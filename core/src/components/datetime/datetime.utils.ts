@@ -8,173 +8,45 @@ interface DatetimeParts {
 }
 
 export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year, dayOfWeek } = refParts;
-  if (day === null || dayOfWeek === null || dayOfWeek === undefined) {
-    throw new Error('No day provided');
+  const { dayOfWeek } = refParts;
+  if (dayOfWeek === null || dayOfWeek === undefined) {
+    throw new Error('No day of week provided');
   }
 
-  const workingParts = {
-    month,
-    day,
-    year
-  };
-
-  workingParts.day -= dayOfWeek;
-
-  /**
-   * If wrapping to previous month
-   * update days and decrement month
-   */
-  if (workingParts.day < 1) {
-    workingParts.month -= 1;
-  }
-
-  /**
-   * If moving to previous year, reset
-   * month to December and decrement year
-   */
-  if (workingParts.month < 1) {
-    workingParts.month = 12;
-    workingParts.year -= 1;
-  }
-
-  /**
-   * Determine how many days are in the current
-   * month
-   */
-
-  if (workingParts.day < 1) {
-    const daysInMonth = getNumDaysInMonth(workingParts.month, workingParts.year);
-
-    /**
-     * Take num days in month and add the
-     * number of underflow days. This number will
-     * be negative.
-     * Example: 1 week before Jan 2, 2021 is
-     * December 26, 2021 so:
-     * 2 - 7 = -5
-     * 31 + (-5) = 26
-     */
-    workingParts.day = daysInMonth + workingParts.day;
-  }
-
-  return workingParts;
+  return subtractDays(refParts, dayOfWeek);
 }
 
 export const getEndOfWeek = (refParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year, dayOfWeek } = refParts;
-  if (day === null || dayOfWeek === null || dayOfWeek === undefined) {
-    throw new Error('No day provided');
+  const { dayOfWeek } = refParts;
+  if (dayOfWeek === null || dayOfWeek === undefined) {
+    throw new Error('No day of week provided');
   }
 
-  const workingParts = {
-    month,
-    day,
-    year
-  }
-
-  const daysInMonth = getNumDaysInMonth(month, year);
-  workingParts.day += (6 - dayOfWeek);
-
-  /**
-   * If wrapping to next month
-   * update days and increment month
-   */
-  if (workingParts.day > daysInMonth) {
-    workingParts.day -= daysInMonth;
-    workingParts.month += 1;
-  }
-
-  /**
-   * If moving to next year, reset
-   * month to January and increment year
-   */
-  if (workingParts.month > 12) {
-    workingParts.month = 1;
-    workingParts.year += 1;
-  }
-
-  return workingParts;
+  return addDays(refParts, 6 - dayOfWeek);
 }
 
 export const getNextDay = (refParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year } = refParts;
-  if (day === null) {
-    throw new Error('No day provided');
-  }
-
-  const workingParts = {
-    month,
-    day,
-    year
-  }
-
-  workingParts.day += 1;
-
-  /**
-   * If wrapping to next month
-   * update days and increment month
-   */
-  if (workingParts.day > getNumDaysInMonth(month, year)) {
-    workingParts.day = 1;
-    workingParts.month += 1;
-  }
-
-  /**
-   * If moving to next year, reset
-   * month to January and increment year
-   */
-  if (workingParts.month > 12) {
-    workingParts.month = 1;
-    workingParts.year += 1;
-  }
-
-  return workingParts;
+  return addDays(refParts, 1);
 }
 
 export const getPreviousDay = (refParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year } = refParts;
-  if (day === null) {
-    throw new Error('No day provided');
-  }
-
-  const workingParts = {
-    month,
-    day,
-    year
-  }
-
-  workingParts.day -= 1;
-
-  /**
-   * If wrapping to previous month
-   * update days and decrement month
-   */
-  if (workingParts.day < 1) {
-    workingParts.month -= 1;
-  }
-
-  /**
-   * If moving to previous year, reset
-   * month to December and decrement year
-   */
-  if (workingParts.month < 1) {
-    workingParts.month = 12;
-    workingParts.year -= 1;
-  }
-
-  /**
-   * Determine how many days are in the current
-   * month
-   */
-  if (workingParts.day < 1) {
-    workingParts.day = getNumDaysInMonth(workingParts.month, workingParts.year);
-  }
-
-  return workingParts;
+  return subtractDays(refParts, 1);
 }
 
 export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
+  return subtractDays(refParts, 7);
+}
+
+export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
+  return addDays(refParts, 7);
+}
+
+/**
+ * Given datetime parts, subtract
+ * numDays from the date.
+ * Returns a new DatetimeParts object
+ */
+export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
   const { month, day, year } = refParts;
   if (day === null) {
     throw new Error('No day provided');
@@ -186,7 +58,7 @@ export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
     year
   }
 
-  workingParts.day = day - 7;
+  workingParts.day = day - numDays;
 
   /**
    * If wrapping to previous month
@@ -228,7 +100,12 @@ export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
   return workingParts;
 }
 
-export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
+/**
+ * Given datetime parts, add
+ * numDays to the date.
+ * Returns a new DatetimeParts object
+ */
+export const addDays = (refParts: DatetimeParts, numDays: number) => {
   const { month, day, year } = refParts;
   if (day === null) {
     throw new Error('No day provided');
@@ -241,7 +118,7 @@ export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
   }
 
   const daysInMonth = getNumDaysInMonth(month, year);
-  workingParts.day = day + 7;
+  workingParts.day = day + numDays;
 
   /**
    * If wrapping to next month
@@ -264,6 +141,11 @@ export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
   return workingParts;
 }
 
+/**
+ * Extracts date information
+ * from a .calendar-day element
+ * into DatetimeParts.
+ */
 export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
   return {
     month: parseInt(el.getAttribute('data-month')!, 10),
