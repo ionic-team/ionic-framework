@@ -5,6 +5,35 @@ interface DatetimeParts {
   day: number | null;
   year: number;
   dayOfWeek?: number | null;
+  hour?: number;
+  minute?: number;
+}
+
+const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
+const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+export const is24Hour = (locale: string) => {
+  const date = new Date('5/18/2021 00:00');
+  const formatted = new Intl.DateTimeFormat(locale, { hour: 'numeric' }).formatToParts(date);
+  const hour = formatted.find(p => p.type === 'hour');
+
+  if (!hour) {
+    throw new Error('Hour value not found from DateTimeFormat');
+  }
+
+  return hour.value === '00';
+}
+
+export const generateTime = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+  const use24Hour = is24Hour(locale);
+
+  console.log('need to account for these', minParts, maxParts, refParts, use24Hour)
+
+  return {
+    hours: use24Hour ? hour24 : hour12,
+    minutes
+  }
+
 }
 
 export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {

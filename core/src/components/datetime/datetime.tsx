@@ -2,11 +2,12 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
-import { renderHiddenInput } from '../../utils/helpers';
+import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
   generateMonths,
+  generateTime,
   getCalendarDayState,
   getDaysOfMonth,
   getDaysOfWeek,
@@ -21,6 +22,7 @@ import {
   getPreviousMonth,
   getPreviousWeek,
   getStartOfWeek,
+  is24Hour,
   parseDate,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
@@ -49,6 +51,9 @@ export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private showDefaultTitleAndButtons = true;
   private calendarBodyRef?: HTMLElement;
+  private timeBaseRef?: HTMLElement;
+  private timeHourRef?: HTMLElement;
+  private timeMinuteRef?: HTMLElement;
 
   private minParts?: any;
   private maxParts?: any;
@@ -365,12 +370,14 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { month, day, year } = parseDate(this.min);
+    const { month, day, year, hour, minute } = parseDate(this.min);
 
     this.minParts = {
       month,
       day,
-      year
+      year,
+      hour,
+      minute
     }
   }
 
@@ -380,12 +387,14 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { month, day, year } = parseDate(this.max);
+    const { month, day, year, hour, minute } = parseDate(this.max);
 
     this.maxParts = {
       month,
       day,
-      year
+      year,
+      hour,
+      minute
     }
   }
 
@@ -398,7 +407,7 @@ export class Datetime implements ComponentInterface {
   }
 
   componentDidLoad() {
-    const { calendarBodyRef } = this;
+    const { calendarBodyRef, timeBaseRef, timeHourRef, timeMinuteRef } = this;
     if (!calendarBodyRef) { return; }
 
     const mode = getIonMode(this);
@@ -543,6 +552,31 @@ export class Datetime implements ComponentInterface {
 
       this.initializeKeyboardListeners();
     });
+
+    if (timeBaseRef && timeHourRef && timeMinuteRef) {
+      let timeout: any;
+      const scrollCallback = (activeCol: HTMLElement, otherCol: HTMLElement) => {
+        raf(() => {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = undefined;
+          }
+
+          timeBaseRef.classList.add('time-base-active');
+          activeCol.classList.add('time-column-active');
+
+          timeout = setTimeout(() => {
+            timeBaseRef.classList.remove('time-base-active');
+            activeCol.classList.remove('time-column-active');
+            otherCol.classList.remove('time-column-active');
+
+            // TODO need to update working time
+          }, 250);
+        });
+      }
+      timeHourRef.addEventListener('scroll', () => scrollCallback(timeHourRef, timeMinuteRef));
+      timeMinuteRef.addEventListener('scroll', () => scrollCallback(timeMinuteRef, timeHourRef));
+    }
   }
 
   componentWillLoad() {
@@ -754,8 +788,62 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTime() {
+    const { hours, minutes } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
+
+     // TODO: can we hardcode these values?
+    const addPadding = (v: number) => {
+      const vString = v.toString();
+      if (vString.length > 1) { return vString; }
+
+      return `0${vString}`;
+    }
     return (
-      <div class="datetime-time">Time Placeholder</div>
+      <div class="datetime-time">
+        <div class="time-header">Time</div>
+        <div class="time-body">
+          <div class="time-base" ref={el => this.timeBaseRef = el}>
+            <div class="time-wrapper">
+              <div
+                class="time-column"
+                aria-label="Hours"
+                role="slider"
+                ref={el => this.timeHourRef = el}
+                tabindex="0"
+              >
+                { hours.map(hour => {
+                  return (
+                    <div
+                      class="time-item"
+                    >{addPadding(hour)}</div>
+                  )
+                })}
+              </div>
+              <div class="time-separator">:</div>
+              <div
+                class="time-column"
+                aria-label="Minutes"
+                role="slider"
+                ref={el => this.timeMinuteRef = el}
+                tabindex="0"
+              >
+                { minutes.map(minute => {
+                  return (
+                    <div
+                      class="time-item"
+                    >{addPadding(minute)}</div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+          { !is24Hour(this.locale) && <div class="time-ampm">
+            <ion-segment value="am">
+              <ion-segment-button value="am">AM</ion-segment-button>
+              <ion-segment-button value="pm">PM</ion-segment-button>
+            </ion-segment>
+          </div> }
+        </div>
+      </div>
     )
   }
 
@@ -797,8 +885,27 @@ export class Datetime implements ComponentInterface {
     ]
   }
 
+  private renderCalendarAndTimeViews(mode: Mode) {
+    return [
+      this.renderCalendarViewHeader(mode),
+      this.renderCalendar(mode),
+      this.renderTime(),
+      this.renderFooter(mode)
+    ]
+  }
+
+  private renderDatetime(mode: Mode) {
+    const { view } = this;
+
+    if (mode === 'ios') {
+      return this.renderCalendarAndTimeViews(mode);
+    } else {
+      return view === DatetimeView.Calendar ? this.renderCalendarView(mode) : this.renderTimeView(mode);
+    }
+  }
+
   render() {
-    const { name, value, disabled, el, color, isPresented, view, readonly } = this;
+    const { name, value, disabled, el, color, isPresented, readonly } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -815,9 +922,7 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        {
-          view === DatetimeView.Calendar ? this.renderCalendarView(mode) : this.renderTimeView(mode)
-        }
+        {this.renderDatetime(mode)}
       </Host>
     );
   }
