@@ -276,13 +276,18 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   private initializeKeyboardListeners = () => {
+
+    /**
+     * Get a reference to the month
+     * element we are currently viewing.
+     */
+    const currentMonth = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
+
     /**
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */
     this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
-      ev.preventDefault();
-
       const activeElement = this.el!.shadowRoot!.activeElement;
       if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
@@ -290,43 +295,67 @@ export class Datetime implements ComponentInterface {
 
       switch (ev.key) {
         case 'ArrowDown':
+          ev.preventDefault();
           this.workingParts = { ...getNextWeek(parts) as any };
           break;
         case 'ArrowUp':
+          ev.preventDefault();
           this.workingParts = { ...getPreviousWeek(parts) as any };
           break;
         case 'ArrowRight':
+          ev.preventDefault();
           this.workingParts = { ...getNextDay(parts) as any };
           break;
         case 'ArrowLeft':
+          ev.preventDefault();
           this.workingParts = { ...getPreviousDay(parts) as any };
           break;
         case 'Home':
+          ev.preventDefault();
           this.workingParts = { ...getStartOfWeek(parts) as any };
           break;
         case 'End':
+          ev.preventDefault();
           this.workingParts = { ...getEndOfWeek(parts) as any };
           break;
         case 'PageUp':
+          ev.preventDefault();
           this.workingParts = { ...getPreviousMonth(parts) as any }
           break;
         case 'PageDown':
+          ev.preventDefault();
           this.workingParts = { ...getNextMonth(parts) as any }
           break;
+        /**
+         * Do not preventDefault here
+         * as we do not want to override other
+         * browser defaults such as pressing Enter/Space
+         * to select a day.
+         */
         default:
-          console.log('unrecognized');
           return;
       }
 
+      /**
+       * Give view a change to re-render
+       */
       requestAnimationFrame(() => {
-        const month = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
-        const padding = month.querySelectorAll('.calendar-day-padding')
-        const day = month.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement;
-        console.log('focusing', day)
-        day.focus();
-      })
+        /**
+         * Get the number of padding days so
+         * we know how much to offset our next selector by
+         * to grab the correct calenday-day element.
+         */
+        const padding = currentMonth.querySelectorAll('.calendar-day-padding');
 
-      return false;
+        /**
+         * Get the calendar day element
+         * and focus it.
+         */
+        const day = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement | null
+        if (day) {
+          day.focus();
+        }
+      });
     })
   }
 
