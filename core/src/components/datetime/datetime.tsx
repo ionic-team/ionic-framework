@@ -812,6 +812,12 @@ export class Datetime implements ComponentInterface {
                     day,
                     year
                   }
+                  this.activeParts = {
+                    ...this.activeParts,
+                    month,
+                    day,
+                    year
+                  }
                 }}
               >{day}</button>
             )
