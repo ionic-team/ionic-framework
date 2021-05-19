@@ -256,6 +256,8 @@
   height: 100%;
 
   line-height: $datetime-ios-time-height;
+
+  text-align: right;
 }
 
 :host .time-separator {

@@ -851,14 +851,6 @@ export class Datetime implements ComponentInterface {
     const { ampm } = this.workingParts;
     const { hours, minutes } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
 
-     // TODO: can we hardcode these values?
-    const addPadding = (v: number) => {
-      const vString = v.toString();
-      if (vString.length > 1) { return vString; }
-
-      return `0${vString}`;
-    }
-
     /**
      * If PM, then internal value should
      * be converted to 24-hr time.
@@ -870,6 +862,21 @@ export class Datetime implements ComponentInterface {
 
       return convert12HourTo24Hour(hour, ampm);
     }
+
+    const addPadding = (value: number) => {
+      const valueToString = value.toString();
+      if (valueToString.length > 1) { return value; }
+
+      return `0${valueToString}`;
+    }
+
+    // TODO: can we hardcode these values?
+    const getFormattedHour = (hour: number) => {
+      if (!use24Hour) { return hour; }
+
+      return addPadding(hour);
+    }
+
     return (
       <div class="datetime-time">
         <div class="time-header">Time</div>
@@ -888,7 +895,7 @@ export class Datetime implements ComponentInterface {
                     <div
                       class="time-item"
                       data-value={getHourValue(hour)}
-                    >{addPadding(hour)}</div>
+                    >{getFormattedHour(hour)}</div>
                   )
                 })}
               </div>
