@@ -250,14 +250,20 @@
   display: none;
 }
 
+:host .time-column-hours .time-item {
+  text-align: end;
+}
+
+:host .time-column-minutes .time-item {
+  text-align: start;
+}
+
 :host .time-item {
   scroll-snap-align: center;
 
   height: 100%;
 
   line-height: $datetime-ios-time-height;
-
-  text-align: right;
 }
 
 :host .time-separator {

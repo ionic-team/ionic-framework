@@ -114,6 +114,12 @@
 
   // Hide scrollbars on Firefox
   scrollbar-width: none;
+
+  /**
+   * Hide blue outline on calendar body
+   * when it is focused.
+   */
+  outline: none;
 }
 
 :host .calendar-body .calendar-month {

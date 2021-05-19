@@ -299,18 +299,21 @@ export class Datetime implements ComponentInterface {
      * to the working day, but other days should
      * only be accessible using the arrow keys. Pressing
      * Tab should jump between bodies of selectable content.
+     * TODO: This does not work right on Safari
      */
-    this.calendarBodyRef!.addEventListener('focusin', ev => {
-    const relatedTarget = ev.relatedTarget as HTMLElement;
-    if (ev.target !== this.calendarBodyRef) { return; }
+    /*this.calendarBodyRef!.addEventListener('focusin', ev => {
+      const relatedTarget = ev.relatedTarget as HTMLElement;
 
-    if (relatedTarget?.classList.contains('calendar-day')) {
-      const prevButton = root.querySelector('.calendar-next-prev ion-button:last-of-type') as HTMLElement;
-      prevButton.focus();
-    } else {
-      this.focusWorkingDay(currentMonth);
-    }
-  });
+      if (ev.target !== this.calendarBodyRef) { return; }
+
+      if (relatedTarget?.classList.contains('calendar-day')) {
+        const prevButton = root.querySelector('.calendar-next-prev ion-button:last-of-type') as HTMLElement;
+        prevButton.focus();
+      } else {
+        this.focusWorkingDay(currentMonth);
+      }
+
+    });*/
 
     /**
      * We must use keydown not keyup as we want
@@ -884,7 +887,7 @@ export class Datetime implements ComponentInterface {
           <div class="time-base" ref={el => this.timeBaseRef = el}>
             <div class="time-wrapper">
               <div
-                class="time-column"
+                class="time-column time-column-hours"
                 aria-label="Hours"
                 role="slider"
                 ref={el => this.timeHourRef = el}
@@ -901,7 +904,7 @@ export class Datetime implements ComponentInterface {
               </div>
               <div class="time-separator">:</div>
               <div
-                class="time-column"
+                class="time-column time-column-minutes"
                 aria-label="Minutes"
                 role="slider"
                 ref={el => this.timeMinuteRef = el}
