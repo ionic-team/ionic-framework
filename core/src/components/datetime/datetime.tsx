@@ -281,7 +281,7 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   private initializeKeyboardListeners = () => {
-
+    const root = this.el!.shadowRoot!;
     /**
      * Get a reference to the month
      * element we are currently viewing.
@@ -289,11 +289,31 @@ export class Datetime implements ComponentInterface {
     const currentMonth = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
 
     /**
+     * When focusing the calendar body, we want to pass focus
+     * to the working day, but other days should
+     * only be accessible using the arrow keys. Pressing
+     * Tab should jump between bodies of selectable content.
+     */
+    this.calendarBodyRef!.addEventListener('focusin', ev => {
+    const relatedTarget = ev.relatedTarget as HTMLElement;
+    if (ev.target !== this.calendarBodyRef) { return; }
+
+    if (relatedTarget?.classList.contains('calendar-day')) {
+      const prevButton = root.querySelector('.calendar-next-prev ion-button:last-of-type') as HTMLElement;
+      if (prevButton) {
+        prevButton.focus();
+      }
+    } else {
+      this.focusWorkingDay(currentMonth);
+    }
+  });
+
+    /**
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */
     this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
-      const activeElement = this.el!.shadowRoot!.activeElement;
+      const activeElement = root.activeElement;
       if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
       const parts = getPartsFromCalendarDay(activeElement as HTMLElement)
@@ -344,24 +364,26 @@ export class Datetime implements ComponentInterface {
       /**
        * Give view a change to re-render
        */
-      requestAnimationFrame(() => {
-        /**
-         * Get the number of padding days so
-         * we know how much to offset our next selector by
-         * to grab the correct calenday-day element.
-         */
-        const padding = currentMonth.querySelectorAll('.calendar-day-padding');
-
-        /**
-         * Get the calendar day element
-         * and focus it.
-         */
-        const day = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement | null
-        if (day) {
-          day.focus();
-        }
-      });
+      requestAnimationFrame(() => this.focusWorkingDay(currentMonth));
     })
+  }
+
+  private focusWorkingDay = (currentMonth: Element) => {
+    /**
+     * Get the number of padding days so
+     * we know how much to offset our next selector by
+     * to grab the correct calenday-day element.
+     */
+    const padding = currentMonth.querySelectorAll('.calendar-day-padding');
+
+    /**
+     * Get the calendar day element
+     * and focus it.
+     */
+    const day = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement | null
+    if (day) {
+      day.focus();
+    }
   }
 
   private processMinParts = () => {
@@ -737,6 +759,7 @@ export class Datetime implements ComponentInterface {
 
             return (
               <button
+                tabindex="-1"
                 data-day={day}
                 data-month={month}
                 data-year={year}
@@ -770,7 +793,7 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarBody() {
     return (
-      <div class="calendar-body" ref={el => this.calendarBodyRef = el}>
+      <div class="calendar-body" ref={el => this.calendarBodyRef = el} tabindex="0">
         {generateMonths(this.workingParts).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
