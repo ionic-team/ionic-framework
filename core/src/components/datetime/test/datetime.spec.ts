@@ -17,8 +17,184 @@ import {
   getNextDay,
   getPreviousDay,
   getStartOfWeek,
-  getEndOfWeek
+  getEndOfWeek,
+  convert12HourTo24Hour,
+  generateTime
 } from '../datetime.utils';
+
+describe('generateTime()', () => {
+  it('should not filter and hours/minutes when no bounds set', () => {
+    const today = {
+      day: 19,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today);
+
+    expect(hours.length).toEqual(12);
+    expect(minutes.length).toEqual(60);
+    expect(use24Hour).toEqual(false);
+  });
+  it('should filter according to min', () => {
+    const today = {
+      day: 19,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const min = {
+      day: 19,
+      month: 5,
+      year: 2021,
+      hour: 2,
+      minute: 40
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, min);
+
+    expect(hours.length).toEqual(11);
+    expect(minutes.length).toEqual(20);
+    expect(use24Hour).toEqual(false);
+  })
+  it('should not filter according to min if not on reference day', () => {
+    const today = {
+      day: 20,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const min = {
+      day: 19,
+      month: 5,
+      year: 2021,
+      hour: 2,
+      minute: 40
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, min);
+
+    expect(hours.length).toEqual(12);
+    expect(minutes.length).toEqual(60);
+    expect(use24Hour).toEqual(false);
+  })
+  it('should filter according to max', () => {
+    const today = {
+      day: 19,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const max = {
+      day: 19,
+      month: 5,
+      year: 2021,
+      hour: 7,
+      minute: 44
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, max);
+
+    expect(hours.length).toEqual(7);
+    expect(minutes.length).toEqual(45);
+    expect(use24Hour).toEqual(false);
+  })
+  it('should not filter according to min if not on reference day', () => {
+    const today = {
+      day: 20,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const max = {
+      day: 21,
+      month: 5,
+      year: 2021,
+      hour: 2,
+      minute: 40
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, max);
+
+    expect(hours.length).toEqual(12);
+    expect(minutes.length).toEqual(60);
+    expect(use24Hour).toEqual(false);
+  })
+  it('should return no values for a day less than the min', () => {
+    const today = {
+      day: 20,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const min = {
+      day: 21,
+      month: 5,
+      year: 2021,
+      hour: 2,
+      minute: 40
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, min);
+
+    expect(hours.length).toEqual(0);
+    expect(minutes.length).toEqual(0);
+    expect(use24Hour).toEqual(false);
+  })
+  it('should return no values for a day greater than the max', () => {
+    const today = {
+      day: 22,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const max = {
+      day: 21,
+      month: 5,
+      year: 2021,
+      hour: 2,
+      minute: 40
+    }
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, max);
+
+    expect(hours.length).toEqual(0);
+    expect(minutes.length).toEqual(0);
+    expect(use24Hour).toEqual(false);
+  })
+
+})
+
+describe('convert12HourTo24Hour()', () => {
+  it('should correctly convert 12 hour to 24 hour', () => {
+    expect(convert12HourTo24Hour(12, 'am')).toEqual(0);
+    expect(convert12HourTo24Hour(1, 'am')).toEqual(1);
+    expect(convert12HourTo24Hour(2, 'am')).toEqual(2);
+    expect(convert12HourTo24Hour(3, 'am')).toEqual(3);
+    expect(convert12HourTo24Hour(4, 'am')).toEqual(4);
+    expect(convert12HourTo24Hour(5, 'am')).toEqual(5);
+    expect(convert12HourTo24Hour(6, 'am')).toEqual(6);
+    expect(convert12HourTo24Hour(7, 'am')).toEqual(7);
+    expect(convert12HourTo24Hour(8, 'am')).toEqual(8);
+    expect(convert12HourTo24Hour(9, 'am')).toEqual(9);
+    expect(convert12HourTo24Hour(10, 'am')).toEqual(10);
+    expect(convert12HourTo24Hour(11, 'am')).toEqual(11);
+
+    expect(convert12HourTo24Hour(12, 'pm')).toEqual(12);
+    expect(convert12HourTo24Hour(1, 'pm')).toEqual(13);
+    expect(convert12HourTo24Hour(2, 'pm')).toEqual(14);
+    expect(convert12HourTo24Hour(3, 'pm')).toEqual(15);
+    expect(convert12HourTo24Hour(4, 'pm')).toEqual(16);
+    expect(convert12HourTo24Hour(5, 'pm')).toEqual(17);
+    expect(convert12HourTo24Hour(6, 'pm')).toEqual(18);
+    expect(convert12HourTo24Hour(7, 'pm')).toEqual(19);
+    expect(convert12HourTo24Hour(8, 'pm')).toEqual(20);
+    expect(convert12HourTo24Hour(9, 'pm')).toEqual(21);
+    expect(convert12HourTo24Hour(10, 'pm')).toEqual(22);
+    expect(convert12HourTo24Hour(11, 'pm')).toEqual(23);
+  })
+})
 
 describe('getStartOfWeek()', () => {
   it('should correctly return the start of the week', () => {

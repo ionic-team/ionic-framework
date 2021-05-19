@@ -10,12 +10,48 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
+/**
+ * Unless otherwise stated, all month values are
+ * 1 indexed instead of the typical 0 index in JS Date.
+ * Example:
+ *   January = Month 0 when using JS Date
+ *   January = Month 1 when using this datetime util
+ */
+
+/**
+ * Converts an 12 hour value to 24 hours.
+ */
 export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
-  if (ampm === undefined || ampm === 'am') {
+  if (ampm === undefined) { return hour; }
+
+  /**
+   * If AM and 12am
+   * then return 00:00.
+   * Otherwise just return
+   * the hour since it is
+   * already in 24 hour format.
+   */
+  if (ampm === 'am') {
+    if (hour === 12) {
+      return 0;
+    }
+
     return hour;
   }
 
-  return (hour + 12) % 24;
+  /**
+   * If PM and 12pm
+   * just return 12:00
+   * since it is already
+   * in 24 hour format.
+   * Otherwise add 12 hours
+   * to the time.
+   */
+  if (hour === 12) {
+    return 12;
+  }
+
+  return hour + 12;
 }
 
 /**
@@ -61,25 +97,60 @@ export const is24Hour = (locale: string) => {
   return hour.value === '00';
 }
 
+/**
+ * Givne a local, reference datetime parts and option
+ * max/min bound datetime parts, calculate the acceptable
+ * hour and minute values according to the bounds and locale.
+ */
 export const generateTime = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const use24Hour = is24Hour(locale);
   let processedHours = use24Hour ? hour24 : hour12;
   let processedMinutes = minutes;
 
-  if (minParts && isSameDay(refParts, minParts)) {
-    processedHours = processedHours.filter(hour => {
-      const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-      return convertedHour >= minParts.hour!;
-    });
-    processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
+  if (minParts) {
+
+    /**
+     * If ref day is the same as the
+     * minimum allowed day, filter hour/minute
+     * values according to min hour and minute.
+     */
+    if (isSameDay(refParts, minParts)) {
+      processedHours = processedHours.filter(hour => {
+        const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
+        return convertedHour >= minParts.hour!;
+      });
+      processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
+
+    /**
+     * If ref day is before minimum
+     * day do not render any hours/minute values
+     */
+    } else if (isBefore(refParts, minParts)) {
+      processedHours = [];
+      processedMinutes = [];
+    }
   }
 
-  if (maxParts && isSameDay(refParts, maxParts)) {
-    processedHours = processedHours.filter(hour => {
-      const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-      return convertedHour <= maxParts.hour!;
-    });
-    processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+  if (maxParts) {
+    /**
+     * If ref day is the same as the
+     * maximum allowed day, filter hour/minute
+     * values according to max hour and minute.
+     */
+    if (isSameDay(refParts, maxParts)) {
+      processedHours = processedHours.filter(hour => {
+        const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
+        return convertedHour <= maxParts.hour!;
+      });
+      processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+    /**
+     * If ref day is after minimum
+     * day do not render any hours/minute values
+     */
+    } else if (isAfter(refParts, maxParts)) {
+      processedHours = [];
+      processedMinutes = [];
+    }
   }
 
   return {
@@ -87,7 +158,6 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
     minutes: processedMinutes,
     use24Hour
   }
-
 }
 
 export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {
@@ -514,7 +584,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode) => {
 }
 
 /**
- * Returns true if the selected day is equal to the reference day
+ * Returns true if the selected day is equal to the reference day/
  */
 export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
   return (
@@ -525,18 +595,38 @@ export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts)
 }
 
 /**
+ * Returns true is the selected day is before the reference day.
+ */
+export const isBefore = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
+  return (
+    baseParts.year < compareParts.year ||
+    baseParts.year === compareParts.year && baseParts.month < compareParts.month ||
+    baseParts.year === compareParts.year && baseParts.month === compareParts.month && baseParts.day! < compareParts.day!
+  );
+}
+
+/**
+ * Returns true is the selected day is after the reference day.
+ */
+export const isAfter = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
+  return (
+    baseParts.year > compareParts.year ||
+    baseParts.year === compareParts.year && baseParts.month > compareParts.month ||
+    baseParts.year === compareParts.year && baseParts.month === compareParts.month && baseParts.day! > compareParts.day!
+  );
+}
+
+/**
  * Returns true if a given day should
  * not be interactive according to its value,
  * or the max/min dates.
  */
 export const isDayDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
-  const { day, month, year } = refParts;
-
   /**
    * If this is a filler date (i.e. padding)
    * then the date is disabled.
    */
-  if (day === null) { return true; }
+  if (refParts.day === null) { return true; }
 
   /**
    * Given a min date, perform the following
@@ -549,14 +639,8 @@ export const isDayDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts,
    * current month === min allow month, but the current
    * day < the min allowed day?
    */
-  if (minParts) {
-    if (
-      year < minParts.year ||
-      year === minParts.year && month < minParts.month ||
-      year === minParts.year && month === minParts.month && day < minParts.day!
-    ) {
-      return true;
-    }
+  if (minParts && isBefore(refParts, minParts)) {
+    return true;
   }
 
   /**
@@ -570,14 +654,8 @@ export const isDayDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts,
    * current month === max allow month, but the current
    * day > the max allowed day?
    */
-  if (maxParts) {
-    if (
-      year > maxParts.year ||
-      year === maxParts.year && month > maxParts.month ||
-      year === maxParts.year && month === maxParts.month && day > maxParts.day!
-    ) {
-      return true;
-    }
+  if (maxParts && isAfter(refParts, maxParts)) {
+    return true;
   }
 
   /**
