@@ -11,7 +11,7 @@ export interface DatetimeParts {
 }
 
 export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
-  if (!ampm || ampm === 'am') {
+  if (ampm === undefined || ampm === 'am') {
     return hour;
   }
 
@@ -63,12 +63,29 @@ export const is24Hour = (locale: string) => {
 
 export const generateTime = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const use24Hour = is24Hour(locale);
+  let processedHours = use24Hour ? hour24 : hour12;
+  let processedMinutes = minutes;
 
-  console.log('need to account for these', minParts, maxParts, refParts, use24Hour)
+  if (minParts && isSameDay(refParts, minParts)) {
+    processedHours = processedHours.filter(hour => {
+      const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
+      console.log('looking at', convertedHour, hour, minParts.hour)
+      return convertedHour >= minParts.hour!;
+    });
+    processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
+  }
+
+  if (maxParts && isSameDay(refParts, maxParts)) {
+    processedHours = processedHours.filter(hour => {
+      const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
+      return convertedHour <= maxParts.hour!;
+    });
+    processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+  }
 
   return {
-    hours: use24Hour ? hour24 : hour12,
-    minutes,
+    hours: processedHours,
+    minutes: processedMinutes,
     use24Hour
   }
 

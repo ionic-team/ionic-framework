@@ -322,6 +322,7 @@ export class Datetime implements ComponentInterface {
 
       const parts = getPartsFromCalendarDay(activeElement as HTMLElement)
 
+      // TODO: this needs to account for max/min
       switch (ev.key) {
         case 'ArrowDown':
           ev.preventDefault();
@@ -387,7 +388,7 @@ export class Datetime implements ComponentInterface {
      * Get the calendar day element
      * and focus it.
      */
-    const dayEl = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + day})`) as HTMLElement | null
+    const dayEl = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + day})`) as HTMLElement | null;
     if (dayEl) {
       dayEl.focus();
     }
@@ -782,7 +783,7 @@ export class Datetime implements ComponentInterface {
           {getDaysOfMonth(month, year).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.workingParts, this.todayParts, this.minParts, this.maxParts);
 
             return (
               <button
@@ -804,7 +805,8 @@ export class Datetime implements ComponentInterface {
                 onClick={() => {
                   if (day === null) { return; }
 
-                  this.activeParts = {
+                  this.workingParts = {
+                    ...this.workingParts,
                     month,
                     day,
                     year
