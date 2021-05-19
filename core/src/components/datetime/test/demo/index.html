@@ -26,7 +26,7 @@
       }
 
       ion-datetime.md {
-        height: 535px;
+        height: 529px;
 
         border-radius: 4px;
 
@@ -42,7 +42,7 @@
       }
 
       ion-datetime.ios {
-        height: 316px;
+        height: 384px;
 
         border-radius: 12px;
       }
@@ -204,15 +204,32 @@
 
         --ion-card-background: #1e1e1e;
       }
+
+      ion-content::part(scroll) {
+        touch-action: auto;
+      }
     </style>
   </head>
   <body>
     <ion-app>
       <ion-content>
-        <ion-item lines="none">
-          <ion-label>Dark Mode</ion-label>
-          <ion-checkbox slot="end"></ion-checkbox>
-        </ion-item>
+        <div style="display: flex; justify-content: center">
+          <ion-item lines="none">
+            <ion-label>Dark Mode</ion-label>
+            <ion-checkbox slot="end"></ion-checkbox>
+          </ion-item>
+          <ion-item lines="none" detail="true" href="?ionic:mode=ios">
+            <ion-label>iOS Mode</ion-label>
+          </ion-item>
+          <ion-item lines="none" detail="true" href="?ionic:mode=md">
+            <ion-label>MD Mode</ion-label>
+          </ion-item>
+
+          <ion-item lines="none"">
+            <ion-label>Locale</ion-label>
+            <ion-input placeholder="default" id="locale"></ion-input>
+          </ion-item>
+        </div>
 
         <ion-datetime>
           <span slot="title">Select Date</span>
@@ -224,6 +241,12 @@
       </ion-content>
     </ion-app>
     <script>
+      const locale = document.querySelector('#locale');
+      const datetime = document.querySelector('ion-datetime');
+      locale.addEventListener('ionBlur', (ev) => {
+        const value = ev.target.value;
+        datetime.locale = (!!value) ? value : 'default';
+      })
       const darkModeCheckbox = document.querySelector('ion-checkbox');
       darkModeCheckbox.addEventListener('ionChange', (ev) => {
         if (ev.detail.checked) {

@@ -346,15 +346,12 @@ ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,fa
 ion-datetime,prop,interactionStyle,"calendar" | "wheel",'calendar',false,false
 ion-datetime,prop,locale,string,'default',false,false
 ion-datetime,prop,max,string | undefined,undefined,false,false
-ion-datetime,prop,maxSelectableDates,number,1,false,false
 ion-datetime,prop,min,string | undefined,undefined,false,false
 ion-datetime,prop,minuteValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,mode,"ios" | "md",undefined,false,false
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
-ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
-ion-datetime,prop,range,boolean,false,false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false

@@ -34,11 +34,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 #### Datetime
 
-The `pickerOptions` property has been removed. Use the `overlayOptions` property instead.
+- The `pickerOptions` property has been removed. Use the `overlayOptions` property instead.
 
-The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. Use the `locale` property instead.
+- The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. Use the `locale` property instead.
 
-The `text` and `placeholder` Shadow Parts have been removed.
+- The `placeholder` property has been removed.
+
+- The `text` and `placeholder` Shadow Parts have been removed.
 
 #### Header
 
