@@ -300,9 +300,7 @@ export class Datetime implements ComponentInterface {
 
     if (relatedTarget?.classList.contains('calendar-day')) {
       const prevButton = root.querySelector('.calendar-next-prev ion-button:last-of-type') as HTMLElement;
-      if (prevButton) {
-        prevButton.focus();
-      }
+      prevButton.focus();
     } else {
       this.focusWorkingDay(currentMonth);
     }
