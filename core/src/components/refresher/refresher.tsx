@@ -307,7 +307,6 @@ export class Refresher implements ComponentInterface {
       canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
       onStart: (ev: GestureDetail) => {
         ev.data = { animation: undefined, didStart: false, cancelled: false };
-        this.state = RefresherState.Pulling;
       },
       onMove: (ev: GestureDetail) => {
         if ((ev.velocityY < 0 && this.progress === 0 && !ev.data.didStart) || ev.data.cancelled) {
@@ -318,10 +317,12 @@ export class Refresher implements ComponentInterface {
         if (!ev.data.didStart) {
           ev.data.didStart = true;
 
+          this.state = RefresherState.Pulling;
+
           writeTask(() => this.scrollEl!.style.setProperty('--overflow', 'hidden'));
 
           const animationType = getRefresherAnimationType(contentEl);
-          const animation = createPullingAnimation(animationType, pullingRefresherIcon);
+          const animation = createPullingAnimation(animationType, pullingRefresherIcon, this.el);
           ev.data.animation = animation;
           animation.progressStart(false, 0);
           this.ionStart.emit();

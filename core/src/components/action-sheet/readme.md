@@ -94,6 +94,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
@@ -147,7 +150,10 @@ async function presentActionSheet() {
     }
   }];
   document.body.appendChild(actionSheet);
-  return actionSheet.present();
+  await actionSheet.present();
+
+  const { role } = await actionSheet.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -316,6 +322,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -389,7 +398,10 @@ export default defineComponent({
             },
           ],
         });
-      return actionSheet.present();
+      await actionSheet.present();
+
+      const { role } = await actionSheet.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 });
@@ -406,7 +418,7 @@ Developers can also use this component directly in their template:
     header="Albums"
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-action-sheet>
 </template>

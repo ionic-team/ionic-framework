@@ -39,8 +39,10 @@ export class Slides implements ComponentInterface {
   async optionsChanged() {
     if (this.swiperReady) {
       const swiper = await this.getSwiper();
-      Object.assign(swiper.params, this.options);
-      await this.update();
+      if (swiper?.params) {
+        Object.assign(swiper.params, this.options);
+        await this.update();
+      }
     }
   }
 

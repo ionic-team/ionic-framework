@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { mergeRefs } from '../components/utils';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 import { RouteInfo } from '../models';
 
@@ -7,7 +8,7 @@ import { StackContext } from './StackContext';
 
 interface PageManagerProps {
   className?: string;
-  forwardedRef?: React.RefObject<HTMLDivElement>;
+  forwardedRef?: React.ForwardedRef<HTMLDivElement>;
   routeInfo?: RouteInfo;
 }
 
@@ -15,10 +16,13 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
   ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
   context!: React.ContextType<typeof StackContext>;
   ionPageElementRef: React.RefObject<HTMLDivElement>;
+  stableMergedRefs: React.RefCallback<HTMLDivElement>
 
   constructor(props: PageManagerProps) {
     super(props);
-    this.ionPageElementRef = this.props.forwardedRef || React.createRef();
+    this.ionPageElementRef = React.createRef();
+    // React refs must be stable (not created inline).
+    this.stableMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef)
   }
 
   componentDidMount() {
@@ -95,7 +99,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
               className={
                 className ? `${className} ion-page` : `ion-page`
               }
-              ref={this.ionPageElementRef}
+              ref={this.stableMergedRefs}
               {...props}
             >
               {children}

@@ -11,10 +11,11 @@ import {
   createForwardRef,
   dashToPascalCase,
   isCoveredByReact,
+  mergeRefs,
 } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
-  forwardedRef?: React.RefObject<ElementType>;
+  forwardedRef?: React.ForwardedRef<ElementType>;
   href?: string;
   routerLink?: string;
   ref?: React.Ref<any>;
@@ -31,12 +32,14 @@ export const createReactComponent = <PropType, ElementType>(
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;
     ref: React.RefObject<HTMLElement>;
+    stableMergedRefs: React.RefCallback<HTMLElement>
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
-      // If we weren't given a ref to forward, we still need one
-      // in order to attach props to the wrapped element.
+      // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
+      // React refs must be stable (not created inline).
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
     }
 
     componentDidMount() {
@@ -44,9 +47,7 @@ export const createReactComponent = <PropType, ElementType>(
     }
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
-      // Try to use the forwarded ref to get the child node.
-      // Otherwise, use the one we created.
-      const node = (this.props.forwardedRef?.current || this.ref.current!) as HTMLElement;
+      const node = this.ref.current! as HTMLElement;
       attachProps(node, this.props, prevProps);
     }
 
@@ -81,7 +82,7 @@ export const createReactComponent = <PropType, ElementType>(
 
       const newProps: IonicReactInternalProps<PropType> = {
         ...propsToPass,
-        ref: forwardedRef || this.ref,
+        ref: this.stableMergedRefs,
         style,
       };
 
