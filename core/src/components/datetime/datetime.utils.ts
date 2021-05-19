@@ -69,7 +69,6 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
   if (minParts && isSameDay(refParts, minParts)) {
     processedHours = processedHours.filter(hour => {
       const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-      console.log('looking at', convertedHour, hour, minParts.hour)
       return convertedHour >= minParts.hour!;
     });
     processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
