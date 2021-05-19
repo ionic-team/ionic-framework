@@ -585,7 +585,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode) => {
 }
 
 /**
- * Returns true if the selected day is equal to the reference day/
+ * Returns true if the selected day is equal to the reference day
  */
 export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
   return (

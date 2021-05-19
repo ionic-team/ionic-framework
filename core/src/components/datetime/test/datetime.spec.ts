@@ -580,6 +580,7 @@ describe('isSameDay()', () => {
   })
 })
 
+<<<<<<< HEAD
 describe('isBefore()', () => {
   it('should return correct results for month, day, and year', () => {
     const reference = { month: 1, day: 1, year: 2021 }
@@ -613,6 +614,8 @@ describe('isAfter()', () => {
   })
 })
 
+=======
+>>>>>>> origin/next-datetime
 describe('daysInMonth()', () => {
   it('should return correct days in month for month and year', () => {
     expect(getNumDaysInMonth(1, 2019)).toBe(31);
@@ -723,6 +726,7 @@ describe('shouldRenderViewFooter()', () => {
   it('should return true when in MD mode with a slotted button inline', () => {
     expect(shouldRenderViewFooter('md', 'inline', true)).toEqual(true)
   });
+<<<<<<< HEAD
 
   it('should return true when in MD mode with a slotted button in a modal', () => {
     expect(shouldRenderViewFooter('md', 'modal', true)).toEqual(true)
@@ -740,6 +744,25 @@ describe('shouldRenderViewFooter()', () => {
     expect(shouldRenderViewFooter('md', 'modal', false)).toEqual(true)
   });
 
+=======
+
+  it('should return true when in MD mode with a slotted button in a modal', () => {
+    expect(shouldRenderViewFooter('md', 'modal', true)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with a slotted button in a popover', () => {
+    expect(shouldRenderViewFooter('md', 'popover', true)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with no slotted button inline', () => {
+    expect(shouldRenderViewFooter('md', 'inline', false)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with no slotted button in a modal', () => {
+    expect(shouldRenderViewFooter('md', 'modal', false)).toEqual(true)
+  });
+
+>>>>>>> origin/next-datetime
   it('should return false when in MD mode with no slotted button in a popover', () => {
     expect(shouldRenderViewFooter('md', 'popover', false)).toEqual(true)
   });

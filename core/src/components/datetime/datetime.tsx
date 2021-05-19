@@ -288,6 +288,7 @@ export class Datetime implements ComponentInterface {
 
   private initializeKeyboardListeners = () => {
     const root = this.el!.shadowRoot!;
+
     /**
      * Get a reference to the month
      * element we are currently viewing.
@@ -316,6 +317,7 @@ export class Datetime implements ComponentInterface {
     });*/
 
     /**
+
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */

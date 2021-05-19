@@ -7,6 +7,7 @@ import { getElementRoot } from '../../../utils/helpers';
  */
 export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
   const root = getElementRoot(baseEl);
+  const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
@@ -21,6 +22,15 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
 
   return baseAnimation
     .easing('ease')
-    .duration(500)
+    .afterAddWrite(() => {
+      baseEl.style.removeProperty('--width');
+      baseEl.classList.remove('popover-bottom');
+
+      contentEl.style.removeProperty('top');
+      contentEl.style.removeProperty('left');
+      contentEl.style.removeProperty('bottom');
+      contentEl.style.removeProperty('transform-origin');
+    })
+    .duration(150)
     .addAnimation([backdropAnimation, wrapperAnimation]);
 };

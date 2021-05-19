@@ -257,7 +257,6 @@
       const locale = document.querySelector('#locale');
       const datetime = document.querySelector('ion-datetime');
       const buttons = document.querySelectorAll('ion-button');
-
       locale.addEventListener('ionBlur', (ev) => {
         const value = ev.target.value;
         datetime.locale = (!!value) ? value : 'default';

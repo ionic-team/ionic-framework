@@ -7,6 +7,9 @@ import { getElementRoot } from '../../../utils/helpers';
  */
 export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
   const root = getElementRoot(baseEl);
+  const contentEl = root.querySelector('.popover-content') as HTMLElement;
+  const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
+
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
@@ -21,6 +24,21 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
 
   return baseAnimation
     .easing('ease')
-    .duration(500)
+    .afterAddWrite(() => {
+      baseEl.style.removeProperty('--width');
+      baseEl.classList.remove('popover-bottom');
+
+      contentEl.style.removeProperty('top');
+      contentEl.style.removeProperty('left');
+      contentEl.style.removeProperty('bottom');
+      contentEl.style.removeProperty('transform-origin');
+
+      if (arrowEl) {
+        arrowEl.style.removeProperty('top');
+        arrowEl.style.removeProperty('left');
+        arrowEl.style.removeProperty('display');
+      }
+    })
+    .duration(300)
     .addAnimation([backdropAnimation, wrapperAnimation]);
 };
