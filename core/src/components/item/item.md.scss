@@ -47,7 +47,10 @@
 
 :host(.item-has-focus) .item-native {
   caret-color: var(--highlight-color-focused);
-  background-color: rgba(var(--background-focused), .5);
+}
+
+:host(.ion-invalid) .item-native {
+  caret-color: var(--highlight-color-invalid) !important;
 }
 
 // Material Design Item Lines
@@ -320,7 +323,7 @@
     
     border-bottom-style: var(--border-style);
     border-bottom-color: var(--highlight-color-focused);
-    border-bottom-width: 2px;
+    border-bottom-width: var(--highlight-height);
   }
 }
 
@@ -377,13 +380,27 @@
   }
 }
 
+:host(.ion-invalid) .item-native {
+  border-color: var(--highlight-color-invalid);
+}
+
 :host(.item-fill-outline.item-has-focus) .item-native {
   .item-highlight-top,
   .item-highlight-before,
   .item-highlight-after,
   .item-highlight-bottom {
     border-color: var(--highlight-color-focused);
-    border-width: 2px;
+    border-width: var(--highlight-height);
+  }
+}
+
+:host(.ion-invalid.item-has-focus) .item-native {
+  .item-highlight-top,
+  .item-highlight-before,
+  .item-highlight-after,
+  .item-highlight-bottom {
+    border-color: var(--highlight-color-invalid);
+    border-width: var(--highlight-height);
   }
 }
 

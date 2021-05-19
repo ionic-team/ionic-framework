@@ -54,7 +54,7 @@
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-fill-outline.item-has-value).label-floating {
   //TODO
-  @include transform(translateX(var(--item-slotted-icon-computed-width)), translateY(-9px), scale(.75));
+  @include transform(translateX(var(--item-slotted-icon-computed-width)), translateY(-6px), scale(.75));
 }
 
 :host-context(.item-has-focus).label-stacked:not(.ion-color),

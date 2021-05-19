@@ -150,7 +150,7 @@
       <!-- TODO others -->
 
       <p>Full Width</p>
-      <ion-item>
+      <ion-item class="custom" fill="solid">
         <ion-input placeholder="Standard"></ion-input>
       </ion-item>
 
@@ -158,12 +158,12 @@
   </ion-app>
 
   <style>
-    ion-item {
-      margin-bottom: 10px;
-    }
-
     .custom {
       --background: red;
+      --highlight-height: 4px;
+      --background-focused: red;
+      --border-color: red;
+      --highlight-color-focused: green;
     }
   </style>
 </body>
