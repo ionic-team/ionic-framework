@@ -26,7 +26,8 @@ import {
   parseDate,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
-  shouldRenderViewHeader
+  shouldRenderViewHeader,
+  DatetimeParts
 } from './datetime.utils';
 
 /**
@@ -64,7 +65,7 @@ export class Datetime implements ComponentInterface {
     year: 2021
   }
 
-  @State() workingParts = {
+  @State() workingParts: DatetimeParts = {
     month: 5,
     day: 12,
     year: 2021
@@ -373,14 +374,17 @@ export class Datetime implements ComponentInterface {
      * to grab the correct calenday-day element.
      */
     const padding = currentMonth.querySelectorAll('.calendar-day-padding');
+    const { day } = this.workingParts;
+
+    if (!day) return;
 
     /**
      * Get the calendar day element
      * and focus it.
      */
-    const day = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement | null
-    if (day) {
-      day.focus();
+    const dayEl = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + day})`) as HTMLElement | null
+    if (dayEl) {
+      dayEl.focus();
     }
   }
 
@@ -575,12 +579,15 @@ export class Datetime implements ComponentInterface {
 
     if (timeBaseRef && timeHourRef && timeMinuteRef) {
       let timeout: any;
-      const scrollCallback = (activeCol: HTMLElement, otherCol: HTMLElement) => {
+      const scrollCallback = (colType: string) => {
         raf(() => {
           if (timeout) {
             clearTimeout(timeout);
             timeout = undefined;
           }
+
+          const activeCol = colType === 'hour' ? timeHourRef : timeMinuteRef;
+          const otherCol = colType === 'hour' ? timeMinuteRef : timeHourRef;
 
           timeBaseRef.classList.add('time-base-active');
           activeCol.classList.add('time-column-active');
@@ -591,11 +598,29 @@ export class Datetime implements ComponentInterface {
             otherCol.classList.remove('time-column-active');
 
             // TODO need to update working time
+            const bbox = activeCol.getBoundingClientRect();
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x, bbox.y);
+            if (activeElement) {
+              const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+              console.log('value', value)
+
+              if (colType === 'hour') {
+                this.workingParts = {
+                  ...this.workingParts,
+                  hour: value
+                }
+              } else {
+                this.workingParts = {
+                  ...this.workingParts,
+                  minute: value
+                }
+              }
+            }
           }, 250);
         });
       }
-      timeHourRef.addEventListener('scroll', () => scrollCallback(timeHourRef, timeMinuteRef));
-      timeMinuteRef.addEventListener('scroll', () => scrollCallback(timeMinuteRef, timeHourRef));
+      timeHourRef.addEventListener('scroll', () => scrollCallback('hour'));
+      timeMinuteRef.addEventListener('scroll', () => scrollCallback('minute'));
     }
   }
 
@@ -835,6 +860,7 @@ export class Datetime implements ComponentInterface {
                   return (
                     <div
                       class="time-item"
+                      data-value={hour}
                     >{addPadding(hour)}</div>
                   )
                 })}
@@ -851,6 +877,7 @@ export class Datetime implements ComponentInterface {
                   return (
                     <div
                       class="time-item"
+                      data-value={minute}
                     >{addPadding(minute)}</div>
                   )
                 })}
