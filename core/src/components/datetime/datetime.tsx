@@ -326,35 +326,35 @@ export class Datetime implements ComponentInterface {
       switch (ev.key) {
         case 'ArrowDown':
           ev.preventDefault();
-          this.workingParts = { ...getNextWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getNextWeek(parts) as any };
           break;
         case 'ArrowUp':
           ev.preventDefault();
-          this.workingParts = { ...getPreviousWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getPreviousWeek(parts) as any };
           break;
         case 'ArrowRight':
           ev.preventDefault();
-          this.workingParts = { ...getNextDay(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getNextDay(parts) as any };
           break;
         case 'ArrowLeft':
           ev.preventDefault();
-          this.workingParts = { ...getPreviousDay(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getPreviousDay(parts) as any };
           break;
         case 'Home':
           ev.preventDefault();
-          this.workingParts = { ...getStartOfWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getStartOfWeek(parts) as any };
           break;
         case 'End':
           ev.preventDefault();
-          this.workingParts = { ...getEndOfWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getEndOfWeek(parts) as any };
           break;
         case 'PageUp':
           ev.preventDefault();
-          this.workingParts = { ...getPreviousMonth(parts) as any }
+          this.workingParts = { ...this.workingParts, ...getPreviousMonth(parts) as any }
           break;
         case 'PageDown':
           ev.preventDefault();
-          this.workingParts = { ...getNextMonth(parts) as any }
+          this.workingParts = { ...this.workingParts, ...getNextMonth(parts) as any }
           break;
         /**
          * Do not preventDefault here
@@ -530,6 +530,7 @@ export class Datetime implements ComponentInterface {
           const { month, year, day } = refMonthFn(this.workingParts);
 
           this.workingParts = {
+            ...this.workingParts,
             month,
             day: day!,
             year
@@ -783,7 +784,7 @@ export class Datetime implements ComponentInterface {
           {getDaysOfMonth(month, year).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
 
             return (
               <button
