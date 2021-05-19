@@ -10,6 +10,42 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
+export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
+  if (!ampm || ampm === 'am') {
+    return hour;
+  }
+
+  return (hour + 12) % 24;
+}
+
+/**
+ * Given the current datetime parts and a new AM/PM value
+ * calculate what the hour should be in 24-hour time format.
+ * Used when toggling the AM/PM segment since we store our hours
+ * in 24-hour time format internally.
+ */
+export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am' | 'pm') => {
+  const { ampm: currentAMPM, hour } = currentParts;
+
+  let newHour = hour!;
+
+  /**
+   * If going from AM --> PM, need to update the
+   *
+   */
+  if (currentAMPM === 'am' && newAMPM === 'pm') {
+    newHour = (newHour + 12) % 24;
+
+  /**
+   * If going from PM --> AM
+   */
+  } else if (currentAMPM === 'pm' && newAMPM === 'am') {
+    newHour = Math.abs(newHour - 12);
+  }
+
+  return newHour;
+}
+
 const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
@@ -32,7 +68,8 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
 
   return {
     hours: use24Hour ? hour24 : hour12,
-    minutes
+    minutes,
+    use24Hour
   }
 
 }

@@ -6,6 +6,9 @@ import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
+  DatetimeParts,
+  calculateHourFromAMPM,
+  convert12HourTo24Hour,
   generateMonths,
   generateTime,
   getCalendarDayState,
@@ -26,8 +29,7 @@ import {
   parseDate,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
-  shouldRenderViewHeader,
-  DatetimeParts
+  shouldRenderViewHeader
 } from './datetime.utils';
 
 /**
@@ -68,7 +70,10 @@ export class Datetime implements ComponentInterface {
   @State() workingParts: DatetimeParts = {
     month: 5,
     day: 12,
-    year: 2021
+    year: 2021,
+    hour: 13,
+    minute: 52,
+    ampm: 'pm'
   }
 
   private todayParts = {
@@ -376,7 +381,7 @@ export class Datetime implements ComponentInterface {
     const padding = currentMonth.querySelectorAll('.calendar-day-padding');
     const { day } = this.workingParts;
 
-    if (!day) return;
+    if (day === null) { return; }
 
     /**
      * Get the calendar day element
@@ -597,23 +602,22 @@ export class Datetime implements ComponentInterface {
             activeCol.classList.remove('time-column-active');
             otherCol.classList.remove('time-column-active');
 
-            // TODO need to update working time
             const bbox = activeCol.getBoundingClientRect();
-            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x, bbox.y);
-            if (activeElement) {
+            if (colType === 'hour') {
+              const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
               const value = parseInt(activeElement.getAttribute('data-value')!, 10);
-              console.log('value', value)
 
-              if (colType === 'hour') {
-                this.workingParts = {
-                  ...this.workingParts,
-                  hour: value
-                }
-              } else {
-                this.workingParts = {
-                  ...this.workingParts,
-                  minute: value
-                }
+              this.workingParts = {
+                ...this.workingParts,
+                hour: value
+              }
+            } else {
+              const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x - 1, bbox.y + 1)!;
+              const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+              this.workingParts = {
+                ...this.workingParts,
+                minute: value
               }
             }
           }, 250);
@@ -834,6 +838,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTime() {
+    const use24Hour = is24Hour(this.locale);
+    const { ampm } = this.workingParts;
     const { hours, minutes } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
 
      // TODO: can we hardcode these values?
@@ -842,6 +848,18 @@ export class Datetime implements ComponentInterface {
       if (vString.length > 1) { return vString; }
 
       return `0${vString}`;
+    }
+
+    /**
+     * If PM, then internal value should
+     * be converted to 24-hr time.
+     * Does not apply when public
+     * values are already 24-hr time.
+     */
+    const getHourValue = (hour: number) => {
+      if (use24Hour) { return hour; }
+
+      return convert12HourTo24Hour(hour, ampm);
     }
     return (
       <div class="datetime-time">
@@ -860,7 +878,7 @@ export class Datetime implements ComponentInterface {
                   return (
                     <div
                       class="time-item"
-                      data-value={hour}
+                      data-value={getHourValue(hour)}
                     >{addPadding(hour)}</div>
                   )
                 })}
@@ -884,8 +902,26 @@ export class Datetime implements ComponentInterface {
               </div>
             </div>
           </div>
-          { !is24Hour(this.locale) && <div class="time-ampm">
-            <ion-segment value="am">
+          { !use24Hour && <div class="time-ampm">
+            <ion-segment
+              value={this.workingParts.ampm}
+              onIonChange={(ev: CustomEvent) => {
+
+                /**
+                 * Since datetime uses 24-hour time internally
+                 * we need to update the working hour here as well
+                 * if the user is using a 12-hour time format.
+                 */
+                const { value } = ev.detail;
+                const hour = calculateHourFromAMPM(this.workingParts, value);
+
+                this.workingParts = {
+                  ...this.workingParts,
+                  ampm: value,
+                  hour
+                }
+              }}
+            >
               <ion-segment-button value="am">AM</ion-segment-button>
               <ion-segment-button value="pm">PM</ion-segment-button>
             </ion-segment>
