@@ -40,7 +40,7 @@ export class Router implements ComponentInterface {
    * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
    * requires additional server-side configuration in order to properly work.
    *
-   * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
+   * On the other side hash-navigation is much easier to deploy, it even works over the file protocol.
    *
    * By default, this property is `true`, change to `false` to allow hash-less URLs.
    */
@@ -57,11 +57,19 @@ export class Router implements ComponentInterface {
   @Event() ionRouteDidChange!: EventEmitter<RouterEventDetail>;
 
   async componentWillLoad() {
-    console.debug('[ion-router] router will load');
     await waitUntilNavNode();
-    console.debug('[ion-router] found nav');
 
-    await this.onRoutesChanged();
+    const canProceed = await this.runGuards(this.getPath());
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        const { redirect } = canProceed;
+        const path = parsePath(redirect);
+        this.setPath(path.segments, ROUTER_INTENT_NONE, path.queryString);
+        await this.writeNavStateRoot(path.segments, ROUTER_INTENT_NONE);
+      }
+    } else {
+      await this.onRoutesChanged();
+    }
   }
 
   componentDidLoad() {
@@ -72,17 +80,17 @@ export class Router implements ComponentInterface {
   @Listen('popstate', { target: 'window' })
   protected async onPopState() {
     const direction = this.historyDirection();
-    let path = this.getPath();
+    let segments = this.getPath();
 
-    const canProceed = await this.runGuards(path);
+    const canProceed = await this.runGuards(segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
+        segments = parsePath(canProceed.redirect).segments;
+      } else {
+        return false;
       }
-      return false;
     }
-    console.debug('[ion-router] URL changed -> update nav', path, direction);
-    return this.writeNavStateRoot(path, direction);
+    return this.writeNavStateRoot(segments, direction);
   }
 
   @Listen('ionBackButton', { target: 'document' })
@@ -119,23 +127,20 @@ export class Router implements ComponentInterface {
     if (url.startsWith('.')) {
       url = (new URL(url, window.location.href)).pathname;
     }
-    console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
-    let path = parsePath(url);
-    let queryString = url.split('?')[1];
+    let parsedPath = parsePath(url);
 
-    const canProceed = await this.runGuards(path);
+    const canProceed = await this.runGuards(parsedPath.segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
-        queryString = canProceed.redirect.split('?')[1];
+        parsedPath = parsePath(canProceed.redirect)
       } else {
         return false;
       }
     }
 
-    this.setPath(path, direction, queryString);
-    return this.writeNavStateRoot(path, direction, animation);
+    this.setPath(parsedPath.segments, direction, parsedPath.queryString);
+    return this.writeNavStateRoot(parsedPath.segments, direction, animation);
   }
 
   /**
@@ -150,8 +155,6 @@ export class Router implements ComponentInterface {
   /** @internal */
   @Method()
   async printDebug() {
-    console.debug('CURRENT PATH', this.getPath());
-    console.debug('PREVIOUS PATH', this.previousPath);
     printRoutes(readRoutes(this.el));
     printRedirects(readRedirects(this.el));
   }
@@ -177,7 +180,6 @@ export class Router implements ComponentInterface {
       return false;
     }
 
-    console.debug('[ion-router] nav changed -> update URL', ids, path);
     this.setPath(path, direction);
 
     await this.safeWriteNavState(outlet, chain, ROUTER_INTENT_NONE, path, null, ids.length);
@@ -272,24 +274,30 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
-  private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
+
+  // Executes the beforeLeave hook of the source route and the beforeEnter hook of the target route if they exist.
+  //
+  // When the beforeLeave hook does not return true (to allow navigating) then that value is returned early and the beforeEnter is executed.
+  // Otherwise the beforeEnterHook hook of the target route is executed.
+  private async runGuards(to: string[] | null = this.getPath(), from?: string[] | null) {
+    if (from === undefined) {
+      from = parsePath(this.previousPath).segments;
+    }
+
     if (!to || !from) { return true; }
 
     const routes = readRoutes(this.el);
 
-    const toChain = routerPathToChain(to, routes);
     const fromChain = routerPathToChain(from, routes);
-
-    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
     if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
 
-    const canEnter = beforeEnterHook ? await beforeEnterHook() : true;
-    if (canEnter === false || typeof canEnter === 'object') { return canEnter; }
+    const toChain = routerPathToChain(to, routes);
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
 
-    return true;
+    return beforeEnterHook ? beforeEnterHook() : true;
   }
 
   private async writeNavState(
@@ -311,10 +319,6 @@ export class Router implements ComponentInterface {
 
     const changed = await writeNavState(node, chain, direction, index, false, animation);
     this.busy = false;
-
-    if (changed) {
-      console.debug('[ion-router] route changed', path);
-    }
 
     // emit did change
     if (routeEvent) {

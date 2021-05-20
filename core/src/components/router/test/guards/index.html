@@ -80,9 +80,26 @@
       }
     }
 
+    class GuardInitialPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons>
+              <ion-back-button></ion-back-button>
+            </ion-buttons>
+            <ion-title>Guard Initial Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        </ion-content>`;
+      }
+    }
+
     customElements.define('home-page', HomePage);
     customElements.define('child-page', ChildPage);
     customElements.define('test-page', TestPage);
+    customElements.define('guard-initial-page', GuardInitialPage);
 
   </script>
 </head>
@@ -146,6 +163,7 @@
       <ion-route url="/home" component="home-page"></ion-route>
       <ion-route url="/test" component="test-page"></ion-route>
       <ion-route url="/child/:id" component="child-page"></ion-route>
+      <ion-route url="/guard-initial-page" component="guard-initial-page"></ion-route>
     </ion-router>
 
     <ion-nav></ion-nav>
@@ -188,6 +206,12 @@
       const page = document.querySelector('ion-route[component="child-page"]');
       page.beforeEnter = allow;
       page.beforeLeave = allow;
+
+
+      const guardPage = document.querySelector('ion-route[component="guard-initial-page"]');
+      guardPage.beforeEnter = () => {
+        return { redirect: '/child/1' };
+      }      
     </script>
   </ion-app>
 </body>
