@@ -126,7 +126,7 @@
       </ion-row>
       </ion-grid>
 
-      <p>Text Field Without Label</p>
+      <p>Input Without Label</p>
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -144,15 +144,80 @@
               <ion-input></ion-input>
             </ion-item>
           </ion-col>
-      </ion-row>
+        </ion-row>
+      </ion-grid>
+
+      <p>Disable</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item disabled fill="solid">
+              <ion-label position="floating">Standard</ion-label>
+              <ion-input></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item disabled fill="outline">
+              <ion-label position="floating">Standard</ion-label>
+              <ion-input></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item disabled fill="outline" shape="round">
+              <ion-label position="floating">Standard</ion-label>
+              <ion-input></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
       </ion-grid>
 
       <!-- TODO others -->
 
-      <p>Full Width</p>
+      <p>Custom Input</p>
       <ion-item class="custom" fill="solid">
         <ion-input placeholder="Standard"></ion-input>
       </ion-item>
+
+      <p>Textarea</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item fill="solid">
+              <ion-textarea></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item fill="outline">
+              <ion-textarea></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item fill="outline" shape="round">
+              <ion-textarea></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item fill="solid">
+              <ion-label position="floating">Standard</ion-label>
+              <ion-textarea></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item fill="outline">
+              <ion-label position="floating">Standard</ion-label>
+              <ion-textarea></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item fill="outline" shape="round">
+              <ion-label position="floating">Standard</ion-label>
+              <ion-textarea></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
     </ion-content>
   </ion-app>

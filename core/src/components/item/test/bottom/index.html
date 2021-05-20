@@ -42,18 +42,28 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+      <p>Outline</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item counter="true" fill="outline">
+              <ion-label position="floating">Helper and Counter</ion-label>
+              <ion-input maxlength="10"></ion-input>
+              <ion-note slot="helper">This is a helper message.</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item class="ion-invalid" counter="true" fill="outline">
+              <ion-label position="floating">Helper, Counter, Error</ion-label>
+              <ion-input required="true" maxlength="10" minlength="4"></ion-input>
+              <ion-note slot="helper">This is a helper message.</ion-note>
+              <ion-note slot="error">This is an error message!</ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </ion-app>
-
-  <style>
-    ion-item {
-      margin-bottom: 10px;
-    }
-
-    .custom {
-      --background: red;
-    }
-  </style>
 </body>
 
 </html>

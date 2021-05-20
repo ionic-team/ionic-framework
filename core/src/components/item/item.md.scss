@@ -49,10 +49,6 @@
   caret-color: var(--highlight-color-focused);
 }
 
-:host(.ion-invalid) .item-native {
-  caret-color: var(--highlight-color-invalid) !important;
-}
-
 // Material Design Item Lines
 // --------------------------------------------------
 
@@ -310,12 +306,19 @@
   @include border-radius(4px, 4px, 0, 0);
 
   --background: #f5f5f5;
+  --background-hover: #ECECEC;
+  --background-focused: #DBDBDB;
 
   --border-width: 0 0 #{$item-md-border-bottom-width} 0;
   --inner-border-width: 0;
+
+  & .item-native:hover {
+    --background: var(--background-hover);
+  }
 }
 
 :host(.item-fill-solid.item-has-focus) .item-native {
+  --background: var(--background-focused);
   border: none;
 
   .item-highlight-bottom {
@@ -352,10 +355,7 @@
     transform: translateY(calc(-25% * var(--show-notch)));
   }
 
-  .item-highlight-top,
-  .item-highlight-before,
-  .item-highlight-after,
-  .item-highlight-bottom {
+  .item-highlight {
     @include overlay;
     
     border-width: var(--border-width);
@@ -380,26 +380,9 @@
   }
 }
 
-:host(.ion-invalid) .item-native {
-  border-color: var(--highlight-color-invalid);
-}
-
 :host(.item-fill-outline.item-has-focus) .item-native {
-  .item-highlight-top,
-  .item-highlight-before,
-  .item-highlight-after,
-  .item-highlight-bottom {
+  .item-highlight {
     border-color: var(--highlight-color-focused);
-    border-width: var(--highlight-height);
-  }
-}
-
-:host(.ion-invalid.item-has-focus) .item-native {
-  .item-highlight-top,
-  .item-highlight-before,
-  .item-highlight-after,
-  .item-highlight-bottom {
-    border-color: var(--highlight-color-invalid);
     border-width: var(--highlight-height);
   }
 }
@@ -416,4 +399,22 @@
 
 :host(.item-fill-outline.item-shape-round) .item-native {
   @include border-radius(28px);
+}
+
+// Material Design Item: Invalid
+// --------------------------------------------------
+
+:host(.ion-invalid) .item-native {
+  border-color: var(--highlight-color-invalid);
+  caret-color: var(--highlight-color-invalid) !important;
+
+  .item-highlight {
+    border-color: var(--highlight-color-invalid);
+  }
+}
+
+:host(.ion-invalid.item-has-focus) .item-native {
+  .item-highlight {
+    border-color: var(--highlight-color-invalid);
+  }
 }
