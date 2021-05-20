@@ -8,7 +8,7 @@ export const readRedirects = (root: Element): RouteRedirect[] => {
       const to = readProp(el, 'to');
       return {
         from: parsePath(readProp(el, 'from')).segments,
-        to: to == null ? undefined : parsePath(to).segments,
+        to: to == null ? undefined : parsePath(to),
       };
     });
 };
