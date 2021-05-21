@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
-import { clamp, debounceEvent, renderHiddenInput, getAriaLabel, inheritAttributes } from '../../utils/helpers';
+import { clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -411,7 +411,7 @@ export class Range implements ComponentInterface {
      * and use that instead.
      */
     let { labelText } = getAriaLabel(el, inputId);
-    if (!labelText) {
+    if (labelText === undefined || labelText === null) {
       labelText = inheritedAttributes['aria-label'];
     }
     const mode = getIonMode(this);
