@@ -15,11 +15,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 15.x
-    - uses: ./.github/workflows/upload-archive
-      with:
-        name: ionic-core
-        output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader
+
     - name: Cache Node Modules
       uses: actions/cache@v2
       env:
@@ -35,6 +31,11 @@ jobs:
       run: npm ci
     - name: Build Core
       run: npm run build -- --ci
+    - uses: ./.github/workflows/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader
 
   build-vue:
     needs: [build-core]
