@@ -437,7 +437,14 @@ export class Popover implements ComponentInterface, OverlayInterface {
         destroyDismissInteraction();
         this.destroyDismissInteraction = undefined;
       }
-      await detachComponent(this.delegate, this.usersElement);
+
+      /**
+       * If using popover inline
+       * we potentially need to use the coreDelegate
+       * so that this works in vanilla JS apps
+       */
+      const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
+      await detachComponent(delegate, this.usersElement);
     }
 
     this.currentTransition = undefined;
