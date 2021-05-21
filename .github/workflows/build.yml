@@ -12,6 +12,10 @@ jobs:
         working-directory: ./core
     steps:
     - uses: ./.github/workflows/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
@@ -32,10 +36,6 @@ jobs:
       run: npm ci
     - name: Build Core
       run: npm run build -- --ci
-      with:
-        name: ionic-core
-        output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader
 
   build-vue:
     needs: [build-core]
