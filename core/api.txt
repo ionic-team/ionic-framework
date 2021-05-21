@@ -824,7 +824,7 @@ ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
 ion-popover,shadow
-ion-popover,prop,alignment,"center" | "end" | "start",'center',false,false
+ion-popover,prop,alignment,"center" | "end" | "start",'start',false,false
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false

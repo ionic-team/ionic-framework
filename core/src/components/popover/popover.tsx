@@ -205,7 +205,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   /**
    * Describes how to align the popover content with the `reference` point.
    */
-  @Prop() alignment: PositionAlign = 'center';
+  @Prop() alignment: PositionAlign = 'start';
 
   /**
    * If `true`, the popover will display an arrow
@@ -437,7 +437,14 @@ export class Popover implements ComponentInterface, OverlayInterface {
         destroyDismissInteraction();
         this.destroyDismissInteraction = undefined;
       }
-      await detachComponent(this.delegate, this.usersElement);
+
+      /**
+       * If using popover inline
+       * we potentially need to use the coreDelegate
+       * so that this works in vanilla JS apps
+       */
+      const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
+      await detachComponent(delegate, this.usersElement);
     }
 
     this.currentTransition = undefined;
