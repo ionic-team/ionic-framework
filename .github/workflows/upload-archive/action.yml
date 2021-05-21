@@ -10,12 +10,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Create Build Archive
-      uses: edgarrc/action-7z@v1
+    - uses: edgarrc/action-7z@v1
       with:
         args: 7z a -tzip ${{ inputs.output }} ${{ inputs.paths }}
-    - name: Upload Build Archive
-      uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.paths }}

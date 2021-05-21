@@ -11,6 +11,7 @@ jobs:
       run:
         working-directory: ./core
     steps:
+    - uses: ./.github/workflows/upload-archive
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
@@ -31,7 +32,6 @@ jobs:
       run: npm ci
     - name: Build Core
       run: npm run build -- --ci
-    - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-core
         output: core/CoreBuild.zip
