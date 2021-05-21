@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directiory: ./core
+        working-directory: ./core
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
