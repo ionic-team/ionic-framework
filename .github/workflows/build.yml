@@ -11,16 +11,15 @@ jobs:
       run:
         working-directory: ./core
     steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-core
         output: core/CoreBuild.zip
         paths: core/dist core/components core/css core/hydrate core/loader
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 15.x
-
     - name: Cache Node Modules
       uses: actions/cache@v2
       env:
