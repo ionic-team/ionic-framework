@@ -31,7 +31,7 @@ jobs:
       run: npm ci
     - name: Build Core
       run: npm run build -- --ci
-    - uses: ionic/upload-archive@v1
+    - uses: ./upload-archive
       with:
         name: ionic-core
         output: core/CoreBuild.zip
