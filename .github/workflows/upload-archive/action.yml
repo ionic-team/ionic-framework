@@ -1,3 +1,5 @@
+name: 'Ionic Framework Archive Upload'
+description: 'Compresses and uploads an archive to be reused across jobs'
 inputs:
   paths:
     description: 'Paths to files or directories to archive'
