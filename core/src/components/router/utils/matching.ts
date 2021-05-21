@@ -3,7 +3,7 @@ import { RouteChain, RouteID, RouteRedirect } from './interface';
 // Returns whether the given redirect matches the given path segments.
 //
 // A redirect matches when the segments of the path and redirect.from are equal.
-// Note that segments are only check until redirect.from contains a '*' which matches any path segments.
+// Note that segments are only checked until redirect.from contains a '*' which matches any path segment.
 // The path ['some', 'path', 'to', 'page'] matches both ['some', 'path', 'to', 'page'] and ['some', 'path', '*'].
 export const matchesRedirect = (path: string[], redirect: RouteRedirect): boolean => {
   const { from, to } = redirect;
