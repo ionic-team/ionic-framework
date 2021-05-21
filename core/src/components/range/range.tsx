@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
-import { clamp, debounceEvent, renderHiddenInput } from '../../utils/helpers';
+import { clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -28,12 +28,14 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Range implements ComponentInterface {
 
+  private rangeId?: string;
   private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
   private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -59,6 +61,8 @@ export class Range implements ComponentInterface {
   protected debounceChanged() {
     this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
+
+  // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -192,6 +196,16 @@ export class Range implements ComponentInterface {
       });
       this.gesture.enable(!this.disabled);
     }
+  }
+
+  componentWillLoad() {
+    /**
+     * If user has custom ID set then we should
+     * not assign the default incrementing ID.
+     */
+    this.rangeId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
+
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   componentDidLoad() {
@@ -395,8 +409,17 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId } = this;
 
+    /**
+     * Look for external label, ion-label, or aria-labelledby.
+     * If none, see if user placed an aria-label on the host
+     * and use that instead.
+     */
+    let { labelText } = getAriaLabel(el, rangeId!);
+    if (labelText === undefined || labelText === null) {
+      labelText = inheritedAttributes['aria-label'];
+    }
     const mode = getIonMode(this);
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
@@ -439,6 +462,7 @@ export class Range implements ComponentInterface {
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
+        id={rangeId}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -479,7 +503,8 @@ export class Range implements ComponentInterface {
             disabled,
             handleKeyboard,
             min,
-            max
+            max,
+            labelText
           })}
 
           { this.dualKnobs && renderKnob(isRTL, {
@@ -491,7 +516,8 @@ export class Range implements ComponentInterface {
             disabled,
             handleKeyboard,
             min,
-            max
+            max,
+            labelText
           })}
         </div>
         <slot name="end"></slot>
@@ -509,11 +535,12 @@ interface RangeKnob {
   disabled: boolean;
   pressed: boolean;
   pin: boolean;
+  labelText?: string | null;
 
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) => {
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText }: RangeKnob) => {
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -550,6 +577,7 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
+      aria-label={labelText}
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
@@ -577,3 +605,5 @@ const ratioToValue = (
 const valueToRatio = (value: number, min: number, max: number): number => {
   return clamp(0, (value - min) / (max - min), 1);
 };
+
+let rangeIds = 0;
