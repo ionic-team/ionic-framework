@@ -1,6 +1,5 @@
-import { RouteChain, RouterDirection } from '../../../interface';
-
 import { ROUTER_INTENT_FORWARD } from './constants';
+import { ParsedRoute, RouteChain, RouterDirection } from './interface';
 
 export const generatePath = (segments: string[]): string => {
   const path = segments
@@ -81,7 +80,7 @@ export const readPath = (loc: Location, root: string, useHash: boolean): string[
 // Parses the path to:
 // - segments an array of '/' separated parts,
 // - queryString (undefined when no query string).
-export const parsePath = (path: string | undefined | null): {segments: string[], queryString?: string} => {
+export const parsePath = (path: string | undefined | null): ParsedRoute => {
   let segments = [''];
   let queryString;
 

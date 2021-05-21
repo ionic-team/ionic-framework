@@ -6,7 +6,7 @@ import { debounce } from '../../utils/helpers';
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
 import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
-import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
+import { findRouteRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 import { readRedirects, readRoutes } from './utils/parser';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 
@@ -188,7 +188,7 @@ export class Router implements ComponentInterface {
 
   private onRedirectChanged() {
     const path = this.getPath();
-    if (path && routeRedirect(path, readRedirects(this.el))) {
+    if (path && findRouteRedirect(path, readRedirects(this.el))) {
       this.writeNavStateRoot(path, ROUTER_INTENT_NONE);
     }
   }
@@ -226,13 +226,15 @@ export class Router implements ComponentInterface {
 
     // lookup redirect rule
     const redirects = readRedirects(this.el);
-    const redirect = routeRedirect(path, redirects);
+    const redirect = findRouteRedirect(path, redirects);
 
     let redirectFrom: string[] | null = null;
+
     if (redirect) {
-      this.setPath(redirect.to!, direction);
+      const { segments, queryString } = redirect.to!;
+      this.setPath(segments, direction, queryString);
       redirectFrom = redirect.from;
-      path = redirect.to!;
+      path = segments;
     }
 
     // lookup route chain

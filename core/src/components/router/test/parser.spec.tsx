@@ -47,20 +47,22 @@ describe('parser', () => {
       const r3 = mockRedirectElement(win, '*', null);
       const r4 = mockRedirectElement(win, '/workout/*', '');
       const r5 = mockRedirectElement(win, 'path/hey', '/path/to//login');
+      const r6 = mockRedirectElement(win, 'path/qs', '/path?qs=true');
 
       root.appendChild(r1);
       root.appendChild(r2);
       root.appendChild(r3);
       root.appendChild(r4);
       root.appendChild(r5);
+      root.appendChild(r6);
 
       const expected: RouteRedirect[] = [
         { from: [''], to: undefined },
-        { from: [''], to: ['workout'] },
+        { from: [''], to: { segments: ['workout'] }},
         { from: ['*'], to: undefined },
-        { from: ['workout', '*'], to: [''] },
-        { from: ['path', 'hey'], to: ['path', 'to', 'login'] }
-
+        { from: ['workout', '*'], to: { segments: [''] } },
+        { from: ['path', 'hey'], to: { segments: ['path', 'to', 'login'] } },
+        { from: ['path', 'qs'], to: { segments: ['path'], queryString: 'qs=true' } },
       ];
       expect(readRedirects(root)).toEqual(expected);
     });
