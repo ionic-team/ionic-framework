@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forc
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { raf, getFullWidth } from '../../utils/helpers';
+import { getFullWidth, raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { InputChangeEventDetail } from '../input/input-interface';
 
@@ -102,9 +102,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If `true`, a text based counter will display the input's length over its maxlength. 
+   * If `true`, a text based counter will display the input's length over its maxlength.
    */
-   @Prop() counter?: boolean = true;
+  @Prop() counter = true;
 
   /**
    * When using a router, it specifies the transition animation when navigating to
@@ -131,12 +131,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   @State() counterString: string | null | undefined;
-  
+
   @Listen('ionChange')
   handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
     this.updateCounterOutput(ev.target as HTMLIonInputElement);
   }
-  
+
   @Listen('ionColor')
   labelColorChanged(ev: CustomEvent<string>) {
     const { color } = this;
@@ -283,16 +283,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
-    if (this.counter && !this.multipleInputs && inputEl.maxlength) {
-      const length = inputEl.value == undefined ? '0' : inputEl.value.toString().length;
-      this.counterString = `${length}/${inputEl.maxlength}`; 
+    if (this.counter && !this.multipleInputs && inputEl.maxlength !== undefined) {
+      const length = inputEl?.value?.toString().length ?? '0';
+      this.counterString = `${length}/${inputEl.maxlength}`;
     }
   }
 
   // In MD mode, set the border notch width to equal the computed width of the slotted ion-label
   private setNotchWidth() {
     const label = this.el.querySelector('ion-label');
-    const width = (label == null || label.textContent == null) ? 0 : label.clientWidth;
+    const width = (label === null || label.textContent === null) ? 0 : label.clientWidth;
     if (width > 0) {
       this.el.style.setProperty('--show-notch', `1`);
       this.el.style.setProperty('--label-computed-width', `${width}px`);
@@ -303,7 +303,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const label = this.el.querySelector('ion-label');
     const startEl = this.el.querySelector('[slot="start"]');
 
-    if (label == null || startEl == null) {
+    if (label === null || startEl === null) {
       return;
     }
 

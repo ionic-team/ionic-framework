@@ -9,6 +9,7 @@
    * @prop --color: Color of the label
    */
   --color: initial;
+  --item-slotted-icon-computed-width: 0px;
 
   display: block;
 
@@ -23,8 +24,6 @@
 
   overflow: hidden;
   box-sizing: border-box;
-
-  --item-slotted-icon-computed-width: 0px;
 }
 
 :host(.ion-color) {

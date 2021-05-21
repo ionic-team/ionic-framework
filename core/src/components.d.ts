@@ -1024,7 +1024,7 @@ export namespace Components {
         /**
           * If `true`, a text based counter will display the input's length over its maxlength.
          */
-        "counter"?: boolean;
+        "counter": boolean;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
