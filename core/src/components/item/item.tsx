@@ -272,7 +272,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     // Only focus the first input if we clicked on an ion-item
     // and the first input exists
-    if (clickedItem && firstActive) {
+    if (clickedItem && (firstActive || !this.multipleInputs)) {
       input.fireFocusEvents = false;
       input.setBlur();
       input.setFocus();

@@ -23,6 +23,7 @@
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
   --highlight-height: 2px;
   --highlight-color-focused: #{$item-md-input-highlight-color};
+  --highlight-color-hover: #1f1f1f;
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
   --label-computed-width: 0px;
@@ -312,8 +313,9 @@
   --border-width: 0 0 #{$item-md-border-bottom-width} 0;
   --inner-border-width: 0;
 
-  & .item-native:hover {
+  .item-native:hover {
     --background: var(--background-hover);
+    --border-color: var(--highlight-color-hover);
   }
 }
 
@@ -351,6 +353,10 @@
   border: none;
   --native-padding-left: 16px;
 
+  &:hover {
+    --border-color: var(--highlight-color-hover);
+  }
+
   ::slotted(ion-input) {
     transform: translateY(calc(-25% * var(--show-notch)));
   }
@@ -375,8 +381,7 @@
 
   .item-highlight-bottom {
     border-top: none;
-    border-left: none;
-    border-right: none;
+    clip-path: inset(24px 0 0 0);
   }
 }
 
@@ -413,8 +418,6 @@
   }
 }
 
-:host(.ion-invalid.item-has-focus) .item-native {
-  .item-highlight {
-    border-color: var(--highlight-color-invalid);
-  }
+:host(.ion-invalid.item-has-focus) .item-native .item-highlight {
+  border-color: var(--highlight-color-invalid);
 }
