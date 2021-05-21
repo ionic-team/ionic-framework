@@ -28,7 +28,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Range implements ComponentInterface {
 
-  private inputId = `ion-r-${rangeIds++}`;
+  private rangeId?: string;
   private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
@@ -62,7 +62,7 @@ export class Range implements ComponentInterface {
     this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
-  // TODO: In Ionic Framework v6 this should initialize to this.inputId like the other form components do.
+  // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -199,6 +199,12 @@ export class Range implements ComponentInterface {
   }
 
   componentWillLoad() {
+    /**
+     * If user has custom ID set then we should
+     * not assign the default incrementing ID.
+     */
+    this.rangeId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
+
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
@@ -403,14 +409,14 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, inputId } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId } = this;
 
     /**
      * Look for external label, ion-label, or aria-labelledby.
      * If none, see if user placed an aria-label on the host
      * and use that instead.
      */
-    let { labelText } = getAriaLabel(el, inputId);
+    let { labelText } = getAriaLabel(el, rangeId!);
     if (labelText === undefined || labelText === null) {
       labelText = inheritedAttributes['aria-label'];
     }
@@ -456,7 +462,7 @@ export class Range implements ComponentInterface {
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
-        id={inputId}
+        id={rangeId}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
