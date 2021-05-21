@@ -34,7 +34,7 @@ jobs:
     - name: Create Build Archive
       uses: edgarrc/action-7z@v1
       with:
-        args: 7z a -tzip CoreBuild.zip core/dist core/components core/css core/hydrate core/loader
+        args: 7z a -tzip core/CoreBuild.zip core/dist core/components core/css core/hydrate core/loader
     - name: Upload Build Output
       uses: actions/upload-artifact@v2
       with:
