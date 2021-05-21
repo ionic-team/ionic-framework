@@ -41,12 +41,9 @@ jobs:
         name: ionic-core
         path: core/CoreBuild.zip
 
-  build-core-again:
+  build-vue:
     needs: [build-core]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./core
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -64,5 +61,33 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Build Core
-      run: npm run build -- --ci
+    - name: Download Core Build Output
+      uses: actions/download-artifact@v2
+      with:
+        name: ionic-core
+        path: core/CoreBuild.zip
+    - name: Unarchive Core Build Output
+      uses: edgarrc/action-7z@v1
+      with:
+        args: 7z e core/CoreBuild.zip
+    - name: Install Vue Dependencies
+      working-directory: ./packages/vue
+      run: npm install
+    - name: Link @ionic/core
+      working-directory: ./core
+      run: npm link
+    - name: Link @ionic/core in @ionic/vue
+      working-directory: ./packages/vue
+      run: npm link @ionic/core
+    - name: Build
+      working-directory: ./packages/vue
+      run: npm run build
+    - name: Create Build Archive
+      uses: edgarrc/action-7z@v1
+      with:
+        args: 7z a -tzip packages/vue/VueBuild.zip packages/vue/dist packages/vue/css
+    - name: Upload Build Output
+      uses: actions/upload-artifact@v2
+      with:
+        name: ionic-vue
+        path: packages/VueBuild.zip
