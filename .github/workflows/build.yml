@@ -69,7 +69,7 @@ jobs:
     - name: Unarchive Core Build Output
       uses: edgarrc/action-7z@v1
       with:
-        args: 7z e core/CoreBuild.zip
+        args: 7z x core/CoreBuild.zip -aoa
     - name: Install Vue Dependencies
       working-directory: ./packages/vue
       run: npm install
