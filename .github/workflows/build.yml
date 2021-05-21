@@ -1,0 +1,33 @@
+name: 'Ionic Framework'
+
+on:
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  build-core:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directiory: ./core
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Install Dependencies
+      run: npm ci
+    - name: Build Core
+      run: npm run build -- --ci
+    - name: Upload Build Output
+      uses: actions/upload-artifact@v2
+      with:
+        name: ionic-core-dist
+        path: |
+          core/node_modules
+          core/dist
+          core/components
+          core/css
+          core/hydrate
+          core/loader
