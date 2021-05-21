@@ -320,14 +320,14 @@
 
 :host(.item-fill-solid.item-has-focus) .item-native {
   --background: var(--background-focused);
-  border: none;
+  border-bottom-color: var(--highlight-color-focused);
 
   .item-highlight-bottom {
     @include overlay;
+    border-bottom-width: var(--highlight-height);
     
     border-bottom-style: var(--border-style);
     border-bottom-color: var(--highlight-color-focused);
-    border-bottom-width: var(--highlight-height);
   }
 }
 
@@ -366,6 +366,8 @@
     border-width: var(--border-width);
     border-style: var(--border-style);
     border-color: var(--border-color);
+
+    z-index: 2;
   }
 
   .item-highlight-before {
@@ -391,14 +393,8 @@
   }
 }
 
-:host(.item-fill-outline:is(.item-has-focus,.item-has-value)) .item-native {
-  ::slotted(ion-label) {
-    max-width: min-content !important;
-  }
-
-  .item-highlight-top {
-    visibility: hidden;
-  }
+:host(.item-fill-outline:is(.item-has-focus,.item-has-value)) .item-highlight-top {
+  visibility: hidden;
 }
 
 :host(.item-fill-outline.item-shape-round) .item-native {

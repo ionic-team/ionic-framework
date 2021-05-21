@@ -48,13 +48,11 @@
   @include transform(translateY(50%), scale(.75));
 }
 
-// TODO Outline inputs only
-// @include transform(translateY(-5.75px), translateX(-32px), scale(.75));
 :host-context(.item-fill-outline.item-has-focus).label-floating,
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-fill-outline.item-has-value).label-floating {
-  //TODO
   @include transform(translateX(var(--item-slotted-icon-computed-width)), translateY(-6px), scale(.75));
+  max-width: min-content;
 }
 
 :host-context(.item-has-focus).label-stacked:not(.ion-color),
