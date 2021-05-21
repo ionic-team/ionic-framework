@@ -21,8 +21,8 @@ jobs:
       env:
         cache-name: core-node-modules
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -31,16 +31,15 @@ jobs:
       run: npm ci
     - name: Build Core
       run: npm run build -- --ci
+    - name: Create Build Archive
+      uses: edgarrc/action-7z@v1
+      with:
+        args: 7z a -tzip CoreBuild.zip core/dist core/components core/css core/hydrate core/loader
     - name: Upload Build Output
       uses: actions/upload-artifact@v2
       with:
         name: ionic-core
-        path: |
-          core/dist
-          core/components
-          core/css
-          core/hydrate
-          core/loader
+        path: core/CoreBuild.zip
 
   build-core-again:
     needs: [build-core]
@@ -59,8 +58,8 @@ jobs:
       env:
         cache-name: core-node-modules
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
