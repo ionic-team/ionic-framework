@@ -39,7 +39,6 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/core": "5.6.7",
     "@ionic/react": "5.6.7",
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6",

@@ -1,5 +1,5 @@
-import { AnimationBuilder } from '@ionic/core';
 import {
+  AnimationBuilder,
   LocationHistory,
   NavManager,
   RouteAction,
