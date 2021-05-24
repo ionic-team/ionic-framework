@@ -108,21 +108,26 @@ Type: `Promise<void>`
 
 - [ion-buttons](../buttons)
 - [ion-button](../button)
-- ion-icon
 - [ion-item](../item)
 - [ion-label](../label)
+- ion-icon
+- [ion-segment](../segment)
+- [ion-segment-button](../segment-button)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-datetime --> ion-buttons
   ion-datetime --> ion-button
-  ion-datetime --> ion-icon
   ion-datetime --> ion-item
   ion-datetime --> ion-label
+  ion-datetime --> ion-icon
+  ion-datetime --> ion-segment
+  ion-datetime --> ion-segment-button
   ion-button --> ion-ripple-effect
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
+  ion-segment-button --> ion-ripple-effect
   style ion-datetime fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

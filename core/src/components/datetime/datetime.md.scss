@@ -30,13 +30,6 @@
   font-size: 35px;
 }
 
-// Calendar/Time
-// -----------------------------------
-:host .datetime-calendar,
-:host .datetime-time {
-  width: 100%;
-}
-
 // Calendar / Header / Action Buttons
 // -----------------------------------
 :host .datetime-calendar .calendar-action-buttons ion-item {
@@ -115,6 +108,50 @@
   background: current-color(base);
 }
 
+// Time / Header
+// -----------------------------------
+:host .datetime-time {
+  @include padding($datetime-md-padding / 2, $datetime-md-padding, $datetime-md-padding / 2, $datetime-md-padding);
+}
+
+:host .time-header {
+  color: #{$text-color-step-350};
+}
+
+:host .time-base {
+  @include border-radius($datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius);
+  @include margin(0, $datetime-md-padding / 2, 0, 0);
+
+  width: $datetime-md-time-width;
+  height: $datetime-md-time-height;
+}
+
+:host .time-column {
+  @include border-radius($datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius);
+}
+
+:host .time-item {
+  line-height: $datetime-md-time-height;
+}
+
+:host .time-ampm ion-segment {
+  @include border-radius($datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius);
+
+  border: 1px solid rgba($text-color-rgb, 0.1);
+}
+
+:host .time-ampm ion-segment-button {
+  --indicator-height: 0px;
+  --background-checked: #{current-color(base, 0.1)};
+
+  min-height: $datetime-md-time-height + 2;
+}
+
+:host .time-ampm ion-segment-button.segment-button-checked {
+  background: var(--background-checked);
+}
+
+
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
@@ -124,7 +161,7 @@
 
   align-items: center;
 
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 :host .datetime-view-buttons ion-button {

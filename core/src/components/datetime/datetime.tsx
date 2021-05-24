@@ -2,15 +2,21 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
-import { renderHiddenInput } from '../../utils/helpers';
+import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
+  DatetimeParts,
+  addTimePadding,
+  calculateHourFromAMPM,
   generateMonths,
+  generateTime,
   getCalendarDayState,
   getDaysOfMonth,
   getDaysOfWeek,
   getEndOfWeek,
+  getFormattedHour,
+  getInternalHourValue,
   getMonthAndDay,
   getMonthAndYear,
   getNextDay,
@@ -21,8 +27,8 @@ import {
   getPreviousMonth,
   getPreviousWeek,
   getStartOfWeek,
+  is24Hour,
   parseDate,
-  shouldRenderViewButtons,
   shouldRenderViewFooter,
   shouldRenderViewHeader
 } from './datetime.utils';
@@ -49,6 +55,9 @@ export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private showDefaultTitleAndButtons = true;
   private calendarBodyRef?: HTMLElement;
+  private timeBaseRef?: HTMLElement;
+  private timeHourRef?: HTMLElement;
+  private timeMinuteRef?: HTMLElement;
 
   private minParts?: any;
   private maxParts?: any;
@@ -59,10 +68,13 @@ export class Datetime implements ComponentInterface {
     year: 2021
   }
 
-  @State() workingParts = {
+  @State() workingParts: DatetimeParts = {
     month: 5,
     day: 12,
-    year: 2021
+    year: 2021,
+    hour: 13,
+    minute: 52,
+    ampm: 'pm'
   }
 
   private todayParts = {
@@ -74,7 +86,6 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isPresented = false;
-  @State() private view: DatetimeView = DatetimeView.Calendar;
 
   /**
    * The color to use from your application's color palette.
@@ -276,6 +287,7 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   private initializeKeyboardListeners = () => {
+    const root = this.el!.shadowRoot!;
 
     /**
      * Get a reference to the month
@@ -284,47 +296,69 @@ export class Datetime implements ComponentInterface {
     const currentMonth = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
 
     /**
+     * When focusing the calendar body, we want to pass focus
+     * to the working day, but other days should
+     * only be accessible using the arrow keys. Pressing
+     * Tab should jump between bodies of selectable content.
+     * TODO: This does not work right on Safari
+     */
+    /*this.calendarBodyRef!.addEventListener('focusin', ev => {
+      const relatedTarget = ev.relatedTarget as HTMLElement;
+
+      if (ev.target !== this.calendarBodyRef) { return; }
+
+      if (relatedTarget?.classList.contains('calendar-day')) {
+        const prevButton = root.querySelector('.calendar-next-prev ion-button:last-of-type') as HTMLElement;
+        prevButton.focus();
+      } else {
+        this.focusWorkingDay(currentMonth);
+      }
+
+    });*/
+
+    /**
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */
     this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
-      const activeElement = this.el!.shadowRoot!.activeElement;
+      const activeElement = root.activeElement;
       if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
       const parts = getPartsFromCalendarDay(activeElement as HTMLElement)
 
+      // TODO: this needs to account for max/min
       switch (ev.key) {
         case 'ArrowDown':
           ev.preventDefault();
-          this.workingParts = { ...getNextWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getNextWeek(parts) as any };
           break;
         case 'ArrowUp':
           ev.preventDefault();
-          this.workingParts = { ...getPreviousWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getPreviousWeek(parts) as any };
           break;
         case 'ArrowRight':
           ev.preventDefault();
-          this.workingParts = { ...getNextDay(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getNextDay(parts) as any };
           break;
         case 'ArrowLeft':
           ev.preventDefault();
-          this.workingParts = { ...getPreviousDay(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getPreviousDay(parts) as any };
           break;
         case 'Home':
           ev.preventDefault();
-          this.workingParts = { ...getStartOfWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getStartOfWeek(parts) as any };
           break;
         case 'End':
           ev.preventDefault();
-          this.workingParts = { ...getEndOfWeek(parts) as any };
+          this.workingParts = { ...this.workingParts, ...getEndOfWeek(parts) as any };
           break;
         case 'PageUp':
           ev.preventDefault();
-          this.workingParts = { ...getPreviousMonth(parts) as any }
+          this.workingParts = { ...this.workingParts, ...getPreviousMonth(parts) as any }
           break;
         case 'PageDown':
           ev.preventDefault();
-          this.workingParts = { ...getNextMonth(parts) as any }
+          this.workingParts = { ...this.workingParts, ...getNextMonth(parts) as any }
           break;
         /**
          * Do not preventDefault here
@@ -339,24 +373,29 @@ export class Datetime implements ComponentInterface {
       /**
        * Give view a change to re-render
        */
-      requestAnimationFrame(() => {
-        /**
-         * Get the number of padding days so
-         * we know how much to offset our next selector by
-         * to grab the correct calenday-day element.
-         */
-        const padding = currentMonth.querySelectorAll('.calendar-day-padding');
-
-        /**
-         * Get the calendar day element
-         * and focus it.
-         */
-        const day = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement | null
-        if (day) {
-          day.focus();
-        }
-      });
+      requestAnimationFrame(() => this.focusWorkingDay(currentMonth));
     })
+  }
+
+  private focusWorkingDay = (currentMonth: Element) => {
+    /**
+     * Get the number of padding days so
+     * we know how much to offset our next selector by
+     * to grab the correct calenday-day element.
+     */
+    const padding = currentMonth.querySelectorAll('.calendar-day-padding');
+    const { day } = this.workingParts;
+
+    if (day === null) { return; }
+
+    /**
+     * Get the calendar day element
+     * and focus it.
+     */
+    const dayEl = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + day})`) as HTMLElement | null;
+    if (dayEl) {
+      dayEl.focus();
+    }
   }
 
   private processMinParts = () => {
@@ -365,12 +404,14 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { month, day, year } = parseDate(this.min);
+    const { month, day, year, hour, minute } = parseDate(this.min);
 
     this.minParts = {
       month,
       day,
-      year
+      year,
+      hour,
+      minute
     }
   }
 
@@ -380,12 +421,14 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { month, day, year } = parseDate(this.max);
+    const { month, day, year, hour, minute } = parseDate(this.max);
 
     this.maxParts = {
       month,
       day,
-      year
+      year,
+      hour,
+      minute
     }
   }
 
@@ -491,6 +534,7 @@ export class Datetime implements ComponentInterface {
           const { month, year, day } = refMonthFn(this.workingParts);
 
           this.workingParts = {
+            ...this.workingParts,
             month,
             day: day!,
             year
@@ -542,6 +586,81 @@ export class Datetime implements ComponentInterface {
       startIO.observe(startMonth);
 
       this.initializeKeyboardListeners();
+      this.initializeTimeScrollListener();
+    });
+  }
+
+  private initializeTimeScrollListener = () => {
+    const { timeBaseRef, timeHourRef, timeMinuteRef } = this;
+    if (!timeBaseRef || !timeHourRef || !timeMinuteRef) { return; }
+
+    const { hour, minute } = this.workingParts;
+
+    /**
+     * Scroll initial hour and minute into view
+     */
+    const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`);
+    if (initialHour) {
+      initialHour.scrollIntoView();
+    }
+    const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`);
+    if (initialMinute) {
+      initialMinute.scrollIntoView();
+    }
+
+    /**
+     * Highlight the container and
+     * appropriate column when scrolling.
+     */
+    let timeout: any;
+    const scrollCallback = (colType: string) => {
+      raf(() => {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = undefined;
+        }
+
+        const activeCol = colType === 'hour' ? timeHourRef : timeMinuteRef;
+        const otherCol = colType === 'hour' ? timeMinuteRef : timeHourRef;
+
+        timeBaseRef.classList.add('time-base-active');
+        activeCol.classList.add('time-column-active');
+
+        timeout = setTimeout(() => {
+          timeBaseRef.classList.remove('time-base-active');
+          activeCol.classList.remove('time-column-active');
+          otherCol.classList.remove('time-column-active');
+
+          const bbox = activeCol.getBoundingClientRect();
+          if (colType === 'hour') {
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
+            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+            this.workingParts = {
+              ...this.workingParts,
+              hour: value
+            }
+          } else {
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x - 1, bbox.y + 1)!;
+            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+            this.workingParts = {
+              ...this.workingParts,
+              minute: value
+            }
+          }
+        }, 250);
+      });
+    }
+
+    /**
+     * Add scroll listeners to the hour and minute container.
+     * Wrap this in an raf so that the scroll callback
+     * does not fire when we do our initial scrollIntoView above.
+     */
+    raf(() => {
+      timeHourRef.addEventListener('scroll', () => scrollCallback('hour'));
+      timeMinuteRef.addEventListener('scroll', () => scrollCallback('minute'));
     });
   }
 
@@ -590,10 +709,6 @@ export class Datetime implements ComponentInterface {
     this.isPresented = false;
   }
 
-  private toggleView = () => {
-    this.view = (this.view === DatetimeView.Calendar) ? DatetimeView.Time : DatetimeView.Calendar;
-  }
-
   private nextMonth = () => {
     const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
@@ -636,17 +751,6 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-footer">
         <div class="datetime-buttons">
-          {shouldRenderViewButtons(mode) && <div class="datetime-view-buttons">
-            <ion-buttons>
-              <ion-button onClick={() => this.toggleView()}>
-                <ion-icon slot="icon-only" icon={this.view === DatetimeView.Calendar ? 'time-outline' : 'calendar-clear-outline'} lazy={false}></ion-icon>
-              </ion-button>
-              <ion-button>
-                <ion-icon slot="icon-only" icon="pizza-outline" lazy={false}></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </div>}
-
           <div class="datetime-action-buttons">
             <slot name="buttons">
               {this.showDefaultTitleAndButtons && <ion-buttons>
@@ -703,6 +807,7 @@ export class Datetime implements ComponentInterface {
 
             return (
               <button
+                tabindex="-1"
                 data-day={day}
                 data-month={month}
                 data-year={year}
@@ -720,7 +825,14 @@ export class Datetime implements ComponentInterface {
                 onClick={() => {
                   if (day === null) { return; }
 
+                  this.workingParts = {
+                    ...this.workingParts,
+                    month,
+                    day,
+                    year
+                  }
                   this.activeParts = {
+                    ...this.activeParts,
                     month,
                     day,
                     year
@@ -736,7 +848,7 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarBody() {
     return (
-      <div class="calendar-body" ref={el => this.calendarBodyRef = el}>
+      <div class="calendar-body" ref={el => this.calendarBodyRef = el} tabindex="0">
         {generateMonths(this.workingParts).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
@@ -754,8 +866,78 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTime() {
+    const use24Hour = is24Hour(this.locale);
+    const { ampm } = this.workingParts;
+    const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
+
     return (
-      <div class="datetime-time">Time Placeholder</div>
+      <div class="datetime-time">
+        <div class="time-header">Time</div>
+        <div class="time-body">
+          <div class="time-base" ref={el => this.timeBaseRef = el}>
+            <div class="time-wrapper">
+              <div
+                class="time-column time-column-hours"
+                aria-label="Hours"
+                role="slider"
+                ref={el => this.timeHourRef = el}
+                tabindex="0"
+              >
+                { hours.map(hour => {
+                  return (
+                    <div
+                      class="time-item"
+                      data-value={getInternalHourValue(hour, use24Hour, ampm)}
+                    >{getFormattedHour(hour, use24Hour)}</div>
+                  )
+                })}
+              </div>
+              <div class="time-separator">:</div>
+              <div
+                class="time-column time-column-minutes"
+                aria-label="Minutes"
+                role="slider"
+                ref={el => this.timeMinuteRef = el}
+                tabindex="0"
+              >
+                { minutes.map(minute => {
+                  return (
+                    <div
+                      class="time-item"
+                      data-value={minute}
+                    >{addTimePadding(minute)}</div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+          { !use24Hour && <div class="time-ampm">
+            <ion-segment
+              color={this.color}
+              value={this.workingParts.ampm}
+              onIonChange={(ev: CustomEvent) => {
+
+                /**
+                 * Since datetime uses 24-hour time internally
+                 * we need to update the working hour here as well
+                 * if the user is using a 12-hour time format.
+                 */
+                const { value } = ev.detail;
+                const hour = calculateHourFromAMPM(this.workingParts, value);
+
+                this.workingParts = {
+                  ...this.workingParts,
+                  ampm: value,
+                  hour
+                }
+              }}
+            >
+              <ion-segment-button disabled={!am} value="am">AM</ion-segment-button>
+              <ion-segment-button disabled={!pm} value="pm">PM</ion-segment-button>
+            </ion-segment>
+          </div> }
+        </div>
+      </div>
     )
   }
 
@@ -781,24 +963,17 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderCalendarView(mode: Mode) {
+  private renderCalendarAndTimeViews(mode: Mode) {
     return [
       this.renderCalendarViewHeader(mode),
       this.renderCalendar(mode),
-      this.renderFooter(mode)
-    ]
-  }
-
-  private renderTimeView(mode: Mode) {
-    return [
-      this.renderCalendarViewHeader(mode),
       this.renderTime(),
       this.renderFooter(mode)
     ]
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, view, readonly } = this;
+    const { name, value, disabled, el, color, isPresented, readonly } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -815,20 +990,13 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        {
-          view === DatetimeView.Calendar ? this.renderCalendarView(mode) : this.renderTimeView(mode)
-        }
+        {this.renderCalendarAndTimeViews(mode)}
       </Host>
     );
   }
 }
 
 let datetimeIds = 0;
-
-const enum DatetimeView {
-  Calendar = 'calendar',
-  Time = 'time'
-}
 
 const enum DatetimePresentationType {
   Modal = 'modal',
