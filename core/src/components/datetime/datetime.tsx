@@ -12,6 +12,8 @@ import {
   generateMonths,
   generateTime,
   getCalendarDayState,
+  getCalendarYearState,
+  getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
   getEndOfWeek,
@@ -30,9 +32,7 @@ import {
   is24Hour,
   parseDate,
   shouldRenderViewFooter,
-  shouldRenderViewHeader,
-  getCalendarYearState,
-  getCalendarYears
+  shouldRenderViewHeader
 } from './datetime.utils';
 
 /**
@@ -772,35 +772,37 @@ export class Datetime implements ComponentInterface {
     this.showMonthAndYear = !this.showMonthAndYear;
   }
 
-  private renderMonthAndYearView() {
+  private renderYearView() {
     return (
-      <div class="datetime-month-and-year">
-        {getCalendarYears(this.activeParts).map(year => {
+      <div class="datetime-year">
+        <div class="datetime-year-body">
+          {getCalendarYears(this.activeParts).map(year => {
 
-          const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
-          return (
-            <button
-              disabled={disabled}
-              aria-selected={ariaSelected}
-              class={{
-                'datetime-year': true,
-                'datetime-current-year': isCurrentYear,
-                'datetime-active-year': isActiveYear
-              }}
-              onClick={() => {
-                this.workingParts = {
-                  ...this.workingParts,
-                  year
-                }
-                //this.showMonthAndYear = false;
-              }}
-            >
-              <div class="datetime-year-inner">
-                { year }
-              </div>
-            </button>
-          )
-        })}
+            const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+            return (
+              <button
+                disabled={disabled}
+                aria-selected={ariaSelected}
+                class={{
+                  'datetime-year-item': true,
+                  'datetime-current-year': isCurrentYear,
+                  'datetime-active-year': isActiveYear
+                }}
+                onClick={() => {
+                  this.workingParts = {
+                    ...this.workingParts,
+                    year
+                  }
+                  // this.showMonthAndYear = false;
+                }}
+              >
+                <div class="datetime-year-inner">
+                  {year}
+                </div>
+              </button>
+            )
+          })}
+        </div>
       </div>
     );
   }
@@ -1008,7 +1010,7 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderCalendarViewHeader(mode),
       this.renderCalendar(mode),
-      this.renderMonthAndYearView(),
+      this.renderYearView(),
       this.renderTime(),
       this.renderFooter(mode)
     ]
@@ -1028,17 +1030,12 @@ export class Datetime implements ComponentInterface {
             [mode]: true,
             ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
-            ['datetime-disabled']: disabled
+            ['datetime-disabled']: disabled,
+            'show-month-and-year': showMonthAndYear
           })
         }}
       >
-        <div
-          class={{
-            'show-month-and-year': showMonthAndYear
-          }}
-        >
-          {this.renderCalendarAndTimeViews(mode)}
-        </div>
+        {this.renderCalendarAndTimeViews(mode)}
       </Host>
     );
   }

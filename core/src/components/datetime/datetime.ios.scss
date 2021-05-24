@@ -5,10 +5,6 @@
 :host {
   --background: var(--ion-color-step-100, #ffffff);
 
-  display: flex;
-
-  flex-flow: column;
-
   width: 316px;
 }
 
@@ -24,25 +20,6 @@
   color: $text-color-step-400;
 
   font-size: 14px;
-}
-
-// Calendar
-// -----------------------------------
-
-/**
- * This allows the calendar to take
- * up 100% of the remaining height.
- * On iOS, if there are more than
- * 5 rows of dates, the dates should
- * be resized to fit into this
- * container.
- */
-:host .datetime-calendar {
-  display: flex;
-
-  flex: 1 1 auto;
-
-  flex-flow: column;
 }
 
 // Calendar / Header / Action Buttons

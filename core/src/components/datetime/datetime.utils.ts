@@ -12,8 +12,8 @@ export interface DatetimeParts {
 
 export const getCalendarYears = (refParts: DatetimeParts) => {
   const { year } = refParts;
-  let futureYears: number[] = [];
-  let pastYears: number[] = [];
+  const futureYears: number[] = [];
+  const pastYears: number[] = [];
 
   for (let i = 1; i <= 10; i++) {
     futureYears.push(year + i);
