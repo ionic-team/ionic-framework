@@ -7,6 +7,7 @@ import { createColorClasses } from '../../utils/theme';
 
 import {
   DatetimeParts,
+  addTimePadding,
   calculateHourFromAMPM,
   generateMonths,
   generateTime,
@@ -14,6 +15,8 @@ import {
   getDaysOfMonth,
   getDaysOfWeek,
   getEndOfWeek,
+  getFormattedHour,
+  getInternalHourValue,
   getMonthAndDay,
   getMonthAndYear,
   getNextDay,
@@ -27,10 +30,7 @@ import {
   is24Hour,
   parseDate,
   shouldRenderViewFooter,
-  shouldRenderViewHeader,
-  getInternalHourValue,
-  getFormattedHour,
-  addTimePadding
+  shouldRenderViewHeader
 } from './datetime.utils';
 
 /**
@@ -592,7 +592,7 @@ export class Datetime implements ComponentInterface {
 
   private initializeTimeScrollListener = () => {
     const { timeBaseRef, timeHourRef, timeMinuteRef } = this;
-    if (!timeBaseRef || !timeHourRef || !timeMinuteRef) return;
+    if (!timeBaseRef || !timeHourRef || !timeMinuteRef) { return; }
 
     const { hour, minute } = this.workingParts;
 
@@ -600,9 +600,13 @@ export class Datetime implements ComponentInterface {
      * Scroll initial hour and minute into view
      */
     const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`);
-    initialHour && initialHour.scrollIntoView();
+    if (initialHour) {
+      initialHour.scrollIntoView();
+    }
     const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`);
-    initialMinute && initialMinute.scrollIntoView();
+    if (initialMinute) {
+      initialMinute.scrollIntoView();
+    }
 
     /**
      * Highlight the container and
