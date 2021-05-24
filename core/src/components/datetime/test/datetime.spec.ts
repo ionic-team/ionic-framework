@@ -1,5 +1,4 @@
 import {
-  shouldRenderViewButtons,
   shouldRenderViewHeader,
   getDaysOfWeek,
   getMonthAndDay,
@@ -22,8 +21,26 @@ import {
   generateTime,
   calculateHourFromAMPM,
   isBefore,
-  isAfter
+  isAfter,
+  getInternalHourValue,
+  getInternalHourValue
 } from '../datetime.utils';
+
+describe('getInternalHourValue()',() => {
+  it('should correctly get the internal hour value', () => {
+    expect(getInternalHourValue(12, true)).toEqual(12);
+    expect(getInternalHourValue(12, true)).toEqual(12);
+
+    expect(getInternalHourValue(12, false, 'am')).toEqual(0);
+    expect(getInternalHourValue(12, false, 'pm')).toEqual(12);
+
+    expect(getInternalHourValue(1, true)).toEqual(1);
+    expect(getInternalHourValue(1, true)).toEqual(1);
+
+    expect(getInternalHourValue(1, false, 'am')).toEqual(1);
+    expect(getInternalHourValue(1, false, 'pm')).toEqual(13);
+  });
+});
 
 describe('calculateHourFromAMPM()', () => {
   it('should correctly convert from AM to PM', () => {
@@ -580,7 +597,6 @@ describe('isSameDay()', () => {
   })
 })
 
-<<<<<<< HEAD
 describe('isBefore()', () => {
   it('should return correct results for month, day, and year', () => {
     const reference = { month: 1, day: 1, year: 2021 }
@@ -614,8 +630,6 @@ describe('isAfter()', () => {
   })
 })
 
-=======
->>>>>>> origin/next-datetime
 describe('daysInMonth()', () => {
   it('should return correct days in month for month and year', () => {
     expect(getNumDaysInMonth(1, 2019)).toBe(31);
@@ -659,16 +673,6 @@ describe('getMonthAndDay()', () => {
 
   it('should return mar, 11 may', () => {
     expect(getMonthAndDay('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mar, 11 may');
-  });
-})
-
-describe('shouldRenderViewButtons()', () => {
-  it('should return true when running in md mode', () => {
-    expect(shouldRenderViewButtons('md')).toEqual(true)
-  });
-
-  it('should return false when running in ios mode', () => {
-    expect(shouldRenderViewButtons('ios')).toEqual(false)
   });
 })
 
@@ -726,7 +730,6 @@ describe('shouldRenderViewFooter()', () => {
   it('should return true when in MD mode with a slotted button inline', () => {
     expect(shouldRenderViewFooter('md', 'inline', true)).toEqual(true)
   });
-<<<<<<< HEAD
 
   it('should return true when in MD mode with a slotted button in a modal', () => {
     expect(shouldRenderViewFooter('md', 'modal', true)).toEqual(true)
@@ -744,25 +747,6 @@ describe('shouldRenderViewFooter()', () => {
     expect(shouldRenderViewFooter('md', 'modal', false)).toEqual(true)
   });
 
-=======
-
-  it('should return true when in MD mode with a slotted button in a modal', () => {
-    expect(shouldRenderViewFooter('md', 'modal', true)).toEqual(true)
-  });
-
-  it('should return true when in MD mode with a slotted button in a popover', () => {
-    expect(shouldRenderViewFooter('md', 'popover', true)).toEqual(true)
-  });
-
-  it('should return true when in MD mode with no slotted button inline', () => {
-    expect(shouldRenderViewFooter('md', 'inline', false)).toEqual(true)
-  });
-
-  it('should return true when in MD mode with no slotted button in a modal', () => {
-    expect(shouldRenderViewFooter('md', 'modal', false)).toEqual(true)
-  });
-
->>>>>>> origin/next-datetime
   it('should return false when in MD mode with no slotted button in a popover', () => {
     expect(shouldRenderViewFooter('md', 'popover', false)).toEqual(true)
   });
