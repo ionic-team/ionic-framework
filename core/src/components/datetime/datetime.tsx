@@ -27,7 +27,6 @@ import {
   getStartOfWeek,
   is24Hour,
   parseDate,
-  shouldRenderViewButtons,
   shouldRenderViewFooter,
   shouldRenderViewHeader
 } from './datetime.utils';
@@ -85,7 +84,6 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isPresented = false;
-  @State() private view: DatetimeView = DatetimeView.Calendar;
 
   /**
    * The color to use from your application's color palette.
@@ -317,7 +315,6 @@ export class Datetime implements ComponentInterface {
     });*/
 
     /**
-
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */
@@ -680,10 +677,6 @@ export class Datetime implements ComponentInterface {
     this.isPresented = false;
   }
 
-  private toggleView = () => {
-    this.view = (this.view === DatetimeView.Calendar) ? DatetimeView.Time : DatetimeView.Calendar;
-  }
-
   private nextMonth = () => {
     const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
@@ -726,17 +719,6 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-footer">
         <div class="datetime-buttons">
-          {shouldRenderViewButtons(mode) && <div class="datetime-view-buttons">
-            <ion-buttons>
-              <ion-button onClick={() => this.toggleView()}>
-                <ion-icon slot="icon-only" icon={this.view === DatetimeView.Calendar ? 'time-outline' : 'calendar-clear-outline'} lazy={false}></ion-icon>
-              </ion-button>
-              <ion-button>
-                <ion-icon slot="icon-only" icon="pizza-outline" lazy={false}></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </div>}
-
           <div class="datetime-action-buttons">
             <slot name="buttons">
               {this.showDefaultTitleAndButtons && <ion-buttons>
@@ -925,6 +907,7 @@ export class Datetime implements ComponentInterface {
           </div>
           { !use24Hour && <div class="time-ampm">
             <ion-segment
+              color={this.color}
               value={this.workingParts.ampm}
               onIonChange={(ev: CustomEvent) => {
 
@@ -974,22 +957,6 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderCalendarView(mode: Mode) {
-    return [
-      this.renderCalendarViewHeader(mode),
-      this.renderCalendar(mode),
-      this.renderFooter(mode)
-    ]
-  }
-
-  private renderTimeView(mode: Mode) {
-    return [
-      this.renderCalendarViewHeader(mode),
-      this.renderTime(),
-      this.renderFooter(mode)
-    ]
-  }
-
   private renderCalendarAndTimeViews(mode: Mode) {
     return [
       this.renderCalendarViewHeader(mode),
@@ -997,16 +964,6 @@ export class Datetime implements ComponentInterface {
       this.renderTime(),
       this.renderFooter(mode)
     ]
-  }
-
-  private renderDatetime(mode: Mode) {
-    const { view } = this;
-
-    if (mode === 'ios') {
-      return this.renderCalendarAndTimeViews(mode);
-    } else {
-      return view === DatetimeView.Calendar ? this.renderCalendarView(mode) : this.renderTimeView(mode);
-    }
   }
 
   render() {
@@ -1027,18 +984,13 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        {this.renderDatetime(mode)}
+        {this.renderCalendarAndTimeViews(mode)}
       </Host>
     );
   }
 }
 
 let datetimeIds = 0;
-
-const enum DatetimeView {
-  Calendar = 'calendar',
-  Time = 'time'
-}
 
 const enum DatetimePresentationType {
   Modal = 'modal',

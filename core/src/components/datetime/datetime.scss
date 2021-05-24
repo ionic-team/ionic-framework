@@ -211,13 +211,120 @@
   z-index: -1;
 }
 
+// Time / Header
+// -----------------------------------
 
+:host .datetime-time {
+  display: flex;
 
+  justify-content: space-between;
+}
 
+:host .time-base {
+  display: flex;
 
+  align-items: center;
+  justify-content: center;
 
+  border: 2px solid transparent;
 
+  background: rgba($text-color-rgb, 0.065);
 
+  font-size: 22px;
+  font-weight: 400;
+
+  text-align: center;
+
+  overflow-y: hidden;
+}
+
+:host .time-base.time-base-active {
+  border: 2px solid current-color(base);
+}
+
+:host .time-wrapper {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  height: 100%;
+}
+
+:host .time-column {
+  scroll-snap-type: y mandatory;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+
+  height: 100%;
+
+  outline: none;
+}
+
+@media (any-hover: hover) {
+  :host .time-column:focus {
+    outline: none;
+
+    background: current-color(base, 0.2);
+  }
+}
+
+:host .time-column.time-column-active {
+  background: transparent;
+  color: current-color(base);
+}
+
+:host .time-base.time-base-active .time-column:not(.time-column-active),
+:host .time-base.time-base-active .time-separator {
+  pointer-events: none;
+
+  opacity: 0.4;
+}
+
+:host .time-column::-webkit-scrollbar {
+  display: none;
+}
+
+:host .time-column-hours .time-item {
+  text-align: end;
+}
+
+:host .time-column-minutes .time-item {
+  text-align: start;
+}
+
+:host .time-item {
+  scroll-snap-align: center;
+
+  height: 100%;
+}
+
+:host .time-separator {
+  height: 100%;
+}
+
+:host .time-header {
+  display: flex;
+
+  align-items: center;
+}
+
+:host .time-body {
+  display: flex;
+}
+
+:host .time-ampm {
+  width: 100px;
+}
+
+:host .time-ampm ion-segment-button {
+  min-width: 50px;
+}
 
 
 

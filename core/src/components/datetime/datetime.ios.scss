@@ -222,10 +222,6 @@
 :host .datetime-time {
   @include padding($datetime-ios-padding / 2, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
-  display: flex;
-
-  justify-content: space-between;
-
   font-size: 16px;
   font-weight: 600;
 }
@@ -234,118 +230,17 @@
   @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
   @include margin(0, $datetime-ios-padding / 2, 0, 0);
 
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
   width: $datetime-ios-time-width;
   height: $datetime-ios-time-height;
-
-  border: 2px solid transparent;
-
-  background: rgba($text-color-rgb, 0.065);
-
-  font-size: 22px;
-  font-weight: 400;
-
-  text-align: center;
-
-  overflow-y: hidden;
-}
-
-:host .time-base.time-base-active {
-  border: 2px solid current-color(base);
-}
-
-:host .time-wrapper {
-  display: flex;
-
-  align-items: center;
-  justify-content: flex-end;
-
-  height: 100%;
 }
 
 :host .time-column {
-  scroll-snap-type: y mandatory;
-
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  -webkit-overflow-scrolling: touch;
-
-  scrollbar-width: none;
-
-  height: 100%;
-
-  outline: none;
-}
-
-@media (any-hover: hover) {
-  :host .time-column:focus {
-    @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
-
-    outline: none;
-
-    background: current-color(base, 0.2);
-  }
-}
-
-:host .time-column.time-column-active {
-  background: transparent;
-  color: current-color(base);
-}
-
-:host .time-base.time-base-active .time-column:not(.time-column-active),
-:host .time-base.time-base-active .time-separator {
-  pointer-events: none;
-
-  opacity: 0.4;
-}
-
-:host .time-column::-webkit-scrollbar {
-  display: none;
-}
-
-:host .time-column-hours .time-item {
-  text-align: end;
-}
-
-:host .time-column-minutes .time-item {
-  text-align: start;
+  @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
 }
 
 :host .time-item {
-  scroll-snap-align: center;
-
-  height: 100%;
-
   line-height: $datetime-ios-time-height;
 }
-
-:host .time-separator {
-  height: 100%;
-}
-
-:host .time-header {
-  display: flex;
-
-  align-items: center;
-}
-
-:host .time-body {
-  display: flex;
-}
-
-:host .time-ampm {
-  width: 100px;
-}
-
-:host .time-ampm ion-segment-button {
-  min-width: 50px;
-}
-
 
 // Footer
 // -----------------------------------
