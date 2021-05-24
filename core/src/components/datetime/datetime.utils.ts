@@ -10,6 +10,39 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
+export const getCalendarYears = (refParts: DatetimeParts) => {
+  const { year } = refParts;
+  let futureYears: number[] = [];
+  let pastYears: number[] = [];
+
+  for (let i = 1; i <= 10; i++) {
+    futureYears.push(year + i);
+  }
+
+  for (let i = 10; i > 0; i--) {
+    pastYears.push(year - i);
+  }
+
+  return [
+    ...pastYears,
+    refParts.year,
+    ...futureYears
+  ]
+}
+
+export const getCalendarYearState = (refYear: number, activeParts: DatetimeParts, todayParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+    const isActiveYear = refYear === activeParts.year;
+    const isCurrentYear = refYear === todayParts.year;
+    const disabled = isYearDisabled(refYear, minParts, maxParts);
+
+    return {
+      disabled,
+      isActiveYear,
+      isCurrentYear,
+      ariaSelected: isActiveYear ? 'true' : null
+    }
+}
+
 /**
  * Adds padding to a time value so
  * that it is always 2 digits.
@@ -645,6 +678,18 @@ export const isAfter = (baseParts: DatetimeParts, compareParts: DatetimeParts) =
     baseParts.year === compareParts.year && baseParts.month > compareParts.month ||
     baseParts.year === compareParts.year && baseParts.month === compareParts.month && baseParts.day! > compareParts.day!
   );
+}
+
+export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+  if (minParts && minParts.year > refYear) {
+    return true;
+  }
+
+  if (maxParts && maxParts.year < refYear) {
+    return true;
+  }
+
+  return false;
 }
 
 /**

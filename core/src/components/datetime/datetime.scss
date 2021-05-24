@@ -28,6 +28,23 @@
   background: var(--background);
 }
 
+// Month and Year Switch
+// -----------------------------------
+:host .datetime-month-and-year {
+  display: none;
+}
+
+:host .show-month-and-year .datetime-month-and-year {
+  display: grid;
+}
+
+:host .show-month-and-year .calendar-next-prev,
+:host .show-month-and-year .calendar-days-of-week,
+:host .show-month-and-year .calendar-body,
+:host .show-month-and-year .datetime-time {
+  display: none;
+}
+
 :host(.datetime-readonly),
 :host(.datetime-disabled) {
   pointer-events: none;

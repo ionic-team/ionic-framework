@@ -30,7 +30,9 @@ import {
   is24Hour,
   parseDate,
   shouldRenderViewFooter,
-  shouldRenderViewHeader
+  shouldRenderViewHeader,
+  getCalendarYearState,
+  getCalendarYears
 } from './datetime.utils';
 
 /**
@@ -61,6 +63,8 @@ export class Datetime implements ComponentInterface {
 
   private minParts?: any;
   private maxParts?: any;
+
+  @State() showMonthAndYear = false;
 
   @State() activeParts = {
     month: 5,
@@ -764,12 +768,49 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  private toggleMonthAndYearView = () => {
+    this.showMonthAndYear = !this.showMonthAndYear;
+  }
+
+  private renderMonthAndYearView() {
+    return (
+      <div class="datetime-month-and-year">
+        {getCalendarYears(this.activeParts).map(year => {
+
+          const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+          return (
+            <button
+              disabled={disabled}
+              aria-selected={ariaSelected}
+              class={{
+                'datetime-year': true,
+                'datetime-current-year': isCurrentYear,
+                'datetime-active-year': isActiveYear
+              }}
+              onClick={() => {
+                this.workingParts = {
+                  ...this.workingParts,
+                  year
+                }
+                //this.showMonthAndYear = false;
+              }}
+            >
+              <div class="datetime-year-inner">
+                { year }
+              </div>
+            </button>
+          )
+        })}
+      </div>
+    );
+  }
+
   private renderCalendarHeader(mode: Mode) {
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none">
+            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
               </ion-label>
@@ -967,13 +1008,14 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderCalendarViewHeader(mode),
       this.renderCalendar(mode),
+      this.renderMonthAndYearView(),
       this.renderTime(),
       this.renderFooter(mode)
     ]
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -990,7 +1032,13 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        {this.renderCalendarAndTimeViews(mode)}
+        <div
+          class={{
+            'show-month-and-year': showMonthAndYear
+          }}
+        >
+          {this.renderCalendarAndTimeViews(mode)}
+        </div>
       </Host>
     );
   }
