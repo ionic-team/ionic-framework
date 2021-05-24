@@ -10,6 +10,40 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
+/**
+ * Adds padding to a time value so
+ * that it is always 2 digits.
+ */
+export const addTimePadding = (value: number) => {
+  const valueToString = value.toString();
+  if (valueToString.length > 1) { return valueToString; }
+
+  return `0${valueToString}`;
+}
+
+/**
+ * Formats the hour value so that it
+ * is always 2 digits. Only applies
+ * if using 12 hour format.
+ */
+export const getFormattedHour = (hour: number, use24Hour: boolean) => {
+  if (!use24Hour) { return hour; }
+
+  return addTimePadding(hour);
+}
+
+/**
+ * If PM, then internal value should
+ * be converted to 24-hr time.
+ * Does not apply when public
+ * values are already 24-hr time.
+ */
+export const getInternalHourValue = (hour: number, use24Hour: boolean, ampm?: 'am' | 'pm') => {
+  if (use24Hour) { return hour; }
+
+  return convert12HourTo24Hour(hour, ampm);
+}
+
 const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
@@ -107,6 +141,8 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
   const use24Hour = is24Hour(locale);
   let processedHours = use24Hour ? hour24 : hour12;
   let processedMinutes = minutes;
+  let isAMAllowed = true;
+  let isPMAllowed = true;
 
   if (minParts) {
 
@@ -121,6 +157,7 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
         return convertedHour >= minParts.hour!;
       });
       processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
+      isAMAllowed = minParts.hour! < 13;
 
     /**
      * If ref day is before minimum
@@ -129,6 +166,7 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
     } else if (isBefore(refParts, minParts)) {
       processedHours = [];
       processedMinutes = [];
+      isAMAllowed = isPMAllowed = false;
     }
   }
 
@@ -144,6 +182,7 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
         return convertedHour <= maxParts.hour!;
       });
       processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+      isPMAllowed = maxParts.hour! >= 13;
     /**
      * If ref day is after minimum
      * day do not render any hours/minute values
@@ -151,12 +190,15 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
     } else if (isAfter(refParts, maxParts)) {
       processedHours = [];
       processedMinutes = [];
+      isAMAllowed = isPMAllowed = false;
     }
   }
 
   return {
     hours: processedHours,
     minutes: processedMinutes,
+    am: isAMAllowed,
+    pm: isPMAllowed,
     use24Hour
   }
 }

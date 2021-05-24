@@ -8,7 +8,6 @@ import { createColorClasses } from '../../utils/theme';
 import {
   DatetimeParts,
   calculateHourFromAMPM,
-  convert12HourTo24Hour,
   generateMonths,
   generateTime,
   getCalendarDayState,
@@ -28,7 +27,10 @@ import {
   is24Hour,
   parseDate,
   shouldRenderViewFooter,
-  shouldRenderViewHeader
+  shouldRenderViewHeader,
+  getInternalHourValue,
+  getFormattedHour,
+  addTimePadding
 } from './datetime.utils';
 
 /**
@@ -439,7 +441,7 @@ export class Datetime implements ComponentInterface {
   }
 
   componentDidLoad() {
-    const { calendarBodyRef, timeBaseRef, timeHourRef, timeMinuteRef } = this;
+    const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
 
     const mode = getIonMode(this);
@@ -584,52 +586,78 @@ export class Datetime implements ComponentInterface {
       startIO.observe(startMonth);
 
       this.initializeKeyboardListeners();
+      this.initializeTimeScrollListener();
     });
+  }
 
-    if (timeBaseRef && timeHourRef && timeMinuteRef) {
-      let timeout: any;
-      const scrollCallback = (colType: string) => {
-        raf(() => {
-          if (timeout) {
-            clearTimeout(timeout);
-            timeout = undefined;
-          }
+  private initializeTimeScrollListener = () => {
+    const { timeBaseRef, timeHourRef, timeMinuteRef } = this;
+    if (!timeBaseRef || !timeHourRef || !timeMinuteRef) return;
 
-          const activeCol = colType === 'hour' ? timeHourRef : timeMinuteRef;
-          const otherCol = colType === 'hour' ? timeMinuteRef : timeHourRef;
+    const { hour, minute } = this.workingParts;
 
-          timeBaseRef.classList.add('time-base-active');
-          activeCol.classList.add('time-column-active');
+    /**
+     * Scroll initial hour and minute into view
+     */
+    const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`);
+    initialHour && initialHour.scrollIntoView();
+    const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`);
+    initialMinute && initialMinute.scrollIntoView();
 
-          timeout = setTimeout(() => {
-            timeBaseRef.classList.remove('time-base-active');
-            activeCol.classList.remove('time-column-active');
-            otherCol.classList.remove('time-column-active');
+    /**
+     * Highlight the container and
+     * appropriate column when scrolling.
+     */
+    let timeout: any;
+    const scrollCallback = (colType: string) => {
+      raf(() => {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = undefined;
+        }
 
-            const bbox = activeCol.getBoundingClientRect();
-            if (colType === 'hour') {
-              const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
-              const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+        const activeCol = colType === 'hour' ? timeHourRef : timeMinuteRef;
+        const otherCol = colType === 'hour' ? timeMinuteRef : timeHourRef;
 
-              this.workingParts = {
-                ...this.workingParts,
-                hour: value
-              }
-            } else {
-              const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x - 1, bbox.y + 1)!;
-              const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+        timeBaseRef.classList.add('time-base-active');
+        activeCol.classList.add('time-column-active');
 
-              this.workingParts = {
-                ...this.workingParts,
-                minute: value
-              }
+        timeout = setTimeout(() => {
+          timeBaseRef.classList.remove('time-base-active');
+          activeCol.classList.remove('time-column-active');
+          otherCol.classList.remove('time-column-active');
+
+          const bbox = activeCol.getBoundingClientRect();
+          if (colType === 'hour') {
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
+            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+            this.workingParts = {
+              ...this.workingParts,
+              hour: value
             }
-          }, 250);
-        });
-      }
+          } else {
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x - 1, bbox.y + 1)!;
+            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+            this.workingParts = {
+              ...this.workingParts,
+              minute: value
+            }
+          }
+        }, 250);
+      });
+    }
+
+    /**
+     * Add scroll listeners to the hour and minute container.
+     * Wrap this in an raf so that the scroll callback
+     * does not fire when we do our initial scrollIntoView above.
+     */
+    raf(() => {
       timeHourRef.addEventListener('scroll', () => scrollCallback('hour'));
       timeMinuteRef.addEventListener('scroll', () => scrollCallback('minute'));
-    }
+    });
   }
 
   componentWillLoad() {
@@ -836,33 +864,7 @@ export class Datetime implements ComponentInterface {
   private renderTime() {
     const use24Hour = is24Hour(this.locale);
     const { ampm } = this.workingParts;
-    const { hours, minutes } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
-
-    /**
-     * If PM, then internal value should
-     * be converted to 24-hr time.
-     * Does not apply when public
-     * values are already 24-hr time.
-     */
-    const getHourValue = (hour: number) => {
-      if (use24Hour) { return hour; }
-
-      return convert12HourTo24Hour(hour, ampm);
-    }
-
-    const addPadding = (value: number) => {
-      const valueToString = value.toString();
-      if (valueToString.length > 1) { return value; }
-
-      return `0${valueToString}`;
-    }
-
-    // TODO: can we hardcode these values?
-    const getFormattedHour = (hour: number) => {
-      if (!use24Hour) { return hour; }
-
-      return addPadding(hour);
-    }
+    const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
 
     return (
       <div class="datetime-time">
@@ -881,8 +883,8 @@ export class Datetime implements ComponentInterface {
                   return (
                     <div
                       class="time-item"
-                      data-value={getHourValue(hour)}
-                    >{getFormattedHour(hour)}</div>
+                      data-value={getInternalHourValue(hour, use24Hour, ampm)}
+                    >{getFormattedHour(hour, use24Hour)}</div>
                   )
                 })}
               </div>
@@ -899,7 +901,7 @@ export class Datetime implements ComponentInterface {
                     <div
                       class="time-item"
                       data-value={minute}
-                    >{addPadding(minute)}</div>
+                    >{addTimePadding(minute)}</div>
                   )
                 })}
               </div>
@@ -926,8 +928,8 @@ export class Datetime implements ComponentInterface {
                 }
               }}
             >
-              <ion-segment-button value="am">AM</ion-segment-button>
-              <ion-segment-button value="pm">PM</ion-segment-button>
+              <ion-segment-button disabled={!am} value="am">AM</ion-segment-button>
+              <ion-segment-button disabled={!pm} value="pm">PM</ion-segment-button>
             </ion-segment>
           </div> }
         </div>
