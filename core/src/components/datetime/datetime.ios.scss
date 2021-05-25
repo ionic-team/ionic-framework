@@ -3,16 +3,10 @@
 @import "../../themes/ionic.globals.ios";
 
 :host {
-  --background: var(--ion-color-step-100, #ffffff);
+  --background: var(--ion-color-light, #ffffff);
+  --background-rgb: var(--ion-color-light-rgb);
 
   width: 316px;
-}
-
-// TODO: Fix me
-@media (prefers-color-scheme: dark) {
-  :host {
-    --background-rgb: 26, 26, 26;
-  }
 }
 
 // Header

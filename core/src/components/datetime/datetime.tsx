@@ -1,41 +1,50 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
+import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
-  DatetimeParts,
-  addTimePadding,
-  calculateHourFromAMPM,
   generateMonths,
   generateTime,
-  getCalendarDayState,
-  getCalendarYearState,
   getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getEndOfWeek,
+  getPickerMonths,
+  getPickerYears
+} from './utils/data';
+import {
+  addTimePadding,
   getFormattedHour,
-  getInternalHourValue,
   getMonthAndDay,
-  getMonthAndYear,
+  getMonthAndYear
+} from './utils/format';
+import {
+  is24Hour
+} from './utils/helpers';
+import {
+  calculateHourFromAMPM,
+  getEndOfWeek,
+  getInternalHourValue,
   getNextDay,
   getNextMonth,
   getNextWeek,
-  getPartsFromCalendarDay,
-  getPickerMonths,
-  getPickerYears,
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
-  getStartOfWeek,
-  is24Hour,
-  parseDate,
+  getStartOfWeek
+} from './utils/manipulation';
+import {
+  getPartsFromCalendarDay,
+  parseDate
+} from './utils/parse';
+import {
+  getCalendarDayState,
+  getCalendarYearState,
   shouldRenderViewFooter,
-  shouldRenderViewHeader
-} from './datetime.utils';
+  shouldRenderViewHeader,
+} from './utils/state';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -627,7 +636,6 @@ export class Datetime implements ComponentInterface {
 
         timeout = setTimeout(() => {
           const activeCol = colType === 'month' ? monthRef : yearRef;
-
           const bbox = activeCol.getBoundingClientRect();
 
           /**
