@@ -793,7 +793,7 @@ export class Datetime implements ComponentInterface {
                     ...this.workingParts,
                     year
                   }
-                  // this.showMonthAndYear = false;
+                  this.showMonthAndYear = false;
                 }}
               >
                 <div class="datetime-year-inner">

@@ -19,15 +19,15 @@
 }
 
 :host .datetime-header .datetime-title {
-  font-size: 12px;
+  font-size: $datetime-md-title-font-size;
 
   text-transform: uppercase;
 }
 
 :host .datetime-header .datetime-selected-date {
-  margin-top: 30px;
+  @include margin(30px, null, null, null);
 
-  font-size: 35px;
+  font-size: $datetime-md-selected-date-font-size;
 }
 
 // Calendar / Header / Action Buttons
@@ -48,7 +48,7 @@
 
   color: $text-color-step-500;
 
-  font-size: 13px;
+  font-size: $datetime-md-calendar-item-font-size;
 
   line-height: 36px;
 }
@@ -69,10 +69,11 @@
 
 }
 
+// Individual day button in month
 :host .calendar-day {
   @include padding(13px, 0, 13px, 0px);
 
-  font-size: 14px;
+  font-size: $datetime-md-calendar-item-font-size;
 }
 
 :host .calendar-day:focus:after {
@@ -161,17 +162,18 @@
 
   min-height: 0;
 }
+
 :host(.show-month-and-year) .datetime-footer {
   border-top: 1px solid var(--ion-color-step-250, #dddddd);
 }
 
 :host .datetime-year-body {
-  @include padding($datetime-md-padding, $datetime-md-padding, $datetime-md-padding, $datetime-md-padding);
+  @include padding(0, $datetime-md-padding, $datetime-md-padding, $datetime-md-padding);
 
   display: grid;
 
   grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
-  grid-gap: 0px 10px;
+  grid-gap: 0px 6px;
 
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -221,6 +223,7 @@
 
   color: current-color(base);
 }
+
 :host .datetime-active-year .datetime-year-inner {
   border: 1px solid current-color(base);
 
@@ -233,7 +236,6 @@
     background: current-color(base, 0.1);
   }
 }
-
 
 // Footer
 // -----------------------------------
