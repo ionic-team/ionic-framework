@@ -25,6 +25,8 @@ import {
   getNextMonth,
   getNextWeek,
   getPartsFromCalendarDay,
+  getPickerMonths,
+  getPickerYears,
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
@@ -60,6 +62,8 @@ export class Datetime implements ComponentInterface {
   private timeBaseRef?: HTMLElement;
   private timeHourRef?: HTMLElement;
   private timeMinuteRef?: HTMLElement;
+  private monthRef?: HTMLElement;
+  private yearRef?: HTMLElement;
 
   private minParts?: any;
   private maxParts?: any;
@@ -591,6 +595,74 @@ export class Datetime implements ComponentInterface {
 
       this.initializeKeyboardListeners();
       this.initializeTimeScrollListener();
+
+      if (mode === 'ios') {
+        this.initializeMonthAndYearScrollListeners();
+      }
+    });
+  }
+
+  private initializeMonthAndYearScrollListeners = () => {
+    const { monthRef, yearRef } = this;
+    if (!yearRef || !monthRef) { return; }
+
+    const { year } = this.workingParts;
+
+    /**
+     * Scroll initial month and year into view
+     * TODO: This does not work if scrollable area is not visible
+     */
+    const initialYear = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`);
+    if (initialYear) {
+      initialYear.scrollIntoView({ block: 'center', inline: 'center' });
+    }
+
+    let timeout: any;
+    const scrollCallback = (colType: string) => {
+      raf(() => {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = undefined;
+        }
+
+        timeout = setTimeout(() => {
+          const activeCol = colType === 'month' ? monthRef : yearRef;
+
+          const bbox = activeCol.getBoundingClientRect();
+
+          /**
+           * Select item in the center of the column
+           * which is the month/year that we want to select
+           */
+          const centerX = bbox.x + (bbox.width / 2);
+          const centerY = bbox.y + (bbox.height / 2);
+
+          const activeElement = this.el!.shadowRoot!.elementFromPoint(centerX, centerY)!;
+          const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+          if (colType === 'month') {
+            this.workingParts = {
+              ...this.workingParts,
+              month: value
+            }
+          } else {
+            this.workingParts = {
+              ...this.workingParts,
+              year: value
+            }
+          }
+        }, 250);
+      })
+    }
+
+    /**
+     * Add scroll listeners to the month and year containers.
+     * Wrap this in an raf so that the scroll callback
+     * does not fire when we do our initial scrollIntoView above.
+     */
+    raf(() => {
+      monthRef.addEventListener('scroll', () => scrollCallback('month'));
+      yearRef.addEventListener('scroll', () => scrollCallback('year'));
     });
   }
 
@@ -658,7 +730,7 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * Add scroll listeners to the hour and minute container.
+     * Add scroll listeners to the hour and minute containers.
      * Wrap this in an raf so that the scroll callback
      * does not fire when we do our initial scrollIntoView above.
      */
@@ -772,36 +844,88 @@ export class Datetime implements ComponentInterface {
     this.showMonthAndYear = !this.showMonthAndYear;
   }
 
-  private renderYearView() {
+  private renderMDYearView() {
+    return getCalendarYears(this.activeParts).map(year => {
+
+      const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+      return (
+        <button
+          disabled={disabled}
+          aria-selected={ariaSelected}
+          class={{
+            'datetime-year-item': true,
+            'datetime-current-year': isCurrentYear,
+            'datetime-active-year': isActiveYear
+          }}
+          onClick={() => {
+            this.workingParts = {
+              ...this.workingParts,
+              year
+            }
+            this.showMonthAndYear = false;
+          }}
+        >
+          <div class="datetime-year-inner">
+            {year}
+          </div>
+        </button>
+      )
+    })
+  }
+
+  private renderiOSYearView() {
+    return [
+      <div class="datetime-picker-before"></div>,
+      <div class="datetime-picker-after"></div>,
+      <div class="datetime-picker-highlight"></div>,
+      <div class="datetime-picker-col month-col" ref={el => this.monthRef = el}>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        {getPickerMonths(this.locale, this.activeParts, this.minParts, this.maxParts).map(month => {
+          return (
+            <div
+            class="picker-col-item"
+            data-value={month.value}
+            onClick={(ev: Event) => {
+              const target = ev.target as HTMLElement;
+              target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+            }}
+          >{month.text}</div>
+          )
+        })}
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+      </div>,
+      <div class="datetime-picker-col year-col" ref={el => this.yearRef = el}>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        {getPickerYears(this.activeParts, this.minParts, this.maxParts).map(year => {
+          return (
+            <div
+              class="picker-col-item"
+              data-value={year}
+              onClick={(ev: Event) => {
+                const target = ev.target as HTMLElement;
+                target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+              }}
+            >{year}</div>
+          )
+        })}
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+      </div>
+    ]
+  }
+
+  private renderYearView(mode: Mode) {
     return (
       <div class="datetime-year">
         <div class="datetime-year-body">
-          {getCalendarYears(this.activeParts).map(year => {
-
-            const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
-            return (
-              <button
-                disabled={disabled}
-                aria-selected={ariaSelected}
-                class={{
-                  'datetime-year-item': true,
-                  'datetime-current-year': isCurrentYear,
-                  'datetime-active-year': isActiveYear
-                }}
-                onClick={() => {
-                  this.workingParts = {
-                    ...this.workingParts,
-                    year
-                  }
-                  this.showMonthAndYear = false;
-                }}
-              >
-                <div class="datetime-year-inner">
-                  {year}
-                </div>
-              </button>
-            )
-          })}
+          {mode === 'ios' ? this.renderiOSYearView() : this.renderMDYearView()}
         </div>
       </div>
     );
@@ -1019,7 +1143,7 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderCalendarViewHeader(mode),
       this.renderCalendar(mode),
-      this.renderYearView(),
+      this.renderYearView(mode),
       this.renderTime(mode),
       this.renderFooter(mode)
     ]

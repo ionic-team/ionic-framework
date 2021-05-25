@@ -10,6 +10,35 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
+export const getPickerMonths = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+  const { year } = refParts;
+  const maxMonth = maxParts && maxParts.year === year ? maxParts.month : 12;
+  const minMonth = minParts && minParts.year === year ? minParts.month : 1;
+
+  const months = [];
+  for (let i = minMonth; i <= maxMonth; i++) {
+    const date = new Date(`${i}/1/${year}`);
+
+    const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+    months.push({ text: monthString, value: i });
+  }
+
+  return months;
+}
+
+export const getPickerYears = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+  const { year } = refParts;
+  const maxYear = maxParts ? maxParts.year : year + 20;
+  const minYear = minParts ? minParts.year : year - 20;
+
+  const years = [];
+  for (let i = maxYear; i >= minYear; i--) {
+    years.push(i);
+  }
+
+  return years;
+}
+
 export const getCalendarYears = (refParts: DatetimeParts) => {
   const { year } = refParts;
   const futureYears: number[] = [];
@@ -166,7 +195,7 @@ export const is24Hour = (locale: string) => {
 }
 
 /**
- * Givne a local, reference datetime parts and option
+ * Given a local, reference datetime parts and option
  * max/min bound datetime parts, calculate the acceptable
  * hour and minute values according to the bounds and locale.
  */
