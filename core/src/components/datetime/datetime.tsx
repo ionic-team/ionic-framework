@@ -808,13 +808,15 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCalendarHeader(mode: Mode) {
+    const expandedIcon = mode === 'ios' ? 'chevron-down' : 'caret-up-sharp';
+    const collapsedIcon = mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp';
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>
@@ -908,7 +910,14 @@ export class Datetime implements ComponentInterface {
     )
   }
 
-  private renderTime() {
+  /**
+   * Render time picker inside of datetime.
+   * Do not pass color prop to segment on
+   * iOS mode. MD segment has been customized and
+   * should take on the color prop, but iOS
+   * should just be the default segment.
+   */
+  private renderTime(mode: Mode) {
     const use24Hour = is24Hour(this.locale);
     const { ampm } = this.workingParts;
     const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
@@ -956,7 +965,7 @@ export class Datetime implements ComponentInterface {
           </div>
           { !use24Hour && <div class="time-ampm">
             <ion-segment
-              color={this.color}
+              color={mode === 'md' ? this.color : undefined}
               value={this.workingParts.ampm}
               onIonChange={(ev: CustomEvent) => {
 
@@ -1011,7 +1020,7 @@ export class Datetime implements ComponentInterface {
       this.renderCalendarViewHeader(mode),
       this.renderCalendar(mode),
       this.renderYearView(),
-      this.renderTime(),
+      this.renderTime(mode),
       this.renderFooter(mode)
     ]
   }
