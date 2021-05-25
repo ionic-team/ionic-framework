@@ -2,7 +2,8 @@ import {
   generateDayAriaLabel,
   getMonthAndDay,
   getFormattedHour,
-  addTimePadding
+  addTimePadding,
+  getMonthAndYear
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -56,3 +57,13 @@ describe('addTimePadding()', () => {
     expect(addTimePadding(100)).toEqual('100');
   })
 });
+
+describe('getMonthAndYear()', () => {
+  it('should return May 2021', () => {
+    expect(getMonthAndYear('en-US', { month: 5, day: 11, year: 2021 })).toEqual('May 2021');
+  });
+
+  it('should return mar, 11 may', () => {
+    expect(getMonthAndYear('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mayo de 2021');
+  });
+})

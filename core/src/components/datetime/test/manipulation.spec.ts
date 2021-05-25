@@ -9,8 +9,58 @@ import {
   getStartOfWeek,
   convert12HourTo24Hour,
   getInternalHourValue,
-  calculateHourFromAMPM
+  calculateHourFromAMPM,
+  subtractDays,
+  addDays
 } from '../utils/manipulation';
+
+describe('addDays()', () => {
+  it('should correctly add days', () => {
+    expect(addDays({
+      day: 1,
+      month: 1,
+      year: 2021
+    }, 31)).toEqual({
+      day: 1,
+      month: 2,
+      year: 2021
+    })
+
+    expect(addDays({
+      day: 31,
+      month: 12,
+      year: 2021
+    }, 1)).toEqual({
+      day: 1,
+      month: 1,
+      year: 2022
+    })
+  })
+})
+
+describe('subtractDays()', () => {
+  it('should correctly subtract days', () => {
+    expect(subtractDays({
+      day: 1,
+      month: 1,
+      year: 2021
+    }, 1)).toEqual({
+      day: 31,
+      month: 12,
+      year: 2020
+    })
+
+    expect(subtractDays({
+      day: 1,
+      month: 2,
+      year: 2021
+    }, 31)).toEqual({
+      day: 1,
+      month: 1,
+      year: 2021
+    })
+  })
+})
 
 describe('getInternalHourValue()',() => {
   it('should correctly get the internal hour value', () => {

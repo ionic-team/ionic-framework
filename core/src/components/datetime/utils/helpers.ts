@@ -4,7 +4,7 @@
  * is a leap year. Returns `false`
  * otherwise.
  */
-const isLeapYear = (year: number) => {
+export const isLeapYear = (year: number) => {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 

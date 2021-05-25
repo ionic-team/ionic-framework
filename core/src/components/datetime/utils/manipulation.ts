@@ -76,6 +76,7 @@ export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
  * Given datetime parts, subtract
  * numDays from the date.
  * Returns a new DatetimeParts object
+ * Currently can only go backward at most 1 month.
  */
 export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
   const { month, day, year } = refParts;
@@ -135,6 +136,7 @@ export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
  * Given datetime parts, add
  * numDays to the date.
  * Returns a new DatetimeParts object
+ * Currently can only go forward at most 1 month.
  */
 export const addDays = (refParts: DatetimeParts, numDays: number) => {
   const { month, day, year } = refParts;

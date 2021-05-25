@@ -1,6 +1,5 @@
 import { Mode } from '../../../interface';
 import { DatetimeParts } from '../datetime-interface';
-
 import {
   isAfter,
   isBefore,
