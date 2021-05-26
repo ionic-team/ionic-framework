@@ -1,6 +1,7 @@
 describe('Nested', () => {
   beforeEach(() => {
     cy.visit('http://localhost:8080/nested');
+    cy.ionPageVisible('nestedchild');
   });
 
   it('should show first page', () => {

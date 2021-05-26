@@ -1,7 +1,7 @@
 import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 
-import { attachProps } from './utils';
+import { attachProps, setRef } from './utils';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -30,7 +30,7 @@ export const createControllerComponent = <
 
   type Props = OptionsType &
     ReactControllerProps & {
-      forwardedRef?: React.RefObject<OverlayType>;
+      forwardedRef?: React.ForwardedRef<OverlayType>;
     };
 
   class Overlay extends React.Component<Props> {
@@ -73,9 +73,7 @@ export const createControllerComponent = <
       if (this.props.onDidDismiss) {
         this.props.onDidDismiss(event);
       }
-      if (this.props.forwardedRef) {
-        (this.props.forwardedRef as any).current = undefined;
-      }
+      setRef(this.props.forwardedRef, null)
     }
 
     async present(prevProps?: Props) {
@@ -106,9 +104,7 @@ export const createControllerComponent = <
       // Check isOpen again since the value could have changed during the async call to controller.create
       // It's also possible for the component to have become unmounted.
       if (this.props.isOpen === true && this.isUnmounted === false) {
-        if (this.props.forwardedRef) {
-          (this.props.forwardedRef as any).current = this.overlay;
-        }
+        setRef(this.props.forwardedRef, this.overlay)
         await this.overlay.present();
       }
     }

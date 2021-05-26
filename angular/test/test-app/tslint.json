@@ -2,16 +2,37 @@
   "extends": "tslint:recommended",
   "rulesDirectory": ["codelyzer"],
   "rules": {
+    "align": {
+      "options": [
+        "parameters",
+        "statements"
+      ]
+    },
     "array-type": false,
     "arrow-parens": false,
+    "arrow-return-shorthand": true,
     "deprecation": {
       "severity": "warn"
     },
-    "import-blacklist": [true, "rxjs/Rx"],
+    "import-blacklist": [
+      true,
+      "rxjs/Rx"
+    ],
+    "curly": true,
     "interface-name": false,
     "max-classes-per-file": false,
-    "max-line-length": [true, 140],
+    "max-line-length": [
+      true,
+      140
+    ],
+    "eofline": true,
     "member-access": false,
+    "import-spacing": true,
+    "indent": {
+      "options": [
+        "spaces"
+      ]
+    },
     "member-ordering": [
       true,
       {
@@ -30,7 +51,6 @@
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
-    "no-use-before-declare": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [true, "as-needed"],
     "object-literal-sort-keys": false,
@@ -46,9 +66,68 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "one-variable-per-declaration": false,
-    "component-class-suffix": [true, "Page", "Component"],
+    "component-class-suffix": [
+      true,
+      "Page",
+      "Component"
+    ],
+    "semicolon": {
+      "options": [
+        "always"
+      ]
+    },
+    "space-before-function-paren": {
+      "options": {
+        "anonymous": "never",
+        "asyncArrow": "always",
+        "constructor": "never",
+        "method": "never",
+        "named": "never"
+      }
+    },
     "directive-class-suffix": true,
+    "typedef-whitespace": {
+      "options": [
+        {
+          "call-signature": "nospace",
+          "index-signature": "nospace",
+          "parameter": "nospace",
+          "property-declaration": "nospace",
+          "variable-declaration": "nospace"
+        },
+        {
+          "call-signature": "onespace",
+          "index-signature": "onespace",
+          "parameter": "onespace",
+          "property-declaration": "onespace",
+          "variable-declaration": "onespace"
+        }
+      ]
+    },
     "directive-selector": [true, "attribute", "app", "camelCase"],
-    "component-selector": [true, "element", "app", "page", "kebab-case"]
+    "component-selector": [
+      true,
+      "element",
+      "app",
+      "page",
+      "kebab-case"
+    ],
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-pascal-case"
+      ]
+    },
+    "whitespace": {
+      "options": [
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type",
+        "check-typecast"
+      ]
+    }
   }
 }

@@ -14,6 +14,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Components](#components)
   * [Header](#header)
+  * [Popover](#popover)
   * [Tab Bar](#tab-bar)
   * [Toast](#toast)
   * [Toolbar](#toolbar)
@@ -23,6 +24,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Config Provider](#config-provider)
 - [Vue](#vue)
   * [Tabs Config](#tabs-config)
+  * [Overlay Events](#overlay-events)
+  * [Minimum Required Version](#minimum-required-version)
 
 
 
@@ -39,6 +42,12 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
   --border-width: 0 0 0.55px;
 }
 ```
+
+#### Popover
+
+Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead.
 
 #### Tab Bar
 
@@ -156,6 +165,46 @@ const routes: Array<RouteRecordRaw> = [
 ```
 
 In the example above `tabs/tab1/view` has been rewritten has a sibling route to `tabs/tab1`. The `path` field now includes the `tab1` prefix.
+
+#### Overlay Events
+
+Overlay events `onWillPresent`, `onDidPresent`, `onWillDismiss`, and `onDidDismiss` have been removed in favor of `willPresent`, `didPresent`, `willDismiss`, and `didDismiss`.
+
+This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-loading`, `ion-modal`, `ion-picker`, `ion-popover`, and `ion-toast`.
+
+**Old**
+```html
+<ion-modal
+  :is-open="modalOpenRef"
+  @onWillPresent="onModalWillPresentHandler"
+  @onDidPresent="onModalDidPresentHandler"
+  @onWillDismiss="onModalWillDismissHandler"
+  @onDidDismiss="onModalDidDismissHandler"
+>
+  ...
+</ion-modal>
+```
+
+**New**
+```html
+<ion-modal
+  :is-open="modalOpenRef"
+  @willPresent="onModalWillPresentHandler"
+  @didPresent="onModalDidPresentHandler"
+  @willDismiss="onModalWillDismissHandler"
+  @didDismiss="onModalDidDismissHandler"
+>
+  ...
+</ion-modal>
+```
+
+#### Minimum Required Version
+
+Vue v3.0.6 or newer is required.
+
+```
+npm install vue@3
+```
 
 
 

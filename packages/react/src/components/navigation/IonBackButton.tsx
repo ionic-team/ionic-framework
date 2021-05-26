@@ -13,7 +13,7 @@ type Props = Omit<LocalJSX.IonBackButton, 'icon'> &
           md: string;
         }
       | string;
-    ref?: React.RefObject<HTMLIonBackButtonElement>;
+    ref?: React.Ref<HTMLIonBackButtonElement>;
   };
 
 export const IonBackButton = /*@__PURE__*/ (() =>

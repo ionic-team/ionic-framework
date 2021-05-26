@@ -1,3 +1,58 @@
+## [5.6.7](https://github.com/ionic-team/ionic/compare/v5.6.6...v5.6.7) (2021-05-13)
+
+
+### Bug Fixes
+
+* **angular:** warnings are no longer generated when running tests with ng test ([#23292](https://github.com/ionic-team/ionic/issues/23292)) ([9cb6c80](https://github.com/ionic-team/ionic/commit/9cb6c80b3db4273e9c003a62a3065427995cb353)), closes [#19926](https://github.com/ionic-team/ionic/issues/19926)
+* **overlays:** screen readers no longer read content behind overlays ([#23284](https://github.com/ionic-team/ionic/issues/23284)) ([a9b12a5](https://github.com/ionic-team/ionic/commit/a9b12a5aa4c150a1f8a80a826dda0df350bc0092)), closes [#22714](https://github.com/ionic-team/ionic/issues/22714)
+* **refresher:** refresher now only activates when pulling down on MD ([#23283](https://github.com/ionic-team/ionic/issues/23283)) ([1e1596f](https://github.com/ionic-team/ionic/commit/1e1596f471e440085bf2d90e473f0cb0c0dcf6e2)), closes [#23245](https://github.com/ionic-team/ionic/issues/23245)
+* **vue:** use correct history mode when doing ssr to avoid errors ([#23255](https://github.com/ionic-team/ionic/issues/23255)) ([2e00dab](https://github.com/ionic-team/ionic/commit/2e00dab95d3fefeab92c19cedb046ae2bb10879c)), closes [#23254](https://github.com/ionic-team/ionic/issues/23254)
+
+
+
+## [5.6.6](https://github.com/ionic-team/ionic/compare/v5.6.5...v5.6.6) (2021-04-29)
+
+
+### Bug Fixes
+
+* **angular:** back button goes back to proper tab on angular 11.2.10 ([#23238](https://github.com/ionic-team/ionic/issues/23238)) ([e436439](https://github.com/ionic-team/ionic/commit/e436439e10c895b203ca4dc889cf307ffb9524b4)), closes [#23230](https://github.com/ionic-team/ionic/issues/23230)
+* **react:** remove hardware back button event listener when NavManager is unmounted ([#23224](https://github.com/ionic-team/ionic/issues/23224)) ([c501da7](https://github.com/ionic-team/ionic/commit/c501da73be879db0fea818c507bae4386a47d42e)), closes [#23170](https://github.com/ionic-team/ionic/issues/23170)
+* **slides:** undefined error is no longer thrown after destroying and quickly re-creating ion-slides ([#23239](https://github.com/ionic-team/ionic/issues/23239)) ([2ccaabb](https://github.com/ionic-team/ionic/commit/2ccaabb5b4d67ec4b1318e3ccb3edc1bd853ab3e)), closes [#22289](https://github.com/ionic-team/ionic/issues/22289)
+* **vue:** components inside of ion-nav are now unmounted properly ([#23240](https://github.com/ionic-team/ionic/issues/23240)) ([f2f41e2](https://github.com/ionic-team/ionic/commit/f2f41e2af45ba9a36064d33e0b5c1b59da6b74ab)), closes [#23233](https://github.com/ionic-team/ionic/issues/23233)
+* **vue:** overlay events can now be listened for without the "on" prefix, deprecated "on" prefix event listeners ([#23227](https://github.com/ionic-team/ionic/issues/23227)) ([dab927d](https://github.com/ionic-team/ionic/commit/dab927d2901658f4040c1d1aa6c777497d8714c8))
+
+
+
+## [5.6.5](https://github.com/ionic-team/ionic/compare/v5.6.4...v5.6.5) (2021-04-22)
+
+
+### Bug Fixes
+
+* **content:** only render a main element when content is being used in primary view ([#23160](https://github.com/ionic-team/ionic/issues/23160)) ([2d07d82](https://github.com/ionic-team/ionic/commit/2d07d8216af908b181c5e7e438e79a049bb6d8c2))
+* **datetime, input, textarea:** only add aria-labelledby if there is an adjacent label ([#23211](https://github.com/ionic-team/ionic/issues/23211)) ([a31fb55](https://github.com/ionic-team/ionic/commit/a31fb55bac1ef03e014f3d7f6c22c24eff20feb5))
+* **radio-group:** pressing spacebar correctly unselects radio with allow-empty-selection ([#23194](https://github.com/ionic-team/ionic/issues/23194)) ([7139b3f](https://github.com/ionic-team/ionic/commit/7139b3f39e8eeef07ff7c595940fc5dafe062956)), closes [#22734](https://github.com/ionic-team/ionic/issues/22734)
+* **react:** callback refs now work correctly with ionic components ([#23152](https://github.com/ionic-team/ionic/issues/23152)) ([0dd189e](https://github.com/ionic-team/ionic/commit/0dd189e2c05012659894a4c15cd3a9d407fe0a63)), closes [#23153](https://github.com/ionic-team/ionic/issues/23153)
+* **segment, segment-button:** use tablist and tab roles ([#23145](https://github.com/ionic-team/ionic/issues/23145)) ([91ac340](https://github.com/ionic-team/ionic/commit/91ac340ae7e8928f7b0972a093dd9dd7fa727671))
+* **vue:** dynamic tabs are now correctly recognized ([#23212](https://github.com/ionic-team/ionic/issues/23212)) ([004885b](https://github.com/ionic-team/ionic/commit/004885bfd4446487e6386876c868532a2795347f)), closes [#22847](https://github.com/ionic-team/ionic/issues/22847)
+* **vue:** update props when navigating to new parameterized route ([#23189](https://github.com/ionic-team/ionic/issues/23189)) ([35c8802](https://github.com/ionic-team/ionic/commit/35c8802c22c1f4bf213a01e1c28398ad62d1b7ac))
+
+
+
+## [5.6.4](https://github.com/ionic-team/ionic/compare/v5.6.3...v5.6.4) (2021-04-08)
+
+
+### Bug Fixes
+
+* **angular:** swiping back quickly no longer causes app to get stuck ([#23125](https://github.com/ionic-team/ionic/issues/23125)) ([28c52fd](https://github.com/ionic-team/ionic/commit/28c52fd4e3df3d96b4ec83075a322e110e938a1a)), closes [#15154](https://github.com/ionic-team/ionic/issues/15154)
+* **input:** inherit aria-label to input ([#23159](https://github.com/ionic-team/ionic/issues/23159)) ([61f094d](https://github.com/ionic-team/ionic/commit/61f094d30665c9afec428028883a5d9a085892d8))
+* **react:** overlays now correctly unmount any child components after dismissing ([#23149](https://github.com/ionic-team/ionic/issues/23149)) ([dee6eb3](https://github.com/ionic-team/ionic/commit/dee6eb30df370047bbc872b00ab6d801dd11fa81)), closes [#23140](https://github.com/ionic-team/ionic/issues/23140)
+* **react, vue:** correct view now chosen when going back inside tabs ([#23154](https://github.com/ionic-team/ionic/issues/23154)) ([7203190](https://github.com/ionic-team/ionic/commit/72031902347dc279045e2e099f69852a23dd8436)), closes [#23087](https://github.com/ionic-team/ionic/issues/23087) [#23101](https://github.com/ionic-team/ionic/issues/23101)
+* **toggle:** prevent click event from firing twice ([#23146](https://github.com/ionic-team/ionic/issues/23146)) ([42e6c90](https://github.com/ionic-team/ionic/commit/42e6c90c4632423386b165dddc4b94a55c075e2e)), closes [#23041](https://github.com/ionic-team/ionic/issues/23041)
+* **vue:** account for event name changes in vue 3.0.6+ for overlay components ([#23100](https://github.com/ionic-team/ionic/issues/23100)) ([27318cf](https://github.com/ionic-team/ionic/commit/27318cf58563c4b38d0b7045fb61451f45954a8f))
+* **vue:** components now integrate properly with vee-validate ([#23114](https://github.com/ionic-team/ionic/issues/23114)) ([ba51daf](https://github.com/ionic-team/ionic/commit/ba51daf17c4438aea6826882f82a04ebf8d6a5d8)), closes [#22886](https://github.com/ionic-team/ionic/issues/22886)
+
+
+
 ## [5.6.3](https://github.com/ionic-team/ionic/compare/v5.6.2...v5.6.3) (2021-03-23)
 
 

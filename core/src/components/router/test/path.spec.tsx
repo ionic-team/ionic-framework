@@ -4,43 +4,50 @@ import { chainToPath, generatePath, parsePath, readPath, writePath } from '../ut
 
 describe('parseURL', () => {
   it('should parse empty path', () => {
-    expect(parsePath('')).toEqual(['']);
+    expect(parsePath('').segments).toEqual(['']);
   });
 
   it('should parse slash path', () => {
-    expect(parsePath('/')).toEqual(['']);
-    expect(parsePath(' / ')).toEqual(['']);
+    expect(parsePath('/').segments).toEqual(['']);
+    expect(parsePath(' / ').segments).toEqual(['']);
   });
 
   it('should parse empty path (2)', () => {
-    expect(parsePath('   ')).toEqual(['']);
+    expect(parsePath('   ').segments).toEqual(['']);
   });
 
   it('should parse null path', () => {
-    expect(parsePath(null)).toEqual(['']);
+    expect(parsePath(null).segments).toEqual(['']);
   });
 
   it('should parse undefined path', () => {
-    expect(parsePath(undefined)).toEqual(['']);
+    expect(parsePath(undefined).segments).toEqual(['']);
   });
 
   it('should parse single segment', () => {
-    expect(parsePath('path')).toEqual(['path']);
-    expect(parsePath('path/')).toEqual(['path']);
-    expect(parsePath('/path/')).toEqual(['path']);
-    expect(parsePath('/path')).toEqual(['path']);
+    expect(parsePath('path').segments).toEqual(['path']);
+    expect(parsePath('path/').segments).toEqual(['path']);
+    expect(parsePath('/path/').segments).toEqual(['path']);
+    expect(parsePath('/path').segments).toEqual(['path']);
   });
 
   it('should parse relative path', () => {
-    expect(parsePath('path/to/file.js')).toEqual(['path', 'to', 'file.js']);
+    expect(parsePath('path/to/file.js').segments).toEqual(['path', 'to', 'file.js']);
   });
 
   it('should parse absolute path', () => {
-    expect(parsePath('/path/to/file.js')).toEqual(['path', 'to', 'file.js']);
+    expect(parsePath('/path/to/file.js').segments).toEqual(['path', 'to', 'file.js']);
   });
   it('should parse relative path', () => {
-    expect(parsePath('/PATH///to//file.js//')).toEqual(['PATH', 'to', 'file.js']);
+    expect(parsePath('/PATH///to//file.js//').segments).toEqual(['PATH', 'to', 'file.js']);
   });
+
+  it('should parse query string', () => {
+    expect(parsePath(null).queryString).toBe(undefined);
+    expect(parsePath('path/to/file.js').queryString).toBe(undefined);
+    expect(parsePath('path/to/file.js?').queryString).toEqual('');
+    expect(parsePath('path/to/file.js?a=b').queryString).toEqual('a=b');
+  });  
 });
 
 describe('generatePath', () => {
