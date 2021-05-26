@@ -1,12 +1,17 @@
 import { RouteChain, RouteID, RouteRedirect } from './interface';
 
-export const matchesRedirect = (input: string[], route: RouteRedirect): route is RouteRedirect => {
-  const { from, to } = route;
+// Returns whether the given redirect matches the given path segments.
+//
+// A redirect matches when the segments of the path and redirect.from are equal.
+// Note that segments are only checked until redirect.from contains a '*' which matches any path segment.
+// The path ['some', 'path', 'to', 'page'] matches both ['some', 'path', 'to', 'page'] and ['some', 'path', '*'].
+export const matchesRedirect = (path: string[], redirect: RouteRedirect): boolean => {
+  const { from, to } = redirect;
   if (to === undefined) {
     return false;
   }
 
-  if (from.length > input.length) {
+  if (from.length > path.length) {
     return false;
   }
 
@@ -15,15 +20,16 @@ export const matchesRedirect = (input: string[], route: RouteRedirect): route is
     if (expected === '*') {
       return true;
     }
-    if (expected !== input[i]) {
+    if (expected !== path[i]) {
       return false;
     }
   }
-  return from.length === input.length;
+  return from.length === path.length;
 };
 
-export const routeRedirect = (path: string[], routes: RouteRedirect[]) => {
-  return routes.find(route => matchesRedirect(path, route)) as RouteRedirect | undefined;
+// Returns the first redirect matching the path segments or undefined when no match found.
+export const findRouteRedirect = (path: string[], redirects: RouteRedirect[]) => {
+  return redirects.find(redirect => matchesRedirect(path, redirect));
 };
 
 export const matchesIDs = (ids: string[], chain: RouteChain): number => {

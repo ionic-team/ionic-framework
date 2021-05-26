@@ -123,3 +123,7 @@ Cypress.Commands.add('ionMenuClick', () => {
   //   .click()
   // cy.get('ion-menu.show-menu').should('exist');
 });
+
+Cypress.Commands.add('ionHardwareBackEvent', () => {
+  cy.document().trigger('backbutton');
+});
