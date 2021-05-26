@@ -35,7 +35,7 @@ export class Segment implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
   @Watch('color')
   protected colorChanged(value?: Color, oldValue?: Color) {
 
@@ -425,6 +425,7 @@ export class Segment implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
+        role="tablist"
         onClick={this.onClick}
         class={createColorClasses(this.color, {
           [mode]: true,

@@ -10,12 +10,12 @@ import { createForwardRef } from './utils';
 
 type Props = LocalJSX.IonRouterOutlet & {
   basePath?: string;
-  ref?: React.RefObject<any>;
+  ref?: React.Ref<any>;
   ionPage?: boolean;
 };
 
 interface InternalProps extends Props {
-  forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
+  forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
 }
 
 interface InternalState {}

@@ -70,7 +70,7 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          this is the first pahe
+          this is the first page
         </ion-content>`;
       }
     }
@@ -211,6 +211,7 @@
         <ion-route url="/four" component="tab-four"> </ion-route>
       </ion-route>
 
+      <ion-route-redirect from="/redirect-to-three" to="/three?has_query_string=true"></ion-route-redirect>
     </ion-router>
 
     <ion-nav></ion-nav>

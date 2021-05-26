@@ -50,6 +50,7 @@ export default defineComponent({
   },
   setup() {
     const openModal = async () => {
+      debugger;
       const modal = await modalController.create({
         component: Nav
       });

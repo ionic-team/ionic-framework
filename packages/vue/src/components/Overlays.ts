@@ -7,7 +7,6 @@ import {
   loadingController,
   modalController,
   pickerController,
-  popoverController,
   toastController,
 } from '@ionic/core/components';
 
@@ -16,7 +15,6 @@ import { IonAlert as IonAlertCmp } from '@ionic/core/components/ion-alert.js'
 import { IonLoading as IonLoadingCmp } from '@ionic/core/components/ion-loading.js'
 import { IonModal as IonModalCmp } from '@ionic/core/components/ion-modal.js'
 import { IonPicker as IonPickerCmp } from '@ionic/core/components/ion-picker.js'
-import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js'
 import { IonToast as IonToastCmp } from '@ionic/core/components/ion-toast.js'
 
 import { defineOverlayContainer } from '../vue-component-lib/overlays';
@@ -30,8 +28,6 @@ export const IonLoading = /*@__PURE__*/ defineOverlayContainer<JSX.IonLoading>('
 export const IonModal = /*@__PURE__*/ defineOverlayContainer<JSX.IonModal>('ion-modal', IonModalCmp, ['animated', 'backdropDismiss', 'component', 'componentProps', 'cssClass', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose'], modalController);
     
 export const IonPicker = /*@__PURE__*/ defineOverlayContainer<JSX.IonPicker>('ion-picker', IonPickerCmp, ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop'], pickerController);
-    
-export const IonPopover = /*@__PURE__*/ defineOverlayContainer<JSX.IonPopover>('ion-popover', IonPopoverCmp, ['animated', 'backdropDismiss', 'component', 'componentProps', 'cssClass', 'enterAnimation', 'event', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'translucent'], popoverController);
     
 export const IonToast = /*@__PURE__*/ defineOverlayContainer<JSX.IonToast>('ion-toast', IonToastCmp, ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'position', 'translucent'], toastController);
     

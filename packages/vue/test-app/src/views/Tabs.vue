@@ -3,20 +3,17 @@
     <ion-content>
       <ion-tabs id="tabs">
         <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="tab1" href="/tabs/tab1">
-            <ion-icon :icon="triangle" />
-            <ion-label>Tab 1</ion-label>
+          <ion-tab-button
+            v-for="tab in tabs"
+            :tab="'tab' + tab.id"
+            :href="'/tabs/tab' + tab.id"
+            :key="tab.id"
+          >
+            <ion-icon :icon="tab.icon" />
+            <ion-label>Tab {{ tab.id }}</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="tab2" href="/tabs/tab2">
-            <ion-icon :icon="ellipse" />
-            <ion-label>Tab 2</ion-label>
-          </ion-tab-button>
-
-          <ion-tab-button tab="tab3" href="/tabs/tab3">
-            <ion-icon :icon="square" />
-            <ion-label>Tab 3</ion-label>
-          </ion-tab-button>
+          <ion-button id="add-tab" @click="addTab()">Add Tab</ion-button>
         </ion-tab-bar>
       </ion-tabs>
     </ion-content>
@@ -24,18 +21,33 @@
 </template>
 
 <script lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonContent, IonLabel, IonIcon, IonPage } from '@ionic/vue';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { IonButton, IonTabBar, IonTabButton, IonTabs, IonContent, IonLabel, IonIcon, IonPage } from '@ionic/vue';
+import { ellipse, square, triangle, shield } from 'ionicons/icons';
+import { useRouter } from 'vue-router';
+import { ref, defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'Tabs',
-  components: { IonContent, IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
+  components: { IonButton, IonContent, IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
   setup() {
-    return {
-      ellipse,
-      square,
-      triangle,
+    const tabs = ref([
+      { id: 1, icon: triangle },
+      { id: 2, icon: ellipse },
+      { id: 3, icon: square }
+    ])
+    const router = useRouter();
+    const addTab = () => {
+      router.addRoute({ path: '/tabs/tab4', component: () => import('@/views/Tab4.vue') });
+      tabs.value = [
+        ...tabs.value,
+        {
+          id: 4,
+          icon: shield
+        }
+      ]
     }
+
+    return { tabs, addTab }
   }
-}
+});
 </script>

@@ -5,6 +5,8 @@ import { defineContainer } from './vue-component-lib/utils';
 
 import type { JSX } from '@ionic/core/components';
 
+import { IonAccordion as IonAccordionCmp } from '@ionic/core/components/ion-accordion.js';
+import { IonAccordionGroup as IonAccordionGroupCmp } from '@ionic/core/components/ion-accordion-group.js';
 import { IonAvatar as IonAvatarCmp } from '@ionic/core/components/ion-avatar.js';
 import { IonBackdrop as IonBackdropCmp } from '@ionic/core/components/ion-backdrop.js';
 import { IonBadge as IonBadgeCmp } from '@ionic/core/components/ion-badge.js';
@@ -72,6 +74,25 @@ import { IonTitle as IonTitleCmp } from '@ionic/core/components/ion-title.js';
 import { IonToggle as IonToggleCmp } from '@ionic/core/components/ion-toggle.js';
 import { IonToolbar as IonToolbarCmp } from '@ionic/core/components/ion-toolbar.js';
 import { IonVirtualScroll as IonVirtualScrollCmp } from '@ionic/core/components/ion-virtual-scroll.js';
+
+
+export const IonAccordion = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion-accordion', IonAccordionCmp, [
+  'value',
+  'disabled',
+  'readonly',
+  'toggleIcon',
+  'toggleIconSlot'
+]);
+
+
+export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionGroup>('ion-accordion-group', IonAccordionGroupCmp, [
+  'multiple',
+  'value',
+  'disabled',
+  'readonly',
+  'expand',
+  'ionChange'
+]);
 
 
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', IonAvatarCmp);
@@ -161,14 +182,7 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
   'ionBlur',
   'ionStyle'
 ],
-{
-  "modelProp": "checked",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'checked', 'v-ion-change', 'ionChange');
 
 
 export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', IonChipCmp, [
@@ -248,14 +262,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'ionBlur',
   'ionStyle'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', IonFabCmp, [
@@ -366,14 +373,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
   'ionFocus',
   'ionStyle'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', IonItemCmp, [
@@ -521,14 +521,7 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
   'ionFocus',
   'ionBlur'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('ion-radio-group', IonRadioGroupCmp, [
@@ -537,14 +530,7 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
   'value',
   'ionChange'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range', IonRangeCmp, [
@@ -565,14 +551,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
   'ionFocus',
   'ionBlur'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', IonRefresherCmp, [
@@ -640,14 +619,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
   'ionFocus',
   'ionStyle'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-segment', IonSegmentCmp, [
@@ -660,14 +632,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
   'ionSelect',
   'ionStyle'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton>('ion-segment-button', IonSegmentButtonCmp, [
@@ -676,14 +641,7 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
   'type',
   'value'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-select', IonSelectCmp, [
@@ -704,14 +662,7 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
   'ionBlur',
   'ionStyle'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', IonSelectOptionCmp, [
@@ -800,14 +751,7 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
   'ionBlur',
   'ionFocus'
 ],
-{
-  "modelProp": "value",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', IonThumbnailCmp);
@@ -831,14 +775,7 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
   'ionBlur',
   'ionStyle'
 ],
-{
-  "modelProp": "checked",
-  "modelUpdateEvent": [
-    "v-ionChange",
-    "v-ion-change"
-  ],
-  "externalModelUpdateEvent": "ionChange"
-});
+'checked', 'v-ion-change', 'ionChange');
 
 
 export const IonToolbar = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', IonToolbarCmp, [

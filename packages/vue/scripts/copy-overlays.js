@@ -29,11 +29,6 @@ function generateOverlays() {
       name: 'IonPicker'
     },
     {
-      tag: 'ion-popover',
-      controller: 'popoverController',
-      name: 'IonPopover'
-    },
-    {
       tag: 'ion-toast',
       controller: 'toastController',
       name: 'IonToast'

@@ -14,12 +14,6 @@ interface NavManager<T = any> {
   navigate: (options: T) => void;
 }
 
-interface ComponentOptions {
-  modelProp?: string;
-  modelUpdateEvent?: string | string[];
-  externalModelUpdateEvent?: string;
-}
-
 const getComponentClasses = (classes: unknown) => {
   return (classes as string)?.split(' ') || [];
 };
@@ -39,8 +33,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * @prop modelProp - The prop that v-model binds to (i.e. value)
 * @prop modelUpdateEvent - The event that is fired when the value changes (i.e. ionChange)
 */
-export const defineContainer = <Props>(name: string, customElement: any, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
-  const { modelProp, modelUpdateEvent, externalModelUpdateEvent } = componentOptions;
+export const defineContainer = <Props>(name: string, customElement: any, componentProps: string[] = [], modelProp?: string, modelUpdateEvent?: string, externalModelUpdateEvent?: string) => {
 
   customElements.define(name, customElement);
 
@@ -97,6 +90,8 @@ export const defineContainer = <Props>(name: string, customElement: any, compone
     }
 
     return () => {
+      modelPropValue = (props as any)[modelProp];
+
       getComponentClasses(attrs.class).forEach(value => {
         classes.add(value);
       });
