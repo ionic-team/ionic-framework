@@ -41,7 +41,7 @@
 
 :host(.title-large) {
   @include padding(0, 16px);
-  @include transform-origin(start, center);
+  @include transform-origin(left, center);
 
   bottom: 0;
 
@@ -55,6 +55,10 @@
   font-weight: 700;
 
   text-align: start;
+}
+
+:host(.title-large.title-rtl) {
+  @include transform-origin(right, center);
 }
 
 :host(.title-large.ion-cloned-element) {
