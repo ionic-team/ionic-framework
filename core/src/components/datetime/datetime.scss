@@ -23,9 +23,48 @@
    * @prop --dial-background: The background of the dial and arm in the time picker.
    */
 
-  display: block;
+  display: flex;
+
+  flex-flow: column;
 
   background: var(--background);
+}
+
+// Calendar
+// -----------------------------------
+
+/**
+ * This allows the calendar to take
+ * up 100% of the remaining height.
+ * On iOS, if there are more than
+ * 5 rows of dates, the dates should
+ * be resized to fit into this
+ * container.
+ */
+:host .datetime-calendar,
+:host .datetime-year {
+  display: flex;
+
+  flex: 1 1 auto;
+
+  flex-flow: column;
+}
+
+// Month and Year Switch
+// -----------------------------------
+:host .datetime-year {
+  display: none;
+}
+
+:host(.show-month-and-year) .datetime-year {
+  display: flex;
+}
+
+:host(.show-month-and-year) .calendar-next-prev,
+:host(.show-month-and-year) .calendar-days-of-week,
+:host(.show-month-and-year) .calendar-body,
+:host(.show-month-and-year) .datetime-time {
+  display: none;
 }
 
 :host(.datetime-readonly),

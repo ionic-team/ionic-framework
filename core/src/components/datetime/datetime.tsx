@@ -1,37 +1,49 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
+import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
-  DatetimeParts,
-  addTimePadding,
-  calculateHourFromAMPM,
   generateMonths,
   generateTime,
-  getCalendarDayState,
+  getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getEndOfWeek,
+  getPickerMonths
+} from './utils/data';
+import {
+  addTimePadding,
   getFormattedHour,
-  getInternalHourValue,
   getMonthAndDay,
-  getMonthAndYear,
+  getMonthAndYear
+} from './utils/format';
+import {
+  is24Hour
+} from './utils/helpers';
+import {
+  calculateHourFromAMPM,
+  getEndOfWeek,
+  getInternalHourValue,
   getNextDay,
   getNextMonth,
   getNextWeek,
-  getPartsFromCalendarDay,
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
-  getStartOfWeek,
-  is24Hour,
-  parseDate,
+  getStartOfWeek
+} from './utils/manipulation';
+import {
+  getPartsFromCalendarDay,
+  parseDate
+} from './utils/parse';
+import {
+  getCalendarDayState,
+  getCalendarYearState,
   shouldRenderViewFooter,
-  shouldRenderViewHeader
-} from './datetime.utils';
+  shouldRenderViewHeader,
+} from './utils/state';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -58,9 +70,13 @@ export class Datetime implements ComponentInterface {
   private timeBaseRef?: HTMLElement;
   private timeHourRef?: HTMLElement;
   private timeMinuteRef?: HTMLElement;
+  private monthRef?: HTMLElement;
+  private yearRef?: HTMLElement;
 
   private minParts?: any;
   private maxParts?: any;
+
+  @State() showMonthAndYear = false;
 
   @State() activeParts = {
     month: 5,
@@ -587,6 +603,102 @@ export class Datetime implements ComponentInterface {
 
       this.initializeKeyboardListeners();
       this.initializeTimeScrollListener();
+
+      if (mode === 'ios') {
+        this.initializeMonthAndYearScrollListeners();
+      }
+    });
+  }
+
+  private initializeMonthAndYearScrollListeners = () => {
+    const { monthRef, yearRef } = this;
+    if (!yearRef || !monthRef) { return; }
+
+    const { year } = this.workingParts;
+
+    /**
+     * Scroll initial month and year into view
+     * TODO: This does not work if scrollable area is not visible
+     */
+    const initialYear = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`);
+    if (initialYear) {
+      initialYear.scrollIntoView({ block: 'center', inline: 'center' });
+    }
+
+    let timeout: any;
+    const scrollCallback = (colType: string) => {
+      raf(() => {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = undefined;
+        }
+
+        const activeCol = colType === 'month' ? monthRef : yearRef;
+        timeout = setTimeout(() => {
+
+          const bbox = activeCol.getBoundingClientRect();
+
+          /**
+           * Select item in the center of the column
+           * which is the month/year that we want to select
+           */
+          const centerX = bbox.x + (bbox.width / 2);
+          const centerY = bbox.y + (bbox.height / 2);
+
+          const activeElement = this.el!.shadowRoot!.elementFromPoint(centerX, centerY)!;
+          const dataValue = activeElement.getAttribute('data-value');
+
+          /**
+           * If no value it is
+           * possible we hit one of the
+           * empty padding columns.
+           */
+          if (dataValue === null) {
+            return;
+          }
+
+          const value = parseInt(dataValue, 10);
+          if (colType === 'month') {
+            this.workingParts = {
+              ...this.workingParts,
+              month: value
+            }
+          } else {
+            this.workingParts = {
+              ...this.workingParts,
+              year: value
+            }
+          }
+
+          /**
+           * If the year changed, it is possible that
+           * the allowed month values have changed and the scroll
+           * position got reset
+           */
+          raf(() => {
+            const { month, year } = this.workingParts;
+            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${month}']`);
+            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${year}']`);
+
+            if (monthEl) {
+              monthEl.scrollIntoView({ block: 'center', inline: 'center' });
+            }
+
+            if (yearEl) {
+              yearEl.scrollIntoView({ block: 'center', inline: 'center' });
+            }
+          });
+        }, 250);
+      })
+    }
+    /**
+     * Add scroll listeners to the month and year containers.
+     * Wrap this in an raf so that the scroll callback
+     * does not fire when we do our initial scrollIntoView above.
+     */
+    raf(() => {
+      monthRef.addEventListener('scroll', () => scrollCallback('month'));
+      yearRef.addEventListener('scroll', () => scrollCallback('year'));
     });
   }
 
@@ -654,7 +766,7 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * Add scroll listeners to the hour and minute container.
+     * Add scroll listeners to the hour and minute containers.
      * Wrap this in an raf so that the scroll callback
      * does not fire when we do our initial scrollIntoView above.
      */
@@ -764,14 +876,107 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  private toggleMonthAndYearView = () => {
+    this.showMonthAndYear = !this.showMonthAndYear;
+  }
+
+  private renderMDYearView() {
+    return getCalendarYears(this.activeParts, true).map(year => {
+
+      const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+      return (
+        <button
+          disabled={disabled}
+          aria-selected={ariaSelected}
+          class={{
+            'datetime-year-item': true,
+            'datetime-current-year': isCurrentYear,
+            'datetime-active-year': isActiveYear
+          }}
+          onClick={() => {
+            this.workingParts = {
+              ...this.workingParts,
+              year
+            }
+            this.showMonthAndYear = false;
+          }}
+        >
+          <div class="datetime-year-inner">
+            {year}
+          </div>
+        </button>
+      )
+    })
+  }
+
+  private renderiOSYearView() {
+    return [
+      <div class="datetime-picker-before"></div>,
+      <div class="datetime-picker-after"></div>,
+      <div class="datetime-picker-highlight"></div>,
+      <div class="datetime-picker-col month-col" ref={el => this.monthRef = el} tabindex="0">
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        {getPickerMonths(this.locale, this.workingParts, this.minParts, this.maxParts).map(month => {
+          return (
+            <div
+            class="picker-col-item"
+            data-value={month.value}
+            onClick={(ev: Event) => {
+              const target = ev.target as HTMLElement;
+              target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+            }}
+          >{month.text}</div>
+          )
+        })}
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+      </div>,
+      <div class="datetime-picker-col year-col" ref={el => this.yearRef = el} tabindex="0">
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        {getCalendarYears(this.activeParts, false, this.minParts, this.maxParts).map(year => {
+          return (
+            <div
+              class="picker-col-item"
+              data-value={year}
+              onClick={(ev: Event) => {
+                const target = ev.target as HTMLElement;
+                target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+              }}
+            >{year}</div>
+          )
+        })}
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+        <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
+      </div>
+    ]
+  }
+
+  private renderYearView(mode: Mode) {
+    return (
+      <div class="datetime-year">
+        <div class="datetime-year-body">
+          {mode === 'ios' ? this.renderiOSYearView() : this.renderMDYearView()}
+        </div>
+      </div>
+    );
+  }
+
   private renderCalendarHeader(mode: Mode) {
+    const expandedIcon = mode === 'ios' ? 'chevron-down' : 'caret-up-sharp';
+    const collapsedIcon = mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp';
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none">
+            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>
@@ -865,7 +1070,14 @@ export class Datetime implements ComponentInterface {
     )
   }
 
-  private renderTime() {
+  /**
+   * Render time picker inside of datetime.
+   * Do not pass color prop to segment on
+   * iOS mode. MD segment has been customized and
+   * should take on the color prop, but iOS
+   * should just be the default segment.
+   */
+  private renderTime(mode: Mode) {
     const use24Hour = is24Hour(this.locale);
     const { ampm } = this.workingParts;
     const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
@@ -913,7 +1125,7 @@ export class Datetime implements ComponentInterface {
           </div>
           { !use24Hour && <div class="time-ampm">
             <ion-segment
-              color={this.color}
+              color={mode === 'md' ? this.color : undefined}
               value={this.workingParts.ampm}
               onIonChange={(ev: CustomEvent) => {
 
@@ -967,13 +1179,14 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderCalendarViewHeader(mode),
       this.renderCalendar(mode),
-      this.renderTime(),
+      this.renderYearView(mode),
+      this.renderTime(mode),
       this.renderFooter(mode)
     ]
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -986,7 +1199,8 @@ export class Datetime implements ComponentInterface {
             [mode]: true,
             ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
-            ['datetime-disabled']: disabled
+            ['datetime-disabled']: disabled,
+            'show-month-and-year': showMonthAndYear
           })
         }}
       >
