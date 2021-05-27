@@ -34,13 +34,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 #### Datetime
 
-- The `pickerOptions` property has been removed. Use the `overlayOptions` property instead.
+The `ion-datetime` component has undergone a complete rewrite and uses a new calendar style. As a result, some of the properties no longer apply and have been removed.
 
-- The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. Use the `locale` property instead.
+- The `pickerOptions` and `pickerFormat` properties have been removed since `ion-datetime` now uses a calendar style rather than a wheel picker style.
 
-- The `placeholder` property has been removed.
+- The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. `ion-datetime` can now automatically format these values according to your devices locale thanks to the [Intl.DateTimeFormat API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat). To set a specific locale, use the new `locale` property.
 
-- The `text` and `placeholder` Shadow Parts have been removed.
+- `ion-datetime` now displays the calendar inline by default, allowing for more flexibility in presentation. As a result, the `placeholder` property has been removed. Additionally, the `text` and `placeholder` Shadow Parts have been removed.
 
 #### Header
 

@@ -660,10 +660,6 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
-          * Which type of datetime picker that should be used. `'calendar'` will display a calendar picker with a time input. `'wheel'` will display a scrollable list of date and time options.
-         */
-        "interactionStyle": 'calendar' | 'wheel';
-        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale": string;
@@ -695,10 +691,6 @@ export namespace Components {
           * Opens the datetime overlay. Only applies when `presentationStyle="overlay"`.
          */
         "open": () => Promise<void>;
-        /**
-          * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
-         */
-        "pickerFormat"?: string;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
@@ -4080,10 +4072,6 @@ declare namespace LocalJSX {
          */
         "hourValues"?: number[] | number | string;
         /**
-          * Which type of datetime picker that should be used. `'calendar'` will display a calendar picker with a time input. `'wheel'` will display a scrollable list of date and time options.
-         */
-        "interactionStyle"?: 'calendar' | 'wheel';
-        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale"?: string;
@@ -4131,10 +4119,6 @@ declare namespace LocalJSX {
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
-        /**
-          * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
-         */
-        "pickerFormat"?: string;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
