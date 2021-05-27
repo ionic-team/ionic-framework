@@ -41,8 +41,6 @@ import {
 import {
   getCalendarDayState,
   getCalendarYearState,
-  shouldRenderViewFooter,
-  shouldRenderViewHeader,
 } from './utils/state';
 
 /**
@@ -63,9 +61,7 @@ import {
 })
 export class Datetime implements ComponentInterface {
 
-  private presentationType: DatetimePresentationType = DatetimePresentationType.Inline;
   private inputId = `ion-dt-${datetimeIds++}`;
-  private showDefaultTitleAndButtons = true;
   private calendarBodyRef?: HTMLElement;
   private timeBaseRef?: HTMLElement;
   private timeHourRef?: HTMLElement;
@@ -161,11 +157,10 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * The display format of the date and time as text that shows
-   * within the item. When the `pickerFormat` input is not used, then the
-   * `displayFormat` is used for both display the formatted text, and determining
-   * the datetime picker's columns. See the `pickerFormat` input description for
-   * more info. Defaults to `MMM D, YYYY`.
+   * The format of the date and time that is returned in the
+   * event payload of `ionChange`. You can configure
+   * the timezone used with the `displayTimezone` property.
+   * Defaults to `MMM D, YYYY`.
    */
   @Prop() displayFormat = 'MMM D, YYYY';
 
@@ -256,6 +251,24 @@ export class Datetime implements ComponentInterface {
       value: this.value
     });
   }
+
+  /**
+   * If `true`, a header will be shown above the calendar
+   * picker. On `ios` mode this will include the
+   * slotted title, and on `md` mode this will include
+   * the slotted title and the selected date.
+   */
+  @Prop() showDefaultTitle = false;
+
+  /**
+   * If `true`, the default "Cancel" and "OK" buttons
+   * will be rendered at the bottom of the `ion-datetime`
+   * component. Developers can also use the `button` slot
+   * if they want to customize these buttons. If custom
+   * buttons are set in the `button` slot then the
+   * default buttons will not be rendered.
+   */
+  @Prop() showDefaultButtons = false;
 
   /**
    * Emitted when the datetime selection was cancelled.
@@ -426,14 +439,6 @@ export class Datetime implements ComponentInterface {
       year,
       hour,
       minute
-    }
-  }
-
-  connectedCallback() {
-    const modalOrPopover = this.el.closest('ion-modal, ion-popover');
-    if (modalOrPopover) {
-      this.presentationType = (modalOrPopover.tagName === 'ION-MODAL') ? DatetimePresentationType.Modal : DatetimePresentationType.Popover;
-      modalOrPopover.classList.add('overlay-datetime');
     }
   }
 
@@ -761,15 +766,6 @@ export class Datetime implements ComponentInterface {
     this.processMinParts();
     this.processMaxParts();
     this.emitStyle();
-
-    /**
-     * Buttons and titles should only be shown
-     * by default when in a modal; however,
-     * developers can slot in their own buttons and
-     * titles if they want to override this behavior.
-     */
-    const isModal = this.el.closest('ion-modal');
-    this.showDefaultTitleAndButtons = (isModal) ? true : false;
   }
 
   private emitStyle() {
@@ -830,9 +826,9 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private renderFooter(mode: Mode) {
+  private renderFooter() {
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
-    if (!shouldRenderViewFooter(mode, this.presentationType, hasSlottedButtons)) { return; }
+    if (!hasSlottedButtons && !this.showDefaultButtons) { return; }
 
     /**
      * By default we render two buttons:
@@ -846,10 +842,10 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-buttons">
           <div class="datetime-action-buttons">
             <slot name="buttons">
-              {this.showDefaultTitleAndButtons && <ion-buttons>
+              <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.dismiss()}>{this.cancelText}</ion-button>
                 <ion-button color={this.color} onClick={() => this.dismiss()}>{this.doneText}</ion-button>
-              </ion-buttons> }
+              </ion-buttons>
             </slot>
           </div>
         </div>
@@ -1136,7 +1132,7 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarViewHeader(mode: Mode) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
-    if (!shouldRenderViewHeader(mode, this.presentationType, hasSlottedTitle)) { return; }
+    if (!hasSlottedTitle && !this.showDefaultTitle) { return; }
 
     /**
      * On iOS there is no default title
@@ -1162,7 +1158,7 @@ export class Datetime implements ComponentInterface {
       this.renderCalendar(mode),
       this.renderYearView(mode),
       this.renderTime(mode),
-      this.renderFooter(mode)
+      this.renderFooter()
     ]
   }
 
@@ -1192,9 +1188,3 @@ export class Datetime implements ComponentInterface {
 }
 
 let datetimeIds = 0;
-
-const enum DatetimePresentationType {
-  Modal = 'modal',
-  Popover = 'popover',
-  Inline = 'inline'
-}
