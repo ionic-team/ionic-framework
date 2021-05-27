@@ -914,7 +914,7 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-picker-before"></div>,
       <div class="datetime-picker-after"></div>,
       <div class="datetime-picker-highlight"></div>,
-      <div class="datetime-picker-col month-col" ref={el => this.monthRef = el}>
+      <div class="datetime-picker-col month-col" ref={el => this.monthRef = el} tabindex="0">
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
@@ -934,7 +934,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
       </div>,
-      <div class="datetime-picker-col year-col" ref={el => this.yearRef = el}>
+      <div class="datetime-picker-col year-col" ref={el => this.yearRef = el} tabindex="0">
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
