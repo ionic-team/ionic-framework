@@ -22,12 +22,12 @@ export const IonicVue: Plugin = {
 
   async install(_: App, config: IonicConfig = {}) {
     if (typeof (window as any) !== 'undefined') {
-      const { ael, rel } = getHelperFunctions();
-      // TODO: need to pass in ce
+      const { ael, rel, ce } = getHelperFunctions();
       initialize({
         ...config,
         _ael: ael,
-        _rel: rel
+        _rel: rel,
+        _ce: ce
       });
     }
   }
