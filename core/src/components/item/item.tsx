@@ -74,8 +74,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
-   * The fill for the item. If "solid" it will have a background, if
-   * "outline" it will be transparent with a border.
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border.
    */
   @Prop() fill?: 'outline' | 'solid';
 
