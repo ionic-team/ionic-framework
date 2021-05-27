@@ -645,8 +645,18 @@ export class Datetime implements ComponentInterface {
           const centerY = bbox.y + (bbox.height / 2);
 
           const activeElement = this.el!.shadowRoot!.elementFromPoint(centerX, centerY)!;
-          const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+          const dataValue = activeElement.getAttribute('data-value');
 
+          /**
+           * If no value it is
+           * possible we hit one of the
+           * empty padding columns.
+           */
+          if (dataValue === null) {
+            return;
+          }
+
+          const value = parseInt(dataValue, 10);
           if (colType === 'month') {
             this.workingParts = {
               ...this.workingParts,
@@ -889,7 +899,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getPickerMonths(this.locale, this.activeParts, this.minParts, this.maxParts).map(month => {
+        {getPickerMonths(this.locale, this.workingParts, this.minParts, this.maxParts).map(month => {
           return (
             <div
             class="picker-col-item"
