@@ -102,7 +102,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If `true`, a text based counter will display the input's length over its maxlength.
+   * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
    */
   @Prop() counter = true;
 
