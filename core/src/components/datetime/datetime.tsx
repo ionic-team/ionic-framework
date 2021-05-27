@@ -633,8 +633,9 @@ export class Datetime implements ComponentInterface {
           timeout = undefined;
         }
 
+        const activeCol = colType === 'month' ? monthRef : yearRef;
         timeout = setTimeout(() => {
-          const activeCol = colType === 'month' ? monthRef : yearRef;
+
           const bbox = activeCol.getBoundingClientRect();
 
           /**
@@ -668,10 +669,28 @@ export class Datetime implements ComponentInterface {
               year: value
             }
           }
+
+          /**
+           * If the year changed, it is possible that
+           * the allowed month values have changed and the scroll
+           * position got reset
+           */
+          raf(() => {
+            const { month, year } = this.workingParts;
+            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${month}']`);
+            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${year}']`);
+
+            if (monthEl) {
+              monthEl.scrollIntoView({ block: 'center', inline: 'center' });
+            }
+
+            if (yearEl) {
+              yearEl.scrollIntoView({ block: 'center', inline: 'center' });
+            }
+          });
         }, 250);
       })
     }
-
     /**
      * Add scroll listeners to the month and year containers.
      * Wrap this in an raf so that the scroll callback
