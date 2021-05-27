@@ -202,6 +202,12 @@
   z-index: 0;
 }
 
+:host .datetime-year-item[disabled] {
+  pointer-events: none;
+
+  opacity: 0.4;
+}
+
 :host .datetime-year-item .datetime-year-inner {
   @include border-radius(20px, 20px, 20px, 20px);
   @include margin(10px, 10px, 10px, 10px);
@@ -232,7 +238,8 @@
 }
 
 @media (any-hover: hover) {
-  :host .datetime-year-item:hover {
+  :host .datetime-year-item:hover,
+  :host .datetime-year-item:focus {
     background: current-color(base, 0.1);
   }
 }

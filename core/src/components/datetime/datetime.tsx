@@ -11,8 +11,7 @@ import {
   getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getPickerMonths,
-  getPickerYears
+  getPickerMonths
 } from './utils/data';
 import {
   addTimePadding,
@@ -853,7 +852,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMDYearView() {
-    return getCalendarYears(this.activeParts).map(year => {
+    return getCalendarYears(this.activeParts, true).map(year => {
 
       const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
       return (
@@ -910,7 +909,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getPickerYears(this.activeParts, this.minParts, this.maxParts).map(year => {
+        {getCalendarYears(this.activeParts, false, this.minParts, this.maxParts).map(year => {
           return (
             <div
               class="picker-col-item"

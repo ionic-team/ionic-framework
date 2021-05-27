@@ -1,5 +1,6 @@
 import { Mode } from '../../../interface';
 import { DatetimeParts } from '../datetime-interface';
+
 import {
   isAfter,
   isBefore,
@@ -175,35 +176,15 @@ export const getPickerMonths = (locale: string, refParts: DatetimeParts, minPart
   return months;
 }
 
-export const getPickerYears = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const getCalendarYears = (refParts: DatetimeParts, showOutOfBoundsYears = false, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const { year } = refParts;
-  const maxYear = maxParts ? maxParts.year : year + 20;
-  const minYear = minParts ? minParts.year : year - 20;
+  const maxYear = (showOutOfBoundsYears) ? year + 20 : (maxParts?.year || year + 20)
+  const minYear = (showOutOfBoundsYears) ? year - 20 : (minParts?.year || year - 20);
 
   const years = [];
   for (let i = maxYear; i >= minYear; i--) {
     years.push(i);
   }
 
-  return years;
-}
-
-export const getCalendarYears = (refParts: DatetimeParts) => {
-  const { year } = refParts;
-  const futureYears: number[] = [];
-  const pastYears: number[] = [];
-
-  for (let i = 1; i <= 10; i++) {
-    futureYears.push(year + i);
-  }
-
-  for (let i = 10; i > 0; i--) {
-    pastYears.push(year - i);
-  }
-
-  return [
-    ...pastYears,
-    refParts.year,
-    ...futureYears
-  ]
+  return years
 }
