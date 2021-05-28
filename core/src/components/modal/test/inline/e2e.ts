@@ -20,7 +20,7 @@ test('modal: inline', async () => {
   screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
   modal = await page.find('ion-modal');
-  expect(modal).toBeNull();
+  expect(modal).not.toBe(null);
 
   await page.click('ion-button');
   await page.waitForSelector('ion-modal');
