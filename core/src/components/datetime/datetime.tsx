@@ -76,13 +76,13 @@ export class Datetime implements ComponentInterface {
 
   @State() activeParts = {
     month: 5,
-    day: 12,
+    day: 28,
     year: 2021
   }
 
   @State() workingParts: DatetimeParts = {
     month: 5,
-    day: 12,
+    day: 28,
     year: 2021,
     hour: 13,
     minute: 52,
@@ -91,7 +91,7 @@ export class Datetime implements ComponentInterface {
 
   private todayParts = {
     month: 5,
-    day: 14,
+    day: 28,
     year: 2021
   }
 
@@ -155,6 +155,15 @@ export class Datetime implements ComponentInterface {
   protected maxChanged() {
     this.processMaxParts();
   }
+
+  /**
+   * Which values you want to select. `'date'` will show
+   * a calendar picker to select the month, day, and year. `'time'`
+   * will show a time picker to select the hour, minute, and (optionally)
+   * AM/PM. `'date-time'` will show the date picker first and time picker second.
+   * `'time-date'` will show the time picker first and date picker second.
+   */
+  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' = 'date-time';
 
   /**
    * The format of the date and time that is returned in the
@@ -297,13 +306,16 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   private initializeKeyboardListeners = () => {
+    const { calendarBodyRef } = this;
+    if (!calendarBodyRef) { return; }
+
     const root = this.el!.shadowRoot!;
 
     /**
      * Get a reference to the month
      * element we are currently viewing.
      */
-    const currentMonth = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
+    const currentMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(2)')!;
 
     /**
      * When focusing the calendar body, we want to pass focus
@@ -442,7 +454,7 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  componentDidLoad() {
+  private initializeCalendarIOListeners = () => {
     const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
 
@@ -586,14 +598,19 @@ export class Datetime implements ComponentInterface {
         root: calendarBodyRef
       });
       startIO.observe(startMonth);
-
-      this.initializeKeyboardListeners();
-      this.initializeTimeScrollListener();
-
-      if (mode === 'ios') {
-        this.initializeMonthAndYearScrollListeners();
-      }
     });
+  }
+
+  componentDidLoad() {
+    const mode = getIonMode(this);
+
+    this.initializeCalendarIOListeners();
+    this.initializeKeyboardListeners();
+    this.initializeTimeScrollListener();
+
+    if (mode === 'ios') {
+      this.initializeMonthAndYearScrollListeners();
+    }
   }
 
   private initializeMonthAndYearScrollListeners = () => {
@@ -1146,18 +1163,42 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderCalendarAndTimeViews(mode: Mode) {
-    return [
-      this.renderCalendarViewHeader(mode),
-      this.renderCalendar(mode),
-      this.renderYearView(mode),
-      this.renderTime(mode),
-      this.renderFooter()
-    ]
+  private renderDatetime(mode: Mode) {
+    const { presentation } = this;
+    switch (presentation) {
+      case 'date-time':
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderCalendar(mode),
+          this.renderYearView(mode),
+          this.renderTime(mode),
+          this.renderFooter()
+        ]
+      case 'time-date':
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderTime(mode),
+          this.renderCalendar(mode),
+          this.renderYearView(mode),
+          this.renderFooter()
+        ]
+      case 'time':
+        return [
+          this.renderTime(mode),
+          this.renderFooter()
+        ]
+      case 'date':
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderCalendar(mode),
+          this.renderYearView(mode),
+          this.renderFooter()
+        ]
+    }
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -1171,11 +1212,12 @@ export class Datetime implements ComponentInterface {
             ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
-            'show-month-and-year': showMonthAndYear
+            'show-month-and-year': showMonthAndYear,
+            [`datetime-presentation-${presentation}`]: true
           })
         }}
       >
-        {this.renderCalendarAndTimeViews(mode)}
+        {this.renderDatetime(mode)}
       </Host>
     );
   }

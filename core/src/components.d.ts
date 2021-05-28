@@ -692,6 +692,10 @@ export namespace Components {
          */
         "open": () => Promise<void>;
         /**
+          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+         */
+        "presentation": 'date-time' | 'time-date' | 'date' | 'time';
+        /**
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly": boolean;
@@ -4127,6 +4131,10 @@ declare namespace LocalJSX {
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
+          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+         */
+        "presentation"?: 'date-time' | 'time-date' | 'date' | 'time';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */

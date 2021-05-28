@@ -3,17 +3,37 @@
   <head>
     <meta charset="UTF-8">
     <title>Datetime - Basic</title>
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ionic App" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <style>
+    body {
+      overflow: hidden;
+    }
       ion-datetime {
+
+        height: 360px;
         margin: 0 auto;
 
         overflow: hidden;
+
+        position: absolute;
+        left: 0;
+         right: 0;
+         top: 50%;
+         bottom:0;
+         transform: translateY(-50%);
       }
 
       ion-datetime.md {
@@ -195,19 +215,29 @@
       ion-content::part(scroll) {
         touch-action: auto;
       }
+
+      #invisible {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
     <ion-app>
-      <ion-content>
-        <ion-button id="popover-trigger">Options</ion-button>
+      <ion-content scroll-y="false">
+        <br><br>
+        <!-- <ion-button id="popover-trigger">Options</ion-button> -->
+
+        <ion-item id="invisible">
+          <ion-label>Dark Mode</ion-label>
+          <ion-checkbox slot="end"></ion-checkbox>
+        </ion-item>
 
         <ion-popover trigger="popover-trigger">
           <ion-list lines="none">
-            <ion-item>
+            <!--<ion-item>
               <ion-label>Dark Mode</ion-label>
               <ion-checkbox slot="end"></ion-checkbox>
-            </ion-item>
+            </ion-item>-->
             <ion-item detail="true" href="?ionic:mode=ios">
               <ion-label>iOS Mode</ion-label>
             </ion-item>
