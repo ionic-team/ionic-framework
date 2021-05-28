@@ -12,8 +12,6 @@ import { NavController } from '../../providers/nav-controller';
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
 
-import { componentOnReady } from '@ionic/core';
-
 @Directive({
   selector: 'ion-router-outlet',
   exportAs: 'outlet',

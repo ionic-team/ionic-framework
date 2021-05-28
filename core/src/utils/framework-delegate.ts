@@ -1,5 +1,6 @@
-import { componentOnReady } from './helpers';
 import { ComponentRef, FrameworkDelegate } from '../interface';
+
+import { componentOnReady } from './helpers';
 
 export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,

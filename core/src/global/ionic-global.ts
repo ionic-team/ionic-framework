@@ -24,7 +24,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   // Setup platforms
   setupPlatforms(win);
 
-  let platformHelpers: any = {};
+  const platformHelpers: any = {};
   if (userConfig._ael) {
     platformHelpers.ael = userConfig._ael;
   }
