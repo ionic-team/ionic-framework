@@ -1,8 +1,12 @@
 import { defineComponent, h, ref, onMounted } from 'vue';
+import { defineCustomElement } from '../utils';
+import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js';
 
 export const IonPopover = defineComponent({
   name: 'IonPopover',
   setup(_, { attrs, slots }) {
+    defineCustomElement('ion-popover', IonPopoverCmp);
+
     const isOpen = ref(false);
     const elementRef = ref();
 
