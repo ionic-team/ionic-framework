@@ -1134,16 +1134,10 @@ export class Datetime implements ComponentInterface {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) { return; }
 
-    /**
-     * On iOS there is no default title
-     * shown. User can slot in a custom title.
-     */
-    const defaultTitle = mode === 'md' ? 'Select Date' : '';
-
     return (
       <div class="datetime-header">
         <div class="datetime-title">
-          <slot name="title">{defaultTitle}</slot>
+          <slot name="title">Select Date</slot>
         </div>
         {mode === 'md' && <div class="datetime-selected-date">
           {getMonthAndDay(this.locale, this.activeParts)}
