@@ -198,7 +198,6 @@
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
-
   @include padding($datetime-ios-padding / 2, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   font-size: 16px;

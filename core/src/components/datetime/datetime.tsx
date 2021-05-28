@@ -679,9 +679,9 @@ export class Datetime implements ComponentInterface {
            * position got reset
            */
           raf(() => {
-            const { month, year } = this.workingParts;
-            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${month}']`);
-            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${year}']`);
+            const { month: workingMonth, year: workingYear } = this.workingParts;
+            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${workingMonth}']`);
+            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${workingYear}']`);
 
             if (monthEl) {
               monthEl.scrollIntoView({ block: 'center', inline: 'center' });
