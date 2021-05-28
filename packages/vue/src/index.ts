@@ -31,19 +31,18 @@ export {
 
 export {
   modalController,
-  popoverController
+  popoverController,
+  alertController,
+  actionSheetController,
+  loadingController,
+  pickerController,
+  toastController
 } from './controllers';
 
 export * from './globalExtensions';
 
 export {
-  // Overlay Controllers
-  alertController,
-  actionSheetController,
   menuController,
-  loadingController,
-  pickerController,
-  toastController,
 
   // Security
   IonicSafeString,
