@@ -26,9 +26,15 @@ const testComponent = (overlay, shadow = false) => {
     cy.get(overlay).shadow().find('ion-backdrop').click({ force: true });
   } else {
     cy.get(`${overlay} ion-backdrop`).click({ force: true });
-  }
 
-  cy.get(overlay).should('not.exist');
+    /**
+     * Overlay components that are shadow can be used inline
+     * so they should not be removed from the DOM. This test
+     * might need to be revisited if other overlay components
+     * are converted to shadow as well.
+     */
+    cy.get(overlay).should('not.exist');
+  }
 }
 
 describe('Overlays', () => {
@@ -50,7 +56,7 @@ describe('Overlays', () => {
   });
 
   it(`should open and close ion-modal via controller`, () => {
-    testController('ion-modal');
+    testController('ion-modal', true);
   });
 
   it(`should open and close ion-popover via controller`, () => {
@@ -82,7 +88,7 @@ describe('Overlays', () => {
   });
 
   it(`should open and close ion-modal via component`, () => {
-    testComponent('ion-modal');
+    testComponent('ion-modal', true);
   });
 
   it(`should open and close ion-popover via component`, () => {
