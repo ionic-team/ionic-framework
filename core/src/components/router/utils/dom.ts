@@ -88,5 +88,5 @@ const searchNavNode = (root: HTMLElement | undefined): NavOutletElement | undefi
     return root as NavOutletElement;
   }
   const outlet = root.querySelector<NavOutletElement>(QUERY);
-  return outlet ? outlet : undefined;
+  return outlet ?? undefined;
 };
