@@ -3,20 +3,16 @@ import { defineCustomElement } from '../utils';
 import { IonApp as IonAppCmp } from '@ionic/core/components/ion-app.js';
 
 const userComponents = shallowRef([]);
-export const IonApp = /*@__PURE__*/ defineComponent({
-  name: 'IonApp',
-  setup(_, { attrs, slots }) {
-    defineCustomElement('ion-app', IonAppCmp);
-
-    return () => {
-      return h(
-        'ion-app',
-        {
-          ...attrs
-        },
-        [slots.default && slots.default(), ...userComponents.value]
-      )
-    }
+export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
+  defineCustomElement('ion-app', IonAppCmp);
+  return () => {
+    return h(
+      'ion-app',
+      {
+        ...attrs
+      },
+      [slots.default && slots.default(), ...userComponents.value]
+    )
   }
 });
 
