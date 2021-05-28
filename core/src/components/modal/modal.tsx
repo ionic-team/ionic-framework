@@ -37,6 +37,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
+  private destroyTriggerInteraction?: () => void;
 
   // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
@@ -138,6 +139,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * An ID corresponding to the trigger element that
+   * causes the modal to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  onTriggerChange() {
+    this.configureTriggerInteraction();
+  }
+
+  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -210,6 +221,32 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+
+    this.configureTriggerInteraction();
+  }
+
+  private configureTriggerInteraction = () => {
+    const { trigger, el, destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
+
+    const triggerEl = (trigger !== undefined) ? document.getElementById(trigger) : null;
+    if (!triggerEl) { return; }
+
+    const configureTriggerInteraction = (triggerEl: HTMLElement, modalEl: HTMLIonModalElement) => {
+      const openModal = () => {
+        modalEl.present();
+      }
+      triggerEl.addEventListener('click', openModal);
+
+      return () => {
+        triggerEl.removeEventListener('click', openModal);
+      }
+    }
+
+    this.destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
   }
 
   /**

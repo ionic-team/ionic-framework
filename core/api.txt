@@ -732,6 +732,7 @@ ion-modal,prop,mode,"ios" | "md",undefined,false,false
 ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
 ion-modal,prop,swipeToClose,boolean,false,false,false
+ion-modal,prop,trigger,string | undefined,undefined,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-modal,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>

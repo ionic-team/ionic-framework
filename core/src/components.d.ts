@@ -1437,6 +1437,10 @@ export namespace Components {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the modal to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonNav {
         /**
@@ -4912,6 +4916,10 @@ declare namespace LocalJSX {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the modal to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonNav {
         /**
