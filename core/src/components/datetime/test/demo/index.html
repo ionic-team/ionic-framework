@@ -3,31 +3,40 @@
   <head>
     <meta charset="UTF-8">
     <title>Datetime - Basic</title>
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ionic App" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <style>
+    body {
+      overflow: hidden;
+    }
       ion-datetime {
-        position: fixed;
 
+        height: 360px;
         margin: 0 auto;
-
-        top: 50%;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
 
         overflow: hidden;
 
+        position: absolute;
+        left: 0;
+         right: 0;
+         top: 50%;
+         bottom:0;
+         transform: translateY(-50%);
       }
 
       ion-datetime.md {
-        height: 562px;
-
         border-radius: 4px;
 
         box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
@@ -42,8 +51,6 @@
       }
 
       ion-datetime.ios {
-        height: 440px;
-
         border-radius: 12px;
       }
 
@@ -208,48 +215,66 @@
       ion-content::part(scroll) {
         touch-action: auto;
       }
+
+      #invisible {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
     <ion-app>
-      <ion-content>
-        <div style="display: flex; justify-content: center">
-          <ion-item lines="none">
-            <ion-label>Dark Mode</ion-label>
-            <ion-checkbox slot="end"></ion-checkbox>
-          </ion-item>
-          <ion-item lines="none" detail="true" href="?ionic:mode=ios">
-            <ion-label>iOS Mode</ion-label>
-          </ion-item>
-          <ion-item lines="none" detail="true" href="?ionic:mode=md">
-            <ion-label>MD Mode</ion-label>
-          </ion-item>
+      <ion-content scroll-y="false">
+        <br><br>
+        <!-- <ion-button id="popover-trigger">Options</ion-button> -->
 
-          <ion-item lines="none">
-            <ion-label>Locale</ion-label>
-            <ion-input placeholder="default" id="locale"></ion-input>
-          </ion-item>
+        <ion-item id="invisible">
+          <ion-label>Dark Mode</ion-label>
+          <ion-checkbox slot="end"></ion-checkbox>
+        </ion-item>
 
-          <ion-item lines="none">
-            <ion-label>Color</ion-label>
-            <ion-select id="color" value="primary">
-              <ion-select-option value="primary">Primary</ion-select-option>
-              <ion-select-option value="secondary">Secondary</ion-select-option>
-              <ion-select-option value="tertiary">Tertiary</ion-select-option>
-              <ion-select-option value="success">Success</ion-select-option>
-              <ion-select-option value="warning">Warning</ion-select-option>
-              <ion-select-option value="danger">Danger</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>
+        <ion-popover trigger="popover-trigger">
+          <ion-list lines="none">
+            <!--<ion-item>
+              <ion-label>Dark Mode</ion-label>
+              <ion-checkbox slot="end"></ion-checkbox>
+            </ion-item>-->
+            <ion-item detail="true" href="?ionic:mode=ios">
+              <ion-label>iOS Mode</ion-label>
+            </ion-item>
+            <ion-item detail="true" href="?ionic:mode=md">
+              <ion-label>MD Mode</ion-label>
+            </ion-item>
 
-        <ion-datetime max="2023-10-15" min="2015-07-04">
-          <span slot="title">Select Date</span>
-          <ion-buttons slot="buttons">
-            <ion-button color="primary">Cancel</ion-button>
-            <ion-button color="primary">Ok</ion-button>
-          </ion-buttons>
-        </ion-datetime>
+            <ion-item>
+              <ion-label>Show Default Title</ion-label>
+              <ion-toggle id="titleToggle"></ion-toggle>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Show Default Buttons</ion-label>
+              <ion-toggle id="buttonsToggle"></ion-toggle>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Locale</ion-label>
+              <ion-input placeholder="default" id="locale"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Color</ion-label>
+              <ion-select id="color" value="primary">
+                <ion-select-option value="primary">Primary</ion-select-option>
+                <ion-select-option value="secondary">Secondary</ion-select-option>
+                <ion-select-option value="tertiary">Tertiary</ion-select-option>
+                <ion-select-option value="success">Success</ion-select-option>
+                <ion-select-option value="warning">Warning</ion-select-option>
+                <ion-select-option value="danger">Danger</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-popover>
+
+        <ion-datetime></ion-datetime>
       </ion-content>
     </ion-app>
     <script>
@@ -257,6 +282,8 @@
       const locale = document.querySelector('#locale');
       const datetime = document.querySelector('ion-datetime');
       const buttons = document.querySelectorAll('ion-button');
+      const titleToggle = document.querySelector('#titleToggle');
+      const buttonsToggle = document.querySelector('#buttonsToggle');
       locale.addEventListener('ionBlur', (ev) => {
         const value = ev.target.value;
         datetime.locale = (!!value) ? value : 'default';
@@ -274,6 +301,13 @@
         buttons.forEach(button => {
           button.color = ev.target.value;
         })
+      })
+
+      titleToggle.addEventListener('ionChange', (ev) => {
+        datetime.showDefaultTitle = ev.detail.checked;
+      })
+      buttonsToggle.addEventListener('ionChange', (ev) => {
+        datetime.showDefaultButtons = ev.detail.checked;
       })
     </script>
   </body>

@@ -41,8 +41,6 @@ import {
 import {
   getCalendarDayState,
   getCalendarYearState,
-  shouldRenderViewFooter,
-  shouldRenderViewHeader,
 } from './utils/state';
 
 /**
@@ -63,9 +61,7 @@ import {
 })
 export class Datetime implements ComponentInterface {
 
-  private presentationType: DatetimePresentationType = DatetimePresentationType.Inline;
   private inputId = `ion-dt-${datetimeIds++}`;
-  private showDefaultTitleAndButtons = true;
   private calendarBodyRef?: HTMLElement;
   private timeBaseRef?: HTMLElement;
   private timeHourRef?: HTMLElement;
@@ -80,13 +76,13 @@ export class Datetime implements ComponentInterface {
 
   @State() activeParts = {
     month: 5,
-    day: 12,
+    day: 28,
     year: 2021
   }
 
   @State() workingParts: DatetimeParts = {
     month: 5,
-    day: 12,
+    day: 28,
     year: 2021,
     hour: 13,
     minute: 52,
@@ -95,7 +91,7 @@ export class Datetime implements ComponentInterface {
 
   private todayParts = {
     month: 5,
-    day: 14,
+    day: 28,
     year: 2021
   }
 
@@ -161,11 +157,19 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * The display format of the date and time as text that shows
-   * within the item. When the `pickerFormat` input is not used, then the
-   * `displayFormat` is used for both display the formatted text, and determining
-   * the datetime picker's columns. See the `pickerFormat` input description for
-   * more info. Defaults to `MMM D, YYYY`.
+   * Which values you want to select. `'date'` will show
+   * a calendar picker to select the month, day, and year. `'time'`
+   * will show a time picker to select the hour, minute, and (optionally)
+   * AM/PM. `'date-time'` will show the date picker first and time picker second.
+   * `'time-date'` will show the time picker first and date picker second.
+   */
+  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' = 'date-time';
+
+  /**
+   * The format of the date and time that is returned in the
+   * event payload of `ionChange`. You can configure
+   * the timezone used with the `displayTimezone` property.
+   * Defaults to `MMM D, YYYY`.
    */
   @Prop() displayFormat = 'MMM D, YYYY';
 
@@ -176,16 +180,6 @@ export class Datetime implements ComponentInterface {
    * component will default to displaying times in the user's local timezone.
    */
   @Prop() displayTimezone?: string;
-
-  /**
-   * The format of the date and time picker columns the user selects.
-   * A datetime input can have one or many datetime parts, each getting their
-   * own column which allow individual selection of that particular datetime part. For
-   * example, year and month columns are two individually selectable columns which help
-   * choose an exact date from the datetime picker. Each column follows the string
-   * parse format. Defaults to use `displayFormat`.
-   */
-  @Prop() pickerFormat?: string;
 
   /**
    * The text to display on the picker's cancel button.
@@ -268,13 +262,22 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Which type of datetime picker that should be used.
-   * `'calendar'` will display a calendar picker with a
-   * time input.
-   * `'wheel'` will display a scrollable list of date
-   * and time options.
+   * If `true`, a header will be shown above the calendar
+   * picker. On `ios` mode this will include the
+   * slotted title, and on `md` mode this will include
+   * the slotted title and the selected date.
    */
-  @Prop() interactionStyle: 'calendar' | 'wheel' = 'calendar';
+  @Prop() showDefaultTitle = false;
+
+  /**
+   * If `true`, the default "Cancel" and "OK" buttons
+   * will be rendered at the bottom of the `ion-datetime`
+   * component. Developers can also use the `button` slot
+   * if they want to customize these buttons. If custom
+   * buttons are set in the `button` slot then the
+   * default buttons will not be rendered.
+   */
+  @Prop() showDefaultButtons = false;
 
   /**
    * Emitted when the datetime selection was cancelled.
@@ -303,13 +306,16 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   private initializeKeyboardListeners = () => {
+    const { calendarBodyRef } = this;
+    if (!calendarBodyRef) { return; }
+
     const root = this.el!.shadowRoot!;
 
     /**
      * Get a reference to the month
      * element we are currently viewing.
      */
-    const currentMonth = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
+    const currentMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(2)')!;
 
     /**
      * When focusing the calendar body, we want to pass focus
@@ -448,15 +454,7 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  connectedCallback() {
-    const modalOrPopover = this.el.closest('ion-modal, ion-popover');
-    if (modalOrPopover) {
-      this.presentationType = (modalOrPopover.tagName === 'ION-MODAL') ? DatetimePresentationType.Modal : DatetimePresentationType.Popover;
-      modalOrPopover.classList.add('overlay-datetime');
-    }
-  }
-
-  componentDidLoad() {
+  private initializeCalendarIOListeners = () => {
     const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
 
@@ -600,14 +598,19 @@ export class Datetime implements ComponentInterface {
         root: calendarBodyRef
       });
       startIO.observe(startMonth);
-
-      this.initializeKeyboardListeners();
-      this.initializeTimeScrollListener();
-
-      if (mode === 'ios') {
-        this.initializeMonthAndYearScrollListeners();
-      }
     });
+  }
+
+  componentDidLoad() {
+    const mode = getIonMode(this);
+
+    this.initializeCalendarIOListeners();
+    this.initializeKeyboardListeners();
+    this.initializeTimeScrollListener();
+
+    if (mode === 'ios') {
+      this.initializeMonthAndYearScrollListeners();
+    }
   }
 
   private initializeMonthAndYearScrollListeners = () => {
@@ -676,9 +679,9 @@ export class Datetime implements ComponentInterface {
            * position got reset
            */
           raf(() => {
-            const { month, year } = this.workingParts;
-            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${month}']`);
-            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${year}']`);
+            const { month: workingMonth, year: workingYear } = this.workingParts;
+            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${workingMonth}']`);
+            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${workingYear}']`);
 
             if (monthEl) {
               monthEl.scrollIntoView({ block: 'center', inline: 'center' });
@@ -780,15 +783,6 @@ export class Datetime implements ComponentInterface {
     this.processMinParts();
     this.processMaxParts();
     this.emitStyle();
-
-    /**
-     * Buttons and titles should only be shown
-     * by default when in a modal; however,
-     * developers can slot in their own buttons and
-     * titles if they want to override this behavior.
-     */
-    const isModal = this.el.closest('ion-modal');
-    this.showDefaultTitleAndButtons = (isModal) ? true : false;
   }
 
   private emitStyle() {
@@ -849,9 +843,9 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private renderFooter(mode: Mode) {
+  private renderFooter() {
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
-    if (!shouldRenderViewFooter(mode, this.presentationType, hasSlottedButtons)) { return; }
+    if (!hasSlottedButtons && !this.showDefaultButtons) { return; }
 
     /**
      * By default we render two buttons:
@@ -865,10 +859,10 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-buttons">
           <div class="datetime-action-buttons">
             <slot name="buttons">
-              {this.showDefaultTitleAndButtons && <ion-buttons>
+              <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.dismiss()}>{this.cancelText}</ion-button>
                 <ion-button color={this.color} onClick={() => this.dismiss()}>{this.doneText}</ion-button>
-              </ion-buttons> }
+              </ion-buttons>
             </slot>
           </div>
         </div>
@@ -1155,18 +1149,12 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarViewHeader(mode: Mode) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
-    if (!shouldRenderViewHeader(mode, this.presentationType, hasSlottedTitle)) { return; }
-
-    /**
-     * On iOS there is no default title
-     * shown. User can slot in a custom title.
-     */
-    const defaultTitle = mode === 'md' ? 'Select Date' : '';
+    if (!hasSlottedTitle && !this.showDefaultTitle) { return; }
 
     return (
       <div class="datetime-header">
         <div class="datetime-title">
-          <slot name="title">{defaultTitle}</slot>
+          <slot name="title">Select Date</slot>
         </div>
         {mode === 'md' && <div class="datetime-selected-date">
           {getMonthAndDay(this.locale, this.activeParts)}
@@ -1175,18 +1163,42 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderCalendarAndTimeViews(mode: Mode) {
-    return [
-      this.renderCalendarViewHeader(mode),
-      this.renderCalendar(mode),
-      this.renderYearView(mode),
-      this.renderTime(mode),
-      this.renderFooter(mode)
-    ]
+  private renderDatetime(mode: Mode) {
+    const { presentation } = this;
+    switch (presentation) {
+      case 'date-time':
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderCalendar(mode),
+          this.renderYearView(mode),
+          this.renderTime(mode),
+          this.renderFooter()
+        ]
+      case 'time-date':
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderTime(mode),
+          this.renderCalendar(mode),
+          this.renderYearView(mode),
+          this.renderFooter()
+        ]
+      case 'time':
+        return [
+          this.renderTime(mode),
+          this.renderFooter()
+        ]
+      case 'date':
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderCalendar(mode),
+          this.renderYearView(mode),
+          this.renderFooter()
+        ]
+    }
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -1200,20 +1212,15 @@ export class Datetime implements ComponentInterface {
             ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
-            'show-month-and-year': showMonthAndYear
+            'show-month-and-year': showMonthAndYear,
+            [`datetime-presentation-${presentation}`]: true
           })
         }}
       >
-        {this.renderCalendarAndTimeViews(mode)}
+        {this.renderDatetime(mode)}
       </Host>
     );
   }
 }
 
 let datetimeIds = 0;
-
-const enum DatetimePresentationType {
-  Modal = 'modal',
-  Popover = 'popover',
-  Inline = 'inline'
-}

@@ -644,7 +644,7 @@ export namespace Components {
          */
         "dismiss": () => Promise<void>;
         /**
-          * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
+          * The format of the date and time that is returned in the event payload of `ionChange`. You can configure the timezone used with the `displayTimezone` property. Defaults to `MMM D, YYYY`.
          */
         "displayFormat": string;
         /**
@@ -659,10 +659,6 @@ export namespace Components {
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
-        /**
-          * Which type of datetime picker that should be used. `'calendar'` will display a calendar picker with a time input. `'wheel'` will display a scrollable list of date and time options.
-         */
-        "interactionStyle": 'calendar' | 'wheel';
         /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
@@ -696,13 +692,21 @@ export namespace Components {
          */
         "open": () => Promise<void>;
         /**
-          * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
+          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "pickerFormat"?: string;
+        "presentation": 'date-time' | 'time-date' | 'date' | 'time';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly": boolean;
+        /**
+          * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
+         */
+        "showDefaultButtons": boolean;
+        /**
+          * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
+         */
+        "showDefaultTitle": boolean;
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
@@ -4064,7 +4068,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
+          * The format of the date and time that is returned in the event payload of `ionChange`. You can configure the timezone used with the `displayTimezone` property. Defaults to `MMM D, YYYY`.
          */
         "displayFormat"?: string;
         /**
@@ -4079,10 +4083,6 @@ declare namespace LocalJSX {
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
-        /**
-          * Which type of datetime picker that should be used. `'calendar'` will display a calendar picker with a time input. `'wheel'` will display a scrollable list of date and time options.
-         */
-        "interactionStyle"?: 'calendar' | 'wheel';
         /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
@@ -4132,13 +4132,21 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
-          * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
+          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "pickerFormat"?: string;
+        "presentation"?: 'date-time' | 'time-date' | 'date' | 'time';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly"?: boolean;
+        /**
+          * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
+         */
+        "showDefaultButtons"?: boolean;
+        /**
+          * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
+         */
+        "showDefaultTitle"?: boolean;
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */

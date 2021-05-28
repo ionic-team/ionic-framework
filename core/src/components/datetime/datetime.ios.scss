@@ -291,6 +291,13 @@
   justify-content: center;
 
   font-size: 22px;
+
+  /**
+   * This is required otherwise the
+   * highlight will appear behind
+   * the datetime.
+   */
+  z-index: 0;
 }
 
 :host .datetime-picker-col {
