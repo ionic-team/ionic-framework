@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/SearchBar/Usage" />
+
+# Usage
+
+Documentação auxiliar: **https://ionicframework.com/docs/api/searchbar**
+
+### Propriedades
+
+| Propriedade              | Atributo                           | Descrição                                                                    |  Tipo          | Default        |
+| ------------------------ | ---------------------------------- | ---------------------------------------------------------------------------- | -------------- | -------------- |
+| **showClearButton**      | **show-clear-button**              | Esconde o botão em formato de icone, para limpar o texto                     | **never**      | **never**      |
+| **showCancelButton**     | **show-cancel-button**             | Mostra um botão em formato de label no momento do focus, para limpar o texto | **focus**      | **focus**      |
+| **cancelButtonText**     | **cancel-button-text**             | Troca o texto do botão que limpa o conteúdo da caixa de input                | **Cancelar**   | **Cancelar**   |
+| **mode**                 | **mode**                           | Configura a maior parte dos estilos necessários                              | **ios**        | **ios**        |
+| **searchIcon**           | **search-icon**                    | Muda o ícone de lupa para a busca                                            | **med-search** | **med-search** |
+
+
+# Atenção ⚠️
+Os atributos listados acima, são obrigatórios para a estilização. Basta copiar o codigo abaixo para ter o componente com o padrão básico configurado.
+
+```html
+<ion-searchbar
+  show-clear-button="never"
+  show-cancel-button="focus"
+  cancel-button-text="Cancelar"
+  mode="ios"
+  search-icon="med-search">
+ </ion-searchbar>
+```

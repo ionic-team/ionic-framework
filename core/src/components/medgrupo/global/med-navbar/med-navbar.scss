@@ -24,12 +24,9 @@
   .header {
     background: var(--background);
 
-    @include iphone-x-range  {
-      padding-top: $med-iphone-x-top + $med-spacing-stack-xxxs !important;
-    }
-
     &__container {
       padding: var(--padding);
+      padding-top: var(--ion-safe-area-top, 0);
 
       position: relative;
       display: flex;

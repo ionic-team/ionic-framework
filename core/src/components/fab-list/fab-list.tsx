@@ -9,6 +9,9 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class FabList implements ComponentInterface {
 
+  //custom
+  @Prop() dsSize?: 'md' | 'lg';
+
   @Element() el!: HTMLIonFabElement;
 
   /**

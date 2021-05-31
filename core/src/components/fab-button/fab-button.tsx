@@ -14,13 +14,17 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
-    ios: 'fab-button.ios.scss',
+    ios: 'fab-button.md.scss',
     md: 'fab-button.md.scss'
   },
   shadow: true
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   @Element() el!: HTMLElement;
+
+  //custom
+  @Prop() dsSize?: 'md' | 'lg';
+  @Prop() dsName?: 'label' | 'icon-label';
 
   /**
    * The color to use from your application's color palette.
@@ -168,6 +172,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           <ion-icon icon={this.closeIcon} part="close-icon" class="close-icon" lazy={false}></ion-icon>
           <span class="button-inner">
             <slot></slot>
+            <slot name="label"></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>

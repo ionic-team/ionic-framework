@@ -17,12 +17,10 @@
 ### Depends on
 
 - [med-header](../med-header)
-- [med-toolbar](../med-toolbar)
-- [ion-buttons](../../../buttons)
+- [med-navbar](../med-navbar)
 - [ion-button](../../../button)
 - ion-icon
 - [ion-content](../../../content)
-- [ion-grid](../../../grid)
 - [ion-slides](../../../slides)
 - [ion-slide](../../../slide)
 
@@ -30,12 +28,10 @@
 ```mermaid
 graph TD;
   med-image-zoom --> med-header
-  med-image-zoom --> med-toolbar
-  med-image-zoom --> ion-buttons
+  med-image-zoom --> med-navbar
   med-image-zoom --> ion-button
   med-image-zoom --> ion-icon
   med-image-zoom --> ion-content
-  med-image-zoom --> ion-grid
   med-image-zoom --> ion-slides
   med-image-zoom --> ion-slide
   ion-button --> ion-ripple-effect

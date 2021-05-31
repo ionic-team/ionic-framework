@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/Rate-Bar',
+  title: 'Components/Global/Rate Bar',
   decorators: [withDesign],
 };
 
@@ -18,13 +18,13 @@ const TemplateDefault = () => {
         </med-rate-bar>
         <!-- component -->
 
-      <ion-content>
+      <div>
     </ion-app>
   `
 }
 
-export const Default = TemplateDefault.bind({});
-Default.parameters = {
+export const RateBar = TemplateDefault.bind({});
+RateBar.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/zdbyAa3XpX3loOjJEaXc6E/Quest%C3%B5es?node-id=826%3A1008',

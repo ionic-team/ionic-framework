@@ -1,20 +1,21 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medIcons } from '../../med-icons';
 
 export default {
-  title: 'Components/Global/Button/Icon Label',
+  title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplateIconlabel = ({ disabled }) => {
+const TemplateIconlabel = ({ disabled, iconName, label }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
         <ion-button ds-name="icon-label" ?disabled=${disabled}>
-          próxima
-          <ion-icon name="med-arrow-left-circle" slot="start"></ion-icon>
+          ${label}
+          <ion-icon name=${iconName} slot="start"></ion-icon>
         </ion-button>
         <!-- component -->
 
@@ -22,8 +23,8 @@ const TemplateIconlabel = ({ disabled }) => {
 
         <!-- component -->
         <ion-button ds-name="icon-label" ?disabled=${disabled}>
-          <ion-icon name="med-arrow-right-circle" slot="end"></ion-icon>
-          próxima
+          <ion-icon name=${iconName} slot="end"></ion-icon>
+          ${label}
         </ion-button>
         <!-- component -->
 
@@ -32,14 +33,14 @@ const TemplateIconlabel = ({ disabled }) => {
   `
 }
 
-export const IconLabel = TemplateIconlabel.bind({});
-IconLabel.parameters = {
+export const ButtonIconLabel = TemplateIconlabel.bind({});
+ButtonIconLabel.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=1619%3A594',
   },
 }
-IconLabel.argTypes = {
+ButtonIconLabel.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -47,6 +48,23 @@ IconLabel.argTypes = {
     table: {
       type:  { summary: 'boolean' },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  iconName: {
+    options: medIcons,
+    control: { type: 'select'},
+    defaultValue: 'med-arrow-left-circle',
+    description: "Mude o ícone!",
+    table: {
+      type:  { summary: 'Atributo para testes no storybook apenas' },
+    },
+  },
+  label: {
+    control: { type: 'text' },
+    defaultValue: 'button',
+    description: "Digite algo!",
+    table: {
+      type: { summary: 'Atributo para testes no storybook apenas' },
     },
   },
 };

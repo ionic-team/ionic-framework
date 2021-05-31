@@ -131,3 +131,7 @@
     border-radius: $med-border-radius-quark;
   }
 }
+
+:host-context(.light-mode):host(.med-tooltip) {
+  --background: #{$med-color-neutral-light-prime};
+}

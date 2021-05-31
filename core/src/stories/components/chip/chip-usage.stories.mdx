@@ -1,0 +1,48 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Chip/Usage" />
+
+# Chip
+
+Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/chip**
+
+## Propriedades
+
+| Propriedade  | Atributo     | Descrição                               | Tipo           | Default       |
+| ------------ | ------------ | --------------------------------------- | -------------- | ------------- |
+| **outline**  | **outline**  | Define o estilo transparente com borda. | **"boolean"**  | **undefined** |
+| **color**    | **color**    | Define o tamanho do botão.              | **"boolean"**  | **undefined** |
+
+O uso do componente **ion-label** e **ion-icon** é necessário, para estilizar corretamente o componente **ion-chip**.
+
+## Usage
+
+```html
+<!-- default -->
+<ion-chip>
+  <ion-label>ion-chip</ion-label>
+</ion-chip>
+
+<!-- icon -->
+<ion-chip>
+  <ion-icon name="med-check-circle"></ion-icon>
+  <ion-label>ion-chip</ion-label>
+</ion-chip>
+
+<!-- dual icon -->
+<ion-chip>
+  <ion-icon name="med-check-circle"></ion-icon>
+  <ion-label>ion-chip</ion-label>
+  <ion-icon name="med-check-circle"></ion-icon>
+</ion-chip>
+
+<!-- outline -->
+<ion-chip outline>
+  <ion-label>ion-chip</ion-label>
+</ion-chip>
+
+<!-- color -->
+<ion-chip color>
+  <ion-label>ion-chip</ion-label>
+</ion-chip>
+```

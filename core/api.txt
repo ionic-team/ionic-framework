@@ -147,7 +147,7 @@ ion-button,prop,color,string | undefined,undefined,false,false
 ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,dsName,"icon-label" | "icon-only" | "primary" | "secondary" | "tertiary" | undefined,undefined,false,false
-ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
+ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | "xxs" | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
@@ -367,6 +367,8 @@ ion-fab-button,prop,closeIcon,string,'close',false,false
 ion-fab-button,prop,color,string | undefined,undefined,false,false
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,download,string | undefined,undefined,false,false
+ion-fab-button,prop,dsName,"icon-label" | "label" | undefined,undefined,false,false
+ion-fab-button,prop,dsSize,"lg" | "md" | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-fab-button,prop,rel,string | undefined,undefined,false,false
@@ -407,6 +409,7 @@ ion-fab-button,part,native
 
 ion-fab-list,shadow
 ion-fab-list,prop,activated,boolean,false,false,false
+ion-fab-list,prop,dsSize,"lg" | "md" | undefined,undefined,false,false
 ion-fab-list,prop,side,"bottom" | "end" | "start" | "top",'bottom',false,false
 
 ion-footer,none
@@ -989,7 +992,7 @@ ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
-ion-searchbar,prop,placeholder,string,'Search',false,false
+ion-searchbar,prop,placeholder,string,'Pesquisar',false,false
 ion-searchbar,prop,searchIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
 ion-searchbar,prop,showClearButton,"always" | "focus" | "never",'focus',false,false
@@ -1175,6 +1178,7 @@ ion-tab-bar,prop,color,string | undefined,undefined,false,false
 ion-tab-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-tab-bar,prop,selectedTab,string | undefined,undefined,false,false
 ion-tab-bar,prop,translucent,boolean,false,false,false
+ion-tab-bar,event,medResize,TabBarResizeEventDetail,true
 ion-tab-bar,css-prop,--background
 ion-tab-bar,css-prop,--border
 ion-tab-bar,css-prop,--color
@@ -1376,6 +1380,16 @@ med-alternativas,prop,respostaCorreta,string,undefined,true,true
 med-alternativas,event,medChange,MedAlternativaInterface,true
 med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
 
+med-autocomplete,shadow
+med-autocomplete,prop,disable,boolean,false,false,false
+
+med-banner,shadow
+med-banner,prop,btnLeft,string,undefined,true,false
+med-banner,prop,btnRight,string,undefined,true,false
+med-banner,prop,header,string,undefined,true,false
+med-banner,event,btnLeftClick,void,true
+med-banner,event,btnRightClick,void,true
+
 med-cartao-resposta-item,shadow
 med-cartao-resposta-item,prop,color,string | undefined,undefined,false,false
 
@@ -1384,6 +1398,10 @@ med-cartao-resposta-lista,shadow
 med-enunciado,shadow
 med-enunciado,prop,imagens,string | string[],undefined,true,true
 med-enunciado,event,medGalleryRequest,string,true
+
+med-enunciado-discursiva,shadow
+med-enunciado-discursiva,prop,imagens,string | string[],undefined,true,true
+med-enunciado-discursiva,event,medGalleryRequest,string,true
 
 med-header,shadow
 med-header,event,medResize,headerResizeEventDetail,true

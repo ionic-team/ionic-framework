@@ -34,7 +34,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   // custom
   @Prop() dsName?: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
-  @Prop() dsSize?: 'xs' | 'sm' | 'md' | 'lg';
+  @Prop() dsSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
   private iconOnly = false;
   private iconLabel = false;
 

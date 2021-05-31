@@ -164,6 +164,13 @@ export default defineComponent({
 | `translucent` | `translucent`  | If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                 | `boolean`             | `false`     |
 
 
+## Events
+
+| Event       | Description | Type                                   |
+| ----------- | ----------- | -------------------------------------- |
+| `medResize` |             | `CustomEvent<TabBarResizeEventDetail>` |
+
+
 ## CSS Custom Properties
 
 | Name           | Description               |

@@ -2,17 +2,17 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/Button/Tertiary',
+  title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplateTertiary = ({ disabled, expand }) => {
+const TemplateTertiary = ({ disabled, expand, size, label }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="tertiary" ?disabled=${disabled} .expand=${expand}>ion-button</ion-button>
+        <ion-button ds-name="tertiary" ?disabled=${disabled} .expand=${expand} ds-size=${size}>${label}</ion-button>
         <!-- component -->
 
       </div>
@@ -20,14 +20,14 @@ const TemplateTertiary = ({ disabled, expand }) => {
   `
 }
 
-export const Tertiary = TemplateTertiary.bind({});
-Tertiary.parameters = {
+export const ButtonTertiary = TemplateTertiary.bind({});
+ButtonTertiary.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=764%3A19',
   },
 }
-Tertiary.argTypes = {
+ButtonTertiary.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -45,6 +45,23 @@ Tertiary.argTypes = {
     table: {
       type:  { summary: ['full | block'] },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  size: {
+    options: [undefined, 'xxs', 'xs', 'sm'],
+    control: { type: 'radio'},
+    description: "Define o tamanho do botão.",
+    table: {
+      type:  { summary: 'xxs | xs | sm' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  label: {
+    control: { type: 'text' },
+    defaultValue: 'button',
+    description: "Digite algo!",
+    table: {
+      type:  { summary: 'Atributo para testes no storybook apenas' },
     },
   },
 };

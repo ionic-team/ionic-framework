@@ -1,0 +1,52 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Fab/Usage" />
+
+# Fab
+
+Documentação auxiliar fab: **https://ionicframework.com/docs/api/fab**
+
+## Propriedades
+
+| Propriedade  | Atributo     | Descrição                          | Tipo                 | Default        |
+| ------------ | ------------ | ---------------------------------- | -------------------- | -------------- |
+| **dsName**   | **ds-name**  | Define se o fab terá icone + label | **"icon-label"**     | **undefined**  |
+| **dsName**   | **ds-name**  | Define se o fab terá apenas label  | **"label"**          | **undefined**  |
+| **disabled** | **disabled** | Define o estado disabled do botão  | **boolean**          | **undefined**  |
+| **dsSize**   | **ds-size**  | Define o tamanho do botão          | **"md"** \| **"lg"** | **undefined**  |
+
+### Usage
+```html
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button ds-name="icon-label">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+    <ion-fab-button><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+    <ion-fab-button><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+```
+
+## Fab Variations
+
+### Tamanhos
+
+⚠️ A propriedade **ds-size** deve ser inserida tanto no componente **ion-fab** quanto no **ion-fab-list** e **ion-fab-button** para que os tamanhos sejam aplicados.
+
+```html
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button ds-size="lg" ds-name="icon-label">
+    <ion-icon name="add"></ion-icon>
+    <ion-label slot="label">ion-label</ion-label>
+  </ion-fab-button>
+  <ion-fab-list ds-size="lg" side="top">
+    <ion-fab-button ds-size="lg"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    <ion-fab-button ds-size="lg"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+    <ion-fab-button ds-size="lg"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+    <ion-fab-button ds-size="lg"><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+```

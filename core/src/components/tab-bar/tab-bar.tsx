@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, TabBarChangedEventDetail } from '../../interface';
+import { Color, TabBarChangedEventDetail, TabBarResizeEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -18,6 +18,10 @@ import { createColorClasses } from '../../utils/theme';
 export class TabBar implements ComponentInterface {
   private keyboardWillShowHandler?: () => void;
   private keyboardWillHideHandler?: () => void;
+
+  private hostHeight = 0;
+  private hostResizeObserver!: ResizeObserver;
+  @Event() medResize!: EventEmitter<TabBarResizeEventDetail>;
 
   @Element() el!: HTMLElement;
 
@@ -55,6 +59,7 @@ export class TabBar implements ComponentInterface {
 
   componentWillLoad() {
     this.selectedTabChanged();
+    this.setSize();
   }
 
   connectedCallback() {
@@ -83,9 +88,29 @@ export class TabBar implements ComponentInterface {
     }
   }
 
+/**
+ * Med Resize
+ *
+ */
+
+ private setSize() {
+   this.medResize.emit({height:1})
+  this.hostResizeObserver = new ResizeObserver(() => {
+    let newHostHeight = Number(this.el.getBoundingClientRect().height);
+
+    if (newHostHeight !== this.hostHeight) {
+      this.medResize.emit({ height: newHostHeight });
+      this.hostHeight = newHostHeight;
+    }
+  });
+
+  this.hostResizeObserver.observe(this.el);
+}
+
   render() {
     const { color, translucent, keyboardVisible } = this;
     const mode = getIonMode(this);
+    this.medResize.emit({height:1})
 
     return (
       <Host

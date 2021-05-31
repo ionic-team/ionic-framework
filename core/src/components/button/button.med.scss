@@ -76,6 +76,21 @@
   --ripple-color: transparent;
 }
 
+// sizes secondary
+:host([ds-size="sm"].med-button-outline) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-outline) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+}
+
+:host([ds-size="xxs"].med-button-outline) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+}
+
 // hover
 @media (any-hover: hover) {
   :host(.med-button-outline:hover) {
@@ -155,9 +170,19 @@
   --color: #{$med-color-neutral-light-10};
 }
 
-// sizes {
-:host([ds-size="md"].med-button-clear) {
-  --min-height: 48px;
+// sizes tertiary
+:host([ds-size="sm"].med-button-clear) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-clear) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+}
+
+:host([ds-size="xxs"].med-button-clear) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
 }
 
 // expand

@@ -20,7 +20,7 @@ export const medColors = [
   'questoes-light',
   'questoes-lightest',
   'revalida-darkest',
-  'revalida-dar',
+  'revalida-dark',
   'revalida-medium',
   'revalida-light',
   'revalida-lightest',

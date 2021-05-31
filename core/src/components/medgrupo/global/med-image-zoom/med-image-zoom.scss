@@ -1,23 +1,86 @@
+@import "../../../../../med-components/abstracts";
+
 :host {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: $med-color-neutral-dark-prime;
 
-  ion-grid {
+  .header {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+
+    &__title {
+      color: $med-color-neutral-light-prime;
+      font-size: $med-font-size-xs;
+      line-height: $med-line-height-compressed;
+      font-weight: $med-font-weight-semibold;
+    }
+  }
+
+  .content {
+    --background: #{$med-color-neutral-dark-prime};
+
     height: 100%;
+    overflow-y: hidden;
   }
 
   ion-slides {
-    width: 100%;
+    --bullet-background-active: #{$med-color-brand-primary-medium};
+
+    display: flex;
+    justify-content: center;
     height: 100%;
-    text-align: center;
+  }
 
-    ion-slide {
-      display: inline;
-      height: 100%;
+  .swiper-zoom-container div {
+    flex-direction: column;
+    margin: 0 16px;
+  }
 
-      div {
-        display: block;
+  .legenda {
+    color: #fff;
+    font-size: 14px;
+    margin: 0;
+    padding: 16px;
+    max-width: 992px;
+  }
+
+  .button-container {
+    position: fixed;
+    bottom: $med-spacing-stack-md;
+    right: 15px;
+    height: 175px;
+    width: 48px;
+  }
+
+  .button {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $med-color-neutral-light-40;
+
+    ion-icon {
+      font-size: 24px;
+      color: $med-color-neutral-dark-40;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: $med-spacing-stack-base;
+    }
+
+    &--close {
+      background-color: $med-color-neutral-dark-40;
+
+      ion-icon {
+        color: $med-color-neutral-light-prime;
       }
     }
   }

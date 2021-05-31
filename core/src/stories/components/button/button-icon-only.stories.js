@@ -2,11 +2,11 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/Button/Icon Only',
+  title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplateIconOnly = ({ disabled, size, platform }) => {
+const TemplateIconOnly = ({ disabled, size, platform, iconName }) => {
   if (platform === 'Mobile') {
     document.querySelector('html').classList.remove('plt-desktop');
   } else if (platform === 'Desktop') {
@@ -19,7 +19,7 @@ const TemplateIconOnly = ({ disabled, size, platform }) => {
 
         <!-- component -->
         <ion-button ds-name="icon-only" ?disabled=${disabled} ds-size=${size}>
-          <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
+          <ion-icon slot="icon-only" name=${iconName}></ion-icon>
         </ion-button>
         <!-- component -->
 
@@ -28,14 +28,14 @@ const TemplateIconOnly = ({ disabled, size, platform }) => {
   `
 }
 
-export const IconOnly = TemplateIconOnly.bind({});
-IconOnly.parameters = {
+export const ButtonIconOnly = TemplateIconOnly.bind({});
+ButtonIconOnly.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=1615%3A3',
   },
 }
-IconOnly.argTypes = {
+ButtonIconOnly.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -53,6 +53,15 @@ IconOnly.argTypes = {
     table: {
       type:  { summary: ['xs | sm | md | lg'] },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  iconName: {
+    options: medIcons,
+    control: { type: 'select'},
+    defaultValue: 'med-arrow-left-circle',
+    description: "Mude o ícone!",
+    table: {
+      type:  { summary: 'Atributo para testes no storybook apenas' },
     },
   },
   platform: {

@@ -49,8 +49,8 @@ const TemplateDefault = () => {
   `
 }
 
-export const Default = TemplateDefault.bind({});
-Default.parameters = {
+export const Popover = TemplateDefault.bind({});
+Popover.parameters = {
   design: {
     type: 'figma',
     url: '',

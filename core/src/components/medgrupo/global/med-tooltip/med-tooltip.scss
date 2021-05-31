@@ -60,3 +60,13 @@
 :host(.simple) {
   padding: $med-spacing-squish-nano;
 }
+
+:host-context(.light-mode):host {
+  .header {
+    color: $med-color-neutral-light-10;
+  }
+
+  .content {
+    color: $med-color-neutral-light-10;
+  }
+}

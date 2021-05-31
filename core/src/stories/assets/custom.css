@@ -1,3 +1,13 @@
+:root .dark-mode {
+  --global-background: #141414;
+  --global-color: #fff;
+}
+
+:root .light-mode {
+  --global-background: #fafafa;
+  --global-color: #000;
+}
+
 html {
   overflow: auto;
 }

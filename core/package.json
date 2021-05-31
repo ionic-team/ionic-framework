@@ -109,8 +109,7 @@
     "build-storybook": "npm run build && build-storybook -s dist/ionic/",
     "start:stencil": "stencil build --watch",
     "build:stencil": "stencil build",
-    "story": "npm run build:stencil && npm-run-all --parallel start:stencil storybook",
-    "teste": "stencil build --dev --watch --serve"
+    "story": "npm run build:stencil && npm-run-all --parallel start:stencil storybook"
   },
   "author": "Ionic Team",
   "license": "MIT",

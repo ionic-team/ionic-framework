@@ -3,17 +3,17 @@ import { withDesign } from 'storybook-addon-designs';
 import { medColors } from '../../med-colors'
 
 export default {
-  title: 'Components/Global/Badge/Default',
+  title: 'Components/Global/Badge',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ color, fill, size }) => {
+const TemplateDefault = ({ color, fill, size, label }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-badge .color=${color} fill=${fill} ds-size=${size}>ion-badge</ion-badge>
+        <ion-badge .color=${color} fill=${fill} ds-size=${size}>${label}</ion-badge>
         <!-- component -->
 
       </div>
@@ -21,14 +21,14 @@ const TemplateDefault = ({ color, fill, size }) => {
   `
 }
 
-export const Default = TemplateDefault.bind({});
-Default.parameters = {
+export const Badge = TemplateDefault.bind({});
+Badge.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=1972%3A356',
   },
 }
-Default.argTypes = {
+Badge.argTypes = {
   color: {
     options: medColors,
     control: { type: 'select'},
@@ -54,6 +54,14 @@ Default.argTypes = {
     table: {
       type:  { summary: 'sm | md | lg' },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  label: {
+    control: { type: 'text' },
+    defaultValue: 'badge',
+    description: "Digite algo!",
+    table: {
+      type:  { summary: 'Atributo para testes no storybook apenas' },
     },
   },
 };

@@ -2,17 +2,19 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Components/Global/Button/Usage" />
 
-# Usage
+# Button
+
+Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/button**
 
 ## primary
 
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                         | Tipo                     | Default       |
-| ------------ | ------------ | --------------------------------- | ------------------------ | ------------- |
-| **dsName**   | **ds-name**  | Define o botão                    | **"primary"**            | **"primary"** |
-| **expand**   | **expand**   | Define o tamanho do botão         | **"full"** **"block"**   | **undefined** |
-| **disabled** | **disabled** | Define o estado disabled do botão | **boolean**              | **undefined** |
+| Propriedade  | Atributo     | Descrição                          | Tipo                      | Default       |
+| ------------ | ------------ | ---------------------------------- | ------------------------- | ------------- |
+| **dsName**   | **ds-name**  | Define o botão.                    | **"primary"**             | **"primary"** |
+| **expand**   | **expand**   | Define o tamanho do botão.         | **"full"** \| **"block"** | **undefined** |
+| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**               | **undefined** |
 
 ```html
 <!-- primary -->
@@ -30,10 +32,11 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                         | Tipo             | Default       |
-| ------------ | ------------ | --------------------------------- | ---------------- | ------------- |
-| **dsName**   | **ds-name**  | Define o botão                    | **"secondary"**  | **"primary"** |
-| **disabled** | **disabled** | Define o estado disabled do botão | **boolean**      | **undefined** |
+| Propriedade  | Atributo     | Descrição                          | Tipo                              | Default         |
+| ------------ | ------------ | ---------------------------------- | --------------------------------- | --------------- |
+| **dsName**   | **ds-name**  | Define o botão.                    | **"secondary"**                   | **"secondary"** |
+| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**                       | **undefined**   |
+| **dsSize**   | **ds-size**  | Define o tamanho do botão.         | **"xxs"** \| **"xs"** \| **"sm"** | **undefined**   |
 
 ```html
 <!-- secondary -->
@@ -41,19 +44,21 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <!-- disabled -->
 <ion-button ds-name="secondary" disabled>ion-button</ion-button>
+
+<!-- size -->
+<ion-button ds-name="secondary" ds-size="xxs">ion-button</ion-button>
 ```
 
 ## tertiary
 
-### Atributos
-
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                          | Tipo                     | Default        |
-| ------------ | ------------ | ---------------------------------- | ------------------------ | -------------- |
-| **dsName**   | **ds-name**  | Define o botão                     | **"tertiary"**           | **"tertiary"** |
-| **expand**   | **expand**   | Define o estilo o tamanho do botão | **"full"** **"block"**   | **undefined**  |
-| **disabled** | **disabled** | Define o estado disabled do botão  | **boolean**              | **undefined**  |
+| Propriedade  | Atributo     | Descrição                           | Tipo                              | Default        |
+| ------------ | ------------ | ----------------------------------- | --------------------------------- | -------------- |
+| **dsName**   | **ds-name**  | Define o botão.                     | **"tertiary"**                    | **"tertiary"** |
+| **expand**   | **expand**   | Define o estilo o tamanho do botão. | **"full"** \| **"block"**         | **undefined**  |
+| **disabled** | **disabled** | Define o estado disabled do botão.  | **boolean**                       | **undefined**  |
+| **dsSize**   | **ds-size**  | Define o tamanho do botão.          | **"xxs"** \| **"xs"** \| **"sm"** | **undefined**  |
 
 ```html
 <!-- tertiary -->
@@ -65,17 +70,20 @@ import { Meta } from "@storybook/addon-docs/blocks";
 <!-- expand -->
 <ion-button ds-name="tertiary" expand="full">ion-button</ion-button>
 <ion-button ds-name="tertiary" expand="block">ion-button</ion-button>
+
+<!-- size -->
+<ion-button ds-name="tertiary" ds-size="xxs">ion-button</ion-button>
 ```
 
 ## icon-only
 
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                         | Tipo                                      | Default         |
-| ------------ | ------------ | --------------------------------- | ----------------------------------------- | --------------- |
-| **dsName**   | **ds-name**  | Define o botão                    | **"icon-only"**                           | **"icon-only"** |
-| **dsSize**   | **ds-size**  | Define os tamanhos do botão       | **"xs"** **"sm"** **"md"** **"lg"**       | **undefined**   |
-| **disabled** | **disabled** | Define o estado disabled do botão | **boolean**                               | **undefined**   |
+| Propriedade  | Atributo     | Descrição                          | Tipo                                         | Default         |
+| ------------ | ------------ | ---------------------------------- | -------------------------------------------- | --------------- |
+| **dsName**   | **ds-name**  | Define o botão.                    | **"icon-only"**                              | **"icon-only"** |
+| **dsSize**   | **ds-size**  | Define os tamanhos do botão.       | **"xs"** \| **"sm"** \| **"md"** \| **"lg"** | **undefined**   |
+| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**                                  | **undefined**   |
 
 ```html
 <!-- icon-only -->
@@ -98,17 +106,17 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                         | Tipo             | Default       |
-| ------------ | ------------ | --------------------------------- | ---------------- | ------------- |
-| **dsName**   | **ds-name**  | Define o botão                    | **"icon-label"** | **"icon-label"** |
-| **disabled** | **disabled** | Define o estado disabled do botão | **boolean**      | **undefined** |
+| Propriedade  | Atributo     | Descrição                          | Tipo             | Default          |
+| ------------ | ------------ | ---------------------------------- | ---------------- | ---------------- |
+| **dsName**   | **ds-name**  | Define o botão.                    | **"icon-label"** | **"icon-label"** |
+| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**      | **undefined**    |
 
 ### Slots
 
-| Slot              | Descrição                                |
-| ----------------- | ---------------------------------------- |
-| **slot="start"**  | Posiciona um elemento no começo do botão |
-| **slot="end"**    | Posiciona um elemento no final do botão  |
+| Slot              | Descrição                                 |
+| ----------------- | ----------------------------------------- |
+| **slot="start"**  | Posiciona um elemento no começo do botão. |
+| **slot="end"**    | Posiciona um elemento no final do botão.  |
 
 ```html
 <!-- slot="start" -->

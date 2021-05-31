@@ -32,7 +32,6 @@ export * from './components/virtual-scroll/virtual-scroll-interface';
 
 // medgrupo
 export * from './components/medgrupo/team/med-alternativas/med-alternativas-interface';
-export * from './components/medgrupo/global/med-rate-like/med-rate-like.enum';
 export * from './components/medgrupo/global/med-image-zoom/med-image-zoom-interface'
 
 // Types from utils

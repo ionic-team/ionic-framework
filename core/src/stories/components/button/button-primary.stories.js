@@ -2,17 +2,17 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/Button/Primary',
+  title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplatePrimary = ({ disabled, expand }) => {
+const TemplatePrimary = ({ disabled, expand, label }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-          <ion-button ds-name="primary" ?disabled=${disabled} .expand=${expand}>ion-button</ion-button>
+          <ion-button ds-name="primary" ?disabled=${disabled} .expand=${expand}>${label}</ion-button>
         <!-- component -->
 
       </div>
@@ -20,14 +20,14 @@ const TemplatePrimary = ({ disabled, expand }) => {
   `
 }
 
-export const Primary = TemplatePrimary.bind({});
-Primary.parameters = {
+export const ButtonPrimary = TemplatePrimary.bind({});
+ButtonPrimary.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=729%3A189',
   },
 }
-Primary.argTypes = {
+ButtonPrimary.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -45,6 +45,14 @@ Primary.argTypes = {
     table: {
       type:  { summary: ['full | block'] },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  label: {
+    control: { type: 'text' },
+    defaultValue: 'button',
+    description: "Digite algo!",
+    table: {
+      type:  { summary: 'Atributo para testes no storybook apenas' },
     },
   },
 };

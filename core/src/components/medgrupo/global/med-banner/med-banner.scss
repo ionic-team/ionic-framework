@@ -1,0 +1,67 @@
+:host {
+  --background: var(--surface-color, #{$med-color-neutral-dark-40});
+  --color: var(--text-color, #{$med-color-neutral-light-prime});
+}
+
+:host {
+  padding: $med-spacing-stretch-md;
+  display: block;
+  background: var(--background);
+
+  .content {
+    &__top {
+      display: flex;
+    }
+
+    &__left {
+      margin-right: $med-spacing-inline-base;
+    }
+
+    &__bottom {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .header {
+    font-size: $med-font-size-xs;
+    font-weight: $med-font-weight-semibold;
+    line-height: $med-line-height-default;
+    color: var(--color);
+    margin: 0;
+    margin-bottom: $med-spacing-inline-nano;
+    text-align: left;
+  }
+
+  .button {
+    font-size: $med-font-size-xxs;
+    line-height: line-height($med-font-size-xxs);
+    color: $med-color-neutral-light-prime;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: $med-font-weight-regular;
+
+    &--right {
+      font-weight: $med-font-weight-semibold;
+      margin-left: $med-spacing-inline-xxs;
+    }
+  }
+}
+
+::slotted([slot="content"]) {
+  font-size: $med-font-size-xxs;
+  font-weight: $med-font-weight-regular;
+  line-height: $med-line-height-compressed;
+  color: $med-color-neutral-light-prime;
+  margin: 0;
+  padding: 0;
+  padding-bottom: $med-spacing-inline-xxs;
+  text-align: left;
+}
+
+::slotted([slot="imagem"]) {
+  min-width: 56px;
+  max-width: 56px;
+}

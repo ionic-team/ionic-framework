@@ -81,7 +81,12 @@ export class MedAlternativas implements MedAlternativasInterface {
 
                   <div class='image-container' onClick={() => this.imageRequest(alternativa)}>
                     {alternativa[this.keyImagem] && <img class='alternativa__image' src={alternativa[this.keyImagem]} />}
-                    <div class='image-container__overlay'>Clique para ampliar</div>
+                    <div class='overlay'>
+                      <div class="overlay__content">
+                        <p class="overlay__label">clique para ampliar</p>
+                        <ion-icon name="med-expand"></ion-icon>
+                      </div>
+                    </div>
                   </div>
 
                   <ion-progress-bar percentage class={`

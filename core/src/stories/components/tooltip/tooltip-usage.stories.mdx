@@ -2,22 +2,22 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Components/Global/Tooltip/Usage" />
 
-# Descrição
+# Tooltip
 
 O tooltip utiliza o componente popover como base.
 
-Para utilização do popover ver: https://ionicframework.com/docs/api/popover
+Documentação auxiliar popover: **https://ionicframework.com/docs/api/popover**
 
 **As propriedades marcadas com ⚠️ são extritamente necessárias.**
 
 ```ts
 async presentPopover(ev: any) {
   const popover = await this.popoverController.create({
-    component: 'med-tooltip', ⚠️⚠️⚠️⚠️⚠️⚠️
-    cssClass: 'med-tooltip', ⚠️⚠️⚠️⚠️⚠️⚠️
-    componentProps: { ... }, ⚠️⚠️⚠️⚠️⚠️⚠️
-    mode: 'ios', ⚠️⚠️⚠️⚠️⚠️⚠️
-    showBackdrop: false ⚠️⚠️⚠️⚠️⚠️⚠️
+    component: 'med-tooltip', ⚠️
+    cssClass: 'med-tooltip', ⚠️
+    componentProps: { ... }, ⚠️
+    mode: 'ios', ⚠️
+    showBackdrop: false ⚠️
   });
   await popover.present();
 }

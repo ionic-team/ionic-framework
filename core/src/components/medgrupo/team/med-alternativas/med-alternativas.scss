@@ -60,20 +60,33 @@
 
     .image-container {
       position: relative;
+    }
 
-      &__overlay {
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.3);
-        cursor: pointer;
-        color: #fff;
+    .overlay {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      cursor: pointer;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__content {
         display: flex;
         align-items: center;
-        justify-content: center;
+      }
+
+      &__label {
+        margin: 0 10px 0 0;
+      }
+
+      ion-icon {
+        font-size: 24px;
       }
     }
 
@@ -132,7 +145,7 @@
 
 // desktop
 :host-context(.plt-desktop) .image-container:hover {
-  .image-container__overlay  {
+  .overlay  {
     opacity: 1;
     visibility: visible;
     transition: opacity 300ms ease;

@@ -5,11 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabBarResizeEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
+import { RangeValue as RangeValue1 } from "./components/range/range-interface";
 import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
 import { MedImagensZoomInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
 import { navbarResizeEventDetail } from "./components/medgrupo/global/med-navbar/med-navbar-interface";
@@ -234,7 +235,7 @@ export namespace Components {
          */
         "download": string | undefined;
         "dsName"?: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
-        "dsSize"?: 'xs' | 'sm' | 'md' | 'lg';
+        "dsSize"?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -717,6 +718,8 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
+        "dsName"?: 'label' | 'icon-label';
+        "dsSize"?: 'md' | 'lg';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -763,6 +766,7 @@ export namespace Components {
           * If `true`, the fab list will show all fab buttons in the list.
          */
         "activated": boolean;
+        "dsSize"?: 'md' | 'lg';
         /**
           * The side the fab list will show on relative to the main fab button.
          */
@@ -2727,6 +2731,14 @@ export namespace Components {
         "mostraResposta": boolean;
         "respostaCorreta": string;
     }
+    interface MedAutocomplete {
+        "disable": boolean;
+    }
+    interface MedBanner {
+        "btnLeft": string;
+        "btnRight": string;
+        "header": string;
+    }
     interface MedCartaoRespostaItem {
         "color"?: Color;
     }
@@ -2734,6 +2746,12 @@ export namespace Components {
     }
     interface MedEnunciado {
         "imagens": string[] | string;
+    }
+    interface MedEnunciadoDiscursiva {
+        "imagens": string[] | string;
+    }
+    interface MedFontZoom {
+        "emitter": {emit: (value: RangeValue) => void};
     }
     interface MedHeader {
     }
@@ -3287,6 +3305,18 @@ declare global {
         prototype: HTMLMedAlternativasElement;
         new (): HTMLMedAlternativasElement;
     };
+    interface HTMLMedAutocompleteElement extends Components.MedAutocomplete, HTMLStencilElement {
+    }
+    var HTMLMedAutocompleteElement: {
+        prototype: HTMLMedAutocompleteElement;
+        new (): HTMLMedAutocompleteElement;
+    };
+    interface HTMLMedBannerElement extends Components.MedBanner, HTMLStencilElement {
+    }
+    var HTMLMedBannerElement: {
+        prototype: HTMLMedBannerElement;
+        new (): HTMLMedBannerElement;
+    };
     interface HTMLMedCartaoRespostaItemElement extends Components.MedCartaoRespostaItem, HTMLStencilElement {
     }
     var HTMLMedCartaoRespostaItemElement: {
@@ -3304,6 +3334,19 @@ declare global {
     var HTMLMedEnunciadoElement: {
         prototype: HTMLMedEnunciadoElement;
         new (): HTMLMedEnunciadoElement;
+    };
+    interface HTMLMedEnunciadoDiscursivaElement extends Components.MedEnunciadoDiscursiva, HTMLStencilElement {
+    }
+    var HTMLMedEnunciadoDiscursivaElement: {
+        prototype: HTMLMedEnunciadoDiscursivaElement;
+        new (): HTMLMedEnunciadoDiscursivaElement;
+
+    };
+    interface HTMLMedFontZoomElement extends Components.MedFontZoom, HTMLStencilElement {
+    }
+    var HTMLMedFontZoomElement: {
+        prototype: HTMLMedFontZoomElement;
+        new (): HTMLMedFontZoomElement;
     };
     interface HTMLMedHeaderElement extends Components.MedHeader, HTMLStencilElement {
     }
@@ -3442,9 +3485,12 @@ declare global {
         "ion-toolbar": HTMLIonToolbarElement;
         "ion-virtual-scroll": HTMLIonVirtualScrollElement;
         "med-alternativas": HTMLMedAlternativasElement;
+        "med-autocomplete": HTMLMedAutocompleteElement;
+        "med-banner": HTMLMedBannerElement;
         "med-cartao-resposta-item": HTMLMedCartaoRespostaItemElement;
         "med-cartao-resposta-lista": HTMLMedCartaoRespostaListaElement;
         "med-enunciado": HTMLMedEnunciadoElement;
+        "med-font-zoom": HTMLMedFontZoomElement;
         "med-header": HTMLMedHeaderElement;
         "med-image-zoom": HTMLMedImageZoomElement;
         "med-navbar": HTMLMedNavbarElement;
@@ -3675,7 +3721,7 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         "dsName"?: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
-        "dsSize"?: 'xs' | 'sm' | 'md' | 'lg';
+        "dsSize"?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -4178,6 +4224,8 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
+        "dsName"?: 'label' | 'icon-label';
+        "dsSize"?: 'md' | 'lg';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -4232,6 +4280,7 @@ declare namespace LocalJSX {
           * If `true`, the fab list will show all fab buttons in the list.
          */
         "activated"?: boolean;
+        "dsSize"?: 'md' | 'lg';
         /**
           * The side the fab list will show on relative to the main fab button.
          */
@@ -5804,6 +5853,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         "onIonTabBarChanged"?: (event: CustomEvent<TabBarChangedEventDetail>) => void;
+        "onMedResize"?: (event: CustomEvent<TabBarResizeEventDetail>) => void;
         /**
           * The selected tab component
          */
@@ -6196,6 +6246,16 @@ declare namespace LocalJSX {
         "onMedGalleryRequest"?: (event: CustomEvent<MedAlternativaInterface>) => void;
         "respostaCorreta": string;
     }
+    interface MedAutocomplete {
+        "disable"?: boolean;
+    }
+    interface MedBanner {
+        "btnLeft": string;
+        "btnRight": string;
+        "header": string;
+        "onBtnLeftClick"?: (event: CustomEvent<void>) => void;
+        "onBtnRightClick"?: (event: CustomEvent<void>) => void;
+    }
     interface MedCartaoRespostaItem {
         "color"?: Color;
     }
@@ -6204,6 +6264,13 @@ declare namespace LocalJSX {
     interface MedEnunciado {
         "imagens": string[] | string;
         "onMedGalleryRequest"?: (event: CustomEvent<string>) => void;
+    }
+    interface MedEnunciadoDiscursiva {
+        "imagens": string[] | string;
+        "onMedGalleryRequest"?: (event: CustomEvent<string>) => void;
+    }
+    interface MedFontZoom {
+        "emitter": {emit: (value: RangeValue) => void};
     }
     interface MedHeader {
         "onMedResize"?: (event: CustomEvent<headerResizeEventDetail>) => void;
@@ -6319,9 +6386,13 @@ declare namespace LocalJSX {
         "ion-toolbar": IonToolbar;
         "ion-virtual-scroll": IonVirtualScroll;
         "med-alternativas": MedAlternativas;
+        "med-autocomplete": MedAutocomplete;
+        "med-banner": MedBanner;
         "med-cartao-resposta-item": MedCartaoRespostaItem;
         "med-cartao-resposta-lista": MedCartaoRespostaLista;
         "med-enunciado": MedEnunciado;
+        "med-enunciado-discursiva": MedEnunciadoDiscursiva;
+        "med-font-zoom": MedFontZoom;
         "med-header": MedHeader;
         "med-image-zoom": MedImageZoom;
         "med-navbar": MedNavbar;
@@ -6424,9 +6495,13 @@ declare module "@stencil/core" {
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
             "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
             "med-alternativas": LocalJSX.MedAlternativas & JSXBase.HTMLAttributes<HTMLMedAlternativasElement>;
+            "med-autocomplete": LocalJSX.MedAutocomplete & JSXBase.HTMLAttributes<HTMLMedAutocompleteElement>;
+            "med-banner": LocalJSX.MedBanner & JSXBase.HTMLAttributes<HTMLMedBannerElement>;
             "med-cartao-resposta-item": LocalJSX.MedCartaoRespostaItem & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaItemElement>;
             "med-cartao-resposta-lista": LocalJSX.MedCartaoRespostaLista & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaListaElement>;
             "med-enunciado": LocalJSX.MedEnunciado & JSXBase.HTMLAttributes<HTMLMedEnunciadoElement>;
+            "med-enunciado-discursiva": LocalJSX.MedEnunciadoDiscursiva & JSXBase.HTMLAttributes<HTMLMedEnunciadoDiscursivaElement>;
+            "med-font-zoom": LocalJSX.MedFontZoom & JSXBase.HTMLAttributes<HTMLMedFontZoomElement>;
             "med-header": LocalJSX.MedHeader & JSXBase.HTMLAttributes<HTMLMedHeaderElement>;
             "med-image-zoom": LocalJSX.MedImageZoom & JSXBase.HTMLAttributes<HTMLMedImageZoomElement>;
             "med-navbar": LocalJSX.MedNavbar & JSXBase.HTMLAttributes<HTMLMedNavbarElement>;

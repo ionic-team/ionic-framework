@@ -1,0 +1,91 @@
+@import "../../../../../med-components/abstracts";
+@import "../../../../themes/ionic.mixins.scss";
+
+:host {
+  --font-size: #{$med-font-size-xs};
+  --font-weight: #{$med-font-weight-regular};
+  --line-height: #{$med-line-height-double};
+  --color: var(--med-theme-color, #{$med-color-neutral-dark-20});
+  --text-align: justify;
+
+  --image-list-padding-top: #{$med-spacing-stack-base};
+
+  display: block;
+
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  color: var(--color);
+  text-align: var(--text-align);
+
+  .list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding-top: var(--image-list-padding-top);
+    flex-direction: column;
+
+    @include media-breakpoint-up('md', $med-grid-breakpoints) {
+      flex-direction: row;
+    }
+
+    @include media-breakpoint-up('lg', $med-grid-breakpoints) {
+      flex-direction: row;
+    }
+
+    &__item {
+      max-width: 100%;
+      cursor: pointer;
+
+      &:not(:last-child) {
+        padding-right: 0;
+        padding-bottom: 16px;
+      }
+
+      @include media-breakpoint-up('md', $med-grid-breakpoints) {
+        max-width: 50%;
+        padding-bottom: 0;
+
+        &:not(:last-child) {
+          padding-right: 16px;
+        }
+      }
+
+      @include media-breakpoint-up('lg', $med-grid-breakpoints) {
+        max-width: 33.33%;
+        padding-bottom: 0;
+
+        &:not(:last-child) {
+          padding-right: 16px;
+        }
+      }
+    }
+
+    &__image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  .number {
+    font-weight: $med-font-weight-bold;
+    color: $med-color-questoes-medium;
+  }
+}
+
+//
+// theme
+//
+
+:host-context(body.light),
+:host-context(data-theme[light]) {
+  --color: var(--med-theme-color, #{$med-color-neutral-dark-20});
+}
+
+:host-context(body.dark),
+:host-context(data-theme[dark]) {
+  --color: var(--med-theme-color, #{$med-color-neutral-light-20});
+}
