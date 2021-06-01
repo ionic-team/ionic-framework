@@ -51,7 +51,7 @@
 :host-context(.item-fill-outline.item-has-focus).label-floating,
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-fill-outline.item-has-value).label-floating {
-  @include transform(translateX(var(--item-slotted-icon-computed-width)), translateY(-6px), scale(.75));
+  @include transform(translateX(var(--item-translate-label-x, 0px)), translateY(-6px), scale(.75));
   max-width: min-content;
 }
 

@@ -360,7 +360,7 @@
 
 :host(.item-fill-outline.item-shape-round) .item-native {
   @include border-radius(28px);
-
+  --inner-padding-start: 16px;
 }
 
 // Material Design Item: Highlight and Notched Outline
@@ -386,8 +386,8 @@
 }
 
 :host(.item-fill-outline.item-has-focus.show-notch) .item-native .item-highlight {
-  --slotted-label-left: calc(var(--native-padding-left) - var(--notch-padding));
-  --slotted-label-right: calc(calc(var(--native-padding-left) + calc(var(--label-computed-width) * .75) + var(--notch-padding)));
+  --slotted-label-left: calc(var(--padding-start) - var(--notch-padding) + var(--inner-padding-start));
+  --slotted-label-right: calc(var(--slotted-label-left) + calc(var(--label-computed-width) * .75) + calc(var(--notch-padding) * 2));
   --slotted-label-top: 0px;
   --slotted-label-bottom: calc(var(--label-computed-height) / 2);
 

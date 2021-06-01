@@ -314,8 +314,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       return;
     }
 
-    const fullWidth = getFullWidth(startEl);
-    label.style.setProperty('--item-slotted-icon-computed-width', `-${fullWidth}px`);
+    const translateX = `-${getFullWidth(startEl)}px`
+    label.style.setProperty('--item-translate-label-x', translateX);
   }
 
   render() {
