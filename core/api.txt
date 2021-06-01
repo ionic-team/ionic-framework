@@ -721,27 +721,30 @@ ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
 ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 
-ion-modal,scoped
+ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
-ion-modal,prop,component,Function | HTMLElement | null | string,undefined,true,false
-ion-modal,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-ion-modal,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-modal,prop,isOpen,boolean,false,false,false
 ion-modal,prop,keyboardClose,boolean,true,false,false
 ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,mode,"ios" | "md",undefined,false,false
 ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
 ion-modal,prop,swipeToClose,boolean,false,false,false
+ion-modal,prop,trigger,string | undefined,undefined,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-modal,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,present,present() => Promise<void>
+ion-modal,event,didDismiss,OverlayEventDetail<any>,true
+ion-modal,event,didPresent,void,true
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,event,willDismiss,OverlayEventDetail<any>,true
+ion-modal,event,willPresent,void,true
 ion-modal,css-prop,--backdrop-opacity
 ion-modal,css-prop,--background
 ion-modal,css-prop,--border-color
@@ -754,6 +757,8 @@ ion-modal,css-prop,--max-width
 ion-modal,css-prop,--min-height
 ion-modal,css-prop,--min-width
 ion-modal,css-prop,--width
+ion-modal,part,backdrop
+ion-modal,part,content
 
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false

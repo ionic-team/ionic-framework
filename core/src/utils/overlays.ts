@@ -445,6 +445,9 @@ export const dismiss = async (
 
     activeAnimations.delete(overlay);
 
+    // Make overlay hidden again in case it is being reused
+    overlay.el.classList.add('overlay-hidden');
+
   } catch (err) {
     console.error(err);
   }
