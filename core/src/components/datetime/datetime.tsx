@@ -340,17 +340,17 @@ export class Datetime implements ComponentInterface {
     this.workingParts = {
       ...parts
     }
-
-    const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
-    if (hasSlottedButtons || this.showDefaultButtons) { return; }
-
-    this.confirm();
   }
 
   private setActiveParts = (parts: DatetimeParts) => {
     this.activeParts = {
       ...parts
     }
+
+    const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
+    if (hasSlottedButtons || this.showDefaultButtons) { return; }
+
+    this.confirm();
   }
 
   private initializeKeyboardListeners = () => {
@@ -795,18 +795,15 @@ export class Datetime implements ComponentInterface {
           otherCol.classList.remove('time-column-active');
 
           const bbox = activeCol.getBoundingClientRect();
-          if (colType === 'hour') {
-            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
-            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+          const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
+          const value = parseInt(activeElement.getAttribute('data-value')!, 10);
 
+          if (colType === 'hour') {
             this.setWorkingParts({
               ...this.workingParts,
               hour: value
             });
           } else {
-            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x - 1, bbox.y + 1)!;
-            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
-
             this.setWorkingParts({
               ...this.workingParts,
               minute: value
@@ -832,6 +829,15 @@ export class Datetime implements ComponentInterface {
     const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
     this.workingParts = {
+      month,
+      day,
+      year,
+      hour,
+      minute,
+      tzOffset,
+      ampm: hour >= 13 ? 'pm' : 'am'
+    }
+    this.activeParts = {
       month,
       day,
       year,
