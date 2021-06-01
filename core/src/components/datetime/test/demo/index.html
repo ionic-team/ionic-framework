@@ -23,17 +23,6 @@
     }
       ion-datetime {
 
-        height: 360px;
-        margin: 0 auto;
-
-        overflow: hidden;
-
-        position: absolute;
-        left: 0;
-         right: 0;
-         top: 50%;
-         bottom:0;
-         transform: translateY(-50%);
       }
 
       ion-datetime.md {
@@ -46,9 +35,7 @@
         --background: linear-gradient(45deg, rgba(241,87,122,1) 0%, rgba(241,165,128,1) 50%, rgba(5,131,238,1) 100%);
       }
 
-      ion-content.md {
-        --background: rgba(0, 0, 0, 0.2);
-      }
+
 
       ion-datetime.ios {
         border-radius: 12px;
@@ -224,20 +211,13 @@
   <body>
     <ion-app>
       <ion-content scroll-y="false">
-        <br><br>
-        <!-- <ion-button id="popover-trigger">Options</ion-button> -->
-
-        <ion-item id="invisible">
-          <ion-label>Dark Mode</ion-label>
-          <ion-checkbox slot="end"></ion-checkbox>
-        </ion-item>
-
+        <ion-button id="popover-trigger">Options</ion-button>
         <ion-popover trigger="popover-trigger">
           <ion-list lines="none">
-            <!--<ion-item>
+            <ion-item>
               <ion-label>Dark Mode</ion-label>
               <ion-checkbox slot="end"></ion-checkbox>
-            </ion-item>-->
+            </ion-item>
             <ion-item detail="true" href="?ionic:mode=ios">
               <ion-label>iOS Mode</ion-label>
             </ion-item>

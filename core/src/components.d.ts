@@ -624,6 +624,10 @@ export namespace Components {
     }
     interface IonDatetime {
         /**
+          * Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
+         */
+        "cancel": (closeOverlay?: boolean) => Promise<void>;
+        /**
           * The text to display on the picker's cancel button.
          */
         "cancelText": string;
@@ -632,6 +636,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Confirms the selected datetime value, updates the `value` property, and optionally closes the popover or modal that the datetime was presented in.
+         */
+        "confirm": (closeOverlay?: boolean) => Promise<void>;
+        /**
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
         "dayValues"?: number[] | number | string;
@@ -639,10 +647,6 @@ export namespace Components {
           * If `true`, the user cannot interact with the datetime.
          */
         "disabled": boolean;
-        /**
-          * Dismisses the datetime overlay. Only applies when `presentationStyle="overlay"`.
-         */
-        "dismiss": () => Promise<void>;
         /**
           * The format of the date and time that is returned in the event payload of `ionChange`. You can configure the timezone used with the `displayTimezone` property. Defaults to `MMM D, YYYY`.
          */
@@ -688,10 +692,6 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Opens the datetime overlay. Only applies when `presentationStyle="overlay"`.
-         */
-        "open": () => Promise<void>;
-        /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
         "presentation": 'date-time' | 'time-date' | 'date' | 'time';
@@ -699,6 +699,10 @@ export namespace Components {
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly": boolean;
+        /**
+          * Resets the internal state of the datetime but does not update the value.
+         */
+        "reset": (value?: string | undefined) => Promise<void>;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */

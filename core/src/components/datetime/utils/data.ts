@@ -19,6 +19,12 @@ const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
+export const getTimezoneOffset = (localDate: Date, timeZone: string) => {
+  const utcDateTime = new Date(localDate.toLocaleString('en-US', { timeZone: 'utc' }));
+  const tzDateTime = new Date(localDate.toLocaleString('en-US', { timeZone }));
+  return utcDateTime.getTime() - tzDateTime.getTime();
+};
+
 /**
  * Given a locale and a mode,
  * return an array with formatted days
