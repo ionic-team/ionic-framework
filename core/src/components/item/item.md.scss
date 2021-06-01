@@ -25,9 +25,7 @@
   --highlight-color-hover: #1f1f1f;
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
-  --label-computed-width: 0px;
   --notch-padding: 4px;
-  --show-notch: 0;
 
   font-size: $item-md-font-size;
   font-weight: normal;
@@ -326,7 +324,7 @@
   border-bottom-color: var(--highlight-color-focused);
 }
 
-:host(.item-fill-solid.item-has-focus) .item-native .item-highlight-bottom {
+:host(.item-fill-solid.item-has-focus) .item-native .item-highlight {
   @include overlay;
   border-bottom-width: var(--highlight-height);
   
@@ -360,9 +358,13 @@
   --border-color: var(--highlight-color-hover);
 }
 
-:host(.item-fill-outline) .item-native ::slotted(ion-input) {
-  transform: translateY(calc(-25% * var(--show-notch)));
+:host(.item-fill-outline.item-shape-round) .item-native {
+  @include border-radius(28px);
+
 }
+
+// Material Design Item: Highlight and Notched Outline
+// --------------------------------------------------
 
 :host(.item-fill-outline) .item-native .item-highlight {
   @include overlay;
@@ -374,33 +376,25 @@
   z-index: 2;
 }
 
-:host(.item-fill-outline) .item-native .item-highlight-before {
-  --before-clip: calc(calc(100% - var(--native-padding-left) + var(--notch-padding)) * var(--show-notch));
-  clip-path: inset(0 var(--before-clip) 0 0);
-}
-
-:host(.item-fill-outline) .item-native .item-highlight-after {
-  --after-clip: calc(calc(var(--native-padding-left) + calc(var(--label-computed-width) * .75) + var(--notch-padding)) * var(--show-notch));
-  clip-path: inset(0 0 0 var(--after-clip));
-}
-
-:host(.item-fill-outline) .item-native .item-highlight-bottom {
-  border-top: none;
-  clip-path: inset(24px 0 0 0);
-}
-
 :host(.item-fill-outline.item-has-focus) .item-native .item-highlight {
   border-width: var(--highlight-height);
   border-color: var(--highlight-color-focused);
 }
 
-:host(.item-fill-outline.item-has-focus) .item-highlight-top,
-:host(.item-fill-outline.item-has-value) .item-highlight-top {
-  visibility: hidden;
+:host(.item-fill-outline.show-notch) .item-native ::slotted(ion-input) {
+  transform: translateY(-25%);
 }
 
-:host(.item-fill-outline.item-shape-round) .item-native {
-  @include border-radius(28px);
+:host(.item-fill-outline.item-has-focus.show-notch) .item-native .item-highlight {
+  --slotted-label-left: calc(var(--native-padding-left) - var(--notch-padding));
+  --slotted-label-right: calc(calc(var(--native-padding-left) + calc(var(--label-computed-width) * .75) + var(--notch-padding)));
+  --slotted-label-top: 0px;
+  --slotted-label-bottom: calc(var(--label-computed-height) / 2);
+
+  border-width: var(--highlight-height);
+
+  // Clips out a rectangle from behind the slotted ion-label
+  clip-path: polygon(0% 0%, 0% 100%, var(--slotted-label-left) 100%, var(--slotted-label-left) var(--slotted-label-top), var(--slotted-label-right) var(--slotted-label-top), var(--slotted-label-right) var(--slotted-label-bottom), var(--slotted-label-left) var(--slotted-label-bottom), var(--slotted-label-left) 100%, 100% 100%, 100% 0%);
 }
 
 // Material Design Item: Invalid

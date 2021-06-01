@@ -193,7 +193,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.el.addEventListener('click', this.clickListener);
     }
 
-    if (this.fill === 'outline') {
+    if (this.fill === 'outline' 
+        && this.el.classList.contains('item-has-focus')
+        && !this.el.classList.contains('show-notch')
+      ) {
       this.setNotchWidth();
       this.setLabelTranslateX();
     }
@@ -295,9 +298,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private setNotchWidth() {
     const label = this.el.querySelector('ion-label');
     const width = (label === null || label.textContent === null) ? 0 : label.clientWidth;
-    if (width > 0) {
-      this.el.style.setProperty('--show-notch', `1`);
+    const height = (label === null || label.textContent === null) ? 0 : label.clientHeight;
+    if (width > 0 && height > 0) {
+      this.el.classList.add('show-notch');
       this.el.style.setProperty('--label-computed-width', `${width}px`);
+      this.el.style.setProperty('--label-computed-height', `${height}px`);
     }
   }
 
@@ -375,10 +380,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-            <div class="item-highlight item-highlight-top"></div>
+            {/* <div class="item-highlight item-highlight-top"></div>
             <div class="item-highlight item-highlight-before"></div>
             <div class="item-highlight item-highlight-after"></div>
-            <div class="item-highlight item-highlight-bottom"></div>
+            <div class="item-highlight item-highlight-bottom"></div> */}
+            <div class="item-highlight"></div>
           </TagType>
           <div class="item-bottom">
             <slot name="error"></slot>
