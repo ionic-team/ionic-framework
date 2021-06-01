@@ -25,6 +25,7 @@ import {
 } from './utils/helpers';
 import {
   calculateHourFromAMPM,
+  convertDataToISO,
   getEndOfWeek,
   getInternalHourValue,
   getNextDay,
@@ -33,8 +34,7 @@ import {
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
-  getStartOfWeek,
-  convertDataToISO
+  getStartOfWeek
 } from './utils/manipulation';
 import {
   getPartsFromCalendarDay,
@@ -48,10 +48,8 @@ import {
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot title - The title of the datetime. Only visible
- * when presentationStyle="overlay".
- * @slot buttons - The buttons in the datetime. Only
- * visible when presentationStyle="overlay".
+ * @slot title - The title of the datetime.
+ * @slot buttons - The buttons in the datetime.
  */
 @Component({
   tag: 'ion-datetime',
@@ -306,8 +304,13 @@ export class Datetime implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
+  /**
+   * Confirms the selected datetime value, updates the
+   * `value` property, and optionally closes the popover
+   * or modal that the datetime was presented in.
+   */
   @Method()
-  async confirm() {
+  async confirm(closeOverlay = false) {
     /**
      * Prevent convertDataToISO from doing any
      * kind of transformation based on timezone
@@ -325,11 +328,41 @@ export class Datetime implements ComponentInterface {
       : date.getTimezoneOffset() * -1;
 
     this.value = convertDataToISO(this.workingParts);
+
+    if (closeOverlay) {
+      this.closeParentOverlay();
+    }
   }
 
+  /**
+   * Resets the internal state of the datetime
+   * but does not update the value.
+   */
   @Method()
   async reset(value?: string) {
     this.processValue(value);
+  }
+
+  /**
+   * Emits the ionCancel event and
+   * optionally closes the popover
+   * or modal that the datetime was
+   * presented in.
+   */
+  @Method()
+  async cancel(closeOverlay = false) {
+    this.ionCancel.emit();
+
+    if (closeOverlay) {
+      this.closeParentOverlay();
+    }
+  }
+
+  private closeParentOverlay = () => {
+    const popoverOrModal = this.el.closest('ion-modal, ion-popover') as HTMLIonModalElement | HTMLIonPopoverElement | null;
+    if (popoverOrModal) {
+      popoverOrModal.dismiss();
+    }
   }
 
   private setWorkingParts = (parts: DatetimeParts) => {
@@ -858,14 +891,8 @@ export class Datetime implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'datetime': true,
-      // 'has-placeholder': this.placeholder != null,
-      // 'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });
-  }
-
-  private cancel = () => {
-    this.ionCancel.emit();
   }
 
   private nextMonth = () => {
@@ -913,7 +940,7 @@ export class Datetime implements ComponentInterface {
           <div class="datetime-action-buttons">
             <slot name="buttons">
               <ion-buttons>
-                <ion-button color={this.color} onClick={() => this.cancel()}>{this.cancelText}</ion-button>
+                <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
                 <ion-button color={this.color} onClick={() => this.confirm()}>{this.doneText}</ion-button>
               </ion-buttons>
             </slot>

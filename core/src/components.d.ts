@@ -624,6 +624,10 @@ export namespace Components {
     }
     interface IonDatetime {
         /**
+          * Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
+         */
+        "cancel": (closeOverlay?: boolean) => Promise<void>;
+        /**
           * The text to display on the picker's cancel button.
          */
         "cancelText": string;
@@ -631,7 +635,10 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
-        "confirm": () => Promise<void>;
+        /**
+          * Confirms the selected datetime value, updates the `value` property, and optionally closes the popover or modal that the datetime was presented in.
+         */
+        "confirm": (closeOverlay?: boolean) => Promise<void>;
         /**
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
@@ -692,6 +699,9 @@ export namespace Components {
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly": boolean;
+        /**
+          * Resets the internal state of the datetime but does not update the value.
+         */
         "reset": (value?: string | undefined) => Promise<void>;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
