@@ -1371,7 +1371,7 @@ export namespace Components {
         /**
           * The component to display inside of the modal.
          */
-        "component": ComponentRef;
+        "component"?: ComponentRef;
         /**
           * The data to pass to the modal component.
          */
@@ -1391,6 +1391,11 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "inline": boolean;
+        /**
+          * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1428,6 +1433,10 @@ export namespace Components {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the modal to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonNav {
         /**
@@ -2007,7 +2016,7 @@ export namespace Components {
          */
         "root": string;
         /**
-          * The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires additional server-side configuration in order to properly work.  On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs.
+          * The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires additional server-side configuration in order to properly work.  On the other side hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs.
          */
         "useHash": boolean;
     }
@@ -4819,7 +4828,7 @@ declare namespace LocalJSX {
         /**
           * The component to display inside of the modal.
          */
-        "component": ComponentRef;
+        "component"?: ComponentRef;
         /**
           * The data to pass to the modal component.
          */
@@ -4833,6 +4842,11 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "inline"?: boolean;
+        /**
+          * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4845,6 +4859,14 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
+         */
+        "onDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
+         */
+        "onDidPresent"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted after the modal has dismissed.
          */
@@ -4861,6 +4883,14 @@ declare namespace LocalJSX {
           * Emitted before the modal has presented.
          */
         "onIonModalWillPresent"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
+         */
+        "onWillDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the modal has presented. Shorthand for ionModalWillPresent.
+         */
+        "onWillPresent"?: (event: CustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
@@ -4874,6 +4904,10 @@ declare namespace LocalJSX {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the modal to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonNav {
         /**
@@ -5408,7 +5442,7 @@ declare namespace LocalJSX {
          */
         "root"?: string;
         /**
-          * The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires additional server-side configuration in order to properly work.  On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs.
+          * The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires additional server-side configuration in order to properly work.  On the other side hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs.
          */
         "useHash"?: boolean;
     }

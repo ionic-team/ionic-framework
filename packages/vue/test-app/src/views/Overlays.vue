@@ -99,13 +99,12 @@
 
       <ion-modal
         :is-open="isModalOpen"
-        :componentProps="overlayProps"
         @willPresent="onModalWillPresent"
         @didPresent="onModalDidPresent"
         @willDismiss="onModalWillDismiss"
         @didDismiss="onModalDidDismiss"
       >
-        <ModalContent></ModalContent>
+        <ModalContent :title="overlayProps.title"></ModalContent>
       </ion-modal>
 
       <ion-popover

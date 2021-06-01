@@ -1,35 +1,35 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 test('popover - arrow side: top', async () => {
-  await testPopover('top');
+  await testPopover('top', false);
 });
 
 test('popover - arrow side: right', async () => {
-  await testPopover('right');
+  await testPopover('right', false);
 });
 
 test('popover - arrow side: bottom', async () => {
-  await testPopover('bottom');
+  await testPopover('bottom', false);
 });
 
 test('popover - arrow side: left', async () => {
-  await testPopover('left');
+  await testPopover('left', false);
 });
 
 test('popover - arrow side: start', async () => {
-  await testPopover('start');
+  await testPopover('start'), false;
 });
 
 test('popover - arrow side: end', async () => {
-  await testPopover('end');
+  await testPopover('end', false);
 });
 
 test('popover - arrow side: start, rtl', async () => {
-  await testPopover('start', true);
+  await testPopover('start', false, true);
 });
 
 test('popover - arrow side: end, rtl', async () => {
-  await testPopover('end', true);
+  await testPopover('end', false, true);
 });
 
 
