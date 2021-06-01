@@ -193,8 +193,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.el.addEventListener('click', this.clickListener);
     }
 
-    this.setNotchWidth();
-    this.setLabelTranslateX();
+    if (this.fill === 'outline') {
+      this.setNotchWidth();
+      this.setLabelTranslateX();
+    }
   }
 
   disconnectedCallback() {

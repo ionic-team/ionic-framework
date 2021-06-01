@@ -18,7 +18,6 @@
   --color: #{$item-md-color};
   --transition: opacity 15ms linear, background-color 15ms linear;
   --padding-start: #{$item-md-padding-start};
-  --border-color: #{$item-md-border-bottom-color};
   --inner-padding-end: #{$item-md-padding-end};
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
   --highlight-height: 2px;
@@ -311,24 +310,28 @@
   --inner-border-width: 0;
 
   @include border-radius(4px, 4px, 0, 0);
+}
 
-  .item-native:hover {
-    --background: var(--background-hover);
-    --border-color: var(--highlight-color-hover);
-  }
+:host(.item-fill-solid) .item-native {
+  --border-color: #8f8f8f;
+}
+
+:host(.item-fill-solid) .item-native:hover {
+  --background: var(--background-hover);
+  --border-color: var(--highlight-color-hover);
 }
 
 :host(.item-fill-solid.item-has-focus) .item-native {
   --background: var(--background-focused);
   border-bottom-color: var(--highlight-color-focused);
+}
 
-  .item-highlight-bottom {
-    @include overlay;
-    border-bottom-width: var(--highlight-height);
-    
-    border-bottom-style: var(--border-style);
-    border-bottom-color: var(--highlight-color-focused);
-  }
+:host(.item-fill-solid.item-has-focus) .item-native .item-highlight-bottom {
+  @include overlay;
+  border-bottom-width: var(--highlight-height);
+  
+  border-bottom-style: var(--border-style);
+  border-bottom-color: var(--highlight-color-focused);
 }
 
 :host(.item-fill-solid.item-shape-round) {
@@ -351,49 +354,48 @@
 
   @include border-radius(4px);
   border: none;
-
-  &:hover {
-    --border-color: var(--highlight-color-hover);
-  }
-
-  ::slotted(ion-input) {
-    transform: translateY(calc(-25% * var(--show-notch)));
-  }
-
-  .item-highlight {
-    @include overlay;
-    
-    border-width: var(--border-width);
-    border-style: var(--border-style);
-    border-color: var(--border-color);
-
-    z-index: 2;
-  }
-
-  .item-highlight-before {
-    --before-clip: calc(calc(100% - var(--native-padding-left) + var(--notch-padding)) * var(--show-notch));
-    clip-path: inset(0 var(--before-clip) 0 0);
-  }
-
-  .item-highlight-after {
-    --after-clip: calc(calc(var(--native-padding-left) + calc(var(--label-computed-width) * .75) + var(--notch-padding)) * var(--show-notch));
-    clip-path: inset(0 0 0 var(--after-clip));
-  }
-
-  .item-highlight-bottom {
-    border-top: none;
-    clip-path: inset(24px 0 0 0);
-  }
 }
 
-:host(.item-fill-outline.item-has-focus) .item-native {
-  .item-highlight {
-    border-width: var(--highlight-height);
-    border-color: var(--highlight-color-focused);
-  }
+:host(.item-fill-outline) .item-native:hover {
+  --border-color: var(--highlight-color-hover);
 }
 
-:host(.item-fill-outline:is(.item-has-focus,.item-has-value)) .item-highlight-top {
+:host(.item-fill-outline) .item-native ::slotted(ion-input) {
+  transform: translateY(calc(-25% * var(--show-notch)));
+}
+
+:host(.item-fill-outline) .item-native .item-highlight {
+  @include overlay;
+  
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  z-index: 2;
+}
+
+:host(.item-fill-outline) .item-native .item-highlight-before {
+  --before-clip: calc(calc(100% - var(--native-padding-left) + var(--notch-padding)) * var(--show-notch));
+  clip-path: inset(0 var(--before-clip) 0 0);
+}
+
+:host(.item-fill-outline) .item-native .item-highlight-after {
+  --after-clip: calc(calc(var(--native-padding-left) + calc(var(--label-computed-width) * .75) + var(--notch-padding)) * var(--show-notch));
+  clip-path: inset(0 0 0 var(--after-clip));
+}
+
+:host(.item-fill-outline) .item-native .item-highlight-bottom {
+  border-top: none;
+  clip-path: inset(24px 0 0 0);
+}
+
+:host(.item-fill-outline.item-has-focus) .item-native .item-highlight {
+  border-width: var(--highlight-height);
+  border-color: var(--highlight-color-focused);
+}
+
+:host(.item-fill-outline.item-has-focus) .item-highlight-top,
+:host(.item-fill-outline.item-has-value) .item-highlight-top {
   visibility: hidden;
 }
 
@@ -404,11 +406,10 @@
 // Material Design Item: Invalid
 // --------------------------------------------------
 
-:host(:is(.ion-invalid,.ion-invalid.item-has-focus)) .item-native {
+:host(.ion-invalid) .item-native,
+:host(.ion-invalid) .item-native .item-highlight,
+:host(.ion-invalid.item-has-focus) .item-native,
+:host(.ion-invalid.item-has-focus) .item-native .item-highlight {
   border-color: var(--highlight-color-invalid);
   caret-color: var(--highlight-color-invalid);
-
-  .item-highlight {
-    border-color: var(--highlight-color-invalid);
-  }
 }

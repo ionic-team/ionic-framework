@@ -1022,7 +1022,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * If `true`, a text based counter will display the input's length over its maxlength.
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
          */
         "counter": boolean;
         /**
@@ -1042,7 +1042,7 @@ export namespace Components {
          */
         "download": string | undefined;
         /**
-          * The fill for the item. If "solid" it will have a background, if "outline" it will be transparent with a border.
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -4506,7 +4506,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * If `true`, a text based counter will display the input's length over its maxlength.
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
          */
         "counter"?: boolean;
         /**
@@ -4526,7 +4526,7 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         /**
-          * The fill for the item. If "solid" it will have a background, if "outline" it will be transparent with a border.
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border.
          */
         "fill"?: 'outline' | 'solid';
         /**
