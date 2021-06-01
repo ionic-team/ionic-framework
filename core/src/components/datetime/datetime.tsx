@@ -94,11 +94,7 @@ export class Datetime implements ComponentInterface {
     ampm: 'pm'
   }
 
-  private todayParts = {
-    month: 5,
-    day: 28,
-    year: 2021
-  }
+  private todayParts = parseDate(new Date().toISOString())
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -762,65 +758,67 @@ export class Datetime implements ComponentInterface {
     /**
      * Scroll initial hour and minute into view
      */
-    const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`);
-    if (initialHour) {
-      initialHour.scrollIntoView();
-    }
-    const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`);
-    if (initialMinute) {
-      initialMinute.scrollIntoView();
-    }
-
-    /**
-     * Highlight the container and
-     * appropriate column when scrolling.
-     */
-    let timeout: any;
-    const scrollCallback = (colType: string) => {
-      raf(() => {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = undefined;
-        }
-
-        const activeCol = colType === 'hour' ? timeHourRef : timeMinuteRef;
-        const otherCol = colType === 'hour' ? timeMinuteRef : timeHourRef;
-
-        timeBaseRef.classList.add('time-base-active');
-        activeCol.classList.add('time-column-active');
-
-        timeout = setTimeout(() => {
-          timeBaseRef.classList.remove('time-base-active');
-          activeCol.classList.remove('time-column-active');
-          otherCol.classList.remove('time-column-active');
-
-          const bbox = activeCol.getBoundingClientRect();
-          const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
-          const value = parseInt(activeElement.getAttribute('data-value')!, 10);
-
-          if (colType === 'hour') {
-            this.setWorkingParts({
-              ...this.workingParts,
-              hour: value
-            });
-          } else {
-            this.setWorkingParts({
-              ...this.workingParts,
-              minute: value
-            });
-          }
-        }, 250);
-      });
-    }
-
-    /**
-     * Add scroll listeners to the hour and minute containers.
-     * Wrap this in an raf so that the scroll callback
-     * does not fire when we do our initial scrollIntoView above.
-     */
     raf(() => {
-      timeHourRef.addEventListener('scroll', () => scrollCallback('hour'));
-      timeMinuteRef.addEventListener('scroll', () => scrollCallback('minute'));
+      const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`);
+      if (initialHour) {
+        initialHour.scrollIntoView();
+      }
+      const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`);
+      if (initialMinute) {
+        initialMinute.scrollIntoView();
+      }
+
+      /**
+       * Highlight the container and
+       * appropriate column when scrolling.
+       */
+      let timeout: any;
+      const scrollCallback = (colType: string) => {
+        raf(() => {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = undefined;
+          }
+
+          const activeCol = colType === 'hour' ? timeHourRef : timeMinuteRef;
+          const otherCol = colType === 'hour' ? timeMinuteRef : timeHourRef;
+
+          timeBaseRef.classList.add('time-base-active');
+          activeCol.classList.add('time-column-active');
+
+          timeout = setTimeout(() => {
+            timeBaseRef.classList.remove('time-base-active');
+            activeCol.classList.remove('time-column-active');
+            otherCol.classList.remove('time-column-active');
+
+            const bbox = activeCol.getBoundingClientRect();
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
+            const value = parseInt(activeElement.getAttribute('data-value')!, 10);
+
+            if (colType === 'hour') {
+              this.setWorkingParts({
+                ...this.workingParts,
+                hour: value
+              });
+            } else {
+              this.setWorkingParts({
+                ...this.workingParts,
+                minute: value
+              });
+            }
+          }, 250);
+        });
+      }
+
+      /**
+       * Add scroll listeners to the hour and minute containers.
+       * Wrap this in an raf so that the scroll callback
+       * does not fire when we do our initial scrollIntoView above.
+       */
+      raf(() => {
+        timeHourRef.addEventListener('scroll', () => scrollCallback('hour'));
+        timeMinuteRef.addEventListener('scroll', () => scrollCallback('minute'));
+      });
     });
   }
 
