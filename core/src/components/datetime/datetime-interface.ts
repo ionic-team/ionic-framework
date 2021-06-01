@@ -14,4 +14,5 @@ export interface DatetimeParts {
   hour?: number;
   minute?: number;
   ampm?: 'am' | 'pm';
+  tzOffset?: number;
 }

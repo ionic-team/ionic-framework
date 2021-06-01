@@ -2,6 +2,54 @@ import { DatetimeParts } from '../datetime-interface';
 
 import { getNumDaysInMonth } from './helpers';
 
+const twoDigit = (val: number | undefined): string => {
+  return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
+};
+
+const fourDigit = (val: number | undefined): string => {
+  return ('000' + (val !== undefined ? Math.abs(val) : '0')).slice(-4);
+};
+
+export const convertDataToISO = (data: DatetimeParts): string => {
+  // https://www.w3.org/TR/NOTE-datetime
+  let rtn = '';
+  if (data.year !== undefined) {
+    // YYYY
+    rtn = fourDigit(data.year);
+
+    if (data.month !== undefined) {
+      // YYYY-MM
+      rtn += '-' + twoDigit(data.month);
+
+      if (data.day !== undefined) {
+        // YYYY-MM-DD
+        rtn += '-' + twoDigit(data.day!);
+
+        if (data.hour !== undefined) {
+          // YYYY-MM-DDTHH:mm:SS
+          rtn += `T${twoDigit(data.hour)}:${twoDigit(data.minute)}:00`;
+
+          if (data.tzOffset === undefined) {
+            // YYYY-MM-DDTHH:mm:SSZ
+            rtn += 'Z';
+
+          } else {
+
+            // YYYY-MM-DDTHH:mm:SS+/-HH:mm
+            rtn += (data.tzOffset > 0 ? '+' : '-') + twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) + ':' + twoDigit(data.tzOffset % 60);
+          }
+        }
+      }
+    }
+
+  } else if (data.hour !== undefined) {
+    // HH:mm
+    rtn = twoDigit(data.hour) + ':' + twoDigit(data.minute);
+  }
+
+  return rtn;
+};
+
 /**
  * Converts an 12 hour value to 24 hours.
  */

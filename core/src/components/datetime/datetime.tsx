@@ -11,7 +11,8 @@ import {
   getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getPickerMonths
+  getPickerMonths,
+  getTimezoneOffset
 } from './utils/data';
 import {
   addTimePadding,
@@ -32,7 +33,8 @@ import {
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
-  getStartOfWeek
+  getStartOfWeek,
+  convertDataToISO
 } from './utils/manipulation';
 import {
   getPartsFromCalendarDay,
@@ -305,6 +307,43 @@ export class Datetime implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
+  @Method()
+  async confirm() {
+    /**
+     * Prevent convertDataToISO from doing any
+     * kind of transformation based on timezone
+     * This cancels out any change it attempts to make
+     *
+     * Important: Take the timezone offset based on
+     * the date that is currently selected, otherwise
+     * there can be 1 hr difference when dealing w/ DST
+     */
+    const date = new Date(convertDataToISO(this.workingParts));
+
+    // If a custom display timezone is provided, use that tzOffset value instead
+    this.workingParts.tzOffset = (this.displayTimezone !== undefined && this.displayTimezone.length > 0)
+      ? ((getTimezoneOffset(date, this.displayTimezone)) / 1000 / 60) * -1
+      : date.getTimezoneOffset() * -1;
+
+    this.value = convertDataToISO(this.workingParts);
+  }
+
+  @Method()
+  async reset(value?: string) {
+    this.processValue(value);
+  }
+
+  private setWorkingParts = (parts: DatetimeParts) => {
+    this.workingParts = {
+      ...parts
+    }
+
+    const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
+    if (hasSlottedButtons || this.showDefaultButtons) { return; }
+
+    this.confirm();
+  }
+
   private initializeKeyboardListeners = () => {
     const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
@@ -352,35 +391,35 @@ export class Datetime implements ComponentInterface {
       switch (ev.key) {
         case 'ArrowDown':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getNextWeek(parts) as any };
+          this.setWorkingParts({ ...this.workingParts, ...getNextWeek(parts) as any });
           break;
         case 'ArrowUp':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getPreviousWeek(parts) as any };
+          this.setWorkingParts({ ...this.workingParts, ...getPreviousWeek(parts) as any });
           break;
         case 'ArrowRight':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getNextDay(parts) as any };
+          this.setWorkingParts({ ...this.workingParts, ...getNextDay(parts) as any });
           break;
         case 'ArrowLeft':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getPreviousDay(parts) as any };
+          this.setWorkingParts({ ...this.workingParts, ...getPreviousDay(parts) as any });
           break;
         case 'Home':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getStartOfWeek(parts) as any };
+          this.setWorkingParts({ ...this.workingParts, ...getStartOfWeek(parts) as any });
           break;
         case 'End':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getEndOfWeek(parts) as any };
+          this.setWorkingParts({ ...this.workingParts, ...getEndOfWeek(parts) as any });
           break;
         case 'PageUp':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getPreviousMonth(parts) as any }
+          this.setWorkingParts({ ...this.workingParts, ...getPreviousMonth(parts) as any });
           break;
         case 'PageDown':
           ev.preventDefault();
-          this.workingParts = { ...this.workingParts, ...getNextMonth(parts) as any }
+          this.setWorkingParts({ ...this.workingParts, ...getNextMonth(parts) as any });
           break;
         /**
          * Do not preventDefault here
@@ -547,12 +586,12 @@ export class Datetime implements ComponentInterface {
         writeTask(() => {
           const { month, year, day } = refMonthFn(this.workingParts);
 
-          this.workingParts = {
+          this.setWorkingParts({
             ...this.workingParts,
             month,
             day: day!,
             year
-          }
+          });
 
           workingMonth.scrollIntoView(false);
           calendarBodyRef.style.removeProperty('overflow');
@@ -662,15 +701,15 @@ export class Datetime implements ComponentInterface {
 
           const value = parseInt(dataValue, 10);
           if (colType === 'month') {
-            this.workingParts = {
+            this.setWorkingParts({
               ...this.workingParts,
               month: value
-            }
+            });
           } else {
-            this.workingParts = {
+            this.setWorkingParts({
               ...this.workingParts,
               year: value
-            }
+            });
           }
 
           /**
@@ -751,18 +790,18 @@ export class Datetime implements ComponentInterface {
             const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
             const value = parseInt(activeElement.getAttribute('data-value')!, 10);
 
-            this.workingParts = {
+            this.setWorkingParts({
               ...this.workingParts,
               hour: value
-            }
+            });
           } else {
             const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x - 1, bbox.y + 1)!;
             const value = parseInt(activeElement.getAttribute('data-value')!, 10);
 
-            this.workingParts = {
+            this.setWorkingParts({
               ...this.workingParts,
               minute: value
-            }
+            });
           }
         }, 250);
       });
@@ -779,7 +818,24 @@ export class Datetime implements ComponentInterface {
     });
   }
 
+  private processValue = (value?: string | null) => {
+    const valueToProcess = value || new Date().toISOString();
+    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+
+    this.workingParts = {
+      month,
+      day,
+      year,
+      hour,
+      minute,
+      tzOffset,
+      ampm: hour >= 13 ? 'pm' : 'am'
+    }
+
+  }
+
   componentWillLoad() {
+    this.processValue(this.value);
     this.processMinParts();
     this.processMaxParts();
     this.emitStyle();
@@ -888,10 +944,10 @@ export class Datetime implements ComponentInterface {
             'datetime-active-year': isActiveYear
           }}
           onClick={() => {
-            this.workingParts = {
+            this.setWorkingParts({
               ...this.workingParts,
               year
-            }
+            });
             this.showMonthAndYear = false;
           }}
         >
@@ -932,7 +988,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getCalendarYears(this.activeParts, false, this.minParts, this.maxParts).map(year => {
+        {getCalendarYears(this.workingParts, false, this.minParts, this.maxParts).map(year => {
           return (
             <div
               class="picker-col-item"
@@ -1002,7 +1058,7 @@ export class Datetime implements ComponentInterface {
           {getDaysOfMonth(month, year).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.workingParts, this.todayParts, this.minParts, this.maxParts);
 
             return (
               <button
@@ -1024,18 +1080,12 @@ export class Datetime implements ComponentInterface {
                 onClick={() => {
                   if (day === null) { return; }
 
-                  this.workingParts = {
+                  this.setWorkingParts({
                     ...this.workingParts,
                     month,
                     day,
                     year
-                  }
-                  this.activeParts = {
-                    ...this.activeParts,
-                    month,
-                    day,
-                    year
-                  }
+                  });
                 }}
               >{day}</button>
             )
@@ -1131,11 +1181,18 @@ export class Datetime implements ComponentInterface {
                 const { value } = ev.detail;
                 const hour = calculateHourFromAMPM(this.workingParts, value);
 
-                this.workingParts = {
+                this.setWorkingParts({
                   ...this.workingParts,
                   ampm: value,
                   hour
-                }
+                });
+
+                /**
+                 * Do not let this event bubble up
+                 * otherwise developers listening for ionChange
+                 * on the datetime will see this event.
+                 */
+                ev.stopPropagation();
               }}
             >
               <ion-segment-button disabled={!am} value="am">AM</ion-segment-button>

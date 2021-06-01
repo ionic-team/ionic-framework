@@ -208,7 +208,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Inline</h2>
-            <ion-datetime></ion-datetime>
+            <ion-datetime value="2020-03-14T14:23:00.000Z" id="inline-datetime"></ion-datetime>
           </div>
 
           <div class="grid-item">
@@ -242,8 +242,8 @@
 
           <div class="grid-item">
             <h2>Popover - Custom</h2>
-            <ion-button onclick="presentPopover(customPopover, event)">Present Popover</ion-button>
-            <ion-popover id="custom-popover">
+            <ion-button id="open-popover">Present Popover</ion-button>
+            <ion-popover trigger="open-popover" id="custom-popover">
               <ion-datetime>
                 <span slot="title">My Custom Title</span>
                 <ion-buttons slot="buttons">
@@ -256,11 +256,24 @@
 
           <div class="grid-item">
             <h2>Modal - Custom</h2>
-            TBD
+            <ion-button id="open-modal">Present Modal</ion-button>
+            <ion-modal trigger="open-modal" id="modal">
+              <ion-datetime>
+                <span slot="title">My Custom Title</span>
+                <ion-buttons slot="buttons">
+                  <ion-button color="danger">Destroy</ion-button>
+                  <ion-button color="primary">Confirm</ion-button>
+                </ion-buttons>
+              </ion-datetime>
+            </ion-modal>
           </div>
         </div>
       </ion-content>
       <script>
+        const inlineDatetime = document.querySelector('#inline-datetime');
+        inlineDatetime.addEventListener('ionChange', (ev) => {
+          console.log('did change', ev);
+        })
         const darkModeCheckbox = document.querySelector('ion-checkbox');
         darkModeCheckbox.addEventListener('ionChange', (ev) => {
           if (ev.detail.checked) {
