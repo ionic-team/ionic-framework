@@ -107,7 +107,7 @@ export class RadioGroup implements ComponentInterface {
 
     // Get all radios inside of the radio group and then
     // filter out disabled radios since we need to skip those
-    const radios = Array.from(this.el.querySelectorAll('ion-radio')).filter(radio => !radio.disabled);
+    const radios = this.getRadios().filter(radio => !radio.disabled);
 
     // Only move the radio if the current focus is in the radio group
     if (ev.target && radios.includes(ev.target)) {
