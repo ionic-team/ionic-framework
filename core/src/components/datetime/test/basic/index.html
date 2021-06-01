@@ -226,12 +226,8 @@
 
           <div class="grid-item">
             <h2>Inline - Custom</h2>
-            <ion-datetime color="danger">
+            <ion-datetime show-default-buttons="true" color="danger" id="custom-datetime">
               <span slot="title">Select Date</span>
-              <ion-buttons slot="buttons">
-                <ion-button color="primary">Cancel</ion-button>
-                <ion-button color="primary">Ok</ion-button>
-              </ion-buttons>
             </ion-datetime>
 
             <form>
@@ -272,6 +268,11 @@
       <script>
         const inlineDatetime = document.querySelector('#inline-datetime');
         inlineDatetime.addEventListener('ionChange', (ev) => {
+          console.log('did change', ev);
+        })
+
+        const customDatetime = document.querySelector('#custom-datetime');
+        customDatetime.addEventListener('ionChange', (ev) => {
           console.log('did change', ev);
         })
         const darkModeCheckbox = document.querySelector('ion-checkbox');

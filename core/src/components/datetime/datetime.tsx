@@ -76,10 +76,13 @@ export class Datetime implements ComponentInterface {
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts = {
+  @State() activeParts: DatetimeParts = {
     month: 5,
     day: 28,
-    year: 2021
+    year: 2021,
+    hour: 13,
+    minute: 52,
+    ampm: 'pm'
   }
 
   @State() workingParts: DatetimeParts = {
@@ -342,6 +345,12 @@ export class Datetime implements ComponentInterface {
     if (hasSlottedButtons || this.showDefaultButtons) { return; }
 
     this.confirm();
+  }
+
+  private setActiveParts = (parts: DatetimeParts) => {
+    this.activeParts = {
+      ...parts
+    }
   }
 
   private initializeKeyboardListeners = () => {
@@ -851,24 +860,8 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  /**
-   * Opens the datetime overlay.
-   * Only applies when `presentationStyle="overlay"`.
-   */
-  @Method()
-  async open() {
-    console.log('[Stubbed]: open()')
-    this.isPresented = true;
-  }
-
-  /**
-   * Dismisses the datetime overlay.
-   * Only applies when `presentationStyle="overlay"`.
-   */
-  @Method()
-  async dismiss() {
-    console.log('[Stubbed]: dismiss()')
-    this.isPresented = false;
+  private cancel = () => {
+    this.ionCancel.emit();
   }
 
   private nextMonth = () => {
@@ -916,8 +909,8 @@ export class Datetime implements ComponentInterface {
           <div class="datetime-action-buttons">
             <slot name="buttons">
               <ion-buttons>
-                <ion-button color={this.color} onClick={() => this.dismiss()}>{this.cancelText}</ion-button>
-                <ion-button color={this.color} onClick={() => this.dismiss()}>{this.doneText}</ion-button>
+                <ion-button color={this.color} onClick={() => this.cancel()}>{this.cancelText}</ion-button>
+                <ion-button color={this.color} onClick={() => this.confirm()}>{this.doneText}</ion-button>
               </ion-buttons>
             </slot>
           </div>
@@ -1058,7 +1051,7 @@ export class Datetime implements ComponentInterface {
           {getDaysOfMonth(month, year).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
 
             return (
               <button
@@ -1086,6 +1079,13 @@ export class Datetime implements ComponentInterface {
                     day,
                     year
                   });
+
+                  this.setActiveParts({
+                    ...this.activeParts,
+                    month,
+                    day,
+                    year
+                  })
                 }}
               >{day}</button>
             )

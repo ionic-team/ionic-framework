@@ -641,10 +641,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Dismisses the datetime overlay. Only applies when `presentationStyle="overlay"`.
-         */
-        "dismiss": () => Promise<void>;
-        /**
           * The format of the date and time that is returned in the event payload of `ionChange`. You can configure the timezone used with the `displayTimezone` property. Defaults to `MMM D, YYYY`.
          */
         "displayFormat": string;
@@ -688,10 +684,6 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
-        /**
-          * Opens the datetime overlay. Only applies when `presentationStyle="overlay"`.
-         */
-        "open": () => Promise<void>;
         /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
