@@ -673,21 +673,53 @@ export class Datetime implements ComponentInterface {
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
         root: calendarBodyRef
-      });
+       });
       startIO.observe(startMonth);
-    });
+   });
   }
 
   componentDidLoad() {
     const mode = getIonMode(this);
 
-    this.initializeCalendarIOListeners();
-    this.initializeKeyboardListeners();
-    this.initializeTimeScrollListener();
+    /**
+     * If a scrollable element is hidden using `display: none`,
+     * it will not have a scroll height meaning we cannot scroll elements
+     * into view. As a result, we will need to wait for the datetime to become
+     * visible if used inside of a modal or a popover otherwise the scrollable
+     * areas will not have the correct values snapped into place.
+     */
+    let visibleIO: IntersectionObserver | undefined;
+    const visibleCallback = (entries: IntersectionObserverEntry[]) => {
+      const ev = entries[0];
+      if (!ev.isIntersecting) { return; }
 
-    if (mode === 'ios') {
-      this.initializeMonthAndYearScrollListeners();
+      /**
+       * This needs to run at most once for initial setup.
+       */
+      visibleIO!.disconnect()
+
+      this.initializeCalendarIOListeners();
+      this.initializeKeyboardListeners();
+      this.initializeTimeScrollListener();
+
+      if (mode === 'ios') {
+        this.initializeMonthAndYearScrollListeners();
+      }
+
+      /**
+       * TODO: Datetime needs a frame to ensure that it
+       * can properly scroll contents into view. As a result
+       * we hide the scrollable content until after that frame
+       * so users do not see the content quickly shifting. The downside
+       * is that the content will pop into view a frame after. Maybe there
+       * is a better way to handle this?
+       */
+      writeTask(() => {
+        this.el.classList.add('datetime-ready');
+      });
     }
+    visibleIO = new IntersectionObserver(visibleCallback, { threshold: 1 });
+    visibleIO.observe(this.el);
   }
 
   private initializeMonthAndYearScrollListeners = () => {

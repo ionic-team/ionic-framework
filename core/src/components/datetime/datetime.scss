@@ -30,6 +30,16 @@
   background: var(--background);
 }
 
+:host .calendar-body,
+:host .time-column {
+  opacity: 0;
+}
+
+:host(.datetime-ready) .calendar-body,
+:host(.datetime-ready) .time-column {
+  opacity: 1;
+}
+
 // Calendar
 // -----------------------------------
 
