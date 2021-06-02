@@ -27,7 +27,32 @@
 
   flex-flow: column;
 
+  width: 100%;
+  height: 100%;
+
   background: var(--background);
+}
+
+:host .calendar-body,
+:host .time-column,
+:host .datetime-year {
+  opacity: 0;
+}
+
+:host(:not(.datetime-ready)) .datetime-year {
+  position: absolute;
+  pointer-events: none;
+}
+
+:host(.datetime-ready) .calendar-body,
+:host(.datetime-ready) .time-column {
+  opacity: 1;
+}
+
+:host(.datetime-ready) .datetime-year {
+  display: none;
+
+  opacity: 1;
 }
 
 // Calendar
@@ -48,12 +73,6 @@
   flex: 1 1 auto;
 
   flex-flow: column;
-}
-
-// Month and Year Switch
-// -----------------------------------
-:host .datetime-year {
-  display: none;
 }
 
 :host(.show-month-and-year) .datetime-year {
