@@ -697,7 +697,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.add('datetime-ready');
       });
     }
-    visibleIO = new IntersectionObserver(visibleCallback, { threshold: 1 });
+    visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
     visibleIO.observe(this.el);
   }
 

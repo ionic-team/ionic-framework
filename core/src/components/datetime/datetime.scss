@@ -31,6 +31,8 @@
   height: 100%;
 
   background: var(--background);
+
+  overflow: hidden;
 }
 
 :host .calendar-body,
