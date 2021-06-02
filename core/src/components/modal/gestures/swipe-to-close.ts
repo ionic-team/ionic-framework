@@ -28,7 +28,7 @@ export const createSwipeToCloseGesture = (
     if (contentOrFooter === null) {
       return true;
     }
-    // Target is in the content or the footer so we don't start the gesture.
+    // Target is in the content or the footer so do not start the gesture.
     // We could be more nuanced here and allow it for content that
     // does not need to scroll.
     return false;
