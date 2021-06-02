@@ -197,8 +197,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         && this.el.classList.contains('item-has-focus')
         && !this.el.classList.contains('show-notch')
       ) {
-      this.setNotchWidth();
-      this.setLabelTranslateX();
+      raf(() => {
+        this.setNotchWidth();
+        this.setLabelTranslateX();
+      }); 
     }
   }
 
@@ -212,6 +214,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     this.setMultipleInputs();
+
+    if (this.fill === 'outline') {
+      raf(() => {
+        this.setNotchWidth();
+        this.setLabelTranslateX();
+      });
+    }
   }
 
   // If the item contains multiple clickable elements and/or inputs, then the item
@@ -299,6 +308,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const label = this.el.querySelector('ion-label');
     const width = (label === null || label.textContent === null) ? 0 : label.clientWidth;
     const height = (label === null || label.textContent === null) ? 0 : label.clientHeight;
+
+    //TODO fix no notch on initial input value
+    console.log(width, height)
     if (width > 0 && height > 0) {
       this.el.classList.add('show-notch');
       this.el.style.setProperty('--label-computed-width', `${width}px`);
@@ -380,10 +392,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-            {/* <div class="item-highlight item-highlight-top"></div>
-            <div class="item-highlight item-highlight-before"></div>
-            <div class="item-highlight item-highlight-after"></div>
-            <div class="item-highlight item-highlight-bottom"></div> */}
             <div class="item-highlight"></div>
           </TagType>
           <div class="item-bottom">
