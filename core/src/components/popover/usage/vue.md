@@ -60,7 +60,7 @@ Developers can also use this component directly in their template:
     css-class="my-custom-class"
     :event="event"
     :translucent="true"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Popover></Popover>
   </ion-popover>
@@ -76,8 +76,8 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const event = ref();
-    const setOpen = (state: boolean, event?: Event) => {
-      event.value = event; 
+    const setOpen = (state: boolean, ev?: Event) => {
+      event.value = ev; 
       isOpenRef.value = state;
     }
     return { isOpenRef, setOpen, event }

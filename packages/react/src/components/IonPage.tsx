@@ -9,7 +9,7 @@ import { createForwardRef } from './utils';
 interface IonPageProps extends IonicReactProps {}
 
 interface IonPageInternalProps extends IonPageProps {
-  forwardedRef?: React.RefObject<HTMLDivElement>;
+  forwardedRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {

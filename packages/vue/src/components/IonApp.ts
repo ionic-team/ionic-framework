@@ -18,7 +18,7 @@ export const IonApp = defineComponent({
 
 /**
  * When rendering user components inside of
- * ion-modal, ion-popover, or ion-nav, the component
+ * ion-modal, or ion-popover the component
  * needs to be created inside of the current application
  * context otherwise libraries such as vue-i18n or vuex
  * will not work properly.

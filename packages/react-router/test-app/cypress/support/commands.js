@@ -47,12 +47,6 @@ Cypress.Commands.add('ionPageVisible', (pageId) => {
   // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('have.attr', 'style', 'z-index: 101;')
 });
 
-Cypress.Commands.add('ionPageInvisible', (pageId) => {
-  cy.get(`div.ion-page[data-pageid=${pageId}]`)
-    .should('have.class', 'ion-page-invisible')
-    .should('have.length', 1);
-});
-
 Cypress.Commands.add('ionPageHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('have.class', 'ion-page-hidden')
@@ -128,4 +122,8 @@ Cypress.Commands.add('ionMenuClick', () => {
   //   .find('ion-menu-button')
   //   .click()
   // cy.get('ion-menu.show-menu').should('exist');
+});
+
+Cypress.Commands.add('ionHardwareBackEvent', () => {
+  cy.document().trigger('backbutton');
 });

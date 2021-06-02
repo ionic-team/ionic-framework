@@ -8,7 +8,7 @@ import { StackContext } from './StackContext';
 
 interface OutletPageManagerProps {
   className?: string;
-  forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
+  forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
   StackManager: any;
 }
