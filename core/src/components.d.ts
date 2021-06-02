@@ -648,14 +648,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The format of the date and time that is returned in the event payload of `ionChange`. You can configure the timezone used with the `displayTimezone` property. Defaults to `MMM D, YYYY`.
-         */
-        "displayFormat": string;
-        /**
-          * The timezone to use for display purposes only. See [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString) for a list of supported timezones. If no value is provided, the component will default to displaying times in the user's local timezone.
-         */
-        "displayTimezone"?: string;
-        /**
           * The text to display on the picker's "Done" button.
          */
         "doneText": string;
@@ -4080,14 +4072,6 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the datetime.
          */
         "disabled"?: boolean;
-        /**
-          * The format of the date and time that is returned in the event payload of `ionChange`. You can configure the timezone used with the `displayTimezone` property. Defaults to `MMM D, YYYY`.
-         */
-        "displayFormat"?: string;
-        /**
-          * The timezone to use for display purposes only. See [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString) for a list of supported timezones. If no value is provided, the component will default to displaying times in the user's local timezone.
-         */
-        "displayTimezone"?: string;
         /**
           * The text to display on the picker's "Done" button.
          */

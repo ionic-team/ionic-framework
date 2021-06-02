@@ -11,8 +11,7 @@ import {
   getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getPickerMonths,
-  getTimezoneOffset
+  getPickerMonths
 } from './utils/data';
 import {
   addTimePadding,
@@ -165,22 +164,6 @@ export class Datetime implements ComponentInterface {
   @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' = 'date-time';
 
   /**
-   * The format of the date and time that is returned in the
-   * event payload of `ionChange`. You can configure
-   * the timezone used with the `displayTimezone` property.
-   * Defaults to `MMM D, YYYY`.
-   */
-  @Prop() displayFormat = 'MMM D, YYYY';
-
-  /**
-   * The timezone to use for display purposes only. See
-   * [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString)
-   * for a list of supported timezones. If no value is provided, the
-   * component will default to displaying times in the user's local timezone.
-   */
-  @Prop() displayTimezone?: string;
-
-  /**
    * The text to display on the picker's cancel button.
    */
   @Prop() cancelText = 'Cancel';
@@ -321,11 +304,7 @@ export class Datetime implements ComponentInterface {
      * there can be 1 hr difference when dealing w/ DST
      */
     const date = new Date(convertDataToISO(this.workingParts));
-
-    // If a custom display timezone is provided, use that tzOffset value instead
-    this.workingParts.tzOffset = (this.displayTimezone !== undefined && this.displayTimezone.length > 0)
-      ? ((getTimezoneOffset(date, this.displayTimezone)) / 1000 / 60) * -1
-      : date.getTimezoneOffset() * -1;
+    this.workingParts.tzOffset = date.getTimezoneOffset() * -1;
 
     this.value = convertDataToISO(this.workingParts);
 
