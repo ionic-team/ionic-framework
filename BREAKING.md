@@ -37,13 +37,39 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 The `ion-datetime` component has undergone a complete rewrite and uses a new calendar style. As a result, some of the properties no longer apply and have been removed.
 
+- The `displayFormat` and `displayTimezone` properties have been removed since `ion-datetime` now displays inline with a calendar picker. To parse the UTC string provided in the payload of the `ionChange` event, we recommend using a 3rd-party date library like [date-fns](https://date-fns.org/). Here is an example of how you can take the UTC string from `ion-datetime` and format it to whatever style you prefer:
+
+```typescript
+import { format, parseISO } from 'date-fns';
+
+/**
+ * This is provided in the event
+ * payload from the `ionChange` event.
+ */
+const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
+const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
+
+console.log(formattedString); // Jun 4, 2021
+```
+
 - The `pickerOptions` and `pickerFormat` properties have been removed since `ion-datetime` now uses a calendar style rather than a wheel picker style.
 
-- The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. `ion-datetime` can now automatically format these values according to your devices locale thanks to the [Intl.DateTimeFormat API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat). To set a specific locale, use the new `locale` property.
+- The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. `ion-datetime` can now automatically format these values according to your devices locale thanks to the [Intl.DateTimeFormat API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat). If you wish to force a specific locale, you can use the new `locale` property:
+
+```html
+<ion-datetime locale="fr-FR"></ion-datetime>
+```
 
 - `ion-datetime` now displays the calendar inline by default, allowing for more flexibility in presentation. As a result, the `placeholder` property has been removed. Additionally, the `text` and `placeholder` Shadow Parts have been removed.
 
-- The `open` method has been removed. To present the datetime in an overlay, you can pass it into an `ion-modal` or `ion-popover` component and call the `present` method on the overlay instance. Alternatively, you can use the `trigger` property on `ion-modal` or `ion-popover` to present the overlay on a button click.
+- The `open` method has been removed. To present the datetime in an overlay, you can pass it into an `ion-modal` or `ion-popover` component and call the `present` method on the overlay instance. Alternatively, you can use the `trigger` property on `ion-modal` or `ion-popover` to present the overlay on a button click:
+
+```html
+<ion-button id="open-modal">Open Datetime Modal</ion-button>
+<ion-modal trigger="open-modal">
+  <ion-datetime></ion-datetime>
+</ion-modal>
+```
 
 #### Header
 
