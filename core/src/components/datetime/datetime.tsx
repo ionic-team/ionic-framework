@@ -726,15 +726,19 @@ export class Datetime implements ComponentInterface {
     const { monthRef, yearRef } = this;
     if (!yearRef || !monthRef) { return; }
 
-    const { year } = this.workingParts;
+    const { year, month } = this.workingParts;
 
     /**
      * Scroll initial month and year into view
-     * TODO: This does not work if scrollable area is not visible
      */
     const initialYear = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`);
     if (initialYear) {
       initialYear.scrollIntoView({ block: 'center', inline: 'center' });
+    }
+
+    const initialMonth = monthRef.querySelector(`.picker-col-item[data-value="${month}"]`);
+    if (initialMonth) {
+      initialMonth.scrollIntoView({ block: 'center', inline: 'center' });
     }
 
     let timeout: any;
