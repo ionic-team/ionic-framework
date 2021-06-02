@@ -27,10 +27,10 @@
 
   flex-flow: column;
 
-  background: var(--background);
-
   width: 100%;
   height: 100%;
+
+  background: var(--background);
 }
 
 :host .calendar-body,
