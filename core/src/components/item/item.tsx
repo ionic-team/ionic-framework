@@ -198,7 +198,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         && !this.el.classList.contains('show-notch')
       ) {
       raf(() => {
-        this.setNotchWidth();
+        this.setNotchSize();
         this.setLabelTranslateX();
       }); 
     }
@@ -215,11 +215,24 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   componentDidLoad() {
     this.setMultipleInputs();
 
-    if (this.fill === 'outline') {
-      raf(() => {
-        this.setNotchWidth();
+    if (this.fill === 'outline' && this.el.classList.contains('item-has-value')) {
+      
+      // This is a workaround for `componentDidLoad` not waiting for the browser to set an element's client dimensions.
+      let n = 0;
+      const checkSize = () => {
+        n++;
+        if (!this.el.offsetWidth && !this.el.offsetHeight) {
+          return raf(checkSize);
+        }
+    
+        // If we get here, `el` has a width or height.
+        console.log('frameDelay:', n);
+        this.setNotchSize();
         this.setLabelTranslateX();
-      });
+        return;
+      }
+    
+      checkSize();
     }
   }
 
@@ -304,18 +317,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   // In MD mode, set the border notch width to equal the computed width of the slotted ion-label
-  private setNotchWidth() {
+  private setNotchSize() {
     const label = this.el.querySelector('ion-label');
     const width = (label === null || label.textContent === null) ? 0 : label.clientWidth;
     const height = (label === null || label.textContent === null) ? 0 : label.clientHeight;
 
     //TODO fix no notch on initial input value
-    console.log(width, height)
     if (width > 0 && height > 0) {
       this.el.classList.add('show-notch');
       this.el.style.setProperty('--label-computed-width', `${width}px`);
       this.el.style.setProperty('--label-computed-height', `${height}px`);
     }
+
+    return width;
   }
 
   private setLabelTranslateX() {

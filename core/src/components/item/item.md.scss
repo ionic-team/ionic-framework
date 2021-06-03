@@ -23,6 +23,7 @@
   --highlight-height: 2px;
   --highlight-color-focused: #{$item-md-input-highlight-color};
   --highlight-color-hover: #1f1f1f;
+  // --highlight-color-hover: #{$item-md-input-highlight-color-hover};
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
   --notch-padding: 4px;
@@ -301,9 +302,12 @@
 // --------------------------------------------------
 
 :host(.item-fill-solid) {
-  --background: #f5f5f5;
-  --background-hover: #ECECEC;
-  --background-focused: #DBDBDB;
+  // --background: #f5f5f5;
+  // --background-hover: #ECECEC;
+  // --background-focused: #DBDBDB;
+  --background: #{$item-md-input-fill-solid-background-color};
+  --background-hover: #{$item-md-input-fill-solid-background-color-hover};
+  --background-focused: #{$item-md-input-fill-solid-background-color-focus};
   --border-width: 0 0 #{$item-md-border-bottom-width} 0;
   --inner-border-width: 0;
 
@@ -385,7 +389,8 @@
   border-color: var(--highlight-color-focused);
 }
 
-:host(.item-fill-outline.show-notch) .item-native ::slotted(ion-input) {
+:host(.item-fill-outline.item-has-focus.show-notch) .item-native ::slotted(ion-input),
+:host(.item-fill-outline.item-has-value.show-notch) .item-native ::slotted(ion-input) {
   transform: translateY(-25%);
 }
 

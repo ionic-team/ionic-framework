@@ -51,8 +51,23 @@ $item-md-border-bottom-color:               $item-md-border-color !default;
 /// @prop - Border bottom for the item when lines are displayed
 $item-md-border-bottom:                     $item-md-border-bottom-width $item-md-border-bottom-style $item-md-border-color !default;
 
+// Item Input
+// --------------------------------------------------
+
+/// @prop - Color of the item input background
+$item-md-input-fill-solid-background-color:            $background-color-step-50 !default;
+
+/// @prop - Color of the item input background when hovered
+$item-md-input-fill-solid-background-color-hover:            $background-color-step-100 !default;
+
+/// @prop - Color of the item input background when focused
+$item-md-input-fill-solid-background-color-focus:            $background-color-step-150 !default;
+
 /// @prop - Color of the item input highlight
 $item-md-input-highlight-color:             ion-color(primary, base) !default;
+
+/// @prop - Color of the item input highlight when hovered
+$item-md-input-highlight-color-hover:       $background-color-step-750 !default;
 
 /// @prop - Color of the item input highlight when valid
 $item-md-input-highlight-color-valid:       ion-color(success, base) !default;
