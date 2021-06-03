@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
+import { startFocusVisible } from '../../utils/focus-visible';
 import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -68,6 +69,7 @@ export class Datetime implements ComponentInterface {
   private timeMinuteRef?: HTMLElement;
   private monthRef?: HTMLElement;
   private yearRef?: HTMLElement;
+  private clearFocusVisible?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
@@ -379,21 +381,27 @@ export class Datetime implements ComponentInterface {
      * to the working day, but other days should
      * only be accessible using the arrow keys. Pressing
      * Tab should jump between bodies of selectable content.
-     * TODO: This does not work right on Safari
      */
-    /*this.calendarBodyRef!.addEventListener('focusin', ev => {
-      const relatedTarget = ev.relatedTarget as HTMLElement;
+    const checkCalendarBodyFocus = (ev: MutationRecord[]) => {
+      const record = ev[0];
 
-      if (ev.target !== this.calendarBodyRef) { return; }
-
-      if (relatedTarget?.classList.contains('calendar-day')) {
-        const prevButton = root.querySelector('.calendar-next-prev ion-button:last-of-type') as HTMLElement;
-        prevButton.focus();
-      } else {
-        this.focusWorkingDay(currentMonth);
+      /**
+       * If calendar body was already focused
+       * when this fired or if the calendar body
+       * if not currently focused, we should not re-focus
+       * the inner day.
+       */
+      if (
+        record.oldValue?.includes('ion-focused') ||
+        !calendarBodyRef.classList.contains('ion-focused')
+      ) {
+        return;
       }
 
-    });*/
+      this.focusWorkingDay(currentMonth);
+    }
+    const mo = new MutationObserver(checkCalendarBodyFocus);
+    mo.observe(calendarBodyRef, { attributeFilter: ['class'], attributeOldValue: true });
 
     /**
      * We must use keydown not keyup as we want
@@ -670,6 +678,17 @@ export class Datetime implements ComponentInterface {
        });
       startIO.observe(startMonth);
    });
+  }
+
+  connectedCallback() {
+    this.clearFocusVisible = startFocusVisible(this.el);
+  }
+
+  disconnectedCallback() {
+    if (this.clearFocusVisible) {
+      this.clearFocusVisible();
+      this.clearFocusVisible = undefined;
+    }
   }
 
   componentDidLoad() {
@@ -1158,7 +1177,7 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarBody() {
     return (
-      <div class="calendar-body" ref={el => this.calendarBodyRef = el} tabindex="0">
+      <div class="calendar-body ion-focusable" ref={el => this.calendarBodyRef = el} tabindex="0">
         {generateMonths(this.workingParts).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
@@ -1186,7 +1205,6 @@ export class Datetime implements ComponentInterface {
     const use24Hour = is24Hour(this.locale);
     const { ampm } = this.workingParts;
     const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
-    console.log('hour vals', hours)
     return (
       <div class="datetime-time">
         <div class="time-header">Time</div>
@@ -1194,7 +1212,7 @@ export class Datetime implements ComponentInterface {
           <div class="time-base" ref={el => this.timeBaseRef = el}>
             <div class="time-wrapper">
               <div
-                class="time-column time-column-hours"
+                class="ion-focusable time-column time-column-hours"
                 aria-label="Hours"
                 role="slider"
                 ref={el => this.timeHourRef = el}
@@ -1211,7 +1229,7 @@ export class Datetime implements ComponentInterface {
               </div>
               <div class="time-separator">:</div>
               <div
-                class="time-column time-column-minutes"
+                class="ion-focusable time-column time-column-minutes"
                 aria-label="Minutes"
                 role="slider"
                 ref={el => this.timeMinuteRef = el}
