@@ -88,7 +88,6 @@ test('router: guards - router.push - allow/block', async () => {
   await checkUrl(page, '#/child');
 });
 
-// TODO this is an actual bug in the code.
 test('router: guards - router.push - allow/redirect', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
