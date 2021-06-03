@@ -97,13 +97,21 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
      * values according to min hour and minute.
      */
     if (isSameDay(refParts, minParts)) {
-      processedHours = processedHours.filter(hour => {
-        const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-        return convertedHour >= minParts.hour!;
-      });
-      processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
-      isAMAllowed = minParts.hour! < 13;
-
+      /**
+       * Users may not always set the hour/minute for
+       * min value (i.e. 2021-06-02) so we should allow
+       * all hours/minutes in that case.
+       */
+      if (minParts.hour !== undefined) {
+        processedHours = processedHours.filter(hour => {
+          const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
+          return convertedHour >= minParts.hour!;
+        });
+        isAMAllowed = minParts.hour < 13;
+      }
+      if (minParts.minute !== undefined) {
+        processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
+      }
     /**
      * If ref day is before minimum
      * day do not render any hours/minute values
@@ -122,12 +130,22 @@ export const generateTime = (locale: string, refParts: DatetimeParts, minParts?:
      * values according to max hour and minute.
      */
     if (isSameDay(refParts, maxParts)) {
-      processedHours = processedHours.filter(hour => {
-        const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-        return convertedHour <= maxParts.hour!;
-      });
-      processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
-      isPMAllowed = maxParts.hour! >= 13;
+      /**
+       * Users may not always set the hour/minute for
+       * max value (i.e. 2021-06-02) so we should allow
+       * all hours/minutes in that case.
+       */
+      if (maxParts.hour !== undefined) {
+        processedHours = processedHours.filter(hour => {
+          const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
+          return convertedHour <= maxParts.hour!;
+        });
+        isPMAllowed = maxParts.hour >= 13;
+      }
+      if (maxParts.minute !== undefined) {
+        processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+      }
+
     /**
      * If ref day is after minimum
      * day do not render any hours/minute values

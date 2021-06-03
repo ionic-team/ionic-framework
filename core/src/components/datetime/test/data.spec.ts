@@ -173,5 +173,29 @@ describe('generateTime()', () => {
     expect(minutes.length).toEqual(0);
     expect(use24Hour).toEqual(false);
   })
+  it('should allow all hours and minutes if not set in min/max', () => {
+    const today = {
+      day: 22,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+    const min = {
+      day: 22,
+      month: 5,
+      year: 2021
+    }
+    const max = {
+      day: 22,
+      month: 5,
+      year: 2021
+    }
 
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, min, max);
+
+    expect(hours.length).toEqual(12);
+    expect(minutes.length).toEqual(60);
+    expect(use24Hour).toEqual(false);
+  })
 })
