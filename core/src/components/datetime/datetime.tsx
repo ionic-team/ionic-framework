@@ -42,6 +42,7 @@ import {
 import {
   getCalendarDayState,
   getCalendarYearState,
+  isDayDisabled
 } from './utils/state';
 
 /**
@@ -404,39 +405,39 @@ export class Datetime implements ComponentInterface {
 
       const parts = getPartsFromCalendarDay(activeElement as HTMLElement)
 
-      // TODO: this needs to account for max/min
+      let partsToFocus: DatetimeParts | undefined;
       switch (ev.key) {
         case 'ArrowDown':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getNextWeek(parts) as any });
+          partsToFocus = getNextWeek(parts);
           break;
         case 'ArrowUp':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getPreviousWeek(parts) as any });
+          partsToFocus = getPreviousWeek(parts);
           break;
         case 'ArrowRight':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getNextDay(parts) as any });
+          partsToFocus = getNextDay(parts);
           break;
         case 'ArrowLeft':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getPreviousDay(parts) as any });
+          partsToFocus = getPreviousDay(parts);
           break;
         case 'Home':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getStartOfWeek(parts) as any });
+          partsToFocus = getStartOfWeek(parts);
           break;
         case 'End':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getEndOfWeek(parts) as any });
+          partsToFocus = getEndOfWeek(parts);
           break;
         case 'PageUp':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getPreviousMonth(parts) as any });
+          partsToFocus = getPreviousMonth(parts);
           break;
         case 'PageDown':
           ev.preventDefault();
-          this.setWorkingParts({ ...this.workingParts, ...getNextMonth(parts) as any });
+          partsToFocus = getNextMonth(parts);
           break;
         /**
          * Do not preventDefault here
@@ -449,7 +450,21 @@ export class Datetime implements ComponentInterface {
       }
 
       /**
-       * Give view a change to re-render
+       * If the day we want to move focus to is
+       * disabled, do not do anything.
+       */
+      if (isDayDisabled(partsToFocus, this.minParts, this.maxParts)) {
+        return;
+      }
+
+      this.setWorkingParts({
+        ...this.workingParts,
+        ...partsToFocus
+      })
+
+      /**
+       * Give view a chance to re-render
+       * then move focus to the new working day
        */
       requestAnimationFrame(() => this.focusWorkingDay(currentMonth));
     })
