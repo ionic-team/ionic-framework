@@ -198,4 +198,18 @@ describe('generateTime()', () => {
     expect(minutes.length).toEqual(60);
     expect(use24Hour).toEqual(false);
   })
+  it('should allow certain hours and minutes based on minuteValues and hourValues', () => {
+    const today = {
+      day: 22,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43
+    }
+
+    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, undefined, [1,2,3], [10,15,20]);
+
+    expect(hours).toStrictEqual([1,2,3]);
+    expect(minutes).toStrictEqual([10,15,20]);
+  })
 })

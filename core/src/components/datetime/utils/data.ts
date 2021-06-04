@@ -82,12 +82,27 @@ export const getDaysOfMonth = (month: number, year: number) => {
  * max/min bound datetime parts, calculate the acceptable
  * hour and minute values according to the bounds and locale.
  */
-export const generateTime = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const generateTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  hourValues?: number[],
+  minuteValues?: number[]
+) => {
   const use24Hour = is24Hour(locale);
   let processedHours = use24Hour ? hour24 : hour12;
   let processedMinutes = minutes;
   let isAMAllowed = true;
   let isPMAllowed = true;
+
+  if (hourValues) {
+    processedHours = processedHours.filter(hour => hourValues.includes(hour));
+  }
+
+  if (minuteValues) {
+    processedMinutes = processedMinutes.filter(minute => minuteValues.includes(minute))
+  }
 
   if (minParts) {
 
@@ -178,31 +193,72 @@ export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   ]
 }
 
-export const getPickerMonths = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const getPickerMonths = (
+  locale: string,
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  monthValues?: number[]
+) => {
   const { year } = refParts;
-  const maxMonth = maxParts && maxParts.year === year ? maxParts.month : 12;
-  const minMonth = minParts && minParts.year === year ? minParts.month : 1;
-
   const months = [];
-  for (let i = minMonth; i <= maxMonth; i++) {
-    const date = new Date(`${i}/1/${year}`);
 
-    const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
-    months.push({ text: monthString, value: i });
+  if (monthValues !== undefined) {
+    let processedMonths = monthValues;
+    if (maxParts?.month !== undefined) {
+      processedMonths = processedMonths.filter(month => month <= maxParts.month!);
+    }
+    if (minParts?.month !== undefined) {
+      processedMonths = processedMonths.filter(month => month >= minParts.month!);
+    }
+
+    processedMonths.forEach(processedMonth => {
+      const date = new Date(`${processedMonth}/1/${year}`);
+
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      months.push({ text: monthString, value: processedMonth });
+    });
+  } else {
+    const maxMonth = maxParts && maxParts.year === year ? maxParts.month : 12;
+    const minMonth = minParts && minParts.year === year ? minParts.month : 1;
+
+    for (let i = minMonth; i <= maxMonth; i++) {
+      const date = new Date(`${i}/1/${year}`);
+
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      months.push({ text: monthString, value: i });
+    }
   }
 
   return months;
 }
 
-export const getCalendarYears = (refParts: DatetimeParts, showOutOfBoundsYears = false, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
-  const { year } = refParts;
-  const maxYear = (showOutOfBoundsYears) ? year + 20 : (maxParts?.year || year + 20)
-  const minYear = (showOutOfBoundsYears) ? year - 20 : (minParts?.year || year - 20);
+export const getCalendarYears = (
+  refParts: DatetimeParts,
+  showOutOfBoundsYears = false,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  yearValues?: number[]
+ ) => {
+  if (yearValues !== undefined) {
+    let processedYears = yearValues;
+    if (maxParts?.year !== undefined) {
+      processedYears = processedYears.filter(year => year <= maxParts.year!);
+    }
+    if (minParts?.year !== undefined) {
+      processedYears = processedYears.filter(year => year >= minParts.year!);
+    }
+    return processedYears;
+  } else {
+    const { year } = refParts;
+    const maxYear = (showOutOfBoundsYears) ? year + 20 : (maxParts?.year || year + 20)
+    const minYear = (showOutOfBoundsYears) ? year - 20 : (minParts?.year || year - 20);
 
-  const years = [];
-  for (let i = maxYear; i >= minYear; i--) {
-    years.push(i);
+    const years = [];
+    for (let i = maxYear; i >= minYear; i--) {
+      years.push(i);
+    }
+
+    return years;
   }
-
-  return years
 }

@@ -40,6 +40,22 @@ describe('getCalendarDayState()', () => {
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1'
     });
+
+    expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [1])).toEqual({
+      isActive: true,
+      isToday: true,
+      disabled: false,
+      ariaSelected: 'true',
+      ariaLabel: 'Today, Tuesday, January 1'
+    });
+
+    expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [2])).toEqual({
+      isActive: true,
+      isToday: true,
+      disabled: true,
+      ariaSelected: 'true',
+      ariaLabel: 'Today, Tuesday, January 1'
+    });
   });
 });
 

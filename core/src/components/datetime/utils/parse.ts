@@ -4,6 +4,34 @@ const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
 /**
+ * Use to convert a string of comma separated numbers or
+ * an array of numbers, and clean up any user input
+ */
+export const convertToArrayOfNumbers = (input?: number[] | number | string): number[] | undefined => {
+  if (input === undefined) { return; }
+
+  let processedInput: any = input;
+
+  if (typeof input === 'string') {
+    // convert the string to an array of strings
+    // auto remove any whitespace and [] characters
+    processedInput = input.replace(/\[|\]|\s/g, '').split(',');
+  }
+
+  let values: number[];
+  if (Array.isArray(processedInput)) {
+    // ensure each value is an actual number in the returned array
+    values = processedInput
+      .map((num: any) => parseInt(num, 10))
+      .filter(isFinite);
+  } else {
+    values = [processedInput as number];
+  }
+
+  return values;
+};
+
+/**
  * Extracts date information
  * from a .calendar-day element
  * into DatetimeParts.
