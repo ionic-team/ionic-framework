@@ -110,8 +110,10 @@ export class Breadcrumb implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  /* @internal */
-  @Event() collapsedClick!: EventEmitter<void>;
+  /**
+   * Emitted when the collapsed indicator is clicked on.
+   */
+  @Event() ionCollapsedClick!: EventEmitter<void>;
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
@@ -126,7 +128,7 @@ export class Breadcrumb implements ComponentInterface {
   }
 
   private collapsedIndicatorClick = () => {
-    this.collapsedClick.emit();
+    this.ionCollapsedClick.emit();
   }
 
   render() {

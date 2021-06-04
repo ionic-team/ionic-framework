@@ -3802,11 +3802,14 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        "onCollapsedClick"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the breadcrumb loses focus.
          */
         "onIonBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the collapsed indicator is clicked on.
+         */
+        "onIonCollapsedClick"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the breadcrumb has focus.
          */
@@ -3854,10 +3857,6 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        /**
-          * Emitted when the collapsed indicator is clicked on.
-         */
-        "onIonCollapsedClick"?: (event: CustomEvent<void>) => void;
     }
     interface IonButton {
         /**

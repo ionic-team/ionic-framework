@@ -48,20 +48,10 @@ export class Breadcrumbs implements ComponentInterface {
    */
   @Prop() itemsAfterCollapse = 1;
 
-  /**
-   * Emitted when the collapsed indicator is clicked on.
-   */
-  @Event() ionCollapsedClick!: EventEmitter<void>;
-
   @Watch('maxItems')
   maxItemsChanged() {
     this.resetActiveBreadcrumb();
     this.breadcrumbsInit();
-  }
-
-  @Listen('collapsedClick')
-  collapsedChanged() {
-    this.ionCollapsedClick.emit();
   }
 
   componentWillLoad() {
