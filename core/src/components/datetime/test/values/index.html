@@ -41,8 +41,25 @@
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Hour and Minute Values</h2>
-            <ion-datetime hour-values="1,2,3" minute-values="0,15,30,59"></ion-datetime>
+            <h2>Values</h2>
+            <ion-datetime
+              hour-values="1,2,3"
+              minute-values="0,15,30,59"
+              year-values="2010,2015,2020,2025"
+              month-values="5,10"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Values with Max/Min</h2>
+            <ion-datetime
+              hour-values="1,2,3"
+              minute-values="0,15,30,59"
+              year-values="2010,2015,2020,2025"
+
+              max="2021-06-05"
+              min="2012-06-05"
+            ></ion-datetime>
           </div>
         </div>
       </ion-content>

@@ -74,6 +74,8 @@ export class Datetime implements ComponentInterface {
 
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
+  private parsedMonthValues?: number[];
+  private parsedYearValues?: number[];
 
   private minParts?: any;
   private maxParts?: any;
@@ -188,6 +190,10 @@ export class Datetime implements ComponentInterface {
    * recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
    */
   @Prop() yearValues?: number[] | number | string;
+  @Watch('yearValues')
+  protected yearValuesChanged() {
+    this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
+  }
 
   /**
    * Values used to create the list of selectable months. By default
@@ -198,6 +204,10 @@ export class Datetime implements ComponentInterface {
    * zero-based index, meaning January's value is `1`, and December's is `12`.
    */
   @Prop() monthValues?: number[] | number | string;
+  @Watch('monthValues')
+  protected monthValuesChanged() {
+    this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
+  }
 
   /**
    * Values used to create the list of selectable days. By default
@@ -947,6 +957,8 @@ export class Datetime implements ComponentInterface {
     this.processMaxParts();
     this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
+    this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
+    this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
     this.emitStyle();
   }
 
@@ -1018,7 +1030,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMDYearView() {
-    return getCalendarYears(this.activeParts, true).map(year => {
+    return getCalendarYears(this.activeParts, true, undefined, undefined, this.parsedYearValues).map(year => {
 
       const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
       return (
@@ -1055,7 +1067,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getPickerMonths(this.locale, this.workingParts, this.minParts, this.maxParts).map(month => {
+        {getPickerMonths(this.locale, this.workingParts, this.minParts, this.maxParts, this.parsedMonthValues).map(month => {
           return (
             <div
             class="picker-col-item"
@@ -1075,7 +1087,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getCalendarYears(this.workingParts, false, this.minParts, this.maxParts).map(year => {
+        {getCalendarYears(this.workingParts, false, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
           return (
             <div
               class="picker-col-item"
