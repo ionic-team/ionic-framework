@@ -1151,6 +1151,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMonth(month: number, year: number) {
+    const isMonthDisabled = !this.parsedYearValues?.includes(year) || !this.parsedMonthValues?.includes(month);
     return (
       <div class="calendar-month">
         <div class="calendar-month-grid">
@@ -1167,7 +1168,7 @@ export class Datetime implements ComponentInterface {
                 data-year={year}
                 data-index={index}
                 data-day-of-week={dayOfWeek}
-                disabled={disabled}
+                disabled={isMonthDisabled || disabled}
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
@@ -1231,7 +1232,6 @@ export class Datetime implements ComponentInterface {
     const use24Hour = is24Hour(this.locale);
     const { ampm } = this.workingParts;
     const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
-    console.log('render time')
     return (
       <div class="datetime-time">
         <div class="time-header">Time</div>
