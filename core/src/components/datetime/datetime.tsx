@@ -70,6 +70,7 @@ export class Datetime implements ComponentInterface {
   private monthRef?: HTMLElement;
   private yearRef?: HTMLElement;
   private clearFocusVisible?: () => void;
+  private overlayIsPresenting = false;
 
   private minParts?: any;
   private maxParts?: any;
@@ -582,6 +583,18 @@ export class Datetime implements ComponentInterface {
         if (!ev.isIntersecting) { return; }
 
         /**
+         * When presenting an inline overlay,
+         * subsequent presentations will cause
+         * the IO to fire again (since the overlay
+         * is now visible and therefore the calendar
+         * months are intersecting).
+         */
+        if (this.overlayIsPresenting) {
+          this.overlayIsPresenting = false;
+          return;
+        }
+
+        /**
          * On iOS, we need to set pointer-events: none
          * when the user is almost done with the gesture
          * so that they cannot quickly swipe while
@@ -714,6 +727,7 @@ export class Datetime implements ComponentInterface {
       this.initializeCalendarIOListeners();
       this.initializeKeyboardListeners();
       this.initializeTimeScrollListener();
+      this.initializeOverlayListener();
 
       if (mode === 'ios') {
         this.initializeMonthAndYearScrollListeners();
@@ -733,6 +747,22 @@ export class Datetime implements ComponentInterface {
     }
     visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
     visibleIO.observe(this.el);
+  }
+
+  /**
+   * When doing subsequent presentations of an inline
+   * overlay, the IO callback will fire again causing
+   * the calendar to go back one month. We need to listen
+   * for the presentation of the overlay so we can properly
+   * cancel that IO callback.
+   */
+  private initializeOverlayListener = () => {
+    const overlay = this.el.closest('ion-popover, ion-modal');
+    if (overlay === null) { return; }
+
+    overlay.addEventListener('willPresent', () => {
+      this.overlayIsPresenting = true;
+    });
   }
 
   private initializeMonthAndYearScrollListeners = () => {
