@@ -37,6 +37,7 @@ import {
   getStartOfWeek
 } from './utils/manipulation';
 import {
+  convertToArrayOfNumbers,
   getPartsFromCalendarDay,
   parseDate
 } from './utils/parse';
@@ -70,6 +71,9 @@ export class Datetime implements ComponentInterface {
   private monthRef?: HTMLElement;
   private yearRef?: HTMLElement;
   private clearFocusVisible?: () => void;
+
+  private parsedMinuteValues?: number[];
+  private parsedHourValues?: number[];
 
   private minParts?: any;
   private maxParts?: any;
@@ -212,6 +216,10 @@ export class Datetime implements ComponentInterface {
    * array of numbers, or a string of comma separated numbers.
    */
   @Prop() hourValues?: number[] | number | string;
+  @Watch('hourValues')
+  protected hourValuesChanged() {
+    this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
+  }
 
   /**
    * Values used to create the list of selectable minutes. By default
@@ -221,6 +229,10 @@ export class Datetime implements ComponentInterface {
    * then this input value would be `minuteValues="0,15,30,45"`.
    */
   @Prop() minuteValues?: number[] | number | string;
+  @Watch('minuteValues')
+  protected minuteValuesChanged() {
+    this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
+  }
 
   /**
    * The locale to use for `ion-datetime`. This
@@ -933,6 +945,8 @@ export class Datetime implements ComponentInterface {
     this.processValue(this.value);
     this.processMinParts();
     this.processMaxParts();
+    this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
+    this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
     this.emitStyle();
   }
 
@@ -1204,7 +1218,8 @@ export class Datetime implements ComponentInterface {
   private renderTime(mode: Mode) {
     const use24Hour = is24Hour(this.locale);
     const { ampm } = this.workingParts;
-    const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts);
+    const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
+    console.log('render time')
     return (
       <div class="datetime-time">
         <div class="time-header">Time</div>

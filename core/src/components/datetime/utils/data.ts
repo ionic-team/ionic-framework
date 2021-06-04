@@ -82,12 +82,28 @@ export const getDaysOfMonth = (month: number, year: number) => {
  * max/min bound datetime parts, calculate the acceptable
  * hour and minute values according to the bounds and locale.
  */
-export const generateTime = (locale: string, refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const generateTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  hourValues?: number[],
+  minuteValues?: number[]
+) => {
   const use24Hour = is24Hour(locale);
   let processedHours = use24Hour ? hour24 : hour12;
   let processedMinutes = minutes;
   let isAMAllowed = true;
   let isPMAllowed = true;
+
+  console.log(hourValues, minuteValues)
+
+  if (minuteValues) {
+    processedMinutes = processedMinutes.filter(minute => {
+      return minuteValues.includes(minute);
+    })
+    console.log('process minute')
+  }
 
   if (minParts) {
 
