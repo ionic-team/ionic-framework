@@ -37,7 +37,7 @@ export const isDayDisabled = (
    * check to make sure that the date we are looking
    * at is in this array.
    */
-  if (!dayValues?.includes(refParts.day)) { return true; }
+  if (dayValues !== undefined && !dayValues.includes(refParts.day)) { return true; }
 
   /**
    * Given a min date, perform the following
