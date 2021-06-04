@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { popoverController } from '../../../../dist/ionic/index.esm.js';
+    window.popoverController = popoverController;
+  </script>
 <body>
   <ion-app>
 
@@ -171,8 +174,8 @@
 
       <h1>Collapsed</h1>
 
-      <ion-breadcrumbs>
-        <ion-breadcrumb href="#" collapsed>
+      <ion-breadcrumbs max-items="4" items-before-collapse="0" items-after-collapse="4">
+        <ion-breadcrumb href="#">
           <ion-icon slot="start" ios="home" md="home-sharp"></ion-icon>
           Home
         </ion-breadcrumb>
@@ -198,8 +201,8 @@
 
       <h1>Collapsed: Tab Focus</h1>
 
-      <ion-breadcrumbs>
-        <ion-breadcrumb href="#" collapsed>
+      <ion-breadcrumbs max-items="4" items-before-collapse="0" items-after-collapse="4">
+        <ion-breadcrumb href="#">
           <ion-icon slot="start" ios="home" md="home-sharp"></ion-icon>
           Home
         </ion-breadcrumb>
@@ -228,23 +231,23 @@
         <ion-button size="small" fill="clear" onClick="collapseBreadcrumbs()">Re-collapse</ion-button>
       </h1>
 
-      <ion-breadcrumbs id="expandOnClick">
+      <ion-breadcrumbs id="expandOnClick" max-items="4">
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#electronics" collapsed class="collapse-on-click">
+        <ion-breadcrumb href="#electronics">
           Cameras & Camcorders
         </ion-breadcrumb>
-        <ion-breadcrumb href="#digital-camera-accessories" collapsed class="collapse-on-click">
+        <ion-breadcrumb href="#digital-camera-accessories">
           Digital Camera Accessories
         </ion-breadcrumb>
-        <ion-breadcrumb href="#camera-lenses" collapsed class="collapse-on-click">
+        <ion-breadcrumb href="#camera-lenses">
           Camera Lenses
         </ion-breadcrumb>
-        <ion-breadcrumb href="#dslr-lenses" collapsed class="collapse-on-click">
+        <ion-breadcrumb href="#dslr-lenses">
           DSLR Lenses
         </ion-breadcrumb>
-        <ion-breadcrumb href="#prime-lenses" collapsed class="collapse-on-click">
+        <ion-breadcrumb href="#prime-lenses">
           Prime Lenses
         </ion-breadcrumb>
         <ion-breadcrumb>
@@ -256,17 +259,17 @@
 
       <h1>Breadcrumbs: collapsed / popover on click</h1>
 
-      <ion-breadcrumbs id="popoverOnClick">
-        <ion-breadcrumb href="#" collapsed>
+      <ion-breadcrumbs id="popoverOnClick" max-items="4" items-before-collapse="0" items-after-collapse="3">
+        <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#electronics" collapsed>
+        <ion-breadcrumb href="#electronics">
           Cameras & Camcorders
         </ion-breadcrumb>
-        <ion-breadcrumb href="#digital-camera-accessories" collapsed>
+        <ion-breadcrumb href="#digital-camera-accessories">
           Digital Camera Accessories
         </ion-breadcrumb>
-        <ion-breadcrumb href="#camera-lenses" collapsed>
+        <ion-breadcrumb href="#camera-lenses">
           Camera Lenses
         </ion-breadcrumb>
         <ion-breadcrumb href="#dslr-lenses">
@@ -416,23 +419,11 @@
 
     function expandBreadcrumbs() {
       console.log('expand onClick');
-      const breadcrumbs = expandOnClick.querySelectorAll('ion-breadcrumb');
-
-      for (const breadcrumb of breadcrumbs) {
-        if (breadcrumb.collapsed === true) {
-          breadcrumb.collapsed = undefined;
-        }
-      }
+      expandOnClick.maxItems = undefined;
     }
 
     function collapseBreadcrumbs() {
-      const breadcrumbs = expandOnClick.querySelectorAll('ion-breadcrumb');
-
-      for (const breadcrumb of breadcrumbs) {
-        if (breadcrumb.classList.contains('collapse-on-click')) {
-          breadcrumb.collapsed = true;
-        }
-      }
+      expandOnClick.maxItems = 4;
     }
 
     const popoverOnClick = document.querySelector('#popoverOnClick');
@@ -467,16 +458,14 @@
 
     customElements.define('list-popover', ListPopover);
 
-    function presentPopover(ev) {
+    async function presentPopover(ev) {
       console.log('present ev', ev);
-      const popover = Object.assign(document.createElement('ion-popover'), {
+      const popover = await popoverController.create({
         component: 'list-popover',
         event: ev,
       });
-      document.body.appendChild(popover);
-      return popover.present();
+      await popover.present();
     }
-
   </script>
 
   <style>

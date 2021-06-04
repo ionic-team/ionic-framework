@@ -72,3 +72,21 @@
 :host(.breadcrumb-active) ::slotted(ion-icon) {
   color: #222d3a;
 }
+
+
+// Breadcrumbs Collapsed Indicator
+// --------------------------------------------------
+
+.breadcrumbs-collapsed-indicator {
+  @include border-radius(2px);
+
+  background: #eef1f3;
+}
+
+.breadcrumbs-collapsed-indicator:hover {
+  opacity: 0.7;
+}
+
+.breadcrumbs-collapsed-indicator:focus {
+  background: #dfe5e8;
+}

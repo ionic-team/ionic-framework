@@ -3,25 +3,6 @@
 // iOS Breadcrumbs
 // --------------------------------------------------
 
-// Breadcrumbs Collapsed Indicator
-// --------------------------------------------------
-
-.breadcrumbs-collapsed-indicator {
-  @include border-radius(4px);
-
-  background: #e9edf3;
-}
-
-.breadcrumbs-collapsed-indicator:hover {
-  opacity: 0.45;
-}
-
-
-.breadcrumbs-collapsed-indicator:focus {
-  background: #d9e0ea;
-}
-
-
 // Breadcrumbs: In Toolbar
 // --------------------------------------------------
 

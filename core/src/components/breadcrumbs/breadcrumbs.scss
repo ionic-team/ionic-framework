@@ -17,41 +17,6 @@
   align-items: center;
 }
 
-// Breadcrumbs: Collapsed Indicator
-// --------------------------------------------------
-
-.breadcrumbs-collapsed-indicator {
-  @include padding(0);
-  @include margin(0, 14px);
-
-  display: none;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 32px;
-  height: 18px;
-
-  border: 0;
-
-  outline: none;
-
-  cursor: pointer;
-  appearance: none;
-}
-
-.breadcrumbs-collapsed-indicator ion-icon {
-  margin-top: 1px;
-
-  color: #73849a;
-
-  font-size: 22px;
-}
-
-:host(.breadcrumbs-collapsed) .breadcrumbs-collapsed-indicator {
-  display: flex;
-}
-
 
 // Breadcrumbs: In Toolbar
 // --------------------------------------------------

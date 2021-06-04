@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection as RouterDirection1, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { RouterDirection } from "./components/router/utils/interface";
 import { AnimationBuilder as AnimationBuilder1 } from "./utils/animation/animation-interface";
@@ -271,9 +271,6 @@ export namespace Components {
           * If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.
          */
         "active": boolean;
-        /**
-          * If `true`, the breadcrumb will collapse and show an indicator that it is collapsed in its place.
-         */
         "collapsed": boolean;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -291,7 +288,7 @@ export namespace Components {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href": string | undefined;
-        "lastCollapsed": boolean;
+        "last": boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -312,6 +309,7 @@ export namespace Components {
           * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
          */
         "separator"?: boolean | undefined;
+        "showCollapsedIndicator": boolean;
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -322,6 +320,18 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsAfterCollapse": number;
+        /**
+          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsBeforeCollapse": number;
+        /**
+          * The maximum number of breadcrumbs to show before collapsing.
+         */
+        "maxItems"?: number;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3770,9 +3780,6 @@ declare namespace LocalJSX {
           * If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.
          */
         "active"?: boolean;
-        /**
-          * If `true`, the breadcrumb will collapse and show an indicator that it is collapsed in its place.
-         */
         "collapsed"?: boolean;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -3790,19 +3797,16 @@ declare namespace LocalJSX {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href"?: string | undefined;
-        "lastCollapsed": boolean;
+        "last": boolean;
         /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "onCollapsedClick"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the breadcrumb loses focus.
          */
         "onIonBlur"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the collapse property changes.
-         */
-        "onIonCollapsed"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * Emitted when the breadcrumb has focus.
          */
@@ -3823,6 +3827,7 @@ declare namespace LocalJSX {
           * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
          */
         "separator"?: boolean | undefined;
+        "showCollapsedIndicator": boolean;
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -3834,11 +3839,23 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsAfterCollapse"?: number;
+        /**
+          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsBeforeCollapse"?: number;
+        /**
+          * The maximum number of breadcrumbs to show before collapsing.
+         */
+        "maxItems"?: number;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted when the collapsed button is clicked on.
+          * Emitted when the collapsed indicator is clicked on.
          */
         "onIonCollapsedClick"?: (event: CustomEvent<void>) => void;
     }
