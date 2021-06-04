@@ -340,3 +340,23 @@ export const getFullWidth = (el: Element): number => {
     + parseFloat(styles.getPropertyValue('margin-right'));
   return fullWidth;
 }
+
+/** 
+ * `componentDidLoad` does not wait for an element's initial sizes to load before firing.
+ * This function will resolve when the inital styles are loaded.
+ */ 
+export const waitForInitialSizing = async (el: HTMLElement) => {
+  let response = new Promise((resolve, _reject) => {
+    const checkSize = () => {
+      if (!el.offsetWidth && !el.offsetHeight) {
+        return raf(checkSize);
+      }
+  
+      return resolve(true);
+    }
+
+    checkSize();
+  });
+
+  return response;
+}

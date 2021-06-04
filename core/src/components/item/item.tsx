@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forc
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { getFullWidth, raf } from '../../utils/helpers';
+import { getFullWidth, raf, waitForInitialSizing } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { InputChangeEventDetail } from '../input/input-interface';
 
@@ -216,23 +216,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.setMultipleInputs();
 
     if (this.fill === 'outline' && this.el.classList.contains('item-has-value')) {
-      
-      // This is a workaround for `componentDidLoad` not waiting for the browser to set an element's client dimensions.
-      let n = 0;
-      const checkSize = () => {
-        n++;
-        if (!this.el.offsetWidth && !this.el.offsetHeight) {
-          return raf(checkSize);
-        }
-    
-        // If we get here, `el` has a width or height.
-        console.log('frameDelay:', n);
+      waitForInitialSizing(this.el).then(() => {
         this.setNotchSize();
         this.setLabelTranslateX();
-        return;
-      }
-    
-      checkSize();
+      })
     }
   }
 
