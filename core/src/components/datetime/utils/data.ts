@@ -203,12 +203,12 @@ export const getPickerMonths = (
   const { year } = refParts;
   const months = [];
 
-  if (monthValues) {
+  if (monthValues !== undefined) {
     let processedMonths = monthValues;
-    if (maxParts?.month) {
+    if (maxParts?.month !== undefined) {
       processedMonths = processedMonths.filter(month => month <= maxParts.month!);
     }
-    if (minParts?.month) {
+    if (minParts?.month !== undefined) {
       processedMonths = processedMonths.filter(month => month >= minParts.month!);
     }
 
@@ -240,12 +240,12 @@ export const getCalendarYears = (
   maxParts?: DatetimeParts,
   yearValues?: number[]
  ) => {
-  if (yearValues) {
+  if (yearValues !== undefined) {
     let processedYears = yearValues;
-    if (maxParts?.year) {
+    if (maxParts?.year !== undefined) {
       processedYears = processedYears.filter(year => year <= maxParts.year!);
     }
-    if (minParts?.year) {
+    if (minParts?.year !== undefined) {
       processedYears = processedYears.filter(year => year >= minParts.year!);
     }
     return processedYears;
