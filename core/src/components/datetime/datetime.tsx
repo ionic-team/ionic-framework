@@ -76,6 +76,7 @@ export class Datetime implements ComponentInterface {
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
   private parsedYearValues?: number[];
+  private parsedDayValues?: number[];
 
   private minParts?: any;
   private maxParts?: any;
@@ -218,6 +219,10 @@ export class Datetime implements ComponentInterface {
    * days which are not valid for the selected month.
    */
   @Prop() dayValues?: number[] | number | string;
+  @Watch('dayValues')
+  protected dayValuesChanged() {
+    this.parsedDayValues = convertToArrayOfNumbers(this.dayValues);
+  }
 
   /**
    * Values used to create the list of selectable hours. By default
@@ -959,6 +964,7 @@ export class Datetime implements ComponentInterface {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
     this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
     this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
+    this.parsedDayValues = convertToArrayOfNumbers(this.dayValues);
     this.emitStyle();
   }
 
@@ -1158,7 +1164,7 @@ export class Datetime implements ComponentInterface {
           {getDaysOfMonth(month, year).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts, this.parsedDayValues);
 
             return (
               <button

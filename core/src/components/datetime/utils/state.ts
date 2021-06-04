@@ -20,12 +20,24 @@ export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxPar
  * not be interactive according to its value,
  * or the max/min dates.
  */
-export const isDayDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const isDayDisabled = (
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[]
+) => {
   /**
    * If this is a filler date (i.e. padding)
    * then the date is disabled.
    */
   if (refParts.day === null) { return true; }
+
+  /**
+   * If user passed in a list of acceptable day values
+   * check to make sure that the date we are looking
+   * at is in this array.
+   */
+  if (!dayValues?.includes(refParts.day)) { return true; }
 
   /**
    * Given a min date, perform the following
@@ -82,10 +94,18 @@ export const getCalendarYearState = (refYear: number, activeParts: DatetimeParts
  * Given a locale, a date, the selected date, and today's date,
  * generate the state for a given calendar day button.
  */
-export const getCalendarDayState = (locale: string, refParts: DatetimeParts, activeParts: DatetimeParts, todayParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const getCalendarDayState = (
+  locale: string,
+  refParts: DatetimeParts,
+  activeParts: DatetimeParts,
+  todayParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[]
+) => {
   const isActive = isSameDay(refParts, activeParts);
   const isToday = isSameDay(refParts, todayParts);
-  const disabled = isDayDisabled(refParts, minParts, maxParts);
+  const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
 
   return {
     disabled,
