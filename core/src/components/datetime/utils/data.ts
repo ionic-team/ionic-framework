@@ -96,13 +96,12 @@ export const generateTime = (
   let isAMAllowed = true;
   let isPMAllowed = true;
 
-  console.log(hourValues, minuteValues)
+  if (hourValues) {
+    processedHours = processedHours.filter(hour => hourValues.includes(hour));
+  }
 
   if (minuteValues) {
-    processedMinutes = processedMinutes.filter(minute => {
-      return minuteValues.includes(minute);
-    })
-    console.log('process minute')
+    processedMinutes = processedMinutes.filter(minute => minuteValues.includes(minute))
   }
 
   if (minParts) {

@@ -8,7 +8,7 @@ const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(
  * an array of numbers, and clean up any user input
  */
 export const convertToArrayOfNumbers = (input?: number[] | number | string): number[] | undefined => {
-  if (input === undefined) return;
+  if (input === undefined) { return; }
 
   let processedInput: any = input;
 
