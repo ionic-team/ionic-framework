@@ -7,6 +7,23 @@ consist of items, headers, and footers. For performance reasons, not every recor
 in the list is rendered at once; instead a small subset of records (enough to fill the viewport)
 are rendered and reused as the user scrolls.
 
+This guide will go over the recommended virtual scrolling packages for each framework integration as well as documentation for the deprecated `ion-virtual-scroll` component for Ionic Angular. We recommend using the framework-specific solutions listed below, but the the `ion-virtual-scroll` documentation is available below for developers who are still using that component.
+
+## Angular
+
+We recommend using CDK Scroller for a virtual scrolling solution in Ionic Angular. For more information, please see: https://ionicframework.com/docs/angular/virtual-scroll.
+
+## React
+
+We recommend using Virtuoso for a virtual scrolling solution in Ionic React. For more information, please see: https://ionicframework.com/docs/react/virtual-scroll.
+
+## Vue
+
+We recommend using `vue-virtual-scroller` for a virtual scrolling solution in Ionic Vue. For more information, please see: https://ionicframework.com/docs/vue/virtual-scroll.
+
+------
+
+The following documentation applies to the `ion-virtual-scroll` component.
 
 ## Approximate Widths and Heights
 
@@ -96,14 +113,6 @@ Each virtual item must stay extremely efficient, but one way to really
 kill its performance is to perform any DOM operations within section header
 and footer functions. These functions are called for every record in the
 dataset, so please make sure they're performant.
-
-## React
-
-The Virtual Scroll component is not supported in React.
-
-## Vue
-
-`ion-virtual-scroll` is not supported in Vue. We plan on integrating with existing community-driven solutions for virtual scroll in the near future. Follow our [GitHub issue thread](https://github.com/ionic-team/ionic-framework/issues/17887) for the latest updates.
 
 <!-- Auto Generated Below -->
 
