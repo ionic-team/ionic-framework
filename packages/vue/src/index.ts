@@ -1,5 +1,5 @@
 import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
+import { arrowBackSharp, caretBackSharp, chevronBack, chevronDown, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 export * from './proxies';
 export { IonicVue } from './ionic-vue';
@@ -81,6 +81,7 @@ addIcons({
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
+  'chevron-down': chevronDown,
   'close': close,
   'close-circle': closeCircle,
   'close-sharp': closeSharp,
