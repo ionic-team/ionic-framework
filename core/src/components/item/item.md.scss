@@ -302,9 +302,6 @@
 // --------------------------------------------------
 
 :host(.item-fill-solid) {
-  // --background: #f5f5f5;
-  // --background-hover: #ECECEC;
-  // --background-focused: #DBDBDB;
   --background: #{$item-md-input-fill-solid-background-color};
   --background-hover: #{$item-md-input-fill-solid-background-color-hover};
   --background-focused: #{$item-md-input-fill-solid-background-color-focus};
@@ -328,12 +325,20 @@
   border-bottom-color: var(--highlight-color-focused);
 }
 
+:host(.item-fill-solid) .item-native .item-highlight {
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity 200ms, transform 200ms;
+}
+
 :host(.item-fill-solid.item-has-focus) .item-native .item-highlight {
   @include overlay;
-  border-bottom-width: var(--highlight-height);
-  
+  border-bottom-width: calc(var(--highlight-height) - 1px);
   border-bottom-style: var(--border-style);
   border-bottom-color: var(--highlight-color-focused);
+
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 :host(.item-fill-solid.item-shape-round) {

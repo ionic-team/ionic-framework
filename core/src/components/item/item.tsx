@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forc
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { getFullWidth, raf, waitForInitialSizing } from '../../utils/helpers';
+import { getFullWidth, raf, getInitialSizing } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { InputChangeEventDetail } from '../input/input-interface';
 
@@ -216,7 +216,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.setMultipleInputs();
 
     if (this.fill === 'outline' && this.el.classList.contains('item-has-value')) {
-      waitForInitialSizing(this.el).then(() => {
+      getInitialSizing(this.el).then(() => {
         this.setNotchSize();
         this.setLabelTranslateX();
       })

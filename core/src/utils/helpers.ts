@@ -345,18 +345,23 @@ export const getFullWidth = (el: Element): number => {
  * `componentDidLoad` does not wait for an element's initial sizes to load before firing.
  * This function will resolve when the inital styles are loaded.
  */ 
-export const waitForInitialSizing = async (el: HTMLElement) => {
-  let response = new Promise((resolve, _reject) => {
+export const getInitialSizing = async (el: HTMLElement, frameLimit: number = 500): Promise<unknown> => {
+  const response = new Promise((resolve, reject) => {
+    if (!el) {
+      reject();
+    }
+    let n = 0;
+
     const checkSize = () => {
+      n++;
       if (!el.offsetWidth && !el.offsetHeight) {
-        return raf(checkSize);
+        return (n < frameLimit) ? raf(checkSize) : reject();
       }
-  
       return resolve(true);
     }
 
     checkSize();
   });
 
-  return response;
+ return response;
 }
