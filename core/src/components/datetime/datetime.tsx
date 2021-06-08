@@ -5,6 +5,13 @@ import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail
 import { startFocusVisible } from '../../utils/focus-visible';
 import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
+import {
+  chevronBack,
+  chevronForward,
+  chevronDown,
+  caretUpSharp,
+  caretDownSharp
+} from 'ionicons/icons';
 
 import {
   generateMonths,
@@ -1153,8 +1160,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCalendarHeader(mode: Mode) {
-    const expandedIcon = mode === 'ios' ? 'chevron-down' : 'caret-up-sharp';
-    const collapsedIcon = mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp';
+    const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
+    const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
@@ -1169,10 +1176,10 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
               </ion-button>
               <ion-button onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
