@@ -10,10 +10,6 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-  <script type="module">
-    import { popoverController } from '../../../../dist/ionic/index.esm.js';
-    window.popoverController = popoverController;
-  </script>
 <body>
   <ion-app>
 
@@ -460,10 +456,12 @@
 
     async function presentPopover(ev) {
       console.log('present ev', ev);
-      const popover = await popoverController.create({
+      const popover = Object.assign(document.createElement('ion-popover'), {
         component: 'list-popover',
         event: ev,
       });
+      document.body.appendChild(popover);
+
       await popover.present();
     }
   </script>
