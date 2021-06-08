@@ -373,7 +373,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
       popover: this.el
     };
 
-    const { inline, delegate } = this.getDelegate();
+    const { inline, delegate } = this.getDelegate(true);
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
