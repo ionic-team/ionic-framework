@@ -173,7 +173,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    this.setMultipleInputs();
+    raf(() => this.setMultipleInputs());
   }
 
   // If the item contains multiple clickable elements and/or inputs, then the item
