@@ -1,3 +1,15 @@
+## [5.6.9](https://github.com/ionic-team/ionic/compare/v5.6.8...v5.6.9) (2021-06-08)
+
+
+### Bug Fixes
+
+* **modal:** swipe to close modal is no longer swipeable on footer ([#23401](https://github.com/ionic-team/ionic/issues/23401)) ([ae96563](https://github.com/ionic-team/ionic/commit/ae96563fb3c4612cb8585292b389ee746f5759f7)), closes [#23398](https://github.com/ionic-team/ionic/issues/23398)
+* **title:** inherit padding for iOS title in a toolbar ([#23343](https://github.com/ionic-team/ionic/issues/23343)) ([82cfa55](https://github.com/ionic-team/ionic/commit/82cfa5565347704b0e9f7dac792ed2aa6dd30505)), closes [#23072](https://github.com/ionic-team/ionic/issues/23072)
+* **vue:** improve v-model integration for Vue 3.1.0+ ([#23420](https://github.com/ionic-team/ionic/issues/23420)) ([f008628](https://github.com/ionic-team/ionic/commit/f0086288512bd7f7d1929d79bfd8bf702efc732e))
+* **vue:** prevent error from being thrown when testing on certain jest runners ([#23421](https://github.com/ionic-team/ionic/issues/23421)) ([60bedb5](https://github.com/ionic-team/ionic/commit/60bedb5599b286bffccfc54c4861a269d9b8df73)), closes [#23397](https://github.com/ionic-team/ionic/issues/23397)
+
+
+
 ## [5.6.8](https://github.com/ionic-team/ionic/compare/v5.6.7...v5.6.8) (2021-05-27)
 
 
