@@ -1,17 +1,17 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import {
+  caretDownSharp,
+  caretUpSharp,
+  chevronBack,
+  chevronDown,
+  chevronForward
+} from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
-import {
-  chevronBack,
-  chevronForward,
-  chevronDown,
-  caretUpSharp,
-  caretDownSharp
-} from 'ionicons/icons';
 
 import {
   generateMonths,
@@ -19,7 +19,8 @@ import {
   getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getPickerMonths
+  getPickerMonths,
+  getToday
 } from './utils/data';
 import {
   addTimePadding,
@@ -109,7 +110,7 @@ export class Datetime implements ComponentInterface {
     ampm: 'pm'
   }
 
-  private todayParts = parseDate(new Date().toISOString())
+  private todayParts = parseDate(getToday())
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -969,7 +970,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | null) => {
-    const valueToProcess = value || new Date().toISOString();
+    const valueToProcess = value || getToday();
     const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
     this.workingParts = {
@@ -979,7 +980,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 13 ? 'pm' : 'am'
+      ampm: hour >= 12 ? 'pm' : 'am'
     }
     this.activeParts = {
       month,
@@ -988,7 +989,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 13 ? 'pm' : 'am'
+      ampm: hour >= 12 ? 'pm' : 'am'
     }
 
   }

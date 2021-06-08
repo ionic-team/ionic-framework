@@ -15,6 +15,32 @@ import {
   getPreviousMonth
 } from './manipulation';
 
+/**
+ * Returns the current date as
+ * an ISO string in the user's
+ * timezone.
+ */
+export const getToday = () => {
+  /**
+   * Grab the current date object
+   * as well as the timezone offset
+   */
+  const date = new Date();
+  const tzOffset = date.getTimezoneOffset();
+
+  /**
+   * When converting to ISO string, everything is
+   * set to UTC. Since we want to show these dates
+   * relative to the user's timezone, we need to
+   * subtract the timezone offset from the date
+   * so that when `toISOString()` adds it back
+   * there was a net change of zero hours from the
+   * local date.
+   */
+  date.setHours(date.getHours() - (tzOffset / 60))
+  return date.toISOString();
+}
+
 const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
