@@ -346,8 +346,8 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const event = ref();
-    const setOpen = (state: boolean, event?: Event) => {
-      event.value = event; 
+    const setOpen = (state: boolean, ev?: Event) => {
+      event.value = ev; 
       isOpenRef.value = state;
     }
     return { isOpenRef, setOpen, event }

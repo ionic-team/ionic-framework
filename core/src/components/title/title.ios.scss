@@ -5,7 +5,7 @@
 
 :host {
   @include position(0, null, null, 0);
-  @include padding(0, 90px, 0);
+  @include padding(var(--padding-top), 90px, var(--padding-bottom));
 
   position: absolute;
 
