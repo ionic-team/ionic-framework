@@ -1187,7 +1187,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMonth(month: number, year: number) {
-    const isMonthDisabled = !this.parsedYearValues?.includes(year) || !this.parsedMonthValues?.includes(month);
+    const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
+    const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
+    const isMonthDisabled = !yearAllowed || !monthAllowed;
     return (
       <div class="calendar-month">
         <div class="calendar-month-grid">
