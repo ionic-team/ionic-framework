@@ -1395,7 +1395,6 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
-        "inline": boolean;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
@@ -1707,7 +1706,6 @@ export namespace Components {
          */
         "event": any;
         "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
-        "inline": boolean;
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
@@ -4854,7 +4852,6 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
-        "inline"?: boolean;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
@@ -5099,7 +5096,6 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
-        "inline"?: boolean;
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
