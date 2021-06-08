@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
-import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
@@ -14,28 +14,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
-
-const CoreDelegate = () => {
-  let Cmp: any;
-  const attachViewToDom = (parentElement: HTMLElement) => {
-    Cmp = parentElement;
-    const app = document.querySelector('ion-app') || document.body;
-    if (app && Cmp) {
-      app.appendChild(Cmp);
-    }
-
-    return Cmp;
-  }
-
-  const removeViewFromDom = () => {
-    if (Cmp) {
-      Cmp.remove();
-    }
-    return Promise.resolve();
-  }
-
-  return { attachViewToDom, removeViewFromDom }
-}
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -205,7 +183,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   /**
    * Describes how to align the popover content with the `reference` point.
    */
-  @Prop() alignment: PositionAlign = 'center';
+  @Prop() alignment: PositionAlign = 'start';
 
   /**
    * If `true`, the popover will display an arrow
@@ -437,7 +415,14 @@ export class Popover implements ComponentInterface, OverlayInterface {
         destroyDismissInteraction();
         this.destroyDismissInteraction = undefined;
       }
-      await detachComponent(this.delegate, this.usersElement);
+
+      /**
+       * If using popover inline
+       * we potentially need to use the coreDelegate
+       * so that this works in vanilla JS apps
+       */
+      const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
+      await detachComponent(delegate, this.usersElement);
     }
 
     this.currentTransition = undefined;

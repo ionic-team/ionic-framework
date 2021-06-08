@@ -39,8 +39,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * about the replace action in opts.history.listen
      * but we can check to see if the latest routing action
      * was a replace action by looking at the history state.
+     * We need to use opts.history rather than window.history
+     * because window.history will be undefined when using SSR.
      */
-    const replaceAction = history.state.replaced ? 'replace' : undefined;
+    const replaceAction = opts.history.state.replaced ? 'replace' : undefined;
     handleHistoryChange(to, action || replaceAction, direction);
 
     currentNavigationInfo = { direction: undefined, action: undefined };
