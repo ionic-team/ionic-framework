@@ -324,19 +324,22 @@
 }
 
 :host(.item-fill-solid) .item-native .item-highlight {
-  opacity: 0;
   transform: scaleX(0);
+
   transition: opacity 200ms, transform 200ms;
+
+  opacity: 0;
 }
 
 :host(.item-fill-solid.item-has-focus) .item-native .item-highlight {
   @include overlay;
+  transform: scaleX(1);
+
   border-bottom-width: calc(var(--highlight-height) - 1px);
   border-bottom-style: var(--border-style);
   border-bottom-color: var(--highlight-color-focused);
 
   opacity: 1;
-  transform: scaleX(1);
 }
 
 :host(.item-fill-solid.item-shape-round) {
@@ -366,8 +369,9 @@
 }
 
 :host(.item-fill-outline.item-shape-round) .item-native {
-  @include border-radius(28px);
   --inner-padding-start: 16px;
+
+  @include border-radius(28px);
 }
 
 :host(.item-fill-outline.item-shape-round) .item-bottom {

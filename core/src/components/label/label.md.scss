@@ -47,25 +47,33 @@
 :host-context(.item-fill-outline.item-has-focus).label-floating,
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-fill-outline.item-has-value).label-floating {
-  background-color: $item-md-background;
   @include transform(translateY(-6px), scale(.75));
-  max-width: min-content;
-  z-index: 3;
   position: relative;
+
+  max-width: min-content;
+
+  background-color: $item-md-background;
+
   overflow: visible;
+  z-index: 3;
 
   &::before,
   &::after {
-    background-color: $item-md-background;
-    content: "";
     display: inline-block;
+
     width: $item-md-fill-outline-label-padding;
+
+    background-color: $item-md-background;
+
+    content: "";
   }
 
   &::before {
-    height: 100%;
-    left: calc(-1 * #{$item-md-fill-outline-label-padding});
+    // left: calc(-1 * #{$item-md-fill-outline-label-padding});
+    @include position-horizontal(calc(-1 * #{$item-md-fill-outline-label-padding}), null);
     position: absolute;
+
+    height: 100%;
   }
 }
 
@@ -73,6 +81,7 @@
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input).item-has-start-slot).label-floating,
 :host-context(.item-fill-outline.item-has-value.item-has-start-slot).label-floating {
   --item-translate-label-x: #{$item-md-fill-outline-label-translate-x};
+
   @include transform(translateX(var(--item-translate-label-x)), translateY(-6px), scale(.75));
 }
 
