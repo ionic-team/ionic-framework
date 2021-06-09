@@ -58,10 +58,10 @@ $item-md-border-bottom:                     $item-md-border-bottom-width $item-m
 $item-md-input-fill-solid-background-color:            $background-color-step-50 !default;
 
 /// @prop - Color of the item input background when hovered
-$item-md-input-fill-solid-background-color-hover:            $background-color-step-100 !default;
+$item-md-input-fill-solid-background-color-hover:      $background-color-step-100 !default;
 
 /// @prop - Color of the item input background when focused
-$item-md-input-fill-solid-background-color-focus:            $background-color-step-150 !default;
+$item-md-input-fill-solid-background-color-focus:      $background-color-step-150 !default;
 
 /// @prop - Color of the item input highlight
 $item-md-input-highlight-color:             ion-color(primary, base) !default;
@@ -90,6 +90,12 @@ $item-md-label-margin-bottom:               10px !default;
 
 /// @prop - Margin start of the label
 $item-md-label-margin-start:                0 !default;
+
+/// @prop - X translation for floating labels
+$item-md-fill-outline-label-translate-x:    -32px !default;
+
+/// @prop - Padding for floating labels
+$item-md-fill-outline-label-padding:        4px !default;
 
 
 // Item Slots

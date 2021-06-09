@@ -355,7 +355,6 @@ button, a {
 // Item Input Highlight
 // --------------------------------------------------
 
-// .item-highlight,
 .item-inner-highlight {
   @include position(null, 0, 0, 0);
 
@@ -365,10 +364,6 @@ button, a {
 
   z-index: 1;
 }
-
-// .item-highlight {
-//   height: var(--full-highlight-height);
-// }
 
 .item-inner-highlight {
   height: var(--inset-highlight-height);

@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forc
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { getFullWidth, raf, getInitialSizing } from '../../utils/helpers';
+import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { InputChangeEventDetail } from '../input/input-interface';
 
@@ -77,7 +77,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * The fill for the item. If `'solid'` the item will have a background. If
    * `'outline'` the item will be transparent with a border.
    */
-  @Prop() fill?: 'outline' | 'solid';
+  @Prop() fill?: 'outline' | 'outline-dynamic' | 'solid';
 
   /**
    * The shape of the item. If "round" it will have increased
@@ -192,16 +192,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
       this.el.addEventListener('click', this.clickListener);
     }
-
-    if (this.fill === 'outline' 
-        && this.el.classList.contains('item-has-focus')
-        && !this.el.classList.contains('show-notch')
-      ) {
-      raf(() => {
-        this.setNotchSize();
-        this.setLabelTranslateX();
-      }); 
-    }
   }
 
   disconnectedCallback() {
@@ -215,11 +205,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   componentDidLoad() {
     this.setMultipleInputs();
 
-    if (this.fill === 'outline' && this.el.classList.contains('item-has-value')) {
-      getInitialSizing(this.el).then(() => {
-        this.setNotchSize();
-        this.setLabelTranslateX();
-      })
+    if (this.fill === 'outline') {
+      this.hasStartEl();
     }
   }
 
@@ -303,32 +290,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
-  // In MD mode, set the border notch width to equal the computed width of the slotted ion-label
-  private setNotchSize() {
-    const label = this.el.querySelector('ion-label');
-    const width = (label === null || label.textContent === null) ? 0 : label.clientWidth;
-    const height = (label === null || label.textContent === null) ? 0 : label.clientHeight;
-
-    //TODO fix no notch on initial input value
-    if (width > 0 && height > 0) {
-      this.el.classList.add('show-notch');
-      this.el.style.setProperty('--label-computed-width', `${width}px`);
-      this.el.style.setProperty('--label-computed-height', `${height}px`);
-    }
-
-    return width;
-  }
-
-  private setLabelTranslateX() {
-    const label = this.el.querySelector('ion-label');
+  private hasStartEl() {
     const startEl = this.el.querySelector('[slot="start"]');
-
-    if (label === null || startEl === null) {
-      return;
+    if (startEl !== null) {
+      this.el.classList.add('item-has-start-slot');
     }
-
-    const translateX = `-${getFullWidth(startEl)}px`
-    label.style.setProperty('--item-translate-label-x', translateX);
   }
 
   render() {

@@ -329,39 +329,3 @@ export const debounce = (func: (...args: any[]) => void, wait = 0) => {
     timer = setTimeout(func, wait, ...args);
   };
 };
-
-// Get the full width of an element: margin + padding + width
-export const getFullWidth = (el: Element): number => {
-  const styles = window.getComputedStyle(el);
-  const fullWidth = parseFloat(styles.getPropertyValue('margin-left'))
-    + parseFloat(styles.getPropertyValue('padding-left'))
-    + parseFloat(styles.getPropertyValue('width'))
-    + parseFloat(styles.getPropertyValue('padding-right'))
-    + parseFloat(styles.getPropertyValue('margin-right'));
-  return fullWidth;
-}
-
-/** 
- * `componentDidLoad` does not wait for an element's initial sizes to load before firing.
- * This function will resolve when the inital styles are loaded.
- */ 
-export const getInitialSizing = async (el: HTMLElement, frameLimit: number = 500): Promise<unknown> => {
-  const response = new Promise((resolve, reject) => {
-    if (!el) {
-      reject();
-    }
-    let n = 0;
-
-    const checkSize = () => {
-      n++;
-      if (!el.offsetWidth && !el.offsetHeight) {
-        return (n < frameLimit) ? raf(checkSize) : reject();
-      }
-      return resolve(true);
-    }
-
-    checkSize();
-  });
-
- return response;
-}

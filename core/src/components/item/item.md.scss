@@ -22,11 +22,9 @@
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
   --highlight-height: 2px;
   --highlight-color-focused: #{$item-md-input-highlight-color};
-  --highlight-color-hover: #1f1f1f;
-  // --highlight-color-hover: #{$item-md-input-highlight-color-hover};
+  --highlight-color-hover: #{$item-md-input-highlight-color-hover};
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
-  --notch-padding: 4px;
 
   font-size: $item-md-font-size;
   font-weight: normal;
@@ -394,24 +392,13 @@
   border-color: var(--highlight-color-focused);
 }
 
-:host(.item-fill-outline.item-has-focus.show-notch) .item-native ::slotted(ion-input),
-:host(.item-fill-outline.item-has-value.show-notch) .item-native ::slotted(ion-input) {
+:host(.item-fill-outline.item-has-focus) .item-native ::slotted(ion-input),
+:host(.item-fill-outline.item-has-value) .item-native ::slotted(ion-input) {
   transform: translateY(-25%);
 }
 
-:host(.item-fill-outline.item-has-focus.show-notch) .item-native .item-highlight {
+:host(.item-fill-outline.item-has-focus) .item-native .item-highlight {
   border-width: var(--highlight-height);
-}
-
-:host(.item-fill-outline.item-has-focus.show-notch) .item-native .item-highlight,
-:host(.item-fill-outline.item-has-value.show-notch) .item-native .item-highlight {
-  --slotted-label-left: calc(var(--padding-start) - var(--notch-padding) + var(--inner-padding-start));
-  --slotted-label-right: calc(var(--slotted-label-left) + calc(var(--label-computed-width) * .75) + calc(var(--notch-padding) * 2));
-  --slotted-label-top: 0px;
-  --slotted-label-bottom: calc(var(--label-computed-height) / 2);
-
-  // Clips out a rectangle from behind the slotted ion-label
-  clip-path: polygon(0% 0%, 0% 100%, var(--slotted-label-left) 100%, var(--slotted-label-left) var(--slotted-label-top), var(--slotted-label-right) var(--slotted-label-top), var(--slotted-label-right) var(--slotted-label-bottom), var(--slotted-label-left) var(--slotted-label-bottom), var(--slotted-label-left) 100%, 100% 100%, 100% 0%);
 }
 
 // Material Design Item: Invalid
