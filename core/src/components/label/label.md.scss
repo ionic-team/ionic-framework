@@ -33,10 +33,6 @@
     transform 150ms $label-md-transition-timing-function;
 }
 
-:host-context(.item-textarea).label-floating {
-  @include transform(translateY(185%));
-}
-
 :host(.label-stacked),
 :host(.label-floating) {
   @include margin(0, 0, 0, 0);

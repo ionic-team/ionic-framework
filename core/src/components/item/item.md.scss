@@ -392,8 +392,10 @@
   border-color: var(--highlight-color-focused);
 }
 
-:host(.item-fill-outline.item-has-focus) .item-native ::slotted(ion-input),
-:host(.item-fill-outline.item-has-value) .item-native ::slotted(ion-input) {
+:host(.item-fill-outline.item-has-focus) .item-native ::slotted(ion-input:not(:first-child)),
+:host(.item-fill-outline.item-has-value) .item-native ::slotted(ion-input:not(:first-child)),
+:host(.item-fill-outline.item-has-focus) .item-native ::slotted(ion-textarea:not(:first-child)), 
+:host(.item-fill-outline.item-has-value) .item-native ::slotted(ion-textarea:not(:first-child)) {
   transform: translateY(-25%);
 }
 
