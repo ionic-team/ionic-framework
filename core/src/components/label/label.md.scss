@@ -69,7 +69,6 @@
   }
 
   &::before {
-    // left: calc(-1 * #{$item-md-fill-outline-label-padding});
     @include position-horizontal(calc(-1 * #{$item-md-fill-outline-label-padding}), null);
     position: absolute;
 
