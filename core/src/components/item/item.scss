@@ -401,16 +401,15 @@ button, a {
 
 :host(.item-interactive.ion-invalid) {
   --highlight-background: var(--highlight-color-invalid);
-
-  & ::slotted([slot="helper"]) {
-    display: none;
-  }
-
-  & ::slotted([slot="error"]) {
-    display: block;
-  }
 }
 
+:host(.item-interactive.ion-invalid) ::slotted([slot="helper"]) {
+  display: none;
+}
+
+:host(.item-interactive.ion-invalid) ::slotted([slot="error"]) {
+  display: block;
+}
 
 // Item Select
 // --------------------------------------------------
