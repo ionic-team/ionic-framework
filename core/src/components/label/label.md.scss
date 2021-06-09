@@ -17,8 +17,20 @@
  * When translating the label, we need to use translateY
  * instead of translate3d due to a WebKit bug: https://bugs.webkit.org/show_bug.cgi?id=215731
  */
+ :host(.label-stacked),
+ :host(.label-floating) {
+   @include margin(0, 0, 0, 0);
+  //  @include transform-origin(start, top);
+   transform-origin: top left;
+ }
+
+ :host(.label-stacked.label-rtl),
+ :host(.label-floating.label-rtl) {
+  //  @include margin(0, 0, 0, 0);
+   transform-origin: top right;
+ }
+
 :host(.label-stacked) {
-  @include transform-origin(start, top);
   @include transform(translateY(50%), scale(.75));
 
   transition: color 150ms $label-md-transition-timing-function;
@@ -26,16 +38,10 @@
 
 :host(.label-floating) {
   @include transform(translateY(96%));
-  @include transform-origin(start, top);
 
   transition:
     color 150ms $label-md-transition-timing-function,
     transform 150ms $label-md-transition-timing-function;
-}
-
-:host(.label-stacked),
-:host(.label-floating) {
-  @include margin(0, 0, 0, 0);
 }
 
 :host-context(.item-has-focus).label-floating,
@@ -79,9 +85,11 @@
 :host-context(.item-fill-outline.item-has-focus.item-has-start-slot).label-floating,
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input).item-has-start-slot).label-floating,
 :host-context(.item-fill-outline.item-has-value.item-has-start-slot).label-floating {
-  --item-translate-label-x: #{$item-md-fill-outline-label-translate-x};
+  @include transform(translateX(#{$item-md-fill-outline-label-translate-x}), translateY(-6px), scale(.75));
 
-  @include transform(translateX(var(--item-translate-label-x)), translateY(-6px), scale(.75));
+  &:dir(rtl) {
+    @include transform(translateX(calc(-1 * #{$item-md-fill-outline-label-translate-x})), translateY(-6px), scale(.75));
+  }
 }
 
 :host-context(.item-has-focus).label-stacked:not(.ion-color),

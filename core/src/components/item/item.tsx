@@ -339,6 +339,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': true,
+            'item-rtl': document.dir === 'rtl'
           })
         }}
       >
