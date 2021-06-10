@@ -26,8 +26,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Vue](#vue)
   * [Tabs Config](#tabs-config)
   * [Overlay Events](#overlay-events)
-  * [Minimum Required Version](#minimum-required-version)
-
+- [Browser and Platform Support](#browser-and-platform-support)
 
 
 ### Components
@@ -205,13 +204,37 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
 </ion-modal>
 ```
 
-#### Minimum Required Version
 
-Vue v3.0.6 or newer is required.
+### Browser and Platform Support
 
-```
-npm install vue@3
-```
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic Framework v6.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ----------------- |
+| Chrome          | 60+               |
+| Safari          | 13+               |
+| Firefox         | 63+               |
+| Edge            | 79+               |
+
+**Minimum JavaScript Framework Versions**
+
+| Framework | Supported Version     |
+| --------- | --------------------- |
+| Angular   | 11+ with Ivy renderer |
+| React     | 17+                   |
+| Vue       | 3.0.6+                |
+
+**Minimum Mobile Platform Versions**
+
+| Platform | Supported Version                       |
+| -------- | --------------------------------------- |
+| iOS      | 13+                                     |
+| Android  | 5.0+ with Chromium 60+ (See note below) |
+
+Starting with Android 5.0, the webview was moved to a separate application that can be updated independently of Android. This means that most Android 5.0+ devices are going to be running a modern version of Chromium. However, there are a still a subset of Android devices whose manufacturer has locked the webview version and does not allow the webview to update. These webviews are typically stuck at the version that was available when the device initially shipped.
+
+As a result, Ionic Framework only supports Android devices and emulators running Android 5.0+ with a webview of Chromium 60 or newer. For context, this is the version that Stencil can support with no polyfills: https://stenciljs.com/docs/browser-support
 
 
 
