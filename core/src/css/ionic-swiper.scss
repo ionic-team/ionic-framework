@@ -5,6 +5,16 @@
 // --------------------------------------------------
 
 .swiper-container {
+
+  // These values are the same for iOS and MD
+  // We just do not add a .md or .ios class beforehand
+  // so the styles are easier to override by the user.
+  --bullet-background: #{$slides-ios-bullet-background};
+  --bullet-background-active: #{$slides-ios-bullet-background-active};
+  --progress-bar-background: #{$slides-ios-progress-bar-background};
+  --progress-bar-background-active: #{$slides-ios-progress-bar-background-active};
+  --scroll-bar-background: #{$slides-ios-scroll-bar-background};
+  --scroll-bar-background-active: #{$slides-ios-scroll-bar-drag-background};
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet
@@ -18,16 +28,6 @@
   display: block;
 
   user-select: none;
-
-  // These values are the same for iOS and MD
-  // We just do not add a .md or .ios class beforehand
-  // so the styles are easier to override by the user.
-  --bullet-background: #{$slides-ios-bullet-background};
-  --bullet-background-active: #{$slides-ios-bullet-background-active};
-  --progress-bar-background: #{$slides-ios-progress-bar-background};
-  --progress-bar-background-active: #{$slides-ios-progress-bar-background-active};
-  --scroll-bar-background: #{$slides-ios-scroll-bar-background};
-  --scroll-bar-background-active: #{$slides-ios-scroll-bar-drag-background};
 }
 
 // Pagination Bullets
