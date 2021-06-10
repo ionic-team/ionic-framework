@@ -11,15 +11,15 @@ This guide will go over the recommended virtual scrolling packages for each fram
 
 ## Angular
 
-We recommend using CDK Scroller for a virtual scrolling solution in Ionic Angular. For more information, please see: https://ionicframework.com/docs/angular/virtual-scroll.
+For virtual scrolling options in Ionic Angular, please see https://ionicframework.com/docs/angular/virtual-scroll.
 
 ## React
 
-We recommend using Virtuoso for a virtual scrolling solution in Ionic React. For more information, please see: https://ionicframework.com/docs/react/virtual-scroll.
+For virtual scrolling options in Ionic React, please see: https://ionicframework.com/docs/react/virtual-scroll.
 
 ## Vue
 
-We recommend using `vue-virtual-scroller` for a virtual scrolling solution in Ionic Vue. For more information, please see: https://ionicframework.com/docs/vue/virtual-scroll.
+For virtual scrolling options in Ionic Vue, please see: https://ionicframework.com/docs/vue/virtual-scroll.
 
 ------
 

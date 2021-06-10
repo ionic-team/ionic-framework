@@ -154,7 +154,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   componentWillLoad() {
-    console.warn(`[Deprecation Warning]: ion-virtual-scroll has been deprecated and will be removed in Ionic Framework v7.0. See https://ionicframework.com/docs/api/virtual-scroll for migration steps.`);
+    console.warn(`[Deprecation Warning]: ion-virtual-scroll has been deprecated and will be removed in Ionic Framework v7.0. See https://ionicframework.com/docs/angular/virtual-scroll for migration steps.`);
   }
 
   async connectedCallback() {
