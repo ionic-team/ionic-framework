@@ -128,31 +128,43 @@
 
 // Material Design Button: Hover
 // --------------------------------------------------
-
-:host(.button-solid.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(contrast)};
-
-  opacity: .24;
+:host(.button-solid.ion-color.ion-focused) {
+  --background-focused: #{current-color(contrast)};
+  --background-focused-opacity: .24;
 }
 
+:host(.button-clear.ion-color.ion-focused),
+:host(.button-outline.ion-color.ion-focused) {
+  --background-focused: #{current-color(base)};
+  --background-focused-opacity: .12;
+}
+
+:host(.button-solid.ion-color.ion-focused) .button-native::after,
 :host(.button-clear.ion-color.ion-focused) .button-native::after,
 :host(.button-outline.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(base)};
+  background: var(--background-focused);
 
-  opacity: .12;
+  opacity: var(--background-focused-opacity);
 }
 
-@media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) .button-native::after {
-    background: #{current-color(contrast)};
 
-    opacity: .08;
+@media (any-hover: hover) {
+  :host(.button-solid.ion-color:hover) {
+    --background-hover: #{current-color(contrast)};
+    --background-hover-opacity: 0.08;
   }
 
+  :host(.button-clear.ion-color:hover),
+  :host(.button-outline.ion-color:hover) {
+    --background-hover: #{current-color(base)};
+    --background-hover-opacity: 0.04;
+  }
+
+  :host(.button-solid.ion-color:hover) .button-native::after,
   :host(.button-clear.ion-color:hover) .button-native::after,
   :host(.button-outline.ion-color:hover) .button-native::after {
-    background: #{current-color(base)};
+    background: var(--background-hover);
 
-    opacity: .04;
+    opacity: var(--background-hover-opacity);
   }
 }
