@@ -416,7 +416,7 @@ export const getPopoverPosition = (
   align: PositionAlign,
   defaultPosition: PopoverPosition,
   triggerEl?: HTMLElement,
-  event?: MouseEvent,
+  event?: MouseEvent | CustomEvent,
 ): PopoverPosition => {
   let referenceCoordinates = {
     top: 0,
@@ -436,9 +436,11 @@ export const getPopoverPosition = (
         return defaultPosition;
       }
 
+      const mouseEv = event as MouseEvent;
+
       referenceCoordinates = {
-        top: event.clientY,
-        left: event.clientX,
+        top: mouseEv.clientY,
+        left: mouseEv.clientX,
         width: 1,
         height: 1
       }
@@ -454,7 +456,18 @@ export const getPopoverPosition = (
      */
     case 'trigger':
     default:
-      const actualTriggerEl = (triggerEl || event?.target) as HTMLElement | null;
+      const customEv = event as CustomEvent;
+
+      /**
+       * ionShadowTarget is used when we need to align the
+       * popover with an element inside of the shadow root
+       * of an Ionic component. Ex: Presenting a popover
+       * by clicking on the collapsed indicator inside
+       * of `ion-breadcrumb` and centering it relative
+       * to the indicator rather than `ion-breadcrumb`
+       * as a whole.
+       */
+      const actualTriggerEl = (triggerEl || customEv?.detail?.ionShadowTarget || customEv?.target) as HTMLElement | null;
       if (!actualTriggerEl) {
         return defaultPosition;
       }
