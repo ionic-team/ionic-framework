@@ -173,7 +173,7 @@ ion-breadcrumb,prop,routerDirection,"back" | "forward" | "root",'forward',false,
 ion-breadcrumb,prop,separator,boolean | undefined,undefined,false,false
 ion-breadcrumb,prop,target,string | undefined,undefined,false,false
 ion-breadcrumb,event,ionBlur,void,true
-ion-breadcrumb,event,ionCollapsedClick,void,true
+ion-breadcrumb,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
 ion-breadcrumb,event,ionFocus,void,true
 ion-breadcrumb,css-prop,--color
 ion-breadcrumb,part,collapsed-indicator

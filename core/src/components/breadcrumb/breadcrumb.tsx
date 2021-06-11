@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
@@ -195,14 +196,14 @@ export class Breadcrumb implements ComponentInterface {
                 'breadcrumbs-collapsed-indicator': true,
               }}
             >
-              <ion-icon name="ellipsis-horizontal" lazy={false}></ion-icon>
+              <ion-icon icon={ellipsisHorizontal} lazy={false}></ion-icon>
             </button>
         }
         { showSeparator &&
           <span class="breadcrumb-separator" part="separator">
             <slot name="separator">
               { mode === 'ios'
-                ? <ion-icon name="chevron-forward-outline" lazy={false}></ion-icon>
+                ? <ion-icon icon={chevronForwardOutline} lazy={false}></ion-icon>
                 : <span>/</span>
               }
             </slot>
