@@ -36,6 +36,7 @@ export {
   mdTransitionAnimation,
   NavComponentWithProps,
   setupConfig,
+  IonicSwiper,
 } from '@ionic/core';
 export * from './proxies';
 

@@ -72,7 +72,10 @@ export {
   getTimeGivenProgression,
 
   // Hardware Back Button
-  BackButtonEvent
+  BackButtonEvent,
+
+  // Swiper
+  IonicSwiper
 } from '@ionic/core';
 
 // Icons that are used by internal components
