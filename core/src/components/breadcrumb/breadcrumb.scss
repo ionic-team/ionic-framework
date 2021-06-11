@@ -91,20 +91,6 @@
 }
 
 
-// Breadcrumb: Focused
-// --------------------------------------------------
-
-:host(.ion-focused) .button-native {
-  border: 1px solid var(--color);
-  // color: var(--color-focused);
-
-  // &::after {
-  //   background: var(--background-focused);
-
-  //   opacity: var(--background-focused-opacity);
-  // }
-}
-
 // Breadcrumbs: Collapsed Indicator
 // --------------------------------------------------
 
