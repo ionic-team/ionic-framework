@@ -1044,7 +1044,7 @@ export namespace Components {
         /**
           * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border.
          */
-        "fill"?: 'outline' | 'outline-dynamic' | 'solid';
+        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -4528,7 +4528,7 @@ declare namespace LocalJSX {
         /**
           * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border.
          */
-        "fill"?: 'outline' | 'outline-dynamic' | 'solid';
+        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */

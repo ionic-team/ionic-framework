@@ -77,7 +77,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * The fill for the item. If `'solid'` the item will have a background. If
    * `'outline'` the item will be transparent with a border.
    */
-  @Prop() fill?: 'outline' | 'outline-dynamic' | 'solid';
+  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * The shape of the item. If "round" it will have increased
@@ -134,7 +134,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   @Listen('ionChange')
   handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
-    this.updateCounterOutput(ev.target as HTMLIonInputElement);
+    if (this.counter && ev.target == this.getFirstInput()) {
+      this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
+    }
   }
 
   @Listen('ionColor')

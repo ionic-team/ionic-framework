@@ -20,13 +20,11 @@
  :host(.label-stacked),
  :host(.label-floating) {
    @include margin(0, 0, 0, 0);
-  //  @include transform-origin(start, top);
    transform-origin: top left;
  }
 
  :host(.label-stacked.label-rtl),
  :host(.label-floating.label-rtl) {
-  //  @include margin(0, 0, 0, 0);
    transform-origin: top right;
  }
 
@@ -65,20 +63,21 @@
 
   &::before,
   &::after {
-    display: inline-block;
-
     width: $item-md-fill-outline-label-padding;
 
     background-color: $item-md-background;
+    position: absolute;
 
+    height: 100%;
     content: "";
   }
 
   &::before {
-    @include position-horizontal(calc(-1 * #{$item-md-fill-outline-label-padding}), null);
-    position: absolute;
+    left: calc(-1 * #{$item-md-fill-outline-label-padding});
+  }
 
-    height: 100%;
+  &::after {
+    right: calc(-1 * #{$item-md-fill-outline-label-padding});
   }
 }
 
@@ -86,10 +85,12 @@
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input).item-has-start-slot).label-floating,
 :host-context(.item-fill-outline.item-has-value.item-has-start-slot).label-floating {
   @include transform(translateX(#{$item-md-fill-outline-label-translate-x}), translateY(-6px), scale(.75));
+}
 
-  &:dir(rtl) {
-    @include transform(translateX(calc(-1 * #{$item-md-fill-outline-label-translate-x})), translateY(-6px), scale(.75));
-  }
+:host-context(.item-fill-outline.item-has-focus.item-has-start-slot).label-floating.label-rtl,
+:host-context(.item-fill-outline.item-has-placeholder:not(.item-input).item-has-start-slot).label-floating.label-rtl,
+:host-context(.item-fill-outline.item-has-value.item-has-start-slot).label-floating.label-rtl {
+  @include transform(translateX(calc(-1 * #{$item-md-fill-outline-label-translate-x})), translateY(-6px), scale(.75));
 }
 
 :host-context(.item-has-focus).label-stacked:not(.ion-color),
