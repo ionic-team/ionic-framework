@@ -692,7 +692,7 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the internal state of the datetime but does not update the value.
+          * Resets the internal state of the datetime but does not update the value. Passing a value ISO-8601 string will reset the state of te component to the provided date.
          */
         "reset": (value?: string | undefined) => Promise<void>;
         /**

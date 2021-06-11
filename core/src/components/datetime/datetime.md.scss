@@ -4,7 +4,6 @@
 
 :host {
   --background: var(--ion-color-step-100, #ffffff);
-  --background-secondary: #{current-color(base)};
   --title-color: #{current-color(contrast)};
 }
 
@@ -13,7 +12,7 @@
 :host .datetime-header {
   @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding);
 
-  background: var(--background-secondary);
+  background: current-color(base);
   color: var(--title-color);
 }
 

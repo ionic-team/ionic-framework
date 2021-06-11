@@ -362,18 +362,7 @@ ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
 ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--background
-ion-datetime,css-prop,--background-active
-ion-datetime,css-prop,--background-secondary
-ion-datetime,css-prop,--color
-ion-datetime,css-prop,--color-active
-ion-datetime,css-prop,--color-secondary
-ion-datetime,css-prop,--dial-background
-ion-datetime,css-prop,--dial-color
-ion-datetime,css-prop,--padding-bottom
-ion-datetime,css-prop,--padding-end
-ion-datetime,css-prop,--padding-start
-ion-datetime,css-prop,--padding-top
-ion-datetime,css-prop,--placeholder-color
+ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
 
 ion-fab,shadow

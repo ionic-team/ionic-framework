@@ -354,7 +354,9 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Resets the internal state of the datetime
-   * but does not update the value.
+   * but does not update the value. Passing a value
+   * ISO-8601 string will reset the state of
+   * te component to the provided date.
    */
   @Method()
   async reset(value?: string) {

@@ -1,6 +1,113 @@
 # ion-datetime
 
+Datetimes present a calendar interface and time wheel, making it easy for users to select dates and times. Datetimes are similar to the native `input` elements of `datetime-local`, however, Ionic Framework's Datetime componetn makes it easy to display the date and time in the a preferred format, and manage the datetime values.
 
+### Datetime Data
+
+Historically, handling datetime values within JavaScript, or even within HTML
+inputs, has always been a challenge. Specifically, JavaScript's `Date` object is
+notoriously difficult to correctly parse apart datetime strings or to format
+datetime values. Even worse is how different browsers and JavaScript versions
+parse various datetime strings differently, especially per locale.
+
+Fortunately, Ionic Framework's datetime input has been designed so developers can avoid
+the common pitfalls, allowing developers to easily manipulate datetime values and give the user a simple datetime picker for a great user experience.
+
+##### ISO 8601 Datetime Format: YYYY-MM-DDTHH:mmZ
+
+Ionic Framework uses the [ISO 8601 datetime format](https://www.w3.org/TR/NOTE-datetime)
+for its value. The value is simply a string, rather than using JavaScript's
+`Date` object. Using the ISO datetime format makes it easy to serialize
+and parse within JSON objects and databases.
+
+An ISO format can be used as a simple year, or just the hour and minute, or get
+more detailed down to the millisecond and timezone. Any of the ISO formats below
+can be used, and after a user selects a new value, Ionic Framework will continue to use
+the same ISO format which datetime value was originally given as.
+
+| Description          | Format                 | Datetime Value Example        |
+| -------------------- | ---------------------- | ----------------------------  |
+| Year                 | YYYY                   | 1994                          |
+| Year and Month       | YYYY-MM                | 1994-12                       |
+| Complete Date        | YYYY-MM-DD             | 1994-12-15                    |
+| Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47              |
+| UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z      |
+| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+05:00 |
+| Hour and Minute      | HH:mm                  | 13:47                         |
+| Hour, Minute, Second | HH:mm:ss               | 13:47:20                      |
+
+Note that the year is always four-digits, milliseconds (if it's added) is always
+three-digits, and all others are always two-digits. So the number representing
+January always has a leading zero, such as `01`. Additionally, the hour is
+always in the 24-hour format, so `00` is `12am` on a 12-hour clock, `13` means
+`1pm`, and `23` means `11pm`.
+
+## Min and Max Datetimes
+
+By default, there is no maximum or minimum date a user can select. To customize the minimum and maximum datetime values, the `min` and `max` component properties can be provided which may make more sense for the app's use-case. Following the same IS0 8601 format listed in the table above, each component can restrict which dates can be selected by the user. By passing `2016` to the `min` property and `2020-10-31` to the `max` property, the datetime will restrict the date selection between the beginning of `2016`, and `October 31st of 2020`.
+
+## Selecting Specific Values
+
+While the `min` and `max` properties allow you to restrict date selection to a certain range, the `monthValues`, `dayValues`, `yearValues`, `hourValues`, and `minuteValues` properties allow you choose specific days and times that you to have enabled.
+
+For example, if we wanted users to only select minutes in increments of 15, we could pass `"0,15,30,45"` to the `minuteValues` property.
+
+As another example, if we wanted users to only select from the month of October, we could pass `"10"` to the `monthValues` property.
+
+## Customizing Date and Time Presentation
+
+Some use cases may call for only date selection or only time selection. The `presentation` property allows you to specify which pickers to show and the order to show them in. For example, `presentation="time"` would only show the time picker. `presentation="time-date"` would show the time picker first and the date picker second, but `presentation="date-time"` would show the date picker first and the time picker second.
+
+## Reset and Cancel Buttons
+
+`ion-datetime` provides `cancel` and `reset` methods that you can call when clicking on custom buttons that you have provided in the `buttons` slot. The `reset` method also allows you to provide a date to reset the datetime to.
+
+## Confirming Selected Values
+
+By default, `ionChange` is emitted with the new datetime value whenever a new date is selected. To require user confirmation before emitting `ionChange`, you can either set the `showDefaultButtons` property to `true` or use the `buttons` slot to pass in a custom confirmation button. When passing in custom buttons, the confirm button must call the `confirm` method on `ion-datetime` for `ionChange` to be emitted.
+
+## Localization
+
+Ionic Framework makes use of the [Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat) Web API which allows us to automatically localize the month and day names according to the language and region set on the user's device.
+
+For instances where you need a specific locale, you can use the `locale` property to set it. The following example sets the language to "French" and the region to "France":
+
+```html
+<ion-datetime locale="fr-FR"></ion-datetime>
+```
+
+## Parsing Dates
+
+When `ionChange` is emitted, we provide an ISO-8601 string in the event payload. From there, it is the developer's responsibility to format it as they see fit. We recommend using a library like [date-fns](https://date-fns.org) to format their dates properly.
+
+Below is an example of formatting an ISO-8601 string to display the month, date, and year:
+
+```typescript
+import { format, parseISO } from 'date-fns';
+
+/**
+ * This is provided in the event
+ * payload from the `ionChange` event.
+ */
+const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
+const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
+
+console.log(formattedString); // Jun 4, 2021
+```
+
+See https://date-fns.org/docs/format for a list of all the valid format tokens.
+
+## Advanced Datetime Validation and Manipulation
+
+The datetime picker provides the simplicity of selecting an exact format, and
+persists the datetime values as a string using the standardized [ISO 8601
+datetime format](https://www.w3.org/TR/NOTE-datetime). However, it's important
+to note that `ion-datetime` does not attempt to solve all situations when
+validating and manipulating datetime values. If datetime values need to be
+parsed from a certain format, or manipulated (such as adding 5 days to a date,
+subtracting 30 minutes, etc.), or even formatting data to a specific locale,
+then we highly recommend using [date-fns](https://date-fns.org) to work with
+dates in JavaScript.
 
 <!-- Auto Generated Below -->
 
@@ -78,7 +185,9 @@ Type: `Promise<void>`
 ### `reset(value?: string | undefined) => Promise<void>`
 
 Resets the internal state of the datetime
-but does not update the value.
+but does not update the value. Passing a value
+ISO-8601 string will reset the state of
+te component to the provided date.
 
 #### Returns
 
@@ -97,22 +206,11 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                     | Description                                                                                                                                                             |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--background`           | The primary background of the datetime component.                                                                                                                       |
-| `--background-active`    | The background of the active interactive components. This is the selected date in the date picker. In the time picker this is the active input and active AM/PM button. |
-| `--background-secondary` | The secondary background of the datetime component. This is the background of the header in the date picker and the dial and inputs in the time picker.                 |
-| `--color`                | The primary body text color.                                                                                                                                            |
-| `--color-active`         | The text color of any active text. Applies to the "today" date in the calendar picker. In the time picker this applies to the active input and active AM/PM buttons.    |
-| `--color-secondary`      | The color for the days of the week, next and previous buttons, and the AM/PM buttons.                                                                                   |
-| `--dial-background`      | The background of the dial and arm in the time picker.                                                                                                                  |
-| `--dial-color`           | The color of the text that is selected by the dial in the time picker.                                                                                                  |
-| `--padding-bottom`       | Bottom padding of the datetime                                                                                                                                          |
-| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime                                                             |
-| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime                                                             |
-| `--padding-top`          | Top padding of the datetime                                                                                                                                             |
-| `--placeholder-color`    | Color of the datetime placeholder                                                                                                                                       |
-| `--title-color`          | The text color of the title.                                                                                                                                            |
+| Name               | Description                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| `--background`     | The primary background of the datetime component.               |
+| `--background-rgb` | The primary background of the datetime component in RGB format. |
+| `--title-color`    | The text color of the title.                                    |
 
 
 ## Dependencies

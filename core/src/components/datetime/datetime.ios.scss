@@ -5,6 +5,7 @@
 :host {
   --background: var(--ion-color-light, #ffffff);
   --background-rgb: var(--ion-color-light-rgb);
+  --title-color: #{$text-color-step-400};
 }
 
 // Header
@@ -16,7 +17,7 @@
 }
 
 :host .datetime-header .datetime-title {
-  color: $text-color-step-400;
+  color: var(--title-color);
 
   font-size: 14px;
 }
