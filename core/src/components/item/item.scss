@@ -312,11 +312,6 @@ button, a {
   flex: 1;
 }
 
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
-  align-self: center;
-}
-
 
 // Item Input
 // --------------------------------------------------
@@ -355,6 +350,7 @@ button, a {
 // Item Input Highlight
 // --------------------------------------------------
 
+:host(:not(.item-fill-outline):not(.item-solid-fill)) .item-highlight,
 .item-inner-highlight {
   @include position(null, 0, 0, 0);
 
@@ -363,6 +359,10 @@ button, a {
   background: var(--highlight-background);
 
   z-index: 1;
+}
+
+:host(:not(.item-fill-outline):not(.item-solid-fill)) .item-highlight {
+  height: var(--full-highlight-height);
 }
 
 .item-inner-highlight {

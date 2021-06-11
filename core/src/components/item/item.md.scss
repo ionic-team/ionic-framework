@@ -110,6 +110,11 @@
   @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
 }
 
+:host(.item-fill-solid, .item-fill-outline) ::slotted([slot="start"]),
+:host(.item-fill-solid, .item-fill-outline) ::slotted([slot="end"]) {
+  align-self: center;
+}
+
 
 // Material Design Slotted Icon
 // --------------------------------------------------
@@ -134,6 +139,10 @@
 
 ::slotted(ion-icon[slot="end"]) {
   @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
+}
+
+:host(.item-fill-solid, .item-fill-outline) ::slotted(ion-icon[slot="start"]) {
+  @include margin-horizontal($item-md-icon-start-slot-margin-start, $item-md-input-icon-start-slot-margin-end);
 }
 
 
