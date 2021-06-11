@@ -114,9 +114,394 @@ dates in JavaScript.
 
 ## Usage
 
-### Angular / javascript / react / stencil / vue
+### Angular
+
+```html
+<!-- Initial value -->
+<ion-datetime value="2012-12-15T13:47:20.789"></ion-datetime>
+
+<!-- Readonly -->
+<ion-datetime readonly></ion-datetime>
+
+<!-- Disabled -->
+<ion-datetime disabled></ion-datetime>
+
+<!-- Custom locale -->
+<ion-datetime locale="en-GB"></ion-datetime>
+
+<!-- Max and min -->
+<ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>
+
+<!-- 15 minute increments -->
+<ion-datetime minuteValues="0,15,30,45"></ion-datetime>
+
+<!-- Specific days/months/years --> 
+<ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>
+
+<!-- Selecting time, no date -->
+<ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time first, date second -->
+<ion-datetime presentation="time-date"></ion-datetime>
+
+<!-- Custom title -->
+<ion-datetime>
+  <div slot="title">My Custom Title</div>
+</ion-datetime>
+
+<!-- Custom buttons -->
+<ion-datetime #customDatetime>
+  <ion-buttons slot="buttons">
+    <ion-button (click)="confirm()">Good to go!</ion-button>
+    <ion-button (click)="reset()">Reset</ion-button>
+  </ion-buttons>
+</ion-datetime>
+
+<!-- Datetime in overlay -->
+<ion-button id="open-modal">Open Datetime Modal</ion-button>
+<ion-modal trigger="open-modal">
+  <ion-content>
+    <ion-datetime></ion-datetime>
+  </ion-content>
+</ion-modal>
+
+```javascript
+@Component({…})
+export class MyComponent {
+  @ViewChild('customDatetime', { static: false }) datetime: HTMLIonDateTimeElement;
+  constructor() {}
+  
+  confirm() {
+    this.datetime.nativeEl.confirm();
+  }
+  
+  reset() {
+    this.datetime.nativeEl.reset();
+  }
+}
+```
 
 
+### Javascript
+
+```html
+<!-- Initial value -->
+<ion-datetime value="2012-12-15T13:47:20.789"></ion-datetime>
+
+<!-- Readonly -->
+<ion-datetime readonly></ion-datetime>
+
+<!-- Disabled -->
+<ion-datetime disabled></ion-datetime>
+
+<!-- Custom locale -->
+<ion-datetime locale="en-GB"></ion-datetime>
+
+<!-- Max and min -->
+<ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>
+
+<!-- 15 minute increments -->
+<ion-datetime minute-values="0,15,30,45"></ion-datetime>
+
+<!-- Specific days/months/years --> 
+<ion-datetime month-values="6,7,8" year-values="2014,2015" day-values="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>
+
+<!-- Selecting time, no date -->
+<ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time first, date second -->
+<ion-datetime presentation="time-date"></ion-datetime>
+
+<!-- Custom title -->
+<ion-datetime>
+  <div slot="title">My Custom Title</div>
+</ion-datetime>
+
+<!-- Custom buttons -->
+<ion-datetime id="custom-datetime">
+  <ion-buttons slot="buttons">
+    <ion-button onclick="confirm()">Good to go!</ion-button>
+    <ion-button onclick="reset()">Reset</ion-button>
+  </ion-buttons>
+</ion-datetime>
+
+<!-- Datetime in overlay -->
+<ion-button id="open-modal">Open Datetime Modal</ion-button>
+<ion-modal trigger="open-modal">
+  <ion-content>
+    <ion-datetime></ion-datetime>
+  </ion-content>
+</ion-modal>
+
+```javascript
+const datetime = document.querySelector('#custom-datetime');
+
+const confirm = () => {
+  datetime.confirm();
+}
+
+const reset = () => {
+  datetime.reset();
+}
+```
+
+
+### React
+
+```javascript
+import React, { useState, useRef } from 'react';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonDatetime,
+  IonModal,
+  IonPage
+} from '@ionic/react';
+
+export const DateTimeExamples: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState<string>('2012-12-15T13:47:20.789');
+  const customDatetime = useRef();
+  const confirm = () => {
+    if (customDatetime === undefined) return;
+    
+    customDatetime.confirm();
+  }
+  
+  const reset = () => {
+    if (customDatetime === undefined) return;
+    
+    customDatetime.reset();
+  }
+
+  return (
+    <IonPage>
+      {/* Initial value */}
+      <IonDatetime value={selectedDate} onIonChange={e => setSelectedDate(e.detail.value!)}></IonDatetime>
+      
+      {/* Readonly */}
+      <IonDatetime readonly></IonDatetime>
+      
+      {/* Disabled */}
+      <IonDatetime disabled></IonDatetime>
+      
+      {/* Custom locale */}
+      <IonDatetime locale="en-GB"></IonDatetime>
+      
+      {/* Max and min */}
+      <IonDatetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></IonDatetime>
+      
+      {/* 15 minute increments */}
+      <IonDatetime minuteValues="0,15,30,45"></IonDatetime>
+      
+      {/* Specific days/months/years */} 
+      <IonDatetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10,11,12,13,14"></IonDatetime>
+      
+      {/* Selecting time, no date */}
+      <IonDatetime presentation="time"></IonDatetime>
+      
+      {/* Selecting time first, date second */}
+      <IonDatetime presentation="time-date"></IonDatetime>
+      
+      {/* Custom title */}
+      <IonDatetime>
+        <div slot="title">My Custom Title</div>
+      </IonDatetime>
+      
+      {/* Custom buttons */}
+      <IonDatetime ref={customDatetime}>
+        <IonButtons slot="buttons">
+          <IonButton onClick={() => confirm()}>Good to go!</IonButton>
+          <IonButton onClick={() => reset()}>Reset</IonButton>
+        </IonButtons>
+      </IonDatetime>
+      
+      {/* Datetime in overlay */}
+      <IonButton id="open-modal">Open Datetime Modal</IonButton>
+      <IonModal trigger="open-modal">
+        <IonContent>
+          <IonDatetime></IonDatetime>
+        </IonContent>
+      </IonModal>
+    </IonPage>
+  )
+}
+```
+
+
+### Stencil
+
+```javascript
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'datetime-example',
+  styleUrl: 'datetime-example.css'
+})
+export class DatetimeExample {
+  private customDatetime?: HTMLElement;
+  
+  private confirm() {
+    const { customDatetime } = this;
+    if (customDatetime === undefined) return;
+    
+    customDatetime.confirm();
+  }
+
+  private reset() {
+    const { customDatetime } = this;
+    if (customDatetime === undefined) return;
+    
+    customDatetime.reset();
+  }
+  
+  render() {
+    return [
+      {/* Initial value */}
+      <ion-datetime value="2012-12-15T13:47:20.789"></ion-datetime>,
+      
+      {/* Readonly */}
+      <ion-datetime readonly></ion-datetime>,
+      
+      {/* Disabled */}
+      <ion-datetime disabled></ion-datetime>,
+      
+      {/* Custom locale */}
+      <ion-datetime locale="en-GB"></ion-datetime>,
+      
+      {/* Max and min */}
+      <ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>,
+      
+      {/* 15 minute increments */}
+      <ion-datetime minuteValues="0,15,30,45"></ion-datetime>,
+      
+      {/* Specific days/months/years */} 
+      <ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>,
+      
+      {/* Selecting time, no date */}
+      <ion-datetime presentation="time"></ion-datetime>,
+      
+      {/* Selecting time first, date second */}
+      <ion-datetime presentation="time-date"></ion-datetime>,
+      
+      {/* Custom title */}
+      <ion-datetime>
+        <div slot="title">My Custom Title</div>
+      </ion-datetime>,
+      
+      {/* Custom buttons */}
+      <ion-datetime ref={el => this.customDatetime = el}>
+        <ion-buttons slot="buttons">
+          <ion-button onClick={() => this.confirm()}>Good to go!</ion-button>
+          <ion-button onClick={() => this.reset()}>Reset</ion-button>
+        </ion-buttons>
+      </ion-datetime>,
+      
+      {/* Datetime in overlay */}
+      <ion-button id="open-modal">Open Datetime Modal</ion-button>
+      <ion-modal trigger="open-modal">
+        <ion-content>
+          <ion-datetime></ion-datetime>
+        </ion-content>
+      </ion-modal>
+    ]
+  }
+}
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Initial value -->
+  <ion-datetime value="2012-12-15T13:47:20.789"></ion-datetime>
+  
+  <!-- Readonly -->
+  <ion-datetime readonly></ion-datetime>
+  
+  <!-- Disabled -->
+  <ion-datetime disabled></ion-datetime>
+  
+  <!-- Custom locale -->
+  <ion-datetime locale="en-GB"></ion-datetime>
+  
+  <!-- Max and min -->
+  <ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>
+  
+  <!-- 15 minute increments -->
+  <ion-datetime minute-values="0,15,30,45"></ion-datetime>
+  
+  <!-- Specific days/months/years --> 
+  <ion-datetime month-values="6,7,8" year-values="2014,2015" day-values="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>
+  
+  <!-- Selecting time, no date -->
+  <ion-datetime presentation="time"></ion-datetime>
+  
+  <!-- Selecting time first, date second -->
+  <ion-datetime presentation="time-date"></ion-datetime>
+  
+  <!-- Custom title -->
+  <ion-datetime>
+    <div slot="title">My Custom Title</div>
+  </ion-datetime>
+  
+  <!-- Custom buttons -->
+  <ion-datetime ref="customDatetime">
+    <ion-buttons slot="buttons">
+      <ion-button @click="confirm()">Good to go!</ion-button>
+      <ion-button @click="reset()">Reset</ion-button>
+    </ion-buttons>
+  </ion-datetime>
+  
+  <!-- Datetime in overlay -->
+  <ion-button id="open-modal">Open Datetime Modal</ion-button>
+  <ion-modal trigger="open-modal">
+    <ion-content>
+      <ion-datetime></ion-datetime>
+    </ion-content>
+  </ion-modal>
+</template>
+
+<script>
+  import { defineComponent, ref } from 'vue';
+  import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonDatetime,
+    IonModal
+  } from '@ionic/vue';
+
+  export default defineComponent({
+    components: {
+      IonButton,
+      IonButtons,
+      IonContent,
+      IonDatetime,
+      IonModal
+    },
+    setup() {
+      const customDatetime = ref();
+      const confirm = () => {
+        if (customDatetime.value === undefined) return;
+        
+        customDatetime.value.$el.confirm();
+      }
+      const reset = () => {
+        if (customDatetime.value === undefined) return;
+        
+        customDatetime.value.$el.reset();
+      }
+      return {
+        customDatetime,
+        confirm,
+        reset
+      }
+    }
+  })
+</script>
+```
 
 
 
