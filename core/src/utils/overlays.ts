@@ -53,11 +53,8 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
       /**
        * Convert the passed in overlay options into props
        * that get passed down into the new overlay.
-       * Inline is needed for ion-popover as it can
-       * be presented via a controller or written
-       * inline in a template.
        */
-      Object.assign(element, { ...opts, inline: false });
+      Object.assign(element, { ...opts });
 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
