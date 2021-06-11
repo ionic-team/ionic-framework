@@ -11,7 +11,6 @@ Breadcrumb
 | Property          | Attribute          | Description                                                                                                                                                                                                                                                                               | Type                                                    | Default     |
 | ----------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
 | `active`          | `active`           | If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.                                                                                                           | `boolean`                                               | `false`     |
-| `collapsed`       | `collapsed`        | If `true`, the breadcrumb will collapse and show an indicator that it is collapsed in its place.                                                                                                                                                                                          | `boolean`                                               | `false`     |
 | `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                    | `string \| undefined`                                   | `undefined` |
 | `disabled`        | `disabled`         | If `true`, the user cannot interact with the breadcrumb.                                                                                                                                                                                                                                  | `boolean`                                               | `false`     |
 | `download`        | `download`         | This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want). | `string \| undefined`                                   | `undefined` |
@@ -26,18 +25,20 @@ Breadcrumb
 
 ## Events
 
-| Event      | Description                              | Type                |
-| ---------- | ---------------------------------------- | ------------------- |
-| `ionBlur`  | Emitted when the breadcrumb loses focus. | `CustomEvent<void>` |
-| `ionFocus` | Emitted when the breadcrumb has focus.   | `CustomEvent<void>` |
+| Event               | Description                                         | Type                |
+| ------------------- | --------------------------------------------------- | ------------------- |
+| `ionBlur`           | Emitted when the breadcrumb loses focus.            | `CustomEvent<void>` |
+| `ionCollapsedClick` | Emitted when the collapsed indicator is clicked on. | `CustomEvent<void>` |
+| `ionFocus`          | Emitted when the breadcrumb has focus.              | `CustomEvent<void>` |
 
 
 ## Shadow Parts
 
-| Part          | Description                                                          |
-| ------------- | -------------------------------------------------------------------- |
-| `"native"`    | The native HTML anchor or div element that wraps all child elements. |
-| `"separator"` | The separator element between each breadcrumb.                       |
+| Part                    | Description                                                          |
+| ----------------------- | -------------------------------------------------------------------- |
+| `"collapsed-indicator"` | The indicator element that shows the breadcrumbs are collapsed.      |
+| `"native"`              | The native HTML anchor or div element that wraps all child elements. |
+| `"separator"`           | The separator element between each breadcrumb.                       |
 
 
 ## CSS Custom Properties

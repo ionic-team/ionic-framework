@@ -44,10 +44,11 @@ export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge',
 
 
 export const IonBreadcrumb = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumb>('ion-breadcrumb', [
-  'lastCollapsed',
+  'collapsed',
+  'last',
+  'showCollapsedIndicator',
   'color',
   'active',
-  'collapsed',
   'disabled',
   'download',
   'href',
@@ -58,13 +59,15 @@ export const IonBreadcrumb = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumb>('i
   'routerAnimation',
   'ionFocus',
   'ionBlur',
-  'ionCollapsed'
+  'ionCollapsedClick'
 ]);
 
 
 export const IonBreadcrumbs = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumbs>('ion-breadcrumbs', [
   'color',
-  'ionCollapsedClick'
+  'maxItems',
+  'itemsBeforeCollapse',
+  'itemsAfterCollapse'
 ]);
 
 
