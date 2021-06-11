@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
 import { AnimationBuilder } from '../../utils/animation/animation-interface';
 import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -24,6 +24,7 @@ import { RouterDirection } from '../router/utils/interface';
 })
 export class Breadcrumb implements ComponentInterface {
   private inheritedAttributes: { [k: string]: any } = {};
+  private collapsedRef?: HTMLElement;
 
   /** @internal */
   @Prop() collapsed = false;
@@ -113,7 +114,7 @@ export class Breadcrumb implements ComponentInterface {
   /**
    * Emitted when the collapsed indicator is clicked on.
    */
-  @Event() ionCollapsedClick!: EventEmitter<void>;
+  @Event() ionCollapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
@@ -128,7 +129,7 @@ export class Breadcrumb implements ComponentInterface {
   }
 
   private collapsedIndicatorClick = () => {
-    this.ionCollapsedClick.emit();
+    this.ionCollapsedClick.emit({ ionShadowTarget: this.collapsedRef });
   }
 
   render() {
@@ -189,6 +190,7 @@ export class Breadcrumb implements ComponentInterface {
             <button
               part="collapsed-indicator"
               onClick={() => this.collapsedIndicatorClick()}
+              ref={collapsedEl => this.collapsedRef = collapsedEl}
               class={{
                 'breadcrumbs-collapsed-indicator': true,
               }}

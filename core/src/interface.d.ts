@@ -5,6 +5,7 @@ export * from './index';
 export * from './components/accordion-group/accordion-group-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
+export * from './components/breadcrumb/breadcrumb-interface';
 export * from './components/content/content-interface';
 export * from './components/checkbox/checkbox-interface';
 export * from './components/datetime/datetime-interface';
