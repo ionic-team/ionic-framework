@@ -641,7 +641,7 @@ export class Datetime implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         aria-expanded={`${isExpanded}`}
         aria-haspopup="true"
-        aria-labelledby={labelId}
+        aria-labelledby={label ? labelId : null}
         class={{
           [mode]: true,
           'datetime-disabled': disabled,

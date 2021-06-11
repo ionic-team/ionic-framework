@@ -5,13 +5,11 @@ export interface OverlayProps {
 }
 
 export const defineOverlayContainer = <Props extends object>(name: string, componentProps: string[] = [], controller: any) => {
-  // TODO
-  const eventPrefix = name.toLowerCase().split('-').join('');
   const eventListeners = [
-    { componentEv: `${eventPrefix}willpresent`, frameworkEv: 'onWillPresent' },
-    { componentEv: `${eventPrefix}didpresent`, frameworkEv: 'onDidPresent' },
-    { componentEv: `${eventPrefix}willdismiss`, frameworkEv: 'onWillDismiss' },
-    { componentEv: `${eventPrefix}diddismiss`, frameworkEv: 'onDidDismiss' },
+    { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
+    { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
+    { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
+    { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
   ];
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
@@ -68,9 +66,19 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
         return;
       }
 
+      /**
+       * These are getting passed as props.
+       * Potentially a Vue bug with Web Components?
+       */
+      const restOfProps = { ...(props as any) };
+      delete restOfProps.onWillPresent;
+      delete restOfProps.onDidPresent;
+      delete restOfProps.onWillDismiss;
+      delete restOfProps.onDidDismiss;
+
       const component = slots.default && slots.default()[0];
       overlay.value = controller.create({
-        ...props,
+        ...restOfProps,
         component
       });
 
@@ -101,7 +109,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
 
   Container.displayName = name;
   Container.props = [...componentProps, 'isOpen'];
-  Container.emits = eventListeners.map(ev => ev.frameworkEv);
+  Container.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
 
   return Container;
 }

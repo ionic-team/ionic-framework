@@ -18,7 +18,7 @@ export interface RouterEventDetail {
 
 export interface RouteRedirect {
   from: string[];
-  to?: string[];
+  to?: ParsedRoute;
 }
 
 export interface RouteWrite {
@@ -43,6 +43,13 @@ export interface RouteEntry {
 
 export interface RouteNode extends RouteEntry {
   children: RouteTree;
+}
+
+export interface ParsedRoute {
+  // Parts of the route (non empty "/" separated parts of an URL).
+  segments: string[];
+  // Unparsed query string.
+  queryString?: string;
 }
 
 export type RouterDirection = 'forward' | 'back' | 'root';

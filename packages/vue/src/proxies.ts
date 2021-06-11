@@ -8,6 +8,25 @@ import type { JSX } from '@ionic/core';
 
 
 
+export const IonAccordion = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion-accordion', [
+  'value',
+  'disabled',
+  'readonly',
+  'toggleIcon',
+  'toggleIconSlot'
+]);
+
+
+export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionGroup>('ion-accordion-group', [
+  'multiple',
+  'value',
+  'disabled',
+  'readonly',
+  'expand',
+  'ionChange'
+]);
+
+
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar');
 
 

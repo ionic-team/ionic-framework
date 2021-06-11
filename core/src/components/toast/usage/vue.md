@@ -45,7 +45,10 @@ export default {
             }
           ]
         })
-      return toast.present();
+      await toast.present();
+  
+      const { role } = await toast.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
@@ -61,7 +64,7 @@ Developers can also use this component directly in their template:
     :is-open="isOpenRef"
     message="Your settings have been saved."
     :duration="2000"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-toast>
 </template>

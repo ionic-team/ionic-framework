@@ -19,19 +19,9 @@ function generateOverlays() {
       name: 'IonLoading'
     },
     {
-      tag: 'ion-modal',
-      controller: 'modalController',
-      name: 'IonModal'
-    },
-    {
       tag: 'ion-picker',
       controller: 'pickerController',
       name: 'IonPicker'
-    },
-    {
-      tag: 'ion-popover',
-      controller: 'popoverController',
-      name: 'IonPopover'
     },
     {
       tag: 'ion-toast',

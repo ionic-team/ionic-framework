@@ -41,7 +41,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If `true`, a button tag will be rendered and the item will be tappable.
@@ -305,7 +305,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 <slot></slot>
               </div>
               <slot name="end"></slot>
-              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon"></ion-icon>}
+              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true"></ion-icon>}
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

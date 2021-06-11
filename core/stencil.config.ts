@@ -52,6 +52,7 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+    { components: ['ion-accordion-group', 'ion-accordion'] },
   ],
   plugins: [
     sass({

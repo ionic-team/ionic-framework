@@ -47,7 +47,12 @@ span {
 :host(.skeleton-text-animated) {
   position: relative;
 
-  background: linear-gradient(to right, $skeleton-text-background 8%, $skeleton-text-background-animated 18%, $skeleton-text-background 33%);
+  background: linear-gradient(
+    to right,
+    $skeleton-text-background 8%,
+    $skeleton-text-background-animated 18%,
+    $skeleton-text-background 33%
+  );
   background-size: 800px 104px;
   animation-duration: 1s;
   animation-fill-mode: forwards;
@@ -59,11 +64,11 @@ span {
 /* stylelint-disable property-blacklist */
 @keyframes shimmer {
   0% {
-    background-position: -468px 0
+    background-position: -400px 0;
   }
 
   100% {
-    background-position: 468px 0
+    background-position: 400px 0;
   }
 }
 /* stylelint-enable property-blacklist */

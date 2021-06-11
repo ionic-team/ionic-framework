@@ -5,9 +5,7 @@ import {
   actionSheetController,
   alertController,
   loadingController,
-  modalController,
   pickerController,
-  popoverController,
   toastController
 } from '@ionic/core';
 
@@ -19,11 +17,7 @@ export const IonAlert = /*@__PURE__*/defineOverlayContainer<JSX.IonAlert>('ion-a
     
 export const IonLoading = /*@__PURE__*/defineOverlayContainer<JSX.IonLoading>('ion-loading', ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent'], loadingController);
     
-export const IonModal = /*@__PURE__*/defineOverlayContainer<JSX.IonModal>('ion-modal', ['animated', 'backdropDismiss', 'component', 'componentProps', 'cssClass', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose'], modalController);
-    
 export const IonPicker = /*@__PURE__*/defineOverlayContainer<JSX.IonPicker>('ion-picker', ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop'], pickerController);
-    
-export const IonPopover = /*@__PURE__*/defineOverlayContainer<JSX.IonPopover>('ion-popover', ['animated', 'backdropDismiss', 'component', 'componentProps', 'cssClass', 'enterAnimation', 'event', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'translucent'], popoverController);
     
 export const IonToast = /*@__PURE__*/defineOverlayContainer<JSX.IonToast>('ion-toast', ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'position', 'translucent'], toastController);
     
