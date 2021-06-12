@@ -350,23 +350,62 @@ button, a {
 // Item Input Highlight
 // --------------------------------------------------
 
-:host(:not(.item-fill-outline):not(.item-solid-fill)) .item-highlight,
+.item-highlight,
 .item-inner-highlight {
-  @include position(null, 0, 0, 0);
-
+  @include position(0, 0, 0, 0);
+  @include border-radius(inherit);
   position: absolute;
 
-  background: var(--highlight-background);
+  width: 100%;
 
-  z-index: 1;
+  height: 100%;
+  
+  transform: scaleX(0);
+
+  transition: transform 200ms, border-bottom-width 200ms;
+
+  z-index: 2;
+
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
-:host(:not(.item-fill-outline):not(.item-solid-fill)) .item-highlight {
-  height: var(--full-highlight-height);
+:host(.item-has-focus) .item-highlight,
+:host(.item-has-focus) .item-inner-highlight {
+  transform: scaleX(1);
+
+  border-style: var(--border-style);
+  border-color: var(--highlight-background);
 }
 
-.item-inner-highlight {
-  height: var(--inset-highlight-height);
+:host(.item-has-focus) .item-highlight {
+  border-width: var(--full-highlight-height);
+}
+
+:host(.item-has-focus) .item-inner-highlight {
+  border-bottom-width: var(--inset-highlight-height);
+}
+
+:host(.item-has-focus) .item-inner-highlight,
+:host(.item-has-focus:not(.item-fill-outline)) .item-highlight {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+:host(.item-fill-outline) .item-highlight {
+  --position-offset: calc(-1 * var(--border-width));
+
+  @include position(var(--position-offset), null, null, var(--position-offset));
+
+  width: calc(100% + 2 * var(--border-width));
+  height: calc(100% + 2 * var(--border-width));
+
+  transition: none;
+}
+
+:host(.item-fill-outline.item-has-focus) .item-native {
+  border-color: transparent;
 }
 
 

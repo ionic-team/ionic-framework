@@ -20,12 +20,16 @@
  :host(.label-stacked),
  :host(.label-floating) {
    @include margin(0, 0, 0, 0);
+   /* stylelint-disable property-blacklist */
    transform-origin: top left;
+   /* stylelint-enable property-blacklist */
  }
 
  :host(.label-stacked.label-rtl),
  :host(.label-floating.label-rtl) {
+   /* stylelint-disable property-blacklist */
    transform-origin: top right;
+   /* stylelint-enable property-blacklist */
  }
 
 :host(.label-stacked) {
@@ -63,21 +67,27 @@
 
   &::before,
   &::after {
-    width: $item-md-fill-outline-label-padding;
-
-    background-color: $item-md-background;
     position: absolute;
 
+    width: $item-md-fill-outline-label-padding;
+
     height: 100%;
+
+    background-color: $item-md-background;
+
     content: "";
   }
 
   &::before {
+    /* stylelint-disable property-blacklist */
     left: calc(-1 * #{$item-md-fill-outline-label-padding});
+    /* stylelint-enable property-blacklist */
   }
 
   &::after {
+    /* stylelint-disable property-blacklist */
     right: calc(-1 * #{$item-md-fill-outline-label-padding});
+    /* stylelint-enable property-blacklist */
   }
 }
 

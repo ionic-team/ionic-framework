@@ -134,7 +134,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   @Listen('ionChange')
   handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
-    if (this.counter && ev.target == this.getFirstInput()) {
+    if (this.counter && ev.target === this.getFirstInput()) {
       this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
     }
   }
@@ -345,30 +345,30 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           })
         }}
       >
-          <TagType
-            {...attrs}
-            class="item-native"
-            part="native"
-            disabled={disabled}
-            {...clickFn}
-          >
-            <slot name="start"></slot>
-            <div class="item-inner">
-              <div class="input-wrapper">
-                <slot></slot>
-              </div>
-              <slot name="end"></slot>
-              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true"></ion-icon>}
-              <div class="item-inner-highlight"></div>
+        <TagType
+          {...attrs}
+          class="item-native"
+          part="native"
+          disabled={disabled}
+          {...clickFn}
+        >
+          <slot name="start"></slot>
+          <div class="item-inner">
+            <div class="input-wrapper">
+              <slot></slot>
             </div>
-            {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-            <div class="item-highlight"></div>
-          </TagType>
-          <div class="item-bottom">
-            <slot name="error"></slot>
-            <slot name="helper"></slot>
-            {counterString && <ion-note class="item-counter">{counterString}</ion-note>}
+            <slot name="end"></slot>
+            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true"></ion-icon>}
+            <div class="item-inner-highlight"></div>
           </div>
+          {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          <div class="item-highlight"></div>
+        </TagType>
+        <div class="item-bottom">
+          <slot name="error"></slot>
+          <slot name="helper"></slot>
+          {counterString && <ion-note class="item-counter">{counterString}</ion-note>}
+        </div>
       </Host>
     );
   }

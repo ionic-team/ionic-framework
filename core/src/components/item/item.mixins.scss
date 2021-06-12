@@ -7,18 +7,3 @@
 
   @include svg-background-image($item-detail-push-svg, true);
 }
-
-@mixin overlay() {
-  @include position(null, 0, 0, 0);
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  box-sizing: border-box;
-  pointer-events: none;
-
-  /* stylelint-disable property-blacklist */
-  border-radius: inherit;
-  /* stylelint-enable property-blacklist */
-}
