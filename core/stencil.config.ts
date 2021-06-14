@@ -53,6 +53,7 @@ export const config: Config = {
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
     { components: ['ion-accordion-group', 'ion-accordion'] },
+    { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
     sass({
