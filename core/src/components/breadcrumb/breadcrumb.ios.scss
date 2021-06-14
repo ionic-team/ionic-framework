@@ -42,12 +42,8 @@
 :host(.ion-focused) .breadcrumb-native {
   @include border-radius(8px);
 
-  background: rgba(233, 237, 243, 0.7);
-  color: #001a3a;
-}
-
-:host(.ion-focused) ::slotted(ion-icon) {
-  color: #445b78;
+  background: $breadcrumb-ios-background-focused;
+  color: $breadcrumb-ios-color-focused;
 }
 
 :host(.in-breadcrumbs-color.ion-focused) .breadcrumb-native,
@@ -56,9 +52,18 @@
   color: #{current-color(base)};
 }
 
+:host(.ion-focused) ::slotted(ion-icon),
 :host(.in-breadcrumbs-color.ion-focused) ::slotted(ion-icon),
 :host(.ion-color.ion-focused) ::slotted(ion-icon) {
-  color: #445b78;
+  color: $breadcrumb-ios-icon-color-focused;
+}
+
+
+// Breadcrumb Separator
+// ------------------------------------------
+
+.breadcrumb-separator {
+  color: $breadcrumb-ios-separator-color;
 }
 
 
@@ -66,7 +71,7 @@
 // ------------------------------------------
 
 ::slotted(ion-icon) {
-  color: #92a0b3;
+  color: $breadcrumb-ios-icon-color;
 
   font-size: 18px;
 }
@@ -80,7 +85,7 @@
 }
 
 :host(.breadcrumb-active) ::slotted(ion-icon) {
-  color: #242d39;
+  color: $breadcrumb-ios-icon-color-active;
 }
 
 
@@ -90,7 +95,9 @@
 .breadcrumbs-collapsed-indicator {
   @include border-radius(4px);
 
-  background: #e9edf3;
+  background: $breadcrumb-ios-indicator-background;
+
+  color: $breadcrumb-ios-indicator-color;
 }
 
 .breadcrumbs-collapsed-indicator:hover {
@@ -98,5 +105,5 @@
 }
 
 .breadcrumbs-collapsed-indicator:focus {
-  background: #d9e0ea;
+  background: $breadcrumb-ios-indicator-background-focused;
 }

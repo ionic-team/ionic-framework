@@ -48,7 +48,17 @@
 :host(.ion-focused) .breadcrumb-native {
   @include border-radius(4px);
 
+  background: $breadcrumb-md-background-focused;
+
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+// Breadcrumb Separator
+// ------------------------------------------
+
+.breadcrumb-separator {
+  color: $breadcrumb-md-separator-color;
 }
 
 
@@ -56,7 +66,7 @@
 // ------------------------------------------
 
 ::slotted(ion-icon) {
-  color: #7d8894;
+  color: $breadcrumb-md-icon-color;
 
   font-size: 18px;
 }
@@ -70,7 +80,7 @@
 }
 
 :host(.breadcrumb-active) ::slotted(ion-icon) {
-  color: #222d3a;
+  color: $breadcrumb-md-icon-color-active;
 }
 
 
@@ -80,7 +90,9 @@
 .breadcrumbs-collapsed-indicator {
   @include border-radius(2px);
 
-  background: #eef1f3;
+  background: $breadcrumb-md-indicator-background;
+
+  color: $breadcrumb-md-indicator-color;
 }
 
 .breadcrumbs-collapsed-indicator:hover {
@@ -88,5 +100,5 @@
 }
 
 .breadcrumbs-collapsed-indicator:focus {
-  background: #dfe5e8;
+  background: $breadcrumb-md-indicator-background-focused;
 }
