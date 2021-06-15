@@ -181,7 +181,7 @@
 }
 
 :host-context(ion-toolbar.ion-color):not(.ion-color) .searchbar-input {
-  background: #{current-color(contrast, $searchbar-ios-input-background-color-alpha)};
+  background: rgba(var(--ion-color-contrast-rgb), $searchbar-ios-input-background-color-alpha);
   color: currentColor;
 }
 
