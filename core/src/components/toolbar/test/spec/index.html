@@ -258,50 +258,13 @@
           </ion-button>
         </ion-buttons>
 
-        <ion-progress-bar value=".4" color="success"></ion-progress-bar>
-      </ion-toolbar>
-
-      <ion-toolbar color="tertiary">
-        <ion-title>
-          Title Only
-        </ion-title>
-      </ion-toolbar>
-
-      <ion-toolbar color="tertiary">
-        <ion-breadcrumbs>
-          <ion-breadcrumb href="#">
-            Home
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#library" collapsed>
-            Cameras & Camcorders
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#digital-camera-accessories" collapsed>
-            Digital Camera Accessories
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#camera-lenses" collapsed>
-            Camera Lenses
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#dslr-lenses" collapsed>
-            DSLR Lenses
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#prime-lenses">
-            Prime Lenses
-          </ion-breadcrumb>
-          <ion-breadcrumb>
-            Product Info
-          </ion-breadcrumb>
-        </ion-breadcrumbs>
+        <ion-progress-bar value=".4"></ion-progress-bar>
       </ion-toolbar>
 
     </ion-content>
 
     <ion-footer>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button onClick="toggleToolbarColors()">
-            Toggle Colors
-          </ion-button>
-        </ion-buttons>
         <ion-title>
           Click to Add Text
         </ion-title>
@@ -328,28 +291,6 @@
           button.appendChild(text, button);
         }
       }
-
-      const toolbars = document.querySelectorAll('ion-toolbar[color]');
-
-      function toggleToolbarColors() {
-        if (toolbars.length === 0) return;
-
-        // All toolbars are the same color so just grab the first one
-        const color = toolbars[0].color;
-        const newColor = color === 'tertiary'
-          ? 'warning'
-          : color === 'warning'
-            ? 'light'
-            : color === 'light'
-              ? 'danger'
-              : 'tertiary';
-
-
-        for (const toolbar of toolbars) {
-          toolbar.color = newColor;
-        }
-      }
-
     </script>
 
     <style>
