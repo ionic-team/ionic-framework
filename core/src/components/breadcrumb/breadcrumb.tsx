@@ -127,6 +127,10 @@ export class Breadcrumb implements ComponentInterface {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
+  private isClickable(): boolean {
+    return this.href !== undefined;
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -141,6 +145,7 @@ export class Breadcrumb implements ComponentInterface {
 
   render() {
     const { color, active, collapsed, disabled, download, el, inheritedAttributes, last, routerAnimation, routerDirection, separator, showCollapsedIndicator, target } = this;
+    const clickable = this.isClickable();
     const TagType = this.href === undefined ? 'span' : 'a' as any;
 
     // Links can still be tabbed to when set to disabled if they have an href
@@ -176,8 +181,8 @@ export class Breadcrumb implements ComponentInterface {
           'in-breadcrumbs-color': hostContext('ion-breadcrumbs[color]', el),
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'ion-activatable': true,
-          'ion-focusable': true,
+          'ion-activatable': clickable,
+          'ion-focusable': clickable,
         })}
       >
         <TagType

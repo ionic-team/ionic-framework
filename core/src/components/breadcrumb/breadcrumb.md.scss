@@ -31,12 +31,12 @@
 // ------------------------------------------
 
 @media (any-hover: hover) {
-  :host(:hover) {
+  :host(.ion-activatable:hover) {
     color: $breadcrumb-md-color-active;
   }
 
-  :host(.in-breadcrumbs-color:hover),
-  :host(.ion-color:hover) {
+  :host(.ion-activatable.in-breadcrumbs-color:hover),
+  :host(.ion-activatable.ion-color:hover) {
     color: #{current-color(shade)};
   }
 }
