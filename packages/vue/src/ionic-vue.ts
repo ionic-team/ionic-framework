@@ -22,6 +22,16 @@ export const IonicVue: Plugin = {
 
   async install(_: App, config: IonicConfig = {}) {
     if (typeof (window as any) !== 'undefined') {
+
+      /**
+       * By default Ionic Framework hides elements that
+       * are not hydrated, but in the CE build there is no
+       * hydration.
+       * TODO: Remove when all integrations have been
+       * migrated to CE build.
+       */
+      document.documentElement.classList.add('ion-ce');
+
       const { ael, rel, ce } = getHelperFunctions();
       initialize({
         ...config,

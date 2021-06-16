@@ -1,10 +1,6 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
-html:not(.hydrated) body {
-  display: block;
-}
-
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
