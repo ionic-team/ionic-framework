@@ -50,20 +50,16 @@ export const defineContainer = <Props>(
   * Note: The `props` here are not all properties on a component.
   * They refer to whatever properties are set on an instance of a component.
   */
-  const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
-    /**
-     * If importing custom elements, register it
-     * with the custom elements registry only if
-     * it has not already been registered.
-     */
-    if (
-      customElement !== undefined &&
-      typeof customElements !== 'undefined' &&
-      !customElements.get(name)
-    ) {
-      customElements.define(name, customElement);
-    }
 
+  if (
+    customElement !== undefined &&
+    typeof customElements !== 'undefined' &&
+    !customElements.get(name)
+  ) {
+    customElements.define(name, customElement);
+  }
+
+  const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
     let modelPropValue = (props as any)[modelProp];
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
