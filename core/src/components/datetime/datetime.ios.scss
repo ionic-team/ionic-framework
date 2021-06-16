@@ -6,6 +6,8 @@
   --background: var(--ion-color-light, #ffffff);
   --background-rgb: var(--ion-color-light-rgb);
   --title-color: #{$text-color-step-400};
+
+  min-height: 300px;
 }
 
 // Header
