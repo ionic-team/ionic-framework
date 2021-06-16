@@ -2043,6 +2043,13 @@ export default defineComponent({
 | `mode`                | `mode`                  | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
+## Events
+
+| Event               | Description                                         | Type                                               |
+| ------------------- | --------------------------------------------------- | -------------------------------------------------- |
+| `ionCollapsedClick` | Emitted when the collapsed indicator is clicked on. | `CustomEvent<BreadcrumbCollapsedClickEventDetail>` |
+
+
 ## CSS Custom Properties
 
 | Name           | Description                   |

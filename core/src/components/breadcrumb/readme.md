@@ -25,11 +25,10 @@ Breadcrumb
 
 ## Events
 
-| Event               | Description                                         | Type                                               |
-| ------------------- | --------------------------------------------------- | -------------------------------------------------- |
-| `ionBlur`           | Emitted when the breadcrumb loses focus.            | `CustomEvent<void>`                                |
-| `ionCollapsedClick` | Emitted when the collapsed indicator is clicked on. | `CustomEvent<BreadcrumbCollapsedClickEventDetail>` |
-| `ionFocus`          | Emitted when the breadcrumb has focus.              | `CustomEvent<void>`                                |
+| Event      | Description                              | Type                |
+| ---------- | ---------------------------------------- | ------------------- |
+| `ionBlur`  | Emitted when the breadcrumb loses focus. | `CustomEvent<void>` |
+| `ionFocus` | Emitted when the breadcrumb has focus.   | `CustomEvent<void>` |
 
 
 ## Shadow Parts

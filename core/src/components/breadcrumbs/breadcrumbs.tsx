@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -47,6 +47,16 @@ export class Breadcrumbs implements ComponentInterface {
    * If this property exists `maxItems` will be ignored.
    */
   @Prop() itemsAfterCollapse = 1;
+
+  /**
+   * Emitted when the collapsed indicator is clicked on.
+   */
+  @Event() ionCollapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
+
+  @Listen('collapsedClick')
+  onCollapsedClick(ev: CustomEvent) {
+    this.ionCollapsedClick.emit(ev.detail)
+  }
 
   @Watch('maxItems')
   maxItemsChanged() {

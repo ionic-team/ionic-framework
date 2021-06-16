@@ -59,7 +59,7 @@ export const IonBreadcrumb = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumb>('i
   'routerAnimation',
   'ionFocus',
   'ionBlur',
-  'ionCollapsedClick'
+  'collapsedClick'
 ]);
 
 
@@ -67,7 +67,8 @@ export const IonBreadcrumbs = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumbs>(
   'color',
   'maxItems',
   'itemsBeforeCollapse',
-  'itemsAfterCollapse'
+  'itemsAfterCollapse',
+  'ionCollapsedClick'
 ]);
 
 

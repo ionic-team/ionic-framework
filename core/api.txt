@@ -173,7 +173,6 @@ ion-breadcrumb,prop,routerDirection,"back" | "forward" | "root",'forward',false,
 ion-breadcrumb,prop,separator,boolean | undefined,undefined,false,false
 ion-breadcrumb,prop,target,string | undefined,undefined,false,false
 ion-breadcrumb,event,ionBlur,void,true
-ion-breadcrumb,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
 ion-breadcrumb,event,ionFocus,void,true
 ion-breadcrumb,css-prop,--color
 ion-breadcrumb,part,collapsed-indicator
@@ -186,6 +185,7 @@ ion-breadcrumbs,prop,itemsAfterCollapse,number,1,false,false
 ion-breadcrumbs,prop,itemsBeforeCollapse,number,1,false,false
 ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
 ion-breadcrumbs,prop,mode,"ios" | "md",undefined,false,false
+ion-breadcrumbs,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
 ion-breadcrumbs,css-prop,--background
 ion-breadcrumbs,css-prop,--color
 

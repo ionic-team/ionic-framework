@@ -3810,13 +3810,13 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted when the collapsed indicator is clicked on. `ion-breadcrumbs` will listen for this and emit ionCollapsedClick. Normally we could just emit this as `ionCollapsedClick` and let the event bubble to `ion-breadcrumbs`, but if the event custom event is not set on `ion-breadcrumbs`, TypeScript will throw an error in user applications.
+         */
+        "onCollapsedClick"?: (event: CustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
+        /**
           * Emitted when the breadcrumb loses focus.
          */
         "onIonBlur"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the collapsed indicator is clicked on.
-         */
-        "onIonCollapsedClick"?: (event: CustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
         /**
           * Emitted when the breadcrumb has focus.
          */
@@ -3864,6 +3864,10 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted when the collapsed indicator is clicked on.
+         */
+        "onIonCollapsedClick"?: (event: CustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
     }
     interface IonButton {
         /**

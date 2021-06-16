@@ -114,8 +114,14 @@ export class Breadcrumb implements ComponentInterface {
 
   /**
    * Emitted when the collapsed indicator is clicked on.
+   * `ion-breadcrumbs` will listen for this and emit ionCollapsedClick.
+   * Normally we could just emit this as `ionCollapsedClick`
+   * and let the event bubble to `ion-breadcrumbs`,
+   * but if the event custom event is not set on `ion-breadcrumbs`,
+   * TypeScript will throw an error in user applications.
+   * @internal
    */
-  @Event() ionCollapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
+  @Event() collapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
@@ -130,7 +136,7 @@ export class Breadcrumb implements ComponentInterface {
   }
 
   private collapsedIndicatorClick = () => {
-    this.ionCollapsedClick.emit({ ionShadowTarget: this.collapsedRef });
+    this.collapsedClick.emit({ ionShadowTarget: this.collapsedRef });
   }
 
   render() {
