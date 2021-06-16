@@ -336,40 +336,34 @@ ion-content,part,scroll
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
-ion-datetime,prop,dayNames,string | string[] | undefined,undefined,false,false
-ion-datetime,prop,dayShortNames,string | string[] | undefined,undefined,false,false
+ion-datetime,prop,color,string | undefined,'primary',false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
-ion-datetime,prop,displayFormat,string,'MMM D, YYYY',false,false
-ion-datetime,prop,displayTimezone,string | undefined,undefined,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
+ion-datetime,prop,locale,string,'default',false,false
 ion-datetime,prop,max,string | undefined,undefined,false,false
 ion-datetime,prop,min,string | undefined,undefined,false,false
 ion-datetime,prop,minuteValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,mode,"ios" | "md",undefined,false,false
-ion-datetime,prop,monthNames,string | string[] | undefined,undefined,false,false
-ion-datetime,prop,monthShortNames,string | string[] | undefined,undefined,false,false
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
-ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
-ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; showBackdrop?: boolean | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: Mode | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
-ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
+ion-datetime,prop,presentation,"date" | "date-time" | "time" | "time-date",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
+ion-datetime,prop,showDefaultButtons,boolean,false,false,false
+ion-datetime,prop,showDefaultTitle,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
-ion-datetime,method,open,open() => Promise<void>
+ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
+ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>
+ion-datetime,method,reset,reset(value?: string | undefined) => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
 ion-datetime,event,ionFocus,void,true
-ion-datetime,css-prop,--padding-bottom
-ion-datetime,css-prop,--padding-end
-ion-datetime,css-prop,--padding-start
-ion-datetime,css-prop,--padding-top
-ion-datetime,css-prop,--placeholder-color
-ion-datetime,part,placeholder
-ion-datetime,part,text
+ion-datetime,css-prop,--background
+ion-datetime,css-prop,--background-rgb
+ion-datetime,css-prop,--title-color
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
