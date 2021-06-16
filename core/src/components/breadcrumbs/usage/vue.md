@@ -215,7 +215,7 @@ export default defineComponent({
 ```html
 <template>
   <!-- Max Items -->
-  <ion-breadcrumbs max-items="4">
+  <ion-breadcrumbs :max-items="4">
     <ion-breadcrumb href="#">
       Home
     </ion-breadcrumb>
@@ -252,7 +252,7 @@ export default defineComponent({
 ```html
 <template>
   <!-- Items before collapse -->
-  <ion-breadcrumbs max-items="4" items-before-collapse="2">
+  <ion-breadcrumbs :max-items="4" :items-before-collapse="2">
     <ion-breadcrumb href="#">
       Home
     </ion-breadcrumb>
@@ -274,7 +274,7 @@ export default defineComponent({
   </ion-breadcrumbs>
 
   <!-- Items after collapse -->
-  <ion-breadcrumbs max-items="4" items-after-collapse="3">
+  <ion-breadcrumbs :max-items="4" :items-after-collapse="3">
     <ion-breadcrumb href="#">
       Home
     </ion-breadcrumb>
@@ -296,7 +296,7 @@ export default defineComponent({
   </ion-breadcrumbs>
 
   <!-- Items before and after collapse -->
-  <ion-breadcrumbs max-items="4" items-before-collapse="0" items-after-collapse="3">
+  <ion-breadcrumbs :max-items="4" :items-before-collapse="0" :items-after-collapse="3">
     <ion-breadcrumb href="#">
       Home
     </ion-breadcrumb>
@@ -379,7 +379,7 @@ export default defineComponent({
 
 ```html
 <template>
-  <ion-breadcrumbs max-items="4" @ionCollapsedClick="presentPopover($event)">
+  <ion-breadcrumbs :max-items="4" @ionCollapsedClick="presentPopover($event)">
     <ion-breadcrumb href="#">
       Home
     </ion-breadcrumb>

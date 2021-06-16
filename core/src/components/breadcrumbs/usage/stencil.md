@@ -218,7 +218,7 @@ import { Component, h } from '@stencil/core';
 export class BreadcrumbsExample {
   render() {
     return [
-      <ion-breadcrumbs maxItems="4">
+      <ion-breadcrumbs maxItems={4}>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
@@ -258,7 +258,7 @@ export class BreadcrumbsExample {
   render() {
     return [
       // Items before collapse
-      <ion-breadcrumbs maxItems="4" itemsBeforeCollapse="2">
+      <ion-breadcrumbs maxItems={4} itemsBeforeCollapse={2}>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
@@ -280,7 +280,7 @@ export class BreadcrumbsExample {
       </ion-breadcrumbs>,
 
       // Items after collapse
-      <ion-breadcrumbs maxItems="4" itemsAfterCollapse="3">
+      <ion-breadcrumbs maxItems={4} itemsAfterCollapse={3}>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
@@ -302,7 +302,7 @@ export class BreadcrumbsExample {
       </ion-breadcrumbs>,
 
       // Items before and after collapse
-      <ion-breadcrumbs maxItems="4" itemsBeforeCollapse="0" itemsAfterCollapse="3">
+      <ion-breadcrumbs maxItems={4} itemsBeforeCollapse={0} itemsAfterCollapse={3}>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
@@ -394,7 +394,7 @@ export class BreadcrumbsExample {
 
   render() {
     return [
-      <ion-breadcrumbs maxItems="4" onIonCollapsedClick={(ev) => this.presentPopover(ev)}>
+      <ion-breadcrumbs maxItems={4} onIonCollapsedClick={(ev) => this.presentPopover(ev)}>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>

@@ -162,7 +162,7 @@
 
 ```html
 <!-- Max Items -->
-<ion-breadcrumbs maxItems="4">
+<ion-breadcrumbs [maxItems]="4">
   <ion-breadcrumb href="#">
     Home
   </ion-breadcrumb>
@@ -188,7 +188,7 @@
 
 ```html
 <!-- Items before collapse -->
-<ion-breadcrumbs maxItems="4" itemsBeforeCollapse="2">
+<ion-breadcrumbs [maxItems]="4" [itemsBeforeCollapse]="2">
   <ion-breadcrumb href="#">
     Home
   </ion-breadcrumb>
@@ -210,7 +210,7 @@
 </ion-breadcrumbs>
 
 <!-- Items after collapse -->
-<ion-breadcrumbs maxItems="4" itemsAfterCollapse="3">
+<ion-breadcrumbs [maxItems]="4" [itemsAfterCollapse]="3">
   <ion-breadcrumb href="#">
     Home
   </ion-breadcrumb>
@@ -232,7 +232,7 @@
 </ion-breadcrumbs>
 
 <!-- Items before and after collapse -->
-<ion-breadcrumbs maxItems="4" itemsBeforeCollapse="0" itemsAfterCollapse="3">
+<ion-breadcrumbs [maxItems]="4" [itemsBeforeCollapse]="0" [itemsAfterCollapse]="3">
   <ion-breadcrumb href="#">
     Home
   </ion-breadcrumb>
@@ -299,7 +299,7 @@ export class BreadcrumbsExample {
 ### Popover on Collapsed Indicator Click
 
 ```html
-<ion-breadcrumbs maxItems="4" (ionCollapsedClick)="presentPopover($event)">
+<ion-breadcrumbs [maxItems]="4" (ionCollapsedClick)="presentPopover($event)">
   <ion-breadcrumb href="#">
     Home
   </ion-breadcrumb>
