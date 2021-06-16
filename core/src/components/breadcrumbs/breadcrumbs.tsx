@@ -103,7 +103,7 @@ export class Breadcrumbs implements ComponentInterface {
 
     if (shouldCollapse) {
       // Show the collapsed indicator in the first breadcrumb that collapses
-      for (const [index, breadcrumb] of breadcrumbs.entries()) {
+      breadcrumbs.forEach((breadcrumb, index) => {
         if (index === itemsBeforeCollapse) {
           breadcrumb.showCollapsedIndicator = true;
         }
@@ -114,7 +114,7 @@ export class Breadcrumbs implements ComponentInterface {
         if (index >= itemsBeforeCollapse && index < breadcrumbs.length - itemsAfterCollapse) {
           breadcrumb.collapsed = true;
         }
-      }
+      });
     }
   }
 
