@@ -349,7 +349,6 @@ class ListPopover extends HTMLElement {
 customElements.define('list-popover', ListPopover);
 
 async function presentPopover(ev) {
-  console.log('present ev', ev);
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'list-popover',
     event: ev

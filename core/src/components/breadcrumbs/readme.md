@@ -303,7 +303,7 @@ export class BreadcrumbsExample {
   maxBreadcrumbs = 4;
 
   expandBreadcrumbs() {
-    maxBreadcrumbs = undefined;
+    this.maxBreadcrumbs = undefined;
   }
 }
 ```
@@ -723,7 +723,6 @@ class ListPopover extends HTMLElement {
 customElements.define('list-popover', ListPopover);
 
 async function presentPopover(ev) {
-  console.log('present ev', ev);
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'list-popover',
     event: ev
@@ -1035,7 +1034,7 @@ import { IonBreadcrumb, IonBreadcrumbs } from '@ionic/react';
 export const BreadcrumbsExample: React.FC = () => {
   const [maxBreadcrumbs, setMaxBreadcrumbs] = useState(4);
 
-  expandBreadcrumbs() {
+  const expandBreadcrumbs = () => {
     setMaxBreadcrumbs(undefined);
   }
 

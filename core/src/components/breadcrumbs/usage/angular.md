@@ -291,7 +291,7 @@ export class BreadcrumbsExample {
   maxBreadcrumbs = 4;
 
   expandBreadcrumbs() {
-    maxBreadcrumbs = undefined;
+    this.maxBreadcrumbs = undefined;
   }
 }
 ```

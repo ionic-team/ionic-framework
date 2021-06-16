@@ -296,7 +296,7 @@ import { IonBreadcrumb, IonBreadcrumbs } from '@ionic/react';
 export const BreadcrumbsExample: React.FC = () => {
   const [maxBreadcrumbs, setMaxBreadcrumbs] = useState(4);
 
-  expandBreadcrumbs() {
+  const expandBreadcrumbs = () => {
     setMaxBreadcrumbs(undefined);
   }
 
