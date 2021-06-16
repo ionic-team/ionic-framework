@@ -80,7 +80,9 @@ export const defineContainer = <Props>(
              * native web component, but the v-model will
              * not have been updated yet.
              */
-            emit(externalModelUpdateEvent, e);
+            if (externalModelUpdateEvent) {
+              emit(externalModelUpdateEvent, e);
+            }
           });
         });
       }
@@ -128,7 +130,7 @@ export const defineContainer = <Props>(
         ref: containerRef,
         class: getElementClasses(containerRef, classes),
         onClick: handleClick,
-        onVnodeBeforeMount: (modelUpdateEvent && externalModelUpdateEvent) ? onVnodeBeforeMount : undefined
+        onVnodeBeforeMount: (modelUpdateEvent) ? onVnodeBeforeMount : undefined
       };
 
       if (modelProp) {
