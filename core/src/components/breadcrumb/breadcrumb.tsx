@@ -2,11 +2,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
-import { AnimationBuilder } from '../../utils/animation/animation-interface';
+import { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
 import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-import { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
