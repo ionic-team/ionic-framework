@@ -59,6 +59,8 @@ export class Breadcrumbs implements ComponentInterface {
   }
 
   @Watch('maxItems')
+  @Watch('itemsBeforeCollapse')
+  @Watch('itemsAfterCollapse')
   maxItemsChanged() {
     this.resetActiveBreadcrumb();
     this.breadcrumbsInit();
