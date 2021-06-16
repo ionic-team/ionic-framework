@@ -183,6 +183,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (this.counter) {
       this.updateCounterOutput(this.getFirstInput());
     }
+
+    this.hasStartEl();
   }
 
   componentDidUpdate() {
@@ -206,10 +208,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     this.setMultipleInputs();
-
-    if (this.fill === 'outline') {
-      this.hasStartEl();
-    }
   }
 
   // If the item contains multiple clickable elements and/or inputs, then the item
@@ -305,6 +303,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
+    const hasFill = fill === 'outline' || fill === 'solid';
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -362,8 +361,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-          <div class="item-highlight"></div>
+          {hasFill && <div class="item-highlight"></div>}
         </TagType>
+        {!hasFill && <div class="item-highlight"></div>}
         <div class="item-bottom">
           <slot name="error"></slot>
           <slot name="helper"></slot>

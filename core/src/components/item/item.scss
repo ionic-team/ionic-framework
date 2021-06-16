@@ -380,10 +380,18 @@ button, a {
 
 :host(.item-has-focus) .item-highlight {
   border-width: var(--full-highlight-height);
+
+  opacity: var(--show-full-highlight);
 }
 
 :host(.item-has-focus) .item-inner-highlight {
   border-bottom-width: var(--inset-highlight-height);
+
+  opacity: var(--show-inset-highlight);
+}
+
+:host(.item-has-focus.item-fill-solid) .item-highlight {
+  border-width: calc(var(--full-highlight-height) - 1px);
 }
 
 :host(.item-has-focus) .item-inner-highlight,
@@ -391,21 +399,6 @@ button, a {
   border-top: none;
   border-right: none;
   border-left: none;
-}
-
-:host(.item-fill-outline) .item-highlight {
-  --position-offset: calc(-1 * var(--border-width));
-
-  @include position(var(--position-offset), null, null, var(--position-offset));
-
-  width: calc(100% + 2 * var(--border-width));
-  height: calc(100% + 2 * var(--border-width));
-
-  transition: none;
-}
-
-:host(.item-fill-outline.item-has-focus) .item-native {
-  border-color: transparent;
 }
 
 
@@ -532,11 +525,18 @@ ion-ripple-effect {
     var(--padding-top),
     var(--inner-padding-end),
     var(--padding-bottom),
-    var(--padding-start)
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px) + var(--bottom-padding-start, 0px))
   );
   display: flex;
 
   justify-content: space-between;
+}
+
+:host(.item-fill-solid) ::slotted([slot="start"]),
+:host(.item-fill-solid) ::slotted([slot="end"]),
+:host(.item-fill-outline) ::slotted([slot="start"]),
+:host(.item-fill-outline) ::slotted([slot="end"]) {
+  align-self: center;
 }
 
 ::slotted([slot="helper"]),

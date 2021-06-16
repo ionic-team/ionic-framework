@@ -19,11 +19,11 @@
   --background-hover-opacity: .04;
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
-  --highlight-height: 0;
+  --highlight-height: 0px;
   --highlight-color-focused: #{$item-ios-input-highlight-color};
   --highlight-color-valid: #{$item-ios-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-ios-input-highlight-color-invalid};
-
+  --bottom-padding-start: 0px;
   font-size: $item-ios-font-size;
 }
 
@@ -93,11 +93,20 @@
   transition: none;
 }
 
+:host(.item-has-focus) .item-inner-highlight,
+:host(.item-has-focus) .item-highlight {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
 
 // iOS Item Slots
 // --------------------------------------------------
 
 ::slotted([slot="start"]) {
+  --item-bottom-padding-start: 66px;
+
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
@@ -217,6 +226,12 @@
   --padding-start: 0;
 }
 
+// Item Bottom
+// --------------------------------------------------
+
+:host(.item-has-start-slot) .item-bottom {
+  --bottom-padding-start: 48px;
+}
 
 // FROM TEXTAREA
 // iOS Stacked & Floating Textarea
