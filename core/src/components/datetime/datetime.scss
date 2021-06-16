@@ -299,6 +299,11 @@
 }
 
 :host .time-column {
+  position: relative;
+
+  height: 100%;
+
+  outline: none;
   scroll-snap-type: y mandatory;
 
   overflow-y: scroll;
@@ -307,10 +312,6 @@
   -webkit-overflow-scrolling: touch;
 
   scrollbar-width: none;
-
-  height: 100%;
-
-  outline: none;
 }
 
 @media (any-hover: hover) {

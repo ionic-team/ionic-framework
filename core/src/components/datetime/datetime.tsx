@@ -602,9 +602,11 @@ export class Datetime implements ComponentInterface {
     /**
      * Before setting up the IntersectionObserver,
      * scroll the middle month into view.
+     * scrollIntoView() will scroll entire page
+     * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      workingMonth.scrollIntoView(false);
+      calendarBodyRef.scrollLeft = startMonth.clientWidth;
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
@@ -809,16 +811,18 @@ export class Datetime implements ComponentInterface {
     const { year, month } = this.workingParts;
 
     /**
-     * Scroll initial month and year into view
+     * Scroll initial month and year into view.
+     * scrollIntoView() will scroll entire page
+     * if element is not in viewport. Use scrollTop instead.
      */
-    const initialYear = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`);
+    const initialYear = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`) as HTMLElement | null;
     if (initialYear) {
-      initialYear.scrollIntoView({ block: 'center', inline: 'center' });
+      yearRef.scrollTop = initialYear.offsetTop - (initialYear.clientHeight * 2);
     }
 
-    const initialMonth = monthRef.querySelector(`.picker-col-item[data-value="${month}"]`);
+    const initialMonth = monthRef.querySelector(`.picker-col-item[data-value="${month}"]`) as HTMLElement | null;
     if (initialMonth) {
-      initialMonth.scrollIntoView({ block: 'center', inline: 'center' });
+      monthRef.scrollTop = initialMonth.offsetTop - (initialMonth.clientHeight * 2);
     }
 
     let timeout: any;
@@ -905,16 +909,18 @@ export class Datetime implements ComponentInterface {
     const { hour, minute } = this.workingParts;
 
     /**
-     * Scroll initial hour and minute into view
+     * Scroll initial hour and minute into view.
+     * scrollIntoView() will scroll entire page
+     * if element is not in viewport. Use scrollTop instead.
      */
     raf(() => {
-      const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`);
+      const initialHour = timeHourRef.querySelector(`.time-item[data-value="${hour}"]`) as HTMLElement | null;
       if (initialHour) {
-        initialHour.scrollIntoView();
+        timeHourRef.scrollTop = initialHour.offsetTop;
       }
-      const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`);
+      const initialMinute = timeMinuteRef.querySelector(`.time-item[data-value="${minute}"]`) as HTMLElement | null;
       if (initialMinute) {
-        initialMinute.scrollIntoView();
+        timeMinuteRef.scrollTop = initialMinute.offsetTop;
       }
 
       /**
