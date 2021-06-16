@@ -6,6 +6,10 @@
 :host {
  /**
    * @prop --color: Text color of the breadcrumb
+   * @prop --color-active: Text color of the active breadcrumb
+   * @prop --color-hover: Text color of the breadcrumb on hover
+   * @prop --color-focused: Text color of the breadcrumb when focused
+   * @prop --background-focused: Background color of the breadcrumb when focused
    */
   display: flex;
 
@@ -41,6 +45,41 @@
   cursor: default;
   opacity: .5;
   pointer-events: none;
+}
+
+
+// Breadcrumb: Active
+// ------------------------------------------
+
+:host(.breadcrumb-active) {
+  color: var(--color-active);
+}
+
+
+// Breadcrumb: Focused
+// ------------------------------------------
+
+:host(.ion-focused) {
+  color: var(--color-focused);
+}
+
+:host(.ion-focused) .breadcrumb-native {
+  background: var(--background-focused);
+}
+
+
+// Breadcrumb: Hover
+// ------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-activatable:hover) {
+    color: var(--color-hover);
+  }
+
+  :host(.ion-activatable.in-breadcrumbs-color:hover),
+  :host(.ion-activatable.ion-color:hover) {
+    color: #{current-color(shade)};
+  }
 }
 
 

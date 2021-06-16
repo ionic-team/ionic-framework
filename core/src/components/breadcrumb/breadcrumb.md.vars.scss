@@ -9,6 +9,9 @@ $breadcrumb-md-color:                               var(--ion-color-step-600, #6
 /// @prop - Color of the active breadcrumb
 $breadcrumb-md-color-active:                        var(--ion-text-color, #03060b) !default;
 
+/// @prop - Color of the focused breadcrumb
+$breadcrumb-md-color-focused:                        var(--ion-color-step-800, #35404e) !default;
+
 /// @prop - Background color of the focused breadcrumb
 $breadcrumb-md-background-focused:                  var(--ion-color-step-50, #fff) !default;
 

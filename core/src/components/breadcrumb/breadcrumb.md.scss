@@ -6,11 +6,13 @@
 
 :host {
   --color: #{$breadcrumb-md-color};
+  --color-active: #{$breadcrumb-md-color-active};
+  --color-hover: #{$breadcrumb-md-color-active};
+  --color-focused: #{$breadcrumb-md-color-focused};
+  --background-focused: $breadcrumb-md-background-focused;
 }
 
 :host(.breadcrumb-active) {
-  color: $breadcrumb-md-color-active;
-
   font-weight: 500;
 }
 
@@ -27,28 +29,11 @@
 }
 
 
-// Breadcrumb: Hover
-// ------------------------------------------
-
-@media (any-hover: hover) {
-  :host(.ion-activatable:hover) {
-    color: $breadcrumb-md-color-active;
-  }
-
-  :host(.ion-activatable.in-breadcrumbs-color:hover),
-  :host(.ion-activatable.ion-color:hover) {
-    color: #{current-color(shade)};
-  }
-}
-
-
 // Breadcrumb: Focused
 // ------------------------------------------
 
 :host(.ion-focused) .breadcrumb-native {
   @include border-radius(4px);
-
-  background: $breadcrumb-md-background-focused;
 
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 2px 8px rgba(0, 0, 0, 0.12);
 }

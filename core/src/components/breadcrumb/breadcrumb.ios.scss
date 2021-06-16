@@ -6,11 +6,13 @@
 
 :host {
   --color: #{$breadcrumb-ios-color};
+  --color-active: #{$breadcrumb-ios-color-active};
+  --color-hover: #{$breadcrumb-ios-color-active};
+  --color-focused: var(--color-active);
+  --background-focused: #{$breadcrumb-ios-background-focused};
 }
 
 :host(.breadcrumb-active) {
-  color: $breadcrumb-ios-color-active;
-
   font-weight: 600;
 }
 
@@ -22,28 +24,11 @@
 }
 
 
-// Breadcrumb: Hover
-// ------------------------------------------
-
-@media (any-hover: hover) {
-  :host(.ion-activatable:hover) {
-    color: $breadcrumb-ios-color-active;
-  }
-
-  :host(.ion-activatable.in-breadcrumbs-color:hover),
-  :host(.ion-activatable.ion-color:hover) {
-    color: #{current-color(shade)};
-  }
-}
-
 // Breadcrumb: Focused
 // ------------------------------------------
 
 :host(.ion-focused) .breadcrumb-native {
   @include border-radius(8px);
-
-  background: $breadcrumb-ios-background-focused;
-  color: $breadcrumb-ios-color-focused;
 }
 
 :host(.in-breadcrumbs-color.ion-focused) .breadcrumb-native,

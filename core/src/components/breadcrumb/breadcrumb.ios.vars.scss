@@ -9,9 +9,6 @@ $breadcrumb-ios-color:                             var(--ion-color-step-850, #2d
 /// @prop - Color of the active breadcrumb
 $breadcrumb-ios-color-active:                      var(--ion-text-color, #03060b) !default;
 
-/// @prop - Color of the focused breadcrumb
-$breadcrumb-ios-color-focused:                     $breadcrumb-ios-color-active !default;
-
 /// @prop - Background color of the focused breadcrumb
 $breadcrumb-ios-background-focused:                var(--ion-color-step-50, rgba(233, 237, 243, 0.7)) !default;
 
