@@ -141,7 +141,7 @@
   font-size: $item-md-icon-slot-font-size;
 }
 
-:host(.ion-color) ::slotted(ion-icon) {
+:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) ::slotted(ion-icon) {
   color: current-color(contrast);
 }
 
@@ -322,6 +322,12 @@
   --highlight-color-focused: #{current-color(base)};
 }
 
+:host(.item-fill-solid.ion-color),
+:host(.item-fill-outline.ion-color) {
+  --highlight-background: #{current-color(base)};
+  --highlight-color-focused: #{current-color(base)};
+}
+
 // Material Design Item: Fill Solid
 // --------------------------------------------------
 
@@ -359,6 +365,8 @@
 :host(.item-fill-outline) {
   --border-color: #9e9e9e;
   --border-width: #{$item-md-border-bottom-width};
+  margin-top: 5px;
+
   border: none;
 
   overflow: visible;
@@ -395,18 +403,16 @@
 // Material Design Item: Invalid
 // --------------------------------------------------
 
-:host(.item-fill-solid.ion-invalid) .item-native,
-:host(.item-fill-solid.ion-invalid) .item-native .item-highlight,
-:host(.item-fill-solid.ion-invalid.item-has-focus) .item-native,
-:host(.item-fill-solid.ion-invalid.item-has-focus) .item-native .item-highlight {
-  border-color: var(--highlight-color-invalid);
+:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-native,
+:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native {
   caret-color: var(--highlight-color-invalid);
 }
 
+:host(.item-fill-outline.ion-invalid),
 :host(.item-fill-outline.ion-invalid) .item-native,
-:host(.item-fill-outline.ion-invalid) .item-native .item-highlight,
-:host(.item-fill-outline.ion-invalid.item-has-focus) .item-native,
-:host(.item-fill-outline.ion-invalid.item-has-focus) .item-native .item-highlight {
+:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-highlight,
+:host(.item-fill-solid.ion-invalid:not(.ion-color)),
+:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native,
+:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-highlight {
   border-color: var(--highlight-color-invalid);
-  caret-color: var(--highlight-color-invalid);
 }

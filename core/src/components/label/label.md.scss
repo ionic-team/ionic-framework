@@ -113,6 +113,13 @@
   color: #{current-color(contrast)};
 }
 
+:host-context(.item-fill-solid.item-has-focus.ion-color).label-stacked:not(.ion-color),
+:host-context(.item-fill-solid.item-has-focus.ion-color).label-floating:not(.ion-color),
+:host-context(.item-fill-outline.item-has-focus.ion-color).label-stacked:not(.ion-color),
+:host-context(.item-fill-outline.item-has-focus.ion-color).label-floating:not(.ion-color) {
+  color: #{current-color(base)};
+}
+
 :host-context(.ion-invalid).label-stacked:not(.ion-color),
 :host-context(.ion-invalid).label-floating:not(.ion-color) {
   color: var(--highlight-color-invalid);

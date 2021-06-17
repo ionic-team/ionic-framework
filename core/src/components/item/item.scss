@@ -99,13 +99,13 @@
 // Item: Color
 // --------------------------------------------------
 
-:host(.ion-color) .item-native {
+:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-:host(.ion-color) .item-native,
-:host(.ion-color) .item-inner {
+:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native,
+:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-inner {
   border-color: current-color(shade);
 }
 
