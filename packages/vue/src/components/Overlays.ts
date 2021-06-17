@@ -5,7 +5,6 @@ import {
   actionSheetController,
   alertController,
   loadingController,
-  modalController,
   pickerController,
   toastController
 } from '@ionic/core';
@@ -17,8 +16,6 @@ export const IonActionSheet = /*@__PURE__*/defineOverlayContainer<JSX.IonActionS
 export const IonAlert = /*@__PURE__*/defineOverlayContainer<JSX.IonAlert>('ion-alert', ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'inputs', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent'], alertController);
     
 export const IonLoading = /*@__PURE__*/defineOverlayContainer<JSX.IonLoading>('ion-loading', ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent'], loadingController);
-    
-export const IonModal = /*@__PURE__*/defineOverlayContainer<JSX.IonModal>('ion-modal', ['animated', 'backdropDismiss', 'component', 'componentProps', 'cssClass', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose'], modalController);
     
 export const IonPicker = /*@__PURE__*/defineOverlayContainer<JSX.IonPicker>('ion-picker', ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop'], pickerController);
     
