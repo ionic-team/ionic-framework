@@ -1898,6 +1898,7 @@ export default defineComponent({
     IonButton,
     IonCheckbox, 
     IonDatetime,
+    IonNote,
     IonIcon,
     IonInput, 
     IonItem, 
