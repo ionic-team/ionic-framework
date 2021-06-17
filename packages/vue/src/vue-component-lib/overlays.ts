@@ -1,4 +1,5 @@
 import { defineComponent, h, ref, VNode } from 'vue';
+import { defineCustomElement } from '../utils';
 
 export interface OverlayProps {
   isOpen?: boolean;
@@ -13,9 +14,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
   ];
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
-    if (!customElements.get(name)) {
-      customElements.define(name, customElement);
-    }
+    defineCustomElement(name, customElement);
 
     const overlay = ref();
     const onVnodeMounted = async () => {
