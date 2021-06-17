@@ -190,6 +190,7 @@ export interface IonicConfig {
   _zoneGate?: (h: () => any) => any;
   _ael?: (el: any, name: string, cb: any, opts: any) => any;
   _rel?: (el: any, name: string, cb: any, opts: any) => any;
+  _ce?: (eventName: string, opts: any) => any;
 }
 
 export const setupConfig = (config: IonicConfig) => {

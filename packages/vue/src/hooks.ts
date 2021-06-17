@@ -1,4 +1,4 @@
-import { BackButtonEvent } from '@ionic/core';
+import { BackButtonEvent } from '@ionic/core/components';
 import {
   inject,
   ref,

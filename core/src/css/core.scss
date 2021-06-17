@@ -33,7 +33,7 @@ body.backdrop-no-scroll {
 // Modal - Card Style
 // --------------------------------------------------
 /**
- * Card style modal needs additional padding on the 
+ * Card style modal needs additional padding on the
  * top of the header. We accomplish this by targeting
  * the first toolbar in the header.
  * Footer also needs this. We do not adjust the bottom
@@ -45,7 +45,7 @@ html.ios ion-modal ion-footer ion-toolbar:first-of-type {
 }
 
 /**
-* Card style modal needs additional padding on the 
+* Card style modal needs additional padding on the
 * bottom of the header. We accomplish this by targeting
 * the last toolbar in the header.
 */
@@ -63,11 +63,15 @@ html.ios ion-modal ion-toolbar {
   padding-left: calc(var(--ion-safe-area-left) + 8px);
 }
 
-// .ion-page needs to explicitly inherit
-// the border radius in safari otherwise
-// modals will not show border radius properly
+/**
+ * .ion-page needs to explicitly set
+ * the border radius in WebKit otherwise
+ * modals will not show border radius properly.
+ * Do not use inherit as that will not
+ * work with shadow dom in this case.
+ */
 html.ios ion-modal .ion-page {
-  border-radius: inherit;
+  border-radius: 10px 10px 0 0;
 }
 
 /**

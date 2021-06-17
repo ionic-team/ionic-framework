@@ -68,10 +68,3 @@
     box-shadow: var(--box-shadow);
   }
 }
-
-:host(.overlay-datetime) {
-  --width: 316px;
-  --height: 296px;
-  --background: transparent;
-  --border-radius: #{$modal-ios-border-radius};
-}
