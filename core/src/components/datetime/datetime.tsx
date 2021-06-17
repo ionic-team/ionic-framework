@@ -955,9 +955,17 @@ export class Datetime implements ComponentInterface {
                 ...this.workingParts,
                 hour: value
               });
+              this.setActiveParts({
+                ...this.activeParts,
+                hour: value
+              });
             } else {
               this.setWorkingParts({
                 ...this.workingParts,
+                minute: value
+              });
+              this.setActiveParts({
+                ...this.activeParts,
                 minute: value
               });
             }
