@@ -23,6 +23,7 @@
    /* stylelint-disable property-blacklist */
    transform-origin: top left;
    /* stylelint-enable property-blacklist */
+   z-index: 3;
  }
 
  :host(.label-stacked.label-rtl),
