@@ -13,7 +13,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 6.x
 
 - [Components](#components)
+  * [Datetime](#datetime)
   * [Header](#header)
+  * [Modal](#modal)
   * [Popover](#popover)
   * [Tab Bar](#tab-bar)
   * [Toast](#toast)
@@ -25,11 +27,50 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Vue](#vue)
   * [Tabs Config](#tabs-config)
   * [Overlay Events](#overlay-events)
-  * [Minimum Required Version](#minimum-required-version)
-
+- [Browser and Platform Support](#browser-and-platform-support)
 
 
 ### Components
+
+#### Datetime
+
+The `ion-datetime` component has undergone a complete rewrite and uses a new calendar style. As a result, some of the properties no longer apply and have been removed.
+
+- `ion-datetime` now displays the calendar inline by default, allowing for more flexibility in presentation. As a result, the `placeholder` property has been removed. Additionally, the `text` and `placeholder` Shadow Parts have been removed.
+
+- The `--padding-bottom`, `--padding-end`, `--padding-start`, `--padding-top`, and `--placeholder-color` CSS Variables have been removed since `ion-datetime` now displays inline by default.
+
+- The `displayFormat` and `displayTimezone` properties have been removed since `ion-datetime` now displays inline with a calendar picker. To parse the UTC string provided in the payload of the `ionChange` event, we recommend using a 3rd-party date library like [date-fns](https://date-fns.org/). Here is an example of how you can take the UTC string from `ion-datetime` and format it to whatever style you prefer:
+
+```typescript
+import { format, parseISO } from 'date-fns';
+
+/**
+ * This is provided in the event
+ * payload from the `ionChange` event.
+ */
+const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
+const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
+
+console.log(formattedString); // Jun 4, 2021
+```
+
+- The `pickerOptions` and `pickerFormat` properties have been removed since `ion-datetime` now uses a calendar style rather than a wheel picker style.
+
+- The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. `ion-datetime` can now automatically format these values according to your devices locale thanks to the [Intl.DateTimeFormat API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat). If you wish to force a specific locale, you can use the new `locale` property:
+
+```html
+<ion-datetime locale="fr-FR"></ion-datetime>
+```
+
+- The `open` method has been removed. To present the datetime in an overlay, you can pass it into an `ion-modal` or `ion-popover` component and call the `present` method on the overlay instance. Alternatively, you can use the `trigger` property on `ion-modal` or `ion-popover` to present the overlay on a button click:
+
+```html
+<ion-button id="open-modal">Open Datetime Modal</ion-button>
+<ion-modal trigger="open-modal">
+  <ion-datetime></ion-datetime>
+</ion-modal>
+```
 
 #### Header
 
@@ -47,7 +88,13 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
 
 Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
-If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead.
+If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+#### Modal
+
+Converted `ion-modal` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-modal` in your CSS, you will need to target the `backdrop` or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 #### Tab Bar
 
@@ -198,13 +245,37 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
 </ion-modal>
 ```
 
-#### Minimum Required Version
 
-Vue v3.0.6 or newer is required.
+### Browser and Platform Support
 
-```
-npm install vue@3
-```
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic Framework v6.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ----------------- |
+| Chrome          | 60+               |
+| Safari          | 13+               |
+| Firefox         | 63+               |
+| Edge            | 79+               |
+
+**Minimum JavaScript Framework Versions**
+
+| Framework | Supported Version     |
+| --------- | --------------------- |
+| Angular   | 11+ with Ivy renderer |
+| React     | 17+                   |
+| Vue       | 3.0.6+                |
+
+**Minimum Mobile Platform Versions**
+
+| Platform | Supported Version                       |
+| -------- | --------------------------------------- |
+| iOS      | 13+                                     |
+| Android  | 5.0+ with Chromium 60+ (See note below) |
+
+Starting with Android 5.0, the webview was moved to a separate application that can be updated independently of Android. This means that most Android 5.0+ devices are going to be running a modern version of Chromium. However, there are a still a subset of Android devices whose manufacturer has locked the webview version and does not allow the webview to update. These webviews are typically stuck at the version that was available when the device initially shipped.
+
+As a result, Ionic Framework only supports Android devices and emulators running Android 5.0+ with a webview of Chromium 60 or newer. For context, this is the version that Stencil can support with no polyfills: https://stenciljs.com/docs/browser-support
 
 
 

@@ -1,5 +1,5 @@
 import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
+import { arrowBackSharp, caretBackSharp, chevronBack, chevronDown, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 export * from './proxies';
 export { IonicVue } from './ionic-vue';
@@ -14,6 +14,7 @@ export { IonNav } from './components/IonNav';
 export { IonIcon } from './components/IonIcon';
 export { IonApp } from './components/IonApp';
 export { IonPopover } from './components/IonPopover';
+export { IonModal } from './components/IonModal';
 
 export * from './components/Overlays';
 
@@ -71,7 +72,10 @@ export {
   getTimeGivenProgression,
 
   // Hardware Back Button
-  BackButtonEvent
+  BackButtonEvent,
+
+  // Swiper
+  IonicSwiper
 } from '@ionic/core';
 
 // Icons that are used by internal components
@@ -80,6 +84,7 @@ addIcons({
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
+  'chevron-down': chevronDown,
   'close': close,
   'close-circle': closeCircle,
   'close-sharp': closeSharp,

@@ -3,7 +3,6 @@
 A Popover is a dialog that appears on top of the current page. It can be used for anything, but generally it is used for overflow actions that don't fit in the navigation bar.
 
 There are two ways to use `ion-popover`: inline or via the `popoverController`. Each method comes with different considerations, so be sure to use the approach that best fits your use case.
-<<<<<<< HEAD
 
 ## Inline Popovers
 
@@ -78,68 +77,6 @@ type PositionReference = 'trigger' | 'event';
 type PositionSide = 'top' | 'right' | 'bottom' | 'left' | 'start' | 'end';
 type PositionAlign = 'start' | 'center' | 'end';
 ```
-
-=======
-
-## Inline Popovers
-
-`ion-popover` can be used by writing the component directly in your template. This reduces the number of handlers you need to wire up in order to present the popover. See [Usage](#usage) for an example of how to write a popover inline. 
-
-When using `ion-popover` with Angular, React, or Vue, the component you pass in will be destroyed when the popover is dismissed. If you are not using a JavaScript Framework, you should use the `component` property to pass in the name of a Web Component. This Web Component will be destroyed when the popover is dismissed, and a new instance will be created if the popover is presented again.
-
-### Angular 
-
-Since the component you passed in needs to be created when the popover is presented and destroyed when the popover is dismissed, we are unable to project the content using `<ng-content>` internally. Instead, we use `<ng-container>` which expects an `<ng-template>` to be passed in. As a result, when passing in your component you will need to wrap it in an `<ng-template>`:
-
-```html
-<ion-popover [isOpen]="isPopoverOpen">
-  <ng-template>
-    <app-popover-content></app-popover-content>
-  </ng-template>
-</ion-popover>
-```
-
-Liam: Usage will be filled out via desktop popover PR.
-
-### When to use
-
-Liam: Will be filled out via desktop popover PR.
-
-## Controller Popovers
-
-`ion-popover` can also be presented programmatically by using the `popoverController` imported from Ionic Framework. This allows you to have complete control over when a popover is presented above and beyond the customization that inline popovers give you. See [Usage](#usage) for an example of how to use the `popoverController`.
-
-Liam: Usage will be filled out via desktop popover PR.
-
-
-### When to use
-
-Liam: Will be filled out via desktop popover PR.
-
-## Interfaces
-
-Below you will find all of the options available to you when using the `popoverController`. These options should be supplied when calling `popoverController.create()`.
-
-```typescript
-interface PopoverOptions {
-  component: any;
-  componentProps?: { [key: string]: any };
-  showBackdrop?: boolean;
-  backdropDismiss?: boolean;
-  translucent?: boolean;
-  cssClass?: string | string[];
-  event?: Event;
-  animated?: boolean;
-
-  mode?: 'ios' | 'md';
-  keyboardClose?: boolean;
-  id?: string;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
-}
-```
->>>>>>> origin/next
 
 ## Customization
 
