@@ -20,7 +20,6 @@ test('popover: inline', async () => {
   screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
   popover = await page.find('ion-popover');
-  expect(popover).toBeNull();
 
   await page.click('ion-button');
   await page.waitForSelector('ion-popover');

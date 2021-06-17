@@ -70,6 +70,16 @@ html.ios ion-modal .ion-page {
   border-radius: inherit;
 }
 
+/**
+ * Card style modal on iPadOS
+ * should only have backdrop on first instance.
+ */
+@media screen and (min-width: 768px) {
+  html.ios ion-modal.modal-card:first-of-type {
+    --backdrop-opacity: 0.18;
+  }
+}
+
 // Ionic Colors
 // --------------------------------------------------
 // Generates the color classes and variables based on the
