@@ -9,6 +9,8 @@ export const DIRECTIVES = [
   d.IonBackButton,
   d.IonBackdrop,
   d.IonBadge,
+  d.IonBreadcrumb,
+  d.IonBreadcrumbs,
   d.IonButton,
   d.IonButtons,
   d.IonCard,

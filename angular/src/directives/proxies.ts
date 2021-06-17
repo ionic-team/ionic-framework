@@ -83,6 +83,33 @@ export class IonBadge {
     this.el = r.nativeElement;
   }
 }
+export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
+}
+@ProxyCmp({ inputs: ["active", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "separator", "target"] })
+@Component({ selector: "ion-breadcrumb", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["active", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "separator", "target"] })
+export class IonBreadcrumb {
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ["ionFocus", "ionBlur"]);
+  }
+}
+export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
+}
+@ProxyCmp({ inputs: ["color", "itemsAfterCollapse", "itemsBeforeCollapse", "maxItems", "mode"] })
+@Component({ selector: "ion-breadcrumbs", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "itemsAfterCollapse", "itemsBeforeCollapse", "maxItems", "mode"] })
+export class IonBreadcrumbs {
+  ionCollapsedClick!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ["ionCollapsedClick"]);
+  }
+}
 export declare interface IonButton extends Components.IonButton {
 }
 @ProxyCmp({ inputs: ["buttonType", "color", "disabled", "download", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "strong", "target", "type"] })

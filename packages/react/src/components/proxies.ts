@@ -20,6 +20,12 @@ export const IonBackdrop = /*@__PURE__*/ createReactComponent<
 export const IonBadge = /*@__PURE__*/ createReactComponent<JSX.IonBadge, HTMLIonBadgeElement>(
   'ion-badge'
 );
+export const IonBreadcrumb = /*@__PURE__*/ createReactComponent<JSX.IonBreadcrumb, HTMLIonBreadcrumbElement>(
+  'ion-breadcrumb'
+);
+export const IonBreadcrumbs = /*@__PURE__*/ createReactComponent<JSX.IonBreadcrumbs, HTMLIonBreadcrumbsElement>(
+  'ion-breadcrumbs'
+);
 export const IonButton = /*@__PURE__*/ createReactComponent<
   HrefProps<JSX.IonButton>,
   HTMLIonButtonElement

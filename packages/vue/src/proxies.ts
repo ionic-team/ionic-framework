@@ -10,6 +10,8 @@ import { IonAccordionGroup as IonAccordionGroupCmp } from '@ionic/core/component
 import { IonAvatar as IonAvatarCmp } from '@ionic/core/components/ion-avatar.js';
 import { IonBackdrop as IonBackdropCmp } from '@ionic/core/components/ion-backdrop.js';
 import { IonBadge as IonBadgeCmp } from '@ionic/core/components/ion-badge.js';
+import { IonBreadcrumb as IonBreadcrumbCmp } from '@ionic/core/components/ion-breadcrumb.js';
+import { IonBreadcrumbs as IonBreadcrumbsCmp } from '@ionic/core/components/ion-breadcrumbs.js';
 import { IonButton as IonButtonCmp } from '@ionic/core/components/ion-button.js';
 import { IonButtons as IonButtonsCmp } from '@ionic/core/components/ion-buttons.js';
 import { IonCard as IonCardCmp } from '@ionic/core/components/ion-card.js';
@@ -108,6 +110,35 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', IonBadgeCmp, [
   'color'
+]);
+
+
+export const IonBreadcrumb = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumb>('ion-breadcrumb', IonBreadcrumbCmp, [
+  'collapsed',
+  'last',
+  'showCollapsedIndicator',
+  'color',
+  'active',
+  'disabled',
+  'download',
+  'href',
+  'rel',
+  'separator',
+  'target',
+  'routerDirection',
+  'routerAnimation',
+  'ionFocus',
+  'ionBlur',
+  'collapsedClick'
+]);
+
+
+export const IonBreadcrumbs = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumbs>('ion-breadcrumbs', IonBreadcrumbsCmp, [
+  'color',
+  'maxItems',
+  'itemsBeforeCollapse',
+  'itemsAfterCollapse',
+  'ionCollapsedClick'
 ]);
 
 

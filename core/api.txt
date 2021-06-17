@@ -160,6 +160,39 @@ ion-badge,css-prop,--padding-end
 ion-badge,css-prop,--padding-start
 ion-badge,css-prop,--padding-top
 
+ion-breadcrumb,shadow
+ion-breadcrumb,prop,active,boolean,false,false,false
+ion-breadcrumb,prop,color,string | undefined,undefined,false,false
+ion-breadcrumb,prop,disabled,boolean,false,false,false
+ion-breadcrumb,prop,download,string | undefined,undefined,false,false
+ion-breadcrumb,prop,href,string | undefined,undefined,false,false
+ion-breadcrumb,prop,mode,"ios" | "md",undefined,false,false
+ion-breadcrumb,prop,rel,string | undefined,undefined,false,false
+ion-breadcrumb,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-breadcrumb,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-breadcrumb,prop,separator,boolean | undefined,undefined,false,false
+ion-breadcrumb,prop,target,string | undefined,undefined,false,false
+ion-breadcrumb,event,ionBlur,void,true
+ion-breadcrumb,event,ionFocus,void,true
+ion-breadcrumb,css-prop,--background-focused
+ion-breadcrumb,css-prop,--color
+ion-breadcrumb,css-prop,--color-active
+ion-breadcrumb,css-prop,--color-focused
+ion-breadcrumb,css-prop,--color-hover
+ion-breadcrumb,part,collapsed-indicator
+ion-breadcrumb,part,native
+ion-breadcrumb,part,separator
+
+ion-breadcrumbs,shadow
+ion-breadcrumbs,prop,color,string | undefined,undefined,false,false
+ion-breadcrumbs,prop,itemsAfterCollapse,number,1,false,false
+ion-breadcrumbs,prop,itemsBeforeCollapse,number,1,false,false
+ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
+ion-breadcrumbs,prop,mode,"ios" | "md",undefined,false,false
+ion-breadcrumbs,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
+ion-breadcrumbs,css-prop,--background
+ion-breadcrumbs,css-prop,--color
+
 ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false
 ion-button,prop,color,string | undefined,undefined,false,true

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
@@ -259,6 +259,77 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
+    interface IonBreadcrumb {
+        /**
+          * If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.
+         */
+        "active": boolean;
+        "collapsed": boolean;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the breadcrumb.
+         */
+        "disabled": boolean;
+        /**
+          * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+         */
+        "download": string | undefined;
+        /**
+          * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+         */
+        "href": string | undefined;
+        "last": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+         */
+        "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
+          * When using a router, it specifies the transition direction when navigating to another page using `href`.
+         */
+        "routerDirection": RouterDirection;
+        /**
+          * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
+         */
+        "separator"?: boolean | undefined;
+        "showCollapsedIndicator": boolean;
+        /**
+          * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+         */
+        "target": string | undefined;
+    }
+    interface IonBreadcrumbs {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsAfterCollapse": number;
+        /**
+          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsBeforeCollapse": number;
+        /**
+          * The maximum number of breadcrumbs to show before collapsing.
+         */
+        "maxItems"?: number;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2870,6 +2941,18 @@ declare global {
         prototype: HTMLIonBadgeElement;
         new (): HTMLIonBadgeElement;
     };
+    interface HTMLIonBreadcrumbElement extends Components.IonBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLIonBreadcrumbElement: {
+        prototype: HTMLIonBreadcrumbElement;
+        new (): HTMLIonBreadcrumbElement;
+    };
+    interface HTMLIonBreadcrumbsElement extends Components.IonBreadcrumbs, HTMLStencilElement {
+    }
+    var HTMLIonBreadcrumbsElement: {
+        prototype: HTMLIonBreadcrumbsElement;
+        new (): HTMLIonBreadcrumbsElement;
+    };
     interface HTMLIonButtonElement extends Components.IonButton, HTMLStencilElement {
     }
     var HTMLIonButtonElement: {
@@ -3360,6 +3443,8 @@ declare global {
         "ion-back-button": HTMLIonBackButtonElement;
         "ion-backdrop": HTMLIonBackdropElement;
         "ion-badge": HTMLIonBadgeElement;
+        "ion-breadcrumb": HTMLIonBreadcrumbElement;
+        "ion-breadcrumbs": HTMLIonBreadcrumbsElement;
         "ion-button": HTMLIonButtonElement;
         "ion-buttons": HTMLIonButtonsElement;
         "ion-card": HTMLIonCardElement;
@@ -3698,6 +3783,93 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+    }
+    interface IonBreadcrumb {
+        /**
+          * If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.
+         */
+        "active"?: boolean;
+        "collapsed"?: boolean;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the breadcrumb.
+         */
+        "disabled"?: boolean;
+        /**
+          * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+         */
+        "download"?: string | undefined;
+        /**
+          * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+         */
+        "href"?: string | undefined;
+        "last": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Emitted when the collapsed indicator is clicked on. `ion-breadcrumbs` will listen for this and emit ionCollapsedClick. Normally we could just emit this as `ionCollapsedClick` and let the event bubble to `ion-breadcrumbs`, but if the event custom event is not set on `ion-breadcrumbs`, TypeScript will throw an error in user applications.
+         */
+        "onCollapsedClick"?: (event: CustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
+        /**
+          * Emitted when the breadcrumb loses focus.
+         */
+        "onIonBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the breadcrumb has focus.
+         */
+        "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+         */
+        "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
+          * When using a router, it specifies the transition direction when navigating to another page using `href`.
+         */
+        "routerDirection"?: RouterDirection;
+        /**
+          * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
+         */
+        "separator"?: boolean | undefined;
+        "showCollapsedIndicator": boolean;
+        /**
+          * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+         */
+        "target"?: string | undefined;
+    }
+    interface IonBreadcrumbs {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsAfterCollapse"?: number;
+        /**
+          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+         */
+        "itemsBeforeCollapse"?: number;
+        /**
+          * The maximum number of breadcrumbs to show before collapsing.
+         */
+        "maxItems"?: number;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Emitted when the collapsed indicator is clicked on.
+         */
+        "onIonCollapsedClick"?: (event: CustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
     }
     interface IonButton {
         /**
@@ -6303,6 +6475,8 @@ declare namespace LocalJSX {
         "ion-back-button": IonBackButton;
         "ion-backdrop": IonBackdrop;
         "ion-badge": IonBadge;
+        "ion-breadcrumb": IonBreadcrumb;
+        "ion-breadcrumbs": IonBreadcrumbs;
         "ion-button": IonButton;
         "ion-buttons": IonButtons;
         "ion-card": IonCard;
@@ -6398,6 +6572,8 @@ declare module "@stencil/core" {
             "ion-back-button": LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
             "ion-backdrop": LocalJSX.IonBackdrop & JSXBase.HTMLAttributes<HTMLIonBackdropElement>;
             "ion-badge": LocalJSX.IonBadge & JSXBase.HTMLAttributes<HTMLIonBadgeElement>;
+            "ion-breadcrumb": LocalJSX.IonBreadcrumb & JSXBase.HTMLAttributes<HTMLIonBreadcrumbElement>;
+            "ion-breadcrumbs": LocalJSX.IonBreadcrumbs & JSXBase.HTMLAttributes<HTMLIonBreadcrumbsElement>;
             "ion-button": LocalJSX.IonButton & JSXBase.HTMLAttributes<HTMLIonButtonElement>;
             "ion-buttons": LocalJSX.IonButtons & JSXBase.HTMLAttributes<HTMLIonButtonsElement>;
             "ion-card": LocalJSX.IonCard & JSXBase.HTMLAttributes<HTMLIonCardElement>;
