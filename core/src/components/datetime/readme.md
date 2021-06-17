@@ -623,6 +623,7 @@ graph TD;
   ion-button --> ion-ripple-effect
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
+  ion-item --> ion-note
   ion-segment-button --> ion-ripple-effect
   style ion-datetime fill:#f9f,stroke:#333,stroke-width:4px
 ```
