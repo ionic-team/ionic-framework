@@ -66,14 +66,17 @@ $item-md-input-fill-solid-background-color-focus:      $background-color-step-15
 /// @prop - Color of the item input highlight
 $item-md-input-highlight-color:             ion-color(primary, base) !default;
 
-/// @prop - Color of the item input highlight when hovered
-$item-md-input-highlight-color-hover:       $background-color-step-750 !default;
-
 /// @prop - Color of the item input highlight when valid
 $item-md-input-highlight-color-valid:       ion-color(success, base) !default;
 
 /// @prop - Color of the item input highlight when invalid
 $item-md-input-highlight-color-invalid:     ion-color(danger, base) !default;
+
+/// @prop - Color of the item border when `fill` is set
+$item-md-input-fill-border-color:           $background-color-step-500 !default;
+
+/// @prop - Color of the item border when `fill` is set and hovered
+$item-md-input-fill-border-color-hover:     $background-color-step-750 !default;
 
 
 // Item Label

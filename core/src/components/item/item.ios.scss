@@ -105,7 +105,6 @@
 // --------------------------------------------------
 
 ::slotted([slot="start"]) {
-
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 

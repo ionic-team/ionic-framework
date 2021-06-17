@@ -52,6 +52,10 @@
   @include transform(translateY(50%), scale(.75));
 }
 
+/**
+ * When translating the label inside of an ion-item with `fill="outline"`, 
+ * add pseudo-elements to imitate fieldset-like padding without shifting the label
+ */
 :host-context(.item-fill-outline.item-has-focus).label-floating,
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-fill-outline.item-has-value).label-floating {

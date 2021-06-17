@@ -22,7 +22,6 @@
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
   --highlight-height: 2px;
   --highlight-color-focused: #{$item-md-input-highlight-color};
-  --highlight-color-hover: #{$item-md-input-highlight-color-hover};
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
 
@@ -86,6 +85,9 @@
   --show-inset-highlight: 0;
 }
 
+/**
+ * When `fill="outline"`, reposition the highlight element to cover everything but the `.item-bottom`
+ */
 :host(.item-fill-outline) .item-highlight {
   --position-offset: calc(-1 * var(--border-width));
 
@@ -342,12 +344,12 @@
 }
 
 :host(.item-fill-solid) .item-native {
-  --border-color: #8f8f8f;
+  --border-color: #{$item-md-input-fill-border-color};
 }
 
 :host(.item-fill-solid) .item-native:hover {
   --background: var(--background-hover);
-  --border-color: var(--highlight-color-hover);
+  --border-color: #{$item-md-input-fill-border-color-hover};
 }
 
 :host(.item-fill-solid.item-has-focus) .item-native {
@@ -363,7 +365,7 @@
 // --------------------------------------------------
 
 :host(.item-fill-outline) {
-  --border-color: #9e9e9e;
+  --border-color: #{$item-md-input-fill-border-color};
   --border-width: #{$item-md-border-bottom-width};
 
   border: none;
@@ -378,7 +380,7 @@
 }
 
 :host(.item-fill-outline) .item-native:hover {
-  --border-color: var(--highlight-color-hover);
+  --border-color: #{$item-md-input-fill-border-color-hover};
 }
 
 :host(.item-fill-outline.item-shape-round) .item-native {
