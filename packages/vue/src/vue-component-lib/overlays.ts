@@ -1,10 +1,11 @@
 import { defineComponent, h, ref, VNode } from 'vue';
+import { defineCustomElement } from '../utils';
 
 export interface OverlayProps {
   isOpen?: boolean;
 }
 
-export const defineOverlayContainer = <Props extends object>(name: string, componentProps: string[] = [], controller: any) => {
+export const defineOverlayContainer = <Props extends object>(name: string, customElement: any, componentProps: string[] = [], controller: any) => {
   const eventListeners = [
     { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
     { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
@@ -13,6 +14,8 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
   ];
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
+    defineCustomElement(name, customElement);
+
     const overlay = ref();
     const onVnodeMounted = async () => {
       const isOpen = props.isOpen;

@@ -1,6 +1,5 @@
 import { App, Plugin } from 'vue';
-import { IonicConfig, setupConfig } from '@ionic/core';
-import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
+import { IonicConfig, initialize } from '@ionic/core/components';
 
 /**
 * We need to make sure that the web component fires an event
@@ -23,19 +22,23 @@ export const IonicVue: Plugin = {
 
   async install(_: App, config: IonicConfig = {}) {
     if (typeof (window as any) !== 'undefined') {
+
+      /**
+       * By default Ionic Framework hides elements that
+       * are not hydrated, but in the CE build there is no
+       * hydration.
+       * TODO: Remove when all integrations have been
+       * migrated to CE build.
+       */
+      document.documentElement.classList.add('ion-ce');
+
       const { ael, rel, ce } = getHelperFunctions();
-      setupConfig({
+      initialize({
         ...config,
         _ael: ael,
         _rel: rel,
+        _ce: ce
       });
-      await applyPolyfills();
-      await defineCustomElements(window, {
-        exclude: ['ion-tabs'],
-        ce,
-        ael,
-        rel
-      } as any);
     }
   }
 };
