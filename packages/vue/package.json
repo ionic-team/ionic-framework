@@ -65,5 +65,5 @@
     "attributes": "dist/vetur/attributes.json"
   },
   "web-types": "dist/web-types.json",
-  "sideEffects": false
+  "sideEffects": ["css/*.css"]
 }
