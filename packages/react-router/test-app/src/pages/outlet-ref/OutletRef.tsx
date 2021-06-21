@@ -1,12 +1,17 @@
 import React, { useRef, useEffect } from 'react';
-import { IonRouterOutlet, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
+import {
+  IonRouterOutlet,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+} from '@ionic/react';
 import { Route } from 'react-router';
 
-interface OutletRefProps {
-}
+interface OutletRefProps {}
 
 export const OutletRef: React.FC<OutletRefProps> = () => {
-
   const ref = useRef<HTMLIonRouterOutletElement>(null);
 
   useEffect(() => {
@@ -15,14 +20,17 @@ export const OutletRef: React.FC<OutletRefProps> = () => {
 
   return (
     <IonRouterOutlet id="main-outlet" ref={ref}>
-      <Route path="/outlet-ref" render={() => {
-        return <Main outletId={ref.current?.id} />;
-      }} />
+      <Route
+        path="/outlet-ref"
+        render={() => {
+          return <Main outletId={ref.current?.id} />;
+        }}
+      />
     </IonRouterOutlet>
   );
 };
 
-const Main: React.FC<{ outletId?: string; }> = ({ outletId }) => {
+const Main: React.FC<{ outletId?: string }> = ({ outletId }) => {
   return (
     <IonPage data-pageid="main">
       <IonHeader>

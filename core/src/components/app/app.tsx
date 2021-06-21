@@ -13,7 +13,7 @@ export class App implements ComponentInterface {
 
   componentDidLoad() {
     if (Build.isBrowser) {
-      rIC(() => {
+      rIC(async () => {
         const isHybrid = isPlatform(window, 'hybrid');
         if (!config.getBoolean('_testing')) {
           import('../../utils/tap-click').then(module => module.startTapClick(config));
@@ -24,8 +24,11 @@ export class App implements ComponentInterface {
         if (config.getBoolean('inputShims', needInputShims())) {
           import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
         }
+        const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
         if (config.getBoolean('hardwareBackButton', isHybrid)) {
-          import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
+          hardwareBackButtonModule.startHardwareBackButton();
+        } else {
+          hardwareBackButtonModule.blockHardwareBackButton();
         }
         if (typeof (window as any) !== 'undefined') {
           import('../../utils/keyboard/keyboard').then(module => module.startKeyboardAssist(window));

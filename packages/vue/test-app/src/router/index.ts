@@ -46,7 +46,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/routing/:id',
-    component: () => import('@/views/RoutingParameter.vue')
+    component: () => import('@/views/RoutingParameter.vue'),
+    props: true
   },
   {
     path: '/routing/:id/view',
@@ -68,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'two',
         component: () => import('@/views/NestedChildTwo.vue')
+      },
+      {
+        path: ':id',
+        component: () => import('@/views/Folder.vue'),
+        props: true
       }
     ]
   },
@@ -82,16 +88,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'tab1',
         component: () => import('@/views/Tab1.vue'),
-        children: [
-          {
-            path: 'child-one',
-            component: () => import('@/views/Tab1ChildOne.vue')
-          },
-          {
-            path: 'child-two',
-            component: () => import('@/views/Tab1ChildTwo.vue')
-          }
-        ]
+      },
+      {
+        path: 'tab1/child-one',
+        component: () => import('@/views/Tab1ChildOne.vue')
+      },
+      {
+        path: 'tab1/child-two',
+        component: () => import('@/views/Tab1ChildTwo.vue')
       },
       {
         path: 'tab2',
@@ -103,6 +107,10 @@ const routes: Array<RouteRecordRaw> = [
           next({ path: '/tabs/tab1' });
         },
         component: () => import('@/views/Tab3.vue')
+      },
+      {
+        path: 'tab4',
+        component: () => import('@/views/Tab4.vue')
       }
     ]
   },
@@ -134,5 +142,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+(window as any).debugRouter = router;
 
 export default router

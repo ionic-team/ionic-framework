@@ -7,5 +7,5 @@ export interface IonTabsContextState {
 
 export const IonTabsContext = React.createContext<IonTabsContextState>({
   activeTab: undefined,
-  selectTab: () => false
+  selectTab: () => false,
 });

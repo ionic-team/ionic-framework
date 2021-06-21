@@ -1,4 +1,14 @@
-import { IonApp, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonApp,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import { logoIonic } from 'ionicons/icons';
 import React from 'react';
 
@@ -14,9 +24,7 @@ const App: React.FC = () => {
         <IonList>
           <IonItem button>
             <IonIcon icon={logoIonic} slot="start"></IonIcon>
-            <IonLabel>
-              Test something
-            </IonLabel>
+            <IonLabel>Test something</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

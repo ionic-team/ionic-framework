@@ -46,13 +46,13 @@ const hostStyles: React.CSSProperties = {
   flexDirection: 'column',
   width: '100%',
   height: '100%',
-  contain: 'layout size style'
+  contain: 'layout size style',
 };
 
 const tabsInner: React.CSSProperties = {
   position: 'relative',
   flex: 1,
-  contain: 'layout size style'
+  contain: 'layout size style',
 };
 
 export class IonTabs extends React.Component<Props> {
@@ -63,7 +63,7 @@ export class IonTabs extends React.Component<Props> {
 
   ionTabContextState: IonTabsContextState = {
     activeTab: undefined,
-    selectTab: () => false
+    selectTab: () => false,
   };
 
   constructor(props: Props) {
@@ -85,33 +85,55 @@ export class IonTabs extends React.Component<Props> {
   render() {
     let outlet: React.ReactElement<{}> | undefined;
     let tabBar: React.ReactElement | undefined;
+    const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
 
-    const children = typeof this.props.children === 'function' ?
-      (this.props.children as ChildFunction)(this.ionTabContextState) : this.props.children;
+    const children =
+      typeof this.props.children === 'function'
+        ? (this.props.children as ChildFunction)(this.ionTabContextState)
+        : this.props.children;
 
     React.Children.forEach(children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
-      if (child.type === IonRouterOutlet) {
+      if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
         outlet = React.cloneElement(child, { tabs: true });
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
-      if (child.type === IonTabBar) {
-        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
-        tabBar = React.cloneElement(child, {
-          onIonTabsDidChange,
-          onIonTabsWillChange,
-          ref: this.tabBarRef
-        });
-      } else if (child.type === Fragment && child.props.children[1].type === IonTabBar) {
-        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
-        tabBar = React.cloneElement(child.props.children[1], {
-          onIonTabsDidChange,
-          onIonTabsWillChange,
-          ref: this.tabBarRef
-        });
+
+      let childProps: any = {
+        ref: this.tabBarRef
+      }
+
+      /**
+       * Only pass these props
+       * down from IonTabs to IonTabBar
+       * if they are defined, otherwise
+       * if you have a handler set on
+       * IonTabBar it will be overridden.
+       */
+      if (onIonTabsDidChange !== undefined) {
+        childProps = {
+          ...childProps,
+          onIonTabsDidChange
+        }
+      }
+
+      if (onIonTabsWillChange !== undefined) {
+        childProps = {
+          ...childProps,
+          onIonTabsWillChange
+        }
+      }
+
+      if (child.type === IonTabBar || child.type.isTabBar) {
+        tabBar = React.cloneElement(child, childProps);
+      } else if (
+        child.type === Fragment &&
+        (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
+      ) {
+        tabBar = React.cloneElement(child.props.children[1], childProps);
       }
     });
 
@@ -122,14 +144,14 @@ export class IonTabs extends React.Component<Props> {
       throw new Error('IonTabs needs a IonTabBar');
     }
 
-    const { className, ...props } = this.props;
-
     return (
-      <IonTabsContext.Provider
-        value={this.ionTabContextState}
-      >
+      <IonTabsContext.Provider value={this.ionTabContextState}>
         {this.context.hasIonicRouter() ? (
-          <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
+          <PageManager
+            className={className ? `${className}` : ''}
+            routeInfo={this.context.routeInfo}
+            {...props}
+          >
             <ion-tabs className="ion-tabs" style={hostStyles}>
               {tabBar.props.slot === 'top' ? tabBar : null}
               <div style={tabsInner} className="tabs-inner">
@@ -139,15 +161,15 @@ export class IonTabs extends React.Component<Props> {
             </ion-tabs>
           </PageManager>
         ) : (
-            <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
-              {tabBar.props.slot === 'top' ? tabBar : null}
-              <div style={tabsInner} className="tabs-inner">
-                {outlet}
-              </div>
-              {tabBar.props.slot === 'bottom' ? tabBar : null}
+          <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
+            {tabBar.props.slot === 'top' ? tabBar : null}
+            <div style={tabsInner} className="tabs-inner">
+              {outlet}
             </div>
-          )}
-      </IonTabsContext.Provider >
+            {tabBar.props.slot === 'bottom' ? tabBar : null}
+          </div>
+        )}
+      </IonTabsContext.Provider>
     );
   }
 

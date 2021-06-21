@@ -629,7 +629,7 @@ export default defineComponent({
     const doReorder = (event: CustomEvent) => {
       // Before complete is called with the items they will remain in the
       // order before the drag
-      console.log('Before complete', this.items);
+      console.log('Before complete', items.value);
 
       // Finish the reorder and position the item in the DOM based on
       // where the gesture ended. Update the items variable to the
@@ -637,7 +637,7 @@ export default defineComponent({
       items.value = event.detail.complete(items.value);
 
       // After complete is called the items will be in the new order
-      console.log('After complete', this.items);
+      console.log('After complete', items.value);
     }
     return { doReorder, items, ... }
   }

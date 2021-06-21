@@ -15,7 +15,10 @@ export class PopoverExample {
       event: ev,
       translucent: true
     });
-    return await popover.present();
+    await popover.present();
+  
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {

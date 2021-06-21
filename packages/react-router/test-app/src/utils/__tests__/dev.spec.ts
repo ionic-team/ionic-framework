@@ -1,4 +1,3 @@
-
 import { isDevMode } from '../dev';
 
 describe('isDevMode', () => {
@@ -9,6 +8,6 @@ describe('isDevMode', () => {
   it('when in dev mode, should return true', () => {
     process.env.NODE_ENV = 'development';
     const isDev = isDevMode();
-    expect(isDev).toBeTruthy()
+    expect(isDev).toBeTruthy();
   });
 });

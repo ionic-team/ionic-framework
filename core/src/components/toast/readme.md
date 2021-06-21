@@ -61,7 +61,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+  
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
@@ -103,7 +106,10 @@ async function presentToastWithOptions() {
   ];
 
   document.body.appendChild(toast);
-  return toast.present();
+  await toast.present();
+  
+  const { role } = await toast.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -111,6 +117,48 @@ async function presentToastWithOptions() {
 ### React
 
 ```tsx
+/* Using the useIonToast Hook */
+
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonToast } from '@ionic/react';
+
+const ToastExample: React.FC = () => {
+  const [present, dismiss] = useIonToast();
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              buttons: [{ text: 'hide', handler: () => dismiss() }],
+              message: 'toast from hook, click hide to dismiss',
+              onDidDismiss: () => console.log('dismissed'),
+              onWillDismiss: () => console.log('will dismiss'),
+            })
+          }
+        >
+          Show Toast
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('hello from hook', 3000)}
+        >
+          Show Toast using params, closes in 3 secs
+        </IonButton>
+        <IonButton expand="block" onClick={dismiss}>
+          Hide Toast
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using the IonToast Component */
+
 import React, { useState } from 'react';
 import { IonToast, IonContent, IonButton } from '@ionic/react';
 
@@ -200,7 +248,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+  
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -264,7 +315,10 @@ export default {
             }
           ]
         })
-      return toast.present();
+      await toast.present();
+  
+      const { role } = await toast.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
@@ -280,7 +334,7 @@ Developers can also use this component directly in their template:
     :is-open="isOpenRef"
     message="Your settings have been saved."
     :duration="2000"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-toast>
 </template>

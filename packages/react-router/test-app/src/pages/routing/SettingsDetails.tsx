@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonCard, IonButton } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonLabel,
+  IonCard,
+  IonButton,
+} from '@ionic/react';
 import { useParams } from 'react-router';
 
-interface DetailsProps {
-}
+interface DetailsProps {}
 
 const SettingsDetails: React.FC<DetailsProps> = () => {
-
-  const { id } = useParams<{ id: string; }>();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     console.log('Settings Details mount');
@@ -29,7 +38,8 @@ const SettingsDetails: React.FC<DetailsProps> = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonLabel data-testid="details-label">Details {id}</IonLabel>
-        <br /><br />
+        <br />
+        <br />
         <IonButton routerLink={`/routing/tabs/settings/details/${nextId}`}>
           <IonLabel>Go to Settings Details {nextId}</IonLabel>
         </IonButton>

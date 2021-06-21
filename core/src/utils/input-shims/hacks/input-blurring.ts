@@ -1,6 +1,6 @@
 import { addEventListener, removeEventListener } from '../../helpers';
 
-const SKIP_SELECTOR = 'input, textarea, [no-blur]';
+const SKIP_SELECTOR = 'input, textarea, [no-blur], [contenteditable]';
 
 export const enableInputBlurring = () => {
   let focused = true;

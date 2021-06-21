@@ -53,6 +53,8 @@ label {
   align-items: center;
 
   opacity: 0;
+
+  pointer-events: none;
 }
 
 input {

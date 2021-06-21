@@ -1,6 +1,6 @@
 ## @ionic/react
 
-These are React specific building blocks on top of  [@ionic/core](https://www.npmjs.com/package/@ionic/core) components/services.
+These are React specific building blocks on top of [@ionic/core](https://www.npmjs.com/package/@ionic/core) components/services.
 
 To get started, install the Ionic CLI by running `npm i -g ionic`. Then, start a new Ionic React Project by running `ionic start myapp --type=react`.
 
@@ -8,7 +8,7 @@ To get started, install the Ionic CLI by running `npm i -g ionic`. Then, start a
 
 Below is a list of components yet to be implemented:
 
-| Component |
+| Component          |
 | ------------------ |
 | `IonVirtualScroll` |
 
@@ -28,29 +28,30 @@ ionic integrations enable capacitor
 ```
 
 Then run the following command to get started with either `ios` or `android` platforms.
+
 ```
 ionic capacitor add <android|ios>
 ```
 
 After build you build your app you will need to copy your capacitor resources into the build dir so execute the following command.
+
 ```
 ionic capacitor copy
 ```
 
 To open your application to build/emulate in Android Studio or Xcode run the `open` command.
+
 ```
 ionic capacitor open <android|ios>
 ```
 
-
 ## Related
 
-* [Ionic Documentation](https://ionicframework.com/docs/)
-* [Ionic Forum](https://forum.ionicframework.com/)
-* [Ionicons](http://ionicons.com/)
-* [Capacitor](https://capacitor.ionicframework.com/)
-
+- [Ionic Documentation](https://ionicframework.com/docs/)
+- [Ionic Forum](https://forum.ionicframework.com/)
+- [Ionicons](http://ionicons.com/)
+- [Capacitor](https://capacitor.ionicframework.com/)
 
 ## License
 
-* [MIT](https://raw.githubusercontent.com/ionic-team/ionic/master/LICENSE)
+- [MIT](https://raw.githubusercontent.com/ionic-team/ionic/master/LICENSE)

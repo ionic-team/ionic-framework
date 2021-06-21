@@ -6,9 +6,8 @@ describe('IonRouterOutlet Ref', () => {
   */
 
   it('/outlet-ref, page should contain the id of the ion-router-outlet', () => {
-    cy.visit(`http://localhost:${port}/outlet-ref`)
-    cy.get('div').contains('main-outlet')
-    cy.ionPageVisible('main')
-  })
-
-})
+    cy.visit(`http://localhost:${port}/outlet-ref`);
+    cy.get('div').contains('main-outlet');
+    cy.ionPageVisible('main');
+  });
+});

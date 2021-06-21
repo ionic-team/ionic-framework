@@ -13,9 +13,9 @@ describe('isCoveredByReact', () => {
 
 describe('syncEvent', () => {
   it('should add event on sync and readd on additional syncs', () => {
-    var div = document.createElement("div");
-    const addEventListener = jest.spyOn(div, "addEventListener");
-    const removeEventListener = jest.spyOn(div, "removeEventListener");
+    var div = document.createElement('div');
+    const addEventListener = jest.spyOn(div, 'addEventListener');
+    const removeEventListener = jest.spyOn(div, 'removeEventListener');
     const ionClickCallback = jest.fn();
 
     utils.syncEvent(div, 'ionClick', ionClickCallback);
@@ -26,29 +26,28 @@ describe('syncEvent', () => {
     expect(removeEventListener).toHaveBeenCalledWith('ionClick', expect.any(Function));
     expect(addEventListener).toHaveBeenCalledWith('ionClick', expect.any(Function));
 
-    const event = new CustomEvent('ionClick', { detail: 'test'});
+    const event = new CustomEvent('ionClick', { detail: 'test' });
     div.dispatchEvent(event);
     expect(ionClickCallback).toHaveBeenCalled();
-  })
+  });
 });
 
 describe('attachProps', () => {
   it('should pass props to a dom node', () => {
     const onIonClickCallback = () => {};
 
-    var div = document.createElement("div");
+    var div = document.createElement('div');
     utils.attachProps(div, {
-      'children': [],
-      'style': 'color: red',
-      'ref': () => {},
-      'onClick': () => {},
-      'onIonClick': onIonClickCallback,
-      'testprop': ['red']
+      children: [],
+      style: 'color: red',
+      ref: () => {},
+      onClick: () => {},
+      onIonClick: onIonClickCallback,
+      testprop: ['red'],
     });
 
     expect((div as any).testprop).toEqual(['red']);
     expect(div).toHaveStyle(`display: block;`);
     expect(Object.keys((div as any).__events)).toEqual(['ionClick']);
   });
-
 });
