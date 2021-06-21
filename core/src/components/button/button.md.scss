@@ -134,17 +134,9 @@
  * as developers should not be overriding
  * colors when using the color prop.
  */
-:host(.button-solid.ion-color.ion-focused) {
-  --background-focused-opacity: .24;
-}
 
 :host(.button-solid.ion-color.ion-focused) .button-native::after {
   background: #{current-color(contrast)};
-}
-
-:host(.button-clear.ion-color.ion-focused),
-:host(.button-outline.ion-color.ion-focused) {
-  --background-focused-opacity: .12;
 }
 
 :host(.button-clear.ion-color.ion-focused) .button-native::after,
@@ -160,17 +152,8 @@
 
 
 @media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) {
-    --background-hover-opacity: 0.08;
-  }
-
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: #{current-color(contrast)};
-  }
-
-  :host(.button-clear.ion-color:hover),
-  :host(.button-outline.ion-color:hover) {
-    --background-hover-opacity: 0.04;
   }
 
   :host(.button-clear.ion-color:hover) .button-native::after,
