@@ -1,6 +1,16 @@
 import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
+const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
+  if (prop in el) {
+    return (el as any)[prop];
+  }
+  if (el.hasAttribute(prop)) {
+    return el.getAttribute(prop);
+  }
+  return null;
+};
+
 export const readRedirects = (root: Element): RouteRedirect[] => {
   return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
     .filter(el => el.tagName === 'ION-ROUTE-REDIRECT')
@@ -17,46 +27,33 @@ export const readRoutes = (root: Element): RouteChain[] => {
   return flattenRouterTree(readRouteNodes(root));
 };
 
-export const readRouteNodes = (root: Element, node = root): RouteTree => {
+export const readRouteNodes = (node: Element): RouteTree => {
   return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
-      const component = readProp(el, 'component');
-      if (component == null) {
-        throw new Error('component missing in ion-route');
-      }
+      const component = readProp(el, 'component') as string;
       return {
         path: parsePath(readProp(el, 'url')).segments,
         id: component.toLowerCase(),
         params: el.componentProps,
         beforeLeave: el.beforeLeave,
         beforeEnter: el.beforeEnter,
-        children: readRouteNodes(root, el)
+        children: readRouteNodes(el)
       };
     });
 };
 
-export const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
-  if (prop in el) {
-    return (el as any)[prop];
-  }
-  if (el.hasAttribute(prop)) {
-    return el.getAttribute(prop);
-  }
-  return null;
-};
-
 export const flattenRouterTree = (nodes: RouteTree): RouteChain[] => {
-  const routes: RouteChain[] = [];
+  const chains: RouteChain[] = [];
   for (const node of nodes) {
-    flattenNode([], routes, node);
+    flattenNode([], chains, node);
   }
-  return routes;
+  return chains;
 };
 
-const flattenNode = (chain: RouteChain, routes: RouteChain[], node: RouteNode) => {
-  const s = chain.slice();
-  s.push({
+const flattenNode = (chain: RouteChain, chains: RouteChain[], node: RouteNode) => {
+  chain = chain.slice();
+  chain.push({
     id: node.id,
     path: node.path,
     params: node.params,
@@ -65,10 +62,10 @@ const flattenNode = (chain: RouteChain, routes: RouteChain[], node: RouteNode) =
   });
 
   if (node.children.length === 0) {
-    routes.push(s);
+    chains.push(chain);
     return;
   }
-  for (const sub of node.children) {
-    flattenNode(s, routes, sub);
+  for (const child of node.children) {
+    flattenNode(chain, chains, child);
   }
 };

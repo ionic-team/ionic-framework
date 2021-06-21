@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 
 import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
+import { NavigationHookResult } from '../route/route-interface';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
@@ -186,6 +187,7 @@ export class Router implements ComponentInterface {
     return true;
   }
 
+  // This handler gets called when a `ion-route-redirect` component is added to the DOM or if the from or to property of such node changes.
   private onRedirectChanged() {
     const path = this.getPath();
     if (path && findRouteRedirect(path, readRedirects(this.el))) {
@@ -193,6 +195,7 @@ export class Router implements ComponentInterface {
     }
   }
 
+  // This handler gets called when a `ion-route` component is added to the DOM or if the from or to property of such node changes.
   private onRoutesChanged() {
     return this.writeNavStateRoot(this.getPath(), ROUTER_INTENT_NONE);
   }
@@ -202,7 +205,7 @@ export class Router implements ComponentInterface {
 
     if (win.history.state === null) {
       this.state++;
-      win.history.replaceState(this.state, win.document.title, win.document.location && win.document.location.href);
+      win.history.replaceState(this.state, win.document.title, win.document.location?.href);
     }
 
     const state = win.history.state;
@@ -211,11 +214,11 @@ export class Router implements ComponentInterface {
 
     if (state > lastState || (state >= lastState && lastState > 0)) {
       return ROUTER_INTENT_FORWARD;
-    } else if (state < lastState) {
-      return ROUTER_INTENT_BACK;
-    } else {
-      return ROUTER_INTENT_NONE;
     }
+    if (state < lastState) {
+      return ROUTER_INTENT_BACK;
+    }
+    return ROUTER_INTENT_NONE;
   }
 
   private async writeNavStateRoot(path: string[] | null, direction: RouterDirection, animation?: AnimationBuilder): Promise<boolean> {
@@ -281,7 +284,7 @@ export class Router implements ComponentInterface {
   //
   // When the beforeLeave hook does not return true (to allow navigating) then that value is returned early and the beforeEnter is executed.
   // Otherwise the beforeEnterHook hook of the target route is executed.
-  private async runGuards(to: string[] | null = this.getPath(), from?: string[] | null) {
+  private async runGuards(to: string[] | null = this.getPath(), from?: string[] | null): Promise<NavigationHookResult> {
     if (from === undefined) {
       from = parsePath(this.previousPath).segments;
     }

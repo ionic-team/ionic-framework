@@ -64,6 +64,7 @@ export class ToolbarTitle implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,
+          'title-rtl': document.dir === 'rtl'
         })}
       >
         <div class="toolbar-title">
