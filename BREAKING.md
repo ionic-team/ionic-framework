@@ -27,6 +27,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Config Provider](#config-provider)
 - [Vue](#vue)
   * [Tabs Config](#tabs-config)
+  * [Tabs Router Outlet](#tabs-router-outlet)
   * [Overlay Events](#overlay-events)
 - [Browser and Platform Support](#browser-and-platform-support)
 
@@ -219,6 +220,47 @@ const routes: Array<RouteRecordRaw> = [
 ```
 
 In the example above `tabs/tab1/view` has been rewritten has a sibling route to `tabs/tab1`. The `path` field now includes the `tab1` prefix.
+
+#### Tabs Router Outlet
+
+Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previously one was generated automatically, but this made it difficult for developers to access the properties on the generated `ion-router-outlet`.
+
+**Old**
+```html
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    ...
+  </ion-tab-bar>
+</ion-tabs>
+
+<script>
+  import { IonTabs, IonTabBar } from '@ionic/vue';
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    components: { IonTabs, IonTabBar }
+  });
+</script>
+```
+
+**New**
+```html
+<ion-tabs>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tab-bar slot="bottom">
+    ...
+  </ion-tab-bar>
+</ion-tabs>
+
+<script>
+  import { IonTabs, IonTabBar, IonRouterOutlet } from '@ionic/vue';
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    components: { IonTabs, IonTabBar, IonRouterOutlet }
+  });
+</script>
+```
 
 #### Overlay Events
 
