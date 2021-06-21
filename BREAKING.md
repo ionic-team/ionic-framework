@@ -17,6 +17,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Header](#header)
   * [Modal](#modal)
   * [Popover](#popover)
+  * [Searchbar](#searchbar)
   * [Tab Bar](#tab-bar)
   * [Toast](#toast)
   * [Toolbar](#toolbar)
@@ -84,17 +85,23 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
 }
 ```
 
+#### Modal
+
+Converted `ion-modal` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-modal` in your CSS, you will need to target the `backdrop` or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
 #### Popover
 
 Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
-#### Modal
+#### Searchbar
 
-Converted `ion-modal` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+The `showClearButton` property now defaults to `'always'` for improved usability with screen readers.
 
-If you were targeting the internals of `ion-modal` in your CSS, you will need to target the `backdrop` or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+To get the old behavior, set `showClearButton` to `'focus'`.
 
 #### Tab Bar
 
