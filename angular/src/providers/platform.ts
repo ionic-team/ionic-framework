@@ -209,7 +209,7 @@ export class Platform {
   }
 
   /**
-   * Returns `true` if the app is in portait mode.
+   * Returns `true` if the app is in portrait mode.
    */
   isPortrait(): boolean {
     return this.win.matchMedia && this.win.matchMedia('(orientation: portrait)').matches;
