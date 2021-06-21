@@ -144,12 +144,6 @@
   background: #{current-color(base)};
 }
 
-:host(.button-solid.ion-color.ion-focused) .button-native::after,
-:host(.button-clear.ion-color.ion-focused) .button-native::after,
-:host(.button-outline.ion-color.ion-focused) .button-native::after {
-  opacity: var(--background-focused-opacity);
-}
-
 
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native::after {
@@ -159,11 +153,5 @@
   :host(.button-clear.ion-color:hover) .button-native::after,
   :host(.button-outline.ion-color:hover) .button-native::after {
     background: #{current-color(base)};
-  }
-
-  :host(.button-solid.ion-color:hover) .button-native::after,
-  :host(.button-clear.ion-color:hover) .button-native::after,
-  :host(.button-outline.ion-color:hover) .button-native::after {
-    opacity: var(--background-hover-opacity);
   }
 }
