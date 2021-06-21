@@ -7,7 +7,7 @@
           <ion-tab-button
             v-for="tab in tabs"
             :tab="'tab' + tab.id"
-            :href="'/tabs/tab' + tab.id"
+            :href="'/tabs-new/tab' + tab.id"
             :key="tab.id"
           >
             <ion-icon :icon="tab.icon" />
