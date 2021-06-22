@@ -10,11 +10,13 @@ Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/button
 
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                          | Tipo                      | Default       |
-| ------------ | ------------ | ---------------------------------- | ------------------------- | ------------- |
-| **dsName**   | **ds-name**  | Define o botão.                    | **"primary"**             | **"primary"** |
-| **expand**   | **expand**   | Define o tamanho do botão.         | **"full"** \| **"block"** | **undefined** |
-| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**               | **undefined** |
+| Propriedade  | Atributo     | Descrição                          | Tipo                              | Default       |
+| ------------ | ------------ | ---------------------------------- | --------------------------------- | ------------- |
+| **color**    | **color**    | Define a cor do botão.             | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)**  | **undefined** |
+| **dsName**   | **ds-name**  | Define o botão.                    | **"primary"**                     | **"primary"** |
+| **expand**   | **expand**   | Define o tamanho do botão.         | **"full"** \| **"block"**         | **undefined** |
+| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**                       | **undefined** |
+| **dsSize**   | **ds-size**  | Define o tamanho do botão.         | **"xxs"** \| **"xs"** \| **"sm"** | **undefined** |
 
 ```html
 <!-- primary -->
@@ -26,6 +28,9 @@ Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/button
 <!-- expand -->
 <ion-button ds-name="primary" expand="full">ion-button</ion-button>
 <ion-button ds-name="primary" expand="block">ion-button</ion-button>
+
+<!-- size -->
+<ion-button ds-name="primary" ds-size="xxs">ion-button</ion-button>
 ```
 
 ## secondary

@@ -52,7 +52,7 @@ const TemplateDefaultTop = () => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="primary" @click="${createToastTop}">Abrir Toast</ion-button>
+        <ion-button ds-name="primary" @click="${createToastTop}">Abrir Snackbar</ion-button>
         <!-- component -->
 
       </div>

@@ -20,8 +20,9 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 
 
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', [
-  'color',
-  'dsSize'
+  'dsSize',
+  'fill',
+  'color'
 ]);
 
 
@@ -821,7 +822,7 @@ export const MedAlternativas = /*@__PURE__*/ defineContainer<JSX.MedAlternativas
 
 
 export const MedAutocomplete = /*@__PURE__*/ defineContainer<JSX.MedAutocomplete>('med-autocomplete', [
-  'disable'
+  'list'
 ]);
 
 
@@ -855,7 +856,8 @@ export const MedEnunciadoDiscursiva = /*@__PURE__*/ defineContainer<JSX.MedEnunc
 
 
 export const MedFontZoom = /*@__PURE__*/ defineContainer<JSX.MedFontZoom>('med-font-zoom', [
-  'emitter'
+  'emitter',
+  'value'
 ]);
 
 

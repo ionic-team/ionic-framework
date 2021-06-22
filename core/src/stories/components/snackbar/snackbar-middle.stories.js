@@ -49,7 +49,7 @@ const TemplateDefaultMiddle = () => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="primary" @click="${createToastMiddle}">Abrir Toast</ion-button>
+        <ion-button ds-name="primary" @click="${createToastMiddle}">Abrir Snackbar</ion-button>
         <!-- component -->
 
       </div>

@@ -12,8 +12,8 @@ const TemplateFail = ({ label, helper }) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-input placeholder=${label} fail></ion-input>
-        <ion-label ds-name="helper" fail>${helper}</ion-label>
+        <ion-input placeholder=${label} error></ion-input>
+        <ion-label ds-name="helper" error>${helper}</ion-label>
         <!-- component -->
 
       </div>
@@ -21,14 +21,14 @@ const TemplateFail = ({ label, helper }) => {
   `
 }
 
-export const InputFail = TemplateFail.bind({});
-InputFail.parameters = {
+export const InputError = TemplateFail.bind({});
+InputError.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=2101%3A5',
   },
 }
-InputFail.argTypes = {
+InputError.argTypes = {
   label: {
     control: { type: 'text' },
     defaultValue: 'Enter Input',

@@ -50,7 +50,7 @@
   --padding-end: 56px;
 }
 
-:host([fail]) {
+:host([error]) {
   --border-color: #{$med-color-feedback-error-medium};
 }
 

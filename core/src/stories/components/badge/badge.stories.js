@@ -7,13 +7,13 @@ export default {
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ color, fill, size, label }) => {
+const TemplateDefault = ({ color, fill, size, slot }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-badge .color=${color} fill=${fill} ds-size=${size}>${label}</ion-badge>
+        <ion-badge .color=${color} fill=${fill} ds-size=${size}>${slot}</ion-badge>
         <!-- component -->
 
       </div>
@@ -32,9 +32,9 @@ Badge.argTypes = {
   color: {
     options: medColors,
     control: { type: 'select'},
-    description: "Define a cor do badge baseado nos tokens.",
+    description: "Define a cor do badge.",
     table: {
-      type:  { summary: 'Qualquer cor do Design System' },
+      type:  { summary: 'Color' },
       defaultValue: { summary: 'undefined' },
     },
   },
@@ -56,12 +56,8 @@ Badge.argTypes = {
       defaultValue: { summary: 'undefined' },
     },
   },
-  label: {
+  slot: {
     control: { type: 'text' },
     defaultValue: 'badge',
-    description: "Digite algo!",
-    table: {
-      type:  { summary: 'Atributo para testes no storybook apenas' },
-    },
   },
 };

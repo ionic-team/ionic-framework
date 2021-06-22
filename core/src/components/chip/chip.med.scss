@@ -48,3 +48,10 @@
   --border-color: #{$med-color-questoes-medium};
   --color: #{$med-color-questoes-dark};
 }
+
+// Chip: Activated
+// ---------------------------------------------
+
+:host(.ion-activated) {
+  --background: #{rgba($med-color-neutral-light-30, .80)};
+}

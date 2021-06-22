@@ -1,0 +1,44 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Textarea/Usage" />
+
+# Textarea
+
+Documentaçao complementar ion-textarea: **https://ionicframework.com/docs/api/textarea**
+
+## Propriedades
+
+| Propriedade  | Atributo    | Descrição                    | Tipo        | Default       |
+| ------------ | ----------- | ---------------------------- | ----------- | ------------- |
+| **success**  | **success** | Define o estido de sucesso.  | **boolean** | **undefined** |
+| **error**    | **error**   | Define o estido de erro.     | **boolean** | **undefined** |
+
+## Usage
+
+O uso do componente **ion-label** e **ion-icon** é necessário para utilização correta do componente **ion-textarea**.
+
+### default
+
+```html
+<ion-label ds-name="stacked">Stacked</ion-label>
+<ion-textarea placeholder="Enter Input"></ion-textarea>
+<ion-label ds-name="helper">Helper</ion-label>
+```
+
+### Success
+
+```html
+<ion-label ds-name="stacked">Stacked</ion-label>
+<ion-textarea placeholder="Enter Input" success></ion-textarea>
+<ion-label ds-name="helper">Helper</ion-label>
+```
+
+### Error
+
+A atributo **error** é necessário tanto no **ion-textarea** quanto no **ion-label**.
+
+```html
+<ion-label ds-name="stacked">Stacked</ion-label>
+<ion-textarea placeholder="Enter Input" error></ion-textarea>
+<ion-label ds-name="helper" error>Helper</ion-label>
+```

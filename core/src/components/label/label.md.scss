@@ -131,6 +131,6 @@
   display: flex;
 }
 
-:host([ds-name="helper"][fail]) {
+:host([ds-name="helper"][error]) {
   color: #{$med-color-feedback-error-medium};
 }

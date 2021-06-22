@@ -6,13 +6,21 @@ export default {
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ alternativas }) => {
+const TemplateDefault = ({ alternativas, platform }) => {
+  if (platform === 'Mobile') {
+    document.querySelector('html').classList.remove('plt-electron');
+    document.querySelector('html').classList.remove('plt-desktop');
+  } else if (platform === 'Desktop') {
+    document.querySelector('html').classList.add('plt-electron');
+    document.querySelector('html').classList.add('plt-desktop');
+  }
+
   const id = Math.random().toString(36).substr(2, 9);
 
   setTimeout(() => {
     const alternativasEl = document.getElementById(id);
 
-    for(const key in alternativas) {
+    for (const key in alternativas) {
       alternativasEl[key] = alternativas[key];
     }
   }, 3000);
@@ -83,6 +91,16 @@ Alternativas.argTypes = {
     table: {
       type:  { summary: 'MedAlternativaInterface[]' },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  platform: {
+    defaultValue: 'Desktop',
+    options: ['Desktop', 'Mobile'],
+    control: { type: 'radio' },
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
+    table: {
+      type:  { summary: ['desktop | mobile'] },
+      defaultValue: { summary: 'desktop' },
     },
   },
 };

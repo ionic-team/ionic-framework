@@ -1,0 +1,74 @@
+@import "../functions";
+@import "../variables";
+@import "../mixins";
+
+:root .dark-mode {
+  --on-surface: #fff;
+  --surface: #121212;
+
+  ion-content {
+    --background: #141414;
+  }
+}
+
+:root .light-mode {
+  --on-surface: #121212;
+  --surface: #fff;
+
+  ion-content {
+    --background: #fafafa;
+  }
+}
+
+$med-color-brand-primary-darkest: #7e6c3d;
+$med-color-brand-primary-dark: #8d7942;
+$med-color-brand-primary-medium: #b89d58;
+$med-color-brand-primary-light: #baa87b;
+$med-color-brand-primary-lightest: #bbad8a;
+$med-color-brand-primary-gradient: linear-gradient(to right, $med-color-brand-primary-medium, $med-color-brand-primary-dark);
+
+$colors: (
+  /* primary-gradient: (
+    base:             $med-color-brand-primary-gradient,
+    contrast:         #fff,
+    shade:            $med-color-brand-primary-medium,
+    tint:             $med-color-brand-primary-medium
+  ), */
+  primary-darkest: (
+    base:             $med-color-brand-primary-darkest,
+    contrast:         #fff,
+    shade:            get-color-shade($med-color-brand-primary-darkest),
+    tint:             get-color-tint($med-color-brand-primary-darkest)
+  ),
+  primary-dark: (
+    base:             $med-color-brand-primary-dark,
+    contrast:         #fff,
+    shade:            get-color-shade($med-color-brand-primary-dark),
+    tint:             get-color-tint($med-color-brand-primary-dark)
+  ),
+  primary-medium: (
+    base:             $med-color-brand-primary-medium,
+    contrast:         #fff,
+    shade:            get-color-shade($med-color-brand-primary-medium),
+    tint:             get-color-tint($med-color-brand-primary-medium)
+  ),
+  primary-light: (
+    base:             $med-color-brand-primary-light,
+    contrast:         #000,
+    shade:            get-color-shade($med-color-brand-primary-light),
+    tint:             get-color-tint($med-color-brand-primary-light)
+  ),
+  primary-lightest: (
+    base:             $med-color-brand-primary-lightest,
+    contrast:         #000,
+    shade:            get-color-shade($med-color-brand-primary-lightest),
+    tint:             get-color-tint($med-color-brand-primary-lightest)
+  ),
+);
+
+@include generate-custom-theme('gold');
+
+// components
+
+@import "../../src/components/button/medgrupo/button.med.theme";
+@import "../../src/components/medgrupo/team/med-alternativas/med-alternativas.theme";

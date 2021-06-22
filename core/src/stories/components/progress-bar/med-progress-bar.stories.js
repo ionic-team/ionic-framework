@@ -24,7 +24,7 @@ export const ProgressBar = Template.bind();
 ProgressBar.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/zdbyAa3XpX3loOjJEaXc6E/Quest%C3%B5es?node-id=392%3A160',
+    url: 'https://www.figma.com/file/zdbyAa3XpX3loOjJEaXc6E/Quest%C3%B5es?node-id=313%3A107',
   },
 }
 ProgressBar.argTypes = {

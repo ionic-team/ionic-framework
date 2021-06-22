@@ -16,13 +16,16 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class Badge implements ComponentInterface {
+  // custom
+  @Prop() dsSize?: 'sm' | 'md' | 'lg';
+  @Prop() fill?: 'outline'
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-  @Prop() dsSize?: 'sm' | 'md' | 'lg';
 
   render() {
     const mode = getIonMode(this);

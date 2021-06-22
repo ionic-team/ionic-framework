@@ -160,4 +160,650 @@
     }
 }
 
-@import './button.med.scss';
+// @import './button.med.scss';
+
+//
+// custom
+//
+
+@import "../../../med-components/abstracts";
+
+:host {
+  --border-radius: #{$med-border-radius-pill};
+  --box-shadow: none;
+  --color: #{$med-color-neutral-light-prime};
+  --transition: background var(--transition-timing) ease-out, color var(--transition-timing) ease-out, border-color var(--transition-timing) ease-out, opacity var(--transition-timing) ease-out;
+
+  // design system
+  --padding: #{$med-spacing-squish-base};
+  --min-height: 48px;
+  --min-width: auto;
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-semibold};
+  --text-transform: uppercase;
+  --line-height: #{$med-line-height-compressed};
+  --transition-timing: 300ms;
+
+  min-height: var(--min-height);
+  min-width: var(--min-width);
+  height: auto;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  text-transform: var(--text-transform);
+  margin: 0;
+}
+
+.button-native {
+  padding: var(--padding);
+  min-height: var(--min-height);
+  line-height: var(--line-height);
+  box-shadow: none;
+}
+
+.button-native::before {
+  transition: var(--transition);
+}
+
+//
+// color
+//
+
+:host(.ion-color) {
+  --ion-color-contrast: #fff !important;
+}
+
+//
+// disabled
+//
+
+:host(.med-button-disabled) {
+  opacity: 1;
+}
+
+/* :host(.ion-color.med-button-disabled) {
+  --ion-color-contrast: #fff !important;
+} */
+
+//
+// primary
+//
+
+:host(.med-button-solid) {
+  // --background: #{ion-color(primary-gradient, base)};
+  --background: $med-color-brand-primary-gradient;// #{ion-color(primary-medium, base)};
+  --background-hover: #{ion-color(primary-medium, base)};
+  --background-hover-opacity: 1;
+  --background-focused: #{$med-color-brand-primary-medium};
+  --background-focused-opacity: 1;
+  --background-activated: #{$med-color-brand-primary-dark};
+  --background-activated-opacity: 1;
+  --ripple-color: #{$med-color-brand-primary-dark};
+}
+
+// expand
+:host([expand="full"].med-button-solid) {
+  --min-height: 48px;
+  --font-size: #{$med-font-size-xxs};
+  --padding: #{$med-spacing-squish-base};
+}
+
+:host([expand="block"].med-button-solid) {
+  --min-height: 48px;
+  --font-size: #{$med-font-size-xxs};
+  --padding: #{$med-spacing-squish-base};
+}
+
+// sizes primary
+:host([ds-size="sm"].med-button-solid) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-solid) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+  --padding: #{$med-spacing-squish-sm};
+}
+
+:host([ds-size="xxs"].med-button-solid) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-base};
+}
+
+// disabled
+:host(.med-button-solid.med-button-disabled) .button-native {
+  background: $med-color-neutral-light-20;
+}
+
+// hover
+
+
+// active
+:host(.ion-color.med-button-solid.ion-activated) {
+  --background-activated: current-color(shade);
+}
+
+//
+// secondary
+//
+
+:host(.med-button-outline) {
+  --background-hover: transparent;
+  --background-focused: transparent;
+  --background-activated: transparent;
+  --border-width: #{$med-border-width-thin};
+  --border-color: #{$med-color-brand-primary-light};
+  --color: #{$med-color-brand-primary-light};
+  --ripple-color: transparent;
+
+  --background-activated-opacity: 0;
+  --background-focused-opacity: 0;
+  --background-hover-opacity: 0;
+}
+
+// sizes secondary
+:host([ds-size="sm"].med-button-outline) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-outline) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+  --padding: #{$med-spacing-squish-sm};
+}
+
+:host([ds-size="xxs"].med-button-outline) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-base};
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(.med-button-outline:hover) {
+    --border-color: #{$med-color-brand-primary-medium};
+    --color: #{$med-color-brand-primary-medium};
+  }
+}
+
+// hover storybook
+:host(.med-button-outline.med-hovered) {
+  --border-color: #{$med-color-brand-primary-medium};
+  --color: #{$med-color-brand-primary-medium};
+}
+
+// active
+:host(.med-button-outline.ion-activated) {
+  --border-color: #{$med-color-brand-primary-dark};
+  --color: #{$med-color-brand-primary-dark};
+}
+
+// focus
+:host(.med-button-outline.ion-focused) {
+  --border-color: #{$med-color-brand-primary-medium};
+  --color: #{$med-color-brand-primary-medium};
+}
+
+// disabled
+:host(.med-button-outline.med-button-disabled) {
+  --border-color: #{$med-color-neutral-light-10};
+  --color: #{$med-color-neutral-light-10};
+}
+
+:host(.ion-color.med-button-outline.med-button-disabled) {
+  --ion-color-base: #{$med-color-neutral-light-10} !important;
+}
+
+//
+// tertiary
+//
+
+:host(.med-button-clear) {
+  --background-hover: #{$med-color-brand-primary-medium};
+  --background-hover-opacity: #{$med-opacity-level-light};
+  --background-focused: #{$med-color-brand-primary-medium};
+  --background-focused-opacity: #{$med-opacity-level-light};
+  --ripple-color: rgba(#{$med-color-brand-primary-medium-rgb}, #{$med-opacity-level-light});
+  --border-radius: #{$med-border-radius-nano};
+
+  // design system
+  --padding: #{$med-spacing-inset-xs};
+  --color: #{$med-color-neutral-light-prime};
+  --min-height: 32px;
+}
+
+// expand
+:host([expand="full"].med-button-clear) {
+  --min-height: 48px;
+  --font-size: #{$med-font-size-xxs};
+}
+
+:host([expand="block"].med-button-clear) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxs};
+}
+
+// sizes tertiary
+:host([ds-size="sm"].med-button-clear) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-clear) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+  --padding: #{$med-spacing-squish-sm};
+}
+
+:host([ds-size="xxs"].med-button-clear) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-base};
+}
+
+// disabled
+:host(.med-button-clear.med-button-disabled) {
+  --color: #{$med-color-neutral-light-10};
+  --ion-color-base: #{$med-color-neutral-light-10} !important;
+}
+
+:host(.ion.med-button-clear.med-button-disabled) {
+  --ion-color-base: #{$med-color-neutral-light-10} !important;
+}
+
+//
+// icon-only
+//
+
+:host(.button-has-icon-only) {
+  --border-radius: 50%;
+  --background-hover: #{$med-color-neutral-light-10};
+  --background-hover-opacity: #{$med-opacity-level-semitransparent};
+  --background-focused: #{$med-color-neutral-light-10};
+  --background-focused-opacity: #{$med-opacity-level-semitransparent};
+  --ripple-color: rgba(#{$med-color-neutral-light-10-rgb}, #{$med-opacity-level-semitransparent});
+
+  // design system
+  --padding: 0;
+  --color: #{$med-color-neutral-light-prime};
+  --min-height: 32px;
+  --min-width: 32px;
+
+  font-size: 32px;
+}
+
+:host(.ion-color.button-has-icon-only) ::slotted(ion-icon[slot="icon-only"]) {
+  color: var(--ion-color-base);
+}
+
+// slotted
+::slotted(ion-icon) {
+  font-size: 1em;
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  color: $med-color-neutral-light-prime;
+  font-size: 1em;
+}
+
+// disabled
+:host(.button-has-icon-only.med-button-disabled) ::slotted(ion-icon[slot="icon-only"]) {
+  opacity: $med-opacity-level-medium;
+}
+
+// sizes
+:host([ds-size="xs"].button-has-icon-only) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --padding: 0;
+  font-size: 16px;
+}
+
+:host([ds-size="sm"].button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --padding: 0;
+  font-size: 24px;
+}
+
+/* :host([ds-size="xs"].button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --padding: 0;
+  font-size: 16px;
+}
+
+:host([ds-size="sm"].button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  --padding: 0;
+  font-size: 24px;
+}
+
+:host([ds-size="md"].button-has-icon-only) {
+  --min-height: 40px;
+  --min-width: 40px;
+  --padding: 0;
+  font-size: 32px;
+}
+
+:host([ds-size="lg"].button-has-icon-only) {
+  --min-height: 48px;
+  --min-width: 48px;
+  --padding: 0;
+  font-size: 32px;
+} */
+
+// desktop
+/* :host-context(.plt-desktop):host(.button-has-icon-only) {
+  --padding: #{$med-spacing-inset-nano};
+  --min-height: 40px;
+  --min-width: 40px;
+
+  --background-hover: #{$med-color-neutral-light-10};
+  --background-hover-opacity: #{$med-opacity-level-semitransparent};
+  --border-radius: #{$med-border-radius-full};
+  --ripple-color: rgba(#{$med-color-neutral-light-10-rgb}, #{$med-opacity-level-semitransparent});
+} */
+
+// activated
+/* :host-context(.plt-desktop) :host(.button-has-icon-only.ion-activated) ::slotted(ion-icon[slot="icon-only"]) {
+  opacity: 1;
+} */
+
+// desktop light-mode
+/* :host-context(.plt-desktop.light-mode):host(.button-has-icon-only) {
+  --background-hover: #{$med-color-neutral-dark-10};
+  --background-hover-opacity: #{$med-opacity-level-semitransparent};
+  --border-radius: #{$med-border-radius-full};
+  --ripple-color: rgba(#{$med-color-neutral-dark-10-rgb}, #{$med-opacity-level-semitransparent});
+} */
+
+// desktop sizes
+/* :host-context(.plt-desktop):host([ds-size="xs"].button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  font-size: 16px;
+} */
+
+/* :host-context(.plt-desktop):host([ds-size="sm"].button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  font-size: 24px;
+} */
+
+/* :host-context(.plt-desktop):host([ds-size="md"].button-has-icon-only) {
+  --min-height: 40px;
+  --min-width: 40px;
+  font-size: 32px;
+} */
+
+/* :host-context(.plt-desktop):host([ds-size="lg"].button-has-icon-only) {
+  --padding: #{$med-spacing-inset-xs};
+  --min-height: 48px;
+  --min-width: 48px;
+  font-size: 32px;
+} */
+
+// in med-navbar default
+:host(.in-med-navbar.button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  font-size: 24px;
+}
+
+// in med-navbar default desktop
+/* :host-context(.plt-desktop):host(.in-med-navbar.button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  font-size: 24px;
+} */
+
+// in med-navbar default light-mode
+/* :host-context(.light-mode):host(.in-med-navbar.button-has-icon-only) {
+  ::slotted(ion-icon[slot="icon-only"]) {
+    color: $med-color-neutral-dark-prime;
+  }
+} */
+
+// in med-navbar secondary
+/* :host-context(.med-navbar[ds-name="secondary"]):host(.in-med-navbar.button-has-icon-only) {
+  ::slotted(ion-icon[slot="icon-only"]) {
+    color: $med-color-neutral-dark-prime;
+  }
+} */
+
+// in med-navbar transparent dark
+/* :host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-has-icon-only),
+:host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-has-icon-only) {
+  ::slotted(ion-icon[slot="icon-only"]) {
+    color: $med-color-neutral-dark-prime;
+  }
+} */
+
+// in med-navbar transparent light
+/* :host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-has-icon-only),
+:host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-has-icon-only) {
+  ::slotted(ion-icon[slot="icon-only"]) {
+    color: $med-color-neutral-light-prime;
+  }
+} */
+
+// in med-toolbar
+:host(.in-med-toolbar.button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  font-size: 24px;
+
+  ::slotted(ion-icon[slot="icon-only"]) {
+    color: $med-color-neutral-light-10;
+  }
+}
+
+:host(.in-med-toolbar.button-has-icon-only:not(:last-child)) {
+  margin-right: $med-spacing-inline-xxs;
+}
+
+// in med-toolbar desktop
+/* :host-context(.plt-desktop):host(.in-med-toolbar.button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  font-size: 24px;
+} */
+
+//
+// icon-label
+//
+
+:host(.button-icon-label) {
+  --padding: 0;
+  --color: #{$med-color-neutral-light-prime};
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-regular};
+  --text-transform: normal;
+  --line-height: #{$med-line-height-compressed};
+
+  --background-hover: transparent;
+  --background-hover-opacity: transparent;
+  --background-focused: transparent;
+  --background-focused-opacity: transparent;
+  --ripple-color: transparent;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  margin: 0 $med-spacing-inline-nano 0 0;
+}
+
+::slotted(ion-icon[slot="end"]) {
+  margin: 0 0 0 $med-spacing-inline-nano;
+}
+
+:host(.button-icon-label) ::slotted(ion-icon) {
+  font-size: 24px;
+}
+
+// light-mode
+/* :host-context(.light-mode):host(.button-icon-label) {
+  --color: $med-color-neutral-dark-10;
+} */
+
+// activated
+:host(.button-icon-label.ion-activated) {
+  opacity: $med-opacity-level-half;
+}
+
+// disabled
+:host(.button-icon-label.med-button-disabled) {
+  opacity: $med-opacity-level-medium;
+}
+
+// in med-navbar
+// in med-navbar light-mode
+/* :host-context(.light-mode):host(.in-med-navbar.button-icon-label) {
+  color: $med-color-neutral-dark-prime;
+} */
+
+// in med-navbar secondary
+/* :host-context(.med-navbar[ds-name="secondary"]):host(.in-med-navbar.button-icon-label) {
+  color: $med-color-neutral-dark-prime;
+} */
+
+// in med-navbar transparent dark
+/* :host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-icon-label),
+:host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-icon-label) {
+  color: $med-color-neutral-dark-prime;
+} */
+
+// in med-navbar transparent light
+/* :host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-icon-label),
+:host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-icon-label) {
+  color: $med-color-neutral-light-prime;
+}
+ */
+// in med-toolbar
+:host(.in-med-toolbar.button-icon-label) {
+  color: $med-color-neutral-light-10;
+}
+
+//
+// remoção do ::after
+//
+
+:host(.button-block) .button-native::after,
+.button-native::after,
+:host(.ion-activated) .button-native::after,
+:host(.ion-focused) .button-native::after {
+	display: none;
+}
+
+:host(.med-hovered) .button-native::after {
+  display: none;
+}
+@media (any-hover: hover) {
+  :host(:hover) .button-native::after {
+	  display: none;
+  }
+}
+
+:host(.med-button-solid.ion-color.ion-focused) .button-native::after,
+:host(.med-button-clear.ion-color.ion-focused) .button-native::after,
+:host(.med-button-outline.ion-color.ion-focused) .button-native::after {
+	display: none;
+}
+
+:host(.med-hovered.med-button-solid.ion-color) .button-native::after,
+:host(.med-hovered.med-button-clear.ion-color) .button-native::after,
+:host(.med-hovered.med-button-outline.ion-color) .button-native::after {
+  display: none;
+}
+@media (any-hover: hover) {
+  :host(.med-button-solid.ion-color:hover) .button-native::after,
+	:host(.med-button-clear.ion-color:hover) .button-native::after,
+  :host(.med-button-outline.ion-color:hover) .button-native::after {
+		display: none;
+	}
+}
+
+//
+// replace do ::after pelo ::before
+//
+
+:host(.button-block) .button-native::before {
+  clear: both;
+}
+
+.button-native::before {
+  @include button-state();
+}
+
+:host(.ion-activated) .button-native::before {
+  background: var(--background-activated);
+  opacity: var(--background-activated-opacity);
+}
+
+:host(.ion-focused) .button-native::before {
+  background: var(--background-focused);
+  opacity: var(--background-focused-opacity);
+}
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native::before {
+    background: var(--background-hover);
+    opacity: var(--background-hover-opacity);
+  }
+}
+
+:host(.med-button-solid.ion-color.ion-focused) .button-native::before {
+  background: current-color(contrast);
+  //opacity: .24;
+}
+
+:host(.med-button-outline.ion-color.ion-focused) .button-native::before {
+  background: current-color(base);
+  //opacity: 0;
+}
+
+:host(.med-button-clear.ion-color.ion-focused) .button-native::before {
+  background: current-color(base);
+  //opacity: .12;
+}
+
+@media (any-hover: hover) {
+  :host(.med-button-solid.ion-color:hover) .button-native::before {
+    background: current-color(base);
+    //opacity: .04;
+  }
+
+  :host(.med-button-outline.ion-color:hover) .button-native::before {
+    background: current-color(base);
+    //opacity: .04;
+  }
+
+  :host(.med-button-clear.ion-color:hover) .button-native::before {
+    background: current-color(base);
+    //opacity: .04;
+  }
+}
+
+//
+// documentação storybook
+//
+
+:host(.med-hovered) .button-native::before {
+  background: var(--background-hover);
+  opacity: var(--background-hover-opacity);
+}
+
+:host(.med-hovered.med-button-solid.ion-color) .button-native::before {
+  background: current-color(base);
+  //opacity: .08;
+}
+
+:host(.med-hovered.med-button-clear.ion-color) .button-native::before {
+  background: current-color(base);
+  //opacity: .04;
+}
+
+:host(.med-hovered.med-button-outline.ion-color) .button-native::before {
+  background: current-color(base);
+  //opacity: .04;
+}

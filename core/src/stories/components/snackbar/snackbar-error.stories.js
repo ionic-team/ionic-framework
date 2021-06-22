@@ -44,7 +44,7 @@ const TemplateDefaultError = () => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="primary" @click="${createToastDefaultError}">Abrir Toast</ion-button>
+        <ion-button ds-name="primary" @click="${createToastDefaultError}">Abrir Snackbar</ion-button>
         <!-- component -->
 
       </div>

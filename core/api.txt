@@ -133,6 +133,7 @@ ion-backdrop,event,ionBackdropTap,void,true
 ion-badge,shadow
 ion-badge,prop,color,string | undefined,undefined,false,false
 ion-badge,prop,dsSize,"lg" | "md" | "sm" | undefined,undefined,false,false
+ion-badge,prop,fill,"outline" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,css-prop,--background
 ion-badge,css-prop,--color
@@ -1381,7 +1382,7 @@ med-alternativas,event,medChange,MedAlternativaInterface,true
 med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
 
 med-autocomplete,shadow
-med-autocomplete,prop,disable,boolean,false,false,false
+med-autocomplete,prop,list,boolean,false,false,false
 
 med-banner,shadow
 med-banner,prop,btnLeft,string,undefined,true,false
@@ -1402,6 +1403,10 @@ med-enunciado,event,medGalleryRequest,string,true
 med-enunciado-discursiva,shadow
 med-enunciado-discursiva,prop,imagens,string | string[],undefined,true,true
 med-enunciado-discursiva,event,medGalleryRequest,string,true
+
+med-font-zoom,shadow
+med-font-zoom,prop,emitter,{ emit: (value: MedFontSize) => void; },undefined,true,false
+med-font-zoom,prop,value,MedFontSize.MD | MedFontSize.SM | MedFontSize.XS | MedFontSize.XXS | MedFontSize.XXXS,MedFontSize.XS,false,false
 
 med-header,shadow
 med-header,event,medResize,headerResizeEventDetail,true

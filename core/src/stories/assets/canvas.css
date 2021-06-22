@@ -1,12 +1,12 @@
-:root .dark-mode {
+/* :root body.dark-mode {
   --global-background: #141414;
   --global-color: #fff;
 }
 
-:root .light-mode {
+:root body.light-mode {
   --global-background: #fafafa;
   --global-color: #000;
-}
+} */
 
 html {
   overflow: auto;
@@ -23,10 +23,12 @@ body {
 
 body.sb-show-main.sb-main-padded.dark-mode {
   background-color: #141414;
+  color: #fff;
 }
 
 body.sb-show-main.sb-main-padded.light-mode {
   background-color: #fafafa;
+  color: #000;
 }
 
 body.sb-show-main.sb-main-padded.dark-mode ion-content {

@@ -44,7 +44,7 @@ const TemplateDefaultSuccess = () => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="primary" @click="${createToastDefaultSuccess}">Abrir Toast</ion-button>
+        <ion-button ds-name="primary" @click="${createToastDefaultSuccess}">Abrir Snackbar</ion-button>
         <!-- component -->
 
       </div>

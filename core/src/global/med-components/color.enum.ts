@@ -1,10 +1,10 @@
 export enum MedColors {
   // brand color
-  BRAND_PRIMARY_DARKEST = 'brand-primary-darkest',
-  BRAND_PRIMARY_DARK = 'brand-primary-dark',
-  BRAND_PRIMARY_MEDIUM = 'brand-primary-medium',
-  BRAND_PRIMARY_LIGHT = 'brand-primary-light',
-  BRAND_PRIMARY_LIGHTEST = 'brand-primary-lightest',
+  PRIMARY_DARKEST = 'primary-darkest',
+  PRIMARY_DARK = 'primary-dark',
+  PRIMARY_MEDIUM = 'primary-medium',
+  PRIMARY_LIGHT = 'primary-light',
+  PRIMARY_LIGHTEST = 'primary-lightest',
 
   // aula color
   AULA_DARKEST = 'aula-darkest',

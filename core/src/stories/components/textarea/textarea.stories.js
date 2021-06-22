@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/Autocomplete',
+  title: 'Components/Global/Textarea',
   decorators: [withDesign],
 };
 
@@ -12,7 +12,9 @@ const TemplateDefault = () => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <med-autocomplete></med-autocomplete>
+          <ion-label ds-name="stacked">Stacked</ion-label>
+          <ion-textarea placeholder="Digite o texto aqui."></ion-textarea>
+          <ion-label ds-name="helper">Helper</ion-label>
         <!-- component -->
 
       </div>
@@ -20,10 +22,10 @@ const TemplateDefault = () => {
   `
 }
 
-export const AutoComplete = TemplateDefault.bind({});
-AutoComplete.parameters = {
+export const Default = TemplateDefault.bind({});
+Default.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=2101%3A5',
+    url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=2101%3A6',
   },
 };

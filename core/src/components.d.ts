@@ -10,7 +10,7 @@ import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
-import { RangeValue as RangeValue1 } from "./components/range/range-interface";
+import { MedFontSize } from "./global/med-components/font-size.enum";
 import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
 import { MedImagensZoomInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
 import { navbarResizeEventDetail } from "./components/medgrupo/global/med-navbar/med-navbar-interface";
@@ -212,6 +212,7 @@ export namespace Components {
          */
         "color"?: Color;
         "dsSize"?: 'sm' | 'md' | 'lg';
+        "fill"?: 'outline';
         /**
           * The mode determines which platform styles to use.
          */
@@ -2732,7 +2733,7 @@ export namespace Components {
         "respostaCorreta": string;
     }
     interface MedAutocomplete {
-        "disable": boolean;
+        "list": boolean;
     }
     interface MedBanner {
         "btnLeft": string;
@@ -2751,7 +2752,8 @@ export namespace Components {
         "imagens": string[] | string;
     }
     interface MedFontZoom {
-        "emitter": {emit: (value: RangeValue) => void};
+        "emitter": { emit: (value: MedFontSize) => void };
+        "value": MedFontSize;
     }
     interface MedHeader {
     }
@@ -3340,7 +3342,6 @@ declare global {
     var HTMLMedEnunciadoDiscursivaElement: {
         prototype: HTMLMedEnunciadoDiscursivaElement;
         new (): HTMLMedEnunciadoDiscursivaElement;
-
     };
     interface HTMLMedFontZoomElement extends Components.MedFontZoom, HTMLStencilElement {
     }
@@ -3490,6 +3491,7 @@ declare global {
         "med-cartao-resposta-item": HTMLMedCartaoRespostaItemElement;
         "med-cartao-resposta-lista": HTMLMedCartaoRespostaListaElement;
         "med-enunciado": HTMLMedEnunciadoElement;
+        "med-enunciado-discursiva": HTMLMedEnunciadoDiscursivaElement;
         "med-font-zoom": HTMLMedFontZoomElement;
         "med-header": HTMLMedHeaderElement;
         "med-image-zoom": HTMLMedImageZoomElement;
@@ -3698,6 +3700,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         "dsSize"?: 'sm' | 'md' | 'lg';
+        "fill"?: 'outline';
         /**
           * The mode determines which platform styles to use.
          */
@@ -6247,7 +6250,7 @@ declare namespace LocalJSX {
         "respostaCorreta": string;
     }
     interface MedAutocomplete {
-        "disable"?: boolean;
+        "list"?: boolean;
     }
     interface MedBanner {
         "btnLeft": string;
@@ -6270,7 +6273,8 @@ declare namespace LocalJSX {
         "onMedGalleryRequest"?: (event: CustomEvent<string>) => void;
     }
     interface MedFontZoom {
-        "emitter": {emit: (value: RangeValue) => void};
+        "emitter": { emit: (value: MedFontSize) => void };
+        "value"?: MedFontSize;
     }
     interface MedHeader {
         "onMedResize"?: (event: CustomEvent<headerResizeEventDetail>) => void;

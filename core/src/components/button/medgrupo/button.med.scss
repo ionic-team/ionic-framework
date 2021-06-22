@@ -1,4 +1,3 @@
-
 //
 // custom
 //
@@ -6,6 +5,12 @@
 @import "../../../med-components/abstracts";
 
 :host {
+  --border-radius: #{$med-border-radius-pill};
+  --box-shadow: none;
+  --color: #{$med-color-neutral-light-prime};
+  --transition: background var(--transition-timing) ease-out, color var(--transition-timing) ease-out, border-color var(--transition-timing) ease-out, opacity var(--transition-timing) ease-out;
+
+  // design system
   --padding: #{$med-spacing-squish-base};
   --min-height: 48px;
   --min-width: auto;
@@ -13,12 +18,8 @@
   --font-weight: #{$med-font-weight-semibold};
   --text-transform: uppercase;
   --line-height: #{$med-line-height-compressed};
-
-  --border-radius: #{$med-border-radius-pill};
-  --color: #{$med-color-neutral-light-prime};
-  --box-shadow: none;
   --transition-timing: 300ms;
-  --transition: background var(--transition-timing) ease-out, color var(--transition-timing) ease-out, border-color var(--transition-timing) ease-out, opacity var(--transition-timing) ease-out;
+
   min-height: var(--min-height);
   min-width: var(--min-width);
   height: auto;
@@ -44,8 +45,13 @@
 //
 
 :host(.med-button-disabled) {
-  opacity: 1
+  opacity: 1;
 }
+
+:host(.ion-color.med-button-disabled) {
+  --ion-color-contrast: #fff !important;
+}
+
 
 //
 // primary
@@ -62,7 +68,7 @@
 
 // disabled
 :host(.med-button-solid.med-button-disabled) .button-native {
-  background: #{$med-color-neutral-light-20};
+  background: $med-color-neutral-light-20;
 }
 
 //
@@ -114,7 +120,7 @@
 // disabled
 :host(.med-button-outline.med-button-disabled) {
   --border-color: var(--background-disabled);
-  --color: #{$med-color-neutral-light-20};
+  --color: #{$med-color-neutral-light-20} !important;
 }
 
 // light-mode
@@ -209,13 +215,14 @@
   --color: #{$med-color-neutral-light-prime};
   --min-height: 32px;
   --min-width: 32px;
-  font-size: 32px;
 
   --background-hover: transparent;
   --background-hover-opacity: transparent;
   --background-focused: transparent;
   --background-focused-opacity: transparent;
   --ripple-color: transparent;
+
+  font-size: 32px;
 }
 
 ::slotted(ion-icon) {
@@ -223,18 +230,18 @@
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
-  color: #{$med-color-neutral-light-prime};
+  color: $med-color-neutral-light-prime;
   font-size: 1em;
 }
 
 // activated
 :host(.button-has-icon-only.ion-activated) ::slotted(ion-icon[slot="icon-only"]) {
-  opacity: #{$med-opacity-level-half};
+  opacity: $med-opacity-level-half;
 }
 
 // disabled
 :host(.button-has-icon-only.med-button-disabled) ::slotted(ion-icon[slot="icon-only"]) {
-  opacity: #{$med-opacity-level-medium};
+  opacity: $med-opacity-level-medium;
 }
 
 // sizes
@@ -259,7 +266,7 @@
 // light-mode
 :host-context(.light-mode) {
   ::slotted(ion-icon[slot="icon-only"]) {
-    color: #{$med-color-neutral-dark-10};
+    color: $med-color-neutral-dark-10;
   }
 }
 
@@ -331,14 +338,14 @@
 // in med-navbar default light-mode
 :host-context(.light-mode):host(.in-med-navbar.button-has-icon-only) {
   ::slotted(ion-icon[slot="icon-only"]) {
-    color: #{$med-color-neutral-dark-prime};
+    color: $med-color-neutral-dark-prime;
   }
 }
 
 // in med-navbar secondary
 :host-context(.med-navbar[ds-name="secondary"]):host(.in-med-navbar.button-has-icon-only) {
   ::slotted(ion-icon[slot="icon-only"]) {
-    color: #{$med-color-neutral-dark-prime};
+    color: $med-color-neutral-dark-prime;
   }
 }
 
@@ -346,7 +353,7 @@
 :host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-has-icon-only),
 :host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-has-icon-only) {
   ::slotted(ion-icon[slot="icon-only"]) {
-    color: #{$med-color-neutral-dark-prime};
+    color: $med-color-neutral-dark-prime;
   }
 }
 
@@ -354,7 +361,7 @@
 :host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-has-icon-only),
 :host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-has-icon-only) {
   ::slotted(ion-icon[slot="icon-only"]) {
-    color: #{$med-color-neutral-light-prime};
+    color: $med-color-neutral-light-prime;
   }
 }
 
@@ -365,12 +372,12 @@
   font-size: 24px;
 
   ::slotted(ion-icon[slot="icon-only"]) {
-    color: #{$med-color-neutral-light-10};
+    color: $med-color-neutral-light-10;
   }
 }
 
 :host(.in-med-toolbar.button-has-icon-only:not(:last-child)) {
-  margin-right: #{$med-spacing-inline-xxs};
+  margin-right: $med-spacing-inline-xxs;
 }
 
 // in med-toolbar desktop
@@ -400,11 +407,11 @@
 }
 
 ::slotted(ion-icon[slot="start"]) {
-  margin: 0 #{$med-spacing-inline-nano} 0 0;
+  margin: 0 $med-spacing-inline-nano 0 0;
 }
 
 ::slotted(ion-icon[slot="end"]) {
-  margin: 0 0 0 #{$med-spacing-inline-nano};
+  margin: 0 0 0 $med-spacing-inline-nano;
 }
 
 :host(.button-icon-label) ::slotted(ion-icon) {
@@ -413,45 +420,45 @@
 
 // light-mode
 :host-context(.light-mode):host(.button-icon-label) {
-  --color: #{$med-color-neutral-dark-10};
+  --color: $med-color-neutral-dark-10;
 }
 
 // activated
 :host(.button-icon-label.ion-activated) {
-  opacity: #{$med-opacity-level-half};
+  opacity: $med-opacity-level-half;
 }
 
 // disabled
 :host(.button-icon-label.med-button-disabled) {
-  opacity: #{$med-opacity-level-medium};
+  opacity: $med-opacity-level-medium;
 }
 
 // in med-navbar
 // in med-navbar light-mode
 :host-context(.light-mode):host(.in-med-navbar.button-icon-label) {
-  color: #{$med-color-neutral-dark-prime};
+  color: $med-color-neutral-dark-prime;
 }
 
 // in med-navbar secondary
 :host-context(.med-navbar[ds-name="secondary"]):host(.in-med-navbar.button-icon-label) {
-  color: #{$med-color-neutral-dark-prime};
+  color: $med-color-neutral-dark-prime;
 }
 
 // in med-navbar transparent dark
 :host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-icon-label),
 :host-context(.dark-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="dark"]):host(.in-med-navbar.button-icon-label) {
-  color: #{$med-color-neutral-dark-prime};
+  color: $med-color-neutral-dark-prime;
 }
 
 // in med-navbar transparent light
 :host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-icon-label),
 :host-context(.light-mode):host-context(.med-navbar[ds-name="transparent"][ds-theme="light"]):host(.in-med-navbar.button-icon-label) {
-  color: #{$med-color-neutral-light-prime};
+  color: $med-color-neutral-light-prime;
 }
 
 // in med-toolbar
 :host(.in-med-toolbar.button-icon-label) {
-  color: #{$med-color-neutral-light-10};
+  color: $med-color-neutral-light-10;
 }
 
 //
@@ -515,35 +522,25 @@
 }
 
 :host(.med-button-solid.ion-color.ion-focused) .button-native::before {
-  background: #{current-color(contrast)};
+  background: current-color(contrast);
   opacity: .24;
 }
 
 :host(.med-button-clear.ion-color.ion-focused) .button-native::before,
 :host(.med-button-outline.ion-color.ion-focused) .button-native::before {
-  background: #{current-color(base)};
+  background: current-color(base);
   opacity: .12;
 }
 
 @media (any-hover: hover) {
   :host(.med-button-solid.ion-color:hover) .button-native::before {
-    background: #{current-color(contrast)};
+    background: current-color(contrast);
     opacity: .08;
   }
 
   :host(.med-button-clear.ion-color:hover) .button-native::before,
   :host(.med-button-outline.ion-color:hover) .button-native::before {
-    background: #{current-color(base)};
+    background: current-color(base);
     opacity: .04;
   }
 }
-
-//
-// Variações dispositivos
-//
-
-/* @include media-breakpoint-down('xs', $med-grid-breakpoints) {
-  :host(.med-button-clear[icon-label]) {
-    font-size: #{$med-font-size-xxs};
-  }
-} */

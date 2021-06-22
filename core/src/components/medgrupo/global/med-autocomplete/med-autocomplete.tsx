@@ -6,7 +6,8 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class MedAutocomplete {
-@Prop() disable = false;
+  @Prop() list = false;
+
   render() {
     return (
       <Host>
@@ -29,7 +30,7 @@ export class MedAutocomplete {
           </li>
         </ul>
 
-        {this.disable && <span class="msg">Nenhum item encontrado.</span>}
+        {this.list && <span class="msg">Nenhum item encontrado.</span>}
       </Host>
     );
   }

@@ -1,18 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplateSecondary = ({ disabled, size, label }) => {
+const TemplateSecondary = ({ color, disabled, size, slot }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="secondary" ?disabled=${disabled} ds-size=${size}>${label}</ion-button>
+        <ion-button .color=${color} ds-name="secondary" ?disabled=${disabled} ds-size=${size}>${slot}</ion-button>
         <!-- component -->
 
       </div>
@@ -28,6 +29,15 @@ ButtonSecondary.parameters = {
   },
 }
 ButtonSecondary.argTypes = {
+  color: {
+    options: medColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -46,12 +56,13 @@ ButtonSecondary.argTypes = {
       defaultValue: { summary: 'undefined' },
     },
   },
-  label: {
+  slot: {
     control: { type: 'text' },
     defaultValue: 'button',
-    description: "Digite algo!",
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type:  { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'button' },
     },
   },
 };

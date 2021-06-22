@@ -1,7 +1,8 @@
 @import "../../../../../med-components/abstracts";
 
 :host(.med-navbar) {
-  --padding: #{$med-spacing-squish-xs};
+  // #{$med-spacing-squish-xs};
+  --padding: var(--ion-safe-area-top, 0) #{$med-spacing-inset-sm} 0 #{$med-spacing-inset-sm};
   --background: #{$med-color-neutral-dark-prime};
 
   --title-color: #{$med-color-neutral-light-prime};
@@ -26,7 +27,7 @@
 
     &__container {
       padding: var(--padding);
-      padding-top: var(--ion-safe-area-top, 0);
+      //padding-top: var(--ion-safe-area-top, 0);
 
       position: relative;
       display: flex;

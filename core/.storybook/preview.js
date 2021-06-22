@@ -1,3 +1,4 @@
+// ionic
 import { defineCustomElements} from '../loader/index.js';
 import '../css/core.css';
 import '../css/display.css';
@@ -11,10 +12,14 @@ import '../css/structure.css';
 import '../css/text-alignment.css';
 import '../css/text-transformation.css';
 import '../css/typography.css';
-import '../src/stories/assets/fsemeric.css';
-import '../src/stories/assets/custom.css';
-
 defineCustomElements();
+
+// storybook canvas
+import '../src/stories/assets/canvas.css';
+
+// med-components
+import '../src/stories/assets/fsemeric.css';
+import '../css/medsoft-theme.css';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -24,22 +29,22 @@ export const parameters = {
     {
       name: 'Dark Mode',
       class: ['dark-mode'],
-      color: '#000'
+      color: '#000',
+      default: true
     },
     {
       name: 'Light Mode',
       class: ['light-mode'],
       color: '#fff',
-      default: true
     },
     {
       name: 'Gold - Dark Mode',
-      class: ['dark-mode', 'gold-mode'],
+      class: ['dark-mode', 'theme-gold'],
       color: '#b89d58'
     },
     {
       name: 'Gold - Light Mode',
-      class: ['light-mode', 'gold-mode'],
+      class: ['light-mode', 'theme-gold'],
       color: '#b89d58'
     },
     {

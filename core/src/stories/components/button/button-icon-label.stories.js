@@ -1,20 +1,22 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 import { medIcons } from '../../med-icons';
+import { medColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplateIconlabel = ({ disabled, iconName, label }) => {
+const TemplateIconlabel = ({ disabled, iconName, slot }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
+        <h2>Slot start</h2>
         <ion-button ds-name="icon-label" ?disabled=${disabled}>
-          ${label}
+          ${slot}
           <ion-icon name=${iconName} slot="start"></ion-icon>
         </ion-button>
         <!-- component -->
@@ -22,9 +24,10 @@ const TemplateIconlabel = ({ disabled, iconName, label }) => {
         <div style="width: 100%;"></div>
 
         <!-- component -->
+        <h2>Slot end</h2>
         <ion-button ds-name="icon-label" ?disabled=${disabled}>
           <ion-icon name=${iconName} slot="end"></ion-icon>
-          ${label}
+          ${slot}
         </ion-button>
         <!-- component -->
 
@@ -41,6 +44,15 @@ ButtonIconLabel.parameters = {
   },
 }
 ButtonIconLabel.argTypes = {
+  color: {
+    options: medColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -54,17 +66,19 @@ ButtonIconLabel.argTypes = {
     options: medIcons,
     control: { type: 'select'},
     defaultValue: 'med-arrow-left-circle',
-    description: "Mude o ícone!",
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type:  { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'med-arrow-left-circle' },
     },
   },
-  label: {
+  slot: {
     control: { type: 'text' },
     defaultValue: 'button',
-    description: "Digite algo!",
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type: { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'button' },
     },
   },
 };

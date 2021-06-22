@@ -50,8 +50,8 @@ export class IonBackdrop {
 }
 export declare interface IonBadge extends Components.IonBadge {
 }
-@ProxyCmp({ inputs: ["color", "dsSize", "mode"] })
-@Component({ selector: "ion-badge", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "dsSize", "mode"] })
+@ProxyCmp({ inputs: ["color", "dsSize", "fill", "mode"] })
+@Component({ selector: "ion-badge", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "dsSize", "fill", "mode"] })
 export class IonBadge {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -897,8 +897,8 @@ export class MedAlternativas {
 }
 export declare interface MedAutocomplete extends Components.MedAutocomplete {
 }
-@ProxyCmp({ inputs: ["disable"] })
-@Component({ selector: "med-autocomplete", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["disable"] })
+@ProxyCmp({ inputs: ["list"] })
+@Component({ selector: "med-autocomplete", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["list"] })
 export class MedAutocomplete {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -969,8 +969,8 @@ export class MedEnunciadoDiscursiva {
 }
 export declare interface MedFontZoom extends Components.MedFontZoom {
 }
-@ProxyCmp({ inputs: ["emitter"] })
-@Component({ selector: "med-font-zoom", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["emitter"] })
+@ProxyCmp({ inputs: ["emitter", "value"] })
+@Component({ selector: "med-font-zoom", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["emitter", "value"] })
 export class MedFontZoom {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

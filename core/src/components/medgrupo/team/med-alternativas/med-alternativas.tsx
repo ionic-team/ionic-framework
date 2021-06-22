@@ -28,7 +28,7 @@ export class MedAlternativas implements MedAlternativasInterface {
       if (alternativa === this.respostaCorreta) {
         classe += ' alternativa--correta';
       } else if (alternativa === this.alternativaSelecionada) {
-         classe += ' alternativa--incorreto';
+        classe += ' alternativa--incorreto';
       }
     }
 
@@ -77,7 +77,7 @@ export class MedAlternativas implements MedAlternativasInterface {
                 </med-option>
 
                 <div class='alternativa__right'>
-                  {alternativa[this.keyEnunciado] && <div class='alternativa__text' innerHTML={alternativa[this.keyEnunciado]} ></div>}
+                  {alternativa[this.keyEnunciado] && <div class='alternativa__text' innerHTML={alternativa[this.keyEnunciado]}></div>}
 
                   <div class='image-container' onClick={() => this.imageRequest(alternativa)}>
                     {alternativa[this.keyImagem] && <img class='alternativa__image' src={alternativa[this.keyImagem]} />}
@@ -96,6 +96,11 @@ export class MedAlternativas implements MedAlternativasInterface {
                     value={alternativa[this.keyPorcentagem]}>
                   </ion-progress-bar>
                 </div>
+
+                {/* <div class="riscar">
+                  <ion-icon name="med-riscar"></ion-icon>
+                  <span class="riscar__label">Riscar</span>
+                </div> */}
               </li>
             ))}
 

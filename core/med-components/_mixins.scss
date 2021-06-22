@@ -116,3 +116,45 @@
     }
   }
 }
+
+//
+// theme
+//
+
+@mixin generate-custom-theme($name) {
+  :root {
+    .theme-#{$name} {
+      @each $key, $value in $colors {
+        $base: map-get(map-get($colors, $key), base);
+        $contrast: map-get(map-get($colors, $key), contrast);
+        $shade: map-get(map-get($colors, $key), shade);
+        $tint: map-get(map-get($colors, $key), tint);
+
+        --ion-color-#{$key}: #{$base};
+        --ion-color-#{$key}-rgb: #{list-color-rgb($base)};
+        --ion-color-#{$key}-contrast: #{$contrast};
+        --ion-color-#{$key}-contrast-rgb: #{list-color-rgb($contrast)};
+        --ion-color-#{$key}-shade: #{$shade};
+        --ion-color-#{$key}-tint: #{$tint};
+      }
+    }
+  }
+
+  .theme-#{$name} {
+    @each $key, $value in $colors {
+      .ion-color-#{$key} {
+        $base: map-get(map-get($colors, $key), base);
+        $contrast: map-get(map-get($colors, $key), contrast);
+        $shade: map-get(map-get($colors, $key), shade);
+        $tint: map-get(map-get($colors, $key), tint);
+
+        --ion-color-base: var(--ion-color-#{$key}, #{$base}) !important;
+        --ion-color-base-rgb: var(--ion-color-#{$key}-rgb, #{list-color-rgb($base)}) !important;
+        --ion-color-contrast: var(--ion-color-#{$key}-contrast, #{$contrast}) !important;
+        --ion-color-contrast-rgb: var(--ion-color-#{$key}-contrast-rgb, #{list-color-rgb($contrast)}) !important;
+        --ion-color-shade: var(--ion-color-#{$key}-shade, #{$shade}) !important;
+        --ion-color-tint: var(--ion-color-#{$key}-tint, #{$tint}) !important;
+      }
+    }
+  }
+}

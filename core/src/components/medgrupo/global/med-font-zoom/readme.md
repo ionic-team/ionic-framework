@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property               | Attribute | Description | Type                                     | Default     |
-| ---------------------- | --------- | ----------- | ---------------------------------------- | ----------- |
-| `emitter` _(required)_ | --        |             | `{ emit: (value: RangeValue) => void; }` | `undefined` |
+| Property               | Attribute | Description | Type                                                                                        | Default          |
+| ---------------------- | --------- | ----------- | ------------------------------------------------------------------------------------------- | ---------------- |
+| `emitter` _(required)_ | --        |             | `{ emit: (value: MedFontSize) => void; }`                                                   | `undefined`      |
+| `value`                | `value`   |             | `MedFontSize.MD \| MedFontSize.SM \| MedFontSize.XS \| MedFontSize.XXS \| MedFontSize.XXXS` | `MedFontSize.XS` |
 
 
 ## Dependencies

@@ -1,12 +1,14 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medColors } from '../../med-colors';
+import { medIcons } from '../../med-icons';
 
 export default {
   title: 'Components/Global/Button',
   decorators: [withDesign],
 };
 
-const TemplateIconOnly = ({ disabled, size, platform, iconName }) => {
+const TemplateIconOnly = ({ color, disabled, size, platform, iconName }) => {
   if (platform === 'Mobile') {
     document.querySelector('html').classList.remove('plt-desktop');
   } else if (platform === 'Desktop') {
@@ -18,7 +20,7 @@ const TemplateIconOnly = ({ disabled, size, platform, iconName }) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-button ds-name="icon-only" ?disabled=${disabled} ds-size=${size}>
+        <ion-button ds-name="icon-only" .color=${color} ?disabled=${disabled} ds-size=${size}>
           <ion-icon slot="icon-only" name=${iconName}></ion-icon>
         </ion-button>
         <!-- component -->
@@ -36,6 +38,15 @@ ButtonIconOnly.parameters = {
   },
 }
 ButtonIconOnly.argTypes = {
+  color: {
+    options: medColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
@@ -59,16 +70,17 @@ ButtonIconOnly.argTypes = {
     options: medIcons,
     control: { type: 'select'},
     defaultValue: 'med-arrow-left-circle',
-    description: "Mude o ícone!",
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type:  { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'med-arrow-left-circle' },
     },
   },
   platform: {
     defaultValue: 'Desktop',
     options: ['Desktop', 'Mobile'],
     control: { type: 'radio' },
-    description: 'Muda a visualização do componente entre plataformas. **Usado apenas no storybook para visualização.**',
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
       type:  { summary: ['desktop | mobile'] },
       defaultValue: { summary: 'desktop' },
