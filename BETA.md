@@ -6,6 +6,8 @@ Thanks for your interest in trying out the Framework v6 beta! We are looking for
 
 We have worked to make the Framework v6 migration as easy as possible, so the upgrade process should be a breeze!
 
+Developers can follow the guide below to begin updating their existing apps to Framework v6. If you want to try out Framework v6 in a new app, you can create a starter application using `ionic start` with the Ionic CLI and then follow the guide below. See https://ionicframework.com/docs/intro/cli for information on how to get started with a new Ionic Framework application.
+
 > Note: Framework v6 is currently in beta, so do not push any apps running v6 to production!
 
 ### Ionic Vue
