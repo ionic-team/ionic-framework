@@ -1,9 +1,9 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medsoftColors } from '../../med-colors'
+import { medsoftColors } from '../../med-colors'
 
 export default {
-  title: 'Components/Global/Button',
+  title: 'Components/Examples',
   decorators: [withDesign],
 };
 
@@ -12,23 +12,34 @@ const TemplatePrimary = ({ color, disabled, expand, size, slot }) => {
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
-        <!-- component -->
-          <ion-button ds-name="primary" .color=${color} ?disabled=${disabled} .expand=${expand} ds-size=${size}>${slot}</ion-button>
-        <!-- component -->
+        <div style="margin-bottom: 50px;">
+          <ion-button ds-name="primary" color="brand-primary" ?disabled=${disabled} .expand=${expand} ds-size=${size}>brand</ion-button>
+        </div>
+
+        <div>
+          <ion-button style="margin: 25px;" ds-name="primary" color="questoes" ?disabled=${disabled} .expand=${expand} ds-size=${size}>questões</ion-button>
+          <ion-button style="margin: 25px;" ds-name="primary" color="aula" ?disabled=${disabled} .expand=${expand} ds-size=${size}>aulas</ion-button>
+          <ion-button style="margin: 25px;" ds-name="primary" color="material" ?disabled=${disabled} .expand=${expand} ds-size=${size}>material</ion-button>
+          <ion-button style="margin: 25px;" ds-name="primary" color="provaschecklist" ?disabled=${disabled} .expand=${expand} ds-size=${size}>provas</ion-button>
+        </div>
+
+        <div>
+          <ion-button style="margin-top: 50px;" ds-name="primary" .color=${color} ?disabled=${disabled} .expand=${expand} ds-size=${size}>dinamico</ion-button>
+        </div>
 
       </div>
     </ion-app>
   `
 }
 
-export const ButtonPrimary = TemplatePrimary.bind({});
-ButtonPrimary.parameters = {
+export const Theme = TemplatePrimary.bind({});
+Theme.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=729%3A189',
   },
 }
-ButtonPrimary.argTypes = {
+Theme.argTypes = {
   color: {
     options: medsoftColors,
     control: { type: 'select'},

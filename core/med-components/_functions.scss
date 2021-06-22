@@ -60,3 +60,33 @@
 
   @return $number;
 }
+
+//
+// theme
+//
+
+@function medsoft-current-color($variation, $alpha: null) {
+  @if $alpha == null {
+    @return var(--med-color-#{$variation});
+  } @else {
+    @return rgba(var(--med-color-#{$variation}-rgb), #{$alpha});
+  }
+}
+
+@function medsoft-color($name, $variation, $alpha: null, $rgb: null) {
+  $values: map-get($medsoft-colors, $name);
+  $value: map-get($values, $variation);
+  $variable: --med-color-#{$name}-#{$variation};
+
+  @if ($alpha) {
+    $value: color-to-rgb-list($value);
+    @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
+
+  @if ($rgb) {
+    $value: color-to-rgb-list($value);
+    $variable: #{$variable}-rgb;
+  }
+
+  @return var(#{$variable}, $value);
+}
