@@ -11,11 +11,9 @@
   "devDependencies": {
     "@octokit/rest": "^17.11.2",
     "colorette": "^1.2.1",
-    "conventional-changelog-cli": "^2.1.0",
     "execa": "^0.10.0",
     "fs-extra": "^7.0.0",
     "inquirer": "^6.0.0",
-    "lerna": "^3.22.1",
     "listr": "^0.14.0",
     "rimraf": "^2.6.3",
     "semver": "^5.5.0"
