@@ -118,7 +118,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/tabs-new/',
-    component: () => import('@/views/Tabs.vue'),
+    component: () => import('@/views/TabsNew.vue'),
     children: [
       {
         path: '',

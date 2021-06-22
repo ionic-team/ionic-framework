@@ -89,6 +89,31 @@
         <ion-button class="custom ion-activated" color="warning" fill="outline">Outline</ion-button>
         <ion-button class="custom ion-activated" color="dark" fill="clear">Clear</ion-button>
       </p>
+
+      <div class="custom-variables">
+        <ion-button>Button</ion-button>
+        <ion-button fill="clear">Button</ion-button>
+        <ion-button fill="outline">Button</ion-button>
+
+        <br>
+
+        <ion-button class="ion-focused">Button</ion-button>
+        <ion-button class="ion-focused" fill="clear">Button</ion-button>
+        <ion-button class="ion-focused" fill="outline">Button</ion-button>
+
+        <br>
+
+        <ion-button color="tertiary">Button</ion-button>
+        <ion-button color="tertiary" fill="clear">Button</ion-button>
+        <ion-button color="tertiary" fill="outline">Button</ion-button>
+
+        <br>
+
+        <ion-button color="tertiary" class="ion-focused">Button</ion-button>
+        <ion-button color="tertiary" class="ion-focused" fill="clear">Button</ion-button>
+        <ion-button color="tertiary" class="ion-focused" fill="outline">Button</ion-button>
+      </div>
+
     </ion-content>
   </ion-app>
 
@@ -109,6 +134,17 @@
     /* TODO should this inherit or users set all */
     .custom {
       --color: red;
+    }
+
+    .custom-variables ion-button {
+      --color: black;
+
+      --background: pink;
+      --background-focused: red;
+      --background-hover: green;
+
+      --background-focused-opacity: .5;
+      --background-hover-opacity: .5;
     }
   </style>
 </body>
