@@ -1,0 +1,43 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Toolbar/Usage" />
+
+# Toolbar
+
+## Slots
+
+| Slot                | Descrição                                   |
+| ------------------- | ------------------------------------------- |
+| **slot="start"**    | Posiciona um elemento no começo da toolbar. |
+| **slot="end"**      | Posiciona um elemento no fim da toolbar.    |
+
+```html
+<med-toolbar>
+  <ion-button ds-name="icon-label" disabled slot="start">
+    <ion-icon name="med-arrow-left-circle" slot="start"></ion-icon>
+    anterior
+  </ion-button>
+
+  <ul>
+    <li>
+      <ion-button ds-name="icon-only">
+        <ion-icon slot="icon-only" name="med-star-outline"></ion-icon>
+      </ion-button>
+      <ion-button ds-name="icon-only">
+        <ion-icon slot="icon-only" name="med-eye-show-line"></ion-icon>
+      </ion-button>
+      <ion-button ds-name="icon-only">
+        <ion-icon slot="icon-only" name="med-notes"></ion-icon>
+      </ion-button>
+      <ion-button ds-name="icon-only">
+        <ion-icon slot="icon-only" name="med-font-size"></ion-icon>
+      </ion-button>
+    </li>
+  </ul>
+
+  <ion-button ds-name="icon-label" slot="end">
+    próxima
+    <ion-icon name="med-arrow-right-circle" slot="end"></ion-icon>
+  </ion-button>
+</med-toolbar>
+```

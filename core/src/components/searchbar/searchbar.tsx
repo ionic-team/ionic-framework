@@ -13,7 +13,7 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-searchbar',
   styleUrls: {
     ios: 'searchbar.ios.scss',
-    md: 'searchbar.md.scss'
+    md: 'searchbar.ios.scss'
   },
   scoped: true
 })
@@ -104,7 +104,7 @@ export class Searchbar implements ComponentInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() placeholder = 'Search';
+  @Prop() placeholder = 'Pesquisar';
 
   /**
    * The icon to use as the search icon. Defaults to `"search-outline"` in

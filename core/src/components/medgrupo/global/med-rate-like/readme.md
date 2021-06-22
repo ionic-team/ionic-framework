@@ -5,11 +5,18 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type                                                 | Default     |
+| -------- | --------- | ----------- | ---------------------------------------------------- | ----------- |
+| `status` | `status`  |             | `RateStatus.DISLIKE \| RateStatus.LIKE \| undefined` | `undefined` |
+
+
 ## Events
 
-| Event       | Description | Type                               |
-| ----------- | ----------- | ---------------------------------- |
-| `medChange` |             | `CustomEvent<"dislike" \| "like">` |
+| Event       | Description | Type                                                 |
+| ----------- | ----------- | ---------------------------------------------------- |
+| `medChange` |             | `CustomEvent<RateStatus.DISLIKE \| RateStatus.LIKE>` |
 
 
 ## Dependencies

@@ -332,6 +332,19 @@ export default defineComponent({
 | `--pin-color`             | Color of the range pin             |
 
 
+## Dependencies
+
+### Used by
+
+ - [med-font-zoom](../medgrupo/global/med-font-zoom)
+
+### Graph
+```mermaid
+graph TD;
+  med-font-zoom --> ion-range
+  style ion-range fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -152,6 +152,15 @@ export default defineComponent({
 | `"track"`    | The track bar behind the progress bar. If the `buffer` property is set and `type` is `"determinate"` the track will be the width of the `buffer` value. |
 
 
+## CSS Custom Properties
+
+| Name                    | Description                                                            |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `--background`          | Background of the progress track, or the buffer bar if `buffer` is set |
+| `--buffer-background`   | DEPRECATED, use `--background` instead                                 |
+| `--progress-background` | Background of the progress bar representing the current value          |
+
+
 ## Dependencies
 
 ### Used by

@@ -16,6 +16,10 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class Badge implements ComponentInterface {
+  // custom
+  @Prop() dsSize?: 'sm' | 'md' | 'lg';
+  @Prop() fill?: 'outline'
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -31,7 +35,9 @@ export class Badge implements ComponentInterface {
           [mode]: true,
         })}
       >
-        <slot></slot>
+        <span class="inner">
+          <slot></slot>
+        </span>
       </Host>
     );
   }

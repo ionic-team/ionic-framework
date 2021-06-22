@@ -8,6 +8,7 @@ module.exports = {
     "@storybook/addon-essentials",
     '@storybook/addon-a11y',
     'storybook-addon-themes',
-    'storybook-addon-designs'
+    'storybook-addon-designs',
+    'storybook-design-token'
   ]
 }

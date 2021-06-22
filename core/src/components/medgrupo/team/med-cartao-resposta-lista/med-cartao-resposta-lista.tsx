@@ -10,7 +10,9 @@ export class MedCartaoRespostaLista {
   render() {
     return (
       <Host from-stencil>
-        <slot></slot>
+        <div class="wrapper">
+          <slot></slot>
+        </div>
       </Host>
     );
   }

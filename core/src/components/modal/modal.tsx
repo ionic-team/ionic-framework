@@ -20,7 +20,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 @Component({
   tag: 'ion-modal',
   styleUrls: {
-    ios: 'modal.ios.scss',
+    ios: 'modal.md.scss',
     md: 'modal.md.scss'
   },
   scoped: true

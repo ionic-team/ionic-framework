@@ -108,3 +108,29 @@
   color: inherit;
 }
 
+@import './label.med.scss';
+
+//custom
+
+@import "../../../med-components/abstracts";
+
+:host([ds-name="stacked"]) {
+  color: #{$med-color-neutral-dark-10};
+  margin-bottom: #{$med-spacing-stack-xxxs};
+  font-size: #{$med-font-size-xxs};
+  font-weight: #{$med-font-weight-regular};
+  line-height: #{$med-line-height-compressed};
+  display: flex;
+}
+
+:host([ds-name="helper"]) {
+  color: #{$med-color-neutral-light-30};
+  font-size: #{$med-font-size-xxxs};
+  font-weight: #{$med-font-weight-regular};
+  line-height: line-height();
+  display: flex;
+}
+
+:host([ds-name="helper"][error]) {
+  color: #{$med-color-feedback-error-medium};
+}

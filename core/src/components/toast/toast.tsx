@@ -235,22 +235,22 @@ export class Toast implements ComponentInterface, OverlayInterface {
       [`toast-button-group-${side}`]: true
     };
     return (
-      <div class={buttonGroupsClasses}>
-        {buttons.map(b =>
-          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button">
-            <div class="toast-button-inner">
-              {b.icon &&
-                <ion-icon
-                  icon={b.icon}
-                  slot={b.text === undefined ? 'icon-only' : undefined}
-                  class="toast-icon"
-                />}
-              {b.text}
-            </div>
-            {mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
-          </button>
-        )}
-      </div>
+        <div class={buttonGroupsClasses}>
+          {buttons.map(b =>
+            <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button">
+              <div class="toast-button-inner">
+                {b.icon &&
+                  <ion-icon
+                    icon={b.icon}
+                    slot={b.text === undefined ? 'icon-only' : undefined}
+                    class="toast-icon"
+                  />}
+                {b.text}
+              </div>
+              {mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
+            </button>
+          )}
+        </div>
     );
   }
 
@@ -265,7 +265,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     };
 
     return (
-      <Host
+      <Host from-stencil
         style={{
           zIndex: `${60000 + this.overlayIndex}`,
         }}

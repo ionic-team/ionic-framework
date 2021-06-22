@@ -28,7 +28,7 @@ export class MedAlternativas implements MedAlternativasInterface {
       if (alternativa === this.respostaCorreta) {
         classe += ' alternativa--correta';
       } else if (alternativa === this.alternativaSelecionada) {
-         classe += ' alternativa--incorreto';
+        classe += ' alternativa--incorreto';
       }
     }
 
@@ -77,20 +77,30 @@ export class MedAlternativas implements MedAlternativasInterface {
                 </med-option>
 
                 <div class='alternativa__right'>
-                  {alternativa[this.keyEnunciado] && <div class='alternativa__text' innerHTML={alternativa[this.keyEnunciado]} ></div>}
+                  {alternativa[this.keyEnunciado] && <div class='alternativa__text' innerHTML={alternativa[this.keyEnunciado]}></div>}
 
                   <div class='image-container' onClick={() => this.imageRequest(alternativa)}>
                     {alternativa[this.keyImagem] && <img class='alternativa__image' src={alternativa[this.keyImagem]} />}
-                    <div class='image-container__overlay'>Clique para ampliar</div>
+                    <div class='overlay'>
+                      <div class="overlay__content">
+                        <p class="overlay__label">clique para ampliar</p>
+                        <ion-icon name="med-expand"></ion-icon>
+                      </div>
+                    </div>
                   </div>
 
-                  <ion-progress-bar class={`
+                  <ion-progress-bar percentage class={`
                     ion-progress-bar
                     ${this.mostraResposta && this.alternativaSelecionada ? 'ion-progress-bar--toggle' : '' }
-                    ${alternativa[this.keyPorcentagem] === 100 ? 'ion-progress-bar--100' : '' }`}
+                    ${alternativa[this.keyPorcentagem] === 1 ? 'ion-progress-bar--100' : '' }`}
                     value={alternativa[this.keyPorcentagem]}>
                   </ion-progress-bar>
                 </div>
+
+                {/* <div class="riscar">
+                  <ion-icon name="med-riscar"></ion-icon>
+                  <span class="riscar__label">Riscar</span>
+                </div> */}
               </li>
             ))}
 

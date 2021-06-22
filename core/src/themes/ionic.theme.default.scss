@@ -82,31 +82,38 @@ $colors:  (
     tint:             get-color-tint($dark)
   ),
 
-  brand-primary-darkest: (
+  /* primary-gradient: (
+    base:             $med-color-brand-primary-gradient,
+    contrast:         #fff,
+    shade:            $med-color-brand-primary-medium,
+    tint:             $med-color-brand-primary-medium
+  ), */
+
+  primary-darkest: (
     base:             $med-color-brand-primary-darkest,
     contrast:         #fff,
     shade:            get-color-shade($med-color-brand-primary-darkest),
     tint:             get-color-tint($med-color-brand-primary-darkest)
   ),
-  brand-primary-dark: (
+  primary-dark: (
     base:             $med-color-brand-primary-dark,
     contrast:         #fff,
     shade:            get-color-shade($med-color-brand-primary-dark),
     tint:             get-color-tint($med-color-brand-primary-dark)
   ),
-  brand-primary-medium: (
+  primary-medium: (
     base:             $med-color-brand-primary-medium,
     contrast:         #fff,
     shade:            get-color-shade($med-color-brand-primary-medium),
     tint:             get-color-tint($med-color-brand-primary-medium)
   ),
-  brand-primary-light: (
+  primary-light: (
     base:             $med-color-brand-primary-light,
     contrast:         #000,
     shade:            get-color-shade($med-color-brand-primary-light),
     tint:             get-color-tint($med-color-brand-primary-light)
   ),
-  brand-primary-lightest: (
+  primary-lightest: (
     base:             $med-color-brand-primary-lightest,
     contrast:         #000,
     shade:            get-color-shade($med-color-brand-primary-lightest),

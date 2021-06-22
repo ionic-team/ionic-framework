@@ -13,7 +13,14 @@
 
     <script nomodule src="./dist/ionic/ionic.js"></script>
     <script type="module" src="./dist/ionic/ionic.esm.js"></script></head>
-
+    <script type="module">
+      import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+      window.modalController = modalController;
+    </script>
+      <script type="module">
+        import { toastController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+        window.toastController = toastController;
+      </script>
     <style>
       :root {
         --ion-font-family: 'fsemeric';
@@ -31,69 +38,169 @@
       .light-mode ion-content {
         --background: #fafafa;
       }
+      .modal {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 500px;
+        height: 500px;
+        background-color: aquamarine;
+      }
     </style>
-    <script type="module">
-      import { popoverController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
-      window.popoverController = popoverController;
-    </script>
   </head>
   <body class="dark-mode">
     <ion-app>
-      <ion-content>
-        <button id="theme">toggle theme</button>
 
-        <ion-button expand="block">Show Popover</ion-button>
+      <med-header>
+        <med-navbar slot="navbar">
+          <ion-button ds-name="icon-label" slot="left">
+            <ion-icon name="med-chevron-left"></ion-icon>
+            voltar
+          </ion-button>
+
+          <span slot="title">Título</span>
+          <span slot="subtitle">subtítulo</span>
+
+          <ion-button ds-name="icon-only" slot="right">
+            <ion-icon slot="icon-only" name="med-star-filled"></ion-icon>
+          </ion-button>
+        </med-navbar>
+      </med-header>
+
+      <ion-content fullscreen class="ion-padding">
+        <ion-icon name="med-configuracoes">teste</ion-icon>
+        <ion-icon name="med-arrow-up">teste</ion-icon>
+        <ion-icon name="med-arrow-down">teste</ion-icon>
+        <ion-button id="toastID"  expand="block" fill="clear" shape="round">
+          toast default
+        </ion-button>
       </ion-content>
+
+      <!-- component -->
+      <ion-tab-bar id="tabBar" slot="bottom">
+        <ion-tab-button tab="questao">
+          <ion-icon name="med-questao"></ion-icon>
+          <ion-label>Questão</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="gabarito-comentado">
+          <ion-icon name="med-comentario-questao"></ion-icon>
+          <ion-label>Gabarito Comentado</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="med-cartao-resposta">
+          <ion-icon name="med-cartao-resposta"></ion-icon>
+          <ion-label>Cartão Resposta</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="questao-sec">
+          <ion-icon name="med-questao"></ion-icon>
+          <ion-label>Questão</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="gabarito-comentado" disabled>
+          <ion-icon name="med-comentario-questao"></ion-icon>
+          <ion-label>Gabarito Comentado</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+      <!-- component -->
+
     </ion-app>
 
     <script>
-      document.querySelector('#theme').addEventListener('click', () => {
-        const html = document.querySelector('html');
-        const body = document.querySelector('body');
+    const button1 = document.querySelector('#single');
+    const button2 = document.querySelector('#mult');
+    const buttonToast =  document.querySelector('#toastID')
+    const tabBar =  document.querySelector('#tabBar')
 
-        if(body.classList.contains('dark-mode')) {
-          body.classList.remove('dark-mode');
-          body.classList.add('light-mode');
-        } else {
-          body.classList.add('dark-mode');
-          body.classList.remove('light-mode');
+    buttonToast.addEventListener('click',createToast)
+    button1.addEventListener('click', createModal1);
+    button2.addEventListener('click', createModal2);
+    tabBar.addEventListener('medResize',medResizeTapBar)
+
+    function medResizeTapBar(event){
+      console.log('index>>',event)
+    }
+
+    async function createModal1() {
+      const modal = await modalController.create({
+        component: 'med-image-zoom',
+        cssClass: 'med-image-zoom',
+        componentProps:{ imagens: [
+          {link: "https://via.placeholder.com/500", legenda:"texto"},
+        ]}
+      });
+
+      await modal.present();
+    }
+
+    async function createModal2() {
+      const modal = await modalController.create({
+        component: 'med-image-zoom',
+        cssClass: 'med-image-zoom',
+        componentProps:{ imagens: [
+          {title: "Alernativa A", link: "https://via.placeholder.com/500", legenda:"texto"},
+          {title: "Alernativa B", link: "https://via.placeholder.com/500", legenda:"texto2"},
+          {title: "Alernativa C", link: "https://via.placeholder.com/500", legenda:"texto2"},
+          {title: "Alernativa D", link: "https://via.placeholder.com/500", legenda:"texto3"},
+          {title: "Alernativa E", link: "https://via.placeholder.com/500", legenda:"text4"},
+        ]}
+      });
+
+      await modal.present();
+    }
+
+    async function createToast(){
+      console.log('chamou')
+      const toast = await toastController.create({
+        color: '',
+        duration: 500000,
+        header: 'Teste',
+        message: 'Aeeeoooo',
+        position: 'bottom',
+        showCloseButton: true,
+        buttons: [
+        {
+          side: 'start',
+          icon: 'med-information',
+          text: '',
+          handler: () => {
+            console.log('clicked');
+          }
+        },
+        {
+          text: 'TENTE NOVAMENTE',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          side: 'end',
+          icon: 'med-close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
         }
+      ]
       })
 
-      let currentPopover = null;
+    await toast.present()
+    }
 
-      const buttons = document.querySelectorAll('ion-button');
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', handleButtonClick);
+    document.querySelector('#theme').addEventListener('click', () => {
+      const html = document.querySelector('html');
+      const body = document.querySelector('body');
+
+      if(body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+      } else {
+        body.classList.add('dark-mode');
+        body.classList.remove('light-mode');
       }
-
-      async function handleButtonClick(ev) {
-        popover = await popoverController.create({
-          component: 'popover-example-page',
-          mode: 'ios',
-          event: ev,
-          translucent: true
-        });
-        currentPopover = popover;
-        return popover.present();
-      }
-
-      function dismissPopover() {
-        if (currentPopover) {
-          currentPopover.dismiss().then(() => { currentPopover = null; });
-        }
-      }
-
-      customElements.define('popover-example-page', class ModalContent extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
-           <ion-range max="5">
-            <ion-icon slot="start" size="small" name="med-font-decrease-32"></ion-icon>
-            <ion-icon slot="end" name="med-font-increase-32"></ion-icon>
-           </ion-range>
-          `;
-        }
-      });
+    })
     </script>
   </body>
 </html>

@@ -20,6 +20,8 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 
 
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', [
+  'dsSize',
+  'fill',
   'color'
 ]);
 
@@ -203,6 +205,8 @@ export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
 
 
 export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', [
+  'dsSize',
+  'dsName',
   'color',
   'activated',
   'disabled',
@@ -223,6 +227,7 @@ export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion
 
 
 export const IonFabList = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab-list', [
+  'dsSize',
   'activated',
   'side'
 ]);
@@ -363,6 +368,7 @@ export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>(
 
 
 export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', [
+  'dsName',
   'color',
   'position',
   'ionColor',
@@ -815,6 +821,20 @@ export const MedAlternativas = /*@__PURE__*/ defineContainer<JSX.MedAlternativas
 ]);
 
 
+export const MedAutocomplete = /*@__PURE__*/ defineContainer<JSX.MedAutocomplete>('med-autocomplete', [
+  'list'
+]);
+
+
+export const MedBanner = /*@__PURE__*/ defineContainer<JSX.MedBanner>('med-banner', [
+  'header',
+  'btnLeft',
+  'btnRight',
+  'btnLeftClick',
+  'btnRightClick'
+]);
+
+
 export const MedCartaoRespostaItem = /*@__PURE__*/ defineContainer<JSX.MedCartaoRespostaItem>('med-cartao-resposta-item', [
   'color'
 ]);
@@ -829,8 +849,25 @@ export const MedEnunciado = /*@__PURE__*/ defineContainer<JSX.MedEnunciado>('med
 ]);
 
 
+export const MedEnunciadoDiscursiva = /*@__PURE__*/ defineContainer<JSX.MedEnunciadoDiscursiva>('med-enunciado-discursiva', [
+  'imagens',
+  'medGalleryRequest'
+]);
+
+
+export const MedFontZoom = /*@__PURE__*/ defineContainer<JSX.MedFontZoom>('med-font-zoom', [
+  'emitter',
+  'value'
+]);
+
+
 export const MedHeader = /*@__PURE__*/ defineContainer<JSX.MedHeader>('med-header', [
   'medResize'
+]);
+
+
+export const MedImageZoom = /*@__PURE__*/ defineContainer<JSX.MedImageZoom>('med-image-zoom', [
+  'imagens'
 ]);
 
 
@@ -846,9 +883,18 @@ export const MedRateBar = /*@__PURE__*/ defineContainer<JSX.MedRateBar>('med-rat
 
 
 export const MedRateLike = /*@__PURE__*/ defineContainer<JSX.MedRateLike>('med-rate-like', [
+  'status',
   'medChange'
 ]);
 
 
 export const MedToolbar = /*@__PURE__*/ defineContainer<JSX.MedToolbar>('med-toolbar');
+
+
+export const MedTooltip = /*@__PURE__*/ defineContainer<JSX.MedTooltip>('med-tooltip', [
+  'header',
+  'content',
+  'buttonLeft',
+  'buttonRight'
+]);
 

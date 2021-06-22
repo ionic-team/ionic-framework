@@ -1,0 +1,72 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Image Zoom/Usage" />
+
+# Image Zoom
+
+O Image Zoom utiliza os componente **ion-modal** e **ion-slides** como base.
+
+- Documentação auxiliar ion-modal: **https://ionicframework.com/docs/api/modal**
+- Documentação auxiliar ion-slides: **https://ionicframework.com/docs/api/slides**
+
+**As propriedades marcadas com ⚠️ são extritamente necessárias.**
+
+```ts
+const createModal = async () => {
+  modalController.create({
+    component: 'med-image-zoom', ⚠️
+    cssClass: 'med-image-zoom', ⚠️
+    componentProps:{ ... } ⚠️
+  }).then((modal)=>{
+    modal.present()
+  });
+}
+```
+
+## componentProps
+
+```ts
+componentProps: {
+  imagens: [
+    title?: String,  // título do tolltip
+    link?: String,  // título do tolltip
+    legenda?: String,  // título do tolltip
+  ],
+},
+```
+
+## Imagen Única
+
+```ts
+const createModal = async () => {
+  modalController.create({
+    component: 'med-image-zoom',
+    cssClass: 'med-image-zoom',
+    componentProps:{ imagens: [
+      { title: 'Alternativa A', link: "https://via.placeholder.com/500", legenda: "1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+    ]}
+  }).then((modal)=>{
+    modal.present()
+  });
+}
+```
+
+## Multi-Imagens
+
+```ts
+const createModal = async () => {
+  modalController.create({
+    component: 'med-image-zoom',
+    cssClass: 'med-image-zoom',
+    componentProps:{ imagens: [
+      { title: "Alternativa A", link: "https://via.placeholder.com/500", legenda: "1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+      { title: "Alternativa B", link: "https://via.placeholder.com/500", legenda: "2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+      { title: "Alternativa C", link: "https://via.placeholder.com/500", legenda: "3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+      { title: "Alternativa D", link: "https://via.placeholder.com/500", legenda: "4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+      { title: "Alternativa E", link: "https://via.placeholder.com/500", legenda: "5 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+    ]}
+  }).then((modal)=>{
+    modal.present()
+  });
+}
+```

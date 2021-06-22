@@ -1,0 +1,63 @@
+@import "../../../med-components/abstracts";
+
+:host {
+  --spacing: #{$med-spacing-squish-xs};
+  --background: #{$med-color-neutral-light-prime};
+  --height: 48px;
+  --border-radius: #{$med-border-radius-sm};
+  --border-width: #{$med-border-width-hairline};
+  --border-color: #{$med-color-neutral-light-10};
+  --border-style: solid;
+  --color: #{$med-color-neutral-dark-20};
+
+  --placeholder-spacing: #{$med-spacing-stack-nano};
+  --placeholder-font-size: #{$med-font-size-xs};
+  --placeholder-line-height: #{$med-line-height-compressed};
+
+
+  //ionic
+  --padding-end: #{$med-spacing-inline-base};
+  --placeholder-color: #{$med-color-neutral-light-20};
+  --placeholder-font-weight: #{$med-font-weight-regular};
+
+  padding: var(--spacing);
+  padding-right: 56px;
+  background: var(--background);
+  height: var(--height);
+  border-style: var(--border-style);
+  border-radius: var(--border-radius);
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+  text-align: left;
+  color: var(--color);
+
+  &::placeholder {
+    margin: var(--placeholder-spacing);
+    font-size: var(--placeholder-font-size);
+    font-weight: var(--placeholder-font-weight);
+    line-height: var(--placeholder-line-height);
+    color: var(--placeholder-color);
+  }
+}
+
+:host(.has-focus) {
+  --border-width: #{$med-border-width-thin};
+}
+
+:host([success]) {
+  --border-color: #{$med-color-feedback-success-medium};
+  --color: #{$med-color-neutral-dark-20};
+  --padding-end: 56px;
+}
+
+:host([error]) {
+  --border-color: #{$med-color-feedback-error-medium};
+}
+
+::slotted(ion-icon) {
+  position: absolute;
+  right: 16px;
+  fill: #{$med-color-feedback-success-medium};
+  width: 24px;
+  height: 24px;
+}

@@ -34,6 +34,7 @@
 - [ion-radio-group](../../../radio-group)
 - [med-option](../med-option)
 - [ion-radio](../../../radio)
+- ion-icon
 - [ion-progress-bar](../../../progress-bar)
 
 ### Graph
@@ -42,6 +43,7 @@ graph TD;
   med-alternativas --> ion-radio-group
   med-alternativas --> med-option
   med-alternativas --> ion-radio
+  med-alternativas --> ion-icon
   med-alternativas --> ion-progress-bar
   style med-alternativas fill:#f9f,stroke:#333,stroke-width:4px
 ```

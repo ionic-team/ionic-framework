@@ -1,30 +1,35 @@
 @import "../../../../../med-components/abstracts";
 
 :host {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  position: relative;
   padding: 0px;
   width: 100%;
   max-width: 1200px;
   margin: 0px auto;
 
-  @include breakpoint-up('xs') {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  .wrapper {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 10vw);
 
-  @include breakpoint-up('sm') {
-    grid-template-columns: repeat(10, 1fr);
-  }
+    @include breakpoint-down('xl') {
+      grid-template-columns: repeat(auto-fit, 10vw);
+    }
 
- /*  @include breakpoint-up('md') {
-    grid-template-columns: repeat(12, 1fr);
-  }
+    @include breakpoint-down('lg') {
+      grid-template-columns: repeat(auto-fit, 13vw);
+    }
 
-  @include breakpoint-up('lg') {
-    grid-template-columns: repeat(15, 1fr);
-  }
+    @include breakpoint-down('md') {
+      grid-template-columns: repeat(auto-fit, 14vw);
+    }
 
-  @include breakpoint-up('xl') {
-    grid-template-columns: repeat(18, 1fr);
-  } */
+    @include breakpoint-down('sm') {
+      grid-template-columns: repeat(auto-fit, 17vw);
+    }
+
+    @include breakpoint-down('xs') {
+      grid-template-columns: repeat(auto-fit, 19vw);
+    }
+  }
 }

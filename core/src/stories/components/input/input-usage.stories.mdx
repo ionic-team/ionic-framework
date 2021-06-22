@@ -1,0 +1,45 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Input/Usage" />
+
+# Input
+
+Documentação auxiliar ion-input: **https://ionicframework.com/docs/api/input**
+
+## Propriedades
+
+| Propriedade  | Atributo     | Descrição                   | Tipo           | Default       |
+| ------------ | ------------ | --------------------------- | -------------- | ------------- |
+| **success**  | **success**  | Define o estilo de sucesso. | **"boolean"**  | **undefined** |
+| **error**    | **error**     | Define o tamanho de falha. | **"boolean"**  | **undefined** |
+
+## Usage
+
+### Input
+
+⚠️ O uso do componente **ion-label** e **ion-icon** é necessário, para estilizar corretamente o componente **ion-input**.
+
+```html
+<ion-label ds-name="stacked">Stacked</ion-label>
+<ion-input placeholder="Enter Input"></ion-input>
+<ion-label ds-name="helper">Helper</ion-label>
+```
+
+### Input Success
+
+⚠️ Para utilizar o input success corretamente, é necessário utilizar o componente ion-icon com atrubuto **name="med-check-circle"**. Utilizando o atributo **"success"**.
+
+```html
+<ion-input placeholder="Enter Input" success>
+  <ion-icon name="med-check-circle">med-check-circle</ion-icon>
+</ion-input>
+```
+
+### Input Fail
+
+⚠️ O Componente Input Fail, é aplicado ao utilizar o atributo **"fail"**.
+
+```html
+<ion-input placeholder="Enter Input" fail></ion-input>
+<ion-label ds-name="helper" fail>Helper</ion-label>
+```

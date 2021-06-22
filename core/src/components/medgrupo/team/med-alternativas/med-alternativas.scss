@@ -1,19 +1,9 @@
 @import "../../../../../med-components/abstracts";
 
 :host {
-  --alternativa-spacing: #{$med-spacing-stack-xs};
-  --alternativa-color: #{$med-color-neutral-dark-10};
-  --alternativa-font-size: #{$med-font-size-xs};
-  --alternativa-font-weight: #{$med-font-weight-regular};
-  --alternativa-line-height: #{line-height()};
-  --alternativa-text-align: justify;
-  --alternativa-text-spacing: #{$med-spacing-inline-base};
-  --alternativa-image-spacing: #{$med-spacing-inline-base};
-
-  --background-correto: #{$med-color-feedback-success-medium};
-  --background-incorreto: #{$med-color-feedback-error-medium};
-
-  --progess-background: #{$med-color-feedback-success-light};
+  --riscar-flex-direction: column;
+  --riscar-icon-margin: 0 0 #{$med-spacing-stack-quark} 0;
+  --font-size: #{$med-font-size-xs};
 
   .alternativas {
     list-style: none;
@@ -27,12 +17,14 @@
       }
 
       .alternativa {
+        align-items: flex-start;
+
         &:nth-of-type(odd) {
           margin-right: auto;
           padding-right: 0;
 
           @include breakpoint-up('md') {
-           padding-right: #{$med-spacing-inline-base};
+           padding-right: $med-spacing-inline-base;
           }
         }
 
@@ -52,43 +44,68 @@
   }
 
   .alternativa {
+    padding: $med-spacing-stack-base;
     display: flex;
+    align-items: start;
 
-    &:not(:last-child) {
-      padding-bottom: var(--alternativa-spacing);
-    }
+    /* &:not(:last-child) {
+      padding-bottom: $med-spacing-stack-xs;
+    } */
 
     .image-container {
       position: relative;
+    }
 
-      &__overlay {
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.3);
-        cursor: pointer;
-        color: #fff;
+    @media (any-hover: hover) {
+      .image-container:hover {
+        .overlay  {
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 300ms ease;
+        }
+      }
+    }
+
+    .overlay {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__content {
         display: flex;
         align-items: center;
-        justify-content: center;
+      }
+
+      &__label {
+        margin: 0 10px 0 0;
+      }
+
+      ion-icon {
+        font-size: 24px;
       }
     }
 
     &__right {
+      margin-left: $med-spacing-inline-base;
       flex: 1;
-      margin-left: var(--alternativa-text-spacing);
       overflow: hidden;
     }
 
     &__text {
-      text-align: var(--alternativa-text-align);
-      color: var(--alternativa-color);
-      font-size: var(--alternativa-font-size);
-      font-weight: var(--alternativa-font-weight);
-      line-height: var(--alternativa-line-height);
+      color: $med-color-neutral-dark-10;
+      font-size: var(--font-size);
+      font-weight: $med-font-weight-regular;
+      line-height: calc(var(--font-size) * 1.3);
+      text-align: justify;
       margin: 0;
     }
 
@@ -103,13 +120,26 @@
 
     &--correta {
       med-option {
-        --background: var(--background-correto);
+        --background: #{$med-color-feedback-success-medium};
       }
     }
 
     &--incorreto {
       med-option {
-        --background: var(--background-incorreto);
+        --background: #{$med-color-feedback-error-medium};
+      }
+    }
+
+    &--pressed {
+      background-color: $med-color-neutral-light-40;
+    }
+
+    &--riscada {
+      opacity: $med-opacity-level-half;
+      pointer-events: none;
+
+      .alternativa__text {
+        text-decoration: line-through;
       }
     }
   }
@@ -125,18 +155,27 @@
     }
 
     &--100 {
-      --progress-background: var(--progess-background);
+      --progress-background: $med-color-feedback-success-light;
+    }
+  }
+
+  .riscar {
+    flex-direction: var(--riscar-flex-direction);
+    margin-left: $med-spacing-inline-md;
+    display: flex;
+    align-items: center;
+
+    ion-icon {
+      margin: var(--riscar-icon-margin);
+      color: $med-color-neutral-dark-10;
+      font-size: 32px;
+    }
+
+    &__label {
+      font-size: $med-font-size-xxs;
+      font-weight: $med-font-weight-regular;
+      color: $med-color-neutral-dark-10;
+      line-height: $med-line-height-compressed;
     }
   }
 }
-
-// desktop
-:host-context(.plt-desktop) .image-container:hover {
-  .image-container__overlay  {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 300ms ease;
-  }
-}
-
-

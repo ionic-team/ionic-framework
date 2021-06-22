@@ -24,3 +24,23 @@
 
   opacity: .01;
 }
+
+//
+// custom
+//
+
+@import "../../../med-components/abstracts";
+
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+  :host(.med-image-zoom) {
+    --width: 100%;
+    --height: 100%;
+  }
+}
+
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
+  :host(.med-image-zoom) {
+    --width: 100%;
+    --height: 100%;
+  }
+}
