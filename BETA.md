@@ -68,7 +68,7 @@ Check out https://beta.ionicframework.com/docs for the Framework v6 documentatio
 
 ### Ionic Angular
 
-Ionic Angular developer should first begin by upgrading to the latest version of Angular. As of Framework v6, Angular 11+ is required.
+Ionic Angular developers should first begin by upgrading to the latest version of Angular. As of Framework v6, Angular 11+ is required.
 
 Please see https://update.angular.io/ for a guide on how to update to the latest version of Angular.
 
@@ -84,7 +84,7 @@ After that, you should be good to go! Check out https://beta.ionicframework.com/
 
 ### Ionic Core
 
-Developers using `@ionic/core` directly should can install the Framework v6 beta directly:
+Developers using `@ionic/core` directly should install the Framework v6 beta directly:
 
 ```shell
 npm install @ionic/core@next
