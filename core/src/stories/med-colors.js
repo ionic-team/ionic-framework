@@ -68,4 +68,6 @@ export const medsoftColors = [
   'feedback-warning',
   'feedback-error',
   'feedback-success',
+  'neutral-dark',
+  'neutral-light',
 ]
