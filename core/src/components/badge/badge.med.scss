@@ -86,7 +86,6 @@
   height: 32px;
 }
 
-
 :host([ds-size="lg"]) {
   --padding-start: #{$med-spacing-inline-xxs};
   --padding-end: #{$med-spacing-inline-xxs};
