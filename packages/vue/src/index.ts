@@ -3,8 +3,8 @@ import { arrowBackSharp, caretBackSharp, chevronBack, chevronDown, chevronForwar
 
 export * from './proxies';
 
-export { useBackButton } from './hooks/back-button';
-export { IonKeyboardRef, useKeyboard } from './hooks/keyboard';
+export { UseBackButtonResult, useBackButton } from './hooks/back-button';
+export { UseKeyboardResult, useKeyboard } from './hooks/keyboard';
 export { onIonViewWillEnter, onIonViewDidEnter, onIonViewWillLeave, onIonViewDidLeave } from './hooks/lifecycle';
 export { UseIonRouterResult, useIonRouter } from './hooks/router';
 

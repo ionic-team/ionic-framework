@@ -1,12 +1,12 @@
 import { ref, Ref } from 'vue';
 
-export interface IonKeyboardRef {
+export interface UseKeyboardResult {
   isOpen: Ref<boolean>;
   keyboardHeight: Ref<number>;
   unregister: () => void
 }
 
-export const useKeyboard = (): IonKeyboardRef => {
+export const useKeyboard = (): UseKeyboardResult => {
   let isOpen = ref(false);
   let keyboardHeight = ref(0);
 
