@@ -315,11 +315,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   }
 
   const goBack = (routerAnimation?: AnimationBuilder) => {
-    setIncomingRouteParams('back', 'pop', routerAnimation);
+    setIncomingRouteParams('pop', 'back', routerAnimation);
     router.back()
   };
   const goForward = (routerAnimation?: AnimationBuilder) => {
-    setIncomingRouteParams('forward', 'push', routerAnimation);
+    setIncomingRouteParams('push', 'forward', routerAnimation);
     router.forward();
   }
 
