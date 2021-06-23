@@ -10,6 +10,12 @@ export const IonRouterLink = /*@__PURE__*/ createReactComponent<
   HrefProps<JSX.IonRouterLink>,
   HTMLIonRouterLinkElement
 >('ion-router-link', true);
+export const IonAccordion = /*@__PURE__*/ createReactComponent<JSX.IonAccordion, HTMLIonAccordionElement>(
+  'ion-accordion'
+);
+export const IonAccordionGroup = /*@__PURE__*/ createReactComponent<JSX.IonAccordionGroup, HTMLIonAccordionGroupElement>(
+  'ion-accordion-group'
+);
 export const IonAvatar = /*@__PURE__*/ createReactComponent<JSX.IonAvatar, HTMLIonAvatarElement>(
   'ion-avatar'
 );
