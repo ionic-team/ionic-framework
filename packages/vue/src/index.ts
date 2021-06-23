@@ -6,7 +6,7 @@ export * from './proxies';
 export { useBackButton } from './hooks/back-button';
 export { IonKeyboardRef, useKeyboard } from './hooks/keyboard';
 export { onIonViewWillEnter, onIonViewDidEnter, onIonViewWillLeave, onIonViewDidLeave } from './hooks/lifecycle';
-export { IonRouter, useIonRouter } from './hooks/router';
+export { UseIonRouterResult, useIonRouter } from './hooks/router';
 
 export { IonicVue } from './ionic-vue';
 

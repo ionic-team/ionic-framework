@@ -5,7 +5,7 @@ import { Location } from '../types';
 export type RouteAction = 'push' | 'pop' | 'replace';
 export type RouteDirection = 'forward' | 'back' | 'root' | 'none';
 
-export interface IonRouter {
+export interface UseIonRouterResult {
   canGoBack: (deep?: number) => boolean;
   push: (location: string | Location, routerAnimation?: AnimationBuilder) => void;
   replace: (location: string | Location, routerAnimation?: AnimationBuilder) => void;
@@ -19,13 +19,12 @@ export interface IonRouter {
   ) => void;
 }
 
-export const useIonRouter = (): IonRouter => {
-  const {
-    canGoBack,
-    goBack,
-    goForward,
-    handleNavigate
-  } = inject('navManager') as any;
+/**
+ * Used to navigate within Vue Router
+ * while controlling the animation.
+ */
+export const useIonRouter = (): UseIonRouterResult => {
+  const { canGoBack, goBack, goForward, handleNavigate } = inject('navManager') as any;
 
   const navigate = (
     location: string | Location,
@@ -59,7 +58,7 @@ export const useIonRouter = (): IonRouter => {
     back,
     forward,
     navigate
-  } as IonRouter
+  } as UseIonRouterResult
 }
 
 
