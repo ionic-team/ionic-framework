@@ -15,10 +15,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#components)
   * [Datetime](#datetime)
   * [Header](#header)
+  * [Input](#input)
   * [Modal](#modal)
   * [Popover](#popover)
   * [Searchbar](#searchbar)
+  * [Select](#select)
   * [Tab Bar](#tab-bar)
+  * [Textarea](#textarea)
   * [Toast](#toast)
   * [Toolbar](#toolbar)
 - [Config](#config)
@@ -86,6 +89,10 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
 }
 ```
 
+#### Input
+
+The `placeholder` property now has a type of `string | undefined` rather than `null | string | undefined`.
+
 #### Modal
 
 Converted `ion-modal` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
@@ -104,6 +111,10 @@ The `showClearButton` property now defaults to `'always'` for improved usability
 
 To get the old behavior, set `showClearButton` to `'focus'`.
 
+#### Select
+
+The `placeholder` property now has a type of `string | undefined` rather than `null | string | undefined`.
+
 #### Tab Bar
 
 The default iOS tab bar background color has been updated to better reflect the latest iOS styles. The new default value is:
@@ -111,6 +122,10 @@ The default iOS tab bar background color has been updated to better reflect the 
 ```css
 var(--ion-tab-bar-background, var(--ion-color-step-50, #f7f7f7));
 ```
+
+#### Textarea
+
+The `placeholder` property now has a type of `string | undefined` rather than `null | string | undefined`.
 
 #### Toast
 
