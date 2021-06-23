@@ -517,7 +517,7 @@ ion-input,prop,mode,"ios" | "md",undefined,false,false
 ion-input,prop,multiple,boolean | undefined,undefined,false,false
 ion-input,prop,name,string,this.inputId,false,false
 ion-input,prop,pattern,string | undefined,undefined,false,false
-ion-input,prop,placeholder,null | string | undefined,undefined,false,false
+ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,false
 ion-input,prop,required,boolean,false,false,false
 ion-input,prop,size,number | undefined,undefined,false,false
@@ -1144,7 +1144,7 @@ ion-select,prop,mode,"ios" | "md",undefined,false,false
 ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
-ion-select,prop,placeholder,null | string | undefined,undefined,false,false
+ion-select,prop,placeholder,string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
 ion-select,method,open,open(event?: UIEvent | undefined) => Promise<any>
@@ -1298,7 +1298,7 @@ ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
 ion-textarea,prop,name,string,this.inputId,false,false
-ion-textarea,prop,placeholder,null | string | undefined,undefined,false,false
+ion-textarea,prop,placeholder,string | undefined,undefined,false,false
 ion-textarea,prop,readonly,boolean,false,false,false
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
