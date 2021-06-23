@@ -13,7 +13,7 @@ const TemplatePrimary = ({ color, disabled, expand, size, slot }) => {
       <div class="storybook-only__container">
 
         <div style="margin-bottom: 50px;">
-          <ion-button ds-name="primary" color="brand-primary" ?disabled=${disabled} .expand=${expand} ds-size=${size}>brand</ion-button>
+          <ion-button ds-name="primary" ?disabled=${disabled} .expand=${expand} ds-size=${size}>brand</ion-button>
         </div>
 
         <div>

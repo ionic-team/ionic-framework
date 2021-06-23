@@ -38,8 +38,6 @@
     --background-focused-opacity: .24;
     --background-hover-opacity: .08;
     --box-shadow: #{$button-md-box-shadow};
-    --background-hover: red;
-                    --background-hover-opacity: 1;
     }
 
     :host(.med-button-solid.ion-activated) {
@@ -169,44 +167,30 @@
 @import "../../../med-components/abstracts";
 
 :host {
+  // ionic css custom properties
   --border-radius: #{$med-border-radius-pill};
   --box-shadow: none;
-  --color: #{$med-color-neutral-light-prime};
-  --transition: background var(--transition-timing) ease-out, color var(--transition-timing) ease-out, border-color var(--transition-timing) ease-out, opacity var(--transition-timing) ease-out;
+  --transition: background 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out, opacity 300ms ease-out;
 
-  // design system
-  --padding: #{$med-spacing-squish-base};
-  --min-height: 48px;
-  --min-width: auto;
-  --font-size: #{$med-font-size-xxs};
-  --font-weight: #{$med-font-weight-semibold};
-  --text-transform: uppercase;
-  --line-height: #{$med-line-height-compressed};
-  --transition-timing: 300ms;
-
-  min-height: var(--min-height);
-  min-width: var(--min-width);
+  min-height: 48px;
+  min-width: auto;
   height: auto;
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  text-transform: var(--text-transform);
+  font-size: $med-font-size-xxs;
+  font-weight: $med-font-weight-semibold;
+  text-transform: uppercase;
   margin: 0;
 }
 
 .button-native {
-  padding: var(--padding);
-  min-height: var(--min-height);
-  line-height: var(--line-height);
+  padding: $med-spacing-squish-base;
+  min-height: 48px;
+  line-height: $med-line-height-compressed;
   box-shadow: none;
 }
 
 .button-native::before {
   transition: var(--transition);
 }
-
-//
-// disabled
-//
 
 :host(.med-button-disabled) {
   opacity: 1;
@@ -217,6 +201,102 @@
 //
 
 :host(.med-button-solid) {
+  --color: #{medsoft-color(brand-primary, contrast)};
+  --background: #{medsoft-color(brand-primary, gradient)};
+  --background-hover: #{medsoft-color(brand-primary, medium)};
+  --background-hover-opacity: 1;
+  --background-focused: #{medsoft-color(brand-primary, medium)};
+  --background-focused-opacity: 1;
+  --background-activated: #{medsoft-color(brand-primary, dark)};
+  --background-activated-opacity: 1;
+  --ripple-color: #{medsoft-color(brand-primary, dark)};
+}
+
+// disabled
+:host(.med-button-solid.med-button-disabled) {
+  --background: #{medsoft-color(neutral-light, 20)};
+}
+
+// color
+:host(.ion-color.med-button-solid) .button-native {
+  background: medsoft-current-color(gradient);
+}
+
+// color hover
+@media (any-hover: hover) {
+  :host(.ion-color.med-button-solid:hover) .button-native::before {
+    background: medsoft-current-color(medium);
+  }
+}
+
+// color focused
+:host(.ion-color.med-button-solid.ion-focused) .button-native::before {
+  background: medsoft-current-color(medium);
+}
+
+// color activated
+:host(.ion-color.med-button-solid.ion-activated) .button-native::before {
+  background: medsoft-current-color(dark);
+}
+
+// color disabled
+:host(.ion-color.med-button-solid.med-button-disabled) .button-native {
+  background: medsoft-color(neutral-light, 20);
+}
+
+//
+// primary
+//
+
+:host(.med-button-solid) {
+  --color: #{medsoft-color(brand-primary, contrast)};
+  --background: #{medsoft-color(brand-primary, gradient)};
+  --background-hover: #{medsoft-color(brand-primary, medium)};
+  --background-hover-opacity: 1;
+  --background-focused: #{medsoft-color(brand-primary, medium)};
+  --background-focused-opacity: 1;
+  --background-activated: #{medsoft-color(brand-primary, dark)};
+  --background-activated-opacity: 1;
+  --ripple-color: #{medsoft-color(brand-primary, dark)};
+}
+
+// disabled
+:host(.med-button-solid.med-button-disabled) {
+  --background: #{medsoft-color(neutral-light, 20)};
+}
+
+// color
+:host(.ion-color.med-button-solid) .button-native {
+  background: medsoft-current-color(gradient);
+}
+
+// color hover
+@media (any-hover: hover) {
+  :host(.ion-color.med-button-solid:hover) .button-native::before {
+    background: medsoft-current-color(medium);
+  }
+}
+
+// color focused
+:host(.ion-color.med-button-solid.ion-focused) .button-native::before {
+  background: medsoft-current-color(medium);
+}
+
+// color activated
+:host(.ion-color.med-button-solid.ion-activated) .button-native::before {
+  background: medsoft-current-color(dark);
+}
+
+// color disabled
+:host(.ion-color.med-button-solid.med-button-disabled) .button-native {
+  background: medsoft-color(neutral-light, 20);
+}
+
+//
+// primary
+//
+
+/* :host(.med-button-solid) {
   --background: #{medsoft-color(brand-primary, gradient)};
   --background-hover: #{medsoft-color(brand-primary, medium)};
   --background-hover-opacity: 1;
@@ -276,15 +356,13 @@
 // active
 :host(.ion-color.med-button-solid.ion-activated) {
   --background-activated: current-color(shade);
-}
-
-
+} */
 
 //
 // secondary
 //
 
-:host(.med-button-outline) {
+/* :host(.med-button-outline) {
   --background-hover: transparent;
   --background-focused: transparent;
   --background-activated: transparent;
@@ -349,13 +427,13 @@
 
 :host(.ion-color.med-button-outline.med-button-disabled) {
   --ion-color-base: #{$med-color-neutral-light-10} !important;
-}
+} */
 
 //
 // tertiary
 //
 
-:host(.med-button-clear) {
+/* :host(.med-button-clear) {
   --background-hover: #{$med-color-brand-primary-medium};
   --background-hover-opacity: #{$med-opacity-level-light};
   --background-focused: #{$med-color-brand-primary-medium};
@@ -405,13 +483,13 @@
 
 :host(.ion.med-button-clear.med-button-disabled) {
   --ion-color-base: #{$med-color-neutral-light-10} !important;
-}
+} */
 
 //
 // icon-only
 //
 
-:host(.button-has-icon-only) {
+/* :host(.button-has-icon-only) {
   --border-radius: 50%;
   --background-hover: #{$med-color-neutral-light-10};
   --background-hover-opacity: #{$med-opacity-level-semitransparent};
@@ -482,13 +560,13 @@
 
 :host(.in-med-toolbar.button-has-icon-only:not(:last-child)) {
   margin-right: $med-spacing-inline-xxs;
-}
+} */
 
 //
 // icon-label
 //
 
-:host(.button-icon-label) {
+/* :host(.button-icon-label) {
   --padding: 0;
   --color: #{$med-color-neutral-light-prime};
   --font-size: #{$med-font-size-xxs};
@@ -528,7 +606,7 @@
 // in med-toolbar
 :host(.in-med-toolbar.button-icon-label) {
   color: $med-color-neutral-light-10;
-}
+} */
 
 //
 // remoção do ::after
@@ -544,6 +622,7 @@
 :host(.med-hovered) .button-native::after {
   display: none;
 }
+
 @media (any-hover: hover) {
   :host(:hover) .button-native::after {
 	  display: none;
@@ -561,6 +640,7 @@
 :host(.med-hovered.med-button-outline.ion-color) .button-native::after {
   display: none;
 }
+
 @media (any-hover: hover) {
   :host(.med-button-solid.ion-color:hover) .button-native::after,
 	:host(.med-button-clear.ion-color:hover) .button-native::after,
@@ -598,10 +678,10 @@
   }
 }
 
-:host(.med-button-solid.ion-color.ion-focused) .button-native::before {
+/* :host(.med-button-solid.ion-color.ion-focused) .button-native::before {
   background: medsoft-current-color(medium);
   //opacity: .24;
-}
+} */
 
 :host(.med-button-outline.ion-color.ion-focused) .button-native::before {
   background: medsoft-current-color(medium);
@@ -630,19 +710,19 @@
 // documentação storybook
 //
 
-:host(.med-hovered) .button-native::before {
+/* :host(.med-hovered) .button-native::before {
   background: var(--background-hover);
   opacity: var(--background-hover-opacity);
-}
+} */
 
-:host(.med-hovered.med-button-solid.ion-color) .button-native::before {
+/* :host(.med-hovered.med-button-solid.ion-color) .button-native::before {
   background: medsoft-current-color(medium);
-}
+} */
 
-:host(.med-hovered.med-button-clear.ion-color) .button-native::before {
+/* :host(.med-hovered.med-button-clear.ion-color) .button-native::before {
   background: medsoft-current-color(medium);
-}
+} */
 
-:host(.med-hovered.med-button-outline.ion-color) .button-native::before {
+/* :host(.med-hovered.med-button-outline.ion-color) .button-native::before {
   background: medsoft-current-color(medium);
-}
+} */
