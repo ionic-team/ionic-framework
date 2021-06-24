@@ -1,18 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medsoftColors } from '../../med-colors'
 
 export default {
   title: 'Components/Global/Agrupador',
   decorators: [withDesign],
 };
 
-const TemplateDefault = () => {
+const TemplateDefault = ({color}) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-          <med-agrupador>
+          <med-agrupador .color=${color}>
             Expandir a lista
             <ion-icon name="med-arrow-down" color="brand-primary"></ion-icon>
           </med-agrupador>
@@ -34,5 +35,13 @@ Agrupador.parameters = {
   },
 }
 Agrupador.argTypes = {
-
+  color: {
+    options: medsoftColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  }
 };
