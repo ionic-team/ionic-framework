@@ -5,14 +5,18 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Dependencies
 
-| Property      | Attribute      | Description | Type     | Default              |
-| ------------- | -------------- | ----------- | -------- | -------------------- |
-| `icon`        | `icon`         |             | `string` | `'med-arrow-up'`     |
-| `textAlt`     | `text-alt`     |             | `string` | `'Ocultar a lista'`  |
-| `textDefault` | `text-default` |             | `string` | `'Expandir a lista'` |
+### Depends on
 
+- ion-icon
+
+### Graph
+```mermaid
+graph TD;
+  med-agrupador --> ion-icon
+  style med-agrupador fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -6,9 +6,33 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+
+  ion-icon {
+    font-size: 24px;
+  }
 }
 
-// slotted
-::slotted(ion-icon) {
-  font-size: 24px;
+.toggle__expandir {
+  display: block;
 }
+
+.toggle__ocultar {
+  display: none;
+}
+
+:host(.toggle) {
+  flex-direction: column-reverse;
+
+  .toggle__expandir {
+    display: none;
+  }
+
+  .toggle__ocultar {
+    display: block;
+  }
+
+  .toggle__img {
+    transform: rotate(180deg);
+  }
+}
+
