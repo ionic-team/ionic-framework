@@ -85,7 +85,7 @@ via CSS.
 ### Use `ion-img` for images
 
 When including images within Virtual Scroll, be sure to use
-[`ion-img`](../img/Img/) rather than the standard `<img>` HTML element.
+[`ion-img`](../img) rather than the standard `<img>` HTML element.
 With `ion-img`, images are lazy loaded so only the viewable ones are
 rendered, and HTTP requests are efficiently controlled while scrolling.
 
