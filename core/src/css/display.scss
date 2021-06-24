@@ -30,3 +30,16 @@
     }
   }
 }
+
+// Adds classes for displaying content based on prefers-color-scheme
+.ion-hide-when-dark {
+  @media (prefers-color-scheme: dark) {
+    display: none;
+  }
+}
+.ion-show-when-dark {
+  display: none;
+  @media (prefers-color-scheme: dark) {
+    display: block;
+  }
+}
