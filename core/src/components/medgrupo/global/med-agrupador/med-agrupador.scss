@@ -1,4 +1,7 @@
+@import "../../../../../med-components/abstracts";
+
 :host {
+  --color: #{medsoft-color(brand-primary, medium)};
   font-size: $med-font-size-xxs;
   font-weight: $med-font-weight-medium;
   line-height: $med-line-height-compressed;
@@ -6,6 +9,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  color: var(--color);
 
   ion-icon {
     font-size: 24px;
@@ -34,5 +38,9 @@
   .toggle__img {
     transform: rotate(180deg);
   }
+}
+
+:host(.ion-color) {
+  --color: #{medsoft-current-color(medium)};
 }
 

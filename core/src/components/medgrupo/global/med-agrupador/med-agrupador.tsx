@@ -1,4 +1,6 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
+import { Color } from '../../../../interface';
+import { createColorClasses } from '../../../../utils/theme';
 
 @Component({
   tag: 'med-agrupador',
@@ -7,12 +9,15 @@ import { Component, Host, h } from '@stencil/core';
 })
 export class MedAgrupador {
 
+  @Prop() color?: Color;
+
   render() {
+    const {color} = this;
     return (
-      <Host class="">
-          <div class="toggle__expandir">Expandir a lista</div>
-          <div class="toggle__ocultar">Ocultar a lista</div>
-          <ion-icon class="toggle__img" name="med-arrow-down"></ion-icon>
+      <Host class={createColorClasses(color, {null:true})}>
+        <div class="toggle__expandir">Expandir a lista</div>
+        <div class="toggle__ocultar">Ocultar a lista</div>
+        <ion-icon class="toggle__img" name="med-arrow-down"></ion-icon>
       </Host>
     );
   }
