@@ -1,4 +1,4 @@
-import { Component, Host, Prop, h, State } from '@stencil/core';
+import { Component, Host, h } from '@stencil/core';
 
 @Component({
   tag: 'med-agrupador',
@@ -6,23 +6,13 @@ import { Component, Host, Prop, h, State } from '@stencil/core';
   shadow: true,
 })
 export class MedAgrupador {
-  @State() state = false;
-  @Prop() textDefault= 'Expandir a lista';
-  @Prop() textAlt= 'Ocultar a lista';
-  @Prop() icon= 'med-arrow-up';
-
-  private toggle =() =>{
-    console.log('teste');
-  }
 
   render() {
-    const {textDefault, textAlt, icon} = this;
     return (
-      <Host onClick={() => this.toggle()}>
-
-        {textDefault}
-        {textAlt}
-        {icon}
+      <Host class="">
+          <div class="toggle__expandir">Expandir a lista</div>
+          <div class="toggle__ocultar">Ocultar a lista</div>
+          <ion-icon class="toggle__img" name="med-arrow-down"></ion-icon>
       </Host>
     );
   }
