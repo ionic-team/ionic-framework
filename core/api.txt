@@ -344,6 +344,7 @@ ion-content,shadow
 ion-content,prop,color,string | undefined,undefined,false,true
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
+ion-content,prop,pinchZoom,boolean,false,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
 ion-content,prop,scrollX,boolean,false,false,false
 ion-content,prop,scrollY,boolean,true,false,false

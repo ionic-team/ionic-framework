@@ -74,6 +74,12 @@ export class Content implements ComponentInterface {
   @Prop({ mutable: true }) forceOverscroll?: boolean;
 
   /**
+   * If you want to enable zooming of the content, set this property to `true`.
+   * Defaults to `true` when the platform is `"mobileweb"`.
+   */
+   @Prop() pinchZoom: boolean = isPlatform('mobileweb');
+
+  /**
    * If you want to enable the content scrolling in the X axis, set this property to `true`.
    */
   @Prop() scrollX = false;
@@ -308,7 +314,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY } = this;
+    const { isMainContent, pinchZoom, scrollX, scrollY } = this;
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
@@ -332,6 +338,7 @@ export class Content implements ComponentInterface {
         <TagType
           class={{
             'inner-scroll': true,
+            'pinch-zoom': pinchZoom,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && forceOverscroll

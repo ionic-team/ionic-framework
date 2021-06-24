@@ -20,7 +20,7 @@ const Main: React.FC<MainProps> = () => {
           <IonTitle>Main</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent pinchZoom scrollX>
         <IonList>
           <IonItem routerLink="/routing">
             <IonLabel>Routing</IonLabel>

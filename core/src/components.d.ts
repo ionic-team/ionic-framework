@@ -657,6 +657,10 @@ export namespace Components {
          */
         "getScrollElement": () => Promise<HTMLElement>;
         /**
+          * If you want to enable zooming of the content, set this property to `true`.
+         */
+        "pinchZoom": boolean;
+        /**
           * Scroll by a specified X/Y distance in the component.
           * @param x The amount to scroll by on the horizontal axis.
           * @param y The amount to scroll by on the vertical axis.
@@ -4224,6 +4228,10 @@ declare namespace LocalJSX {
           * Emitted when the scroll has started.
          */
         "onIonScrollStart"?: (event: CustomEvent<ScrollBaseDetail>) => void;
+        /**
+          * If you want to enable zooming of the content, set this property to `true`.
+         */
+        "pinchZoom"?: boolean;
         /**
           * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
          */

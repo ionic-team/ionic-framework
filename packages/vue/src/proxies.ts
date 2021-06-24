@@ -255,6 +255,7 @@ export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-con
   'color',
   'fullscreen',
   'forceOverscroll',
+  'pinchZoom',
   'scrollX',
   'scrollY',
   'scrollEvents',

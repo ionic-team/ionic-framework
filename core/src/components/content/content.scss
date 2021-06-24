@@ -121,6 +121,22 @@
   touch-action: auto;
 }
 
+.pinch-zoom {
+  touch-action: pinch-zoom;
+}
+
+.pinch-zoom.scroll-y {
+  touch-action: pan-y pinch-zoom;
+}
+
+.pinch-zoom.scroll-x {
+  touch-action: pan-x pinch-zoom;
+}
+
+.pinch-zoom.scroll-y.scroll-x {
+  touch-action: auto pinch-zoom;
+}
+
 .overscroll::before,
 .overscroll::after {
   position: absolute;

@@ -39,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "6.0.0-beta.0",
+    "@ionic/core": "file:../../core",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },
