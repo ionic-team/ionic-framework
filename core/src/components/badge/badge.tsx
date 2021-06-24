@@ -35,9 +35,10 @@ export class Badge implements ComponentInterface {
           [mode]: true,
         })}
       >
-        <span class="inner">
-          <slot></slot>
-        </span>
+        <slot></slot>
+       {/*  <span class="inner">
+
+        </span> */}
       </Host>
     );
   }

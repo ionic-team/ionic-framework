@@ -286,10 +286,10 @@ ion-ripple-effect {
 // --------------------------------------------------
 
 // Solid Button with Color
-:host(.med-button-solid.ion-color) .button-native {
+/* :host(.med-button-solid.ion-color) .button-native {
   background: current-color(base);
   color: current-color(contrast);
-}
+} */
 
 // Outline Button with Color
 :host(.med-button-outline.ion-color) .button-native {

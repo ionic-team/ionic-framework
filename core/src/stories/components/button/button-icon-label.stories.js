@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 import { medIcons } from '../../med-icons';
-import { medColors } from '../../med-colors';
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Button',
@@ -45,7 +45,7 @@ ButtonIconLabel.parameters = {
 }
 ButtonIconLabel.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do botão.",
     table: {

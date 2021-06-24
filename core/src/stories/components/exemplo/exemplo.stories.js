@@ -7,24 +7,24 @@ export default {
   decorators: [withDesign],
 };
 
-const TemplatePrimary = ({ color, disabled, expand, size, slot }) => {
+const TemplatePrimary = ({ color, disabled, expand, size, dsName }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <div style="margin-bottom: 50px;">
-          <ion-button ds-name="primary" ?disabled=${disabled} .expand=${expand} ds-size=${size}>brand</ion-button>
+          <ion-button ds-name=${dsName} ?disabled=${disabled} .expand=${expand} ds-size=${size}>brand</ion-button>
         </div>
 
         <div>
-          <ion-button style="margin: 25px;" ds-name="primary" color="questoes" ?disabled=${disabled} .expand=${expand} ds-size=${size}>questões</ion-button>
-          <ion-button style="margin: 25px;" ds-name="primary" color="aula" ?disabled=${disabled} .expand=${expand} ds-size=${size}>aulas</ion-button>
-          <ion-button style="margin: 25px;" ds-name="primary" color="material" ?disabled=${disabled} .expand=${expand} ds-size=${size}>material</ion-button>
-          <ion-button style="margin: 25px;" ds-name="primary" color="provaschecklist" ?disabled=${disabled} .expand=${expand} ds-size=${size}>provas</ion-button>
+          <ion-button style="margin: 25px;" ds-name=${dsName} color="questoes" ?disabled=${disabled} .expand=${expand} ds-size=${size}>questões</ion-button>
+          <ion-button style="margin: 25px;" ds-name=${dsName} color="aula" ?disabled=${disabled} .expand=${expand} ds-size=${size}>aulas</ion-button>
+          <ion-button style="margin: 25px;" ds-name=${dsName} color="material" ?disabled=${disabled} .expand=${expand} ds-size=${size}>material</ion-button>
+          <ion-button style="margin: 25px;" ds-name=${dsName} color="provaschecklist" ?disabled=${disabled} .expand=${expand} ds-size=${size}>provas</ion-button>
         </div>
 
         <div>
-          <ion-button style="margin-top: 50px;" ds-name="primary" .color=${color} ?disabled=${disabled} .expand=${expand} ds-size=${size}>dinamico</ion-button>
+          <ion-button style="margin-top: 50px;" ds-name=${dsName} .color=${color} ?disabled=${disabled} .expand=${expand} ds-size=${size}>dinamico</ion-button>
         </div>
 
       </div>
@@ -77,13 +77,14 @@ Theme.argTypes = {
       defaultValue: { summary: 'undefined' },
     },
   },
-  slot: {
-    control: { type: 'text' },
-    defaultValue: 'button',
-    description: '**Atributo utilizado apenas no storybook para visualização.**',
+  dsName: {
+    defaultValue: 'none',
+    options: ['primary', 'secondary', 'tertiary'],
+    control: { type: 'radio'},
+    description: "Define o botão.",
     table: {
-      type:  { summary: ['string'] },
-      defaultValue: { summary: 'button' },
+      type:  { summary: ['primary | secondary | tertiary'] },
+      defaultValue: { summary: 'primary' },
     },
   },
 };
