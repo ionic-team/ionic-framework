@@ -1,5 +1,5 @@
 import { html } from 'lit-html';
-import { medColors } from '../../med-colors'
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Icon',
@@ -165,7 +165,7 @@ const TemplateIcon = ({ color }) => {
 export const Icon = TemplateIcon.bind({});
 Icon.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do badge baseado nos tokens.",
     table: {
