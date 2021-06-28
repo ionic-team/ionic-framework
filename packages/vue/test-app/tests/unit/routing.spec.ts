@@ -392,6 +392,8 @@ describe('Routing', () => {
     router.push('/page/2');
     await waitForRouter();
 
-    expect(page.props()).toEqual({ id: '2' });
+    const pageAgain = wrapper.findAllComponents(Page);
+    expect(pageAgain[0].props()).toEqual({ id: '1' });
+    expect(pageAgain[1].props()).toEqual({ id: '2' });
   });
 });
