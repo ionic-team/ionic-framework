@@ -14,8 +14,6 @@ const TemplateDefault = ({color}) => {
 
         <!-- component -->
           <med-agrupador .color=${color}>
-            Expandir a lista
-            <ion-icon name="med-arrow-down" color="brand-primary"></ion-icon>
           </med-agrupador>
         <!-- component -->
 
