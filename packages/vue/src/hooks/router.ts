@@ -17,7 +17,7 @@ export interface UseIonRouterResult {
   back: (routerAnimation?: AnimationBuilder) => void;
   forward: (routerAnimation?: AnimationBuilder) => void;
   navigate: (
-    location: string | Location,
+    location: any,
     routerDirection?: RouteDirection,
     routerAction?: RouteAction,
     routerAnimation?: AnimationBuilder
