@@ -27,11 +27,11 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
        * when double tapping the ion-back-button.
        */
       enteringEl.style.setProperty('pointer-events', 'none');
-      leavingEl.style.setProperty('pointer-events', 'none');
+      leavingEl?.style.setProperty('pointer-events', 'none');
     })
     .afterAddWrite(() => {
       enteringEl.style.removeProperty('pointer-events');
-      leavingEl.style.removeProperty('pointer-events');
+      leavingEl?.style.removeProperty('pointer-events');
     });
 
   // animate the component itself
