@@ -20,7 +20,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private gesture?: Gesture;
   private ani?: Animation;
   private animationEnabled = true;
-  private isTransitioning = false;
 
   @Element() el!: HTMLElement;
 
@@ -64,7 +63,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   async connectedCallback() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !this.isTransitioning && !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
+      () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
       () => this.swipeHandler && this.swipeHandler.onStart(),
       step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
@@ -185,8 +184,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 
-    this.isTransitioning = true;
-
     await transition({
       mode,
       animated,
@@ -200,8 +197,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       ...opts,
       animationBuilder,
     });
-
-    this.isTransitioning = false;
 
     // emit nav changed event
     this.ionNavDidChange.emit();

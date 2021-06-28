@@ -17,7 +17,22 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
   rootTransition
     .addElement(ionPageElement)
     .fill('both')
-    .beforeRemoveClass('ion-page-invisible');
+    .beforeRemoveClass('ion-page-invisible')
+    .beforeAddWrite(() => {
+      /**
+       * When transitioning, the page should not
+       * respond to click events. This resolves small
+       * issues like users trying to swipe to
+       * go back while the page is transitioning in and
+       * when double tapping the ion-back-button.
+       */
+      enteringEl.style.setProperty('pointer-events', 'none');
+      leavingEl.style.setProperty('pointer-events', 'none');
+    })
+    .afterAddWrite(() => {
+      enteringEl.style.removeProperty('pointer-events');
+      leavingEl.style.removeProperty('pointer-events');
+    });
 
   // animate the component itself
   if (backDirection) {
