@@ -32,6 +32,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Tabs Config](#tabs-config)
   * [Tabs Router Outlet](#tabs-router-outlet)
   * [Overlay Events](#overlay-events)
+  * [Utility Function Types](#utility-function-types)
 - [Browser and Platform Support](#browser-and-platform-support)
 
 
@@ -308,6 +309,12 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
   ...
 </ion-modal>
 ```
+
+#### Utility Function Types
+
+- The `IonRouter` type for `useIonRouter` has been renamed to `UseIonRouterResult`.
+
+- The `IonKeyboardRef` type for `useKeyboard` has been renamed to `UseKeyboardResult`.
 
 
 ### Browser and Platform Support
