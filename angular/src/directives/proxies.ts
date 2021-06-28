@@ -883,7 +883,8 @@ export class IonToolbar {
 }
 export declare interface MedAgrupador extends Components.MedAgrupador {
 }
-@Component({ selector: "med-agrupador", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+@ProxyCmp({ inputs: ["color"] })
+@Component({ selector: "med-agrupador", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color"] })
 export class MedAgrupador {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

@@ -2723,6 +2723,7 @@ export namespace Components {
         "renderItem"?: (item: any, index: number) => any;
     }
     interface MedAgrupador {
+        "color"?: Color;
     }
     interface MedAlternativas {
         "alternativaSelecionada": string;
@@ -6247,6 +6248,7 @@ declare namespace LocalJSX {
         "renderItem"?: (item: any, index: number) => any;
     }
     interface MedAgrupador {
+        "color"?: Color;
     }
     interface MedAlternativas {
         "alternativaSelecionada": string;

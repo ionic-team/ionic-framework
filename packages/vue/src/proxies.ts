@@ -807,7 +807,9 @@ export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScro
 ]);
 
 
-export const MedAgrupador = /*@__PURE__*/ defineContainer<JSX.MedAgrupador>('med-agrupador');
+export const MedAgrupador = /*@__PURE__*/ defineContainer<JSX.MedAgrupador>('med-agrupador', [
+  'color'
+]);
 
 
 export const MedAlternativas = /*@__PURE__*/ defineContainer<JSX.MedAlternativas>('med-alternativas', [

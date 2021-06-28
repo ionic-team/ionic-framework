@@ -1370,6 +1370,7 @@ ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) =>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
 med-agrupador,shadow
+med-agrupador,prop,color,string | undefined,undefined,false,false
 
 med-alternativas,shadow
 med-alternativas,prop,alternativaSelecionada,string,undefined,true,true
