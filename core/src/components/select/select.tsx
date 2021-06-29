@@ -125,7 +125,8 @@ export class Select implements ComponentInterface {
 
   @Watch('disabled')
   @Watch('placeholder')
-  disabledChanged() {
+  @Watch('isExpanded')
+  styleChanged() {
     this.emitStyle();
   }
 
@@ -306,15 +307,22 @@ export class Select implements ComponentInterface {
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
+    const showBackdrop = mode === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
+
+    // TODO make sure users can override showBackdrop / size
+    // and change size from cover when inline
+
     const popoverOpts: PopoverOptions = {
       mode,
+      showBackdrop,
       ...interfaceOptions,
 
       component: 'ion-select-popover',
       cssClass: ['select-popover', interfaceOptions.cssClass],
       event: ev,
+      size: 'cover',
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
@@ -415,11 +423,12 @@ export class Select implements ComponentInterface {
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
+      'interactive-disabled': this.disabled,
       'select': true,
+      'select-disabled': this.disabled,
       'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
-      'interactive-disabled': this.disabled,
-      'select-disabled': this.disabled
+      'has-focus': this.isExpanded,
     });
   }
 
@@ -427,6 +436,7 @@ export class Select implements ComponentInterface {
     this.setFocus();
     this.open(ev);
   }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
