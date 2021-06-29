@@ -40,13 +40,13 @@ export const createPanRecognizer = (direction: string, thresh: number, maxAngle:
         return false;
       }
       const hypotenuse = Math.sqrt(distance);
-      
+
       if(isDirUndefined) {
-        isPan = distance > 0 ? 1 : 0; // Could do the calculation with the bigger Dx or Dy
+        isPan = distance > 0 ? 1 : 0;
         dirty = false;
         return true;
       }
-      
+
       const cosine = (isDirX ? deltaX : deltaY) / hypotenuse;
 
       if (cosine > maxCosine) {
