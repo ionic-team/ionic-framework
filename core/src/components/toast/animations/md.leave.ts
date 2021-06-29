@@ -1,23 +1,23 @@
 import { Animation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * md Toast Leave Animation
  */
-export const mdLeaveAnimation = (AnimationC: Animation, baseEl: ShadowRoot): Promise<Animation> => {
-  const baseAnimation = new AnimationC();
+export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
+  const baseAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const wrapperAnimation = new AnimationC();
+  const root = getElementRoot(baseEl);
+  const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
 
-  const hostEl = baseEl.host || baseEl;
-  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
+  wrapperAnimation
+    .addElement(wrapperEl)
+    .fromTo('opacity', 0.99, 0);
 
-  wrapperAnimation.addElement(wrapperEl);
-
-  wrapperAnimation.fromTo('opacity', 0.99, 0);
-
-  return Promise.resolve(baseAnimation
-    .addElement(hostEl)
+  return baseAnimation
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
-    .add(wrapperAnimation));
+    .addAnimation(wrapperAnimation);
 };

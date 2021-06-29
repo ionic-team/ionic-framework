@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Injector } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValueAccessor } from './value-accessor';
@@ -16,13 +16,13 @@ import { ValueAccessor } from './value-accessor';
 })
 export class NumericValueAccessor extends ValueAccessor {
 
-  constructor(el: ElementRef) {
-    super(el);
+  constructor(injector: Injector, el: ElementRef) {
+    super(injector, el);
   }
 
-  @HostListener('ionChange', ['$event.target.value'])
-  _handleIonChange(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionChange', ['$event.target'])
+  _handleIonChange(el: any) {
+    this.handleChangeEvent(el, el.value);
   }
 
   registerOnChange(fn: (_: number | null) => void) {

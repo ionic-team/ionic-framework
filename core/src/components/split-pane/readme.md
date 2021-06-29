@@ -6,7 +6,7 @@ displayed as the viewport width increases.
 If the device's screen width is below a certain size, the split pane will collapse and the menu will be hidden. This is ideal for creating an app that will be served in a browser and deployed through the app store to phones and tablets.
 
 
-### Setting Breakpoints
+## Setting Breakpoints
 
 By default, the split pane will expand when the screen is larger than 992px. To customize this, pass a breakpoint in the `when` property. The `when` property can accept a boolean value, any valid media query, or one of Ionic's predefined sizes.
 
@@ -37,9 +37,9 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 ### Angular
 
 ```html
-<ion-split-pane contentId="menu-content">
-  <!--  our side menu  -->
-  <ion-menu contentId="menu-content">
+<ion-split-pane contentId="main">
+  <!--  the side menu  -->
+  <ion-menu contentId="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -48,7 +48,7 @@ By default, the split pane will expand when the screen is larger than 992px. To 
   </ion-menu>
 
   <!-- the main content -->
-  <ion-router-outlet id="menu-content"></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-split-pane>
 ```
 
@@ -56,9 +56,9 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 ### Javascript
 
 ```html
-<ion-split-pane content-id="menu-content">
-  <!--  our side menu  -->
-  <ion-menu content-id="menu-content">
+<ion-split-pane content-id="main">
+  <!--  the side menu  -->
+  <ion-menu content-id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -67,7 +67,7 @@ By default, the split pane will expand when the screen is larger than 992px. To 
   </ion-menu>
 
   <!-- the main content -->
-  <ion-content id="menu-content">
+  <ion-content id="main">
     <h1>Hello</h1>
   </ion-content>
 </ion-split-pane>
@@ -91,9 +91,9 @@ import {
 
 export const SplitPlaneExample: React.SFC<{}> = () => (
   <IonContent>
-    <IonSplitPane contentId="menuContent">
-      {/*--  our side menu  --*/}
-      <IonMenu contentId="menuContent">
+    <IonSplitPane contentId="main">
+      {/*--  the side menu  --*/}
+      <IonMenu contentId="main">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Menu</IonTitle>
@@ -102,10 +102,41 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
       </IonMenu>
 
       {/*-- the main content --*/}
-      <IonPage id="menuContent"/>
+      <IonPage id="main"/>
     </IonSplitPane>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'split-pane-example',
+  styleUrl: 'split-pane-example.css'
+})
+export class SplitPaneExample {
+  render() {
+    return [
+      <ion-split-pane content-id="main">
+        {/*  the side menu */}
+        <ion-menu content-id="main">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Menu</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        </ion-menu>
+
+        {/* the main content */}
+        <ion-router-outlet id="main"></ion-router-outlet>
+      </ion-split-pane>
+    ];
+  }
+}
 ```
 
 
@@ -113,9 +144,9 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
 
 ```html
 <template>
-  <ion-split-pane contentId="menu-content">
-    <!--  our side menu  -->
-    <ion-menu contentId="menu-content">
+  <ion-split-pane content-id="main">
+    <!--  the side menu  -->
+    <ion-menu content-id="main">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -124,20 +155,43 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
     </ion-menu>
 
     <!-- the main content -->
-    <ion-router-outlet id="menu-content"></ion-router-outlet>
+    <ion-router-outlet id="main"></ion-router-outlet>
   </ion-split-pane>
 </template>
+
+<script>
+import { 
+  IonHeader, 
+  IonMenu, 
+  IonRouterOutlet, 
+  IonSplitPane, 
+  IonTitle, 
+  IonToolbar
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonHeader, 
+    IonMenu, 
+    IonRouterOutlet, 
+    IonSplitPane, 
+    IonTitle, 
+    IonToolbar
+  }
+});
+</script>
 ```
 
 
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                                                                                                    | Type                  | Default       |
-| ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
-| `contentId` | `content-id` | The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane. | `string \| undefined` | `undefined`   |
-| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                      | `boolean`             | `false`       |
-| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                          | `boolean \| string`   | `QUERY['lg']` |
+| Property    | Attribute    | Description                                                                                                                                                                                                                            | Type                  | Default       |
+| ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
+| `contentId` | `content-id` | The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`. | `string \| undefined` | `undefined`   |
+| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                                                                                              | `boolean`             | `false`       |
+| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                                                                                                  | `boolean \| string`   | `QUERY['lg']` |
 
 
 ## Events
@@ -149,9 +203,12 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
 
 ## CSS Custom Properties
 
-| Name       | Description          |
-| ---------- | -------------------- |
-| `--border` | Border between panes |
+| Name               | Description                                                                  |
+| ------------------ | ---------------------------------------------------------------------------- |
+| `--border`         | Border between panes                                                         |
+| `--side-max-width` | Maximum width of the side pane. Does not apply when split pane is collapsed. |
+| `--side-min-width` | Minimum width of the side pane. Does not apply when split pane is collapsed. |
+| `--side-width`     | Width of the side pane. Does not apply when split pane is collapsed.         |
 
 
 ----------------------------------------------

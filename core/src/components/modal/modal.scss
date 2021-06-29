@@ -20,6 +20,7 @@
    * @prop --height: Height of the modal
    * @prop --max-height: Maximum height of the modal
    *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --width: 100%;
   --min-width: auto;
@@ -34,6 +35,7 @@
   --border-color: transparent;
   --background: #{$background-color};
   --box-shadow: none;
+  --backdrop-opacity: 0;
 
   @include position(0, 0, 0, 0);
 
@@ -43,14 +45,24 @@
   align-items: center;
   justify-content: center;
 
+  outline: none;
+
   contain: strict;
+
+  pointer-events: none;
+}
+
+:host(.modal-interactive) .modal-wrapper,
+:host(.modal-interactive) ion-backdrop {
+  pointer-events: auto;
 }
 
 :host(.overlay-hidden) {
   display: none;
 }
 
-.modal-wrapper {
+.modal-wrapper,
+.modal-shadow {
   @include border-radius(var(--border-radius));
 
   width: var(--width);
@@ -70,6 +82,12 @@
   box-shadow: var(--box-shadow);
   overflow: var(--overflow);
   z-index: 10;
+}
+
+.modal-shadow {
+  position: absolute;
+
+  background: transparent;
 }
 
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {

@@ -19,7 +19,9 @@ radio button within the same group.
 <ion-list>
   <ion-radio-group>
     <ion-list-header>
-      Auto Manufacturers
+      <ion-label>
+        Auto Manufacturers
+      </ion-label>
     </ion-list-header>
 
     <ion-item>
@@ -57,11 +59,15 @@ radio button within the same group.
 import React from 'react';
 import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonRadio, IonItem, IonContent } from '@ionic/react';
 
-export const RadioGroupExample: React.FunctionComponent = () => (
+export const RadioGroupExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonRadioGroup>
-        <IonListHeader>Auto Manufacturers</IonListHeader>
+        <IonListHeader>
+          <IonLabel>
+            Auto Manufacturers
+          </IonLabel>
+        </IonListHeader>
 
         <IonItem>
           <IonLabel>Cord</IonLabel>
@@ -94,6 +100,58 @@ export const RadioGroupExample: React.FunctionComponent = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'radio-group-example',
+  styleUrl: 'radio-group-example.css'
+})
+export class RadioGroupExample {
+  render() {
+    return [
+      <ion-list>
+        <ion-radio-group>
+          <ion-list-header>
+            <ion-label>
+              Auto Manufacturers
+            </ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>Cord</ion-label>
+            <ion-radio value="cord"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Duesenberg</ion-label>
+            <ion-radio value="duesenberg"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Hudson</ion-label>
+            <ion-radio value="hudson"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Packard</ion-label>
+            <ion-radio value="packard"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Studebaker</ion-label>
+            <ion-radio value="studebaker"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -101,7 +159,9 @@ export const RadioGroupExample: React.FunctionComponent = () => (
   <ion-list>
     <ion-radio-group>
       <ion-list-header>
-        Auto Manufacturers
+        <ion-label>
+          Auto Manufacturers
+        </ion-label>
       </ion-list-header>
 
       <ion-item>
@@ -131,6 +191,29 @@ export const RadioGroupExample: React.FunctionComponent = () => (
     </ion-radio-group>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList, 
+  IonListHeader, 
+  IonRadio, 
+  IonRadioGroup
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList, 
+    IonListHeader, 
+    IonRadio, 
+    IonRadioGroup
+  }
+});
+</script>
 ```
 
 

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Refresher - Spec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <style>
+    ion-spinner {
+      color: #555;
+    }
+  </style>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text="Mailboxes"></ion-back-button>
+        </ion-buttons>
+        <ion-title>All Inboxes</ion-title>
+        <ion-buttons slot="end">
+          <ion-button>Edit</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-refresher id="refresher" slot="fixed">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">All Inboxes</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-list id="list"></ion-list>
+      
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button onclick="toggleHeader()">
+          <ion-icon name="settings"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    
+    const toggleHeader = () => {
+      const app = document.querySelector('ion-app');
+      const header = app.querySelector('ion-header');
+      
+      if (header) {
+        header.parentNode.removeChild(header);
+      } else {
+        app.insertAdjacentHTML("afterbegin", `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button default-href="/" text="Mailboxes"></ion-back-button>
+              </ion-buttons>
+              <ion-title>All Inboxes</ion-title>
+              <ion-buttons slot="end">
+                <ion-button>Edit</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        `);
+      }
+    }
+    
+    let items = [];
+    for (var i = 0; i < 30; i++) {
+      items.push(i + 1);
+    }
+    const list = document.getElementById('list');
+    const refresher = document.getElementById('refresher');
+    
+    refresher.addEventListener('ionPull', () => {
+      console.log('ionPull');
+    });
+    
+    refresher.addEventListener('ionStart', () => {
+      console.log('ionStart');
+    });
+    
+    refresher.addEventListener('ionRefresh', async function () {
+      console.log('Loading data...');
+      const data = await getAsyncData();
+      items = items.concat(data);
+      refresher.complete();
+      render();
+      console.log('Done');
+    });
+    function render() {
+      let html = '';
+      for (let item of items) {
+        html += `<ion-item button>${item}</ion-item>`;
+      }
+      list.innerHTML = html;
+    }
+    function getAsyncData() {
+      // async return mock data
+      return new Promise(resolve => {
+        setTimeout(() => {
+          let data = [];
+          for (var i = 0; i < 30; i++) {
+            data.push(i);
+          }
+          resolve(data);
+        }, 5000);
+      });
+    }
+    render();
+  </script>
+</body>
+</html>

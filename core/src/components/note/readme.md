@@ -42,7 +42,7 @@ Notes are text elements generally used as subtitles that provide more informatio
 import React from 'react';
 import { IonNote, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const NoteExample: React.FunctionComponent = () => (
+export const NoteExample: React.FC = () => (
   <IonContent>
     {/*-- Default Note --*/}
     <IonNote>Default Note</IonNote><br />
@@ -68,6 +68,46 @@ export const NoteExample: React.FunctionComponent = () => (
     </IonList>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'note-example',
+  styleUrl: 'note-example.css'
+})
+export class NoteExample {
+  render() {
+    return [
+      // Default Note
+      <ion-note>Default Note</ion-note>,
+
+      // Note Colors
+      <ion-note color="primary">Primary Note</ion-note>,
+      <ion-note color="secondary">Secondary Note</ion-note>,
+      <ion-note color="danger">Danger Note</ion-note>,
+      <ion-note color="light">Light Note</ion-note>,
+      <ion-note color="dark">Dark Note</ion-note>,
+
+      // Notes in a List
+      <ion-list>
+        <ion-item>
+          <ion-label>Note (End)</ion-label>
+          <ion-note slot="end">On</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-note slot="start">Off</ion-note>
+          <ion-label>Note (Start)</ion-label>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
 ```
 
 
@@ -98,6 +138,15 @@ export const NoteExample: React.FunctionComponent = () => (
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { IonItem, IonLabel, IonList, IonNote } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonLabel, IonList, IonNote }
+});
+</script>
 ```
 
 
@@ -116,6 +165,19 @@ export const NoteExample: React.FunctionComponent = () => (
 | --------- | ----------------- |
 | `--color` | Color of the note |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-item](../item)
+
+### Graph
+```mermaid
+graph TD;
+  ion-item --> ion-note
+  style ion-note fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

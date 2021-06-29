@@ -8,10 +8,17 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 
 ## Usage
 
-### Javascript
+### Angular / javascript
 
 ```html
 <ion-content></ion-content>
+
+<!-- Footer without a border -->
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Footer - No Border</ion-title>
+  </ion-toolbar>
+</ion-footer>
 
 <ion-footer>
   <ion-toolbar>
@@ -27,9 +34,16 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 import React from 'react';
 import { IonContent, IonFooter, IonToolbar, IonTitle } from '@ionic/react';
 
-export const FooterExample: React.FunctionComponent = () => (
+export const FooterExample: React.FC = () => (
   <>
     <IonContent />
+    
+    {/*-- Footer without a border --*/}
+    <IonFooter className="ion-no-border">
+      <IonToolbar>
+        <IonTitle>Footer - No Border</IonTitle>
+      </IonToolbar>
+    </IonFooter>
 
     <IonFooter>
       <IonToolbar>
@@ -38,6 +52,69 @@ export const FooterExample: React.FunctionComponent = () => (
     </IonFooter>
   </>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'footer-example',
+  styleUrl: 'footer-example.css'
+})
+export class FooterExample {
+  render() {
+    return [
+      <ion-content></ion-content>,
+
+      // Footer without a border
+      <ion-footer class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Footer - No Border</ion-title>
+        </ion-toolbar>
+      </ion-footer>,
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    ];
+  }
+}
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-content></ion-content>
+  
+  <!-- Footer without a border -->
+  <ion-footer class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Footer - No Border</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+  
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+</template>
+
+<script>
+import { IonContent, IonFooter, IonTitle, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonContent, IonFooter, IonTitle, IonToolbar }
+});
+</script>
 ```
 
 

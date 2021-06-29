@@ -1,15 +1,20 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
-import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { findItemLabel, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
+import { watchForOptions } from '../../utils/watch-options';
 
 import { SelectCompareFn } from './select-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part placeholder - The text displayed in the select when there is no value.
+ * @part text - The displayed value of the select.
+ * @part icon - The select icon container.
  */
 @Component({
   tag: 'ion-select',
@@ -21,11 +26,11 @@ import { SelectCompareFn } from './select-interface';
 })
 export class Select implements ComponentInterface {
 
-  private childOpts: HTMLIonSelectOptionElement[] = [];
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private didInit = false;
-  private buttonEl?: HTMLButtonElement;
+  private focusEl?: HTMLButtonElement;
+  private mutationO?: MutationObserver;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -49,7 +54,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder?: string | null;
+  @Prop() placeholder?: string;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -73,10 +78,12 @@ export class Select implements ComponentInterface {
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
-   * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
-   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
-   * [PopoverController API docs](../../popover/PopoverController/#create) for the
+   * can take. See the [ion-alert docs](../alert), the
+   * [ion-action-sheet docs](../action-sheet) and the
+   * [ion-popover docs](../popover) for the
    * create options for each interface.
+   *
+   * Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
    */
   @Prop() interfaceOptions: any = {};
 
@@ -117,64 +124,38 @@ export class Select implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
+  @Watch('placeholder')
   disabledChanged() {
     this.emitStyle();
   }
 
   @Watch('value')
   valueChanged() {
+    this.emitStyle();
     if (this.didInit) {
-      this.updateOptions();
       this.ionChange.emit({
         value: this.value,
       });
-      this.emitStyle();
     }
   }
 
-  @Listen('ionSelectOptionDidLoad')
-  @Listen('ionSelectOptionDidUnload')
-  async selectOptionChanged() {
-    await this.loadOptions();
-
-    if (this.didInit) {
-      this.updateOptions();
-      this.updateOverlayOptions();
-      this.emitStyle();
-
-      /**
-       * In the event that options
-       * are not loaded at component load
-       * this ensures that any value that is
-       * set is properly rendered once
-       * options have been loaded
-       */
-      if (this.value !== undefined) {
-        this.el.forceUpdate();
-      }
-
-    }
-  }
-
-  async componentDidLoad() {
-    await this.loadOptions();
-
-    if (this.value === undefined) {
-      if (this.multiple) {
-        // there are no values set at this point
-        // so check to see who should be selected
-        const checked = this.childOpts.filter(o => o.selected);
-        this.value = checked.map(o => o.value);
-      } else {
-        const checked = this.childOpts.find(o => o.selected);
-        if (checked) {
-          this.value = checked.value;
-        }
-      }
-    }
-    this.updateOptions();
+  async connectedCallback() {
+    this.updateOverlayOptions();
     this.emitStyle();
-    this.el.forceUpdate();
+
+    this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
+      this.updateOverlayOptions();
+    });
+  }
+
+  disconnectedCallback() {
+    if (this.mutationO) {
+      this.mutationO.disconnect();
+      this.mutationO = undefined;
+    }
+  }
+
+  componentDidLoad() {
     this.didInit = true;
   }
 
@@ -222,33 +203,43 @@ export class Select implements ComponentInterface {
   }
 
   private updateOverlayOptions(): void {
-    if (!this.overlay) { return; }
     const overlay = (this.overlay as any);
-
+    if (!overlay) {
+      return;
+    }
+    const childOpts = this.childOpts;
+    const value = this.value;
     switch (this.interface) {
       case 'action-sheet':
-        overlay.buttons = this.createActionSheetButtons(this.childOpts);
+        overlay.buttons = this.createActionSheetButtons(childOpts, value);
         break;
       case 'popover':
         const popover = overlay.querySelector('ion-select-popover');
         if (popover) {
-          popover.options = this.createPopoverOptions(this.childOpts);
+          popover.options = this.createPopoverOptions(childOpts, value);
         }
         break;
-      default:
+      case 'alert':
         const inputType = (this.multiple ? 'checkbox' : 'radio');
-        overlay.inputs = this.createAlertInputs(this.childOpts, inputType);
+        overlay.inputs = this.createAlertInputs(childOpts, inputType, value);
         break;
     }
   }
 
-  private createActionSheetButtons(data: any[]): ActionSheetButton[] {
+  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
     const actionSheetButtons = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
-        role: (option.selected ? 'selected' : ''),
+        role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
         text: option.textContent,
+        cssClass: optClass,
         handler: () => {
-          this.value = option.value;
+          this.value = value;
         }
       } as ActionSheetButton;
     });
@@ -265,37 +256,55 @@ export class Select implements ComponentInterface {
     return actionSheetButtons;
   }
 
-  private createAlertInputs(data: any[], inputType: string): AlertInput[] {
-    return data.map(o => {
+  private createAlertInputs(data: HTMLIonSelectOptionElement[], inputType: 'checkbox' | 'radio', selectValue: any): AlertInput[] {
+    const alertInputs = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
         type: inputType,
-        label: o.textContent,
-        value: o.value,
-        checked: o.selected,
-        disabled: o.disabled
-      } as AlertInput;
+        cssClass: optClass,
+        label: option.textContent || '',
+        value,
+        checked: isOptionSelected(value, selectValue, this.compareWith),
+        disabled: option.disabled
+      };
     });
+
+    return alertInputs;
   }
 
-  private createPopoverOptions(data: any[]): SelectPopoverOption[] {
-    return data.map(o => {
+  private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
+    const popoverOptions = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
-        text: o.textContent,
-        value: o.value,
-        checked: o.selected,
-        disabled: o.disabled,
+        text: option.textContent || '',
+        cssClass: optClass,
+        value,
+        checked: isOptionSelected(value, selectValue, this.compareWith),
+        disabled: option.disabled,
         handler: () => {
-          this.value = o.value;
+          this.value = value;
           this.close();
         }
-      } as SelectPopoverOption;
+      };
     });
+
+    return popoverOptions;
   }
 
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
-
+    const value = this.value;
     const popoverOpts: PopoverOptions = {
       mode,
       ...interfaceOptions,
@@ -307,22 +316,21 @@ export class Select implements ComponentInterface {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
-        value: this.value,
-        options: this.createPopoverOptions(this.childOpts)
+        value,
+        options: this.createPopoverOptions(this.childOpts, value)
       }
     };
     return popoverController.create(popoverOpts);
   }
 
   private async openActionSheet() {
-
     const mode = getIonMode(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
       ...interfaceOptions,
 
-      buttons: this.createActionSheetButtons(this.childOpts),
+      buttons: this.createActionSheetButtons(this.childOpts, this.value),
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
     return actionSheetController.create(actionSheetOpts);
@@ -341,7 +349,7 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
-      inputs: this.createAlertInputs(this.childOpts, inputType),
+      inputs: this.createAlertInputs(this.childOpts, inputType, this.value),
       buttons: [
         {
           text: this.cancelText,
@@ -374,33 +382,16 @@ export class Select implements ComponentInterface {
     return this.overlay.dismiss();
   }
 
-  private async loadOptions() {
-    this.childOpts = await Promise.all(
-      Array.from(this.el.querySelectorAll('ion-select-option')).map(o => o.componentOnReady())
-    );
-  }
-
-  private updateOptions() {
-    // iterate all options, updating the selected prop
-    let canSelect = true;
-    for (const selectOption of this.childOpts) {
-      const selected = canSelect && isOptionSelected(this.value, selectOption.value, this.compareWith);
-      selectOption.selected = selected;
-
-      // if current option is selected and select is single-option, we can't select
-      // any option more
-      if (selected && !this.multiple) {
-        canSelect = false;
-      }
-    }
-  }
-
   private getLabel() {
     return findItemLabel(this.el);
   }
 
   private hasValue(): boolean {
     return this.getText() !== '';
+  }
+
+  private get childOpts() {
+    return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
 
   private getText(): string {
@@ -412,8 +403,8 @@ export class Select implements ComponentInterface {
   }
 
   private setFocus() {
-    if (this.buttonEl) {
-      this.buttonEl.focus();
+    if (this.focusEl) {
+      this.focusEl.focus();
     }
   }
 
@@ -421,7 +412,7 @@ export class Select implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'has-placeholder': this.placeholder != null,
+      'has-placeholder': this.placeholder !== undefined,
       'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
       'select-disabled': this.disabled
@@ -441,70 +432,74 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    const { placeholder, name, disabled, isExpanded, value, el } = this;
+    const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
     const mode = getIonMode(this);
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
+    const { labelText, labelId } = getAriaLabel(el, inputId);
+
+    renderHiddenInput(true, el, name, parseValue(value), disabled);
+
+    const displayValue = this.getText();
 
     let addPlaceholderClass = false;
-    let selectText = this.getText();
-    if (selectText === '' && placeholder != null) {
+    let selectText = displayValue;
+    if (selectText === '' && placeholder !== undefined) {
       selectText = placeholder;
       addPlaceholderClass = true;
     }
-
-    renderHiddenInput(true, el, name, parseValue(value), disabled);
 
     const selectTextClasses: CssClassMap = {
       'select-text': true,
       'select-placeholder': addPlaceholderClass
     };
 
+    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+
+    // If there is a label then we need to concatenate it with the
+    // current value (or placeholder) and a comma so it separates
+    // nicely when the screen reader announces it, otherwise just
+    // announce the value / placeholder
+    const displayLabel = labelText !== undefined
+      ? (selectText !== '' ? `${selectText}, ${labelText}` : labelText)
+      : selectText;
+
     return (
       <Host
         onClick={this.onClick}
-        role="combobox"
-        aria-haspopup="dialog"
+        role="button"
+        aria-haspopup="listbox"
         aria-disabled={disabled ? 'true' : null}
-        aria-expanded={`${isExpanded}`}
-        aria-labelledby={labelId}
+        aria-label={displayLabel}
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
+          'select-expanded': isExpanded
         }}
       >
-        <div class={selectTextClasses}>
+        <div aria-hidden="true" class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
-        <div class="select-icon" role="presentation">
+        <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
+        <label id={labelId}>
+          {displayLabel}
+        </label>
         <button
           type="button"
+          disabled={disabled}
+          id={inputId}
+          aria-labelledby={labelId}
+          aria-haspopup="listbox"
+          aria-expanded={`${isExpanded}`}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          disabled={disabled}
-          ref={(btnEl => this.buttonEl = btnEl)}
-        >
-        </button>
+          ref={(focusEl => this.focusEl = focusEl)}
+        ></button>
       </Host>
     );
   }
 }
-
-const parseValue = (value: any) => {
-  if (value == null) {
-    return undefined;
-  }
-  if (Array.isArray(value)) {
-    return value.join(',');
-  }
-  return value.toString();
-};
 
 const isOptionSelected = (currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) => {
   if (currentValue === undefined) {
@@ -517,13 +512,30 @@ const isOptionSelected = (currentValue: any[] | any, compareValue: any, compareW
   }
 };
 
+const getOptionValue = (el: HTMLIonSelectOptionElement) => {
+  const value = el.value;
+  return (value === undefined)
+    ? el.textContent || ''
+    : value;
+};
+
+const parseValue = (value: any) => {
+  if (value == null) {
+    return undefined;
+  }
+  if (Array.isArray(value)) {
+    return value.join(',');
+  }
+  return value.toString();
+};
+
 const compareOptions = (currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean => {
   if (typeof compareWith === 'function') {
     return compareWith(currentValue, compareValue);
   } else if (typeof compareWith === 'string') {
     return currentValue[compareWith] === compareValue[compareWith];
   } else {
-    return currentValue === compareValue;
+    return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
   }
 };
 
@@ -543,7 +555,7 @@ const generateText = (opts: HTMLIonSelectOptionElement[], value: any | any[], co
 
 const textForValue = (opts: HTMLIonSelectOptionElement[], value: any, compareWith?: string | SelectCompareFn | null): string | null => {
   const selectOpt = opts.find(opt => {
-    return compareOptions(opt.value, value, compareWith);
+    return compareOptions(getOptionValue(opt), value, compareWith);
   });
   return selectOpt
     ? selectOpt.textContent
@@ -551,3 +563,5 @@ const textForValue = (opts: HTMLIonSelectOptionElement[], value: any, compareWit
 };
 
 let selectIds = 0;
+
+const OPTION_CLASS = 'select-interface-option';

@@ -20,7 +20,6 @@ export * from './directives/proxies';
 export { AngularDelegate } from './providers/angular-delegate';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { AlertController } from './providers/alert-controller';
-export { Events } from './providers/events';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { PickerController } from './providers/picker-controller';
@@ -31,9 +30,20 @@ export { ToastController } from './providers/toast-controller';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
+export { AnimationController } from './providers/animation-controller';
+export { GestureController } from './providers/gesture-controller';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 
+// TYPES
+export * from './types/ionic-lifecycle-hooks';
+
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
+
+// UTILS
+export { IonicSafeString, getPlatforms, isPlatform, createAnimation, IonicSwiper } from '@ionic/core';
+
+// CORE TYPES
+export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation, NavComponentWithProps } from '@ionic/core';

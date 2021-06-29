@@ -102,4 +102,28 @@
     </ion-item-sliding>
   </ion-item-group>
 </template>
+<script>
+import { 
+  IonItem, 
+  IonItemDivider,
+  IonItemGroup, 
+  IonItemOption, 
+  IonItemOptions, 
+  IonItemSliding, 
+  IonLabel
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonItem,
+    IonItemDivider, 
+    IonItemGroup, 
+    IonItemOption, 
+    IonItemOptions, 
+    IonItemSliding, 
+    IonLabel
+  }
+});
+</script>
 ```

@@ -45,10 +45,7 @@ export class RouteRedirect implements ComponentInterface {
     this.ionRouteRedirectChanged.emit();
   }
 
-  componentDidLoad() {
-    this.ionRouteRedirectChanged.emit();
-  }
-  componentDidUnload() {
+  connectedCallback() {
     this.ionRouteRedirectChanged.emit();
   }
 }

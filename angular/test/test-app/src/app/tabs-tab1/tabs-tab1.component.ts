@@ -6,6 +6,8 @@ import { Component, NgZone } from '@angular/core';
 })
 export class TabsTab1Component {
   title = 'ERROR';
+  segment = 'one';
+  changed = 'false';
 
   ionViewWillEnter() {
     NgZone.assertInAngularZone();
@@ -13,5 +15,10 @@ export class TabsTab1Component {
       NgZone.assertInAngularZone();
       this.title = 'Tab 1 - Page 1';
     });
+  }
+
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+    this.changed = 'true';
   }
 }

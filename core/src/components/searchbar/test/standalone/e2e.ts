@@ -5,8 +5,6 @@ test('searchbar: standalone', async () => {
     url: '/src/components/searchbar/test/standalone?ionic:_testing=true'
   });
 
-  await page.waitFor(250);
-
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 

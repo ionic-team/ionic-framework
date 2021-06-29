@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -18,7 +18,7 @@
       <ion-toolbar>
         <ion-title>Toggle - Basic</ion-title>
         <ion-buttons slot="primary">
-          <ion-toggle></ion-toggle>
+          <ion-toggle aria-label="Toggle"></ion-toggle>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -33,7 +33,7 @@
 
         <ion-item>
           <ion-label>Banana</ion-label>
-          <ion-toggle slot="start" name="banana" checked></ion-toggle>
+          <ion-toggle slot="start" name="banana" checked class="toggle-part"></ion-toggle>
         </ion-item>
 
         <ion-item>
@@ -71,6 +71,16 @@
           <ion-icon name="information-circle" slot="end"></ion-icon>
         </ion-item>
 
+        <ion-item>
+          <ion-label>Custom</ion-label>
+          <ion-toggle slot="start" style="--border-radius: 0px;--handle-border-radius: 0px;" checked></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Stop Immediate Event Propagation</ion-label>
+          <ion-toggle slot="start" checked id="eventPropagation"></ion-toggle>
+        </ion-item>
+
       </ion-list>
 
 
@@ -81,11 +91,29 @@
       </p>
 
       <p>
-        <ion-toggle id="standAloneChecked"></ion-toggle>
+        <ion-toggle aria-label="Stand-alone toggle" id="standAloneChecked"></ion-toggle>
         Stand-alone toggle:
         <span id="standAloneCheckedSpan"></span>
       </p>
     </ion-content>
+
+    <style>
+      .toggle-part.toggle-checked::part(handle) {
+        background: red;
+      }
+
+      .toggle-part.toggle-checked::part(track) {
+        background: purple;
+      }
+
+      .toggle-part::part(handle) {
+        background: green;
+      }
+
+      .toggle-part::part(track) {
+        background: hotpink;
+      }
+    </style>
 
     <script>
       function printForm(ev) {
@@ -98,6 +126,11 @@
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
       }
+
+      document.getElementById('eventPropagation').addEventListener('click', (evt) => {
+        evt.stopImmediatePropagation();
+        console.log('clicked');
+      });
     </script>
 
   </ion-app>

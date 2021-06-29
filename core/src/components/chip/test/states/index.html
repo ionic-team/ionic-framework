@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chip - States</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <h3>Default</h3>
+
+      <p>
+        <ion-chip>
+          <ion-label>Default</ion-label>
+        </ion-chip>
+        <ion-chip style="border-radius: 4px;">
+          <ion-label>Border Radius</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>With Icon</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+          <ion-label>With Avatar</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+          <ion-label>With Icon and Avatar</ion-label>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
+      <p>
+        <ion-chip class="ion-focused">
+          <ion-label>Default</ion-label>
+        </ion-chip>
+        <ion-chip style="border-radius: 4px;" class="ion-focused">
+          <ion-label>Border Radius</ion-label>
+        </ion-chip>
+        <ion-chip class="ion-focused">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>With Icon</ion-label>
+        </ion-chip>
+        <ion-chip class="ion-focused">
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+          <ion-label>With Avatar</ion-label>
+        </ion-chip>
+        <ion-chip class="ion-focused">
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+          <ion-label>With Icon and Avatar</ion-label>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
+
+      <h3>Colors</h3>
+      <p>
+        <ion-chip color="primary">
+          <ion-label>Primary</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary">
+          <ion-label>Secondary</ion-label>
+        </ion-chip>
+        <ion-chip color="tertiary">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Tertiary with Icon</ion-label>
+        </ion-chip>
+        <ion-chip color="success">
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+          <ion-label>Success with Avatar</ion-label>
+        </ion-chip>
+        <ion-chip color="warning">
+          <ion-label>Warning with Icon</ion-label>
+          <ion-icon name="calendar"></ion-icon>
+        </ion-chip>
+        <ion-chip color="danger">
+          <ion-label>Danger</ion-label>
+        </ion-chip>
+        <ion-chip color="light">
+          <ion-label>Light</ion-label>
+        </ion-chip>
+        <ion-chip color="medium">
+          <ion-label>Medium</ion-label>
+        </ion-chip>
+        <ion-chip color="dark">
+          <ion-label>Dark</ion-label>
+        </ion-chip>
+      </p>
+      <p>
+        <ion-chip color="primary" class="ion-focused">
+          <ion-label>Primary</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary" class="ion-focused">
+          <ion-label>Secondary</ion-label>
+        </ion-chip>
+        <ion-chip color="tertiary" class="ion-focused">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Tertiary with Icon</ion-label>
+        </ion-chip>
+        <ion-chip color="success" class="ion-focused">
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+          <ion-label>Success with Avatar</ion-label>
+        </ion-chip>
+        <ion-chip color="warning" class="ion-focused">
+          <ion-label>Warning with Icon</ion-label>
+          <ion-icon name="calendar"></ion-icon>
+        </ion-chip>
+        <ion-chip color="danger" class="ion-focused">
+          <ion-label>Danger</ion-label>
+        </ion-chip>
+        <ion-chip color="light" class="ion-focused">
+          <ion-label>Light</ion-label>
+        </ion-chip>
+        <ion-chip color="medium" class="ion-focused">
+          <ion-label>Medium</ion-label>
+        </ion-chip>
+        <ion-chip color="dark" class="ion-focused">
+          <ion-label>Dark</ion-label>
+        </ion-chip>
+      </p>
+
+      <h3>Outline</h3>
+
+      <p>
+        <ion-chip outline>
+          <ion-label>Outline</ion-label>
+        </ion-chip>
+        <ion-chip outline color="danger">
+          <ion-label>Danger Outline</ion-label>
+        </ion-chip>
+        <ion-chip outline color="secondary">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Secondary Outline with Icon</ion-label>
+        </ion-chip>
+        <ion-chip outline color="primary">
+          <ion-label>Primary Outline with Avatar</ion-label>
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+        </ion-chip>
+        <ion-chip outline>
+          <ion-icon name="git-pull-request"></ion-icon>
+          <ion-label>Outline with Icon and Avatar</ion-label>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
+      <p>
+        <ion-chip outline class="ion-focused">
+          <ion-label>Outline</ion-label>
+        </ion-chip>
+        <ion-chip outline color="danger" class="ion-focused">
+          <ion-label>Danger Outline</ion-label>
+        </ion-chip>
+        <ion-chip outline color="secondary" class="ion-focused">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Secondary Outline with Icon</ion-label>
+        </ion-chip>
+        <ion-chip outline color="primary" class="ion-focused">
+          <ion-label>Primary Outline with Avatar</ion-label>
+          <ion-avatar>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+          </ion-avatar>
+        </ion-chip>
+        <ion-chip outline class="ion-focused">
+          <ion-icon name="git-pull-request"></ion-icon>
+          <ion-label>Outline with Icon and Avatar</ion-label>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
+
+      <h3>Disabled</h3>
+
+      <p>
+        <ion-chip disabled>
+          <ion-label>Disabled</ion-label>
+        </ion-chip>
+        <ion-chip outline color="danger" class="ion-focused" disabled>
+          <ion-label>Disabled Outline</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary" class="ion-focused" disabled>
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Disabled Secondary with Icon</ion-label>
+        </ion-chip>
+        <ion-chip outline class="ion-focused" disabled>
+          <ion-icon name="git-pull-request"></ion-icon>
+          <ion-label>Disabled Outline with Icon and Avatar</ion-label>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
+
+      <h3>Custom</h3>
+
+      <!-- Custom Font -->
+      <p>
+        <ion-chip class="wide" text="wide">
+          <ion-icon name="add"></ion-icon>
+        </ion-chip>
+        <ion-chip class="wide ion-focused" text="wide">
+          <ion-icon name="add"></ion-icon>
+        </ion-chip>
+      </p>
+
+      <!-- Custom Colors -->
+      <p>
+        <ion-chip class="custom">
+          <ion-icon name="add"></ion-icon>
+        </ion-chip>
+        <ion-chip color="secondary" class="custom">
+          <ion-icon name="add"></ion-icon>
+        </ion-chip>
+        <ion-chip class="custom ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-chip>
+        <ion-chip color="secondary" class="custom ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-chip>
+      </p>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    var buttons = document.querySelectorAll('ion-chip');
+
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', (event) => onClick(event));
+    }
+
+    function onClick(ev) {
+      console.log("clicked the button", ev.target.innerText);
+    }
+  </script>
+
+  <style>
+    h3 {
+      padding-left: 16px;
+    }
+
+    p {
+      padding-left: 8px;
+    }
+
+    .wide {
+      --background: #d1f3ff;
+      --background-hover: #add8e6;
+      --background-focused: #84c5db;
+
+      height: 50px;
+      width: 150px;
+    }
+
+    .custom {
+      --background: #ffdde2;
+      --background-hover: #fcc6ce;
+      --background-focused: lightpink;
+      --color: rgb(214, 60, 235);
+      --border-radius: 10px;
+      --padding-start: 10px;
+      --padding-end: 10px;
+    }
+
+    .custom:hover {
+      opacity: 1;
+    }
+
+    .themed {
+      --ion-toolbar-background: #222;
+      --ion-toolbar-color: #ddd;
+    }
+
+  </style>
+</body>
+
+</html>

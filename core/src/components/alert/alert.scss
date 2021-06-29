@@ -14,6 +14,8 @@
    * @prop --min-height: Minimum height of the alert
    * @prop --height: Height of the alert
    * @prop --max-height: Maximum height of the alert
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --min-width: #{$alert-min-width};
   --width: auto;
@@ -25,10 +27,12 @@
   @include position(0, 0, 0, 0);
 
   display: flex;
-  position: fixed;
+  position: absolute;
 
   align-items: center;
   justify-content: center;
+
+  outline: none;
 
   font-family: $font-family-base;
 
@@ -150,6 +154,17 @@
   height: 100%;
 }
 
+
+// Alert Button: Disabled
+// --------------------------------------------------
+.alert-input-disabled,
+.alert-checkbox-button-disabled .alert-button-inner,
+.alert-radio-button-disabled .alert-button-inner {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
 .alert-tappable {
   @include margin(0);
   @include padding(0);
@@ -183,4 +198,9 @@
 .alert-checkbox-icon,
 .alert-checkbox-inner {
   box-sizing: border-box;
+}
+
+textarea.alert-input {
+  min-height: $alert-input-min-height;
+  resize: none;
 }

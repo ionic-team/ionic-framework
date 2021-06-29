@@ -1,9 +1,13 @@
-## Single Selection
+### Single Selection
 
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Single Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Single Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Gender</ion-label>
@@ -15,7 +19,7 @@
 
     <ion-item>
       <ion-label>Hair Color</ion-label>
-      <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+      <ion-select value="brown" ok-text="Okay" cancel-text="Dismiss">
         <ion-select-option value="brown">Brown</ion-select-option>
         <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>
@@ -25,18 +29,45 @@
 
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  }
+});
+</script>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Multiple Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Multiple Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Toppings</ion-label>
-      <ion-select multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select multiple="true" cancel-text="Nah" ok-text="Okay!">
         <ion-select-option value="bacon">Bacon</ion-select-option>
         <ion-select-option value="olives">Black Olives</ion-select-option>
         <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -52,27 +83,54 @@
 
     <ion-item>
       <ion-label>Pets</ion-label>
-      <ion-select multiple="true">
-        <ion-select-option value="bird" selected>Bird</ion-select-option>
+      <ion-select multiple="true" :value=['bird', 'dog']>
+        <ion-select-option value="bird">Bird</ion-select-option>
         <ion-select-option value="cat">Cat</ion-select-option>
-        <ion-select-option value="dog" selected>Dog</ion-select-option>
+        <ion-select-option value="dog">Dog</ion-select-option>
         <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  }
+});
+</script>
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Interface Options</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Interface Options
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Alert</ion-label>
-      <ion-select :interfaceOptions="customAlertOptions" interface="alert" multiple="true" placeholder="Select One">
+      <ion-select :interface-options="customAlertOptions" interface="alert" multiple="true" placeholder="Select One">
         <ion-select-option value="bacon">Bacon</ion-select-option>
         <ion-select-option value="olives">Black Olives</ion-select-option>
         <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -88,7 +146,7 @@
 
     <ion-item>
       <ion-label>Popover</ion-label>
-      <ion-select :interfaceOptions="customPopoverOptions" interface="popover" placeholder="Select One">
+      <ion-select :interface-options="customPopoverOptions" interface="popover" placeholder="Select One">
         <ion-select-option value="brown">Brown</ion-select-option>
         <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>
@@ -98,7 +156,7 @@
 
     <ion-item>
       <ion-label>Action Sheet</ion-label>
-      <ion-select :interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+      <ion-select :interface-options="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
         <ion-select-option value="red">Red</ion-select-option>
         <ion-select-option value="purple">Purple</ion-select-option>
         <ion-select-option value="yellow">Yellow</ion-select-option>
@@ -110,28 +168,51 @@
   </ion-list>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    customAlertOptions: any = {
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  },
+  setup() {
+    const customAlertOptions: any = {
       header: 'Pizza Toppings',
       subHeader: 'Select your toppings',
       message: '$1.00 per topping',
       translucent: true
     };
 
-    customPopoverOptions: any = {
+    const customPopoverOptions: any = {
       header: 'Hair Color',
       subHeader: 'Select your hair color',
       message: 'Only select your dominant hair color'
     };
 
-    customActionSheetOptions: any = {
+    const customActionSheetOptions: any = {
       header: 'Colors',
       subHeader: 'Select your favorite color'
     };
+    
+    return {
+      customAlertOptions,
+      customPopoverOptions,
+      customActionSheetOptions
+    }
   }
+});
 </script>
 ```

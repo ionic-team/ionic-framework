@@ -2,7 +2,6 @@ import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop,
 
 import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { now } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-backdrop',
@@ -14,7 +13,6 @@ import { now } from '../../utils/helpers';
 })
 export class Backdrop implements ComponentInterface {
 
-  private lastClick = -10000;
   private blocker = GESTURE_CONTROLLER.createBlocker({
     disableScroll: true
   });
@@ -39,28 +37,19 @@ export class Backdrop implements ComponentInterface {
    */
   @Event() ionBackdropTap!: EventEmitter<void>;
 
-  componentDidLoad() {
+  connectedCallback() {
     if (this.stopPropagation) {
       this.blocker.block();
     }
   }
 
-  componentDidUnload() {
-    this.blocker.destroy();
-  }
-
-  @Listen('touchstart', { passive: false, capture: true })
-  protected onTouchStart(ev: TouchEvent) {
-    this.lastClick = now(ev);
-    this.emitTap(ev);
+  disconnectedCallback() {
+    this.blocker.unblock();
   }
 
   @Listen('click', { passive: false, capture: true })
-  @Listen('mousedown', { passive: false, capture: true })
   protected onMouseDown(ev: TouchEvent) {
-    if (this.lastClick < now(ev) - 2500) {
-      this.emitTap(ev);
-    }
+    this.emitTap(ev);
   }
 
   private emitTap(ev: Event) {
@@ -78,6 +67,7 @@ export class Backdrop implements ComponentInterface {
     return (
       <Host
         tabindex="-1"
+        aria-hidden="true"
         class={{
           [mode]: true,
           'backdrop-hide': !this.visible,

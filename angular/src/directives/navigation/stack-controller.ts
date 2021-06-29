@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -52,7 +52,8 @@ export class StackController {
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
-    let { direction, animation } = this.navCtrl.consumeTransition();
+    const consumeResult = this.navCtrl.consumeTransition();
+    let { direction, animation, animationBuilder } = consumeResult;
     const leavingView = this.activeView;
     const tabSwitch = isTabSwitch(enteringView, leavingView);
     if (tabSwitch) {
@@ -70,7 +71,7 @@ export class StackController {
     if (router.getCurrentNavigation) {
       currentNavigation = router.getCurrentNavigation();
 
-    // Angular < 7.2.0
+      // Angular < 7.2.0
     } else if (
       router.navigations &&
       router.navigations.value
@@ -105,10 +106,43 @@ export class StackController {
       enteringView.ref.changeDetectorRef.detectChanges();
     }
 
+    /**
+     * If we are going back from a page that
+     * was presented using a custom animation
+     * we should default to using that
+     * unless the developer explicitly
+     * provided another animation.
+     */
+    const customAnimation = enteringView.animationBuilder;
+    if (
+      animationBuilder === undefined &&
+      direction === 'back' &&
+      !tabSwitch &&
+      customAnimation !== undefined
+    ) {
+      animationBuilder = customAnimation;
+    }
+
+    /**
+     * Save any custom animation so that navigating
+     * back will use this custom animation by default.
+     */
+    if (leavingView) {
+      leavingView.animationBuilder = animationBuilder;
+    }
+
     // Wait until previous transitions finish
     return this.zone.runOutsideAngular(() => {
       return this.wait(() => {
-        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
+        // disconnect leaving page from change detection to
+        // reduce jank during the page transition
+        if (leavingView) {
+          leavingView.ref.changeDetectorRef.detach();
+        }
+        // In case the enteringView is the same as the leavingPage we need to reattach()
+        enteringView.ref.changeDetectorRef.reattach();
+
+        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false, animationBuilder)
           .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
           .then(() => ({
             enteringView,
@@ -146,8 +180,8 @@ export class StackController {
           url = primaryOutlet.route._routerState.snapshot.url;
         }
       }
-
-      return this.navCtrl.navigateBack(url, view.savedExtras).then(() => true);
+      const { animationBuilder } = this.navCtrl.consumeTransition();
+      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animation: animationBuilder }).then(() => true);
     });
   }
 
@@ -156,13 +190,16 @@ export class StackController {
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
       const enteringView = views[views.length - 2];
+      const customAnimation = enteringView.animationBuilder;
+
       return this.wait(() => {
         return this.transition(
           enteringView, // entering view
           leavingView, // leaving view
           'back',
+          this.canGoBack(2),
           true,
-          true
+          customAnimation
         );
       });
     }
@@ -173,6 +210,8 @@ export class StackController {
     if (shouldComplete) {
       this.skipTransition = true;
       this.pop(1);
+    } else if (this.activeView) {
+      cleanup(this.activeView, this.views, this.views, this.location);
     }
   }
 
@@ -181,8 +220,20 @@ export class StackController {
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
+  /**
+   * @internal
+   */
+  getRootUrl(stackId?: string) {
+    const views = this.getStack(stackId);
+    return views.length > 0 ? views[0] : undefined;
+  }
+
   getActiveStackId(): string | undefined {
     return this.activeView ? this.activeView.stackId : undefined;
+  }
+
+  hasRunningTask(): boolean {
+    return this.runningTask !== undefined;
   }
 
   destroy() {
@@ -207,7 +258,8 @@ export class StackController {
     leavingView: RouteView | undefined,
     direction: 'forward' | 'back' | undefined,
     showGoBack: boolean,
-    progressAnimation: boolean
+    progressAnimation: boolean,
+    animationBuilder?: AnimationBuilder
   ) {
     if (this.skipTransition) {
       this.skipTransition = false;
@@ -216,21 +268,12 @@ export class StackController {
     if (leavingView === enteringView) {
       return Promise.resolve(false);
     }
-
-    // disconnect leaving page from change detection to
-    // reduce jank during the page transition
-    if (leavingView) {
-      leavingView.ref.changeDetectorRef.detach();
-    }
-    // In case the enteringView is the same as the leavingPage we need to reattach()
-    if (enteringView) {
-      enteringView.ref.changeDetectorRef.reattach();
-    }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
-      enteringEl.classList.add('ion-page', 'ion-page-invisible');
+      enteringEl.classList.add('ion-page');
+      enteringEl.classList.add('ion-page-invisible');
       if (enteringEl.parentElement !== containerEl) {
         containerEl.appendChild(enteringEl);
       }
@@ -241,7 +284,8 @@ export class StackController {
           duration: direction === undefined ? 0 : undefined,
           direction,
           showGoBack,
-          progressAnimation
+          progressAnimation,
+          animationBuilder
         });
       }
     }
@@ -254,6 +298,7 @@ export class StackController {
       this.runningTask = undefined;
     }
     const promise = this.runningTask = task();
+    promise.finally(() => this.runningTask = undefined);
     return promise;
   }
 }

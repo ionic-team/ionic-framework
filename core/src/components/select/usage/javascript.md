@@ -1,8 +1,12 @@
-## Single Selection
+### Single Selection
 
 ```html
 <ion-list>
-  <ion-list-header>Single Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Single Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Gender</ion-label>
@@ -25,11 +29,15 @@
 </ion-list>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <ion-list>
-  <ion-list-header>Multiple Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Multiple Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Toppings</ion-label>
@@ -49,21 +57,30 @@
 
   <ion-item>
     <ion-label>Pets</ion-label>
-    <ion-select multiple="true">
-      <ion-select-option value="bird" selected>Bird</ion-select-option>
+    <ion-select id="multiple" multiple="true">
+      <ion-select-option value="bird">Bird</ion-select-option>
       <ion-select-option value="cat">Cat</ion-select-option>
-      <ion-select-option value="dog" selected>Dog</ion-select-option>
+      <ion-select-option value="dog">Dog</ion-select-option>
       <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-list>
 ```
 
-## Objects as Values
+```javascript
+const select = document.querySelector('multiple');
+select.value = ['bird', 'dog'];
+```
+
+### Objects as Values
 
 ```html
 <ion-list>
-  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Users</ion-label>
@@ -97,23 +114,28 @@
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
   objectSelectElement.compareWith = compareWithFn;
-  
+
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');
     selectOption.value = option;
     selectOption.textContent = option.first + ' ' + option.last;
-    selectOption.selected = (i === 0);
-    
+
     objectSelectElement.appendChild(selectOption)
   });
+
+  objectSelectElement.value = objectOptions[0];
 }
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <ion-list>
-  <ion-list-header>Interface Options</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Interface Options
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Alert</ion-label>

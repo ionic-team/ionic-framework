@@ -16,7 +16,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       Multi-line text that should wrap when it is too long
       to fit on one line in the item.
     </ion-label>
@@ -53,4 +53,25 @@
     <ion-label>Checkbox</ion-label>
   </ion-item>
 </template>
+
+<script>
+import { 
+  IonCheckbox, 
+  IonInput, 
+  IonItem, 
+  IonLabel,
+  IonToggle
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonCheckbox, 
+    IonInput, 
+    IonItem, 
+    IonLabel,
+    IonToggle
+  }
+});
+</script>
 ```

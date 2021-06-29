@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --background: transparent;
+  --color: inherit;
+
   display: block;
   position: relative;
 
@@ -14,9 +17,4 @@
 :host(.ion-color) {
   background: current-color(base);
   color: current-color(contrast);
-}
-
-:host(.ion-color) ::slotted(ion-card-title),
-:host(.ion-color) ::slotted(ion-card-subtitle) {
-  color: currentColor;
 }

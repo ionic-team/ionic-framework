@@ -11,6 +11,10 @@
   <ion-label color="dark">Secondary w/ Dark label</ion-label>
 </ion-chip>
 
+<ion-chip [disabled]="true">
+  <ion-label>Disabled Chip</ion-label>
+</ion-chip>
+
 <ion-chip>
   <ion-icon name="pin"></ion-icon>
   <ion-label>Default</ion-label>

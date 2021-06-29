@@ -15,9 +15,6 @@ $card-ios-margin-bottom:               $card-ios-margin-top !default;
 /// @prop - Margin start of the card
 $card-ios-margin-start:                16px !default;
 
-/// @prop - Background color of the card
-$card-ios-background-color:            $item-ios-background !default;
-
 /// @prop - Box shadow color of the card
 $card-ios-box-shadow-color:            rgba(0, 0, 0, .12) !default;
 
@@ -29,9 +26,6 @@ $card-ios-border-radius:               8px !default;
 
 /// @prop - Font size of the card
 $card-ios-font-size:                   14px !default;
-
-/// @prop - Color of the card text
-$card-ios-text-color:                  $text-color-step-400 !default;
 
 /// @prop - Transition timing function of the card
 $card-ios-transition-timing-function:  cubic-bezier(0.12, 0.72, 0.29, 1) !default;

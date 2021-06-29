@@ -1,11 +1,11 @@
 import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
-import { ModalController, NavParams, IonNav } from '@ionic/angular';
+import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-example',
   templateUrl: './modal-example.component.html',
 })
-export class ModalExampleComponent implements OnInit {
+export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
   @Input() value: string;
 

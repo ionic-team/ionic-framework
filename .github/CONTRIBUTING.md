@@ -2,6 +2,31 @@
 
 Thanks for your interest in contributing to the Ionic Framework! :tada:
 
+- [Contributing Etiquette](#contributing-etiquette)
+- [Creating an Issue](#creating-an-issue)
+  * [Creating a Good Code Reproduction](#creating-a-good-code-reproduction)
+- [Creating a Pull Request](#creating-a-pull-request)
+  * [Setup](#setup)
+  * [Core](#core)
+    + [Modifying Components](#modifying-components)
+    + [Preview Changes](#preview-changes)
+    + [Lint Changes](#lint-changes)
+    + [Modifying Documentation](#modifying-documentation)
+    + [Modifying Tests](#modifying-tests)
+      - [Screenshot Tests](#screenshot-tests)
+    + [Building Changes](#building-changes)
+  * [Submit Pull Request](#submit-pull-request)
+- [Commit Message Guidelines](#commit-message-guidelines)
+  * [Commit Message Format](#commit-message-format)
+  * [Revert](#revert)
+  * [Type](#type)
+  * [Scope](#scope)
+  * [Subject](#subject)
+  * [Body](#body)
+  * [Footer](#footer)
+  * [Examples](#examples)
+- [License](#license)
+
 
 ## Contributing Etiquette
 
@@ -16,11 +41,38 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 * The issue list of this repository is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
 
-* Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs: reply" and receives no further replies from the author of the issue for more than 30 days, it will be closed.
+* Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs: reply" and receives no further replies from the author of the issue for more than 14 days, it will be closed.
 
 * If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/ionic-team/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
 
 * Next, [create a new issue](https://github.com/ionic-team/ionic/issues/new/choose) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
+
+
+## Creating a Good Code Reproduction
+
+### What is a Code Reproduction?
+
+A code reproduction is a small application that is built to demonstrate a particular issue. The code reproduction should contain the minimum amount of code needed to recreate the issue and should focus on a single issue.
+
+### Why Should You Create a Reproduction?
+
+A code reproduction of the issue you are experiencing helps us better isolate the cause of the problem. This is an important first step to getting any bug fixed! 
+
+Without a reliable code reproduction, it is unlikely we will be able to resolve the issue, leading to it being closed. In other words, creating a code reproduction of the issue helps us help you.
+
+### How to Create a Reproduction
+
+* Create a new Ionic application using one of our starter templates. The `blank` starter application is a great choice for this. You can create one using the following Ionic CLI command: `ionic start myApp blank`
+* Add the minimum amount of code needed to recreate the issue you are experiencing. Do not include anything that is not required to reproduce the issue. This includes any 3rd party plugins you have installed.
+* Publish the application on GitHub and include a link to it when [creating an issue](#creating-an-issue).
+* Be sure to include steps to reproduce the issue. These steps should be clear and easy to follow.
+
+### Benefits of Creating a Reproduction
+
+* **Uses the latest version of Ionic:** By creating a new Ionic application, you are ensuring that you are testing against the latest version of the framework. Sometimes the issues you are experiencing have already been resolved in a newer version of the framework!
+* **Minimal surface area:** By removing code that is not needed in order to reproduce the issue, it makes it easier to identify the cause of the issue.
+* **No secret code needed:** Creating a minimal reproduction of the issue prevents you from having to publish any proprietary code used in your project.
+* **Get help fixing the issue:** If we can reliably reproduce an issue, there is a good chance we will be able to address it.
 
 
 ## Creating a Pull Request
@@ -116,13 +168,32 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 3. Please fill out the provided Pull Request template to the best of your ability and include any issues that are related.
 
 
-## Commit Message Format
+## Commit Message Guidelines
 
-We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md). (Ok you got us, it's basically Angular's commit message format).
+We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).
 
-`type(scope): subject`
+### Commit Message Format
 
-#### Type
+We follow the [Conventional Commits specification](https://www.conventionalcommits.org/). A commit message consists of a **header**, **body** and **footer**.  The header has a **type**, **scope** and **subject**:
+
+```
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+```
+
+The **header** is mandatory and the **scope** of the header is optional.
+
+### Revert
+
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
+
+### Type
+
+If the prefix is `feat`, `fix` or `perf`, it will appear in the changelog. However if there is any [BREAKING CHANGE](#footer), the commit will always appear in the changelog.
+
 Must be one of the following:
 
 * **feat**: A new feature
@@ -134,10 +205,12 @@ Must be one of the following:
 * **test**: Adding missing tests
 * **chore**: Changes to the build process or auxiliary tools and libraries such as documentation generation
 
-#### Scope
-The scope can be anything specifying place of the commit change. For example `action-sheet`, `button`, `menu`, `nav`, etc. If you make multiple commits for the same component, please keep the naming of this component consistent. For example, if you make a change to navigation and the first commit is `fix(nav)`, you should continue to use `nav` for any more commits related to navigation.
+### Scope
 
-#### Subject
+The scope can be anything specifying place of the commit change. Usually it will refer to a component but it can also refer to a utility. For example `action-sheet`, `button`, `css`, `menu`, `nav`, etc. If you make multiple commits for the same component, please keep the naming of this component consistent. For example, if you make a change to navigation and the first commit is `fix(nav)`, you should continue to use `nav` for any more commits related to navigation. As a general rule, if you're modifying a component use the name of the folder.
+
+### Subject
+
 The subject contains succinct description of the change:
 
 * use the imperative, present tense: "change" not "changed" nor "changes"
@@ -146,6 +219,66 @@ The subject contains succinct description of the change:
 * entire length of the commit message must not go over 50 characters
 * describe what the commit does, not what issue it relates to or fixes
 * **be brief, yet descriptive** - we should have a good understanding of what the commit does by reading the subject
+
+### Body
+
+Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
+The body should include the motivation for the change and contrast this with previous behavior.
+
+### Footer
+
+The footer should contain any information about **Breaking Changes** and is also the place to
+reference GitHub issues that this commit **Closes**.
+
+**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
+
+### Examples
+
+Does not appear in the generated changelog:
+
+```
+docs(changelog): update steps to update
+```
+
+Appears under "Features" header, toast subheader:
+
+```
+feat(toast): add 'buttons' property
+```
+
+Appears under "Bug Fixes" header, skeleton-text subheader, with a link to issue #28:
+
+```
+fix(skeleton-text): use proper color when animated
+
+closes #28
+```
+
+Appears under "Performance Improvements" header, and under "Breaking Changes" with the breaking change explanation:
+
+```
+perf(css): remove all css utility attributes
+
+BREAKING CHANGE: The CSS utility attributes have been removed. Use CSS classes instead.
+```
+
+Appears under "Breaking Changes" with the breaking change explanation:
+
+```
+refactor(animations): update to new animation system
+
+BREAKING CHANGE:
+
+Removes the old animation system to use the new Ionic animations.
+```
+
+The following commit and commit `667ecc1` do not appear in the changelog if they are under the same release. If not, the revert commit appears under the "Reverts" header.
+
+```
+revert: feat(skeleton-text): add animated property
+
+This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
+```
 
 
 ## License

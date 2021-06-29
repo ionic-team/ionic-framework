@@ -41,3 +41,7 @@
     font-size: 14px;
   }
 }
+
+ion-card-header + .card-content-ios {
+  padding-top: 0;
+}

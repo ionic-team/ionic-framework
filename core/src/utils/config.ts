@@ -41,6 +41,11 @@ export interface IonicConfig {
   backButtonText?: string;
 
   /**
+   * Overrides the default defaultHref in all `<ion-back-button>` components.
+   */
+  backButtonDefaultHref?: string;
+
+  /**
    * Overrides the default icon in all `<ion-menu-button>` components.
    */
   menuIcon?: string;
@@ -166,9 +171,9 @@ export interface IonicConfig {
   pickerLeave?: AnimationBuilder;
 
   /**
-   * EXPERIMENTAL: Adds a page shadow to transitioning pages on iOS. Disabled by default.
+   * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
    */
-  experimentalTransitionShadow?: boolean;
+  sanitizerEnabled?: boolean;
 
   // PRIVATE configs
   keyboardHeight?: number;
@@ -183,13 +188,15 @@ export interface IonicConfig {
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
   _zoneGate?: (h: () => any) => any;
+  _ael?: (el: any, name: string, cb: any, opts: any) => any;
+  _rel?: (el: any, name: string, cb: any, opts: any) => any;
+  _ce?: (eventName: string, opts: any) => any;
 }
 
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
-    console.error('ionic config was already initialized');
     return;
   }
   win.Ionic = win.Ionic || {};
@@ -198,4 +205,17 @@ export const setupConfig = (config: IonicConfig) => {
     ...config
   };
   return win.Ionic.config;
+};
+
+export const getMode = (): Mode => {
+  const win = window as any;
+  const config = win && win.Ionic && win.Ionic.config;
+  if (config) {
+    if (config.mode) {
+      return config.mode;
+    } else {
+      return config.get('mode');
+    }
+  }
+  return 'md';
 };

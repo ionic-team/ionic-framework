@@ -5,17 +5,46 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$list-ios-header-background-color};
-  --color: #{$list-ios-header-color};
+  --background: #{$list-header-ios-background-color};
+  --color: #{$list-header-ios-color};
+  --border-color: #{$item-ios-border-bottom-color};
 
-  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-ios-header-padding-start}), null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-header-ios-padding-start}), null);
 
   position: relative;
 
-  font-size: $list-ios-header-font-size;
-  font-weight: $list-ios-header-font-weight;
+  align-items: flex-end;
 
-  letter-spacing: $list-ios-header-letter-spacing;
+  font-size: $list-header-ios-font-size;
+  font-weight: $list-header-ios-font-weight;
 
-  text-transform: $list-ios-header-text-transform;
+  letter-spacing: $list-header-ios-letter-spacing;
+}
+
+// List Header: Slotted Components
+// --------------------------------------------------
+
+::slotted(ion-button),
+::slotted(ion-label) {
+  @include margin(29px, null, 6px);
+}
+
+::slotted(ion-button) {
+  @include margin(null, 3px);
+
+  height: 1.4em;
+}
+
+
+// List Header Lines
+// --------------------------------------------------
+
+// Full lines - apply the border to the list header
+// Inset lines - apply the border to the list header inner
+:host(.list-header-lines-full) {
+  --border-width: #{0 0 $item-ios-border-bottom-width 0};
+}
+
+:host(.list-header-lines-inset) {
+  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 }

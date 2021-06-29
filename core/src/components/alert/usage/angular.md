@@ -13,6 +13,7 @@ export class AlertExample {
 
   async presentAlert() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -20,10 +21,14 @@ export class AlertExample {
     });
 
     await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   async presentAlertMultipleButtons() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -35,6 +40,7 @@ export class AlertExample {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
@@ -59,6 +65,7 @@ export class AlertExample {
 
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Prompt!',
       inputs: [
         {
@@ -72,6 +79,13 @@ export class AlertExample {
           id: 'name2-id',
           value: 'hello',
           placeholder: 'Placeholder 2'
+        },
+        // multiline input.
+        {
+          name: 'paragraph',
+          id: 'paragraph',
+          type: 'textarea',
+          placeholder: 'Placeholder 3'
         },
         {
           name: 'name3',
@@ -100,6 +114,16 @@ export class AlertExample {
         {
           name: 'name7',
           type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
         }
       ],
       buttons: [
@@ -124,6 +148,7 @@ export class AlertExample {
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Radio',
       inputs: [
         {
@@ -131,37 +156,55 @@ export class AlertExample {
           type: 'radio',
           label: 'Radio 1',
           value: 'value1',
+          handler: () => {
+            console.log('Radio 1 selected');
+          },
           checked: true
         },
         {
           name: 'radio2',
           type: 'radio',
           label: 'Radio 2',
-          value: 'value2'
+          value: 'value2',
+          handler: () => {
+            console.log('Radio 2 selected');
+          }
         },
         {
           name: 'radio3',
           type: 'radio',
           label: 'Radio 3',
-          value: 'value3'
+          value: 'value3',
+          handler: () => {
+            console.log('Radio 3 selected');
+          }
         },
         {
           name: 'radio4',
           type: 'radio',
           label: 'Radio 4',
-          value: 'value4'
+          value: 'value4',
+          handler: () => {
+            console.log('Radio 4 selected');
+          }
         },
         {
           name: 'radio5',
           type: 'radio',
           label: 'Radio 5',
-          value: 'value5'
+          value: 'value5',
+          handler: () => {
+            console.log('Radio 5 selected');
+          }
         },
         {
           name: 'radio6',
           type: 'radio',
           label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-          value: 'value6'
+          value: 'value6',
+          handler: () => {
+            console.log('Radio 6 selected');
+          }
         }
       ],
       buttons: [
@@ -186,6 +229,7 @@ export class AlertExample {
 
   async presentAlertCheckbox() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Checkbox',
       inputs: [
         {
@@ -193,6 +237,9 @@ export class AlertExample {
           type: 'checkbox',
           label: 'Checkbox 1',
           value: 'value1',
+          handler: () => {
+            console.log('Checkbox 1 selected');
+          },
           checked: true
         },
 
@@ -200,35 +247,50 @@ export class AlertExample {
           name: 'checkbox2',
           type: 'checkbox',
           label: 'Checkbox 2',
-          value: 'value2'
+          value: 'value2',
+          handler: () => {
+            console.log('Checkbox 2 selected');
+          }
         },
 
         {
           name: 'checkbox3',
           type: 'checkbox',
           label: 'Checkbox 3',
-          value: 'value3'
+          value: 'value3',
+          handler: () => {
+            console.log('Checkbox 3 selected');
+          }
         },
 
         {
           name: 'checkbox4',
           type: 'checkbox',
           label: 'Checkbox 4',
-          value: 'value4'
+          value: 'value4',
+          handler: () => {
+            console.log('Checkbox 4 selected');
+          }
         },
 
         {
           name: 'checkbox5',
           type: 'checkbox',
           label: 'Checkbox 5',
-          value: 'value5'
+          value: 'value5',
+          handler: () => {
+            console.log('Checkbox 5 selected');
+          }
         },
 
         {
           name: 'checkbox6',
           type: 'checkbox',
           label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
-          value: 'value6'
+          value: 'value6',
+          handler: () => {
+            console.log('Checkbox 6 selected');
+          }
         }
       ],
       buttons: [
@@ -250,6 +312,10 @@ export class AlertExample {
 
     await alert.present();
   }
-
 }
 ```
+
+
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Alert can be presented from within a page, the `ion-alert` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).

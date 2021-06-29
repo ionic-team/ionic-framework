@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { rIC } from '../../utils/helpers.js';
+import { componentOnReady } from '../../utils/helpers'
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
@@ -14,16 +14,18 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  assetsDir: 'swiper',
+  assetsDirs: ['swiper'],
 })
 export class Slides implements ComponentInterface {
 
   private scrollbarEl?: HTMLElement;
   private paginationEl?: HTMLElement;
-  private didInit = false;
-
+  private swiperReady = false;
+  private mutationO?: MutationObserver;
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
+  private syncSwiper?: SwiperInterface;
+  private didInit = false;
 
   @Element() el!: HTMLIonSlidesElement;
 
@@ -35,10 +37,12 @@ export class Slides implements ComponentInterface {
 
   @Watch('options')
   async optionsChanged() {
-    if (this.didInit) {
+    if (this.swiperReady) {
       const swiper = await this.getSwiper();
-      Object.assign(swiper.params, this.options);
-      await this.update();
+      if (swiper?.params) {
+        Object.assign(swiper.params, this.options);
+        await this.update();
+      }
     }
   }
 
@@ -132,20 +136,54 @@ export class Slides implements ComponentInterface {
    */
   @Event() ionSlideTouchEnd!: EventEmitter<void>;
 
-  componentDidLoad() {
-    rIC(() => this.initSwiper());
+  componentWillLoad() {
+    console.warn(`[Deprecation Warning]: ion-slides has been deprecated and will be removed in Ionic Framework v7.0. We recommend using the framework-specific integrations that Swiper.js provides, allowing for faster bug fixes and an improved developer experience. See https://ionicframework.com/docs/api/slides for more information including migration steps.`);
   }
 
-  async componentDidUnload() {
-    const swiper = await this.getSwiper();
-    swiper.destroy(true, true);
-  }
+  connectedCallback() {
+    // tslint:disable-next-line: strict-type-predicates
+    if (typeof MutationObserver !== 'undefined') {
+      const mut = this.mutationO = new MutationObserver(() => {
+        if (this.swiperReady) {
+          this.update();
+        }
+      });
+      mut.observe(this.el, {
+        childList: true,
+        subtree: true
+      });
 
-  @Listen('ionSlideChanged')
-  onSlideChanged() {
-    if (this.didInit) {
-      this.update();
+      componentOnReady(this.el, () => {
+        if (!this.didInit) {
+          this.didInit = true;
+          this.initSwiper();
+        }
+      })
     }
+  }
+
+  disconnectedCallback() {
+    if (this.mutationO) {
+      this.mutationO.disconnect();
+      this.mutationO = undefined;
+    }
+
+    /**
+     * We need to synchronously destroy
+     * swiper otherwise it is possible
+     * that it will be left in a
+     * destroyed state if connectedCallback
+     * is called multiple times
+     */
+    const swiper = this.syncSwiper;
+    if (swiper !== undefined) {
+      swiper.destroy(true, true);
+      this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
+      this.swiperReady = false;
+      this.syncSwiper = undefined;
+    }
+
+    this.didInit = false;
   }
 
   /**
@@ -154,7 +192,10 @@ export class Slides implements ComponentInterface {
    */
   @Method()
   async update() {
-    const swiper = await this.getSwiper();
+    const [swiper] = await Promise.all([
+      this.getSwiper(),
+      waitForSlides(this.el)
+    ]);
     swiper.update();
   }
 
@@ -309,19 +350,27 @@ export class Slides implements ComponentInterface {
     swiper.allowTouchMove = !lock;
   }
 
+  /**
+   * Get the Swiper instance.
+   * Use this to access the full Swiper API.
+   * See https://idangero.us/swiper/api/ for all API options.
+   */
+  @Method()
+  async getSwiper(): Promise<any> {
+    return this.swiper;
+  }
+
   private async initSwiper() {
     const finalOptions = this.normalizeOptions();
 
     // init swiper core
     // @ts-ignore
     const { Swiper } = await import('./swiper/swiper.bundle.js');
+    await waitForSlides(this.el);
     const swiper = new Swiper(this.el, finalOptions);
-    this.didInit = true;
+    this.swiperReady = true;
+    this.syncSwiper = swiper;
     this.readySwiper(swiper);
-  }
-
-  private getSwiper() {
-    return this.swiper;
   }
 
   private normalizeOptions(): SwiperOptions {
@@ -401,7 +450,7 @@ export class Slides implements ComponentInterface {
         shadowScale: 0.94
       },
       fadeEffect: {
-        crossfade: false
+        crossFade: false
       },
       a11y: {
         prevSlideMessage: 'Previous slide',
@@ -485,3 +534,9 @@ export class Slides implements ComponentInterface {
     );
   }
 }
+
+const waitForSlides = (el: HTMLElement) => {
+  return Promise.all(
+    Array.from(el.querySelectorAll('ion-slide')).map(s => new Promise(resolve => componentOnReady(s, resolve)))
+  );
+};

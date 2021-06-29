@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -10,50 +10,54 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Action Sheet - Translucent</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet - Translucent</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content class="ion-padding">
-        <ion-action-sheet-controller></ion-action-sheet-controller>
+    <ion-content class="ion-padding">
+      <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+      <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
+      <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
+      <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
+      <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
 
-        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
-        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
-        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
-        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4"><f class="red"></f></ion-col>
-            <ion-col size="4"><f class="green"></f></ion-col>
-            <ion-col size="4"><f class="blue"></f></ion-col>
-            <ion-col size="4"><f class="yellow"></f></ion-col>
-            <ion-col size="4"><f class="pink"></f></ion-col>
-            <ion-col size="4"><f class="purple"></f></ion-col>
-            <ion-col size="4"><f class="black"></f></ion-col>
-            <ion-col size="4"><f class="fuchsia"></f></ion-col>
-            <ion-col size="4"><f class="orange"></f></ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
-
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4"><f class="red"></f></ion-col>
+          <ion-col size="4"><f class="green"></f></ion-col>
+          <ion-col size="4"><f class="blue"></f></ion-col>
+          <ion-col size="4"><f class="yellow"></f></ion-col>
+          <ion-col size="4"><f class="pink"></f></ion-col>
+          <ion-col size="4"><f class="purple"></f></ion-col>
+          <ion-col size="4"><f class="black"></f></ion-col>
+          <ion-col size="4"><f class="fuchsia"></f></ion-col>
+          <ion-col size="4"><f class="orange"></f></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+    <ion-action-sheet-controller></ion-action-sheet-controller>
   </ion-app>
 
   <script>
+    
+    async function openActionSheet(opts) {
+      const actionSheet = await actionSheetController.create(opts);
+      await actionSheet.present();
+    }
 
     async function presentBasic() {
       var mode = Ionic.mode;
-
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -70,7 +74,7 @@
           }
         }, {
           text: 'Play (open modal)',
-          icon: 'arrow-dropright-circle',
+          icon: 'chevron-forward-circle',
           handler: () => {
             console.log('Play clicked');
           }
@@ -89,13 +93,11 @@
           }
         }],
         translucent: true
-      })
-      await actionSheetElement.present();
+      });
     }
 
     async function presentNoBackdropDismiss() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         backdropDismiss: false,
         buttons: [{
           text: 'Archive',
@@ -117,12 +119,10 @@
         }],
         translucent: true
       });
-      return await actionSheetElement.present();
     }
 
     async function presentAlert() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [{
           text: 'Open Alert',
           handler: () => {
@@ -137,12 +137,10 @@
         }],
         translucent: true
       });
-      return await actionSheetElement.present();
     }
 
     async function presentScroll() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [
           {
             text: 'Add Reaction',
@@ -151,7 +149,7 @@
             }
           }, {
             text: 'Copy Text',
-            cssClass: 'activated',
+            cssClass: 'ion-activated',
             handler: () => {
               console.log('Copy Text clicked');
             }
@@ -187,7 +185,7 @@
             }
           }, {
             text: 'Edit Title',
-            cssClass: 'activated',
+            cssClass: 'ion-activated',
             handler: () => {
               console.log('Edit Title clicked');
             }
@@ -217,12 +215,10 @@
         ],
         translucent: true
       });
-      return await actionSheetElement.present();
     }
 
     async function presentScrollNoCancel() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [
           {
             text: 'Add Reaction',
@@ -289,12 +285,10 @@
         ],
         translucent: true
       });
-      return await actionSheetElement.present();
     }
 
     async function presentCancelOnly() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [
           {
             text: 'Cancel',
@@ -306,7 +300,6 @@
         ],
         translucent: true
       });
-      return await actionSheetElement.present();
     }
   </script>
 

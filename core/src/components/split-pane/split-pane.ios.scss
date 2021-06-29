@@ -4,22 +4,22 @@
 // Split Pane
 // --------------------------------------------------
 
-.split-pane-ios {
+:host {
   --border: #{$split-pane-ios-border};
+  --side-min-width: #{$split-pane-ios-side-min-width};
+  --side-max-width: #{$split-pane-ios-side-max-width};
 }
 
-.split-pane-ios.split-pane-visible > .split-pane-side {
-  min-width: $split-pane-ios-side-min-width;
-  max-width: $split-pane-ios-side-max-width;
+:host(.split-pane-visible) ::slotted(.split-pane-side) {
+  @include border(0, var(--border), 0, 0);
 
-  border-right: var(--border);
-  border-left: 0;
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
 }
 
-.split-pane-ios.split-pane-visible > .split-pane-side[side=end] {
-  min-width: $split-pane-ios-side-min-width;
-  max-width: $split-pane-ios-side-max-width;
-
-  border-right: 0;
-  border-left: var(--border);
+:host(.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
+  @include border(0, 0, 0, var(--border));
+  
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
 }

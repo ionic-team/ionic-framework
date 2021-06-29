@@ -21,6 +21,9 @@
 .swiper-container-no-flexbox .swiper-slide {
   float: left;
 }
+.swiper-container-vertical {
+  height: 100%;
+}
 .swiper-container-vertical > .swiper-wrapper {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;

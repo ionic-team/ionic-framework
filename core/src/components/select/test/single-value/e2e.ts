@@ -13,7 +13,7 @@ test('select: single-value', async () => {
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compare = await page.compareScreenshot('should open gender single select');
   expect(compare).toMatchScreenshot();

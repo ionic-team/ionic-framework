@@ -38,7 +38,7 @@ export class NavParams {
    *
    * @param param Which param you want to look up
    */
-  get(param: string): any {
+  get<T = any>(param: string): T {
     return this.data[param];
   }
 }

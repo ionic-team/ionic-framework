@@ -1,6 +1,6 @@
 # ion-item-divider
 
-Item Dividers are block elements that can be used to separate items in a list. They are similar to list headers, but instead of being placed at the top of a list, they should go in between groups of like items.
+Item Dividers are block elements that can be used to separate items in a list. They are similar to list headers, but instead of being placed at the top of a list, they should go in between groups of items.
 
 <!-- Auto Generated Below -->
 
@@ -57,7 +57,7 @@ Item Dividers are block elements that can be used to separate items in a list. T
 import React from 'react';
 import { IonItemDivider, IonLabel, IonList, IonItem, IonContent } from '@ionic/react';
 
-export const ItemDividerExample: React.FunctionComponent = () => (
+export const ItemDividerExample: React.FC = () => (
   <IonContent>
     <IonItemDivider>
       <IonLabel>
@@ -99,6 +99,62 @@ export const ItemDividerExample: React.FunctionComponent = () => (
     </IonList>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-divider-example',
+  styleUrl: 'item-divider-example.css'
+})
+export class ItemDividerExample {
+  render() {
+    return [
+      <ion-item-divider>
+        <ion-label>
+          Basic Item Divider
+        </ion-label>
+      </ion-item-divider>,
+
+      <ion-item-divider color="secondary">
+        <ion-label>
+          Secondary Item Divider
+        </ion-label>
+      </ion-item-divider>,
+
+      //  Item Dividers in a List
+      <ion-list>
+        <ion-item-divider>
+          <ion-label>
+            Section A
+          </ion-label>
+        </ion-item-divider>
+
+        <ion-item><ion-label>A1</ion-label></ion-item>
+        <ion-item><ion-label>A2</ion-label></ion-item>
+        <ion-item><ion-label>A3</ion-label></ion-item>
+        <ion-item><ion-label>A4</ion-label></ion-item>
+        <ion-item><ion-label>A5</ion-label></ion-item>
+
+        <ion-item-divider>
+          <ion-label>
+            Section B
+          </ion-label>
+        </ion-item-divider>
+
+        <ion-item><ion-label>B1</ion-label></ion-item>
+        <ion-item><ion-label>B2</ion-label></ion-item>
+        <ion-item><ion-label>B3</ion-label></ion-item>
+        <ion-item><ion-label>B4</ion-label></ion-item>
+        <ion-item><ion-label>B5</ion-label></ion-item>
+      </ion-list>
+    ];
+  }
+}
 ```
 
 
@@ -145,6 +201,15 @@ export const ItemDividerExample: React.FunctionComponent = () => (
     <ion-item><ion-label>B5</ion-label></ion-item>
   </ion-list>
 </template>
+
+<script>
+import { IonItem, IonItemDivider, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonItemDivider, IonLabel }
+});
+</script>
 ```
 
 

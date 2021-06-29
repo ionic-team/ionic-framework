@@ -1,5 +1,3 @@
-Basic Usage
-
 ```html
 <!-- Default Item -->
 <ion-item>
@@ -9,7 +7,7 @@ Basic Usage
 </ion-item>
 
 <!-- Item as a Button -->
-<ion-item onclick="buttonClick()">
+<ion-item button onclick="buttonClick()">
   <ion-label>
     Button Item
   </ion-label>
@@ -29,7 +27,7 @@ Basic Usage
 </ion-item>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <ion-item detail>
@@ -38,7 +36,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item onclick="buttonClick()" detail>
+<ion-item button onclick="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -51,7 +49,7 @@ Detail Arrows
 </ion-item>
 ```
 
-List Items
+### List Items
 
 ```html
 <ion-list>
@@ -68,14 +66,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -95,7 +93,7 @@ List Items
 </ion-list>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <!-- Item Inset Lines -->
@@ -152,10 +150,10 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
-<ion-item onclick="testClick()">
+<ion-item button onclick="testClick()">
   <ion-avatar slot="start">
     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   </ion-avatar>
@@ -184,7 +182,7 @@ Media Items
   <ion-button fill="outline" slot="end">View</ion-button>
 </ion-item>
 
-<ion-item onclick="testClick()">
+<ion-item button onclick="testClick()">
   <ion-thumbnail slot="start">
     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   </ion-thumbnail>
@@ -196,7 +194,7 @@ Media Items
 </ion-item>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <ion-item>
@@ -232,7 +230,7 @@ Buttons in Items
 </ion-item>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <ion-item>
@@ -272,7 +270,7 @@ Icons in Items
 </ion-item>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <ion-item>
@@ -306,6 +304,23 @@ Item Inputs
 <ion-item>
   <ion-label>Input (placeholder)</ion-label>
   <ion-input placeholder="Placeholder"></ion-input>
+</ion-item>
+
+<ion-item fill="solid">
+  <ion-label position="floating">Input (Fill: Solid)</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item fill="outline">
+  <ion-label position="floating">Input (Fill: Outline)</ion-label>
+  <ion-input></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label>Helper and Error Text</ion-label>
+  <ion-input></ion-input>
+  <ion-note slot="helper">Helper Text</ion-note>
+  <ion-note slot="error">Error Text</ion-note>
 </ion-item>
 
 <ion-item>

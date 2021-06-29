@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fab - States</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <ion-fab slot="fixed" horizontal="end">
+        <ion-fab-button>
+          <ion-icon name="share-social"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="bottom">
+          <ion-fab-button>
+            <ion-icon name="logo-vimeo"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="logo-instagram"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="logo-twitter"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
+
+      <h3>Default</h3>
+      <p>
+        <ion-fab-button>
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button text="Back">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button icon="add">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button disabled text="Text Only" icon="">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button icon="heart" text="Love" color="danger">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </p>
+      <p>
+        <ion-fab-button class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="ion-focused" text="Back">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="ion-focused" icon="add">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button disabled class="ion-focused" text="Text Only" icon="">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="ion-focused" icon="heart" text="Love" color="danger">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </p>
+
+      <h3>Colors</h3>
+      <p>
+        <ion-fab-button color="primary">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="secondary">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="tertiary">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="success">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="warning">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="danger">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="medium">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="dark">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </p>
+      <p>
+        <ion-fab-button color="primary" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="secondary" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="tertiary" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="success" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="warning" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="danger" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="medium" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="dark" class="ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </p>
+
+      <h3>Custom</h3>
+
+      <!-- Custom Font -->
+      <p>
+        <ion-fab-button class="wide" text="wide">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="wide ion-focused" text="wide">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </p>
+
+      <!-- Custom Colors -->
+      <p>
+        <ion-fab-button class="custom">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="secondary" class="custom">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="custom-white">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="custom ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="secondary" class="custom ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="custom-white ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </p>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    var buttons = document.querySelectorAll('ion-fab-button');
+
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', (event) => onClick(event));
+    }
+
+    function onClick(ev) {
+      console.log("clicked the button", ev.target.innerText);
+    }
+  </script>
+
+  <style>
+    h3 {
+      padding-left: 16px;
+    }
+
+    p {
+      padding-left: 8px;
+    }
+
+    ion-fab-button {
+      display: inline-block !important;
+      vertical-align: middle;
+    }
+
+    .wide {
+      --background: #d1f3ff;
+      --background-hover: #add8e6;
+      --background-focused: #84c5db;
+
+      height: 50px;
+      width: 150px;
+    }
+
+    .custom {
+      --background: #ffdde2;
+      --background-hover: #fcc6ce;
+      --background-focused: lightpink;
+      --color: rgb(214, 60, 235);
+      --border-radius: 10px;
+      --padding-start: 10px;
+      --padding-end: 10px;
+    }
+
+    .custom:hover {
+      opacity: 1;
+    }
+
+    .themed {
+      --ion-toolbar-background: #222;
+      --ion-toolbar-color: #ddd;
+    }
+
+    .custom-white {
+      --background: white;
+      --background-hover: #888;
+      --background-focused: #444;
+
+      --color: #3880ff;
+    }
+
+    .ios .custom-white {
+      --background-activated: #ddd;
+    }
+  </style>
+</body>
+
+</html>

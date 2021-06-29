@@ -1,5 +1,5 @@
-
 import { Config } from '../../interface';
+import { componentOnReady } from '../helpers';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
@@ -23,9 +23,13 @@ export const startInputShims = (config: Config) => {
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
-  const registerInput = (componentEl: HTMLElement) => {
-    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input') || (componentEl.shadowRoot || componentEl).querySelector('textarea');
+  const registerInput = async (componentEl: HTMLElement) => {
+    await new Promise(resolve => componentOnReady(componentEl, resolve));
+
+    const inputRoot = componentEl.shadowRoot || componentEl;
+    const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
     const scrollEl = componentEl.closest('ion-content');
+    const footerEl = (!scrollEl) ? componentEl.closest('ion-footer') as HTMLIonFooterElement | null : null;
 
     if (!inputEl) {
       return;
@@ -36,8 +40,8 @@ export const startInputShims = (config: Config) => {
       hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && !!scrollEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, keyboardHeight);
+    if (SCROLL_ASSIST && (!!scrollEl || !!footerEl) && scrollAssist && !scrollAssistMap.has(componentEl)) {
+      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight);
       scrollAssistMap.set(componentEl, rmFn);
     }
   };
@@ -75,11 +79,13 @@ export const startInputShims = (config: Config) => {
     registerInput(input);
   }
 
-  doc.body.addEventListener('ionInputDidLoad', event => {
-    registerInput(event.target as any);
-  });
+  doc.addEventListener('ionInputDidLoad', ((ev: InputEvent) => {
+    registerInput(ev.detail);
+  }) as any);
 
-  doc.body.addEventListener('ionInputDidUnload', event => {
-    unregisterInput(event.target as any);
-  });
+  doc.addEventListener('ionInputDidUnload', ((ev: InputEvent) => {
+    unregisterInput(ev.detail);
+  }) as any);
 };
+
+type InputEvent = CustomEvent<HTMLElement>;

@@ -27,7 +27,7 @@ The `ion-tab-bar` needs a slot defined in order to be projected to the right pla
     </ion-tab-button>
 
     <ion-tab-button tab="speakers">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
@@ -118,7 +118,7 @@ const routes: Routes = [
     </ion-tab-button>
 
     <ion-tab-button tab="tab-speaker">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
@@ -137,7 +137,7 @@ const routes: Routes = [
 ```
 
 
-## Activating Tabs
+### Activating Tabs
 
 Each `ion-tab-button` will activate one of the tabs when pressed. In order to link the `ion-tab-button` to the `ion-tab` container, a matching `tab` property should be set on each component.
 
@@ -178,28 +178,30 @@ will match the following tab:
 ```tsx
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
+import { calendar, personCircle, map, informationCircle } from 'ionicons/icons';
 
-export const TabsExample: React.FunctionComponent = () => (
+
+export const TabsExample: React.FC = () => (
   <IonTabs>
     <IonTabBar slot="bottom">
       <IonTabButton tab="schedule">
-        <IonIcon name="calendar" />
+        <IonIcon icon={calendar} />
         <IonLabel>Schedule</IonLabel>
         <IonBadge>6</IonBadge>
       </IonTabButton>
 
       <IonTabButton tab="speakers">
-        <IonIcon name="contacts" />
+        <IonIcon icon={personCircle} />
         <IonLabel>Speakers</IonLabel>
       </IonTabButton>
 
       <IonTabButton tab="map">
-        <IonIcon name="map" />
+        <IonIcon icon={map} />
         <IonLabel>Map</IonLabel>
       </IonTabButton>
 
       <IonTabButton tab="about">
-        <IonIcon name="information-circle" />
+        <IonIcon icon={informationCircle} />
         <IonLabel>About</IonLabel>
       </IonTabButton>
     </IonTabBar>
@@ -208,61 +210,214 @@ export const TabsExample: React.FunctionComponent = () => (
 ```
 
 
-### Vue
+### Stencil
 
-```html
-<template>
-  <!-- Listen to before and after tab change events -->
-  <ion-tabs @IonTabsWillChange="beforeTabChange" @IonTabsDidChange="afterTabChange">
-    <ion-tab tab="schedule">
-      <Schedule />
-    </ion-tab>
+```tsx
+import { Component, h } from '@stencil/core';
 
-    <!-- Match by "app.speakers" route name -->
-    <ion-tab tab="speakers" :routes="'app.speakers'">
-      <Speakers />
-    </ion-tab>
+@Component({
+  tag: 'tabs-example',
+  styleUrl: 'tabs-example.css'
+})
+export class TabsExample {
+  render() {
+    return [
+     <ion-tabs>
+      <ion-tab tab="tab-schedule">
+        <ion-nav></ion-nav>
+      </ion-tab>
 
-    <!-- Match by an array of route names -->
-    <ion-tab tab="map" :routes="['app.map', 'app.other.route']">
-      <Map />
-    </ion-tab>
+      <ion-tab tab="tab-speaker">
+        <ion-nav></ion-nav>
+      </ion-tab>
 
-    <!-- Get matched routes with a helper method -->
-    <ion-tab tab="about" :routes="getMatchedRoutes">
-      <About />
-    </ion-tab>
+      <ion-tab tab="tab-map" component="page-map">
+        <ion-nav></ion-nav>
+      </ion-tab>
 
-    <!-- Use v-slot:bottom with Vue ^2.6.0 -->
-    <template slot="bottom">
-      <ion-tab-bar>
-        <ion-tab-button tab="schedule">
+      <ion-tab tab="tab-about" component="page-about">
+        <ion-nav></ion-nav>
+      </ion-tab>
+
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="tab-schedule">
           <ion-icon name="calendar"></ion-icon>
           <ion-label>Schedule</ion-label>
           <ion-badge>6</ion-badge>
         </ion-tab-button>
 
-        <!-- Provide a custom route to navigate to -->
-        <ion-tab-button tab="speakers" :to="{ name: 'app.speakers' }">
-          <ion-icon name="contacts"></ion-icon>
+        <ion-tab-button tab="tab-speaker">
+          <ion-icon name="person-circle"></ion-icon>
           <ion-label>Speakers</ion-label>
         </ion-tab-button>
 
-        <!-- Provide extra data to route -->
-        <ion-tab-button tab="map" :to="{ name: 'app.map', params: { mode: 'dark' } }">
+        <ion-tab-button tab="tab-map">
           <ion-icon name="map"></ion-icon>
           <ion-label>Map</ion-label>
         </ion-tab-button>
 
-        <!-- Provide custom click handler -->
-        <ion-tab-button tab="about" @click="goToAboutTab">
+        <ion-tab-button tab="tab-about">
           <ion-icon name="information-circle"></ion-icon>
           <ion-label>About</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
-    </template>
-  </ion-tabs>
+
+    </ion-tabs>
+    ];
+  }
+}
+```
+
+
+### Activating Tabs
+
+Each `ion-tab-button` will activate one of the tabs when pressed. In order to link the `ion-tab-button` to the `ion-tab` container, a matching `tab` property should be set on each component.
+
+```jsx
+<ion-tab tab="settings">
+  ...
+</ion-tab>
+
+<ion-tab-button tab="settings">
+  ...
+</ion-tab-button>
+```
+
+The `ion-tab-button` and `ion-tab` above are linked by the common `tab` property.
+
+The `tab` property identifies each tab, and it has to be unique within the `ion-tabs`. It's important to always set the `tab` property on the `ion-tab` and `ion-tab-button`, even if one component is not used.
+
+
+### Router integration
+
+When used with Ionic's router (`ion-router`) the `tab` property of the `ion-tab` matches the `component` property of an `ion-route`.
+
+The following route within the scope of an `ion-tabs` outlet:
+
+```tsx
+<ion-route url="/settings-page" component="settings"></ion-route>
+```
+
+will match the following tab:
+
+```tsx
+<ion-tab tab="settings" component="settings-component"></ion-tab>
+```
+
+
+### Vue
+
+**Tabs.vue**
+```html
+<template>
+  <ion-page>
+    <ion-tabs @ionTabsWillChange="beforeTabChange" @ionTabsDidChange="afterTabChange">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="schedule" href="/tabs/schedule">
+          <ion-icon :icon="calendar"></ion-icon>
+          <ion-label>Schedule</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+  
+        <ion-tab-button tab="speakers" href="/tabs/speakers">
+          <ion-icon :icon="personCircle"></ion-icon>
+          <ion-label>Speakers</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-page>
 </template>
+
+<script>
+import { defineComponent } from 'vue';
+import { 
+  IonIcon, 
+  IonLabel, 
+  IonPage,
+  IonTabBar, 
+  IonTabButton, 
+  IonTabs
+} from '@ionic/vue';
+import { calendar, personCircle } from 'ionicons/icons';
+
+export default defineComponent({
+  components: { IonIcon, IonLabel, IonPage, IonTabBar, IonTabButton, IonTabs },
+  setup() {
+    const beforeTabChange = () => {
+      // do something before tab change
+    }
+    const afterTabChange = () => {
+      // do something after tab change
+    }
+    return {
+      calendar,
+      personCircle,
+      beforeTabChange,
+      afterTabChange
+    }
+  }
+});
+</script>
+```
+
+**Schedule.vue**
+```html
+<template>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Schedule</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">Schedule Tab</ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
+
+export default defineComponent({
+  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar }
+});
+</script>
+```
+
+**Speakers.vue**
+```html
+<template>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Speakers</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">Speakers Tab</ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
+
+export default defineComponent({
+  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar }
+});
+</script>
 ```
 
 

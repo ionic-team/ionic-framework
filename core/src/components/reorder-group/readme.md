@@ -88,6 +88,7 @@ The `detail` property of the `ionItemReorder` event includes all of the relevant
 ```javascript
 import { Component, ViewChild } from '@angular/core';
 import { IonReorderGroup } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'reorder-group-example',
@@ -99,7 +100,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) {
+  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
@@ -116,11 +117,12 @@ export class ReorderGroupExample {
 }
 ```
 
-#### Updating Data
+### Updating Data
 
 ```javascript
 import { Component, ViewChild } from '@angular/core';
 import { IonReorderGroup } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'reorder-group-example',
@@ -134,7 +136,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) {
+  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
     // order before the drag
     console.log('Before complete', this.items);
@@ -239,7 +241,7 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 });
 ```
 
-#### Updating Data
+### Updating Data
 
 ```javascript
 const items = [1, 2, 3, 4, 5];
@@ -267,6 +269,7 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 import React from 'react';
 import { IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon, IonContent } from '@ionic/react';
 import { ItemReorderEventDetail } from '@ionic/core';
+import { pizza } from 'ionicons/icons';
 
 function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   // The `from` and `to` properties contain the index of the item
@@ -279,7 +282,7 @@ function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   event.detail.complete();
 }
 
-export const ReorderGroupExample: React.FunctionComponent = () => (
+export const ReorderGroupExample: React.FC = () => (
   <IonContent>
     {/*-- The reorder gesture is disabled by default, enable it to drag and drop items --*/}
     <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>
@@ -309,14 +312,14 @@ export const ReorderGroupExample: React.FunctionComponent = () => (
       <IonItem>
         <IonLabel>Item 5</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza" />
+          <IonIcon icon={pizza} />
         </IonReorder>
       </IonItem>
 
       <IonItem>
         <IonLabel>Item 6</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza" />
+          <IonIcon icon={pizza} />
         </IonReorder>
       </IonItem>
 
@@ -337,7 +340,7 @@ export const ReorderGroupExample: React.FunctionComponent = () => (
 );
 ```
 
-#### Updating Data
+### Updating Data
 
 ```tsx
 const items = [1, 2, 3, 4, 5];
@@ -354,6 +357,149 @@ function doReorder(event: CustomEvent) {
 
   // After complete is called the items will be in the new order
   console.log('After complete', this.items);
+}
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'reorder-group-example',
+  styleUrl: 'reorder-group-example.css'
+})
+export class ReorderGroupExample {
+  doReorder(ev: any) {
+    // The `from` and `to` properties contain the index of the item
+    // when the drag started and ended, respectively
+    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. This method can also be called directly
+    // by the reorder group
+    ev.detail.complete();
+  }
+
+  render() {
+    return [
+      // The reorder gesture is disabled by default, enable it to drag and drop items
+      <ion-reorder-group onIonItemReorder={(ev) => this.doReorder(ev)} disabled={false}>
+        {/* Default reorder icon, end aligned items */}
+        <ion-item>
+          <ion-label>
+            Item 1
+          </ion-label>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            Item 2
+          </ion-label>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+
+        {/* Default reorder icon, start aligned items */}
+        <ion-item>
+          <ion-reorder slot="start"></ion-reorder>
+          <ion-label>
+            Item 3
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-reorder slot="start"></ion-reorder>
+          <ion-label>
+            Item 4
+          </ion-label>
+        </ion-item>
+
+        {/* Custom reorder icon end items */}
+        <ion-item>
+          <ion-label>
+            Item 5
+          </ion-label>
+          <ion-reorder slot="end">
+            <ion-icon name="pizza"></ion-icon>
+          </ion-reorder>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            Item 6
+          </ion-label>
+          <ion-reorder slot="end">
+            <ion-icon name="pizza"></ion-icon>
+          </ion-reorder>
+        </ion-item>
+
+        {/* Items wrapped in a reorder, entire item can be dragged */}
+        <ion-reorder>
+          <ion-item>
+            <ion-label>
+              Item 7
+            </ion-label>
+          </ion-item>
+        </ion-reorder>
+
+        <ion-reorder>
+          <ion-item>
+            <ion-label>
+              Item 8
+            </ion-label>
+          </ion-item>
+        </ion-reorder>
+      </ion-reorder-group>
+    ]
+  }
+}
+```
+
+### Updating Data
+
+```tsx
+import { Component, State, h } from '@stencil/core';
+
+@Component({
+  tag: 'reorder-group-example',
+  styleUrl: 'reorder-group-example.css'
+})
+export class ReorderGroupExample {
+  @State() items = [1, 2, 3, 4, 5];
+
+  doReorder(ev: any) {
+    // Before complete is called with the items they will remain in the
+    // order before the drag
+    console.log('Before complete', this.items);
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. Update the items variable to the
+    // new order of items
+    this.items = ev.detail.complete(this.items);
+
+    // After complete is called the items will be in the new order
+    console.log('After complete', this.items);
+  }
+
+  render() {
+    return [
+      // The reorder gesture is disabled by default, enable it to drag and drop items
+      <ion-reorder-group onIonItemReorder={(ev) => this.doReorder(ev)} disabled={false}>
+
+        {this.items.map(item =>
+          <ion-item>
+            <ion-label>
+              Item { item }
+            </ion-label>
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+        )}
+
+      </ion-reorder-group>
+    ]
+  }
 }
 ```
 
@@ -432,13 +578,27 @@ function doReorder(event: CustomEvent) {
   </ion-reorder-group>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonIcon, 
+  IonItem, 
+  IonLabel, 
+  IonReorder, 
+  IonReorderGroup
+} from '@ionic/vue';
+import { pizza } from 'ionicons/icons';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-
-    doReorder(event) {
+export default defineComponent({
+  components: { 
+    IonIcon, 
+    IonItem, 
+    IonLabel, 
+    IonReorder, 
+    IonReorderGroup
+  },
+  setup() {
+    const doReorder = (event: CustomEvent) => {
       // The `from` and `to` properties contain the index of the item
       // when the drag started and ended, respectively
       console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
@@ -448,34 +608,40 @@ function doReorder(event: CustomEvent) {
       // by the reorder group
       event.detail.complete();
     }
+    return { doReorder, pizza }
   }
+});
 </script>
 ```
 
-#### Updating Data
+### Updating Data
 
 ```html
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+...
+import { defineComponent, ref } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    items = [1, 2, 3, 4, 5];
+export default defineComponent({
+  ...
+  setup() {
+    const items = ref([1, 2, 3, 4, 5]);
 
-    doReorder(event) {
+    const doReorder = (event: CustomEvent) => {
       // Before complete is called with the items they will remain in the
       // order before the drag
-      console.log('Before complete', this.items);
+      console.log('Before complete', items.value);
 
       // Finish the reorder and position the item in the DOM based on
       // where the gesture ended. Update the items variable to the
       // new order of items
-      this.items = event.detail.complete(this.items);
+      items.value = event.detail.complete(items.value);
 
       // After complete is called the items will be in the new order
-      console.log('After complete', this.items);
+      console.log('After complete', items.value);
     }
+    return { doReorder, items, ... }
   }
+});
 </script>
 ```
 

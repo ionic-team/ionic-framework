@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "4.7.1",
+  "version": "6.0.0-beta.0",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -19,12 +19,16 @@
     "type": "git",
     "url": "https://github.com/ionic-team/ionic.git"
   },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
+    "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",
     "build.link": "npm run build && node scripts/link-copy.js",
-    "build.ng": "npm run build.es2015 && npm run build.es5",
+    "build.ng": "ng-packagr -p package.json",
     "build.es2015": "ngc -p tsconfig.json && rollup --config ./scripts/rollup.config.js",
     "build.es5": "ngc -p tsconfig.legacy.json && rollup --config ./scripts/rollup.config.legacy.js",
     "clean": "node scripts/clean.js",
@@ -37,53 +41,46 @@
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
-  "module": "dist/fesm5.js",
-  "main": "dist/fesm5.js",
-  "types": "dist/core.d.ts",
-  "files": [
-    "dist/",
-    "css/"
-  ],
   "dependencies": {
-    "@ionic/core": "4.7.1",
+    "@ionic/core": "6.0.0-beta.0",
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
-    "@angular-devkit/core": "7.2.1 - 8",
-    "@angular-devkit/schematics": "7.2.1 - 8",
-    "@angular/core": "7.2.1 - 8",
-    "@angular/common": "7.2.1 - 8",
-    "@angular/forms": "7.2.1 - 8",
-    "@angular/router": "7.2.1 - 8",
-    "@angular/compiler": "7.2.1 - 8",
-    "@angular/compiler-cli": "7.2.1 - 8",
-    "@angular/platform-browser": "7.2.1 - 8",
-    "@angular/platform-browser-dynamic": "7.2.1 - 8",
+    "@angular/core": ">=8.2.7",
+    "@angular/forms": ">=8.2.7",
+    "@angular/router": ">=8.2.7",
     "rxjs": ">=6.2.0",
     "zone.js": ">=0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^7.2.1",
-    "@angular-devkit/schematics": "^7.2.1",
-    "@angular/common": "^7.2.1",
-    "@angular/compiler": "^7.2.1",
-    "@angular/compiler-cli": "^7.2.1",
-    "@angular/core": "^7.2.1",
-    "@angular/forms": "^7.2.1",
-    "@angular/platform-browser": "^7.2.1",
-    "@angular/platform-browser-dynamic": "^7.2.1",
-    "@angular/router": "^7.2.1",
-    "@types/node": "~12.0.12",
+    "@angular-devkit/core": "8.3.17",
+    "@angular-devkit/schematics": "8.3.17",
+    "@angular/common": "8.2.13",
+    "@angular/compiler": "8.2.13",
+    "@angular/compiler-cli": "8.2.13",
+    "@angular/core": "8.2.13",
+    "@angular/forms": "8.2.13",
+    "@angular/router": "8.2.13",
+    "@types/node": "12.12.5",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.4",
+    "ng-packagr": "^9.1.5",
     "rollup": "~1.17.0",
     "rollup-plugin-node-resolve": "~5.2.0",
-    "rxjs": "^6.5.2",
-    "tsickle": "^0.34.0",
+    "rxjs": "^6.6.2",
+    "tsickle": "^0.39.1",
     "tslint": "^5.12.1",
     "tslint-ionic-rules": "0.0.21",
-    "typescript": "3.2.4",
-    "zone.js": "^0.8.28"
+    "typescript": "3.4.5",
+    "zone.js": "^0.11.1"
   },
-  "schematics": "./dist/schematics/collection.json"
+  "schematics": "./schematics/collection.json",
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/index.ts"
+    },
+    "whitelistedNonPeerDependencies": [
+      "@ionic/core"
+    ]
+  }
 }

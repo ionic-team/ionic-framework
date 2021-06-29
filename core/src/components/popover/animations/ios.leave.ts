@@ -1,24 +1,44 @@
 import { Animation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * iOS Popover Leave Animation
  */
-export const iosLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
-  const baseAnimation = new AnimationC();
+export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
+  const root = getElementRoot(baseEl);
+  const contentEl = root.querySelector('.popover-content') as HTMLElement;
+  const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
+  backdropAnimation
+    .addElement(root.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
-  wrapperAnimation.fromTo('opacity', 0.99, 0);
-  backdropAnimation.fromTo('opacity', 0.08, 0);
+  wrapperAnimation
+    .addElement(root.querySelector('.popover-wrapper')!)
+    .fromTo('opacity', 0.99, 0);
 
-  return Promise.resolve(baseAnimation
-    .addElement(baseEl)
+  return baseAnimation
     .easing('ease')
-    .duration(500)
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
+    .afterAddWrite(() => {
+      baseEl.style.removeProperty('--width');
+      baseEl.classList.remove('popover-bottom');
+
+      contentEl.style.removeProperty('top');
+      contentEl.style.removeProperty('left');
+      contentEl.style.removeProperty('bottom');
+      contentEl.style.removeProperty('transform-origin');
+
+      if (arrowEl) {
+        arrowEl.style.removeProperty('top');
+        arrowEl.style.removeProperty('left');
+        arrowEl.style.removeProperty('display');
+      }
+    })
+    .duration(300)
+    .addAnimation([backdropAnimation, wrapperAnimation]);
 };

@@ -25,9 +25,9 @@
 </ion-card>
 
 <ion-card>
-  <ion-item href="#" class="activated">
+  <ion-item href="#" class="ion-activated">
     <ion-icon name="wifi" slot="start"></ion-icon>
-    <ion-label>Card Link Item 1 .activated</ion-label>
+    <ion-label>Card Link Item 1 activated</ion-label>
   </ion-item>
 
   <ion-item href="#">
@@ -35,9 +35,9 @@
     <ion-label>Card Link Item 2</ion-label>
   </ion-item>
 
-  <ion-item class="activated">
+  <ion-item class="ion-activated">
     <ion-icon name="warning" slot="start"></ion-icon>
-    <ion-label>Card Button Item 1 .activated</ion-label>
+    <ion-label>Card Button Item 1 activated</ion-label>
   </ion-item>
 
   <ion-item>

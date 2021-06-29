@@ -1,5 +1,3 @@
-Basic Usage
-
 ```html
 <template>
   <!-- Default Item -->
@@ -10,7 +8,7 @@ Basic Usage
   </ion-item>
 
   <!-- Item as a Button -->
-  <ion-item @click="buttonClick()">
+  <ion-item button @click="buttonClick()">
     <ion-label>
       Button Item
     </ion-label>
@@ -31,7 +29,7 @@ Basic Usage
 </template>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <template>
@@ -41,7 +39,7 @@ Detail Arrows
     </ion-label>
   </ion-item>
 
-  <ion-item @click="buttonClick()" detail>
+  <ion-item button @click="buttonClick()" detail>
     <ion-label>
       Button Item with Detail Arrow
     </ion-label>
@@ -55,7 +53,7 @@ Detail Arrows
 </template>
 ```
 
-List Items
+### List Items
 
 ```html
 <template>
@@ -73,14 +71,14 @@ List Items
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
       Multiline text that should wrap when it is too long
       to fit on one line in the item.
       </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
         <ion-text color="primary">
           <h3>H3 Primary Title</h3>
         </ion-text>
@@ -101,7 +99,7 @@ List Items
 </template>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <template>
@@ -160,11 +158,11 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <template>
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-avatar slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-avatar>
@@ -193,7 +191,7 @@ Media Items
     <ion-button fill="outline" slot="end">View</ion-button>
   </ion-item>
 
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-thumbnail slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-thumbnail>
@@ -201,12 +199,12 @@ Media Items
       <h3>H3 Title Text</h3>
       <p>Icon on right</p>
     </ion-label>
-    <ion-icon name="close-circle" slot="end"></ion-icon>
+    <ion-icon :icon="closeCircle" slot="end"></ion-icon>
   </ion-item>
 </template>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <template>
@@ -223,28 +221,28 @@ Buttons in Items
   <ion-item>
     <ion-button slot="start">
       Start Icon
-      <ion-icon name="home" slot="end"></ion-icon>
+      <ion-icon :icon="home" slot="end"></ion-icon>
     </ion-button>
     <ion-label>Buttons with Icons</ion-label>
     <ion-button slot="end">
-      <ion-icon name="star" slot="end"></ion-icon>
+      <ion-icon :icon="star" slot="end"></ion-icon>
       End Icon
     </ion-button>
   </ion-item>
 
   <ion-item>
     <ion-button slot="start">
-      <ion-icon slot="icon-only" name="navigate"></ion-icon>
+      <ion-icon slot="icon-only" :icon="navigate"></ion-icon>
     </ion-button>
     <ion-label>Icon only Buttons</ion-label>
     <ion-button slot="end">
-      <ion-icon slot="icon-only" name="star"></ion-icon>
+      <ion-icon slot="icon-only" :icon="star"></ion-icon>
     </ion-button>
   </ion-item>
 </template>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <template>
@@ -252,25 +250,25 @@ Icons in Items
     <ion-label>
       Icon End
     </ion-label>
-    <ion-icon name="information-circle" slot="end"></ion-icon>
+    <ion-icon :icon="informationCircle" slot="end"></ion-icon>
   </ion-item>
 
   <ion-item>
     <ion-label>
       Large Icon End
     </ion-label>
-    <ion-icon name="information-circle" size="large" slot="end"></ion-icon>
+    <ion-icon :icon="informationCircle" size="large" slot="end"></ion-icon>
   </ion-item>
 
   <ion-item>
     <ion-label>
       Small Icon End
     </ion-label>
-    <ion-icon name="information-circle" size="small" slot="end"></ion-icon>
+    <ion-icon :icon="informationCircle" size="small" slot="end"></ion-icon>
   </ion-item>
 
   <ion-item>
-    <ion-icon name="star" slot="start"></ion-icon>
+    <ion-icon :icon="star" slot="start"></ion-icon>
     <ion-label>
       Icon Start
     </ion-label>
@@ -280,13 +278,13 @@ Icons in Items
     <ion-label>
       Two Icons End
     </ion-label>
-    <ion-icon name="checkmark-circle" slot="end"></ion-icon>
-    <ion-icon name="shuffle" slot="end"></ion-icon>
+    <ion-icon :icon="checkmarkCircle" slot="end"></ion-icon>
+    <ion-icon :icon="shuffle" slot="end"></ion-icon>
   </ion-item>
 </template>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <template>
@@ -323,6 +321,23 @@ Item Inputs
     <ion-input placeholder="Placeholder"></ion-input>
   </ion-item>
 
+  <ion-item fill="solid">
+    <ion-label position="floating">Input (Fill: Solid)</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item fill="outline">
+    <ion-label position="floating">Input (Fill: Outline)</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Helper and Error Text</ion-label>
+    <ion-input></ion-input>
+    <ion-note slot="helper">Helper Text</ion-note>
+    <ion-note slot="error">Error Text</ion-note>
+  </ion-item>
+
   <ion-item>
     <ion-label>Checkbox</ion-label>
     <ion-checkbox slot="start"></ion-checkbox>
@@ -333,4 +348,65 @@ Item Inputs
     <ion-range></ion-range>
   </ion-item>
 </template>
+
+<script>
+import { 
+  IonAvatar,
+  IonButton,
+  IonCheckbox, 
+  IonDatetime,
+  IonNote,
+  IonIcon,
+  IonInput, 
+  IonItem, 
+  IonLabel, 
+  IonRange,
+  IonSelect, 
+  IonSelectOption, 
+  IonText,
+  IonThumbnail,
+  IonToggle
+} from '@ionic/vue';
+import { 
+  checkmarkCircle, 
+  closeCircle, 
+  home, 
+  informationCircle, 
+  navigate, 
+  shuffle, 
+  star
+} from 'ionicons/icons';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonAvatar,
+    IonButton,
+    IonCheckbox, 
+    IonDatetime,
+    IonNote,
+    IonIcon,
+    IonInput, 
+    IonItem, 
+    IonLabel, 
+    IonRange,
+    IonSelect, 
+    IonSelectOption, 
+    IonText,
+    IonThumbnail,
+    IonToggle
+  },
+  setup() {
+    return {
+      checkmarkCircle, 
+      closeCircle, 
+      home, 
+      informationCircle, 
+      navigate, 
+      shuffle, 
+      star
+    }
+  }
+});
+</script>
 ```

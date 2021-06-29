@@ -40,6 +40,10 @@ export class Footer implements ComponentInterface {
           [`footer-translucent-${mode}`]: translucent,
         }}
       >
+        { mode === 'ios' && translucent &&
+          <div class="footer-background"></div>
+        }
+        <slot></slot>
       </Host>
     );
   }

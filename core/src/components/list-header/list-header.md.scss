@@ -6,11 +6,25 @@
 
 :host {
   --background: transparent;
-  --color: #{$list-md-header-color};
+  --color: #{$list-header-md-color};
+  --border-color: #{$item-md-border-bottom-color};
 
-  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-md-header-padding-start}), null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0) + #{$list-header-md-padding-start}), null);
 
-  min-height: $list-md-header-min-height;
+  min-height: $list-header-md-min-height;
 
-  font-size: $list-md-header-font-size;
+  font-size: $list-header-md-font-size;
+}
+
+// List Header Lines
+// --------------------------------------------------
+
+// Full lines - apply the border to the list header
+// Inset lines - apply the border to the list header inner
+:host(.list-header-lines-full) {
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
+}
+
+:host(.list-header-lines-inset) {
+  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
 }

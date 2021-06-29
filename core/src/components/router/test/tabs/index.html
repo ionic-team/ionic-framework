@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Nav</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script>
+  
+      class PageTabOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Tab One</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <ion-header collapse="condense">
+              <ion-toolbar>
+                <ion-title size="large">Tab One</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            
+            <div class="ion-padding">
+              <ion-button href="#/second-page">Go to Child</ion-button>
+            </div>
+  
+          </ion-content>`;
+        }
+      }
+      
+      class PageTabTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Tab Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <ion-header collapse="condense">
+              <ion-toolbar>
+                <ion-title size="large">Tab Two</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            
+            <div class="ion-padding">
+              <ion-button href="#/second-page">Go to Child</ion-button>
+            </div>
+  
+          </ion-content>`;
+        }
+      }
+  
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons>
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Child</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <ion-header collapse="condense">
+              <ion-toolbar>
+                <ion-title size="large">Child</ion-title>
+              </ion-toolbar>
+            </ion-header>
+          </ion-content>`;
+        }
+      }
+  
+      class TabOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `<ion-nav></ion-nav>`;
+        }
+      }
+  
+      class TabTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `<ion-nav></ion-nav>`;
+        }
+      }
+      
+      class TabsPage extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <ion-tabs>
+            
+              <ion-tab tab="tab-one" component="tab-one"></ion-tab>
+              <ion-tab tab="tab-two" component="tab-two"></ion-tab>
+            
+              <ion-tab-bar slot="bottom">
+                <ion-tab-button tab="tab-one">
+                  <ion-label>Tab One</ion-label>
+                  <ion-icon name="star"></ion-icon>
+                </ion-tab-button>
+            
+                <ion-tab-button tab="tab-two">
+                  <ion-label>Tab Two</ion-label>
+                  <ion-icon name="globe"></ion-icon>
+                </ion-tab-button>
+              </ion-tab-bar>
+            </ion-tabs>
+          `;
+        }
+      }
+  
+  
+      customElements.define('page-tab-one', PageTabOne);
+      customElements.define('page-tab-two', PageTabTwo);
+      customElements.define('page-two', PageTwo);
+  
+      customElements.define('tabs-page', TabsPage);
+      customElements.define('tab-one', TabOne);
+      customElements.define('tab-two', TabTwo);
+    </script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-router>
+        <ion-route url="/" component="tabs-page">
+          <ion-route url="/one" component="tab-one">
+            <ion-route component="page-tab-one"></ion-route>
+          </ion-route>
+          <ion-route url="/two" component="tab-two">
+            <ion-route component="page-tab-two"></ion-route>
+          </ion-route>
+        </ion-route>
+        <ion-route url="/second-page" component="page-two"></ion-route>
+
+      </ion-router>
+  
+      <ion-nav></ion-nav>
+    </ion-app>
+  </body>
+
+</html>

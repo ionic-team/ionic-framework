@@ -1,24 +1,36 @@
 import { Animation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * Md Popover Leave Animation
  */
-export const mdLeaveAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
-  const baseAnimation = new AnimationC();
+export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
+  const root = getElementRoot(baseEl);
+  const contentEl = root.querySelector('.popover-content') as HTMLElement;
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  backdropAnimation
+    .addElement(root.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
+  wrapperAnimation
+    .addElement(root.querySelector('.popover-wrapper')!)
+    .fromTo('opacity', 0.99, 0);
 
-  wrapperAnimation.fromTo('opacity', 0.99, 0);
-  backdropAnimation.fromTo('opacity', 0.32, 0);
-
-  return Promise.resolve(baseAnimation
-    .addElement(baseEl)
+  return baseAnimation
     .easing('ease')
-    .duration(500)
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
+    .afterAddWrite(() => {
+      baseEl.style.removeProperty('--width');
+      baseEl.classList.remove('popover-bottom');
+
+      contentEl.style.removeProperty('top');
+      contentEl.style.removeProperty('left');
+      contentEl.style.removeProperty('bottom');
+      contentEl.style.removeProperty('transform-origin');
+    })
+    .duration(150)
+    .addAnimation([backdropAnimation, wrapperAnimation]);
 };

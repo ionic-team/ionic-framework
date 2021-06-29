@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
 <body>
   <ion-app>
 
@@ -21,8 +24,6 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <ion-action-sheet-controller></ion-action-sheet-controller>
-
       <ion-button expand="block" id="spec" onclick="presentSpec()">Spec</ion-button>
     </ion-content>
 
@@ -33,9 +34,7 @@
 
     async function presentSpec() {
       const mode = Ionic.mode;
-
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheet = await actionSheetController.create({
         header: "Open in",
         buttons: [{
           text: 'Item 1',
@@ -69,7 +68,7 @@
           }
         }]
       });
-      await actionSheetElement.present();
+      await actionSheet.present();
     }
   </script>
 </body>

@@ -2,10 +2,6 @@ import { testToast } from '../test.utils';
 
 const DIRECTORY = 'buttons';
 
-test('toast: buttons, close property', async () => {
-  await testToast(DIRECTORY, '#closeProp');
-});
-
 test('toast: buttons, close array', async () => {
   await testToast(DIRECTORY, '#closeArray');
 });
@@ -25,10 +21,6 @@ test('toast: buttons, long button', async () => {
 /**
  * RTL Tests
  */
-
-test('toast:rtl: buttons, close property', async () => {
-  await testToast(DIRECTORY, '#closeProp', true);
-});
 
 test('toast:rtl: buttons, close array', async () => {
   await testToast(DIRECTORY, '#closeArray', true);

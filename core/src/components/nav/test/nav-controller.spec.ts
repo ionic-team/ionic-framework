@@ -119,6 +119,7 @@ describe('NavController', () => {
       mockViews(nav, [view1]);
 
       const view2 = mockView(MockView2);
+
       await nav.push(view2, null, null, trnsDone);
 
       const hasCompleted = true;
@@ -817,8 +818,8 @@ describe('NavController', () => {
       const view5 = mockView(MockView5);
 
       await nav.setPages([
-        { page: view4 },
-        { page: view5 }
+        { component: view4 },
+        { component: view5 }
       ], null, trnsDone);
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
@@ -924,6 +925,27 @@ describe('NavController', () => {
   const MockView4 = 'mock-view4';
   const MockView5 = 'mock-view5';
 
+  const mockWebAnimation = (el: HTMLElement) => {
+    Element.prototype.animate = () => {};
+
+    el.animate = () => {
+      const animation = {
+        stop: () => {},
+        pause: () => {},
+        cancel: () => {},
+        onfinish: undefined
+      }
+
+      animation.play = () => {
+        if (animation.onfinish) {
+          animation.onfinish();
+        }
+      }
+
+      return animation;
+    }
+  }
+
   function mockView(component?: any, params?: ComponentProps) {
     if (!component) {
       component = MockView;
@@ -931,6 +953,9 @@ describe('NavController', () => {
 
     const view = new ViewController(component, params);
     view.element = document.createElement(component) as HTMLElement;
+
+    mockWebAnimation(view.element);
+
     return view;
   }
 

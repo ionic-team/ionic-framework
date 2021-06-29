@@ -27,7 +27,7 @@ export function getSourceFile(host: Tree, path: string): ts.SourceFile {
  */
 export function addModuleImportToRootModule(
   host: Tree,
-  projectSourceRoot,
+  projectSourceRoot: string,
   moduleName: string,
   importSrc: string
 ) {

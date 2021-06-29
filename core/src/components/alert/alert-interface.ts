@@ -1,9 +1,12 @@
+import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
+import { IonicSafeString } from '../../utils/sanitization';
 
 export interface AlertOptions {
   header?: string;
   subHeader?: string;
-  message?: string;
+  message?: string | IonicSafeString;
   cssClass?: string | string[];
   inputs?: AlertInput[];
   buttons?: (AlertButton | string)[];
@@ -20,7 +23,7 @@ export interface AlertOptions {
 }
 
 export interface AlertInput {
-  type?: TextFieldTypes | 'checkbox' | 'radio';
+  type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
   name?: string;
   placeholder?: string;
   value?: any;
@@ -31,7 +34,13 @@ export interface AlertInput {
   handler?: (input: AlertInput) => void;
   min?: string | number;
   max?: string | number;
+  cssClass?: string | string[];
+  attributes?: AlertInputAttributes | AlertTextareaAttributes;
+  tabindex?: number;
 }
+
+export interface AlertTextareaAttributes extends JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export interface AlertInputAttributes extends JSXBase.InputHTMLAttributes<HTMLInputElement> {}
 
 export interface AlertButton {
   text: string;

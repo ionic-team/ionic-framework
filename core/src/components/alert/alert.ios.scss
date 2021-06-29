@@ -7,6 +7,7 @@
 :host {
   --background: #{$alert-ios-background-color};
   --max-width: #{$alert-ios-max-width};
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.3);
 
   font-size: $alert-ios-font-size;
 }
@@ -16,6 +17,10 @@
 
   box-shadow: $alert-ios-box-shadow;
   overflow: hidden;
+}
+
+.alert-button .alert-button-inner {
+  pointer-events: none;
 }
 
 
@@ -297,6 +302,15 @@
   font-weight: $alert-ios-button-main-font-weight;
 }
 
-.alert-button.activated {
+.alert-button.ion-activated {
   background-color: $alert-ios-button-background-color-activated;
+}
+
+// iOS Action Sheet Button: Destructive
+// ---------------------------------------------------
+
+.alert-button-role-destructive,
+.alert-button-role-destructive.ion-activated,
+.alert-button-role-destructive.ion-focused {
+  color: $alert-ios-button-destructive-text-color;
 }

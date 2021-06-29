@@ -7,21 +7,110 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### React
+
+```tsx
+/* Using with useIonPicker Hook */
+
+import React, { useState } from 'react';
+import { IonButton, IonContent, IonPage, useIonPicker } from '@ionic/react';
+
+const PickerExample: React.FC = () => {
+  const [present] = useIonPicker();
+  const [value, setValue] = useState('');
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              buttons: [
+                {
+                  text: 'Confirm',
+                  handler: (selected) => {
+                    setValue(selected.animal.value)
+                  },
+                },
+              ],
+              columns: [
+                {
+                  name: 'animal',
+                  options: [
+                    { text: 'Dog', value: 'dog' },
+                    { text: 'Cat', value: 'cat' },
+                    { text: 'Bird', value: 'bird' },
+                  ],
+                },
+              ],
+            })
+          }
+        >
+          Show Picker
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present(
+              [
+                {
+                  name: 'animal',
+                  options: [
+                    { text: 'Dog', value: 'dog' },
+                    { text: 'Cat', value: 'cat' },
+                    { text: 'Bird', value: 'bird' },
+                  ],
+                },
+                {
+                  name: 'vehicle',
+                  options: [
+                    { text: 'Car', value: 'car' },
+                    { text: 'Truck', value: 'truck' },
+                    { text: 'Bike', value: 'bike' },
+                  ],
+                },
+              ],
+              [
+                {
+                  text: 'Confirm',
+                  handler: (selected) => {
+                    setValue(`${selected.animal.value}, ${selected.vehicle.value}`)
+                  },
+                },
+              ]
+            )
+          }
+        >
+          Show Picker using params
+        </IonButton>
+        {value && (
+          <div>Selected Value: {value}</div>
+        )}
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+
+
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`        | `animated`         | If `true`, the picker will animate.                                                                              | `boolean`                                                                              | `true`      |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the picker will be dismissed when the backdrop is clicked.                                            | `boolean`                                                                              | `true`      |
-| `buttons`         | --                 | Array of buttons to be displayed at the top of the picker.                                                       | `PickerButton[]`                                                                       | `[]`        |
-| `columns`         | --                 | Array of columns to be displayed in the picker.                                                                  | `PickerColumn[]`                                                                       | `[]`        |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                      | `undefined` |
-| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the picker.                                                     | `number`                                                                               | `0`         |
-| `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
-| `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
-| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the picker.                                                       | `boolean`                                                                              | `true`      |
+| Property          | Attribute          | Description                                                                                                      | Type                                                    | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the picker will animate.                                                                              | `boolean`                                               | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the picker will be dismissed when the backdrop is clicked.                                            | `boolean`                                               | `true`      |
+| `buttons`         | --                 | Array of buttons to be displayed at the top of the picker.                                                       | `PickerButton[]`                                        | `[]`        |
+| `columns`         | --                 | Array of columns to be displayed in the picker.                                                                  | `PickerColumn[]`                                        | `[]`        |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                       | `undefined` |
+| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the picker.                                                     | `number`                                                | `0`         |
+| `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                               | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                         | `undefined` |
+| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the picker.                                                       | `boolean`                                               | `true`      |
 
 
 ## Events
@@ -56,23 +145,23 @@ Type: `Promise<PickerColumn | undefined>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the picker did dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the picker will dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 
@@ -89,20 +178,21 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name               | Description                            |
-| ------------------ | -------------------------------------- |
-| `--background`     | Background of the picker               |
-| `--background-rgb` | Background of the picker in rgb format |
-| `--border-color`   | Border color of the picker             |
-| `--border-radius`  | Border radius of the picker            |
-| `--border-style`   | Border style of the picker             |
-| `--border-width`   | Border width of the picker             |
-| `--height`         | Height of the picker                   |
-| `--max-height`     | Maximum height of the picker           |
-| `--max-width`      | Maximum width of the picker            |
-| `--min-height`     | Minimum height of the picker           |
-| `--min-width`      | Minimum width of the picker            |
-| `--width`          | Width of the picker                    |
+| Name                 | Description                            |
+| -------------------- | -------------------------------------- |
+| `--backdrop-opacity` | Opacity of the backdrop                |
+| `--background`       | Background of the picker               |
+| `--background-rgb`   | Background of the picker in rgb format |
+| `--border-color`     | Border color of the picker             |
+| `--border-radius`    | Border radius of the picker            |
+| `--border-style`     | Border style of the picker             |
+| `--border-width`     | Border width of the picker             |
+| `--height`           | Height of the picker                   |
+| `--max-height`       | Maximum height of the picker           |
+| `--max-width`        | Maximum width of the picker            |
+| `--min-height`       | Minimum height of the picker           |
+| `--min-width`        | Minimum width of the picker            |
+| `--width`            | Width of the picker                    |
 
 
 ## Dependencies

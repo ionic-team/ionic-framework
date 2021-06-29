@@ -47,5 +47,5 @@ const deleteItemSliding = async (item: any, page: any, id: string) => {
   // Wait for element to be removed from DOM
   await page.waitForSelector(id, { hidden: true });
 
-  await page.waitFor(1000);
+  await page.waitForTimeout(1000);
 };

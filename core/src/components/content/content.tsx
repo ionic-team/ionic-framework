@@ -1,6 +1,5 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
-import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -9,6 +8,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
+ *
+ * @part background - The background of the content.
+ * @part scroll - The scrollable container of the content.
  */
 @Component({
   tag: 'ion-content',
@@ -24,6 +26,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
+  private isMainContent = true;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -35,14 +38,14 @@ export class Content implements ComponentInterface {
     event: undefined!,
     startX: 0,
     startY: 0,
-    startTimeStamp: 0,
+    startTime: 0,
     currentX: 0,
     currentY: 0,
     velocityX: 0,
     velocityY: 0,
     deltaX: 0,
     deltaY: 0,
-    timeStamp: 0,
+    currentTime: 0,
     data: undefined,
     isScrolling: true,
   };
@@ -54,7 +57,7 @@ export class Content implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If `true`, the content will scroll behind the headers
@@ -102,19 +105,17 @@ export class Content implements ComponentInterface {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  componentWillLoad() {
-    if (this.forceOverscroll === undefined) {
-      const mode = getIonMode(this);
-      this.forceOverscroll = mode === 'ios' && isPlatform(window, 'mobile');
-    }
+  connectedCallback() {
+    this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
   }
 
-  componentDidLoad() {
-    this.resize();
-  }
-
-  componentDidUnload() {
+  disconnectedCallback() {
     this.onScrollEnd();
+  }
+
+  @Listen('appload', { target: 'window' })
+  onAppLoad() {
+    this.resize();
   }
 
   @Listen('click', { capture: true })
@@ -125,12 +126,20 @@ export class Content implements ComponentInterface {
     }
   }
 
+  private shouldForceOverscroll() {
+    const { forceOverscroll } = this;
+    const mode = getIonMode(this);
+    return forceOverscroll === undefined
+      ? mode === 'ios' && isPlatform('ios')
+      : forceOverscroll;
+  }
+
   private resize() {
     if (this.fullscreen) {
-      readTask(this.readDimensions.bind(this));
+      readTask(() => this.readDimensions());
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -142,7 +151,7 @@ export class Content implements ComponentInterface {
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -299,38 +308,40 @@ export class Content implements ComponentInterface {
   }
 
   render() {
+    const { isMainContent, scrollX, scrollY } = this;
     const mode = getIonMode(this);
-    const { scrollX, scrollY, forceOverscroll } = this;
-
-    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
+    const forceOverscroll = this.shouldForceOverscroll();
+    const transitionShadow = mode === 'ios';
+    const TagType = isMainContent ? 'main' : 'div' as any;
 
     this.resize();
 
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
-          'overscroll': !!this.forceOverscroll,
-        }}
+          'overscroll': forceOverscroll,
+        })}
         style={{
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <main
+        <div id="background-content" part="background"></div>
+        <TagType
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && !!forceOverscroll
+            'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
-          ref={el => this.scrollEl = el!}
-          onScroll={ev => this.onScroll(ev)}
+          ref={(el: HTMLElement) => this.scrollEl = el!}
+          onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
+          part="scroll"
         >
           <slot></slot>
-        </main>
+        </TagType>
 
         {transitionShadow ? (
           <div class="transition-effect">
@@ -378,19 +389,19 @@ const updateScrollDetail = (
 ) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
-  const prevT = detail.timeStamp;
+  const prevT = detail.currentTime;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
   const timeDelta = timestamp - prevT;
 
   if (shouldStart) {
     // remember the start positions
-    detail.startTimeStamp = timestamp;
+    detail.startTime = timestamp;
     detail.startX = currentX;
     detail.startY = currentY;
     detail.velocityX = detail.velocityY = 0;
   }
-  detail.timeStamp = timestamp;
+  detail.currentTime = timestamp;
   detail.currentX = detail.scrollLeft = currentX;
   detail.currentY = detail.scrollTop = currentY;
   detail.deltaX = currentX - detail.startX;

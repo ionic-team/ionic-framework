@@ -1,20 +1,21 @@
 import { Animation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * MD Toast Enter Animation
  */
-export const mdEnterAnimation = (AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> => {
-  const baseAnimation = new AnimationC();
+export const mdEnterAnimation = (baseEl: HTMLElement, position: string): Animation => {
+  const baseAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const wrapperAnimation = new AnimationC();
-
-  const hostEl = baseEl.host || baseEl;
-  const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
-
-  wrapperAnimation.addElement(wrapperEl);
+  const root = getElementRoot(baseEl);
+  const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
 
   const bottom = `calc(8px + var(--ion-safe-area-bottom, 0px))`;
   const top = `calc(8px + var(--ion-safe-area-top, 0px))`;
+
+  wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
     case 'top':
@@ -23,7 +24,7 @@ export const mdEnterAnimation = (AnimationC: Animation, baseEl: ShadowRoot, posi
       break;
     case 'middle':
       const topPosition = Math.floor(
-        hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
+        baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2
       );
       wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
@@ -33,9 +34,8 @@ export const mdEnterAnimation = (AnimationC: Animation, baseEl: ShadowRoot, posi
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
   }
-  return Promise.resolve(baseAnimation
-    .addElement(hostEl)
+  return baseAnimation
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
-    .add(wrapperAnimation));
+    .addAnimation(wrapperAnimation);
 };

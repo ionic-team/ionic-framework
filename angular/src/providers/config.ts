@@ -31,23 +31,16 @@ export class Config {
     }
     return 0;
   }
-
-  set(key: keyof IonicConfig, value?: any) {
-    const c = getConfig();
-    if (c) {
-      c.set(key, value);
-    }
-  }
 }
 
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
-function getConfig(): CoreConfig | null {
+const getConfig = (): CoreConfig | null => {
   if (typeof (window as any) !== 'undefined') {
-    const Ionic = (window as IonicWindow).Ionic;
+    const Ionic = (window as any as IonicWindow).Ionic;
     if (Ionic && Ionic.config) {
       return Ionic.config;
     }
   }
   return null;
-}
+};

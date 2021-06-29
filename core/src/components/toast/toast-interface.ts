@@ -1,13 +1,12 @@
 import { AnimationBuilder, Color, Mode } from '../../interface';
+import { IonicSafeString } from '../../utils/sanitization';
 
 export interface ToastOptions {
   header?: string;
-  message?: string;
+  message?: string | IonicSafeString;
   cssClass?: string | string[];
   duration?: number;
   buttons?: (ToastButton | string)[];
-  showCloseButton?: boolean;
-  closeButtonText?: string;
   position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
   animated?: boolean;
@@ -27,5 +26,5 @@ export interface ToastButton {
   side?: 'start' | 'end';
   role?: 'cancel' | string;
   cssClass?: string | string[];
-  handler?: () => boolean | void | Promise<boolean>;
+  handler?: () => boolean | void | Promise<boolean | void>;
 }

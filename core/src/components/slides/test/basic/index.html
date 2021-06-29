@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -33,6 +33,9 @@
           <h1>Slide 3</h1>
         </ion-slide>
       </ion-slides>
+      <ion-button expand="block" onclick="addSlide()">Add slide</ion-button>
+      <ion-button expand="block" onclick="removeSlide()">Remove slide</ion-button>
+
       <ion-button expand="block" onclick="slidePrev()">Slide Prev</ion-button>
       <ion-button expand="block" onclick="slideNext()">Slide Next</ion-button>
       <ion-button expand="block" onclick="getActiveIndex()">Get Active Index</ion-button>
@@ -50,9 +53,27 @@
 
   </ion-app>
   <script>
+    let slideCount = 4;
     const slides = document.getElementById('slides')
     slides.pager = false;
-    slides.options = {}
+    slides.options = {
+      keyboard: {
+        enabled: true
+      }
+    }
+
+    async function addSlide() {
+      const slide = document.createElement('ion-slide');
+      slide.style.background = 'white';
+      slide.innerHTML = `<h1>Slide ${slideCount}</h1>`;
+      slideCount++;
+      slides.querySelector('.swiper-wrapper').appendChild(slide);
+    };
+
+    async function removeSlide() {
+      const wraper = slides.querySelector('.swiper-wrapper');
+      wraper.children[wraper.children.length-1].remove();
+    };
 
     async function slideNext() {
       await slides.slideNext(500)
@@ -127,7 +148,7 @@
       console.log('slide transition start', e)
     });
     slides.addEventListener('ionSlideTransitionEnd', function (e) {
-      console.log('slide transistion end', e)
+      console.log('slide transition end', e)
     });
     slides.addEventListener('ionSlideDrag', function (e) {
       console.log('slide drag', e)

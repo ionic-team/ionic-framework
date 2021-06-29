@@ -36,10 +36,10 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 ### React
 
 ```tsx
-import React from 'react'
+import React from 'react';
 import { IonAvatar, IonChip, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const AvatarExample: React.FunctionComponent = () => (
+export const AvatarExample: React.FC = () => (
   <IonContent>
     <IonAvatar>
       <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
@@ -60,6 +60,41 @@ export const AvatarExample: React.FunctionComponent = () => (
     </IonItem>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'avatar-example',
+  styleUrl: 'avatar-example.css'
+})
+export class AvatarExample {
+  render() {
+    return [
+      <ion-avatar>
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"/>
+      </ion-avatar>,
+
+      <ion-chip>
+        <ion-avatar>
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"/>
+        </ion-avatar>
+        <ion-label>Chip Avatar</ion-label>
+      </ion-chip>,
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"/>
+        </ion-avatar>
+        <ion-label>Item Avatar</ion-label>
+      </ion-item>
+    ];
+  }
+}
 ```
 
 
@@ -85,6 +120,15 @@ export const AvatarExample: React.FunctionComponent = () => (
     <ion-label>Item Avatar</ion-label>
   </ion-item>
 </template>
+
+<script>
+import { IonAvatar, IonChip, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonAvatar, IonChip, IonItem, IonLabel }
+});
+</script>
 ```
 
 

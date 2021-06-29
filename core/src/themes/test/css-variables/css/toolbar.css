@@ -1,0 +1,26 @@
+/**
+ * Toolbar
+ * -----------------------------------------------------
+ * The toolbar theme customizes the toolbar only
+ *
+ * Looking to create a custom theme? Check out the generator!
+ * https://ionicframework.com/docs/theming/color-generator
+**/
+
+:root {
+  --ion-color-primary: #3880ff;
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+
+  --ion-toolbar-background: var(--ion-color-primary);
+  --ion-toolbar-color: var(--ion-color-light);
+}
+
+.md body {
+  --ion-toolbar-segment-color: rgba(var(--ion-color-light-rgb), .7);
+  --ion-toolbar-segment-color-checked: var(--ion-color-light);
+}
+
+.ios body {
+  --ion-toolbar-segment-color-checked: var(--ion-color-primary);
+}

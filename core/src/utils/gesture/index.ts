@@ -1,5 +1,3 @@
-import { writeTask } from '@stencil/core';
-
 import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
@@ -28,19 +26,21 @@ export const createGesture = (config: GestureConfig): Gesture => {
   const notCaptured = finalConfig.notCaptured;
   const onMove = finalConfig.onMove;
   const threshold = finalConfig.threshold;
+  const passive = finalConfig.passive;
+  const blurOnStart = finalConfig.blurOnStart;
 
   const detail = {
     type: 'pan',
     startX: 0,
     startY: 0,
-    startTimeStamp: 0,
+    startTime: 0,
     currentX: 0,
     currentY: 0,
     velocityX: 0,
     velocityY: 0,
     deltaX: 0,
     deltaY: 0,
-    timeStamp: 0,
+    currentTime: 0,
     event: undefined as any,
     data: undefined
   };
@@ -61,7 +61,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     updateDetail(ev, detail);
     detail.startX = detail.currentX;
     detail.startY = detail.currentY;
-    detail.startTimeStamp = detail.timeStamp = timeStamp;
+    detail.startTime = detail.currentTime = timeStamp;
     detail.velocityX = detail.velocityY = detail.deltaX = detail.deltaY = 0;
     detail.event = ev;
 
@@ -92,7 +92,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
       if (!isMoveQueued && hasFiredStart) {
         isMoveQueued = true;
         calcGestureData(detail, ev);
-        writeTask(fireOnMove);
+        requestAnimationFrame(fireOnMove);
       }
       return;
     }
@@ -133,7 +133,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     // more accurate value of the velocity.
     detail.startX = detail.currentX;
     detail.startY = detail.currentY;
-    detail.startTimeStamp = detail.timeStamp;
+    detail.startTime = detail.currentTime;
 
     if (onWillStart) {
       onWillStart(detail).then(fireOnStart);
@@ -143,7 +143,20 @@ export const createGesture = (config: GestureConfig): Gesture => {
     return true;
   };
 
+  const blurActiveElement = () => {
+    /* tslint:disable-next-line */
+    if (typeof document !== 'undefined') {
+      const activeElement = document.activeElement as HTMLElement | null;
+      if (activeElement !== null && activeElement.blur) {
+        activeElement.blur();
+      }
+    }
+  };
+
   const fireOnStart = () => {
+    if (blurOnStart) {
+      blurActiveElement();
+    }
     if (onStart) {
       onStart(detail);
     }
@@ -192,6 +205,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     pointerUp,
     {
       capture: false,
+      passive
     }
   );
 
@@ -204,11 +218,15 @@ export const createGesture = (config: GestureConfig): Gesture => {
   };
 
   return {
-    setDisabled(disabled: boolean) {
-      if (disabled && hasCapturedPan) {
-        pointerUp(undefined);
+    enable(enable = true) {
+      if (!enable) {
+        if (hasCapturedPan) {
+          pointerUp(undefined);
+        }
+
+        reset();
       }
-      pointerEvents.setDisabled(disabled);
+      pointerEvents.enable(enable);
     },
     destroy() {
       gesture.destroy();
@@ -223,13 +241,13 @@ const calcGestureData = (detail: GestureDetail, ev: UIEvent | undefined) => {
   }
   const prevX = detail.currentX;
   const prevY = detail.currentY;
-  const prevT = detail.timeStamp;
+  const prevT = detail.currentTime;
 
   updateDetail(ev, detail);
 
   const currentX = detail.currentX;
   const currentY = detail.currentY;
-  const timestamp = detail.timeStamp = now(ev);
+  const timestamp = detail.currentTime = now(ev);
   const timeDelta = timestamp - prevT;
   if (timeDelta > 0 && timeDelta < 100) {
     const velocityX = (currentX - prevX) / timeDelta;
@@ -270,14 +288,14 @@ export interface GestureDetail {
   type: string;
   startX: number;
   startY: number;
-  startTimeStamp: number;
+  startTime: number;
   currentX: number;
   currentY: number;
   velocityX: number;
   velocityY: number;
   deltaX: number;
   deltaY: number;
-  timeStamp: number;
+  currentTime: number;
   event: UIEvent;
   data?: any;
 }
@@ -285,7 +303,7 @@ export interface GestureDetail {
 export type GestureCallback = (detail: GestureDetail) => boolean | void;
 
 export interface Gesture {
-  setDisabled(disabled: boolean): void;
+  enable(enable?: boolean): void;
   destroy(): void;
 }
 
@@ -299,6 +317,7 @@ export interface GestureConfig {
   passive?: boolean;
   maxAngle?: number;
   threshold?: number;
+  blurOnStart?: boolean;
 
   canStart?: GestureCallback;
   onWillStart?: (_: GestureDetail) => Promise<void>;

@@ -12,13 +12,13 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Hellooo',
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
       duration: 2000
     });
     await loading.present();
-    
+
     const { role, data } = await loading.onDidDismiss();
-    
     console.log('Loading dismissed!');
   }
 
@@ -26,11 +26,20 @@ export class LoadingExample {
     const loading = await this.loadingController.create({
       spinner: null,
       duration: 5000,
-      message: 'Please wait...',
+      message: 'Click the backdrop to dismiss early...',
       translucent: true,
-      cssClass: 'custom-class custom-loading'
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
     });
-    return await loading.present();
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
   }
 }
 ```
+
+
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Loading can be presented from within a page, the `ion-loading` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).

@@ -35,8 +35,10 @@
 
       <ion-item>
         <ion-label>Input (required)</ion-label>
-        <ion-input formControlName="input" class="required"></ion-input>
+        <ion-input formControlName="input" class="required" id="touched-input-test"></ion-input>
       </ion-item>
+
+      <ion-button id="input-touched" (click)="setTouched()">Set Input Touched</ion-button>
 
       <ion-item>
         <ion-label>Input</ion-label>

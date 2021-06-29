@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
@@ -13,8 +13,6 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
-
-  @Element() el!: HTMLIonColElement;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -158,7 +156,7 @@ export class Col implements ComponentInterface {
 
   @Listen('resize', { target: 'window' })
   onResize() {
-    this.el.forceUpdate();
+    forceUpdate(this);
   }
 
   // Loop through all of the breakpoints to see if the media query

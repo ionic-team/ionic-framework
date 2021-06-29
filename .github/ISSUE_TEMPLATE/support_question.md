@@ -8,4 +8,4 @@ assignees: ''
 
 # Support Question
 
-Please do not submit support requests or "How to" questions here. Instead, please use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/
+Please do not submit support requests or "How to" questions here. Instead, please use the Ionic Forum: https://forum.ionicframework.com/

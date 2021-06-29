@@ -10,24 +10,29 @@
   <ion-backdrop visible="false"></ion-backdrop>
 
   <!-- Backdrop with propagation -->
-  <ion-backdrop stopPropagation="false"></ion-backdrop>
+  <ion-backdrop stop-propagation="false"></ion-backdrop>
 
   <!-- Backdrop that sets dynamic properties -->
   <ion-backdrop
     :tappable="enableBackdropDismiss"
     :visible="showBackdrop"
-    :stopPropagation="shouldPropagate">
+    :stop-propagation="shouldPropagate">
   </ion-backdrop>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonBackdrop } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    backdropDismiss = false;
-    showBackdrop = false;
-    shouldPropagate = false;
+export default defineComponent({
+  components: { IonBackdrop },
+  setup() {
+    return {
+      enableBackdropDismiss: true,
+      showBackdrop: true,
+      shouldPropagate: true
+    }
   }
+});
 </script>
 ```

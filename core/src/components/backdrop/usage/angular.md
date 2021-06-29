@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./backdrop-example.css'],
 })
 export class BackdropExample {
-  backdropDismiss = false;
+  enableBackdropDismiss = false;
   showBackdrop = false;
   shouldPropagate = false;
 }

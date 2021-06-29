@@ -1,5 +1,11 @@
 ```html
-<ion-content></ion-content>
+<ion-content>
+  <h1>Main Content</h1>
+
+  <div slot="fixed">
+    <h1>Fixed Content</h1>
+  </div>
+</ion-content>
 ```
 
 ```javascript

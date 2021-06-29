@@ -1,6 +1,40 @@
 import { testAlert } from '../test.utils';
+import { newE2EPage } from '@stencil/core/testing';
 
 const DIRECTORY = 'basic';
+const getActiveElementText = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return await page.evaluate(el => el && el.textContent, activeElement);
+}
+
+test('alert: focus trap', async () => {
+  const page = await newE2EPage({ url: '/src/components/alert/test/basic?ionic:_testing=true' });
+
+  await page.click('#multipleButtons');
+  await page.waitForSelector('#multipleButtons');
+
+  let alert = await page.find('ion-alert');
+
+  expect(alert).not.toBe(null);
+  await alert.waitForVisible();
+
+  await page.keyboard.press('Tab');
+
+  const activeElementText = await getActiveElementText(page);
+  expect(activeElementText).toEqual('Open Modal');
+
+  await page.keyboard.down('Shift');
+  await page.keyboard.press('Tab');
+  await page.keyboard.up('Shift');
+
+  const activeElementTextTwo = await getActiveElementText(page);
+  expect(activeElementTextTwo).toEqual('Cancel');
+
+  await page.keyboard.press('Tab');
+
+  const activeElementTextThree = await getActiveElementText(page);
+  expect(activeElementTextThree).toEqual('Open Modal');
+});
 
 test(`alert: basic`, async () => {
   await testAlert(DIRECTORY, '#basic');

@@ -46,13 +46,13 @@ $item-ios-detail-icon-color:                 $item-ios-border-color !default;
 $item-ios-padding-top:                       10px !default;
 
 /// @prop - Padding end for the item content
-$item-ios-padding-end:                       16px !default;
+$item-ios-padding-end:                       20px !default;
 
 /// @prop - Padding bottom for the item content
 $item-ios-padding-bottom:                    10px !default;
 
 /// @prop - Padding start for the item content
-$item-ios-padding-start:                     16px !default;
+$item-ios-padding-start:                     20px !default;
 
 /// @prop - Border bottom width for the item when lines are displayed
 $item-ios-border-bottom-width:               $hairlines-width !default;
@@ -113,7 +113,7 @@ $item-ios-icon-slot-margin-end:              null !default;
 $item-ios-icon-slot-margin-bottom:           7px !default;
 
 /// @prop - Margin start for an icon in the start/end slot
-$item-ios-icon-slot-margin-start:            0 !default;
+$item-ios-icon-slot-margin-start:            null !default;
 
 /// @prop - Margin top for the end slot inside of a floating/stacked label
 $item-ios-label-slot-end-margin-top:         7px !default;

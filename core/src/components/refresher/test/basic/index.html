@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -21,7 +21,11 @@
 
     <ion-content>
       <ion-refresher id="refresher" slot="fixed">
-        <ion-refresher-content pulling-text="Pull to refresh..." refreshing-spinner="bubbles" refreshing-text="Refreshing...">
+        <ion-refresher-content
+          pulling-icon="arrow-down-outline"
+          pulling-text="Pull to refresh..."
+          refreshing-text="Refreshing..."
+          refreshing-spinner="circles">
         </ion-refresher-content>
       </ion-refresher>
 

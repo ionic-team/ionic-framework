@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toolbar - Custom</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-content id="content">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text=""></ion-back-button>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Default</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="secondary">
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Default</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text=""></ion-back-button>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Color</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+        <ion-buttons slot="secondary">
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Color</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary" class="themed-colors component-colors">
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text=""></ion-back-button>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Color: Themed</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary" class="themed-colors component-colors">
+        <ion-buttons slot="secondary">
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Color: Themed</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed-colors">
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text=""></ion-back-button>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Themed</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed-colors">
+        <ion-buttons slot="secondary">
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Themed</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed-colors">
+        <ion-buttons slot="start">
+          <ion-back-button color="danger" default-href="/" text=""></ion-back-button>
+          <ion-menu-button color="danger" auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button color="danger">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button color="danger">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Themed w / Color Buttons</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed-colors">
+        <ion-buttons slot="secondary">
+          <ion-button color="danger" fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button color="danger">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button color="danger" fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Themed w / Color Buttons</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="component-colors">
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text=""></ion-back-button>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Component Level Vars</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="component-colors">
+        <ion-buttons slot="secondary">
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Component Level Vars</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="component-colors">
+        <ion-buttons slot="start">
+          <ion-back-button color="secondary" default-href="/" text=""></ion-back-button>
+          <ion-menu-button color="secondary" auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button color="secondary">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Component Level Vars w/ Color Buttons</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="component-colors">
+        <ion-buttons slot="secondary">
+          <ion-button color="secondary" fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button color="secondary" fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary" fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Component Level Vars w/ Color Buttons</ion-title>
+      </ion-toolbar>
+    </ion-content>
+  </ion-app>
+
+  <style>
+    .themed-colors {
+      --ion-toolbar-background: #d9fae0;
+      --ion-toolbar-color: #b68928;
+    }
+
+    .component-colors {
+      --background: #fff4f5;
+    }
+
+    .component-colors,
+    .component-colors ion-back-button,
+    .component-colors ion-menu-button,
+    .component-colors ion-button {
+      --color: #aa3723;
+    }
+
+    .component-colors ion-button[fill="solid"] {
+      --background: #aa3723;
+      --color: #fff;
+    }
+
+  </style>
+</body>
+
+</html>

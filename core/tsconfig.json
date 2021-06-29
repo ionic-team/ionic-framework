@@ -7,6 +7,7 @@
     "declaration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "assumeChangesOnlyAffectDirectDependencies": true,
     "jsx": "react",
     "jsxFactory": "h",
     "lib": [
@@ -25,11 +26,10 @@
     "target": "es2017"
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "stencil.config.ts"
+    "src",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/test"
   ]
 }

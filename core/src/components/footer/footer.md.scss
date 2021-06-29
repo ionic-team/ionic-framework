@@ -22,6 +22,6 @@
   content: "";
 }
 
-.footer-md[no-border]::before {
+.footer-md.ion-no-border::before {
   display: none;
 }

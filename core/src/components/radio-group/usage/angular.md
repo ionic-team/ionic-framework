@@ -2,7 +2,9 @@
 <ion-list>
   <ion-radio-group>
     <ion-list-header>
-      Auto Manufacturers
+      <ion-label>
+        Auto Manufacturers
+      </ion-label>
     </ion-list-header>
 
     <ion-item>

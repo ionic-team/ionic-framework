@@ -2,6 +2,7 @@
 import React from 'react';
 import { IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon, IonContent } from '@ionic/react';
 import { ItemReorderEventDetail } from '@ionic/core';
+import { pizza } from 'ionicons/icons';
 
 function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   // The `from` and `to` properties contain the index of the item
@@ -14,7 +15,7 @@ function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   event.detail.complete();
 }
 
-export const ReorderGroupExample: React.FunctionComponent = () => (
+export const ReorderGroupExample: React.FC = () => (
   <IonContent>
     {/*-- The reorder gesture is disabled by default, enable it to drag and drop items --*/}
     <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>
@@ -44,14 +45,14 @@ export const ReorderGroupExample: React.FunctionComponent = () => (
       <IonItem>
         <IonLabel>Item 5</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza" />
+          <IonIcon icon={pizza} />
         </IonReorder>
       </IonItem>
 
       <IonItem>
         <IonLabel>Item 6</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza" />
+          <IonIcon icon={pizza} />
         </IonReorder>
       </IonItem>
 
@@ -72,7 +73,7 @@ export const ReorderGroupExample: React.FunctionComponent = () => (
 );
 ```
 
-#### Updating Data
+### Updating Data
 
 ```tsx
 const items = [1, 2, 3, 4, 5];

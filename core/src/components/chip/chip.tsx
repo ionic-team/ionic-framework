@@ -21,24 +21,30 @@ export class Chip implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * Display an outline style button.
    */
   @Prop() outline = false;
 
+  /**
+   * If `true`, the user cannot interact with the chip.
+   */
+  @Prop() disabled = false;
+
   render() {
     const mode = getIonMode(this);
 
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        aria-disabled={this.disabled ? 'true' : null}
+        class={createColorClasses(this.color, {
           [mode]: true,
           'chip-outline': this.outline,
+          'chip-disabled': this.disabled,
           'ion-activatable': true,
-        }}
+        })}
       >
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

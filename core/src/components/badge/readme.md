@@ -40,7 +40,7 @@ Badges are inline block elements that usually appear near another element. Typic
 import React from 'react';
 import { IonBadge, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const BadgeExample: React.FunctionComponent = () => (
+export const BadgeExample: React.FC = () => (
   <IonContent>
     {/*-- Default --*/}
     <IonBadge>99</IonBadge>
@@ -64,6 +64,44 @@ export const BadgeExample: React.FunctionComponent = () => (
     </IonItem>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'badge-example',
+  styleUrl: 'badge-example.css'
+})
+export class BadgeExample {
+  render() {
+    return [
+      // Default
+      <ion-badge>99</ion-badge>,
+
+      // Colors
+      <ion-badge color="primary">11</ion-badge>,
+      <ion-badge color="secondary">22</ion-badge>,
+      <ion-badge color="tertiary">33</ion-badge>,
+      <ion-badge color="success">44</ion-badge>,
+      <ion-badge color="warning">55</ion-badge>,
+      <ion-badge color="danger">66</ion-badge>,
+      <ion-badge color="light">77</ion-badge>,
+      <ion-badge color="medium">88</ion-badge>,
+      <ion-badge color="dark">99</ion-badge>,
+
+      // Item with badge on left and right
+      <ion-item>
+        <ion-badge slot="start">11</ion-badge>
+        <ion-label>My Item</ion-label>
+        <ion-badge slot="end">22</ion-badge>
+      </ion-item>
+    ];
+  }
+}
 ```
 
 
@@ -92,6 +130,15 @@ export const BadgeExample: React.FunctionComponent = () => (
     <ion-badge slot="end">22</ion-badge>
   </ion-item>
 </template>
+
+<script>
+import { IonBadge, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonBadge, IonItem, IonLabel }
+});
+</script>
 ```
 
 

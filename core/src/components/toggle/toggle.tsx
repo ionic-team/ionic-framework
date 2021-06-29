@@ -2,12 +2,15 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
-import { hapticSelection } from '../../utils/haptic';
-import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { hapticSelection } from '../../utils/native/haptic';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part track - The background track of the toggle.
+ * @part handle - The toggle handle, or knob, used to change the checked state.
  */
 @Component({
   tag: 'ion-toggle',
@@ -21,7 +24,7 @@ export class Toggle implements ComponentInterface {
 
   private inputId = `ion-tg-${toggleIds++}`;
   private gesture?: Gesture;
-  private buttonEl?: HTMLElement;
+  private focusEl?: HTMLElement;
   private lastDrag = 0;
 
   @Element() el!: HTMLElement;
@@ -33,7 +36,7 @@ export class Toggle implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -92,15 +95,11 @@ export class Toggle implements ComponentInterface {
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'toggle',
@@ -114,11 +113,15 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   private emitStyle() {
@@ -153,12 +156,14 @@ export class Toggle implements ComponentInterface {
   }
 
   private setFocus() {
-    if (this.buttonEl) {
-      this.buttonEl.focus();
+    if (this.focusEl) {
+      this.focusEl.focus();
     }
   }
 
-  private onClick = () => {
+  private onClick = (ev: Event) => {
+    ev.preventDefault();
+
     if (this.lastDrag + 300 < Date.now()) {
       this.checked = !this.checked;
     }
@@ -173,44 +178,47 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, checked, activated, color, el } = this;
+    const { activated, color, checked, disabled, el, inputId, name } = this;
     const mode = getIonMode(this);
-    const labelId = inputId + '-lbl';
-    const label = findItemLabel(el);
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
-    if (label) {
-      label.id = labelId;
-    }
-    renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
+
+    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
 
     return (
       <Host
         onClick={this.onClick}
-        role="checkbox"
-        aria-disabled={disabled ? 'true' : null}
+        aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
-        aria-labelledby={labelId}
-        class={{
-          ...createColorClasses(color),
+        aria-hidden={disabled ? 'true' : null}
+        role="switch"
+        class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           'interactive': true
-        }}
+        })}
       >
-        <div class="toggle-icon">
-          <div class="toggle-inner"/>
+        <div class="toggle-icon" part="track">
+          <div class="toggle-icon-wrapper">
+            <div class="toggle-inner" part="handle" />
+          </div>
         </div>
-        <button
-          type="button"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
+        <label htmlFor={inputId}>
+          {labelText}
+        </label>
+        <input
+          type="checkbox"
+          role="switch"
+          aria-checked={`${checked}`}
           disabled={disabled}
-          ref={btnEl => this.buttonEl = btnEl}
-        >
-        </button>
+          id={inputId}
+          onFocus={() => this.onFocus()}
+          onBlur={() => this.onBlur()}
+          ref={focusEl => this.focusEl = focusEl}
+        />
       </Host>
     );
   }

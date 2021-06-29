@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
 
 import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { componentOnReady } from '../../utils/helpers';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -152,16 +153,18 @@ export class VirtualScroll implements ComponentInterface {
     this.updateVirtualScroll();
   }
 
-  async componentDidLoad() {
+  componentWillLoad() {
+    console.warn(`[Deprecation Warning]: ion-virtual-scroll has been deprecated and will be removed in Ionic Framework v7.0. See https://ionicframework.com/docs/angular/virtual-scroll for migration steps.`);
+  }
+
+  async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
-      console.error('virtual-scroll must be used inside ion-content');
+      console.error('<ion-virtual-scroll> must be used inside an <ion-content>');
       return;
     }
-    await contentEl.componentOnReady();
-
-    this.contentEl = contentEl;
     this.scrollEl = await contentEl.getScrollElement();
+    this.contentEl = contentEl;
     this.calcCells();
     this.updateState();
   }
@@ -170,7 +173,7 @@ export class VirtualScroll implements ComponentInterface {
     this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.scrollEl = undefined;
   }
 
@@ -268,7 +271,7 @@ export class VirtualScroll implements ComponentInterface {
     let node: HTMLElement | null = el;
     while (node && node !== contentEl) {
       topOffset += node.offsetTop;
-      node = node.parentElement;
+      node = node.offsetParent as HTMLElement;
     }
     this.viewportOffset = topOffset;
     if (scrollEl) {
@@ -312,7 +315,7 @@ export class VirtualScroll implements ComponentInterface {
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
     } else if (this.renderItem) {
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -324,8 +327,8 @@ export class VirtualScroll implements ComponentInterface {
         this.setCellHeight(cell, height);
       }
     };
-    if (node && node.componentOnReady) {
-      node.componentOnReady().then(update);
+    if (node) {
+      componentOnReady(node, update);
     } else {
       update();
     }

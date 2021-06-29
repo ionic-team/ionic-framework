@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Modal - Spec</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { modalController, createAnimation } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+    window.createAnimation = createAnimation;
+  </script>
+  <style>
+  #modal-header {
+    padding-top: 5px !important;
+    height: 55px;
+  }
+  #modal-header ion-title {
+    padding-top: 5px;
+  }
+
+  #modal-header ion-note {
+    display: block;
+    width: 100%;
+    height: 15px;
+    text-align: center;
+    font-size: 11px;
+    color: #111;
+  }
+
+  ion-list ion-icon {
+    width: 100%;
+    height: 100%;
+  }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <div class="ion-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button id="card-modal" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Favorites</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-item>
+          <ion-label>Use Custom Animation</ion-label>
+          <ion-toggle></ion-toggle>
+        </ion-item>
+
+        <ion-list id="list"></ion-list>
+      </ion-content>
+    </div>
+  </ion-app>
+
+  <script>
+    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
+    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
+
+    const enterAnimation = (baseEl) => {
+      const backdropAnimation = createAnimation()
+        .addElement(baseEl.querySelector('ion-backdrop'))
+        .fromTo('opacity', '0.01', '0.4');
+
+      const wrapperAnimation = createAnimation()
+        .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow'))
+        .keyframes([
+          { offset: 0, opacity: '0', transform: 'scale(0)' },
+          { offset: 1, opacity: '0.99', transform: 'scale(1)' }
+        ]);
+
+      return createAnimation()
+        .addElement(baseEl)
+        .easing('ease-out')
+        .duration(500)
+        .addAnimation([backdropAnimation, wrapperAnimation]);
+    }
+
+    const leaveAnimation = (baseEl) => {
+      const backdropAnimation = createAnimation()
+        .addElement(baseEl.querySelector('ion-backdrop'))
+        .fromTo('opacity', '0.4', '0.01');
+
+      const wrapperAnimation = createAnimation()
+        .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow'))
+        .keyframes([
+          { offset: 0, opacity: '0.99', transform: 'scale(1)' },
+          { offset: 1, opacity: '0', transform: 'scale(0)' }
+        ]);
+
+      return createAnimation()
+        .addElement(baseEl)
+        .easing('ease-out')
+        .duration(500)
+        .addAnimation([backdropAnimation, wrapperAnimation]);
+    }
+
+    const people = [
+      {
+          "name": "Miyah Myles",
+          "email": "miyah.myles@gmail.com",
+          "position": "Business Analyst",
+      },
+      {
+          "name": "June Cha",
+          "email": "june.cha@gmail.com",
+          "position": "Data Entry Clerk",
+      },
+      {
+          "name": "Iida Niskanen",
+          "email": "iida.niskanen@gmail.com",
+          "position": "Business Analyst",
+      },
+      {
+          "name": "Renee Sims",
+          "email": "renee.sims@gmail.com",
+          "position": "Lead Developer",
+      },
+      {
+          "name": "Jonathan Nu\u00f1ez",
+          "email": "jonathan.nu\u00f1ez@gmail.com",
+          "position": "Receptionist",
+      },
+      {
+          "name": "Sasha Ho",
+          "email": "sasha.ho@gmail.com",
+          "position": "Sales",
+      },
+      {
+          "name": "Abdullah Hadley",
+          "email": "abdullah.hadley@gmail.com",
+          "position": "Sales Manager",
+      },
+      {
+          "name": "Veeti Seppanen",
+          "email": "veeti.seppanen@gmail.com",
+          "position": "Marketing",
+      },
+      {
+          "name": "Thomas Stock",
+          "email": "thomas.stock@gmail.com",
+          "position": "Clerical",
+      },
+      {
+          "name": "Bonnie Riley",
+          "email": "bonnie.riley@gmail.com",
+          "position": "Medical Assistant",
+      }
+    ];
+
+    const allContacts = [
+      {
+          "name": "Miyah Myles",
+          "email": "miyah.myles@gmail.com",
+          "position": "Office Assistant",
+      },
+      {
+          "name": "June Cha",
+          "email": "june.cha@gmail.com",
+          "position": "Administrative Assistant",
+      },
+      {
+          "name": "Iida Niskanen",
+          "email": "iida.niskanen@gmail.com",
+          "position": "Customer Service Representative",
+      },
+      {
+          "name": "Renee Sims",
+          "email": "renee.sims@gmail.com",
+          "position": "Customer Service Representative",
+      },
+      {
+          "name": "Jonathan Nu\u00f1ez",
+          "email": "jonathan.nu\u00f1ez@gmail.com",
+          "position": "Sales",
+      },
+      {
+          "name": "Sasha Ho",
+          "email": "sasha.ho@gmail.com",
+          "position": "Marketing",
+      },
+      {
+          "name": "Abdullah Hadley",
+          "email": "abdullah.hadley@gmail.com",
+          "position": "Marketing",
+      },
+      {
+          "name": "Veeti Seppanen",
+          "email": "veeti.seppanen@gmail.com",
+          "position": "Project Manager",
+      },
+      {
+          "name": "Thomas Stock",
+          "email": "thomas.stock@gmail.com",
+          "position": "Customer Service",
+      },
+      {
+          "name": "Bonnie Riley",
+          "email": "bonnie.riley@gmail.com",
+          "position": "Executive Assistant",
+      },
+      {
+          "name": "Steve T. Scaife",
+          "email": "steve.t..scaife@gmail.com",
+          "position": "Receptionist",
+      },
+      {
+          "name": "Andreas Brixen",
+          "email": "andreas.brixen@gmail.com",
+          "position": "Director",
+      },
+      {
+          "name": "Lilja Peltola",
+          "email": "lilja.peltola@gmail.com",
+          "position": "Sales Manager",
+      },
+      {
+          "name": "Sean PJPGR Doran",
+          "email": "sean.pjpgr.doran@gmail.com",
+          "position": "Lead Developer",
+      },
+      {
+          "name": "Elliana Palacios",
+          "email": "elliana.palacios@gmail.com",
+          "position": "Marketing",
+      },
+      {
+          "name": "Eduard Franz",
+          "email": "eduard.franz@gmail.com",
+          "position": "Manager",
+      },
+      {
+          "name": "Leah Stevens",
+          "email": "leah.stevens@gmail.com",
+          "position": "Attorney",
+      },
+      {
+          "name": "Britney Cooper",
+          "email": "britney.cooper@gmail.com",
+          "position": "Data Entry Clerk",
+      },
+      {
+          "name": "Chrishell Stause",
+          "email": "chrishell.stause@gmail.com",
+          "position": "Receptionist",
+      },
+      {
+          "name": "Ana De Armas",
+          "email": "ana.de.armas@gmail.com",
+          "position": "Administrative Assistant",
+      },
+      {
+          "name": "Jennifer Fritz",
+          "email": "jennifer.fritz@gmail.com",
+          "position": "Graphic Designer",
+      },
+      {
+          "name": "Wyatt Morris",
+          "email": "wyatt.morris@gmail.com",
+          "position": "Executive Assistant",
+      },
+      {
+          "name": "Lourdes Browning",
+          "email": "lourdes.browning@gmail.com",
+          "position": "Sales",
+      },
+      {
+          "name": "Tim Schoch",
+          "email": "tim.schoch@gmail.com",
+          "position": "Product Designer",
+      },
+      {
+          "name": "Nykyta Korotkevych",
+          "email": "nykyta.korotkevych@gmail.com",
+          "position": "Lead Developer",
+      },
+      {
+          "name": "Carys Metz",
+          "email": "carys.metz@gmail.com",
+          "position": "Administrative Assistant",
+      },
+      {
+          "name": "Loki Bright",
+          "email": "loki.bright@gmail.com",
+          "position": "Data Entry",
+      },
+      {
+          "name": "Ferdinand Karl",
+          "email": "ferdinand.karl@gmail.com",
+          "position": "Medical Assistant",
+      },
+      {
+          "name": "Andrew Kumar",
+          "email": "andrew.kumar@gmail.com",
+          "position": "Accounting",
+      },
+      {
+          "name": "Mario Palmer",
+          "email": "mario.palmer@gmail.com",
+          "position": "Attorney",
+      },
+      {
+          "name": "Zechariah Burrell",
+          "email": "zechariah.burrell@gmail.com",
+          "position": "Part Time",
+      },
+      {
+          "name": "Lucr\u00e9cia Caldeira",
+          "email": "lucr\u00e9cia.caldeira@gmail.com",
+          "position": "Human Resources",
+      },
+      {
+          "name": "Love Grayson",
+          "email": "love.grayson@gmail.com",
+          "position": "Office Assistant",
+      },
+      {
+          "name": "Elizabeth Olsen",
+          "email": "elizabeth.olsen@gmail.com",
+          "position": "Accounting",
+      },
+      {
+          "name": "Layton Diament",
+          "email": "layton.diament@gmail.com",
+          "position": "Receptionist",
+      },
+      {
+          "name": "Sophie French",
+          "email": "sophie.french@gmail.com",
+          "position": "Medical Assistant",
+      },
+      {
+          "name": "Mia Denys",
+          "email": "mia.denys@gmail.com",
+          "position": "Data Entry Clerk",
+      },
+      {
+          "name": "Christine M. Maldonado",
+          "email": "christine.m..maldonado@gmail.com",
+          "position": "Director",
+      },
+      {
+          "name": "Line Rolland",
+          "email": "line.rolland@gmail.com",
+          "position": "Project Manager",
+      },
+      {
+          "name": "Micheal Murphy",
+          "email": "micheal.murphy@gmail.com",
+          "position": "Software Engineer",
+      },
+      {
+          "name": "Jacob Ginnish",
+          "email": "jacob.ginnish@gmail.com",
+          "position": "Sales",
+      },
+      {
+          "name": "Erwan Gauthier",
+          "email": "erwan.gauthier@gmail.com",
+          "position": "Marketing",
+      },
+      {
+          "name": "Derrick Wells",
+          "email": "derrick.wells@gmail.com",
+          "position": "Office Assistant",
+      },
+      {
+          "name": "Emre Topalo\u011flu",
+          "email": "emre.topalo\u011flu@gmail.com",
+          "position": "Project Manager",
+      },
+      {
+          "name": "Lucy Walker",
+          "email": "lucy.walker@gmail.com",
+          "position": "Business Analyst",
+      },
+      {
+          "name": "Ece Akman",
+          "email": "ece.akman@gmail.com",
+          "position": "Accounting",
+      },
+      {
+          "name": "Sophie Louise Hart",
+          "email": "sophie.louise.hart@gmail.com",
+          "position": "Attorney",
+      },
+      {
+          "name": "Carmen Velasco",
+          "email": "carmen.velasco@gmail.com",
+          "position": "Executive Assistant",
+      }
+    ]
+
+    const list = document.querySelector('#list');
+
+    const addFavorite = (p) => {
+      const item = document.createElement('ion-item');
+      item.innerHTML = `
+        <ion-avatar slot="start"><ion-icon name="person"></ion-icon></ion-avatar>
+        <ion-label>
+          <h2>${p.name}</h2>
+          <h3>${p.position}</h3>
+        </ion-label>
+      `;
+      list.appendChild(item);
+    }
+
+    people.forEach(p => addFavorite(p));
+
+    function handleAddFavorite (email) {
+      modalController.dismiss(email);
+    }
+
+    async function createModal(presentingEl) {
+      const contactGroups = allContacts
+      .sort((a, b) => {
+        const aSplit = a.name.split(' ');
+        const bSplit = b.name.split(' ');
+        return aSplit[1].localeCompare(bSplit[1]);
+      }).reduce((groups, contact) => {
+        const firstLast = contact.name.split(' ')[1].charAt(0);
+
+        if (!groups.hasOwnProperty(firstLast)) {
+          groups[firstLast] = [];
+        }
+        groups[firstLast].push(contact);
+        return groups;
+      }, {});
+
+      const sortedGroups = Object.keys(contactGroups)
+                                 .map(k => { return { letter: k, contacts: contactGroups[k] }})
+                                 .sort((a, b) => a.letter.localeCompare(b.letter))
+
+      const items = new Array(20).fill(0).map((item, i) => {
+        return {
+          title: `Person ${i}`
+        }
+      });
+
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header id="modal-header">
+        <ion-note>Choose a contact to add to Favorites</ion-note>
+        <ion-toolbar>
+          <ion-title>Contacts</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="add">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          ${sortedGroups.map(group => {
+            return `<ion-item-divider sticky="true">
+                      <ion-label>
+                        ${group.letter}
+                      </ion-label>
+                    </ion-item-divider>
+                    ${group.contacts.map(item => `<ion-item onclick="handleAddFavorite('${item.email}')"><ion-label>${item.name}</ion-label></ion-item>`).join('')}
+                    `;
+          }).join('')}
+        </ion-list>
+        <ion-button class="dismiss">Dismiss Modal</ion-button>
+      </ion-content>
+      `;
+
+      // listen for close event
+      const button = element.querySelector('ion-button.dismiss');
+      button.addEventListener('click', () => {
+        modalController.dismiss();
+      });
+
+      const create = element.querySelector('ion-button.add');
+      create.addEventListener('click', async () => {
+        const topModal = await modalController.getTop();
+
+        presentModal(topModal);
+      });
+
+
+      const toggle = document.querySelector('ion-toggle');
+      // present the modal
+      const modalElement = await modalController.create({
+        presentingElement: presentingEl,
+        component: element,
+        swipeToClose: true,
+        enterAnimation: (toggle.checked) ? enterAnimation : undefined,
+        leaveAnimation: (toggle.checked) ? leaveAnimation : undefined,
+      });
+      return modalElement;
+    }
+
+    async function presentModal(presentingEl) {
+      const modal = await createModal(presentingEl);
+      await modal.present();
+      const data = await modal.onWillDismiss();
+      const person = allContacts.find(c => c.email === data.data);
+      person && addFavorite(person);
+    }
+  </script>
+</body>
+
+</html>

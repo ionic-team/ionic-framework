@@ -1,8 +1,9 @@
 import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { menuController } from '../../utils/menu-controller';
 
-import { toggleMenu, updateVisibility } from './menu-toggle-util';
+import { updateVisibility } from './menu-toggle-util';
 
 @Component({
   tag: 'ion-menu-toggle',
@@ -31,22 +32,18 @@ export class MenuToggle implements ComponentInterface {
    */
   @Prop() autoHide = true;
 
-  async componentDidLoad() {
-    await this.setVisibility();
+  connectedCallback() {
+    this.visibilityChanged();
   }
 
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    await this.setVisibility();
-  }
-
-  private setVisibility = async () => {
     this.visible = await updateVisibility(this.menu);
   }
 
-  private onClick = async () => {
-    await toggleMenu(this.menu);
+  private onClick = () => {
+    return menuController.toggle(this.menu);
   }
 
   render() {

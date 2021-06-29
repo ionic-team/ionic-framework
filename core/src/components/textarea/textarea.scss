@@ -39,7 +39,6 @@
   flex: 1;
 
   width: 100%;
-  box-sizing: border-box;
 
   background: var(--background);
   color: var(--color);
@@ -49,6 +48,8 @@
   white-space: pre-wrap;
 
   z-index: $z-index-item-input;
+
+  box-sizing: border-box;
 }
 
 :host(.ion-color) {
@@ -74,6 +75,13 @@
 // Native Textarea
 // --------------------------------------------------
 
+.textarea-wrapper {
+  min-width: inherit;
+  max-width: inherit;
+  min-height: inherit;
+  max-height: inherit;
+}
+
 .native-textarea {
   @include border-radius(var(--border-radius));
   @include margin(0);
@@ -96,6 +104,8 @@
   appearance: none;
 
   &::placeholder {
+    @include padding(0);
+
     color: var(--placeholder-color);
 
     font-family: inherit;
@@ -124,4 +134,19 @@
   position: absolute;
 
   pointer-events: none;
+}
+
+
+// Item Floating: Placeholder
+// ----------------------------------------------------------------
+// When used with a floating item the placeholder should hide
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value)) {
+  opacity: 0;
+}
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value).item-has-focus) {
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  opacity: 1;
 }

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -16,7 +16,7 @@ export class RouterLink implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -37,6 +37,12 @@ export class RouterLink implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
@@ -44,7 +50,7 @@ export class RouterLink implements ComponentInterface {
   @Prop() target: string | undefined;
 
   private onClick = (ev: Event) => {
-    openURL(this.href, ev, this.routerDirection);
+    openURL(this.href, ev, this.routerDirection, this.routerAnimation);
   }
 
   render() {
@@ -57,11 +63,10 @@ export class RouterLink implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'ion-activatable': true
-        }}
+        })}
       >
         <a {...attrs}>
           <slot></slot>

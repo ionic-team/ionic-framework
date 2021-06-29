@@ -1,48 +1,88 @@
 ```html
 <template>
-  <IonVuePage :title="'Loading'">
-    <ion-button @click="presentLoading">Show Loading</ion-button>
-    <br />
-    <ion-button @click="presentLoadingWithOptions">Show Loading</ion-button>
-  </IonVuePage>
+  <ion-button @click="presentLoading">Show Loading</ion-button>
+  <br />
+  <ion-button @click="presentLoadingWithOptions">Show Loading</ion-button>
 </template>
 
 <script>
-export default {
+
+<script>
+import { IonButton, loadingController } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   props: {
     timeout: { type: Number, default: 1000 },
   },
   methods: {
-    presentLoading() {
-      return this.$ionic.loadingController
+    async presentLoading() {
+      const loading = await loadingController
         .create({
-          message: 'Loading',
+          cssClass: 'my-custom-class',
+          message: 'Please wait...',
           duration: this.timeout,
-        })
-        .then(l => {
-          setTimeout(function() {
-            l.dismiss()
-          }, this.timeout)
-          return l.present()
-        })
+        });
+        
+      await loading.present();
+      
+      setTimeout(function() {
+        loading.dismiss()
+      }, this.timeout);
     },
-    presentLoadingWithOptions() {
-      return this.$ionic.loadingController
+    async presentLoadingWithOptions() {
+      const loading = await loadingController
         .create({
           spinner: null,
           duration: this.timeout,
-          message: 'Please wait...',
+          message: 'Click the backdrop to dismiss early...',
           translucent: true,
           cssClass: 'custom-class custom-loading',
-        })
-        .then(l => {
-          setTimeout(function() {
-            l.dismiss()
-          }, this.timeout)
-          return l.present()
-        })
+          backdropDismiss: true
+        });
+        
+      await loading.present();
+        
+      setTimeout(function() {
+        loading.dismiss()
+      }, this.timeout);
     },
   },
-}
+  components: { IonButton }
+});
+</script>
+```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Loading</ion-button>
+  <ion-loading
+    :is-open="isOpenRef"
+    cssClass="my-custom-class"
+    message="Please wait..."
+    :duration="timeout"
+    @didDismiss="setOpen(false)"
+  >
+  </ion-loading>
+</template>
+
+<script>
+import { IonLoading, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  props: {
+    timeout: { type: Number, default: 1000 },
+  },
+  components: { IonLoading, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    
+    return { isOpenRef, setOpen }
+  }
+});
 </script>
 ```

@@ -3,7 +3,9 @@
   <ion-list>
     <ion-radio-group>
       <ion-list-header>
-        Auto Manufacturers
+        <ion-label>
+          Auto Manufacturers
+        </ion-label>
       </ion-list-header>
 
       <ion-item>
@@ -33,4 +35,27 @@
     </ion-radio-group>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList, 
+  IonListHeader, 
+  IonRadio, 
+  IonRadioGroup
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList, 
+    IonListHeader, 
+    IonRadio, 
+    IonRadioGroup
+  }
+});
+</script>
 ```

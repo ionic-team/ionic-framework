@@ -2,11 +2,14 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
-import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part container - The container for the checkbox mark.
+ * @part mark - The checkmark used to indicate the checked state.
  */
 @Component({
   tag: 'ion-checkbox',
@@ -19,7 +22,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Checkbox implements ComponentInterface {
 
   private inputId = `ion-cb-${checkboxIds++}`;
-  private buttonEl?: HTMLElement;
+  private focusEl?: HTMLElement;
 
   @Element() el!: HTMLElement;
 
@@ -28,7 +31,7 @@ export class Checkbox implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -51,11 +54,11 @@ export class Checkbox implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * The value of the toggle does not mean if it's checked or not, use the `checked`
+   * The value of the checkbox does not mean if it's checked or not, use the `checked`
    * property for that.
    *
-   * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
-   * it's only used when the toggle participates in a native `<form>`.
+   * The value of a checkbox is analogous to the value of an `<input type="checkbox">`,
+   * it's only used when the checkbox participates in a native `<form>`.
    */
   @Prop() value = 'on';
 
@@ -65,12 +68,12 @@ export class Checkbox implements ComponentInterface {
   @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
   /**
-   * Emitted when the toggle has focus.
+   * Emitted when the checkbox has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
 
   /**
-   * Emitted when the toggle loses focus.
+   * Emitted when the checkbox loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
 
@@ -106,12 +109,14 @@ export class Checkbox implements ComponentInterface {
   }
 
   private setFocus() {
-    if (this.buttonEl) {
-      this.buttonEl.focus();
+    if (this.focusEl) {
+      this.focusEl.focus();
     }
   }
 
-  private onClick = () => {
+  private onClick = (ev: any) => {
+    ev.preventDefault();
+
     this.setFocus();
     this.checked = !this.checked;
     this.indeterminate = false;
@@ -126,53 +131,53 @@ export class Checkbox implements ComponentInterface {
   }
 
   render() {
-    const { inputId, indeterminate, disabled, checked, value, color, el } = this;
-    const labelId = inputId + '-lbl';
+    const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
-    renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+
+    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
 
     let path = indeterminate
-      ? <path d="M6 12L18 12"/>
-      : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" />;
+      ? <path d="M6 12L18 12" part="mark" />
+      : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />;
 
     if (mode === 'md') {
       path = indeterminate
-        ? <path d="M2 12H22"/>
-        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59"/>;
+        ? <path d="M2 12H22" part="mark" />
+        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />;
     }
 
     return (
       <Host
         onClick={this.onClick}
-        role="checkbox"
-        aria-disabled={disabled ? 'true' : null}
+        aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
-        aria-labelledby={labelId}
-        class={{
-          ...createColorClasses(color),
+        aria-hidden={disabled ? 'true' : null}
+        role="checkbox"
+        class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           'interactive': true
-        }}
+        })}
       >
-        <svg class="checkbox-icon" viewBox="0 0 24 24">
+        <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <button
-          type="button"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          disabled={this.disabled}
-          ref={btnEl => this.buttonEl = btnEl}
-        >
-        </button>
+        <label htmlFor={inputId}>
+          {labelText}
+        </label>
+        <input
+          type="checkbox"
+          aria-checked={`${checked}`}
+          disabled={disabled}
+          id={inputId}
+          onFocus={() => this.onFocus()}
+          onBlur={() => this.onBlur()}
+          ref={focusEl => this.focusEl = focusEl}
+        />
       </Host>
     );
   }

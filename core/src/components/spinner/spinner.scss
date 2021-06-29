@@ -36,18 +36,31 @@ svg {
 }
 
 
-// Spinner: lines / lines-small
+// Spinner: lines / lines-small / lines-sharp / lines-sharp-small
 // --------------------------------------------------
 
 :host(.spinner-lines) line,
 :host(.spinner-lines-small) line {
+  stroke-width: 7px;
+}
+
+:host(.spinner-lines-sharp) line,
+:host(.spinner-lines-sharp-small) line {
   stroke-width: 4px;
+}
+
+:host(.spinner-lines) line,
+:host(.spinner-lines-small) line,
+:host(.spinner-lines-sharp) line,
+:host(.spinner-lines-sharp-small) line {
   stroke-linecap: round;
   stroke: currentColor;
 }
 
 :host(.spinner-lines) svg,
-:host(.spinner-lines-small) svg {
+:host(.spinner-lines-small) svg,
+:host(.spinner-lines-sharp) svg,
+:host(.spinner-lines-sharp-small) svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 
@@ -99,10 +112,29 @@ svg {
 }
 
 
+// Spinner: circular
+// --------------------------------------------------
+
+:host(.spinner-circular) {
+  animation: spinner-circular linear infinite;
+}
+
+:host(.spinner-circular) circle {
+  animation: spinner-circular-inner ease-in-out infinite;
+  stroke: currentColor;
+  stroke-dasharray: 80px, 200px;
+  stroke-dashoffset: 0px;
+  stroke-width: 5.6;
+  fill: none;
+}
+
+
 // Spinner: paused
 // --------------------------------------------------
 
-:host(.spinner-paused) svg {
+:host(.spinner-paused),
+:host(.spinner-paused) svg,
+:host(.spinner-paused) circle {
   animation-play-state: paused;
 }
 
@@ -160,5 +192,26 @@ svg {
     transform: scale(1, 1);
 
     opacity: .9;
+  }
+}
+
+@keyframes spinner-circular {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-circular-inner {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0px;
+  }
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
   }
 }

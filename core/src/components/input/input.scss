@@ -147,7 +147,11 @@
   appearance: none;
 }
 
-:host(.has-focus.has-value) .input-clear-icon {
+.input-clear-icon:focus {
+  opacity: 0.5;
+}
+
+:host(.has-value) .input-clear-icon {
   visibility: visible;
 }
 
@@ -164,4 +168,19 @@
 :host(.has-focus) a,
 :host(.has-focus) button {
   pointer-events: auto;
+}
+
+
+// Item Floating: Placeholder
+// ----------------------------------------------------------------
+// When used with a floating item the placeholder should hide
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value)) {
+  opacity: 0;
+}
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value).item-has-focus) {
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  opacity: 1;
 }

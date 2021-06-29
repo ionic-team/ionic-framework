@@ -13,7 +13,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="home"></ion-back-button>
+        <ion-back-button default-href="home"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -49,4 +49,13 @@
     </ion-toolbar>
   </ion-header>
 </template>
+
+<script>
+import { IonButtons, IonHeader, IonMenuButton, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonButtons, IonHeader, IonMenuButton, IonToolbar }
+});
+</script>
 ```

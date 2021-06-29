@@ -49,4 +49,13 @@
   <ion-button>Default</ion-button>
   <ion-button size="small">Small</ion-button>
 </template>
+
+<script>
+import { IonButton } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonButton }
+});
+</script>
 ```

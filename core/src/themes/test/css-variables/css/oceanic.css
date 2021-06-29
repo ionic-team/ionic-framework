@@ -84,11 +84,10 @@
   --ion-tab-bar-background: #343d46;
   --ion-tab-bar-background-focused: #293039;
   --ion-tab-bar-color: #a7adba;
-  --ion-tab-bar-color-activated: #549ee7;
+  --ion-tab-bar-color-selected: #549ee7;
 
   --ion-toolbar-background: #343d46;
   --ion-toolbar-color: #a7adba;
-  --ion-toolbar-color-activated: var(--ion-color-primary);
 
   /* Background, Text, Step Colors */
   --ion-background-color: #1b2b34;

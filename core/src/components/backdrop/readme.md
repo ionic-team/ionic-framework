@@ -40,7 +40,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./backdrop-example.css'],
 })
 export class BackdropExample {
-  backdropDismiss = false;
+  enableBackdropDismiss = false;
   showBackdrop = false;
   shouldPropagate = false;
 }
@@ -80,7 +80,7 @@ backdrop.stopPropagation = false;
 import React from 'react';
 import { IonBackdrop, IonContent } from '@ionic/react';
 
-export const BackdropExample: React.FunctionComponent = () => (
+export const BackdropExample: React.FC = () => (
   <IonContent>
     {/*-- Default backdrop --*/}
     <IonBackdrop />
@@ -100,6 +100,46 @@ export const BackdropExample: React.FunctionComponent = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'backdrop-example',
+  styleUrl: 'backdrop-example.css'
+})
+export class BackdropExample {
+  render() {
+    const enableBackdropDismiss = false;
+    const showBackdrop = false;
+    const shouldPropagate = false;
+
+    return [
+      // Default backdrop
+      <ion-backdrop></ion-backdrop>,
+
+      // Backdrop that is not tappable
+      <ion-backdrop tappable={false}></ion-backdrop>,
+
+      // Backdrop that is not visible
+      <ion-backdrop visible={false}></ion-backdrop>,
+
+      // Backdrop with propagation
+      <ion-backdrop stopPropagation={false}></ion-backdrop>,
+
+      // Backdrop that sets dynamic properties
+      <ion-backdrop
+        tappable={enableBackdropDismiss}
+        visible={showBackdrop}
+        stopPropagation={shouldPropagate}>
+      </ion-backdrop>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -114,25 +154,30 @@ export const BackdropExample: React.FunctionComponent = () => (
   <ion-backdrop visible="false"></ion-backdrop>
 
   <!-- Backdrop with propagation -->
-  <ion-backdrop stopPropagation="false"></ion-backdrop>
+  <ion-backdrop stop-propagation="false"></ion-backdrop>
 
   <!-- Backdrop that sets dynamic properties -->
   <ion-backdrop
     :tappable="enableBackdropDismiss"
     :visible="showBackdrop"
-    :stopPropagation="shouldPropagate">
+    :stop-propagation="shouldPropagate">
   </ion-backdrop>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonBackdrop } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    backdropDismiss = false;
-    showBackdrop = false;
-    shouldPropagate = false;
+export default defineComponent({
+  components: { IonBackdrop },
+  setup() {
+    return {
+      enableBackdropDismiss: true,
+      showBackdrop: true,
+      shouldPropagate: true
+    }
   }
+});
 </script>
 ```
 

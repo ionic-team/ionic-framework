@@ -6,46 +6,46 @@
 
 :host {
   --min-height: #{$item-ios-min-height};
-  --transition: background-color 200ms linear;
+  --transition: background-color 200ms linear, opacity 200ms linear;
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
-  --background-activated: #{$item-ios-background-activated};
-  --background-focused: #{$item-ios-background-focused};
-  --background-hover: #{$item-ios-background-hover};
+  --background-activated: #000;
+  --background-focused: #000;
+  --background-hover: currentColor;
+  --background-activated-opacity: .12;
+  --background-focused-opacity: .15;
+  --background-hover-opacity: .04;
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
-  --highlight-height: 0;
+  --highlight-height: 0px;
   --highlight-color-focused: #{$item-ios-input-highlight-color};
   --highlight-color-valid: #{$item-ios-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-ios-input-highlight-color-invalid};
-
+  --bottom-padding-start: 0px;
   font-size: $item-ios-font-size;
 }
 
 
-// iOS Activated
+// iOS Item: States
 // --------------------------------------------------
 
-:host(.activated) {
+:host(.ion-activated) {
   --transition: none;
 }
 
-:host(.ion-color.activated) .item-native {
-  background: current-color(shade);
-  color: current-color(contrast);
+:host(.ion-color.ion-focused) .item-native::after {
+  background: #000;
+
+  opacity: .15;
 }
 
-@media (any-hover: hover) {
-  :host(.activated.ion-activatable:hover) .item-native {
-    background: var(--background-activated);
-    color: var(--color-activated);
-  }
+:host(.ion-color.ion-activated) .item-native {
+  &::after {
+    background: #000;
 
-  :host(.activated.ion-color.ion-activatable:hover) .item-native {
-    background: #{current-color(shade)};
-    color: #{current-color(contrast)};
+    opacity: .12;
   }
 }
 
@@ -86,6 +86,18 @@
 :host(.item-lines-none) {
   --inner-border-width: 0px;
   --show-inset-highlight: 0;
+}
+
+.item-highlight,
+.item-inner-highlight {
+  transition: none;
+}
+
+:host(.item-has-focus) .item-inner-highlight,
+:host(.item-has-focus) .item-highlight {
+  border-top: none;
+  border-right: none;
+  border-left: none;
 }
 
 
@@ -203,6 +215,21 @@
   --padding-start: 0px;
 }
 
+
+// iOS Fixed Labels
+// --------------------------------------------------
+
+:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-datetime) {
+  --padding-start: 0;
+}
+
+// Item Bottom
+// --------------------------------------------------
+
+:host(.item-has-start-slot) .item-bottom {
+  --bottom-padding-start: 48px;
+}
 
 // FROM TEXTAREA
 // iOS Stacked & Floating Textarea

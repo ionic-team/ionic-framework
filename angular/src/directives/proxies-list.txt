@@ -1,12 +1,16 @@
 
-import * as d from './proxies';
+import type * as d from './proxies';
 
 export const DIRECTIVES = [
-d.IonApp,
+  d.IonAccordion,
+  d.IonAccordionGroup,
+  d.IonApp,
   d.IonAvatar,
   d.IonBackButton,
   d.IonBackdrop,
   d.IonBadge,
+  d.IonBreadcrumb,
+  d.IonBreadcrumbs,
   d.IonButton,
   d.IonButtons,
   d.IonCard,
@@ -43,9 +47,7 @@ d.IonApp,
   d.IonMenuButton,
   d.IonMenuToggle,
   d.IonNav,
-  d.IonNavPop,
-  d.IonNavPush,
-  d.IonNavSetRoot,
+  d.IonNavLink,
   d.IonNote,
   d.IonProgressBar,
   d.IonRadio,

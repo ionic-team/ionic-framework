@@ -8,10 +8,10 @@
   font-size: $item-option-button-ios-font-size;
 }
 
-:host(.activated) {
+:host(.ion-activated) {
   background: ion-color(primary, shade);
 }
 
-:host(.ion-color.activated) {
+:host(.ion-color.ion-activated) {
   background: current-color(shade);
 }

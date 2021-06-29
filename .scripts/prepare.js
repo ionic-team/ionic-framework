@@ -2,7 +2,7 @@
  * Deploy script adopted from https://github.com/sindresorhus/np
  * MIT License (c) Sindre Sorhus (sindresorhus.com)
  */
-const tc = require('turbocolor');
+const { cyan, dim, red, reset } = require('colorette');
 const execa = require('execa');
 const inquirer = require('inquirer');
 const Listr = require('listr');
@@ -17,8 +17,12 @@ async function main() {
       throw new Error('env.GH_TOKEN is undefined');
     }
 
-    const version = await askVersion();
+    const { version, confirm } = await askVersion();
     const install = process.argv.indexOf('--no-install') < 0;
+
+    if (!confirm) {
+      return;
+    }
 
     // compile and verify packages
     await preparePackages(common.packages, version, install);
@@ -30,7 +34,7 @@ async function main() {
     console.log(`  npm run release\n`);
 
   } catch(err) {
-    console.log('\n', tc.red(err), '\n');
+    console.log('\n', red(err), '\n');
     process.exit(1);
   }
 }
@@ -80,13 +84,13 @@ async function askVersion() {
       type: 'confirm',
       name: 'confirm',
       message: answers => {
-        return `Will bump from ${tc.cyan(oldVersion)} to ${tc.cyan(answers.version)}. Continue?`;
+        return `Will bump from ${cyan(oldVersion)} to ${cyan(answers.version)}. Continue?`;
       }
     }
   ];
 
-  const {version} = await inquirer.prompt(prompts);
-  return version;
+  const { version, confirm } = await inquirer.prompt(prompts);
+  return { version, confirm };
 }
 
 
@@ -107,12 +111,13 @@ async function preparePackages(packages, version, install) {
   });
 
   // add update package.json of each project
-  packages.forEach(package => {
-    common.updatePackageVersion(tasks, package, version);
-  });
+  common.updatePackageVersions(tasks, packages, version);
 
   // generate changelog
   generateChangeLog(tasks);
+
+  // check dist folders
+  common.checkTestDist(tasks);
 
   // update core readme with version number
   updateCoreReadme(tasks, version);
@@ -126,7 +131,7 @@ async function preparePackages(packages, version, install) {
 function validateGit(tasks, version) {
   tasks.push(
     {
-      title: `Validate git tag ${tc.dim(`(v${version})`)}`,
+      title: `Validate git tag ${dim(`(v${version})`)}`,
       task: () => execa('git', ['fetch'])
         .then(() => {
           return execa.stdout('npm', ['config', 'get', 'tag-version-prefix']);
@@ -193,17 +198,17 @@ function prettyVersionDiff(oldVersion, inc) {
 
   for (let i = 0; i < newVersion.length; i++) {
     if ((newVersion[i] !== oldVersion[i] && !firstVersionChange)) {
-      output.push(`${tc.dim.cyan(newVersion[i])}`);
+      output.push(`${dim(cyan(newVersion[i]))}`);
       firstVersionChange = true;
     } else if (newVersion[i].indexOf('-') >= 1) {
       let preVersion = [];
       preVersion = newVersion[i].split('-');
-      output.push(`${tc.dim.cyan(`${preVersion[0]}-${preVersion[1]}`)}`);
+      output.push(`${dim(cyan(`${preVersion[0]}-${preVersion[1]}`))}`);
     } else {
-      output.push(tc.reset.dim(newVersion[i]));
+      output.push(reset(dim(newVersion[i])));
     }
   }
-  return output.join(tc.reset.dim('.'));
+  return output.join(reset(dim('.')));
 }
 
 main();

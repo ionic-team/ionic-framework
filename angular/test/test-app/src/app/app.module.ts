@@ -59,11 +59,11 @@ import { AlertComponent } from './alert/alert.component';
     AlertComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ keyboardHeight: 12345 }),
   ],
   entryComponents: [
     ModalExampleComponent,

@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonContent } from '@ionic/react';
 
-export const ListExample: React.FunctionComponent = () => (
+export const ListExample: React.FC = () => (
   <IonContent>
     {/*-- List of Text Items --*/}
     <IonList>

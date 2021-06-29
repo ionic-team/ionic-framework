@@ -21,7 +21,7 @@ export class CardTitle implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   render() {
     const mode = getIonMode(this);
@@ -29,12 +29,12 @@ export class CardTitle implements ComponentInterface {
       <Host
         role="heading"
         aria-level="2"
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
+          'ion-inherit-color': true,
           [mode]: true
-        }}
+        })}
       >
-        <slot></slot>;
+        <slot></slot>
       </Host>
     );
   }

@@ -46,7 +46,7 @@ The default spinner to use is based on the platform. The default spinner for `io
 import React from 'react';
 import { IonSpinner, IonContent } from '@ionic/react';
 
-export const SpinnerExample: React.FunctionComponent = () => (
+export const SpinnerExample: React.FC = () => (
   <IonContent>
     {/*-- Default Spinner --*/}
     <IonSpinner />
@@ -73,6 +73,47 @@ export const SpinnerExample: React.FunctionComponent = () => (
     <IonSpinner paused />
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'spinner-example',
+  styleUrl: 'spinner-example.css'
+})
+export class SpinnerExample {
+  render() {
+    return [
+      // Default Spinner
+      <ion-spinner></ion-spinner>,
+
+      // Lines
+      <ion-spinner name="lines"></ion-spinner>,
+
+      // Lines Small
+      <ion-spinner name="lines-small"></ion-spinner>,
+
+      // Dots
+      <ion-spinner name="dots"></ion-spinner>,
+
+      // Bubbles
+      <ion-spinner name="bubbles"></ion-spinner>,
+
+      // Circles
+      <ion-spinner name="circles"></ion-spinner>,
+
+      // Crescent
+      <ion-spinner name="crescent"></ion-spinner>,
+
+      // Paused Default Spinner
+      <ion-spinner paused={true}></ion-spinner>
+    ];
+  }
+}
 ```
 
 
@@ -104,18 +145,27 @@ export const SpinnerExample: React.FunctionComponent = () => (
   <!-- Paused Default Spinner -->
   <ion-spinner paused></ion-spinner>
 </template>
+
+<script>
+import { IonSpinner } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonSpinner }
+});
+</script>
 ```
 
 
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                                                                      | Default     |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------- |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                     | `undefined` |
-| `duration` | `duration` | Duration of the spinner animation in milliseconds. The default varies based on the spinner.                                                                                                                                                                            | `number \| undefined`                                                                     | `undefined` |
-| `name`     | `name`     | The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.                                                                                                                                                            | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| undefined` | `undefined` |
-| `paused`   | `paused`   | If `true`, the spinner's animation will be paused.                                                                                                                                                                                                                     | `boolean`                                                                                 | `false`     |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                                                                                                                            | Default     |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                                                                           | `undefined` |
+| `duration` | `duration` | Duration of the spinner animation in milliseconds. The default varies based on the spinner.                                                                                                                                                                            | `number \| undefined`                                                                                                                           | `undefined` |
+| `name`     | `name`     | The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.                                                                                                                                                            | `"bubbles" \| "circles" \| "circular" \| "crescent" \| "dots" \| "lines" \| "lines-sharp" \| "lines-sharp-small" \| "lines-small" \| undefined` | `undefined` |
+| `paused`   | `paused`   | If `true`, the spinner's animation will be paused.                                                                                                                                                                                                                     | `boolean`                                                                                                                                       | `false`     |
 
 
 ## CSS Custom Properties

@@ -9,6 +9,7 @@
   --border-width: #{$hairlines-width 0 0};
   --border-color: #{$picker-md-border-color};
   --height: #{$picker-md-height};
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.26);
 
   color: $picker-md-option-text-color;
 }
@@ -22,7 +23,7 @@
 }
 
 .picker-button,
-.picker-button.activated {
+.picker-button.ion-activated {
   @include margin(0);
   @include padding(0, 1.1em);
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>App - Keyboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../dist/ionic.js"></script>
+  <style>
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+
+    ion-footer {
+      transition: all 0.5s cubic-bezier(0.38, 0.7, 0.128, 1);
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>App - Keyboard</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <f></f>
+      <f></f>
+      <f></f>
+      <f></f>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-input type="text" placeholder="Enter some text..."></ion-input>
+        <ion-input type="text" placeholder="Enter some text..."></ion-input>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-app>
+
+  <script>
+    const input = document.querySelector('ion-footer');
+
+    window.addEventListener('ionKeyboardDidShow', (e) => {
+      console.log('ionKeyboardDidShow');
+      setInputOffset(e.detail.keyboardHeight);
+    });
+
+    window.addEventListener('ionKeyboardDidHide', () => {
+      console.log('ionKeyboardDidHide');
+      setInputOffset(0);
+    });
+
+    function setInputOffset(offset) {
+      input.setAttribute('style', `transform: translate3d(0, ${-offset}px, 0)`);
+    }
+  </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
 import { Cell, CellType, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn } from '@ionic/core';
 
-import { proxyInputs, proxyMethods } from '../proxies-utils';
+import { ProxyCmp } from '../proxies-utils';
 
 import { VirtualFooter } from './virtual-footer';
 import { VirtualHeader } from './virtual-header';
@@ -71,7 +71,7 @@ export declare interface IonVirtualScroll {
    * entire virtual scroll is reset, which is an expensive operation and
    * should be avoided if possible.
    */
-  items?: any[];
+  items?: any[] | null;
 
   /**
    * An optional function that maps each item within their height.
@@ -112,6 +112,10 @@ export declare interface IonVirtualScroll {
   'positionForItem': (index: number) => Promise<number>;
 }
 
+@ProxyCmp({
+  inputs: ['approxItemHeight', 'approxHeaderHeight', 'approxFooterHeight', 'headerFn', 'footerFn', 'items', 'itemHeight', 'headerHeight', 'footerHeight'],
+  methods: ['checkEnd', 'checkRange', 'positionForItem']
+})
 @Component({
   selector: 'ion-virtual-scroll',
   template: '<ng-content></ng-content>',
@@ -133,11 +137,11 @@ export class IonVirtualScroll {
 
   private differ?: IterableDiffer<any>;
   private el: HTMLIonVirtualScrollElement;
-  private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
+  private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>>();
 
-  @ContentChild(VirtualItem) itmTmp!: VirtualItem;
-  @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
-  @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
+  @ContentChild(VirtualItem, { static: false }) itmTmp!: VirtualItem;
+  @ContentChild(VirtualHeader, { static: false }) hdrTmp!: VirtualHeader;
+  @ContentChild(VirtualFooter, { static: false }) ftrTmp!: VirtualFooter;
 
   constructor(
     private z: NgZone,
@@ -206,7 +210,7 @@ export class IonVirtualScroll {
   }
 }
 
-function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
+const getElement = (view: EmbeddedViewRef<VirtualContext>): HTMLElement => {
   const rootNodes = view.rootNodes;
   for (let i = 0; i < rootNodes.length; i++) {
     if (rootNodes[i].nodeType === 1) {
@@ -214,22 +218,4 @@ function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
     }
   }
   throw new Error('virtual element was not created');
-}
-
-proxyInputs(IonVirtualScroll, [
-  'approxItemHeight',
-  'approxHeaderHeight',
-  'approxFooterHeight',
-  'headerFn',
-  'footerFn',
-  'items',
-  'itemHeight',
-  'headerHeight',
-  'footerHeight'
-]);
-
-proxyMethods(IonVirtualScroll, [
-  'checkEnd',
-  'checkRange',
-  'positionForItem'
-]);
+};

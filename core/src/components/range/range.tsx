@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
-import { clamp, debounceEvent } from '../../utils/helpers';
+import { clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -10,6 +10,13 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ *
+ * @part tick - An inactive tick mark.
+ * @part tick-active - An active tick mark.
+ * @part pin - The counter that appears above a knob.
+ * @part knob - The handle that is used to drag the range.
+ * @part bar - The inactive part of the bar.
+ * @part bar-active - The active part of the bar.
  */
 @Component({
   tag: 'ion-range',
@@ -21,11 +28,14 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Range implements ComponentInterface {
 
+  private rangeId?: string;
+  private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
   private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -38,11 +48,12 @@ export class Range implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value.
+   * This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -50,6 +61,8 @@ export class Range implements ComponentInterface {
   protected debounceChanged() {
     this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
+
+  // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -113,7 +126,7 @@ export class Range implements ComponentInterface {
   @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
     this.emitStyle();
   }
@@ -169,26 +182,54 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  private setupGesture = async () => {
+    const rangeSlider = this.rangeSlider;
+    if (rangeSlider) {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: rangeSlider,
+        gestureName: 'range',
+        gesturePriority: 100,
+        threshold: 0,
+        onStart: ev => this.onStart(ev),
+        onMove: ev => this.onMove(ev),
+        onEnd: ev => this.onEnd(ev),
+      });
+      this.gesture.enable(!this.disabled);
+    }
+  }
+
   componentWillLoad() {
+    /**
+     * If user has custom ID set then we should
+     * not assign the default incrementing ID.
+     */
+    this.rangeId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
+
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
+  componentDidLoad() {
+    this.setupGesture();
+    this.didLoad = true;
+  }
+
+  connectedCallback() {
     this.updateRatio();
     this.debounceChanged();
-    this.emitStyle();
+    this.disabledChanged();
+
+    /**
+     * If we have not yet rendered
+     * ion-range, then rangeSlider is not defined.
+     * But if we are moving ion-range via appendChild,
+     * then rangeSlider will be defined.
+     */
+    if (this.didLoad) {
+      this.setupGesture();
+    }
   }
 
-  async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.rangeSlider!,
-      gestureName: 'range',
-      gesturePriority: 100,
-      threshold: 0,
-      onStart: ev => this.onStart(ev),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
-    });
-    this.gesture.setDisabled(this.disabled);
-  }
-
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -368,8 +409,17 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId } = this;
 
+    /**
+     * Look for external label, ion-label, or aria-labelledby.
+     * If none, see if user placed an aria-label on the host
+     * and use that instead.
+     */
+    let { labelText } = getAriaLabel(el, rangeId!);
+    if (labelText === undefined || labelText === null) {
+      labelText = inheritedAttributes['aria-label'];
+    }
     const mode = getIonMode(this);
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
@@ -406,18 +456,20 @@ export class Range implements ComponentInterface {
       }
     }
 
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
     return (
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
-        class={{
-          ...createColorClasses(this.color),
+        id={rangeId}
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin
-        }}
+        })}
       >
 
         <slot name="start"></slot>
@@ -430,14 +482,16 @@ export class Range implements ComponentInterface {
                 'range-tick': true,
                 'range-tick-active': tick.active
               }}
+              part={tick.active ? 'tick-active' : 'tick'}
             />
           ))}
 
-          <div class="range-bar" role="presentation" />
+          <div class="range-bar" role="presentation" part="bar" />
           <div
             class="range-bar range-bar-active"
             role="presentation"
             style={barStyle}
+            part="bar-active"
           />
 
           { renderKnob(isRTL, {
@@ -449,7 +503,8 @@ export class Range implements ComponentInterface {
             disabled,
             handleKeyboard,
             min,
-            max
+            max,
+            labelText
           })}
 
           { this.dualKnobs && renderKnob(isRTL, {
@@ -461,7 +516,8 @@ export class Range implements ComponentInterface {
             disabled,
             handleKeyboard,
             min,
-            max
+            max,
+            labelText
           })}
         </div>
         <slot name="end"></slot>
@@ -479,11 +535,12 @@ interface RangeKnob {
   disabled: boolean;
   pressed: boolean;
   pin: boolean;
+  labelText?: string | null;
 
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) => {
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText }: RangeKnob) => {
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -520,13 +577,14 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
+      aria-label={labelText}
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
-      <div class="range-knob" role="presentation" />
+      {pin && <div class="range-pin" role="presentation" part="pin">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" part="knob" />
     </div>
   );
 };
@@ -547,3 +605,5 @@ const ratioToValue = (
 const valueToRatio = (value: number, min: number, max: number): number => {
   return clamp(0, (value - min) / (max - min), 1);
 };
+
+let rangeIds = 0;

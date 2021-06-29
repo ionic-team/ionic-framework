@@ -1,12 +1,14 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Mode, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button, anchor, or div element that wraps all child elements.
  */
 @Component({
   tag: 'ion-card',
@@ -14,7 +16,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
     ios: 'card.ios.scss',
     md: 'card.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
 
@@ -23,7 +25,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If `true`, a button tag will be rendered and the card will be tappable.
@@ -67,6 +69,12 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
@@ -85,7 +93,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         <slot></slot>
       ];
     }
-    const { href, routerDirection } = this;
+    const { href, routerAnimation, routerDirection } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -100,8 +108,9 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       <TagType
         {...attrs}
         class="card-native"
+        part="native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
       >
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
@@ -113,13 +122,11 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
-
-          ...createColorClasses(this.color),
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable()
-        }}
+        })}
       >
         {this.renderCard(mode)}
       </Host>

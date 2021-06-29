@@ -4,17 +4,23 @@
 // iOS Item Divider
 // --------------------------------------------------
 
+/// @prop - Minimum height for the divider
+$item-divider-ios-min-height:             28px !default;
+
 /// @prop - Font size of the item
-$item-ios-divider-font-size:              17px !default;
+$item-divider-ios-font-size:              17px !default;
+
+/// @prop - Font weight of the item
+$item-divider-ios-font-weight:            600 !default;
 
 /// @prop - Background for the divider
-$item-ios-divider-background:             $background-color-step-50 !default;
+$item-divider-ios-background:             $background-color-step-100 !default;
 
 /// @prop - Color for the divider
-$item-ios-divider-color:                  $text-color-step-150 !default;
+$item-divider-ios-color:                  $text-color-step-150 !default;
 
 /// @prop - Padding start for the divider
-$item-ios-divider-padding-start:          $item-ios-padding-start !default;
+$item-divider-ios-padding-start:          $item-ios-padding-start !default;
 
 /// @prop - Padding end for the divider
-$item-ios-divider-padding-end:            $item-ios-padding-end !default;
+$item-divider-ios-padding-end:            $item-ios-padding-end !default;

@@ -28,7 +28,7 @@ export class ItemDivider implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * When it's set to `true`, the item-divider will stay visible when it reaches the top
@@ -43,14 +43,13 @@ export class ItemDivider implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'item-divider-sticky': this.sticky,
           'item': true,
-        }}
+        })}
       >
-        <slot name="start"></slot>,
+        <slot name="start"></slot>
         <div class="item-divider-inner">
           <div class="item-divider-wrapper">
             <slot></slot>

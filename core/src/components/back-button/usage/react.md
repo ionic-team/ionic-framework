@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonContent } from '@ionic/react';
 
-export const BackButtonExample: React.FunctionComponent = () => (
+export const BackButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Default back button --*/}
     <IonHeader>

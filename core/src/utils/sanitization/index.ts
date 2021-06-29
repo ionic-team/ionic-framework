@@ -3,9 +3,10 @@
  * in an untrusted string
  */
 
-export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
+export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
-    if (typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
+    if (untrustedString instanceof IonicSafeString) { return untrustedString.value; }
+    if (!isSanitizerEnabled() || typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
 
     /**
      * Create a document fragment
@@ -52,11 +53,11 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
      */
 
     // IE does not support .children on document fragments, only .childNodes
-    const documentFragmentChildren = getElementChildren(documentFragment);
+    const dfChildren = getElementChildren(documentFragment);
 
     /* tslint:disable-next-line */
-    for (let childIndex = 0; childIndex < documentFragmentChildren.length; childIndex++) {
-      sanitizeElement(documentFragmentChildren[childIndex]);
+    for (let childIndex = 0; childIndex < dfChildren.length; childIndex++) {
+      sanitizeElement(dfChildren[childIndex]);
     }
 
     // Append document fragment to div
@@ -84,7 +85,7 @@ const sanitizeElement = (element: any) => {
   if (element.nodeType && element.nodeType !== 1) { return; }
 
   for (let i = element.attributes.length - 1; i >= 0; i--) {
-    const attribute = element.attributes[i];
+    const attribute = element.attributes.item(i);
     const attributeName = attribute.name;
 
     // remove non-allowed attribs
@@ -118,9 +119,26 @@ const sanitizeElement = (element: any) => {
  * IE doesn't always support .children
  * so we revert to .childNodes instead
  */
-const getElementChildren = (element: any) => {
-  return (element.children != null) ? element.children : element.childNodes;
+const getElementChildren = (el: any) => {
+  return (el.children != null) ? el.children : el.childNodes;
+};
+
+const isSanitizerEnabled = (): boolean => {
+  const win = window as any;
+  const config = win && win.Ionic && win.Ionic.config;
+  if (config) {
+    if (config.get) {
+      return config.get('sanitizerEnabled', true);
+    } else {
+      return config.sanitizerEnabled === true || config.sanitizerEnabled === undefined;
+    }
+  }
+  return true;
 };
 
 const allowedAttributes = ['class', 'id', 'href', 'src', 'name', 'slot'];
 const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
+
+export class IonicSafeString {
+  constructor(public value: string) {}
+}

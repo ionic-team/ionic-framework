@@ -17,7 +17,7 @@
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
-      pullingIcon="arrow-dropdown"
+      pullingIcon="chevron-down-circle-outline"
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
       refreshingText="Refreshing...">

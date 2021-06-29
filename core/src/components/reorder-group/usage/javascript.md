@@ -84,7 +84,7 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 });
 ```
 
-#### Updating Data
+### Updating Data
 
 ```javascript
 const items = [1, 2, 3, 4, 5];
