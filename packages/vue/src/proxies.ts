@@ -88,6 +88,7 @@ export const IonAccordion = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion
 
 
 export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionGroup>('ion-accordion-group', IonAccordionGroupCmp, [
+  'animated',
   'multiple',
   'value',
   'disabled',

@@ -17,8 +17,8 @@ export class IonAccordion {
 }
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
 }
-@ProxyCmp({ inputs: ["disabled", "expand", "mode", "multiple", "readonly", "value"] })
-@Component({ selector: "ion-accordion-group", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["disabled", "expand", "mode", "multiple", "readonly", "value"] })
+@ProxyCmp({ inputs: ["animated", "disabled", "expand", "mode", "multiple", "readonly", "value"] })
+@Component({ selector: "ion-accordion-group", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["animated", "disabled", "expand", "mode", "multiple", "readonly", "value"] })
 export class IonAccordionGroup {
   ionChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;

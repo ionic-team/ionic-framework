@@ -292,6 +292,8 @@ export class Accordion implements ComponentInterface {
     const animated = config.get('animated', true);
     if (!animated) { return false; }
 
+    if (this.accordionGroupEl && !this.accordionGroupEl.animated) { return false; }
+
     return true;
   }
 
