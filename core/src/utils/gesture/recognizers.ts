@@ -42,7 +42,7 @@ export const createPanRecognizer = (direction: string, thresh: number, maxAngle:
       const hypotenuse = Math.sqrt(distance);
       
       if(isDirUndefined) {
-        pan = distance > 0 ? 1 : 0; // Could do the calculation with the bigger Dx or Dy
+        isPan = distance > 0 ? 1 : 0; // Could do the calculation with the bigger Dx or Dy
         dirty = false;
         return true;
       }
