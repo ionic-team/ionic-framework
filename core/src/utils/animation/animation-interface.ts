@@ -29,7 +29,7 @@ export interface Animation {
    */
   destroy(clearStyleSheets?: boolean): void;
 
-  progressStart(forceLinearEasing: boolean, step?: number): Animation;
+  progressStart(forceLinearEasing?: boolean, step?: number): Animation;
   progressStep(step: number): Animation;
   progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): Animation;
 
