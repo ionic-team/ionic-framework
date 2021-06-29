@@ -19,7 +19,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
 
-  const referenceSizeEl = trigger || ev?.target;
+  const referenceSizeEl = trigger || ev?.detail?.ionShadowTarget || ev?.target;
   const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl);
 
   const defaultPosition = {
