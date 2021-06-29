@@ -208,26 +208,19 @@ export class Accordion implements ComponentInterface {
     }
 
     if (this.shouldAnimate()) {
-      this.state = AccordionState.Expanding;
+      raf(() => {
+        this.state = AccordionState.Expanding;
 
-      this.currentRaf = raf(async () => {
-        const contentHeight = contentElWrapper.offsetHeight;
-        const waitForTransition = transitionEndAsync(contentEl, 2000);
-        contentEl.style.setProperty('max-height', `${contentHeight}px`);
+        this.currentRaf = raf(async () => {
+          const contentHeight = contentElWrapper.offsetHeight;
+          const waitForTransition = transitionEndAsync(contentEl, 2000);
+          contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
-        /**
-         * Force a repaint. We can't use an raf
-         * here as it could cause the collapse animation
-         * to get out of sync with the other
-         * accordion's expand animation.
-         */
-        // tslint:disable-next-line
-        void contentEl.offsetHeight;
+          await waitForTransition;
 
-        await waitForTransition;
-
-        this.state = AccordionState.Expanded;
-        contentEl.style.removeProperty('max-height');
+          this.state = AccordionState.Expanded;
+          contentEl.style.removeProperty('max-height');
+        });
       });
     } else {
       this.state = AccordionState.Expanded;
@@ -254,22 +247,16 @@ export class Accordion implements ComponentInterface {
         const contentHeight = contentEl.offsetHeight;
         contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
-        /**
-         * Force a repaint. We can't use an raf
-         * here as it could cause the collapse animation
-         * to get out of sync with the other
-         * accordion's expand animation.
-         */
-        // tslint:disable-next-line
-        void contentEl.offsetHeight;
+        raf(async () => {
+          const waitForTransition = transitionEndAsync(contentEl, 2000);
 
-        const waitForTransition = transitionEndAsync(contentEl, 2000);
-        this.state = AccordionState.Collapsing;
+          this.state = AccordionState.Collapsing;
 
-        await waitForTransition;
+          await waitForTransition;
 
-        this.state = AccordionState.Collapsed;
-        contentEl.style.removeProperty('max-height');
+          this.state = AccordionState.Collapsed;
+          contentEl.style.removeProperty('max-height');
+        });
       });
     } else {
       this.state = AccordionState.Collapsed;
