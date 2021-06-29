@@ -154,7 +154,7 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.ion-activatable:hover) .item-native {
+  :host(.ion-activatable:not(.ion-focused):hover) .item-native {
     color: var(--color-hover);
 
     &::after {
@@ -164,7 +164,7 @@
     }
   }
 
-  :host(.ion-color.ion-activatable:hover) .item-native {
+  :host(.ion-color.ion-activatable:not(.ion-focused):hover) .item-native {
     color: #{current-color(contrast)};
 
     &::after {
@@ -172,6 +172,7 @@
     }
   }
 }
+
 
 // Item: Disabled
 // --------------------------------------------------
@@ -308,7 +309,11 @@ button, a {
   z-index: 1;
 }
 
+// Setting pointer-events to none allows the label
+// to be clicked to open the select interface
 ::slotted(ion-label) {
+  pointer-events: none;
+
   flex: 1;
 }
 
@@ -359,7 +364,7 @@ button, a {
   width: 100%;
 
   height: 100%;
-  
+
   transform: scaleX(0);
 
   transition: transform 200ms, border-bottom-width 200ms;

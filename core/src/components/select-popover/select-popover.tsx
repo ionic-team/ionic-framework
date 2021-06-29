@@ -132,7 +132,7 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
-    const checked = options.filter(o => o.checked).map(o => o.value);
+    const checked = options.filter(o => o.checked).map(o => o.value)[0];
 
     return (
       <ion-radio-group value={checked}>
