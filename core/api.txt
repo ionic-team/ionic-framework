@@ -11,6 +11,7 @@ ion-accordion,part,expanded
 ion-accordion,part,header
 
 ion-accordion-group,shadow
+ion-accordion-group,prop,animated,boolean,true,false,false
 ion-accordion-group,prop,disabled,boolean,false,false,false
 ion-accordion-group,prop,expand,"compact" | "inset",'compact',false,false
 ion-accordion-group,prop,mode,"ios" | "md",undefined,false,false

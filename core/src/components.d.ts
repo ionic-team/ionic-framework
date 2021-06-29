@@ -38,6 +38,10 @@ export namespace Components {
     }
     interface IonAccordionGroup {
         /**
+          * If `true`, all accordions inside of the accordion group will animate when expanding or collapsing.
+         */
+        "animated": boolean;
+        /**
           * If `true`, the accordion group cannot be interacted with.
          */
         "disabled": boolean;
@@ -3555,6 +3559,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface IonAccordionGroup {
+        /**
+          * If `true`, all accordions inside of the accordion group will animate when expanding or collapsing.
+         */
+        "animated"?: boolean;
         /**
           * If `true`, the accordion group cannot be interacted with.
          */
