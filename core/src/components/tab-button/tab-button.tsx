@@ -152,6 +152,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
         onKeyup={this.onKeyUp}
         role="tab"
         tabindex={tabIndex}
+        aria-disabled={disabled ? 'true' : null}
         aria-selected={selected ? 'true' : null}
         id={tab !== undefined ? `tab-button-${tab}` : null}
         class={{
