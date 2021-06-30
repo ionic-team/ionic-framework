@@ -7,17 +7,18 @@ import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
 interface LoadingProps {}
 
 const LoadingExample: React.FC<LoadingProps> = () => {
-  const [present] = useIonLoading();
+  const [present, dismiss] = useIonLoading();
   return (
     <IonPage>
       <IonContent>
         <IonButton
           expand="block"
-          onClick={() =>
+          onClick={() => {
             present({
-              duration: 3000,
+              message: 'Loading...',
             })
-          }
+            setTimeout(dismiss, 3000)
+          }}
         >
           Show Loading
         </IonButton>
