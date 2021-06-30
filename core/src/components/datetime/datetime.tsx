@@ -1076,7 +1076,7 @@ export class Datetime implements ComponentInterface {
             <slot name="buttons">
               <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
-                <ion-button color={this.color} onClick={() => this.confirm()}>{this.doneText}</ion-button>
+                <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
               </ion-buttons>
             </slot>
           </div>
