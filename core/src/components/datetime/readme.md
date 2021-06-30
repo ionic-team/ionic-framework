@@ -1,6 +1,6 @@
 # ion-datetime
 
-Datetimes present a calendar interface and time wheel, making it easy for users to select dates and times. Datetimes are similar to the native `input` elements of `datetime-local`, however, Ionic Framework's Datetime componetn makes it easy to display the date and time in the a preferred format, and manage the datetime values.
+Datetimes present a calendar interface and time wheel, making it easy for users to select dates and times. Datetimes are similar to the native `input` elements of `datetime-local`, however, Ionic Framework's Datetime component makes it easy to display the date and time in the a preferred format, and manage the datetime values.
 
 ### Datetime Data
 
