@@ -49,6 +49,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
 
   wrapperAnimation
     .addElement(root.querySelector('.popover-wrapper')!)
+    .duration(150)
     .fromTo('opacity', 0.01, 1);
 
   contentAnimation
@@ -63,7 +64,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
         contentEl.style.setProperty('bottom', `${bottom}px`);
       }
     })
-    .fromTo('transform', 'scale(0.001)', 'scale(1)');
+    .fromTo('transform', 'scale(0.8)', 'scale(1)');
 
   viewportAnimation
     .addElement(root.querySelector('.popover-viewport')!)
