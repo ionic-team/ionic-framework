@@ -38,7 +38,7 @@
           </ion-item>
         </div>
         <div class="column">
-          <h2>Default Focused</h2>
+          <h2>Default: Focused</h2>
 
           <ion-item class="ion-focused">
             <ion-label position="floating">Fruit</ion-label>
@@ -64,9 +64,9 @@
           </ion-item>
         </div>
         <div class="column">
-          <h2>Outlined</h2>
+          <h2>Filled: Focused</h2>
 
-          <ion-item fill="outline">
+          <ion-item fill="solid" class="ion-focused">
             <ion-label position="floating">Fruit</ion-label>
             <ion-select interface="popover">
               <ion-select-option></ion-select-option>
@@ -77,9 +77,9 @@
           </ion-item>
         </div>
         <div class="column">
-          <h2>Filled: Focused</h2>
+          <h2>Outlined</h2>
 
-          <ion-item fill="solid" class="ion-focused">
+          <ion-item fill="outline">
             <ion-label position="floating">Fruit</ion-label>
             <ion-select interface="popover">
               <ion-select-option></ion-select-option>
@@ -104,6 +104,90 @@
         </div>
       </div>
 
+      <hr>
+
+      <h1>Stacked Selects</h1>
+
+      <div class="grid">
+        <div class="column">
+          <h2>Default</h2>
+
+          <ion-item>
+            <ion-label position="stacked">Fruit</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option></ion-select-option>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="column">
+          <h2>Default: Focused</h2>
+
+          <ion-item class="ion-focused">
+            <ion-label position="stacked">Fruit</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option></ion-select-option>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="column">
+          <h2>Filled</h2>
+
+          <ion-item fill="solid">
+            <ion-label position="stacked">Fruit</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option></ion-select-option>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="column">
+          <h2>Filled: Focused</h2>
+
+          <ion-item fill="solid" class="ion-focused">
+            <ion-label position="stacked">Fruit</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option></ion-select-option>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="column">
+          <h2>Outlined</h2>
+
+          <ion-item fill="outline">
+            <ion-label position="stacked">Fruit</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option></ion-select-option>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="column">
+          <h2>Outlined: Focused</h2>
+
+          <ion-item fill="outline" class="ion-focused">
+            <ion-label position="stacked">Fruit</ion-label>
+            <ion-select interface="popover">
+              <ion-select-option></ion-select-option>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
     </ion-content>
   </ion-app>
 
