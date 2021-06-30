@@ -1,21 +1,25 @@
 <template>
-  <ion-page data-pageid="tab1childone">
+  <ion-page :data-pageid="'tab1' + $props.id">
     <ion-header>
       <ion-toolbar>
         <ion-buttons>
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Tab 1 Child 1</ion-title>
+        <ion-title>Tab 1 Child {{ $props.id }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Tab 1 Child 1</ion-title>
+          <ion-title size="large">Tab 1 Child {{ $props.id }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-item router-link="child-two" id="child-two">
+      <ion-item router-link="childone" id="child-one">
+        <ion-label>Tab 1 Child 1</ion-label>
+      </ion-item>
+
+      <ion-item router-link="childtwo" id="child-two">
         <ion-label>Tab 1 Child 2</ion-label>
       </ion-item>
 
@@ -37,6 +41,7 @@ import {
 } from '@ionic/vue';
 
 export default  {
+  props: { id: String },
   components: {
     IonButtons,
     IonBackButton,
