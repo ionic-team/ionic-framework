@@ -311,18 +311,34 @@ export class Select implements ComponentInterface {
     const multiple = this.multiple;
     const value = this.value;
 
-    // TODO make sure users can override showBackdrop / size
-    // and change size from cover when inline
+    let event: Event | CustomEvent = ev;
+    let size = 'auto';
+
+    const item = this.el.closest('ion-item');
+
+    // If the select is inside of an item containing a floating
+    // or stacked label then the popover should take up the
+    // full width of the item when it presents
+    if (item && (item.classList.contains('item-label-floating') || item.classList.contains('item-label-stacked'))) {
+      event = {
+        ...ev,
+        detail: {
+          ionShadowTarget: item
+        }
+      }
+      size = 'cover';
+    }
 
     const popoverOpts: PopoverOptions = {
       mode,
+      event,
+      alignment: 'center',
+      size,
       showBackdrop,
       ...interfaceOptions,
 
       component: 'ion-select-popover',
       cssClass: ['select-popover', interfaceOptions.cssClass],
-      event: ev,
-      size: 'cover',
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
