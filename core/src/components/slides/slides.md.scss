@@ -12,3 +12,24 @@
   --scroll-bar-background: #{$slides-md-scroll-bar-background};
   --scroll-bar-background-active: #{$slides-md-scroll-bar-drag-background};
 }
+
+.swiper-slide {
+  padding: 16px;
+}
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-container-horizontal>.swiper-pagination-bullets {
+  bottom: 0;
+}
+
+.swiper-pagination-bullet {
+  background: transparent;
+  opacity: 1;
+  border: $med-border-width-thin solid #fff;
+}
+
+.swiper-pagination-bullet-active {
+  border: none;
+  background: #fff;
+}
