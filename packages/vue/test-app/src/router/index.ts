@@ -90,12 +90,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab1.vue'),
       },
       {
-        path: 'tab1/child-one',
-        component: () => import('@/views/Tab1ChildOne.vue')
-      },
-      {
-        path: 'tab1/child-two',
-        component: () => import('@/views/Tab1ChildTwo.vue')
+        path: 'tab1/:id',
+        component: () => import('@/views/Tab1Parameter.vue'),
+        props: true
       },
       {
         path: 'tab2',

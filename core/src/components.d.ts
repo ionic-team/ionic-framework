@@ -38,6 +38,10 @@ export namespace Components {
     }
     interface IonAccordionGroup {
         /**
+          * If `true`, all accordions inside of the accordion group will animate when expanding or collapsing.
+         */
+        "animated": boolean;
+        /**
           * If `true`, the accordion group cannot be interacted with.
          */
         "disabled": boolean;
@@ -1037,7 +1041,7 @@ export namespace Components {
         /**
           * Instructional text that shows before the input has a value.
          */
-        "placeholder"?: string | null;
+        "placeholder"?: string;
         /**
           * If `true`, the user cannot modify the value.
          */
@@ -2323,7 +2327,7 @@ export namespace Components {
         /**
           * The text to display when the select is empty.
          */
-        "placeholder"?: string | null;
+        "placeholder"?: string;
         /**
           * The text to display instead of the selected option's value.
          */
@@ -2667,7 +2671,7 @@ export namespace Components {
         /**
           * Instructional text that shows before the input has a value.
          */
-        "placeholder"?: string | null;
+        "placeholder"?: string;
         /**
           * If `true`, the user cannot modify the value.
          */
@@ -3559,6 +3563,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface IonAccordionGroup {
+        /**
+          * If `true`, all accordions inside of the accordion group will animate when expanding or collapsing.
+         */
+        "animated"?: boolean;
         /**
           * If `true`, the accordion group cannot be interacted with.
          */
@@ -4625,7 +4633,7 @@ declare namespace LocalJSX {
         /**
           * Instructional text that shows before the input has a value.
          */
-        "placeholder"?: string | null;
+        "placeholder"?: string;
         /**
           * If `true`, the user cannot modify the value.
          */
@@ -5903,7 +5911,7 @@ declare namespace LocalJSX {
         /**
           * The text to display when the select is empty.
          */
-        "placeholder"?: string | null;
+        "placeholder"?: string;
         /**
           * The text to display instead of the selected option's value.
          */
@@ -6253,7 +6261,7 @@ declare namespace LocalJSX {
         /**
           * Instructional text that shows before the input has a value.
          */
-        "placeholder"?: string | null;
+        "placeholder"?: string;
         /**
           * If `true`, the user cannot modify the value.
          */

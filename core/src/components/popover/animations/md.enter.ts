@@ -18,7 +18,9 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
 
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
-  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, trigger);
+
+  const referenceSizeEl = trigger || ev?.detail?.ionShadowTarget || ev?.target;
+  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl);
 
   const defaultPosition = {
     top: bodyHeight / 2 - contentHeight / 2,
@@ -47,6 +49,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
 
   wrapperAnimation
     .addElement(root.querySelector('.popover-wrapper')!)
+    .duration(150)
     .fromTo('opacity', 0.01, 1);
 
   contentAnimation
@@ -61,7 +64,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
         contentEl.style.setProperty('bottom', `${bottom}px`);
       }
     })
-    .fromTo('transform', 'scale(0.001)', 'scale(1)');
+    .fromTo('transform', 'scale(0.8)', 'scale(1)');
 
   viewportAnimation
     .addElement(root.querySelector('.popover-viewport')!)

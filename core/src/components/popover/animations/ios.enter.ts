@@ -19,7 +19,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
 
-  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, trigger);
+  const referenceSizeEl = trigger || ev?.detail?.ionShadowTarget || ev?.target;
+  const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, referenceSizeEl);
   const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl);
 
   const defaultPosition = {

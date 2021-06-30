@@ -15,9 +15,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#components)
   * [Datetime](#datetime)
   * [Header](#header)
+  * [Input](#input)
   * [Modal](#modal)
   * [Popover](#popover)
+  * [Searchbar](#searchbar)
+  * [Select](#select)
   * [Tab Bar](#tab-bar)
+  * [Textarea](#textarea)
   * [Toast](#toast)
   * [Toolbar](#toolbar)
 - [Config](#config)
@@ -26,7 +30,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Config Provider](#config-provider)
 - [Vue](#vue)
   * [Tabs Config](#tabs-config)
+  * [Tabs Router Outlet](#tabs-router-outlet)
   * [Overlay Events](#overlay-events)
+  * [Utility Function Types](#utility-function-types)
 - [Browser and Platform Support](#browser-and-platform-support)
 
 
@@ -84,17 +90,31 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
 }
 ```
 
-#### Popover
+#### Input
 
-Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
-
-If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+The `placeholder` property now has a type of `string | undefined` rather than `null | string | undefined`.
 
 #### Modal
 
 Converted `ion-modal` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-modal` in your CSS, you will need to target the `backdrop` or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+#### Popover
+
+Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+#### Searchbar
+
+The `showClearButton` property now defaults to `'always'` for improved usability with screen readers.
+
+To get the old behavior, set `showClearButton` to `'focus'`.
+
+#### Select
+
+The `placeholder` property now has a type of `string | undefined` rather than `null | string | undefined`.
 
 #### Tab Bar
 
@@ -103,6 +123,10 @@ The default iOS tab bar background color has been updated to better reflect the 
 ```css
 var(--ion-tab-bar-background, var(--ion-color-step-50, #f7f7f7));
 ```
+
+#### Textarea
+
+The `placeholder` property now has a type of `string | undefined` rather than `null | string | undefined`.
 
 #### Toast
 
@@ -213,6 +237,47 @@ const routes: Array<RouteRecordRaw> = [
 
 In the example above `tabs/tab1/view` has been rewritten has a sibling route to `tabs/tab1`. The `path` field now includes the `tab1` prefix.
 
+#### Tabs Router Outlet
+
+Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previously one was generated automatically, but this made it difficult for developers to access the properties on the generated `ion-router-outlet`.
+
+**Old**
+```html
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    ...
+  </ion-tab-bar>
+</ion-tabs>
+
+<script>
+  import { IonTabs, IonTabBar } from '@ionic/vue';
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    components: { IonTabs, IonTabBar }
+  });
+</script>
+```
+
+**New**
+```html
+<ion-tabs>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tab-bar slot="bottom">
+    ...
+  </ion-tab-bar>
+</ion-tabs>
+
+<script>
+  import { IonTabs, IonTabBar, IonRouterOutlet } from '@ionic/vue';
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    components: { IonTabs, IonTabBar, IonRouterOutlet }
+  });
+</script>
+```
+
 #### Overlay Events
 
 Overlay events `onWillPresent`, `onDidPresent`, `onWillDismiss`, and `onDidDismiss` have been removed in favor of `willPresent`, `didPresent`, `willDismiss`, and `didDismiss`.
@@ -244,6 +309,12 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
   ...
 </ion-modal>
 ```
+
+#### Utility Function Types
+
+- The `IonRouter` type for `useIonRouter` has been renamed to `UseIonRouterResult`.
+
+- The `IonKeyboardRef` type for `useKeyboard` has been renamed to `UseKeyboardResult`.
 
 
 ### Browser and Platform Support

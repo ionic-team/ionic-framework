@@ -1,5 +1,4 @@
 import { h, defineComponent, VNode } from 'vue';
-import { IonRouterOutlet } from './IonRouterOutlet';
 
 const WILL_CHANGE = 'ionTabsWillChange';
 const DID_CHANGE = 'ionTabsDidChange';
@@ -10,6 +9,20 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
   render() {
     const { $slots: slots, $emit } = this;
     const slottedContent = slots.default && slots.default();
+    let routerOutlet;
+
+    /**
+     * Developers must pass an ion-router-outlet
+     * inside of ion-tabs.
+     */
+    if (slottedContent && slottedContent.length > 0) {
+      routerOutlet = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'IonRouterOutlet');
+    }
+
+    if (!routerOutlet) {
+      throw new Error('IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
+    }
+
     let childrenToRender = [
       h('div', {
         class: 'tabs-inner',
@@ -18,9 +31,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
             'flex': '1',
             'contain': 'layout size style'
         }
-      }, [
-        h(IonRouterOutlet)
-      ])
+      }, routerOutlet)
     ];
 
     /**
@@ -29,7 +40,16 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
      * not show above the tab content.
      */
     if (slottedContent && slottedContent.length > 0) {
-      const slottedTabBar = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'IonTabBar');
+      /**
+       * Render all content except for router outlet
+       * since that needs to be inside of `.tabs-inner`.
+       */
+      const filteredContent = slottedContent.filter((child: VNode) => (
+        !child.type ||
+        (child.type && (child.type as any).name !== 'IonRouterOutlet')
+      ));
+
+      const slottedTabBar = filteredContent.find((child: VNode) => child.type && (child.type as any).name === 'IonTabBar');
       const hasTopSlotTabBar = slottedTabBar && slottedTabBar.props?.slot === 'top';
 
       if (slottedTabBar) {
@@ -49,13 +69,13 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
 
       if (hasTopSlotTabBar) {
         childrenToRender = [
-          ...slottedContent,
+          ...filteredContent,
           ...childrenToRender
         ];
       } else {
         childrenToRender = [
           ...childrenToRender,
-          ...slottedContent
+          ...filteredContent
         ]
       }
     }

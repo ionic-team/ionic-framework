@@ -10,10 +10,11 @@ const App = {
 describe('ion-tab-bar', () => {
   it('should render in the top slot', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar },
+      components: { IonPage, IonTabs, IonTabBar, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="top"></ion-tab-bar>
           </ion-tabs>
         </ion-page>
@@ -42,10 +43,11 @@ describe('ion-tab-bar', () => {
 
   it('should render in the bottom slot', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar },
+      components: { IonPage, IonTabs, IonTabBar, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="bottom"></ion-tab-bar>
           </ion-tabs>
         </ion-page>
@@ -74,10 +76,11 @@ describe('ion-tab-bar', () => {
 
   it('should render in the default slot', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar },
+      components: { IonPage, IonTabs, IonTabBar, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar></ion-tab-bar>
           </ion-tabs>
         </ion-page>
@@ -106,10 +109,11 @@ describe('ion-tab-bar', () => {
   // Verifies the fix for https://github.com/ionic-team/ionic-framework/issues/22642
   it('should not fail on non tab button elements', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar },
+      components: { IonPage, IonTabs, IonTabBar, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar>
               <!-- my comment -->
             </ion-tab-bar>

@@ -18,6 +18,13 @@ export class AccordionGroup implements ComponentInterface {
   @Element() el!: HTMLIonAccordionGroupElement;
 
   /**
+   * If `true`, all accordions inside of the
+   * accordion group will animate when expanding
+   * or collapsing.
+   */
+  @Prop() animated = true;
+
+  /**
    * If `true`, the accordion group can have multiple
    * accordion components expanded at the same time.
    */

@@ -7,7 +7,7 @@ it('should properly set readonly on child accordions', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group>
+      <ion-accordion-group animated="false">
         <ion-accordion>
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -36,7 +36,7 @@ it('should properly set disabled on child accordions', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group>
+      <ion-accordion-group animated="false">
         <ion-accordion>
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -65,7 +65,7 @@ it('should open correct accordions', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group>
+      <ion-accordion-group animated="false">
         <ion-accordion value="first">
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -102,7 +102,7 @@ it('should not open more than one accordion when multiple="false"', async () => 
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group>
+      <ion-accordion-group animated="false">
         <ion-accordion value="first">
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -138,7 +138,7 @@ it('should open more than one accordion when multiple="true"', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group multiple="true">
+      <ion-accordion-group multiple="true" animated="false">
         <ion-accordion value="first">
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -174,7 +174,7 @@ it('should render with accordion open', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group value="first">
+      <ion-accordion-group value="first" animated="false">
         <ion-accordion value="first">
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -203,7 +203,7 @@ it('should accept a string when multiple="true"', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group multiple="true" value="first">
+      <ion-accordion-group multiple="true" value="first" animated="false">
         <ion-accordion value="first">
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>
@@ -232,7 +232,7 @@ it('should set default values if not provided', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
-      <ion-accordion-group>
+      <ion-accordion-group animated="false">
         <ion-accordion>
           <ion-item slot="header">Label</ion-item>
           <div slot="content">Content</div>

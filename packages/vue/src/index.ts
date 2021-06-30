@@ -2,6 +2,12 @@ import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronDown, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 export * from './proxies';
+
+export { UseBackButtonResult, useBackButton } from './hooks/back-button';
+export { UseKeyboardResult, useKeyboard } from './hooks/keyboard';
+export { onIonViewWillEnter, onIonViewDidEnter, onIonViewWillLeave, onIonViewDidLeave } from './hooks/lifecycle';
+export { UseIonRouterResult, useIonRouter } from './hooks/router';
+
 export { IonicVue } from './ionic-vue';
 
 export { IonBackButton } from './components/IonBackButton';
@@ -17,18 +23,6 @@ export { IonPopover } from './components/IonPopover';
 export { IonModal } from './components/IonModal';
 
 export * from './components/Overlays';
-
-export {
-  IonKeyboardRef,
-  IonRouter,
-  useBackButton,
-  useIonRouter,
-  useKeyboard,
-  onIonViewWillEnter,
-  onIonViewDidEnter,
-  onIonViewWillLeave,
-  onIonViewDidLeave
-} from './hooks';
 
 export {
   modalController,
