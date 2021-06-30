@@ -425,7 +425,6 @@ export class Segment implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        aria-disabled={this.disabled ? 'true' : null}
         role="tablist"
         onClick={this.onClick}
         class={createColorClasses(this.color, {

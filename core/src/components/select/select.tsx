@@ -482,7 +482,7 @@ export class Select implements ComponentInterface {
         <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
-        <label id={labelId} htmlFor={inputId}>
+        <label id={labelId}>
           {displayLabel}
         </label>
         <button

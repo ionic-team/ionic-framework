@@ -190,7 +190,7 @@ export class Toggle implements ComponentInterface {
         onClick={this.onClick}
         aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
-        aria-disabled={disabled ? 'true' : null}
+        aria-hidden={disabled ? 'true' : null}
         role="switch"
         class={createColorClasses(color, {
           [mode]: true,
@@ -213,7 +213,6 @@ export class Toggle implements ComponentInterface {
           type="checkbox"
           role="switch"
           aria-checked={`${checked}`}
-          aria-disabled={disabled ? 'true' : null}
           disabled={disabled}
           id={inputId}
           onFocus={() => this.onFocus()}
