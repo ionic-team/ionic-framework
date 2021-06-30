@@ -1,10 +1,6 @@
 @import "./select-popover";
 @import "./select-popover.md.vars";
 
-ion-list {
-  @include padding(0);
-}
-
 ion-list ion-radio {
   opacity: 0;
 }
