@@ -6,7 +6,7 @@ import { Components } from "@ionic/core";
 export declare interface IonPopover extends Components.IonPopover {
 }
 @ProxyCmp({ inputs: ["alignment", "animated", "arrow", "backdropDismiss", "cssClass", "dismissOnSelect", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent", "trigger", "triggerAction", "reference", "size"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"] })
-@Component({ selector: "ion-popover", changeDetection: ChangeDetectionStrategy.OnPush, template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`, inputs: ["alignment", "animated", "arrow", "backdropDismiss", "cssClass", "dismissOnSelect", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent", "trigger", "triggerAction", "reference", "size"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"] })
+@Component({ selector: "ion-popover", changeDetection: ChangeDetectionStrategy.OnPush, template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`, inputs: ["alignment", "animated", "arrow", "backdropDismiss", "cssClass", "dismissOnSelect", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent", "trigger", "triggerAction", "reference", "size"] })
 export class IonPopover {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 

@@ -6,7 +6,7 @@ import { Components } from "@ionic/core";
 export declare interface IonModal extends Components.IonModal {
 }
 @ProxyCmp({ inputs: ["animated", "backdropDismiss", "cssClass", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "presentingElement", "showBackdrop", "swipeToClose", "translucent", "trigger"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"] })
-@Component({ selector: "ion-modal", changeDetection: ChangeDetectionStrategy.OnPush, template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`, inputs: ["animated", "backdropDismiss", "cssClass", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "presentingElement", "showBackdrop", "swipeToClose", "translucent", "trigger"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"] })
+@Component({ selector: "ion-modal", changeDetection: ChangeDetectionStrategy.OnPush, template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`, inputs: ["animated", "backdropDismiss", "cssClass", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "presentingElement", "showBackdrop", "swipeToClose", "translucent", "trigger"] })
 export class IonModal {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
