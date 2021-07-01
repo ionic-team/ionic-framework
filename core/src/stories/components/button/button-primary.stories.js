@@ -13,7 +13,7 @@ const TemplatePrimary = ({ color, disabled, expand, size, slot }) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-          <ion-button ds-name="primary" .color=${color} ?disabled=${disabled} .expand=${expand} ds-size=${size}>${slot}</ion-button>
+          <ion-button ds-name="primary" .color="${color}" ?disabled=${disabled} .expand=${expand} ds-size=${size}>${slot}</ion-button>
         <!-- component -->
 
       </div>

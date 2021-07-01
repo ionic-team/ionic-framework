@@ -1,19 +1,20 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Chip',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ label }) => {
+const TemplateDefault = ({ slot, color }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-chip>
-          <ion-label>${label}</ion-label>
+        <ion-chip .color=${color}>
+          <ion-label>${slot}</ion-label>
         </ion-chip>
         <!-- component -->
 
@@ -30,12 +31,22 @@ Chip.parameters = {
   },
 }
 Chip.argTypes = {
-  label: {
+  color: {
+    options: medsoftColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  slot: {
     control: { type: 'text' },
     defaultValue: 'chip',
-    description: "Digite algo!",
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type: { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'button' },
     },
   },
 };

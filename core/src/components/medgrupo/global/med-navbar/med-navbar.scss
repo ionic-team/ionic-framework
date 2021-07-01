@@ -1,24 +1,7 @@
 @import "../../../../../med-components/abstracts";
 
 :host(.med-navbar) {
-  // #{$med-spacing-squish-xs};
-  --padding: var(--ion-safe-area-top, 0) #{$med-spacing-inset-sm} 0 #{$med-spacing-inset-sm};
-  --background: #{$med-color-neutral-dark-prime};
-
-  --title-color: #{$med-color-neutral-light-prime};
-  --title-font-size: #{$med-font-size-xs};
-  --title-line-height: #{$med-line-height-compressed};
-  --title-font-weight: #{$med-font-weight-semibold};
-
-  --subtitle-color: #{$med-color-neutral-light-prime};
-  --subtitle-font-size: #{$med-font-size-xxxs};
-  --subtitle-line-height: #{line-height($med-font-size-xxxs)};
-  --subtitle-font-weight: #{$med-font-weight-semibold};
-
-  --center-padding: #{$med-spacing-stack-xxxs};
-
-  --slotted-color: #{$med-color-neutral-light-prime};
-  --slotted-spacing: #{$med-spacing-inline-base};
+  --background: var(--surface, #{medsoft-color(neutral-dark, prime)});
 
   display: block;
 
@@ -26,9 +9,7 @@
     background: var(--background);
 
     &__container {
-      padding: var(--padding);
-      //padding-top: var(--ion-safe-area-top, 0);
-
+      padding: var(--ion-safe-area-top, 0) #{$med-spacing-inset-sm} 0 #{$med-spacing-inset-sm};
       position: relative;
       display: flex;
       align-items: center;
@@ -58,8 +39,8 @@
     padding-right: var(--padding-right);
     // setado via tsx //
 
-    padding-top: var(--center-padding);
-    padding-bottom: var(--center-padding);
+    padding-top: $med-spacing-stack-xxxs;
+    padding-bottom: $med-spacing-stack-xxxs;
 
     display: flex;
     align-items: center;
@@ -72,61 +53,6 @@
 }
 
 //
-// text-transform
-//
-
-:host([text-initial]) {
-  .center {
-    text-transform: initial;
-  }
-}
-
-//
-// secondary
-//
-:host([ds-name="secondary"].med-navbar) {
-  --background:  #{$med-color-neutral-light-prime};
-}
-
-:host-context(.dark-mode):host([ds-name="secondary"].med-navbar) ::slotted([slot="title"]) {
-  color: #{$med-color-neutral-dark-prime};
-}
-
-:host-context(.dark-mode):host([ds-name="secondary"].med-navbar) ::slotted([slot="subtitle"]) {
-  color: #{$med-color-neutral-dark-prime};
-}
-
-:host([ds-name="transparent"].med-navbar) {
-  --background: transparent;
-}
-
-//
-// transparent dark
-//
-:host-context(.dark-mode):host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted([slot="title"]),
-:host-context(.light-mode):host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted([slot="title"]) {
-  color: #{$med-color-neutral-dark-prime};
-}
-
-:host-context(.dark-mode):host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted([slot="subtitle"]),
-:host-context(.light-mode):host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted([slot="subtitle"])  {
-  color: #{$med-color-neutral-dark-prime};
-}
-
-//
-// transparent light
-//
-:host-context(.dark-mode):host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted([slot="title"]),
-:host-context(.light-mode):host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted([slot="title"]) {
-  color: #{$med-color-neutral-light-prime};
-}
-
-:host-context(.dark-mode):host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted([slot="subtitle"]),
-:host-context(.light-mode):host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted([slot="subtitle"]) {
-  color: #{$med-color-neutral-light-prime};
-}
-
-//
 // slotted
 //
 
@@ -136,7 +62,7 @@
 }
 
 :host(.med-navbar) ::slotted([slot="left"]) {
-  margin-right: var(--slotted-spacing) !important;
+  margin-right: $med-spacing-inline-base !important;
 
   display: flex;
   align-items: center;
@@ -144,25 +70,25 @@
 }
 
 :host(.med-navbar) ::slotted([slot="title"]) {
-  color: var(--title-color);
-  font-size: var(--title-font-size) !important;
-  font-weight: var(--title-font-weight) !important;
-  line-height: var(--title-line-height) !important;
+  color: #{medsoft-color(neutral-light, prime)};
+  font-size: $med-font-size-xs !important;
+  font-weight: $med-font-weight-semibold !important;
+  line-height: $med-line-height-compressed !important;
 
   display: block;
 }
 
 :host(.med-navbar) ::slotted([slot="subtitle"]) {
-  color: var(--subtitle-color);
-  font-size: var(--subtitle-font-size) !important;
-  font-weight: var(--subtitle-font-weight) !important;
-  line-height: var(--subtitle-line-height) !important;
+  color: #{medsoft-color(neutral-light, prime)};
+  font-size: $med-font-size-xxxs !important;
+  font-weight: $med-font-weight-semibold !important;
+  line-height: line-height($med-font-size-xxxs) !important;
 
   display: block;
 }
 
 :host(.med-navbar) ::slotted([slot="right"]) {
-  margin-left: var(--slotted-spacing) !important;
+  margin-left: $med-spacing-inline-base !important;
 
   display: flex;
   align-items: center;
@@ -170,27 +96,38 @@
 }
 
 //
-// light-mode
+// secondary
 //
 
-:host-context(.light-mode) {
-  --background: #{$med-color-neutral-light-prime};
-  --title-color: #{$med-color-neutral-dark-prime};
-  --subtitle-color: #{$med-color-neutral-dark-prime};
+:host([ds-name="secondary"].med-navbar) {
+  --background: #{medsoft-color(neutral-light, prime)};
+}
+
+:host([ds-name="secondary"].med-navbar) ::slotted([slot="title"]),
+:host([ds-name="secondary"].med-navbar) ::slotted([slot="subtitle"]),
+:host([ds-name="secondary"].med-navbar) ::slotted(ion-button),
+:host([ds-name="secondary"].med-navbar) ::slotted(ion-button) {
+  color: #{medsoft-color(neutral-dark, prime)};
 }
 
 //
-// platforms
+// transparent
 //
 
-:host-context(.platform-ios) {
-  .header {
-    padding-top: $med-iphone-top + $med-spacing-stack-xxxs !important;
-  }
+:host([ds-name="transparent"].med-navbar) .header {
+  background: transparent;
 }
 
-:host-context(.platform-macintel) {
-  .header {
-    padding-top: $med-mac-top + $med-spacing-stack-xxxs !important;
-  }
+:host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted([slot="title"]),
+:host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted([slot="subtitle"]),
+:host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted(ion-button),
+:host([ds-name="transparent"][ds-theme="dark"].med-navbar) ::slotted(ion-button) {
+  color: #{medsoft-color(neutral-dark, prime)};
+}
+
+:host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted([slot="title"]),
+:host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted([slot="subtitle"]),
+:host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted(ion-button),
+:host([ds-name="transparent"][ds-theme="light"].med-navbar) ::slotted(ion-button) {
+  color: #{medsoft-color(neutral-light, prime)};
 }

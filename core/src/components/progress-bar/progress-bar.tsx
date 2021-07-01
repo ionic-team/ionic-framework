@@ -1,10 +1,10 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h, Element } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -23,6 +23,8 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
   @Prop() percentage = false;
 
   /**
@@ -71,7 +73,8 @@ export class ProgressBar implements ComponentInterface {
           [`progress-bar-${type}`]: true,
           'percentage': percentage,
           'progress-paused': paused,
-          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
+          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
+          'in-med-header': hostContext('med-header', this.el),
         })}
       >
         {type === 'indeterminate'

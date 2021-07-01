@@ -1,18 +1,16 @@
 @import "../../../../../med-components/abstracts";
 
 :host {
-  --spacing: #{$med-spacing-inset-xs};
-  --background: #{$med-color-neutral-dark-40};
-  --shadow: #{$med-shadow-level-1};
-  --min-height: 48px;
-  --height: auto;
+  --background: var(--surface, #{medsoft-color(neutral-dark, 40)});
 
-  padding: var(--spacing);
+  padding: $med-spacing-squish-xs;
   background: var(--background);
-  min-height: var(--min-height);
-  height: var(--height);
-  box-shadow: var(--shadow);
+  min-height: 48px;
+  height: auto;
+  box-shadow: $med-shadow-level-1;
   display: block;
+  display: flex;
+  align-items: center;
 }
 
 .container {
@@ -36,12 +34,4 @@
   margin: 0 !important;
   padding: 0 !important;
   list-style: none;
-}
-
-//
-// light-mode
-//
-
-:host-context(.light-mode) {
-  --background: #{$med-color-neutral-light-prime};
 }
