@@ -42,9 +42,11 @@
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">
-  <ion-content>
-    <ion-datetime></ion-datetime>
-  </ion-content>
+  <ng-template>
+    <ion-content>
+      <ion-datetime></ion-datetime>
+    </ion-content>
+  </ng-template>
 </ion-modal>
 
 ```javascript
