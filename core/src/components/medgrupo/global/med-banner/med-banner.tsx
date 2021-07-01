@@ -32,7 +32,7 @@ export class MedBanner {
               <slot name="imagem"></slot>
             </div>
             <div class="content__right">
-              <h4 class="header"> {header}</h4>
+              <h4 class="header">{header}</h4>
               <slot name="content"></slot>
             </div>
           </div>

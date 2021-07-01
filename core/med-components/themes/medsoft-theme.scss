@@ -3,8 +3,8 @@
 @import "../mixins";
 
 :root .dark-mode {
-  --on-surface: #fff;
-  --surface: #121212;
+  /* --on-surface: #fff;
+  --surface: #121212; */
 
   ion-content {
     --background: #141414;
@@ -12,8 +12,8 @@
 }
 
 :root .light-mode {
-  --on-surface: #121212;
-  --surface: #fff;
+  /* --on-surface: #121212;
+  --surface: #fff; */
 
   ion-content {
     --background: #fafafa;
