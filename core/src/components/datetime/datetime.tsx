@@ -87,10 +87,10 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-  private destroyCalendarIO?: Function;
-  private destroyKeyboardMO?: Function;
-  private destroyTimeScroll?: Function;
-  private destroyMonthAndYearScroll?: Function;
+  private destroyCalendarIO?: () => void;
+  private destroyKeyboardMO?: () => void;
+  private destroyTimeScroll?: () => void;
+  private destroyMonthAndYearScroll?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
@@ -765,10 +765,21 @@ export class Datetime implements ComponentInterface {
   private destroyListeners = () => {
     const { destroyCalendarIO, destroyKeyboardMO, destroyTimeScroll, destroyMonthAndYearScroll } = this;
 
-    destroyCalendarIO && destroyCalendarIO();
-    destroyKeyboardMO && destroyKeyboardMO();
-    destroyTimeScroll && destroyTimeScroll();
-    destroyMonthAndYearScroll && destroyMonthAndYearScroll();
+    if (destroyCalendarIO !== undefined) {
+      destroyCalendarIO();
+    }
+
+    if (destroyKeyboardMO !== undefined) {
+      destroyKeyboardMO();
+    }
+
+    if (destroyTimeScroll !== undefined) {
+      destroyTimeScroll();
+    }
+
+    if (destroyMonthAndYearScroll !== undefined) {
+      destroyMonthAndYearScroll();
+    }
   }
 
   componentDidLoad() {
