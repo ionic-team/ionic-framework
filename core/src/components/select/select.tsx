@@ -431,6 +431,10 @@ export class Select implements ComponentInterface {
     this.ionBlur.emit();
   }
 
+  private onClickLabel = (ev: UIEvent) => {
+    ev.preventDefault();
+  }
+
   render() {
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
     const mode = getIonMode(this);
@@ -482,7 +486,7 @@ export class Select implements ComponentInterface {
         <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
-        <label id={labelId} htmlFor={inputId}>
+        <label id={labelId} htmlFor={inputId} onClick={this.onClickLabel}>
           {displayLabel}
         </label>
         <button
