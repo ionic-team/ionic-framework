@@ -37,8 +37,18 @@ const beforeTransition = (opts: TransitionOptions) => {
     enteringEl.classList.remove('can-go-back');
   }
   setPageHidden(enteringEl, false);
+
+  /**
+   * When transitioning, the page should not
+   * respond to click events. This resolves small
+   * issues like users double tapping the ion-back-button.
+   * These pointer events are removed in `afterTransition`.
+   */
+  enteringEl.style.setProperty('pointer-events', 'none');
+
   if (leavingEl) {
     setPageHidden(leavingEl, false);
+    leavingEl.style.setProperty('pointer-events', 'none');
   }
 };
 
@@ -56,8 +66,10 @@ const afterTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   enteringEl.classList.remove('ion-page-invisible');
+  enteringEl.style.removeProperty('pointer-events');
   if (leavingEl !== undefined) {
     leavingEl.classList.remove('ion-page-invisible');
+    leavingEl.style.removeProperty('pointer-events');
   }
 };
 
