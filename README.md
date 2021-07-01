@@ -5,6 +5,9 @@ build top quality native and progressive web apps with web technologies.
 
 Ionic Framework is based on [Web Components](https://www.webcomponents.org/introduction) and comes with many significant performance, usability, and feature improvements over the past versions.
 
+## Looking for the Ionic Framework v6 beta?
+
+[Click here to get started!](https://github.com/ionic-team/ionic-framework/blob/next/BETA.md)
 
 ### Packages
 
