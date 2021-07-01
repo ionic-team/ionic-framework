@@ -10,17 +10,21 @@ import { createColorClasses } from '../../../../utils/theme';
 export class MedAccordion {
 
   @Prop() color?: Color;
+  @Prop() dsSize?: 'full';
 
   render() {
-    const {color} = this;
+    const {color, dsSize} = this;
     return (
-      <Host class={createColorClasses(color, {null:true})}>
-        <slot name="avatar"></slot>
+      <Host class={createColorClasses(color, {
+        null:true,
+        'med-accordion--full': dsSize !== undefined,
+        })}>
+        <slot name="image"></slot>
         <div class="content">
           <slot name="title"></slot>
-          <slot name="paragraph"></slot>
+          <slot name="content"></slot>
         </div>
-        <slot name="arrow"></slot>
+        <ion-icon name="med-arrow-up"></ion-icon>
       </Host>
     );
   }

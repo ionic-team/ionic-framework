@@ -1,27 +1,46 @@
 @import "../../../../../med-components/abstracts";
 
 :host {
-  --color-title: #{medsoft-color(neutral-light, medium)};
-  --color-text: #{medsoft-color(neutral-light, medium)};
+  --color-title: #{medsoft-color(neutral-light, prime)};
+  --color-text: #{medsoft-color(neutral-light, 30)};
 
-  display: flex;
   padding: $med-spacing-squish-md;
   border-radius: $med-border-radius-sm;
+  background: $med-color-neutral-dark-30;
+  display: flex;
   width: 100%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
+  cursor: pointer;
 
-  .title {
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-semibold;
-    line-height: line-height();
-    color: var(--color-title);
+  .content {
+    flex: 1;
+    padding: 0 $med-spacing-inline-xxxs;
   }
 
-  .paragraph {
-    color: var(--color-text);
-    font-size: $med-font-size-xxs;
-    font-weight: $med-font-weight-regular;
+  ion-icon {
+    font-size: 24px;
   }
 }
+
+:host(.med-accordion--full) {
+  border-radius: 0;
+}
+
+::slotted([slot="title"]) {
+  text-align: left;
+  margin: 0 0 $med-spacing-stack-base 0 !important;
+  padding: 0 !important;
+  font-size: $med-font-size-xs;
+  font-weight: $med-font-weight-semibold;
+  line-height: line-height();
+  color: var(--color-title);
+}
+
+::slotted([slot="content"]) {
+  text-align: left;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--color-text);
+  font-size: $med-font-size-xxs;
+  font-weight: $med-font-weight-regular;
+}
+
