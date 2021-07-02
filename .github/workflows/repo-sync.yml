@@ -1,3 +1,4 @@
+name: Repo Sync with Ionic Team
 on:
   schedule:
     - cron: "00 00,12 * * *"

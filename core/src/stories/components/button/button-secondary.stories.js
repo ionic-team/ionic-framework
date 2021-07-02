@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors } from '../../med-colors';
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Button',
@@ -30,7 +30,7 @@ ButtonSecondary.parameters = {
 }
 ButtonSecondary.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do botão.",
     table: {

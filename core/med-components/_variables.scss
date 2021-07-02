@@ -57,6 +57,8 @@ $med-color-aula-light-rgb: 115, 229, 207 !default;
 $med-color-aula-lightest: #b0f5e7 !default;
 $med-color-aula-lightest-rgb: 176, 245, 231 !default;
 
+$med-color-aula-gradient: linear-gradient(to right, $med-color-aula-medium, $med-color-aula-dark) !default;
+
 // material color
 $med-color-material-darkest: #552607 !default;
 $med-color-material-darkest-rgb: 85, 38, 7 !default;
@@ -72,6 +74,8 @@ $med-color-material-light-rgb: 229, 161, 115 !default;
 
 $med-color-material-lightest: #f5ccb0 !default;
 $med-color-material-lightest-rgb: 245, 204, 176 !default;
+
+$med-color-material-gradient: linear-gradient(to right, $med-color-material-medium, $med-color-material-dark) !default;
 
 // questões color
 $med-color-questoes-darkest: #073953 !default;
@@ -89,6 +93,8 @@ $med-color-questoes-light-rgb: 115, 191, 229 !default;
 $med-color-questoes-lightest: #b0def5 !default;
 $med-color-questoes-lightest-rgb: 176, 222, 245 !default;
 
+$med-color-questoes-gradient: linear-gradient(to right, $med-color-questoes-medium, $med-color-questoes-dark) !default;
+
 // revalida color
 $med-color-revalida-darkest: #53071e !default;
 $med-color-revalida-darkest-rgb: 83, 7, 30 !default;
@@ -105,6 +111,8 @@ $med-color-revalida-light-rgb: 229, 115, 149 !default;
 $med-color-revalida-lightest: #f5b0c5 !default;
 $med-color-revalida-lightest-rgb: 245, 176, 197 !default;
 
+$med-color-revalida-gradient: linear-gradient(to right, $med-color-revalida-medium, $med-color-revalida-dark) !default;
+
 // provas & checklist color
 $med-color-provaschecklist-darkest: #2b0755 !default;
 $med-color-provaschecklist-darkest-rgb: 43, 7, 85 !default;
@@ -120,6 +128,8 @@ $med-color-provaschecklist-light-rgb: 168, 115, 229 !default;
 
 $med-color-provaschecklist-lightest: #d1b2f5 !default;
 $med-color-provaschecklist-lightest-rgb: 209, 178, 245 !default;
+
+$med-color-provaschecklist-gradient: linear-gradient(to right, $med-color-provaschecklist-medium, $med-color-provaschecklist-dark) !default;
 
 // neutral dark color
 $med-color-neutral-dark-prime: #141414 !default;
@@ -153,7 +163,8 @@ $med-color-neutral-light-20-rgb: 194, 194, 194 !default;
 $med-color-neutral-light-10: #adadad !default;
 $med-color-neutral-light-10-rgb: 173, 173, 173 !default;
 
-$med-color-neutral-gradient: linear-gradient(to right, $med-color-neutral-dark-prime, $med-color-neutral-light-prime) !default;
+$med-color-neutral-light-gradient: linear-gradient(to right, $med-color-neutral-dark-prime, $med-color-neutral-light-prime) !default;
+$med-color-neutral-dark-gradient: linear-gradient(to right, $med-color-neutral-light-prime, $med-color-neutral-dark-prime) !default;
 
 // feedback warning color
 $med-color-feedback-warning-darkest: #504606 !default;
@@ -171,6 +182,8 @@ $med-color-feedback-warning-light-rgb: 229, 214, 115 !default;
 $med-color-feedback-warning-lightest: #f5ecb0 !default;
 $med-color-feedback-warning-lightest-rgb: 245, 236, 176 !default;
 
+$med-color-feedback-warning-gradient: linear-gradient(to right, $med-color-feedback-warning-medium, $med-color-feedback-warning-dark) !default;
+
 // feedback warning color
 $med-color-feedback-error-darkest: #520c07 !default;
 $med-color-feedback-error-darkest-rgb: 82, 12, 7 !default;
@@ -187,6 +200,8 @@ $med-color-feedback-error-light-rgb: 229, 122, 115 !default;
 $med-color-feedback-error-lightest: #f5b5b0 !default;
 $med-color-feedback-error-lightest-rgb: 245, 181, 176 !default;
 
+$med-color-feedback-error-gradient: linear-gradient(to right, $med-color-feedback-error-medium, $med-color-feedback-error-dark) !default;
+
 // feedback success color
 $med-color-feedback-success-darkest: #065010 !default;
 $med-color-feedback-success-darkest-rgb: 6, 80, 16 !default;
@@ -202,6 +217,8 @@ $med-color-feedback-success-light-rgb: 115, 229, 130 !default;
 
 $med-color-feedback-success-lightest: #b0f5b9 !default;
 $med-color-feedback-success-lightest-rgb: 176, 245, 185 !default;
+
+$med-color-feedback-success-gradient: linear-gradient(to right, $med-color-feedback-success-medium, $med-color-feedback-success-dark) !default;
 
 //
 // tipografia
@@ -373,3 +390,109 @@ $med-shadow-level-7: 0 9px 12px rgba(0, 0, 0, 0.14), 0 3px 16px rgba(0, 0, 0, 0.
 $med-shadow-level-8: 0 12px 17px rgba(0, 0, 0, 0.14), 0 5px 22px rgba(0, 0, 0, 0.12), 0 7px 8px rgba(0, 0, 0, 0.2) !default;
 $med-shadow-level-9: 0 16px 24px rgba(0, 0, 0, 0.14), 0 6px 30px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.2) !default;
 $med-shadow-level-10: 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12), 0 11px 15px rgba(0, 0, 0, 0.2) !default;
+
+//
+// cores
+//
+
+$medsoft-colors: (
+  brand-primary: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-brand-primary-darkest,
+    dark:      $med-color-brand-primary-dark,
+    medium:    $med-color-brand-primary-medium,
+    light:     $med-color-brand-primary-light,
+    lightest:  $med-color-brand-primary-lightest,
+    gradient:  linear-gradient(to right, $med-color-brand-primary-medium, $med-color-brand-primary-dark)
+  ),
+  aula: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-aula-darkest,
+    dark:      $med-color-aula-dark,
+    medium:    $med-color-aula-medium,
+    light:     $med-color-aula-light,
+    lightest:  $med-color-aula-lightest,
+    gradient:  linear-gradient(to right, $med-color-aula-medium, $med-color-aula-dark)
+  ),
+  material: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-material-darkest,
+    dark:      $med-color-material-dark,
+    medium:    $med-color-material-medium,
+    light:     $med-color-material-light,
+    lightest:  $med-color-material-lightest,
+    gradient:  linear-gradient(to right, $med-color-material-medium, $med-color-material-dark)
+  ),
+  questoes: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-questoes-darkest,
+    dark:      $med-color-questoes-dark,
+    medium:    $med-color-questoes-medium,
+    light:     $med-color-questoes-light,
+    lightest:  $med-color-questoes-lightest,
+    gradient:  linear-gradient(to right, $med-color-questoes-medium, $med-color-questoes-dark)
+  ),
+  revalida: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-revalida-darkest,
+    dark:      $med-color-revalida-dark,
+    medium:    $med-color-revalida-medium,
+    light:     $med-color-revalida-light,
+    lightest:  $med-color-revalida-lightest,
+    gradient:  linear-gradient(to right, $med-color-revalida-medium, $med-color-revalida-dark)
+  ),
+  provaschecklist: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-provaschecklist-darkest,
+    dark:      $med-color-provaschecklist-dark,
+    medium:    $med-color-provaschecklist-medium,
+    light:     $med-color-provaschecklist-light,
+    lightest:  $med-color-provaschecklist-lightest,
+    gradient:  linear-gradient(to right, $med-color-provaschecklist-medium, $med-color-provaschecklist-dark)
+  ),
+  feedback-warning: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-feedback-warning-darkest,
+    dark:      $med-color-feedback-warning-dark,
+    medium:    $med-color-feedback-warning-medium,
+    light:     $med-color-feedback-warning-light,
+    lightest:  $med-color-feedback-warning-lightest,
+    gradient:  linear-gradient(to right, $med-color-feedback-warning-medium, $med-color-feedback-warning-dark)
+  ),
+  feedback-error: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-feedback-error-darkest,
+    dark:      $med-color-feedback-error-dark,
+    medium:    $med-color-feedback-error-medium,
+    light:     $med-color-feedback-error-light,
+    lightest:  $med-color-feedback-error-lightest,
+    gradient:  linear-gradient(to right, $med-color-feedback-error-medium, $med-color-feedback-error-dark)
+  ),
+  feedback-success: (
+    contrast:  $med-color-neutral-light-prime,
+    darkest:   $med-color-feedback-success-darkest,
+    dark:      $med-color-feedback-success-dark,
+    medium:    $med-color-feedback-success-medium,
+    light:     $med-color-feedback-success-light,
+    lightest:  $med-color-feedback-success-lightest,
+    gradient:  linear-gradient(to right, $med-color-feedback-success-medium, $med-color-feedback-success-dark)
+  ),
+  neutral-light: (
+    contrast:  $med-color-neutral-dark-40,
+    prime:     $med-color-neutral-light-prime,
+    40:        $med-color-neutral-light-40,
+    30:        $med-color-neutral-light-30,
+    20:        $med-color-neutral-light-20,
+    10:        $med-color-neutral-light-10,
+    gradient:  linear-gradient(to right, $med-color-neutral-dark-prime, $med-color-neutral-light-prime)
+  ),
+  neutral-dark: (
+    contrast:  $med-color-neutral-light-40,
+    prime:     $med-color-neutral-dark-prime,
+    40:        $med-color-neutral-dark-40,
+    30:        $med-color-neutral-dark-30,
+    20:        $med-color-neutral-dark-20,
+    10:        $med-color-neutral-dark-10,
+    gradient:  linear-gradient(to right, $med-color-neutral-light-prime, $med-color-neutral-dark-prime)
+  )
+);

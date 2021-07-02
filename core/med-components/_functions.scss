@@ -60,3 +60,57 @@
 
   @return $number;
 }
+
+//
+// theme
+//
+
+@function medsoft-current-color($variation, $alpha: null) {
+  $new-variation: null;
+
+  @if $variation == 10 {
+    $new-variation: lightest;
+  } @else if $variation == 20 {
+    $new-variation: light;
+  } @else if $variation == 30 {
+    $new-variation: dark;
+  } @else if $variation == 40 {
+    $new-variation: darkest;
+  } @else if $variation == prime {
+    $new-variation: prime;
+  }
+
+  @if $alpha == null {
+    @if $variation != 10 and $variation != 20 and $variation != 30 and $variation != 40 and $variation != prime {
+      @return var(--med-color-#{$variation});
+    } @else {
+      @return var(--med-color-#{$new-variation});
+    }
+  }
+
+  @if $alpha != null {
+    @if $variation != 10 and $variation != 20 and $variation != 30 and $variation != 40 and $variation != prime {
+      @return rgba(var(--med-color-#{$variation}-rgb), #{$alpha});
+    } @else {
+      @return rgba(var(--med-color-#{$new-variation}-rgb), #{$alpha});
+    }
+  }
+}
+
+@function medsoft-color($name, $variation, $alpha: null, $rgb: null) {
+  $values: map-get($medsoft-colors, $name);
+  $value: map-get($values, $variation);
+  $variable: --med-color-#{$name}-#{$variation};
+
+  @if ($alpha) {
+    $value: color-to-rgb-list($value);
+    @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
+
+  @if ($rgb) {
+    $value: color-to-rgb-list($value);
+    $variable: #{$variable}-rgb;
+  }
+
+  @return var(#{$variable}, $value);
+}

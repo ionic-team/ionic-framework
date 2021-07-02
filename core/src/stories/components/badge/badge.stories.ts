@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors } from '../../med-colors'
+import { medsoftColors } from '../../med-colors'
 
 export default {
   title: 'Components/Global/Badge',
@@ -30,7 +30,7 @@ Badge.parameters = {
 }
 Badge.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do badge.",
     table: {
@@ -48,16 +48,16 @@ Badge.argTypes = {
     },
   },
   size: {
-    options: [undefined, 'sm', 'md', 'lg'],
+    options: [undefined, 'xs', 'sm', 'md', 'lg'],
     control: { type: 'radio'},
     description: "Define o tamanho do badge.",
     table: {
-      type:  { summary: 'sm | md | lg' },
+      type:  { summary: 'xs | sm | md | lg' },
       defaultValue: { summary: 'undefined' },
     },
   },
   slot: {
     control: { type: 'text' },
-    defaultValue: 'badge',
+    defaultValue: 'UNIFESP 2020',
   },
 };

@@ -2,9 +2,6 @@
 // themes
 //
 
-@import "../../../../themes/ionic.functions.color.scss";
-@import "../../../../themes/ionic.theme.default";
-
 @import "../../../../../med-components/abstracts";
 
 @include platform('desktop') {

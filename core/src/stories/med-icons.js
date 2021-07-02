@@ -3,6 +3,7 @@ export const medIcons = [
   'med-arrow-right-circle',
   'med-arrow-up',
   'med-arrow-down',
+  'med-add-circle',
   'med-cartao-resposta',
   'med-check-circle',
   'med-chevron-left',

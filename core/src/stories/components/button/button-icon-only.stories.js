@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors } from '../../med-colors';
+import { medsoftColors } from '../../med-colors';
 import { medIcons } from '../../med-icons';
 
 export default {
@@ -11,8 +11,10 @@ export default {
 const TemplateIconOnly = ({ color, disabled, size, platform, iconName }) => {
   if (platform === 'Mobile') {
     document.querySelector('html').classList.remove('plt-desktop');
+    document.querySelector('html').classList.remove('plt-electron');
   } else if (platform === 'Desktop') {
     document.querySelector('html').classList.add('plt-desktop');
+    document.querySelector('html').classList.add('plt-electron');
   }
 
   return html`
@@ -39,7 +41,7 @@ ButtonIconOnly.parameters = {
 }
 ButtonIconOnly.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do botão.",
     table: {

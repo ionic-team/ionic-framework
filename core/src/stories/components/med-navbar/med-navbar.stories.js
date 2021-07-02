@@ -9,8 +9,10 @@ export default {
 const TemplateDefault = ({ platform }) => {
   if (platform === 'Mobile') {
     document.querySelector('html').classList.remove('plt-desktop');
+    document.querySelector('html').classList.remove('plt-electron');
   } else if (platform === 'Desktop') {
     document.querySelector('html').classList.add('plt-desktop');
+    document.querySelector('html').classList.add('plt-electron');
   }
 
   return html `

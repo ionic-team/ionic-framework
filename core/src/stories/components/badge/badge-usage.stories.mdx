@@ -8,22 +8,23 @@ Documentação auxiliar ion-badge: **https://ionicframework.com/docs/api/badge**
 
 ## Propriedades
 
-| Propriedade  | Atributo   | Descrição                                 | Tipo                                                                                               | Default       |
-| ------------ | ---------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------- |
-| **color**    | **color**  | Define a cor do badge baseado nos tokens. | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)**  | **undefined** |
-| **fill**     | **fill**   | Define o comportamento de fill do badge.  | **"outline"**                                                                                      | **undefined** |
-| **dsSize**   | **ds-size**| Define o tamanho do badge.                | **"sm"** \| **"md"** \| **"lg"**                                                                   | **undefined** |
+| Propriedade  | Atributo    | Descrição                                 | Tipo                                                                                               | Default       |
+| ------------ | ----------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------- |
+| **color**    | **color**   | Define a cor do badge baseado nos tokens. | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)**  | **undefined** |
+| **fill**     | **fill**    | Define o comportamento de fill do badge.  | **"outline"**                                                                                      | **undefined** |
+| **dsSize**   | **ds-size** | Define o tamanho do badge.                | **"xs"** \| **"sm"** \| **"md"** \| **"lg"**                                                       | **undefined** |
 
 ## Usage
 
 ```html
 <!-- default -->
 <ion-badge>ion-badge</ion-badge>
-<ion-badge color="primary-medium">ion-badge</ion-badge>
+
+<!-- color -->
+<ion-badge color="brand-primary">ion-badge</ion-badge>
 
 <!-- fill -->
 <ion-badge fill="outline">ion-badge</ion-badge>
-<ion-badge fill="outline" color="primary-medium">ion-badge</ion-badge>
 
 <!-- size -->
 <ion-badge ds-size="md">ion-badge</ion-badge>

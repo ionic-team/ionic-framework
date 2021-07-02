@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors } from '../../med-colors'
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Button',
@@ -13,7 +13,7 @@ const TemplatePrimary = ({ color, disabled, expand, size, slot }) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-          <ion-button ds-name="primary" .color=${color} ?disabled=${disabled} .expand=${expand} ds-size=${size}>${slot}</ion-button>
+          <ion-button ds-name="primary" .color="${color}" ?disabled=${disabled} .expand=${expand} ds-size=${size}>${slot}</ion-button>
         <!-- component -->
 
       </div>
@@ -30,7 +30,7 @@ ButtonPrimary.parameters = {
 }
 ButtonPrimary.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do botão.",
     table: {

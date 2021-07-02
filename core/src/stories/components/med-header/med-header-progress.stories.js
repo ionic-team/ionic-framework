@@ -58,7 +58,7 @@ const TemplateProgress = ({ platform }) => {
         </ion-button>
       </med-toolbar>
 
-      <ion-progress-bar value="100" slot="progress"></ion-progress-bar>
+      <ion-progress-bar value="1" slot="progress"></ion-progress-bar>
 
     </med-header>
     <!-- component -->

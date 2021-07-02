@@ -5,23 +5,28 @@
 @import "../../../med-components/abstracts";
 
 :host {
-  --background: #{$med-color-neutral-light-10};
-  --color: #{$med-color-neutral-light-prime};
+  // ionic css custom properties
+  --color: #{medsoft-color(brand-primary, contrast)};
+  --background: #{medsoft-color(brand-primary, medium)};
   --padding-bottom: 0;
-  --padding-end: #{$med-spacing-inline-xxxs};
-  --padding-start: #{$med-spacing-inline-xxxs};
+  --padding-end: #{$med-spacing-inline-base};
+  --padding-start: #{$med-spacing-inline-base};
   --padding-top: 0;
+}
 
+:host {
+  font-size: $med-font-size-xxxs;
+  font-weight: $med-font-weight-medium;
+  line-height: $med-line-height-compressed;
+  border-radius: $med-border-radius-pill;
+  border-color: medsoft-color(brand-primary, medium);
+  border-width: $med-border-width-hairline;
   font-family: inherit;
   min-width: auto;
   border-style: solid;
-
-  font-size: $med-font-size-nano;
-  font-weight: $med-font-weight-regular;
-  line-height: line-height($med-font-size-nano);
-  border-radius: $med-border-radius-pill;
-  border-color: $med-color-neutral-light-10;
-  border-width: $med-border-width-hairline;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
 }
 
 //
@@ -29,7 +34,9 @@
 //
 
 :host(.ion-color) {
-  border-color: current-color(base);
+  background: medsoft-current-color(medium);
+  border-color: medsoft-current-color(medium);
+  color: medsoft-current-color(contrast);
 }
 
 //
@@ -39,24 +46,26 @@
 :host([fill="outline"]){
   background: transparent;
   border-style: solid;
-
-  color: $med-color-neutral-light-10;
-  border-width: $med-border-width-hairline;
+  color: #{medsoft-color(brand-primary, medium)};
 }
 
 // color
 :host(.ion-color[fill="outline"]) {
-  border-color: current-color(base);
-  color: current-color(base);
+  border-color: medsoft-current-color(medium);
+  color: medsoft-current-color(medium);
 }
 
 //
 // sizes
 //
 
-:host([ds-size]) {
-  display: inline-flex;
-  align-items: center;
+:host([ds-size="xs"]) {
+  --padding-start: #{$med-spacing-inline-xxxs};
+  --padding-end: #{$med-spacing-inline-xxxs};
+
+  font-size: $med-font-size-nano;
+  font-weight: $med-font-weight-regular;
+  height: 16px;
 }
 
 :host([ds-size="sm"]) {

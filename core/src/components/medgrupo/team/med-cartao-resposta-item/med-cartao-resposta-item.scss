@@ -70,11 +70,6 @@
     font: inherit;
     cursor: pointer;
   }
-
-  @include breakpoint-up('md') {
-    width: 10%;
-    max-width: 80px;
-  }
 }
 
 slot[name] {

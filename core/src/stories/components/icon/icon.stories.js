@@ -1,5 +1,5 @@
 import { html } from 'lit-html';
-import { medColors } from '../../med-colors'
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Icon',
@@ -47,6 +47,10 @@ const TemplateIcon = ({ color }) => {
           <li class="list__item">
             <ion-icon .color=${color} name="med-arrow-down"></ion-icon>
             <span class="list__span">med-arrow-down</span>
+          </li>
+          <li class="list__item">
+            <ion-icon .color=${color} name="med-add-circle"></ion-icon>
+            <span class="list__span">med-add-circle</span>
           </li>
           <li class="list__item">
             <ion-icon .color=${color} name="med-cartao-resposta"></ion-icon>
@@ -161,7 +165,7 @@ const TemplateIcon = ({ color }) => {
 export const Icon = TemplateIcon.bind({});
 Icon.argTypes = {
   color: {
-    options: medColors,
+    options: medsoftColors,
     control: { type: 'select'},
     description: "Define a cor do badge baseado nos tokens.",
     table: {

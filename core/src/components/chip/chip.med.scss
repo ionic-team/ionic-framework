@@ -1,57 +1,92 @@
 @import "../../../med-components/abstracts";
 
 :host {
-  --spacing: #{$med-spacing-squish-nano};
-  --background: #{$med-color-neutral-light-30};
-  --border-radius: #{$med-border-radius-pill};
-  --border-width: #{$med-border-width-none};
-  --border-color: #{$med-color-neutral-light-30};
-  --font-size: #{$med-font-size-xxs};
-  --font-weight: #{$med-font-weight-regular};
-  --line-height: #{$med-line-height-compressed};
-  --color: #{$med-color-neutral-dark-30};
-  --ripple-color: rgba(#{$med-color-neutral-dark-prime-rgb}, #{$med-opacity-level-half});
+  // ionic css custom properties
+  --color: #{medsoft-color(neutral-dark, 30)};
+  --background: #{medsoft-color(neutral-light, 30)};
+
+  // design system css custom properties
+  --ripple-color: #{medsoft-color(brand-primary, dark, $med-opacity-level-half)};
 
   height: 32px;
-  padding: var(--spacing);
+  padding: $med-spacing-squish-nano;
   background: var(--background);
-  border-radius: var(--border-radius);
-  border-width: var(--border-width);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  line-height: var(--line-height);
+  border-radius: $med-border-radius-pill;
+  font-size: $med-font-size-xxs;
+  font-weight: $med-font-weight-regular;
+  line-height: $med-line-height-compressed;
   color: var(--color);
 }
 
+// activated
+:host(.ion-activated) {
+  --background: #{medsoft-color(neutral-light, 30)};
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(:hover) {
+    --background: #{medsoft-color(neutral-light, 30)};
+  }
+}
+
+// color
+:host(.ion-color)  {
+  background: #{medsoft-current-color(lightest)};
+  color: #{medsoft-current-color(dark)};
+  border-color: #{medsoft-current-color(medium)};
+}
+
+// color hover
+@media (any-hover: hover) {
+  :host(:hover.ion-color:hover) {
+    background: #{medsoft-current-color(lightest)};
+  }
+}
+
+//
+// outline
+//
+
+:host(.chip-outline) {
+  border-color: #{medsoft-color(neutral-light, 30)};
+  color: #{medsoft-color(neutral-dark, 30)};
+}
+
+:host(.chip-outline) ::slotted(ion-icon) {
+  color: #{medsoft-color(neutral-dark, 30)};
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(.chip-outline:hover) {
+    background: transparent !important;
+  }
+}
+
+// color
+:host(.ion-color.chip-outline)  {
+  border-color: #{medsoft-current-color(light)};
+  color: #{medsoft-current-color(dark)};
+  background: transparent;
+}
+
+:host(.ion-color.chip-outline) ::slotted(ion-icon) {
+  color: #{medsoft-current-color(dark)};
+}
+
+// icons
+
 ::slotted(ion-icon:last-child) {
-  margin-inline: #{$med-spacing-inline-nano};
+  margin-inline: $med-spacing-inline-nano;
   margin-right: 0;
 }
 
 ::slotted(ion-icon:first-child) {
-  margin-inline: #{$med-spacing-inline-nano};
+  margin-inline: $med-spacing-inline-nano;
   margin-left: 0;
 }
 
 ::slotted(ion-label) {
-  margin: #{$med-spacing-inline-nano};
-}
-
-:host([outline]) {
-  --background: transparent;
-  --border-width: #{$med-border-width-hairline};
-  border-color: var(--border-color);
-}
-
-:host([color]) {
-  --background: #{$med-color-questoes-lightest};
-  --border-color: #{$med-color-questoes-medium};
-  --color: #{$med-color-questoes-dark};
-}
-
-// Chip: Activated
-// ---------------------------------------------
-
-:host(.ion-activated) {
-  --background: #{rgba($med-color-neutral-light-30, .80)};
+  margin: $med-spacing-inline-nano;
 }

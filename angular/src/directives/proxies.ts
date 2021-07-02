@@ -881,6 +881,17 @@ export class IonToolbar {
     this.el = r.nativeElement;
   }
 }
+export declare interface MedAgrupador extends Components.MedAgrupador {
+}
+@ProxyCmp({ inputs: ["color"] })
+@Component({ selector: "med-agrupador", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color"] })
+export class MedAgrupador {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface MedAlternativas extends Components.MedAlternativas {
 }
 @ProxyCmp({ inputs: ["alternativaSelecionada", "alternativas", "keyAlternativa", "keyEnunciado", "keyImagem", "keyPorcentagem", "mostraResposta", "respostaCorreta"] })

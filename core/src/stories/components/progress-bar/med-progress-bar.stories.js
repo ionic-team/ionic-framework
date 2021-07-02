@@ -1,18 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Progress Bar',
   decorators: [withDesign],
 };
 
-const Template = ({value = 0, percentage}) => {
+const Template = ({value = 0, percentage, color}) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-          <ion-progress-bar value=${value / 100} ?percentage=${percentage}></ion-progress-bar>
+          <ion-progress-bar .color=${color} value=${value / 100} ?percentage=${percentage}></ion-progress-bar>
         <!-- component -->
 
       </div>
@@ -28,6 +29,15 @@ ProgressBar.parameters = {
   },
 }
 ProgressBar.argTypes = {
+  color: {
+    options: medsoftColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   percentage: {
     disabled: false,
     control: { type: 'boolean' },

@@ -30,6 +30,7 @@
   ],
   "exclude": [
     "node_modules",
-    "**/test"
+    "**/test",
+    "src/stories"
   ]
 }

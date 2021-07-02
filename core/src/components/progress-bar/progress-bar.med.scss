@@ -11,51 +11,61 @@
    * @prop --progress-background: Background of the progress bar representing the current value
    * @prop --buffer-background: DEPRECATED, use `--background` instead
    */
+  // ionic css custom properties
   --background: transparent;
-  --progress-background: #{$med-color-questoes-light};
-  --progress-correct-background: #{$med-color-feedback-success-light};
+  --progress-background: #{medsoft-color(questoes, light)};
   --buffer-background: transparent;
-  --height: 8px;
 
-  --percentage-font-size: #{$med-font-size-nano};
-  --percentage-font-weight: #{$med-font-weight-regular};
-  --percentage-line-height: #{$med-line-height-compressed};
-  --percentage-color: #{$med-color-neutral-light-10};
-  --percentage-spacing: #{$med-spacing-inline-xxxs};
+  // design system css custom properties
+  --progress-correct-background: #{medsoft-color(feedback-success, light)};
+  --percentage-color: #{medsoft-color(neutral-light, 10)};
 
   display: block;
   position: relative;
   contain: strict;
   overflow: hidden;
   width: 100%;
-  height: var(--height);
+  height: 8px;
 }
 
 .progress-container {
   display: flex;
 }
 
-:host-context(med-header) .progress-container {
-  --background: #{$med-color-neutral-light-40};
-}
+:host(.in-med-header) {
+  .progress-container {
+    background: medsoft-color(neutral-light, 40);
+  }
 
-:host-context(med-header) .progress__percentage {
-  display: none;
+  .progress {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    &__percentage {
+      display: none;
+    }
+
+    &--correct {
+      background: medsoft-color(questoes, light);
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 }
 
 .progress {
   width: 100%;
   height: 100%;
   border-radius: 100px;
-  height: var(--height);
+  height: 8px;
   background: var(--progress-background);
 
   &__percentage {
-    font-size: var(--percentage-font-size);
-    font-weight: var(--percentage-font-weight);
-    line-height: var(--percentage-line-height);
+    font-size: $med-font-size-nano;
+    font-weight: $med-font-weight-regular;
+    line-height: $med-line-height-compressed;
     color: var(--percentage-color);
-    margin-left: var(--percentage-spacing);
+    margin-left: $med-spacing-inline-xxxs;
     display: none;
   }
 
@@ -68,4 +78,8 @@
   .progress__percentage {
     display: block;
   }
+}
+
+:host(.ion-color) {
+  --progress-background: #{medsoft-current-color(light)};
 }

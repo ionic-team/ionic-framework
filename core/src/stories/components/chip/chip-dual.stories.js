@@ -1,21 +1,22 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 import { medIcons } from '../../med-icons';
+import { medsoftColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Chip',
   decorators: [withDesign],
 };
 
-const TemplateDual = ({ label, iconName }) => {
+const TemplateDual = ({ slot, iconName, color, outline }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-chip>
+        <ion-chip .outline=${outline} .color=${color}>
           <ion-icon name=${iconName}></ion-icon>
-          <ion-label>${label}</ion-label>
+          <ion-label>${slot}</ion-label>
           <ion-icon name=${iconName}></ion-icon>
         </ion-chip>
         <!-- component -->
@@ -33,21 +34,41 @@ ChipDualIcon.parameters = {
   },
 }
 ChipDualIcon.argTypes = {
+  outline: {
+    disabled: false,
+    control: { type: 'boolean' },
+    description: 'Define o estilo transparente com borda.',
+    table: {
+      type:  { summary: 'boolean' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  color: {
+    options: medsoftColors,
+    control: { type: 'select'},
+    description: "Define a cor do botão.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   iconName: {
     options: medIcons,
     control: { type: 'select'},
-    defaultValue: 'med-check-circle',
-    description: "Mude o ícone!",
+    defaultValue: 'med-arrow-left-circle',
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type:  { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'med-arrow-left-circle' },
     },
   },
-  label: {
+  slot: {
     control: { type: 'text' },
     defaultValue: 'chip',
-    description: "Digite algo!",
+    description: '**Atributo utilizado apenas no storybook para visualização.**',
     table: {
-      type: { summary: 'Atributo para testes no storybook apenas' },
+      type:  { summary: ['string'] },
+      defaultValue: { summary: 'button' },
     },
   },
 };
