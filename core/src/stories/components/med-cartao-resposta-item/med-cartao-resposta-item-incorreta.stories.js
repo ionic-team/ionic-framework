@@ -17,7 +17,7 @@ const TemplateIncorreta = () => {
 
         <!-- component -->
         <med-cartao-resposta-lista>
-          <med-cartao-resposta-item color="error-medium">01</med-cartao-resposta-item>
+          <med-cartao-resposta-item color="feedback-error">01</med-cartao-resposta-item>
         </med-cartao-resposta-lista>
         <!-- component -->
 

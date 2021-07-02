@@ -13,7 +13,7 @@ const TemplateCorreta = () => {
 
         <!-- component -->
         <med-cartao-resposta-lista>
-          <med-cartao-resposta-item color="success-medium">01</med-cartao-resposta-item>
+          <med-cartao-resposta-item color="feedback-success">01</med-cartao-resposta-item>
         </med-cartao-resposta-lista>
         <!-- component -->
 

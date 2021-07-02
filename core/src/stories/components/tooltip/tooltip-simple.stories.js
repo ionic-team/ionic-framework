@@ -33,7 +33,7 @@ const TemplateSimple = () => {
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-icon color="dark-30" name="med-information" @click="${createSimplePopover}" style="cursor: pointer;"></ion-icon>
+        <ion-icon name="med-information" @click="${createSimplePopover}" style="cursor: pointer;"></ion-icon>
         <!-- component -->
 
       </div>

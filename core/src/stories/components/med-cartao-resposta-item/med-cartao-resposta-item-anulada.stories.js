@@ -13,7 +13,7 @@ const TemplateAnulada = () => {
 
         <!-- component -->
         <med-cartao-resposta-lista>
-          <med-cartao-resposta-item color="warning-medium" anulada>01</med-cartao-resposta-item>
+          <med-cartao-resposta-item color="feedback-warning" anulada>01</med-cartao-resposta-item>
         </med-cartao-resposta-lista>
         <!-- component -->
 

@@ -14,9 +14,9 @@ const TemplateDefault = () => {
     cartaoResposta = [
       { index: '01'},
       { index: '02', active: true },
-      { index: '03', color: 'success-medium' },
-      { index: '04', color: 'error-medium' },
-      { index: '05', color: 'warning-medium', anulada: true },
+      { index: '03', color: 'feedback-success' },
+      { index: '04', color: 'feedback-error' },
+      { index: '05', color: 'feedback-warning', anulada: true },
       { index: '06', impressa: true },
     ];
 

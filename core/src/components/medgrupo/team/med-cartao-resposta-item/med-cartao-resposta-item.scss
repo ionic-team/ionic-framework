@@ -108,7 +108,7 @@ slot[name] {
 }
 
 :host(.ion-color) {
-  --color: #{current-color(base)};
+  --color: #{medsoft-current-color(medium)};
 }
 
 :host([class^="ion-color"]) {

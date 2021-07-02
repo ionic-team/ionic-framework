@@ -12,7 +12,7 @@ const TemplateDefault = ({enunciado}) => {
       <ion-content>
 
         <!-- component -->
-        <med-enunciado>
+        <med-enunciado imagens='["https://via.placeholder.com/500", "https://via.placeholder.com/500", "https://via.placeholder.com/500"]'>
           ${enunciado}
         </med-enunciado>
         <!-- component -->
