@@ -9,7 +9,7 @@ export default {
 
 const createToastDefaultError = async () => {
   toastController.create({
-    color: 'error-medium',
+    color: 'feedback-error',
     header: 'Titulo da Notificação.',
     message: 'Sem conexão. Por favor, tente conectar-se novamente para concluir essa tarefa.',
     position: 'bottom',

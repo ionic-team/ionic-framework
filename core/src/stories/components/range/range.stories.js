@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/SearchBar',
+  title: 'Components/Global/Range',
   decorators: [withDesign],
 };
 

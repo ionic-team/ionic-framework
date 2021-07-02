@@ -102,3 +102,8 @@
     top: calc(8px + var(--ion-safe-area-bottom, 0px)) !important;
   }
 }
+
+:host(.ion-color) .toast-wrapper {
+  background: #{medsoft-current-color(medium)};;
+}
+
