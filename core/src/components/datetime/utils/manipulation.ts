@@ -277,7 +277,7 @@ export const getPreviousYear = (refParts: DatetimeParts) => {
  * Given DatetimeParts, generate the next year.
  */
 export const getNextYear = (refParts: DatetimeParts) => {
-  return changeYear(refParts, +1);
+  return changeYear(refParts, 1);
 }
 
 /**
