@@ -87,6 +87,11 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
+  private destroyCalendarIO?: () => void;
+  private destroyKeyboardMO?: () => void;
+  private destroyTimeScroll?: () => void;
+  private destroyMonthAndYearScroll?: () => void;
+
   private minParts?: any;
   private maxParts?: any;
 
@@ -441,6 +446,10 @@ export class Datetime implements ComponentInterface {
     const mo = new MutationObserver(checkCalendarBodyFocus);
     mo.observe(calendarBodyRef, { attributeFilter: ['class'], attributeOldValue: true });
 
+    this.destroyKeyboardMO = () => {
+      mo?.disconnect();
+    }
+
     /**
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
@@ -729,6 +738,11 @@ export class Datetime implements ComponentInterface {
         root: calendarBodyRef
        });
       startIO.observe(startMonth);
+
+      this.destroyCalendarIO = () => {
+        endIO?.disconnect();
+        startIO?.disconnect();
+      }
    });
   }
 
@@ -740,6 +754,31 @@ export class Datetime implements ComponentInterface {
     if (this.clearFocusVisible) {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
+    }
+  }
+
+  /**
+   * Clean up all listeners except for the overlay
+   * listener. This is so that we can re-create the listeners
+   * if the datetime has been hidden/presented by a modal or popover.
+   */
+  private destroyListeners = () => {
+    const { destroyCalendarIO, destroyKeyboardMO, destroyTimeScroll, destroyMonthAndYearScroll } = this;
+
+    if (destroyCalendarIO !== undefined) {
+      destroyCalendarIO();
+    }
+
+    if (destroyKeyboardMO !== undefined) {
+      destroyKeyboardMO();
+    }
+
+    if (destroyTimeScroll !== undefined) {
+      destroyTimeScroll();
+    }
+
+    if (destroyMonthAndYearScroll !== undefined) {
+      destroyMonthAndYearScroll();
     }
   }
 
@@ -757,11 +796,6 @@ export class Datetime implements ComponentInterface {
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (!ev.isIntersecting) { return; }
-
-      /**
-       * This needs to run at most once for initial setup.
-       */
-      visibleIO!.disconnect()
 
       this.initializeCalendarIOListeners();
       this.initializeKeyboardListeners();
@@ -786,6 +820,27 @@ export class Datetime implements ComponentInterface {
     }
     visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
     visibleIO.observe(this.el);
+
+    /**
+     * We need to clean up listeners when the datetime is hidden
+     * in a popover/modal so that we can properly scroll containers
+     * back into view if they are re-presented. When the datetime is hidden
+     * the scroll areas have scroll widths/heights of 0px, so any snapping
+     * we did originally has been lost.
+     */
+    let hiddenIO: IntersectionObserver | undefined;
+    const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
+      const ev = entries[0];
+      if (ev.isIntersecting) { return; }
+
+      this.destroyListeners();
+
+      writeTask(() => {
+        this.el.classList.remove('datetime-ready');
+      });
+    }
+    hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
+    hiddenIO.observe(this.el);
   }
 
   /**
@@ -897,8 +952,15 @@ export class Datetime implements ComponentInterface {
      * does not fire when we do our initial scrollIntoView above.
      */
     raf(() => {
-      monthRef.addEventListener('scroll', () => scrollCallback('month'));
-      yearRef.addEventListener('scroll', () => scrollCallback('year'));
+      const monthScroll = () => scrollCallback('month');
+      const yearScroll = () => scrollCallback('year');
+      monthRef.addEventListener('scroll', monthScroll);
+      yearRef.addEventListener('scroll', yearScroll);
+
+      this.destroyMonthAndYearScroll = () => {
+        monthRef.removeEventListener('scroll', monthScroll);
+        yearRef.removeEventListener('scroll', yearScroll);
+      }
     });
   }
 
@@ -979,8 +1041,16 @@ export class Datetime implements ComponentInterface {
        * does not fire when we do our initial scrollIntoView above.
        */
       raf(() => {
-        timeHourRef.addEventListener('scroll', () => scrollCallback('hour'));
-        timeMinuteRef.addEventListener('scroll', () => scrollCallback('minute'));
+        const hourScroll = () => scrollCallback('hour');
+        const minuteScroll = () => scrollCallback('minute');
+
+        timeHourRef.addEventListener('scroll', hourScroll);
+        timeMinuteRef.addEventListener('scroll', minuteScroll);
+
+        this.destroyTimeScroll = () => {
+          timeHourRef.removeEventListener('scroll', hourScroll);
+          timeMinuteRef.removeEventListener('scroll', minuteScroll);
+        }
       });
     });
   }
@@ -1076,7 +1146,7 @@ export class Datetime implements ComponentInterface {
             <slot name="buttons">
               <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
-                <ion-button color={this.color} onClick={() => this.confirm()}>{this.doneText}</ion-button>
+                <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
               </ion-buttons>
             </slot>
           </div>
