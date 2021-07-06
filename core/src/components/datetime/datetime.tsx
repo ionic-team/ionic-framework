@@ -1009,7 +1009,15 @@ export class Datetime implements ComponentInterface {
             otherCol.classList.remove('time-column-active');
 
             const bbox = activeCol.getBoundingClientRect();
-            const activeElement = this.el!.shadowRoot!.elementFromPoint(bbox.x + 1, bbox.y + 1)!;
+
+            /**
+             * Do not use floating point
+             * here as some browsers may clamp
+             * or round down.
+             */
+            const x = Math.ceil(bbox.x + 1);
+            const y = Math.ceil(bbox.y + 1);
+            const activeElement = this.el!.shadowRoot!.elementFromPoint(x, y)!;
             const value = parseInt(activeElement.getAttribute('data-value')!, 10);
 
             if (colType === 'hour') {
