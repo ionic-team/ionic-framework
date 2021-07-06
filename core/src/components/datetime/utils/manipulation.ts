@@ -256,6 +256,30 @@ export const getNextMonth = (refParts: DatetimeParts) => {
   return { month, year, day };
 }
 
+const changeYear = (refParts: DatetimeParts, yearDelta: number) => {
+  const month = refParts.month;
+  const year = refParts.year + yearDelta;
+
+  const numDaysInMonth = getNumDaysInMonth(month, year);
+  const day = (numDaysInMonth < refParts.day!) ? numDaysInMonth : refParts.day;
+
+  return { month, year, day }
+}
+
+/**
+ * Given DatetimeParts, generate the previous year.
+ */
+export const getPreviousYear = (refParts: DatetimeParts) => {
+  return changeYear(refParts, -1);
+}
+
+/**
+ * Given DatetimeParts, generate the next year.
+ */
+export const getNextYear = (refParts: DatetimeParts) => {
+  return changeYear(refParts, 1);
+}
+
 /**
  * If PM, then internal value should
  * be converted to 24-hr time.

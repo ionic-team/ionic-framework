@@ -109,6 +109,33 @@ subtracting 30 minutes, etc.), or even formatting data to a specific locale,
 then we highly recommend using [date-fns](https://date-fns.org) to work with
 dates in JavaScript.
 
+## Accessibility
+
+### Keyboard Navigation
+
+`ion-datetime` has full keyboard support for navigating between focusable elements inside of the component. The following table details what each key does:
+
+| Key                | Function                                                     |
+| ------------------ | ------------------------------------------------------------ |
+| `Tab`              | Moves focus to the next focusable element.                   |
+| `Shift` + `Tab`    | Moves focus to the previous focusable element.               |
+| `Space` or `Enter` | Clicks the focusable element.                                |
+
+#### Date Grid
+
+| Key                | Function                                                     |
+| ------------------ | ------------------------------------------------------------ |
+| `ArrowUp` | Moves focus to the same day of the previous week. |
+| `ArrowDown` | Moves focus to the same day of the next week. |
+| `ArrowRight` | Moves focus to the next day. |
+| `ArrowLeft` | Moves focus to the previous day. |
+| `Home` | Moves focus to the first day of the current week. |
+| `End` | Moves focus to the last day of the current week. |
+| `PageUp` | Changes the grid of dates to the previous month. |
+| `PageDown` | Changes the grid of dates to the next month. |
+| `Shift` + `PageUp` | Changes the grid of dates to the previous year. |
+| `Shift` + `PageDown` | Changes the grid of dates to the next year. |
+
 <!-- Auto Generated Below -->
 
 

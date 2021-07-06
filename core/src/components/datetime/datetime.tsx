@@ -39,9 +39,11 @@ import {
   getNextDay,
   getNextMonth,
   getNextWeek,
+  getNextYear,
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
+  getPreviousYear,
   getStartOfWeek
 } from './utils/manipulation';
 import {
@@ -488,11 +490,11 @@ export class Datetime implements ComponentInterface {
           break;
         case 'PageUp':
           ev.preventDefault();
-          partsToFocus = getPreviousMonth(parts);
+          partsToFocus = ev.shiftKey ? getPreviousYear(parts) : getPreviousMonth(parts);
           break;
         case 'PageDown':
           ev.preventDefault();
-          partsToFocus = getNextMonth(parts);
+          partsToFocus = ev.shiftKey ? getNextYear(parts) : getNextMonth(parts);
           break;
         /**
          * Do not preventDefault here
