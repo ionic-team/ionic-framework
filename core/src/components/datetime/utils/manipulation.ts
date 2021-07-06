@@ -270,14 +270,14 @@ const changeYear = (refParts: DatetimeParts, yearDelta: number) => {
  * Given DatetimeParts, generate the previous year.
  */
 export const getPreviousYear = (refParts: DatetimeParts) => {
-  return changeYear(refParts, +1);
+  return changeYear(refParts, -1);
 }
 
 /**
  * Given DatetimeParts, generate the next year.
  */
 export const getNextYear = (refParts: DatetimeParts) => {
-  return changeYear(refParts, -1);
+  return changeYear(refParts, +1);
 }
 
 /**

@@ -1,4 +1,6 @@
 import {
+  getPreviousYear,
+  getNextYear,
   getPreviousMonth,
   getNextMonth,
   getPreviousDay,
@@ -385,6 +387,48 @@ describe('getPreviousMonth()', () => {
       month: 12,
       year: 1999,
       day: 30
+    });
+  });
+});
+
+describe('getNextYear()', () => {
+  it('should return correct next year', () => {
+    expect(getNextYear({ month: 5, year: 2021, day: 1 })).toEqual({
+      month: 5,
+      year: 2022,
+      day: 1
+    });
+    expect(getNextYear({ month: 12, year: 1999, day: 30 })).toEqual({
+      month: 12,
+      year: 2000,
+      day: 30
+    });
+    // Leap year
+    expect(getNextYear({ month: 2, year: 2024, day: 29 })).toEqual({
+      month: 2,
+      year: 2025,
+      day: 28
+    });
+  });
+});
+
+describe('getPreviousYear()', () => {
+  it('should return correct next year', () => {
+    expect(getPreviousYear({ month: 5, year: 2021, day: 1 })).toEqual({
+      month: 5,
+      year: 2020,
+      day: 1
+    });
+    expect(getPreviousYear({ month: 12, year: 1999, day: 30 })).toEqual({
+      month: 12,
+      year: 1998,
+      day: 30
+    });
+    // Leap year
+    expect(getPreviousYear({ month: 2, year: 2024, day: 29 })).toEqual({
+      month: 2,
+      year: 2023,
+      day: 28
     });
   });
 });
