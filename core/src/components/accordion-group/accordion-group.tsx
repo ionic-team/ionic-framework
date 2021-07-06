@@ -165,8 +165,9 @@ export class AccordionGroup implements ComponentInterface {
        * out of the values array or unset the value.
        */
       if (multiple) {
-        const groupValue = (value || []) as string[];
-        this.value = groupValue.filter(v => v !== accordionValue);
+        const groupValue = value || [];
+        const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
+        this.value = processedValue.filter(v => v !== accordionValue);
       } else {
         this.value = undefined;
       }
