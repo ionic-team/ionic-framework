@@ -23,13 +23,14 @@
 }
 
 :host-context(.item-has-focus) .select-icon {
-  transition: transform .15s cubic-bezier(.4,0,.2,1),-webkit-transform .15s cubic-bezier(.4,0,.2,1);
-
   @include transform(rotate(180deg), translate3d(0, 0px, 0));
+
+  transition: transform .15s cubic-bezier(.4,0,.2,1),-webkit-transform .15s cubic-bezier(.4,0,.2,1);
 }
 
 :host-context(ion-item.ion-focused) .select-icon,
 :host-context(.item-has-focus) .select-icon {
   color: var(--highlight-color-focused);
+
   opacity: 1;
 }
