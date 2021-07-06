@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>Datetime - Time label</title>
     <meta name="viewport"
@@ -25,7 +25,7 @@
             border-radius: 8px;
         }
     </style>
-</head>
+  </head>
 <body>
 <ion-app>
     <ion-header translucent="true">
@@ -42,12 +42,12 @@
             <h2>showDefaultTimeLabel="false"</h2>
             <ion-datetime show-default-time-label="false"></ion-datetime>
         </div>
-      <div>
-        <h2>custom slot text</h2>
-        <ion-datetime>
-          <span slot="time-label">Custom Text</span>
-        </ion-datetime>
-      </div>
+        <div>
+            <h2>Custom Time Label</h2>
+            <ion-datetime>
+                <span slot="time-label">Custom Text</span>
+            </ion-datetime>
+        </div>
     </ion-content>
 </ion-app>
 </body>
