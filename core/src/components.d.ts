@@ -775,6 +775,10 @@ export namespace Components {
          */
         "showDefaultButtons": boolean;
         /**
+          * If `true`, the default "Time" label will be rendered for the time selector of the `ion-datetime` component. Developers can also use the `time-label` slot if they want to customize this label. If a custom label is set in the `time-label` slot then the default label will not be rendered.
+         */
+        "showDefaultTimeLabel": boolean;
+        /**
           * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
          */
         "showDefaultTitle": boolean;
@@ -4330,6 +4334,10 @@ declare namespace LocalJSX {
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
         "showDefaultButtons"?: boolean;
+        /**
+          * If `true`, the default "Time" label will be rendered for the time selector of the `ion-datetime` component. Developers can also use the `time-label` slot if they want to customize this label. If a custom label is set in the `time-label` slot then the default label will not be rendered.
+         */
+        "showDefaultTimeLabel"?: boolean;
         /**
           * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
          */

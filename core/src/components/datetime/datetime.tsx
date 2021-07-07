@@ -62,6 +62,7 @@ import {
  *
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.
+ * @slot time-label - The label for the time selector in the datetime.
  */
 @Component({
   tag: 'ion-datetime',
@@ -306,6 +307,16 @@ export class Datetime implements ComponentInterface {
    * default buttons will not be rendered.
    */
   @Prop() showDefaultButtons = false;
+
+  /**
+   * If `true`, the default "Time" label will be rendered
+   * for the time selector of the `ion-datetime` component.
+   * Developers can also use the `time-label` slot
+   * if they want to customize this label. If a custom
+   * label is set in the `time-label` slot then the
+   * default label will not be rendered.
+   */
+  @Prop() showDefaultTimeLabel = true;
 
   /**
    * Emitted when the datetime selection was cancelled.
@@ -1363,6 +1374,15 @@ export class Datetime implements ComponentInterface {
     )
   }
 
+  private renderTimeLabel() {
+    const hasSlottedTimeLabel = this.el.querySelector('[slot="time-label"]') !== null;
+    if (!hasSlottedTimeLabel && !this.showDefaultTimeLabel) { return; }
+
+    return (
+      <slot name="time-label">Time</slot>
+    );
+  }
+
   /**
    * Render time picker inside of datetime.
    * Do not pass color prop to segment on
@@ -1376,7 +1396,9 @@ export class Datetime implements ComponentInterface {
     const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
     return (
       <div class="datetime-time">
-        <div class="time-header">Time</div>
+        <div class="time-header">
+          {this.renderTimeLabel()}
+        </div>
         <div class="time-body">
           <div class="time-base" ref={el => this.timeBaseRef = el}>
             <div class="time-wrapper">
