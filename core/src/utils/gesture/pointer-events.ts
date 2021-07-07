@@ -31,10 +31,10 @@ export const createPointerEvents = (
       rmTouchMove = addEventListener(el, 'touchmove', pointerMove, options);
     }
     if (!rmTouchEnd) {
-      rmTouchEnd = addEventListener(el, 'touchend', handleTouchEnd, options);
+      rmTouchEnd = addEventListener(ev.target, 'touchend', handleTouchEnd, options);
     }
     if (!rmTouchCancel) {
-      rmTouchCancel = addEventListener(el, 'touchcancel', handleTouchEnd, options);
+      rmTouchCancel = addEventListener(ev, 'touchcancel', handleTouchEnd, options);
     }
   };
 
