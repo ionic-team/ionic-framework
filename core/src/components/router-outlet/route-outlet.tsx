@@ -62,7 +62,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   async connectedCallback() {
     const onStart = () => {
-      this.gestureAndAnimationInProgress = true;
+      this.gestureOrAnimationInProgress = true;
       if (this.swipeHandler) {
         this.swipeHandler.onStart();
       }
