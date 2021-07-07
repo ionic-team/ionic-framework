@@ -60,7 +60,7 @@ import {
  *
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.
- * @slot time-label - The label for the time selector in the datetime
+ * @slot time-label - The label for the time selector in the datetime.
  */
 @Component({
   tag: 'ion-datetime',
