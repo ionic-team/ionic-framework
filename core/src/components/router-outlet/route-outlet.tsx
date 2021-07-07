@@ -213,7 +213,14 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
                 this.swipeHandler.onEnd(false);
               }
             }, { oneTimeCallback: true });
-            ani.progressEnd(undefined, 0);
+
+            /**
+             * Playing animation to beginning
+             * with a duration of 0 prevents
+             * any flickering when the animation
+             * is later cleaned up.
+             */
+            ani.progressEnd(0, 0, 0);
           } else {
             this.ani = ani;
           }
