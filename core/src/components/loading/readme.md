@@ -133,17 +133,12 @@ async function presentLoadingWithOptions() {
 ```tsx
 /* Using with useIonLoading Hook */
 
-import React from "react";
-import { IonButton, IonContent, IonPage, useIonLoading } from "@ionic/react";
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
 
 interface LoadingProps {}
 
 const LoadingExample: React.FC<LoadingProps> = () => {
-  /**
-   * The recommended way of dismissing is to use the `dismiss` property
-   * on `IonLoading`, but the `dismiss` method returned from `useIonLoading`
-   * can be used for more complex scenarios.
-   */
   const [present, dismiss] = useIonLoading();
   return (
     <IonPage>
@@ -152,16 +147,16 @@ const LoadingExample: React.FC<LoadingProps> = () => {
           expand="block"
           onClick={() => {
             present({
-              message: "Loading...",
-              duration: 3000,
-            });
+              message: 'Loading...',
+            })
+            setTimeout(dismiss, 3000)
           }}
         >
           Show Loading
         </IonButton>
         <IonButton
           expand="block"
-          onClick={() => present("Loading", 2000, "dots")}
+          onClick={() => present('Loading', 2000, 'dots')}
         >
           Show Loading using params
         </IonButton>
@@ -174,8 +169,8 @@ const LoadingExample: React.FC<LoadingProps> = () => {
 ```tsx
 /* Using with IonLoading Component */
 
-import React, { useState } from "react";
-import { IonLoading, IonButton, IonContent } from "@ionic/react";
+import React, { useState } from 'react';
+import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
 export const LoadingExample: React.FC = () => {
   const [showLoading, setShowLoading] = useState(true);
@@ -188,10 +183,10 @@ export const LoadingExample: React.FC = () => {
     <IonContent>
       <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
-        cssClass="my-custom-class"
+        cssClass='my-custom-class'
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
-        message={"Please wait..."}
+        message={'Please wait...'}
         duration={5000}
       />
     </IonContent>
