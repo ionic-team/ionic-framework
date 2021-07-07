@@ -139,17 +139,23 @@ import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
 interface LoadingProps {}
 
 const LoadingExample: React.FC<LoadingProps> = () => {
-  const [present] = useIonLoading();
+  const [present, dismiss] = useIonLoading();
+  /**
+   * The recommended way of dismissing is to use the `dismiss` property
+   * on `IonLoading`, but the `dismiss` method returned from `useIonLoading`
+   * can be used for more complex scenarios.
+   */
   return (
     <IonPage>
       <IonContent>
         <IonButton
           expand="block"
-          onClick={() =>
+          onClick={() => {
             present({
-              duration: 3000,
+              message: 'Loading...',
+              duration: 3000
             })
-          }
+          }}
         >
           Show Loading
         </IonButton>
