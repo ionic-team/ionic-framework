@@ -19,8 +19,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
-  private animationEnabled = true;
-  private isTransitioning = false;
+  private gestureOrAnimationInProgress = false;
 
   @Element() el!: HTMLElement;
 
@@ -62,17 +61,22 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
   async connectedCallback() {
+    const onStart = () => {
+      this.gestureAndAnimationInProgress = true;
+      if (this.swipeHandler) {
+        this.swipeHandler.onStart();
+      }
+    }
+
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !this.isTransitioning && !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
-      () => this.swipeHandler && this.swipeHandler.onStart(),
+      () => !this.gestureAndAnimationInProgress && !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => onStart(),
       step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
         if (this.ani) {
-          this.animationEnabled = false;
-
           this.ani.onFinish(() => {
-            this.animationEnabled = true;
+            this.gestureOrAnimationInProgress = false;
 
             if (this.swipeHandler) {
               this.swipeHandler.onEnd(shouldComplete);
@@ -98,7 +102,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
           }
 
           this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
-
+        } else {
+          this.gestureOrAnimationInProgress = false;
         }
       }
     );
@@ -185,8 +190,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 
-    this.isTransitioning = true;
-
     await transition({
       mode,
       animated,
@@ -194,14 +197,32 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       leavingEl,
       baseEl: el,
       progressCallback: (opts.progressAnimation
-        ? ani => this.ani = ani
+        ? ani => {
+          /**
+           * Because this progress callback is called asynchronously
+           * it is possible for the gesture to start and end before
+           * the animation is ever set. In that scenario, we should
+           * immediately call progressEnd so that the transition promise
+           * resolves and the gesture does not get locked up.
+           */
+          if (ani !== undefined && !this.gestureOrAnimationInProgress) {
+            this.gestureOrAnimationInProgress = true;
+            ani.onFinish(() => {
+              this.gestureOrAnimationInProgress = false;
+              if (this.swipeHandler) {
+                this.swipeHandler.onEnd(false);
+              }
+            }, { oneTimeCallback: true });
+            ani.progressEnd(undefined, 0);
+          } else {
+            this.ani = ani;
+          }
+        }
         : undefined
       ),
       ...opts,
       animationBuilder,
     });
-
-    this.isTransitioning = false;
 
     // emit nav changed event
     this.ionNavDidChange.emit();
