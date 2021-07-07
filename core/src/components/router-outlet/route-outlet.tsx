@@ -70,7 +70,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !this.gestureAndAnimationInProgress && !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => !this.gestureOrAnimationInProgress && !!this.swipeHandler && this.swipeHandler.canStart(),
       () => onStart(),
       step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
