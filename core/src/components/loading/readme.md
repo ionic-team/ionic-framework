@@ -140,6 +140,11 @@ interface LoadingProps {}
 
 const LoadingExample: React.FC<LoadingProps> = () => {
   const [present, dismiss] = useIonLoading();
+  /**
+   * The recommended way of dismissing is to use the `dismiss` property
+   * on `IonLoading`, but the `dismiss` method returned from `useIonLoading`
+   * can be used for more complex scenarios.
+   */
   return (
     <IonPage>
       <IonContent>
@@ -148,8 +153,8 @@ const LoadingExample: React.FC<LoadingProps> = () => {
           onClick={() => {
             present({
               message: 'Loading...',
+              duration: 3000
             })
-            setTimeout(dismiss, 3000)
           }}
         >
           Show Loading
