@@ -273,10 +273,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
     });
+    const ariaDisabled = (disabled || childStyles['item-interactive-disabled']) ? 'true' : null;
 
     return (
       <Host
-        aria-disabled={disabled || childStyles['item-interactive-disabled'] ? 'true' : null}
+        aria-disabled={ariaDisabled}
         class={{
           ...childStyles,
           ...labelColorStyles,
