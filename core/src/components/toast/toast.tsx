@@ -110,8 +110,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Name of the icon to display. See `ion-icon`.
    * https://ionic.io/ionicons
    */
-   @Prop() icon?: string;
-
+  @Prop() icon?: string;
 
   /**
    * Emitted after the toast has presented.

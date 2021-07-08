@@ -121,9 +121,11 @@
 }
 
 .toast-icon {
-  padding: 10px;
-
+  /* stylelint-disable property-blacklist */
   margin-left: 15px;
+
+  padding: 10px;
+   /* stylelint-enable property-blacklist */
 
   font-size: 1.4em;
 }
