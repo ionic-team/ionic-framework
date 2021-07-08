@@ -164,9 +164,8 @@
   </ion-accordion>
 </ion-accordion-group>
 
-```html
 <!-- Multiple Accordions -->
-<ion-accordion-group multiple="true">
+<ion-accordion-group multiple="true" id="multiple">
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
@@ -220,15 +219,8 @@
   </ion-accordion>
 </ion-accordion-group>
 
-<script>
-  let accordionGroup = document.querySelector('ion-accordion-group');
-  accordionGroup.value = ['colors', 'numbers'];
-</script>
-```
-
-```html
 <!-- Getting and setting the state of the accordion group -->
-<ion-accordion-group value="numbers">
+<ion-accordion-group value="numbers" id="state">
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
@@ -286,7 +278,11 @@
 <ion-button onclick="closeAccordion()">Close All Accordions</ion-button>
 
 <script>
-  const accordionGroup = document.querySelector('ion-accordion-group');
+  const accordionGroup = document.querySelector('ion-accordion-group#state');
+  let accordionGroupMultiple = document.querySelector('ion-accordion-group#multiple');
+  
+  accordionGroupMultiple.value = ['colors', 'numbers'];
+  
   const logAccordionValue = () => {
     console.log(accordionGroup.value);
   }

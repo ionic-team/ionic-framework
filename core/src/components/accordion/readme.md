@@ -57,10 +57,6 @@ ion-accordion.accordion-expanded ion-item[slot="header"] {
 
 This example will set the text color of the header `ion-item` to red when the accordion is expanded.
 
-## Managing Accordion State
-
-The state of all accordions is managed by the parent `ion-accordion-group` in the `value` property. Managing the state using the `value` property means you do not need to know which accordions are already open when you want to programmatically open another accordion. See [Usage](#usage) for a code example.
-
 ## Accessibility
 
 ### Animations
@@ -560,9 +556,8 @@ export class MyComponent {
   </ion-accordion>
 </ion-accordion-group>
 
-```html
 <!-- Multiple Accordions -->
-<ion-accordion-group multiple="true">
+<ion-accordion-group multiple="true" id="multiple">
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
@@ -616,15 +611,8 @@ export class MyComponent {
   </ion-accordion>
 </ion-accordion-group>
 
-<script>
-  let accordionGroup = document.querySelector('ion-accordion-group');
-  accordionGroup.value = ['colors', 'numbers'];
-</script>
-```
-
-```html
 <!-- Getting and setting the state of the accordion group -->
-<ion-accordion-group value="numbers">
+<ion-accordion-group value="numbers" id="state">
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
@@ -682,7 +670,11 @@ export class MyComponent {
 <ion-button onclick="closeAccordion()">Close All Accordions</ion-button>
 
 <script>
-  const accordionGroup = document.querySelector('ion-accordion-group');
+  const accordionGroup = document.querySelector('ion-accordion-group#state');
+  let accordionGroupMultiple = document.querySelector('ion-accordion-group#multiple');
+  
+  accordionGroupMultiple.value = ['colors', 'numbers'];
+  
   const logAccordionValue = () => {
     console.log(accordionGroup.value);
   }
