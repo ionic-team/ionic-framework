@@ -100,7 +100,6 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     return (
       <Host
         onClick={this.onClick}
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'item-option-disabled': disabled,

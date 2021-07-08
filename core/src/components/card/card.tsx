@@ -122,7 +122,6 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     return (
       <Host
-        aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'card-disabled': this.disabled,

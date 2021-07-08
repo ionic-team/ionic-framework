@@ -213,7 +213,6 @@ export class Toggle implements ComponentInterface {
           type="checkbox"
           role="switch"
           aria-checked={`${checked}`}
-          aria-disabled={disabled ? 'true' : null}
           disabled={disabled}
           id={inputId}
           onFocus={() => this.onFocus()}

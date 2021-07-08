@@ -144,7 +144,6 @@ export class Radio implements ComponentInterface {
     return (
       <Host
         aria-checked={`${checked}`}
-        aria-disabled={disabled ? 'true' : null}
         aria-hidden={disabled ? 'true' : null}
         aria-labelledby={label ? labelId : null}
         role="radio"

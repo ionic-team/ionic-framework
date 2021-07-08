@@ -251,7 +251,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   render() {
     const { detail, detailIcon, download, labelColorStyles, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
-    const childStyles = {};
+    const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
@@ -276,7 +276,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
+        aria-disabled={disabled || childStyles['item-interactive-disabled'] ? 'true' : null}
         class={{
           ...childStyles,
           ...labelColorStyles,

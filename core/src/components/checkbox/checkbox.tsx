@@ -152,7 +152,6 @@ export class Checkbox implements ComponentInterface {
         onClick={this.onClick}
         aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
-        aria-disabled={disabled ? 'true' : null}
         aria-hidden={disabled ? 'true' : null}
         role="checkbox"
         class={createColorClasses(color, {
