@@ -180,12 +180,9 @@ export const config: Config = {
   ],
   buildEs5: 'prod',
   extras: {
-    cssVarsShim: true,
     dynamicImportShim: true,
     initializeNextTick: true,
-    safari10: true,
-    scriptDataOpts: true,
-    shadowDomShim: true,
+    scriptDataOpts: true
   },
   testing: {
     allowableMismatchedPixels: 200,
