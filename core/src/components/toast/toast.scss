@@ -120,6 +120,13 @@
   justify-content: center;
 }
 
+.toast-icon {
+  padding: 10px;
+
+  margin-left: 15px;
+
+  font-size: 1.4em;
+}
 
 .toast-message {
   flex: 1;
@@ -141,7 +148,7 @@
   z-index: 0;
 }
 
-.toast-icon {
+.toast-button-icon {
   font-size: 1.4em;
 }
 

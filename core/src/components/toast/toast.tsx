@@ -107,6 +107,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * Name of the icon to display. See `ion-icon`.
+   * https://ionic.io/ionicons
+   */
+   @Prop() icon?: string;
+
+
+  /**
    * Emitted after the toast has presented.
    */
   @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
@@ -243,7 +250,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 <ion-icon
                   icon={b.icon}
                   slot={b.text === undefined ? 'icon-only' : undefined}
-                  class="toast-icon"
+                  class="toast-button-icon"
                 />}
               {b.text}
             </div>
@@ -280,6 +287,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
         <div class={wrapperClass}>
           <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
+
+            {this.icon !== undefined &&
+              <ion-icon class="toast-icon" part="icon" name={this.icon}></ion-icon>
+            }
 
             <div class="toast-content">
               {this.header !== undefined &&
