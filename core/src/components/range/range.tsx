@@ -463,7 +463,6 @@ export class Range implements ComponentInterface {
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
         id={rangeId}
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
