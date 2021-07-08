@@ -431,12 +431,21 @@ export class Segment implements ComponentInterface {
     this.checked = current;
   }
 
+  private onKeyUp = (ev: KeyboardEvent) => {
+    if (['Enter', ' '].includes(ev.key)) {
+      const previous = this.checked;
+      const current = this.el.querySelector('ion-segment-button:focus') as HTMLIonSegmentButtonElement;
+      previous && current ? this.checkButton(previous, current) : this.setCheckedClasses();
+    }
+  }
+
   render() {
     const mode = getIonMode(this);
     return (
       <Host
         role="tablist"
         onClick={this.onClick}
+        onKeyup={this.onKeyUp}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
