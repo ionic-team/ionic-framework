@@ -57,7 +57,6 @@ ion-accordion.accordion-expanded ion-item[slot="header"] {
 
 This example will set the text color of the header `ion-item` to red when the accordion is expanded.
 
-
 ## Accessibility
 
 ### Animations
@@ -307,6 +306,87 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
 </ion-accordion-group>
 ```
 
+**component.html**
+```html
+<!-- Getting and setting the state of the accordion group -->
+<ion-accordion-group value="numbers">
+  <ion-accordion value="colors">
+    <ion-item slot="header">
+      <ion-label>Colors</ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item>
+        <ion-label>Red</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Green</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Blue</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+  <ion-accordion value="shapes">
+    <ion-item slot="header">
+      <ion-label>Shapes</ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item>
+        <ion-label>Circle</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Triangle</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Square</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+  <ion-accordion value="numbers">
+    <ion-item slot="header">
+      <ion-label>Numbers</ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item>
+        <ion-label>1</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>2</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>3</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+</ion-accordion-group>
+
+<ion-button (click)="logAccordionValue()">Log Value of Accordion Group</ion-button>
+<ion-button (click)="closeAccordion()">Close All Accordions</ion-button>
+```
+
+**component.ts**
+```typescript
+import { Component, ViewChild } from '@angular/core';
+import { IonAccordionGroup } from '@ionic/angular';
+
+@Component({…})
+export class MyComponent {
+  @ViewChild(IonAccordionGroup, { static: true }) accordionGroup: IonAccordionGroup;
+  constructor() {}
+  
+  logAccordionValue() {
+    console.log(this.accordionGroup.value);
+  }
+  
+  closeAccordion() {
+    this.accordionGroup.value = undefined;
+  }  
+}
+```
+
 
 ### Javascript
 
@@ -477,7 +557,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
 </ion-accordion-group>
 
 <!-- Multiple Accordions -->
-<ion-accordion-group multiple="true">
+<ion-accordion-group multiple="true" id="multiple">
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
@@ -531,9 +611,76 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
   </ion-accordion>
 </ion-accordion-group>
 
+<!-- Getting and setting the state of the accordion group -->
+<ion-accordion-group value="numbers" id="state">
+  <ion-accordion value="colors">
+    <ion-item slot="header">
+      <ion-label>Colors</ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item>
+        <ion-label>Red</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Green</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Blue</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+  <ion-accordion value="shapes">
+    <ion-item slot="header">
+      <ion-label>Shapes</ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item>
+        <ion-label>Circle</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Triangle</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Square</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+  <ion-accordion value="numbers">
+    <ion-item slot="header">
+      <ion-label>Numbers</ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item>
+        <ion-label>1</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>2</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>3</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+</ion-accordion-group>
+
+<ion-button onclick="logAccordionValue()">Log Value of Accordion Group</ion-button>
+<ion-button onclick="closeAccordion()">Close All Accordions</ion-button>
+
 <script>
-  let accordionGroup = document.querySelector('ion-accordion-group');
-  accordionGroup.value = ['colors', 'numbers'];
+  const accordionGroup = document.querySelector('ion-accordion-group#state');
+  let accordionGroupMultiple = document.querySelector('ion-accordion-group#multiple');
+  
+  accordionGroupMultiple.value = ['colors', 'numbers'];
+  
+  const logAccordionValue = () => {
+    console.log(accordionGroup.value);
+  }
+  const closeAccordion = () => {
+    accordionGroup.value = undefined;
+  }
 </script>
 ```
 
@@ -541,231 +688,307 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
 ### React
 
 ```tsx
-import React from 'react';
+import React, { useRef } from 'react';
 
-import { IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel } from '@ionic/react';
+import { IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonPage } from '@ionic/react';
 import { arrowDownCircle } from 'ionicons/icons';
 
-export const AccordionExample: React.FC = () => (
-  {/*-- Basic --*/}
-  <IonAccordionGroup>
-    <IonAccordion value="colors">
-      <IonItem slot="header">
-        <IonLabel>Colors</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Red</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Green</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Blue</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="shapes">
-      <IonItem slot="header">
-        <IonLabel>Shapes</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Circle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Triangle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Square</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="numbers">
-      <IonItem slot="header">
-        <IonLabel>Numbers</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>1</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>2</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>3</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-  </IonAccordionGroup>
-
-  {/*-- Custom Icon --*/}
-  <IonAccordionGroup>
-    <IonAccordion value="colors" toggleIcon={arrowDownCircle}>
-      <IonItem slot="header">
-        <IonLabel>Colors</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Red</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Green</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Blue</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="shapes" toggleIcon={arrowDownCircle}>
-      <IonItem slot="header">
-        <IonLabel>Shapes</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Circle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Triangle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Square</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="numbers" toggleIcon={arrowDownCircle}>
-      <IonItem slot="header">
-        <IonLabel>Numbers</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>1</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>2</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>3</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-  </IonAccordionGroup>
-
-  {/*-- Open Accordion --*/}
-  <IonAccordionGroup value="colors">
-    <IonAccordion value="colors">
-      <IonItem slot="header">
-        <IonLabel>Colors</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Red</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Green</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Blue</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="shapes">
-      <IonItem slot="header">
-        <IonLabel>Shapes</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Circle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Triangle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Square</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="numbers">
-      <IonItem slot="header">
-        <IonLabel>Numbers</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>1</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>2</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>3</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-  </IonAccordionGroup>
-
-  {/*-- Multiple Accordions --*/}
-  <IonAccordionGroup multiple={true} value={['colors', 'numbers']}>
-    <IonAccordion value="colors">
-      <IonItem slot="header">
-        <IonLabel>Colors</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Red</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Green</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Blue</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="shapes">
-      <IonItem slot="header">
-        <IonLabel>Shapes</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>Circle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Triangle</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Square</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-    <IonAccordion value="numbers">
-      <IonItem slot="header">
-        <IonLabel>Numbers</IonLabel>
-      </IonItem>
-
-      <ion-list slot="content">
-        <IonItem>
-          <IonLabel>1</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>2</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>3</IonLabel>
-        </IonItem>
-      </ion-list>
-    </IonAccordion>
-  </IonAccordionGroup>
+export const AccordionExample: React.FC = () => {
+  const accordionGroupRef = useRef(null);
+  const logAccordionValue = () => {
+    if (accordionGroupRef.current) {
+      console.log(accordionGroupRef.current.value);
+    }
+  }
+  const closeAccordion = () => {
+    if (accordionGroupRef.current) {
+      accordionGroupRef.current.value = undefined;
+    }
+  }
+  
+  return (
+    <IonPage>
+      <IonContent>
+        {/*-- Basic --*/}
+        <IonAccordionGroup>
+          <IonAccordion value="colors">
+            <IonItem slot="header">
+              <IonLabel>Colors</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Red</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Green</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Blue</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="shapes">
+            <IonItem slot="header">
+              <IonLabel>Shapes</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Circle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Triangle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Square</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="numbers">
+            <IonItem slot="header">
+              <IonLabel>Numbers</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>1</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>2</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>3</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+        </IonAccordionGroup>
+      
+        {/*-- Custom Icon --*/}
+        <IonAccordionGroup>
+          <IonAccordion value="colors" toggleIcon={arrowDownCircle}>
+            <IonItem slot="header">
+              <IonLabel>Colors</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Red</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Green</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Blue</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="shapes" toggleIcon={arrowDownCircle}>
+            <IonItem slot="header">
+              <IonLabel>Shapes</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Circle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Triangle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Square</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="numbers" toggleIcon={arrowDownCircle}>
+            <IonItem slot="header">
+              <IonLabel>Numbers</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>1</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>2</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>3</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+        </IonAccordionGroup>
+      
+        {/*-- Open Accordion --*/}
+        <IonAccordionGroup value="colors">
+          <IonAccordion value="colors">
+            <IonItem slot="header">
+              <IonLabel>Colors</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Red</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Green</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Blue</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="shapes">
+            <IonItem slot="header">
+              <IonLabel>Shapes</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Circle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Triangle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Square</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="numbers">
+            <IonItem slot="header">
+              <IonLabel>Numbers</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>1</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>2</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>3</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+        </IonAccordionGroup>
+      
+        {/*-- Multiple Accordions --*/}
+        <IonAccordionGroup multiple={true} value={['colors', 'numbers']}>
+          <IonAccordion value="colors">
+            <IonItem slot="header">
+              <IonLabel>Colors</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Red</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Green</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Blue</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="shapes">
+            <IonItem slot="header">
+              <IonLabel>Shapes</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Circle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Triangle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Square</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="numbers">
+            <IonItem slot="header">
+              <IonLabel>Numbers</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>1</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>2</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>3</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+        </IonAccordionGroup>
+        
+        {/*-- Getting and setting the state of the accordion group --*/}
+        <IonAccordionGroup value="numbers" ref={accordionGroupRef}>
+          <IonAccordion value="colors">
+            <IonItem slot="header">
+              <IonLabel>Colors</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Red</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Green</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Blue</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="shapes">
+            <IonItem slot="header">
+              <IonLabel>Shapes</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>Circle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Triangle</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Square</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+          <IonAccordion value="numbers">
+            <IonItem slot="header">
+              <IonLabel>Numbers</IonLabel>
+            </IonItem>
+      
+            <ion-list slot="content">
+              <IonItem>
+                <IonLabel>1</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>2</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>3</IonLabel>
+              </IonItem>
+            </ion-list>
+          </IonAccordion>
+        </IonAccordionGroup>
+        
+        <IonButton onClick={() => logAccordionValue()}>Log Value of Accordion Group</IonButton>
+        <IonButton onClick={() => closeAccordion()}>Close All Accordions</IonButton>
+      </IonContent>
+    </IonPage>
+  )
 );
 ```
 
@@ -780,6 +1003,22 @@ import { Component, h } from '@stencil/core';
   styleUrl: 'accordion-example.css'
 })
 export const AccordionExample {
+  private accordionGroupRef?: HTMLIonAccordionGroupEl;
+  
+  private logAccordionValue = () => {
+    const { accordionGroupRef } = this;
+    if (accordionGroupRef) {
+      console.log(accordionGroupRef.value);
+    }
+  }
+  
+  private closeAccordion = () => {
+    const { accordionGroupRef } = this;
+    if (accordionGroupRef) {
+      accordionGroupRef.value = undefined;
+    }
+  }
+  
   render() {
     return [
       // Basic
@@ -835,7 +1074,7 @@ export const AccordionExample {
             </ion-item>
           </ion-list>
         </ion-accordion>
-      </ion-accordion-group>
+      </ion-accordion-group>,
 
       // Custom Icon
       <ion-accordion-group>
@@ -890,7 +1129,7 @@ export const AccordionExample {
             </ion-item>
           </ion-list>
         </ion-accordion>
-      </ion-accordion-group>
+      </ion-accordion-group>,
 
       // Open Accordion
       <ion-accordion-group value="colors">
@@ -945,7 +1184,7 @@ export const AccordionExample {
             </ion-item>
           </ion-list>
         </ion-accordion>
-      </ion-accordion-group>
+      </ion-accordion-group>,
 
       // Multiple Accordions
       <ion-accordion-group multiple={true} value={['colors', 'numbers']}>
@@ -1000,7 +1239,65 @@ export const AccordionExample {
             </ion-item>
           </ion-list>
         </ion-accordion>
-      </ion-accordion-group>
+      </ion-accordion-group>,
+      
+      {/* Getting and setting the state of the accordion group */}
+      <ion-accordion-group value="numbers" ref={el => this.accordionGroupRef = el}>
+        <ion-accordion value="colors">
+          <ion-item slot="header">
+            <ion-label>Colors</ion-label>
+          </ion-item>
+      
+          <ion-list slot="content">
+            <ion-item>
+              <ion-label>Red</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Green</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Blue</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+        <ion-accordion value="shapes">
+          <ion-item slot="header">
+            <ion-label>Shapes</ion-label>
+          </ion-item>
+      
+          <ion-list slot="content">
+            <ion-item>
+              <ion-label>Circle</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Triangle</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Square</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+        <ion-accordion value="numbers">
+          <ion-item slot="header">
+            <ion-label>Numbers</ion-label>
+          </ion-item>
+      
+          <ion-list slot="content">
+            <ion-item>
+              <ion-label>1</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>2</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>3</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>,
+      
+      <ion-button onClick={() => logAccordionValue()}>Log Value of Accordion Group</ion-button>,
+      <ion-button onClick={() => closeAccordion()}>Close All Accordions</ion-button>,
     ];
   }
 );
@@ -1230,17 +1527,91 @@ export const AccordionExample {
       </ion-list>
     </ion-accordion>
   </ion-accordion-group>
+  
+  <!-- Getting and setting the state of the accordion group -->
+  <ion-accordion-group value="numbers" ref="accordionGroup">
+    <ion-accordion value="colors">
+      <ion-item slot="header">
+        <ion-label>Colors</ion-label>
+      </ion-item>
+  
+      <ion-list slot="content">
+        <ion-item>
+          <ion-label>Red</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Green</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Blue</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+    <ion-accordion value="shapes">
+      <ion-item slot="header">
+        <ion-label>Shapes</ion-label>
+      </ion-item>
+  
+      <ion-list slot="content">
+        <ion-item>
+          <ion-label>Circle</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Triangle</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Square</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+    <ion-accordion value="numbers">
+      <ion-item slot="header">
+        <ion-label>Numbers</ion-label>
+      </ion-item>
+  
+      <ion-list slot="content">
+        <ion-item>
+          <ion-label>1</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>2</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>3</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+  </ion-accordion-group>
+  
+  <ion-button @click="logAccordionValue()">Log Value of Accordion Group</ion-button>
+  <ion-button @click="closeAccordion()">Close All Accordions</ion-button>
 </template>
 
 <script>
-  import { IonAccordion, IonAccordionGroup, IonItem, IonLabel } from '@ionic/vue';
-  import { defineComponent } from 'vue';
+  import { IonAccordion, IonAccordionGroup, IonButton, IonItem, IonLabel } from '@ionic/vue';
+  import { defineComponent, ref } from 'vue';
   import { arrowDownCircle } from 'ionicons/icons';
 
   export default defineComponent({
-    components: { IonAccordion, IonAccordionGroup, IonItem, IonLabel },
+    components: { IonAccordion, IonAccordionGroup, IonButton, IonItem, IonLabel },
     setup() {
-      return { arrowDownCircle }
+      const accordionGroup = ref();
+      const logAccordionValue = () => {
+        if (accordionGroup.value) {
+          console.log(accordionGroup.value.$el.value);
+        }
+      }
+      const closeAccordion = () => {
+        if (accordionGroup.value) {
+          accordionGroup.value.$el.value = undefined;
+        }
+      }
+      return {
+        accordionGroup,
+        arrowDownCircle,
+        closeAccordion,
+        logAccordionValue
+      }
     }
   });
 </script>

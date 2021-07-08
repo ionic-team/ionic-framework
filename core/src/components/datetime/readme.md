@@ -176,14 +176,6 @@ dates in JavaScript.
   <div slot="title">My Custom Title</div>
 </ion-datetime>
 
-<!-- Custom buttons -->
-<ion-datetime #customDatetime>
-  <ion-buttons slot="buttons">
-    <ion-button (click)="confirm()">Good to go!</ion-button>
-    <ion-button (click)="reset()">Reset</ion-button>
-  </ion-buttons>
-</ion-datetime>
-
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">
@@ -193,11 +185,28 @@ dates in JavaScript.
     </ion-content>
   </ng-template>
 </ion-modal>
+```
 
-```javascript
+**component.html**
+```html
+<!-- Custom buttons -->
+<ion-datetime>
+  <ion-buttons slot="buttons">
+    <ion-button (click)="confirm()">Good to go!</ion-button>
+    <ion-button (click)="reset()">Reset</ion-button>
+  </ion-buttons>
+</ion-datetime>
+```
+
+**component.ts**
+```typescript
+
+import { Component, ViewChild } from '@angular/core';
+import { IonDatetime } from '@ionic/angular';
+
 @Component({…})
 export class MyComponent {
-  @ViewChild('customDatetime', { static: false }) datetime: HTMLIonDateTimeElement;
+  @ViewChild(IonDatetime, { static: true }) datetime: IonDatetime;
   constructor() {}
   
   confirm() {
