@@ -22,7 +22,7 @@ left or right of the range.
 ```html
 <ion-list>
   <ion-item>
-    <ion-range color="danger" pin="true"></ion-range>
+    <ion-range color="danger" [pin]="true"></ion-range>
   </ion-item>
 
   <ion-item>
@@ -50,7 +50,24 @@ left or right of the range.
   <ion-item>
     <ion-range dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
+  
+  <ion-item>
+    <ion-range min="0" max="100" [pinFormatter]="customFormatter" [pin]="true"></ion-range>
+  </ion-item>
 </ion-list>
+```
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({…})
+export class MyComponent {
+  constructor() {}
+  
+  private customFormatter(value: number) {
+    return `${value}%`
+  }
+}
 ```
 
 
@@ -87,7 +104,16 @@ left or right of the range.
   <ion-item>
     <ion-range dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
+  
+  <ion-item>
+    <ion-range min="0" max="100" pin="true" id="custom-range"></ion-range>
+  </ion-item>
 </ion-list>
+
+<script>
+  const customRange = document.querySelector('#custom-range');
+  customRange.pinFormatter = (value) => `${value}%`; 
+</script>
 ```
 
 
@@ -106,6 +132,8 @@ export const RangeExamples: React.FC = () => {
     lower: number;
     upper: number;
   }>({ lower: 0, upper: 0 });
+  
+  const customFormatter = (value: number) => `${value}%`;
 
   return (
     <IonPage>
@@ -157,6 +185,10 @@ export const RangeExamples: React.FC = () => {
           <IonItem>
             <IonLabel>Value: lower: {rangeValue.lower} upper: {rangeValue.upper}</IonLabel>
           </IonItem>
+          
+          <IonItem>
+            <IonRange min={0} max={100} pinFormatter={customFormatter} pin={true}></IonRange>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
@@ -175,6 +207,8 @@ import { Component, h } from '@stencil/core';
   styleUrl: 'range-example.css'
 })
 export class RangeExample {
+  private customFormatter = (value: number) => `${value}%`;
+  
   render() {
     return [
       <ion-list>
@@ -207,6 +241,10 @@ export class RangeExample {
         <ion-item>
           <ion-range dualKnobs={true} min={21} max={72} step={3} snaps={true}></ion-range>
         </ion-item>
+        
+        <ion-item>
+          <ion-range min="0" max="100" pinFormatter={this.customFormatter} pin={true}></ion-range>
+        </ion-item>
       </ion-list>
     ];
   }
@@ -220,7 +258,7 @@ export class RangeExample {
 <template>
   <ion-list>
     <ion-item>
-      <ion-range color="danger" pin="true"></ion-range>
+      <ion-range color="danger" :pin="true"></ion-range>
     </ion-item>
 
     <ion-item>
@@ -248,6 +286,10 @@ export class RangeExample {
     <ion-item>
       <ion-range ref="rangeDualKnobs" dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
     </ion-item>
+    
+    <ion-item>
+      <ion-range min="0" max="100" :pin-formatter="customFormatter" :pin="true"></ion-range>
+    </ion-item>
   </ion-list>
 </template>
 
@@ -260,6 +302,11 @@ export default defineComponent({
   mounted() {
     // Sets initial value for dual-knob ion-range
     this.$refs.rangeDualKnobs.value = { lower: 24, upper: 42 };
+  },
+  setup() {
+    const customFormatter = (value: number) => `${value}%`;
+    
+    return { customFormatter };
   }
 });
 </script>
