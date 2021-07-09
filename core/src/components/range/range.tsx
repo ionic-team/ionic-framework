@@ -7,8 +7,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 import { PinFormatter } from './range-interface';
 
-const DEFAULT_PIN_FORMATTER: PinFormatter = (value: number): number => Math.round(value);
-
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -110,7 +108,7 @@ export class Range implements ComponentInterface {
    * A callback used to format the pin text.
    * By default the pin text is set to `Math.round(value)`.
    */
-  @Prop() pinFormatter?: PinFormatter;
+  @Prop() pinFormatter: PinFormatter = (value: number): number => Math.round(value);
 
   /**
    * If `true`, the knob snaps to tick marks evenly spaced based
@@ -419,7 +417,7 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId, pinFormatter } = this;
 
     /**
      * Look for external label, ion-label, or aria-labelledby.
@@ -438,7 +436,6 @@ export class Range implements ComponentInterface {
     const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
-    const pinFormatter = this.pinFormatter || DEFAULT_PIN_FORMATTER;
 
     const tickStyle = (tick: any) => {
       return {

@@ -1956,7 +1956,7 @@ export namespace Components {
         /**
           * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
          */
-        "pinFormatter"?: PinFormatter;
+        "pinFormatter": PinFormatter;
         /**
           * If `true`, the knob snaps to tick marks evenly spaced based on the step property value.
          */
