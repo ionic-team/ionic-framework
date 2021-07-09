@@ -16,7 +16,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: true
+  shadow: {
+    delegatesFocus: false,
+  }
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
@@ -288,6 +290,7 @@ export class Segment implements ComponentInterface {
 
     this.value = current.value;
     this.setCheckedClasses();
+    current.focus();
   }
 
   private setCheckedClasses() {
@@ -431,12 +434,56 @@ export class Segment implements ComponentInterface {
     this.checked = current;
   }
 
-  private onKeyUp = (ev: KeyboardEvent) => {
-    if (['Enter', ' '].includes(ev.key)) {
-      const previous = this.checked;
-      const current = this.el.querySelector('ion-segment-button:focus') as HTMLIonSegmentButtonElement;
-      previous && current ? this.checkButton(previous, current) : this.setCheckedClasses();
+  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
+    switch (selector) {
+      case 'first':
+        return this.el.querySelector('ion-segment-button:first-of-type');
+      case 'last':
+        return this.el.querySelector('ion-segment-button:last-of-type');
+      case 'next':
+        return this.checked?.nextElementSibling as HTMLIonSegmentButtonElement || this.getSegmentButton('first');
+      case 'previous':
+        return this.checked?.previousElementSibling as HTMLIonSegmentButtonElement || this.getSegmentButton('last');
+      default:
+        return null;
     }
+  }
+
+  private onKeyUp = (ev: KeyboardEvent) => {
+    const previous = this.checked;
+    let current;
+    switch (ev.key) {
+      case 'Enter':
+      case ' ':
+        ev.preventDefault();
+        current = this.el.querySelector('ion-segment-button.ion-focused') as HTMLIonSegmentButtonElement;
+        break;
+      case 'ArrowRight':
+        ev.preventDefault();
+        current = this.getSegmentButton('next');
+        break;
+      case 'ArrowLeft':
+        ev.preventDefault();
+        current = this.getSegmentButton('previous')
+        break;
+      case 'Home':
+        ev.preventDefault();
+        current = this.getSegmentButton('first');
+        break;
+      case 'End':
+        ev.preventDefault();
+        current = this.getSegmentButton('last');
+        break;
+      default:
+        break;
+    }
+
+    previous && current ? this.checkButton(previous, current) : this.setCheckedClasses();
+  }
+
+  //TODO: not working
+  private onFocus = (ev: Event) => {
+    this.checked?.focus();
   }
 
   render() {
@@ -446,6 +493,7 @@ export class Segment implements ComponentInterface {
         role="tablist"
         onClick={this.onClick}
         onKeyup={this.onKeyUp}
+        onFocus={this.onFocus}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
