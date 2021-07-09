@@ -16,6 +16,7 @@ export class ActionSheetExample {
         text: 'Delete',
         role: 'destructive',
         icon: 'trash',
+        id: 'delete-button',
         handler: () => {
           console.log('Delete clicked');
         }
@@ -47,6 +48,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {

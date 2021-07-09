@@ -54,7 +54,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder?: string | null;
+  @Prop() placeholder?: string;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -412,7 +412,7 @@ export class Select implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'has-placeholder': this.placeholder != null,
+      'has-placeholder': this.placeholder !== undefined,
       'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
       'select-disabled': this.disabled
@@ -442,7 +442,7 @@ export class Select implements ComponentInterface {
 
     let addPlaceholderClass = false;
     let selectText = displayValue;
-    if (selectText === '' && placeholder != null) {
+    if (selectText === '' && placeholder !== undefined) {
       selectText = placeholder;
       addPlaceholderClass = true;
     }

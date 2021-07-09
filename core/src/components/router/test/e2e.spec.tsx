@@ -77,7 +77,7 @@ describe('ionic-conference-app', () => {
 });
 
 export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
-  return routerPathToChain(parsePath(path), routes)!.map(r => r.id);
+  return routerPathToChain(parsePath(path).segments, routes)!.map(r => r.id);
 }
 
 export function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {

@@ -4,6 +4,7 @@ import {
   arrowBackSharp,
   caretBackSharp,
   chevronBack,
+  chevronDown,
   chevronForward,
   close,
   closeCircle,
@@ -35,6 +36,7 @@ export {
   mdTransitionAnimation,
   NavComponentWithProps,
   setupConfig,
+  IonicSwiper,
 } from '@ionic/core';
 export * from './proxies';
 
@@ -69,11 +71,21 @@ export * from './hrefprops';
 // Ionic Animations
 export { CreateAnimation } from './CreateAnimation';
 
+// Hooks
+export { useIonActionSheet, UseIonActionSheetResult } from '../hooks/useIonActionSheet';
+export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
+export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
+export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
+export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
+export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
+export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
+
 // Icons that are used by internal components
 addIcons({
   'arrow-back-sharp': arrowBackSharp,
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
+  'chevron-down': chevronDown,
   'chevron-forward': chevronForward,
   close,
   'close-circle': closeCircle,

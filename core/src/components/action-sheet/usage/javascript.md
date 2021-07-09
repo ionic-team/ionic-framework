@@ -8,6 +8,7 @@ async function presentActionSheet() {
     text: 'Delete',
     role: 'destructive',
     icon: 'trash',
+    id: 'delete-button',
     handler: () => {
       console.log('Delete clicked');
     }
@@ -38,6 +39,9 @@ async function presentActionSheet() {
     }
   }];
   document.body.appendChild(actionSheet);
-  return actionSheet.present();
+  await actionSheet.present();
+
+  const { role } = await actionSheet.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```

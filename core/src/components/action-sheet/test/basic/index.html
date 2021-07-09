@@ -58,6 +58,10 @@
       --ion-backdrop-opacity: 1;
     }
 
+    #delete-button {
+      color: #eb445a;
+    }
+
   </style>
   <script>
     window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
@@ -70,10 +74,12 @@
       const mode = Ionic.mode;
       await openActionSheet({
         header: "Albums",
+        subHeader: 'This is a sub header inside of an action sheet',
         buttons: [{
           text: 'Delete',
           role: 'destructive',
           icon: 'trash',
+          id: 'delete-button',
           handler: () => {
             console.log('Delete clicked');
           }

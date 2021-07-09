@@ -1,5 +1,5 @@
-import { AnimationBuilder } from '@ionic/core';
 import {
+  AnimationBuilder,
   LocationHistory,
   NavManager,
   RouteAction,
@@ -76,7 +76,9 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     };
   }
 
-  handleChangeTab(tab: string, path: string, routeOptions?: any) {
+  handleChangeTab(tab: string, path?: string, routeOptions?: any) {
+    if (!path) { return; }
+
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname, search] = path.split('?');
     if (routeInfo) {
@@ -201,8 +203,16 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.incomingRouteParams = undefined;
   }
 
+  /**
+   * history@4.x uses goBack(), history@5.x uses back()
+   * TODO: If support for React Router <=5 is dropped
+   * this logic is no longer needed. We can just
+   * assume back() is available.
+   */
   handleNativeBack() {
-    this.props.history.goBack();
+    const history = this.props.history as any;
+    const goBack = history.goBack || history.back;
+    goBack();
   }
 
   handleNavigate(
@@ -241,8 +251,28 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           routeDirection: 'back',
           routeAnimation: routeAnimation || routeInfo.routeAnimation,
         };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
-          this.props.history.goBack();
+        if (
+          routeInfo.lastPathname === routeInfo.pushedByRoute ||
+          (
+            /**
+             * We need to exclude tab switches/tab
+             * context changes here because tabbed
+             * navigation is not linear, but router.back()
+             * will go back in a linear fashion.
+             */
+            prevInfo.pathname === routeInfo.pushedByRoute &&
+            routeInfo.tab === '' && prevInfo.tab === ''
+          )
+        ) {
+          /**
+           * history@4.x uses goBack(), history@5.x uses back()
+           * TODO: If support for React Router <=5 is dropped
+           * this logic is no longer needed. We can just
+           * assume back() is available.
+           */
+          const history = this.props.history as any;
+          const goBack = history.goBack || history.back;
+          goBack();
         } else {
           this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back');
         }

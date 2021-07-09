@@ -63,6 +63,7 @@ export class ActionSheetExample {
         text: 'Delete',
         role: 'destructive',
         icon: 'trash',
+        id: 'delete-button',
         handler: () => {
           console.log('Delete clicked');
         }
@@ -94,6 +95,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
@@ -117,6 +121,7 @@ async function presentActionSheet() {
     text: 'Delete',
     role: 'destructive',
     icon: 'trash',
+    id: 'delete-button',
     handler: () => {
       console.log('Delete clicked');
     }
@@ -147,7 +152,10 @@ async function presentActionSheet() {
     }
   }];
   document.body.appendChild(actionSheet);
-  return actionSheet.present();
+  await actionSheet.present();
+
+  const { role } = await actionSheet.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -155,6 +163,59 @@ async function presentActionSheet() {
 ### React
 
 ```tsx
+/* Using with useIonActionSheet Hook */
+
+import React from 'react';
+import {
+  IonButton,
+  IonContent,
+  IonPage,
+  useIonActionSheet,
+} from '@ionic/react';
+
+const ActionSheetExample: React.FC = () => {
+  const [present, dismiss] = useIonActionSheet();
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              buttons: [{ text: 'Ok' }, { text: 'Cancel' }],
+              header: 'Action Sheet'
+            })
+          }
+        >
+          Show ActionSheet
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present([{ text: 'Ok' }, { text: 'Cancel' }], 'Action Sheet')
+          }
+        >
+          Show ActionSheet using params
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => {
+            present([{ text: 'Ok' }, { text: 'Cancel' }], 'Action Sheet');
+            setTimeout(dismiss, 3000);
+          }}
+        >
+          Show ActionSheet, hide after 3 seconds
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonActionSheet Component */
+
 import React, { useState } from 'react';
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 import { trash, share, caretForwardCircle, heart, close } from 'ionicons/icons';
@@ -175,6 +236,7 @@ export const ActionSheetExample: React.FC = () => {
           text: 'Delete',
           role: 'destructive',
           icon: trash,
+          id: 'delete-button',
           handler: () => {
             console.log('Delete clicked');
           }
@@ -232,6 +294,7 @@ export class ActionSheetExample {
         text: 'Delete',
         role: 'destructive',
         icon: 'trash',
+        id: 'delete-button',
         handler: () => {
           console.log('Delete clicked');
         }
@@ -263,6 +326,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -301,6 +367,7 @@ export default defineComponent({
               text: 'Delete',
               role: 'destructive',
               icon: trash,
+              id: 'delete-button',
               handler: () => {
                 console.log('Delete clicked')
               },
@@ -336,7 +403,10 @@ export default defineComponent({
             },
           ],
         });
-      return actionSheet.present();
+      await actionSheet.present();
+
+      const { role } = await actionSheet.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 });
@@ -353,7 +423,7 @@ Developers can also use this component directly in their template:
     header="Albums"
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-action-sheet>
 </template>

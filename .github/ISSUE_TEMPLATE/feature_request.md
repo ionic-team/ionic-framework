@@ -19,7 +19,9 @@ assignees: ''
 **Ionic version:**
 <!-- (For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1) -->
 <!-- (For Ionic 2.x & 3.x issues, please use https://github.com/ionic-team/ionic-v3) -->
-[x] **4.x**
+[ ] **4.x**
+[ ] **5.x**
+[ ] **6.x**
 
 **Describe the Feature Request**
 <!-- A clear and concise description of what the feature request is. Please include if your feature request is related to a problem. -->

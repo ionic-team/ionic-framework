@@ -72,6 +72,9 @@ export class AlertExample {
     });
 
     await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   async presentAlertMultipleButtons() {
@@ -96,11 +99,13 @@ export class AlertExample {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
+          id: 'cancel-button',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
+          id: 'confirm-button',
           handler: () => {
             console.log('Confirm Okay');
           }
@@ -204,37 +209,55 @@ export class AlertExample {
           type: 'radio',
           label: 'Radio 1',
           value: 'value1',
+          handler: () => {
+            console.log('Radio 1 selected');
+          },
           checked: true
         },
         {
           name: 'radio2',
           type: 'radio',
           label: 'Radio 2',
-          value: 'value2'
+          value: 'value2',
+          handler: () => {
+            console.log('Radio 2 selected');
+          }
         },
         {
           name: 'radio3',
           type: 'radio',
           label: 'Radio 3',
-          value: 'value3'
+          value: 'value3',
+          handler: () => {
+            console.log('Radio 3 selected');
+          }
         },
         {
           name: 'radio4',
           type: 'radio',
           label: 'Radio 4',
-          value: 'value4'
+          value: 'value4',
+          handler: () => {
+            console.log('Radio 4 selected');
+          }
         },
         {
           name: 'radio5',
           type: 'radio',
           label: 'Radio 5',
-          value: 'value5'
+          value: 'value5',
+          handler: () => {
+            console.log('Radio 5 selected');
+          }
         },
         {
           name: 'radio6',
           type: 'radio',
           label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-          value: 'value6'
+          value: 'value6',
+          handler: () => {
+            console.log('Radio 6 selected');
+          }
         }
       ],
       buttons: [
@@ -267,6 +290,9 @@ export class AlertExample {
           type: 'checkbox',
           label: 'Checkbox 1',
           value: 'value1',
+          handler: () => {
+            console.log('Checkbox 1 selected');
+          },
           checked: true
         },
 
@@ -274,35 +300,50 @@ export class AlertExample {
           name: 'checkbox2',
           type: 'checkbox',
           label: 'Checkbox 2',
-          value: 'value2'
+          value: 'value2',
+          handler: () => {
+            console.log('Checkbox 2 selected');
+          }
         },
 
         {
           name: 'checkbox3',
           type: 'checkbox',
           label: 'Checkbox 3',
-          value: 'value3'
+          value: 'value3',
+          handler: () => {
+            console.log('Checkbox 3 selected');
+          }
         },
 
         {
           name: 'checkbox4',
           type: 'checkbox',
           label: 'Checkbox 4',
-          value: 'value4'
+          value: 'value4',
+          handler: () => {
+            console.log('Checkbox 4 selected');
+          }
         },
 
         {
           name: 'checkbox5',
           type: 'checkbox',
           label: 'Checkbox 5',
-          value: 'value5'
+          value: 'value5',
+          handler: () => {
+            console.log('Checkbox 5 selected');
+          }
         },
 
         {
           name: 'checkbox6',
           type: 'checkbox',
           label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
-          value: 'value6'
+          value: 'value6',
+          handler: () => {
+            console.log('Checkbox 6 selected');
+          }
         }
       ],
       buttons: [
@@ -345,7 +386,10 @@ function presentAlert() {
   alert.buttons = ['OK'];
 
   document.body.appendChild(alert);
-  return alert.present();
+  await alert.present();
+
+  const { role } = await alert.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 
 function presentAlertMultipleButtons() {
@@ -370,11 +414,13 @@ function presentAlertConfirm() {
       text: 'Cancel',
       role: 'cancel',
       cssClass: 'secondary',
+      id: 'cancel-button',
       handler: (blah) => {
         console.log('Confirm Cancel: blah');
       }
     }, {
       text: 'Okay',
+      id: 'confirm-button',
       handler: () => {
         console.log('Confirm Okay')
       }
@@ -474,32 +520,50 @@ function presentAlertRadio() {
       type: 'radio',
       label: 'Radio 1',
       value: 'value1',
+      handler: () => {
+        console.log('Radio 1 selected');
+      },
       checked: true
     },
     {
       type: 'radio',
       label: 'Radio 2',
-      value: 'value2'
+      value: 'value2',
+      handler: () => {
+        console.log('Radio 2 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 3',
-      value: 'value3'
+      value: 'value3',
+      handler: () => {
+        console.log('Radio 3 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 4',
-      value: 'value4'
+      value: 'value4',
+      handler: () => {
+        console.log('Radio 4 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 5',
-      value: 'value5'
+      value: 'value5',
+      handler: () => {
+        console.log('Radio 5 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-      value: 'value6'
+      value: 'value6',
+      handler: () => {
+        console.log('Radio 6 selected');
+      }
     }
   ];
   alert.buttons = [
@@ -530,37 +594,55 @@ function presentAlertCheckbox() {
       type: 'checkbox',
       label: 'Checkbox 1',
       value: 'value1',
+      handler: () => {
+        console.log('Checkbox 1 selected');
+      },
       checked: true
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 2',
-      value: 'value2'
+      value: 'value2',
+      handler: () => {
+        console.log('Checkbox 2 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 3',
-      value: 'value3'
+      value: 'value3',
+      handler: () => {
+        console.log('Checkbox 3 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 4',
-      value: 'value4'
+      value: 'value4',
+      handler: () => {
+        console.log('Checkbox 4 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 5',
-      value: 'value5'
+      value: 'value5',
+      handler: () => {
+        console.log('Checkbox 5 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
-      value: 'value6'
+      value: 'value6',
+      handler: () => {
+        console.log('Checkbox 6 selected');
+      }
     }
   ];
   alert.buttons = [
@@ -588,6 +670,48 @@ function presentAlertCheckbox() {
 ### React
 
 ```tsx
+/* Using with useIonAlert Hook */
+
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonAlert } from '@ionic/react';
+
+const AlertExample: React.FC = () => {
+  const [present] = useIonAlert();
+  return (
+    <IonPage>
+      <IonContent fullscreen>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              cssClass: 'my-css',
+              header: 'Alert',
+              message: 'alert from hook',
+              buttons: [
+                'Cancel',
+                { text: 'Ok', handler: (d) => console.log('ok pressed') },
+              ],
+              onDidDismiss: (e) => console.log('did dismiss'),
+            })
+          }
+        >
+          Show Alert
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('hello with params', [{ text: 'Ok' }])}
+        >
+          Show Alert using params
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonAlert Component */
+
 import React, { useState } from 'react';
 import { IonAlert, IonButton, IonContent } from '@ionic/react';
 
@@ -639,12 +763,14 @@ export const AlertExample: React.FC = () => {
               text: 'Cancel',
               role: 'cancel',
               cssClass: 'secondary',
+              id: 'cancel-button',
               handler: blah => {
                 console.log('Confirm Cancel: blah');
               }
             },
             {
               text: 'Okay',
+              id: 'confirm-button',
               handler: () => {
                 console.log('Confirm Okay');
               }
@@ -738,37 +864,55 @@ export const AlertExample: React.FC = () => {
               type: 'radio',
               label: 'Radio 1',
               value: 'value1',
+              handler: () => {
+                console.log('Radio 1 selected');
+              },
               checked: true
             },
             {
               name: 'radio2',
               type: 'radio',
               label: 'Radio 2',
-              value: 'value2'
+              value: 'value2',
+              handler: () => {
+                console.log('Radio 2 selected');
+              }
             },
             {
               name: 'radio3',
               type: 'radio',
               label: 'Radio 3',
-              value: 'value3'
+              value: 'value3',
+              handler: () => {
+                console.log('Radio 3 selected');
+              }
             },
             {
               name: 'radio4',
               type: 'radio',
               label: 'Radio 4',
-              value: 'value4'
+              value: 'value4',
+              handler: () => {
+                console.log('Radio 4 selected');
+              }
             },
             {
               name: 'radio5',
               type: 'radio',
               label: 'Radio 5',
-              value: 'value5'
+              value: 'value5',
+              handler: () => {
+                console.log('Radio 5 selected');
+              }
             },
             {
               name: 'radio6',
               type: 'radio',
               label: 'Radio 6',
-              value: 'value6'
+              value: 'value6',
+              handler: () => {
+                console.log('Radio 6 selected');
+              }
             }
           ]}
           buttons={[
@@ -800,37 +944,55 @@ export const AlertExample: React.FC = () => {
               type: 'checkbox',
               label: 'Checkbox 1',
               value: 'value1',
+              handler: () => {
+                console.log('Checkbox 1 selected');
+              },
               checked: true
             },
             {
               name: 'checkbox2',
               type: 'checkbox',
               label: 'Checkbox 2',
-              value: 'value2'
+              value: 'value2',
+              handler: () => {
+                console.log('Checkbox 2 selected');
+              }
             },
             {
               name: 'checkbox3',
               type: 'checkbox',
               label: 'Checkbox 3',
-              value: 'value3'
+              value: 'value3',
+              handler: () => {
+                console.log('Checkbox 3 selected');
+              }
             },
             {
               name: 'checkbox4',
               type: 'checkbox',
               label: 'Checkbox 4',
-              value: 'value4'
+              value: 'value4',
+              handler: () => {
+                console.log('Checkbox 4 selected');
+              }
             },
             {
               name: 'checkbox5',
               type: 'checkbox',
               label: 'Checkbox 5',
-              value: 'value5'
+              value: 'value5',
+              handler: () => {
+                console.log('Checkbox 5 selected');
+              }
             },
             {
               name: 'checkbox6',
               type: 'checkbox',
               label: 'Checkbox 6',
-              value: 'value6'
+              value: 'value6',
+              handler: () => {
+                console.log('Checkbox 6 selected');
+              }
             }
           ]}
           buttons={[
@@ -881,6 +1043,9 @@ export class AlertExample {
     });
 
     await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   async presentAlertMultipleButtons() {
@@ -905,11 +1070,13 @@ export class AlertExample {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
+          id: 'cancel-button',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
+          id: 'confirm-button',
           handler: () => {
             console.log('Confirm Okay');
           }
@@ -1013,37 +1180,55 @@ export class AlertExample {
           type: 'radio',
           label: 'Radio 1',
           value: 'value1',
+          handler: () => {
+            console.log('Radio 1 selected');
+          },
           checked: true
         },
         {
           name: 'radio2',
           type: 'radio',
           label: 'Radio 2',
-          value: 'value2'
+          value: 'value2',
+          handler: () => {
+            console.log('Radio 2 selected');
+          }
         },
         {
           name: 'radio3',
           type: 'radio',
           label: 'Radio 3',
-          value: 'value3'
+          value: 'value3',
+          handler: () => {
+            console.log('Radio 3 selected');
+          }
         },
         {
           name: 'radio4',
           type: 'radio',
           label: 'Radio 4',
-          value: 'value4'
+          value: 'value4',
+          handler: () => {
+            console.log('Radio 4 selected');
+          }
         },
         {
           name: 'radio5',
           type: 'radio',
           label: 'Radio 5',
-          value: 'value5'
+          value: 'value5',
+          handler: () => {
+            console.log('Radio 5 selected');
+          }
         },
         {
           name: 'radio6',
           type: 'radio',
           label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-          value: 'value6'
+          value: 'value6',
+          handler: () => {
+            console.log('Radio 6 selected');
+          }
         }
       ],
       buttons: [
@@ -1076,42 +1261,59 @@ export class AlertExample {
           type: 'checkbox',
           label: 'Checkbox 1',
           value: 'value1',
+          handler: () => {
+            console.log('Checkbox 1 selected');
+          },
           checked: true
         },
-
         {
           name: 'checkbox2',
           type: 'checkbox',
           label: 'Checkbox 2',
-          value: 'value2'
+          value: 'value2',
+          handler: () => {
+            console.log('Checkbox 2 selected');
+          }
         },
 
         {
           name: 'checkbox3',
           type: 'checkbox',
           label: 'Checkbox 3',
-          value: 'value3'
+          value: 'value3',
+          handler: () => {
+            console.log('Checkbox 3 selected');
+          }
         },
 
         {
           name: 'checkbox4',
           type: 'checkbox',
           label: 'Checkbox 4',
-          value: 'value4'
+          value: 'value4',
+          handler: () => {
+            console.log('Checkbox 4 selected');
+          }
         },
 
         {
           name: 'checkbox5',
           type: 'checkbox',
           label: 'Checkbox 5',
-          value: 'value5'
+          value: 'value5',
+          handler: () => {
+            console.log('Checkbox 5 selected');
+          }
         },
 
         {
           name: 'checkbox6',
           type: 'checkbox',
           label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
-          value: 'value6'
+          value: 'value6',
+          handler: () => {
+            console.log('Checkbox 6 selected');
+          }
         }
       ],
       buttons: [
@@ -1179,7 +1381,10 @@ export default defineComponent({
           message: 'This is an alert message.',
           buttons: ['OK'],
         });
-      return alert.present();
+      await alert.present();
+
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
 
     async presentAlertMultipleButtons() {
@@ -1205,12 +1410,14 @@ export default defineComponent({
               text: 'Cancel',
               role: 'cancel',
               cssClass: 'secondary',
+              id: 'cancel-button',
               handler: blah => {
                 console.log('Confirm Cancel:', blah)
               },
             },
             {
               text: 'Okay',
+              id: 'confirm-button',
               handler: () => {
                 console.log('Confirm Okay')
               },
@@ -1304,32 +1511,50 @@ export default defineComponent({
               type: 'radio',
               label: 'Radio 1',
               value: 'value1',
+              handler: () => {
+                console.log('Radio 1 selected');
+              },
               checked: true,
             },
             {
               type: 'radio',
               label: 'Radio 2',
               value: 'value2',
+              handler: () => {
+                console.log('Radio 2 selected');
+              }
             },
             {
               type: 'radio',
               label: 'Radio 3',
               value: 'value3',
+              handler: () => {
+                console.log('Radio 3 selected');
+              }
             },
             {
               type: 'radio',
               label: 'Radio 4',
               value: 'value4',
+              handler: () => {
+                console.log('Radio 4 selected');
+              }
             },
             {
               type: 'radio',
               label: 'Radio 5',
               value: 'value5',
+              handler: () => {
+                console.log('Radio 5 selected');
+              }
             },
             {
               type: 'radio',
               label: 'Radio 6',
               value: 'value6',
+              handler: () => {
+                console.log('Radio 6 selected');
+              }
             },
           ],
           buttons: [
@@ -1362,6 +1587,9 @@ export default defineComponent({
               type: 'checkbox',
               label: 'Checkbox 1',
               value: 'value1',
+              handler: () => {
+                console.log('Checkbox 1 selected');
+              },
               checked: true,
             },
 
@@ -1369,30 +1597,45 @@ export default defineComponent({
               type: 'checkbox',
               label: 'Checkbox 2',
               value: 'value2',
+              handler: () => {
+                console.log('Checkbox 2 selected');
+              }
             },
 
             {
               type: 'checkbox',
               label: 'Checkbox 3',
               value: 'value3',
+              handler: () => {
+                console.log('Checkbox 3 selected');
+              }
             },
 
             {
               type: 'checkbox',
               label: 'Checkbox 4',
               value: 'value4',
+              handler: () => {
+                console.log('Checkbox 4 selected');
+              }
             },
 
             {
               type: 'checkbox',
               label: 'Checkbox 5',
               value: 'value5',
+              handler: () => {
+                console.log('Checkbox 5 selected');
+              }
             },
 
             {
               type: 'checkbox',
               label: 'Checkbox 6',
               value: 'value6',
+              handler: () => {
+                console.log('Checkbox 6 selected');
+              }
             },
           ],
           buttons: [
@@ -1431,7 +1674,7 @@ Developers can also use this component directly in their template:
     message="This is an alert message."
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-alert>
 </template>

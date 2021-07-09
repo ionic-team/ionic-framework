@@ -21,6 +21,7 @@ export default defineComponent({
               text: 'Delete',
               role: 'destructive',
               icon: trash,
+              id: 'delete-button',
               handler: () => {
                 console.log('Delete clicked')
               },
@@ -56,7 +57,10 @@ export default defineComponent({
             },
           ],
         });
-      return actionSheet.present();
+      await actionSheet.present();
+
+      const { role } = await actionSheet.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 });
@@ -73,7 +77,7 @@ Developers can also use this component directly in their template:
     header="Albums"
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-action-sheet>
 </template>

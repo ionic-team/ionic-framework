@@ -11,10 +11,13 @@
   * [References](#references)
 - [Accessibility](#accessibility)
   * [Checkbox](#checkbox)
+  * [Switch](#switch)
+  * [Accordion](#accordion)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
+- [RTL](#rtl)
 
 ## Button States
 
@@ -371,7 +374,6 @@ ion-ripple-effect {
 #### Example Components
 
 - [ion-checkbox](https://github.com/ionic-team/ionic/tree/master/core/src/components/checkbox)
-- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
 
 #### VoiceOver
 
@@ -432,9 +434,13 @@ const { label, labelId, labelText } = getAriaLabel(el, inputId);
 where `el` and `inputId` are the following:
 
 ```tsx
-private inputId = `ion-cb-${checkboxIds++}`;
+export class Checkbox implements ComponentInterface {
+  private inputId = `ion-cb-${checkboxIds++}`;
 
-@Element() el!: HTMLElement;
+  @Element() el!: HTMLElement;
+
+  ...
+}
 ```
 
 This can then be added to the `Host` like the following:
@@ -448,7 +454,7 @@ This can then be added to the `Host` like the following:
 >
 ```
 
-In addition to that, the checkbox should have a label added:
+In addition to that, the checkbox input should have a label added:
 
 ```tsx
 <Host
@@ -487,6 +493,150 @@ currently on a checkbox inside of a checkbox
 ```
 
 This is a compromise we have to make in order for it to work with the other screen readers & Safari.
+
+
+### Switch
+
+#### Example Components
+
+- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
+
+#### Voiceover
+
+In order for VoiceOver to work properly with a switch component there must be a native `input` with `type="checkbox"` and `role="switch"`, and `aria-checked` and `role="switch"` **must** be on the host element. The `aria-hidden` attribute needs to be added if the switch is disabled, preventing iOS users from selecting it:
+
+```tsx
+render() {
+  const { checked, disabled } = this;
+
+  return (
+    <Host
+      aria-checked={`${checked}`}
+      aria-hidden={disabled ? 'true' : null}
+      role="switch"
+    >
+      <input
+        type="checkbox"
+        role="switch"
+      />
+      ...
+    </Host>
+  );
+}
+```
+
+#### NVDA
+
+It is required to have `aria-checked` on the native input for checked to read properly and `disabled` to prevent tabbing to the input:
+
+```tsx
+render() {
+  const { checked, disabled } = this;
+
+  return (
+    <Host
+      aria-checked={`${checked}`}
+      aria-hidden={disabled ? 'true' : null}
+      role="switch"
+    >
+      <input
+        type="checkbox"
+        role="switch"
+        aria-checked={`${checked}`}
+        disabled={disabled}
+      />
+      ...
+    </Host>
+  );
+}
+```
+
+#### Labels
+
+A helper function has been created to get the proper `aria-label` for the switch. This can be imported as `getAriaLabel` like the following:
+
+```tsx
+const { label, labelId, labelText } = getAriaLabel(el, inputId);
+```
+
+where `el` and `inputId` are the following:
+
+```tsx
+export class Toggle implements ComponentInterface {
+  private inputId = `ion-tg-${toggleIds++}`;
+
+  @Element() el!: HTMLElement;
+
+  ...
+}
+```
+
+This can then be added to the `Host` like the following:
+
+```tsx
+<Host
+  aria-labelledby={label ? labelId : null}
+  aria-checked={`${checked}`}
+  aria-hidden={disabled ? 'true' : null}
+  role="switch"
+>
+```
+
+In addition to that, the checkbox input should have a label added:
+
+```tsx
+<Host
+  aria-labelledby={label ? labelId : null}
+  aria-checked={`${checked}`}
+  aria-hidden={disabled ? 'true' : null}
+  role="switch"
+>
+  <label htmlFor={inputId}>
+    {labelText}
+  </label>
+  <input
+    type="checkbox"
+    role="switch"
+    aria-checked={`${checked}`}
+    disabled={disabled}
+    id={inputId}
+  />
+```
+
+
+#### Hidden Input
+
+A helper function to render a hidden input has been added, it can be added in the `render`:
+
+```tsx
+renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
+```
+
+> This is required for the switch to work with forms.
+
+
+#### Known Issues
+
+When using VoiceOver on macOS or iOS, Chrome will announce the switch as a checked or unchecked `checkbox`:
+
+```
+You are currently on a switch. To select or deselect this checkbox, press Control-Option-Space.
+```
+
+There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196354
+
+### Accordion
+
+#### Example Components
+
+- [ion-accordion](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion)
+- [ion-accordion-group](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion-group)
+
+#### NVDA
+
+In order to use the arrow keys to navigate the accordions, users must be in "Focus Mode". Typically, NVDA automatically switches between Browse and Focus modes when inside of a form, but not every accordion needs a form.
+
+You can either wrap your `ion-accordion-group` in a form, or manually toggle Focus Mode using NVDA's keyboard shortcut.
 
 
 ## Rendering Anchor or Button
@@ -567,4 +717,40 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 
 /* IN SHADOW*/
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+```
+
+## RTL
+
+When you need to support both LTR and RTL modes, try to avoid using values such as `left` and `right`. For certain CSS properties, you can use the appropriate mixin to have this handled for you automatically.
+
+For example, if you wanted `transform-origin` to be RTL-aware, you would use the `transform-origin` mixin:
+
+```css
+@include transform-origin(start, center);
+```
+
+This would output `transform-origin: left center` in LTR mode and `transform-origin: right center` in RTL mode. 
+
+These mixins depend on the `:host-context` pseudo-class when used inside of shadow components, which is not supported in WebKit. As a result, these mixins will not work in Safari for macOS and iOS when applied to shadow components.
+
+To work around this, you should set an RTL class on the host of your component and set your RTL styles by targeting that class:
+
+```tsx
+<Host
+class={{
+  'my-cmp-rtl': document.dir === 'rtl'
+})
+>
+ ...
+</Host>
+```
+
+```css
+:host {
+  transform-origin: left center;
+}
+
+:host(.my-cmp-rtl) {
+  transform-origin: right center;
+}
 ```
