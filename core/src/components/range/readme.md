@@ -11,6 +11,10 @@ Labels can be placed on either side of the range by adding the
 be an `ion-label`, it can be added to any element to place it to the
 left or right of the range.
 
+## Custom Pin Formatters
+
+When using a pin, the default behavior is to round the value that gets displayed using `Math.round()`. This behavior can be customized by passing in a formatter function to the `pinFormatter` property. See the [Usage](#usage) section for an example.
+
 
 <!-- Auto Generated Below -->
 
