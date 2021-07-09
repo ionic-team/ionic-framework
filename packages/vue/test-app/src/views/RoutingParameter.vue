@@ -21,8 +21,6 @@
       <ion-button router-link="/routing/abc">Go to Parameter Page ABC</ion-button>
       <ion-button router-link="/routing/xyz">Go to Parameter Page XYZ</ion-button>
 
-      <ion-button @click="goBack()">Go back 2 pages</ion-button>
-
       <div class="ion-padding" id="parameter-value">
         {{ $props.id }}
       </div>
@@ -42,7 +40,6 @@ import {
   IonToolbar
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { useRouter } from 'vue-router';
 
 export default defineComponent({
   props: {
@@ -57,14 +54,6 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar
-  },
-  setup() {
-    const router = useRouter();
-    const goBack = () => {
-      router.go(-2);
-    }
-
-    return { goBack };
   }
 });
 </script>

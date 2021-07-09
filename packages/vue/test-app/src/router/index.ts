@@ -78,7 +78,7 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/tabs',
+    path: '/tabs/',
     component: () => import('@/views/Tabs.vue'),
     children: [
       {
