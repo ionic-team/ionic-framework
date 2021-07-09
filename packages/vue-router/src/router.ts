@@ -18,7 +18,7 @@ import {
 import { AnimationBuilder } from '@ionic/vue';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
-  let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };
+  let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined, delta: undefined };
 
   /**
    * Ionic Vue should only react to navigation
@@ -32,7 +32,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized, failure?: NavigationFailure) => {
     if (failure) return;
 
-    const { direction, action } = currentNavigationInfo;
+    const { direction, action, delta } = currentNavigationInfo;
 
     /**
      * When calling router.replace, we are not informed
@@ -43,9 +43,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * because window.history will be undefined when using SSR.
      */
     const replaceAction = opts.history.state.replaced ? 'replace' : undefined;
-    handleHistoryChange(to, action || replaceAction, direction);
+    handleHistoryChange(to, action || replaceAction, direction, delta);
 
-    currentNavigationInfo = { direction: undefined, action: undefined };
+    currentNavigationInfo = { direction: undefined, action: undefined, delta: undefined };
   });
 
   const locationHistory = createLocationHistory();
@@ -78,6 +78,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * router.beforeEach
      */
     currentNavigationInfo = {
+      delta: info.delta,
       action: info.type,
       direction: info.direction === '' ? 'forward' : info.direction
     };
@@ -131,7 +132,12 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   }
 
   // TODO RouteLocationNormalized
-  const handleHistoryChange = (location: any, action?: RouteAction, direction?: RouteDirection) => {
+  const handleHistoryChange = (
+    location: any,
+    action?: RouteAction,
+    direction?: RouteDirection,
+    delta?: number
+  ) => {
     let leavingLocationInfo: RouteInfo;
     if (incomingRouteParams) {
       if (incomingRouteParams.routerAction === 'replace') {
@@ -162,7 +168,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         } else if (action === 'pop') {
           const routeInfo = locationHistory.current();
           if (routeInfo && routeInfo.pushedByRoute) {
-            const prevRouteInfo = locationHistory.findLastLocation(routeInfo);
+            const prevRouteInfo = locationHistory.findLastLocation(routeInfo, delta);
             incomingRouteParams = {
               ...prevRouteInfo,
               routerAction: 'pop',

@@ -68,4 +68,5 @@ export interface ExternalNavigationOptions {
 export interface NavigationInformation {
   action?: RouteAction;
   direction?: RouteDirection;
+  delta?: number;
 }

@@ -191,6 +191,29 @@ describe('Routing', () => {
 
     cy.ionBackButtonHidden('home');
   });
+
+  it('should select correct view when using router.go()', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/abc');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.routerGo(-2);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routingparameter');
+
+    // TODO: This does not work yet
+    //cy.ionPageDoesNotExist('routing');
+
+    cy.routerGo(2);
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {
@@ -215,4 +238,33 @@ describe('Routing - Swipe to Go Back', () => {
     // TODO: Vue router does not go back in cypress with router.back()
     //cy.ionPageDoesNotExist('navigation');
   });
+
+  it('swipe to go back should work when using router.go()', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/abc');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.routerGo(-2);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routingparameter');
+
+    // TODO: This does not work yet
+    //cy.ionPageDoesNotExist('routing');
+
+    cy.routerGo(2);
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    // TODO: This does not work yet
+    /*cy.ionSwipeToGoBack(true);
+
+    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageVisible('routing');*/
+  })
 })
