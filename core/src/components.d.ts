@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
+import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
@@ -1952,6 +1953,10 @@ export namespace Components {
           * If `true`, a pin with integer value is shown when the knob is pressed.
          */
         "pin": boolean;
+        /**
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
+         */
+        "pinFormatter": PinFormatter;
         /**
           * If `true`, the knob snaps to tick marks evenly spaced based on the step property value.
          */
@@ -5493,6 +5498,10 @@ declare namespace LocalJSX {
           * If `true`, a pin with integer value is shown when the knob is pressed.
          */
         "pin"?: boolean;
+        /**
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
+         */
+        "pinFormatter"?: PinFormatter;
         /**
           * If `true`, the knob snaps to tick marks evenly spaced based on the step property value.
          */

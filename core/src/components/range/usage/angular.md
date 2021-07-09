@@ -1,7 +1,7 @@
 ```html
 <ion-list>
   <ion-item>
-    <ion-range color="danger" pin="true"></ion-range>
+    <ion-range color="danger" [pin]="true"></ion-range>
   </ion-item>
 
   <ion-item>
@@ -29,5 +29,22 @@
   <ion-item>
     <ion-range dualKnobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
+  
+  <ion-item>
+    <ion-range min="0" max="100" [pinFormatter]="customFormatter" [pin]="true"></ion-range>
+  </ion-item>
 </ion-list>
+```
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({…})
+export class MyComponent {
+  constructor() {}
+  
+  public customFormatter(value: number) {
+    return `${value}%`
+  }
+}
 ```
