@@ -1373,6 +1373,7 @@ ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Prom
 med-accordion,shadow
 med-accordion,prop,collapsed,boolean,true,false,true
 med-accordion,prop,color,string | undefined,undefined,false,false
+med-accordion,prop,icon,"left" | "right" | undefined,undefined,false,true
 med-accordion,prop,size,"full" | undefined,undefined,false,false
 med-accordion,method,toggle,toggle() => Promise<void>
 

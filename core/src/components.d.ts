@@ -2726,6 +2726,7 @@ export namespace Components {
     interface MedAccordion {
         "collapsed": boolean;
         "color"?: Color;
+        "icon"?: 'left' | 'right';
         "size"?: 'full';
         "toggle": () => Promise<void>;
     }
@@ -6268,6 +6269,7 @@ declare namespace LocalJSX {
     interface MedAccordion {
         "collapsed"?: boolean;
         "color"?: Color;
+        "icon"?: 'left' | 'right';
         "size"?: 'full';
     }
     interface MedAgrupador {

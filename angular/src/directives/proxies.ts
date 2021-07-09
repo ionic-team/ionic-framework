@@ -883,8 +883,8 @@ export class IonToolbar {
 }
 export declare interface MedAccordion extends Components.MedAccordion {
 }
-@ProxyCmp({ inputs: ["collapsed", "color", "size"], "methods": ["toggle"] })
-@Component({ selector: "med-accordion", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["collapsed", "color", "size"] })
+@ProxyCmp({ inputs: ["collapsed", "color", "icon", "size"], "methods": ["toggle"] })
+@Component({ selector: "med-accordion", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["collapsed", "color", "icon", "size"] })
 export class MedAccordion {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

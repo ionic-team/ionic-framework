@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Method, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Method, Element, State, Watch } from '@stencil/core';
 import { Color } from '../../../../interface';
 import { createColorClasses } from '../../../../utils/theme';
 
@@ -11,7 +11,9 @@ export class MedAccordion {
   @Element() el!: HTMLElement;
   @Prop() color?: Color;
   @Prop() size?: 'full';
+  @Prop({ reflect: true }) icon?: 'left' | 'right';
   @Prop({ reflect: true, mutable: true }) collapsed = true;
+  @State() collapsedState = true;
 
   private contentEl!: HTMLDivElement;
   private contentFakeEl!: HTMLDivElement;
@@ -27,15 +29,20 @@ export class MedAccordion {
     this.expandContent();
   }
 
+  @Watch('collapsed')
+  collapsedChanged() {
+    this.expandContent();
+  }
+
   onClick = () => {
     this.expandContent();
   }
 
   private expandContent = async () => {
-    if (this.collapsed) {
+    if (this.collapsedState) {
       this.contentFakeEl.style.display = 'block';
       this.fakeHeight = this.contentFakeEl.scrollHeight;
-      this.collapsed = !this.collapsed;
+      this.collapsedState = !this.collapsedState;
       this.contentEl.style.maxHeight = `${this.fakeHeight}px`;
       this.contentFakeEl.style.maxHeight = '0';
       this.contentEl.style.maxHeight = `${this.contentEl.scrollHeight}px`;
@@ -48,7 +55,7 @@ export class MedAccordion {
       this.contentEl.style.transition = 'unset';
       this.contentEl.style.maxHeight = '0px';
       this.contentFakeEl.style.display = 'block';
-      this.collapsed = !this.collapsed;
+      this.collapsedState = !this.collapsedState;
     }
   }
 
@@ -61,15 +68,22 @@ export class MedAccordion {
   }
 
   render() {
-    const {color, size} = this;
+    const {color, size, collapsedState: collapsed, icon} = this;
     return (
       <Host from-stencil class={createColorClasses(color, {
         'med-accordion--full': size !== undefined,
-        'med-accordion--collapsed': this.collapsed,
+        'med-accordion--collapsed': collapsed,
         })}>
         <div class="med-accordion__header" onClick={this.onClick}>
+          {icon === 'left' && <div class="med-accordion__icon-container med-accordion__icon-container--left">
+             <ion-icon class="med-accordion__icon" name="med-arrow-down"></ion-icon>
+          </div>}
+
           <slot name="header"></slot>
-          <ion-icon class="med-accordion__icon" name="med-arrow-down"></ion-icon>
+
+          {(!icon || icon === 'right') && <div class="med-accordion__icon-container med-accordion__icon-container--right">
+            <ion-icon class="med-accordion__icon" name="med-arrow-down"></ion-icon>
+          </div>}
         </div>
 
         <div class="med-accordion__content--fake" ref={(el) => this.contentFakeEl = el as HTMLDivElement}>

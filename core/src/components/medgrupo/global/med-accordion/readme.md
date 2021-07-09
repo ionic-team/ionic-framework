@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type                  | Default     |
-| ----------- | ----------- | ----------- | --------------------- | ----------- |
-| `collapsed` | `collapsed` |             | `boolean`             | `true`      |
-| `color`     | `color`     |             | `string \| undefined` | `undefined` |
-| `size`      | `size`      |             | `"full" \| undefined` | `undefined` |
+| Property    | Attribute   | Description | Type                             | Default     |
+| ----------- | ----------- | ----------- | -------------------------------- | ----------- |
+| `collapsed` | `collapsed` |             | `boolean`                        | `true`      |
+| `color`     | `color`     |             | `string \| undefined`            | `undefined` |
+| `icon`      | `icon`      |             | `"left" \| "right" \| undefined` | `undefined` |
+| `size`      | `size`      |             | `"full" \| undefined`            | `undefined` |
 
 
 ## Methods

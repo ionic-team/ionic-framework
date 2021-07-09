@@ -1,42 +1,59 @@
 @import "../../../../../med-components/abstracts";
 
 :host {
-  --background: var(--med-color-neutral-3);
+  --background: var(--med-color-neutral-2);
   --icon-color: var(--med-color-neutral-10);
+}
 
+:host {
   display: block;
   border-radius: $med-border-radius-sm;
   background: var(--background);
   width: 100%;
+
+  .med-accordion__header {
+    display: flex;
+    cursor: pointer;
+    width: 100%;
+    padding: $med-spacing-inset-sm;
+    box-sizing: border-box;
+  }
+
+  .med-accordion__icon-container {
+    display: flex;
+
+    &--left {
+      padding-right: $med-spacing-inline-xxxs;
+    }
+
+    &--right {
+      padding-left: $med-spacing-inline-xxxs;
+      margin-left: auto;
+    }
+  }
+
+  .med-accordion__icon {
+    color: var(--icon-color);
+    font-size: 24px;
+    transform: rotate(180deg);
+  }
+
+  .med-accordion__content--fake {
+    overflow: hidden;
+  }
+
+  .med-accordion__content {
+    overflow: hidden;
+  }
 }
 
-.med-accordion__header {
-  display: flex;
-  cursor: pointer;
-  width: 100%;
-  padding: $med-spacing-squish-md;
-  box-sizing: border-box;
-}
-
-.med-accordion__icon {
-  color: var(--icon-color);
-  margin-left: auto;
-  font-size: 24px;
-  transform: rotate(180deg);
-}
+//
+// collapsed
+//
 
 :host(.med-accordion--collapsed) .med-accordion__icon {
   transform: rotate(0);
 }
-
-.med-accordion__content--fake {
-  overflow: hidden;
-}
-
-.med-accordion__content {
-  overflow: hidden;
-}
-
 
 //
 // full

@@ -6,13 +6,13 @@ export default {
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({size}) => {
+const TemplateDefault = ({size, icon, collapsed}) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-          <med-accordion .size=${size}>
+          <med-accordion .size=${size} .icon=${icon} .collapsed=${collapsed}>
           <div slot="header">
             test
           </div>
@@ -48,6 +48,24 @@ Accordion.argTypes = {
     table: {
       type:  { summary: 'full' },
       defaultValue: { summary: 'undefined' },
+    },
+  },
+  icon: {
+    options: [undefined, 'left', 'right'],
+    control: { type: 'radio'},
+    description: "Define a posição do ícone.",
+    table: {
+      type:  { summary: 'left | right' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  collapsed: {
+    control: { type: 'boolean' },
+    description: 'Define o estado do componente.',
+    defaultValue: true,
+    table: {
+      type:  { summary: 'boolean' },
+      defaultValue: { summary: 'true' },
     },
   },
 };
