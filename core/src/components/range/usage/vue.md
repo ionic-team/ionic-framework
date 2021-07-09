@@ -37,7 +37,7 @@
   </ion-list>
 </template>
 
-<script>
+<script lang="ts">
 import { IonItem, IonLabel, IonList, IonRange } from '@ionic/vue';
 import { defineComponent } from 'vue';
 

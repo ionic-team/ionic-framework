@@ -43,7 +43,7 @@ import { Component } from '@angular/core';
 export class MyComponent {
   constructor() {}
   
-  private customFormatter(value: number) {
+  public customFormatter(value: number) {
     return `${value}%`
   }
 }

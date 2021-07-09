@@ -68,7 +68,7 @@ import { Component } from '@angular/core';
 export class MyComponent {
   constructor() {}
   
-  private customFormatter(value: number) {
+  public customFormatter(value: number) {
     return `${value}%`
   }
 }
@@ -297,7 +297,7 @@ export class RangeExample {
   </ion-list>
 </template>
 
-<script>
+<script lang="ts">
 import { IonItem, IonLabel, IonList, IonRange } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
