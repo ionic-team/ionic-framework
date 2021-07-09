@@ -13,12 +13,16 @@ const createModalArrayIMG = async () => {
     cssClass: 'med-image-zoom',
     componentProps:{
       imagens: [
-        { title: "Alternativa A", link: "https://via.placeholder.com/500", legenda: "1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
-        { title: "Alternativa B", link: "https://via.placeholder.com/500", legenda: "2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
-        { title: "Alternativa C", link: "https://via.placeholder.com/500", legenda: "3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
-        { title: "Alternativa D", link: "https://via.placeholder.com/500", legenda: "4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
-        { title: "Alternativa E", link: "https://via.placeholder.com/500", legenda: "5 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
-      ]
+        {src: "https://via.placeholder.com/500", legenda: "1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+        {src: "https://via.placeholder.com/500", legenda: "2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+        {src: "https://via.placeholder.com/500", legenda: "3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+        {src: "https://via.placeholder.com/500", legenda: "4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+        {src: "https://via.placeholder.com/500", legenda: "5 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
+      ],
+
+      marcaAguaSuperior?: '123456',
+      marcaAguaInferior?: '1234567890',
+      titulo:'Alternativas',
     }
   }).then((modal)=>{
     modal.present()

@@ -1,7 +1,7 @@
 @import "../../../../../med-components/abstracts";
 
 :host {
-  --color: #{medsoft-color(brand-primary, medium)};
+  --color: #{md-color(brand, 3)};
   font-size: $med-font-size-xxs;
   font-weight: $med-font-weight-medium;
   line-height: $med-line-height-compressed;
@@ -42,6 +42,6 @@
 }
 
 :host(.ion-color) {
-  --color: #{medsoft-current-color(medium)};
+  --color: #{md-current-color(3)};
 }
 

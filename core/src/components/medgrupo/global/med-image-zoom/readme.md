@@ -7,9 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type  | Default |
-| --------- | --------- | ----------- | ----- | ------- |
-| `imagens` | `imagens` |             | `any` | `[]`    |
+| Property            | Attribute             | Description | Type                  | Default     |
+| ------------------- | --------------------- | ----------- | --------------------- | ----------- |
+| `imagens`           | `imagens`             |             | `any`                 | `[]`        |
+| `marcaAguaInferior` | `marca-agua-inferior` |             | `string \| undefined` | `undefined` |
+| `marcaAguaSuperior` | `marca-agua-superior` |             | `string \| undefined` | `undefined` |
+| `titulo`            | `titulo`              |             | `string \| undefined` | `undefined` |
 
 
 ## Dependencies

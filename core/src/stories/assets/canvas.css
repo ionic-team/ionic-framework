@@ -1,12 +1,10 @@
-/* :root body.dark-mode {
-  --global-background: #141414;
-  --global-color: #fff;
+:root .color-scheme-dark ion-content {
+  --background: #141414;
 }
 
-:root body.light-mode {
-  --global-background: #fafafa;
-  --global-color: #000;
-} */
+:root .color-scheme-light ion-content {
+  --background: #fafafa;
+}
 
 html {
   overflow: auto;

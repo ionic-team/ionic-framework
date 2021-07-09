@@ -50,8 +50,8 @@ export class IonBackdrop {
 }
 export declare interface IonBadge extends Components.IonBadge {
 }
-@ProxyCmp({ inputs: ["color", "dsSize", "fill", "mode"] })
-@Component({ selector: "ion-badge", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "dsSize", "fill", "mode"] })
+@ProxyCmp({ inputs: ["color", "dsSize", "fill", "invert", "mode"] })
+@Component({ selector: "ion-badge", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "dsSize", "fill", "invert", "mode"] })
 export class IonBadge {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -881,6 +881,17 @@ export class IonToolbar {
     this.el = r.nativeElement;
   }
 }
+export declare interface MedAccordion extends Components.MedAccordion {
+}
+@ProxyCmp({ inputs: ["collapsed", "color", "size"], "methods": ["toggle"] })
+@Component({ selector: "med-accordion", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["collapsed", "color", "size"] })
+export class MedAccordion {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface MedAgrupador extends Components.MedAgrupador {
 }
 @ProxyCmp({ inputs: ["color"] })
@@ -1003,8 +1014,8 @@ export class MedHeader {
 }
 export declare interface MedImageZoom extends Components.MedImageZoom {
 }
-@ProxyCmp({ inputs: ["imagens"] })
-@Component({ selector: "med-image-zoom", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["imagens"] })
+@ProxyCmp({ inputs: ["imagens", "marcaAguaInferior", "marcaAguaSuperior", "titulo"] })
+@Component({ selector: "med-image-zoom", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["imagens", "marcaAguaInferior", "marcaAguaSuperior", "titulo"] })
 export class MedImageZoom {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

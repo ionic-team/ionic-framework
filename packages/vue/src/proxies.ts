@@ -22,6 +22,7 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', [
   'dsSize',
   'fill',
+  'invert',
   'color'
 ]);
 
@@ -807,6 +808,13 @@ export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScro
 ]);
 
 
+export const MedAccordion = /*@__PURE__*/ defineContainer<JSX.MedAccordion>('med-accordion', [
+  'color',
+  'size',
+  'collapsed'
+]);
+
+
 export const MedAgrupador = /*@__PURE__*/ defineContainer<JSX.MedAgrupador>('med-agrupador', [
   'color'
 ]);
@@ -872,7 +880,10 @@ export const MedHeader = /*@__PURE__*/ defineContainer<JSX.MedHeader>('med-heade
 
 
 export const MedImageZoom = /*@__PURE__*/ defineContainer<JSX.MedImageZoom>('med-image-zoom', [
-  'imagens'
+  'imagens',
+  'marcaAguaSuperior',
+  'marcaAguaInferior',
+  'titulo'
 ]);
 
 

@@ -1,19 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medsoftColors } from '../../med-colors'
+import { medColors } from '../../med-colors'
 
 export default {
   title: 'Components/Global/Badge',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ color, fill, size, slot }) => {
+const TemplateDefault = ({ color, fill, size, slot, invert }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-badge .color=${color} fill=${fill} ds-size=${size}>${slot}</ion-badge>
+        <ion-badge .color=${color} fill=${fill} ds-size=${size} ?invert=${invert}>${slot}</ion-badge>
         <!-- component -->
 
       </div>
@@ -30,7 +30,7 @@ Badge.parameters = {
 }
 Badge.argTypes = {
   color: {
-    options: medsoftColors,
+    options: medColors,
     control: { type: 'select'},
     description: "Define a cor do badge.",
     table: {
@@ -53,6 +53,15 @@ Badge.argTypes = {
     description: "Define o tamanho do badge.",
     table: {
       type:  { summary: 'xs | sm | md | lg' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  invert: {
+    disabled: false,
+    control: { type: 'boolean' },
+    description: 'Inverte a cor de componente para tom de cinza.',
+    table: {
+      type:  { summary: 'boolean' },
       defaultValue: { summary: 'undefined' },
     },
   },

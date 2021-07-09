@@ -12,7 +12,7 @@ import { SelectCompareFn } from "./components/select/select-interface";
 import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
 import { MedFontSize } from "./global/med-components/font-size.enum";
 import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
-import { MedImagensZoomInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
+import { MedImageZoomItemInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
 import { navbarResizeEventDetail } from "./components/medgrupo/global/med-navbar/med-navbar-interface";
 import { RateStatus } from "./components/medgrupo/global/med-rate-like/med-rate-like.enum";
 export namespace Components {
@@ -213,6 +213,7 @@ export namespace Components {
         "color"?: Color;
         "dsSize"?: 'sm' | 'md' | 'lg';
         "fill"?: 'outline';
+        "invert": boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2722,6 +2723,12 @@ export namespace Components {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
+    interface MedAccordion {
+        "collapsed": boolean;
+        "color"?: Color;
+        "size"?: 'full';
+        "toggle": () => Promise<void>;
+    }
     interface MedAgrupador {
         "color"?: Color;
     }
@@ -2761,7 +2768,10 @@ export namespace Components {
     interface MedHeader {
     }
     interface MedImageZoom {
-        "imagens": MedImagensZoomInterface[] | any;
+        "imagens": MedImageZoomItemInterface[] | any;
+        "marcaAguaInferior"?: string;
+        "marcaAguaSuperior"?: string;
+        "titulo"?: string;
     }
     interface MedNavbar {
     }
@@ -3304,6 +3314,12 @@ declare global {
         prototype: HTMLIonVirtualScrollElement;
         new (): HTMLIonVirtualScrollElement;
     };
+    interface HTMLMedAccordionElement extends Components.MedAccordion, HTMLStencilElement {
+    }
+    var HTMLMedAccordionElement: {
+        prototype: HTMLMedAccordionElement;
+        new (): HTMLMedAccordionElement;
+    };
     interface HTMLMedAgrupadorElement extends Components.MedAgrupador, HTMLStencilElement {
     }
     var HTMLMedAgrupadorElement: {
@@ -3494,6 +3510,7 @@ declare global {
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
         "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+        "med-accordion": HTMLMedAccordionElement;
         "med-agrupador": HTMLMedAgrupadorElement;
         "med-alternativas": HTMLMedAlternativasElement;
         "med-autocomplete": HTMLMedAutocompleteElement;
@@ -3711,6 +3728,7 @@ declare namespace LocalJSX {
         "color"?: Color;
         "dsSize"?: 'sm' | 'md' | 'lg';
         "fill"?: 'outline';
+        "invert"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -6247,6 +6265,11 @@ declare namespace LocalJSX {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
+    interface MedAccordion {
+        "collapsed"?: boolean;
+        "color"?: Color;
+        "size"?: 'full';
+    }
     interface MedAgrupador {
         "color"?: Color;
     }
@@ -6293,7 +6316,10 @@ declare namespace LocalJSX {
         "onMedResize"?: (event: CustomEvent<headerResizeEventDetail>) => void;
     }
     interface MedImageZoom {
-        "imagens"?: MedImagensZoomInterface[] | any;
+        "imagens"?: MedImageZoomItemInterface[] | any;
+        "marcaAguaInferior"?: string;
+        "marcaAguaSuperior"?: string;
+        "titulo"?: string;
     }
     interface MedNavbar {
         "onMedResize"?: (event: CustomEvent<navbarResizeEventDetail>) => void;
@@ -6402,6 +6428,7 @@ declare namespace LocalJSX {
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
         "ion-virtual-scroll": IonVirtualScroll;
+        "med-accordion": MedAccordion;
         "med-agrupador": MedAgrupador;
         "med-alternativas": MedAlternativas;
         "med-autocomplete": MedAutocomplete;
@@ -6512,6 +6539,7 @@ declare module "@stencil/core" {
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
             "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
+            "med-accordion": LocalJSX.MedAccordion & JSXBase.HTMLAttributes<HTMLMedAccordionElement>;
             "med-agrupador": LocalJSX.MedAgrupador & JSXBase.HTMLAttributes<HTMLMedAgrupadorElement>;
             "med-alternativas": LocalJSX.MedAlternativas & JSXBase.HTMLAttributes<HTMLMedAlternativasElement>;
             "med-autocomplete": LocalJSX.MedAutocomplete & JSXBase.HTMLAttributes<HTMLMedAutocompleteElement>;

@@ -12,3 +12,17 @@ export const medsoftColors = [
   'neutral-dark',
   'neutral-light',
 ]
+
+export const medColors = [
+  undefined,
+  'brand',
+  'aulas',
+  'material',
+  'questoes',
+  'revalida',
+  'provas',
+  'success',
+  'warning',
+  'caution'
+]
+

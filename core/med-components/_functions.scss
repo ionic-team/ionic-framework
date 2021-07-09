@@ -65,6 +65,10 @@
 // theme
 //
 
+@function color-to-rgb-list($color) {
+  @return #{red($color)},#{green($color)},#{blue($color)};
+}
+
 @function medsoft-current-color($variation, $alpha: null) {
   $new-variation: null;
 
@@ -107,6 +111,34 @@
     @return rgba(var(#{$variable}-rgb, $value), $alpha);
   }
 
+  @if ($rgb) {
+    $value: color-to-rgb-list($value);
+    $variable: #{$variable}-rgb;
+  }
+
+  @return var(#{$variable}, $value);
+}
+
+//
+// NOVO:theme
+//
+
+@function md-current-color($variation, $alpha: null) {
+  @if $alpha {
+    @return rgba(var(--med-color-#{$variation}-rgb), #{$alpha});
+  } @else {
+    @return var(--med-color-#{$variation});
+  }
+}
+
+@function md-color($name, $variation, $alpha: null, $rgb: false) {
+  $value: map-get(map-get($new-medsoft-colors, $name), $variation);
+  $variable: --med-color-#{$name}-#{$variation};
+
+  @if ($alpha) {
+    $value: color-to-rgb-list($value);
+    @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
   @if ($rgb) {
     $value: color-to-rgb-list($value);
     $variable: #{$variable}-rgb;

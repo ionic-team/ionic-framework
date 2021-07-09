@@ -1,0 +1,110 @@
+@import "../functions";
+@import "../variables";
+@import "../mixins";
+
+$med-saturation: 40%;
+
+$new-medsoft-colors-feedback: (
+  success: (
+    3: hsl(128, 80, 30),
+  ),
+  warning: (
+    3: hsl(43, 80, 45),
+  ),
+  caution: (
+    3: hsl(4, 80, 40),
+  )
+);
+
+$new-medsoft-colors: (
+  brand: (
+    1: hsl($med-brand, $med-saturation, $med-lightest),
+    2: hsl($med-brand, $med-saturation, $med-light),
+    3: hsl($med-brand, $med-saturation, $med-medium),
+    4: hsl($med-brand, $med-saturation, $med-dark),
+    5: hsl($med-brand, $med-saturation, $med-darkest),
+    gradient: linear-gradient(to right, hsl($med-brand, $med-saturation, $med-medium), hsl($med-brand, $med-saturation, $med-lightest)),
+  ),
+  aulas: (
+    1: hsl($med-aulas, $med-saturation, $med-lightest),
+    2: hsl($med-aulas, $med-saturation, $med-light),
+    3: hsl($med-aulas, $med-saturation, $med-medium),
+    4: hsl($med-aulas, $med-saturation, $med-dark),
+    5: hsl($med-aulas, $med-saturation, $med-darkest),
+    gradient: linear-gradient(to right, hsl($med-aulas, $med-saturation, $med-medium), hsl($med-aulas, $med-saturation, $med-lightest)),
+  ),
+  material: (
+    1: hsl($med-material, $med-saturation, $med-lightest),
+    2: hsl($med-material, $med-saturation, $med-light),
+    3: hsl($med-material, $med-saturation, $med-medium),
+    4: hsl($med-material, $med-saturation, $med-dark),
+    5: hsl($med-material, $med-saturation, $med-darkest),
+    gradient: linear-gradient(to right, hsl($med-material, $med-saturation, $med-medium), hsl($med-material, $med-saturation, $med-lightest)),
+  ),
+  questoes: (
+    1: hsl($med-questoes, $med-saturation, $med-lightest),
+    2: hsl($med-questoes, $med-saturation, $med-light),
+    3: hsl($med-questoes, $med-saturation, $med-medium),
+    4: hsl($med-questoes, $med-saturation, $med-dark),
+    5: hsl($med-questoes, $med-saturation, $med-darkest),
+    gradient: linear-gradient(to right, hsl($med-questoes, $med-saturation, $med-medium), hsl($med-questoes, $med-saturation, $med-lightest)),
+  ),
+  revalida: (
+    1: hsl($med-revalida, $med-saturation, $med-lightest),
+    2: hsl($med-revalida, $med-saturation, $med-light),
+    3: hsl($med-revalida, $med-saturation, $med-medium),
+    4: hsl($med-revalida, $med-saturation, $med-dark),
+    5: hsl($med-revalida, $med-saturation, $med-darkest),
+    gradient: linear-gradient(to right, hsl($med-revalida, $med-saturation, $med-medium), hsl($med-revalida, $med-saturation, $med-lightest)),
+  ),
+  provas: (
+    1: hsl($med-provas, $med-saturation, $med-lightest),
+    2: hsl($med-provas, $med-saturation, $med-light),
+    3: hsl($med-provas, $med-saturation, $med-medium),
+    4: hsl($med-provas, $med-saturation, $med-dark),
+    5: hsl($med-provas, $med-saturation, $med-darkest),
+    gradient: linear-gradient(to right, hsl($med-provas, $med-saturation, $med-medium), hsl($med-provas, $med-saturation, $med-lightest)),
+  ),
+  success: (
+    1: hsl(128, 80, 30),
+    2: hsl(128, 80, 30),
+    3: hsl(128, 80, 30),
+    4: hsl(128, 80, 30),
+    5: hsl(128, 80, 30),
+    gradient: linear-gradient(to right, hsl($med-brand, 10, 25), hsl($med-brand, 10, 45)),
+  ),
+  warning: (
+    1: hsl(43, 80, 45),
+    2: hsl(43, 80, 45),
+    3: hsl(43, 80, 45),
+    4: hsl(43, 80, 45),
+    5: hsl(43, 80, 45),
+    gradient: linear-gradient(to right, hsl($med-brand, 10, 25), hsl($med-brand, 10, 45)),
+  ),
+  caution: (
+    1: hsl(4, 80, 40),
+    2: hsl(4, 80, 40),
+    3: hsl(4, 80, 40),
+    4: hsl(4, 80, 40),
+    5: hsl(4, 80, 40),
+    gradient: linear-gradient(to right, hsl($med-brand, 10, 75), hsl($med-brand, 10, 95)),
+  ),
+  light: (
+    1: hsl($med-brand, 10, 5),
+    2: hsl($med-brand, 10, 15),
+    3: hsl($med-brand, 10, 25),
+    4: hsl($med-brand, 10, 35),
+    5: hsl($med-brand, 10, 45),
+    gradient: linear-gradient(to right, hsl($med-brand, 10, 25), hsl($med-brand, 10, 45)),
+  ),
+  dark: (
+    1: hsl($med-brand, 10, 55),
+    2: hsl($med-brand, 10, 65),
+    3: hsl($med-brand, 10, 75),
+    4: hsl($med-brand, 10, 85),
+    5: hsl($med-brand, 10, 95),
+    gradient: linear-gradient(to right, hsl($med-brand, 10, 75), hsl($med-brand, 10, 95)),
+  )
+);
+
+@include new-generate-custom-scheme('light');

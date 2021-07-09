@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medsoftColors } from '../../med-colors'
+import { medColors } from '../../med-colors';
 
 export default {
   title: 'Components/Global/Agrupador',
@@ -13,8 +13,7 @@ const TemplateDefault = ({color}) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-          <med-agrupador .color=${color}>
-          </med-agrupador>
+          <med-agrupador .color=${color}></med-agrupador>
         <!-- component -->
 
       <ion-content>
@@ -28,15 +27,12 @@ Agrupador.parameters = {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=2781%3A8634',
   },
-  actions: {
-    handles: ['btnLeftClick', 'btnRightClick'],
-  },
 }
 Agrupador.argTypes = {
   color: {
-    options: medsoftColors,
+    options: medColors,
     control: { type: 'select'},
-    description: "Define a cor do botão.",
+    description: "Define a cor do componente.",
     table: {
       type:  { summary: 'Color' },
       defaultValue: { summary: 'undefined' },

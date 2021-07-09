@@ -14,11 +14,13 @@ const createModal = async () => {
     componentProps:{
       imagens: [
         {
-          title: 'Alternativa A',
-          link: "https://via.placeholder.com/500",
-          legenda: "1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo."
+          src: "https://via.placeholder.com/500",
+          legenda: "Alternativa A - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo."
         },
-      ]
+      ],
+      marcaAguaSuperior: '123456',
+      marcaAguaInferior: '1234567890',
+      titulo:'Alternativa A',
     }
   }).then((modal)=>{
     modal.present()

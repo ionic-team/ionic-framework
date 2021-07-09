@@ -2,45 +2,6 @@
 @import "../variables";
 @import "../mixins";
 
-:root .dark-mode {
-  /* --on-surface: #fff;
-  --surface: #121212; */
-
-  ion-content {
-    --background: #141414;
-  }
-}
-
-:root .light-mode {
-  /* --on-surface: #121212;
-  --surface: #fff; */
-
-  ion-content {
-    --background: #fafafa;
-  }
-}
-
-$med-color-brand-primary-darkest: #7e6c3d;
-$med-color-brand-primary-dark: #8d7942;
-$med-color-brand-primary-medium: #b89d58;
-$med-color-brand-primary-light: #baa87b;
-$med-color-brand-primary-lightest: #bbad8a;
-$med-color-brand-primary-gradient: linear-gradient(to right, $med-color-brand-primary-medium, $med-color-brand-primary-dark);
-
-$medsoft-colors: (
-  brand-primary: (
-    contrast: #fff,
-    darkest:   $med-color-brand-primary-darkest,
-    dark:      $med-color-brand-primary-dark,
-    medium:    $med-color-brand-primary-medium,
-    light:     $med-color-brand-primary-light,
-    lightest:  $med-color-brand-primary-lightest,
-    gradient:  linear-gradient(to right, $med-color-brand-primary-medium, $med-color-brand-primary-dark)
-  ),
-);
-
-@include generate-custom-theme('gold');
-
 // components
 
 @import "../../src/components/button/medgrupo/button.med.theme";

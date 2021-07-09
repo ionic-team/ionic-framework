@@ -282,3 +282,183 @@
     }
   }
 }
+
+//
+// NOVO:theme
+//
+
+@mixin new-generate-medsoft-color() {
+  @each $key, $value in $new-medsoft-colors {
+    $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
+    $dark: map-get(map-get($new-medsoft-colors, $key), 2);
+    $medium: map-get(map-get($new-medsoft-colors, $key), 3);
+    $light: map-get(map-get($new-medsoft-colors, $key), 4);
+    $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
+    $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
+
+    --med-color-#{$key}-1: #{$darkest};
+    --med-color-#{$key}-2: #{$dark};
+    --med-color-#{$key}-3: #{$medium};
+    --med-color-#{$key}-4: #{$light};
+    --med-color-#{$key}-5: #{$lightest};
+
+    --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
+    --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
+    --med-color-#{$key}-3-rgb: #{color-to-rgb-list($medium)};
+    --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
+    --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
+
+    --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+  }
+}
+
+@mixin new-generate-medsoft-color-classes($color-name) {
+  $value: map-get($new-medsoft-colors, $color-name);
+
+  $darkest: map-get($value, 1);
+  $dark: map-get($value, 2);
+  $medium: map-get($value, 3);
+  $light: map-get($value, 4);
+  $lightest: map-get($value, 5);
+  $gradient: map-get($value, gradient);
+
+  --med-color-1: var(--med-color-#{$color-name}-1, #{$darkest});
+  --med-color-2: var(--med-color-#{$color-name}-2, #{$dark});
+  --med-color-3: var(--med-color-#{$color-name}-3, #{$medium});
+  --med-color-4: var(--med-color-#{$color-name}-4, #{$light});
+  --med-color-5: var(--med-color-#{$color-name}-5, #{$lightest});
+
+  --med-color-1-rgb: var(--med-color-#{$color-name}-1-rgb, #{color-to-rgb-list($darkest)});
+  --med-color-2-rgb: var(--med-color-#{$color-name}-2-rgb, #{color-to-rgb-list($dark)});
+  --med-color-3-rgb: var(--med-color-#{$color-name}-3-rgb, #{color-to-rgb-list($medium)});
+  --med-color-4-rgb: var(--med-color-#{$color-name}-4-rgb, #{color-to-rgb-list($light)});
+  --med-color-5-rgb: var(--med-color-#{$color-name}-5-rgb, #{color-to-rgb-list($lightest)});
+
+  --med-color-gradient: var(--med-color-#{$color-name}-gradient, #{$gradient});
+}
+
+@mixin new-generate-neutral-colors($invert:null) {
+  @if $invert == true {
+    $l: 95;
+    $i: 1;
+    @for $index from 1 through 10 {
+      $color: hsl($med-brand, 10, $l);
+      --med-color-neutral-#{$i}: #{$color};
+      --med-color-neutral-#{$i}-rgb: #{color-to-rgb-list($color)};
+      $i: $index + 1;
+      $l: $l - 10;
+    }
+  } @else {
+    $l: 5;
+    @for $index from 1 through 10 {
+      $color: hsl($med-brand, 10, $l);
+      --med-color-neutral-#{$index}: #{$color};
+      --med-color-neutral-#{$index}-rgb: #{color-to-rgb-list($color)};
+      $l: $l + 10;
+    }
+  }
+}
+
+@mixin new-generate-custom-scheme($scheme) {
+  .color-scheme-#{$scheme},
+  [color-scheme='#{$scheme}'] {
+    @include new-generate-neutral-colors(true);
+
+    @each $key, $value in $new-medsoft-colors {
+      $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
+      $dark: map-get(map-get($new-medsoft-colors, $key), 2);
+      $medium: map-get(map-get($new-medsoft-colors, $key), 3);
+      $light: map-get(map-get($new-medsoft-colors, $key), 4);
+      $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
+      $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
+
+      --med-color-#{$key}-1: #{$darkest};
+      --med-color-#{$key}-2: #{$dark};
+      --med-color-#{$key}-3: #{$medium};
+      --med-color-#{$key}-4: #{$light};
+      --med-color-#{$key}-5: #{$lightest};
+
+      --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
+      --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
+      --med-color-#{$key}-3-rgb: #{color-to-rgb-list($medium)};
+      --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
+      --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
+
+      --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+    }
+
+    @each $color-name, $value in $new-medsoft-colors {
+      .ion-color-#{$color-name} {
+        @include new-generate-medsoft-color-classes($color-name);
+      }
+    }
+  }
+}
+
+@mixin new-generate-custom-theme($theme) {
+  .color-theme-#{$theme},
+  [color-theme='#{$theme}'] {
+    @each $key, $value in $new-medsoft-colors {
+      $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
+      $dark: map-get(map-get($new-medsoft-colors, $key), 2);
+      $medium: map-get(map-get($new-medsoft-colors, $key), 3);
+      $light: map-get(map-get($new-medsoft-colors, $key), 4);
+      $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
+      $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
+
+      --med-color-#{$key}-1: #{$darkest};
+      --med-color-#{$key}-2: #{$dark};
+      --med-color-#{$key}-3: #{$medium};
+      --med-color-#{$key}-4: #{$light};
+      --med-color-#{$key}-5: #{$lightest};
+
+      --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
+      --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
+      --med-color-#{$key}-3-rgb: #{color-to-rgb-list($medium)};
+      --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
+      --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
+
+      --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+    }
+
+    @each $color-name, $value in $new-medsoft-colors {
+      .ion-color-#{$color-name} {
+        @include new-generate-medsoft-color-classes($color-name);
+      }
+    }
+  }
+}
+
+@mixin new-generate-custom-theme-scheme($theme, $scheme) {
+  .color-theme-#{$theme}.color-scheme-#{$scheme},
+  [color-theme='#{$theme}'][color-scheme='#{$scheme}'] {
+    @each $key, $value in $new-medsoft-colors {
+      $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
+      $dark: map-get(map-get($new-medsoft-colors, $key), 2);
+      $medium: map-get(map-get($new-medsoft-colors, $key), 3);
+      $light: map-get(map-get($new-medsoft-colors, $key), 4);
+      $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
+      $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
+
+      --med-color-#{$key}-1: #{$darkest};
+      --med-color-#{$key}-2: #{$dark};
+      --med-color-#{$key}-3: #{$medium};
+      --med-color-#{$key}-4: #{$light};
+      --med-color-#{$key}-5: #{$lightest};
+
+      --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
+      --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
+      --med-color-#{$key}-3-rgb: #{color-to-rgb-list($medium)};
+      --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
+      --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
+
+      --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+    }
+
+    @each $color-name, $value in $new-medsoft-colors {
+      .ion-color-#{$color-name} {
+        @include new-generate-medsoft-color-classes($color-name);
+      }
+    }
+  }
+}

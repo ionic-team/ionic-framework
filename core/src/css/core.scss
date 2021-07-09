@@ -200,12 +200,3 @@ ion-card-header.ion-color .ion-inherit-color {
 .md .menu-content-push {
   box-shadow: $menu-md-box-shadow;
 }
-
-//
-// medsoft
-//
-
-@import "../../med-components/variables";
-@import "../../med-components/mixins";
-
-@include generate-medsoft-color-classes();

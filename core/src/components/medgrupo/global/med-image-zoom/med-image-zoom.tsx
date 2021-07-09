@@ -1,5 +1,5 @@
-import { Component, Host, h, Prop, State, Listen} from '@stencil/core';
-import { MedImagensZoomInterface } from './med-image-zoom-interface';
+import { Component, Host, h, Prop, State } from '@stencil/core';
+import { MedImageZoomItemInterface } from './med-image-zoom-interface';
 import { modalController } from '../../../../utils/overlays';
 
 @Component({
@@ -8,24 +8,12 @@ import { modalController } from '../../../../utils/overlays';
   shadow: true,
 })
 export class MedImageZoom {
-  @Prop({ mutable: true, reflect: true }) imagens: MedImagensZoomInterface[] | any = []
+  @Prop({ mutable: true, reflect: true }) imagens: MedImageZoomItemInterface[] | any = []
+  @Prop({ mutable: true, reflect: true }) marcaAguaSuperior?: string
+  @Prop({ mutable: true, reflect: true }) marcaAguaInferior?: string
+  @Prop({ mutable: true, reflect: true }) titulo?: string
+
   @State() slider!: any
-  @State() title!: any
-
-  @Listen('ionSlideDidChange')
-  ionSlideDidChangeHandler() {
-   this.slider.getActiveIndex().then((idx: number)  => {
-      this.title = this.imagens[idx].title;
-   });;
-
-  }
-
-  @Listen('ionSlidesDidLoad')
-  ionSlidesDidLoadHandler() {
-   this.slider.getActiveIndex().then((idx: number)  => {
-      this.title = this.imagens[idx].title;
-   });;
-  }
 
   private sliderOpts = {
     zoom: {
@@ -49,11 +37,11 @@ export class MedImageZoom {
   render() {
     return (
       <Host from-stencil>
-       <med-header class="header">
+        <med-header class="header">
           <med-navbar slot="navbar" ds-name="transparent" ds-theme="light">
-            <span slot="title">{this.title}</span>
+            <span slot="title">{this.titulo}</span>
 
-            <ion-button ds-name="icon-only" slot="right"  onClick={() => this.dismiss()}>
+            <ion-button ds-name="icon-only" slot="right" onClick={() => this.dismiss()}>
               <ion-icon slot="icon-only" name="med-close"></ion-icon>
             </ion-button>
           </med-navbar>
@@ -61,19 +49,20 @@ export class MedImageZoom {
 
         <ion-content class="content">
           <ion-slides
-            ref={(el) => { this.slider = el as any; (el as any).options = this.sliderOpts;}}
+            ref={(el) => { this.slider = el as any; (el as any).options = this.sliderOpts; }}
             pager={this.imagens && this.imagens.length > 1}>
             {this.imagens.map((img: any) =>
               <ion-slide>
+                <span class="marcaAguaSuperior">{this.marcaAguaSuperior}</span>
                 <div class="swiper-zoom-container">
-                  <img src={img?.link} />
+                  <img src={img?.src} />
                   <p class="legenda">{img?.legenda}</p>
                 </div>
               </ion-slide>
             )}
           </ion-slides>
+          <span class="marcaAguaInferior">{this.marcaAguaInferior}</span>
         </ion-content>
-
         <div class="button-container">
           <button class="button button--in" onClick={() => this.zoom(true)}>
             <ion-icon name="med-plus"></ion-icon>
