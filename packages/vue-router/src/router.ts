@@ -79,7 +79,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      */
     currentNavigationInfo = {
       delta: info.delta,
-      action: info.type,
+
+      /**
+       * Both the browser forward and backward actions
+       * are considered "pop" actions, but when going forward
+       * we want to make sure the forward animation is used.
+       */
+      action: (info.type === 'pop' && info.delta >= 1) ? 'push' : info.type,
       direction: info.direction === '' ? 'forward' : info.direction
     };
   });
