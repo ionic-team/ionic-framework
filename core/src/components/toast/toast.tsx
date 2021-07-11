@@ -288,7 +288,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             {this.renderButtons(startButtons, 'start')}
 
             {this.icon !== undefined &&
-              <ion-icon class="toast-icon" part="icon" name={this.icon}></ion-icon>
+              <ion-icon class="toast-icon" part="icon" icon={this.icon}></ion-icon>
             }
 
             <div class="toast-content">
