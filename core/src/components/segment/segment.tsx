@@ -130,7 +130,7 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
-    this.value ??= this.el.querySelector('ion-segment-button')?.value;
+    // this.value ??= this.el.querySelector('ion-segment-button')?.value;
   }
 
   componentWillLoad() {
@@ -139,6 +139,7 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.setCheckedClasses();
+    this.handleFallbackFocus();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -435,9 +436,9 @@ export class Segment implements ComponentInterface {
     this.checked = current;
   }
 
-  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
+  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous' | 'focused'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter(button => !button.disabled);
-    const currIndex = buttons.findIndex(button => button === this.checked);
+    const currIndex = buttons.findIndex(button => button === this.checked || button.classList.contains('ion-focused'));
     switch (selector) {
       case 'first':
         return buttons[0];
@@ -447,13 +448,14 @@ export class Segment implements ComponentInterface {
         return buttons[currIndex + 1] || buttons[0];
       case 'previous':
         return buttons[currIndex - 1 ] || buttons[buttons.length - 1];
+      case 'focused':
+        return this.el.querySelector('ion-segment-button.ion-focused');
       default:
         return null;
     }
   }
 
   private onKeyUp = (ev: KeyboardEvent) => {
-    const previous = this.checked;
     const isRTL = document.dir === 'rtl';
     let current;
     switch (ev.key) {
@@ -473,11 +475,26 @@ export class Segment implements ComponentInterface {
         ev.preventDefault();
         current = this.getSegmentButton('last');
         break;
+      case ' ':
+      case 'Enter':
+        ev.preventDefault();
+        current = this.getSegmentButton('focused');
       default:
         break;
     }
 
-    previous && current ? this.checkButton(previous, current) : this.setCheckedClasses();
+    const previous = this.checked || current;
+    if (previous && current) {
+      this.checkButton(previous, current);
+    }
+  }
+
+  private handleFallbackFocus() {
+    const buttons = this.getButtons();
+    const noTabButtons = this.getButtons().filter(button => button.tabIndex < 0);
+    if (noTabButtons.length === buttons.length) {
+      buttons[0].tabIndex = 0;
+    }
   }
 
   render() {
