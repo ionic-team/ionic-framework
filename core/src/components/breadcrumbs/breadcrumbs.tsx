@@ -55,7 +55,10 @@ export class Breadcrumbs implements ComponentInterface {
 
   @Listen('collapsedClick')
   onCollapsedClick(ev: CustomEvent) {
-    this.ionCollapsedClick.emit(ev.detail)
+    const breadcrumbs = this.getBreadcrumbs();
+    const collapsedBreadcrumbs = breadcrumbs.filter(breadcrumb => breadcrumb.collapsed);
+
+    this.ionCollapsedClick.emit({ ...ev.detail, collapsedBreadcrumbs });
   }
 
   @Watch('maxItems')
