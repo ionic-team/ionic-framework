@@ -82,6 +82,13 @@ export {
   AlertButton,
 
   LoadingOptions,
+
+  ModalOptions,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
 } from '@ionic/core/components';
 
 // Icons that are used by internal components

@@ -74,4 +74,11 @@ export {
 
   LoadingOptions,
 
+  ModalOptions,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
+
 } from '@ionic/core';

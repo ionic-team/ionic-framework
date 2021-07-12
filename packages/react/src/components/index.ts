@@ -50,6 +50,13 @@ export {
   AlertButton,
 
   LoadingOptions,
+
+  ModalOptions,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
 } from '@ionic/core';
 export * from './proxies';
 
