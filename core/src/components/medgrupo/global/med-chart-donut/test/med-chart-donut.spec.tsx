@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ChartDonut } from '../chart-donut';
+import { MedChartDonut } from '../med-chart-donut';
 
-describe('chart-donut', () => {
+describe('med-chart-donut', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [ChartDonut],
-      html: `<chart-donut></chart-donut>`,
+      components: [MedChartDonut],
+      html: `<med-chart-donut></med-chart-donut>`,
     });
     expect(page.root).toEqualHtml(`
-      <chart-donut>
+      <med-chart-donut>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </chart-donut>
+      </med-chart-donut>
     `);
   });
 });

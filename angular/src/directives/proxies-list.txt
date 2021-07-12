@@ -80,6 +80,7 @@ export const DIRECTIVES = [
   d.MedBanner,
   d.MedCartaoRespostaItem,
   d.MedCartaoRespostaLista,
+  d.MedChartDonut,
   d.MedEnunciado,
   d.MedEnunciadoDiscursiva,
   d.MedFontZoom,

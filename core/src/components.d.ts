@@ -10,6 +10,7 @@ import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
+import { MedDonutItem } from "./components/medgrupo/global/med-chart-donut/med-chart-donut";
 import { MedFontSize } from "./global/med-components/font-size.enum";
 import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
 import { MedImageZoomItemInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
@@ -2756,6 +2757,9 @@ export namespace Components {
     }
     interface MedCartaoRespostaLista {
     }
+    interface MedChartDonut {
+        "valores": MedDonutItem[];
+    }
     interface MedEnunciado {
         "imagens": string[] | string;
     }
@@ -3357,6 +3361,12 @@ declare global {
         prototype: HTMLMedCartaoRespostaListaElement;
         new (): HTMLMedCartaoRespostaListaElement;
     };
+    interface HTMLMedChartDonutElement extends Components.MedChartDonut, HTMLStencilElement {
+    }
+    var HTMLMedChartDonutElement: {
+        prototype: HTMLMedChartDonutElement;
+        new (): HTMLMedChartDonutElement;
+    };
     interface HTMLMedEnunciadoElement extends Components.MedEnunciado, HTMLStencilElement {
     }
     var HTMLMedEnunciadoElement: {
@@ -3518,6 +3528,7 @@ declare global {
         "med-banner": HTMLMedBannerElement;
         "med-cartao-resposta-item": HTMLMedCartaoRespostaItemElement;
         "med-cartao-resposta-lista": HTMLMedCartaoRespostaListaElement;
+        "med-chart-donut": HTMLMedChartDonutElement;
         "med-enunciado": HTMLMedEnunciadoElement;
         "med-enunciado-discursiva": HTMLMedEnunciadoDiscursivaElement;
         "med-font-zoom": HTMLMedFontZoomElement;
@@ -6302,6 +6313,9 @@ declare namespace LocalJSX {
     }
     interface MedCartaoRespostaLista {
     }
+    interface MedChartDonut {
+        "valores"?: MedDonutItem[];
+    }
     interface MedEnunciado {
         "imagens": string[] | string;
         "onMedGalleryRequest"?: (event: CustomEvent<string>) => void;
@@ -6437,6 +6451,7 @@ declare namespace LocalJSX {
         "med-banner": MedBanner;
         "med-cartao-resposta-item": MedCartaoRespostaItem;
         "med-cartao-resposta-lista": MedCartaoRespostaLista;
+        "med-chart-donut": MedChartDonut;
         "med-enunciado": MedEnunciado;
         "med-enunciado-discursiva": MedEnunciadoDiscursiva;
         "med-font-zoom": MedFontZoom;
@@ -6548,6 +6563,7 @@ declare module "@stencil/core" {
             "med-banner": LocalJSX.MedBanner & JSXBase.HTMLAttributes<HTMLMedBannerElement>;
             "med-cartao-resposta-item": LocalJSX.MedCartaoRespostaItem & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaItemElement>;
             "med-cartao-resposta-lista": LocalJSX.MedCartaoRespostaLista & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaListaElement>;
+            "med-chart-donut": LocalJSX.MedChartDonut & JSXBase.HTMLAttributes<HTMLMedChartDonutElement>;
             "med-enunciado": LocalJSX.MedEnunciado & JSXBase.HTMLAttributes<HTMLMedEnunciadoElement>;
             "med-enunciado-discursiva": LocalJSX.MedEnunciadoDiscursiva & JSXBase.HTMLAttributes<HTMLMedEnunciadoDiscursivaElement>;
             "med-font-zoom": LocalJSX.MedFontZoom & JSXBase.HTMLAttributes<HTMLMedFontZoomElement>;

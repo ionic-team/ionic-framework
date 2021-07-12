@@ -963,6 +963,17 @@ export class MedCartaoRespostaLista {
     this.el = r.nativeElement;
   }
 }
+export declare interface MedChartDonut extends Components.MedChartDonut {
+}
+@ProxyCmp({ inputs: ["valores"] })
+@Component({ selector: "med-chart-donut", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["valores"] })
+export class MedChartDonut {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface MedEnunciado extends Components.MedEnunciado {
 }
 @ProxyCmp({ inputs: ["imagens"] })

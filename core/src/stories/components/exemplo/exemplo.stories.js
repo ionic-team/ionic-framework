@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { medsoftColors } from '../../med-colors'
 
 export default {
-  title: 'Components/Examples',
+  title: 'Components/Other/Examples',
   decorators: [withDesign],
 };
 

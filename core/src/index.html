@@ -56,23 +56,39 @@
   <body class="dark-mode">
     <ion-app>
 
-      <med-accordion>
-        <div slot="header">
-          <div class="teste"></div>
-        </div>
-        <span slot="">aueghuaehuaeh</span>
-        <p slot="content-fake">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-        <p slot="content"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem esse nesciunt officiis quo provident non asperiores, at iusto eveniet ipsum maxime, magni dignissimos quidem adipisci nostrum natus. At tempore odit nobis incidunt dignissimos exercitationem doloremque, error, sed quasi nulla provident aliquam natus dolorem accusantium fuga voluptatibus dicta distinctio ea inventore placeat. Ad voluptas assumenda libero unde fugit recusandae a officiis vitae voluptate, error optio. Illum quaerat fugiat odit harum, consequatur doloremque asperiores neque eius labore fuga minima in? Aliquam aperiam error suscipit reprehenderit quasi quas a, animi, quibusdam eligendi consequatur nobis adipisci sed molestiae dolor minima natus veniam. Omnis dolorum deserunt maxime reiciendis doloribus commodi sequi, debitis, vero iusto explicabo nesciunt corrupti autem, magni distinctio rerum dignissimos harum? Debitis eius harum dolorum, accusantium quas corrupti quisquam at consectetur. Facilis iusto, laboriosam eius enim sed doloremque minus voluptatem, cum inventore repellendus natus tempore. Inventore est rem ab, temporibus sint ipsum alias suscipit ipsam nihil soluta voluptates ad voluptatum reprehenderit explicabo aut harum vero? Omnis in maxime quia nam ad ipsum dolores ducimus sequi doloribus. Magni, vero. Blanditiis facilis voluptas quia itaque iure minus, asperiores labore cumque ratione dignissimos sint, possimus, aperiam nobis! Quod incidunt expedita magnam enim, dolores, ea ex voluptate perspiciatis quae, optio assumenda eius sunt obcaecati iste deleniti? Quis at inventore porro a culpa, suscipit similique voluptates incidunt beatae. Velit quaerat cupiditate dolores quia debitis minus ipsam officiis ratione, voluptatibus aliquam eos sunt ea accusamus labore, explicabo facere alias dolorem perferendis. Quidem nihil corrupti fugit deserunt fugiat ducimus nobis, reiciendis repellendus, soluta vel magnam tempore, ullam provident nesciunt? Repellendus quos facere at delectus quo, nihil explicabo suscipit officia voluptates quas assumenda asperiores illum animi omnis quaerat voluptate, quam doloribus ratione laboriosam unde, voluptatibus quisquam esse. Blanditiis rem consequatur accusantium minus dicta aliquid id enim praesentium est placeat saepe quas modi itaque, consequuntur, molestias exercitationem, eius facilis? Inventore explicabo dolorem quis consequuntur autem quos quasi saepe consectetur error. Natus alias eum voluptatem minima excepturi, ut fugit dolore eveniet iure doloremque aut explicabo suscipit, reiciendis voluptatum. Deserunt ullam consectetur incidunt provident, adipisci nesciunt numquam quibusdam. Eos, ipsam totam quasi officiis ad ab quibusdam vel nam illo reiciendis tempora, obcaecati recusandae beatae odio nesciunt. Aut dolor a itaque fuga quod eius, aliquid voluptas ullam corrupti asperiores maiores voluptates autem nulla libero nobis omnis tempore, fugit necessitatibus distinctio. Ea iusto voluptatibus molestias ad impedit mollitia officia pariatur velit. Nam officiis in animi repellendus corrupti incidunt sed illo aut itaque dolorum maxime accusamus facilis nemo rem cum odit velit, inventore dignissimos unde error quas! Adipisci sint delectus, repellendus eaque doloremque ipsam similique, beatae itaque quas quidem minima labore numquam obcaecati debitis? Quod adipisci cupiditate officia delectus corporis, explicabo distinctio harum recusandae culpa ad. Placeat autem odit nisi facilis accusamus, totam dignissimos blanditiis deserunt a non aliquam magni. Vitae mollitia error aut! Laboriosam, unde, consequatur magni voluptatum ut voluptatem saepe, quidem quis nemo molestiae earum facere veritatis optio excepturi? Similique exercitationem quo blanditiis, voluptatem dolores quisquam asperiores dolore consequuntur, dolorem culpa vel earum distinctio quam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quis assumenda similique, veniam dicta voluptatem debitis quidem accusamus! Sequi libero nihil quod. Ratione fugit quo alias in facilis, error rerum? Laboriosam eveniet ex deleniti iste a minima minus magnam libero, voluptates ullam veritatis explicabo voluptas? Illo nesciunt fugiat odit omnis voluptatem, officiis, vel voluptate, reprehenderit cupiditate consequuntur magni nihil inventore animi similique esse a officia harum tempore dolor sapiente rem tempora cum minima voluptatum? Velit, adipisci quasi animi necessitatibus reprehenderit rem vel nulla. Delectus eaque neque natus illum nostrum. Veniam cupiditate ex aperiam iusto voluptas inventore tenetur reiciendis aliquam obcaecati?</p>
-      </med-accordion>
+      <med-chart-donut></med-chart-donut>
 
     </ion-app>
 
     <script>
-      document.querySelector('.teste').addEventListener('click', (e) => {
-        e.stopPropagation();
-        console.log('eeeeeeeeeeee');
-      })
+      const data = [
+        {
+          cor: 'ion-color-success',
+          label: 'acertos',
+          quantia: 32,
+          ignoreBarra: false,
+        },
+        {
+          cor: 'ion-color-caution',
+          label: 'acertos',
+          quantia: 15,
+          ignoreBarra: false,
+        },
+        {
+          cor: 'ion-color-warning ',
+          label: 'acertos',
+          quantia: 10,
+          ignoreBarra: false,
+        },
+        {
+          cor: 'gray',
+          label: 'restantes',
+          quantia: 43,
+          ignoreBarra: true,
+        }
+      ];
 
+      document.querySelector('med-chart-donut').valores = data;
     </script>
   </body>
 </html>

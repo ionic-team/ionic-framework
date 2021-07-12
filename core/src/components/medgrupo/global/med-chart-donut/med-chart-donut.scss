@@ -1,0 +1,23 @@
+:host {
+  svg {
+    width: 104px;
+    height: 104px;
+  }
+
+  circle {
+      stroke-dashoffset: 0;
+      stroke: var(--med-color-neutral-1);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: 1s ease-in-out;
+      transform: rotate(-90deg);
+      transform-origin: 18px 18px;
+
+      &.size {
+        stroke: var(--med-color-2);
+        stroke-dasharray: var(--size) 100;
+    }
+  }
+}

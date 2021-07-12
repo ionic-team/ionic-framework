@@ -31,9 +31,6 @@ const TemplateDefault = () => {
         })
       }
     }
-
-    console.log(cartaoResposta);
-
     return cartaoResposta;
   };
 
@@ -41,7 +38,6 @@ const TemplateDefault = () => {
 
   const itemTemplates = [];
   for (const item of items) {
-    console.log(item.active);
     itemTemplates.push(html`<med-cartao-resposta-item ?active=${item.active} .color=${item.color} ?impressa=${item.impressa} ?anulada=${item.anulada}>${item.index}</med-cartao-resposta-item>`);
   }
 
