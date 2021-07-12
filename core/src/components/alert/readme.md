@@ -43,6 +43,45 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 ## Interfaces
 
+### AlertButton
+
+```typescript
+interface AlertButton {
+  text: string;
+  role?: string;
+  cssClass?: string | string[];
+  handler?: (value: any) => boolean | void | {[key: string]: any};
+}
+```
+
+
+### AlertInput
+
+```typescript
+interface AlertInput {
+  type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
+  name?: string;
+  placeholder?: string;
+  value?: any;
+  label?: string;
+  checked?: boolean;
+  disabled?: boolean;
+  id?: string;
+  handler?: (input: AlertInput) => void;
+  min?: string | number;
+  max?: string | number;
+  cssClass?: string | string[];
+  attributes?: AlertInputAttributes | AlertTextareaAttributes;
+  tabindex?: number;
+}
+```
+
+### AlertInputAttributes
+
+```typescript
+interface AlertInputAttributes extends JSXBase.InputHTMLAttributes<HTMLInputElement> {}
+```
+
 ### AlertOptions
 
 ```typescript
@@ -66,48 +105,11 @@ interface AlertOptions {
 }
 ```
 
-### AlertInput
-
-```typescript
-interface AlertInput {
-  type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
-  name?: string;
-  placeholder?: string;
-  value?: any;
-  label?: string;
-  checked?: boolean;
-  disabled?: boolean;
-  id?: string;
-  handler?: (input: AlertInput) => void;
-  min?: string | number;
-  max?: string | number;
-  cssClass?: string | string[];
-  attributes?: AlertInputAttributes | AlertTextareaAttributes;
-  tabindex?: number;
-}
-```
-
-### AlertButton
-
-```typescript
-interface AlertButton {
-  text: string;
-  role?: string;
-  cssClass?: string | string[];
-  handler?: (value: any) => boolean | void | {[key: string]: any};
-}
-```
-
-### AlertInputAttributes
-
-```typescript
-interface AlertInputAttributes extends JSXBase.InputHTMLAttributes<HTMLInputElement> {}
-```
-
 ### AlertTextareaAttributes
 ```typescript
 interface AlertTextareaAttributes extends JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 ```
+
 
 
 <!-- Auto Generated Below -->
