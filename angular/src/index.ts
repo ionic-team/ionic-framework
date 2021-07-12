@@ -61,6 +61,7 @@ export {
   iosTransitionAnimation,
   NavComponentWithProps,
 
+  SpinnerTypes,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -70,4 +71,7 @@ export {
   AlertTextareaAttributes,
   AlertInputAttributes,
   AlertButton,
+
+  LoadingOptions,
+
 } from '@ionic/core';

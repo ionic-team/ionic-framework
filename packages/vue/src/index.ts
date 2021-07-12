@@ -70,6 +70,8 @@ export {
   // Swiper
   IonicSwiper,
 
+  SpinnerTypes,
+
   ActionSheetOptions,
   ActionSheetButton,
 
@@ -78,6 +80,8 @@ export {
   AlertTextareaAttributes,
   AlertInputAttributes,
   AlertButton,
+
+  LoadingOptions,
 } from '@ionic/core/components';
 
 // Icons that are used by internal components
