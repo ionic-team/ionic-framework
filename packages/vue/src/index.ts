@@ -68,7 +68,16 @@ export {
   BackButtonEvent,
 
   // Swiper
-  IonicSwiper
+  IonicSwiper,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
 } from '@ionic/core/components';
 
 // Icons that are used by internal components

@@ -46,4 +46,28 @@ export { IonicModule } from './ionic-module';
 export { IonicSafeString, getPlatforms, isPlatform, createAnimation, IonicSwiper } from '@ionic/core';
 
 // CORE TYPES
-export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation, NavComponentWithProps } from '@ionic/core';
+export {
+  Animation,
+  AnimationBuilder,
+  AnimationCallbackOptions,
+  AnimationDirection,
+  AnimationFill,
+  AnimationKeyFrames,
+  AnimationLifecycle,
+  Gesture,
+  GestureConfig,
+  GestureDetail,
+  mdTransitionAnimation,
+  iosTransitionAnimation,
+  NavComponentWithProps,
+
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
+} from '@ionic/core';

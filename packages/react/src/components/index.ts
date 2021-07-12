@@ -37,6 +37,15 @@ export {
   NavComponentWithProps,
   setupConfig,
   IonicSwiper,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
 } from '@ionic/core';
 export * from './proxies';
 
