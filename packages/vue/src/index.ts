@@ -91,6 +91,16 @@ export {
   PickerButton,
   PickerColumn,
   PickerColumnOption,
+
+  PopoverOptions,
+  PopoverSize,
+  TriggerAction,
+  PositionReference,
+  PositionSide,
+  PositionAlign,
+
+  ToastOptions,
+  ToastButton
 } from '@ionic/core/components';
 
 // Icons that are used by internal components

@@ -81,4 +81,14 @@ export {
   PickerColumn,
   PickerColumnOption,
 
+  PopoverOptions,
+  PopoverSize,
+  TriggerAction,
+  PositionReference,
+  PositionSide,
+  PositionAlign,
+
+  ToastOptions,
+  ToastButton
+
 } from '@ionic/core';
