@@ -16,9 +16,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: {
-    delegatesFocus: false,
-  }
+  shadow: true
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
@@ -130,7 +128,6 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
-    // this.value ??= this.el.querySelector('ion-segment-button')?.value;
   }
 
   componentWillLoad() {
