@@ -40,6 +40,8 @@ We typically recommend that you write your popovers inline as it streamlines the
 
 Below you will find all of the options available to you when using the `popoverController`. These options should be supplied when calling `popoverController.create()`.
 
+### PopoverOptions
+
 ```typescript
 interface PopoverOptions {
   component: any;
