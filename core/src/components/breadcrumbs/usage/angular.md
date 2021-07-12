@@ -337,6 +337,9 @@ export class BreadcrumbsExample {
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: PopoverComponent,
+      componentProps: {
+        collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+      },
       event: ev
     });
     await popover.present();
@@ -344,13 +347,23 @@ export class BreadcrumbsExample {
 }
 ```
 
+```html
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let breadcrumb of collapsedBreadcrumbs" [href]="breadcrumb.href">
+      <ion-label>{{ breadcrumb.textContent }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+```
 ```typescript
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'popover-component',
 })
 export class PopoverComponent {
+  @Input() collapsedBreadcrumbs: HTMLElement[] = [];
 
   constructor() {}
 

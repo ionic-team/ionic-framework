@@ -333,21 +333,15 @@ import { IonBreadcrumb, IonBreadcrumbs, IonContent, IonItem, IonLabel, IonList, 
 
 const PopoverList: React.FC<{
   onHide: () => void;
-}> = ({ onHide }) => (
+  collapsedBreadcrumbs: HTMLElement[]
+}> = ({ onHide, collapsedBreadcrumbs }) => (
   <IonContent>
     <IonList>
-      <IonItem href="#">
-        <IonLabel>Home</IonLabel>
-      </IonItem>
-      <IonItem href="#electronics">
-        <IonLabel>Electronics</IonLabel>
-      </IonItem>
-      <IonItem href="#photography">
-        <IonLabel>Photography</IonLabel>
-      </IonItem>
-      <IonItem href="#cameras">
-        <IonLabel>Cameras</IonLabel>
-      </IonItem>
+      {collapsedBreadcrumbs.map(breadcrumb => (
+        <IonItem href={breadcrumb.href}>
+          <IonLabel>{breadcrumb.textContent}</IonLabel>
+        </IonItem>
+      ))}
     </IonList>
   </IonContent>
 );

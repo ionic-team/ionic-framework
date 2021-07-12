@@ -349,6 +349,9 @@ export class BreadcrumbsExample {
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: PopoverComponent,
+      componentProps: {
+        collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+      },
       event: ev
     });
     await popover.present();
@@ -356,13 +359,23 @@ export class BreadcrumbsExample {
 }
 ```
 
+```html
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let breadcrumb of collapsedBreadcrumbs" [href]="breadcrumb.href">
+      <ion-label>{{ breadcrumb.textContent }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+```
 ```typescript
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'popover-component',
 })
 export class PopoverComponent {
+  @Input() collapsedBreadcrumbs: HTMLElement[] = [];
 
   constructor() {}
 
@@ -699,21 +712,18 @@ class ListPopover extends HTMLElement {
   }
 
   connectedCallback() {
+    let breadcrumbTemplate = ``;
+    this.collapsedBreadcrumbs.forEach(breadcrumb => {
+      breadcrumbTemplate += `
+        <ion-item href="${breadcrumb.href}">
+          <ion-label>${breadcrumb.textContent}</ion-label>
+        </ion-item>
+      `;
+    })
     this.innerHTML = `
       <ion-content>
         <ion-list>
-          <ion-item href="#">
-            <ion-label>Home</ion-label>
-          </ion-item>
-          <ion-item href="#electronics">
-            <ion-label>Electronics</ion-label>
-          </ion-item>
-          <ion-item href="#photography">
-            <ion-label>Photography</ion-label>
-          </ion-item>
-          <ion-item href="#cameras">
-            <ion-label>Cameras</ion-label>
-          </ion-item>
+          ${breadcrumbTemplate}
         </ion-list>
       </ion-content>
     `;
@@ -725,6 +735,9 @@ customElements.define('list-popover', ListPopover);
 async function presentPopover(ev) {
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'list-popover',
+    componentProps: {
+      collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+    },
     event: ev
   });
   document.body.appendChild(popover);
@@ -1071,21 +1084,15 @@ import { IonBreadcrumb, IonBreadcrumbs, IonContent, IonItem, IonLabel, IonList, 
 
 const PopoverList: React.FC<{
   onHide: () => void;
-}> = ({ onHide }) => (
+  collapsedBreadcrumbs: HTMLElement[]
+}> = ({ onHide, collapsedBreadcrumbs }) => (
   <IonContent>
     <IonList>
-      <IonItem href="#">
-        <IonLabel>Home</IonLabel>
-      </IonItem>
-      <IonItem href="#electronics">
-        <IonLabel>Electronics</IonLabel>
-      </IonItem>
-      <IonItem href="#photography">
-        <IonLabel>Photography</IonLabel>
-      </IonItem>
-      <IonItem href="#cameras">
-        <IonLabel>Cameras</IonLabel>
-      </IonItem>
+      {collapsedBreadcrumbs.map(breadcrumb => (
+        <IonItem href={breadcrumb.href}>
+          <IonLabel>{breadcrumb.textContent}</IonLabel>
+        </IonItem>
+      ))}
     </IonList>
   </IonContent>
 );
@@ -1510,6 +1517,9 @@ export class BreadcrumbsExample {
   async presentPopover(ev: any) {
     const popover = await popoverController.create({
       component: 'list-popover',
+      componentProps: {
+        collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+      },
       event: ev
     });
     await popover.present();
@@ -1543,29 +1553,24 @@ export class BreadcrumbsExample {
 ```
 
 ```tsx
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'list-popover',
   styleUrl: 'list-popover.css',
 })
 export class ListPopover {
+  @Prop() collapsedBreadcrumbs: HTMLElement[] = [];
+
   render() {
     return [
       <ion-content>
         <ion-list>
-          <ion-item href="#">
-            <ion-label>Home</ion-label>
-          </ion-item>
-          <ion-item href="#electronics">
-            <ion-label>Electronics</ion-label>
-          </ion-item>
-          <ion-item href="#photography">
-            <ion-label>Photography</ion-label>
-          </ion-item>
-          <ion-item href="#cameras">
-            <ion-label>Cameras</ion-label>
-          </ion-item>
+          {this.collapsedBreadcrumbs.map(breadcrumb => (
+            <ion-item href={breadcrumb.href}>
+              <ion-label>{breadcrumb.textContent}</ion-label>
+            </ion-item>
+          ))}
         </ion-list>
       </ion-content>
     ];
@@ -1990,6 +1995,9 @@ export default defineComponent({
     async presentPopover(ev: Event) {
       const popover = await popoverController.create({
         component: ListPopover,
+        componentProps: {
+          collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+        },
         event: ev
       });
       await popover.present();
@@ -2003,17 +2011,8 @@ export default defineComponent({
 <template>
   <ion-content>
     <ion-list>
-      <ion-item href="#">
-        <ion-label>Home</ion-label>
-      </ion-item>
-      <ion-item href="#electronics">
-        <ion-label>Electronics</ion-label>
-      </ion-item>
-      <ion-item href="#photography">
-        <ion-label>Photography</ion-label>
-      </ion-item>
-      <ion-item href="#cameras">
-        <ion-label>Cameras</ion-label>
+      <ion-item v-for="breadcrumb in $props.collapsedBreadcrumbs" :href="breadcrumb.href">
+        <ion-label>{{ breadcrumb.textContent }}</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
@@ -2025,6 +2024,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ListPopover',
+  props: {
+    collapsedBreadcrumbs: { type: Array, default: [] }
+  },
   components: { IonContent, IonItem, IonLabel, IonList }
 });
 </script>

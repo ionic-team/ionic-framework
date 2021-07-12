@@ -387,6 +387,9 @@ export class BreadcrumbsExample {
   async presentPopover(ev: any) {
     const popover = await popoverController.create({
       component: 'list-popover',
+      componentProps: {
+        collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+      },
       event: ev
     });
     await popover.present();
@@ -420,29 +423,24 @@ export class BreadcrumbsExample {
 ```
 
 ```tsx
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'list-popover',
   styleUrl: 'list-popover.css',
 })
 export class ListPopover {
+  @Prop() collapsedBreadcrumbs: HTMLElement[] = [];
+
   render() {
     return [
       <ion-content>
         <ion-list>
-          <ion-item href="#">
-            <ion-label>Home</ion-label>
-          </ion-item>
-          <ion-item href="#electronics">
-            <ion-label>Electronics</ion-label>
-          </ion-item>
-          <ion-item href="#photography">
-            <ion-label>Photography</ion-label>
-          </ion-item>
-          <ion-item href="#cameras">
-            <ion-label>Cameras</ion-label>
-          </ion-item>
+          {this.collapsedBreadcrumbs.map(breadcrumb => (
+            <ion-item href={breadcrumb.href}>
+              <ion-label>{breadcrumb.textContent}</ion-label>
+            </ion-item>
+          ))}
         </ion-list>
       </ion-content>
     ];
