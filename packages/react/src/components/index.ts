@@ -36,6 +36,8 @@ export {
   NavComponentWithProps,
   setupConfig,
 
+  SpinnerTypes,
+
   ActionSheetOptions,
   ActionSheetButton,
 
@@ -44,6 +46,8 @@ export {
   AlertTextareaAttributes,
   AlertInputAttributes,
   AlertButton,
+
+  LoadingOptions,
 } from '@ionic/core';
 export * from './proxies';
 
