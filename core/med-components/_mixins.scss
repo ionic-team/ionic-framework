@@ -289,6 +289,9 @@
 
 @mixin new-generate-medsoft-color() {
   @each $key, $value in $new-medsoft-colors {
+    $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
+    $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
+
     $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
     $dark: map-get(map-get($new-medsoft-colors, $key), 2);
     $medium: map-get(map-get($new-medsoft-colors, $key), 3);
@@ -296,11 +299,17 @@
     $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
     $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
 
+    --med-color-#{$key}-contrast-1: #{$contrast-1};
+    --med-color-#{$key}-contrast-2: #{$contrast-2};
+
     --med-color-#{$key}-1: #{$darkest};
     --med-color-#{$key}-2: #{$dark};
     --med-color-#{$key}-3: #{$medium};
     --med-color-#{$key}-4: #{$light};
     --med-color-#{$key}-5: #{$lightest};
+
+    --med-color-#{$key}-contrast-1-rgb: #{color-to-rgb-list($contrast-1)};
+    --med-color-#{$key}-contrast-2-rgb: #{color-to-rgb-list($contrast-2)};
 
     --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
     --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
@@ -315,6 +324,9 @@
 @mixin new-generate-medsoft-color-classes($color-name) {
   $value: map-get($new-medsoft-colors, $color-name);
 
+  $contrast-1: map-get($value, contrast-1);
+  $contrast-2: map-get($value, contrast-2);
+
   $darkest: map-get($value, 1);
   $dark: map-get($value, 2);
   $medium: map-get($value, 3);
@@ -322,11 +334,17 @@
   $lightest: map-get($value, 5);
   $gradient: map-get($value, gradient);
 
+  --med-color-contrast-1: var(--med-color-#{$color-name}-contrast-1, #{$contrast-1});
+  --med-color-contrast-2: var(--med-color-#{$color-name}-contrast-2, #{$contrast-2});
+
   --med-color-1: var(--med-color-#{$color-name}-1, #{$darkest});
   --med-color-2: var(--med-color-#{$color-name}-2, #{$dark});
   --med-color-3: var(--med-color-#{$color-name}-3, #{$medium});
   --med-color-4: var(--med-color-#{$color-name}-4, #{$light});
   --med-color-5: var(--med-color-#{$color-name}-5, #{$lightest});
+
+  --med-color-contrast-1-rgb: var(--med-color-#{$color-name}-contrast-1-rgb, #{color-to-rgb-list($contrast-1)});
+  --med-color-contrast-2-rgb: var(--med-color-#{$color-name}-contrast-2-rgb, #{color-to-rgb-list($contrast-2)});
 
   --med-color-1-rgb: var(--med-color-#{$color-name}-1-rgb, #{color-to-rgb-list($darkest)});
   --med-color-2-rgb: var(--med-color-#{$color-name}-2-rgb, #{color-to-rgb-list($dark)});
@@ -365,6 +383,9 @@
     @include new-generate-neutral-colors(true);
 
     @each $key, $value in $new-medsoft-colors {
+      $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
+      $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
+
       $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
       $dark: map-get(map-get($new-medsoft-colors, $key), 2);
       $medium: map-get(map-get($new-medsoft-colors, $key), 3);
@@ -372,11 +393,17 @@
       $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
       $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
 
+      --med-color-#{$key}-contrast-1: #{$contrast-1};
+      --med-color-#{$key}-contrast-2: #{$contrast-2};
+
       --med-color-#{$key}-1: #{$darkest};
       --med-color-#{$key}-2: #{$dark};
       --med-color-#{$key}-3: #{$medium};
       --med-color-#{$key}-4: #{$light};
       --med-color-#{$key}-5: #{$lightest};
+
+      --med-color-#{$key}-contrast-1-rgb: #{color-to-rgb-list($contrast-1)};
+      --med-color-#{$key}-contrast-2-rgb: #{color-to-rgb-list($contrast-2)};
 
       --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
       --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
@@ -399,6 +426,9 @@
   .color-theme-#{$theme},
   [color-theme='#{$theme}'] {
     @each $key, $value in $new-medsoft-colors {
+      $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
+      $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
+
       $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
       $dark: map-get(map-get($new-medsoft-colors, $key), 2);
       $medium: map-get(map-get($new-medsoft-colors, $key), 3);
@@ -406,11 +436,17 @@
       $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
       $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
 
+      --med-color-#{$key}-contrast-1: #{$contrast-1};
+      --med-color-#{$key}-contrast-2: #{$contrast-2};
+
       --med-color-#{$key}-1: #{$darkest};
       --med-color-#{$key}-2: #{$dark};
       --med-color-#{$key}-3: #{$medium};
       --med-color-#{$key}-4: #{$light};
       --med-color-#{$key}-5: #{$lightest};
+
+      --med-color-#{$key}-contrast-1-rgb: #{color-to-rgb-list($contrast-1)};
+      --med-color-#{$key}-contrast-2-rgb: #{color-to-rgb-list($contrast-2)};
 
       --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
       --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};
@@ -433,6 +469,9 @@
   .color-theme-#{$theme}.color-scheme-#{$scheme},
   [color-theme='#{$theme}'][color-scheme='#{$scheme}'] {
     @each $key, $value in $new-medsoft-colors {
+      $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
+      $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
+
       $darkest: map-get(map-get($new-medsoft-colors, $key), 1);
       $dark: map-get(map-get($new-medsoft-colors, $key), 2);
       $medium: map-get(map-get($new-medsoft-colors, $key), 3);
@@ -440,11 +479,17 @@
       $lightest: map-get(map-get($new-medsoft-colors, $key), 5);
       $gradient: map-get(map-get($new-medsoft-colors, $key), gradient);
 
+      --med-color-#{$key}-contrast-1: #{$contrast-1};
+      --med-color-#{$key}-contrast-2: #{$contrast-2};
+
       --med-color-#{$key}-1: #{$darkest};
       --med-color-#{$key}-2: #{$dark};
       --med-color-#{$key}-3: #{$medium};
       --med-color-#{$key}-4: #{$light};
       --med-color-#{$key}-5: #{$lightest};
+
+      --med-color-#{$key}-contrast-1-rgb: #{color-to-rgb-list($contrast-1)};
+      --med-color-#{$key}-contrast-2-rgb: #{color-to-rgb-list($contrast-2)};
 
       --med-color-#{$key}-1-rgb: #{color-to-rgb-list($darkest)};
       --med-color-#{$key}-2-rgb: #{color-to-rgb-list($dark)};

@@ -533,6 +533,8 @@ $new-medsoft-colors-feedback: (
 
 $new-medsoft-colors: (
   brand: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-brand, $med-saturation, $med-darkest),
     2: hsl($med-brand, $med-saturation, $med-dark),
     3: hsl($med-brand, $med-saturation, $med-medium),
@@ -541,6 +543,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-brand, $med-saturation, $med-medium), hsl($med-brand, $med-saturation, $med-darkest)),
   ),
   aulas: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-aulas, $med-saturation, $med-darkest),
     2: hsl($med-aulas, $med-saturation, $med-dark),
     3: hsl($med-aulas, $med-saturation, $med-medium),
@@ -549,6 +553,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-aulas, $med-saturation, $med-medium), hsl($med-aulas, $med-saturation, $med-darkest)),
   ),
   material: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-material, $med-saturation, $med-darkest),
     2: hsl($med-material, $med-saturation, $med-dark),
     3: hsl($med-material, $med-saturation, $med-medium),
@@ -557,6 +563,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-material, $med-saturation, $med-medium), hsl($med-material, $med-saturation, $med-darkest)),
   ),
   questoes: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-questoes, $med-saturation, $med-darkest),
     2: hsl($med-questoes, $med-saturation, $med-dark),
     3: hsl($med-questoes, $med-saturation, $med-medium),
@@ -565,6 +573,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-questoes, $med-saturation, $med-medium), hsl($med-questoes, $med-saturation, $med-darkest)),
   ),
   revalida: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-revalida, $med-saturation, $med-darkest),
     2: hsl($med-revalida, $med-saturation, $med-dark),
     3: hsl($med-revalida, $med-saturation, $med-medium),
@@ -573,6 +583,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-revalida, $med-saturation, $med-medium), hsl($med-revalida, $med-saturation, $med-darkest)),
   ),
   provas: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-provas, $med-saturation, $med-darkest),
     2: hsl($med-provas, $med-saturation, $med-dark),
     3: hsl($med-provas, $med-saturation, $med-medium),
@@ -581,6 +593,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-provas, $med-saturation, $med-medium), hsl($med-provas, $med-saturation, $med-darkest)),
   ),
   success: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl(128, 80, 60),
     2: hsl(128, 80, 60),
     3: hsl(128, 80, 60),
@@ -589,6 +603,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-brand, 10, 25), hsl($med-brand, 10, 45)),
   ),
   warning: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl(43, 80, 60),
     2: hsl(43, 80, 60),
     3: hsl(43, 80, 60),
@@ -597,6 +613,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-brand, 10, 25), hsl($med-brand, 10, 45)),
   ),
   caution: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl(4, 80, 65),
     2: hsl(4, 80, 65),
     3: hsl(4, 80, 65),
@@ -605,6 +623,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-brand, 10, 75), hsl($med-brand, 10, 95)),
   ),
   light: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-brand, 10, 95),
     2: hsl($med-brand, 10, 85),
     3: hsl($med-brand, 10, 75),
@@ -613,6 +633,8 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-brand, 10, 75), hsl($med-brand, 10, 95)),
   ),
   dark: (
+    contrast-1: #fff,
+    contrast-2: #000,
     1: hsl($med-brand, 10, 45),
     2: hsl($med-brand, 10, 35),
     3: hsl($med-brand, 10, 25),

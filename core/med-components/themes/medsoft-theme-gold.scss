@@ -6,6 +6,8 @@ $med-brand: 43;
 
 $new-medsoft-colors: (
   brand: (
+    contrast-1: #000,
+    contrast-2: #fff,
     1: hsl($med-brand, $med-saturation, $med-darkest),
     2: hsl($med-brand, $med-saturation, $med-dark),
     3: hsl($med-brand, $med-saturation, $med-medium),
