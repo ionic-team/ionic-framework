@@ -5,6 +5,7 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 ## Interfaces
 
 ### PickerButton
+
 ```typescript
 interface PickerButton {
   text?: string;
@@ -15,6 +16,7 @@ interface PickerButton {
 ```
 
 ### PickerColumn
+
 ```typescript
 interface PickerColumn {
   name: string;
@@ -34,6 +36,7 @@ interface PickerColumn {
 ```
 
 ### PickerColumnOption
+
 ```typescript
 interface PickerColumnOption {
   text?: string;
@@ -46,6 +49,7 @@ interface PickerColumnOption {
 ```
 
 ### PickerOptions
+
 ```typescript
 interface PickerOptions {
   columns: PickerColumn[];

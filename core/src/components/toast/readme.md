@@ -13,6 +13,7 @@ The toast can be dismissed automatically after a specific amount of time by pass
 ## Interfaces
 
 ### ToastButton
+
 ```typescript
 interface ToastButton {
   text?: string;
@@ -25,6 +26,7 @@ interface ToastButton {
 ```
 
 ### ToastOptions
+
 ```typescript
 interface ToastOptions {
   header?: string;

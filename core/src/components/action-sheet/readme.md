@@ -36,6 +36,18 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 ## Interfaces
 
+### ActionSheetButton
+
+```typescript
+interface ActionSheetButton {
+  text?: string;
+  role?: 'cancel' | 'destructive' | 'selected' | string;
+  icon?: string;
+  cssClass?: string | string[];
+  handler?: () => boolean | void | Promise<boolean | void>;
+}
+```
+
 ### ActionSheetOptions
 
 ```typescript
@@ -53,18 +65,6 @@ interface ActionSheetOptions {
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
-}
-```
-
-### ActionSheetButton
-
-```typescript
-interface ActionSheetButton {
-  text?: string;
-  role?: 'cancel' | 'destructive' | 'selected' | string;
-  icon?: string;
-  cssClass?: string | string[];
-  handler?: () => boolean | void | Promise<boolean | void>;
 }
 ```
 
