@@ -130,6 +130,7 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+    this.value ??= this.el.querySelector('ion-segment-button')?.value;
   }
 
   componentWillLoad() {
@@ -435,15 +436,17 @@ export class Segment implements ComponentInterface {
   }
 
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
+    const buttons = this.getButtons().filter(button => !button.disabled);
+    const currIndex = buttons.findIndex(button => button === this.checked);
     switch (selector) {
       case 'first':
-        return this.el.querySelector('ion-segment-button:first-of-type');
+        return buttons[0];
       case 'last':
-        return this.el.querySelector('ion-segment-button:last-of-type');
+        return buttons[buttons.length - 1];
       case 'next':
-        return this.checked?.nextElementSibling as HTMLIonSegmentButtonElement || this.getSegmentButton('first');
+        return buttons[currIndex + 1] || buttons[0];
       case 'previous':
-        return this.checked?.previousElementSibling as HTMLIonSegmentButtonElement || this.getSegmentButton('last');
+        return buttons[currIndex - 1 ] || buttons[buttons.length - 1];
       default:
         return null;
     }
@@ -451,20 +454,16 @@ export class Segment implements ComponentInterface {
 
   private onKeyUp = (ev: KeyboardEvent) => {
     const previous = this.checked;
+    const isRTL = document.dir === 'rtl';
     let current;
     switch (ev.key) {
-      case 'Enter':
-      case ' ':
-        ev.preventDefault();
-        current = this.el.querySelector('ion-segment-button.ion-focused') as HTMLIonSegmentButtonElement;
-        break;
       case 'ArrowRight':
         ev.preventDefault();
-        current = this.getSegmentButton('next');
+        current = isRTL ? this.getSegmentButton('previous') : this.getSegmentButton('next');
         break;
       case 'ArrowLeft':
         ev.preventDefault();
-        current = this.getSegmentButton('previous')
+        current = isRTL ? this.getSegmentButton('next') : this.getSegmentButton('previous')
         break;
       case 'Home':
         ev.preventDefault();
@@ -481,11 +480,6 @@ export class Segment implements ComponentInterface {
     previous && current ? this.checkButton(previous, current) : this.setCheckedClasses();
   }
 
-  //TODO: not working
-  private onFocus = (ev: Event) => {
-    this.checked?.focus();
-  }
-
   render() {
     const mode = getIonMode(this);
     return (
@@ -493,7 +487,6 @@ export class Segment implements ComponentInterface {
         role="tablist"
         onClick={this.onClick}
         onKeyup={this.onKeyUp}
-        onFocus={this.onFocus}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
