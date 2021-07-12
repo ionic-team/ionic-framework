@@ -26,8 +26,6 @@ export {
   AnimationLifecycle,
   createAnimation,
   createGesture,
-  AlertButton,
-  AlertInput,
   Gesture,
   GestureConfig,
   GestureDetail,
