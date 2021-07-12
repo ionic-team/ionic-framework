@@ -70,8 +70,17 @@ export {
   getTimeGivenProgression,
 
   // Hardware Back Button
-  BackButtonEvent
-} from '@ionic/core';
+  BackButtonEvent,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
+} from '@ionic/core/components';
 
 // Icons that are used by internal components
 addIcons({
