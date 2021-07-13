@@ -327,10 +327,10 @@ export const IonRouterOutlet = defineComponent({
         /**
          * All views that can be transitioned to must have
          * an `<ion-page>` element for transitions and lifecycle
-         * hooks to work properly.
+         * methods to work properly.
          */
         if (enteringViewItem.vueComponent?.components?.IonPage === undefined) {
-          console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${currentRoute.pathname} does not have the required <ion-page> component. Transitions and lifecycle hooks may not work as expected.
+          console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${currentRoute.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
         }
