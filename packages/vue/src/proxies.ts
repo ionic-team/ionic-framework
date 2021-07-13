@@ -862,7 +862,9 @@ export const MedChartDonut = /*@__PURE__*/ defineContainer<JSX.MedChartDonut>('m
 ]);
 
 
-export const MedChartLabel = /*@__PURE__*/ defineContainer<JSX.MedChartLabel>('med-chart-label');
+export const MedChartLabel = /*@__PURE__*/ defineContainer<JSX.MedChartLabel>('med-chart-label', [
+  'valores'
+]);
 
 
 export const MedEnunciado = /*@__PURE__*/ defineContainer<JSX.MedEnunciado>('med-enunciado', [

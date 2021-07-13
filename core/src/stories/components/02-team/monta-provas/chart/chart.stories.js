@@ -10,6 +10,7 @@ const TemplateDefault = ({valores}) => {
 
   setTimeout(() => {
     document.querySelector('med-chart-donut').valores = valores.valores;
+    document.querySelector('med-chart-label').valores = valores.valores;
   }, 1000);
 
   return html`
@@ -36,6 +37,7 @@ const TemplateDefault = ({valores}) => {
       .med-chart-donut__label {
         font-size: var(--med-font-size-nano);
         color: var(--med-color-neutral-dark-10);
+        font-weight: var(--med-font-weight-bold);
       }
 
       .med-chart-donut__number {
@@ -65,9 +67,7 @@ const TemplateDefault = ({valores}) => {
             </med-chart-donut>
 
             <div class="monta-provas__info">
-              <span>acertos 12</span>
-              <span>erros 12</span>
-              <span>nao realizadas 12</span>
+              <med-chart-label></med-chart-label>
             </div>
 
           </div>
@@ -91,19 +91,19 @@ ChartDonut.argTypes = {
       valores: [
         {
           cor: 'ion-color-success',
-          label: 'acertos',
+          label: 'Acertos',
           quantia: 32,
           ignoreBarra: false,
         },
         {
           cor: 'ion-color-caution',
-          label: 'erros',
+          label: 'Erros',
           quantia: 16,
           ignoreBarra: false,
         },
         {
           cor: '',
-          label: 'restantes',
+          label: 'Restantes',
           quantia: 52,
           ignoreBarra: true,
         }

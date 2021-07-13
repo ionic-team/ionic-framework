@@ -3,6 +3,7 @@
 
   .list {
     list-style: none;
+    padding: 0;
   }
 
   .item {
@@ -11,6 +12,7 @@
     color: var(--med-color-neutral-5);
     display: flex;
     align-items: center;
+    font-weight: $med-font-weight-bold;
 
     &:not(:last-of-type) {
       padding-bottom: $med-spacing-stack-xxxs;
@@ -22,5 +24,6 @@
     line-height: $med-line-height-compressed;
     margin-right: $med-spacing-inline-xxxs;
     color: var(--med-color-3);
+    font-weight: $med-font-weight-bold;
   }
 }

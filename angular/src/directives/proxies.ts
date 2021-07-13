@@ -976,7 +976,8 @@ export class MedChartDonut {
 }
 export declare interface MedChartLabel extends Components.MedChartLabel {
 }
-@Component({ selector: "med-chart-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+@ProxyCmp({ inputs: ["valores"] })
+@Component({ selector: "med-chart-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["valores"] })
 export class MedChartLabel {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
