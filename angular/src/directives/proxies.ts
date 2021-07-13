@@ -985,6 +985,16 @@ export class MedChartLabel {
     this.el = r.nativeElement;
   }
 }
+export declare interface MedDivider extends Components.MedDivider {
+}
+@Component({ selector: "med-divider", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+export class MedDivider {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface MedEnunciado extends Components.MedEnunciado {
 }
 @ProxyCmp({ inputs: ["imagens"] })

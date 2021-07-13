@@ -2764,6 +2764,8 @@ export namespace Components {
     interface MedChartLabel {
         "valores": MedDonutItem[];
     }
+    interface MedDivider {
+    }
     interface MedEnunciado {
         "imagens": string[] | string;
     }
@@ -3377,6 +3379,12 @@ declare global {
         prototype: HTMLMedChartLabelElement;
         new (): HTMLMedChartLabelElement;
     };
+    interface HTMLMedDividerElement extends Components.MedDivider, HTMLStencilElement {
+    }
+    var HTMLMedDividerElement: {
+        prototype: HTMLMedDividerElement;
+        new (): HTMLMedDividerElement;
+    };
     interface HTMLMedEnunciadoElement extends Components.MedEnunciado, HTMLStencilElement {
     }
     var HTMLMedEnunciadoElement: {
@@ -3540,6 +3548,7 @@ declare global {
         "med-cartao-resposta-lista": HTMLMedCartaoRespostaListaElement;
         "med-chart-donut": HTMLMedChartDonutElement;
         "med-chart-label": HTMLMedChartLabelElement;
+        "med-divider": HTMLMedDividerElement;
         "med-enunciado": HTMLMedEnunciadoElement;
         "med-enunciado-discursiva": HTMLMedEnunciadoDiscursivaElement;
         "med-font-zoom": HTMLMedFontZoomElement;
@@ -6330,6 +6339,8 @@ declare namespace LocalJSX {
     interface MedChartLabel {
         "valores"?: MedDonutItem[];
     }
+    interface MedDivider {
+    }
     interface MedEnunciado {
         "imagens": string[] | string;
         "onMedGalleryRequest"?: (event: CustomEvent<string>) => void;
@@ -6467,6 +6478,7 @@ declare namespace LocalJSX {
         "med-cartao-resposta-lista": MedCartaoRespostaLista;
         "med-chart-donut": MedChartDonut;
         "med-chart-label": MedChartLabel;
+        "med-divider": MedDivider;
         "med-enunciado": MedEnunciado;
         "med-enunciado-discursiva": MedEnunciadoDiscursiva;
         "med-font-zoom": MedFontZoom;
@@ -6580,6 +6592,7 @@ declare module "@stencil/core" {
             "med-cartao-resposta-lista": LocalJSX.MedCartaoRespostaLista & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaListaElement>;
             "med-chart-donut": LocalJSX.MedChartDonut & JSXBase.HTMLAttributes<HTMLMedChartDonutElement>;
             "med-chart-label": LocalJSX.MedChartLabel & JSXBase.HTMLAttributes<HTMLMedChartLabelElement>;
+            "med-divider": LocalJSX.MedDivider & JSXBase.HTMLAttributes<HTMLMedDividerElement>;
             "med-enunciado": LocalJSX.MedEnunciado & JSXBase.HTMLAttributes<HTMLMedEnunciadoElement>;
             "med-enunciado-discursiva": LocalJSX.MedEnunciadoDiscursiva & JSXBase.HTMLAttributes<HTMLMedEnunciadoDiscursivaElement>;
             "med-font-zoom": LocalJSX.MedFontZoom & JSXBase.HTMLAttributes<HTMLMedFontZoomElement>;

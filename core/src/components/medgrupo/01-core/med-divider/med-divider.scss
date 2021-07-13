@@ -1,0 +1,13 @@
+:host {
+  display: block;
+
+  .heading {
+    padding: 0;
+    margin: 0;
+    padding-top: $med-spacing-stack-base;
+    line-height: $med-line-height-compressed;
+    font-weight: $med-font-weight-semibold;
+    color: var(--med-color-neutral-5);
+  }
+
+}

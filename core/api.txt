@@ -1413,6 +1413,8 @@ med-chart-donut,prop,valores,MedDonutItem[],[],false,false
 med-chart-label,scoped
 med-chart-label,prop,valores,MedDonutItem[],[],false,false
 
+med-divider,shadow
+
 med-enunciado,shadow
 med-enunciado,prop,imagens,string | string[],undefined,true,true
 med-enunciado,event,medGalleryRequest,string,true
