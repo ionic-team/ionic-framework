@@ -81,6 +81,7 @@ export const DIRECTIVES = [
   d.MedCartaoRespostaItem,
   d.MedCartaoRespostaLista,
   d.MedChartDonut,
+  d.MedChartLabel,
   d.MedEnunciado,
   d.MedEnunciadoDiscursiva,
   d.MedFontZoom,

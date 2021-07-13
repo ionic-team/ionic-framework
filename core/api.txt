@@ -1410,6 +1410,8 @@ med-cartao-resposta-lista,shadow
 med-chart-donut,scoped
 med-chart-donut,prop,valores,MedDonutItem[],[],false,false
 
+med-chart-label,shadow
+
 med-enunciado,shadow
 med-enunciado,prop,imagens,string | string[],undefined,true,true
 med-enunciado,event,medGalleryRequest,string,true

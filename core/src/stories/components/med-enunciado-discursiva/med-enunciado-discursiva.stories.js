@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Team/Enunciado Discursiva',
+  title: 'Components/Team/Questões/Enunciado Discursiva',
   decorators: [withDesign],
 };
 

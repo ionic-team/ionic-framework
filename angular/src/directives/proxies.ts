@@ -974,6 +974,16 @@ export class MedChartDonut {
     this.el = r.nativeElement;
   }
 }
+export declare interface MedChartLabel extends Components.MedChartLabel {
+}
+@Component({ selector: "med-chart-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+export class MedChartLabel {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface MedEnunciado extends Components.MedEnunciado {
 }
 @ProxyCmp({ inputs: ["imagens"] })
