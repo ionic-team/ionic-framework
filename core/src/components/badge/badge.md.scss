@@ -79,7 +79,7 @@
 }
 
 // neutral
-:host(.ion-color[fill="outline"]) {
+:host(.med-neutral[fill="outline"]) {
   color: var(--med-neutral);
   background: transparent;
   border-color: var(--med-neutral);
