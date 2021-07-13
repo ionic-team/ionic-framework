@@ -156,6 +156,10 @@ const TemplateIcon = ({ color }) => {
             <ion-icon .color=${color} name="med-star-outline"></ion-icon>
             <span class="list__span">med-star-outline</span>
           </li>
+          <li class="list__item">
+            <ion-icon .color=${color} name="med-filtro"></ion-icon>
+            <span class="list__span">med-filtro</span>
+          </li>
         </ul>
       </div>
     </ion-app>

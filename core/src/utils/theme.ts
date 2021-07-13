@@ -7,12 +7,28 @@ export const hostContext = (selector: string, el: HTMLElement): boolean => {
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
-export const createColorClasses = (color: Color | undefined | null, cssClassMap: CssClassMap): CssClassMap => {
-  return (typeof color === 'string' && color.length > 0) ? {
+export const createColorClasses = (color: Color | undefined | null, cssClassMap: CssClassMap, neutral?: any): CssClassMap => {
+  /* return (typeof color === 'string' && color.length > 0) ? {
     'ion-color': true,
     [`ion-color-${color}`]: true,
     ...cssClassMap
   } : cssClassMap;
+ */
+  if (typeof color === 'string' && color.length > 0) {
+    return {
+      'ion-color': true,
+      [`ion-color-${color}`]: true,
+      ...cssClassMap
+    }
+  } else if (neutral) {
+    return {
+      'med-neutral': true,
+      [`med-neutral-${neutral}`]: true,
+      ...cssClassMap
+    }
+  } else {
+    return cssClassMap;
+  }
 };
 
 export const getClassList = (classes: string | (string | null | undefined)[] | undefined): string[] => {

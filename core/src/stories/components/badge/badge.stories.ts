@@ -1,19 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors } from '../../med-colors'
+import { medColors, medNeutrals } from '../../med-colors'
 
 export default {
   title: 'Components/Global/Badge',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ color, fill, size, slot, invert }) => {
+const TemplateDefault = ({ color, neutral, fill, size, slot, invert }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <ion-badge .color=${color} fill=${fill} ds-size=${size} ?invert=${invert}>${slot}</ion-badge>
+        <ion-badge .color=${color} .neutral=${neutral} fill=${fill} ds-size=${size} ?invert=${invert}>${slot}</ion-badge>
         <!-- component -->
 
       </div>
@@ -35,6 +35,15 @@ Badge.argTypes = {
     description: "Define a cor do badge.",
     table: {
       type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  neutral: {
+    options: medNeutrals,
+    control: { type: 'select'},
+    description: "Define a cor neutral do badge.",
+    table: {
+      type:  { summary: 'Neutrals' },
       defaultValue: { summary: 'undefined' },
     },
   },

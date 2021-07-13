@@ -519,17 +519,17 @@ $med-medium: 40%;
 $med-light: 60%;
 $med-lightest: 80%;
 
-$new-medsoft-colors-feedback: (
-  success: (
-    3: hsl(128, 80, 60),
-  ),
-  warning: (
-    3: hsl(43, 80, 60),
-  ),
-  caution: (
-    3: hsl(4, 80, 65),
-  )
-);
+// $new-medsoft-colors-feedback: (
+//   success: (
+//     3: hsl(128, 80, 60),
+//   ),
+//   warning: (
+//     3: hsl(43, 80, 60),
+//   ),
+//   caution: (
+//     3: hsl(4, 80, 65),
+//   )
+// );
 
 $new-medsoft-colors: (
   brand: (
@@ -593,7 +593,7 @@ $new-medsoft-colors: (
     gradient: linear-gradient(to right, hsl($med-provas, $med-saturation, $med-medium), hsl($med-provas, $med-saturation, $med-darkest)),
   ),
   success: (
-    contrast-1: #fff,
+    contrast-1: #000,
     contrast-2: #000,
     1: hsl(128, 80, 60),
     2: hsl(128, 80, 60),
@@ -622,24 +622,17 @@ $new-medsoft-colors: (
     5: hsl(4, 80, 65),
     gradient: linear-gradient(to right, hsl($med-brand, 10, 75), hsl($med-brand, 10, 95)),
   ),
-  light: (
-    contrast-1: #fff,
-    contrast-2: #000,
-    1: hsl($med-brand, 10, 95),
-    2: hsl($med-brand, 10, 85),
-    3: hsl($med-brand, 10, 75),
-    4: hsl($med-brand, 10, 65),
-    5: hsl($med-brand, 10, 55),
-    gradient: linear-gradient(to right, hsl($med-brand, 10, 75), hsl($med-brand, 10, 95)),
-  ),
-  dark: (
-    contrast-1: #fff,
-    contrast-2: #000,
-    1: hsl($med-brand, 10, 45),
-    2: hsl($med-brand, 10, 35),
-    3: hsl($med-brand, 10, 25),
-    4: hsl($med-brand, 10, 15),
-    5: hsl($med-brand, 10, 5),
-    gradient: linear-gradient(to right, hsl($med-brand, 10, 25), hsl($med-brand, 10, 45)),
-  ),
 );
+
+$med-neutrals: (
+  '1': #0b0e0e,
+  '2': #22292a,
+  '3': #394446,
+  '4': #506062,
+  '5': #677b7e,
+  '6': #819598,
+  '7': #9dacaf,
+  '8': #b9c4c6,
+  '9': #d5dcdd,
+  '10': #f1f3f4,
+) !default;

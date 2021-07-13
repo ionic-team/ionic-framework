@@ -20,6 +20,7 @@ export class Badge implements ComponentInterface {
   @Prop() dsSize?: 'sm' | 'md' | 'lg';
   @Prop() fill?: 'outline';
   @Prop({ reflect: true }) invert = false;
+  @Prop() neutral?: Color;
 
   /**
    * The color to use from your application's color palette.
@@ -35,7 +36,7 @@ export class Badge implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'invert': this.invert,
-        })}
+        }, this.neutral)}
       >
         <slot></slot>
       </Host>

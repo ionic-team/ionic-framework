@@ -269,7 +269,7 @@
   --med-color-gradient: var(--med-color-#{$color-name}-gradient, #{$gradient}) !important;
 }
 
-@mixin generate-medsoft-color-classes {
+@mixin generate-medsoft-color-classes() {
   @each $color-name, $value in $medsoft-colors {
     @if $color-name != 'neutral-light' and $color-name != 'neutral-dark'{
       .ion-color-#{$color-name} {
@@ -419,6 +419,8 @@
         @include new-generate-medsoft-color-classes($color-name);
       }
     }
+
+    @include generate-neutrals(true);
   }
 }
 
@@ -505,5 +507,44 @@
         @include new-generate-medsoft-color-classes($color-name);
       }
     }
+  }
+}
+
+@mixin generate-neutrals($invert: false) {
+  $index: 1;
+
+  @each $key, $value in $med-neutrals {
+    @if $index <= 6 {
+      .med-neutral-#{$key} {
+        $neutral: map-get($med-neutrals, $key);
+
+        --med-neutral: var(--med-neutral-#{$key}, #{$neutral}) !important;
+        --med-neutral-rgb: var(--med-neutral-#{$key}-rgb, #{color-to-rgb-list($neutral)}) !important;
+        @if not $invert {
+          --med-neutral-contrast: #fff !important;
+          --med-neutral-contrast-rgb: #{color-to-rgb-list(#fff)} !important;
+        } @else {
+          --med-neutral-contrast: #000 !important;
+          --med-neutral-contrast-rgb: #{color-to-rgb-list(#000)} !important;
+        }
+      }
+    } @else {
+      .med-neutral-#{$key} {
+        $neutral: map-get($med-neutrals, $key);
+
+        --med-neutral: var(--med-neutral-#{$key}, #{$neutral}) !important;
+        --med-neutral-rgb: var(--med-neutral-#{$key}-rgb, #{color-to-rgb-list($neutral)}) !important;
+
+        @if not $invert {
+          --med-neutral-contrast: #000 !important;
+          --med-neutral-contrast-rgb: #{color-to-rgb-list(#000)} !important;
+        } @else {
+          --med-neutral-contrast: #fff !important;
+          --med-neutral-contrast-rgb: #{color-to-rgb-list(#fff)} !important;
+        }
+      }
+    }
+
+    $index: $index + 1;
   }
 }

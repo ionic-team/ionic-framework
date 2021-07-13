@@ -19,7 +19,7 @@
 
 :host {
   // ionic css custom properties
-  --color: var(--med-color-neutral-10);
+  --color: md-color(brand, contrast-1);
   --background: #{md-color(brand, 2)};
   --padding-bottom: 0;
   --padding-end: #{$med-spacing-inline-base};
@@ -48,8 +48,18 @@
 
 :host(.ion-color) {
   background: md-current-color(2);
-  color: var(--med-color-neutral-10);
+  color: md-current-color(contrast-1);
   border-color: md-current-color(2);
+}
+
+//
+// neutral
+//
+
+:host(.med-neutral) {
+  color: var(--med-neutral-contrast);
+  background: var(--med-neutral);
+  border-color: var(--med-neutral);
 }
 
 //
@@ -66,6 +76,13 @@
 :host(.ion-color[fill="outline"]) {
   border-color: md-current-color(2);
   color: md-current-color(2);
+}
+
+// neutral
+:host(.ion-color[fill="outline"]) {
+  color: var(--med-neutral);
+  background: transparent;
+  border-color: var(--med-neutral);
 }
 
 //
@@ -112,7 +129,7 @@
 // invert
 //
 
-:host(.invert) {
+/* :host(.invert) {
   background: var(--med-color-neutral-3);
   border-color: var(--med-color-neutral-3);
   color: var(--med-color-neutral-8);
@@ -138,3 +155,4 @@
   border-color: var(--med-color-neutral-8);
   color: var(--med-color-neutral-8);
 }
+ */

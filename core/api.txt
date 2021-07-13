@@ -136,6 +136,7 @@ ion-badge,prop,dsSize,"lg" | "md" | "sm" | undefined,undefined,false,false
 ion-badge,prop,fill,"outline" | undefined,undefined,false,false
 ion-badge,prop,invert,boolean,false,false,true
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
+ion-badge,prop,neutral,string | undefined,undefined,false,false
 ion-badge,css-prop,--background
 ion-badge,css-prop,--color
 ion-badge,css-prop,--padding-bottom

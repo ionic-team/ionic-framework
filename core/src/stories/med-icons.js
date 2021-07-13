@@ -30,4 +30,5 @@ export const medIcons = [
   'med-search',
   'med-star-filled',
   'med-star-outline',
+  'med-filtro'
 ]

@@ -24,6 +24,8 @@
   }
 }
 
+@include generate-neutrals();
+
 // /* @each $color-name, $value in $new-medsoft-colors-feedback {
 //   .ion-color-#{$color-name} {
 //     @include new-generate-medsoft-feedback-color-classes($color-name);
