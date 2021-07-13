@@ -82,11 +82,6 @@ export {
   PickerColumnOption,
 
   PopoverOptions,
-  PopoverSize,
-  TriggerAction,
-  PositionReference,
-  PositionSide,
-  PositionAlign,
 
   ToastOptions,
   ToastButton
