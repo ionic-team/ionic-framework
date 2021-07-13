@@ -867,7 +867,9 @@ export const MedChartLabel = /*@__PURE__*/ defineContainer<JSX.MedChartLabel>('m
 ]);
 
 
-export const MedDivider = /*@__PURE__*/ defineContainer<JSX.MedDivider>('med-divider');
+export const MedDivider = /*@__PURE__*/ defineContainer<JSX.MedDivider>('med-divider', [
+  'text'
+]);
 
 
 export const MedEnunciado = /*@__PURE__*/ defineContainer<JSX.MedEnunciado>('med-enunciado', [

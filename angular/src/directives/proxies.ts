@@ -987,7 +987,8 @@ export class MedChartLabel {
 }
 export declare interface MedDivider extends Components.MedDivider {
 }
-@Component({ selector: "med-divider", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+@ProxyCmp({ inputs: ["text"] })
+@Component({ selector: "med-divider", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["text"] })
 export class MedDivider {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

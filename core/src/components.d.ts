@@ -2765,6 +2765,7 @@ export namespace Components {
         "valores": MedDonutItem[];
     }
     interface MedDivider {
+        "text": string;
     }
     interface MedEnunciado {
         "imagens": string[] | string;
@@ -6340,6 +6341,7 @@ declare namespace LocalJSX {
         "valores"?: MedDonutItem[];
     }
     interface MedDivider {
+        "text": string;
     }
     interface MedEnunciado {
         "imagens": string[] | string;
