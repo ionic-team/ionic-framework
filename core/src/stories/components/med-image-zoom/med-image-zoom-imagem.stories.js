@@ -20,8 +20,8 @@ const createModalArrayIMG = async () => {
         {src: "https://via.placeholder.com/500", legenda: "5 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo." },
       ],
 
-      marcaAguaSuperior?: '123456',
-      marcaAguaInferior?: '1234567890',
+      marcaAguaSuperior: '123456',
+      marcaAguaInferior: '1234567890',
       titulo:'Alternativas',
     }
   }).then((modal)=>{

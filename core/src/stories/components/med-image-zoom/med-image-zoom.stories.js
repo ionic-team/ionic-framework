@@ -18,7 +18,7 @@ const createModal = async () => {
           legenda: "Alternativa A - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo ultrices placerat. Ut quis ante viverra, egestas orci vitae, feugiat velit. Pellentesque luctus sapien eget vulputate dapibus. Donec in leo."
         },
       ],
-      marcaAguaSuperior: '123456',
+      marcaAguaSuperior: '1234567890',
       marcaAguaInferior: '1234567890',
       titulo:'Alternativa A',
     }
