@@ -17,6 +17,7 @@
     width: 100%;
     padding: $med-spacing-inset-sm;
     box-sizing: border-box;
+    line-height: line-height();
   }
 
   .med-accordion__icon-container {

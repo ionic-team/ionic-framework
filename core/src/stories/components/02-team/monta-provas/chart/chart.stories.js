@@ -56,7 +56,12 @@ const TemplateDefault = ({valores}) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-          <div class="monta-provas__chart">
+
+        <med-accordion icon="left">
+
+          <div slot="header">Teste</div>
+
+          <div class="monta-provas__chart" slot="content">
 
             <med-chart-donut class="med-chart-donut">
               <div class="med-chart-donut__total">
@@ -71,6 +76,9 @@ const TemplateDefault = ({valores}) => {
             </div>
 
           </div>
+
+        </med-accordion>
+
         <!-- component -->
 
       <ion-content>
