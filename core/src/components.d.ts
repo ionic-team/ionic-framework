@@ -11,6 +11,7 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
 import { MedDonutItem } from "./components/medgrupo/01-core/med-chart-donut/med-chart-donut";
+import { MedDonutItem as MedDonutItem1 } from "./components/medgrupo/01-core/med-chart-label/med-chart-label";
 import { MedFontSize } from "./global/med-components/font-size.enum";
 import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
 import { MedImageZoomItemInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
@@ -2761,6 +2762,7 @@ export namespace Components {
         "valores": MedDonutItem[];
     }
     interface MedChartLabel {
+        "valores": MedDonutItem[];
     }
     interface MedEnunciado {
         "imagens": string[] | string;
@@ -6326,6 +6328,7 @@ declare namespace LocalJSX {
         "valores"?: MedDonutItem[];
     }
     interface MedChartLabel {
+        "valores"?: MedDonutItem[];
     }
     interface MedEnunciado {
         "imagens": string[] | string;

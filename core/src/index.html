@@ -56,7 +56,7 @@
   <body class="dark-mode">
     <ion-app>
 
-      <med-chart-donut></med-chart-donut>
+      <med-chart-label></med-chart-label>
 
     </ion-app>
 
@@ -64,13 +64,13 @@
       const data = [
         {
           cor: 'ion-color-success',
-          label: 'acertos',
+          label: 'Acertos',
           quantia: 32,
           ignoreBarra: false,
         },
         {
           cor: 'ion-color-caution',
-          label: 'acertos',
+          label: 'certos',
           quantia: 15,
           ignoreBarra: false,
         },
@@ -88,7 +88,7 @@
         }
       ];
 
-      document.querySelector('med-chart-donut').valores = data;
+      document.querySelector('med-chart-label').valores = data;
     </script>
   </body>
 </html>
