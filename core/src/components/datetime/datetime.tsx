@@ -1181,12 +1181,11 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMDYearView() {
-    return getCalendarYears(this.activeParts, true, undefined, undefined, this.parsedYearValues).map(year => {
+    return getCalendarYears(this.activeParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
 
-      const { isCurrentYear, isActiveYear, disabled, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts, this.minParts, this.maxParts);
+      const { isCurrentYear, isActiveYear, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts);
       return (
         <button
-          disabled={disabled}
           aria-selected={ariaSelected}
           class={{
             'datetime-year-item': true,
@@ -1238,7 +1237,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getCalendarYears(this.workingParts, false, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
+        {getCalendarYears(this.workingParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
           return (
             <div
               class="picker-col-item"
