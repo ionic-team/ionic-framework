@@ -1181,7 +1181,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMDYearView() {
-    return getCalendarYears(this.activeParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
+    return getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
 
       const { isCurrentYear, isActiveYear, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts);
       return (
@@ -1237,7 +1237,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getCalendarYears(this.workingParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
+        {getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
           return (
             <div
               class="picker-col-item"

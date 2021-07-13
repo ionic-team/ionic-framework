@@ -44,7 +44,9 @@ always in the 24-hour format, so `00` is `12am` on a 12-hour clock, `13` means
 
 ## Min and Max Datetimes
 
-By default, there is no maximum or minimum date a user can select. To customize the minimum and maximum datetime values, the `min` and `max` component properties can be provided which may make more sense for the app's use-case. Following the same IS0 8601 format listed in the table above, each component can restrict which dates can be selected by the user. By passing `2016` to the `min` property and `2020-10-31` to the `max` property, the datetime will restrict the date selection between the beginning of `2016`, and `October 31st of 2020`.
+Dates are infinite in either direction, so for a user's selection there should be at least some form of restricting the dates that can be selected. By default, the maximum date is to the end of the current year, and the minimum date is from the beginning of the year that was 100 years ago.
+
+To customize the minimum and maximum datetime values, the `min` and `max` component properties can be provided which may make more sense for the app's use-case. Following the same IS0 8601 format listed in the table above, each component can restrict which dates can be selected by the user. By passing `2016` to the `min` property and `2020-10-31` to the `max` property, the datetime will restrict the date selection between the beginning of `2016`, and `October 31st of 2020`.
 
 ## Selecting Specific Values
 
