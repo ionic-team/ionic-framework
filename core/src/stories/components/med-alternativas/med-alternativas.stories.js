@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Team/Alternativas',
+  title: 'Components/Team/Questões/Alternativas',
   decorators: [withDesign],
 };
 
