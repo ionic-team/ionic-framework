@@ -1180,8 +1180,8 @@ export class Datetime implements ComponentInterface {
     this.showMonthAndYear = !this.showMonthAndYear;
   }
 
-  private renderMDYearView() {
-    return getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
+  private renderMDYearView(calendarYears: number[] = []) {
+    return calendarYears.map(year => {
 
       const { isCurrentYear, isActiveYear, ariaSelected } = getCalendarYearState(year, this.workingParts, this.todayParts);
       return (
@@ -1208,7 +1208,7 @@ export class Datetime implements ComponentInterface {
     })
   }
 
-  private renderiOSYearView() {
+  private renderiOSYearView(calendarYears: number[] = []) {
     return [
       <div class="datetime-picker-before"></div>,
       <div class="datetime-picker-after"></div>,
@@ -1237,7 +1237,7 @@ export class Datetime implements ComponentInterface {
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
         <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-        {getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues).map(year => {
+        {calendarYears.map(year => {
           return (
             <div
               class="picker-col-item"
@@ -1257,10 +1257,11 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderYearView(mode: Mode) {
+    const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
     return (
       <div class="datetime-year">
         <div class="datetime-year-body">
-          {mode === 'ios' ? this.renderiOSYearView() : this.renderMDYearView()}
+          {mode === 'ios' ? this.renderiOSYearView(calendarYears) : this.renderMDYearView(calendarYears)}
         </div>
       </div>
     );
