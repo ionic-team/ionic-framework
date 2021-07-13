@@ -18,6 +18,13 @@
         <ion-title>Breadcrumbs - Basic</ion-title>
       </ion-toolbar>
       <ion-toolbar>
+        <ion-breadcrumbs max-items="2" items-before-collapse="1" items-after-collapse="1">
+          <ion-breadcrumb>First</ion-breadcrumb>
+          <ion-breadcrumb>Second</ion-breadcrumb>
+          <ion-breadcrumb>Third</ion-breadcrumb>
+          <ion-breadcrumb>Fourth</ion-breadcrumb>
+          <ion-breadcrumb>Fifth</ion-breadcrumb>
+        </ion-breadcrumbs>
         <ion-breadcrumbs>
           <ion-breadcrumb href="#">
             Home
@@ -281,27 +288,13 @@
       <h1>Breadcrumbs: collapsed / popover on click</h1>
 
       <ion-breadcrumbs id="popoverOnClick" max-items="4" items-before-collapse="0" items-after-collapse="3">
-        <ion-breadcrumb href="#">
-          Home
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#electronics">
-          Cameras & Camcorders
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#digital-camera-accessories">
-          Digital Camera Accessories
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#camera-lenses">
-          Camera Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#dslr-lenses">
-          DSLR Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#prime-lenses">
-          Prime Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb>
-          Product Info
-        </ion-breadcrumb>
+        <ion-breadcrumb href="#">Home</ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">Cameras & Camcorders</ion-breadcrumb>
+        <ion-breadcrumb href="#digital-camera-accessories">Digital Camera Accessories</ion-breadcrumb>
+        <ion-breadcrumb href="#camera-lenses">Camera Lenses</ion-breadcrumb>
+        <ion-breadcrumb href="#dslr-lenses">DSLR Lenses</ion-breadcrumb>
+        <ion-breadcrumb href="#prime-lenses">Prime Lenses</ion-breadcrumb>
+        <ion-breadcrumb>Product Info</ion-breadcrumb>
       </ion-breadcrumbs>
 
       <hr>
@@ -456,21 +449,20 @@
       }
 
       connectedCallback() {
+        let template = '';
+
+        this.collapsedBreadcrumbs.forEach(breadcrumb => {
+          template += `
+            <ion-item href="${breadcrumb.href}">
+              <ion-label>${breadcrumb.textContent}</ion-label>
+            </ion-item>
+          `;
+        });
+
         this.innerHTML = `
           <ion-content>
             <ion-list>
-              <ion-item href="#">
-                <ion-label>Home</ion-label>
-              </ion-item>
-              <ion-item href="#electronics">
-                <ion-label>Cameras & Camcorders</ion-label>
-              </ion-item>
-              <ion-item href="#digital-camera-accessories">
-                <ion-label>Digital Camera Accessories</ion-label>
-              </ion-item>
-              <ion-item href="#camera-lenses">
-                <ion-label>Camera Lenses</ion-label>
-              </ion-item>
+              ${template}
             </ion-list>
           </ion-content>
         `;
@@ -483,6 +475,7 @@
       console.log('present ev', ev);
       const popover = Object.assign(document.createElement('ion-popover'), {
         component: 'list-popover',
+        componentProps: ev.detail,
         event: ev,
       });
       document.body.appendChild(popover);

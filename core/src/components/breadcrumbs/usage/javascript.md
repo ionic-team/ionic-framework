@@ -325,21 +325,18 @@ class ListPopover extends HTMLElement {
   }
 
   connectedCallback() {
+    let breadcrumbTemplate = ``;
+    this.collapsedBreadcrumbs.forEach(breadcrumb => {
+      breadcrumbTemplate += `
+        <ion-item href="${breadcrumb.href}">
+          <ion-label>${breadcrumb.textContent}</ion-label>
+        </ion-item>
+      `;
+    })
     this.innerHTML = `
       <ion-content>
         <ion-list>
-          <ion-item href="#">
-            <ion-label>Home</ion-label>
-          </ion-item>
-          <ion-item href="#electronics">
-            <ion-label>Electronics</ion-label>
-          </ion-item>
-          <ion-item href="#photography">
-            <ion-label>Photography</ion-label>
-          </ion-item>
-          <ion-item href="#cameras">
-            <ion-label>Cameras</ion-label>
-          </ion-item>
+          ${breadcrumbTemplate}
         </ion-list>
       </ion-content>
     `;
@@ -351,6 +348,9 @@ customElements.define('list-popover', ListPopover);
 async function presentPopover(ev) {
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'list-popover',
+    componentProps: {
+      collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+    },
     event: ev
   });
   document.body.appendChild(popover);

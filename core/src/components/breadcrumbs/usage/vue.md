@@ -412,6 +412,9 @@ export default defineComponent({
     async presentPopover(ev: Event) {
       const popover = await popoverController.create({
         component: ListPopover,
+        componentProps: {
+          collapsedBreadcrumbs: ev.detail.collapsedBreadcrumbs
+        },
         event: ev
       });
       await popover.present();
@@ -425,17 +428,8 @@ export default defineComponent({
 <template>
   <ion-content>
     <ion-list>
-      <ion-item href="#">
-        <ion-label>Home</ion-label>
-      </ion-item>
-      <ion-item href="#electronics">
-        <ion-label>Electronics</ion-label>
-      </ion-item>
-      <ion-item href="#photography">
-        <ion-label>Photography</ion-label>
-      </ion-item>
-      <ion-item href="#cameras">
-        <ion-label>Cameras</ion-label>
+      <ion-item v-for="breadcrumb in $props.collapsedBreadcrumbs" :href="breadcrumb.href">
+        <ion-label>{{ breadcrumb.textContent }}</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
@@ -447,6 +441,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ListPopover',
+  props: {
+    collapsedBreadcrumbs: { type: Array, default: [] }
+  },
   components: { IonContent, IonItem, IonLabel, IonList }
 });
 </script>
