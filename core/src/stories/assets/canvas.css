@@ -1,9 +1,9 @@
 :root .color-scheme-dark ion-content {
-  --background: #141414;
+  --background: #000;
 }
 
 :root .color-scheme-light ion-content {
-  --background: #fafafa;
+  --background: #fff;
 }
 
 html {
@@ -20,21 +20,21 @@ body {
 }
 
 body.sb-show-main.sb-main-padded.dark-mode {
-  background-color: #141414;
+  background-color: #000;
   color: #fff;
 }
 
 body.sb-show-main.sb-main-padded.light-mode {
-  background-color: #fafafa;
+  background-color: #fff;
   color: #000;
 }
 
 body.sb-show-main.sb-main-padded.dark-mode ion-content {
-  --background: #141414;
+  --background: #000;
 }
 
 body.sb-show-main.sb-main-padded.light-mode ion-content {
-  --background: #fafafa;
+  --background: #fff;
 }
 
 .storybook-only {

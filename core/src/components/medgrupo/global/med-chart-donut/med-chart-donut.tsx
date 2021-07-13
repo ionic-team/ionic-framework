@@ -51,7 +51,6 @@ export class MedChartDonut {
               }
             })
           }
-          <slot></slot>
         </svg>
       </Host>
     );
