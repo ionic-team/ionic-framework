@@ -2248,6 +2248,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * If `select`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `focus`, keyboard navigation will only focus the `ion-segment-button` element.
+         */
+        "keyboardBehavior"?: 'focus' | 'select';
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -5804,6 +5808,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the segment.
          */
         "disabled"?: boolean;
+        /**
+          * If `select`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `focus`, keyboard navigation will only focus the `ion-segment-button` element.
+         */
+        "keyboardBehavior"?: 'focus' | 'select';
         /**
           * The mode determines which platform styles to use.
          */

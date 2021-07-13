@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -91,6 +91,12 @@ export class Segment implements ComponentInterface {
       }
     }
   }
+
+  /**
+   * If `select`, navigating to an `ion-segment-button` with the keyboard will focus and select the element.
+   * If `focus`, keyboard navigation will only focus the `ion-segment-button` element. 
+   */
+  @Prop() keyboardBehavior?: 'focus' | 'select' = 'focus';
 
   /**
    * Emitted when the value property has changed and any
@@ -435,7 +441,11 @@ export class Segment implements ComponentInterface {
 
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous' | 'focused'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter(button => !button.disabled);
-    const currIndex = buttons.findIndex(button => button === this.checked || button.classList.contains('ion-focused'));
+    const currIndex = buttons.findIndex(button =>
+      (this.keyboardBehavior === 'select' && this.checked)
+      ? button === this.checked
+      : button.classList.contains('ion-focused'
+    ));
     switch (selector) {
       case 'first':
         return buttons[0];
@@ -452,8 +462,10 @@ export class Segment implements ComponentInterface {
     }
   }
 
-  private onKeyUp = (ev: KeyboardEvent) => {
+  @Listen('keydown')
+  onKeyDown(ev: KeyboardEvent) {
     const isRTL = document.dir === 'rtl';
+    let { keyboardBehavior } = this;
     let current;
     switch (ev.key) {
       case 'ArrowRight':
@@ -476,12 +488,15 @@ export class Segment implements ComponentInterface {
       case 'Enter':
         ev.preventDefault();
         current = this.getSegmentButton('focused');
+        keyboardBehavior = 'select';
       default:
         break;
     }
 
     const previous = this.checked || current;
-    if (previous && current) {
+    if (keyboardBehavior === 'focus') {
+      current?.focus();
+    } else if (keyboardBehavior === 'select' && previous && current) {
       this.checkButton(previous, current);
     }
   }
@@ -500,7 +515,6 @@ export class Segment implements ComponentInterface {
       <Host
         role="tablist"
         onClick={this.onClick}
-        onKeyup={this.onKeyUp}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
