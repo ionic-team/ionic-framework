@@ -20,7 +20,6 @@ export class MedChartDonut {
       total: 0,
       subtotais: [] as number[]
     }
-    console.log(this.valores);
 
     this.valores.forEach((item: MedDonutItem) => {
       totais.total += item.quantia;
