@@ -47,6 +47,13 @@
     max-width: calc(100% - 100px);
     height: auto;
     max-height: calc(100% - 100px);
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+
+
   }
 
   .zoom-legenda-container {

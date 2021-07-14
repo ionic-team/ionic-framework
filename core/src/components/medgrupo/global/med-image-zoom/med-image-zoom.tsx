@@ -5,7 +5,7 @@ import { modalController } from '../../../../utils/overlays';
 @Component({
   tag: 'med-image-zoom',
   styleUrl: 'med-image-zoom.scss',
-  shadow: true,
+  scoped: true
 })
 export class MedImageZoom {
   @Prop({ mutable: true, reflect: true }) imagens: MedImageZoomItemInterface[] | any = []
