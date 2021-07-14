@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Team/Monta Provas/Chart',
+  title: 'Components/Team/Monta Provas/Components/Chart',
   decorators: [withDesign],
 };
 
@@ -15,9 +15,19 @@ const TemplateDefault = ({valores}) => {
 
   return html`
     <style>
-      .monta-provas__chart {
+      .monta-provas-accordion__header {
+        font-size: var(--med-font-size-xs);
+        font-weight: var(--med-font-weight-semibold);
+        line-height: var(--med-line-height-default);
+        color: var(--med-color-neutral-10);
+        margin: 0;
+        padding; 0;
+        width: 100%;
+      }
+
+      .monta-provas-chart {
         background: var(--med-color-neutral-2);
-        padding: var(--med-spacing-inset-base);
+        padding: var(--med-spacing-stretch-md);
         display: flex;
         justify-content: space-evenly;
         align-items: center;
@@ -25,7 +35,7 @@ const TemplateDefault = ({valores}) => {
         margin: 0 auto;
       }
 
-      .med-chart-donut__total {
+      .monta-provas-chart__total {
         position: absolute;
         display: grid;
         left: 50%;
@@ -34,21 +44,16 @@ const TemplateDefault = ({valores}) => {
         line-height: var(--med-line-height-compressed);
       }
 
-      .med-chart-donut__label {
+      .monta-provas-chart__label {
         font-size: var(--med-font-size-nano);
         color: var(--med-color-neutral-dark-10);
         font-weight: var(--med-font-weight-bold);
       }
 
-      .med-chart-donut__number {
+      .monta-provas-chart__number {
         font-weight: var(--med-font-weight-bold);
         font-size: var(--med-font-size-md);
         color: var(--med-color-neutral-light-prime);
-      }
-
-      .monta-provas__info {
-        display: grid;
-        text-align: left;
       }
     </style>
 
@@ -56,44 +61,38 @@ const TemplateDefault = ({valores}) => {
       <div class="storybook-only__container">
 
         <!-- component -->
+        <med-accordion class="monta-provas-accordion" icon="left">
+          <h4 class="monta-provas-accordion__header" slot="header">Nome da Prova</h4>
 
-        <med-accordion icon="left">
+          <div class="monta-provas-chart" slot="content">
 
-          <div slot="header">Teste</div>
-
-          <div class="monta-provas__chart" slot="content">
-
-            <med-chart-donut class="med-chart-donut">
-              <div class="med-chart-donut__total">
-                <span class="med-chart-donut__label">Total de</span>
-                <span class="med-chart-donut__number">100</span>
-                <span class="med-chart-donut__label">Questões</span>
+            <med-chart-donut class="monta-provas-chart__donut">
+              <div class="monta-provas-chart__total">
+                <span class="monta-provas-chart__label">Total de</span>
+                <span class="monta-provas-chart__number">100</span>
+                <span class="monta-provas-chart__label">Questões</span>
               </div>
             </med-chart-donut>
 
-            <div class="monta-provas__info">
-              <med-chart-label></med-chart-label>
-            </div>
+            <med-chart-label class="monta-provas-chart__label"></med-chart-label>
 
           </div>
-
         </med-accordion>
-
         <!-- component -->
 
-      <ion-content>
+      </div>
     </ion-app>
   `
 }
 
-export const ChartDonut = TemplateDefault.bind({});
-ChartDonut.parameters = {
+export const Chart = TemplateDefault.bind({});
+Chart.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/zdbyAa3XpX3loOjJEaXc6E/Quest%C3%B5es?node-id=826%3A1008',
   },
 }
-ChartDonut.argTypes = {
+Chart.argTypes = {
   valores: {
     defaultValue: {
       valores: [
