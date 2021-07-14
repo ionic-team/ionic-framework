@@ -33,6 +33,9 @@
     display: flex;
     justify-content: center;
     height: 100%;
+    .swiper-pagination-bullet-active {
+      border: 2px solid #fff;
+  }
   }
 
   .swiper-zoom-container {
@@ -48,14 +51,14 @@
 
   .zoom-legenda-container {
     padding: 16px 52px;
-    text-align: center;
+    text-align: justify;
   }
 
   @media (max-width: 992px) {
     .zoom-legenda-container {
       padding: 16px 52px;
       padding-right: 70px;
-      text-align: center;
+      text-align: justify;
     }
   }
 
