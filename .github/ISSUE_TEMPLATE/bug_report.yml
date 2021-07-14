@@ -11,7 +11,7 @@ body:
           required: true
         - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
           required: true
-        - label: I have search for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already report this problem, without success.
+        - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already report this problem, without success.
           required: true
   - type: checkboxes
     attributes:
