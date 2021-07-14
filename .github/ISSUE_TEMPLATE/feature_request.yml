@@ -1,18 +1,18 @@
 name: Feature Request
-about: Suggest an idea for Ionic Framework
+description: Suggest an idea for Ionic Framework
 title: 'feat: '
 body:
   - type: checkboxes
     attributes:
       label: Prequisites
       description: Please ensure you have completed all of the following.
-    options:
-      - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
-        required: true
-      - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
-        required: true
-      - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already include this feature request, without success.
-        required: true
+      options:
+        - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
+          required: true
+        - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
+          required: true
+        - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already include this feature request, without success.
+          required: true
   - type: textarea
     attributes:
       label: Describe the Feature Request
