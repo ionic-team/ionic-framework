@@ -6,7 +6,7 @@
   height: 100%;
   background-color: $med-color-neutral-dark-prime;
 
-  .header {
+  .zoom-header {
     position: fixed;
     width: 100%;
     z-index: 1;
@@ -20,7 +20,7 @@
     }
   }
 
-  .content {
+  .zoom-content {
     --background: #{$med-color-neutral-dark-prime};
 
     height: 100%;
@@ -33,6 +33,9 @@
     display: flex;
     justify-content: center;
     height: 100%;
+    .swiper-pagination-bullet-active {
+      border: 2px solid #fff;
+  }
   }
 
   .swiper-zoom-container {
@@ -44,18 +47,25 @@
     max-width: calc(100% - 100px);
     height: auto;
     max-height: calc(100% - 100px);
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+
+
   }
 
   .zoom-legenda-container {
     padding: 16px 52px;
-    text-align: center;
+    text-align: justify;
   }
 
   @media (max-width: 992px) {
     .zoom-legenda-container {
       padding: 16px 52px;
       padding-right: 70px;
-      text-align: center;
+      text-align: justify;
     }
   }
 
@@ -65,7 +75,7 @@
     font-size: 14px;
     max-width: 992px;
     overflow-y: auto;
-    max-height: 50px;
+    max-height: 60px;
   }
 
   .marca-agua-superior {
@@ -92,7 +102,7 @@
     pointer-events: none;
   }
 
-  .button-container {
+  .zoom-button-container {
     position: fixed;
     bottom: $med-spacing-stack-md;
     right: 15px;
@@ -100,7 +110,7 @@
     width: 48px;
   }
 
-  .button {
+  .zoom-button {
     width: 48px;
     height: 48px;
     border: none;
@@ -109,6 +119,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: none;
     background-color: $med-color-neutral-light-40;
 
     ion-icon {
