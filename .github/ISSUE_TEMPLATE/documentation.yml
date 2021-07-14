@@ -1,0 +1,7 @@
+name: Documentation
+about: Suggest an improvement for the Ionic Framework documentation
+title: ''
+labels: 'ionitron: docs'
+body:
+  - type: markdown
+    value: "Please do not submit issues on how to improve or fix the documentation. Instead, please submit an issue to the [Ionic Docs Repository](https://github.com/ionic-team/ionic-docs/issues/new/choose)."
