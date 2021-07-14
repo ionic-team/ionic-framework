@@ -1,0 +1,56 @@
+name: Bug Report
+about: Create a report to help us improve Ionic Framework
+title: 'bug: '
+body:
+  - type: checkboxes
+  attributes:
+    label: Prequisites
+    description: Please ensure you have completed all of the following.
+  options:
+    - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
+      required: true
+    - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
+      required: true
+    - label: I have search for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already report this problem, without success.
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Ionic Framework Version
+      description: Please select which versions of Ionic Framework this issue impacts. For Ionic Framework 1.x issues, please use https://github.com/ionic-team/ionic-v1. For Ionic Framework 2.x and 3.x issues, please use https://github.com/ionic-team/ionic-v3.
+    options:
+      - label: v4.x
+      - label: v5.x
+      - label: v6.x
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A clear description of what the bug is and how it manifests.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Please explain the steps required to duplicate this issue.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Code Reproduction URL
+      description: Please reproduce this issue in a blank Ionic Framework starter application and provide a link to the repo. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app. This is the best way to ensure this issue is triaged quickly. Issues without a code reproduction may be closed if the Ionic Team cannot reproduce the issue you are reporting.
+      placeholder: https://github.com/...
+  - type: textarea
+    attributes:
+      label: Ionic Info
+      description: Please run `ionic info` from within your Ionic Framework project directory and paste the output below.
+    validations:
+      requred: true
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc.
