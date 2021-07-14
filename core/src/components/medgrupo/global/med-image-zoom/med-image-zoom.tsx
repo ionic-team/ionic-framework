@@ -53,15 +53,17 @@ export class MedImageZoom {
             pager={this.imagens && this.imagens.length > 1}>
             {this.imagens.map((img: any) =>
               <ion-slide>
-                <span class="marcaAguaSuperior">{this.marcaAguaSuperior}</span>
+                <span class="marca-agua-superior">{this.marcaAguaSuperior}</span>
                 <div class="swiper-zoom-container">
-                  <img class="img1" src={img?.src} />
-                  <div class="legenda" innerHTML={img?.legenda}></div>
+                  <img class="zoom-imagem" src={img?.src} />
+                  <div class="zoom-legenda-container">
+                    <div class="zoom-legenda" innerHTML={img?.legenda}></div>
+                  </div>
                 </div>
               </ion-slide>
             )}
           </ion-slides>
-          <span class="marcaAguaInferior">{this.marcaAguaInferior}</span>
+          <span class="marca-agua-inferior">{this.marcaAguaInferior}</span>
         </ion-content>
         <div class="button-container">
           <button class="button button--in" onClick={() => this.zoom(true)}>
