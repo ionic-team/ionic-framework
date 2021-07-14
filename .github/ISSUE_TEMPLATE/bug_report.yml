@@ -1,26 +1,26 @@
 name: Bug Report
-about: Create a report to help us improve Ionic Framework
+description: Create a report to help us improve Ionic Framework
 title: 'bug: '
 body:
   - type: checkboxes
     attributes:
       label: Prequisites
       description: Please ensure you have completed all of the following.
-    options:
-      - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
-        required: true
-      - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
-        required: true
-      - label: I have search for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already report this problem, without success.
-        required: true
+      options:
+        - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
+          required: true
+        - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
+          required: true
+        - label: I have search for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already report this problem, without success.
+          required: true
   - type: checkboxes
     attributes:
       label: Ionic Framework Version
       description: Please select which versions of Ionic Framework this issue impacts. For Ionic Framework 1.x issues, please use https://github.com/ionic-team/ionic-v1. For Ionic Framework 2.x and 3.x issues, please use https://github.com/ionic-team/ionic-v3.
-    options:
-      - label: v4.x
-      - label: v5.x
-      - label: v6.x
+      options:
+        - label: v4.x
+        - label: v5.x
+        - label: v6.x
   - type: textarea
     attributes:
       label: Current Behavior
