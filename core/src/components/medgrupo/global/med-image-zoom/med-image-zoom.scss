@@ -40,36 +40,45 @@
     margin: 0 16px;
   }
 
+  .img1 {
+    width: auto;
+    max-width: calc(100% - 100px);
+    height: auto;
+    max-height: calc(100% - 100px);
+  }
+
   .legenda {
     color: #fff;
     font-size: 14px;
     margin: 0;
-    padding: 16px;
-    max-width: 992px;
+    padding: 1em 4em;
+    max-width: 992px !important;
+    overflow-x: auto;
+    text-align: justify !important;
   }
 
-  .marcaAguaSuperior{
+  .marcaAguaSuperior {
     position: absolute;
-    left:12%;
-    top:40%;
+    left: 12%;
+    top: 40%;
     z-index: 1;
     width: auto;
     font-size: 2.5em;
     opacity: 0.01;
-    color: #673AB7;
-    pointer-events:none;
+    color: #673ab7;
+    pointer-events: none;
   }
 
-  .marcaAguaInferior{
+  .marcaAguaInferior {
     position: absolute;
-    left:5%;
-    top:60%;
+    left: 5%;
+    top: 60%;
     z-index: 1;
     width: auto;
     font-size: 2.5em;
     opacity: 0.02;
     color: red;
-    pointer-events:none;
+    pointer-events: none;
   }
 
   .button-container {

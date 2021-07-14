@@ -39,7 +39,7 @@ export class MedImageZoom {
       <Host from-stencil>
         <med-header class="header">
           <med-navbar slot="navbar" ds-name="transparent" ds-theme="light">
-            <span slot="title">{this.titulo}</span>
+            <span slot="title" innerHTML={this.titulo}></span>
 
             <ion-button ds-name="icon-only" slot="right" onClick={() => this.dismiss()}>
               <ion-icon slot="icon-only" name="med-close"></ion-icon>
@@ -55,8 +55,8 @@ export class MedImageZoom {
               <ion-slide>
                 <span class="marcaAguaSuperior">{this.marcaAguaSuperior}</span>
                 <div class="swiper-zoom-container">
-                  <img src={img?.src} />
-                  <p class="legenda">{img?.legenda}</p>
+                  <img class="img1" src={img?.src} />
+                  <div class="legenda" innerHTML={img?.legenda}></div>
                 </div>
               </ion-slide>
             )}
