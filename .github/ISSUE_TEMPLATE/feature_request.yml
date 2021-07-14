@@ -1,0 +1,43 @@
+name: Feature Request
+about: Suggest an idea for Ionic Framework
+title: 'feat: '
+body:
+  - type: checkboxes
+    attributes:
+      label: Prequisites
+      description: Please ensure you have completed all of the following.
+    options:
+      - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
+        required: true
+      - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
+        required: true
+      - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already include this feature request, without success.
+        required: true
+  - type: textarea
+    attributes:
+      label: Describe the Feature Request
+      description: A clear and concise description of what the feature does.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the Use Case
+      description: A clear and concise use case for what problem this feature would solve.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe Preferred Solution
+      description: A clear and concise description of what you how you want this feature to be added to Ionic Framework.
+  - type: textarea
+    attributes:
+      label: Describe Alternatives
+      description: A clear and concise description of any alternative solutions or features you have considered.
+  - type: textarea
+    attributes:
+      label: Related Code
+      description: If you are able to illustrate the feature request with an example, please provide a sample Ionic Framework application. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app.
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to implement, Stack Overflow links, forum links, etc.
