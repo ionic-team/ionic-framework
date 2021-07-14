@@ -30,6 +30,7 @@
 
 .progress-container {
   display: flex;
+  background-color: var(--background);
 }
 
 :host(.in-med-header) {
