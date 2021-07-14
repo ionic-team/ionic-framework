@@ -37,7 +37,6 @@
 
   .swiper-zoom-container {
     flex-direction: column;
-    margin: 0 16px;
   }
 
   .zoom-imagem {
@@ -50,6 +49,14 @@
   .zoom-legenda-container {
     padding: 16px 52px;
     text-align: center;
+  }
+
+  @media (max-width: 992px) {
+    .zoom-legenda-container {
+      padding: 16px 52px;
+      padding-right: 70px;
+      text-align: center;
+    }
   }
 
   .zoom-legenda {
