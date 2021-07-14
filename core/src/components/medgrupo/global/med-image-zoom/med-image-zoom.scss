@@ -35,41 +35,61 @@
     height: 100%;
   }
 
-  .swiper-zoom-container div {
+  .swiper-zoom-container {
     flex-direction: column;
-    margin: 0 16px;
   }
 
-  .legenda {
+  .zoom-imagem {
+    width: auto;
+    max-width: calc(100% - 100px);
+    height: auto;
+    max-height: calc(100% - 100px);
+  }
+
+  .zoom-legenda-container {
+    padding: 16px 52px;
+    text-align: center;
+  }
+
+  @media (max-width: 992px) {
+    .zoom-legenda-container {
+      padding: 16px 52px;
+      padding-right: 70px;
+      text-align: center;
+    }
+  }
+
+  .zoom-legenda {
+    display: inline-block;
     color: #fff;
     font-size: 14px;
-    margin: 0;
-    padding: 16px;
     max-width: 992px;
+    overflow-y: auto;
+    max-height: 50px;
   }
 
-  .marcaAguaSuperior{
+  .marca-agua-superior {
     position: absolute;
-    left:12%;
-    top:40%;
+    top: 29%;
     z-index: 1;
-    width: auto;
+    width: 100%;
+    text-align: center;
     font-size: 2.5em;
     opacity: 0.01;
-    color: #673AB7;
-    pointer-events:none;
+    color: #673ab7;
+    pointer-events: none;
   }
 
-  .marcaAguaInferior{
+  .marca-agua-inferior {
     position: absolute;
-    left:5%;
-    top:60%;
+    top: 52%;
     z-index: 1;
-    width: auto;
+    width: 100%;
+    text-align: center;
     font-size: 2.5em;
     opacity: 0.02;
     color: red;
-    pointer-events:none;
+    pointer-events: none;
   }
 
   .button-container {
