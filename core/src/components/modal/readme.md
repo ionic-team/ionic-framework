@@ -489,6 +489,7 @@ In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `cu
   isOpen={show2ndModal}
   cssClass='my-custom-class'
   presentingElement={firstModalRef.current}
+  swipeToClose={true}
   onDidDismiss={() => setShow2ndModal(false)}>
   <p>This is more modal content</p>
   <IonButton onClick={() => setShow2ndModal(false)}>Close Modal</IonButton>
@@ -750,6 +751,47 @@ export default defineComponent({
 ```
 
 > If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
+
+### Swipeable Modals
+
+Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
+
+> Card style modals when running on iPhone-sized devices do not have backdrops. As a result, the `--backdrop-opacity` variable will not have any effect.
+
+```html
+<template>
+  <ion-page>
+    <ion-content>
+      <ion-button @click="setOpen(true)">Show Modal</ion-button>
+      <ion-modal
+        :is-open="isOpenRef"
+        css-class="my-custom-class"
+        :swipe-to-close="true"
+        :presenting-element="$parent.$refs.ionRouterOutlet"
+        @didDismiss="setOpen(false)"
+      >
+        <Modal :data="data"></Modal>
+      </ion-modal>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script lang="ts">
+import { IonModal, IonButton, IonContent, IonPage } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Modal from './modal.vue'
+
+export default defineComponent({
+  components: { IonModal, IonButton, Modal, IonContent, IonPage },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    const data = { content: 'New Content' };
+    return { isOpenRef, setOpen, data }
+  }
+});
+</script>
+```
 
 
 
