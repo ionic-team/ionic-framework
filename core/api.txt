@@ -1432,7 +1432,7 @@ med-font-zoom,prop,value,MedFontSize.MD | MedFontSize.SM | MedFontSize.XS | MedF
 med-header,shadow
 med-header,event,medResize,headerResizeEventDetail,true
 
-med-image-zoom,shadow
+med-image-zoom,scoped
 med-image-zoom,prop,imagens,any,[],false,true
 med-image-zoom,prop,marcaAguaInferior,string | undefined,undefined,false,true
 med-image-zoom,prop,marcaAguaSuperior,string | undefined,undefined,false,true

@@ -6,7 +6,7 @@
   height: 100%;
   background-color: $med-color-neutral-dark-prime;
 
-  .header {
+  .zoom-header {
     position: fixed;
     width: 100%;
     z-index: 1;
@@ -20,7 +20,7 @@
     }
   }
 
-  .content {
+  .zoom-content {
     --background: #{$med-color-neutral-dark-prime};
 
     height: 100%;
@@ -75,7 +75,7 @@
     font-size: 14px;
     max-width: 992px;
     overflow-y: auto;
-    max-height: 50px;
+    max-height: 60px;
   }
 
   .marca-agua-superior {
@@ -102,7 +102,7 @@
     pointer-events: none;
   }
 
-  .button-container {
+  .zoom-button-container {
     position: fixed;
     bottom: $med-spacing-stack-md;
     right: 15px;
@@ -110,7 +110,7 @@
     width: 48px;
   }
 
-  .button {
+  .zoom-button {
     width: 48px;
     height: 48px;
     border: none;
@@ -119,6 +119,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: none;
     background-color: $med-color-neutral-light-40;
 
     ion-icon {
