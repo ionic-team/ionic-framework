@@ -261,7 +261,6 @@ export const getPickerMonths = (
 
 export const getCalendarYears = (
   refParts: DatetimeParts,
-  showOutOfBoundsYears = false,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   yearValues?: number[]
@@ -277,8 +276,8 @@ export const getCalendarYears = (
     return processedYears;
   } else {
     const { year } = refParts;
-    const maxYear = (showOutOfBoundsYears) ? year + 20 : (maxParts?.year || year + 20)
-    const minYear = (showOutOfBoundsYears) ? year - 20 : (minParts?.year || year - 20);
+    const maxYear = (maxParts?.year || year);
+    const minYear = (minParts?.year || year - 100);
 
     const years = [];
     for (let i = maxYear; i >= minYear; i--) {

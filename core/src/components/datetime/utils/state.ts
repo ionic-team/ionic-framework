@@ -77,13 +77,11 @@ export const isDayDisabled = (
   return false;
 }
 
-export const getCalendarYearState = (refYear: number, activeParts: DatetimeParts, todayParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const getCalendarYearState = (refYear: number, activeParts: DatetimeParts, todayParts: DatetimeParts) => {
   const isActiveYear = refYear === activeParts.year;
   const isCurrentYear = refYear === todayParts.year;
-  const disabled = isYearDisabled(refYear, minParts, maxParts);
 
   return {
-    disabled,
     isActiveYear,
     isCurrentYear,
     ariaSelected: isActiveYear ? 'true' : null

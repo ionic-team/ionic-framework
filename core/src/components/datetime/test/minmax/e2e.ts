@@ -9,6 +9,13 @@ test('minmax', async () => {
 
   screenshotCompares.push(await page.compareScreenshot());
 
+  const monthYearItem = await page.find('ion-datetime#inside >>> .calendar-month-year');
+
+  await monthYearItem.click();
+  await page.waitForChanges();
+
+  screenshotCompares.push(await page.compareScreenshot());
+
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
