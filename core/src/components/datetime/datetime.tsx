@@ -319,6 +319,12 @@ export class Datetime implements ComponentInterface {
   @Prop() showDefaultTimeLabel = true;
 
   /**
+   * If `cover`, the width of the `ion-datetime` component will be set to `100%`.
+   * If unset or `fixed`, the width of the component will be set to `350px`.
+   */
+  @Prop() size: 'cover' | 'fixed' = 'fixed';
+
+  /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel!: EventEmitter<void>;
@@ -1525,7 +1531,7 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -1540,7 +1546,8 @@ export class Datetime implements ComponentInterface {
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
             'show-month-and-year': showMonthAndYear,
-            [`datetime-presentation-${presentation}`]: true
+            [`datetime-presentation-${presentation}`]: true,
+            [`datetime-size-${size}`]: true
           })
         }}
       >

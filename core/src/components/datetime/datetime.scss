@@ -14,12 +14,20 @@
 
   flex-flow: column;
 
-  width: 350px;
   height: 100%;
 
   background: var(--background);
 
   overflow: hidden;
+}
+
+:host(.datetime-size-fixed) {
+  width: 350px;
+}
+
+:host(.datetime-size-cover) {
+  width: 100%;
+  min-width: 350px;
 }
 
 :host .calendar-body,
