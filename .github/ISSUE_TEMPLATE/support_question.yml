@@ -1,8 +1,0 @@
-name: Support Question
-description: Question on how to use Ionic Framework
-title: 'support: '
-labels: 'ionitron: support'
-body:
-  - type: markdown
-    attributes:
-      value: "Please do not submit support requests or "How to" questions here. Instead, please use the Ionic Forum: https://forum.ionicframework.com/."

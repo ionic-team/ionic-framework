@@ -1,7 +1,0 @@
-name: CLI
-description: Suggest an idea for the Ionic CLI
-labels: 'ionitron: cli'
-body:
-  - type: markdown
-    attributes:
-      value: "Please do not submit bug reports or feature requests related to the Ionic CLI. Instead, please submit an issue to the [Ionic CLI Repository](https://github.com/ionic-team/ionic-cli/issues/new/choose)."
