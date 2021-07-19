@@ -20,12 +20,12 @@
 
 :host-context(.item-label-floating) .select-icon {
   @include transform(translate3d(0, -9px, 0));
+
+  transition: transform .15s cubic-bezier(.4, 0, .2, 1);
 }
 
 :host-context(.item-has-focus) .select-icon {
-  @include transform(rotate(180deg), translate3d(0, 0px, 0));
-
-  transition: transform .15s cubic-bezier(.4,0,.2,1),-webkit-transform .15s cubic-bezier(.4,0,.2,1);
+  @include transform(rotate(180deg), translate3d(0, -9px, 0));
 }
 
 :host-context(ion-item.ion-focused) .select-icon,
