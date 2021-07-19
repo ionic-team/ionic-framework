@@ -21,16 +21,12 @@
 
 }
 
-:host-context(.item-label-floating) .select-icon {
+:host-context(.item-label-floating) {
   @include transform(translate3d(0, -9px, 0));
 }
 
-:host-context(.item-label-floating.item-has-focus) .select-icon {
-  @include transform(rotate(180deg), translate3d(0, -9px, 0));
-}
-
 :host-context(.item-has-focus) .select-icon {
-  @include transform(rotate(180deg), translate3d(0, 0px, 0));
+  @include transform(rotate(180deg));
 }
 
 :host-context(ion-item.ion-focused) .select-icon,
