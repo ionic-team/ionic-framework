@@ -2248,10 +2248,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * If `select`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `focus`, keyboard navigation will only focus the `ion-segment-button` element.
-         */
-        "keyboardBehavior"?: 'focus' | 'select';
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -2259,6 +2255,10 @@ export namespace Components {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable": boolean;
+        /**
+          * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.
+         */
+        "selectOnFocus": boolean;
         /**
           * If `true`, users will be able to swipe between segment buttons to activate them.
          */
@@ -5809,10 +5809,6 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * If `select`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `focus`, keyboard navigation will only focus the `ion-segment-button` element.
-         */
-        "keyboardBehavior"?: 'focus' | 'select';
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -5832,6 +5828,10 @@ declare namespace LocalJSX {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable"?: boolean;
+        /**
+          * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.
+         */
+        "selectOnFocus"?: boolean;
         /**
           * If `true`, users will be able to swipe between segment buttons to activate them.
          */

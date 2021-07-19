@@ -16,7 +16,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: true
+  shadow: {
+    delegatesFocus: true
+  }
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
@@ -93,10 +95,10 @@ export class Segment implements ComponentInterface {
   }
 
   /**
-   * If `select`, navigating to an `ion-segment-button` with the keyboard will focus and select the element.
-   * If `focus`, keyboard navigation will only focus the `ion-segment-button` element. 
+   * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element.
+   * If `false`, keyboard navigation will only focus the `ion-segment-button` element.
    */
-  @Prop() keyboardBehavior?: 'focus' | 'select' = 'focus';
+  @Prop() selectOnFocus = false;
 
   /**
    * Emitted when the value property has changed and any
@@ -138,11 +140,12 @@ export class Segment implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
+    console.log('please', this.selectOnFocus)
   }
 
   async componentDidLoad() {
     this.setCheckedClasses();
-    this.handleFallbackFocus();
+    this.ensureFocusable();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -441,11 +444,17 @@ export class Segment implements ComponentInterface {
 
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous' | 'focused'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter(button => !button.disabled);
-    const currIndex = buttons.findIndex(button =>
-      (this.keyboardBehavior === 'select' && this.checked)
-      ? button === this.checked
-      : button.classList.contains('ion-focused'
-    ));
+
+    /* When `selectOnFocus` is true, the current button is the checked button.
+     * Otherwise, it is the button that is currently focused.
+    **/
+    const currIndex = buttons.findIndex(button => {
+      if (this.selectOnFocus && this.checked) {
+        return button === this.checked;
+      }
+      return button === document.activeElement;
+    });
+
     switch (selector) {
       case 'first':
         return buttons[0];
@@ -465,7 +474,7 @@ export class Segment implements ComponentInterface {
   @Listen('keydown')
   onKeyDown(ev: KeyboardEvent) {
     const isRTL = document.dir === 'rtl';
-    let { keyboardBehavior } = this;
+    let select = this.selectOnFocus;
     let current;
     switch (ev.key) {
       case 'ArrowRight':
@@ -488,25 +497,26 @@ export class Segment implements ComponentInterface {
       case 'Enter':
         ev.preventDefault();
         current = this.getSegmentButton('focused');
-        keyboardBehavior = 'select';
+        select = true;
       default:
         break;
     }
 
     const previous = this.checked || current;
-    if (keyboardBehavior === 'focus') {
-      current?.focus();
-    } else if (keyboardBehavior === 'select' && previous && current) {
+    if (select && previous && current) {
       this.checkButton(previous, current);
     }
+    current?.focus();
   }
 
-  private handleFallbackFocus() {
+  /* By default, focus is delegated to the selected `ion-segment-button`.
+   * If there is no selected button, focus will instead pass to the first child button.
+  **/
+  private ensureFocusable() {
+    if (this.value !== undefined) { return };
+
     const buttons = this.getButtons();
-    const noTabButtons = this.getButtons().filter(button => button.tabIndex < 0);
-    if (noTabButtons.length === buttons.length) {
-      buttons[0].tabIndex = 0;
-    }
+    buttons[0].setAttribute('tabindex', '0');
   }
 
   render() {
