@@ -31,7 +31,9 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
 
   const results = getPopoverPosition(isRTL, contentWidth, contentHeight, 0, 0, reference, side, align, defaultPosition, trigger, ev);
 
-  const { originX, originY, top, left, bottom } = calculateWindowAdjustment(side, results.top, results.left, POPOVER_MD_BODY_PADDING, bodyWidth, bodyHeight, contentWidth, contentHeight, 0, results.originX, results.originY, results.referenceCoordinates);
+  const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
+
+  const { originX, originY, top, left, bottom } = calculateWindowAdjustment(side, results.top, results.left, padding, bodyWidth, bodyHeight, contentWidth, contentHeight, 0, results.originX, results.originY, results.referenceCoordinates);
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();

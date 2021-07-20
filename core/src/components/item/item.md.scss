@@ -99,6 +99,7 @@
   transition: none;
 }
 
+:host(.item-fill-outline.ion-focused) .item-native,
 :host(.item-fill-outline.item-has-focus) .item-native {
   border-color: transparent;
 }
@@ -308,6 +309,8 @@
   --padding-start: 0;
 }
 
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating),
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
@@ -347,13 +350,10 @@
   --border-color: #{$item-md-input-fill-border-color};
 }
 
-:host(.item-fill-solid) .item-native:hover {
-  --background: var(--background-hover);
-  --border-color: #{$item-md-input-fill-border-color-hover};
-}
-
+:host(.item-fill-solid.ion-focused) .item-native,
 :host(.item-fill-solid.item-has-focus) .item-native {
   --background: var(--background-focused);
+
   border-bottom-color: var(--highlight-color-focused);
 }
 
@@ -361,10 +361,20 @@
   @include border-radius(16px, 16px, 0, 0);
 }
 
+@media (any-hover: hover) {
+  :host(.item-fill-solid:hover) .item-native {
+    --background: var(--background-hover);
+    --border-color: #{$item-md-input-fill-border-color-hover};
+  }
+}
+
 // Material Design Item: Fill Outline
 // --------------------------------------------------
 
 :host(.item-fill-outline) {
+  --ripple-color: transparent;
+  --background-focused: transparent;
+  --background-hover: transparent;
   --border-color: #{$item-md-input-fill-border-color};
   --border-width: #{$item-md-border-bottom-width};
 
@@ -379,10 +389,6 @@
   @include border-radius(4px);
 }
 
-:host(.item-fill-outline) .item-native:hover {
-  --border-color: #{$item-md-input-fill-border-color-hover};
-}
-
 :host(.item-fill-outline.item-shape-round) .item-native {
   --inner-padding-start: 16px;
 
@@ -393,13 +399,21 @@
   @include padding-horizontal(32px, null);
 }
 
-
+:host(.item-fill-outline.item-label-floating.ion-focused) .item-native ::slotted(ion-input:not(:first-child)),
+:host(.item-fill-outline.item-label-floating.ion-focused) .item-native ::slotted(ion-textarea:not(:first-child)),
 :host(.item-fill-outline.item-label-floating.item-has-focus) .item-native ::slotted(ion-input:not(:first-child)),
+:host(.item-fill-outline.item-label-floating.item-has-focus) .item-native ::slotted(ion-textarea:not(:first-child)),
 :host(.item-fill-outline.item-label-floating.item-has-value) .item-native ::slotted(ion-input:not(:first-child)),
-:host(.item-fill-outline.item-label-floating.item-has-focus) .item-native ::slotted(ion-textarea:not(:first-child)), 
 :host(.item-fill-outline.item-label-floating.item-has-value) .item-native ::slotted(ion-textarea:not(:first-child)) {
   transform: translateY(-25%);
 }
+
+@media (any-hover: hover) {
+  :host(.item-fill-outline:hover) .item-native {
+    --border-color: #{$item-md-input-fill-border-color-hover};
+  }
+}
+
 
 // Material Design Item: Invalid
 // --------------------------------------------------
