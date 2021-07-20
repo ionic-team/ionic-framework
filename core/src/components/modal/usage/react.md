@@ -147,6 +147,7 @@ In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `cu
   isOpen={show2ndModal}
   cssClass='my-custom-class'
   presentingElement={firstModalRef.current}
+  swipeToClose={true}
   onDidDismiss={() => setShow2ndModal(false)}>
   <p>This is more modal content</p>
   <IonButton onClick={() => setShow2ndModal(false)}>Close Modal</IonButton>

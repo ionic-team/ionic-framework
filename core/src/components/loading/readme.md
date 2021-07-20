@@ -37,6 +37,28 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+## Interfaces
+
+### LoadingOptions
+
+```typescript
+interface LoadingOptions {
+  spinner?: SpinnerTypes | null;
+  message?: string | IonicSafeString;
+  cssClass?: string | string[];
+  showBackdrop?: boolean;
+  duration?: number;
+  translucent?: boolean;
+  animated?: boolean;
+  backdropDismiss?: boolean;
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 
@@ -139,17 +161,23 @@ import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
 interface LoadingProps {}
 
 const LoadingExample: React.FC<LoadingProps> = () => {
-  const [present] = useIonLoading();
+  const [present, dismiss] = useIonLoading();
+  /**
+   * The recommended way of dismissing is to use the `dismiss` property
+   * on `IonLoading`, but the `dismiss` method returned from `useIonLoading`
+   * can be used for more complex scenarios.
+   */
   return (
     <IonPage>
       <IonContent>
         <IonButton
           expand="block"
-          onClick={() =>
+          onClick={() => {
             present({
-              duration: 3000,
+              message: 'Loading...',
+              duration: 3000
             })
-          }
+          }}
         >
           Show Loading
         </IonButton>
