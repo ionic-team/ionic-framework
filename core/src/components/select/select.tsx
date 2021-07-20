@@ -178,7 +178,12 @@ export class Select implements ComponentInterface {
       this.isExpanded = false;
       this.setFocus();
     });
-    await overlay.present();
+
+    if (this.interface === 'popover') {
+      await (overlay as HTMLIonPopoverElement).presentFromTrigger(event, true);
+    } else {
+      await overlay.present();
+    }
     return overlay;
   }
 

@@ -207,6 +207,7 @@ export namespace Components {
         "translucent": boolean;
     }
     interface IonApp {
+        "setFocus": (elements: HTMLElement[]) => Promise<void>;
     }
     interface IonAvatar {
     }

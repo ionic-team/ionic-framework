@@ -747,7 +747,7 @@ export class Datetime implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.clearFocusVisible = startFocusVisible(this.el);
+    this.clearFocusVisible = startFocusVisible(this.el).destroy;
   }
 
   disconnectedCallback() {

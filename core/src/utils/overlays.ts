@@ -79,6 +79,21 @@ export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElemen
 
   if (firstInput) {
     firstInput.focus();
+
+    /**
+     * When programmatically focusing an element,
+     * the focus-visible utility will not run because
+     * it is expecting a keyboard event to have triggered this;
+     * however, there are times when we need to manually control
+     * this behavior so we call the `setFocus` method on ion-app
+     * which will let us explicitly set the elements to focus.
+     */
+    if (firstInput.classList.contains('ion-focusable')) {
+      const app = overlay.closest('ion-app');
+      if (app) {
+        app.setFocus([firstInput]);
+      }
+    }
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();
