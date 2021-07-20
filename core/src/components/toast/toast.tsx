@@ -18,6 +18,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
+ * @part icon - The icon that appears next to the toast content.
  */
 @Component({
   tag: 'ion-toast',
@@ -107,7 +108,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * Name of the icon to display. See `ion-icon`.
+   * The name of the icon to display. See `ion-icon`.
    * https://ionic.io/ionicons
    */
   @Prop() icon?: string;
@@ -288,7 +289,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             {this.renderButtons(startButtons, 'start')}
 
             {this.icon !== undefined &&
-              <ion-icon class="toast-icon" part="icon" icon={this.icon}></ion-icon>
+              <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             }
 
             <div class="toast-content">

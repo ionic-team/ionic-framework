@@ -121,13 +121,8 @@
 }
 
 .toast-icon {
-  /* stylelint-disable property-blacklist */
-  margin-left: 15px;
-
-  padding: 10px;
-   /* stylelint-enable property-blacklist */
-
-  font-size: 1.4em;
+  @include margin(0, 0, 0, 15px);
+  @include padding(10px, 10px, 10px, 10px);
 }
 
 .toast-message {
@@ -150,6 +145,7 @@
   z-index: 0;
 }
 
+.toast-icon,
 .toast-button-icon {
   font-size: 1.4em;
 }

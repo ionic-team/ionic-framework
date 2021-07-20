@@ -43,6 +43,7 @@ export class ToastExample {
     const toast = await this.toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
+      icon: 'information-circle',
       position: 'top',
       buttons: [
         {
@@ -62,7 +63,7 @@ export class ToastExample {
       ]
     });
     await toast.present();
-  
+
     const { role } = await toast.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
@@ -87,6 +88,7 @@ async function presentToastWithOptions() {
   const toast = document.createElement('ion-toast');
   toast.header = 'Toast header';
   toast.message = 'Click to Close';
+  toast.icon = 'information-circle',
   toast.position = 'top';
   toast.buttons = [
     {
@@ -107,7 +109,7 @@ async function presentToastWithOptions() {
 
   document.body.appendChild(toast);
   await toast.present();
-  
+
   const { role } = await toast.onDidDismiss();
   console.log('onDidDismiss resolved with role', role);
 }
@@ -181,6 +183,7 @@ export const ToastExample: React.FC = () => {
         isOpen={showToast2}
         onDidDismiss={() => setShowToast2(false)}
         message="Click to Close"
+        icon="information-circle"
         position="top"
         buttons={[
           {
@@ -230,6 +233,7 @@ export class ToastExample {
     const toast = await toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
+      icon: 'information-circle',
       position: 'top',
       buttons: [
         {
@@ -249,7 +253,7 @@ export class ToastExample {
       ]
     });
     await toast.present();
-  
+
     const { role } = await toast.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
@@ -297,6 +301,7 @@ export default {
         .create({
           header: 'Toast header',
           message: 'Click to Close',
+          icon: 'information-circle',
           position: 'top',
           buttons: [
             {
@@ -316,7 +321,7 @@ export default {
           ]
         })
       await toast.present();
-  
+
       const { role } = await toast.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
     },
@@ -348,7 +353,7 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const setOpen = (state: boolean) => isOpenRef.value = state;
-    
+
     return { isOpenRef, setOpen }
   }
 });
@@ -368,6 +373,7 @@ export default defineComponent({
 | `duration`       | `duration`       | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                | `0`         |
 | `enterAnimation` | --               | Animation to use when the toast is presented.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`         | `header`         | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
+| `icon`           | `icon`           | The name of the icon to display. See `ion-icon`. https://ionic.io/ionicons                                                                                                                                                                                             | `string \| undefined`                                   | `undefined` |
 | `keyboardClose`  | `keyboard-close` | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                               | `false`     |
 | `leaveAnimation` | --               | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `message`        | `message`        | Message to be shown in the toast.                                                                                                                                                                                                                                      | `IonicSafeString \| string \| undefined`                | `undefined` |
@@ -436,6 +442,7 @@ Type: `Promise<void>`
 | `"button"`    | Any button element that is displayed inside of the toast. |
 | `"container"` | The element that wraps all child elements.                |
 | `"header"`    | The header text of the toast.                             |
+| `"icon"`      | The icon that appears next to the toast content.          |
 | `"message"`   | The body text of the toast.                               |
 
 
