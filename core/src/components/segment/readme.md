@@ -12,14 +12,14 @@ Segments are not scrollable by default. Each segment button has a fixed width, a
 
 ### Keyboard Navigation
 
-Upon receiving focus, `ion-segment` will pass focus to the selected `ion-segment-button` element. The component also has full keyboard support for navigating between `ion-segment-button` elements. The following table details what each key does:
+The component has full keyboard support for navigating between and selecting `ion-segment-button` elements. By default, keyboard navigation will only focus `ion-segment-button` elements, but you can use the `selectOnFocus` property to ensure that they get selected on focus as well. The following table details what each key does:
 
 | Key                | Function                                                       |
 | ------------------ | -------------------------------------------------------------- |
-| `ArrowRight`       | Selects the next focusable element.                            |
-| `ArrowLeft`        | Selects the previous focusable element.                        |
-| `Home`             | Selects the first focusable element.                           |
-| `End`              | Selects the last focusable element.                            |
+| `ArrowRight`       | Focuses the next focusable element.                            |
+| `ArrowLeft`        | Focuses the previous focusable element.                        |
+| `Home`             | Focuses the first focusable element.                           |
+| `End`              | Focuses the last focusable element.                            |
 | `Space` or `Enter` | Selects the element that is currently focused.                 |
 
 <!-- Auto Generated Below -->

@@ -16,9 +16,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: {
-    delegatesFocus: true
-  }
+  shadow: true
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
@@ -506,7 +504,7 @@ export class Segment implements ComponentInterface {
     if (this.value !== undefined) { return };
 
     const buttons = this.getButtons();
-    buttons[0].setAttribute('tabindex', '0');
+    buttons[0]?.setAttribute('tabindex', '0');
   }
 
   render() {
