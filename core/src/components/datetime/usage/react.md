@@ -52,6 +52,9 @@ export const DateTimeExamples: React.FC = () => {
       
       {/* Selecting time first, date second */}
       <IonDatetime presentation="time-date"></IonDatetime>
+
+      {/* Full width size */}
+      <IonDatetime size="cover"></IonDatetime>
       
       {/* Custom title */}
       <IonDatetime>
