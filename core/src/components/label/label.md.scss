@@ -20,17 +20,17 @@
  :host(.label-stacked),
  :host(.label-floating) {
    @include margin(0, 0, 0, 0);
-   /* stylelint-disable property-blacklist */
+   /* stylelint-disable property-disallowed-list */
    transform-origin: top left;
-   /* stylelint-enable property-blacklist */
+   /* stylelint-enable property-disallowed-list */
    z-index: 3;
  }
 
  :host(.label-stacked.label-rtl),
  :host(.label-floating.label-rtl) {
-   /* stylelint-disable property-blacklist */
+   /* stylelint-disable property-disallowed-list */
    transform-origin: top right;
-   /* stylelint-enable property-blacklist */
+   /* stylelint-enable property-disallowed-list */
  }
 
 :host(.label-stacked) {
@@ -86,15 +86,15 @@
   }
 
   &::before {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable property-disallowed-list */
     left: calc(-1 * #{$item-md-fill-outline-label-padding});
-    /* stylelint-enable property-blacklist */
+    /* stylelint-enable property-disallowed-list */
   }
 
   &::after {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable property-disallowed-list */
     right: calc(-1 * #{$item-md-fill-outline-label-padding});
-    /* stylelint-enable property-blacklist */
+    /* stylelint-enable property-disallowed-list */
   }
 }
 
