@@ -57,7 +57,7 @@
 }
 
 :host(.item-interactive:not(.item-fill-outline):not(.item-fill-solid)) .item-highlight {
-  transform: translateY(#{$item-md-border-bottom-width});
+  --translateHightlightY: #{$item-md-border-bottom-width};
 }
 
 // Full lines - apply the border to the item
@@ -94,6 +94,7 @@
  */
 :host(.item-fill-outline) .item-highlight {
   --position-offset: calc(-1 * var(--border-width));
+  --scaleHightlightX: 1;
 
   @include position(var(--position-offset), null, null, var(--position-offset));
 

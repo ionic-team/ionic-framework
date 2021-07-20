@@ -362,7 +362,7 @@ button, a {
   
   transform: scaleX(0);
 
-  transition: transform 200ms, border-bottom-width 200ms;
+  transition: border-bottom-width 200ms;
 
   z-index: 2;
 
@@ -372,13 +372,25 @@ button, a {
 
 :host(.item-has-focus) .item-highlight,
 :host(.item-has-focus) .item-inner-highlight {
-  transform: scaleX(1);
+  --translateHightlightY: 0px;
+  --scaleHightlightX: 0;
+  animation-name: scaleHighlight;
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
 
   border-style: var(--border-style);
   border-color: var(--highlight-background);
 }
 
-//TODO: change transform to animation
+@keyframes scaleHighlight {
+  from {
+    transform: translateY(var(--translateHightlightY)) scaleX(var(--scaleHightlightX));
+  }
+
+  to {
+    transform: translateY(var(--translateHightlightY)) scaleX(1);
+  }
+}
 
 :host(.item-has-focus) .item-highlight {
   border-width: var(--full-highlight-height);
