@@ -451,7 +451,7 @@ export class Segment implements ComponentInterface {
       case 'next':
         return buttons[currIndex + 1] || buttons[0];
       case 'previous':
-        return buttons[currIndex - 1 ] || buttons[buttons.length - 1];
+        return buttons[currIndex - 1] || buttons[buttons.length - 1];
       default:
         return null;
     }
