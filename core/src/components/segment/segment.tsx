@@ -295,7 +295,6 @@ export class Segment implements ComponentInterface {
 
     this.value = current.value;
     this.setCheckedClasses();
-    current.focus();
   }
 
   private setCheckedClasses() {
@@ -458,9 +457,9 @@ export class Segment implements ComponentInterface {
   }
 
   @Listen('keydown')
-  selectSegmentButton(ev: KeyboardEvent) {
+  onKeyDown(ev: KeyboardEvent) {
     const isRTL = document.dir === 'rtl';
-    let select = this.selectOnFocus;
+    let keyDownSelectsButton = this.selectOnFocus;
     let current;
     switch (ev.key) {
       case 'ArrowRight':
@@ -483,14 +482,14 @@ export class Segment implements ComponentInterface {
       case 'Enter':
         ev.preventDefault();
         current = document.activeElement as HTMLIonSegmentButtonElement;
-        select = true;
+        keyDownSelectsButton = true;
       default:
         break;
     }
 
     if (!current) { return; }
 
-    if (select) {
+    if (keyDownSelectsButton) {
       const previous = this.checked || current;
       this.checkButton(previous, current);
     }
