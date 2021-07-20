@@ -140,7 +140,6 @@ export class Segment implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
-    console.log('please', this.selectOnFocus)
   }
 
   async componentDidLoad() {
@@ -444,16 +443,7 @@ export class Segment implements ComponentInterface {
 
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous' | 'focused'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter(button => !button.disabled);
-
-    /* When `selectOnFocus` is true, the current button is the checked button.
-     * Otherwise, it is the button that is currently focused.
-    **/
-    const currIndex = buttons.findIndex(button => {
-      if (this.selectOnFocus && this.checked) {
-        return button === this.checked;
-      }
-      return button === document.activeElement;
-    });
+    const currIndex = buttons.findIndex(button => button === document.activeElement);
 
     switch (selector) {
       case 'first':
@@ -464,15 +454,13 @@ export class Segment implements ComponentInterface {
         return buttons[currIndex + 1] || buttons[0];
       case 'previous':
         return buttons[currIndex - 1 ] || buttons[buttons.length - 1];
-      case 'focused':
-        return this.el.querySelector('ion-segment-button.ion-focused');
       default:
         return null;
     }
   }
 
   @Listen('keydown')
-  onKeyDown(ev: KeyboardEvent) {
+  selectSegmentButton(ev: KeyboardEvent) {
     const isRTL = document.dir === 'rtl';
     let select = this.selectOnFocus;
     let current;
@@ -496,17 +484,19 @@ export class Segment implements ComponentInterface {
       case ' ':
       case 'Enter':
         ev.preventDefault();
-        current = this.getSegmentButton('focused');
+        current = document.activeElement as HTMLIonSegmentButtonElement;
         select = true;
       default:
         break;
     }
 
-    const previous = this.checked || current;
-    if (select && previous && current) {
+    if (!current) { return; }
+
+    if (select) {
+      const previous = this.checked || current;
       this.checkButton(previous, current);
     }
-    current?.focus();
+    current.focus();
   }
 
   /* By default, focus is delegated to the selected `ion-segment-button`.
