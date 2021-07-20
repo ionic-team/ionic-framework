@@ -173,6 +173,9 @@ dates in JavaScript.
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
 
+<!-- Full width size -->
+<ion-datetime size="cover"></ion-datetime>
+
 <!-- Custom title -->
 <ion-datetime>
   <div slot="title">My Custom Title</div>
@@ -251,6 +254,9 @@ export class MyComponent {
 
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
+
+<!-- Full width size -->
+<ion-datetime size="cover"></ion-datetime>
 
 <!-- Custom title -->
 <ion-datetime>
@@ -342,6 +348,9 @@ export const DateTimeExamples: React.FC = () => {
       
       {/* Selecting time first, date second */}
       <IonDatetime presentation="time-date"></IonDatetime>
+
+      {/* Full width size */}
+      <IonDatetime size="cover"></IonDatetime>
       
       {/* Custom title */}
       <IonDatetime>
@@ -423,6 +432,9 @@ export class DatetimeExample {
       
       {/* Selecting time first, date second */}
       <ion-datetime presentation="time-date"></ion-datetime>,
+
+      {/* Full width size */}
+      <ion-datetime size="cover"></ion-datetime>,
       
       {/* Custom title */}
       <ion-datetime>
@@ -480,6 +492,9 @@ export class DatetimeExample {
   
   <!-- Selecting time first, date second -->
   <ion-datetime presentation="time-date"></ion-datetime>
+
+  <!-- Full width size -->
+  <ion-datetime size="cover"></ion-datetime>
   
   <!-- Custom title -->
   <ion-datetime>
@@ -567,6 +582,7 @@ export class DatetimeExample {
 | `showDefaultButtons`   | `show-default-buttons`    | If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.                                                                                                                                                                                                 | `boolean`                                        | `false`        |
 | `showDefaultTimeLabel` | `show-default-time-label` | If `true`, the default "Time" label will be rendered for the time selector of the `ion-datetime` component. Developers can also use the `time-label` slot if they want to customize this label. If a custom label is set in the `time-label` slot then the default label will not be rendered.                                                                                                                                                                                                    | `boolean`                                        | `true`         |
 | `showDefaultTitle`     | `show-default-title`      | If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.                                                                                                                                                                                                                                                                                                       | `boolean`                                        | `false`        |
+| `size`                 | `size`                    | If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.                                                                                                                                                                                                                                                                                                                                                      | `"cover" \| "fixed"`                             | `'fixed'`      |
 | `value`                | `value`                   | The value of the datetime as a valid ISO 8601 datetime string.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null \| string \| undefined`                    | `undefined`    |
 | `yearValues`           | `year-values`             | Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.                                                                         | `number \| number[] \| string \| undefined`      | `undefined`    |
 

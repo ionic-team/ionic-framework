@@ -387,6 +387,7 @@ ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
+ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>

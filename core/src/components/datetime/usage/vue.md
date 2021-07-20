@@ -26,6 +26,9 @@
   
   <!-- Selecting time first, date second -->
   <ion-datetime presentation="time-date"></ion-datetime>
+
+  <!-- Full width size -->
+  <ion-datetime size="cover"></ion-datetime>
   
   <!-- Custom title -->
   <ion-datetime>

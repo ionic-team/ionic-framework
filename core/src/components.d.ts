@@ -785,6 +785,10 @@ export namespace Components {
          */
         "showDefaultTitle": boolean;
         /**
+          * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
+         */
+        "size": 'cover' | 'fixed';
+        /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
         "value"?: string | null;
@@ -4352,6 +4356,10 @@ declare namespace LocalJSX {
           * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
          */
         "showDefaultTitle"?: boolean;
+        /**
+          * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
+         */
+        "size"?: 'cover' | 'fixed';
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
