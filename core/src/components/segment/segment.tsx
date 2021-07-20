@@ -439,7 +439,7 @@ export class Segment implements ComponentInterface {
     this.checked = current;
   }
 
-  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous' | 'focused'): HTMLIonSegmentButtonElement | null => {
+  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter(button => !button.disabled);
     const currIndex = buttons.findIndex(button => button === document.activeElement);
 
