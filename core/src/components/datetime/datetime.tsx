@@ -319,8 +319,8 @@ export class Datetime implements ComponentInterface {
   @Prop() showDefaultTimeLabel = true;
 
   /**
-   * If `cover`, the width of the `ion-datetime` component will be set to `100%`.
-   * If unset or `fixed`, the width of the component will be set to `350px`.
+   * If `cover`, the `ion-datetime` will expand to cover the full width of its container.
+   * If `fixed`, the `ion-datetime` will have a fixed width.
    */
   @Prop() size: 'cover' | 'fixed' = 'fixed';
 
