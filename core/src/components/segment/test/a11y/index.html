@@ -13,19 +13,21 @@
   </head>
 
   <body>
-    <main>
-      <h1>Segment</h1>
-      <ion-segment aria-label="Tab Options" color="dark" value="reading-list">
-        <ion-segment-button value="bookmarks">
-          <ion-label>Bookmarks</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="reading-list">
-          <ion-label>Reading List</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="shared-links">
-          <ion-label>Shared Links</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </main>
+    <ion-app>
+      <ion-content>
+        <h1>Segment</h1>
+        <ion-segment aria-label="Tab Options" color="dark" select-on-focus>
+          <ion-segment-button value="bookmarks">
+            <ion-label>Bookmarks</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="reading-list">
+            <ion-label>Reading List</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="shared-links">
+            <ion-label>Shared Links</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

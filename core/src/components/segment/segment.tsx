@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -93,6 +93,12 @@ export class Segment implements ComponentInterface {
   }
 
   /**
+   * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element.
+   * If `false`, keyboard navigation will only focus the `ion-segment-button` element.
+   */
+  @Prop() selectOnFocus = false;
+
+  /**
    * Emitted when the value property has changed and any
    * dragging pointer has been released from `ion-segment`.
    */
@@ -136,6 +142,7 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.setCheckedClasses();
+    this.ensureFocusable();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -429,6 +436,74 @@ export class Segment implements ComponentInterface {
     }
 
     this.checked = current;
+  }
+
+  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
+    const buttons = this.getButtons().filter(button => !button.disabled);
+    const currIndex = buttons.findIndex(button => button === document.activeElement);
+
+    switch (selector) {
+      case 'first':
+        return buttons[0];
+      case 'last':
+        return buttons[buttons.length - 1];
+      case 'next':
+        return buttons[currIndex + 1] || buttons[0];
+      case 'previous':
+        return buttons[currIndex - 1] || buttons[buttons.length - 1];
+      default:
+        return null;
+    }
+  }
+
+  @Listen('keydown')
+  onKeyDown(ev: KeyboardEvent) {
+    const isRTL = document.dir === 'rtl';
+    let keyDownSelectsButton = this.selectOnFocus;
+    let current;
+    switch (ev.key) {
+      case 'ArrowRight':
+        ev.preventDefault();
+        current = isRTL ? this.getSegmentButton('previous') : this.getSegmentButton('next');
+        break;
+      case 'ArrowLeft':
+        ev.preventDefault();
+        current = isRTL ? this.getSegmentButton('next') : this.getSegmentButton('previous')
+        break;
+      case 'Home':
+        ev.preventDefault();
+        current = this.getSegmentButton('first');
+        break;
+      case 'End':
+        ev.preventDefault();
+        current = this.getSegmentButton('last');
+        break;
+      case ' ':
+      case 'Enter':
+        ev.preventDefault();
+        current = document.activeElement as HTMLIonSegmentButtonElement;
+        keyDownSelectsButton = true;
+      default:
+        break;
+    }
+
+    if (!current) { return; }
+
+    if (keyDownSelectsButton) {
+      const previous = this.checked || current;
+      this.checkButton(previous, current);
+    }
+    current.focus();
+  }
+
+  /* By default, focus is delegated to the selected `ion-segment-button`.
+   * If there is no selected button, focus will instead pass to the first child button.
+  **/
+  private ensureFocusable() {
+    if (this.value !== undefined) { return };
+
+    const buttons = this.getButtons();
+    buttons[0]?.setAttribute('tabindex', '0');
   }
 
   render() {

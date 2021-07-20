@@ -8,6 +8,20 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 
 Segments are not scrollable by default. Each segment button has a fixed width, and the width is determined by dividing the number of segment buttons by the screen width. This ensures that each segment button can be displayed on the screen without having to scroll. As a result, some segment buttons with longer labels may get cut off. To avoid this we recommend either using a shorter label or switching to a scrollable segment by setting the `scrollable` property to `true`. This will cause the segment to scroll horizontally, but will allow each segment button to have a variable width.
 
+## Accessibility
+
+### Keyboard Navigation
+
+The component has full keyboard support for navigating between and selecting `ion-segment-button` elements. By default, keyboard navigation will only focus `ion-segment-button` elements, but you can use the `selectOnFocus` property to ensure that they get selected on focus as well. The following table details what each key does:
+
+| Key                | Function                                                       |
+| ------------------ | -------------------------------------------------------------- |
+| `ArrowRight`       | Focuses the next focusable element.                            |
+| `ArrowLeft`        | Focuses the previous focusable element.                        |
+| `Home`             | Focuses the first focusable element.                           |
+| `End`              | Focuses the last focusable element.                            |
+| `Space` or `Enter` | Selects the element that is currently focused.                 |
+
 <!-- Auto Generated Below -->
 
 
@@ -566,14 +580,15 @@ export default defineComponent({
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
-| `color`        | `color`         | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
-| `disabled`     | `disabled`      | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
-| `mode`         | `mode`          | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
-| `scrollable`   | `scrollable`    | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
-| `swipeGesture` | `swipe-gesture` | If `true`, users will be able to swipe between segment buttons to activate them.                                                                                                                                                                                       | `boolean`                     | `true`      |
-| `value`        | `value`         | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
+| Property        | Attribute         | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
+| --------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
+| `color`         | `color`           | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
+| `disabled`      | `disabled`        | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
+| `mode`          | `mode`            | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
+| `scrollable`    | `scrollable`      | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
+| `selectOnFocus` | `select-on-focus` | If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.                                                                                | `boolean`                     | `false`     |
+| `swipeGesture`  | `swipe-gesture`   | If `true`, users will be able to swipe between segment buttons to activate them.                                                                                                                                                                                       | `boolean`                     | `true`      |
+| `value`         | `value`           | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
 ## Events
