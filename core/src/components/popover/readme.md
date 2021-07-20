@@ -36,47 +36,6 @@ If you need fine grained control over when the popover is presented and dismisse
 
 We typically recommend that you write your popovers inline as it streamlines the amount of code in your application. You should only use the `popoverController` for complex use cases where writing a popover inline is impractical. When using a controller, your popover is not created ahead of time, so properties such as `trigger` and `trigger-action` are not applicable here. In addition, nested popovers are not compatible with the controller approach because the popover is automatically added to the root of your application when the `create` method is called.
 
-## Interfaces
-
-Below you will find all of the options available to you when using the `popoverController`. These options should be supplied when calling `popoverController.create()`.
-
-```typescript
-interface PopoverOptions {
-  component: any;
-  componentProps?: { [key: string]: any };
-  showBackdrop?: boolean;
-  backdropDismiss?: boolean;
-  translucent?: boolean;
-  cssClass?: string | string[];
-  event?: Event;
-  animated?: boolean;
-
-  mode?: 'ios' | 'md';
-  keyboardClose?: boolean;
-  id?: string;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
-  
-  size?: PopoverSize;
-  dismissOnSelect?: boolean;
-  reference?: PositionReference;
-  side?: PositionSide;
-  align?: PositionAlign;
-}
-```
-
-## Types
-
-Below you will find all of the custom types for `ion-popover`:
-
-```typescript
-type PopoverSize = 'cover' | 'auto';
-type TriggerAction = 'click' | 'hover' | 'context-menu';
-type PositionReference = 'trigger' | 'event';
-type PositionSide = 'top' | 'right' | 'bottom' | 'left' | 'start' | 'end';
-type PositionAlign = 'start' | 'center' | 'end';
-```
 
 ## Customization
 
@@ -154,6 +113,48 @@ When using `ion-popover` inline, you can nested popovers to create nested dropdo
 You can use the `dismissOnSelect` property to automatically close the popover when the popover content has been clicked. This behavior does not apply when clicking a trigger element for another popover.
 
 > Nested popovers cannot be created when using the `popoverController` because the popover is automatically added to the root of your application when the `create` method is called.
+
+## Interfaces
+
+Below you will find all of the options available to you when using the `popoverController`. These options should be supplied when calling `popoverController.create()`.
+
+```typescript
+interface PopoverOptions {
+  component: any;
+  componentProps?: { [key: string]: any };
+  showBackdrop?: boolean;
+  backdropDismiss?: boolean;
+  translucent?: boolean;
+  cssClass?: string | string[];
+  event?: Event;
+  animated?: boolean;
+
+  mode?: 'ios' | 'md';
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+  
+  size?: PopoverSize;
+  dismissOnSelect?: boolean;
+  reference?: PositionReference;
+  side?: PositionSide;
+  align?: PositionAlign;
+}
+```
+
+## Types
+
+Below you will find all of the custom types for `ion-popover`:
+
+```typescript
+type PopoverSize = 'cover' | 'auto';
+type TriggerAction = 'click' | 'hover' | 'context-menu';
+type PositionReference = 'trigger' | 'event';
+type PositionSide = 'top' | 'right' | 'bottom' | 'left' | 'start' | 'end';
+type PositionAlign = 'start' | 'center' | 'end';
+```
 
 ## Accessibility
 

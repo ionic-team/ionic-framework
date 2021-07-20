@@ -258,7 +258,10 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={el => this.groupEl = el}>
               {this.header !== undefined &&
-                <div class="action-sheet-title">
+                <div class={{
+                  'action-sheet-title': true,
+                  'action-sheet-has-sub-title': this.subHeader !== undefined
+                }}>
                   {this.header}
                   {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
                 </div>

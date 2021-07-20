@@ -4,6 +4,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
+import { inheritAttributes } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
@@ -23,6 +24,8 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
+  private inheritedAttributes: { [k: string]: any } = {};
+
   @Element() el!: HTMLIonSegmentElement;
 
   @State() visible = false;
@@ -54,6 +57,10 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
   componentDidLoad() {
     this.visibilityChanged();
   }
@@ -69,7 +76,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, disabled } = this;
+    const { color, disabled, inheritedAttributes } = this;
     const mode = getIonMode(this);
     const menuIcon = config.get('menuIcon', mode === 'ios' ? 'menu-outline' : 'menu-sharp');
     const hidden = this.autoHide && !this.visible;
@@ -77,6 +84,8 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     const attrs = {
       type: this.type
     };
+
+    const ariaLabel = inheritedAttributes['aria-label'] || 'menu';
 
     return (
       <Host
@@ -99,7 +108,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           disabled={disabled}
           class="button-native"
           part="native"
-          aria-label="menu"
+          aria-label={ariaLabel}
         >
           <span class="button-inner">
             <slot>
