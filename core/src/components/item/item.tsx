@@ -362,9 +362,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-          {hasFill && <div class="item-highlight"></div>}
+          <div class="virtual-border"></div>
+          <div class="item-highlight"></div>
         </TagType>
-        {!hasFill && <div class="item-highlight"></div>}
         <div class="item-bottom">
           <slot name="error"></slot>
           <slot name="helper"></slot>

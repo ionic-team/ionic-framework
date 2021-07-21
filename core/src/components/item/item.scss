@@ -214,9 +214,9 @@
 
   transition: var(--transition);
 
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
+  //TODO:
+  border-width: 0px;
+  padding-bottom: var(--border-width);
 
   outline: none;
 
@@ -354,6 +354,26 @@ button, a {
 
 // Item Input Highlight
 // --------------------------------------------------
+
+//TODO
+.virtual-border {
+  @include position(0, 0, 0, 0);
+  @include border-radius(inherit);
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  z-index: 2;
+
+  box-sizing: border-box;
+  pointer-events: none;
+}
 
 .item-highlight,
 .item-inner-highlight {
