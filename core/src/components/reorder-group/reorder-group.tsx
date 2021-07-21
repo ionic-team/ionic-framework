@@ -30,6 +30,15 @@ export class ReorderGroup implements ComponentInterface {
   private containerTop = 0;
   private containerBottom = 0;
 
+  private longPressTimeout?: any;
+  private longPressTimeoutReached?: boolean = false;
+  private clearLongPressTimeout(): any {
+    if (this.longPressTimeout) {
+      clearTimeout(this.longPressTimeout);
+      this.longPressTimeout = undefined;
+    }
+  }
+
   @State() state = ReorderGroupState.Idle;
 
   @Element() el!: HTMLElement;
@@ -119,6 +128,15 @@ export class ReorderGroup implements ComponentInterface {
   private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
+    this.clearLongPressTimeout();
+    this.longPressTimeout = setTimeout(() => {
+      this.longPressTimeout = undefined;
+      this.longPressTimeoutReached = true;
+      console.log('longPressTimeoutReached is', this.longPressTimeoutReached);
+      // TODO: Test on smartphone
+      hapticSelectionChanged();
+    }, 500);
+
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
@@ -161,6 +179,12 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private onMove(ev: GestureDetail) {
+    this.clearLongPressTimeout();
+    if (!this.longPressTimeoutReached) {
+      console.log('longPressTimeoutReached not reached so not doing anything');
+      return;
+    }
+
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
@@ -188,6 +212,9 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private onEnd() {
+    this.clearLongPressTimeout();
+    this.longPressTimeoutReached = false;
+
     const selectedItemEl = this.selectedItemEl;
     this.state = ReorderGroupState.Complete;
     if (!selectedItemEl) {
