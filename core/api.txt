@@ -1391,6 +1391,7 @@ med-alternativas,prop,keyPorcentagem,string,'Porcentagem',false,false
 med-alternativas,prop,mostraResposta,boolean,undefined,true,true
 med-alternativas,prop,respostaCorreta,string,undefined,true,true
 med-alternativas,event,medChange,MedAlternativaInterface,true
+med-alternativas,event,medClick,MedAlternativaInterface,true
 med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
 
 med-autocomplete,shadow
