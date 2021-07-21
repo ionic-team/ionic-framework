@@ -34,6 +34,29 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+## Interfaces
+
+### PopoverOptions
+
+```typescript
+interface PopoverOptions {
+  component: any;
+  componentProps?: { [key: string]: any };
+  showBackdrop?: boolean;
+  backdropDismiss?: boolean;
+  translucent?: boolean;
+  cssClass?: string | string[];
+  event?: Event;
+  animated?: boolean;
+
+  mode?: 'ios' | 'md';
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 

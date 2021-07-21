@@ -110,10 +110,16 @@
   text-align: $action-sheet-ios-text-align;
 }
 
+.action-sheet-title.action-sheet-has-sub-title {
+  font-weight: $action-sheet-ios-title-with-sub-title-font-weight;
+}
+
 .action-sheet-sub-title {
   @include padding($action-sheet-ios-sub-title-padding-top, $action-sheet-ios-sub-title-padding-end, $action-sheet-ios-sub-title-padding-bottom, $action-sheet-ios-sub-title-padding-start);
 
   font-size: $action-sheet-ios-sub-title-font-size;
+
+  font-weight: $action-sheet-ios-title-font-weight;
 }
 
 
