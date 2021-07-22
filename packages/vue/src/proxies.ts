@@ -832,6 +832,7 @@ export const MedAlternativas = /*@__PURE__*/ defineContainer<JSX.MedAlternativas
   'mostraResposta',
   'alternativaSelecionada',
   'medChange',
+  'medClick',
   'medGalleryRequest'
 ]);
 

@@ -107,7 +107,6 @@
     "test.watch": "jest --watch --no-cache",
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
-
     "storybook": "start-storybook -s dist/ionic/ -p 6006",
     "build-storybook": "build-storybook -s dist/ionic/",
     "custom:theme:clean": "shx rm -rf css/medsoft-theme.css css/medsoft-theme.css.map",

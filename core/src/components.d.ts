@@ -6318,6 +6318,7 @@ declare namespace LocalJSX {
         "keyPorcentagem"?: string;
         "mostraResposta": boolean;
         "onMedChange"?: (event: CustomEvent<MedAlternativaInterface>) => void;
+        "onMedClick"?: (event: CustomEvent<MedAlternativaInterface>) => void;
         "onMedGalleryRequest"?: (event: CustomEvent<MedAlternativaInterface>) => void;
         "respostaCorreta": string;
     }

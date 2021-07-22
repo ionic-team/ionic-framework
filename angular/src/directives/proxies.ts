@@ -909,12 +909,13 @@ export declare interface MedAlternativas extends Components.MedAlternativas {
 @Component({ selector: "med-alternativas", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["alternativaSelecionada", "alternativas", "keyAlternativa", "keyEnunciado", "keyImagem", "keyPorcentagem", "mostraResposta", "respostaCorreta"] })
 export class MedAlternativas {
   medChange!: EventEmitter<CustomEvent>;
+  medClick!: EventEmitter<CustomEvent>;
   medGalleryRequest!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ["medChange", "medGalleryRequest"]);
+    proxyOutputs(this, this.el, ["medChange", "medClick", "medGalleryRequest"]);
   }
 }
 export declare interface MedAutocomplete extends Components.MedAutocomplete {

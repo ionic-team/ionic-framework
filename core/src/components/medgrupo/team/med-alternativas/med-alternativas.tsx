@@ -19,6 +19,7 @@ export class MedAlternativas implements MedAlternativasInterface {
   @Prop({ mutable: true, reflect: true }) alternativaSelecionada!: string;
 
   @Event() medChange!: EventEmitter<MedAlternativaInterface>;
+  @Event() medClick!: EventEmitter<MedAlternativaInterface>
   @Event() medGalleryRequest!: EventEmitter<MedAlternativaInterface>;
 
   private cssClassAlternativa(alternativa: string) {
@@ -37,20 +38,14 @@ export class MedAlternativas implements MedAlternativasInterface {
 
   private respostaAlterada(alternativa: string) {
     this.alternativaSelecionada = alternativa;
-
-    let objAlternativa;
-    for (const item of this.alternativas) {
-      if(item[this.keyAlternativa] === alternativa) {
-        objAlternativa = item;
-        break;
-      }
-    }
-
+    let objAlternativa = this.alternativas.find((item:any)=>item[this.keyAlternativa]===alternativa);
+    this.medClick.emit(objAlternativa);
     this.medChange.emit(objAlternativa);
   }
 
-  private imageRequest(alternativa: any) {
+  private imageRequest(alternativa: any,ev:Event) {
     this.medGalleryRequest.emit(alternativa);
+    ev.stopPropagation()
   }
 
   render() {
@@ -66,9 +61,8 @@ export class MedAlternativas implements MedAlternativasInterface {
       <Host from-stencil>
         <ion-radio-group onIonChange={ev => this.respostaAlterada(ev.detail.value)}  value={this.alternativaSelecionada}>
           <ul class={`alternativas ${hasImage ? 'alternativas--imagem' : ''}`}>
-
             {this.alternativas.map((alternativa: any) => (
-              <li class={this.cssClassAlternativa(alternativa[this.keyAlternativa])}>
+              <li onClick={() => this.respostaAlterada(alternativa[this.keyAlternativa])} class={this.cssClassAlternativa(alternativa[this.keyAlternativa])}>
                 <med-option class='alternativa__option'>
                   <ion-radio
                     value={alternativa[this.keyAlternativa]}
@@ -79,7 +73,7 @@ export class MedAlternativas implements MedAlternativasInterface {
                 <div class='alternativa__right'>
                   {alternativa[this.keyEnunciado] && <div class='alternativa__text' innerHTML={alternativa[this.keyEnunciado]}></div>}
 
-                  <div class='image-container' onClick={() => this.imageRequest(alternativa)}>
+                  <div class='image-container' onClick={(ev) => this.imageRequest(alternativa,ev)}>
                     {alternativa[this.keyImagem] && <img class='alternativa__image' src={alternativa[this.keyImagem]} />}
                     <div class='overlay'>
                       <div class="overlay__content">

@@ -24,6 +24,7 @@
 | Event               | Description | Type                                   |
 | ------------------- | ----------- | -------------------------------------- |
 | `medChange`         |             | `CustomEvent<MedAlternativaInterface>` |
+| `medClick`          |             | `CustomEvent<MedAlternativaInterface>` |
 | `medGalleryRequest` |             | `CustomEvent<MedAlternativaInterface>` |
 
 
