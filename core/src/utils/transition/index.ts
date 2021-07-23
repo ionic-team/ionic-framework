@@ -205,13 +205,19 @@ export const deepReady = async (el: any | undefined): Promise<void> => {
       if (stencilEl != null) {
         return;
       }
-    } else {
+
+    /**
+     * Custom elements in Stencil will have __registerHost.
+     */
+    } else if (element.__registerHost != null) {
       /**
        * Non-lazy loaded custom elements need to wait
        * one frame for component to be loaded.
        */
       const waitForCustomElement = new Promise(resolve => raf(resolve));
       await waitForCustomElement;
+
+      return;
     }
     await Promise.all(Array.from(element.children).map(deepReady));
   }
