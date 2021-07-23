@@ -43,7 +43,7 @@ export * from './types/ionic-lifecycle-hooks';
 export { IonicModule } from './ionic-module';
 
 // UTILS
-export { IonicSafeString, getPlatforms, isPlatform, createAnimation } from '@ionic/core';
+export { IonicSafeString, getPlatforms, isPlatform, createAnimation, IonicSwiper } from '@ionic/core';
 
 // CORE TYPES
 export {

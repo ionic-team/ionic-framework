@@ -4,6 +4,7 @@ import {
   arrowBackSharp,
   caretBackSharp,
   chevronBack,
+  chevronDown,
   chevronForward,
   close,
   closeCircle,
@@ -34,6 +35,8 @@ export {
   NavComponentWithProps,
   setupConfig,
 
+  IonicSwiper,
+
   SpinnerTypes,
 
   ActionSheetOptions,
@@ -58,7 +61,6 @@ export {
 
   ToastOptions,
   ToastButton
-
 } from '@ionic/core';
 export * from './proxies';
 
@@ -107,6 +109,7 @@ addIcons({
   'arrow-back-sharp': arrowBackSharp,
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
+  'chevron-down': chevronDown,
   'chevron-forward': chevronForward,
   close,
   'close-circle': closeCircle,
