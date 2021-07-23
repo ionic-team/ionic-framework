@@ -10,6 +10,7 @@
 
 <script>
 import { IonButton, IonContent, IonPage, toastController } from '@ionic/vue';
+import { informationCircle } from 'ionicons/icons';
 
 export default {
   components: { IonButton, IonContent, IonPage },
@@ -27,7 +28,7 @@ export default {
         .create({
           header: 'Toast header',
           message: 'Click to Close',
-          icon: 'information-circle',
+          icon: informationCircle,
           position: 'top',
           buttons: [
             {
