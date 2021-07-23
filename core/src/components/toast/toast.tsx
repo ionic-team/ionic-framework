@@ -108,7 +108,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * The name of the icon to display. See `ion-icon`.
+   * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`.
    * https://ionic.io/ionicons
    */
   @Prop() icon?: string;
