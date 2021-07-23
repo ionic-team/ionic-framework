@@ -10,6 +10,10 @@ Toasts can be positioned at the top, bottom or middle of the viewport. The posit
 
 The toast can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the toast options. If a button with a role of `"cancel"` is added, then that button will dismiss the toast. To dismiss the toast after creation, call the `dismiss()` method on the instance.
 
+## Icons
+
+An icon can be added next to the content inside of the toast. In general, icons in toasts should be used to add additional style or context, not to grab the user's attention or elevate the priority of the toast. If you wish to convey a higher priority message to the user or guarantee a response, we recommend using an [Alert](../alert) instead.
+
 ## Interfaces
 
 ### ToastButton
@@ -80,6 +84,7 @@ export class ToastExample {
     const toast = await this.toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
+      icon: 'information-circle',
       position: 'top',
       buttons: [
         {
@@ -99,7 +104,7 @@ export class ToastExample {
       ]
     });
     await toast.present();
-  
+
     const { role } = await toast.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
@@ -124,6 +129,7 @@ async function presentToastWithOptions() {
   const toast = document.createElement('ion-toast');
   toast.header = 'Toast header';
   toast.message = 'Click to Close';
+  toast.icon = 'information-circle',
   toast.position = 'top';
   toast.buttons = [
     {
@@ -144,7 +150,7 @@ async function presentToastWithOptions() {
 
   document.body.appendChild(toast);
   await toast.present();
-  
+
   const { role } = await toast.onDidDismiss();
   console.log('onDidDismiss resolved with role', role);
 }
@@ -198,6 +204,7 @@ const ToastExample: React.FC = () => {
 
 import React, { useState } from 'react';
 import { IonToast, IonContent, IonButton } from '@ionic/react';
+import { informationCircle } from 'ionicons/icons';
 
 export const ToastExample: React.FC = () => {
   const [showToast1, setShowToast1] = useState(false);
@@ -218,6 +225,7 @@ export const ToastExample: React.FC = () => {
         isOpen={showToast2}
         onDidDismiss={() => setShowToast2(false)}
         message="Click to Close"
+        icon={informationCircle}
         position="top"
         buttons={[
           {
@@ -267,6 +275,7 @@ export class ToastExample {
     const toast = await toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
+      icon: 'information-circle',
       position: 'top',
       buttons: [
         {
@@ -286,7 +295,7 @@ export class ToastExample {
       ]
     });
     await toast.present();
-  
+
     const { role } = await toast.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
@@ -317,6 +326,7 @@ export class ToastExample {
 
 <script>
 import { IonButton, IonContent, IonPage, toastController } from '@ionic/vue';
+import { informationCircle } from 'ionicons/icons';
 
 export default {
   components: { IonButton, IonContent, IonPage },
@@ -334,6 +344,7 @@ export default {
         .create({
           header: 'Toast header',
           message: 'Click to Close',
+          icon: informationCircle,
           position: 'top',
           buttons: [
             {
@@ -353,7 +364,7 @@ export default {
           ]
         })
       await toast.present();
-  
+
       const { role } = await toast.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
     },
@@ -385,7 +396,7 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const setOpen = (state: boolean) => isOpenRef.value = state;
-    
+
     return { isOpenRef, setOpen }
   }
 });
@@ -405,6 +416,7 @@ export default defineComponent({
 | `duration`       | `duration`       | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                | `0`         |
 | `enterAnimation` | --               | Animation to use when the toast is presented.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`         | `header`         | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
+| `icon`           | `icon`           | The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons                                                                                                                                                            | `string \| undefined`                                   | `undefined` |
 | `keyboardClose`  | `keyboard-close` | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                               | `false`     |
 | `leaveAnimation` | --               | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `message`        | `message`        | Message to be shown in the toast.                                                                                                                                                                                                                                      | `IonicSafeString \| string \| undefined`                | `undefined` |
@@ -473,6 +485,7 @@ Type: `Promise<void>`
 | `"button"`    | Any button element that is displayed inside of the toast. |
 | `"container"` | The element that wraps all child elements.                |
 | `"header"`    | The header text of the toast.                             |
+| `"icon"`      | The icon that appears next to the toast content.          |
 | `"message"`   | The body text of the toast.                               |
 
 
