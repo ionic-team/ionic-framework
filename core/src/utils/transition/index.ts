@@ -2,7 +2,7 @@ import { Build, writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
-import { componentOnReady } from '../helpers';
+import { componentOnReady, raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
@@ -205,6 +205,13 @@ export const deepReady = async (el: any | undefined): Promise<void> => {
       if (stencilEl != null) {
         return;
       }
+    } else {
+      /**
+       * Non-lazy loaded custom elements need to wait
+       * one frame for component to be loaded.
+       */
+      const waitForCustomElement = new Promise(resolve => raf(resolve));
+      await waitForCustomElement;
     }
     await Promise.all(Array.from(element.children).map(deepReady));
   }
