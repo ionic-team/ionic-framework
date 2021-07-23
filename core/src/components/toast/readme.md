@@ -10,6 +10,9 @@ Toasts can be positioned at the top, bottom or middle of the viewport. The posit
 
 The toast can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the toast options. If a button with a role of `"cancel"` is added, then that button will dismiss the toast. To dismiss the toast after creation, call the `dismiss()` method on the instance.
 
+## Icons
+
+An icon can be added next to the content inside of the toast. In general, icons in toasts should be used to add additional style or context, not to grab the user's attention or elevate the priority of the toast. If you wish to convey a higher priority message to the user or guarantee a response, we recommend using an [Alert](../alert) instead.
 
 <!-- Auto Generated Below -->
 
