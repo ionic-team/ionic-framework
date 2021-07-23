@@ -2566,7 +2566,7 @@ export namespace Components {
          */
         "header"?: string;
         /**
-          * The name of the icon to display. See `ion-icon`. https://ionic.io/ionicons
+          * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
         /**
@@ -5899,7 +5899,7 @@ declare namespace LocalJSX {
          */
         "header"?: string;
         /**
-          * The name of the icon to display. See `ion-icon`. https://ionic.io/ionicons
+          * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
         /**
