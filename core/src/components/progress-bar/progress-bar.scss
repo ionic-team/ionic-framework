@@ -46,10 +46,10 @@
 
 // Extend a bit to overflow. The size of animated distance.
 .buffer-circles {
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   right: -10px;
   left: -10px;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 }
 
 // Determinate progress bar
@@ -58,7 +58,7 @@
 .progress,
 .progress-buffer-bar,
 .buffer-circles-container {
-  /* stylelint-disable-next-line property-blacklist */
+  /* stylelint-disable-next-line property-disallowed-list */
   transform-origin: left top;
 
   transition: transform 150ms linear;
@@ -88,12 +88,12 @@
 // --------------------------------------------------
 
 .indeterminate-bar-primary {
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   top: 0;
   right: 0;
   bottom: 0;
   left: -145.166611%;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   animation: primary-indeterminate-translate 2s infinite linear;
 
@@ -104,12 +104,12 @@
 }
 
 .indeterminate-bar-secondary {
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   top: 0;
   right: 0;
   bottom: 0;
   left: -54.888891%;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   animation: secondary-indeterminate-translate 2s infinite linear;
 
@@ -125,11 +125,11 @@
 .buffer-circles {
   background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   background-repeat: repeat-x;
   background-position: 5px center;
   background-size: 10px 10px;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   z-index: 0;
   animation: buffering 450ms infinite linear;

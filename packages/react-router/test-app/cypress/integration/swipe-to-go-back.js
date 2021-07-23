@@ -10,6 +10,7 @@ describe('Swipe To Go Back', () => {
     cy.ionPageVisible('main');
     cy.ionNav('ion-item', 'Details');
     cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('main');
   });

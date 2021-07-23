@@ -34,6 +34,39 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+## Interfaces
+
+### ActionSheetButton
+
+```typescript
+interface ActionSheetButton {
+  text?: string;
+  role?: 'cancel' | 'destructive' | 'selected' | string;
+  icon?: string;
+  cssClass?: string | string[];
+  handler?: () => boolean | void | Promise<boolean | void>;
+}
+```
+
+### ActionSheetOptions
+
+```typescript
+interface ActionSheetOptions {
+  header?: string;
+  subHeader?: string;
+  cssClass?: string | string[];
+  buttons: (ActionSheetButton | string)[];
+  backdropDismiss?: boolean;
+  translucent?: boolean;
+  animated?: boolean;
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 

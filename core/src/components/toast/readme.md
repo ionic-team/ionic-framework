@@ -14,6 +14,44 @@ The toast can be dismissed automatically after a specific amount of time by pass
 
 An icon can be added next to the content inside of the toast. In general, icons in toasts should be used to add additional style or context, not to grab the user's attention or elevate the priority of the toast. If you wish to convey a higher priority message to the user or guarantee a response, we recommend using an [Alert](../alert) instead.
 
+## Interfaces
+
+### ToastButton
+
+```typescript
+interface ToastButton {
+  text?: string;
+  icon?: string;
+  side?: 'start' | 'end';
+  role?: 'cancel' | string;
+  cssClass?: string | string[];
+  handler?: () => boolean | void | Promise<boolean | void>;
+}
+```
+
+### ToastOptions
+
+```typescript
+interface ToastOptions {
+  header?: string;
+  message?: string | IonicSafeString;
+  cssClass?: string | string[];
+  duration?: number;
+  buttons?: (ToastButton | string)[];
+  position?: 'top' | 'bottom' | 'middle';
+  translucent?: boolean;
+  animated?: boolean;
+
+  color?: Color;
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
+
 <!-- Auto Generated Below -->
 
 

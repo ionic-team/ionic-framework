@@ -1,3 +1,17 @@
+## [5.6.12](https://github.com/ionic-team/ionic/compare/v5.6.11...v5.6.12) (2021-07-21)
+
+
+### Bug Fixes
+
+* **action-sheet:** header, subheader, and icon alignment better matches native ios ([#23322](https://github.com/ionic-team/ionic/issues/23322)) ([39315bc](https://github.com/ionic-team/ionic/commit/39315bc857b850347dca386776665e21c9742cad)), closes [#23317](https://github.com/ionic-team/ionic/issues/23317)
+* **button:** buttons are now disabled during page transitions ([#23589](https://github.com/ionic-team/ionic/issues/23589)) ([3b803eb](https://github.com/ionic-team/ionic/commit/3b803ebe024be3dbcf814a30a18df51ce23c8880)), closes [#23588](https://github.com/ionic-team/ionic/issues/23588)
+* **item:** mirror disabled prop to aria attribute ([#23544](https://github.com/ionic-team/ionic/issues/23544)) ([9021e7c](https://github.com/ionic-team/ionic/commit/9021e7cc4b48a69ccc94faa7d2ddcb10a2afa340)), closes [#23513](https://github.com/ionic-team/ionic/issues/23513)
+* **menu-button:** custom aria-label can now be set ([#23608](https://github.com/ionic-team/ionic/issues/23608)) ([c08345d](https://github.com/ionic-team/ionic/commit/c08345df2ee3175f3f0d11ff877c7b6f1a102321)), closes [#23604](https://github.com/ionic-team/ionic/issues/23604)
+* **overlays:** overlay interfaces are now exported from framework packages and documented ([#23619](https://github.com/ionic-team/ionic/issues/23619)) ([773bbcb](https://github.com/ionic-team/ionic/commit/773bbcb211d3cf0caf38c25b44e666d98ddfafe5)), closes [#22790](https://github.com/ionic-team/ionic/issues/22790)
+* **router-outlet:** improve reliability of swipe back gesture when quickly swiping back ([#23527](https://github.com/ionic-team/ionic/issues/23527)) ([fa06942](https://github.com/ionic-team/ionic/commit/fa069424b265891852a07869b6d086a1cb041e93)), closes [#22895](https://github.com/ionic-team/ionic/issues/22895)
+
+
+
 ## [5.6.11](https://github.com/ionic-team/ionic/compare/v5.6.10...v5.6.11) (2021-07-01)
 
 

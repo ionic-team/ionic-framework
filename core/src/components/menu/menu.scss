@@ -63,7 +63,7 @@
   --ion-safe-area-right: 0px;
 
   @include multi-dir() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable property-disallowed-list */
     right: auto;
     left: 0;
   }
@@ -75,7 +75,7 @@
   @include multi-dir() {
     right: 0;
     left: auto;
-    /* stylelint-enable property-blacklist */
+    /* stylelint-enable property-disallowed-list */
   }
 }
 

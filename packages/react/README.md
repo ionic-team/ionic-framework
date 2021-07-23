@@ -2,7 +2,7 @@
 
 These are React specific building blocks on top of [@ionic/core](https://www.npmjs.com/package/@ionic/core) components/services.
 
-To get started, install the Ionic CLI by running `npm i -g ionic`. Then, start a new Ionic React Project by running `ionic start myapp --type=react`.
+To get started, install the Ionic CLI by running `npm i -g @ionic/cli`. Then, start a new Ionic React Project by running `ionic start myapp --type=react`.
 
 # Current Status of Components
 

@@ -32,7 +32,7 @@ ion-item-sliding .item {
 
 .item-sliding-active-swipe-end .item-options-end .item-option-expandable {
   @include multi-dir() {
-    /* stylelint-disable-next-line property-blacklist */
+    /* stylelint-disable-next-line property-disallowed-list */
     padding-left: 100%;
   }
 
@@ -50,7 +50,7 @@ ion-item-sliding .item {
 
 .item-sliding-active-swipe-start .item-options-start .item-option-expandable {
   @include multi-dir() {
-    /* stylelint-disable-next-line property-blacklist */
+    /* stylelint-disable-next-line property-disallowed-list */
     padding-right: 100%;
   }
 
