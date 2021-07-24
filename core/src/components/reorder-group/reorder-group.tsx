@@ -182,6 +182,11 @@ export class ReorderGroup implements ComponentInterface {
     this.clearLongPressTimeout();
     if (!this.longPressTimeoutReached) {
       console.log('longPressTimeoutReached not reached so not doing anything');
+      // Disable the gesture to stop processing this gesture event, then re-enable it for next time. Also allows ion-item-sliding to work on same item.
+      if (this.gesture) {
+        this.gesture.enable(false);
+        this.gesture.enable(true);
+      }
       return;
     }
 

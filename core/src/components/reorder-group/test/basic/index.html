@@ -9,7 +9,8 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body>
   <ion-app>
@@ -99,13 +100,24 @@
             </ion-item>
           </ion-reorder>
 
-          <ion-reorder>
-            <ion-item button onclick="openAlert()">
-              <ion-label>
-                Item 9 (the whole item can be dragged)
-              </ion-label>
-            </ion-item>
-          </ion-reorder>
+          <ion-item-sliding>
+            <ion-reorder>
+              <ion-item button onclick="openAlert()">
+                <ion-label>
+                  Item 9 (the whole item can be dragged, with ion-item-sliding)
+                </ion-label>
+              </ion-item>
+            </ion-reorder>
+
+            <ion-item-options side="start">
+              <ion-item-option>Favorite</ion-item-option>
+              <ion-item-option color="danger">Share</ion-item-option>
+            </ion-item-options>
+
+            <ion-item-options side="end">
+              <ion-item-option>Unread</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
 
           <ion-reorder>
             <ion-item button onclick="openAlert()">
@@ -148,7 +160,9 @@
       const reorderGroup = document.getElementById('reorder');
       reorderGroup.disabled = !reorderGroup.disabled;
 
-      reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
+      reorderGroup.addEventListener('ionItemReorder', ({
+        detail
+      }) => {
         console.log('Dragged from index', detail.from, 'to', detail.to);
 
         detail.complete();
