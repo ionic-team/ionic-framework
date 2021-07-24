@@ -133,49 +133,50 @@ export class ReorderGroup implements ComponentInterface {
       this.longPressTimeout = undefined;
       this.longPressTimeoutReached = true;
       console.log('longPressTimeoutReached is', this.longPressTimeoutReached);
+
+      const item = this.selectedItemEl = ev.data;
+      const heights = this.cachedHeights;
+      heights.length = 0;
+      const el = this.el;
+      const children: any = el.children;
+      if (!children || children.length === 0) {
+        return;
+      }
+
+      let sum = 0;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        sum += child.offsetHeight;
+        heights.push(sum);
+        child.$ionIndex = i;
+      }
+
+      const box = el.getBoundingClientRect();
+      this.containerTop = box.top;
+      this.containerBottom = box.bottom;
+
+      if (this.scrollEl) {
+        const scrollBox = this.scrollEl.getBoundingClientRect();
+        this.scrollElInitial = this.scrollEl.scrollTop;
+        this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
+        this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
+      } else {
+        this.scrollElInitial = 0;
+        this.scrollElTop = 0;
+        this.scrollElBottom = 0;
+      }
+
+      this.lastToIndex = indexForItem(item);
+      this.selectedItemHeight = item.offsetHeight;
+      this.state = ReorderGroupState.Active;
+
+      item.classList.add(ITEM_REORDER_SELECTED);
+
+      hapticSelectionStart();
+
       // TODO: Test on smartphone
       hapticSelectionChanged();
     }, LONG_PRESS_TIMEOUT_DURATION);
-
-    const item = this.selectedItemEl = ev.data;
-    const heights = this.cachedHeights;
-    heights.length = 0;
-    const el = this.el;
-    const children: any = el.children;
-    if (!children || children.length === 0) {
-      return;
-    }
-
-    let sum = 0;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      sum += child.offsetHeight;
-      heights.push(sum);
-      child.$ionIndex = i;
-    }
-
-    const box = el.getBoundingClientRect();
-    this.containerTop = box.top;
-    this.containerBottom = box.bottom;
-
-    if (this.scrollEl) {
-      const scrollBox = this.scrollEl.getBoundingClientRect();
-      this.scrollElInitial = this.scrollEl.scrollTop;
-      this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
-      this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
-    } else {
-      this.scrollElInitial = 0;
-      this.scrollElTop = 0;
-      this.scrollElBottom = 0;
-    }
-
-    this.lastToIndex = indexForItem(item);
-    this.selectedItemHeight = item.offsetHeight;
-    this.state = ReorderGroupState.Active;
-
-    item.classList.add(ITEM_REORDER_SELECTED);
-
-    hapticSelectionStart();
   }
 
   private onMove(ev: GestureDetail) {
