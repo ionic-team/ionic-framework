@@ -135,7 +135,7 @@ export class ReorderGroup implements ComponentInterface {
       console.log('longPressTimeoutReached is', this.longPressTimeoutReached);
       // TODO: Test on smartphone
       hapticSelectionChanged();
-    }, 500);
+    }, LONG_PRESS_TIMEOUT_DURATION);
 
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
@@ -353,6 +353,7 @@ const findReorderItem = (node: HTMLElement | null, container: HTMLElement): HTML
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_SELECTED = 'reorder-selected';
+const LONG_PRESS_TIMEOUT_DURATION = 500;
 
 const reorderArray = (array: any[], from: number, to: number): any[] => {
   const element = array[from];
