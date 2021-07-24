@@ -1850,6 +1850,10 @@ export namespace Components {
           * If `true`, the reorder will be hidden.
          */
         "disabled": boolean;
+        /**
+          * If `true`, require long press before can reorder.
+         */
+        "requireLongPress": boolean;
     }
     interface IonRippleEffect {
         /**
@@ -5139,6 +5143,10 @@ declare namespace LocalJSX {
           * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
          */
         "onIonItemReorder"?: (event: CustomEvent<ItemReorderEventDetail>) => void;
+        /**
+          * If `true`, require long press before can reorder.
+         */
+        "requireLongPress"?: boolean;
     }
     interface IonRippleEffect {
         /**

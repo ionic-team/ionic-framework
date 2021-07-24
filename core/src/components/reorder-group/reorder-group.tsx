@@ -30,12 +30,12 @@ export class ReorderGroup implements ComponentInterface {
   private containerTop = 0;
   private containerBottom = 0;
 
-  private longPressTimeout?: any;
-  private longPressTimeoutReached?: boolean = false;
-  private clearLongPressTimeout(): any {
-    if (this.longPressTimeout) {
-      clearTimeout(this.longPressTimeout);
-      this.longPressTimeout = undefined;
+  private pressTimeout?: any;
+  private pressTimeoutReached?: boolean = false;
+  private clearPressTimeout(): any {
+    if (this.pressTimeout) {
+      clearTimeout(this.pressTimeout);
+      this.pressTimeout = undefined;
     }
   }
 
@@ -53,6 +53,11 @@ export class ReorderGroup implements ComponentInterface {
       this.gesture.enable(!this.disabled);
     }
   }
+
+  /**
+   * If `true`, require long press before can reorder.
+   */
+  @Prop() requireLongPress = false;
 
   /**
    * Event that needs to be listened to in order to complete the reorder action.
@@ -128,11 +133,11 @@ export class ReorderGroup implements ComponentInterface {
   private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
-    this.clearLongPressTimeout();
-    this.longPressTimeout = setTimeout(() => {
-      this.longPressTimeout = undefined;
-      this.longPressTimeoutReached = true;
-      console.log('longPressTimeoutReached is', this.longPressTimeoutReached);
+    this.clearPressTimeout();
+    const requiredPressDuration = (this.requireLongPress) ? LONG_PRESS_DURATION : 0;
+    this.pressTimeout = setTimeout(() => {
+      this.pressTimeoutReached = true;
+      this.pressTimeout = undefined;
 
       const item = this.selectedItemEl = ev.data;
       const heights = this.cachedHeights;
@@ -175,14 +180,15 @@ export class ReorderGroup implements ComponentInterface {
       hapticSelectionStart();
 
       // TODO: Test on smartphone
-      hapticSelectionChanged();
-    }, LONG_PRESS_TIMEOUT_DURATION);
+      if (this.requireLongPress) {
+        hapticSelectionChanged();
+      }
+    }, requiredPressDuration);
   }
 
   private onMove(ev: GestureDetail) {
-    this.clearLongPressTimeout();
-    if (!this.longPressTimeoutReached) {
-      console.log('longPressTimeoutReached not reached so not doing anything');
+    this.clearPressTimeout();
+    if (!this.pressTimeoutReached) {
       // Disable the gesture to stop processing this gesture event, then re-enable it for next time. Also allows ion-item-sliding to work on same item.
       if (this.gesture) {
         this.gesture.enable(false);
@@ -218,8 +224,8 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private onEnd() {
-    this.clearLongPressTimeout();
-    this.longPressTimeoutReached = false;
+    this.clearPressTimeout();
+    this.pressTimeoutReached = false;
 
     const selectedItemEl = this.selectedItemEl;
     this.state = ReorderGroupState.Complete;
@@ -359,7 +365,7 @@ const findReorderItem = (node: HTMLElement | null, container: HTMLElement): HTML
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_SELECTED = 'reorder-selected';
-const LONG_PRESS_TIMEOUT_DURATION = 500;
+const LONG_PRESS_DURATION = 500;
 
 const reorderArray = (array: any[], from: number, to: number): any[] => {
   const element = array[from];
