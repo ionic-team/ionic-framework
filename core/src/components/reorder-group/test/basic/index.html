@@ -18,15 +18,20 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>Reorder - Basic</ion-title>
-        <ion-buttons slot="primary">
-          <ion-button onclick="toggleEdit()">Toggle</ion-button>
-        </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
     <ion-content id="content">
+      <ion-button expand="block" onclick="toggleEdit()">
+        Toggle Reorder
+      </ion-button>
+
+      <ion-button expand="block" id="require-long-press-button" style="display: none;" onclick="toggleRequireLongPress()">
+        Toggle require-long-press
+      </ion-button>
+
       <ion-list>
-        <ion-reorder-group id="reorder" require-long-press="true">
+        <ion-reorder-group id="reorder" require-long-press="false">
           <ion-item button onclick="openAlert()">
             <ion-label>
               Item 1 (default ion-reorder)
@@ -152,13 +157,16 @@
   </ion-app>
 
   <script>
+    const reorderGroup = document.getElementById('reorder');
+    const requireLongPressButton = document.getElementById('require-long-press-button');
+
     function openAlert() {
       alert('click');
     }
 
     function toggleEdit() {
-      const reorderGroup = document.getElementById('reorder');
       reorderGroup.disabled = !reorderGroup.disabled;
+      requireLongPressButton.style.display = (reorderGroup.disabled) ? 'none' : 'block';
 
       reorderGroup.addEventListener('ionItemReorder', ({
         detail
@@ -167,6 +175,11 @@
 
         detail.complete();
       });
+    }
+
+    function toggleRequireLongPress() {
+      const newValue = (reorderGroup.getAttribute('require-long-press') === 'false') ? 'true' : 'false';
+      reorderGroup.setAttribute('require-long-press', newValue);
     }
   </script>
 </body>
