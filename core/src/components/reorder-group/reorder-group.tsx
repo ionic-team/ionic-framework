@@ -180,6 +180,7 @@ export class ReorderGroup implements ComponentInterface {
       hapticSelectionStart();
 
       // TODO: Test on smartphone
+      // Trigger initial haptic click when reorder is enabled via long press
       if (this.requireLongPress) {
         hapticSelectionChanged();
       }
@@ -189,7 +190,8 @@ export class ReorderGroup implements ComponentInterface {
   private onMove(ev: GestureDetail) {
     this.clearPressTimeout();
     if (!this.pressTimeoutReached) {
-      // Disable the gesture to stop processing this gesture event, then re-enable it for next time. Also allows ion-item-sliding to work on same item.
+      // Disable the gesture to stop processing this gesture event, then re-enable it for next time
+      // (Also allows ion-item-sliding to work on reorder items)
       if (this.gesture) {
         this.gesture.enable(false);
         this.gesture.enable(true);
