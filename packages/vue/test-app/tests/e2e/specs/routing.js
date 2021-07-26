@@ -192,7 +192,7 @@ describe('Routing', () => {
     cy.ionBackButtonHidden('home');
   });
 
-  it('should select correct view when using router.go()', () => {
+  it.only('should select correct view when using router.go()', () => {
     cy.visit('http://localhost:8080');
 
     cy.routerPush('/routing');
@@ -207,12 +207,13 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routingparameter');
 
-    // TODO: This does not work yet
-    //cy.ionPageDoesNotExist('routing');
-
     cy.routerGo(2);
     cy.ionPageVisible('routingparameter');
     cy.ionPageHidden('home');
+
+    cy.ionBackClick('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageVisible('routing');
   })
 });
 
@@ -239,8 +240,8 @@ describe('Routing - Swipe to Go Back', () => {
     //cy.ionPageDoesNotExist('navigation');
   });
 
-  it('swipe to go back should work when using router.go()', () => {
-    cy.visit('http://localhost:8080');
+  it.only('swipe to go back should work when using router.go()', () => {
+    cy.visit('http://localhost:8080?ionic:mode=ios');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -254,17 +255,14 @@ describe('Routing - Swipe to Go Back', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routingparameter');
 
-    // TODO: This does not work yet
-    //cy.ionPageDoesNotExist('routing');
-
     cy.routerGo(2);
     cy.ionPageVisible('routingparameter');
     cy.ionPageHidden('home');
 
     // TODO: This does not work yet
-    /*cy.ionSwipeToGoBack(true);
+    cy.ionSwipeToGoBack(true);
 
     cy.ionPageDoesNotExist('routingparameter');
-    cy.ionPageVisible('routing');*/
+    cy.ionPageVisible('routing');
   })
 })

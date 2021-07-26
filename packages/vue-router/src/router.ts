@@ -144,6 +144,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     direction?: RouteDirection,
     delta?: number
   ) => {
+    const shouldModifyLocationHistory = delta === undefined || delta === 1 || delta === -1;
     let leavingLocationInfo: RouteInfo;
     if (incomingRouteParams) {
       if (incomingRouteParams.routerAction === 'replace') {
@@ -152,7 +153,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         leavingLocationInfo = locationHistory.current();
       }
     } else {
-      leavingLocationInfo = locationHistory.current();
+      leavingLocationInfo = currentRouteInfo;
     }
 
     if (!leavingLocationInfo) {
@@ -203,7 +204,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           ...incomingRouteParams,
           lastPathname: leavingLocationInfo.pathname
         }
-        locationHistory.add(routeInfo);
 
       } else {
         const isPushed = incomingRouteParams.routerAction === 'push' && incomingRouteParams.routerDirection === 'forward';
@@ -244,8 +244,12 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
 
+      }
+
+      if (shouldModifyLocationHistory) {
         locationHistory.add(routeInfo);
       }
+
       currentRouteInfo = routeInfo;
     }
     incomingRouteParams = undefined;
