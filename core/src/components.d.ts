@@ -789,6 +789,10 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
+          * The start of week day to use for `ion-datetime`. The default value `0` represents Sunday.
+         */
+        "startOfWeek": number;
+        /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
         "value"?: string | null;
@@ -4368,6 +4372,10 @@ declare namespace LocalJSX {
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
          */
         "size"?: 'cover' | 'fixed';
+        /**
+          * The start of week day to use for `ion-datetime`. The default value `0` represents Sunday.
+         */
+        "startOfWeek"?: number;
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
