@@ -789,6 +789,10 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
+          * The time format of the `ion-datetime`. If no value is set, this is specified by the current locale.
+         */
+        "timeFormat"?: '24h' | '12h' | null;
+        /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
         "value"?: string | null;
@@ -4368,6 +4372,10 @@ declare namespace LocalJSX {
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
          */
         "size"?: 'cover' | 'fixed';
+        /**
+          * The time format of the `ion-datetime`. If no value is set, this is specified by the current locale.
+         */
+        "timeFormat"?: '24h' | '12h' | null;
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
