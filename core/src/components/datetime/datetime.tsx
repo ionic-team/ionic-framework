@@ -319,10 +319,10 @@ export class Datetime implements ComponentInterface {
   @Prop() showDefaultTimeLabel = true;
 
   /**
-   * The time format of the `ion-datetime`. If no value is set, this is
+   * The hour cycle of the `ion-datetime`. If no value is set, this is
    * specified by the current locale.
    */
-  @Prop() timeFormat?: '24h' | '12h' | null;
+  @Prop() hourCycle?: 'h23' | 'h12';
 
   /**
    * If `cover`, the `ion-datetime` will expand to cover the full width of its container.
@@ -1403,8 +1403,8 @@ export class Datetime implements ComponentInterface {
    * should just be the default segment.
    */
   private renderTime(mode: Mode) {
-    const { timeFormat } = this;
-    const use24Hour = timeFormat != null ? timeFormat === '24h' : is24Hour(this.locale);
+    const { hourCycle } = this;
+    const use24Hour = is24Hour(this.locale, hourCycle);
     const { ampm } = this.workingParts;
     const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
     return (
