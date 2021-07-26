@@ -125,20 +125,28 @@ export const createLocationHistory = () => {
   const findLastLocation = (routeInfo: RouteInfo, delta: number = -1): RouteInfo | undefined => {
     const routeInfos = getTabsHistory(routeInfo.tab);
     if (routeInfos) {
-      for (let i = routeInfos.length + (delta - 1); i >= 0; i--) {
-        const ri = routeInfos[i];
-        if (ri) {
-          if (ri.pathname === routeInfo.pushedByRoute) {
-            return ri;
+      if (delta < -1) {
+        return routeInfos[routeInfos.length - 1 + delta];
+      } else {
+        for (let i = routeInfos.length - 1; i >= 0; i--) {
+          const ri = routeInfos[i];
+          if (ri) {
+            if (ri.pathname === routeInfo.pushedByRoute) {
+              return ri;
+            }
           }
         }
       }
     }
-    for (let i = locationHistory.length + (delta - 1); i >= 0; i--) {
-      const ri = locationHistory[i];
-      if (ri) {
-        if (ri.pathname === routeInfo.pushedByRoute) {
-          return ri;
+    if (delta < -1) {
+      return locationHistory[locationHistory.length - 1 + delta];
+    } else {
+      for (let i = locationHistory.length - 1; i >= 0; i--) {
+        const ri = locationHistory[i];
+        if (ri) {
+          if (ri.pathname === routeInfo.pushedByRoute) {
+            return ri;
+          }
         }
       }
     }
