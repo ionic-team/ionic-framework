@@ -214,9 +214,7 @@
 
   transition: var(--transition);
 
-  //TODO:
   border-width: 0px;
-  padding-bottom: var(--border-width);
 
   outline: none;
 
@@ -421,7 +419,7 @@ button, a {
 
 :host(.ion-focused.item-fill-solid) .item-highlight,
 :host(.item-has-focus.item-fill-solid) .item-highlight {
-  border-width: calc(var(--full-highlight-height) - 1px);
+  border-width: var(--full-highlight-height);
 }
 
 :host(.ion-focused) .item-inner-highlight,

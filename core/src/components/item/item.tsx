@@ -303,7 +303,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
-    const hasFill = fill === 'outline' || fill === 'solid';
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }

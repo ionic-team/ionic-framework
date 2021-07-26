@@ -383,6 +383,11 @@
   overflow: visible;
 }
 
+:host(.item-fill-outline.item-has-focus) .virtual-border,
+:host(.item-fill-outline.ion-focused) .virtual-border {
+  border: none;
+}
+
 :host(.item-fill-outline) .item-native {
   --native-padding-left: 16px;
 
