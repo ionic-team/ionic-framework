@@ -188,7 +188,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           }
         } else if (action === 'pop') {
           const routeInfo = locationHistory.currentByPosition(initialHistoryPosition, currentHistoryPosition - delta);
-          console.log('curent by pos', routeInfo)
+
           if (routeInfo && routeInfo.pushedByRoute) {
             const prevRouteInfo = locationHistory.findLastLocation(routeInfo, delta);
             incomingRouteParams = {
@@ -359,7 +359,12 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     historyChangeListeners.push(cb);
   }
 
+  const getPreviousRouteInfo = () => {
+    return locationHistory.currentByPosition(initialHistoryPosition, currentHistoryPosition);
+  }
+
   return {
+    getPreviousRouteInfo,
     handleNavigateBack,
     handleSetCurrentTab,
     getCurrentRouteInfo,

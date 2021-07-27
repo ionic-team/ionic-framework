@@ -344,9 +344,9 @@ describe('Routing - Swipe to Go Back', () => {
     cy.ionPageHidden('home');
 
     // TODO: This does not work yet
-    /*cy.ionSwipeToGoBack(true);
+    cy.ionSwipeToGoBack(true);
 
     cy.ionPageDoesNotExist('routingparameter');
-    cy.ionPageVisible('routing');*/
+    cy.ionPageVisible('routing');
   })
 })
