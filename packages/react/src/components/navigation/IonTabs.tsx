@@ -8,13 +8,15 @@ import { IonRouterOutlet } from '../IonRouterOutlet';
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
 
-class IonTabsElement extends HTMLElement {
+import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
+
+class IonTabsElement extends HTMLElementSSR {
   constructor() {
     super();
   }
 }
 
-if (window && window.customElements) {
+if (typeof (window as any) === 'undefined' && window.customElements) {
   const element = customElements.get('ion-tabs');
   if (!element) {
     customElements.define('ion-tabs', IonTabsElement);
