@@ -215,6 +215,90 @@ describe('Routing', () => {
     cy.ionPageDoesNotExist('routingparameter');
     cy.ionPageVisible('routing');
   })
+
+  it('should select correct view when traversing backward and forward through history', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/abc');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.routerGo(-2);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routingparameter');
+
+    cy.routerGo(1);
+    cy.ionPageHidden('home');
+    cy.ionPageVisible('routing');
+
+    cy.routerGo(1);
+    cy.ionPageHidden('routing');
+    cy.ionPageVisible('routingparameter');
+
+    cy.routerGo(-1);
+    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageVisible('routing');
+
+    cy.routerGo(-1);
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('home');
+  })
+
+  it('should create new stack items when going back then pushing pages', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/abc');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.routerGo(-2);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routingparameter');
+
+    cy.routerPush('/inputs');
+    cy.ionPageHidden('home');
+    cy.ionPageVisible('inputs');
+
+    cy.ionBackClick('inputs');
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('inputs');
+  })
+
+  it('should properly go back using ion-back-button after using router.go()', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/abc');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.routerGo(-2);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routingparameter');
+
+    cy.routerGo(2);
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.ionBackClick('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageVisible('routing');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('home');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {

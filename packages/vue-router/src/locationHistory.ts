@@ -102,6 +102,21 @@ export const createLocationHistory = () => {
 
     return history;
   }
+
+  const size = () => locationHistory.length;
+  const updateAtPosition = (routeInfo: RouteInfo) => {
+    const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
+    if (existingRouteIndex === -1) return;
+
+    const current = { ...locationHistory[existingRouteIndex] }
+    locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
+    console.log('Attempting to update', { ...current }, 'with', { ...routeInfo });
+  }
+
+  const currentByPosition = (initialHistory: number, currentHistory: number) => {
+    const index = currentHistory - initialHistory;
+    return locationHistory[index] || current();
+  }
   const previous = () => locationHistory[locationHistory.length - 2] || current();
   const current = () => locationHistory[locationHistory.length - 1];
   const canGoBack = (deep: number = 1) => locationHistory.length > deep;
@@ -154,6 +169,9 @@ export const createLocationHistory = () => {
   }
 
   return {
+    currentByPosition,
+    updateAtPosition,
+    size,
     current,
     previous,
     add,

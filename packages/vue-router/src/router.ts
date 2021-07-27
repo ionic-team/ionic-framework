@@ -42,6 +42,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * We need to use opts.history rather than window.history
      * because window.history will be undefined when using SSR.
      */
+
+    currentHistoryPosition = opts.history.state.position as number;
+
     const replaceAction = opts.history.state.replaced ? 'replace' : undefined;
     handleHistoryChange(to, action || replaceAction, direction, delta);
 
@@ -49,6 +52,16 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   });
 
   const locationHistory = createLocationHistory();
+
+  /**
+   * Keeping track of the history position
+   * allows us to determine if a user is pushing
+   * new pages or updating history via the forward
+   * and back browser buttons.
+   */
+  const initialHistoryPosition = opts.history.state.position as number;
+  let currentHistoryPosition = opts.history.state.position as number;
+
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
   let currentTab: string | undefined;
@@ -92,7 +105,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
     // todo grab default back button href from config
-    const routeInfo = locationHistory.current();
+    const routeInfo = locationHistory.currentByPosition(initialHistoryPosition, currentHistoryPosition);
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
@@ -144,13 +157,14 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     direction?: RouteDirection,
     delta?: number
   ) => {
-    const shouldModifyLocationHistory = delta === undefined || delta === 1 || delta === -1;
     let leavingLocationInfo: RouteInfo;
     if (incomingRouteParams) {
       if (incomingRouteParams.routerAction === 'replace') {
         leavingLocationInfo = locationHistory.previous();
+      } else if (incomingRouteParams.routerAction === 'pop') {
+        leavingLocationInfo = locationHistory.currentByPosition(initialHistoryPosition, currentHistoryPosition + 1);
       } else {
-        leavingLocationInfo = locationHistory.current();
+        leavingLocationInfo = locationHistory.currentByPosition(initialHistoryPosition, currentHistoryPosition - 1);
       }
     } else {
       leavingLocationInfo = currentRouteInfo;
@@ -173,7 +187,8 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
             tab: currentTab
           }
         } else if (action === 'pop') {
-          const routeInfo = locationHistory.current();
+          const routeInfo = locationHistory.currentByPosition(initialHistoryPosition, currentHistoryPosition - delta);
+          console.log('curent by pos', routeInfo)
           if (routeInfo && routeInfo.pushedByRoute) {
             const prevRouteInfo = locationHistory.findLastLocation(routeInfo, delta);
             incomingRouteParams = {
@@ -246,7 +261,22 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
       }
 
-      if (shouldModifyLocationHistory) {
+      routeInfo = { ...routeInfo, position: currentHistoryPosition };
+      const historySize = locationHistory.size();
+      const historyDiff = currentHistoryPosition - initialHistoryPosition;
+
+      /**
+       * If the size of location history is greater
+       * than the difference between the current history
+       * position and the initial history position
+       * then we are guaranteed to already have a history
+       * item for this route. In other words, a user
+       * is navigating within the history without pushing
+       * new items within the stack.
+       */
+      if (historySize > historyDiff) {
+        locationHistory.updateAtPosition(routeInfo);
+      } else {
         locationHistory.add(routeInfo);
       }
 
