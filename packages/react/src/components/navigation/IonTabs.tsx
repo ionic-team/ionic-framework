@@ -3,12 +3,11 @@ import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
+import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
-
-import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 
 class IonTabsElement extends HTMLElementSSR {
   constructor() {
