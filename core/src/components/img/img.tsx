@@ -60,7 +60,7 @@ export class Img implements ComponentInterface {
       'isIntersecting' in window.IntersectionObserverEntry.prototype) {
       this.removeIO();
       this.io = new IntersectionObserver(data => {
-        if (data[data.length-1].isIntersecting) {
+        if (data[data.length - 1].isIntersecting) {
           this.load();
           this.removeIO();
         }
