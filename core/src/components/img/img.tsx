@@ -60,10 +60,7 @@ export class Img implements ComponentInterface {
       'isIntersecting' in window.IntersectionObserverEntry.prototype) {
       this.removeIO();
       this.io = new IntersectionObserver(data => {
-        // because there will only ever be one instance
-        // of the element we are observing
-        // we can just use data[0]
-        if (data[0].isIntersecting) {
+        if (data[data.length-1].isIntersecting) {
           this.load();
           this.removeIO();
         }
