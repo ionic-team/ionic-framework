@@ -31,7 +31,7 @@ export class ReorderGroup implements ComponentInterface {
   private containerBottom = 0;
 
   private pressTimeout?: any;
-  private pressTimeoutReached?: boolean = false;
+  private pressTimeoutReached = false;
   private clearPressTimeout(): any {
     if (this.pressTimeout) {
       clearTimeout(this.pressTimeout);
