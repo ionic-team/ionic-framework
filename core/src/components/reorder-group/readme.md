@@ -649,9 +649,10 @@ export default defineComponent({
 
 ## Properties
 
-| Property   | Attribute  | Description                            | Type      | Default |
-| ---------- | ---------- | -------------------------------------- | --------- | ------- |
-| `disabled` | `disabled` | If `true`, the reorder will be hidden. | `boolean` | `true`  |
+| Property           | Attribute            | Description                                       | Type      | Default |
+| ------------------ | -------------------- | ------------------------------------------------- | --------- | ------- |
+| `disabled`         | `disabled`           | If `true`, the reorder will be hidden.            | `boolean` | `true`  |
+| `requireLongPress` | `require-long-press` | If `true`, require long press before can reorder. | `boolean` | `false` |
 
 
 ## Events

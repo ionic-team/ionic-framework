@@ -150,8 +150,6 @@ export namespace Components {
     }
     interface IonApp {
     }
-    interface IonAvatar {
-    }
     interface IonBackButton {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -2730,12 +2728,6 @@ declare global {
         prototype: HTMLIonAppElement;
         new (): HTMLIonAppElement;
     };
-    interface HTMLIonAvatarElement extends Components.IonAvatar, HTMLStencilElement {
-    }
-    var HTMLIonAvatarElement: {
-        prototype: HTMLIonAvatarElement;
-        new (): HTMLIonAvatarElement;
-    };
     interface HTMLIonBackButtonElement extends Components.IonBackButton, HTMLStencilElement {
     }
     var HTMLIonBackButtonElement: {
@@ -3238,7 +3230,6 @@ declare global {
         "ion-action-sheet": HTMLIonActionSheetElement;
         "ion-alert": HTMLIonAlertElement;
         "ion-app": HTMLIonAppElement;
-        "ion-avatar": HTMLIonAvatarElement;
         "ion-back-button": HTMLIonBackButtonElement;
         "ion-backdrop": HTMLIonBackdropElement;
         "ion-badge": HTMLIonBadgeElement;
@@ -3460,8 +3451,6 @@ declare namespace LocalJSX {
         "translucent"?: boolean;
     }
     interface IonApp {
-    }
-    interface IonAvatar {
     }
     interface IonBackButton {
         /**
@@ -6055,7 +6044,6 @@ declare namespace LocalJSX {
         "ion-action-sheet": IonActionSheet;
         "ion-alert": IonAlert;
         "ion-app": IonApp;
-        "ion-avatar": IonAvatar;
         "ion-back-button": IonBackButton;
         "ion-backdrop": IonBackdrop;
         "ion-badge": IonBadge;
@@ -6148,7 +6136,6 @@ declare module "@stencil/core" {
             "ion-action-sheet": LocalJSX.IonActionSheet & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
             "ion-alert": LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
             "ion-app": LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
-            "ion-avatar": LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
             "ion-back-button": LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
             "ion-backdrop": LocalJSX.IonBackdrop & JSXBase.HTMLAttributes<HTMLIonBackdropElement>;
             "ion-badge": LocalJSX.IonBadge & JSXBase.HTMLAttributes<HTMLIonBadgeElement>;

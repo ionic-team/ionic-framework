@@ -535,6 +535,7 @@ export const IonReorder = /*@__PURE__*/ defineContainer<JSX.IonReorder>('ion-reo
 
 export const IonReorderGroup = /*@__PURE__*/ defineContainer<JSX.IonReorderGroup>('ion-reorder-group', [
   'disabled',
+  'requireLongPress',
   'ionItemReorder'
 ]);
 
