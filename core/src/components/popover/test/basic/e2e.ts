@@ -35,6 +35,23 @@ test('popover: focus trap', async () => {
 
   const activeElementTextThree = await getActiveElementText(page);
   expect(activeElementTextThree).toEqual('Item 0');
+
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('ArrowDown');
+
+  const activeElementTextFour = await getActiveElementText(page);
+  expect(activeElementTextFour).toEqual('Item 2');
+
+  await page.keyboard.press('Home');
+
+  const activeElementTextFive = await getActiveElementText(page);
+  expect(activeElementTextFive).toEqual('Item 0');
+
+  await page.keyboard.press('End');
+
+  const activeElementTextSix = await getActiveElementText(page);
+  expect(activeElementTextSix).toEqual('Item 3');
+
 });
 
 test('popover: basic', async () => {
