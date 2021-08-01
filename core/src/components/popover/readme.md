@@ -176,6 +176,8 @@ type PositionAlign = 'start' | 'center' | 'end';
 | ------------------ | -------------------------------------------------------------- |
 | `ArrowUp`          | Moves focus to the previous focusable element.                 |
 | `ArrowDown`        | Moves focus to the next focusable element.                     |
+| `Home`             | Moves focus to the first focusable element.                    |
+| `End`              | Moves focus to the last focusable element.                     |
 | `ArrowLeft`        | When used in a child popover, closes the popover and returns focus to the parent popover. |
 | `Space`, `Enter`, and `ArrowRight`       | When focusing a trigger element, opens the associated popover. |
 
