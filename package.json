@@ -22,7 +22,6 @@
     "inquirer": "^6.0.0",
     "lint-staged": "^11.1.1",
     "listr": "^0.14.0",
-    "prettier": "^2.3.2",
     "rimraf": "^2.6.3",
     "semver": "^5.5.0"
   },
