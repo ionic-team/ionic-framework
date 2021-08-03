@@ -229,9 +229,9 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                         | Type                                       |
-| ----------- | ----------------------------------- | ------------------------------------------ |
-| `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail>` |
+| Event       | Description                         | Type                                            |
+| ----------- | ----------------------------------- | ----------------------------------------------- |
+| `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail<any>>` |
 
 
 ## Dependencies

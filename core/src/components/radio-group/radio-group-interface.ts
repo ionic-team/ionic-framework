@@ -1,9 +1,9 @@
 
-export interface RadioGroupChangeEventDetail {
-  value: any;
+export interface RadioGroupChangeEventDetail<T = any> {
+  value: T;
 }
 
-export interface RadioChangeEventDetail {
-  value: any;
+export interface RadioChangeEventDetail<T = any> {
+  value: T;
   checked: boolean;
 }
