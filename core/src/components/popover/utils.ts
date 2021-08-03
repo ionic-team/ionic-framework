@@ -314,6 +314,16 @@ export const getPrevItem = (items: HTMLIonItemElement[], currentItem: HTMLElemen
   return items[currentItemIndex - 1];
 }
 
+/** Focus the internal button of the ion-item */
+const focusItem = (item: HTMLIonItemElement) => {
+  const root = getElementRoot(item);
+  const button = root.querySelector('button');
+
+  if (button) {
+    raf(() => button.focus());
+  }
+}
+
 /**
  * Returns `true` if `el` has been designated
  * as a trigger element for an ion-popover.
@@ -326,7 +336,7 @@ export const configureKeyboardInteraction = (
 
   const callback = async (ev: KeyboardEvent) => {
     const activeElement = document.activeElement as HTMLElement | null;
-    let items = [] as any;
+    let items: HTMLIonItemElement[] = [];
 
     /**
      * Complex selectors with :not() are :not supported
@@ -339,7 +349,7 @@ export const configureKeyboardInteraction = (
        * Select all ion-items that are not children of child popovers.
        * i.e. only select ion-item elements that are part of this popover
        */
-      items = Array.from(popoverEl.querySelectorAll('ion-item:not(ion-popover ion-popover *)'));
+      items = Array.from(popoverEl.querySelectorAll('ion-item:not(ion-popover ion-popover *):not([disabled])') as NodeListOf<HTMLIonItemElement>);
     /* tslint:disable-next-line */
     } catch {}
 
@@ -362,20 +372,44 @@ export const configureKeyboardInteraction = (
        * ArrowDown should move focus to the next focusable ion-item.
        */
       case 'ArrowDown':
+        ev.preventDefault();
         const nextItem = getNextItem(items, activeElement);
         // tslint:disable-next-line:strict-type-predicates
         if (nextItem !== undefined) {
-          nextItem.focus();
+          focusItem(nextItem);
         }
         break;
       /**
        * ArrowUp should move focus to the previous focusable ion-item.
        */
       case 'ArrowUp':
+        ev.preventDefault();
         const prevItem = getPrevItem(items, activeElement);
         // tslint:disable-next-line:strict-type-predicates
         if (prevItem !== undefined) {
-          prevItem.focus();
+          focusItem(prevItem);
+        }
+        break;
+      /**
+       * Home should move focus to the first focusable ion-item.
+       */
+      case 'Home':
+        ev.preventDefault();
+        const firstItem = items[0];
+        // tslint:disable-next-line:strict-type-predicates
+        if (firstItem !== undefined) {
+          focusItem(firstItem);
+        }
+        break;
+      /**
+       * End should move focus to the last focusable ion-item.
+       */
+      case 'End':
+        ev.preventDefault();
+        const lastItem = items[items.length - 1];
+        // tslint:disable-next-line:strict-type-predicates
+        if (lastItem !== undefined) {
+          focusItem(lastItem);
         }
         break;
       /**
