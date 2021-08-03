@@ -184,7 +184,45 @@ export class Select implements ComponentInterface {
     } else {
       await overlay.present();
     }
+
+    this.initKeyboardHandler(overlay);
+
     return overlay;
+  }
+
+  private initKeyboardHandler(overlay: OverlaySelect) {
+    let searchQuery: string = '';
+    let timeout: NodeJS.Timeout;
+
+    // The time in ms to clear the stored input
+    const clearTime = 1000;
+    const selectOptions = this.childOpts.filter(opt => !opt.disabled);
+
+    const updateSearchQuery = (key: string) => {
+      searchQuery += key;
+      const foundOption = selectOptions.find(option => option.innerText.toLowerCase().startsWith(searchQuery.toLowerCase()));
+
+      clearInterval(timeout);
+      timeout = setTimeout(() => {
+        searchQuery = '';
+      }, clearTime);
+
+      return foundOption;
+    }
+
+    const keyboardHandler = (ev: KeyboardEvent) => {
+      ev.preventDefault();
+      let nextOption;
+
+      // Only update the searchQuery with printable keys, as opposed to keys like 'RightArrow'.
+      if (ev.key.length === 1) {
+        nextOption = updateSearchQuery(ev.key);
+      }
+      nextOption?.focus();
+
+    }
+
+    overlay.addEventListener('keydown', keyboardHandler);
   }
 
   private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
