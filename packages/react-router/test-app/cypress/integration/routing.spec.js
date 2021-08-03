@@ -289,6 +289,27 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-page');
     cy.ionPageHidden('favorites-page');
   });
+
+  it('should show back button when going back to a pushed page', () => {
+    cy.visit(`http://localhost:${port}/routing/tabs/home`);
+
+    cy.ionNav('ion-item', 'Details 1');
+    cy.ionPageHidden('home-page');
+    cy.ionPageVisible('home-details-page-1');
+
+    cy.get('ion-tab-button#tab-button-settings').click();
+    cy.ionPageHidden('home-details-page-1');
+    cy.ionPageVisible('settings-page');
+
+    cy.get('ion-tab-button#tab-button-home').click();
+    cy.ionPageHidden('settings-page');
+    cy.ionPageVisible('home-details-page-1');
+
+    cy.ionBackClick('home-details-page-1');
+
+    cy.ionPageDoesNotExist('home-details-page-1');
+    cy.ionPageVisible('home-page');
+  });
   /*
     Tests to add:
     Test that lifecycle events fire

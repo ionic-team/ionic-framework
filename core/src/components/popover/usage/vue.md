@@ -40,7 +40,10 @@ export default {
           event: ev,
           translucent: true
         })
-      return popover.present();
+      await popover.present();
+  
+      const { role } = await popover.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
@@ -57,7 +60,7 @@ Developers can also use this component directly in their template:
     css-class="my-custom-class"
     :event="event"
     :translucent="true"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Popover></Popover>
   </ion-popover>
@@ -73,8 +76,8 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const event = ref();
-    const setOpen = (state: boolean, event?: Event) => {
-      event.value = event; 
+    const setOpen = (state: boolean, ev?: Event) => {
+      event.value = ev; 
       isOpenRef.value = state;
     }
     return { isOpenRef, setOpen, event }

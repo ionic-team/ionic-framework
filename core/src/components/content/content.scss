@@ -150,9 +150,9 @@
   display: none;
   position: absolute;
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   left: -100%;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   width: 100%;
   height: 100vh;
@@ -165,9 +165,9 @@
 .transition-cover {
   position: absolute;
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   right: 0;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   width: 100%;
   height: 100%;
@@ -181,9 +181,9 @@
   display: block;
   position: absolute;
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   right: 0;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   width: 10px;
   height: 100%;

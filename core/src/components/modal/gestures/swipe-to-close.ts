@@ -24,11 +24,11 @@ export const createSwipeToCloseGesture = (
       return true;
     }
 
-    const content = target.closest('ion-content');
-    if (content === null) {
+    const contentOrFooter = target.closest('ion-content, ion-footer');
+    if (contentOrFooter === null) {
       return true;
     }
-    // Target is in the content so we don't start the gesture.
+    // Target is in the content or the footer so do not start the gesture.
     // We could be more nuanced here and allow it for content that
     // does not need to scroll.
     return false;

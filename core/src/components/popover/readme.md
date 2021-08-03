@@ -34,6 +34,29 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+## Interfaces
+
+### PopoverOptions
+
+```typescript
+interface PopoverOptions {
+  component: any;
+  componentProps?: { [key: string]: any };
+  showBackdrop?: boolean;
+  backdropDismiss?: boolean;
+  translucent?: boolean;
+  cssClass?: string | string[];
+  event?: Event;
+  animated?: boolean;
+
+  mode?: 'ios' | 'md';
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 
@@ -62,7 +85,10 @@ export class PopoverExample {
       event: ev,
       translucent: true
     });
-    return await popover.present();
+    await popover.present();
+  
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 }
 ```
@@ -106,7 +132,11 @@ function presentPopover(ev) {
     translucent: true
   });
   document.body.appendChild(popover);
-  return popover.present();
+
+  await popover.present();
+  
+  const { role } = await popover.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -216,7 +246,10 @@ export class PopoverExample {
       event: ev,
       translucent: true
     });
-    return await popover.present();
+    await popover.present();
+  
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -300,7 +333,10 @@ export default {
           event: ev,
           translucent: true
         })
-      return popover.present();
+      await popover.present();
+  
+      const { role } = await popover.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
@@ -317,7 +353,7 @@ Developers can also use this component directly in their template:
     css-class="my-custom-class"
     :event="event"
     :translucent="true"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Popover></Popover>
   </ion-popover>
@@ -333,8 +369,8 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const event = ref();
-    const setOpen = (state: boolean, event?: Event) => {
-      event.value = event; 
+    const setOpen = (state: boolean, ev?: Event) => {
+      event.value = ev; 
       isOpenRef.value = state;
     }
     return { isOpenRef, setOpen, event }

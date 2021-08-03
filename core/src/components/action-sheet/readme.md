@@ -34,6 +34,39 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+## Interfaces
+
+### ActionSheetButton
+
+```typescript
+interface ActionSheetButton {
+  text?: string;
+  role?: 'cancel' | 'destructive' | 'selected' | string;
+  icon?: string;
+  cssClass?: string | string[];
+  handler?: () => boolean | void | Promise<boolean | void>;
+}
+```
+
+### ActionSheetOptions
+
+```typescript
+interface ActionSheetOptions {
+  header?: string;
+  subHeader?: string;
+  cssClass?: string | string[];
+  buttons: (ActionSheetButton | string)[];
+  backdropDismiss?: boolean;
+  translucent?: boolean;
+  animated?: boolean;
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 
@@ -94,6 +127,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
@@ -147,7 +183,10 @@ async function presentActionSheet() {
     }
   }];
   document.body.appendChild(actionSheet);
-  return actionSheet.present();
+  await actionSheet.present();
+
+  const { role } = await actionSheet.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -316,6 +355,9 @@ export class ActionSheetExample {
       }]
     });
     await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -389,7 +431,10 @@ export default defineComponent({
             },
           ],
         });
-      return actionSheet.present();
+      await actionSheet.present();
+
+      const { role } = await actionSheet.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 });
@@ -406,7 +451,7 @@ Developers can also use this component directly in their template:
     header="Albums"
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-action-sheet>
 </template>

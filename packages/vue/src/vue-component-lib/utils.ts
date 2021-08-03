@@ -96,6 +96,8 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
     }
 
     return () => {
+      modelPropValue = (props as any)[modelProp];
+
       getComponentClasses(attrs.class).forEach(value => {
         classes.add(value);
       });
@@ -119,9 +121,17 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
       };
 
       if (modelProp) {
+        /**
+         * Starting in Vue 3.1.0, all properties are
+         * added as keys to the props object, even if
+         * they are not being used. In order to correctly
+         * account for both value props and v-model props,
+         * we need to check if the key exists for Vue <3.1.0
+         * and then check if it is not undefined for Vue >= 3.1.0.
+         */
         propsToAdd = {
           ...propsToAdd,
-          [modelProp]: props.hasOwnProperty('modelValue') ? props.modelValue : modelPropValue
+          [modelProp]: props.hasOwnProperty(MODEL_VALUE) && props[MODEL_VALUE] !== undefined ? props.modelValue : modelPropValue
         }
       }
 

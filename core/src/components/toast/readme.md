@@ -10,6 +10,43 @@ Toasts can be positioned at the top, bottom or middle of the viewport. The posit
 
 The toast can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the toast options. If a button with a role of `"cancel"` is added, then that button will dismiss the toast. To dismiss the toast after creation, call the `dismiss()` method on the instance.
 
+## Interfaces
+
+### ToastButton
+
+```typescript
+interface ToastButton {
+  text?: string;
+  icon?: string;
+  side?: 'start' | 'end';
+  role?: 'cancel' | string;
+  cssClass?: string | string[];
+  handler?: () => boolean | void | Promise<boolean | void>;
+}
+```
+
+### ToastOptions
+
+```typescript
+interface ToastOptions {
+  header?: string;
+  message?: string | IonicSafeString;
+  cssClass?: string | string[];
+  duration?: number;
+  buttons?: (ToastButton | string)[];
+  position?: 'top' | 'bottom' | 'middle';
+  translucent?: boolean;
+  animated?: boolean;
+
+  color?: Color;
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 
@@ -61,7 +98,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+  
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
@@ -103,7 +143,10 @@ async function presentToastWithOptions() {
   ];
 
   document.body.appendChild(toast);
-  return toast.present();
+  await toast.present();
+  
+  const { role } = await toast.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -242,7 +285,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+  
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -306,7 +352,10 @@ export default {
             }
           ]
         })
-      return toast.present();
+      await toast.present();
+  
+      const { role } = await toast.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
@@ -322,7 +371,7 @@ Developers can also use this component directly in their template:
     :is-open="isOpenRef"
     message="Your settings have been saved."
     :duration="2000"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-toast>
 </template>

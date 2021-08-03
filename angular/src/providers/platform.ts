@@ -110,6 +110,7 @@ export class Platform {
    * | Platform Name   | Description                        |
    * |-----------------|------------------------------------|
    * | android         | on a device running Android.       |
+   * | capacitor       | on a device running Capacitor.     |
    * | cordova         | on a device running Cordova.       |
    * | ios             | on a device running iOS.           |
    * | ipad            | on an iPad device.                 |
@@ -209,7 +210,7 @@ export class Platform {
   }
 
   /**
-   * Returns `true` if the app is in portait mode.
+   * Returns `true` if the app is in portrait mode.
    */
   isPortrait(): boolean {
     return this.win.matchMedia && this.win.matchMedia('(orientation: portrait)').matches;

@@ -39,8 +39,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * about the replace action in opts.history.listen
      * but we can check to see if the latest routing action
      * was a replace action by looking at the history state.
+     * We need to use opts.history rather than window.history
+     * because window.history will be undefined when using SSR.
      */
-    const replaceAction = history.state.replaced ? 'replace' : undefined;
+    const replaceAction = opts.history.state.replaced ? 'replace' : undefined;
     handleHistoryChange(to, action || replaceAction, direction);
 
     currentNavigationInfo = { direction: undefined, action: undefined };
@@ -88,7 +90,19 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
         incomingRouteParams = { ...prevInfo, routerAction: 'pop', routerDirection: 'back', routerAnimation: routerAnimation || routeInfo.routerAnimation };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute || prevInfo.pathname === routeInfo.pushedByRoute) {
+        if (
+          routeInfo.lastPathname === routeInfo.pushedByRoute ||
+          (
+            /**
+             * We need to exclude tab switches/tab
+             * context changes here because tabbed
+             * navigation is not linear, but router.back()
+             * will go back in a linear fashion.
+             */
+            prevInfo.pathname === routeInfo.pushedByRoute &&
+            routeInfo.tab === '' && prevInfo.tab === ''
+          )
+        ) {
           router.back();
         } else {
           router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });

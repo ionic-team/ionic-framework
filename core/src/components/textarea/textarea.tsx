@@ -43,7 +43,7 @@ export class Textarea implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
@@ -363,7 +363,7 @@ export class Textarea implements ComponentInterface {
         >
           <textarea
             class="native-textarea"
-            aria-labelledby={labelId}
+            aria-labelledby={label ? labelId : null}
             ref={el => this.nativeInput = el}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}

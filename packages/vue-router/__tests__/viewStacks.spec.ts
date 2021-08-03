@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { createViewStacks } from '../src/viewStacks';
 
 let viewStacks;
