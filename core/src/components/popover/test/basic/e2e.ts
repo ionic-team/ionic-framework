@@ -3,9 +3,12 @@ import { newE2EPage } from '@stencil/core/testing';
 
 const DIRECTORY = 'basic';
 
-const getActiveElementText = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
+/**
+ * Focusing happens async inside of popover so we need
+ * to wait for the requestAnimationFrame to fire.
+ */
+const expectActiveElementTextToEqual = async (page, textValue) => {
+  await page.waitFor((text) => document.activeElement.textContent === text, {}, textValue)
 }
 
 test('popover: focus trap', async () => {
@@ -21,37 +24,33 @@ test('popover: focus trap', async () => {
 
   await page.keyboard.press('Tab');
 
-  const activeElementText = await getActiveElementText(page);
-  expect(activeElementText).toEqual('Item 0');
+  await expectActiveElementTextToEqual(page, 'Item 0');
 
   await page.keyboard.down('Shift');
   await page.keyboard.press('Tab');
   await page.keyboard.up('Shift');
 
-  const activeElementTextTwo = await getActiveElementText(page);
-  expect(activeElementTextTwo).toEqual('Item 3');
+  await expectActiveElementTextToEqual(page, 'Item 3');
 
   await page.keyboard.press('Tab');
 
-  const activeElementTextThree = await getActiveElementText(page);
-  expect(activeElementTextThree).toEqual('Item 0');
+  await expectActiveElementTextToEqual(page, 'Item 0');
 
   await page.keyboard.press('ArrowDown');
+
+  await expectActiveElementTextToEqual(page, 'Item 1');
+
   await page.keyboard.press('ArrowDown');
 
-  const activeElementTextFour = await getActiveElementText(page);
-  expect(activeElementTextFour).toEqual('Item 2');
+  await expectActiveElementTextToEqual(page, 'Item 2');
 
   await page.keyboard.press('Home');
 
-  const activeElementTextFive = await getActiveElementText(page);
-  expect(activeElementTextFive).toEqual('Item 0');
+  await expectActiveElementTextToEqual(page, 'Item 0');
 
   await page.keyboard.press('End');
 
-  const activeElementTextSix = await getActiveElementText(page);
-  expect(activeElementTextSix).toEqual('Item 3');
-
+  await expectActiveElementTextToEqual(page, 'Item 3');
 });
 
 test('popover: basic', async () => {
