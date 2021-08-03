@@ -316,7 +316,12 @@ export const getPrevItem = (items: HTMLIonItemElement[], currentItem: HTMLElemen
 
 /** Focus the internal button of the ion-item */
 const focusItem = (item: HTMLIonItemElement) => {
-  (item.shadowRoot?.querySelector('button.item-native') as HTMLElement)?.focus()
+  const root = getElementRoot(item);
+  const button = root.querySelector('button');
+
+  if (button) {
+    raf(() => button.focus());
+  }
 }
 
 /**
