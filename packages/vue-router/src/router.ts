@@ -274,7 +274,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * is navigating within the history without pushing
        * new items within the stack.
        */
-      if (historySize > historyDiff) {
+      if (historySize > historyDiff && routeInfo.tab !== undefined) {
         locationHistory.updateAtPosition(routeInfo);
       } else {
         locationHistory.add(routeInfo);
