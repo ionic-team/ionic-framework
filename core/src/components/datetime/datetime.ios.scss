@@ -116,78 +116,11 @@
 }
 
 /**
- * Day that is not today but
- * is selected should have ion-color for
- * text color and be bolder.
- */
-:host .calendar-day.calendar-day-active .calendar-day-content {
-  background: current-color(contrast);
-}
-
-/**
  * Day that is selected and is today
  * should have white color.
  */
 :host .calendar-day.calendar-day-today.calendar-day-active {
-  color: var(--ion-text-color, #ffffff);
-}
-
-:host .calendar-day.calendar-day-today.calendar-day-active:after {
-  background: current-color(base);
-
-  opacity: 1;
-}
-
-:host .calendar-day {
-  font-size: 20px;
-}
-
-:host .calendar-day:after {
-  opacity: 0.2;
-}
-
-:host .calendar-day:focus:after {
-  background: current-color(base);
-}
-
-/**
- * Day that today but not selected
- * should have ion-color for text color.
- */
-:host .calendar-day.calendar-day-today {
-  color: current-color(base);
-}
-
-/**
- * Day that is not today but
- * is selected should have ion-color for
- * text color and be bolder.
- */
-:host .calendar-day.calendar-day-active {
-  color: current-color(base);
-
-  font-weight: 600;
-}
-
-:host .calendar-day.calendar-day-active:after {
-  background: current-color(base);
-}
-
-/**
- * Day that is not today but
- * is selected should have ion-color for
- * text color and be bolder.
- */
-:host .calendar-day.calendar-day-active .calendar-day-content {
-  background: current-color(contrast);
-}
-
-/**
- * Day that is selected and is today
- * should have white color.
- */
-:host .calendar-day.calendar-day-today.calendar-day-active {
-  color: var(--ion-text-color, #ffffff);
+  color: current-color(contrast);
 }
 
 :host .calendar-day.calendar-day-today.calendar-day-active:after {
