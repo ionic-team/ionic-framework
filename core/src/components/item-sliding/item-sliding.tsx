@@ -247,7 +247,6 @@ export class ItemSliding implements ComponentInterface {
     const selected = openSlidingItem;
     if (selected && selected !== this.el) {
       this.closeOpened();
-      return false;
     }
 
     return !!(this.rightOptions || this.leftOptions);

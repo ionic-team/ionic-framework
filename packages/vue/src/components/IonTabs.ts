@@ -34,6 +34,35 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       }, routerOutlet)
     ];
 
+<<<<<<< HEAD
+=======
+    if (!userProvidedRouterOutlet && !$data.didWarn) {
+      console.warn(`[@ionic/vue Deprecation] Starting in Ionic Vue v6.0, developers must add an 'ion-router-outlet' instance inside of 'ion-tabs'.
+
+      Before:
+
+      <ion-tabs>
+        <ion-tab-bar slot="bottom">
+          ...
+        </ion-tab-bar>
+      </ion-tabs>
+
+      After:
+
+      <ion-tabs>
+        <ion-router-outlet></ion-router-outlet>
+        <ion-tab-bar slot="bottom">
+          ...
+        </ion-tab-bar>
+      </ion-tabs>
+
+      Be sure to import 'IonRouterOutlet' from '@ionic/vue' and provide that import to your Vue component. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.
+      `);
+
+      $data.didWarn = true;
+    }
+
+>>>>>>> origin/main
     /**
      * If ion-tab-bar has slot="top" it needs to be
      * rendered before `.tabs-inner` otherwise it will

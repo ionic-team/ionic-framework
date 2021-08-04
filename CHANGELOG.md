@@ -1,3 +1,17 @@
+## [5.6.13](https://github.com/ionic-team/ionic/compare/v5.6.12...v5.6.13) (2021-08-04)
+
+
+### Bug Fixes
+
+* **checkbox, radio:** change event interfaces correctly use TypeScript generics for value ([#23044](https://github.com/ionic-team/ionic/issues/23044)) ([8a941fd](https://github.com/ionic-team/ionic/commit/8a941fd24cd138817a2e91c42898878a919538e4))
+* **gesture:** onEnd now correctly fires even if the event target was removed from the DOM  ([#23713](https://github.com/ionic-team/ionic/issues/23713)) ([4edb5e2](https://github.com/ionic-team/ionic/commit/4edb5e2fed55c8ea21eae50821d16d351bf3aebf)), closes [#22819](https://github.com/ionic-team/ionic/issues/22819)
+* **item-sliding:** opening item while other items are open no longer requires multiple swipes ([#23683](https://github.com/ionic-team/ionic/issues/23683)) ([792864f](https://github.com/ionic-team/ionic/commit/792864f8ab21dc178c1836a8a0d4fe2d305cc142)), closes [#21579](https://github.com/ionic-team/ionic/issues/21579)
+* **react:** IonTabs no longer causes SSR to fail ([#23696](https://github.com/ionic-team/ionic/issues/23696)) ([f2a05be](https://github.com/ionic-team/ionic/commit/f2a05bed1e2a1150e8f1823bfed2d12a219d6ad0)), closes [#23651](https://github.com/ionic-team/ionic/issues/23651)
+* **vue:** improve accuracy of ion-page dev warning ([#23677](https://github.com/ionic-team/ionic/issues/23677)) ([fb260a9](https://github.com/ionic-team/ionic/commit/fb260a9e09e6f3912b30ef2ebf581d3216483fea)), closes [#23675](https://github.com/ionic-team/ionic/issues/23675)
+* **vue:** tabs warning about user-provided router outlet change is now correctly logged ([#23724](https://github.com/ionic-team/ionic/issues/23724)) ([4a64e97](https://github.com/ionic-team/ionic/commit/4a64e97a3e390e365101bbb477acad0ddc4671ff)), closes [#23719](https://github.com/ionic-team/ionic/issues/23719)
+
+
+
 # [6.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v5.6.12...v6.0.0-beta.2) (2021-07-21)
 
 
@@ -26,6 +40,20 @@
 
 
 
+## [5.6.12](https://github.com/ionic-team/ionic/compare/v5.6.11...v5.6.12) (2021-07-21)
+
+
+### Bug Fixes
+
+* **action-sheet:** header, subheader, and icon alignment better matches native ios ([#23322](https://github.com/ionic-team/ionic/issues/23322)) ([39315bc](https://github.com/ionic-team/ionic/commit/39315bc857b850347dca386776665e21c9742cad)), closes [#23317](https://github.com/ionic-team/ionic/issues/23317)
+* **button:** buttons are now disabled during page transitions ([#23589](https://github.com/ionic-team/ionic/issues/23589)) ([3b803eb](https://github.com/ionic-team/ionic/commit/3b803ebe024be3dbcf814a30a18df51ce23c8880)), closes [#23588](https://github.com/ionic-team/ionic/issues/23588)
+* **item:** mirror disabled prop to aria attribute ([#23544](https://github.com/ionic-team/ionic/issues/23544)) ([9021e7c](https://github.com/ionic-team/ionic/commit/9021e7cc4b48a69ccc94faa7d2ddcb10a2afa340)), closes [#23513](https://github.com/ionic-team/ionic/issues/23513)
+* **menu-button:** custom aria-label can now be set ([#23608](https://github.com/ionic-team/ionic/issues/23608)) ([c08345d](https://github.com/ionic-team/ionic/commit/c08345df2ee3175f3f0d11ff877c7b6f1a102321)), closes [#23604](https://github.com/ionic-team/ionic/issues/23604)
+* **overlays:** overlay interfaces are now exported from framework packages and documented ([#23619](https://github.com/ionic-team/ionic/issues/23619)) ([773bbcb](https://github.com/ionic-team/ionic/commit/773bbcb211d3cf0caf38c25b44e666d98ddfafe5)), closes [#22790](https://github.com/ionic-team/ionic/issues/22790)
+* **router-outlet:** improve reliability of swipe back gesture when quickly swiping back ([#23527](https://github.com/ionic-team/ionic/issues/23527)) ([fa06942](https://github.com/ionic-team/ionic/commit/fa069424b265891852a07869b6d086a1cb041e93)), closes [#22895](https://github.com/ionic-team/ionic/issues/22895)
+
+
+
 # [6.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v5.6.11...v6.0.0-beta.1) (2021-07-01)
 
 
@@ -51,6 +79,15 @@
 ### BREAKING CHANGES
 
 * **input, select, textarea:** Updated the `placeholder` property on `ion-input`, `ion-textarea`, and `ion-select` to have a type of `string | undefined`.
+
+
+
+## [5.6.11](https://github.com/ionic-team/ionic/compare/v5.6.10...v5.6.11) (2021-07-01)
+
+### Bug Fixes
+
+* **animation:** typescript interface has correct return value for progress methods ([#23536](https://github.com/ionic-team/ionic/issues/23536)) ([f3d6abb](https://github.com/ionic-team/ionic/commit/f3d6abbc1beeafe3b5e7f473d70d0b8ef4c79bc8))
+* **ios, md:** double tapping back button no longer causes app to go back 2 pages ([#23526](https://github.com/ionic-team/ionic/issues/23526)) ([69be51d](https://github.com/ionic-team/ionic/commit/69be51dc54e670b2f75cbfac28a4a09517dbf355)), closes [#18455](https://github.com/ionic-team/ionic/issues/18455)
 
 
 
@@ -109,63 +146,6 @@
 * **ios:** The tab bar and toolbar default background colors have been updated to better reflect the latest iOS styles.
 * **header:** The last toolbar in the header with a collapsible large title no longer has a border.
 * **toast:** The `--white-space` CSS Variable now defaults to `normal`.
-
-
-
-## [5.6.12](https://github.com/ionic-team/ionic/compare/v5.6.11...v5.6.12) (2021-07-21)
-
-
-### Bug Fixes
-
-* **action-sheet:** header, subheader, and icon alignment better matches native ios ([#23322](https://github.com/ionic-team/ionic/issues/23322)) ([39315bc](https://github.com/ionic-team/ionic/commit/39315bc857b850347dca386776665e21c9742cad)), closes [#23317](https://github.com/ionic-team/ionic/issues/23317)
-* **button:** buttons are now disabled during page transitions ([#23589](https://github.com/ionic-team/ionic/issues/23589)) ([3b803eb](https://github.com/ionic-team/ionic/commit/3b803ebe024be3dbcf814a30a18df51ce23c8880)), closes [#23588](https://github.com/ionic-team/ionic/issues/23588)
-* **item:** mirror disabled prop to aria attribute ([#23544](https://github.com/ionic-team/ionic/issues/23544)) ([9021e7c](https://github.com/ionic-team/ionic/commit/9021e7cc4b48a69ccc94faa7d2ddcb10a2afa340)), closes [#23513](https://github.com/ionic-team/ionic/issues/23513)
-* **menu-button:** custom aria-label can now be set ([#23608](https://github.com/ionic-team/ionic/issues/23608)) ([c08345d](https://github.com/ionic-team/ionic/commit/c08345df2ee3175f3f0d11ff877c7b6f1a102321)), closes [#23604](https://github.com/ionic-team/ionic/issues/23604)
-* **overlays:** overlay interfaces are now exported from framework packages and documented ([#23619](https://github.com/ionic-team/ionic/issues/23619)) ([773bbcb](https://github.com/ionic-team/ionic/commit/773bbcb211d3cf0caf38c25b44e666d98ddfafe5)), closes [#22790](https://github.com/ionic-team/ionic/issues/22790)
-* **router-outlet:** improve reliability of swipe back gesture when quickly swiping back ([#23527](https://github.com/ionic-team/ionic/issues/23527)) ([fa06942](https://github.com/ionic-team/ionic/commit/fa069424b265891852a07869b6d086a1cb041e93)), closes [#22895](https://github.com/ionic-team/ionic/issues/22895)
-
-
-
-# [6.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.0.0-beta.0...v6.0.0-beta.1) (2021-07-01)
-
-### Bug Fixes
-
-* **accordion:** improved reliability of accordion animations ([#23531](https://github.com/ionic-team/ionic/issues/23531)) ([6fbd60b](https://github.com/ionic-team/ionic/commit/6fbd60b0df56dc927226474a1ffa322d979c563e)), closes [#23504](https://github.com/ionic-team/ionic/issues/23504)
-* **content:** add touch-action manipulation for zoom and pan ([#23534](https://github.com/ionic-team/ionic/issues/23534)) ([6ca1780](https://github.com/ionic-team/ionic/commit/6ca17805b8b1ea38d7fc16d091324da16a4193c6)), closes [#22805](https://github.com/ionic-team/ionic/issues/22805)
-* **datetime:** scroll position no longer gets reset when using datetime in overlay ([#23543](https://github.com/ionic-team/ionic/issues/23543)) ([b735b58](https://github.com/ionic-team/ionic/commit/b735b587cda777ac481bb580c883d9734145f31e))
-* **input, select, textarea:** change type of placeholder prop to string only ([#23500](https://github.com/ionic-team/ionic/issues/23500)) ([f3ae431](https://github.com/ionic-team/ionic/commit/f3ae4319bb64debab304973856a33e422ac910a1)), closes [#22976](https://github.com/ionic-team/ionic/issues/22976)
-* **popover:** size property now works when providing only event ([#23532](https://github.com/ionic-team/ionic/issues/23532)) ([bdc1f23](https://github.com/ionic-team/ionic/commit/bdc1f2360d7795472cc242a86eb4376d05fa0bb7)), closes [#23528](https://github.com/ionic-team/ionic/issues/23528)
-* **popover:** update animation to better match MD spec ([#23541](https://github.com/ionic-team/ionic/issues/23541)) ([bdb95b7](https://github.com/ionic-team/ionic/commit/bdb95b7b6dd798cbc6d1786ae54fa95ac1dfd096))
-* **react:** export accordion and accordion group components ([#23497](https://github.com/ionic-team/ionic/issues/23497)) ([a664d42](https://github.com/ionic-team/ionic/commit/a664d4268dea8e84ab9e3b150043ac8f87fb53c7))
-* **vue:** navigating between parameterized pages now results in page transition ([#23525](https://github.com/ionic-team/ionic/issues/23525)) ([e30b17c](https://github.com/ionic-team/ionic/commit/e30b17c5bbd1af6936a8d7a98d1f7a115073e029)), closes [#22662](https://github.com/ionic-team/ionic/issues/22662)
-
-
-### Features
-
-* **accordion-group:** add animated property to disable animations ([#23530](https://github.com/ionic-team/ionic/issues/23530)) ([9a60dd0](https://github.com/ionic-team/ionic/commit/9a60dd0ea7c55acf0fdd1161433e5b4ed40778f2))
-* **action-sheet, alert:** add id to AlertButton and ActionSheetButton ([#18992](https://github.com/ionic-team/ionic/issues/18992)) ([9e24a0b](https://github.com/ionic-team/ionic/commit/9e24a0b49357a3a39ca89f026ff23271a365d935)), closes [#22959](https://github.com/ionic-team/ionic/issues/22959)
-* **vue:** extend useIonRouter hook for programmatic navigation with animation control  ([#23499](https://github.com/ionic-team/ionic/issues/23499)) ([fc9e1b4](https://github.com/ionic-team/ionic/commit/fc9e1b4b361938e5644683c395a565be2de1eab9)), closes [#23450](https://github.com/ionic-team/ionic/issues/23450)
-
-
-### BREAKING CHANGES
-
-> We recommend updating to the latest version of 5.x before trying out version 6 in order to see deprecation warnings related to your app in the developer console.
-
-* **input, select, textarea:** Updated the `placeholder` property on `ion-input`, `ion-textarea`, and `ion-select` to have a type of `string | undefined`.
-* **vue:** The `IonRouter` type for `useIonRouter` has been renamed to `UseIonRouterResult`, and the `IonKeyboardRef` type for `useKeyboard` has been renamed to `UseKeyboardResult`.
-
-Please see the [BREAKING.md](./BREAKING.md#version-6x) file for a complete list of breaking changes in Framework v6.
-
-Looking to test out the Framework v6 beta? Check out our [v6 Beta Getting Started Guide](./BETA.md).
-
-
-
-## [5.6.11](https://github.com/ionic-team/ionic/compare/v5.6.10...v5.6.11) (2021-07-01)
-
-### Bug Fixes
-
-* **animation:** typescript interface has correct return value for progress methods ([#23536](https://github.com/ionic-team/ionic/issues/23536)) ([f3d6abb](https://github.com/ionic-team/ionic/commit/f3d6abbc1beeafe3b5e7f473d70d0b8ef4c79bc8))
-* **ios, md:** double tapping back button no longer causes app to go back 2 pages ([#23526](https://github.com/ionic-team/ionic/issues/23526)) ([69be51d](https://github.com/ionic-team/ionic/commit/69be51dc54e670b2f75cbfac28a4a09517dbf355)), closes [#18455](https://github.com/ionic-team/ionic/issues/18455)
 
 
 
