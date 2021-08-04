@@ -34,7 +34,7 @@ export const IonTabs = defineComponent({
       }, (userProvidedRouterOutlet) ? userProvidedRouterOutlet : [h(IonRouterOutlet, { tabs: true })])
     ];
 
-    if (userProvidedRouterOutlet && !$data.didWarn) {
+    if (!userProvidedRouterOutlet && !$data.didWarn) {
       console.warn(`[@ionic/vue Deprecation] Starting in Ionic Vue v6.0, developers must add an 'ion-router-outlet' instance inside of 'ion-tabs'.
 
       Before:
