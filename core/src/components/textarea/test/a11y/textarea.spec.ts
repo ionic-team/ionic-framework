@@ -3,6 +3,12 @@ import { Textarea } from '../../textarea';
 import { Item } from '../../../item/item';
 import { Label } from '../../../label/label';
 
+global.MutationObserver = class {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+};
+
 describe('Textarea a11y', () => {
   it('does not set a default aria-labelledby when there is not a neighboring ion-label', async () => {
     const page = await newSpecPage({

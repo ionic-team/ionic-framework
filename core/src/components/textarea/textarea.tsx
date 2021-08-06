@@ -225,11 +225,11 @@ export class Textarea implements ComponentInterface {
   protected watchDisplay(): void {
     const observer = new MutationObserver(() => {
       const child: any = this.el.children[0];
-      if (this.el.style.display != 'none' && child.style.height === '0px') {
+      if (this.el.style.display !== 'none' && child.style.height === '0px') {
         this.runAutoGrow();
       }
     });
-    observer.observe(this.el, {attributes: true, childList: true});
+    observer.observe(this.el, { attributes: true, childList: true });
   }
 
   private runAutoGrow() {
