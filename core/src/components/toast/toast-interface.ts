@@ -10,6 +10,7 @@ export interface ToastOptions {
   position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
   animated?: boolean;
+  icon?: string;
 
   color?: Color;
   mode?: Mode;
