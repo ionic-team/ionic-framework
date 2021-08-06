@@ -203,6 +203,7 @@ export class Textarea implements ComponentInterface {
         detail: this.el
       }));
     }
+    this.watchDisplay();
   }
 
   disconnectedCallback() {
@@ -219,6 +220,16 @@ export class Textarea implements ComponentInterface {
 
   componentDidLoad() {
     raf(() => this.runAutoGrow());
+  }
+
+  protected watchDisplay(): void {
+    const observer = new MutationObserver(() => {
+      const child: any = this.el.children[0];
+      if (this.el.style.display != 'none' && child.style.height === '0px') {
+        this.runAutoGrow();
+      }
+    });
+    observer.observe(this.el, {attributes: true, childList: true});
   }
 
   private runAutoGrow() {
