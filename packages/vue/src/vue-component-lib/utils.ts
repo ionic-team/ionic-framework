@@ -160,9 +160,22 @@ export const defineContainer = <Props>(
       }
 
       if (modelProp) {
-        propsToAdd = {
-          ...propsToAdd,
-          [modelProp]: props[MODEL_VALUE] !== EMPTY_PROP ? props.modelValue : modelPropValue
+        /**
+         * If form value property was set using v-model
+         * then we should use that value.
+         * Otherwise, check to see if form value property
+         * was set as a static value (i.e. no v-model).
+         */
+        if (props[MODEL_VALUE] !== EMPTY_PROP) {
+          propsToAdd = {
+            ...propsToAdd,
+            [modelProp]: props[MODEL_VALUE]
+          }
+        } else if (modelPropValue !== EMPTY_PROP) {
+          propsToAdd = {
+            ...propsToAdd,
+            [modelProp]: modelPropValue
+          }
         }
       }
 
