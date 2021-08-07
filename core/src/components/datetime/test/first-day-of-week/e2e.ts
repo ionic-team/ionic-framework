@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('start-of-week', async () => {
+test('first-day-of-week', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/start-of-week?ionic:_testing=true'
+    url: '/src/components/datetime/test/first-day-of-week?ionic:_testing=true'
   });
 
   const screenshotCompares = [];

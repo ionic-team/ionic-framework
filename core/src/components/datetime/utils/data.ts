@@ -53,11 +53,11 @@ const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
  * MD should display days such as "M"
  * or "T".
  */
-export const getDaysOfWeek = (locale: string, mode: Mode, startOfWeek = 0) => {
+export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) => {
   /**
    * Nov 1st, 2020 starts on a Sunday.
    * ion-datetime assumes weeks start on Sunday,
-   * but is configurable via `startOfWeek`.
+   * but is configurable via `firstDayOfWeek`.
    */
   const weekdayFormat = mode === 'ios' ? 'short' : 'narrow';
   const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat })
@@ -68,7 +68,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode, startOfWeek = 0) => {
    * For each day of the week,
    * get the day name.
    */
-  for (let i = startOfWeek; i < startOfWeek + 7; i++) {
+  for (let i = firstDayOfWeek; i < firstDayOfWeek + 7; i++) {
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate() + i);
 
@@ -84,10 +84,10 @@ export const getDaysOfWeek = (locale: string, mode: Mode, startOfWeek = 0) => {
  * aligned with a week calendar starting on
  * Sunday using null values.
  */
-export const getDaysOfMonth = (month: number, year: number, startOfWeek: number) => {
+export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: number) => {
   const numDays = getNumDaysInMonth(month, year);
   const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
-  const offset = firstOfMonth >= startOfWeek ? firstOfMonth - (startOfWeek + 1) : 6 - (startOfWeek - firstOfMonth);
+  const offset = firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
 
   let days = [];
   for (let i = 1; i <= numDays; i++) {

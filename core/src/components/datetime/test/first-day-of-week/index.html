@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title>Datetime - Start of week</title>
+    <title>Datetime - First day of week</title>
     <meta name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
@@ -42,17 +42,17 @@
     <ion-app>
       <ion-header translucent="true">
         <ion-toolbar>
-          <ion-title>Datetime - Start of week</ion-title>
+          <ion-title>Datetime - First day of week</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
             <h2>Default</h2>
-            <ion-datetime start-of-week="0"></ion-datetime>
-            <ion-button onclick="increase()">Increase StartOfWeek</ion-button>
+            <ion-datetime first-day-of-week="0"></ion-datetime>
+            <ion-button onclick="increase()">Increase firstDayOfWeek</ion-button>
             <div>
-              <span>StartOfWeek: <span id="start-of-week">0</span></span>
+              <span>FirstDayOfWeek: <span id="start-of-week">0</span></span>
             </div>
           </div>
         </div>
@@ -62,10 +62,10 @@
   <script>
     function increase() {
       const datetime = document.querySelector('ion-datetime');
-      datetime.startOfWeek = datetime.startOfWeek + 1;
+      datetime.firstDayOfWeek = datetime.firstDayOfWeek + 1;
 
       const span = document.getElementById('start-of-week');
-      span.innerText = datetime.startOfWeek;
+      span.innerText = datetime.firstDayOfWeek;
     }
   </script>
 </html>

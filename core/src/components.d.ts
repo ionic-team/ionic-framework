@@ -729,6 +729,10 @@ export namespace Components {
          */
         "doneText": string;
         /**
+          * The first day of the week to use for `ion-datetime`. The default value `0` represents Sunday.
+         */
+        "firstDayOfWeek": number;
+        /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
@@ -788,10 +792,6 @@ export namespace Components {
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
          */
         "size": 'cover' | 'fixed';
-        /**
-          * The start of week day to use for `ion-datetime`. The default value `0` represents Sunday.
-         */
-        "startOfWeek": number;
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
@@ -4297,6 +4297,10 @@ declare namespace LocalJSX {
          */
         "doneText"?: string;
         /**
+          * The first day of the week to use for `ion-datetime`. The default value `0` represents Sunday.
+         */
+        "firstDayOfWeek"?: number;
+        /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
@@ -4372,10 +4376,6 @@ declare namespace LocalJSX {
           * If `cover`, the `ion-datetime` will expand to cover the full width of its container. If `fixed`, the `ion-datetime` will have a fixed width.
          */
         "size"?: 'cover' | 'fixed';
-        /**
-          * The start of week day to use for `ion-datetime`. The default value `0` represents Sunday.
-         */
-        "startOfWeek"?: number;
         /**
           * The value of the datetime as a valid ISO 8601 datetime string.
          */
