@@ -70,3 +70,73 @@
 // .checkbox-md + .item-inner ion-label {
 //   @include margin-horizontal(0, null);
 // }
+
+// CUSTOM
+
+@import "../../../med-components/abstracts";
+
+:host {
+  --background: transparent;
+  --border-radius: #{$med-border-radius-sm};
+  --border-color: #{md-color(brand, 4)};
+  --border-width: #{$med-border-width-thin};
+  --size: 24px;
+  min-width: var(--size);
+}
+
+:host .checkbox-icon {
+  position: relative;
+}
+
+:host(.checkbox-checked) .checkbox-icon,
+:host(.checkbox-indeterminate) .checkbox-icon {
+  border-color: var(--border-color);
+  background: var(--background);
+}
+
+:host .checked {
+  transform: translate(-50%, -50%) scale(0);
+}
+
+:host .indeterminate {
+  transform: translate(-50%, -50%) scale(0);
+}
+
+:host(.checkbox-checked) .checked {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 15px;
+  height: 15px;
+  border-radius: #{$med-border-radius-nano};
+  background: var(--border-color);
+  transition: 300ms all ease;
+}
+
+:host(.checkbox-indeterminate) .indeterminate {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 12px;
+  height: 2px;
+  border-radius: #{$med-border-radius-nano};
+  background: var(--border-color);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.ion-color) {
+  --border-color: #{md-current-color(3)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-neutral) {
+  --border-color: var(--med-neutral);
+}

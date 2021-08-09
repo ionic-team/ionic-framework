@@ -38,57 +38,57 @@
       .light-mode ion-content {
         --background: #fafafa;
       }
-      .modal {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 500px;
-        height: 500px;
-        background-color: aquamarine;
+
+      h4 {
+        text-align: left;
+        margin: 0;
       }
-      .teste {
-        width: 100px;
-        height: 100px;
-        background-color: red;
+
+      p {
+        text-align: left;
+        margin: 0;
+      }
+
+      .med-accordion__content {
+        padding: var(--med-spacing-inset-sm);
+        padding-top: 0;
       }
     </style>
   </head>
   <body class="dark-mode">
     <ion-app>
+      <ion-content>
+        <med-accordion-list>
+          <med-accordion-item>
+            <div slot="header">
+              <h4>Header</h4>
+            </div>
+            <div slot="content" class="med-accordion__content">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+            </div>
+          </med-accordion-item>
+          <med-accordion-item>
+            <h3 slot="header">Characters</h3>
+            <ul slot="content">
+              <li>Mace Tyrell</li>
+              <li>Tyrion Lannister</li>
+              <li>Sansa Stark</li>
+              <li>Catelyn Stark</li>
+              <li>Roose Bolton</li>
+              <li>Jon Snow</li>
+              <li>Hot Pie</li>
+            </ul>
+          </med-accordion-item>
+        </med-accordion-list>
 
-      <med-chart-label></med-chart-label>
+      </ion-content>
+
 
     </ion-app>
 
     <script>
-      const data = [
-        {
-          cor: 'ion-color-success',
-          label: 'Acertos',
-          quantia: 32,
-          ignoreBarra: false,
-        },
-        {
-          cor: 'ion-color-caution',
-          label: 'certos',
-          quantia: 15,
-          ignoreBarra: false,
-        },
-        {
-          cor: 'ion-color-warning ',
-          label: 'acertos',
-          quantia: 10,
-          ignoreBarra: false,
-        },
-        {
-          cor: 'gray',
-          label: 'restantes',
-          quantia: 43,
-          ignoreBarra: true,
-        }
-      ];
 
-      document.querySelector('med-chart-label').valores = data;
+
     </script>
   </body>
 </html>

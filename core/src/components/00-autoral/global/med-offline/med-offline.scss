@@ -1,0 +1,59 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --z-index: 1000;
+
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: var(--z-index);
+
+  .wrapper {
+    opacity: $med-opacity-level-semiopaque;
+    background: #0b0e0e;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+
+    &__content {
+      pointer-events: none;
+      width: 100%;
+      height: calc(100% - 50px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: $med-spacing-stack-xxs;
+  }
+
+  .icon-path {
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .title {
+    font-size: $med-font-size-xs;
+    font-weight: $med-font-weight-bold;
+    line-height: $med-line-height-compressed;
+    color: #f1f3f4;
+    margin-bottom: $med-spacing-stack-xxxs;
+  }
+
+  .text {
+    font-size: $med-font-size-xs;
+    font-weight: $med-font-weight-regular;
+    line-height: $med-line-height-compressed;
+    color: #f1f3f4;
+  }
+}

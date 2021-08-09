@@ -1,0 +1,30 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+   * @prop --color: Define a cor do componente.
+   */
+  --color: var(--med-color-neutral-5);
+}
+
+:host(.med-divider) {
+  display: block;
+  text-align: left;
+
+  .med-divider__heading {
+    padding: 0;
+    margin: 0;
+    padding-top: $med-spacing-stack-base;
+    line-height: $med-line-height-compressed;
+    font-weight: $med-font-weight-semibold;
+    color: var(--color);
+  }
+}
+
+:host(.ion-color) {
+  --color: #{md-current-color(3)};
+}
+
+:host(.med-neutral) {
+  --color: var(--med-neutral);
+}

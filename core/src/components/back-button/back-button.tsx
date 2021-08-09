@@ -78,11 +78,11 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
     if (getIonMode(this) === 'ios') {
       // default ios back button icon
-      return config.get('backButtonIcon', 'chevron-back');
+      return config.get('backButtonIcon', 'med-esquerda');
     }
 
     // default md back button icon
-    return config.get('backButtonIcon', 'arrow-back-sharp');
+    return config.get('backButtonIcon', 'med-esquerda');
   }
 
   get backButtonText() {
@@ -142,7 +142,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           aria-label={backButtonText || 'back'}
         >
           <span class="button-inner">
-            {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+            {backButtonIcon && <ion-icon class="med-icon" part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
             {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}

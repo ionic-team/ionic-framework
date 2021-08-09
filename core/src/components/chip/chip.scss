@@ -90,7 +90,7 @@
 // Chip Icon
 // ---------------------------------------------
 
-::slotted(ion-icon) {
+/* ::slotted(ion-icon) {
   font-size: 20px;
 }
 
@@ -104,7 +104,7 @@
 
 ::slotted(ion-icon:last-child) {
   @include margin(-4px, -4px, -4px, 8px);
-}
+} */
 
 
 // Chip Avatar
@@ -147,7 +147,7 @@
 // Chip: Hover
 // ---------------------------------------------
 
-@media (any-hover: hover) {
+/* @media (any-hover: hover) {
   :host(:hover) {
     --background: #{rgba($text-color-rgb, .16)};
   }
@@ -159,4 +159,4 @@
   :host(.chip-outline:not(.ion-color):hover) {
     background: rgba($text-color-rgb, .04);
   }
-}
+} */

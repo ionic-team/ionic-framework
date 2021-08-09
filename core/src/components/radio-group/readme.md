@@ -239,7 +239,7 @@ export default defineComponent({
 ### Used by
 
  - ion-select-popover
- - [med-alternativas](../medgrupo/team/med-alternativas)
+ - [med-alternativas](../00-autoral/team/questoes/med-alternativas)
 
 ### Graph
 ```mermaid

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection, Neutral} from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
@@ -25,6 +25,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   //custom
   @Prop() dsSize?: 'md' | 'lg';
   @Prop() dsName?: 'label' | 'icon-label';
+  @Prop() neutral?: Neutral;
 
   /**
    * The color to use from your application's color palette.
@@ -157,7 +158,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           'ion-activatable': true,
           'ion-focusable': true,
           [`fab-button-${size}`]: size !== undefined,
-        })}
+        }, this.neutral)}
       >
 
         <TagType
@@ -169,7 +170,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           onBlur={this.onBlur}
           onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
         >
-          <ion-icon icon={this.closeIcon} part="close-icon" class="close-icon" lazy={false}></ion-icon>
+          <ion-icon icon={this.closeIcon} part="close-icon" class="med-icon close-icon" lazy={false}></ion-icon>
           <span class="button-inner">
             <slot></slot>
             <slot name="label"></slot>

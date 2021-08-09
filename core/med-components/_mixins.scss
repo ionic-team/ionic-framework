@@ -287,7 +287,7 @@
 // NOVO:theme
 //
 
-@mixin new-generate-medsoft-color() {
+@mixin new-generate-color() {
   @each $key, $value in $new-medsoft-colors {
     $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
     $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
@@ -317,11 +317,11 @@
     --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
     --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
 
-    --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+    --med-color-#{$key}-gradient: #{$gradient};
   }
 }
 
-@mixin new-generate-medsoft-color-classes($color-name) {
+@mixin new-generate-color-classes($color-name) {
   $value: map-get($new-medsoft-colors, $color-name);
 
   $contrast-1: map-get($value, contrast-1);
@@ -355,12 +355,12 @@
   --med-color-gradient: var(--med-color-#{$color-name}-gradient, #{$gradient});
 }
 
-@mixin new-generate-neutral-colors($invert:null) {
+@mixin new-generate-neutral-color($invert:null) {
   @if $invert == true {
     $l: 95;
     $i: 1;
     @for $index from 1 through 10 {
-      $color: hsl($med-brand, 10, $l);
+      $color: hsl($med-brand, 10%, $l * 1%);
       --med-color-neutral-#{$i}: #{$color};
       --med-color-neutral-#{$i}-rgb: #{color-to-rgb-list($color)};
       $i: $index + 1;
@@ -369,7 +369,7 @@
   } @else {
     $l: 5;
     @for $index from 1 through 10 {
-      $color: hsl($med-brand, 10, $l);
+      $color: hsl($med-brand, 10%, $l * 1%);
       --med-color-neutral-#{$index}: #{$color};
       --med-color-neutral-#{$index}-rgb: #{color-to-rgb-list($color)};
       $l: $l + 10;
@@ -380,7 +380,7 @@
 @mixin new-generate-custom-scheme($scheme) {
   .color-scheme-#{$scheme},
   [color-scheme='#{$scheme}'] {
-    @include new-generate-neutral-colors(true);
+    @include new-generate-neutral-color(true);
 
     @each $key, $value in $new-medsoft-colors {
       $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
@@ -411,22 +411,24 @@
       --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
       --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
 
-      --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+      --med-color-#{$key}-gradient: #{$gradient};
     }
 
     @each $color-name, $value in $new-medsoft-colors {
       .ion-color-#{$color-name} {
-        @include new-generate-medsoft-color-classes($color-name);
+        @include new-generate-color-classes($color-name);
       }
     }
 
-    @include generate-neutrals(true);
+    @include new-generate-neutral-classes(true);
   }
 }
 
 @mixin new-generate-custom-theme($theme) {
   .color-theme-#{$theme},
   [color-theme='#{$theme}'] {
+    @include new-generate-neutral-color();
+
     @each $key, $value in $new-medsoft-colors {
       $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
       $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
@@ -456,20 +458,24 @@
       --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
       --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
 
-      --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+      --med-color-#{$key}-gradient: #{$gradient};
     }
 
     @each $color-name, $value in $new-medsoft-colors {
       .ion-color-#{$color-name} {
-        @include new-generate-medsoft-color-classes($color-name);
+        @include new-generate-color-classes($color-name);
       }
     }
+
+    @include new-generate-neutral-classes();
   }
 }
 
 @mixin new-generate-custom-theme-scheme($theme, $scheme) {
   .color-theme-#{$theme}.color-scheme-#{$scheme},
   [color-theme='#{$theme}'][color-scheme='#{$scheme}'] {
+    @include new-generate-neutral-color(true);
+
     @each $key, $value in $new-medsoft-colors {
       $contrast-1: map-get(map-get($new-medsoft-colors, $key), contrast-1);
       $contrast-2: map-get(map-get($new-medsoft-colors, $key), contrast-2);
@@ -499,18 +505,20 @@
       --med-color-#{$key}-4-rgb: #{color-to-rgb-list($light)};
       --med-color-#{$key}-5-rgb: #{color-to-rgb-list($lightest)};
 
-      --med-color-gradient: var(--med-color-#{$key}-gradient, #{$gradient});
+      --med-color-#{$key}-gradient: #{$gradient};
     }
 
     @each $color-name, $value in $new-medsoft-colors {
       .ion-color-#{$color-name} {
-        @include new-generate-medsoft-color-classes($color-name);
+        @include new-generate-color-classes($color-name);
       }
     }
+
+    @include new-generate-neutral-classes(true);
   }
 }
 
-@mixin generate-neutrals($invert: false) {
+@mixin new-generate-neutral-classes($invert: false) {
   $index: 1;
 
   @each $key, $value in $med-neutrals {

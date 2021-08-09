@@ -1,0 +1,28 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Chart Radial/Usage" />
+
+# Chart Radial
+
+## Propriedades
+
+| Propriedade | Atributo    | Descrição                        | Tipo                    | Default       |
+| ----------- | ----------- | -------------------------------- | ----------------------- | ------------- |
+| **valores** | **valores** | Define os valores do componente. | **MedChartRadiaItem[]** | **undefined** |
+
+## Interfaces
+
+```
+export interface MedChartRadiaItem {
+  cor: string;
+  label: string;
+  quantia: number;
+  ignoreBarra: boolean;
+};
+```
+
+## Default
+
+```
+<med-chart-radial></med-chart-radial>
+```

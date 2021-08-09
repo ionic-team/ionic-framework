@@ -1,0 +1,37 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Team/Questões/Alternativas/Usage" />
+
+# Alternativas
+
+## Propriedades
+
+| Propriedade                | Atributo                    | Descrição                                                              | Tipo                          | Default       |
+| -------------------------- | --------------------------- | ---------------------------------------------------------------------- | ----------------------------- | ------------- |
+| **alternativas**           | **alternativas**            | A lista de alternativas.                                               | **MedAlternativaInterface[]** | **undefined** |
+| **keyAlternativa**         | **key-alternativa**         | Define a Key alternativa em caso ela for diferente de **Alternativa**. | **string**                    | **undefined** |
+| **keyEnunciado**           | **key-enunciado**           | Define a Key alternativa em caso ela for diferente de **Enunciado**.   | **string**                    | **undefined** |
+| **keyImagem**              | **key-imagem**              | Define a Key alternativa em caso ela for diferente de **Imagem**.      | **string**                    | **undefined** |
+| **keyPorcentagem**         | **key-porcentagem**         | Define a Key alternativa em caso ela for diferente de **Porcentagem**. | **string**                    | **undefined** |
+| **respostaCorreta**        | **resposta-correta**        | Define a resposta correta.                                             | **string**                    | **undefined** |
+| **mostraResposta**         | **mostra-resposta**         | Define se o componente vai motrar ou não a resposta correta.           | **boolean**                   | **undefined** |
+| **alternativaSelecionada** | **alternativa-selecionada** | Define a alternativa selecionada.                                      | **string**                    | **undefined** |
+
+## Eventos
+
+| Event                 | Descrição                                 | Type                        |
+| --------------------- | ----------------------------------------- | --------------------------- |
+| **medChange**         | Emitido quando é feito um click ou alterado | **MedAlternativaInterface** |
+| **medClick**         | Emitido quando é feito um click no option | **MedAlternativaInterface** |
+| **medGalleryRequest** | Emitido quando é feito um click na imagem | **MedAlternativaInterface** |
+
+## Interfaces
+
+```
+export interface MedAlternativaInterface {
+  Alternativa: string;
+  Enunciado: string;
+  Imagem: string;
+  Porcentagem: number;
+}
+```

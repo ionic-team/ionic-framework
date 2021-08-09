@@ -1,0 +1,103 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Snack Bar/Usage" />
+
+# Snackbar
+
+Documentação auxiliar ion-toast: **https://ionicframework.com/docs/api/toast**
+
+```
+const createToast = async () => {
+  toastController.create({
+    duration: 2500, //  Define a duração do tast se existir
+    header: 'Titulo da Notificação.',
+    message: 'Sem conexão. Por favor, tente conectar-se novamente para concluir essa tarefa.',
+    showCloseButton: true,
+    buttons: [
+    {
+      side: 'start',
+      icon: 'med-information',
+      handler: () => {
+        console.log('clicked');
+      }
+    },
+    {
+      text: 'tente novamente',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    },
+    {
+      side: 'end',
+      icon: 'med-close',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }
+  ]
+  }).then((toast) => {
+    toast.present()
+  })
+}
+```
+
+## Toast Variations
+
+### Posicionamento
+
+```
+const createToast = async () => {
+  toastController.create({
+    position: 'bottom' | 'middle' | 'top',
+  })
+}
+```
+
+### Color
+
+```
+const createToast = async () => {
+  toastController.create({
+    color: 'feedback-success' | 'feedback-error',
+  })
+}
+```
+
+### Tipo
+
+#### Default
+
+Basta omitir a propriedade.
+
+#### Float
+
+```
+const createToast = async () => {
+  toastController.create({
+    cssClass: "ion-toast--float",
+  })
+}
+```
+
+### Rows
+
+#### Default
+
+```
+const createToast = async () => {
+  toastController.create({
+    cssClass: "ion-toast--rows",
+  })
+}
+```
+
+#### Float
+
+```
+const createToast = async () => {
+  toastController.create({
+    cssClass: "ion-toast--float ion-toast--rows",
+  })
+}

@@ -25,13 +25,3 @@
     width: 24px;
   }
 }
-
-//
-// light-mode
-//
-
-:host-context(.light-mode) {
-  --color: #{$med-color-neutral-dark-30};
-  --background: #{$med-color-neutral-light-40};
-  --icon-color: #{$med-color-neutral-dark-30};
-}

@@ -266,7 +266,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               {buttons.map(b =>
                 <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
-                    {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
+                    {b.icon && <ion-icon icon={b.icon} lazy={false} class="med-icon action-sheet-icon" />}
                     {b.text}
                   </span>
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

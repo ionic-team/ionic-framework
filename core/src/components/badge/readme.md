@@ -145,14 +145,13 @@ export default defineComponent({
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                                                                                                                                                                                            | Type                                | Default     |
-| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ----------- |
-| `color`   | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`               | `undefined` |
-| `dsSize`  | `ds-size` |                                                                                                                                                                                                                                                                        | `"lg" \| "md" \| "sm" \| undefined` | `undefined` |
-| `fill`    | `fill`    |                                                                                                                                                                                                                                                                        | `"outline" \| undefined`            | `undefined` |
-| `invert`  | `invert`  |                                                                                                                                                                                                                                                                        | `boolean`                           | `false`     |
-| `mode`    | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                     | `undefined` |
-| `neutral` | `neutral` |                                                                                                                                                                                                                                                                        | `string \| undefined`               | `undefined` |
+| Property  | Attribute | Description                                                                                                                                                                                                                                                            | Type                                        | Default     |
+| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ----------- |
+| `color`   | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                       | `undefined` |
+| `dsName`  | `ds-name` | Define a variação do componente.                                                                                                                                                                                                                                       | `"secondary" \| undefined`                  | `undefined` |
+| `dsSize`  | `ds-size` | Define a variação de tamanho do componente.                                                                                                                                                                                                                            | `"lg" \| "md" \| "sm" \| "xs" \| undefined` | `undefined` |
+| `mode`    | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                             | `undefined` |
+| `neutral` | `neutral` | Define a cor neutra do componente.                                                                                                                                                                                                                                     | `string \| undefined`                       | `undefined` |
 
 
 ## CSS Custom Properties
@@ -160,12 +159,26 @@ export default defineComponent({
 | Name               | Description                                                                                              |
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
 | `--background`     | Background of the badge                                                                                  |
+| `--border-color`   | Define a cor da borda do componente.                                                                     |
 | `--color`          | Text color of the badge                                                                                  |
 | `--padding-bottom` | Bottom padding of the badge                                                                              |
 | `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the badge |
 | `--padding-start`  | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the badge |
 | `--padding-top`    | Top padding of the badge                                                                                 |
 
+
+## Dependencies
+
+### Used by
+
+ - [med-tiles](../00-autoral/global/med-tiles)
+
+### Graph
+```mermaid
+graph TD;
+  med-tiles --> ion-badge
+  style ion-badge fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

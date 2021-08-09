@@ -1,0 +1,32 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Rate Like/Usage" />
+
+# Rate Like
+
+## Propriedades
+
+| Propriedade  | Atributo   | Descrição             | Tipo           | Default       |
+| ------------ | ---------- | --------------------- | -------------- | ------------- |
+| **status**   | **status** | Define o botão ativo. | **RateStatus** | **undefined** |
+
+## Eventos
+
+| Event         | Descrição                                                    | Tipo            |
+| ------------- | ------------------------------------------------------------ | --------------- |
+| **medChange** | Emitido quando é feito um click no botão de like ou dislike. | **RateStatus**  |
+
+```
+<!-- default -->
+<med-rate-like></med-rate-like>
+
+<!-- status -->
+<med-rate-like status="like"></med-rate-like>
+```
+
+```
+enum RateStatus {
+  LIKE = 'like',
+  DISLIKE = 'dislike'
+}
+```

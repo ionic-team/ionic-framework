@@ -1,81 +1,43 @@
 @import "../../../med-components/abstracts";
 
 :host {
-  // ionic css custom properties
-  --color: #{medsoft-color(neutral-dark, 30)};
-  --background: #{medsoft-color(neutral-light, 30)};
+  /**
+   * OBS: sobreescrita das css custom properties do ionic.
+   * @prop --background: Define a cor de background do componente.
+   * @prop --color: Define a cor de texto do componente.
+   */
+  --background: var(--med-color-neutral-7);
+  --color: var(--med-color-neutral-3);
 
-  // design system css custom properties
-  --ripple-color: #{medsoft-color(brand-primary, dark, $med-opacity-level-half)};
+  /**
+   * OBS: design system css custom properties.
+   * @prop --border-color: Define a cor da borda do componente.
+   */
+  --border-color: var(--med-color-neutral-7);
+  --ripple-color: transparent;
+}
 
+:host(.med-chip) {
   height: 32px;
   padding: $med-spacing-squish-nano;
   background: var(--background);
   border-radius: $med-border-radius-pill;
+  border-color: var(--border-color);
+  border-width: $med-border-width-hairline;
+  border-style: solid;
   font-size: $med-font-size-xxs;
   font-weight: $med-font-weight-regular;
   line-height: $med-line-height-compressed;
   color: var(--color);
 }
 
-// activated
-:host(.ion-activated) {
-  --background: #{medsoft-color(neutral-light, 30)};
+// ////////////////////
+// slotted
+// ////////////////////
+
+::slotted(ion-icon) {
+  font-size: 20px;
 }
-
-// hover
-@media (any-hover: hover) {
-  :host(:hover) {
-    --background: #{medsoft-color(neutral-light, 30)};
-  }
-}
-
-// color
-:host(.ion-color)  {
-  background: #{medsoft-current-color(lightest)};
-  color: #{medsoft-current-color(dark)};
-  border-color: #{medsoft-current-color(medium)};
-}
-
-// color hover
-@media (any-hover: hover) {
-  :host(:hover.ion-color:hover) {
-    background: #{medsoft-current-color(lightest)};
-  }
-}
-
-//
-// outline
-//
-
-:host(.chip-outline) {
-  border-color: #{medsoft-color(neutral-light, 30)};
-  color: #{medsoft-color(neutral-dark, 30)};
-}
-
-:host(.chip-outline) ::slotted(ion-icon) {
-  color: #{medsoft-color(neutral-dark, 30)};
-}
-
-// hover
-@media (any-hover: hover) {
-  :host(.chip-outline:hover) {
-    background: transparent !important;
-  }
-}
-
-// color
-:host(.ion-color.chip-outline)  {
-  border-color: #{medsoft-current-color(light)};
-  color: #{medsoft-current-color(dark)};
-  background: transparent;
-}
-
-:host(.ion-color.chip-outline) ::slotted(ion-icon) {
-  color: #{medsoft-current-color(dark)};
-}
-
-// icons
 
 ::slotted(ion-icon:last-child) {
   margin-inline: $med-spacing-inline-nano;
@@ -89,4 +51,110 @@
 
 ::slotted(ion-label) {
   margin: $med-spacing-inline-nano;
+}
+
+// ////////////////////
+// states
+// ////////////////////
+
+@media (any-hover: hover) {
+  :host(.med-chip:hover) {
+    --border-color: var(--med-color-neutral-7);
+    --background: var(--med-color-neutral-7);
+    --color: var(--med-color-neutral-3);
+  }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-chip.ion-color)  {
+  --border-color: #{md-current-color(3)};
+  background: md-current-color(3);
+  color: md-current-color(contrast-1);
+}
+
+@media (any-hover: hover) {
+  :host(.med-chip.ion-color:hover) {
+    --border-color: #{md-current-color(3)};
+    background: md-current-color(3);
+    color: md-current-color(contrast-1);
+  }
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-chip.med-neutral) {
+  --border-color: var(--med-neutral);
+  background: var(--med-neutral);
+  color: var(--med-neutral-contrast);
+}
+
+@media (any-hover: hover) {
+  :host(.med-chip.ion-neutral:hover) {
+    --border-color: var(--med-neutral);
+    background: var(--med-neutral);
+    color: var(--med-neutral-contrast);
+  }
+}
+
+// //////////////////////////////
+// secondary
+// //////////////////////////////
+
+:host(.med-chip--secondary) {
+  --border-color: var(--med-color-neutral-7);
+  --background: transparent;
+  --color: var(--med-color-neutral-7);
+}
+
+// ////////////////////
+// states
+// ////////////////////
+
+@media (any-hover: hover) {
+  :host(.med-chip--secondary:hover) {
+    --border-color: var(--med-color-neutral-7);
+    --background: transparent;
+    --color: var(--med-color-neutral-7);
+  }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-chip--secondary.ion-color)  {
+  --border-color: #{md-current-color(3)};
+  background: transparent;
+  color: md-current-color(3);
+}
+
+@media (any-hover: hover) {
+  :host(.med-chip--secondary.ion-color:hover) {
+    --border-color: #{md-current-color(3)};
+    background: transparent;
+    color: md-current-color(3);
+  }
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-chip--secondary.med-neutral) {
+  --border-color: var(--med-neutral);
+  background: transparent;
+  color: var(--med-neutral);
+}
+
+@media (any-hover: hover) {
+  :host(.med-chip--secondary.ion-neutral:hover) {
+    --border-color: var(--med-neutral);
+    background: transparent;
+    color: var(--med-neutral);
+  }
 }

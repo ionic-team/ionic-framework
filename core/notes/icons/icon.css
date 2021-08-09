@@ -1,0 +1,50 @@
+/*C:\Android\ionic-framework\core\node_modules\ionicons\dist\collection\components\icon\icon.css*/
+
+:host(.med-icon) {
+  --ionicon-stroke-width: 2;
+
+  font-size: 24px;
+  stroke: #fff;
+}
+
+:host(.med-icon) path {
+  stroke-width: var(--ionicon-stroke-width, 32px);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: inherit;
+}
+
+:host(.med-icon.ion-color) {
+  color: var(--med-color-3) !important;
+  stroke: var(--med-color-3) !important;
+}
+
+:host(.med-icon.med-neutral) {
+  color: var(--med-neutral) !important;
+  stroke: var(--med-neutral) !important;
+}
+
+:host(.med-icon.med-icon--xxs) {
+  font-size: 12px;
+}
+
+:host(.med-icon.med-icon--xs) {
+  font-size: 16px;
+}
+
+:host(.med-icon.med-icon--sm) {
+  font-size: 24px;
+}
+
+:host(.med-icon.med-icon--md) {
+  font-size: 32px;
+}
+
+:host(.med-icon.med-icon--lg) {
+  font-size: 48px;
+}
+
+:host(.med-icon.med-icon--stroke-1) {
+  --ionicon-stroke-width: 1;
+}

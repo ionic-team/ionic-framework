@@ -21,7 +21,7 @@ Mixin criado para estilizações pontuais dependentes de orientação:
 
 ### 💈 Utilização:
 
-```scss
+```
 @include landscape() {
   .class { ... }
 }
@@ -29,7 +29,7 @@ Mixin criado para estilizações pontuais dependentes de orientação:
 
 ### 💈 Utilização host:
 
-```scss
+```
 :host {
   .class { ... }
 }
@@ -57,7 +57,7 @@ do medsoft, como mostra o exemplo abaixo.
 
 **Exemplo:** _Ajuste no header quando a aplicação estiver sendo executada nos dispositivos da família iphone X:_
 
-```scss
+```
 .class {
   @include iphone-x-range {
     padding-top: $med-iphone-x-top;
@@ -80,7 +80,7 @@ Para Desktop o mixin utiliza as classes:
 
 Essas classes são definidas pelo **[plataform provider](https://ionicframework.com/docs/angular/platform)** do ionic.
 
-```scss
+```
 @mixin platform($platform) {
   @if $platform == "android" {
     .platform-android {
@@ -114,7 +114,7 @@ Essas classes são definidas pelo **[plataform provider](https://ionicframework.
 
 **Exemplo:** estilização de uma classe especifíca apenas para plataforma android.
 
-```scss
+```
 :host {
   .class {
     ...

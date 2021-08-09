@@ -1,0 +1,225 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+   * @prop --background: Define a cor da borda do componente.
+   * @prop --z-index: Define o z-index do componente.
+   */
+  --background: #{var(--med-color-neutral-3)};
+  --z-index: 1;
+  --box-shadow: #{$med-shadow-level-1};
+  --border-radius: #{$med-border-radius-quark};
+  --padding: #{$med-spacing-squish-nano};
+}
+
+:host(.med-tooltip) {
+  display: inline-block;
+  position: relative;
+
+  .med-tooltip {
+    &__content {
+      z-index: var(--z-index);
+      position: absolute;
+      background: var(--background);
+      border-radius: var(--border-radius);
+      padding: var(--padding);
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 300ms ease-in-out;
+      top: calc(100% + 6px);
+    }
+
+    &__icon-container {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid var(--background);
+        clear: both;
+
+        top: 100%;
+        transform: translateX(-50%);
+      }
+    }
+
+    &__button {
+      --font-size: 24px;
+    }
+
+    &__inner-button {
+      position: absolute;
+      right: 8px;
+      top: 9px;
+      --font-size: 24px;
+    }
+
+    &__icon {
+      stroke: var(--med-color-neutral-10);
+    }
+
+    &__inner-icon {
+      stroke: var(--med-color-neutral-3);
+    }
+
+    &__titulo {
+      font-size: $med-font-size-xxxs;
+      font-weight: $med-font-weight-bold;
+      line-height: line-height($med-font-size-xxxs);
+      color: var(--med-neutral-10);
+      margin: 0;
+      padding-top: $med-spacing-stack-xxxs;
+      padding-bottom: $med-spacing-stack-xxxs;
+    }
+
+    &__text {
+      font-size: $med-font-size-xxxs;
+      font-weight: $med-font-weight-regular;
+      line-height: line-height($med-font-size-xxxs);
+      color: var(--med-neutral-10);
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+}
+
+:host(.med-tooltip--definition) {
+  --padding: #{$med-spacing-inset-sm};
+
+  .med-tooltip__content {
+    min-width: 285px;
+    max-width: 285px;
+    width: 100%;
+  }
+
+  .med-tooltip__text {
+    white-space: initial;
+  }
+}
+
+// ////////////////////
+// state
+// ////////////////////
+
+:host(.med-tooltip--collapsed) {
+  .med-tooltip__content {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .med-tooltip__icon-container::after {
+    display: none;
+  }
+}
+
+// ////////////////////
+// placement
+// ////////////////////
+
+// //////////
+// bottom
+// //////////
+
+:host(.med-tooltip--bottom) .med-tooltip__icon-container::after {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--background);
+}
+
+:host(.med-tooltip--bottom) .med-tooltip__content {
+  top: calc(100% + 6px);
+}
+
+// //////////
+// top
+// //////////
+
+:host(.med-tooltip--top) .med-tooltip__icon-container::after {
+  bottom: 100%;
+  top: auto;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--background);
+  border-bottom: 0;
+}
+
+:host(.med-tooltip--top) .med-tooltip__content {
+  bottom: calc(100% + 6px);
+  top: auto;
+}
+
+// //////////
+// left
+// //////////
+
+:host(.med-tooltip--left) .med-tooltip__icon-container::after {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid var(--background);
+  border-right: 0;
+  right: 100%;
+  left: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host(.med-tooltip--left) .med-tooltip__content {
+  right: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// //////////
+// right
+// //////////
+
+:host(.med-tooltip--right) .med-tooltip__icon-container::after {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid var(--background);
+  border-left: 0;
+  right: auto;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host(.med-tooltip--right) .med-tooltip__content {
+  left: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// ////////////////////
+// position
+// ////////////////////
+
+// //////////
+// center
+// //////////
+
+:host(.med-tooltip--center:not(.med-tooltip--right):not(.med-tooltip--left)) .med-tooltip__content {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// //////////
+// end
+// //////////
+
+:host(.med-tooltip--end:not(.med-tooltip--right):not(.med-tooltip--left)) .med-tooltip__content {
+  transform: rotate(-180deg);
+  left: 100%;
+  transform-origin: left center;
+}
+
+:host(.med-tooltip--end:not(.med-tooltip--right):not(.med-tooltip--left)) .med-tooltip__content *,
+:host(.med-tooltip--end:not(.med-tooltip--right):not(.med-tooltip--left)) ::slotted(*) {
+  transform: rotate(180deg);
+}

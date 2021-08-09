@@ -1,0 +1,110 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Team/Monta provas/Chart/Usage" />
+
+# Chart
+
+## Markup
+
+```
+<med-accordion class="monta-provas-accordion" icon="left">
+  <div class="med-accordion-header" slot="header">
+    <h4 class="med-accordion-header__heading">Nome da Prova</h4>
+  </div>
+
+  <med-context-menu class="med-context-menu" slot="button">
+    <ul class="med-context-menu__list">
+      <li class="med-context-menu__item">
+        <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+        <span>Ver filtro selecionado</span>
+      </li>
+      <li class="med-context-menu__item">
+        <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+        <span>Renomear Prova</span>
+      </li>
+      <li class="med-context-menu__item">
+        <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+        <span>Excluir Prova</span>
+      </li>
+    </ul>
+    <p class="med-context-menu__info">Criada em 30/12/2020</p>
+  </med-context-menu>
+
+  <div class="monta-provas-chart" slot="content">
+    <med-chart-radial>
+      <med-chart-radial-content class="monta-provas-chart-content" total="999999"></med-chart-radial-content>
+    </med-chart-radial>
+
+    <med-chart-radial-label class="monta-provas-chart__label"></med-chart-radial-label>
+  </div>
+</med-accordion>
+```
+
+## SCSS
+
+```
+.med-accordion-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &__heading {
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-semibold);
+    line-height: var(--med-line-height-default);
+    color: var(--med-color-neutral-10);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.monta-provas-chart-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: var(--med-line-height-compressed);
+  text-align: center;
+}
+
+.med-context-menu {
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    padding-right: var(--med-spacing-inline-xs);
+    margin-bottom: var(--med-spacing-stack-base);
+    font-size: var(--med-font-size-xs);
+    line-height: var(--med-line-height-compressed);
+    color: var(--med-color-neutral-3);
+    display: flex;
+    align-items: center;
+    transition: color 300ms ease-out;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--med-color-neutral-1);
+    }
+  }
+
+  &__icon {
+    padding-right: var(--med-spacing-inline-xxxs);
+    stroke: var(--med-color-neutral-3);
+  }
+
+  &__info {
+    padding: 0;
+    margin: 0;
+    font-size: var(--med-font-size-xs);
+    line-height: var(--med-line-height-compressed);
+    color: var(--med-color-neutral-5);
+    padding: var(--med-spacing-inset-xs);
+    text-align: center;
+  }
+}
+```

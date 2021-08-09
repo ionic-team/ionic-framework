@@ -10,7 +10,7 @@ Para utilizar os web components junto ao ionic 1 é necessário o binding de atr
 
 Utiliza-se a diretiva `stencil-props` passando-se a lista de atributos que se deseja fazer o binding.
 
-```js
+```
 <med-alternativas
   stencil-props="{
     alternativas: vm.alternativas,
@@ -24,7 +24,7 @@ Utiliza-se a diretiva `stencil-props` passando-se a lista de atributos que se de
 
 Utiliza-se a diretiva `stencil-events` passando-se a lista de eventos que se deseja escutar e `on-stencil-events` para chamar o método a ser executado no retorno dos listeners.
 
-```js
+```
 <med-alternativas
   stencil-events="['medChange']"
   on-stencil-events="vm.outputsAlternativas($event)"

@@ -1,0 +1,116 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --padding: #{$med-spacing-inset-sm};
+  --background: var(--med-color-neutral-2);
+  --border-radius: #{$med-border-radius-sm};
+  --border-background: var(--med-color-neutral-5);
+  --border-background-selected: #{md-color(brand, 3)};
+  --font-size-title: #{$med-font-size-sm};
+  --color-title: var(--med-color-neutral-10);
+  --font-size-label: #{$med-font-size-xxxs};
+  --color-label: #{md-color(brand, 3)};
+}
+
+:host(.med-tiles) {
+  display: flex;
+  background: var(--background);
+  border-radius: var(--border-radius);
+
+  .med-tiles__content {
+    padding: var(--padding);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+  }
+
+  .med-tiles__border {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    width: 8px;
+    min-height: 100%;
+    background: var(--border-background);
+  }
+
+  .med-tiles__title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-title);
+    font-weight: $med-font-weight-semibold;
+    line-height: $med-line-height-compressed;
+    color: var(--color-title);
+    padding-bottom: $med-spacing-stack-nano;
+  }
+
+  .med-tiles__label {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-label);
+    font-weight: $med-font-weight-regular;
+    line-height: $med-line-height-compressed;
+    color: var(--color-label);
+    padding-bottom: $med-spacing-stack-base;
+  }
+
+  .med-tiles__badge {
+    margin-left: auto;
+  }
+}
+
+:host(.med-tiles--selected) .med-tiles__border {
+  background: var(--border-background-selected);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-tiles.ion-color) {
+  --border-background-selected: #{md-current-color(3)};
+  --color-label: #{md-current-color(3)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-tiles.med-neutral) {
+  --border-background-selected: var(--med-neutral);
+  --color-label: var(--med-neutral);
+}
+
+
+// ////////////////////
+// solid
+// ////////////////////
+
+:host(.med-tiles.med-solid) {
+  --background: #{md-color(brand, 3)};
+  --border-background-selected:  #{md-color(brand, contrast)};
+  --color-label:  #{md-color(brand, contrast)};
+
+  .med-tiles__badge {
+    --background: #{md-color(brand, 3)};
+  }
+}
+
+:host(.med-tiles.med-solid.ion-color) {
+  --background: #{md-current-color(3)};
+  --border-background-selected: #{md-current-color(contrast)};
+  --color-label: #{md-current-color(contrast)};
+}
+
+:host(.med-tiles.med-solid.ion-color) .med-tiles__badge {
+  --background: #{md-current-color(1)} !important;
+}
+
+:host(.med-tiles.med-solid.med-neutral) {
+  --background: var(--med-neutral);
+  --border-background-selected: var(--med-neutral-contrast);
+  --color-label: var(--med-neutral-contrast);
+
+  .med-tiles__badge {
+    --background: var(--med-neutral-contrast);
+  }
+}

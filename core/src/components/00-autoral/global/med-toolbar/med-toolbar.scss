@@ -1,0 +1,49 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --background: var(--med-color-neutral-2);
+  --center-width: auto;
+  --center-margin: 0 #{$med-spacing-inline-base};
+
+  padding: $med-spacing-squish-xs;
+  background: var(--background);
+  min-height: 48px;
+  height: auto;
+  box-shadow: $med-shadow-level-1;
+  display: block;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__center {
+    margin: var(--center-margin);
+    width: var(--center-width);
+  }
+}
+
+:host(.ion-color) {
+  --background: #{md-current-color(1)};
+}
+
+:host(.med-neutral) {
+  --background: var(--med-neutral);
+}
+
+
+//
+// slotted
+//
+
+::slotted(*) {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none;
+}

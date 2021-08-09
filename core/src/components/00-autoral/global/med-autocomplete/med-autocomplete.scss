@@ -1,0 +1,58 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  display: block;
+  background: $med-color-neutral-light-prime;
+  box-shadow: $med-shadow-level-3;
+  border-radius: $med-border-radius-sm;
+  font-size: $med-font-size-xs;
+  font-weight: $med-font-weight-regular;
+  line-height: $med-line-height-compressed;
+  color: $med-color-neutral-dark-30;
+  height: auto;
+  min-height: 192px;
+  text-align: left;
+  max-width: 1100px;
+  position: relative;
+  margin: 0 auto;
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .item {
+    padding: $med-spacing-squish-xs;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .msg {
+    position: relative;
+    left: $med-spacing-inset-xs;
+    top: $med-spacing-inset-sm;
+  }
+}
+
+ion-icon {
+  margin-right: $med-spacing-inline-xxxs;
+  color: $med-color-neutral-dark-30;
+  font-size: 24px;
+  padding: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: $med-color-neutral-light-30;
+}
+
+// hover
+@media (any-hover: hover) {
+  :host {
+    .item:hover {
+      background: $med-color-neutral-light-40;
+    }
+  }
+}

@@ -192,4 +192,64 @@
 }
 
 
-@import './searchbar.med.scss';
+//@import './searchbar.med.scss';
+
+@import "../../../med-components/abstracts";
+
+:host {
+  --color: var(--med-color-neutral-10);
+  --background: var(--med-color-neutral-2);
+  --border-radius: #{$med-border-radius-sm};
+  --icon-color: var(--med-color-neutral-10);
+  --cancel-button-color: #{md-color(brand, 3)};
+  --placeholder-opacity: 1;
+
+  // med-components
+  --spacing: #{$med-spacing-inset-xs};
+
+  padding: var(--spacing);
+  height: 40px;
+
+  .searchbar-input {
+    padding-inline-start: 30px + $med-spacing-inline-nano !important;
+    font-size: $med-font-size-xs;
+    font-weight: $med-font-weight-regular;
+    line-height: $med-line-height-compressed;
+  }
+
+  .searchbar-search-icon {
+    width: 24px;
+  }
+}
+
+//
+// color
+//
+
+:host(.ion-color) {
+  color: var(--med-color-neutral-10);
+}
+
+:host(.ion-color) .searchbar-input {
+  background: var(--med-color-neutral-2);
+}
+
+:host(.ion-color) .searchbar-cancel-button {
+  color: md-current-color(3);
+}
+
+//
+// neutral
+//
+
+:host(.med-neutral) {
+  color: var(--med-color-neutral-10);
+}
+
+:host(.med-neutral) .searchbar-input {
+  background: var(--med-color-neutral-2);
+}
+
+:host(.med-neutral) .searchbar-cancel-button {
+  color: var(--med-neutral-contrast);
+}

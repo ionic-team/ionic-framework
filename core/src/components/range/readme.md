@@ -336,7 +336,7 @@ export default defineComponent({
 
 ### Used by
 
- - [med-font-zoom](../medgrupo/global/med-font-zoom)
+ - [med-font-zoom](../00-autoral/global/med-font-zoom)
 
 ### Graph
 ```mermaid

@@ -132,12 +132,12 @@ ion-backdrop,event,ionBackdropTap,void,true
 
 ion-badge,shadow
 ion-badge,prop,color,string | undefined,undefined,false,false
-ion-badge,prop,dsSize,"lg" | "md" | "sm" | undefined,undefined,false,false
-ion-badge,prop,fill,"outline" | undefined,undefined,false,false
-ion-badge,prop,invert,boolean,false,false,true
+ion-badge,prop,dsName,"secondary" | undefined,undefined,false,false
+ion-badge,prop,dsSize,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,prop,neutral,string | undefined,undefined,false,false
 ion-badge,css-prop,--background
+ion-badge,css-prop,--border-color
 ion-badge,css-prop,--color
 ion-badge,css-prop,--padding-bottom
 ion-badge,css-prop,--padding-end
@@ -234,6 +234,7 @@ ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
+ion-checkbox,prop,neutral,string | undefined,undefined,false,false
 ion-checkbox,prop,value,string,'on',false,false
 ion-checkbox,event,ionBlur,void,true
 ion-checkbox,event,ionChange,CheckboxChangeEventDetail,true
@@ -255,9 +256,12 @@ ion-checkbox,part,mark
 ion-chip,shadow
 ion-chip,prop,color,string | undefined,undefined,false,false
 ion-chip,prop,disabled,boolean,false,false,false
+ion-chip,prop,dsName,"secondary" | undefined,undefined,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
+ion-chip,prop,neutral,string | undefined,undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,css-prop,--background
+ion-chip,css-prop,--border-color
 ion-chip,css-prop,--color
 
 ion-col,shadow
@@ -374,6 +378,7 @@ ion-fab-button,prop,dsName,"icon-label" | "label" | undefined,undefined,false,fa
 ion-fab-button,prop,dsSize,"lg" | "md" | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
+ion-fab-button,prop,neutral,string | undefined,undefined,false,false
 ion-fab-button,prop,rel,string | undefined,undefined,false,false
 ion-fab-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-fab-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
@@ -995,6 +1000,7 @@ ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
+ion-searchbar,prop,neutral,string | undefined,undefined,false,false
 ion-searchbar,prop,placeholder,string,'Pesquisar',false,false
 ion-searchbar,prop,searchIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
@@ -1371,15 +1377,28 @@ ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
 ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
-med-accordion,shadow
-med-accordion,prop,collapsed,boolean,true,false,true
-med-accordion,prop,color,string | undefined,undefined,false,false
-med-accordion,prop,icon,"left" | "right" | undefined,undefined,false,true
-med-accordion,prop,size,"full" | undefined,undefined,false,false
-med-accordion,method,toggle,toggle() => Promise<void>
+med-accordion-item,shadow
+med-accordion-item,prop,icon,"left" | "right" | undefined,undefined,false,true
+med-accordion-item,prop,noBorder,boolean,false,false,true
+med-accordion-item,event,toggle,any,true
+med-accordion-item,css-prop,--background
+med-accordion-item,css-prop,--border-radius
+med-accordion-item,css-prop,--icon-color
+
+med-accordion-list,shadow
+med-accordion-list,prop,margin,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
+med-accordion-list,prop,noBorder,boolean,false,false,true
+med-accordion-list,prop,singleOpen,boolean,true,false,true
+med-accordion-list,css-prop,--background
+med-accordion-list,css-prop,--border
+med-accordion-list,css-prop,--border-radius
 
 med-agrupador,shadow
+med-agrupador,prop,collapsed,boolean,true,false,true
 med-agrupador,prop,color,string | undefined,undefined,false,false
+med-agrupador,prop,neutral,string | undefined,undefined,false,false
+med-agrupador,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-agrupador,css-prop,--color
 
 med-alternativas,shadow
 med-alternativas,prop,alternativaSelecionada,string,undefined,true,true
@@ -1409,14 +1428,29 @@ med-cartao-resposta-item,prop,color,string | undefined,undefined,false,false
 
 med-cartao-resposta-lista,shadow
 
-med-chart-donut,scoped
-med-chart-donut,prop,valores,MedDonutItem[],[],false,false
+med-chart-radial,scoped
+med-chart-radial,prop,valores,MedChartRadiaItem[],[],false,false
 
-med-chart-label,scoped
-med-chart-label,prop,valores,MedDonutItem[],[],false,false
+med-chart-radial-content,shadow
+med-chart-radial-content,prop,total,number,0,false,true
+
+med-chart-radial-label,scoped
+med-chart-radial-label,prop,color,string | undefined,undefined,false,false
+med-chart-radial-label,prop,neutral,string | undefined,undefined,false,false
+med-chart-radial-label,prop,valores,MedChartRadiaItem[],[],false,false
+
+med-context-menu,shadow
+med-context-menu,prop,collapsed,boolean,true,false,true
+med-context-menu,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-context-menu,css-prop,--background
+med-context-menu,css-prop,--color
+med-context-menu,css-prop,--z-index
 
 med-divider,shadow
+med-divider,prop,color,string | undefined,undefined,false,false
+med-divider,prop,neutral,string | undefined,undefined,false,false
 med-divider,prop,text,string,undefined,true,false
+med-divider,css-prop,--color
 
 med-enunciado,shadow
 med-enunciado,prop,imagens,string | string[],undefined,true,true
@@ -1439,10 +1473,50 @@ med-image-zoom,prop,marcaAguaInferior,string | undefined,undefined,false,true
 med-image-zoom,prop,marcaAguaSuperior,string | undefined,undefined,false,true
 med-image-zoom,prop,titulo,string | undefined,undefined,false,true
 
+med-list,shadow
+med-list,prop,color,string | undefined,undefined,false,false
+med-list,prop,margin,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
+med-list,prop,neutral,string | undefined,undefined,false,false
+
+med-list-item,shadow
+med-list-item,prop,border,boolean,false,false,true
+med-list-item,prop,color,string | undefined,undefined,false,false
+med-list-item,prop,dsSize,"md" | "sm" | "xs" | undefined,undefined,false,false
+med-list-item,prop,label,string | undefined,undefined,false,false
+med-list-item,prop,neutral,string | undefined,undefined,false,false
+med-list-item,prop,selected,boolean,false,false,true
+med-list-item,prop,titulo,string | undefined,undefined,false,false
+
+med-list-item-accordion,shadow
+med-list-item-accordion,prop,border,boolean,false,false,true
+med-list-item-accordion,prop,collapsed,boolean,true,false,true
+med-list-item-accordion,prop,color,string | undefined,undefined,false,false
+med-list-item-accordion,prop,dsSize,"md" | "sm" | "xs" | undefined,undefined,false,false
+med-list-item-accordion,prop,label,string | undefined,undefined,false,false
+med-list-item-accordion,prop,margin,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
+med-list-item-accordion,prop,neutral,string | undefined,undefined,false,false
+med-list-item-accordion,prop,selected,boolean,false,false,true
+med-list-item-accordion,prop,titulo,string | undefined,undefined,false,false
+med-list-item-accordion,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+
 med-navbar,shadow
-med-navbar,event,medResize,navbarResizeEventDetail,true
+med-navbar,prop,color,string | undefined,undefined,false,false
+med-navbar,prop,dsName,"secondary" | "transparent" | undefined,undefined,false,false
+med-navbar,prop,neutral,string | undefined,undefined,false,false
+med-navbar,css-prop,--background
+med-navbar,css-prop,--color
+
+med-offline,shadow
+med-offline,event,medClick,void,true
 
 med-option,shadow
+
+med-question,shadow
+med-question,prop,collapsed,boolean,false,false,true
+med-question,prop,color,string | undefined,undefined,false,false
+med-question,prop,neutral,string | undefined,undefined,false,false
+med-question,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-question,css-prop,--color
 
 med-rate-bar,shadow
 
@@ -1450,10 +1524,36 @@ med-rate-like,shadow
 med-rate-like,prop,status,RateStatus.DISLIKE | RateStatus.LIKE | undefined,undefined,false,true
 med-rate-like,event,medChange,RateStatus.DISLIKE | RateStatus.LIKE,true
 
+med-tiles,shadow
+med-tiles,prop,badge,string | undefined,undefined,false,false
+med-tiles,prop,color,string | undefined,undefined,false,false
+med-tiles,prop,label,string | undefined,undefined,false,false
+med-tiles,prop,neutral,string | undefined,undefined,false,false
+med-tiles,prop,selected,boolean,false,false,true
+med-tiles,prop,solid,boolean,false,false,false
+med-tiles,prop,titulo,string | undefined,undefined,false,false
+
 med-toolbar,shadow
+med-toolbar,prop,color,string | undefined,undefined,false,false
+med-toolbar,prop,neutral,string | undefined,undefined,false,false
 
 med-tooltip,shadow
-med-tooltip,prop,buttonLeft,{ label: string; icon: string; },undefined,true,false
-med-tooltip,prop,buttonRight,{ label: string; icon: string; },undefined,true,false
+med-tooltip,prop,collapsed,boolean,true,false,true
 med-tooltip,prop,content,string,undefined,true,true
-med-tooltip,prop,header,string,undefined,true,true
+med-tooltip,prop,dsName,"definition" | undefined,undefined,false,false
+med-tooltip,prop,placement,"bottom" | "left" | "right" | "top" | undefined,undefined,false,true
+med-tooltip,prop,position,"center" | "end" | "start" | undefined,undefined,false,true
+med-tooltip,prop,titulo,string,undefined,true,true
+med-tooltip,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-tooltip,css-prop,--background
+med-tooltip,css-prop,--z-index
+
+med-tooltip2,shadow
+med-tooltip2,prop,buttonLeft,{ label: string; icon: string; },undefined,true,false
+med-tooltip2,prop,buttonRight,{ label: string; icon: string; },undefined,true,false
+med-tooltip2,prop,content,string,undefined,true,true
+med-tooltip2,prop,header,string,undefined,true,true
+
+monta-provas-plusminus,shadow
+monta-provas-plusminus,prop,dsSize,"xl" | undefined,undefined,false,false
+monta-provas-plusminus,event,medChange,PlusMinusStatus.MINUS | PlusMinusStatus.PLUS,true

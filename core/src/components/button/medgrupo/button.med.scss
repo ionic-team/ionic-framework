@@ -317,7 +317,7 @@
 }
 
 :host(.button-has-icon-only) {
-  font-size: 32px;
+  --font-size: 32px;
 }
 
 ::slotted(ion-icon) {

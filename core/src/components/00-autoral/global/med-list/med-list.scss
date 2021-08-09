@@ -1,0 +1,79 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --margin: 0;
+}
+
+// ////////////////////
+// slotted
+// ////////////////////
+
+:host(.med-list) ::slotted(med-list-item) {
+  margin: var(--margin);
+}
+
+:host(.med-list) ::slotted(med-list-item:last-child) {
+  margin-bottom: 0 !important;
+}
+
+:host(.med-list) ::slotted(med-list-item-accordion) {
+  margin: var(--margin);
+}
+
+:host(.med-list) ::slotted(med-list-item-accordion:last-child) {
+  margin-bottom: 0 !important;
+}
+
+
+// ////////////////////
+// margins
+// ////////////////////
+
+:host(.med-list--xs) ::slotted(med-list-item) {
+  --margin: 0 0 #{$med-spacing-stack-nano} 0;
+}
+
+:host(.med-list--sm) ::slotted(med-list-item) {
+  --margin: 0 0 #{$med-spacing-stack-xxxs} 0;
+}
+
+:host(.med-list--md) ::slotted(med-list-item) {
+  --margin: 0 0 #{$med-spacing-stack-base} 0;
+}
+
+:host(.med-list--lg) ::slotted(med-list-item) {
+  --margin: 0 0 #{$med-spacing-stack-xxs } 0;
+}
+
+:host(.med-list--xs) ::slotted(med-list-item-accordion) {
+  --margin: 0 0 #{$med-spacing-stack-nano} 0;
+}
+
+:host(.med-list--sm) ::slotted(med-list-item-accordion) {
+  --margin: 0 0 #{$med-spacing-stack-xxxs} 0;
+}
+
+:host(.med-list--md) ::slotted(med-list-item-accordion) {
+  --margin: 0 0 #{$med-spacing-stack-base} 0;
+}
+
+:host(.med-list--lg) ::slotted(med-list-item-accordion) {
+  --margin: 0 0 #{$med-spacing-stack-xxs } 0;
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-list.ion-color) {
+
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-list.med-neutral) {
+
+}
+

@@ -103,7 +103,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         >
           <span class="button-inner">
             <slot>
-              <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
+              <ion-icon class="med-icon" part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
             </slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}

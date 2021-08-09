@@ -1,0 +1,221 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+   * @prop --background: Define a cor de background do componente.
+   * @prop --color: Define a cor de texto do componente.
+   */
+  --background: var(--med-color-neutral-1);
+  --color: var(--med-color-neutral-10);
+}
+
+:host(.med-navbar) {
+  display: block;
+
+  .med-navbar {
+    &__header {
+      background: var(--background);
+    }
+
+    &__container {
+      padding: var(--ion-safe-area-top, 0) #{$med-spacing-inset-sm} 0 #{$med-spacing-inset-sm};
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      min-height: 48px;
+    }
+
+    &__left,
+    &__right {
+      display: flex;
+      align-items: center;
+    }
+
+    &__left {
+      justify-content: flex-start;
+    }
+
+    &__right {
+      justify-content: flex-end;
+    }
+
+    &__center {
+      // setado via tsx //
+      padding-left: var(--padding-left);
+      padding-right: var(--padding-right);
+      // setado via tsx //
+
+      padding-top: $med-spacing-stack-xxxs;
+      padding-bottom: $med-spacing-stack-xxxs;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-transform: uppercase;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
+
+// ////////////////////
+// slotted
+// ////////////////////
+
+// OBS: !important é necessário para garantir que os elementos passados via slot mantenham a estilização definida no design system.
+
+:host(.med-navbar) ::slotted(*) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+:host(.med-navbar) ::slotted([slot="left"]) {
+  color: var(--color);
+  margin-right: $med-spacing-inline-base;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+:host(.med-navbar) ::slotted([slot="title"]) {
+  color: var(--color);
+  font-size: $med-font-size-xs !important;
+  font-weight: $med-font-weight-semibold !important;
+  line-height: $med-line-height-compressed !important;
+  display: block;
+}
+
+:host(.med-navbar) ::slotted([slot="subtitle"]) {
+  color: var(--color);
+  font-size: $med-font-size-xxxs !important;
+  font-weight: $med-font-weight-semibold !important;
+  line-height: line-height($med-font-size-xxxs) !important;
+  display: block;
+}
+
+:host(.med-navbar) ::slotted([slot="right"]) {
+  color: var(--color);
+  margin-left: $med-spacing-inline-base !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.ion-color) ::slotted([slot="left"]),
+:host(.ion-color) ::slotted([slot="right"]),
+:host(.ion-color) ::slotted([slot="title"]),
+:host(.ion-color) ::slotted([slot="subtitle"]) {
+  --color: #{md-current-color(3)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-neutral) {
+  //--background: #{var(--med-neutral)};
+}
+
+:host(.med-neutral) ::slotted([slot="left"]),
+:host(.med-neutral) ::slotted([slot="right"]),
+:host(.med-neutral) ::slotted([slot="title"]),
+:host(.med-neutral) ::slotted([slot="subtitle"]) {
+  --color: #{var(--med-neutral)};
+}
+
+// //////////////////////////////
+// secondary
+// //////////////////////////////
+
+:host(.med-navbar--secondary) {
+  --background: var(--med-color-neutral-10);
+}
+
+:host(.med-navbar--secondary) ::slotted([slot="left"]),
+:host(.med-navbar--secondary) ::slotted([slot="right"]),
+:host(.med-navbar--secondary) ::slotted([slot="title"]),
+:host(.med-navbar--secondary) ::slotted([slot="subtitle"]) {
+  --color: var(--med-color-neutral-1);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-navbar--secondary.ion-color) {
+  --background: #{md-current-color(3)};
+}
+
+:host(.med-navbar--secondary.ion-color) ::slotted([slot="left"]),
+:host(.med-navbar--secondary.ion-color) ::slotted([slot="right"]),
+:host(.med-navbar--secondary.ion-color) ::slotted([slot="title"]),
+:host(.med-navbar--secondary.ion-color) ::slotted([slot="subtitle"]) {
+  --color: #{md-current-color(contrast-1)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-navbar--secondary.med-neutral) {
+  --background: #{var(--med-neutral)};
+}
+
+:host(.med-navbar--secondary.med-neutral) ::slotted([slot="left"]),
+:host(.med-navbar--secondary.med-neutral) ::slotted([slot="right"]),
+:host(.med-navbar--secondary.med-neutral) ::slotted([slot="title"]),
+:host(.med-navbar--secondary.med-neutral) ::slotted([slot="subtitle"]) {
+  --color: #{var(--med-neutral-contrast)};
+}
+
+// //////////////////////////////
+// transparent
+// //////////////////////////////
+
+:host(.med-navbar--transparent) {
+  --background: transparent;
+}
+
+:host(.med-navbar--transparent) ::slotted([slot="left"]),
+:host(.med-navbar--transparent) ::slotted([slot="right"]),
+:host(.med-navbar--transparent) ::slotted([slot="title"]),
+:host(.med-navbar--transparent) ::slotted([slot="subtitle"]) {
+  --color: var(--med-color-neutral-10);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-navbar--transparent.ion-color) {
+  --background: transparent;
+}
+
+:host(.med-navbar--transparent.ion-color) ::slotted([slot="left"]),
+:host(.med-navbar--transparent.ion-color) ::slotted([slot="right"]),
+:host(.med-navbar--transparent.ion-color) ::slotted([slot="title"]),
+:host(.med-navbar--transparent.ion-color) ::slotted([slot="subtitle"]) {
+  --color: #{md-current-color(3)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-navbar--transparent.med-neutral) {
+  --background: transparent;
+}
+
+:host(.med-navbar--transparent.med-neutral) ::slotted([slot="left"]),
+:host(.med-navbar--transparent.med-neutral) ::slotted([slot="right"]),
+:host(.med-navbar--transparent.med-neutral) ::slotted([slot="title"]),
+:host(.med-navbar--transparent.med-neutral) ::slotted([slot="subtitle"]) {
+  --color: #{var(--med-neutral)};
+}

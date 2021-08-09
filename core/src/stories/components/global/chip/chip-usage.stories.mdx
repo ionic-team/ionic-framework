@@ -1,0 +1,138 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Chip/Usage" />
+
+# Chip
+
+Documentação auxiliar ion-chip: **https://ionicframework.com/docs/api/chip**.
+
+## Propriedades
+
+| Propriedade  | Atributo     | Descrição                                   | Tipo                                                                                                                 | Default       |
+| ------------ | ------------ | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **color**    | **color**    | Define a cor do componente.                 | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)** \| **undefined**   | **undefined** |
+| **neutral**  | **neutral**  | Define a cor neutra do componente.          | **[Neutral](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)** \| **undefined** | **undefined** |
+| **dsName**   | **ds-name**  | Define a variação do componente.            | **"secondary"**  \| **undefined**                                                                                    | **undefined** |
+| **disabled** | **disabled** | Define o estado disabled do componente.     | **boolean**                                                                                                          | **undefined** |
+
+## CSS Custom Properties
+
+| Name               | Description                                   |
+| ------------------ | --------------------------------------------- |
+| **--background**   | Define a cor de background do componente.     |
+| **--color**        | Define a cor de texto do componente.          |
+| **--border-color** | Define a cor da borda do componente.          |
+
+## Default
+
+```
+<ion-chip>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip>
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip>
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+  <ion-icon class="med-icon" name="med-arrow-right-circle"></ion-icon>
+</ion-chip>
+```
+
+### Color
+
+```
+<ion-chip color="brand">
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip color="brand">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip color="brand">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+  <ion-icon class="med-icon" name="med-arrow-right-circle"></ion-icon>
+</ion-chip>
+```
+
+### Neutral
+
+```
+<ion-chip neutral="5">
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip neutral="5">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip neutral="5">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+  <ion-icon class="med-icon" name="med-arrow-right-circle"></ion-icon>
+</ion-chip>
+```
+
+## Variação Secondary
+
+```
+<ion-chip ds-name="secondary">
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip ds-name="secondary">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip ds-name="secondary">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+  <ion-icon class="med-icon" name="med-arrow-right-circle"></ion-icon>
+</ion-chip>
+```
+
+### Color
+
+```
+<ion-chip ds-name="secondary" color="brand">
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip ds-name="secondary" color="brand">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip ds-name="secondary" color="brand">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+  <ion-icon class="med-icon" name="med-arrow-right-circle"></ion-icon>
+</ion-chip>
+```
+
+### Neutral
+
+```
+<ion-chip ds-name="secondary" neutral="5">
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip ds-name="secondary" neutral="5">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+</ion-chip>
+
+<ion-chip ds-name="secondary" neutral="5">
+  <ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
+  <ion-label>UNIFESP 2020</ion-label>
+  <ion-icon class="med-icon" name="med-arrow-right-circle"></ion-icon>
+</ion-chip>
+```

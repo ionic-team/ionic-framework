@@ -1,0 +1,104 @@
+@import "../../../../../../med-components/abstracts";
+
+:host {
+  /**
+   * @prop --color: Define a cor do componente.
+   */
+  --color: var(--med-color-neutral-10);
+  --background: var(--med-color-brand-1);
+  --lines: 1;
+}
+
+:host(.med-question) {
+  background: var(--background);
+  color: var(--color);
+  padding: $med-spacing-inset-base;
+  font-size: $med-font-size-xxs;
+  font-weight: $med-font-weight-regular;
+  line-height: $med-line-height-compressed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  max-width: 1200px;
+}
+
+:host(.med-question) .med-question__icon {
+  margin-top: $med-spacing-stack-xxxs;
+  font-size: 24px;
+  stroke: var(--color);
+  transition: 200ms transform ease;
+}
+
+:host(.med-question) .med-question__text {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--lines);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  animation: close .15s steps(10, end) backwards;
+}
+
+// ////////////////////
+// state
+// ////////////////////
+
+:host(.med-question--collapsed) .med-question__text {
+  animation: open .15s steps(10, end) forwards;
+}
+
+:host(.med-question--collapsed) .med-question__icon {
+  transform: rotate(180deg);
+}
+
+@keyframes open {
+  0% {-webkit-line-clamp:var(--lines)}
+  10% {-webkit-line-clamp:calc(var(--lines) + 1)}
+  20% {-webkit-line-clamp:calc(var(--lines) + 2)}
+  30% {-webkit-line-clamp:calc(var(--lines) + 3)}
+  40% {-webkit-line-clamp:calc(var(--lines) + 4)}
+  50% {-webkit-line-clamp:calc(var(--lines) + 5)}
+  60% {-webkit-line-clamp:calc(var(--lines) + 6)}
+  70% {-webkit-line-clamp:calc(var(--lines) + 7)}
+  80% {-webkit-line-clamp:calc(var(--lines) + 8)}
+  90% {-webkit-line-clamp:calc(var(--lines) + 9)}
+  100% {-webkit-line-clamp:initial}
+}
+@keyframes close {
+  0% {-webkit-line-clamp:initial}
+  10% {-webkit-line-clamp:calc(var(--lines) + 9)}
+  20% {-webkit-line-clamp:calc(var(--lines) + 8)}
+  30% {-webkit-line-clamp:calc(var(--lines) + 7)}
+  40% {-webkit-line-clamp:calc(var(--lines) + 6)}
+  50% {-webkit-line-clamp:calc(var(--lines) + 5)}
+  60% {-webkit-line-clamp:calc(var(--lines) + 4)}
+  70% {-webkit-line-clamp:calc(var(--lines) + 3)}
+  80% {-webkit-line-clamp:calc(var(--lines) + 2)}
+  90% {-webkit-line-clamp:calc(var(--lines) + 1)}
+  100% {-webkit-line-clamp:var(--lines)}
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.ion-color) {
+  --color: #{md-current-color(3)};
+}
+
+:host(.ion-color) .med-question__icon {
+  --color: #{md-current-color(3)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-neutral) {
+  --color: var(--med-neutral);
+}
+
+:host(.med-neutral) .med-question__icon {
+  --color: var(--med-neutral);
+}

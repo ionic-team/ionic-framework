@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, Neutral } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -16,6 +16,16 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class Chip implements ComponentInterface {
+  /**
+   * Define a cor neutra do componente.
+   */
+   @Prop() neutral?: Neutral;
+
+   /**
+    * Define a variação do componente.
+    */
+   @Prop() dsName?: 'secondary';
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -34,20 +44,23 @@ export class Chip implements ComponentInterface {
   @Prop() disabled = false;
 
   render() {
+    const { color, neutral, dsName } = this;
     const mode = getIonMode(this);
 
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [mode]: true,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
-          'ion-activatable': true,
-        })}
+          'ion-activatable': false,
+          'med-chip': true,
+          [`med-chip--${dsName}`]: dsName !== undefined,
+        }, neutral)}
       >
         <slot></slot>
-        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {/* {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>} */}
       </Host>
     );
   }

@@ -80,4 +80,102 @@
   }
 }
 
-@import './fab-button.med.scss';
+// @import './fab-button.med.scss';
+
+@import "../../../med-components/abstracts";
+
+:host {
+  // ionic css custom properties
+  --background: #{md-color(brand, gradient)};
+  --background-activated-opacity: #{$med-opacity-level-medium};
+  --background-hover-opacity: #{$med-opacity-level-light};
+
+  --padding-bottom: #{$med-spacing-inset-xs};
+  --padding-end: #{$med-spacing-inset-xs};
+  --padding-start: #{$med-spacing-inset-xs};
+  --padding-top: #{$med-spacing-inset-xs};
+  --border-radius: #{$med-border-radius-pill};
+  --box-shadow: #{$med-shadow-level-2};
+  --ripple-color: transparent;
+
+  height: 40px;
+  min-width: 40px;
+  width: auto;
+  max-width: 100%;
+  text-transform: uppercase;
+
+  .button-native {
+    contain: none;
+  }
+
+  .button-inner {
+    position: relative;
+  }
+}
+
+:host(.fab-button-disabled) {
+  --background: #{medsoft-color(neutral-light, 20)};
+  opacity: #{$med-opacity-level-semiopaque};
+
+  ::slotted(ion-icon) {
+    fill: #{medsoft-color(neutral-light, prime)};
+  }
+}
+
+::slotted(ion-label) {
+  color: var(--med-neutral-contrast);
+  padding-left: $med-spacing-inline-xxxs;
+  padding-right: $med-spacing-inline-xxxs;
+  font-size: $med-font-size-xxs;
+  font-weight: $med-font-weight-semibold;
+  line-height: $med-line-height-compressed;
+}
+
+:host(.fab-button-close-active) {
+  ::slotted(ion-label) {
+    display: none;
+  }
+}
+
+// sizes
+:host([ds-size="md"]) {
+  height: 48px !important;
+  min-width: 48px !important;
+
+  ::slotted(ion-label) {
+    padding-left: $med-spacing-inline-base;
+    padding-right: $med-spacing-inline-base;
+  }
+}
+
+:host([ds-size="lg"]) {
+  height: 56px !important;
+  min-width: 56px !important;
+
+  ::slotted(ion-label) {
+    padding-left: $med-spacing-inline-base;
+    padding-right: $med-spacing-inline-base;
+  }
+}
+
+:host(.fab-button-close-active) ::slotted([slot="label"]) {
+  transform: scale(.4) rotateZ(-45deg);
+}
+
+//
+// color
+//
+
+:host(.ion-color) .button-native {
+  color: #{md-current-color(contrast-1)};
+  background: #{md-current-color(gradient)};
+}
+
+//
+// neutral
+//
+
+:host(.med-neutral) .button-native {
+  color: var(--med-neutral-contrast);
+  background: var(--med-neutral);
+}

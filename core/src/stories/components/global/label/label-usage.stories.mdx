@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Label/Usage" />
+
+# Label
+
+Documentaçao complementar ion-label: **https://ionicframework.com/docs/api/label**
+
+## Propriedades
+
+| Propriedade | Atributo    | Descrição                                     | Tipo                          | Default       |
+| ----------- | ----------- | --------------------------------------------- | ----------------------------- | ------------- |
+| **dsName**  | **ds-name** | Define o estilo estilo do label dentro do DS. | **"stacked"** \| **"helper"** | **undefined** |
+
+## Usage
+
+### stacked
+
+Usada para complementar o componente **ion-input** e adicionar o estilo stacked.
+
+```
+  <ion-label ds-name="stacked">Stacked</ion-label>
+  <ion-input placeholder="Enter Input"></ion-input>
+```
+
+### helper
+
+Usada para complementar o componente **ion-input** e adicionar o estilo helper.
+
+```
+  <ion-input placeholder="Enter Input"></ion-input>
+  <ion-label ds-name="helper">Helper</ion-label>
+```

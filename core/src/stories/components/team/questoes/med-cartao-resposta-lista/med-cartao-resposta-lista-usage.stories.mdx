@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Team/Questões/Cartão Resposta Lista/Usage" />
+
+# Cartão Resposta Lista
+
+**Este componente funciona como wrapper para o componente [med-cartao-resposta-item](http://desenv.ordomederi.com/med-components/?path=/story/components-team-cart%C3%A3o-resposta-item-usage--page)**.
+
+⚠️ O background deve ser setado na tela!!!
+
+# Usage
+
+```
+<med-cartao-resposta-lista>
+  <!-- default -->
+  <med-cartao-resposta-item>01</med-cartao-resposta-item>
+
+  <!-- ativo -->
+  <med-cartao-resposta-item active>02</med-cartao-resposta-item>
+
+  <!-- correto -->
+  <med-cartao-resposta-item color="feedback-success">03</med-cartao-resposta-item>
+
+  <!-- incorreto -->
+  <med-cartao-resposta-item color="feedback-error">04</med-cartao-resposta-item>
+
+  <!-- anulada -->
+  <med-cartao-resposta-item color="feedback-warning" anulada>05</med-cartao-resposta-item>
+
+  <!-- impressa -->
+  <med-cartao-resposta-item impressa>06</med-cartao-resposta-item>
+</med-cartao-resposta-lista>
+```

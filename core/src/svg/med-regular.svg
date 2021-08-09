@@ -1,0 +1,12 @@
+<svg viewBox="0 0 24 24">
+    <path d="M9.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+    <path d="M6 17v4"/>
+    <path d="M5 10l1 7"/>
+    <path d="M12 17v4"/>
+    <path d="M16 14l2 7"/>
+    <path d="M12 17H6"/>
+    <path d="M16 14h-6"/>
+    <path d="M10 14L9 8"/>
+    <path d="M13 11h-3"/>
+    <path d="M20 21h-2"/>
+</svg>

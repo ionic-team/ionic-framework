@@ -80,7 +80,7 @@ export class RefresherContent implements ComponentInterface {
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
                 {mode === 'md' && this.pullingIcon === 'circular' &&
                   <div class="arrow-container">
-                    <ion-icon name="caret-back-sharp"></ion-icon>
+                    <ion-icon class="med-icon" name="caret-back-sharp"></ion-icon>
                   </div>
                 }
               </div>
@@ -88,7 +88,7 @@ export class RefresherContent implements ComponentInterface {
           }
           {this.pullingIcon && !hasSpinner &&
             <div class="refresher-pulling-icon">
-              <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
+              <ion-icon class="med-icon" icon={this.pullingIcon} lazy={false}></ion-icon>
             </div>
           }
           {this.pullingText &&

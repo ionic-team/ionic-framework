@@ -1,25 +1,31 @@
-//
-// custom
-//
-
 @import "../../../med-components/abstracts";
 
 :host {
-  // ionic css custom properties
-  --color: #{medsoft-color(brand-primary, contrast)};
-  --background: #{medsoft-color(brand-primary, medium)};
+   /**
+   * OBS: sobreescrita das css custom properties do ionic.
+   * @prop --background: Define a cor de background do componente.
+   * @prop --color: Define a cor de texto do componente.
+   */
+  --background: #{md-color(brand, 3)};
+  --color: #{md-color(brand, contrast-1)};
   --padding-bottom: 0;
   --padding-end: #{$med-spacing-inline-base};
   --padding-start: #{$med-spacing-inline-base};
   --padding-top: 0;
+
+  /**
+   * OBS: design system css custom properties.
+   * @prop --border-color: Define a cor da borda do componente.
+   */
+  --border-color: #{md-color(brand, 3)};
 }
 
-:host {
+:host(.med-badge) {
   font-size: $med-font-size-xxxs;
   font-weight: $med-font-weight-medium;
   line-height: $med-line-height-compressed;
   border-radius: $med-border-radius-pill;
-  border-color: medsoft-color(brand-primary, medium);
+  border-color: var(--border-color);
   border-width: $med-border-width-hairline;
   font-family: inherit;
   min-width: auto;
@@ -29,68 +35,88 @@
   align-items: center;
 }
 
-//
-// color
-//
-
-:host(.ion-color) {
-  background: medsoft-current-color(medium);
-  border-color: medsoft-current-color(medium);
-  color: medsoft-current-color(contrast);
-}
-
-//
-// outline
-//
-
-:host([fill="outline"]){
-  background: transparent;
-  border-style: solid;
-  color: #{medsoft-color(brand-primary, medium)};
-}
-
-// color
-:host(.ion-color[fill="outline"]) {
-  border-color: medsoft-current-color(medium);
-  color: medsoft-current-color(medium);
-}
-
-//
+// ////////////////////
 // sizes
-//
+// ////////////////////
 
-:host([ds-size="xs"]) {
+:host(.med-badge--xs) {
   --padding-start: #{$med-spacing-inline-xxxs};
   --padding-end: #{$med-spacing-inline-xxxs};
-
   font-size: $med-font-size-nano;
   font-weight: $med-font-weight-regular;
   height: 16px;
 }
 
-:host([ds-size="sm"]) {
+:host(.med-badge--sm) {
   --padding-start: #{$med-spacing-inline-base};
   --padding-end: #{$med-spacing-inline-base};
-
   font-size: $med-font-size-nano;
   font-weight: $med-font-weight-regular;
   height: 24px;
 }
 
-:host([ds-size="md"]) {
+:host(.med-badge--md) {
   --padding-start: #{$med-spacing-inline-base};
   --padding-end: #{$med-spacing-inline-base};
-
   font-size: $med-font-size-xxs;
   font-weight: $med-font-weight-medium;
   height: 32px;
 }
 
-:host([ds-size="lg"]) {
+:host(.med-badge--lg) {
   --padding-start: #{$med-spacing-inline-xxs};
   --padding-end: #{$med-spacing-inline-xxs};
-
   font-size: $med-font-size-xs;
   font-weight: $med-font-weight-medium;
   height: 40px;
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-badge.ion-color) {
+  --border-color: #{md-current-color(3)};
+  background: md-current-color(3);
+  color: md-current-color(contrast-1);
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-badge.med-neutral) {
+  --border-color: var(--med-neutral);
+  background: var(--med-neutral);
+  color: var(--med-neutral-contrast);
+}
+
+// //////////////////////////////
+// secondary
+// //////////////////////////////
+
+:host(.med-badge--secondary) {
+  border-style: solid;
+  background: transparent;
+  color: #{md-color(brand, 3)};
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-badge--secondary.ion-color) {
+  --border-color: #{md-current-color(3)};
+  background: transparent;
+  color: md-current-color(3);
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-badge--secondary.med-neutral) {
+  --border-color: var(--med-neutral);
+  background: transparent;
+  color: var(--med-neutral);
 }

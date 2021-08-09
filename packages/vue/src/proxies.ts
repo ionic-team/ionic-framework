@@ -20,10 +20,9 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 
 
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', [
-  'dsSize',
-  'fill',
-  'invert',
   'neutral',
+  'dsName',
+  'dsSize',
   'color'
 ]);
 
@@ -90,6 +89,7 @@ export const IonCardTitle = /*@__PURE__*/ defineContainer<JSX.IonCardTitle>('ion
 
 
 export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-checkbox', [
+  'neutral',
   'color',
   'name',
   'checked',
@@ -112,6 +112,8 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
 
 
 export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', [
+  'neutral',
+  'dsName',
   'color',
   'outline',
   'disabled'
@@ -209,6 +211,7 @@ export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
 export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', [
   'dsSize',
   'dsName',
+  'neutral',
   'color',
   'activated',
   'disabled',
@@ -559,6 +562,7 @@ export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row');
 
 
 export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion-searchbar', [
+  'neutral',
   'color',
   'animated',
   'autocomplete',
@@ -809,16 +813,24 @@ export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScro
 ]);
 
 
-export const MedAccordion = /*@__PURE__*/ defineContainer<JSX.MedAccordion>('med-accordion', [
-  'color',
-  'size',
+export const MedAccordionItem = /*@__PURE__*/ defineContainer<JSX.MedAccordionItem>('med-accordion-item', [
   'icon',
-  'collapsed'
+  'noBorder',
+  'toggle'
+]);
+
+
+export const MedAccordionList = /*@__PURE__*/ defineContainer<JSX.MedAccordionList>('med-accordion-list', [
+  'margin',
+  'singleOpen',
+  'noBorder'
 ]);
 
 
 export const MedAgrupador = /*@__PURE__*/ defineContainer<JSX.MedAgrupador>('med-agrupador', [
-  'color'
+  'color',
+  'neutral',
+  'collapsed'
 ]);
 
 
@@ -859,17 +871,31 @@ export const MedCartaoRespostaItem = /*@__PURE__*/ defineContainer<JSX.MedCartao
 export const MedCartaoRespostaLista = /*@__PURE__*/ defineContainer<JSX.MedCartaoRespostaLista>('med-cartao-resposta-lista');
 
 
-export const MedChartDonut = /*@__PURE__*/ defineContainer<JSX.MedChartDonut>('med-chart-donut', [
+export const MedChartRadial = /*@__PURE__*/ defineContainer<JSX.MedChartRadial>('med-chart-radial', [
   'valores'
 ]);
 
 
-export const MedChartLabel = /*@__PURE__*/ defineContainer<JSX.MedChartLabel>('med-chart-label', [
-  'valores'
+export const MedChartRadialContent = /*@__PURE__*/ defineContainer<JSX.MedChartRadialContent>('med-chart-radial-content', [
+  'total'
+]);
+
+
+export const MedChartRadialLabel = /*@__PURE__*/ defineContainer<JSX.MedChartRadialLabel>('med-chart-radial-label', [
+  'valores',
+  'color',
+  'neutral'
+]);
+
+
+export const MedContextMenu = /*@__PURE__*/ defineContainer<JSX.MedContextMenu>('med-context-menu', [
+  'collapsed'
 ]);
 
 
 export const MedDivider = /*@__PURE__*/ defineContainer<JSX.MedDivider>('med-divider', [
+  'color',
+  'neutral',
   'text'
 ]);
 
@@ -905,12 +931,57 @@ export const MedImageZoom = /*@__PURE__*/ defineContainer<JSX.MedImageZoom>('med
 ]);
 
 
+export const MedList = /*@__PURE__*/ defineContainer<JSX.MedList>('med-list', [
+  'neutral',
+  'color',
+  'margin'
+]);
+
+
+export const MedListItem = /*@__PURE__*/ defineContainer<JSX.MedListItem>('med-list-item', [
+  'titulo',
+  'label',
+  'neutral',
+  'color',
+  'selected',
+  'dsSize',
+  'border'
+]);
+
+
+export const MedListItemAccordion = /*@__PURE__*/ defineContainer<JSX.MedListItemAccordion>('med-list-item-accordion', [
+  'titulo',
+  'label',
+  'neutral',
+  'color',
+  'selected',
+  'dsSize',
+  'margin',
+  'border',
+  'collapsed'
+]);
+
+
 export const MedNavbar = /*@__PURE__*/ defineContainer<JSX.MedNavbar>('med-navbar', [
-  'medResize'
+  'color',
+  'neutral',
+  'dsName'
+]);
+
+
+export const MedOffline = /*@__PURE__*/ defineContainer<JSX.MedOffline>('med-offline', [
+  'medClick'
 ]);
 
 
 export const MedOption = /*@__PURE__*/ defineContainer<JSX.MedOption>('med-option');
+
+
+export const MedQuestion = /*@__PURE__*/ defineContainer<JSX.MedQuestion>('med-question', [
+  'color',
+  'neutral',
+  'collapsed'
+]);
 
 
 export const MedRateBar = /*@__PURE__*/ defineContainer<JSX.MedRateBar>('med-rate-bar');
@@ -922,13 +993,43 @@ export const MedRateLike = /*@__PURE__*/ defineContainer<JSX.MedRateLike>('med-r
 ]);
 
 
-export const MedToolbar = /*@__PURE__*/ defineContainer<JSX.MedToolbar>('med-toolbar');
+export const MedTiles = /*@__PURE__*/ defineContainer<JSX.MedTiles>('med-tiles', [
+  'titulo',
+  'label',
+  'badge',
+  'neutral',
+  'color',
+  'solid',
+  'selected'
+]);
+
+
+export const MedToolbar = /*@__PURE__*/ defineContainer<JSX.MedToolbar>('med-toolbar', [
+  'color',
+  'neutral'
+]);
 
 
 export const MedTooltip = /*@__PURE__*/ defineContainer<JSX.MedTooltip>('med-tooltip', [
+  'dsName',
+  'placement',
+  'position',
+  'titulo',
+  'content',
+  'collapsed'
+]);
+
+
+export const MedTooltip2 = /*@__PURE__*/ defineContainer<JSX.MedTooltip2>('med-tooltip2', [
   'header',
   'content',
   'buttonLeft',
   'buttonRight'
+]);
+
+
+export const MontaProvasPlusminus = /*@__PURE__*/ defineContainer<JSX.MontaProvasPlusminus>('monta-provas-plusminus', [
+  'dsSize',
+  'medChange'
 ]);
 

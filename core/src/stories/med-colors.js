@@ -28,7 +28,6 @@ export const medColors = [
 
 export const medNeutrals = [
   undefined,
-  '0',
   '1',
   '2',
   '3',
@@ -39,5 +38,4 @@ export const medNeutrals = [
   '8',
   '9',
   '10',
-  '11',
 ]

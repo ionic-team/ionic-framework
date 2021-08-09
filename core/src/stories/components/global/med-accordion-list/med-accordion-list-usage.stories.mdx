@@ -1,0 +1,61 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Accordion List/Usage" />
+
+# Accordion List
+
+## Propriedades
+
+| Propriedade     | Atributo         | Descrição                                     | Tipo                                                           | Default       |
+| --------------- | ---------------- | --------------------------------------------- | -------------------------------------------------------------- | ------------- |
+| **margin**      | **margin**       | Define a margin entre os itens do accordion.  | **"xs"** \| **"sm"** \| **"md"** \| **"lg"** \| **undefined**  | **undefined** |
+| **singleOpen**  | **single-open**  | Se `true` apenas um item fica aberto por vez. | **boolean**                                                    | **true**      |
+| **noBorder**    | **no-border**    | Define a variação da borda do componente.     | **boolean**                                                    | **false**     |
+
+## Slots
+
+| Slot         | Descrição                                                  |
+| ------------ | ---------------------------------------------------------- |
+| **default**  | Slot default destinado ao componente `med-accordion-item`. |
+
+## CSS Custom Properties
+
+| Name                | Description                                  |
+| ------------------- | -------------------------------------------- |
+| **--background**    | Define a cor de background do componente.    |
+| **--border**        | Define a borda entre os itens do componente. |
+| **--border-radius** | Define o border-radius do componente.        |
+
+## Default
+
+```
+<med-accordion-list>
+  <med-accordion-item>...</med-accordion-item>
+</med-accordion-list>
+```
+
+## Margin
+
+```
+<med-accordion-list margin="sm">
+  <med-accordion-item>...</med-accordion-item>
+</med-accordion-list>
+```
+
+## Single Open
+
+```
+<med-accordion-list single-open="false">
+  <med-accordion-item>...</med-accordion-item>
+</med-accordion-list>
+```
+
+## No Border
+
+⚠️ Se os itens do accordion tiverem a propriedade `no-border` definida, é necessária a definição da propriedade também no componente `med-accordion-list`.
+
+```
+<med-accordion-list no-border>
+  <med-accordion-item no-border>...</med-accordion-item>
+</med-accordion-list>
+```

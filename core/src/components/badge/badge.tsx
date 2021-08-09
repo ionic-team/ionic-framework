@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, Neutral } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -16,11 +16,21 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class Badge implements ComponentInterface {
-  // custom
-  @Prop() dsSize?: 'sm' | 'md' | 'lg';
-  @Prop() fill?: 'outline';
-  @Prop({ reflect: true }) invert = false;
-  @Prop() neutral?: Color;
+
+  /**
+   * Define a cor neutra do componente.
+   */
+  @Prop() neutral?: Neutral;
+
+  /**
+   * Define a variação do componente.
+   */
+  @Prop() dsName?: 'secondary';
+
+  /**
+   * Define a variação de tamanho do componente.
+   */
+  @Prop() dsSize?: 'xs' | 'sm' | 'md' | 'lg';
 
   /**
    * The color to use from your application's color palette.
@@ -30,13 +40,18 @@ export class Badge implements ComponentInterface {
   @Prop() color?: Color;
 
   render() {
+    const { color, neutral, dsName, dsSize } = this;
     const mode = getIonMode(this);
+
     return (
       <Host
-        class={createColorClasses(this.color, {
+        from-stencil
+        class={createColorClasses(color, {
           [mode]: true,
-          'invert': this.invert,
-        }, this.neutral)}
+          'med-badge': true,
+          [`med-badge--${dsName}`]: dsName !== undefined,
+          [`med-badge--${dsSize}`]: dsSize !== undefined,
+        }, neutral)}
       >
         <slot></slot>
       </Host>

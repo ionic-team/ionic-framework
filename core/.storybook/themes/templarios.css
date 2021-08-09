@@ -1,0 +1,132 @@
+/*
+* global
+*/
+
+:root {
+  --custom-color-primary: #fc9d5a;
+  --custom-color-primary-dark: #fb8938;
+  --custom-color-primary-darker: #fb7f28;
+  --custom-color-primary-darkest: #eb6404;
+  --custom-color-primary-light: #fdb17c;
+  --custom-color-primary-lighter: #fdbb8c;
+  --custom-color-primary-lightest: #fed9bf;
+
+  --custom-color-deep-01: #20232a;
+  --custom-color-deep-02: #282c34;
+  --code-background: #484d5b;
+}
+
+/* canvas */
+
+.sb-show-main {
+  overflow: auto !important;
+}
+
+.sbdocs {
+  background: var(--custom-color-deep-02) !important;
+  color: #fff !important;
+}
+
+/* heading */
+
+.sbdocs h1,
+.sbdocs h2,
+.sbdocs h3,
+.sbdocs h4,
+.sbdocs h5,
+.sbdocs h6,
+.sbdocs a {
+  color: var(--custom-color-primary) !important;
+}
+
+.sbdocs h1 span {
+  font-size: 32px !important;
+}
+
+.sbdocs h2 span {
+  font-size: 24px !important;
+}
+
+.sbdocs h3 {
+  margin: 8px 0 8px;
+}
+
+.sbdocs h2 {
+  border-bottom: 1px solid var(--code-background) !important;
+}
+
+/* pre */
+
+.sbdocs .docblock-source {
+  background: var(--code-background) !important;
+}
+
+.sbdocs .css-1imo1gr:focus {
+  box-shadow: var(--custom-color-primary) 0 -3px 0 0 inset !important;
+}
+
+/* code */
+
+.sbdocs code {
+  background: var(--code-background) !important;
+  color: #fff !important;
+  border: 1px solid var(--code-background) !important;
+}
+
+.sbdocs .docblock-source {
+  margin-top: 24px !important;
+  margin-bottom: 24px !important;
+}
+
+/* tables */
+
+.sbdocs tr {
+  background-color: var(--custom-color-deep-02) !important;
+}
+
+.sbdocs tr th,
+.sbdocs tr td {
+  color: #fff !important;
+  border: 1px solid var(--code-background) !important;
+}
+
+/* docs */
+.sbdocs .css-p1dfi6 {
+  background-color: var(--code-background) !important;
+}
+
+.sbdocs .docs-story {
+  background-color: var(--custom-color-deep-01) !important;
+}
+
+.sbdocs .sb-nopreview_main {
+  color: #fff !important;
+}
+
+.sbdocs .css-1vg6q84 {
+  color: #fff !important;
+}
+
+
+.sbdocs .span.rejt-collapsed-text {
+  color: #fff !important;
+}
+/* docs tables */
+
+.sbdocs .css-6hhrgj tbody td {
+  background-color: var(--custom-color-deep-01) !important;
+}
+
+.sbdocs .css-16d4d7t {
+  color: #fff !important;
+  background-color: var(--code-background) !important;
+  border: 1px solid var(--code-background) !important;
+}
+
+/* docs tables inputs */
+
+.sbdocs .css-1h8u63y,
+.sbdocs .css-141ccx4{
+  color: #fff !important;
+  background-color: var(--code-background) !important;
+}

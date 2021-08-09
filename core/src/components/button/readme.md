@@ -369,8 +369,12 @@ export default defineComponent({
 
 ### Used by
 
- - [med-image-zoom](../medgrupo/global/med-image-zoom)
- - [med-tooltip](../medgrupo/global/med-tooltip)
+ - [med-context-menu](../00-autoral/global/med-context-menu)
+ - [med-image-zoom](../00-autoral/global/med-image-zoom)
+ - [med-list-item-accordion](../00-autoral/global/med-list-item-accordion)
+ - [med-offline](../00-autoral/global/med-offline)
+ - [med-tooltip](../00-autoral/global/med-tooltip)
+ - [med-tooltip2](../00-autoral/global/med-tooltip-2)
 
 ### Depends on
 
@@ -380,8 +384,12 @@ export default defineComponent({
 ```mermaid
 graph TD;
   ion-button --> ion-ripple-effect
+  med-context-menu --> ion-button
   med-image-zoom --> ion-button
+  med-list-item-accordion --> ion-button
+  med-offline --> ion-button
   med-tooltip --> ion-button
+  med-tooltip2 --> ion-button
   style ion-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

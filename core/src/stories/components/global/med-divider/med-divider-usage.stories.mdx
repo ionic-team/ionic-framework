@@ -1,0 +1,37 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Divider/Usage" />
+
+# Divider
+
+## Propriedades
+
+| Propriedade            | Atributo    | Descrição                                   | Tipo                                                                                                                 | Default       |
+| ---------------------- | ----------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **color**              | **color**   | Define a cor do componente.                 | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)** \| **undefined**   | **undefined** |
+| **neutral**            | **neutral** | Define a cor neutra do componente.          | **[Neutral](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)** \| **undefined** | **undefined** |
+| **text**  _(required)_ | **text**    | Define o texto do componente.               | **"string"**                                                                                                          | **undefined** |
+
+## CSS Custom Properties
+
+| Name               | Description                                   |
+| ------------------ | --------------------------------------------- |
+| **--color**        | Define a cor de texto do componente.          |
+
+## Default
+
+```
+<med-divider text="Montar Provas"></med-divider>
+```
+
+### Color
+
+```
+<med-divider color="brand" text="Montar Provas"></med-divider>
+```
+
+### Neutral
+
+```
+<med-divider neutral="05" text="Montar Provas"></med-divider>
+```

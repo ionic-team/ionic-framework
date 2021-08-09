@@ -1,0 +1,59 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Tooltip/Usage" />
+
+# Context Menu
+
+## Propriedades
+
+| Propriedade   | Atributo      | Descrição                      | Tipo         | Default       |
+| ------------- | ------------- | ------------------------------ | ------------ | ------------- |
+| **collapsed** | **collapsed** | Define o estado do componente. | **boolean**  | **undefined** |
+
+## Métodos
+
+### `toggle() => Promise<void>`
+
+## Default
+
+```
+<med-context-menu class="med-context-menu">
+  <ul class="med-context-menu__list">
+    <li class="med-context-menu__item">
+      <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+      <span>Ver filtro selecionado</span>
+    </li>
+    <li class="med-context-menu__item">
+      <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+      <span>Renomear Prova</span>
+    </li>
+    <li class="med-context-menu__item">
+      <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+      <span>Excluir Prova</span>
+    </li>
+  </ul>
+  <p class="med-context-menu__info">Criada em 30/12/2020</p>
+</med-context-menu>
+```
+
+### Collapsed
+
+```
+<med-context-menu class="med-context-menu" collapsed>
+  <ul class="med-context-menu__list">
+    <li class="med-context-menu__item">
+      <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+      <span>Ver filtro selecionado</span>
+    </li>
+    <li class="med-context-menu__item">
+      <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+      <span>Renomear Prova</span>
+    </li>
+    <li class="med-context-menu__item">
+      <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+      <span>Excluir Prova</span>
+    </li>
+  </ul>
+  <p class="med-context-menu__info">Criada em 30/12/2020</p>
+</med-context-menu>
+```

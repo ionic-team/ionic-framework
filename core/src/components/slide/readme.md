@@ -14,7 +14,7 @@ See the [Slides API Docs](../slides) for more usage information.
 
 ### Used by
 
- - [med-image-zoom](../medgrupo/global/med-image-zoom)
+ - [med-image-zoom](../00-autoral/global/med-image-zoom)
 
 ### Graph
 ```mermaid

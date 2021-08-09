@@ -1,0 +1,103 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --padding: #{$med-spacing-squish-xs};
+  --background: transparent;
+  --border-radius: #{$med-border-radius-sm};
+  --font-size-title: #{$med-font-size-xs};
+  --color-title: var(--med-color-neutral-10);
+  --font-size-label: #{$med-font-size-xxxs};
+  --color-label: #{md-color(brand, 4)};
+}
+
+:host(.med-list-item) {
+  background-image: linear-gradient(to right, rgba(var(--med-color-neutral-2-rgb),1),
+  rgba(var(--med-color-neutral-2-rgb),0.1),
+  rgba(var(--med-color-neutral-2-rgb),0));
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: .5s;
+  display: flex;
+  padding: var(--padding);
+  align-items: center;
+
+  .med-list-item__content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+  }
+
+  .med-list-item__title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-title);
+    font-weight: $med-font-weight-light;
+    line-height: $med-line-height-compressed;
+    color: var(--color-title);
+  }
+
+  .med-list-item__label {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-label);
+    font-weight: $med-font-weight-regular;
+    line-height: $med-line-height-compressed;
+    color: var(--color-label);
+  }
+
+  .med-list-item__border-radius {
+    border-radius: var(--border-radius);
+  }
+}
+
+:host(.med-list-item--selected) {
+  background-position: 0 0;
+}
+
+// ////////////////////
+// slots
+// ////////////////////
+
+::slotted([slot="start"]) {
+  margin-right: $med-spacing-inline-base;
+}
+
+::slotted([slot="end"]) {
+  margin-left: $med-spacing-inline-base;
+}
+
+// ////////////////////
+// sizes
+// ////////////////////
+
+:host(.med-list-item--xs) {
+  --padding: #{$med-spacing-squish-xs};
+}
+
+:host(.med-list-item--sm) {
+  --padding: #{$med-spacing-inset-sm};
+}
+
+:host(.med-list-item--md) {
+  --padding: #{$med-spacing-stretch-md};
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-list-item.ion-color) {
+  --border-background-selected: #{md-current-color(3)};
+  --color-label: #{md-current-color(3)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-list-item.med-neutral) {
+  --border-background-selected: var(--med-neutral);
+  --color-label: var(--med-neutral);
+}
+

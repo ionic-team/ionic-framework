@@ -1,0 +1,74 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+    * @prop --background: Define a cor de background do componente.
+    * @prop --icon-color: Define a cor de do icone do componente.
+    * @prop --border-radius: Define o border-radius do componente.
+    */
+  --background: var(--med-color-neutral-2);
+  --icon-color: var(--med-color-neutral-10);
+  --border-radius: #{$med-border-radius-sm};
+}
+
+:host(.med-accordion-item) {
+  display: block;
+  border-radius: var(--border-radius);
+
+  .med-accordion-item__header {
+    display: flex;
+    cursor: pointer;
+    width: 100%;
+    padding: $med-spacing-inset-sm;
+    box-sizing: border-box;
+    line-height: line-height();
+    align-items: center;
+    background-color: var(--background);
+    position: relative;
+    border-radius: var(--border-radius);
+  }
+
+  .med-accordion-item__heading {
+    width: 100%;
+  }
+
+  .med-accordion-item__icon-container {
+    display: flex;
+
+    &--left {
+      padding-right: $med-spacing-inline-xxxs;
+    }
+
+    &--right {
+      padding-left: $med-spacing-inline-xxxs;
+      margin-left: auto;
+    }
+  }
+
+  .med-accordion-item__icon {
+    stroke: var(--icon-color);
+    font-size: 32px;
+    transform: rotate(0);
+  }
+
+  .med-accordion-item__content {
+    display: none;
+    padding: 0 20px;
+    overflow: auto;
+    background-color: var(--background);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+}
+
+:host(.med-accordion-item--open) .med-accordion-item__icon {
+  transform: rotate(180deg);
+}
+
+// ////////////////////
+// border
+// ////////////////////
+
+:host(.med-accordion-item--no-border) {
+  --border-radius: 0;
+}
