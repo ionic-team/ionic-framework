@@ -109,7 +109,6 @@ export const createLocationHistory = () => {
     const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
     if (existingRouteIndex === -1) return;
 
-    const current = { ...locationHistory[existingRouteIndex] }
     locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
   }
 
