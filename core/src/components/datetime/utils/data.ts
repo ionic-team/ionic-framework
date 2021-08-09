@@ -7,8 +7,7 @@ import {
   isSameDay
 } from './comparison';
 import {
-  getNumDaysInMonth,
-  is24Hour
+  getNumDaysInMonth
 } from './helpers';
 import {
   getNextMonth,
@@ -109,14 +108,13 @@ export const getDaysOfMonth = (month: number, year: number) => {
  * hour and minute values according to the bounds and locale.
  */
 export const generateTime = (
-  locale: string,
   refParts: DatetimeParts,
+  use24Hour: boolean = false,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   hourValues?: number[],
   minuteValues?: number[]
 ) => {
-  const use24Hour = is24Hour(locale);
   let processedHours = use24Hour ? hour24 : hour12;
   let processedMinutes = minutes;
   let isAMAllowed = true;
@@ -202,8 +200,7 @@ export const generateTime = (
     hours: processedHours,
     minutes: processedMinutes,
     am: isAMAllowed,
-    pm: isPMAllowed,
-    use24Hour
+    pm: isPMAllowed
   }
 }
 
