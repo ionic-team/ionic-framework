@@ -33,7 +33,7 @@ export class ActionSheetExample {
       }, {
         text: 'Play (open modal)',
         icon: 'caret-forward-circle',
-        data: 'some any value',
+        data: 'Data value',
         handler: () => {
           console.log('Play clicked');
         }

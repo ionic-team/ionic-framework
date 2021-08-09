@@ -89,7 +89,7 @@ export const ActionSheetExample: React.FC = () => {
         }, {
           text: 'Play (open modal)',
           icon: caretForwardCircle,
-          data: 'some any value',
+          data: 'Data value',
           handler: () => {
             console.log('Play clicked');
           }

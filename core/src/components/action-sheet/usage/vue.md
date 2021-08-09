@@ -40,7 +40,7 @@ export default defineComponent({
             {
               text: 'Play (open modal)',
               icon: caretForwardCircle,
-              data: 'some any value',  
+              data: 'Data value',
               handler: () => {
                 console.log('Play clicked')
               },
@@ -120,7 +120,7 @@ export default defineComponent({
       {
         text: 'Play (open modal)',
         icon: caretForwardCircle,
-        data: 'some any value',  
+        data: 'Data value',  
         handler: () => {
           console.log('Play clicked')
         },
