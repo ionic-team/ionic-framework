@@ -209,6 +209,9 @@ dates in JavaScript.
 <!-- Full width size -->
 <ion-datetime size="cover"></ion-datetime>
 
+<!-- Custom Hour Cycle -->
+<ion-datetime hour-cycle="h23"></ion-datetime>
+
 <!-- Custom title -->
 <ion-datetime>
   <div slot="title">My Custom Title</div>
@@ -290,6 +293,9 @@ export class MyComponent {
 
 <!-- Full width size -->
 <ion-datetime size="cover"></ion-datetime>
+
+<!-- Custom Hour Cycle -->
+<ion-datetime hour-cycle="h23"></ion-datetime>
 
 <!-- Custom title -->
 <ion-datetime>
@@ -385,6 +391,9 @@ export const DateTimeExamples: React.FC = () => {
       {/* Full width size */}
       <IonDatetime size="cover"></IonDatetime>
       
+      {/* Custom Hour Cycle */}
+      <IonDatetime hourCycle="h23"></IonDatetime>
+
       {/* Custom title */}
       <IonDatetime>
         <div slot="title">My Custom Title</div>
@@ -469,6 +478,9 @@ export class DatetimeExample {
       {/* Full width size */}
       <ion-datetime size="cover"></ion-datetime>,
       
+      {/* Custom Hour Cycle */}
+      <ion-datetime hourCycle="h23"></ion-datetime>,
+
       {/* Custom title */}
       <ion-datetime>
         <div slot="title">My Custom Title</div>
@@ -529,6 +541,9 @@ export class DatetimeExample {
   <!-- Full width size -->
   <ion-datetime size="cover"></ion-datetime>
   
+  <!-- Custom Hour Cycle -->
+  <ion-datetime hour-cycle="h23"></ion-datetime>
+
   <!-- Custom title -->
   <ion-datetime>
     <div slot="title">My Custom Title</div>
