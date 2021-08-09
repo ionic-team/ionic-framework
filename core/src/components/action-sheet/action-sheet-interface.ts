@@ -23,4 +23,5 @@ export interface ActionSheetButton {
   cssClass?: string | string[];
   id?: string;
   handler?: () => boolean | void | Promise<boolean | void>;
+  data?: any;
 }

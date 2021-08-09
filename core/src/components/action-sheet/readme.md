@@ -45,6 +45,7 @@ interface ActionSheetButton {
   icon?: string;
   cssClass?: string | string[];
   handler?: () => boolean | void | Promise<boolean | void>;
+  data?: any;
 }
 ```
 
@@ -97,18 +98,23 @@ export class ActionSheetExample {
         role: 'destructive',
         icon: 'trash',
         id: 'delete-button',
+        data: {
+          type: 'delete'
+        },
         handler: () => {
           console.log('Delete clicked');
         }
       }, {
         text: 'Share',
         icon: 'share',
+        data: 10,
         handler: () => {
           console.log('Share clicked');
         }
       }, {
         text: 'Play (open modal)',
         icon: 'caret-forward-circle',
+        data: 'some any value',
         handler: () => {
           console.log('Play clicked');
         }
@@ -129,8 +135,8 @@ export class ActionSheetExample {
     });
     await actionSheet.present();
 
-    const { role } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    const { role, data } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role and data', role, data);
   }
 
 }
@@ -155,18 +161,23 @@ async function presentActionSheet() {
     role: 'destructive',
     icon: 'trash',
     id: 'delete-button',
+    data: {
+      type: 'delete'
+    },
     handler: () => {
       console.log('Delete clicked');
     }
   }, {
     text: 'Share',
     icon: 'share',
+    data: 10,
     handler: () => {
       console.log('Share clicked');
     }
   }, {
     text: 'Play (open modal)',
     icon: 'caret-forward-circle',
+    data: 'some any value',
     handler: () => {
       console.log('Play clicked');
     }
@@ -187,8 +198,8 @@ async function presentActionSheet() {
   document.body.appendChild(actionSheet);
   await actionSheet.present();
 
-  const { role } = await actionSheet.onDidDismiss();
-  console.log('onDidDismiss resolved with role', role);
+  const { role, data } = await actionSheet.onDidDismiss();
+  console.log('onDidDismiss resolved with role and data', role, data);
 }
 ```
 
@@ -270,18 +281,23 @@ export const ActionSheetExample: React.FC = () => {
           role: 'destructive',
           icon: trash,
           id: 'delete-button',
+          data: {
+            type: 'delete'
+          },
           handler: () => {
             console.log('Delete clicked');
           }
         }, {
           text: 'Share',
           icon: share,
+          data: 10,
           handler: () => {
             console.log('Share clicked');
           }
         }, {
           text: 'Play (open modal)',
           icon: caretForwardCircle,
+          data: 'some any value',
           handler: () => {
             console.log('Play clicked');
           }
@@ -328,18 +344,23 @@ export class ActionSheetExample {
         role: 'destructive',
         icon: 'trash',
         id: 'delete-button',
+        data: {
+          type: 'delete'
+        },
         handler: () => {
           console.log('Delete clicked');
         }
       }, {
         text: 'Share',
         icon: 'share',
+        data: 10,
         handler: () => {
           console.log('Share clicked');
         }
       }, {
         text: 'Play (open modal)',
         icon: 'caret-forward-circle',
+        data: 'some any value',
         handler: () => {
           console.log('Play clicked');
         }
@@ -360,8 +381,8 @@ export class ActionSheetExample {
     });
     await actionSheet.present();
 
-    const { role } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    const { role, data } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role and data', role, data);
   }
 
   render() {
@@ -400,7 +421,10 @@ export default defineComponent({
               text: 'Delete',
               role: 'destructive',
               icon: trash,
-              id: 'delete-button',
+              id: 'delete-button', 
+              data: {
+                type: 'delete'
+              },
               handler: () => {
                 console.log('Delete clicked')
               },
@@ -408,6 +432,7 @@ export default defineComponent({
             {
               text: 'Share',
               icon: share,
+              data: 10,  
               handler: () => {
                 console.log('Share clicked')
               },
@@ -415,6 +440,7 @@ export default defineComponent({
             {
               text: 'Play (open modal)',
               icon: caretForwardCircle,
+              data: 'some any value',  
               handler: () => {
                 console.log('Play clicked')
               },
@@ -438,8 +464,8 @@ export default defineComponent({
         });
       await actionSheet.present();
 
-      const { role } = await actionSheet.onDidDismiss();
-      console.log('onDidDismiss resolved with role', role);
+      const { role, data } = await actionSheet.onDidDismiss();
+      console.log('onDidDismiss resolved with role and data', role, data);
     },
   },
 });
@@ -476,6 +502,9 @@ export default defineComponent({
         text: 'Delete',
         role: 'destructive',
         icon: trash,
+        data: {
+          type: 'delete'
+        }
         handler: () => {
           console.log('Delete clicked')
         },
@@ -483,6 +512,7 @@ export default defineComponent({
       {
         text: 'Share',
         icon: share,
+        data: 10,  
         handler: () => {
           console.log('Share clicked')
         },
@@ -490,6 +520,7 @@ export default defineComponent({
       {
         text: 'Play (open modal)',
         icon: caretForwardCircle,
+        data: 'some any value',  
         handler: () => {
           console.log('Play clicked')
         },
