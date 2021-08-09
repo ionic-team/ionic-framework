@@ -104,21 +104,32 @@ export const createLocationHistory = () => {
   }
 
   const size = () => locationHistory.length;
-  const updateAtPosition = (routeInfo: RouteInfo) => {
+
+  const updateByHistoryPosition = (routeInfo: RouteInfo) => {
     const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
     if (existingRouteIndex === -1) return;
 
     const current = { ...locationHistory[existingRouteIndex] }
     locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
-    console.log('Attempting to update', { ...current }, 'with', { ...routeInfo });
   }
 
-  const currentByPosition = (initialHistory: number, currentHistory: number) => {
+  /**
+   * Finds and returns the location history item
+   * given the state of browser's history API.
+   * This is useful when jumping around in browser
+   * history using router.go.
+   */
+  const current = (initialHistory: number, currentHistory: number) => {
+    /**
+     * initialHistory does not always start at 0 if users navigated
+     * to app from another website, so doing this math lets us
+     * find the correct index in our locationHistory array.
+     */
     const index = currentHistory - initialHistory;
-    return locationHistory[index] || current();
+    return locationHistory[index] || last();
   }
-  const previous = () => locationHistory[locationHistory.length - 2] || current();
-  const current = () => locationHistory[locationHistory.length - 1];
+  const previous = () => locationHistory[locationHistory.length - 2] || last();
+  const last = () => locationHistory[locationHistory.length - 1];
   const canGoBack = (deep: number = 1) => locationHistory.length > deep;
 
   const getFirstRouteInfoForTab = (tab: string): RouteInfo | undefined => {
@@ -137,6 +148,16 @@ export const createLocationHistory = () => {
     return undefined;
   }
 
+  /**
+   * Finds and returns the previous view based upon
+   * what originally pushed it (pushedByRoute).
+   * When `delta` < -1 then we should just index into
+   * to array because the previous view that we want is not
+   * necessarily the view that pushed our current view.
+   * Additionally, when jumping around in history, we
+   * do not modify the locationHistory stack so we would
+   * not update pushedByRoute anyways.
+   */
   const findLastLocation = (routeInfo: RouteInfo, delta: number = -1): RouteInfo | undefined => {
     const routeInfos = getTabsHistory(routeInfo.tab);
     if (routeInfos) {
@@ -169,10 +190,10 @@ export const createLocationHistory = () => {
   }
 
   return {
-    currentByPosition,
-    updateAtPosition,
-    size,
     current,
+    updateByHistoryPosition,
+    size,
+    last,
     previous,
     add,
     canGoBack,

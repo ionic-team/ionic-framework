@@ -97,13 +97,13 @@ export const IonRouterOutlet = defineComponent({
        * to respond to this gesture, so check
        * to make sure the view is in the outlet we want.
        */
-      const routeInfo = ionRouter.getPreviousRouteInfo();
+      const routeInfo = ionRouter.getLeavingRouteInfo();
       const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
 
       return !!enteringViewItem;
     }
     const onStart = async () => {
-      const routeInfo = ionRouter.getPreviousRouteInfo();
+      const routeInfo = ionRouter.getLeavingRouteInfo();
       const { routerAnimation } = routeInfo;
       const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
       const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
