@@ -78,17 +78,30 @@ For instances where you need a specific locale, you can use the `locale` propert
 <ion-datetime locale="fr-FR"></ion-datetime>
 ```
 
-## Controlling the Hour Cycle
+### Controlling the Hour Cycle
 
-By default, `ion-datetime` will use the hour cycle that is specified by the `locale` property. For example, if `locale` is set to `en-US`, then `ion-datetime` will use a 12 hour cycle. However, there may be scenarios where you need to have more control over which hour cycle is used. This is where the `hour-cycle` property can help. The `hour-cycle` property can be used to override whatever hour cycle is set by the locale:
+`ion-datetime` will use the hour cycle that is specified by the `locale` property by default. For example, if `locale` is set to `en-US`, then `ion-datetime` will use a 12 hour cycle.
+
+There are 4 primary hour cycle types:
+
+| Hour cycle type | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `'h12`          | Hour system using 1–12; corresponds to 'h' in patterns. The 12 hour clock, with midnight starting at 12:00 am. |
+| `'h23'`         | Hour system using 0–23; corresponds to 'H' in patterns. The 24 hour clock, with midnight starting at 0:00. |
+| `'h11'`         | Hour system using 0–11; corresponds to 'K' in patterns. The 12 hour clock, with midnight starting at 0:00 am. |
+| `'h24'`         | Hour system using 1–24; corresponds to 'k' in pattern. The 24 hour clock, with midnight starting at 24:00. |
+
+>  Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/hourCycle
+
+There may be scenarios where you need to have more control over which hour cycle is used. This is where the `hour-cycle` property can help.
+
+In the following example, we can use the `hour-cycle` property to force `ion-datetime` to use the 12 hour cycle even though the locale is `en-GB`, which uses a 24 hour cycle by default:
 
 ```html
 <ion-datetime hour-cycle="h12" locale="en-GB"></ion-datetime>
 ```
 
-In the example above, `ion-datetime` will use a 12 hour cycle even though the local is `en-GB` which uses a 24 hour cycle by default.
-
-`ion-datetime` also supports [locale extension tags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale). These tags let you encode information about the locale in the locale string itself.
+`ion-datetime` also supports [locale extension tags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale). These tags let you encode information about the locale in the locale string itself. Developers may prefer to use the extension tag approach if they are using the [Intl.Locale API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) in their apps.
 
 For example, if you wanted to use a 12 hour cycle with the `en-GB` locale, you could alternatively do:
 
@@ -96,21 +109,8 @@ For example, if you wanted to use a 12 hour cycle with the `en-GB` locale, you c
 <ion-datetime locale="en-GB-u-hc-h12"></ion-datetime>
 ```
 
-Developers may prefer to use the extension tag approach if they are using the [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) API in their app.
+`ion-datetime` currently supports the `h12` and `h23` hour cycle types. Interested in seeing support for `h11` and `h24` added to `ion-datetime`? [Let us know!](https://github.com/ionic-team/ionic-framework/issues/23750)
 
-There are 4 primary hour cycle types:
-
-| Hour cycle type | Description |
-| --------------- | ----------- |
-| `'h12`          | Hour system using 1–12; corresponds to 'h' in patterns. The 12 hour clock, with midnight starting at 12:00 am. |
-| `'h23'`         | Hour system using 0–23; corresponds to 'H' in patterns. The 24 hour clock, with midnight starting at 0:00. |
-| `'h11'`         | Hour system using 0–11; corresponds to 'K' in patterns. The 12 hour clock, with midnight starting at 0:00 am. |
-| `'h24'`         | Hour system using 1–24; corresponds to 'k' in pattern. The 24 hour clock, with midnight starting at 24:00. |
-
-> Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/hourCycle
-
-`ion-datetime` currently supports the `'h12'` and `'h23'` hour cycle types. Interested in seeing support for `'h11'` and `'h24'` added to `ion-datetime`? [Let us know!](https://github.com/ionic-team/ionic-framework/issues/23750)
- 
 ## Parsing Dates
 
 When `ionChange` is emitted, we provide an ISO-8601 string in the event payload. From there, it is the developer's responsibility to format it as they see fit. We recommend using a library like [date-fns](https://date-fns.org) to format their dates properly.

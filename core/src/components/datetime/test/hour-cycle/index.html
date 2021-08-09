@@ -12,7 +12,7 @@
       .grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(250px, 1fr));
-        grid-gap: 20px;
+        grid-gap: 60px 20px;
       }
       h2 {
         font-size: 12px;
@@ -50,6 +50,10 @@
           <div class="grid-item">
             <h2>h12 Hour cycle</h2>
             <ion-datetime hour-cycle="h12"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>h23 Hour cycle (Extension Tag)</h2>
+            <ion-datetime locale="en-US-u-hc-h23"></ion-datetime>
           </div>
         </div>
       </ion-content>
