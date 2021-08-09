@@ -16,11 +16,12 @@ export interface ActionSheetOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export interface ActionSheetButton {
+export interface ActionSheetButton<T = any> {
   text?: string;
   role?: 'cancel' | 'destructive' | 'selected' | string;
   icon?: string;
   cssClass?: string | string[];
   id?: string;
   handler?: () => boolean | void | Promise<boolean | void>;
+  data?: T;
 }

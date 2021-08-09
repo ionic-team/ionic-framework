@@ -33,6 +33,7 @@
       <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
       <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
       <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</ion-button>
+      <ion-button expand="block" id="buttonData" onclick="presentWithButtonData()">Button data</ion-button>
     </ion-content>
 
   </ion-app>
@@ -422,6 +423,28 @@
             role: 'destructive',
             handler: () => {
               console.log('Delete File clicked');
+            }
+          }
+        ]
+      });
+    }
+
+    async function presentWithButtonData() {
+      await openActionSheet({
+        buttons: [
+          {
+            text: 'Option 1',
+            id: 'option',
+            data: {
+              type: '1'
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            id: 'cancel',
+            data: {
+              type: 'cancel'
             }
           }
         ]
