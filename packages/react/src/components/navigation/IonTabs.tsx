@@ -3,18 +3,19 @@ import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
+import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
 
-class IonTabsElement extends HTMLElement {
+class IonTabsElement extends HTMLElementSSR {
   constructor() {
     super();
   }
 }
 
-if (window && window.customElements) {
+if (typeof (window as any) !== 'undefined' && window.customElements) {
   const element = customElements.get('ion-tabs');
   if (!element) {
     customElements.define('ion-tabs', IonTabsElement);
