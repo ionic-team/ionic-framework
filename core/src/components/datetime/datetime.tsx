@@ -1406,7 +1406,7 @@ export class Datetime implements ComponentInterface {
     const { hourCycle } = this;
     const use24Hour = is24Hour(this.locale, hourCycle);
     const { ampm } = this.workingParts;
-    const { hours, minutes, am, pm } = generateTime(this.workingParts, use24Hour, this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
+    const { hours, minutes, am, pm } = generateTime(this.workingParts, use24Hour ? 'h23' : 'h12', this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
     return (
       <div class="datetime-time">
         <div class="time-header">

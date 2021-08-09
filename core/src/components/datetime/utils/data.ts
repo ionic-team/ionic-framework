@@ -42,7 +42,7 @@ export const getToday = () => {
 
 const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
 /**
  * Given a locale and a mode,
@@ -109,13 +109,13 @@ export const getDaysOfMonth = (month: number, year: number) => {
  */
 export const generateTime = (
   refParts: DatetimeParts,
-  use24Hour: boolean = false,
+  hourCycle: 'h12' | 'h23' = 'h12',
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   hourValues?: number[],
   minuteValues?: number[]
 ) => {
-  let processedHours = use24Hour ? hour24 : hour12;
+  let processedHours = hourCycle === 'h23' ? hour23 : hour12;
   let processedMinutes = minutes;
   let isAMAllowed = true;
   let isPMAllowed = true;

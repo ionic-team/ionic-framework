@@ -81,7 +81,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes } = generateTime(today, false, min);
+    const { hours, minutes } = generateTime(today, 'h12', min);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -101,7 +101,7 @@ describe('generateTime()', () => {
       hour: 7,
       minute: 44
     }
-    const { hours, minutes } = generateTime(today, false, undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(7);
     expect(minutes.length).toEqual(45);
@@ -121,7 +121,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes } = generateTime(today, false, undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -141,7 +141,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes } = generateTime(today, false, min);
+    const { hours, minutes } = generateTime(today, 'h12', min);
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
@@ -161,7 +161,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes } = generateTime(today, false, undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
@@ -185,7 +185,7 @@ describe('generateTime()', () => {
       year: 2021
     }
 
-    const { hours, minutes } = generateTime(today, false, min, max);
+    const { hours, minutes } = generateTime(today, 'h12', min, max);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -199,7 +199,7 @@ describe('generateTime()', () => {
       minute: 43
     }
 
-    const { hours, minutes, use24Hour } = generateTime(today, false, undefined, undefined, [1,2,3], [10,15,20]);
+    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1,2,3], [10,15,20]);
 
     expect(hours).toStrictEqual([1,2,3]);
     expect(minutes).toStrictEqual([10,15,20]);
