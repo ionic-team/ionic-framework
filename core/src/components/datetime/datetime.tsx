@@ -319,6 +319,12 @@ export class Datetime implements ComponentInterface {
   @Prop() showDefaultTimeLabel = true;
 
   /**
+   * The hour cycle of the `ion-datetime`. If no value is set, this is
+   * specified by the current locale.
+   */
+  @Prop() hourCycle?: 'h23' | 'h12';
+
+  /**
    * If `cover`, the `ion-datetime` will expand to cover the full width of its container.
    * If `fixed`, the `ion-datetime` will have a fixed width.
    */
@@ -1397,9 +1403,10 @@ export class Datetime implements ComponentInterface {
    * should just be the default segment.
    */
   private renderTime(mode: Mode) {
-    const use24Hour = is24Hour(this.locale);
+    const { hourCycle } = this;
+    const use24Hour = is24Hour(this.locale, hourCycle);
     const { ampm } = this.workingParts;
-    const { hours, minutes, am, pm } = generateTime(this.locale, this.workingParts, this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
+    const { hours, minutes, am, pm } = generateTime(this.workingParts, use24Hour ? 'h23' : 'h12', this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
     return (
       <div class="datetime-time">
         <div class="time-header">

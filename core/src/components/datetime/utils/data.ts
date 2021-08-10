@@ -7,8 +7,7 @@ import {
   isSameDay
 } from './comparison';
 import {
-  getNumDaysInMonth,
-  is24Hour
+  getNumDaysInMonth
 } from './helpers';
 import {
   getNextMonth,
@@ -43,7 +42,7 @@ export const getToday = () => {
 
 const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-const hour24 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
 /**
  * Given a locale and a mode,
@@ -109,15 +108,14 @@ export const getDaysOfMonth = (month: number, year: number) => {
  * hour and minute values according to the bounds and locale.
  */
 export const generateTime = (
-  locale: string,
   refParts: DatetimeParts,
+  hourCycle: 'h12' | 'h23' = 'h12',
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   hourValues?: number[],
   minuteValues?: number[]
 ) => {
-  const use24Hour = is24Hour(locale);
-  let processedHours = use24Hour ? hour24 : hour12;
+  let processedHours = hourCycle === 'h23' ? hour23 : hour12;
   let processedMinutes = minutes;
   let isAMAllowed = true;
   let isPMAllowed = true;
@@ -202,8 +200,7 @@ export const generateTime = (
     hours: processedHours,
     minutes: processedMinutes,
     am: isAMAllowed,
-    pm: isPMAllowed,
-    use24Hour
+    pm: isPMAllowed
   }
 }
 

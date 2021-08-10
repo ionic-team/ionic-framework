@@ -729,6 +729,10 @@ export namespace Components {
          */
         "doneText": string;
         /**
+          * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
+         */
+        "hourCycle"?: 'h23' | 'h12';
+        /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
@@ -4292,6 +4296,10 @@ declare namespace LocalJSX {
           * The text to display on the picker's "Done" button.
          */
         "doneText"?: string;
+        /**
+          * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
+         */
+        "hourCycle"?: 'h23' | 'h12';
         /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */

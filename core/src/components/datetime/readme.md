@@ -78,6 +78,39 @@ For instances where you need a specific locale, you can use the `locale` propert
 <ion-datetime locale="fr-FR"></ion-datetime>
 ```
 
+### Controlling the Hour Cycle
+
+`ion-datetime` will use the hour cycle that is specified by the `locale` property by default. For example, if `locale` is set to `en-US`, then `ion-datetime` will use a 12 hour cycle.
+
+There are 4 primary hour cycle types:
+
+| Hour cycle type | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `'h12`          | Hour system using 1–12; corresponds to 'h' in patterns. The 12 hour clock, with midnight starting at 12:00 am. |
+| `'h23'`         | Hour system using 0–23; corresponds to 'H' in patterns. The 24 hour clock, with midnight starting at 0:00. |
+| `'h11'`         | Hour system using 0–11; corresponds to 'K' in patterns. The 12 hour clock, with midnight starting at 0:00 am. |
+| `'h24'`         | Hour system using 1–24; corresponds to 'k' in pattern. The 24 hour clock, with midnight starting at 24:00. |
+
+>  Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/hourCycle
+
+There may be scenarios where you need to have more control over which hour cycle is used. This is where the `hour-cycle` property can help.
+
+In the following example, we can use the `hour-cycle` property to force `ion-datetime` to use the 12 hour cycle even though the locale is `en-GB`, which uses a 24 hour cycle by default:
+
+```html
+<ion-datetime hour-cycle="h12" locale="en-GB"></ion-datetime>
+```
+
+`ion-datetime` also supports [locale extension tags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale). These tags let you encode information about the locale in the locale string itself. Developers may prefer to use the extension tag approach if they are using the [Intl.Locale API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) in their apps.
+
+For example, if you wanted to use a 12 hour cycle with the `en-GB` locale, you could alternatively do:
+
+```html
+<ion-datetime locale="en-GB-u-hc-h12"></ion-datetime>
+```
+
+`ion-datetime` currently supports the `h12` and `h23` hour cycle types. Interested in seeing support for `h11` and `h24` added to `ion-datetime`? [Let us know!](https://github.com/ionic-team/ionic-framework/issues/23750)
+
 ## Parsing Dates
 
 When `ionChange` is emitted, we provide an ISO-8601 string in the event payload. From there, it is the developer's responsibility to format it as they see fit. We recommend using a library like [date-fns](https://date-fns.org) to format their dates properly.
@@ -176,6 +209,9 @@ dates in JavaScript.
 <!-- Full width size -->
 <ion-datetime size="cover"></ion-datetime>
 
+<!-- Custom Hour Cycle -->
+<ion-datetime hour-cycle="h23"></ion-datetime>
+
 <!-- Custom title -->
 <ion-datetime>
   <div slot="title">My Custom Title</div>
@@ -257,6 +293,9 @@ export class MyComponent {
 
 <!-- Full width size -->
 <ion-datetime size="cover"></ion-datetime>
+
+<!-- Custom Hour Cycle -->
+<ion-datetime hour-cycle="h23"></ion-datetime>
 
 <!-- Custom title -->
 <ion-datetime>
@@ -352,6 +391,9 @@ export const DateTimeExamples: React.FC = () => {
       {/* Full width size */}
       <IonDatetime size="cover"></IonDatetime>
       
+      {/* Custom Hour Cycle */}
+      <IonDatetime hourCycle="h23"></IonDatetime>
+
       {/* Custom title */}
       <IonDatetime>
         <div slot="title">My Custom Title</div>
@@ -436,6 +478,9 @@ export class DatetimeExample {
       {/* Full width size */}
       <ion-datetime size="cover"></ion-datetime>,
       
+      {/* Custom Hour Cycle */}
+      <ion-datetime hourCycle="h23"></ion-datetime>,
+
       {/* Custom title */}
       <ion-datetime>
         <div slot="title">My Custom Title</div>
@@ -496,6 +541,9 @@ export class DatetimeExample {
   <!-- Full width size -->
   <ion-datetime size="cover"></ion-datetime>
   
+  <!-- Custom Hour Cycle -->
+  <ion-datetime hour-cycle="h23"></ion-datetime>
+
   <!-- Custom title -->
   <ion-datetime>
     <div slot="title">My Custom Title</div>
@@ -569,6 +617,7 @@ export class DatetimeExample {
 | `dayValues`            | `day-values`              | Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.                                    | `number \| number[] \| string \| undefined`      | `undefined`    |
 | `disabled`             | `disabled`                | If `true`, the user cannot interact with the datetime.                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                                        | `false`        |
 | `doneText`             | `done-text`               | The text to display on the picker's "Done" button.                                                                                                                                                                                                                                                                                                                                                                                                                                                | `string`                                         | `'Done'`       |
+| `hourCycle`            | `hour-cycle`              | The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.                                                                                                                                                                                                                                                                                                                                                                                                | `"h12" \| "h23" \| undefined`                    | `undefined`    |
 | `hourValues`           | `hour-values`             | Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.                                                                                                                                                                                         | `number \| number[] \| string \| undefined`      | `undefined`    |
 | `locale`               | `locale`                  | The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.                                                                                                                                                                                                                                                                                                                                          | `string`                                         | `'default'`    |
 | `max`                  | `max`                     | The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.                                                                                                                                                                  | `string \| undefined`                            | `undefined`    |
