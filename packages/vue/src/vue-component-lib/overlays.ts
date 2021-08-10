@@ -1,19 +1,22 @@
-import { defineComponent, h, ref, VNode } from 'vue';
+import { defineComponent, h, ref, VNode, onMounted } from 'vue';
 import { defineCustomElement } from '../utils';
 
 export interface OverlayProps {
   isOpen?: boolean;
 }
 
-export const defineOverlayContainer = <Props extends object>(name: string, customElement: any, componentProps: string[] = [], controller: any) => {
-  const eventListeners = [
-    { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
-    { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
-    { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
-    { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
-  ];
+const EMPTY_PROP = Symbol();
+const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
-  const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
+const createControllerComponent = (name: string, customElement: any, controller: any) => {
+  return defineComponent((props, { slots, emit }) => {
+    const eventListeners = [
+      { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
+      { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
+      { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
+      { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
+    ];
+
     defineCustomElement(name, customElement);
 
     const overlay = ref();
@@ -69,11 +72,25 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
         return;
       }
 
+      let restOfProps: any = {};
+
+      /**
+       * We can use Object.entries here
+       * to avoid the hasOwnProperty check,
+       * but that would require 2 iterations
+       * where as this only requires 1.
+       */
+      for (const key in props) {
+        const value = props[key] as any;
+        if (props.hasOwnProperty(key) && value !== EMPTY_PROP) {
+          restOfProps[key] = value;
+        }
+      }
+
       /**
        * These are getting passed as props.
        * Potentially a Vue bug with Web Components?
        */
-      const restOfProps = { ...(props as any) };
       delete restOfProps.onWillPresent;
       delete restOfProps.onDidPresent;
       delete restOfProps.onWillDismiss;
@@ -104,14 +121,48 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
           onVnodeMounted,
           onVnodeUpdated,
           onVnodeBeforeUnmount,
-          isOpen: props.isOpen
+          isOpen: props.isOpen === true
         }
       );
     }
   });
+};
+
+const createInlineComponent = (name: string, customElement: any) => {
+  return defineComponent((props, { slots, emit }) => {
+    defineCustomElement(name, customElement);
+    const isOpen = ref(false);
+    const elementRef = ref();
+
+    onMounted(() => {
+      elementRef.value.addEventListener('will-present', () => isOpen.value = true);
+      elementRef.value.addEventListener('did-dismiss', () => isOpen.value = false);
+    });
+
+    return () => {
+      return h(
+        name,
+        { ...props, ref: elementRef },
+        (isOpen.value) ? slots : undefined
+      )
+    }
+  });
+}
+
+export const defineOverlayContainer = /*@__PURE__*/ (name: string, customElement: any, componentProps: string[] = [], controller: any) => {
+
+  const Container = (controller !== undefined) ? createControllerComponent(name, customElement, controller) : createInlineComponent(name, customElement);
 
   Container.displayName = name;
-  Container.props = [...componentProps, 'isOpen'];
+
+  Container.props = {
+    'isOpen': DEFAULT_EMPTY_PROP
+  };
+
+  componentProps.forEach(componentProp => {
+    Container.props[componentProp] = DEFAULT_EMPTY_PROP;
+  });
+
   Container.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
 
   return Container;
