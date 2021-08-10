@@ -299,6 +299,23 @@ describe('Routing', () => {
     cy.ionPageDoesNotExist('routing');
     cy.ionPageVisible('home');
   });
+
+  it('should unmount views skipped over by using router.go with a negative value', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/abc');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.routerGo(-2);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageDoesNotExist('routingparameter');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {

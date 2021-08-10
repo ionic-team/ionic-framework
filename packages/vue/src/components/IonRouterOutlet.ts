@@ -275,7 +275,10 @@ export const IonRouterOutlet = defineComponent({
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
+            viewStacks.unmountLeavingViews(id, enteringViewItem, leavingViewItem);
           }
+        } else {
+          viewStacks.mountIntermediaryViews(id, enteringViewItem, leavingViewItem);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);

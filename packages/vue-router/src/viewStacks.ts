@@ -156,7 +156,50 @@ export const createViewStacks = (router: Router) => {
     return [];
   }
 
+  /**
+   * When navigating backwards, we need to clean up and
+   * leaving pages so that they are re-created if
+   * we ever navigate back to them. This is especially
+   * important when using router.go and stepping back
+   * multiple pages at a time.
+   */
+  const unmountLeavingViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+    const viewStack = viewStacks[outletId];
+    if (!viewStack) return;
+
+    const startIndex = viewStack.findIndex(v => v === enteringViewItem);
+    const endIndex = viewStack.findIndex(v => v === leavingViewItem);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
+      const viewItem = viewStack[i];
+      viewItem.mount = false;
+      viewItem.ionPageElement = undefined;
+      viewItem.ionRoute = false;
+    }
+  }
+
+  /**
+   * When navigating forward it is possible for
+   * developers to step forward over multiple views.
+   * The intermediary views need to be remounted so that
+   * swipe to go back works properly.
+   */
+  const mountIntermediaryViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+    const viewStack = viewStacks[outletId];
+    if (!viewStack) return;
+
+    const startIndex = viewStack.findIndex(v => v === leavingViewItem);
+    const endIndex = viewStack.findIndex(v => v === enteringViewItem);
+
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
+      viewStack[i].mount = true;
+    }
+  }
+
   return {
+    unmountLeavingViews,
+    mountIntermediaryViews,
     clear,
     findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo,
