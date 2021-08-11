@@ -123,7 +123,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
             onVnodeMounted,
             onVnodeUpdated,
             onVnodeBeforeUnmount,
-            isOpen: restOfProps.isOpen
+            isOpen: props.isOpen === true
           }
         );
       }
