@@ -65,14 +65,6 @@
           </ion-item>
 
           <ion-item>
-            <ion-label>Helper/Error</ion-label>
-            <ion-input placeholder="Placeholder"></ion-input>
-            <ion-toggle color="danger" value="error" id="error-toggle"></ion-toggle>
-            <ion-note slot="helper">Helper Text</ion-note>
-            <ion-note slot="error">Error Text</ion-note>
-          </ion-item>
-
-          <ion-item>
             <ion-label>Checkbox</ion-label>
             <ion-checkbox name="checkbox" id="checkbox" slot="start"></ion-checkbox>
           </ion-item>
@@ -234,13 +226,6 @@
         console.log('Listen ionFocus: fired');
       });
     }
-
-    (function toggleHelperError() {
-      const toggle = document.getElementById('error-toggle');
-      toggle.addEventListener('ionChange', (ev) => {
-        ev.target.closest('ion-item').classList.toggle('ion-invalid');
-      });
-    })();
 
     function toggleDisabled() {
       isDisabled = !isDisabled;
