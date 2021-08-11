@@ -95,8 +95,6 @@
 
   width: calc(100% + 2 * var(--border-width));
   height: calc(100% + 2 * var(--border-width));
-
-  transition: none;
 }
 
 :host(.item-fill-outline.ion-focused) .item-native,
@@ -377,6 +375,7 @@
   --background-hover: transparent;
   --border-color: #{$item-md-input-fill-border-color};
   --border-width: #{$item-md-border-bottom-width};
+  --highlight-transition: none;
 
   border: none;
 
