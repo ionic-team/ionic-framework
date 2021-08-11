@@ -177,7 +177,9 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
     Container.props[componentProp] = DEFAULT_EMPTY_PROP;
   });
 
-  Container.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
+  if (controller !== undefined) {
+    Container.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
+  }
 
   return Container;
 }
