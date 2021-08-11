@@ -14,6 +14,8 @@ import { IonAlert as IonAlertCmp } from '@ionic/core/components/ion-alert.js'
 import { IonLoading as IonLoadingCmp } from '@ionic/core/components/ion-loading.js'
 import { IonPicker as IonPickerCmp } from '@ionic/core/components/ion-picker.js'
 import { IonToast as IonToastCmp } from '@ionic/core/components/ion-toast.js'
+import { IonModal as IonModalCmp } from '@ionic/core/components/ion-modal.js'
+import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js'
 
 import { defineOverlayContainer } from '../vue-component-lib/overlays';
 
@@ -26,4 +28,8 @@ export const IonLoading = /*@__PURE__*/ defineOverlayContainer<JSX.IonLoading>('
 export const IonPicker = /*@__PURE__*/ defineOverlayContainer<JSX.IonPicker>('ion-picker', IonPickerCmp, ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop'], pickerController);
     
 export const IonToast = /*@__PURE__*/ defineOverlayContainer<JSX.IonToast>('ion-toast', IonToastCmp, ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'icon', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'position', 'translucent'], toastController);
+    
+export const IonModal = /*@__PURE__*/ defineOverlayContainer<JSX.IonModal>('ion-modal', IonModalCmp, ['animated', 'backdropDismiss', 'enterAnimation', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'swipeToClose', 'trigger']);
+    
+export const IonPopover = /*@__PURE__*/ defineOverlayContainer<JSX.IonPopover>('ion-popover', IonPopoverCmp, ['alignment', 'animated', 'arrow', 'backdropDismiss', 'component', 'componentProps', 'dismissOnSelect', 'enterAnimation', 'event', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'reference', 'showBackdrop', 'side', 'size', 'translucent', 'trigger', 'triggerAction']);
     

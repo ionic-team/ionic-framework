@@ -8,150 +8,164 @@ export interface OverlayProps {
 const EMPTY_PROP = Symbol();
 const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
-const createControllerComponent = (name: string, customElement: any, controller: any) => {
-  return defineComponent((props, { slots, emit }) => {
-    const eventListeners = [
-      { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
-      { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
-      { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
-      { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
-    ];
+export const defineOverlayContainer = <Props extends object>(name: string, customElement: any, componentProps: string[] = [], controller?: any) => {
 
-    defineCustomElement(name, customElement);
+  const createControllerComponent = () => {
+    return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
+      const eventListeners = [
+        { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
+        { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
+        { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
+        { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
+      ];
 
-    const overlay = ref();
-    const onVnodeMounted = async () => {
-      const isOpen = props.isOpen;
-      isOpen && (await present(props))
-    }
+      defineCustomElement(name, customElement);
 
-    const onVnodeUpdated = async (node: VNode, prevNode: VNode) => {
-      const isOpen = node.props!.isOpen;
-      const prevIsOpen = prevNode.props!.isOpen;
+      const overlay = ref();
+      const onVnodeMounted = async () => {
+        const isOpen = props.isOpen;
+        isOpen && (await present(props))
+      }
 
-      /**
-       * Do not do anything if this prop
-       * did not change.
-       */
-      if (isOpen === prevIsOpen) return;
+      const onVnodeUpdated = async (node: VNode, prevNode: VNode) => {
+        const isOpen = node.props!.isOpen;
+        const prevIsOpen = prevNode.props!.isOpen;
 
-      if (isOpen) {
-        await present(props);
-      } else {
+        /**
+         * Do not do anything if this prop
+         * did not change.
+         */
+        if (isOpen === prevIsOpen) return;
+
+        if (isOpen) {
+          await present(props);
+        } else {
+          await dismiss();
+        }
+      }
+
+      const onVnodeBeforeUnmount = async () => {
         await dismiss();
       }
-    }
 
-    const onVnodeBeforeUnmount = async () => {
-      await dismiss();
-    }
+      const dismiss = async () => {
+        if (!overlay.value) return;
 
-    const dismiss = async () => {
-      if (!overlay.value) return;
-
-      await overlay.value;
-
-      overlay.value = overlay.value.dismiss();
-
-      await overlay.value;
-
-      overlay.value = undefined;
-    }
-
-    const present = async (props: Readonly<Props>) => {
-      /**
-       * Do not open another instance
-       * if one is already opened.
-       */
-      if (overlay.value) {
         await overlay.value;
+
+        overlay.value = overlay.value.dismiss();
+
+        await overlay.value;
+
+        overlay.value = undefined;
       }
 
-      if (overlay.value?.present) {
-        await overlay.value.present();
-        return;
-      }
-
-      let restOfProps: any = {};
-
-      /**
-       * We can use Object.entries here
-       * to avoid the hasOwnProperty check,
-       * but that would require 2 iterations
-       * where as this only requires 1.
-       */
-      for (const key in props) {
-        const value = props[key] as any;
-        if (props.hasOwnProperty(key) && value !== EMPTY_PROP) {
-          restOfProps[key] = value;
+      const present = async (props: Readonly<Props>) => {
+        /**
+         * Do not open another instance
+         * if one is already opened.
+         */
+        if (overlay.value) {
+          await overlay.value;
         }
+
+        if (overlay.value?.present) {
+          await overlay.value.present();
+          return;
+        }
+
+        let restOfProps: any = {};
+
+        /**
+         * We can use Object.entries here
+         * to avoid the hasOwnProperty check,
+         * but that would require 2 iterations
+         * where as this only requires 1.
+         */
+        for (const key in props) {
+          const value = props[key] as any;
+          if (props.hasOwnProperty(key) && value !== EMPTY_PROP) {
+            restOfProps[key] = value;
+          }
+        }
+
+        /**
+         * These are getting passed as props.
+         * Potentially a Vue bug with Web Components?
+         */
+        delete restOfProps.onWillPresent;
+        delete restOfProps.onDidPresent;
+        delete restOfProps.onWillDismiss;
+        delete restOfProps.onDidDismiss;
+
+        const component = slots.default && slots.default()[0];
+        overlay.value = controller.create({
+          ...restOfProps,
+          component
+        });
+
+        overlay.value = await overlay.value;
+
+        eventListeners.forEach(eventListener => {
+          overlay.value.addEventListener(eventListener.componentEv, () => {
+            emit(eventListener.frameworkEv);
+          });
+        })
+
+        await overlay.value.present();
       }
 
-      /**
-       * These are getting passed as props.
-       * Potentially a Vue bug with Web Components?
-       */
-      delete restOfProps.onWillPresent;
-      delete restOfProps.onDidPresent;
-      delete restOfProps.onWillDismiss;
-      delete restOfProps.onDidDismiss;
+      return () => {
+        return h(
+          'div',
+          {
+            style: { display: 'none' },
+            onVnodeMounted,
+            onVnodeUpdated,
+            onVnodeBeforeUnmount,
+            isOpen: props.isOpen === true
+          }
+        );
+      }
+    });
+  };
+  const createInlineComponent = () => {
+    return defineComponent((props, { slots }) => {
+      defineCustomElement(name, customElement);
+      const isOpen = ref(false);
+      const elementRef = ref();
 
-      const component = slots.default && slots.default()[0];
-      overlay.value = controller.create({
-        ...restOfProps,
-        component
+      onMounted(() => {
+        elementRef.value.addEventListener('will-present', () => isOpen.value = true);
+        elementRef.value.addEventListener('did-dismiss', () => isOpen.value = false);
       });
 
-      overlay.value = await overlay.value;
+      return () => {
+        let restOfProps: any = {};
 
-      eventListeners.forEach(eventListener => {
-        overlay.value.addEventListener(eventListener.componentEv, () => {
-          emit(eventListener.frameworkEv);
-        });
-      })
-
-      await overlay.value.present();
-    }
-
-    return () => {
-      return h(
-        'div',
-        {
-          style: { display: 'none' },
-          onVnodeMounted,
-          onVnodeUpdated,
-          onVnodeBeforeUnmount,
-          isOpen: props.isOpen === true
+        /**
+         * We can use Object.entries here
+         * to avoid the hasOwnProperty check,
+         * but that would require 2 iterations
+         * where as this only requires 1.
+         */
+        for (const key in props) {
+          const value = (props as any)[key];
+          if (props.hasOwnProperty(key) && value !== EMPTY_PROP) {
+            restOfProps[key] = value;
+          }
         }
-      );
-    }
-  });
-};
 
-const createInlineComponent = (name: string, customElement: any) => {
-  return defineComponent((props, { slots, emit }) => {
-    defineCustomElement(name, customElement);
-    const isOpen = ref(false);
-    const elementRef = ref();
-
-    onMounted(() => {
-      elementRef.value.addEventListener('will-present', () => isOpen.value = true);
-      elementRef.value.addEventListener('did-dismiss', () => isOpen.value = false);
+        return h(
+          name,
+          { ...restOfProps, ref: elementRef },
+          (isOpen.value) ? slots : undefined
+        )
+      }
     });
+  }
 
-    return () => {
-      return h(
-        name,
-        { ...props, ref: elementRef },
-        (isOpen.value) ? slots : undefined
-      )
-    }
-  });
-}
-
-export const defineOverlayContainer = /*@__PURE__*/ (name: string, customElement: any, componentProps: string[] = [], controller: any) => {
-
-  const Container = (controller !== undefined) ? createControllerComponent(name, customElement, controller) : createInlineComponent(name, customElement);
+  const Container = (controller !== undefined) ? createControllerComponent() : createInlineComponent();
 
   Container.displayName = name;
 
