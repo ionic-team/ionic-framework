@@ -72,6 +72,7 @@
   --color-focused: var(--color);
   --color-hover: var(--color);
   --ripple-color: currentColor;
+  --highlight-transition: transform 200ms, border-bottom-width 200ms;
 
   @include font-smoothing();
 
@@ -384,7 +385,7 @@ button, a {
 
   transform: scaleX(0);
 
-  transition: transform 200ms, border-bottom-width 200ms;
+  transition: var(--highlight-transition);
 
   z-index: 2;
 
@@ -584,4 +585,15 @@ ion-ripple-effect {
   display: none;
 
   color: var(--highlight-color-invalid);
+}
+
+
+// Item: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .item-highlight,
+  .item-inner-highlight {
+    --heighlight-transition: none;
+  }
 }

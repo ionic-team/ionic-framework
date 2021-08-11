@@ -85,24 +85,6 @@
   --show-inset-highlight: 0;
 }
 
-/**
- * When `fill="outline"`, reposition the highlight element to cover everything but the `.item-bottom`
- */
-:host(.item-fill-outline) .item-highlight {
-  --position-offset: calc(-1 * var(--border-width));
-
-  @include position(var(--position-offset), null, null, var(--position-offset));
-
-  width: calc(100% + 2 * var(--border-width));
-  height: calc(100% + 2 * var(--border-width));
-
-  transition: none;
-}
-
-:host(.item-fill-outline.ion-focused) .item-native,
-:host(.item-fill-outline.item-has-focus) .item-native {
-  border-color: transparent;
-}
 
 // Material Design Multi-line Item
 // --------------------------------------------------
@@ -377,15 +359,9 @@
   --background-hover: transparent;
   --border-color: #{$item-md-input-fill-border-color};
   --border-width: #{$item-md-border-bottom-width};
-
-  border: none;
+  --highlight-transition: none;
 
   overflow: visible;
-}
-
-:host(.item-fill-outline.item-has-focus) .virtual-border,
-:host(.item-fill-outline.ion-focused) .virtual-border {
-  border: none;
 }
 
 :host(.item-fill-outline) .item-native {
