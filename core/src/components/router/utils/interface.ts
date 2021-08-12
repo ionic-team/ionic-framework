@@ -16,6 +16,11 @@ export interface RouterEventDetail {
   to: string;
 }
 
+export interface RouterEvent extends CustomEvent {
+  target: HTMLIonRouterElement;
+  detail: RouterEventDetail;
+}
+
 export interface RouteRedirect {
   from: string[];
   to?: ParsedRoute;

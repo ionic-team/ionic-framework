@@ -7,3 +7,8 @@ export type PinFormatter = (value: number) => number | string;
 export interface RangeChangeEventDetail {
   value: RangeValue;
 }
+
+export interface RangeEvent extends CustomEvent {
+  target: HTMLIonRangeElement;
+  detail: RangeChangeEventDetail;
+}

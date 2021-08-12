@@ -2,7 +2,7 @@ export interface AccordionGroupChangeEventDetail<T = any> {
   value: T;
 }
 
-export interface AccordionGroupChangeEvent extends CustomEvent {
-  detail: AccordionGroupChangeEventDetail;
+export interface AccordionGroupEvent<T = any> extends CustomEvent {
+  detail: AccordionGroupChangeEventDetail<T>;
   target: HTMLIonAccordionGroupElement;
 }

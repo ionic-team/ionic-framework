@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Input](#input)
   * [Modal](#modal)
   * [Popover](#popover)
+  * [Radio](#radio)
   * [Searchbar](#searchbar)
   * [Select](#select)
   * [Tab Bar](#tab-bar)
@@ -105,6 +106,10 @@ If you were targeting the internals of `ion-modal` in your CSS, you will need to
 Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+#### Radio
+
+The `RadioChangeEventDetail` interface has been removed. Instead, listen for the `ionChange` event on `ion-radio-group` and use the `RadioGroupChangeEventDetail` interface.
 
 #### Searchbar
 
