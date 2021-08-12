@@ -568,3 +568,14 @@ ion-ripple-effect {
 
   color: var(--highlight-color-invalid);
 }
+
+
+// Item: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .item-highlight,
+  .item-inner-highlight {
+    transition: none;
+  }
+}
