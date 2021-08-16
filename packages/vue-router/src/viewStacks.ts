@@ -157,6 +157,34 @@ export const createViewStacks = (router: Router) => {
   }
 
   /**
+   * Given a view stack and entering/leaving views,
+   * determine the position of each item in the stack.
+   * This is useful for removing/adding views in between
+   * the view items when navigating using router.go.
+   * Use this method instead of doing an `Array.findIndex`
+   * for both view items.
+   */
+  const findViewIndex = (viewStack: ViewItem[], enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+    let enteringIndex = -1;
+    let leavingIndex = -1;
+
+    for (let i = 0; i <= viewStack.length - 1; i++) {
+      const viewItem = viewStack[i];
+      if (viewItem === enteringViewItem) {
+        enteringIndex = i;
+      } else if (viewItem === leavingViewItem) {
+        leavingIndex = i;
+      }
+
+      if (enteringIndex > -1 && leavingIndex > -1) {
+        break;
+      }
+    }
+
+    return { enteringIndex, leavingIndex };
+  }
+
+  /**
    * When navigating backwards, we need to clean up and
    * leaving pages so that they are re-created if
    * we ever navigate back to them. This is especially
@@ -167,8 +195,7 @@ export const createViewStacks = (router: Router) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
-    const startIndex = viewStack.findIndex(v => v === enteringViewItem);
-    const endIndex = viewStack.findIndex(v => v === leavingViewItem);
+    const { enteringIndex: startIndex, leavingIndex: endIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
 
     for (let i = startIndex + 1; i < endIndex; i++) {
       const viewItem = viewStack[i];
@@ -188,9 +215,7 @@ export const createViewStacks = (router: Router) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
-    const startIndex = viewStack.findIndex(v => v === leavingViewItem);
-    const endIndex = viewStack.findIndex(v => v === enteringViewItem);
-
+    const { enteringIndex: endIndex, leavingIndex: startIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
 
     for (let i = startIndex + 1; i < endIndex; i++) {
       viewStack[i].mount = true;
