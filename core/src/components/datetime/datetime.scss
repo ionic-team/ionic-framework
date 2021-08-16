@@ -14,11 +14,13 @@
 
   flex-flow: column;
 
-  height: 100%;
-
   background: var(--background);
 
   overflow: hidden;
+}
+
+:host(:not(.datetime-presentation-time)) {
+  height: 100%;
 }
 
 :host(.datetime-size-fixed) {

@@ -6,7 +6,9 @@
   --background: var(--ion-color-light, #ffffff);
   --background-rgb: var(--ion-color-light-rgb);
   --title-color: #{$text-color-step-400};
+}
 
+:host(:not(.datetime-presentation-time)) {
   min-height: 300px;
 }
 
