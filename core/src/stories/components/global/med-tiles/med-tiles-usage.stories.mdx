@@ -32,5 +32,15 @@ import { Meta } from "@storybook/addon-docs/blocks";
 ## Default
 
 ```
-<med-tiles titulo="Titulo" label="Texto da label" badge="Selecionar" selected="false"></med-tiles>
+<med-tiles titulo="Titulo" label="Texto da label" selected="false">
+  <ion-badge slot ds-size="xs">BADGE</ion-badge>
+</med-tiles>
+```
+
+## Default button
+
+```
+<med-tiles titulo="Titulo" label="Texto da label" selected="false">
+  <ion-button slot ds-name="primary" ds-size="xs">BUTTON</ion-button>
+</med-tiles>
 ```

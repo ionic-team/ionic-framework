@@ -48,11 +48,11 @@ ButtonPrimary.argTypes = {
     },
   },
   size: {
-    options: [undefined, 'xxs', 'xs', 'sm'],
+    options: [undefined, 'xxxs', 'xxs', 'xs', 'sm'],
     control: { type: 'radio'},
     description: "Define o tamanho do botão.",
     table: {
-      type:  { summary: 'xxs | xs | sm' },
+      type:  { summary: 'xxxs | xxs | xs | sm' },
       defaultValue: { summary: 'undefined' },
     },
   },

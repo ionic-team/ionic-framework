@@ -1,0 +1,39 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+    * @prop --margin-top-message: Define a margin-top da mensagem principal.
+    * @prop --margin-top-response: Define a margin-top das resposta.
+    * @prop --margin-left-response: Define a margin-left das respostas.
+    * @prop --margin-left-comment: Define a margin-left dos comentários.
+    */
+  --margin-top-message: #{$med-spacing-stack-xxs};
+  --margin-top-response: #{$med-spacing-stack-xxxs};
+  --margin-left-response: #{$med-spacing-inline-sm};
+  --margin-left-comment: #{$med-spacing-inline-xl};
+
+  display: block;
+}
+
+::slotted(.med-message) {
+  margin-top: var(--margin-top-message);
+}
+
+::slotted(.med-message--medgrupo),
+::slotted(.med-message--response) {
+  margin-left: var(--margin-left-response);
+  width: calc( 100% - var(--margin-left-response));
+}
+
+::slotted(.med-message--comment),
+::slotted(.med-message--user-message) {
+  margin-left: $med-spacing-inline-xl;
+  width: calc( 100% - var(--margin-left-comment));
+}
+
+::slotted(.med-message--medgrupo),
+::slotted(.med-message--response),
+::slotted(.med-message--comment),
+::slotted(.med-message--user-message) {
+  margin-top: var(--margin-top-response);
+}

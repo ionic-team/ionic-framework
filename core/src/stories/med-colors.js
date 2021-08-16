@@ -21,9 +21,9 @@ export const medColors = [
   'questoes',
   'revalida',
   'provas',
-  'success',
-  'warning',
-  'caution'
+  'fb-success',
+  'fb-warning',
+  'fb-caution'
 ]
 
 export const medNeutrals = [

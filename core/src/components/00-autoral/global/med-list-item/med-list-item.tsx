@@ -31,8 +31,8 @@ export class MedListItem {
       >
         <slot name="start"></slot>
         <div class="med-list-item__content">
-          <h3 class="med-list-item__title">{titulo}</h3>
-          <h4 class="med-list-item__label">{label}</h4>
+          <h3 class="med-list-item__title" innerHTML={titulo}></h3>
+          <h4 class="med-list-item__label" innerHTML={label}></h4>
         </div>
         <slot name="end"></slot>
       </Host>

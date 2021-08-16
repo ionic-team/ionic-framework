@@ -2,10 +2,12 @@
 
 :host {
   /**
-   * @prop --color: Define a cor do componente.
-   */
+    * @prop --color: Define a cor do componente.
+    * @prop --background: Define a cor de background do componente.
+    * @prop --lines: Define o número de linhas visíveis com reticiências.
+    */
   --color: var(--med-color-neutral-10);
-  --background: var(--med-color-brand-1);
+  --background: #{md-color(brand, 1)};
   --lines: 1;
 }
 
@@ -37,7 +39,7 @@
   -webkit-line-clamp: var(--lines);
   -webkit-box-orient: vertical;
   overflow: hidden;
-  animation: close .15s steps(10, end) backwards;
+  animation: close 0.15s steps(10, end) backwards;
 }
 
 // ////////////////////
@@ -45,7 +47,7 @@
 // ////////////////////
 
 :host(.med-question--collapsed) .med-question__text {
-  animation: open .15s steps(10, end) forwards;
+  animation: open 0.15s steps(10, end) forwards;
 }
 
 :host(.med-question--collapsed) .med-question__icon {
@@ -65,6 +67,7 @@
   90% {-webkit-line-clamp:calc(var(--lines) + 9)}
   100% {-webkit-line-clamp:initial}
 }
+
 @keyframes close {
   0% {-webkit-line-clamp:initial}
   10% {-webkit-line-clamp:calc(var(--lines) + 9)}
@@ -84,11 +87,13 @@
 // ////////////////////
 
 :host(.ion-color) {
-  --color: #{md-current-color(3)};
+  --color: #{md-current-color(contrast-1)};
+  --background: #{md-current-color(1)};
 }
 
 :host(.ion-color) .med-question__icon {
-  --color: #{md-current-color(3)};
+  --color: #{md-current-color(contrast-1)};
+  --background: #{md-current-color(1)};
 }
 
 // ////////////////////
@@ -96,9 +101,11 @@
 // ////////////////////
 
 :host(.med-neutral) {
-  --color: var(--med-neutral);
+  --color: var(--med-neutral-contrast);
+  --background: var(--med-neutral);
 }
 
 :host(.med-neutral) .med-question__icon {
-  --color: var(--med-neutral);
+  --color: var(--med-neutral-contrast);
+  --background: var(--med-neutral);
 }

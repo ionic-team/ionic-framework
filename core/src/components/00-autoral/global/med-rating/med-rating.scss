@@ -1,0 +1,135 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+    * @prop --color: Define a cor do texto.
+    * @prop --color-date: Define a cor do texto da data.
+    * @prop --color-icon: Define a cor do icone.
+    * @prop --background: Define a cor de background do componente quando cabe ou não cabe.
+    * @prop --background-right: Define a cor do background do lado direito do componente.
+    */
+
+  --color: var(--med-color-neutral-10);
+  --color-date: var(--med-color-neutral-5);
+  --color-icon: var(--med-color-neutral-2);
+
+  --background: #{md-color(fb-success, 3)};
+  --background-right: var(--med-color-neutral-2);
+}
+
+:host(.med-rating) {
+  border-radius: $med-border-radius-sm;
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+:host(.med-rating) .med-rating__icon {
+  margin-top: $med-spacing-stack-xxxs;
+  font-size: 24px;
+  stroke: var(--color-icon);
+  transition: 200ms transform ease;
+}
+
+:host(.med-rating) .med-rating__icon-medgrupo {
+  position: absolute;
+  top: $med-spacing-inline-base;
+  right: $med-spacing-inline-base;
+}
+
+:host(.med-rating) .med-rating__left {
+  background: var(--background);
+  padding: $med-spacing-stretch-xs;
+  border-top-left-radius: $med-border-radius-sm;
+  border-bottom-left-radius: $med-border-radius-sm;
+}
+
+:host(.med-rating) .med-rating__right {
+  border-top-right-radius: $med-border-radius-sm;
+  border-bottom-right-radius: $med-border-radius-sm;
+  padding: $med-spacing-inset-sm;
+  background: var(--background-right);
+  text-align: left;
+  width: 100%;
+}
+
+:host(.med-rating) .med-rating__name {
+  font-size: $med-font-size-xxs;
+  line-height: $med-line-height-compressed;
+  color: var(--color);
+}
+
+:host(.med-rating) .med-rating__date {
+  font-size: $med-font-size-xxxs;
+  line-height: $med-line-height-compressed;
+  color: var(--color-date);
+}
+
+:host(.med-rating) .med-rating__concurso {
+  margin: 0;
+  padding: 0;
+  color: var(--color);
+  font-size: $med-font-size-xxs;
+  line-height: $med-line-height-compressed;
+  font-weight: $med-font-weight-semibold;
+  text-transform: uppercase;
+  padding-top: $med-spacing-stack-quark;
+  padding-bottom: $med-spacing-stack-nano;
+}
+
+:host(.med-rating) .med-rating__text {
+  font-size: $med-font-size-xxs;
+}
+
+// ////////////////////
+// state
+// ////////////////////
+
+:host(.med-rating--cabe) {
+  --background: #{md-color(fb-success, 3)};
+
+  .med-rating__name,
+  .med-rating__concurso {
+    --color: #{md-color(fb-success, 3)};
+  }
+}
+
+:host(.med-rating--nao-cabe) {
+  --background: #{md-color(fb-warning, 3)};
+
+  .med-rating__name,
+  .med-rating__concurso {
+    --color: #{md-color(fb-warning, 3)};
+  }
+}
+
+:host(.med-rating--medgrupo) {
+  .med-rating__name,
+  .med-rating__concurso {
+    --color: var(--med-color-neutral-10);
+  }
+
+  .med-rating__date {
+    display: none;
+  }
+}
+
+:host(.med-rating--banca) {
+  .med-rating__name,
+  .med-rating__date,
+  .med-rating__text {
+    display: none;
+  }
+
+  .med-rating__right {
+    display: flex;
+    align-items: center;
+  }
+
+  .med-rating__concurso {
+    font-size: $med-font-size-xs;
+    line-height: $med-line-height-compressed;
+    font-weight: $med-font-weight-semibold;
+  }
+}

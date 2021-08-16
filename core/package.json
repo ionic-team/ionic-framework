@@ -69,7 +69,6 @@
     "shx": "^0.3.3",
     "storybook-addon-designs": "^5.4.5",
     "storybook-addon-themes": "^6.1.0",
-    "storybook-design-token": "^1.0.1",
     "stylelint": "^13.6.1",
     "stylelint-order": "^4.1.0",
     "swiper": "5.4.1",

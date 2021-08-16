@@ -69,9 +69,9 @@ export class MedFontZoom {
             class="med-icon"
             slot="start"
             size="small"
-            name="med-fontmenor"
+            name="med-fontemenor"
           ></ion-icon>
-          <ion-icon class="med-icon" slot="end" name="med-fontmaior"></ion-icon>
+          <ion-icon class="med-icon" slot="end" name="med-fontemaior"></ion-icon>
         </ion-range>
       </Host>
     );

@@ -21,7 +21,7 @@
 }
 
 :host(.med-badge) {
-  font-size: $med-font-size-xxxs;
+  font-size: $med-font-size-xxs;
   font-weight: $med-font-weight-medium;
   line-height: $med-line-height-compressed;
   border-radius: $med-border-radius-pill;
@@ -39,11 +39,19 @@
 // sizes
 // ////////////////////
 
+:host(.med-badge--xxs) {
+  --padding-start: #{$med-spacing-inline-xxxs};
+  --padding-end: #{$med-spacing-inline-xxxs};
+  font-size: $med-font-size-nano;
+  font-weight: $med-font-weight-light;
+  height: 16px;
+}
+
 :host(.med-badge--xs) {
   --padding-start: #{$med-spacing-inline-xxxs};
   --padding-end: #{$med-spacing-inline-xxxs};
   font-size: $med-font-size-nano;
-  font-weight: $med-font-weight-regular;
+  font-weight: $med-font-weight-medium;
   height: 16px;
 }
 
@@ -51,7 +59,7 @@
   --padding-start: #{$med-spacing-inline-base};
   --padding-end: #{$med-spacing-inline-base};
   font-size: $med-font-size-nano;
-  font-weight: $med-font-weight-regular;
+  font-weight: $med-font-weight-medium;
   height: 24px;
 }
 

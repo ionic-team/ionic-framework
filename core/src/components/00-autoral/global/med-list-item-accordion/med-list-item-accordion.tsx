@@ -48,7 +48,7 @@ export class MedListItemAccordion {
           </div>
 
           <ion-button ds-name="icon-only" slot="left" onClick={(event: any) => {this.toggle(event)}}>
-            <ion-icon class="med-icon" name="med-baixo"></ion-icon>
+            <ion-icon class="med-icon" name="med-cima"></ion-icon>
           </ion-button>
         </div>
 

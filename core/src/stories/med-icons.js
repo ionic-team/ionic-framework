@@ -48,6 +48,7 @@ export const medIcons = [
   'med-limparfiltro',
   'med-linkexterno',
   'med-lixeira',
+  'med-logo',
   'med-mais',
   'med-mais-circulo',
   'med-marcar',

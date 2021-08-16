@@ -16,8 +16,8 @@ export class MedTooltip {
 
   @Prop({ reflect: true }) position?: 'start' | 'center' | 'end';
 
-  @Prop({ reflect: true }) titulo!: string;
-  @Prop({ reflect: true }) content!: string;
+  @Prop({ reflect: true }) titulo?: string;
+  @Prop({ reflect: true }) content?: string;
 
   /**
    * Define o estado do componente.
@@ -58,9 +58,9 @@ export class MedTooltip {
         </div>
 
         <div class="med-tooltip__content">
-          <h3 class="med-tooltip__titulo">{titulo}</h3>
-          <p class="med-tooltip__text">{content}</p>
-          <slot></slot>
+          {titulo && <h3 class="med-tooltip__titulo">{titulo}</h3>}
+          {content && <p class="med-tooltip__text">{content}</p>}
+          <slot name="content"></slot>
         </div>
       </Host>
     );

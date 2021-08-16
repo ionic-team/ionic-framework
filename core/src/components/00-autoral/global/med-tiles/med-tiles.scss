@@ -52,10 +52,10 @@
     color: var(--color-label);
     padding-bottom: $med-spacing-stack-base;
   }
+}
 
-  .med-tiles__badge {
-    margin-left: auto;
-  }
+::slotted(*) {
+  margin-left: auto;
 }
 
 :host(.med-tiles--selected) .med-tiles__border {

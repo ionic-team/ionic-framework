@@ -279,6 +279,12 @@
   --padding: 0 #{$med-spacing-inline-base};
 }
 
+:host([ds-size="xxxs"].med-button-solid) {
+  --min-height: 16px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-xxxs};
+}
+
 //
 // secondary
 //

@@ -583,7 +583,7 @@ $new-medsoft-colors: (
     5: hsl($med-provas, $med-saturation, $med-lightest),
     gradient: linear-gradient(to right, hsl($med-provas, $med-saturation, $med-medium), hsl($med-provas, $med-saturation, $med-darkest)),
   ),
-  attention: (
+  fb-attention: (
     contrast-1: hsl($med-brand, $med-saturation-neutral, 8%),
     contrast-2: hsl($med-brand, $med-saturation-neutral, 8%),
     1: hsl(44, 80%, 65%),
@@ -593,7 +593,7 @@ $new-medsoft-colors: (
     5: hsl(44, 80%, 65%),
     gradient: hsl(44, 80%, 65%),
   ),
-  caution: (
+  fb-caution: (
     contrast-1: hsl($med-brand, $med-saturation-neutral, 8%),
     contrast-2: hsl($med-brand, $med-saturation-neutral, 8%),
     1: hsl(24, 80%, 65%),
@@ -603,7 +603,7 @@ $new-medsoft-colors: (
     5: hsl(24, 80%, 65%),
     gradient: hsl(24, 80%, 65%),
   ),
-  warning: (
+  fb-warning: (
     contrast-1: hsl($med-brand, $med-saturation-neutral, 8%),
     contrast-2: hsl($med-brand, $med-saturation-neutral, 8%),
     1: hsl(4, 80%, 65%),
@@ -613,7 +613,7 @@ $new-medsoft-colors: (
     5: hsl(4, 80%, 65%),
     gradient: hsl(4, 80%, 65%),
   ),
-  success: (
+  fb-success: (
     contrast-1: hsl($med-brand, $med-saturation-neutral, 8%),
     contrast-2: hsl($med-brand, $med-saturation-neutral, 8%),
     1: hsl(128, 80%, 65%),

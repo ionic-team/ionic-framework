@@ -48,11 +48,11 @@ Overview.argTypes = {
     },
   },
   dsSize: {
-    options: [undefined, 'xs', 'sm', 'md', 'lg'],
+    options: [undefined, 'xxs', 'xs', 'sm', 'md', 'lg'],
     control: { type: 'radio'},
     description: "Define a variação de tamanho componente.",
     table: {
-      type:  { summary: 'xs | sm | md | lg' },
+      type:  { summary: 'xxs | xs | sm | md | lg' },
       defaultValue: { summary: 'undefined' },
     },
   },

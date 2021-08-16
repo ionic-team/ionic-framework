@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                        | Type                  | Default     |
-| ----------- | ----------- | ---------------------------------- | --------------------- | ----------- |
-| `collapsed` | `collapsed` | Define o estado do componente.     | `boolean`             | `false`     |
-| `color`     | `color`     | Define a cor do componente.        | `string \| undefined` | `undefined` |
-| `neutral`   | `neutral`   | Define a cor neutra do componente. | `string \| undefined` | `undefined` |
+| Property    | Attribute   | Description                               | Type                  | Default     |
+| ----------- | ----------- | ----------------------------------------- | --------------------- | ----------- |
+| `collapsed` | `collapsed` | Define o estado do componente.            | `boolean`             | `false`     |
+| `color`     | `color`     | Define a cor do componente.               | `string \| undefined` | `undefined` |
+| `neutral`   | `neutral`   | Define a cor neutra do componente.        | `string \| undefined` | `undefined` |
+| `texto`     | `texto`     | Define o conteúdo de texto do componente. | `string \| undefined` | `undefined` |
 
 
 ## Methods
@@ -29,9 +30,11 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name      | Description                 |
-| --------- | --------------------------- |
-| `--color` | Define a cor do componente. |
+| Name           | Description                                          |
+| -------------- | ---------------------------------------------------- |
+| `--background` | Define a cor de background do componente.            |
+| `--color`      | Define a cor do componente.                          |
+| `--lines`      | Define o número de linhas visíveis com reticiências. |
 
 
 ## Dependencies

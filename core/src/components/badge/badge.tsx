@@ -30,7 +30,7 @@ export class Badge implements ComponentInterface {
   /**
    * Define a variação de tamanho do componente.
    */
-  @Prop() dsSize?: 'xs' | 'sm' | 'md' | 'lg';
+  @Prop() dsSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
 
   /**
    * The color to use from your application's color palette.

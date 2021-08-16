@@ -13,7 +13,9 @@ const Template = ({ color, neutral, titulo, label, badge, selected, solid }) => 
       <div class="storybook-only__container">
 
         <!-- component -->
-        <med-tiles .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .badge=${badge} .selected=${selected} .solid=${solid}></med-tiles>
+        <med-tiles .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .badge=${badge} .selected=${selected} .solid=${solid}>
+          <ion-button ds-name="primary" ds-size="xxxs">teste</ion-button>
+        </med-tiles>
         <!-- component -->
 
       </div>

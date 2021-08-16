@@ -133,7 +133,7 @@ ion-backdrop,event,ionBackdropTap,void,true
 ion-badge,shadow
 ion-badge,prop,color,string | undefined,undefined,false,false
 ion-badge,prop,dsName,"secondary" | undefined,undefined,false,false
-ion-badge,prop,dsSize,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
+ion-badge,prop,dsSize,"lg" | "md" | "sm" | "xs" | "xxs" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,prop,neutral,string | undefined,undefined,false,false
 ion-badge,css-prop,--background
@@ -150,7 +150,7 @@ ion-button,prop,color,string | undefined,undefined,false,false
 ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,dsName,"icon-label" | "icon-only" | "primary" | "secondary" | "tertiary" | undefined,undefined,false,false
-ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | "xxs" | undefined,undefined,false,false
+ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | "xxs" | "xxxs" | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
@@ -1416,6 +1416,15 @@ med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
 med-autocomplete,shadow
 med-autocomplete,prop,list,boolean,false,false,false
 
+med-avatar,shadow
+med-avatar,prop,color,string | undefined,undefined,false,false
+med-avatar,prop,dsSize,"base" | "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | undefined,undefined,false,false
+med-avatar,prop,image,string | undefined,undefined,false,false
+med-avatar,prop,letter,string | undefined,undefined,false,false
+med-avatar,prop,neutral,string | undefined,undefined,false,false
+med-avatar,css-prop,--background
+med-avatar,css-prop,--color
+
 med-banner,shadow
 med-banner,prop,btnLeft,string,undefined,true,false
 med-banner,prop,btnRight,string,undefined,true,false
@@ -1499,6 +1508,22 @@ med-list-item-accordion,prop,selected,boolean,false,false,true
 med-list-item-accordion,prop,titulo,string | undefined,undefined,false,false
 med-list-item-accordion,method,toggle,toggle(event?: Event | undefined) => Promise<void>
 
+med-message,shadow
+med-message,prop,concurso,string | undefined,undefined,false,false
+med-message,prop,dsName,"comment" | "medgrupo" | "response" | "user-message" | undefined,undefined,false,false
+med-message,prop,messageId,string | undefined,undefined,false,false
+med-message,prop,nome,string | undefined,undefined,false,false
+med-message,prop,texto,string | undefined,undefined,false,false
+med-message,css-prop,--background
+med-message,css-prop,--background-footer
+med-message,css-prop,--color
+
+med-message-list,shadow
+med-message-list,css-prop,--margin-left-comment
+med-message-list,css-prop,--margin-left-response
+med-message-list,css-prop,--margin-top-message
+med-message-list,css-prop,--margin-top-response
+
 med-navbar,shadow
 med-navbar,prop,color,string | undefined,undefined,false,false
 med-navbar,prop,dsName,"secondary" | "transparent" | undefined,undefined,false,false
@@ -1515,14 +1540,30 @@ med-question,shadow
 med-question,prop,collapsed,boolean,false,false,true
 med-question,prop,color,string | undefined,undefined,false,false
 med-question,prop,neutral,string | undefined,undefined,false,false
+med-question,prop,texto,string | undefined,undefined,false,false
 med-question,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-question,css-prop,--background
 med-question,css-prop,--color
+med-question,css-prop,--lines
 
 med-rate-bar,shadow
 
 med-rate-like,shadow
 med-rate-like,prop,status,RateStatus.DISLIKE | RateStatus.LIKE | undefined,undefined,false,true
 med-rate-like,event,medChange,RateStatus.DISLIKE | RateStatus.LIKE,true
+
+med-rating,shadow
+med-rating,prop,cabe,boolean,false,false,false
+med-rating,prop,concurso,string | undefined,undefined,false,false
+med-rating,prop,data,string | undefined,undefined,false,false
+med-rating,prop,dsName,"banca" | "medgrupo" | undefined,undefined,false,false
+med-rating,prop,nome,string | undefined,undefined,false,false
+med-rating,prop,texto,string | undefined,undefined,false,false
+med-rating,css-prop,--background
+med-rating,css-prop,--background-right
+med-rating,css-prop,--color
+med-rating,css-prop,--color-date
+med-rating,css-prop,--color-icon
 
 med-tiles,shadow
 med-tiles,prop,badge,string | undefined,undefined,false,false
@@ -1539,11 +1580,11 @@ med-toolbar,prop,neutral,string | undefined,undefined,false,false
 
 med-tooltip,shadow
 med-tooltip,prop,collapsed,boolean,true,false,true
-med-tooltip,prop,content,string,undefined,true,true
+med-tooltip,prop,content,string | undefined,undefined,false,true
 med-tooltip,prop,dsName,"definition" | undefined,undefined,false,false
 med-tooltip,prop,placement,"bottom" | "left" | "right" | "top" | undefined,undefined,false,true
 med-tooltip,prop,position,"center" | "end" | "start" | undefined,undefined,false,true
-med-tooltip,prop,titulo,string,undefined,true,true
+med-tooltip,prop,titulo,string | undefined,undefined,false,true
 med-tooltip,method,toggle,toggle(event?: Event | undefined) => Promise<void>
 med-tooltip,css-prop,--background
 med-tooltip,css-prop,--z-index
@@ -1553,6 +1594,11 @@ med-tooltip2,prop,buttonLeft,{ label: string; icon: string; },undefined,true,fal
 med-tooltip2,prop,buttonRight,{ label: string; icon: string; },undefined,true,false
 med-tooltip2,prop,content,string,undefined,true,true
 med-tooltip2,prop,header,string,undefined,true,true
+
+med-vote,shadow
+med-vote,prop,cabe,number | undefined,undefined,false,false
+med-vote,prop,naoCabe,number | undefined,undefined,false,false
+med-vote,prop,titulo,string | undefined,undefined,false,false
 
 monta-provas-plusminus,shadow
 monta-provas-plusminus,prop,dsSize,"xl" | undefined,undefined,false,false

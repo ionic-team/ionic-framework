@@ -35,7 +35,7 @@ export class MedContextMenu {
           'med-context-menu--collapsed': this.collapsed
         }, null)}
       >
-        <ion-button onIonBlur={(event) => { console.log('blur'); this.toggle(event); }} onClick={(event) => {this.toggle(event)}} class="med-context-menu__button" ds-name="icon-only">
+        <ion-button onClick={(event) => {this.toggle(event)}} class="med-context-menu__button" ds-name="icon-only">
           <ion-icon class="med-icon med-context-menu__icon" name="med-context-menu"></ion-icon>
         </ion-button>
 

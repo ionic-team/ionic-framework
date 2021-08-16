@@ -18,19 +18,6 @@
 | `titulo`   | `titulo`   |             | `string \| undefined` | `undefined` |
 
 
-## Dependencies
-
-### Depends on
-
-- [ion-badge](../../../badge)
-
-### Graph
-```mermaid
-graph TD;
-  med-tiles --> ion-badge
-  style med-tiles fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

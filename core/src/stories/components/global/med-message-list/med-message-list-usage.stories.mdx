@@ -1,0 +1,56 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Message List/Usage" />
+
+# Question
+
+## Propriedades
+
+| Propriedade   | Atributo      | Descrição                                  | Tipo                                                     | Default       |
+| ------------- | ------------- | ------------------------------------------ | -------------------------------------------------------- | ------------- |
+| **cabe**      | **cabe**      | Define o estado cabe ou não cabe recurso.  | **boolean**                                              | **false**     |
+| **concurso**  | **concurso**  | Define o nome do concurso.                 | **string** \| **undefined**                              | **undefined** |
+| **data**      | **data**      | Define a data da postagem.                 | **string** \| **undefined**                              | **undefined** |
+| **dsName**    | **ds-name**   | Define a variação do componente.           | **"banca"** \| **"medgrupo"** \| **undefined**           | **undefined** |
+| **nome**      | **nome**      | Define o nome do aluno.                    | **string** \| **undefined**                              | **undefined** |
+| **texto**     | **texto**     | Define o conteúdo de texto.                | **string** \| **undefined**                              | **undefined** |
+
+## CSS Custom Properties
+
+| Nome                   | Descrição                                                           |
+| --------------------   | ---------------------------------------------------------------   |
+| **--background**       | Define a cor de background do componente quando cabe ou não cabe. |
+| **--background-right** | Define a cor do background do lado direito do componente.         |
+| **--color**            | Define a cor do texto.                                            |
+| **--color-date**       | Define a cor do texto da data.                                    |
+| **--color-icon**       | Define a cor do icone.                                            |
+
+## Default
+
+```
+<med-rating name="Alex" data="11/8" concurso="UFRJ" texto="Lorem ipsum dolor sit amet consectetur adipisicing elit." ></med-rating>
+```
+
+## Variação Medgrupo
+
+```
+<med-rating name="Alex" data="11/8" concurso="UFRJ" texto="Lorem ipsum dolor sit amet consectetur adipisicing elit." ds-name="medgrupo"></med-rating>
+```
+
+## Variação Banca
+
+```
+<med-rating name="Alex" data="11/8" concurso="UFRJ" texto="Lorem ipsum dolor sit amet consectetur adipisicing elit." ds-name="banca"></med-rating>
+```
+
+## Estado Cabe
+
+```
+<med-rating name="Alex" data="11/8" concurso="UFRJ" texto="Lorem ipsum dolor sit amet consectetur adipisicing elit." cabe></med-rating>
+```
+
+## Estado Não Cabe
+
+```
+<med-rating name="Alex" data="11/8" concurso="UFRJ" texto="Lorem ipsum dolor sit amet consectetur adipisicing elit." cabe="false"></med-rating>
+```

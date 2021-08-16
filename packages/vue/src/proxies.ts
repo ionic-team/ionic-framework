@@ -854,6 +854,15 @@ export const MedAutocomplete = /*@__PURE__*/ defineContainer<JSX.MedAutocomplete
 ]);
 
 
+export const MedAvatar = /*@__PURE__*/ defineContainer<JSX.MedAvatar>('med-avatar', [
+  'color',
+  'neutral',
+  'dsSize',
+  'image',
+  'letter'
+]);
+
+
 export const MedBanner = /*@__PURE__*/ defineContainer<JSX.MedBanner>('med-banner', [
   'header',
   'btnLeft',
@@ -962,6 +971,18 @@ export const MedListItemAccordion = /*@__PURE__*/ defineContainer<JSX.MedListIte
 ]);
 
 
+export const MedMessage = /*@__PURE__*/ defineContainer<JSX.MedMessage>('med-message', [
+  'dsName',
+  'nome',
+  'concurso',
+  'texto',
+  'messageId'
+]);
+
+
+export const MedMessageList = /*@__PURE__*/ defineContainer<JSX.MedMessageList>('med-message-list');
+
+
 export const MedNavbar = /*@__PURE__*/ defineContainer<JSX.MedNavbar>('med-navbar', [
   'color',
   'neutral',
@@ -980,7 +1001,8 @@ export const MedOption = /*@__PURE__*/ defineContainer<JSX.MedOption>('med-optio
 export const MedQuestion = /*@__PURE__*/ defineContainer<JSX.MedQuestion>('med-question', [
   'color',
   'neutral',
-  'collapsed'
+  'collapsed',
+  'texto'
 ]);
 
 
@@ -990,6 +1012,16 @@ export const MedRateBar = /*@__PURE__*/ defineContainer<JSX.MedRateBar>('med-rat
 export const MedRateLike = /*@__PURE__*/ defineContainer<JSX.MedRateLike>('med-rate-like', [
   'status',
   'medChange'
+]);
+
+
+export const MedRating = /*@__PURE__*/ defineContainer<JSX.MedRating>('med-rating', [
+  'dsName',
+  'nome',
+  'data',
+  'concurso',
+  'texto',
+  'cabe'
 ]);
 
 
@@ -1025,6 +1057,13 @@ export const MedTooltip2 = /*@__PURE__*/ defineContainer<JSX.MedTooltip2>('med-t
   'content',
   'buttonLeft',
   'buttonRight'
+]);
+
+
+export const MedVote = /*@__PURE__*/ defineContainer<JSX.MedVote>('med-vote', [
+  'titulo',
+  'cabe',
+  'naoCabe'
 ]);
 
 

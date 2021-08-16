@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property               | Attribute   | Description                      | Type                                                  | Default     |
-| ---------------------- | ----------- | -------------------------------- | ----------------------------------------------------- | ----------- |
-| `collapsed`            | `collapsed` | Define o estado do componente.   | `boolean`                                             | `true`      |
-| `content` _(required)_ | `content`   |                                  | `string`                                              | `undefined` |
-| `dsName`               | `ds-name`   | Define a variação do componente. | `"definition" \| undefined`                           | `undefined` |
-| `placement`            | `placement` |                                  | `"bottom" \| "left" \| "right" \| "top" \| undefined` | `undefined` |
-| `position`             | `position`  |                                  | `"center" \| "end" \| "start" \| undefined`           | `undefined` |
-| `titulo` _(required)_  | `titulo`    |                                  | `string`                                              | `undefined` |
+| Property    | Attribute   | Description                      | Type                                                  | Default     |
+| ----------- | ----------- | -------------------------------- | ----------------------------------------------------- | ----------- |
+| `collapsed` | `collapsed` | Define o estado do componente.   | `boolean`                                             | `true`      |
+| `content`   | `content`   |                                  | `string \| undefined`                                 | `undefined` |
+| `dsName`    | `ds-name`   | Define a variação do componente. | `"definition" \| undefined`                           | `undefined` |
+| `placement` | `placement` |                                  | `"bottom" \| "left" \| "right" \| "top" \| undefined` | `undefined` |
+| `position`  | `position`  |                                  | `"center" \| "end" \| "start" \| undefined`           | `undefined` |
+| `titulo`    | `titulo`    |                                  | `string \| undefined`                                 | `undefined` |
 
 
 ## Methods
@@ -40,6 +40,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [med-message](../med-message)
+
 ### Depends on
 
 - [ion-button](../../../button)
@@ -49,6 +53,7 @@ Type: `Promise<void>`
 graph TD;
   med-tooltip --> ion-button
   ion-button --> ion-ripple-effect
+  med-message --> med-tooltip
   style med-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
