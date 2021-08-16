@@ -43,6 +43,7 @@ export class ItemSliding implements ComponentInterface {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
   private gesture?: Gesture;
+  private initialOverflow: string | undefined;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -252,7 +253,24 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
+  // Toggles between `--overflow: hidden` and the initial provided value.
+  private toggleOverflow() {
+    const style = this.el.closest('ion-content')?.style;
+    if (style === undefined) { return; }
+
+    if (this.initialOverflow !== undefined) {
+      style.setProperty('--overflow', this.initialOverflow);
+      this.initialOverflow = undefined;
+    } else {
+      this.initialOverflow = style.getPropertyValue('--overflow');
+      style.setProperty('--overflow', 'hidden');
+    }
+  }
+
   private onStart() {
+    // Prevent scrolling during gesture
+    this.toggleOverflow();
+
     openSlidingItem = this.el;
 
     if (this.tmr !== undefined) {
@@ -297,6 +315,9 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
+    // Re-enable scrolling when gesture ends
+    this.toggleOverflow();
+
     const velocity = gesture.velocityX;
 
     let restingPoint = (this.openAmount > 0)
