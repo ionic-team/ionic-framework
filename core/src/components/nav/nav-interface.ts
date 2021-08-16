@@ -67,4 +67,8 @@ export interface TransitionInstruction {
   enteringRequiresTransition?: boolean;
 }
 
+export interface NavEvent extends CustomEvent {
+  target: HTMLIonNavElement;
+}
+
 export { ViewController };
