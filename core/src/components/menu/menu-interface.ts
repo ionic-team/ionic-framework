@@ -38,3 +38,8 @@ export interface MenuChangeEventDetail {
   disabled: boolean;
   open: boolean;
 }
+
+export interface MenuEvent<T = any> extends CustomEvent {
+  detail: T;
+  target: HTMLIonMenuElement;
+}
