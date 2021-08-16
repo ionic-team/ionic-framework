@@ -99,6 +99,8 @@
 
       <ion-modal
         :is-open="isModalOpen"
+        :swipe-to-close="true"
+        :presenting-element="$parent.$refs.ionRouterOutlet"
         @willPresent="onModalWillPresent"
         @didPresent="onModalDidPresent"
         @willDismiss="onModalWillDismiss"

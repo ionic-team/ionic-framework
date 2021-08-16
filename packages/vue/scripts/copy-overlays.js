@@ -27,6 +27,14 @@ function generateOverlays() {
       tag: 'ion-toast',
       controller: 'toastController',
       name: 'IonToast'
+    },
+    {
+      tag: 'ion-modal',
+      name: 'IonModal'
+    },
+    {
+      tag: 'ion-popover',
+      name: 'IonPopover'
     }
   ]
 
@@ -39,9 +47,15 @@ function generateOverlays() {
     const props = getPropsFromDocsBlock(docsBlock);
 
     componentImports.push(`import { ${component.name} as ${component.name}Cmp } from '@ionic/core/components/${component.tag}.js'`);
-    controllerImports.push(component.controller);
+
+    if (component.controller) {
+      controllerImports.push(component.controller);
+    }
+
+    const controllerParam = (component.controller) ? `, ${component.controller}` : '';
+
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${component.name}Cmp, [${props.join(', ')}], ${component.controller});
+export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${component.name}Cmp, [${props.join(', ')}]${controllerParam});
     `);
   });
 
