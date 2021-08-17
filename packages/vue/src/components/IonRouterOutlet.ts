@@ -11,19 +11,27 @@ import {
   onUnmounted
 } from 'vue';
 import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
-import { matchedRouteKey, useRoute } from 'vue-router';
-import { fireLifecycle, generateId } from '../utils';
+import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
+import { fireLifecycle, generateId, getConfig } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
   setup(_, { attrs }) {
+    const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
+    let usingDeprecatedRouteSetup = false;
+
+    // TODO: Remove in Ionic Vue v6.0
+    if (attrs.tabs && route.matched[depth]?.children?.length > 0) {
+      console.warn('[@ionic/vue Deprecation]: Your child routes are nested inside of each tab in your routing config. This format will not be supported in Ionic Vue v6.0. Instead, write your child routes as sibling routes. See https://ionicframework.com/docs/vue/navigation#child-routes-within-tabs for more information.');
+      usingDeprecatedRouteSetup = true;
+    }
     const matchedRouteRef: any = computed(() => {
       const matchedRoute = route.matched[depth];
 
-      if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
+      if (matchedRoute && attrs.tabs && route.matched[depth + 1] && usingDeprecatedRouteSetup) {
         return route.matched[route.matched.length - 1];
       }
 
@@ -47,21 +55,40 @@ export const IonRouterOutlet = defineComponent({
     // The base url for this router outlet
     let parentOutletPath: string;
 
-    watch(matchedRouteRef, (currentValue, previousValue) => {
+    /**
+     * We need to watch the route object
+     * to listen for navigation changes.
+     * Previously we had watched matchedRouteRef,
+     * but if you had a /page/:id route, going from
+     * page/1 to page/2 would not cause this callback
+     * to fire since the matchedRouteRef was the same.
+     */
+    watch([route, matchedRouteRef], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
       /**
-       * We need to make sure that we are not re-rendering
-       * the same view if navigation changes in a sub-outlet.
-       * This is mainly for tabs when outlet 1 renders ion-tabs
-       * and outlet 2 renders the individual tab view. We don't
-       * want outlet 1 creating a new ion-tabs instance every time
-       * we switch tabs.
+       * If the matched route ref has changed,
+       * then we need to set up a new view item.
+       * If the matched route ref has not changed,
+       * it is possible that this is a parameterized URL
+       * change such as /page/1 to /page/2. In that case,
+       * we can assume that the `route` object has changed,
+       * but we should only set up a new view item in this outlet
+       * if that last matched view item matches our current matched
+       * view item otherwise if we had this in a nested outlet the
+       * parent outlet would re-render as well as the child page.
        */
-      if (currentValue !== previousValue) {
+      if (
+        currentMatchedRouteRef !== previousMatchedRouteRef ||
+        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef
+      ) {
         setupViewItem(matchedRouteRef);
       }
     });
 
     const canStart = () => {
+      const config = getConfig();
+      const swipeEnabled = config && config.get('swipeBackEnabled', ionRouterOutlet.value.mode === 'ios');
+      if (!swipeEnabled) return false;
+
       const stack = viewStacks.getViewStack(id);
       if (!stack || stack.length <= 1) return false;
 
@@ -70,16 +97,16 @@ export const IonRouterOutlet = defineComponent({
        * to respond to this gesture, so check
        * to make sure the view is in the outlet we want.
        */
-      const routeInfo = ionRouter.getCurrentRouteInfo();
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+      const routeInfo = ionRouter.getLeavingRouteInfo();
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
 
       return !!enteringViewItem;
     }
     const onStart = async () => {
-      const routeInfo = ionRouter.getCurrentRouteInfo();
+      const routeInfo = ionRouter.getLeavingRouteInfo();
       const { routerAnimation } = routeInfo;
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
-      const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
+      const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
@@ -134,7 +161,7 @@ export const IonRouterOutlet = defineComponent({
          * re-hide the page that was going to enter.
          */
         const routeInfo = ionRouter.getCurrentRouteInfo();
-        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
         enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
       }
@@ -187,17 +214,32 @@ export const IonRouterOutlet = defineComponent({
 
     const handlePageTransition = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation } = routeInfo;
+      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname } = routeInfo;
 
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
-      const leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
+      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
       const enteringEl = enteringViewItem.ionPageElement;
+
+      /**
+       * All views that can be transitioned to must have
+       * an `<ion-page>` element for transitions and lifecycle
+       * methods to work properly.
+       */
+      if (enteringEl === undefined) {
+        console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
+
+See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
+      }
 
       if (enteringViewItem === leavingViewItem) return;
 
+      if (!leavingViewItem && prevRouteLastPathname) {
+        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id, usingDeprecatedRouteSetup);
+      }
+
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
-      if (leavingViewItem) {
+      if (leavingViewItem && enteringViewItem !== leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
@@ -234,13 +276,20 @@ export const IonRouterOutlet = defineComponent({
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
 
-        if (!(routerAction === 'push' && routerDirection === 'forward')) {
+        if (routerAction === 'replace') {
+          leavingViewItem.mount = false;
+          leavingViewItem.ionPageElement = undefined;
+          leavingViewItem.ionRoute = false;
+        } else if (!(routerAction === 'push' && routerDirection === 'forward')) {
           const shouldLeavingViewBeRemoved = routerDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
           if (shouldLeavingViewBeRemoved) {
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
+            viewStacks.unmountLeavingViews(id, enteringViewItem, leavingViewItem);
           }
+        } else {
+          viewStacks.mountIntermediaryViews(id, enteringViewItem, leavingViewItem);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
@@ -283,7 +332,7 @@ export const IonRouterOutlet = defineComponent({
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
+      let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id, usingDeprecatedRouteSetup);
 
       if (!enteringViewItem) {
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
@@ -344,12 +393,13 @@ export const IonRouterOutlet = defineComponent({
     return {
       id,
       components,
+      injectedRoute,
       ionRouterOutlet,
       registerIonPage
     }
   },
   render() {
-    const { components, registerIonPage } = this;
+    const { components, registerIonPage, injectedRoute } = this;
 
     return h(
       'ion-router-outlet',
@@ -366,22 +416,43 @@ export const IonRouterOutlet = defineComponent({
         /**
          * IonRouterOutlet does not support named outlets.
          */
-        if (c.matchedRoute?.props?.default) {
-          const matchedRoute = c.matchedRoute;
-          const routePropsOption = matchedRoute.props.default;
-          const routeProps = routePropsOption
-            ? routePropsOption === true
-              ? c.params
-              : typeof routePropsOption === 'function'
-              ? routePropsOption(matchedRoute)
-              : routePropsOption
-            : null
+        const routePropsOption = c.matchedRoute?.props?.default;
 
-          props = {
-            ...props,
-            ...routeProps
+        /**
+         * Since IonRouterOutlet renders multiple components,
+         * each render will cause all props functions to be
+         * called again. As a result, we need to cache the function
+         * result and provide it on each render so that the props
+         * are not lost when navigating from and back to a page.
+         * When a component is destroyed and re-created, the
+         * function is called again.
+         */
+        const getPropsFunctionResult = () => {
+          const cachedPropsResult = c.vueComponentData?.propsFunctionResult;
+          if (cachedPropsResult) {
+            return cachedPropsResult;
+          } else {
+            const propsFunctionResult = routePropsOption(injectedRoute);
+            c.vueComponentData = {
+              ...c.vueComponentData,
+              propsFunctionResult
+            };
+            return propsFunctionResult;
           }
         }
+        const routeProps = routePropsOption
+          ? routePropsOption === true
+            ? c.params
+            : typeof routePropsOption === 'function'
+            ? getPropsFunctionResult()
+            : routePropsOption
+          : null
+
+        props = {
+          ...props,
+          ...routeProps
+        }
+
         return h(
           c.vueComponent,
           props

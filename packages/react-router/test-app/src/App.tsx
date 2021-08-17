@@ -1,6 +1,4 @@
-import {
-  IonApp
-} from '@ionic/react';
+import { IonApp } from '@ionic/react';
 import React from 'react';
 import { Route, Redirect, BrowserRouter, Link } from 'react-router-dom';
 
@@ -20,7 +18,6 @@ import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 
-
 /* Theme variables */
 import './theme/variables.css';
 import Main from './pages/Main';
@@ -35,6 +32,10 @@ import ReplaceAction from './pages/replace-action/Replace';
 import TabsContext from './pages/tab-context/TabContext';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import Refs from './pages/refs/Refs';
+import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
+import Tabs from './pages/tabs/Tabs';
+import TabsSecondary from './pages/tabs/TabsSecondary';
 debugger;
 const App: React.FC = () => {
   return (
@@ -51,6 +52,10 @@ const App: React.FC = () => {
         <Route path="/tab-context" component={TabsContext} />
         <Route path="/outlet-ref" component={OutletRef} />
         <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
+        <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
+        <Route path="/tabs" component={Tabs} />
+        <Route path="/tabs-secondary" component={TabsSecondary} />
+        <Route path="/refs" component={Refs} />
       </IonReactRouter>
     </IonApp>
   );

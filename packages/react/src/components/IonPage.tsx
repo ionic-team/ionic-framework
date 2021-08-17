@@ -6,11 +6,10 @@ import PageManager from '../routing/PageManager';
 import { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
-interface IonPageProps extends IonicReactProps {
-}
+interface IonPageProps extends IonicReactProps {}
 
 interface IonPageInternalProps extends IonPageProps {
-  forwardedRef?: React.RefObject<HTMLDivElement>;
+  forwardedRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {
@@ -23,21 +22,23 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
   render() {
     const { className, children, forwardedRef, ...props } = this.props;
 
-    return (
-      this.context.hasIonicRouter() ? (
-        <PageManager
-          className={className ? `${className}` : ''}
-          routeInfo={this.context.routeInfo}
-          forwardedRef={forwardedRef}
-          {...props}
-        >
-          {children}
-        </PageManager>
-      ) : (
-          <div className={className ? `ion-page ${className}` : 'ion-page'} ref={forwardedRef} {...props}>
-            {children}
-          </div>
-        )
+    return this.context.hasIonicRouter() ? (
+      <PageManager
+        className={className ? `${className}` : ''}
+        routeInfo={this.context.routeInfo}
+        forwardedRef={forwardedRef}
+        {...props}
+      >
+        {children}
+      </PageManager>
+    ) : (
+      <div
+        className={className ? `ion-page ${className}` : 'ion-page'}
+        ref={forwardedRef}
+        {...props}
+      >
+        {children}
+      </div>
     );
   }
 

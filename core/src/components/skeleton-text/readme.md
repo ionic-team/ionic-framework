@@ -736,7 +736,7 @@ export class SkeletonTextExample {
   </div>
 
   <!-- Skeleton screen -->
-  <div *ngIf="!data">
+  <div v-if="!data">
     <div class="ion-padding custom-skeleton">
       <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
       <ion-skeleton-text animated></ion-skeleton-text>
@@ -819,12 +819,12 @@ import {
   IonItem, 
   IonLabel, 
   IonList, 
-  IonListheader,
+  IonListHeader,
   IonSkeletonText,
   IonThumbnail
 } from '@ionic/vue';
 import { call } from 'ionicons/icons';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   components: {
@@ -833,7 +833,7 @@ export default defineComponent({
     IonItem, 
     IonLabel, 
     IonList, 
-    IonListheader,
+    IonListHeader,
     IonSkeletonText,
     IonThumbnail
   },

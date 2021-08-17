@@ -169,7 +169,7 @@ describe('NavController', () => {
 
   describe('insert', () => {
 
-    it('should insert at the begining with no async transition', async () => {
+    it('should insert at the beginning with no async transition', async () => {
       const view4 = mockView(MockView4);
       const instance4 = spyOnLifecycles(view4);
       const opts: NavOptions = {};

@@ -21,7 +21,7 @@ export class ToolbarTitle implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * The size of the toolbar title.
@@ -64,6 +64,7 @@ export class ToolbarTitle implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,
+          'title-rtl': document.dir === 'rtl'
         })}
       >
         <div class="toolbar-title">

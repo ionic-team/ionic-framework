@@ -18,8 +18,11 @@
 
       <ion-button id="parameter-view" :router-link="'/routing/' + $route.params.id + '/view'">Go to Single View</ion-button>
 
+      <ion-button router-link="/routing/abc">Go to Parameter Page ABC</ion-button>
+      <ion-button router-link="/routing/xyz">Go to Parameter Page XYZ</ion-button>
+
       <div class="ion-padding" id="parameter-value">
-        {{ $route.params.id }}
+        {{ $props.id }}
       </div>
     </ion-content>
   </ion-page>
@@ -39,6 +42,9 @@ import {
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  props: {
+    id: { type: String, default: 'my default' }
+  },
   components: {
     IonButton,
     IonBackButton,

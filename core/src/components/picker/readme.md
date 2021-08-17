@@ -2,9 +2,162 @@
 
 A Picker is a dialog that displays a row of buttons and columns underneath. It appears on top of the app's content, and at the bottom of the viewport.
 
+## Interfaces
 
+### PickerButton
+
+```typescript
+interface PickerButton {
+  text?: string;
+  role?: string;
+  cssClass?: string | string[];
+  handler?: (value: any) => boolean | void;
+}
+```
+
+### PickerColumn
+
+```typescript
+interface PickerColumn {
+  name: string;
+  align?: string;
+  selectedIndex?: number;
+  prevSelected?: number;
+  prefix?: string;
+  suffix?: string;
+  options: PickerColumnOption[];
+  cssClass?: string | string[];
+  columnWidth?: string;
+  prefixWidth?: string;
+  suffixWidth?: string;
+  optionsWidth?: string;
+  refresh?: () => void;
+}
+```
+
+### PickerColumnOption
+
+```typescript
+interface PickerColumnOption {
+  text?: string;
+  value?: any;
+  disabled?: boolean;
+  duration?: number;
+  transform?: string;
+  selected?: boolean;
+}
+```
+
+### PickerOptions
+
+```typescript
+interface PickerOptions {
+  columns: PickerColumn[];
+  buttons?: PickerButton[];
+  cssClass?: string | string[];
+  showBackdrop?: boolean;
+  backdropDismiss?: boolean;
+  animated?: boolean;
+
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
+
+
+## Usage
+
+### React
+
+```tsx
+/* Using with useIonPicker Hook */
+
+import React, { useState } from 'react';
+import { IonButton, IonContent, IonPage, useIonPicker } from '@ionic/react';
+
+const PickerExample: React.FC = () => {
+  const [present] = useIonPicker();
+  const [value, setValue] = useState('');
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              buttons: [
+                {
+                  text: 'Confirm',
+                  handler: (selected) => {
+                    setValue(selected.animal.value)
+                  },
+                },
+              ],
+              columns: [
+                {
+                  name: 'animal',
+                  options: [
+                    { text: 'Dog', value: 'dog' },
+                    { text: 'Cat', value: 'cat' },
+                    { text: 'Bird', value: 'bird' },
+                  ],
+                },
+              ],
+            })
+          }
+        >
+          Show Picker
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present(
+              [
+                {
+                  name: 'animal',
+                  options: [
+                    { text: 'Dog', value: 'dog' },
+                    { text: 'Cat', value: 'cat' },
+                    { text: 'Bird', value: 'bird' },
+                  ],
+                },
+                {
+                  name: 'vehicle',
+                  options: [
+                    { text: 'Car', value: 'car' },
+                    { text: 'Truck', value: 'truck' },
+                    { text: 'Bike', value: 'bike' },
+                  ],
+                },
+              ],
+              [
+                {
+                  text: 'Confirm',
+                  handler: (selected) => {
+                    setValue(`${selected.animal.value}, ${selected.vehicle.value}`)
+                  },
+                },
+              ]
+            )
+          }
+        >
+          Show Picker using params
+        </IonButton>
+        {value && (
+          <div>Selected Value: {value}</div>
+        )}
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
 
 
 ## Properties

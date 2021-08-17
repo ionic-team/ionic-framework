@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Attribute, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
+import { componentOnReady } from '@ionic/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
@@ -51,7 +52,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     this._swipeGesture = swipe;
 
     this.nativeEl.swipeHandler = swipe ? {
-      canStart: () => this.stackCtrl.canGoBack(1),
+      canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
       onStart: () => this.stackCtrl.startBackTransition(),
       onEnd: shouldContinue => this.stackCtrl.endBackTransition(shouldContinue)
     } : undefined;
@@ -96,13 +97,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
         this.activateWith(context.route, context.resolver || null);
       }
     }
-    if ((this.nativeEl as any).componentOnReady) {
-      this.nativeEl.componentOnReady().then(() => {
-        if (this._swipeGesture === undefined) {
-          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
-        }
-      });
-    }
+
+    new Promise(resolve => componentOnReady(this.nativeEl, resolve)).then(() => {
+      if (this._swipeGesture === undefined) {
+        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
+      }
+    });
   }
 
   get isActivated(): boolean {
@@ -147,15 +147,27 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   deactivate(): void {
     if (this.activated) {
       if (this.activatedView) {
-        this.activatedView.savedData = new Map(this.getContext()!.children['contexts']);
+        const context = this.getContext()!;
+        this.activatedView.savedData = new Map(context.children['contexts']);
+
+        /**
+         * Angular v11.2.10 introduced a change
+         * where this route context is cleared out when
+         * a router-outlet is deactivated, However,
+         * we need this route information in order to
+         * return a user back to the correct tab when
+         * leaving and then going back to the tab context.
+         */
+        const primaryOutlet = this.activatedView.savedData.get('primary');
+        if (primaryOutlet && context.route) {
+          primaryOutlet.route = { ...context.route };
+        }
 
         /**
          * Ensure we are saving the NavigationExtras
          * data otherwise it will be lost
          */
         this.activatedView.savedExtras = {};
-        const context = this.getContext()!;
-
         if (context.route) {
           const contextSnapshot = context.route.snapshot;
 

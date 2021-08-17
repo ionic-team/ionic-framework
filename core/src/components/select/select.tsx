@@ -473,6 +473,7 @@ export class Select implements ComponentInterface {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
+          'select-expanded': isExpanded
         }}
       >
         <div aria-hidden="true" class={selectTextClasses} part={textPart}>

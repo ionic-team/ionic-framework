@@ -34,6 +34,39 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+> `ion-modal` works under the assumption that stacked modals are the same size. As a result, each subsequent modal will have no box shadow and a backdrop opacity of `0`. This is to avoid the effect of shadows and backdrops getting darker with each added modal. This can be changed by setting the `--box-shadow` and `--backdrop-opacity` CSS variables:
+``` 
+ion-modal.stack-modal {
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+}
+```
+
+## Interfaces
+
+### ModalOptions
+
+```typescript
+interface ModalOptions<T extends ComponentRef = ComponentRef> {
+  component: T;
+  componentProps?: ComponentProps<T>;
+  presentingElement?: HTMLElement;
+  showBackdrop?: boolean;
+  backdropDismiss?: boolean;
+  cssClass?: string | string[];
+  animated?: boolean;
+  swipeToClose?: boolean;
+
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
+
+
 <!-- Auto Generated Below -->
 
 
@@ -125,7 +158,7 @@ export class ModalPage {
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    this.modalCtrl.dismiss({
+    this.modalController.dismiss({
       'dismissed': true
     });
   }
@@ -200,14 +233,14 @@ In most scenarios, using the `ion-router-outlet` element as the `presentingEleme
 ```javascript
 import { ModalController } from '@ionic/angular';
 
-constructor(private modalCtrl: ModalController) {}
+constructor(private modalController: ModalController) {}
 
 async presentModal() {
   const modal = await this.modalController.create({
     component: ModalPage,
     cssClass: 'my-custom-class',
     swipeToClose: true,
-    presentingElement: await this.modalCtrl.getTop() // Get the top-most ion-modal
+    presentingElement: await this.modalController.getTop() // Get the top-most ion-modal
   });
   return await modal.present();
 }
@@ -332,6 +365,70 @@ modalElement.presentingElement = await modalController.getTop(); // Get the top-
 ### React
 
 ```tsx
+/* Using with useIonModal Hook */ 
+
+import React, { useState } from 'react';
+import { IonButton, IonContent, IonPage, useIonModal } from '@ionic/react';
+
+const Body: React.FC<{
+  count: number;
+  onDismiss: () => void;
+  onIncrement: () => void;
+}> = ({ count, onDismiss, onIncrement }) => (
+  <div>
+    count: {count}
+    <IonButton expand="block" onClick={() => onIncrement()}>
+      Increment Count
+    </IonButton>
+    <IonButton expand="block" onClick={() => onDismiss()}>
+      Close
+    </IonButton>
+  </div>
+);
+
+const ModalExample: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleDismiss = () => {
+    dismiss();
+  };
+
+  /**
+   * First parameter is the component to show, second is the props to pass
+   */
+  const [present, dismiss] = useIonModal(Body, {
+    count,
+    onDismiss: handleDismiss,
+    onIncrement: handleIncrement,
+  });
+
+  return (
+    <IonPage>
+      <IonContent fullscreen>
+        <IonButton
+          expand="block"
+          onClick={() => {
+            present({
+              cssClass: 'my-class',
+            });
+          }}
+        >
+          Show Modal
+        </IonButton>
+        <div>Count: {count}</div>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonModal Component */
+
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
 
@@ -349,8 +446,6 @@ export const ModalExample: React.FC = () => {
   );
 };
 ```
-
-> If you need a wrapper element inside of your modal component, we recommend using an `<IonPage>` so that the component dimensions are still computed properly.
 
 ### Swipeable Modals
 
@@ -418,6 +513,7 @@ In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `cu
   isOpen={show2ndModal}
   cssClass='my-custom-class'
   presentingElement={firstModalRef.current}
+  swipeToClose={true}
   onDidDismiss={() => setShow2ndModal(false)}>
   <p>This is more modal content</p>
   <IonButton onClick={() => setShow2ndModal(false)}>Close Modal</IonButton>
@@ -655,7 +751,7 @@ Developers can also use this component directly in their template:
   <ion-modal
     :is-open="isOpenRef"
     css-class="my-custom-class"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Modal :data="data"></Modal>
   </ion-modal>
@@ -679,6 +775,47 @@ export default defineComponent({
 ```
 
 > If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
+
+### Swipeable Modals
+
+Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
+
+> Card style modals when running on iPhone-sized devices do not have backdrops. As a result, the `--backdrop-opacity` variable will not have any effect.
+
+```html
+<template>
+  <ion-page>
+    <ion-content>
+      <ion-button @click="setOpen(true)">Show Modal</ion-button>
+      <ion-modal
+        :is-open="isOpenRef"
+        css-class="my-custom-class"
+        :swipe-to-close="true"
+        :presenting-element="$parent.$refs.ionRouterOutlet"
+        @didDismiss="setOpen(false)"
+      >
+        <Modal :data="data"></Modal>
+      </ion-modal>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script lang="ts">
+import { IonModal, IonButton, IonContent, IonPage } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Modal from './modal.vue'
+
+export default defineComponent({
+  components: { IonModal, IonButton, Modal, IonContent, IonPage },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    const data = { content: 'New Content' };
+    return { isOpenRef, setOpen, data }
+  }
+});
+</script>
+```
 
 
 

@@ -41,7 +41,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If `true`, a button tag will be rendered and the item will be tappable.
@@ -173,7 +173,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    this.setMultipleInputs();
+    raf(() => this.setMultipleInputs());
   }
 
   // If the item contains multiple clickable elements and/or inputs, then the item
@@ -251,7 +251,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   render() {
     const { detail, detailIcon, download, labelColorStyles, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
-    const childStyles = {};
+    const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
@@ -273,10 +273,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
     });
+    const ariaDisabled = (disabled || childStyles['item-interactive-disabled']) ? 'true' : null;
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
+        aria-disabled={ariaDisabled}
         class={{
           ...childStyles,
           ...labelColorStyles,
@@ -305,7 +306,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 <slot></slot>
               </div>
               <slot name="end"></slot>
-              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon"></ion-icon>}
+              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true"></ion-icon>}
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

@@ -6,4 +6,7 @@ export type ReactPopoverOptions = Omit<PopoverOptions, 'component' | 'componentP
   children: React.ReactNode;
 };
 
-export const IonPopover = /*@__PURE__*/createOverlayComponent<ReactPopoverOptions, HTMLIonPopoverElement>('IonPopover', popoverController);
+export const IonPopover = /*@__PURE__*/ createOverlayComponent<
+  ReactPopoverOptions,
+  HTMLIonPopoverElement
+>('IonPopover', popoverController);

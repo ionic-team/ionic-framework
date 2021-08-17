@@ -107,7 +107,7 @@ export class RadioGroup implements ComponentInterface {
 
     // Get all radios inside of the radio group and then
     // filter out disabled radios since we need to skip those
-    const radios = Array.from(this.el.querySelectorAll('ion-radio')).filter(radio => !radio.disabled);
+    const radios = this.getRadios().filter(radio => !radio.disabled);
 
     // Only move the radio if the current focus is in the radio group
     if (ev.target && radios.includes(ev.target)) {
@@ -141,10 +141,15 @@ export class RadioGroup implements ComponentInterface {
       }
 
       // Update the radio group value when a user presses the
-      // space bar on top of a selected radio (only applies
-      // to radios in a select popover)
+      // space bar on top of a selected radio
       if (['Space'].includes(ev.code)) {
-        this.value = current.value;
+        this.value = (this.allowEmptySelection && this.value !== undefined)
+          ? undefined
+          : current.value;
+
+        // Prevent browsers from jumping
+        // to the bottom of the screen
+        ev.preventDefault();
       }
     }
   }

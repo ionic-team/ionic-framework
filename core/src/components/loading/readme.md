@@ -37,6 +37,28 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+## Interfaces
+
+### LoadingOptions
+
+```typescript
+interface LoadingOptions {
+  spinner?: SpinnerTypes | null;
+  message?: string | IonicSafeString;
+  cssClass?: string | string[];
+  showBackdrop?: boolean;
+  duration?: number;
+  translucent?: boolean;
+  animated?: boolean;
+  backdropDismiss?: boolean;
+  mode?: Mode;
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 <!-- Auto Generated Below -->
 
@@ -131,6 +153,49 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
+/* Using with useIonLoading Hook */
+
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
+
+interface LoadingProps {}
+
+const LoadingExample: React.FC<LoadingProps> = () => {
+  const [present, dismiss] = useIonLoading();
+  /**
+   * The recommended way of dismissing is to use the `dismiss` property
+   * on `IonLoading`, but the `dismiss` method returned from `useIonLoading`
+   * can be used for more complex scenarios.
+   */
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() => {
+            present({
+              message: 'Loading...',
+              duration: 3000
+            })
+          }}
+        >
+          Show Loading
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('Loading', 2000, 'dots')}
+        >
+          Show Loading using params
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonLoading Component */
+
 import React, { useState } from 'react';
 import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
@@ -275,7 +340,7 @@ Developers can also use this component directly in their template:
     cssClass="my-custom-class"
     message="Please wait..."
     :duration="timeout"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-loading>
 </template>

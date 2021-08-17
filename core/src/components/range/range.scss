@@ -82,7 +82,7 @@
   );
 
   @include rtl() {
-    /* stylelint-disable-next-line property-blacklist */
+    /* stylelint-disable-next-line property-disallowed-list */
     left: unset;
   }
 
@@ -104,7 +104,7 @@
   @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
 
   @include rtl() {
-    /* stylelint-disable-next-line property-blacklist */
+    /* stylelint-disable-next-line property-disallowed-list */
     left: unset;
   }
 
@@ -127,7 +127,7 @@
   );
 
   @include rtl() {
-    /* stylelint-disable-next-line property-blacklist */
+    /* stylelint-disable-next-line property-disallowed-list */
     left: unset;
   }
 

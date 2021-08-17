@@ -1,6 +1,7 @@
-import { mount, flushPromises } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/vue';
+import { waitForRouter } from './utils';
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -34,8 +35,9 @@ const Tab2 = {
 }
 
 describe('ion-tabs', () => {
-  (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-
+  beforeAll(() => {
+    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
+  });
   it('should emit will change and did change events when changing tab', async () => {
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
@@ -76,7 +78,7 @@ describe('ion-tabs', () => {
     expect(tabs.emitted().ionTabsDidChange[0]).toEqual([{ tab: 'tab1' }]);
 
     router.push('/tab2')
-    await flushPromises()
+    await waitForRouter()
 
     expect(tabs.emitted().ionTabsWillChange.length).toEqual(2);
     expect(tabs.emitted().ionTabsWillChange[1]).toEqual([{ tab: 'tab2' }]);
@@ -124,7 +126,7 @@ describe('ion-tabs', () => {
     expect(tabs.emitted().ionTabsDidChange[0]).toEqual([{ tab: 'tab1' }]);
 
     router.push('/tab1')
-    await flushPromises()
+    await waitForRouter()
 
     expect(tabs.emitted().ionTabsWillChange.length).toEqual(1);
     expect(tabs.emitted().ionTabsDidChange.length).toEqual(1);
@@ -178,9 +180,7 @@ describe('ion-tabs', () => {
     expect(tabs.emitted().ionTabsDidChange[0]).toEqual([{ tab: 'tab1' }]);
 
     router.push('/sibling');
-    await flushPromises();
-
-    await new Promise((r) => setTimeout(r, 100));
+    await waitForRouter()
 
     expect(tabs.emitted().ionTabsWillChange.length).toEqual(1);
     expect(tabs.emitted().ionTabsDidChange.length).toEqual(1);
@@ -236,9 +236,7 @@ describe('ion-tabs', () => {
     expect(tabs.emitted().ionTabsDidChange[0]).toEqual([{ tab: 'tab1' }]);
 
     router.push('/tab1/child');
-    await flushPromises();
-
-    await new Promise((r) => setTimeout(r, 100));
+    await waitForRouter()
 
     expect(tabs.emitted().ionTabsWillChange.length).toEqual(1);
     expect(tabs.emitted().ionTabsDidChange.length).toEqual(1);

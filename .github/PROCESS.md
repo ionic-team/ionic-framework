@@ -77,7 +77,15 @@ NOTE: be sure to perform those actions in the order stated. If you add the comme
 
 If there is a response to the question, the bot will remove the `needs: reply` and apply the `triage` label. The issue will then go through the triage handling again.
 
-If there is no response within 30 days, the issue will be closed and locked.
+If there is no response within 14 days, the issue will be closed and locked.
+
+### Missing Code Reproduction
+
+If the information the submitter has supplied is not enough for you to reproduce the issue, add the `ionitron: needs reproduction` label. An automated comment will be added to the thread asking the submitter to provide a code reproduction of the issue.
+
+This label can also be added when the submitter has supplied some code, but not enough for you to reproduce the issue (i.e. code snippets).
+
+Issues with this label are not automatically closed and locked, so we manually close and lock them if there is no response within 14 days.
 
 ## Workflow
 
@@ -142,7 +150,7 @@ See the [steps for releasing](#releasing) below for detailed information on how 
 
 ### Version Branches
 
-Once a release has shipped and the release branch has been merged into `stable` and `master` it should also be merged into its corrsponding version branch. These version branches allow us to ship updates for specific versions of the framework (i.e. Lets us ship a bug fix that only affects 4.2.x).
+Once a release has shipped and the release branch has been merged into `stable` and `master` it should also be merged into its corresponding version branch. These version branches allow us to ship updates for specific versions of the framework (i.e. Lets us ship a bug fix that only affects 4.2.x).
 
 Patch releases should be merged into their corresponding version branches. For example, a `release-4.1.1` branch should be merged into the `4.1.x` version branch and a `release-5.0.1` branch should be merged into the `5.0.x` version branch.
 

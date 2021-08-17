@@ -42,10 +42,7 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
   'type',
   'ionFocus',
   'ionBlur'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonButtons = /*@__PURE__*/ defineContainer<JSX.IonButtons>('ion-buttons', [
@@ -64,10 +61,7 @@ export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', [
   'routerDirection',
   'routerAnimation',
   'target'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonCardContent = /*@__PURE__*/ defineContainer<JSX.IonCardContent>('ion-card-content');
@@ -103,7 +97,11 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
 ],
 {
   "modelProp": "checked",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -186,7 +184,11 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -195,10 +197,7 @@ export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
   'vertical',
   'edge',
   'activated'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', [
@@ -218,10 +217,7 @@ export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion
   'closeIcon',
   'ionFocus',
   'ionBlur'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonFabList = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab-list', [
@@ -306,7 +302,11 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -324,10 +324,7 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', [
   'routerDirection',
   'target',
   'type'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonItemDivider = /*@__PURE__*/ defineContainer<JSX.IonItemDivider>('ion-item-divider', [
@@ -460,7 +457,11 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -472,7 +473,11 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -496,7 +501,11 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -553,6 +562,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
   'placeholder',
   'searchIcon',
   'showCancelButton',
+  'showClearButton',
   'spellcheck',
   'type',
   'value',
@@ -566,7 +576,11 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -582,7 +596,11 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -594,7 +612,11 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -618,7 +640,11 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -710,7 +736,11 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -737,7 +767,11 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
 ],
 {
   "modelProp": "checked",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": [
+    "v-ionChange",
+    "v-ion-change"
+  ],
+  "externalModelUpdateEvent": "ionChange"
 });
 
 

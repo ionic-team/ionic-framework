@@ -7,7 +7,25 @@ const fs = require('fs');
 [
   // core
   {
-    files: ['../core/dist/index.js', '../core/dist/ionic/index.esm.js']
+    files: [
+      '../core/css/core.css', 
+      '../core/css/core.css.map', 
+      '../core/css/normalize.css', 
+      '../core/css/normalize.css.map', 
+      '../core/components/index.js', 
+      '../core/components/index.d.ts', 
+      '../core/components/package.json',
+      '../core/dist/index.js', 
+      '../core/dist/ionic/index.esm.js', 
+    ]
+  },
+  // hydrate
+  {
+    files: [
+      '../core/hydrate/index.js',
+      '../core/hydrate/index.d.ts',
+      '../core/hydrate/package.json'
+    ]
   },
   // angular
   {

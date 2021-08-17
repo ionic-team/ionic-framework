@@ -16,7 +16,17 @@ export { IonApp } from './components/IonApp';
 
 export * from './components/Overlays';
 
-export { IonKeyboardRef, IonRouter, useBackButton, useIonRouter, useKeyboard } from './hooks';
+export {
+  IonKeyboardRef,
+  IonRouter,
+  useBackButton,
+  useIonRouter,
+  useKeyboard,
+  onIonViewWillEnter,
+  onIonViewDidEnter,
+  onIonViewWillLeave,
+  onIonViewDidLeave
+} from './hooks';
 
 export {
   modalController,
@@ -60,7 +70,32 @@ export {
   getTimeGivenProgression,
 
   // Hardware Back Button
-  BackButtonEvent
+  BackButtonEvent,
+
+  SpinnerTypes,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
+
+  LoadingOptions,
+
+  ModalOptions,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
+
+  PopoverOptions,
+
+  ToastOptions,
+  ToastButton
 } from '@ionic/core';
 
 // Icons that are used by internal components

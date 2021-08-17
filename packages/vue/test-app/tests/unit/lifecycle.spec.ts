@@ -1,7 +1,8 @@
-import { mount, flushPromises } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { waitForRouter } from './utils';
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -48,6 +49,9 @@ const router = createRouter({
 });
 
 describe('Lifecycle Events', () => {
+  beforeAll(() => {
+    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
+  });
   it('Triggers lifecycle events', async () => {
     // Initial render
     router.push('/');
@@ -78,10 +82,7 @@ describe('Lifecycle Events', () => {
     // Navigate to 2nd page
     router.push('/2');
     jest.resetAllMocks();
-    await flushPromises();
-
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-    await new Promise((r) => setTimeout(r, 100));
+    await waitForRouter();
 
     // Page 1 lifecycle hooks
     expect(Page1.ionViewDidEnter).not.toHaveBeenCalled();

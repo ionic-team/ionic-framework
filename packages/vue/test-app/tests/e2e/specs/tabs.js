@@ -85,6 +85,8 @@ describe('Tabs', () => {
   });
 
   it('should go back from a tabs page to a non-tabs page using ion-back-button', () => {
+    cy.visit('http://localhost:8080');
+
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
 
@@ -97,6 +99,8 @@ describe('Tabs', () => {
   });
 
   it('should properly clear stack when leaving tabs', () => {
+    cy.visit('http://localhost:8080/');
+
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
 
@@ -147,6 +151,140 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab3-secondary');
     cy.ionPageHidden('tab1-secondary');
   });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should show correct tab when switching between tabbed and non-tabbed contexts', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('[data-pageid="routing"] #tab1').click();
+    cy.ionPageHidden('routing');
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab2');
+
+    cy.get('[data-pageid="tab2"] #routing').click();
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('tabs');
+
+    cy.get('[data-pageid="routing"] #tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('routing');
+    cy.ionPageHidden('tab2');
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.routerPush('/');
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/tabs/tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionPageHidden('home');
+
+    cy.ionPageVisible('tab2');
+    cy.ionPageVisible('tabs');
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts - new tabs setup', () => {
+    cy.visit('http://localhost:8080/tabs-new/tab1');
+
+    cy.routerPush('/');
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/tabs-new/tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionPageHidden('home');
+
+    cy.ionPageVisible('tab2');
+    cy.ionPageVisible('tabs');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22597
+  it('should deselect old tab button when going to a tab that does not have a tab button', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').should('have.class', 'tab-selected');
+
+    cy.routerPush('/tabs/tab4');
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab4');
+
+    cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23101
+  it('should return to previous tab instance when using the ion-back-button', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.get('#tabs-secondary').click();
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('tab1-secondary');
+
+    cy.get('ion-tab-button#tab-button-tab2-secondary').click();
+    cy.ionPageHidden('tab1-secondary');
+    cy.ionPageVisible('tab2-secondary');
+
+    cy.get('ion-tab-button#tab-button-tab1-secondary').click();
+    cy.ionPageHidden('tab2-secondary');
+    cy.ionPageVisible('tab1-secondary');
+
+    cy.ionBackClick('tab1-secondary');
+    cy.ionPageDoesNotExist('tabs-secondary');
+    cy.ionPageVisible('tab1');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23087
+  it('should return to correct view and url when going back from child page after switching tabs', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.get('#child-one').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab1childone');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1childone');
+    cy.ionPageVisible('tab2');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageHidden('tab2');
+    cy.ionPageVisible('tab1childone');
+
+    cy.ionBackClick('tab1childone');
+    cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageVisible('tab1');
+
+    cy.url().should('include', '/tabs/tab1');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22847
+  it('should support dynamic tabs', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button').its('length').should('equal', 3);
+    cy.get('ion-tab-button#tab-button-tab1').should('have.class', 'tab-selected');
+
+    cy.get('#add-tab').click();
+
+    cy.get('ion-tab-button').its('length').should('equal', 4);
+
+    cy.get('ion-tab-button#tab-button-tab4').click();
+    cy.ionPageVisible('tab4');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
+    cy.get('ion-tab-button#tab-button-tab4').should('have.class', 'tab-selected');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {
@@ -158,11 +296,15 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1')
   });
 
-  it('should swipe and abort', () => {
+  // TODO: Flaky if test runner is slow
+  // Delays between gesture movements
+  // cause swipe back gesture to think
+  // velocity is higher than it actually is
+  /*it('should swipe and abort', () => {
     cy.ionSwipeToGoBack();
     cy.ionPageHidden('home');
     cy.ionPageVisible('tab1');
-  });
+  });*/
 
   it('should swipe and go back to home', () => {
     cy.ionSwipeToGoBack(true);

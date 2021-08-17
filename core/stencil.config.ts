@@ -87,23 +87,20 @@ export const config: Config = {
         'ion-app',
         'ion-icon'
       ],
-      routerLinkComponents: [
-        'ion-card',
-        'ion-item',
-        'ion-button',
-        'ion-fab-button',
-
-      ],
       componentModels: [
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'ionChange'
+          // TODO Ionic v6 remove in favor of v-ion-change
+          event: ['v-ionChange', 'v-ion-change'],
+          externalEvent: 'ionChange'
         },
         {
           elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
           targetAttr: 'value',
-          event: 'ionChange'
+          // TODO Ionic v6 remove in favor of v-ion-change
+          event: ['v-ionChange', 'v-ion-change'],
+          externalEvent: 'ionChange'
         }
       ],
     }),
@@ -116,9 +113,16 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
-    // {
-    //   type: 'dist-custom-elements-bundle',
-    // },
+    {
+      type: 'dist-custom-elements',
+      dir: 'components',
+      copy: [{
+        src: '../scripts/custom-elements',
+        dest: 'components',
+        warn: true
+      }],
+      includeGlobalScripts: false
+    },
     {
       type: 'docs-readme',
       strict: true
