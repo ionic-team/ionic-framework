@@ -43,7 +43,7 @@ export class ItemSliding implements ComponentInterface {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
   private gesture?: Gesture;
-  private initialOverflow: string | undefined;
+  private initialContentScrollY: boolean | undefined;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -253,23 +253,22 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
-  // Toggles between `--overflow: hidden` and the initial provided value.
-  private toggleOverflow() {
-    const style = this.el.closest('ion-content')?.style;
-    if (style === undefined) { return; }
+  private toggleContentScrollY() {
+    const content = this.el.closest('ion-content');
+    if (content === null) { return }
 
-    if (this.initialOverflow !== undefined) {
-      style.setProperty('--overflow', this.initialOverflow);
-      this.initialOverflow = undefined;
+    if (this.initialContentScrollY === undefined) {
+      this.initialContentScrollY = content.scrollY;
+      content.scrollY = false;
     } else {
-      this.initialOverflow = style.getPropertyValue('--overflow');
-      style.setProperty('--overflow', 'hidden');
+      content.scrollY = this.initialContentScrollY;
+      this.initialContentScrollY = undefined;
     }
   }
 
   private onStart() {
     // Prevent scrolling during gesture
-    this.toggleOverflow();
+    this.toggleContentScrollY();
 
     openSlidingItem = this.el;
 
@@ -316,7 +315,7 @@ export class ItemSliding implements ComponentInterface {
 
   private onEnd(gesture: GestureDetail) {
     // Re-enable scrolling when gesture ends
-    this.toggleOverflow();
+    this.toggleContentScrollY();
 
     const velocity = gesture.velocityX;
 
