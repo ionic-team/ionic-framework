@@ -56,6 +56,9 @@ export const DateTimeExamples: React.FC = () => {
       {/* Full width size */}
       <IonDatetime size="cover"></IonDatetime>
       
+      {/* Custom Hour Cycle */}
+      <IonDatetime hourCycle="h23"></IonDatetime>
+
       {/* Custom title */}
       <IonDatetime>
         <div slot="title">My Custom Title</div>

@@ -45,11 +45,10 @@ describe('generateTime()', () => {
       hour: 5,
       minute: 43
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today);
+    const { hours, minutes } = generateTime(today);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
-    expect(use24Hour).toEqual(false);
   });
   it('should filter according to min', () => {
     const today = {
@@ -66,11 +65,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, min);
+    const { hours, minutes } = generateTime(today, false, min);
 
     expect(hours.length).toEqual(11);
     expect(minutes.length).toEqual(20);
-    expect(use24Hour).toEqual(false);
   })
   it('should not filter according to min if not on reference day', () => {
     const today = {
@@ -87,11 +85,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, min);
+    const { hours, minutes } = generateTime(today, 'h12', min);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
-    expect(use24Hour).toEqual(false);
   })
   it('should filter according to max', () => {
     const today = {
@@ -108,11 +105,10 @@ describe('generateTime()', () => {
       hour: 7,
       minute: 44
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(7);
     expect(minutes.length).toEqual(45);
-    expect(use24Hour).toEqual(false);
   })
   it('should not filter according to min if not on reference day', () => {
     const today = {
@@ -129,11 +125,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
-    expect(use24Hour).toEqual(false);
   })
   it('should return no values for a day less than the min', () => {
     const today = {
@@ -150,11 +145,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, min);
+    const { hours, minutes } = generateTime(today, 'h12', min);
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
-    expect(use24Hour).toEqual(false);
   })
   it('should return no values for a day greater than the max', () => {
     const today = {
@@ -171,11 +165,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
-    expect(use24Hour).toEqual(false);
   })
   it('should allow all hours and minutes if not set in min/max', () => {
     const today = {
@@ -196,11 +189,10 @@ describe('generateTime()', () => {
       year: 2021
     }
 
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, min, max);
+    const { hours, minutes } = generateTime(today, 'h12', min, max);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
-    expect(use24Hour).toEqual(false);
   })
   it('should allow certain hours and minutes based on minuteValues and hourValues', () => {
     const today = {
@@ -211,7 +203,7 @@ describe('generateTime()', () => {
       minute: 43
     }
 
-    const { hours, minutes, use24Hour } = generateTime('en-US', today, undefined, undefined, [1,2,3], [10,15,20]);
+    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1,2,3], [10,15,20]);
 
     expect(hours).toStrictEqual([1,2,3]);
     expect(minutes).toStrictEqual([10,15,20]);

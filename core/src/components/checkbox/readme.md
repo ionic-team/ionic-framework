@@ -271,11 +271,11 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                                    | Type                                     |
-| ----------- | ---------------------------------------------- | ---------------------------------------- |
-| `ionBlur`   | Emitted when the checkbox loses focus.         | `CustomEvent<void>`                      |
-| `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
-| `ionFocus`  | Emitted when the checkbox has focus.           | `CustomEvent<void>`                      |
+| Event       | Description                                    | Type                                          |
+| ----------- | ---------------------------------------------- | --------------------------------------------- |
+| `ionBlur`   | Emitted when the checkbox loses focus.         | `CustomEvent<void>`                           |
+| `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail<any>>` |
+| `ionFocus`  | Emitted when the checkbox has focus.           | `CustomEvent<void>`                           |
 
 
 ## Shadow Parts

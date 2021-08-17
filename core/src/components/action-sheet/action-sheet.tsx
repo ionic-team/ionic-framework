@@ -156,11 +156,11 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   private async buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
-      return this.dismiss(undefined, role);
+      return this.dismiss(button.data, role);
     }
     const shouldDismiss = await this.callButtonHandler(button);
     if (shouldDismiss) {
-      return this.dismiss(undefined, button.role);
+      return this.dismiss(button.data, button.role);
     }
     return Promise.resolve();
   }

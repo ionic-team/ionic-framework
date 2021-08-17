@@ -42,6 +42,12 @@ describe('isLeapYear()', () => {
 describe('is24Hour()', () => {
   it('should return true if the locale uses 24 hour time', () => {
     expect(is24Hour('en-US')).toBe(false);
+    expect(is24Hour('en-US', 'h23')).toBe(true);
+    expect(is24Hour('en-US', 'h12')).toBe(false);
+    expect(is24Hour('en-US-u-hc-h23')).toBe(true);
     expect(is24Hour('en-GB')).toBe(true);
+    expect(is24Hour('en-GB', 'h23')).toBe(true);
+    expect(is24Hour('en-GB', 'h12')).toBe(false);
+    expect(is24Hour('en-GB-u-hc-h12')).toBe(false);
   })
 })
