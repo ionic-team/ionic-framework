@@ -97,13 +97,13 @@ export const IonRouterOutlet = defineComponent({
        * to respond to this gesture, so check
        * to make sure the view is in the outlet we want.
        */
-      const routeInfo = ionRouter.getCurrentRouteInfo();
+      const routeInfo = ionRouter.getLeavingRouteInfo();
       const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
 
       return !!enteringViewItem;
     }
     const onStart = async () => {
-      const routeInfo = ionRouter.getCurrentRouteInfo();
+      const routeInfo = ionRouter.getLeavingRouteInfo();
       const { routerAnimation } = routeInfo;
       const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
       const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
@@ -286,7 +286,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
+            viewStacks.unmountLeavingViews(id, enteringViewItem, leavingViewItem);
           }
+        } else {
+          viewStacks.mountIntermediaryViews(id, enteringViewItem, leavingViewItem);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
