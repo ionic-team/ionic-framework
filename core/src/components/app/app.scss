@@ -1,11 +1,3 @@
-/**
- * This ensures that a white space
- * does not appear below the app when
- * the url bar collapses on iOS 15+.
- */
-ion-app {
-  height: 100vh;
-}
 
 html.plt-mobile ion-app {
   user-select: none;
