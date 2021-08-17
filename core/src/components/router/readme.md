@@ -13,6 +13,28 @@ That means the `ion-router` never touches the DOM, it does NOT show the componen
 
 In order to configure this relationship between components (to load/select) and URLs, `ion-router` uses a declarative syntax using JSX/HTML to define a tree of routes.
 
+## Interfaces
+
+### RouterEventDetail
+
+```typescript
+interface RouterEventDetail {
+  from: string | null;
+  redirectedFrom: string | null;
+  to: string;
+}
+```
+
+### RouterCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface RouterCustomEvent extends CustomEvent {
+  detail: RouterEventDetail;
+  target: HTMLIonRouterElement;
+}
+```
 
 <!-- Auto Generated Below -->
 

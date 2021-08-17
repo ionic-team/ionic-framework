@@ -1,9 +1,9 @@
 
 export interface SearchbarChangeEventDetail {
-  value: string | undefined;
+  value?: string;
 }
 
 export interface SearchbarCustomEvent extends CustomEvent {
-  target: HTMLIonSearchbarElement;
   detail: SearchbarChangeEventDetail;
+  target: HTMLIonSearchbarElement;
 }

@@ -17,8 +17,8 @@ export interface RouterEventDetail {
 }
 
 export interface RouterCustomEvent extends CustomEvent {
-  target: HTMLIonRouterElement;
   detail: RouterEventDetail;
+  target: HTMLIonRouterElement;
 }
 
 export interface RouteRedirect {

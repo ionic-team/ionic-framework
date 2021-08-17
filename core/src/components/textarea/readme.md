@@ -6,7 +6,26 @@ Unlike the native textarea element, the Ionic textarea does not support loading 
 
 The textarea component accepts the [native textarea attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea) in addition to the Ionic properties.
 
+## Interfaces
 
+### TextareaChangeEventDetail
+
+```typescript
+interface TextareaChangeEventDetail {
+  value?: string | null;
+}
+```
+
+### TextareaCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface TextareaCustomEvent extends CustomEvent {
+  detail: TextareaChangeEventDetail;
+  target: HTMLIonTextareaElement;
+}
+```
 
 <!-- Auto Generated Below -->
 

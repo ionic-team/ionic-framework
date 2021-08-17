@@ -163,6 +163,28 @@ ion-toggle {
 }
 ```
 
+## Interfaces
+
+### ToggleChangeEventDetail
+
+```typescript
+interface ToggleChangeEventDetail<T = any> {
+  value: T;
+  checked: boolean;
+}
+```
+
+### TextareaCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface ToggleCustomEvent<T = any> extends CustomEvent {
+  detail: ToggleChangeEventDetail<T>;
+  target: HTMLIonToggleElement;
+}
+```
+
 
 <!-- Auto Generated Below -->
 

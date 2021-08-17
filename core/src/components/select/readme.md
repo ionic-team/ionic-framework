@@ -120,6 +120,27 @@ Customizing the interface dialog should be done by following the Customization s
 
 However, the Select Option does set a class for easier styling and allows for the ability to pass a class to the overlay option, see the [Select Options documentation](../select-option) for usage examples of customizing options.
 
+## Interfaces
+
+### SelectChangeEventDetail
+
+```typescript
+interface SelectChangeEventDetail<T = any> {
+  value: T;
+}
+```
+
+### SelectCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface SelectCustomEvent<T = any> extends CustomEvent {
+  detail: SelectChangeEventDetail<T>;
+  target: HTMLIonSelectElement;
+}
+```
+
 <!-- Auto Generated Below -->
 
 

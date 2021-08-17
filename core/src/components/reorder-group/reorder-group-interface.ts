@@ -6,6 +6,6 @@ export interface ItemReorderEventDetail {
 }
 
 export interface ItemReorderCustomEvent extends CustomEvent {
-  target: HTMLIonReorderGroupElement;
   detail: ItemReorderEventDetail;
+  target: HTMLIonReorderGroupElement;
 }

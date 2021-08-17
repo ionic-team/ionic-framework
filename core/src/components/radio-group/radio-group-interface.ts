@@ -4,6 +4,6 @@ export interface RadioGroupChangeEventDetail<T = any> {
 }
 
 export interface RadioGroupCustomEvent<T = any> extends CustomEvent {
-  target: HTMLIonRadioGroupElement;
   detail: RadioGroupChangeEventDetail<T>;
+  target: HTMLIonRadioGroupElement;
 }

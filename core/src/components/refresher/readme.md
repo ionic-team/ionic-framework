@@ -24,6 +24,26 @@ The iOS native `ion-refresher` relies on rubber band scrolling in order to work 
 
 Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](../spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
+## Interfaces
+
+### RefresherEventDetail
+
+```typescript
+interface RefresherEventDetail {
+  complete(): void;
+}
+```
+
+### RefresherCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface RefresherCustomEvent extends CustomEvent {
+  detail: RefresherEventDetail;
+  target: HTMLIonRefresherElement;
+}
+```
 
 <!-- Auto Generated Below -->
 
