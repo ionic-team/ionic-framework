@@ -30,7 +30,10 @@
 <ion-datetime size="cover"></ion-datetime>
 
 <!-- Custom Hour Cycle -->
-<ion-datetime hour-cycle="h23"></ion-datetime>
+<ion-datetime hourCycle="h23"></ion-datetime>
+
+<!-- Custom first day of week -->
+<ion-datetime [firstDayOfWeek]="1"></ion-datetime>
 
 <!-- Custom title -->
 <ion-datetime>

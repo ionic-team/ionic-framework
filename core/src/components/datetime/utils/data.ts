@@ -52,11 +52,11 @@ const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
  * MD should display days such as "M"
  * or "T".
  */
-export const getDaysOfWeek = (locale: string, mode: Mode) => {
+export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) => {
   /**
    * Nov 1st, 2020 starts on a Sunday.
-   * ion-datetime assumes weeks start
-   * on Sunday.
+   * ion-datetime assumes weeks start on Sunday,
+   * but is configurable via `firstDayOfWeek`.
    */
   const weekdayFormat = mode === 'ios' ? 'short' : 'narrow';
   const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat })
@@ -67,7 +67,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode) => {
    * For each day of the week,
    * get the day name.
    */
-  for (let i = 0; i < 7; i++) {
+  for (let i = firstDayOfWeek; i < firstDayOfWeek + 7; i++) {
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate() + i);
 
@@ -81,11 +81,33 @@ export const getDaysOfWeek = (locale: string, mode: Mode) => {
  * Returns an array containing all of the
  * days in a month for a given year. Values are
  * aligned with a week calendar starting on
- * Sunday using null values.
+ * the firstDayOfWeek value (Sunday by default)
+ * using null values.
  */
-export const getDaysOfMonth = (month: number, year: number) => {
+export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: number) => {
   const numDays = getNumDaysInMonth(month, year);
-  const offset = new Date(`${month}/1/${year}`).getDay() - 1;
+  const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
+
+  /**
+   * To get the first day of the month aligned on the correct
+   * day of the week, we need to determine how many "filler" days
+   * to generate. These filler days as empty/disabled buttons
+   * that fill the space of the days of the week before the first
+   * of the month.
+   *
+   * There are two cases here:
+   *
+   * 1. If firstOfMonth = 4, firstDayOfWeek = 0 then the offset
+   * is (4 - (0 + 1)) = 3. Since the offset loop goes from 0 to 3 inclusive,
+   * this will generate 4 filler days (0, 1, 2, 3), and then day of week 4 will have
+   * the first day of the month.
+   *
+   * 2. If firstOfMonth = 2, firstDayOfWeek = 4 then the offset
+   * is (6 - (4 - 2)) = 4. Since the offset loop goes from 0 to 4 inclusive,
+   * this will generate 5 filler days (0, 1, 2, 3, 4), and then day of week 5 will have
+   * the first day of the month.
+   */
+  const offset = firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
 
   let days = [];
   for (let i = 1; i <= numDays; i++) {

@@ -729,6 +729,10 @@ export namespace Components {
          */
         "doneText": string;
         /**
+          * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
+         */
+        "firstDayOfWeek": number;
+        /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
         "hourCycle"?: 'h23' | 'h12';
@@ -4296,6 +4300,10 @@ declare namespace LocalJSX {
           * The text to display on the picker's "Done" button.
          */
         "doneText"?: string;
+        /**
+          * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
+         */
+        "firstDayOfWeek"?: number;
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */

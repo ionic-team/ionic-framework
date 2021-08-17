@@ -93,9 +93,9 @@ There are 4 primary hour cycle types:
 
 >  Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/hourCycle
 
-There may be scenarios where you need to have more control over which hour cycle is used. This is where the `hour-cycle` property can help.
+There may be scenarios where you need to have more control over which hour cycle is used. This is where the `hourCycle` property can help.
 
-In the following example, we can use the `hour-cycle` property to force `ion-datetime` to use the 12 hour cycle even though the locale is `en-GB`, which uses a 24 hour cycle by default:
+In the following example, we can use the `hourCycle` property to force `ion-datetime` to use the 12 hour cycle even though the locale is `en-GB`, which uses a 24 hour cycle by default:
 
 ```html
 <ion-datetime hour-cycle="h12" locale="en-GB"></ion-datetime>
@@ -110,6 +110,18 @@ For example, if you wanted to use a 12 hour cycle with the `en-GB` locale, you c
 ```
 
 `ion-datetime` currently supports the `h12` and `h23` hour cycle types. Interested in seeing support for `h11` and `h24` added to `ion-datetime`? [Let us know!](https://github.com/ionic-team/ionic-framework/issues/23750)
+
+### Setting the First Day of the Week
+
+For `ion-datetime`, the default first day of the week is Sunday. As of 2021, there is no browser API that lets Ionic automatically determine the first day of the week based on a device's locale, though there is on-going work regarding this (see: [TC39 GitHub](https://github.com/tc39/ecma402/issues/6)).
+
+To customize the first day of the week, developers can use the `firstDayOfWeek` property. This property takes in a number between `0` and `6` where `0` represents Sunday and `6` represents Saturday.
+
+For example, if you wanted to have the first day of the week be Monday, you could set `firstDayOfWeek` to `1`:
+
+```html
+<ion-datetime first-day-of-week="1"></ion-datetime>
+```
 
 ## Parsing Dates
 
@@ -210,7 +222,10 @@ dates in JavaScript.
 <ion-datetime size="cover"></ion-datetime>
 
 <!-- Custom Hour Cycle -->
-<ion-datetime hour-cycle="h23"></ion-datetime>
+<ion-datetime hourCycle="h23"></ion-datetime>
+
+<!-- Custom first day of week -->
+<ion-datetime [firstDayOfWeek]="1"></ion-datetime>
 
 <!-- Custom title -->
 <ion-datetime>
@@ -296,6 +311,9 @@ export class MyComponent {
 
 <!-- Custom Hour Cycle -->
 <ion-datetime hour-cycle="h23"></ion-datetime>
+
+<!-- Custom first day of week -->
+<ion-datetime first-day-of-week="1"></ion-datetime>
 
 <!-- Custom title -->
 <ion-datetime>
@@ -393,6 +411,9 @@ export const DateTimeExamples: React.FC = () => {
       
       {/* Custom Hour Cycle */}
       <IonDatetime hourCycle="h23"></IonDatetime>
+      
+      {/* Custom first day of week */}
+      <IonDatetime firstDayOfWeek={1}></IonDatetime>
 
       {/* Custom title */}
       <IonDatetime>
@@ -480,6 +501,9 @@ export class DatetimeExample {
       
       {/* Custom Hour Cycle */}
       <ion-datetime hourCycle="h23"></ion-datetime>,
+      
+      {/* Custom first day of week */}
+      <ion-datetime firstDayOfWeek={1}></ion-datetime>,
 
       {/* Custom title */}
       <ion-datetime>
@@ -543,6 +567,9 @@ export class DatetimeExample {
   
   <!-- Custom Hour Cycle -->
   <ion-datetime hour-cycle="h23"></ion-datetime>
+  
+  <!-- Custom first day of week -->
+  <ion-datetime first-day-of-week="1"></ion-datetime>
 
   <!-- Custom title -->
   <ion-datetime>
@@ -617,6 +644,7 @@ export class DatetimeExample {
 | `dayValues`            | `day-values`              | Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.                                    | `number \| number[] \| string \| undefined`      | `undefined`    |
 | `disabled`             | `disabled`                | If `true`, the user cannot interact with the datetime.                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                                        | `false`        |
 | `doneText`             | `done-text`               | The text to display on the picker's "Done" button.                                                                                                                                                                                                                                                                                                                                                                                                                                                | `string`                                         | `'Done'`       |
+| `firstDayOfWeek`       | `first-day-of-week`       | The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.                                                                                                                                                                                                                                                                                                                                                                                              | `number`                                         | `0`            |
 | `hourCycle`            | `hour-cycle`              | The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.                                                                                                                                                                                                                                                                                                                                                                                                | `"h12" \| "h23" \| undefined`                    | `undefined`    |
 | `hourValues`           | `hour-values`             | Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.                                                                                                                                                                                         | `number \| number[] \| string \| undefined`      | `undefined`    |
 | `locale`               | `locale`                  | The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.                                                                                                                                                                                                                                                                                                                                          | `string`                                         | `'default'`    |

@@ -275,6 +275,12 @@ export class Datetime implements ComponentInterface {
   @Prop() locale = 'default';
 
   /**
+   * The first day of the week to use for `ion-datetime`. The
+   * default value is `0` and represents Sunday.
+   */
+  @Prop() firstDayOfWeek = 0;
+
+  /**
    * The value of the datetime as a valid ISO 8601 datetime string.
    */
   @Prop({ mutable: true }) value?: string | null;
@@ -1305,7 +1311,7 @@ export class Datetime implements ComponentInterface {
           </div>
         </div>
         <div class="calendar-days-of-week">
-          {getDaysOfWeek(this.locale, mode).map(d => {
+          {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map(d => {
             return <div class="day-of-week">{d}</div>
           })}
         </div>
@@ -1320,7 +1326,7 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="calendar-month">
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year).map((dateObject, index) => {
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts, this.parsedDayValues);

@@ -244,8 +244,8 @@ export class IonContent {
 }
 export declare interface IonDatetime extends Components.IonDatetime {
 }
-@ProxyCmp({ inputs: ["cancelText", "color", "dayValues", "disabled", "doneText", "hourCycle", "hourValues", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "presentation", "readonly", "showDefaultButtons", "showDefaultTimeLabel", "showDefaultTitle", "size", "value", "yearValues"], "methods": ["confirm", "reset", "cancel"] })
-@Component({ selector: "ion-datetime", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["cancelText", "color", "dayValues", "disabled", "doneText", "hourCycle", "hourValues", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "presentation", "readonly", "showDefaultButtons", "showDefaultTimeLabel", "showDefaultTitle", "size", "value", "yearValues"] })
+@ProxyCmp({ inputs: ["cancelText", "color", "dayValues", "disabled", "doneText", "firstDayOfWeek", "hourCycle", "hourValues", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "presentation", "readonly", "showDefaultButtons", "showDefaultTimeLabel", "showDefaultTitle", "size", "value", "yearValues"], "methods": ["confirm", "reset", "cancel"] })
+@Component({ selector: "ion-datetime", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["cancelText", "color", "dayValues", "disabled", "doneText", "firstDayOfWeek", "hourCycle", "hourValues", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "presentation", "readonly", "showDefaultButtons", "showDefaultTimeLabel", "showDefaultTitle", "size", "value", "yearValues"] })
 export class IonDatetime {
   ionCancel!: EventEmitter<CustomEvent>;
   ionChange!: EventEmitter<CustomEvent>;
