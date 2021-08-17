@@ -4,7 +4,7 @@ export interface ToggleChangeEventDetail<T = any> {
   checked: boolean;
 }
 
-export interface ToggleEvent<T = any> extends CustomEvent {
+export interface ToggleCustomEvent<T = any> extends CustomEvent {
   target: HTMLIonToggleElement;
   detail: ToggleChangeEventDetail<T>;
 }

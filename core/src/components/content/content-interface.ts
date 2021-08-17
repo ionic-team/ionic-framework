@@ -11,7 +11,7 @@ export interface ScrollDetail extends GestureDetail, ScrollBaseDetail {
 
 export type ScrollCallback = (detail?: ScrollDetail) => boolean | void;
 
-export interface ScrollBaseEvent extends CustomEvent {
+export interface ScrollBaseCustomEvent extends CustomEvent {
   detail: ScrollBaseDetail;
   target: HTMLIonContentElement;
 }

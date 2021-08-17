@@ -4,7 +4,7 @@ export interface CheckboxChangeEventDetail<T = any> {
   checked: boolean;
 }
 
-export interface CheckboxEvent<T = any> extends CustomEvent {
+export interface CheckboxCustomEvent<T = any> extends CustomEvent {
   detail: CheckboxChangeEventDetail<T>;
   target: HTMLIonCheckboxElement;
 }

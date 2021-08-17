@@ -67,7 +67,7 @@ export interface TransitionInstruction {
   enteringRequiresTransition?: boolean;
 }
 
-export interface NavEvent extends CustomEvent {
+export interface NavCustomEvent extends CustomEvent {
   target: HTMLIonNavElement;
 }
 

@@ -5,7 +5,7 @@ export interface ItemReorderEventDetail {
   complete: (data?: boolean | any[]) => any;
 }
 
-export interface ItemReorderEvent extends CustomEvent {
+export interface ItemReorderCustomEvent extends CustomEvent {
   target: HTMLIonReorderGroupElement;
   detail: ItemReorderEventDetail;
 }

@@ -16,7 +16,7 @@ export interface RouterEventDetail {
   to: string;
 }
 
-export interface RouterEvent extends CustomEvent {
+export interface RouterCustomEvent extends CustomEvent {
   target: HTMLIonRouterElement;
   detail: RouterEventDetail;
 }

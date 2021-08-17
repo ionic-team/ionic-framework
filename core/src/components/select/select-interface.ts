@@ -6,7 +6,7 @@ export interface SelectChangeEventDetail<T = any> {
   value: T;
 }
 
-export interface SelectEvent<T = any> extends CustomEvent {
+export interface SelectCustomEvent<T = any> extends CustomEvent {
   target: HTMLIonSelectElement;
   detail: SelectChangeEventDetail<T>;
 }

@@ -6,7 +6,7 @@ export interface DatetimeChangeEventDetail {
   value?: string | null;
 }
 
-export interface DatetimeEvent extends CustomEvent {
+export interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
   target: HTMLIonDatetimeElement;
 }

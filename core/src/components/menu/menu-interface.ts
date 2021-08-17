@@ -39,7 +39,7 @@ export interface MenuChangeEventDetail {
   open: boolean;
 }
 
-export interface MenuEvent<T = any> extends CustomEvent {
+export interface MenuCustomEvent<T = any> extends CustomEvent {
   detail: T;
   target: HTMLIonMenuElement;
 }

@@ -8,7 +8,7 @@ export interface RangeChangeEventDetail {
   value: RangeValue;
 }
 
-export interface RangeEvent extends CustomEvent {
+export interface RangeCustomEvent extends CustomEvent {
   target: HTMLIonRangeElement;
   detail: RangeChangeEventDetail;
 }

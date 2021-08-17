@@ -3,7 +3,7 @@ export interface InputChangeEventDetail {
   value: string | undefined | null;
 }
 
-export interface InputEvent extends CustomEvent {
+export interface InputCustomEvent extends CustomEvent {
   detail: InputChangeEventDetail;
   target: HTMLIonInputElement;
 }

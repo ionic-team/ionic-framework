@@ -5,7 +5,7 @@ export interface SegmentChangeEventDetail {
   value: string | undefined;
 }
 
-export interface SegmentEvent extends CustomEvent {
+export interface SegmentCustomEvent extends CustomEvent {
   target: HTMLIonSegmentElement;
   detail: SegmentChangeEventDetail;
 }
