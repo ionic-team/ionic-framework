@@ -58,6 +58,9 @@ export const DateTimeExamples: React.FC = () => {
       
       {/* Custom Hour Cycle */}
       <IonDatetime hourCycle="h23"></IonDatetime>
+      
+      {/* Custom first day of week */}
+      <IonDatetime firstDayOfWeek={1}></IonDatetime>
 
       {/* Custom title */}
       <IonDatetime>

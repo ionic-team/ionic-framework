@@ -56,6 +56,9 @@ export class DatetimeExample {
       
       {/* Custom Hour Cycle */}
       <ion-datetime hourCycle="h23"></ion-datetime>,
+      
+      {/* Custom first day of week */}
+      <ion-datetime firstDayOfWeek={1}></ion-datetime>,
 
       {/* Custom title */}
       <ion-datetime>
