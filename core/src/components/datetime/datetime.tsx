@@ -276,7 +276,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The first day of the week to use for `ion-datetime`. The
-   * default value `0` represents Sunday.
+   * default value is `0` and represents Sunday.
    */
   @Prop() firstDayOfWeek = 0;
 

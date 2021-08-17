@@ -729,7 +729,7 @@ export namespace Components {
          */
         "doneText": string;
         /**
-          * The first day of the week to use for `ion-datetime`. The default value `0` represents Sunday.
+          * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek": number;
         /**
@@ -4301,7 +4301,7 @@ declare namespace LocalJSX {
          */
         "doneText"?: string;
         /**
-          * The first day of the week to use for `ion-datetime`. The default value `0` represents Sunday.
+          * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek"?: number;
         /**
