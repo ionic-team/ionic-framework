@@ -16,6 +16,6 @@ export interface ScrollBaseCustomEvent extends CustomEvent {
   target: HTMLIonContentElement;
 }
 
-export interface ScrollEvent extends ScrollBaseEvent {
+export interface ScrollCustomEvent extends ScrollBaseCustomEvent {
   detail: ScrollDetail;
 }
