@@ -879,7 +879,7 @@ export class Nav implements NavOutlet {
       leavingEl,
 
       ...opts,
-      
+
       animationBuilder: opts.animationBuilder || this.animation || config.get('navAnimation')
     };
     const { hasCompleted } = await transition(animationOpts);
