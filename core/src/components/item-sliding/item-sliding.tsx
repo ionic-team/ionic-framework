@@ -43,7 +43,8 @@ export class ItemSliding implements ComponentInterface {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
   private gesture?: Gesture;
-  private initialContentScrollY: boolean | undefined;
+  private closestContent: HTMLIonContentElement | null = null;
+  private initialContentScrollY = true;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -67,6 +68,8 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
+    this.closestContent = this.el.closest('ion-content');
+
     await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -253,22 +256,22 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
-  private toggleContentScrollY() {
-    const content = this.el.closest('ion-content');
-    if (content === null) { return }
+  private disableContentScrollY() {
+    if (this.closestContent === null) { return }
 
-    if (this.initialContentScrollY === undefined) {
-      this.initialContentScrollY = content.scrollY;
-      content.scrollY = false;
-    } else {
-      content.scrollY = this.initialContentScrollY;
-      this.initialContentScrollY = undefined;
-    }
+    this.initialContentScrollY = this.closestContent.scrollY;
+    this.closestContent.scrollY = false;
+  }
+
+  private restoreContentScrollY() {
+    if (this.closestContent === null) { return }
+
+    this.closestContent.scrollY = this.initialContentScrollY;
   }
 
   private onStart() {
     // Prevent scrolling during gesture
-    this.toggleContentScrollY();
+    this.disableContentScrollY();
 
     openSlidingItem = this.el;
 
@@ -314,8 +317,8 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
-    // Re-enable scrolling when gesture ends
-    this.toggleContentScrollY();
+    // Restore ion-content scrollY to initial value when gesture ends
+    this.restoreContentScrollY();
 
     const velocity = gesture.velocityX;
 
