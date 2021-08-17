@@ -725,7 +725,7 @@ export class Datetime implements ComponentInterface {
             year
           });
 
-          workingMonth.scrollIntoView(false);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth;
           calendarBodyRef.style.removeProperty('overflow');
           calendarBodyRef.style.removeProperty('pointer-events');
 
@@ -1146,10 +1146,10 @@ export class Datetime implements ComponentInterface {
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
     if (!nextMonth) { return; }
 
-    nextMonth.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest'
+    calendarBodyRef.scrollTo({
+      top: 0,
+      left: 700,
+      behavior: 'smooth'
     });
   }
 
@@ -1160,10 +1160,10 @@ export class Datetime implements ComponentInterface {
     const prevMonth = calendarBodyRef.querySelector('.calendar-month:first-of-type');
     if (!prevMonth) { return; }
 
-    prevMonth.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest'
+    calendarBodyRef.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
     });
   }
 
