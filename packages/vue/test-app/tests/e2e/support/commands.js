@@ -77,6 +77,12 @@ Cypress.Commands.add('routerReplace', (path) => {
   });
 });
 
+Cypress.Commands.add('routerGo', (n) => {
+  cy.window().then(win => {
+    win.debugRouter.go(n);
+  });
+});
+
 Cypress.Commands.add('ionBackButtonHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('be.visible', true)

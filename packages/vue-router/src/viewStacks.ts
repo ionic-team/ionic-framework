@@ -156,7 +156,75 @@ export const createViewStacks = (router: Router) => {
     return [];
   }
 
+  /**
+   * Given a view stack and entering/leaving views,
+   * determine the position of each item in the stack.
+   * This is useful for removing/adding views in between
+   * the view items when navigating using router.go.
+   * Use this method instead of doing an `Array.findIndex`
+   * for both view items.
+   */
+  const findViewIndex = (viewStack: ViewItem[], enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+    let enteringIndex = -1;
+    let leavingIndex = -1;
+
+    for (let i = 0; i <= viewStack.length - 1; i++) {
+      const viewItem = viewStack[i];
+      if (viewItem === enteringViewItem) {
+        enteringIndex = i;
+      } else if (viewItem === leavingViewItem) {
+        leavingIndex = i;
+      }
+
+      if (enteringIndex > -1 && leavingIndex > -1) {
+        break;
+      }
+    }
+
+    return { enteringIndex, leavingIndex };
+  }
+
+  /**
+   * When navigating backwards, we need to clean up and
+   * leaving pages so that they are re-created if
+   * we ever navigate back to them. This is especially
+   * important when using router.go and stepping back
+   * multiple pages at a time.
+   */
+  const unmountLeavingViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+    const viewStack = viewStacks[outletId];
+    if (!viewStack) return;
+
+    const { enteringIndex: startIndex, leavingIndex: endIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
+      const viewItem = viewStack[i];
+      viewItem.mount = false;
+      viewItem.ionPageElement = undefined;
+      viewItem.ionRoute = false;
+    }
+  }
+
+  /**
+   * When navigating forward it is possible for
+   * developers to step forward over multiple views.
+   * The intermediary views need to be remounted so that
+   * swipe to go back works properly.
+   */
+  const mountIntermediaryViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+    const viewStack = viewStacks[outletId];
+    if (!viewStack) return;
+
+    const { enteringIndex: endIndex, leavingIndex: startIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
+      viewStack[i].mount = true;
+    }
+  }
+
   return {
+    unmountLeavingViews,
+    mountIntermediaryViews,
     clear,
     findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo,

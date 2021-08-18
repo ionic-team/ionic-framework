@@ -104,7 +104,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
           [mode]: true,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
-          'ion-activatable': true,
+          'ion-activatable': true
         })}
       >
         <TagType
