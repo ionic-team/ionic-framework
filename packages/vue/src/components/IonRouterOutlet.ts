@@ -85,13 +85,8 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * to respond to this gesture, so check
        * to make sure the view is in the outlet we want.
        */
-<<<<<<< HEAD
-      const routeInfo = ionRouter.getCurrentRouteInfo();
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
-=======
       const routeInfo = ionRouter.getLeavingRouteInfo();
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
->>>>>>> origin/main
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
 
       return !!enteringViewItem;
     }
