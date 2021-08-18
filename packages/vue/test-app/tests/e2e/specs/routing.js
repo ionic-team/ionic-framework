@@ -192,7 +192,6 @@ describe('Routing', () => {
     cy.ionBackButtonHidden('home');
   });
 
-<<<<<<< HEAD
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22662
   it('should push a new instance of a parameterized page so there is a transition', () => {
     cy.visit('http://localhost:8080');
@@ -209,7 +208,8 @@ describe('Routing', () => {
 
     cy.ionPageVisible('routingparameter-123')
     cy.ionPageDoesNotExist('routingparameter-456');
-=======
+  });
+
   it('should select correct view when using router.go()', () => {
     cy.visit('http://localhost:8080');
 
@@ -333,7 +333,6 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routing');
     cy.ionPageDoesNotExist('routingparameter');
->>>>>>> origin/main
   })
 });
 
