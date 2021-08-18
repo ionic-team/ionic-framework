@@ -188,7 +188,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
     const { el, mode } = this;
     const animated = this.animated && config.getBoolean('animated', true);
-    const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
+    const animationBuilder = opts.animationBuilder || this.animation || config.get('navAnimation');
 
     await transition({
       mode,
