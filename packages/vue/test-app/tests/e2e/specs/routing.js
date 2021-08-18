@@ -218,19 +218,19 @@ describe('Routing', () => {
     cy.ionPageHidden('home');
 
     cy.routerPush('/routing/abc');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('routing');
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
 
     cy.routerGo(2);
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('home');
 
-    cy.ionBackClick('routingparameter');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionBackClick('routingparameter-abc');
+    cy.ionPageDoesNotExist('routingparameter-abc');
     cy.ionPageVisible('routing');
   })
 
@@ -242,12 +242,12 @@ describe('Routing', () => {
     cy.ionPageHidden('home');
 
     cy.routerPush('/routing/abc');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('routing');
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
 
     cy.routerGo(1);
     cy.ionPageHidden('home');
@@ -255,10 +255,10 @@ describe('Routing', () => {
 
     cy.routerGo(1);
     cy.ionPageHidden('routing');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
 
     cy.routerGo(-1);
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
     cy.ionPageVisible('routing');
 
     cy.routerGo(-1);
@@ -274,12 +274,12 @@ describe('Routing', () => {
     cy.ionPageHidden('home');
 
     cy.routerPush('/routing/abc');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('routing');
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
 
     cy.routerPush('/inputs');
     cy.ionPageHidden('home');
@@ -298,19 +298,19 @@ describe('Routing', () => {
     cy.ionPageHidden('home');
 
     cy.routerPush('/routing/abc');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('routing');
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
 
     cy.routerGo(2);
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('home');
 
-    cy.ionBackClick('routingparameter');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionBackClick('routingparameter-abc');
+    cy.ionPageDoesNotExist('routingparameter-abc');
     cy.ionPageVisible('routing');
 
     cy.ionBackClick('routing');
@@ -326,13 +326,13 @@ describe('Routing', () => {
     cy.ionPageHidden('home');
 
     cy.routerPush('/routing/abc');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('routing');
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routing');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
   })
 });
 
@@ -367,21 +367,21 @@ describe('Routing - Swipe to Go Back', () => {
     cy.ionPageHidden('home');
 
     cy.routerPush('/routing/abc');
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('routing');
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
 
     cy.routerGo(2);
-    cy.ionPageVisible('routingparameter');
+    cy.ionPageVisible('routingparameter-abc');
     cy.ionPageHidden('home');
 
     // TODO: This does not work yet
     cy.ionSwipeToGoBack(true);
 
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageDoesNotExist('routingparameter-abc');
     cy.ionPageVisible('routing');
   })
 })
