@@ -1,3 +1,24 @@
+# [6.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v5.6.14...v6.0.0-beta.4) (2021-08-18)
+
+
+### Bug Fixes
+
+* **datetime:** reduce time presentation min height ([#23771](https://github.com/ionic-team/ionic/issues/23771)) ([bc4e826](https://github.com/ionic-team/ionic/commit/bc4e8267aa00e7f162cd01579d8d3adbf3cd7a83)), closes [#23690](https://github.com/ionic-team/ionic/issues/23690)
+* **datetime:** text color on ios mode now accounts for color contrast ([#23729](https://github.com/ionic-team/ionic/issues/23729)) ([5980db4](https://github.com/ionic-team/ionic/commit/5980db44e5a765d15e681471325e916d566eca8d)), closes [#23723](https://github.com/ionic-team/ionic/issues/23723)
+* **item:** highlight now appears above helper/error text ([#23763](https://github.com/ionic-team/ionic/issues/23763)) ([2995e33](https://github.com/ionic-team/ionic/commit/2995e337c8b4612a87eb7111224ec702494fd1d7)), closes [#23510](https://github.com/ionic-team/ionic/issues/23510)
+* **toast:** ToastOptions interface now contains icon prop ([#23737](https://github.com/ionic-team/ionic/issues/23737)) ([fbd32ff](https://github.com/ionic-team/ionic/commit/fbd32ffb2633b17d71a34a8760386a319f2e2bca)), closes [#23736](https://github.com/ionic-team/ionic/issues/23736)
+* **vue:** custom element internal properties are no longer overridden in vue 3.1.0 ([#23738](https://github.com/ionic-team/ionic/issues/23738)) ([ea39c70](https://github.com/ionic-team/ionic/commit/ea39c70b3ec78b2ea5ef64263e8528b543378784)), closes [#23539](https://github.com/ionic-team/ionic/issues/23539)
+* **vue:** modal and popover components now correctly pass properties ([#23761](https://github.com/ionic-team/ionic/issues/23761)) ([578b906](https://github.com/ionic-team/ionic/commit/578b9062dd793c8526b80a769d94aa7aad8fe368)), closes [#23698](https://github.com/ionic-team/ionic/issues/23698)
+
+
+### Features
+
+* **action-sheet:** add data property to ActionSheetButton ([#23744](https://github.com/ionic-team/ionic/issues/23744)) ([30f8508](https://github.com/ionic-team/ionic/commit/30f8508296cfc8f8b1c03d04b24abfa184624200)), closes [#23700](https://github.com/ionic-team/ionic/issues/23700)
+* **datetime:** add firstDayOfWeek property ([#23692](https://github.com/ionic-team/ionic/issues/23692)) ([ea348f0](https://github.com/ionic-team/ionic/commit/ea348f005aef7b2fda581a99338139f6fefcda63)), closes [#23556](https://github.com/ionic-team/ionic/issues/23556)
+* **datetime:** add hourCycle property ([#23686](https://github.com/ionic-team/ionic/issues/23686)) ([6342fde](https://github.com/ionic-team/ionic/commit/6342fde56c7687703edd212b8383536c8b9a6400)), closes [#23661](https://github.com/ionic-team/ionic/issues/23661)
+
+
+
 ## [5.6.14](https://github.com/ionic-team/ionic/compare/v5.6.13...v5.6.14) (2021-08-18)
 
 
