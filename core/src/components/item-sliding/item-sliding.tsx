@@ -43,6 +43,8 @@ export class ItemSliding implements ComponentInterface {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
   private gesture?: Gesture;
+  private closestContent: HTMLIonContentElement | null = null;
+  private initialContentScrollY = true;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -66,6 +68,8 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
+    this.closestContent = this.el.closest('ion-content');
+
     await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -252,7 +256,23 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
+  private disableContentScrollY() {
+    if (this.closestContent === null) { return }
+
+    this.initialContentScrollY = this.closestContent.scrollY;
+    this.closestContent.scrollY = false;
+  }
+
+  private restoreContentScrollY() {
+    if (this.closestContent === null) { return }
+
+    this.closestContent.scrollY = this.initialContentScrollY;
+  }
+
   private onStart() {
+    // Prevent scrolling during gesture
+    this.disableContentScrollY();
+
     openSlidingItem = this.el;
 
     if (this.tmr !== undefined) {
@@ -297,6 +317,9 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
+    // Restore ion-content scrollY to initial value when gesture ends
+    this.restoreContentScrollY();
+
     const velocity = gesture.velocityX;
 
     let restingPoint = (this.openAmount > 0)
