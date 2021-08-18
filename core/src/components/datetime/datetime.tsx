@@ -967,11 +967,11 @@ export class Datetime implements ComponentInterface {
             const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${workingYear}']`);
 
             if (monthEl) {
-              monthEl.scrollIntoView({ block: 'center', inline: 'center' });
+              this.pickerScrollIntoView(monthEl as HTMLElement, 'auto');
             }
 
             if (yearEl) {
-              yearEl.scrollIntoView({ block: 'center', inline: 'center' });
+              this.pickerScrollIntoView(yearEl as HTMLElement, 'auto');
             }
           });
         }, 250);
@@ -1148,7 +1148,7 @@ export class Datetime implements ComponentInterface {
 
     calendarBodyRef.scrollTo({
       top: 0,
-      left: 700,
+      left: (nextMonth as HTMLElement).offsetWidth * 2,
       behavior: 'smooth'
     });
   }
@@ -1226,6 +1226,21 @@ export class Datetime implements ComponentInterface {
     })
   }
 
+  private pickerScrollIntoView(target: HTMLElement, behavior: ScrollBehavior = 'smooth') {
+    if (target.parentElement === null) { return }
+    target.parentElement.scroll({
+      // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
+      top: target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2),
+      left: 0,
+      behavior
+    });
+  }
+
+  private handlePickerClick(ev: Event) {
+    const target = ev.target as HTMLElement;
+    this.pickerScrollIntoView(target);
+  }
+
   private renderiOSYearView(calendarYears: number[] = []) {
     return [
       <div class="datetime-picker-before"></div>,
@@ -1240,10 +1255,7 @@ export class Datetime implements ComponentInterface {
             <div
             class="picker-col-item"
             data-value={month.value}
-            onClick={(ev: Event) => {
-              const target = ev.target as HTMLElement;
-              target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
-            }}
+            onClick={this.handlePickerClick.bind(this)}
           >{month.text}</div>
           )
         })}
@@ -1260,10 +1272,7 @@ export class Datetime implements ComponentInterface {
             <div
               class="picker-col-item"
               data-value={year}
-              onClick={(ev: Event) => {
-                const target = ev.target as HTMLElement;
-                target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
-              }}
+              onClick={this.handlePickerClick.bind(this)}
             >{year}</div>
           )
         })}
