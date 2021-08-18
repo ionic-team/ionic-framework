@@ -305,8 +305,11 @@ describe('Routing', () => {
     router.push('/xyz');
     await waitForRouter();
 
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'xyz' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(2);
+    expect(cmpAgain[0].props()).toEqual({ title: 'abc' });
+    expect(cmpAgain[1].props()).toEqual({ title: 'xyz' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
@@ -356,8 +359,11 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(propsFn.mock.calls.length).toBe(2);
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'abc Title' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(2);
+    expect(cmpAgain[0].props()).toEqual({ title: '123 Title' });
+    expect(cmpAgain[1].props()).toEqual({ title: 'abc Title' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
