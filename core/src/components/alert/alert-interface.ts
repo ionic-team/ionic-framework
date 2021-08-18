@@ -44,7 +44,7 @@ export interface AlertInputAttributes extends JSXBase.InputHTMLAttributes<HTMLIn
 
 export interface AlertButton {
   text: string;
-  role?: string;
+  role?: 'cancel' | 'destructive' | string;
   cssClass?: string | string[];
   handler?: (value: any) => boolean | void | {[key: string]: any};
 }
