@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="inputs">
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons>
