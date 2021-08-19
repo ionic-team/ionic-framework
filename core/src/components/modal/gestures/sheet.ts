@@ -76,7 +76,6 @@ export const createSheetGesture = (
 
     const initialStep = 1 - currentBreakpoint;
     offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
-
     animation.progressStep(offset);
   };
 
