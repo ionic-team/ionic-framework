@@ -13,7 +13,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { SheetDefaults, createSheetGesture } from './gestures/sheet';
+import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
@@ -344,7 +344,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, destroyOnFinish: this.type === 'sheet' });
 
     await this.currentTransition;
 
@@ -364,7 +364,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
+    const ani = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement }, false);
     this.gesture = createSwipeToCloseGesture(
       this.el,
       ani,
@@ -394,7 +394,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (getIonMode(this) !== 'ios') { return; }
 
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
-    const ani: Animation = this.animation = animationBuilder(this.el, this.presentingElement);
+    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement });
 
     const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
@@ -421,14 +421,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
     );
     this.gesture.enable(true);
-
-    const wrapperAnimation = ani.childAnimations.find(ani => ani.id === 'wrapperAnimation');
-    const backdropAnimation = ani.childAnimations.find(ani => ani.id === 'backdropAnimation');
-
-    if (wrapperAnimation && backdropAnimation) {
-      wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
-      backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
-    }
   }
 
   /**

@@ -8,16 +8,16 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
  */
 export const iosEnterAnimation = (
   baseEl: HTMLElement,
-  presentingEl?: HTMLElement,
+  opts: any
 ): Animation => {
+  const { presentingEl, destroyOnFinish } = opts;
+
   const root = getElementRoot(baseEl);
   // If an initial breakpoint was passed we need to transform the modal to be that
   // far from the top, otherwise we will transform it to the top (0vh)
   const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
   const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}vh` : '0vh';
   const initialOpacity = initialBreakpoint ? `calc(var(--backdrop-opacity) * ${initialBreakpoint})` : 'var(--backdrop-opacity)';
-
-  console.log('initial breakpoint', initialBreakpoint)
 
   const backdropAnimation = createAnimation('backdropAnimation')
     .addElement(root.querySelector('ion-backdrop')!)
@@ -111,5 +111,14 @@ export const iosEnterAnimation = (
     baseAnimation.addAnimation(backdropAnimation);
   }
 
+
+  if (destroyOnFinish) {
+    baseAnimation.onFinish(() => {
+      requestAnimationFrame(() => {
+        baseAnimation.destroy();
+        console.log('destroying initial animation')
+      });
+    });
+  }
   return baseAnimation;
 };

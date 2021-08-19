@@ -3,7 +3,7 @@ import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
 // Defaults for the sheet swipe animation
-export const SheetDefaults = {
+const SheetDefaults = {
   WRAPPER_KEYFRAMES: [
     { offset: 0, transform: 'translateY(0vh)' },
     { offset: 1, transform: 'translateY(100vh)' }
@@ -29,6 +29,15 @@ export const createSheetGesture = (
   // const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
+
+  if (wrapperAnimation && backdropAnimation) {
+    wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
+    backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
+
+    // TODO: Why twice?
+    animation.progressStart(true, 1 - currentBreakpoint);
+    animation.progressStart(true, 1 - currentBreakpoint);
+  }
 
   const canStart = () => true;
 
