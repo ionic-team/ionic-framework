@@ -396,6 +396,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
     const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement });
 
+    // TODO: Why do we need to do this twice?
+    ani.progressStart(true, 1);
+    ani.progressStart(true, 1);
+
     const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
@@ -458,6 +462,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await detachComponent(delegate, this.usersElement);
       if (this.animation) {
         this.animation.destroy();
+      }
+      if (this.gesture) {
+        this.gesture.destroy();
       }
 
       enteringAnimation.forEach(ani => ani.destroy());

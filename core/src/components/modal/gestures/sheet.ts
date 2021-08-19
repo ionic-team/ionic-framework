@@ -39,6 +39,8 @@ export const createSheetGesture = (
     animation.progressStart(true, 1 - currentBreakpoint);
   }
 
+  console.log('hello',animation)
+
   const canStart = () => true;
 
   const onStart = () => {

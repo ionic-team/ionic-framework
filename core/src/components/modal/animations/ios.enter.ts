@@ -6,12 +6,13 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
+ let id = 0 ;
 export const iosEnterAnimation = (
   baseEl: HTMLElement,
   opts: any
 ): Animation => {
   const { presentingEl, destroyOnFinish } = opts;
-
+  console.log('created!!!')
   const root = getElementRoot(baseEl);
   // If an initial breakpoint was passed we need to transform the modal to be that
   // far from the top, otherwise we will transform it to the top (0vh)
@@ -19,7 +20,7 @@ export const iosEnterAnimation = (
   const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}vh` : '0vh';
   const initialOpacity = initialBreakpoint ? `calc(var(--backdrop-opacity) * ${initialBreakpoint})` : 'var(--backdrop-opacity)';
 
-  const backdropAnimation = createAnimation('backdropAnimation')
+  const backdropAnimation = createAnimation('backdropAnimation' + id)
     .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, initialOpacity)
     .beforeStyles({
@@ -27,12 +28,12 @@ export const iosEnterAnimation = (
     })
     .afterClearStyles(['pointer-events']);
 
-  const wrapperAnimation = createAnimation('wrapperAnimation')
+  const wrapperAnimation = createAnimation('wrapperAnimation' + id)
     .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100vh)', `translateY(${initialHeight})`);
 
-  const baseAnimation = createAnimation('entering-base')
+  const baseAnimation = createAnimation('entering-base' + id)
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
@@ -111,13 +112,11 @@ export const iosEnterAnimation = (
     baseAnimation.addAnimation(backdropAnimation);
   }
 
-
+  id += 1;
   if (destroyOnFinish) {
     baseAnimation.onFinish(() => {
-      requestAnimationFrame(() => {
-        baseAnimation.destroy();
-        console.log('destroying initial animation')
-      });
+      console.log('destroying')
+      requestAnimationFrame(() => baseAnimation.destroy());
     });
   }
   return baseAnimation;

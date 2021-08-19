@@ -501,6 +501,8 @@ const overlayAnimation = async (
 
   await animation.play();
 
+  console.log('Ani!!!',animation)
+
   return animation;
 };
 
