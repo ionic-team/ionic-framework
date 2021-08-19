@@ -355,6 +355,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // After the sheet has been initialized, we need to transform the
     // modal to the initial breakpoint
     if (this.type === 'sheet') {
+      this.animation = await this.currentTransition;
       const { animation } = this;
       const wrapperAnimation = animation!.childAnimations.find(ani => ani.id === 'wrapperAnimation')!;
       const backdropAnimation = animation!.childAnimations.find(ani => ani.id === 'backdropAnimation')!;
@@ -362,10 +363,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
       backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
 
-      this.currentTransition!.progressStart(true, 1 - this.initialBreakpoint);
+      this.animation!.progressStart(true, 1 - this.initialBreakpoint);
+    } else {
+      await this.currentTransition;
     }
-
-    await this.currentTransition;
 
     this.currentTransition = undefined;
   }
@@ -377,7 +378,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.currentTransition = animationBuilder(this.el, this.presentingElement);
+    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
     this.gesture = createSwipeToCloseGesture(
       this.el,
       ani,
@@ -393,7 +394,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
          * removed from the DOM.
          */
         this.gestureAnimationDismissing = true;
-        this.currentTransition!.onFinish(async () => {
+        this.animation!.onFinish(async () => {
           await this.dismiss(undefined, 'gesture');
           this.gestureAnimationDismissing = false;
         });
@@ -406,7 +407,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private initSheetGesture() {
     if (getIonMode(this) !== 'ios') { return; }
 
-    const ani = this.currentTransition!;
+    const ani = this.animation!;
     const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
@@ -425,7 +426,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
          * removed from the DOM.
          */
         this.gestureAnimationDismissing = true;
-        this.currentTransition!.onFinish(async () => {
+        this.animation!.onFinish(async () => {
           await this.dismiss(undefined, 'gesture');
           this.gestureAnimationDismissing = false;
         });
@@ -467,14 +468,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (dismissed) {
       const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
-      if (this.currentTransition) {
-        this.currentTransition.destroy();
+      if (this.animation) {
+        this.animation.destroy();
       }
 
       enteringAnimation.forEach(ani => ani.destroy());
     }
 
     this.currentTransition = undefined;
+    this.animation = undefined;
 
     return dismissed;
   }
