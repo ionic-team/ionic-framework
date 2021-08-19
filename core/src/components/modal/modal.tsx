@@ -346,6 +346,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
+    this.animation = await this.currentTransition;
+
     if (this.type === 'sheet') {
       this.initSheetGesture();
     } else if (this.swipeToClose) {
@@ -355,7 +357,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // After the sheet has been initialized, we need to transform the
     // modal to the initial breakpoint
     if (this.type === 'sheet') {
-      this.animation = await this.currentTransition;
       const { animation } = this;
       const wrapperAnimation = animation!.childAnimations.find(ani => ani.id === 'wrapperAnimation')!;
       const backdropAnimation = animation!.childAnimations.find(ani => ani.id === 'backdropAnimation')!;
@@ -364,8 +365,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
 
       this.animation!.progressStart(true, 1 - this.initialBreakpoint);
-    } else {
-      await this.currentTransition;
     }
 
     this.currentTransition = undefined;
