@@ -344,7 +344,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, destroyOnFinish: this.type === 'sheet' });
+    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
     await this.currentTransition;
 
@@ -364,7 +364,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement }, false);
+    const ani = this.animation = animationBuilder(this.el, this.presentingElement, false);
     this.gesture = createSwipeToCloseGesture(
       this.el,
       ani,
@@ -394,10 +394,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (getIonMode(this) !== 'ios') { return; }
 
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
-    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement });
+    const ani: Animation = this.animation = animationBuilder(this.el, this.presentingElement);
 
-    // TODO: Why do we need to do this twice?
-    ani.progressStart(true, 1);
     ani.progressStart(true, 1);
 
     const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];

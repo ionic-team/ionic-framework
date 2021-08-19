@@ -8,10 +8,8 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
  */
 export const iosEnterAnimation = (
   baseEl: HTMLElement,
-  opts: any
+  presentingEl?: HTMLElement,
 ): Animation => {
-  const { presentingEl, destroyOnFinish } = opts;
-
   const root = getElementRoot(baseEl);
   // If an initial breakpoint was passed we need to transform the modal to be that
   // far from the top, otherwise we will transform it to the top (0vh)
@@ -111,11 +109,5 @@ export const iosEnterAnimation = (
     baseAnimation.addAnimation(backdropAnimation);
   }
 
-  if (destroyOnFinish) {
-    baseAnimation.onFinish(() => {
-      console.log('destroying')
-      requestAnimationFrame(() => baseAnimation.destroy());
-    });
-  }
   return baseAnimation;
 };

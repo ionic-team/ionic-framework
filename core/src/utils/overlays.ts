@@ -372,8 +372,8 @@ export const present = async (
     ? overlay.enterAnimation
     : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-  const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
-  if (completed) {
+  const animation = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+  if (animation) {
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
   }

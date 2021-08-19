@@ -689,9 +689,8 @@ export const createAnimation = (animationId?: string): Animation => {
 
     if (!initialized) {
       initializeAnimation();
-    } else {
-      update(false, true, step);
     }
+    update(false, true, step);
 
     return ani;
   };

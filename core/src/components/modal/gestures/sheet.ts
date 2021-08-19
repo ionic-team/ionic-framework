@@ -31,11 +31,8 @@ export const createSheetGesture = (
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
   if (wrapperAnimation && backdropAnimation) {
-    wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
-    backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
-
-    // TODO: Why twice?
-    animation.progressStart(true, 1 - currentBreakpoint);
+    wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
+    backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
     animation.progressStart(true, 1 - currentBreakpoint);
   }
 
@@ -116,8 +113,8 @@ export const createSheetGesture = (
         animation.progressStart(true, 1);
         if (shouldRemainOpen) {
           if (wrapperAnimation && backdropAnimation) {
-            wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
-            backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
+            wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
+            backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
             animation.progressStep(1 - closest);
             currentBreakpoint = closest;
           }
