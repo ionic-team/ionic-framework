@@ -376,7 +376,6 @@ export const present = async (
   if (completed) {
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
-
   }
 
   /**
@@ -394,8 +393,6 @@ export const present = async (
   if (overlay.keyboardClose) {
     overlay.el.focus();
   }
-
-  return completed;
 };
 
 /**

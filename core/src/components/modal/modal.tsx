@@ -346,25 +346,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
-    this.animation = await this.currentTransition;
+    await this.currentTransition;
 
     if (this.type === 'sheet') {
       this.initSheetGesture();
     } else if (this.swipeToClose) {
       this.initSwipeToClose();
-    }
-
-    // After the sheet has been initialized, we need to transform the
-    // modal to the initial breakpoint
-    if (this.type === 'sheet') {
-      const { animation } = this;
-      const wrapperAnimation = animation!.childAnimations.find(ani => ani.id === 'wrapperAnimation')!;
-      const backdropAnimation = animation!.childAnimations.find(ani => ani.id === 'backdropAnimation')!;
-
-      wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
-      backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
-
-      this.animation!.progressStart(true, 1 - this.initialBreakpoint);
     }
 
     this.currentTransition = undefined;
@@ -406,7 +393,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private initSheetGesture() {
     if (getIonMode(this) !== 'ios') { return; }
 
-    const ani = this.animation!;
+    const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
+    const ani: Animation = this.animation = animationBuilder(this.el, this.presentingElement);
+
     const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
@@ -432,6 +421,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
     );
     this.gesture.enable(true);
+
+    const wrapperAnimation = ani.childAnimations.find(ani => ani.id === 'wrapperAnimation');
+    const backdropAnimation = ani.childAnimations.find(ani => ani.id === 'backdropAnimation');
+
+    if (wrapperAnimation && backdropAnimation) {
+      wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
+      backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
+    }
   }
 
   /**
