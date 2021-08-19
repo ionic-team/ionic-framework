@@ -1497,6 +1497,18 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * The horizontal line that displays at the top of a modal. It is `true` by default for a modal with type `'sheet'`.
+         */
+        "handle"?: boolean;
+        /**
+          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Should be a decimal value between 0 and 1. Defaults to `1`.
+         */
+        "initialBreakpoint": number;
+        /**
+          * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
@@ -1533,6 +1545,14 @@ export namespace Components {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the modal to open when clicked.
+         */
+        "trigger": string | undefined;
+        /**
+          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
+         */
+        "type": 'default' | 'sheet' | 'card';
     }
     interface IonNav {
         /**
@@ -5083,7 +5103,6 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
-<<<<<<< HEAD
           * The horizontal line that displays at the top of a modal. It is `true` by default for a modal with type `'sheet'`.
          */
         "handle"?: boolean;
@@ -5091,11 +5110,10 @@ declare namespace LocalJSX {
           * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Should be a decimal value between 0 and 1. Defaults to `1`.
          */
         "initialBreakpoint"?: number;
-=======
+        /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
         "isOpen"?: boolean;
->>>>>>> origin/next
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5154,15 +5172,13 @@ declare namespace LocalJSX {
          */
         "swipeToClose"?: boolean;
         /**
-<<<<<<< HEAD
-          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
-         */
-        "type"?: 'default' | 'sheet' | 'card';
-=======
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
         "trigger"?: string | undefined;
->>>>>>> origin/next
+        /**
+          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
+         */
+        "type"?: 'default' | 'sheet' | 'card';
     }
     interface IonNav {
         /**
