@@ -33,7 +33,7 @@ export class Searchbar implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If `true`, enable searchbar animation.
@@ -129,7 +129,7 @@ export class Searchbar implements ComponentInterface {
    * Setting to `"always"` shows the clear button regardless
    * of focus state, but only if the input is not empty.
    */
-  @Prop() showClearButton: 'never' | 'focus' | 'always' = 'focus';
+  @Prop() showClearButton: 'never' | 'focus' | 'always' = 'always';
 
   /**
    * If `true`, enable spellcheck on the input.

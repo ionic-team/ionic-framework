@@ -39,8 +39,10 @@ export class Slides implements ComponentInterface {
   async optionsChanged() {
     if (this.swiperReady) {
       const swiper = await this.getSwiper();
-      Object.assign(swiper.params, this.options);
-      await this.update();
+      if (swiper?.params) {
+        Object.assign(swiper.params, this.options);
+        await this.update();
+      }
     }
   }
 
@@ -133,6 +135,10 @@ export class Slides implements ComponentInterface {
    * Emitted when the user releases the touch.
    */
   @Event() ionSlideTouchEnd!: EventEmitter<void>;
+
+  componentWillLoad() {
+    console.warn(`[Deprecation Warning]: ion-slides has been deprecated and will be removed in Ionic Framework v7.0. We recommend using the framework-specific integrations that Swiper.js provides, allowing for faster bug fixes and an improved developer experience. See https://ionicframework.com/docs/api/slides for more information including migration steps.`);
+  }
 
   connectedCallback() {
     // tslint:disable-next-line: strict-type-predicates

@@ -1,5 +1,6 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
@@ -10,16 +11,17 @@ export const iosLeaveAnimation = (
   presentingEl?: HTMLElement,
   duration = 500
 ): Animation => {
+  const root = getElementRoot(baseEl);
   const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
   const lastHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}%` : '0vh';
   // TODO need to find out what the last breakpoint it stopped on was and move it from there instead
 
   const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
 
   const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
+    .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', `translateY(${lastHeight})`, 'translateY(100vh)');
 
@@ -32,6 +34,7 @@ export const iosLeaveAnimation = (
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+    const presentingElRoot = getElementRoot(presentingEl);
 
     const presentingAnimation = createAnimation()
       .beforeClearStyles(['transform'])
@@ -74,7 +77,7 @@ export const iosLeaveAnimation = (
         const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
 
         presentingAnimation
-          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .afterStyles({
             'transform': 'translate3d(0, 0, 0)'
           })
@@ -84,7 +87,7 @@ export const iosLeaveAnimation = (
           ]);
 
         const shadowAnimation = createAnimation()
-          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .afterStyles({
             'transform': 'translateY(0) scale(1)'
           })

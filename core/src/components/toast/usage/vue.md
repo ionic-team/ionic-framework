@@ -10,6 +10,7 @@
 
 <script>
 import { IonButton, IonContent, IonPage, toastController } from '@ionic/vue';
+import { informationCircle } from 'ionicons/icons';
 
 export default {
   components: { IonButton, IonContent, IonPage },
@@ -27,6 +28,7 @@ export default {
         .create({
           header: 'Toast header',
           message: 'Click to Close',
+          icon: informationCircle,
           position: 'top',
           buttons: [
             {
@@ -45,7 +47,10 @@ export default {
             }
           ]
         })
-      return toast.present();
+      await toast.present();
+
+      const { role } = await toast.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
@@ -61,7 +66,7 @@ Developers can also use this component directly in their template:
     :is-open="isOpenRef"
     message="Your settings have been saved."
     :duration="2000"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-toast>
 </template>
@@ -75,7 +80,7 @@ export default defineComponent({
   setup() {
     const isOpenRef = ref(false);
     const setOpen = (state: boolean) => isOpenRef.value = state;
-    
+
     return { isOpenRef, setOpen }
   }
 });

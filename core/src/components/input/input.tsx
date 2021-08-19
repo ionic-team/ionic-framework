@@ -42,7 +42,7 @@ export class Input implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -152,7 +152,7 @@ export class Input implements ComponentInterface {
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder?: string | null;
+  @Prop() placeholder?: string;
 
   /**
    * If `true`, the user cannot modify the value.
@@ -234,7 +234,7 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['tabindex', 'title']);
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label', 'tabindex', 'title']);
   }
 
   connectedCallback() {
@@ -302,7 +302,7 @@ export class Input implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'input': true,
-      'has-placeholder': this.placeholder != null,
+      'has-placeholder': this.placeholder !== undefined,
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus,
       'interactive-disabled': this.disabled,
@@ -408,7 +408,7 @@ export class Input implements ComponentInterface {
         <input
           class="native-input"
           ref={input => this.nativeInput = input}
-          aria-labelledby={labelId}
+          aria-labelledby={label ? labelId : null}
           disabled={this.disabled}
           accept={this.accept}
           autoCapitalize={this.autocapitalize}

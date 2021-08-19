@@ -34,7 +34,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * If `true`, the user cannot interact with the item option.
@@ -104,7 +104,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
           [mode]: true,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
-          'ion-activatable': true,
+          'ion-activatable': true
         })}
       >
         <TagType

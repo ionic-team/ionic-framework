@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { clamp, componentOnReady, getElementRoot, raf } from '../../utils/helpers';
+import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
 import {
@@ -14,7 +14,6 @@ import {
   handleScrollWhileRefreshing,
   setSpinnerOpacity,
   shouldUseNativeRefresher,
-  transitionEndAsync,
   translateElement
 } from './refresher.utils';
 
@@ -333,17 +332,14 @@ export class Refresher implements ComponentInterface {
 
           this.state = RefresherState.Pulling;
 
-          writeTask(() => {
-            const animationType = getRefresherAnimationType(contentEl);
-            const animation = createPullingAnimation(animationType, pullingRefresherIcon);
-            ev.data.animation = animation;
+          writeTask(() => this.scrollEl!.style.setProperty('--overflow', 'hidden'));
 
-            this.scrollEl!.style.setProperty('--overflow', 'hidden');
-
-            animation.progressStart(false, 0);
-            this.ionStart.emit();
-            this.animations.push(animation);
-          });
+          const animationType = getRefresherAnimationType(contentEl);
+          const animation = createPullingAnimation(animationType, pullingRefresherIcon, this.el);
+          ev.data.animation = animation;
+          animation.progressStart(false, 0);
+          this.ionStart.emit();
+          this.animations.push(animation);
 
           return;
         }

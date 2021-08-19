@@ -12,10 +12,12 @@
 - [Accessibility](#accessibility)
   * [Checkbox](#checkbox)
   * [Switch](#switch)
+  * [Accordion](#accordion)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
+- [RTL](#rtl)
 
 ## Button States
 
@@ -623,6 +625,19 @@ You are currently on a switch. To select or deselect this checkbox, press Contro
 
 There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196354
 
+### Accordion
+
+#### Example Components
+
+- [ion-accordion](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion)
+- [ion-accordion-group](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion-group)
+
+#### NVDA
+
+In order to use the arrow keys to navigate the accordions, users must be in "Focus Mode". Typically, NVDA automatically switches between Browse and Focus modes when inside of a form, but not every accordion needs a form.
+
+You can either wrap your `ion-accordion-group` in a form, or manually toggle Focus Mode using NVDA's keyboard shortcut.
+
 
 ## Rendering Anchor or Button
 
@@ -702,4 +717,40 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 
 /* IN SHADOW*/
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+```
+
+## RTL
+
+When you need to support both LTR and RTL modes, try to avoid using values such as `left` and `right`. For certain CSS properties, you can use the appropriate mixin to have this handled for you automatically.
+
+For example, if you wanted `transform-origin` to be RTL-aware, you would use the `transform-origin` mixin:
+
+```css
+@include transform-origin(start, center);
+```
+
+This would output `transform-origin: left center` in LTR mode and `transform-origin: right center` in RTL mode. 
+
+These mixins depend on the `:host-context` pseudo-class when used inside of shadow components, which is not supported in WebKit. As a result, these mixins will not work in Safari for macOS and iOS when applied to shadow components.
+
+To work around this, you should set an RTL class on the host of your component and set your RTL styles by targeting that class:
+
+```tsx
+<Host
+class={{
+  'my-cmp-rtl': document.dir === 'rtl'
+})
+>
+ ...
+</Host>
+```
+
+```css
+:host {
+  transform-origin: left center;
+}
+
+:host(.my-cmp-rtl) {
+  transform-origin: right center;
+}
 ```

@@ -13,7 +13,7 @@ const s3 = new S3({ apiVersion: '2006-03-01' });
 class CIScreenshotConnector extends IonicConnector {
 
   async initBuild(opts) {
-    const result = await execa.stdout('git', ['log', '-1', '--format=%H%n%an <%ae>%n%ct%n%s']);
+    const { stdout: result } = await execa('git', ['log', '-1', '--format=%H%n%an <%ae>%n%ct%n%s']);
     const [ sha1, author, timestamp, msg ] = result.split('\n');
     const sha1short = sha1.slice(0, 7);
 
@@ -125,8 +125,6 @@ class CIScreenshotConnector extends IonicConnector {
     uploadPaths.push(path.join(appRoot, 'scripts', 'testing', 'styles.css'));
 
     const distDir = path.join(appRoot, 'dist');
-    uploadPaths.push(path.join(distDir, 'ionic.js'));
-
     const distIonicDir = path.join(distDir, 'ionic');
     fs.readdirSync(distIonicDir).forEach(distIonicFile => {
       uploadPaths.push(path.join(distIonicDir, distIonicFile));

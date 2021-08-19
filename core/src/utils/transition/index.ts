@@ -2,7 +2,7 @@ import { Build, writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
-import { componentOnReady } from '../helpers';
+import { componentOnReady, raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
@@ -37,8 +37,18 @@ const beforeTransition = (opts: TransitionOptions) => {
     enteringEl.classList.remove('can-go-back');
   }
   setPageHidden(enteringEl, false);
+
+  /**
+   * When transitioning, the page should not
+   * respond to click events. This resolves small
+   * issues like users double tapping the ion-back-button.
+   * These pointer events are removed in `afterTransition`.
+   */
+  enteringEl.style.setProperty('pointer-events', 'none');
+
   if (leavingEl) {
     setPageHidden(leavingEl, false);
+    leavingEl.style.setProperty('pointer-events', 'none');
   }
 };
 
@@ -56,8 +66,10 @@ const afterTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   enteringEl.classList.remove('ion-page-invisible');
+  enteringEl.style.removeProperty('pointer-events');
   if (leavingEl !== undefined) {
     leavingEl.classList.remove('ion-page-invisible');
+    leavingEl.style.removeProperty('pointer-events');
   }
 };
 
@@ -193,6 +205,19 @@ export const deepReady = async (el: any | undefined): Promise<void> => {
       if (stencilEl != null) {
         return;
       }
+
+    /**
+     * Custom elements in Stencil will have __registerHost.
+     */
+    } else if (element.__registerHost != null) {
+      /**
+       * Non-lazy loaded custom elements need to wait
+       * one frame for component to be loaded.
+       */
+      const waitForCustomElement = new Promise(resolve => raf(resolve));
+      await waitForCustomElement;
+
+      return;
     }
     await Promise.all(Array.from(element.children).map(deepReady));
   }

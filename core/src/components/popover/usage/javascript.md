@@ -21,7 +21,7 @@ class PopoverExamplePage extends HTMLElement {
 
 customElements.define('popover-example-page', PopoverExamplePage);
 
-function presentPopover(ev) {
+async function presentPopover(ev) {
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'popover-example-page',
     cssClass: 'my-custom-class',
@@ -29,6 +29,10 @@ function presentPopover(ev) {
     translucent: true
   });
   document.body.appendChild(popover);
-  return popover.present();
+
+  await popover.present();
+
+  const { role } = await popover.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```

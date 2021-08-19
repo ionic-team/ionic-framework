@@ -191,10 +191,11 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22492
   it('should show correct view when replacing', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel },
+      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="top">
               <ion-tab-button tab="tab1" href="/tabs/tab1">
                 <ion-label>Tab 1</ion-label>
@@ -261,5 +262,144 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Parent).exists()).toBe(false);
     expect(wrapper.findComponent(Tab1).exists()).toBe(true);
     expect(wrapper.findComponent(Tab2).exists()).toBe(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
+  it('should show the latest props passed to a route', async () => {
+    const Page1 = {
+      ...BasePage,
+      props: {
+        title: { type: String, default: 'Default Title' }
+      }
+    };
+
+    const Home = {
+      ...BasePage
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Home },
+        { path: '/:title', component: Page1, props: true }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/abc');
+    await waitForRouter();
+
+    const cmp = wrapper.findComponent(Page1);
+    expect(cmp.props()).toEqual({ title: 'abc' });
+
+    router.back();
+    await waitForRouter();
+
+    router.push('/xyz');
+    await waitForRouter();
+
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(2);
+    expect(cmpAgain[0].props()).toEqual({ title: 'abc' });
+    expect(cmpAgain[1].props()).toEqual({ title: 'xyz' });
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
+  it('should call the props function again when params change', async () => {
+    const Page1 = {
+      ...BasePage,
+      props: {
+        title: { type: String, default: 'Default Title' }
+      }
+    };
+
+    const Home = {
+      ...BasePage
+    }
+
+    const propsFn = jest.fn((route) => {
+      return { title: `${route.params.id} Title` }
+    });
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/myPath/:id', component: Page1, props: propsFn },
+        { path: '/', component: Home }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/myPath/123');
+    await waitForRouter();
+
+    const cmp = wrapper.findComponent(Page1);
+    expect(propsFn.mock.calls.length).toBe(1);
+    expect(cmp.props()).toEqual({ title: '123 Title' });
+
+    router.back();
+    await waitForRouter();
+
+    router.push('/myPath/abc');
+    await waitForRouter();
+
+    expect(propsFn.mock.calls.length).toBe(2);
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(2);
+    expect(cmpAgain[0].props()).toEqual({ title: '123 Title' });
+    expect(cmpAgain[1].props()).toEqual({ title: 'abc Title' });
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
+  it('should update props on a parameterized url', async () => {
+    const Page = {
+      props: {
+        id: { type: String, default: 'Default ID' }
+      },
+      components: { IonPage },
+      template: `<ion-page>{{ $props.id }}</ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page/:id', component: Page, props: true },
+        { path: '/', redirect: '/page/1' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const page = wrapper.findComponent(Page);
+    expect(page.props()).toEqual({ id: '1' });
+
+    router.push('/page/2');
+    await waitForRouter();
+
+    const pageAgain = wrapper.findAllComponents(Page);
+    expect(pageAgain[0].props()).toEqual({ id: '1' });
+    expect(pageAgain[1].props()).toEqual({ id: '2' });
   });
 });

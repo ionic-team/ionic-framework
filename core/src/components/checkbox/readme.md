@@ -271,11 +271,11 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                                    | Type                                     |
-| ----------- | ---------------------------------------------- | ---------------------------------------- |
-| `ionBlur`   | Emitted when the checkbox loses focus.         | `CustomEvent<void>`                      |
-| `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
-| `ionFocus`  | Emitted when the checkbox has focus.           | `CustomEvent<void>`                      |
+| Event       | Description                                    | Type                                          |
+| ----------- | ---------------------------------------------- | --------------------------------------------- |
+| `ionBlur`   | Emitted when the checkbox loses focus.         | `CustomEvent<void>`                           |
+| `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail<any>>` |
+| `ionFocus`  | Emitted when the checkbox has focus.           | `CustomEvent<void>`                           |
 
 
 ## Shadow Parts
@@ -302,6 +302,19 @@ export default defineComponent({
 | `--size`                 | Size of the checkbox icon                      |
 | `--transition`           | Transition of the checkbox icon                |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select-popover --> ion-checkbox
+  style ion-checkbox fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

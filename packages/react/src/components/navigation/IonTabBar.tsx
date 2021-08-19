@@ -18,7 +18,7 @@ type IonTabBarProps = LocalJSX.IonTabBar &
   };
 
 interface InternalProps extends IonTabBarProps {
-  forwardedRef?: React.RefObject<HTMLIonIconElement>;
+  forwardedRef?: React.ForwardedRef<HTMLIonIconElement>;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   routeInfo: RouteInfo;
 }

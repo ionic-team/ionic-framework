@@ -4,6 +4,7 @@ import {
   arrowBackSharp,
   caretBackSharp,
   chevronBack,
+  chevronDown,
   chevronForward,
   close,
   closeCircle,
@@ -25,8 +26,6 @@ export {
   AnimationLifecycle,
   createAnimation,
   createGesture,
-  AlertButton,
-  AlertInput,
   Gesture,
   GestureConfig,
   GestureDetail,
@@ -35,6 +34,33 @@ export {
   mdTransitionAnimation,
   NavComponentWithProps,
   setupConfig,
+
+  IonicSwiper,
+
+  SpinnerTypes,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
+
+  LoadingOptions,
+
+  ModalOptions,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
+
+  PopoverOptions,
+
+  ToastOptions,
+  ToastButton
 } from '@ionic/core';
 export * from './proxies';
 
@@ -83,6 +109,7 @@ addIcons({
   'arrow-back-sharp': arrowBackSharp,
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
+  'chevron-down': chevronDown,
   'chevron-forward': chevronForward,
   close,
   'close-circle': closeCircle,

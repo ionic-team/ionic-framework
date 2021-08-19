@@ -190,13 +190,13 @@ export interface IonicConfig {
   _zoneGate?: (h: () => any) => any;
   _ael?: (el: any, name: string, cb: any, opts: any) => any;
   _rel?: (el: any, name: string, cb: any, opts: any) => any;
+  _ce?: (eventName: string, opts: any) => any;
 }
 
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
-    console.error('ionic config was already initialized');
     return;
   }
   win.Ionic = win.Ionic || {};

@@ -26,6 +26,7 @@ export interface RouteInfo {
   params?: { [k: string]: any };
   pushedByRoute?: string;
   tab?: string;
+  position?: number;
 }
 
 export interface RouteParams {
@@ -63,9 +64,11 @@ export interface ExternalNavigationOptions {
   routerLink: string;
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
+  routerAction?: RouteAction;
 }
 
 export interface NavigationInformation {
   action?: RouteAction;
   direction?: RouteDirection;
+  delta?: number;
 }

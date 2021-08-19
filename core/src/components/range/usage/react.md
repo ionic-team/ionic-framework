@@ -11,6 +11,8 @@ export const RangeExamples: React.FC = () => {
     lower: number;
     upper: number;
   }>({ lower: 0, upper: 0 });
+  
+  const customFormatter = (value: number) => `${value}%`;
 
   return (
     <IonPage>
@@ -61,6 +63,10 @@ export const RangeExamples: React.FC = () => {
           </IonItem>
           <IonItem>
             <IonLabel>Value: lower: {rangeValue.lower} upper: {rangeValue.upper}</IonLabel>
+          </IonItem>
+          
+          <IonItem>
+            <IonRange min={0} max={100} pinFormatter={customFormatter} pin={true}></IonRange>
           </IonItem>
         </IonList>
       </IonContent>

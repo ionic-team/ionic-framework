@@ -78,6 +78,8 @@
   box-sizing: border-box;
 
   overflow: hidden;
+
+  touch-action: manipulation;
 }
 
 .scroll-y,
@@ -106,19 +108,13 @@
 }
 
 .scroll-y {
-  touch-action: pan-y;
   overflow-y: var(--overflow);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  touch-action: pan-x;
   overflow-x: var(--overflow);
   overscroll-behavior-x: contain;
-}
-
-.scroll-x.scroll-y {
-  touch-action: auto;
 }
 
 .overscroll::before,
@@ -150,9 +146,9 @@
   display: none;
   position: absolute;
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   left: -100%;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   width: 100%;
   height: 100vh;
@@ -165,9 +161,9 @@
 .transition-cover {
   position: absolute;
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   right: 0;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   width: 100%;
   height: 100%;
@@ -181,9 +177,9 @@
   display: block;
   position: absolute;
 
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   right: 0;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   width: 10px;
   height: 100%;

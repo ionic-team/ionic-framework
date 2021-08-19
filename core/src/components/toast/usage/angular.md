@@ -23,6 +23,7 @@ export class ToastExample {
     const toast = await this.toastController.create({
       header: 'Toast header',
       message: 'Click to Close',
+      icon: 'information-circle',
       position: 'top',
       buttons: [
         {
@@ -41,7 +42,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }

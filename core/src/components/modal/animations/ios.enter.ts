@@ -1,14 +1,16 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
 export const iosEnterAnimation = (
-    baseEl: HTMLElement,
-    presentingEl?: HTMLElement,
-  ): Animation => {
+  baseEl: HTMLElement,
+  presentingEl?: HTMLElement,
+): Animation => {
+  const root = getElementRoot(baseEl);
   // If an initial breakpoint was passed we need to transform the modal to be that
   // far from the top, otherwise we will transform it to the top (0vh)
   const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
@@ -18,7 +20,7 @@ export const iosEnterAnimation = (
   console.log('initial breakpoint', initialBreakpoint)
 
   const backdropAnimation = createAnimation('backdropAnimation')
-    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, initialOpacity)
     .beforeStyles({
       'pointer-events': 'none'
@@ -26,7 +28,7 @@ export const iosEnterAnimation = (
     .afterClearStyles(['pointer-events']);
 
   const wrapperAnimation = createAnimation('wrapperAnimation')
-    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
+    .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100vh)', `translateY(${initialHeight})`);
 
@@ -39,6 +41,7 @@ export const iosEnterAnimation = (
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+    const presentingElRoot = getElementRoot(presentingEl);
 
     const presentingAnimation = createAnimation()
       .beforeStyles({
@@ -85,7 +88,7 @@ export const iosEnterAnimation = (
           .afterStyles({
             'transform': finalTransform
           })
-          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .keyframes([
             { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
             { offset: 1, filter: 'contrast(0.85)', transform: finalTransform }
@@ -95,7 +98,7 @@ export const iosEnterAnimation = (
           .afterStyles({
             'transform': finalTransform
           })
-          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .keyframes([
             { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)' },
             { offset: 1, opacity: '0', transform: finalTransform }

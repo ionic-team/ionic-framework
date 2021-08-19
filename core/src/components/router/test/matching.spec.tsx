@@ -107,7 +107,7 @@ describe('matchesPath', () => {
       { id: '5', path: ['image'], params: { size: 'lg' } },
       { id: '5', path: ['image', ':size', ':type'], params: { size: 'mg' } },
     ];
-    const matched = matchesPath(parsePath('/profile/manu/image/image/large/retina'), chain);
+    const matched = matchesPath(parsePath('/profile/manu/image/image/large/retina').segments, chain);
     expect(matched).toEqual([
       { id: '5', path: ['profile', ':name'], params: { name: 'manu' } },
       { id: '5', path: [''], params: undefined },

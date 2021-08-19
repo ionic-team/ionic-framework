@@ -86,13 +86,20 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     }
   }
 
+  private get tabIndex() {
+    return this.checked && !this.disabled ? 0 : -1;
+  }
+
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, tabIndex } = this;
     const mode = getIonMode(this);
     const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
     return (
       <Host
+        role="tab"
+        aria-selected={checked ? 'true' : 'false'}
         aria-disabled={disabled ? 'true' : null}
+        tabIndex={tabIndex}
         class={{
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
@@ -113,7 +120,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       >
         <button
           type={type}
-          aria-pressed={checked ? 'true' : 'false'}
+          tabIndex={-1}
           class="button-native"
           part="native"
           disabled={disabled}

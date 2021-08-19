@@ -46,7 +46,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/routing/:id',
-    component: () => import('@/views/RoutingParameter.vue')
+    component: () => import('@/views/RoutingParameter.vue'),
+    props: true
   },
   {
     path: '/routing/:id/view',
@@ -71,7 +72,8 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: ':id',
-        component: () => import('@/views/Folder.vue')
+        component: () => import('@/views/Folder.vue'),
+        props: true
       }
     ]
   },
@@ -88,12 +90,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab1.vue'),
       },
       {
-        path: 'tab1/child-one',
-        component: () => import('@/views/Tab1ChildOne.vue')
-      },
-      {
-        path: 'tab1/child-two',
-        component: () => import('@/views/Tab1ChildTwo.vue')
+        path: 'tab1/:id',
+        component: () => import('@/views/Tab1Parameter.vue'),
+        props: true
       },
       {
         path: 'tab2',

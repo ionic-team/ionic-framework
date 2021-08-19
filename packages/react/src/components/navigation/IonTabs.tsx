@@ -3,18 +3,19 @@ import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
+import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
 
-class IonTabsElement extends HTMLElement {
+class IonTabsElement extends HTMLElementSSR {
   constructor() {
     super();
   }
 }
 
-if (window && window.customElements) {
+if (typeof (window as any) !== 'undefined' && window.customElements) {
   const element = customElements.get('ion-tabs');
   if (!element) {
     customElements.define('ion-tabs', IonTabsElement);
@@ -101,23 +102,39 @@ export class IonTabs extends React.Component<Props> {
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
-      if (child.type === IonTabBar || child.type.isTabBar) {
 
-        tabBar = React.cloneElement(child, {
-          onIonTabsDidChange,
-          onIonTabsWillChange,
-          ref: this.tabBarRef,
-        });
+      let childProps: any = {
+        ref: this.tabBarRef
+      }
+
+      /**
+       * Only pass these props
+       * down from IonTabs to IonTabBar
+       * if they are defined, otherwise
+       * if you have a handler set on
+       * IonTabBar it will be overridden.
+       */
+      if (onIonTabsDidChange !== undefined) {
+        childProps = {
+          ...childProps,
+          onIonTabsDidChange
+        }
+      }
+
+      if (onIonTabsWillChange !== undefined) {
+        childProps = {
+          ...childProps,
+          onIonTabsWillChange
+        }
+      }
+
+      if (child.type === IonTabBar || child.type.isTabBar) {
+        tabBar = React.cloneElement(child, childProps);
       } else if (
         child.type === Fragment &&
         (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
       ) {
-
-        tabBar = React.cloneElement(child.props.children[1], {
-          onIonTabsDidChange,
-          onIonTabsWillChange,
-          ref: this.tabBarRef,
-        });
+        tabBar = React.cloneElement(child.props.children[1], childProps);
       }
     });
 
