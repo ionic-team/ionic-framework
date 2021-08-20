@@ -18,3 +18,8 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+
+export interface ModalAnimationOptions {
+  presentingEl?: HTMLElement;
+  currentBreakpoint?: number;
+}

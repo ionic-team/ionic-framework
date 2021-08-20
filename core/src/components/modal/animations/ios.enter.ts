@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
@@ -8,14 +8,15 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
  */
 export const iosEnterAnimation = (
   baseEl: HTMLElement,
-  presentingEl?: HTMLElement,
+  opts: ModalAnimationOptions,
 ): Animation => {
+  const { presentingEl, currentBreakpoint } = opts;
+
   const root = getElementRoot(baseEl);
   // If an initial breakpoint was passed we need to transform the modal to be that
   // far from the top, otherwise we will transform it to the top (0vh)
-  const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
-  const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}vh` : '0vh';
-  const initialOpacity = initialBreakpoint ? `calc(var(--backdrop-opacity) * ${initialBreakpoint})` : 'var(--backdrop-opacity)';
+  const initialHeight = currentBreakpoint !== undefined ? `${100 - (currentBreakpoint * 100)}vh` : '0vh';
+  const initialOpacity = currentBreakpoint !== undefined ? `calc(var(--backdrop-opacity) * ${currentBreakpoint})` : 'var(--backdrop-opacity)';
 
   const backdropAnimation = createAnimation('backdropAnimation')
     .addElement(root.querySelector('ion-backdrop')!)

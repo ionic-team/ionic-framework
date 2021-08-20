@@ -40,6 +40,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
+  private currentBreakpoint?: number;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -241,7 +242,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.modalId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
     this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
 
-    if (breakpoints && initialBreakpoint && !breakpoints.includes(initialBreakpoint)) {
+    if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
       console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.')
     }
   }
@@ -348,7 +349,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint });
 
     await this.currentTransition;
 
@@ -368,7 +369,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation = animationBuilder(this.el, this.presentingElement, false);
+    const ani = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement }, false);
     this.gesture = createSwipeToCloseGesture(
       this.el,
       ani,
@@ -396,7 +397,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private initSheetGesture() {
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
-    const ani: Animation = this.animation = animationBuilder(this.el, this.presentingElement);
+    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint });
 
     ani.progressStart(true, 1);
 
@@ -422,6 +423,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
           await this.dismiss(undefined, 'gesture');
           this.gestureAnimationDismissing = false;
         });
+      },
+      (breakpoint: number) => {
+        this.currentBreakpoint = breakpoint;
       }
     );
     this.gesture.enable(true);
@@ -453,7 +457,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
+    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint });
 
     const dismissed = await this.currentTransition;
 
@@ -517,10 +521,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { handle, isSheetModal } = this;
+    const { handle, isSheetModal, presentingElement } = this;
 
     const showHandle = handle || isSheetModal;
-    console.log(showHandle, isSheetModal)
 
     const mode = getIonMode(this);
     const { presented, modalId } = this;
@@ -532,7 +535,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         tabindex="-1"
         class={{
           [mode]: true,
-          [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
+          [`modal-card`]: presentingElement !== undefined && mode === 'ios',
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
           'modal-interactive': presented,

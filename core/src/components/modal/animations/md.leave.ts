@@ -1,11 +1,19 @@
-import { Animation } from '../../../interface';
+import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * Md Modal Leave Animation
  */
-export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
+export const mdLeaveAnimation = (
+  baseEl: HTMLElement,
+  opts: ModalAnimationOptions
+): Animation => {
+  const { currentBreakpoint } = opts;
+
+  const lastHeight = currentBreakpoint !== undefined ? `${100 - (currentBreakpoint * 100)}vh` : '0px';
+  const lastOpacity = currentBreakpoint !== undefined ? `calc(var(--backdrop-opacity) * ${currentBreakpoint})` : 'var(--backdrop-opacity)';
+
   const root = getElementRoot(baseEl);
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
@@ -14,13 +22,13 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
 
   backdropAnimation
     .addElement(root.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
+    .fromTo('opacity', lastOpacity, 0.0);
 
   wrapperAnimation
     .addElement(wrapperEl)
     .keyframes([
-      { offset: 0, opacity: 0.99, transform: 'translateY(0px)' },
-      { offset: 1, opacity: 0, transform: 'translateY(40px)' }
+      { offset: 0, opacity: 0.99, transform: `translateY(${lastHeight})` },
+      { offset: 1, opacity: 0, transform: currentBreakpoint !== undefined ? 'translateY(100vh)' : 'translateY(40px)' }
     ]);
 
   return baseAnimation

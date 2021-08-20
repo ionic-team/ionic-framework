@@ -421,13 +421,12 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const updateKeyframes = (keyframeValues: AnimationKeyFrames) => {
     if (supportsWebAnimations) {
-      const webAnimations = getWebAnimations();
-      webAnimations.forEach(ani => {
-        if (ani.effect.setKeyframes) {
-          ani.effect.setKeyframes(keyframeValues);
+      getWebAnimations().forEach(animation => {
+        if (animation.effect.setKeyframes) {
+          animation.effect.setKeyframes(keyframeValues);
         } else {
-          const newEffect = new KeyframeEffect(ani.effect.target, keyframeValues, ani.effect.getTiming());
-          ani.effect = newEffect;
+          const newEffect = new KeyframeEffect(animation.effect.target, keyframeValues, animation.effect.getTiming());
+          animation.effect = newEffect;
         }
       });
     } else {

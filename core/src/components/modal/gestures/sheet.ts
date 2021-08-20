@@ -21,7 +21,8 @@ export const createSheetGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
   breakpoints: number[] = [],
-  onDismiss: () => void
+  onDismiss: () => void,
+  onBreakpointChange: (breakpoint: number) => void
 ) => {
   const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
@@ -116,6 +117,7 @@ export const createSheetGesture = (
             backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
             animation.progressStep(1 - closest);
             currentBreakpoint = closest;
+            onBreakpointChange(currentBreakpoint);
           }
 
           gesture.enable(true);
