@@ -38,6 +38,28 @@ If you need fine grained control over when the modal is presented and dismissed,
 
 We typically recommend that you write your modals inline as it streamlines the amount of code in your application. You should only use the `modalController` for complex use cases where writing a modal inline is impractical.
 
+## Card Modal
+
+Developers can create a card modal effect where the modal appears as a card stacked on top of your app's main content. To create a card modal, developers need to set the `presentingElement` property and the `swipeToClose` properties on `ion-modal`.
+
+The `presentingElement` property accepts a reference to the element that should display under your modal. This is typically a reference to `ion-router-outlet`.
+
+The `swipeToClose` property can be used to control whether or not the card modal can be swiped to close.
+
+See [Usage](#usage) for examples on how to use the sheet modal.
+
+## Sheet Modal
+
+Developers can create a sheet modal effect similar to the drawer components available in maps applications. To create a sheet modal, developers need to set the `breakpoints` and `initialBreakpoint` properties on `ion-modal`.
+
+The `breakpoints` property accepts an array which states each breakpoint that the sheet can snap to when swiped. A `breakpoints` property of `[0, 0.5, 1]` would indicate that the sheet can be swiped to 0% of the screen height, 50% of the screen height, and 100% of the screen height. When the modal is swiped to 0% of the screen height, the modal will be automatically dismissed.
+
+The `initialBreakpoint` property is required so that the sheet modal knows which breakpoint to start at when presenting. The `initalBreakpoint` value must also exist in the `breakpoints` array. Given a `breakpoints` value of `[0, 0.5, 1]`, an `initialBreakpoint` value of `0.5` would be valid as `0.5` is in the `breakpoints` array. An `initialBreakpoint` value of `0.25` would not be valid as `0.25` does not exist in the `breakpoints` array.
+
+See [Usage](#usage) for examples on how to use the sheet modal.
+
+> Note: The `swipeToClose` property has no effect when using a sheet modal as sheet modals must be swipeable in order to be usable.
+
 ## Interfaces
 
 Below you will find all of the options available to you when using the `modalController`. These options should be supplied when calling `modalController.create()`.
