@@ -107,3 +107,25 @@
     --height: #{$modal-inset-height-large};
   }
 }
+
+// Sheet Modal
+// --------------------------------------------------
+
+.modal-handle {
+  position: absolute;
+
+  top: 14px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 36px;
+  height: 5px;
+
+  border-radius: 8px;
+
+  background: rgba(0, 0, 0, 0.23);
+
+  z-index: 2;
+}

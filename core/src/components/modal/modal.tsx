@@ -391,8 +391,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSheetGesture() {
-    if (getIonMode(this) !== 'ios') { return; }
-
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
     const ani: Animation = this.animation = animationBuilder(this.el, this.presentingElement);
 
