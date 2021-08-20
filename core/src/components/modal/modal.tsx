@@ -39,6 +39,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
+  private isSheetModal = false;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -78,23 +79,25 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
-   * The breakpoints to use for the sheet type modal gesture. This is used when
-   * dragging the modal up or down to stop at a certain height. Should be passed in
-   * as a decimal percentage of the modal's height, between 0 and 1.
+   * The breakpoints to use when creating a sheet modal. Each value in the
+   * array must be a decimal between 0 and 1 where 0 indicates the modal is fully
+   * closed and 1 indicates the modal is fully open. One of the values in this
+   * array must be the value of the `initialBreakpoint` property.
    * For example: [0, .25, .5, 1]
    */
-  @Prop() breakpoints?: number[] = [0, 1];
+  @Prop() breakpoints?: number[];
 
   /**
-   * The initial breakpoint to open the sheet modal. This must be included in the
-   * breakpoints passed in or it will not stop at the initial breakpoint after opening.
-   * Should be a decimal value between 0 and 1. Defaults to `1`.
+   * A decimal value between 0 and 1 that indicates the
+   * initial point the modal will open at when creating a
+   * sheet modal. This value must also be listed in the
+   * `breakpoints` array.
    */
-  @Prop() initialBreakpoint = 1;
+  @Prop() initialBreakpoint?: number;
 
   /**
-   * The horizontal line that displays at the top of a modal. It is `true` by default for
-   * a modal with type `'sheet'`.
+   * The horizontal line that displays at the top of a sheet modal. It is `true` by default when
+   * setting the `breakpoints` and `initialBreakpoint` properties.
    */
   @Prop() handle?: boolean;
 
@@ -136,12 +139,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
    */
   @Prop() swipeToClose = false;
-
-  /**
-   * The type of modal to present.
-   * TODO we could probably remove this and look for the breakpoints
-   */
-  @Prop() type: 'default' | 'sheet' | 'card' = 'default';
 
   /**
    * The element that presented the modal. This is used for card presentation effects
@@ -235,11 +232,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
+    const { breakpoints, initialBreakpoint } = this;
+
     /**
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
     this.modalId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
+    this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
+
+    if (breakpoints && initialBreakpoint && !breakpoints.includes(initialBreakpoint)) {
+      console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.')
+    }
   }
 
   componentDidLoad() {
@@ -348,7 +352,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     await this.currentTransition;
 
-    if (this.type === 'sheet') {
+    if (this.isSheetModal) {
       this.initSheetGesture();
     } else if (this.swipeToClose) {
       this.initSwipeToClose();
@@ -513,9 +517,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { handle, type } = this;
+    const { handle, isSheetModal } = this;
 
-    const showHandle = handle || type === 'sheet';
+    const showHandle = handle || isSheetModal;
+    console.log(showHandle, isSheetModal)
 
     const mode = getIonMode(this);
     const { presented, modalId } = this;
@@ -528,7 +533,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         class={{
           [mode]: true,
           [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
-          [`modal-${type}`]: true,
+          [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
           'modal-interactive': presented,
           ...getClassMap(this.cssClass)

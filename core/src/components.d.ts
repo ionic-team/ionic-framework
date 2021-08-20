@@ -1470,7 +1470,7 @@ export namespace Components {
          */
         "backdropDismiss": boolean;
         /**
-          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the modal's height, between 0 and 1. For example: [0, .25, .5, 1]
+          * The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]
          */
         "breakpoints"?: number[];
         /**
@@ -1497,13 +1497,13 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
-          * The horizontal line that displays at the top of a modal. It is `true` by default for a modal with type `'sheet'`.
+          * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
         /**
-          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Should be a decimal value between 0 and 1. Defaults to `1`.
+          * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
          */
-        "initialBreakpoint": number;
+        "initialBreakpoint"?: number;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
@@ -1549,10 +1549,6 @@ export namespace Components {
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
         "trigger": string | undefined;
-        /**
-          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
-         */
-        "type": 'default' | 'sheet' | 'card';
     }
     interface IonNav {
         /**
@@ -5082,7 +5078,7 @@ declare namespace LocalJSX {
          */
         "backdropDismiss"?: boolean;
         /**
-          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the modal's height, between 0 and 1. For example: [0, .25, .5, 1]
+          * The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]
          */
         "breakpoints"?: number[];
         /**
@@ -5103,11 +5099,11 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
-          * The horizontal line that displays at the top of a modal. It is `true` by default for a modal with type `'sheet'`.
+          * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
         /**
-          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Should be a decimal value between 0 and 1. Defaults to `1`.
+          * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
          */
         "initialBreakpoint"?: number;
         /**
@@ -5175,10 +5171,6 @@ declare namespace LocalJSX {
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
         "trigger"?: string | undefined;
-        /**
-          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
-         */
-        "type"?: 'default' | 'sheet' | 'card';
     }
     interface IonNav {
         /**

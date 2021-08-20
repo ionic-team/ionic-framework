@@ -25,7 +25,7 @@ export const createSheetGesture = (
 ) => {
   const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
-  let currentBreakpoint = el.initialBreakpoint;
+  let currentBreakpoint = el.initialBreakpoint!;
   // const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
