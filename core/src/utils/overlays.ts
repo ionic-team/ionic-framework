@@ -372,8 +372,8 @@ export const present = async (
     ? overlay.enterAnimation
     : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-  const animation = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
-  if (animation) {
+  const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+  if (completed) {
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
   }
@@ -476,7 +476,7 @@ const overlayAnimation = async (
   animationBuilder: AnimationBuilder,
   baseEl: any,
   opts: any
-): Promise<any> => {
+): Promise<boolean> => {
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
 
@@ -501,7 +501,7 @@ const overlayAnimation = async (
 
   await animation.play();
 
-  return animation;
+  return true;
 };
 
 export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {
