@@ -286,7 +286,7 @@ import { EventModalModule } from '../modals/event/event.module';
 export class CalendarComponentModule {}
 ```
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -326,6 +326,34 @@ async presentModal() {
   });
   return await modal.present();
 }
+```
+
+### Sheet Modals
+
+**Controller**
+```javascript
+import { IonRouterOutlet } from '@ionic/angular';
+
+constructor(private routerOutlet: IonRouterOutlet) {}
+
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: ModalPage,
+    initialBreakpoint: 0.5,
+    breakpoints: [0, 0.5, 1]
+  });
+  return await modal.present();
+}
+```
+
+
+**Inline**
+```html
+<ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 1]">
+  <ng-template>
+    <modal-page></modal-page>
+  </ng-template>
+</ion-modal>
 ```
 
 
@@ -419,7 +447,7 @@ console.log(data);
 ```
 
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -441,6 +469,15 @@ modalElement.component = 'modal-page';
 modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = await modalController.getTop(); // Get the top-most ion-modal
+```
+
+### Sheet Modals
+
+```javascript
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.initialBreakpoint = 0.5;
+modalElement.breakpoints = [0, 0.5, 1];
 ```
 
 
@@ -529,7 +566,7 @@ export const ModalExample: React.FC = () => {
 };
 ```
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -600,6 +637,50 @@ In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `cu
   <p>This is more modal content</p>
   <IonButton onClick={() => setShow2ndModal(false)}>Close Modal</IonButton>
 </IonModal>
+```
+
+
+### Sheet Modals
+
+```tsx
+const App: React.FC = () => {
+  const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+  
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet ref={routerRef}>
+          <Route path="/home" render={() => <Home router={routerRef.current} />}  exact={true} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
+
+...
+
+interface HomePageProps {
+  router: HTMLIonRouterOutletElement | null;
+}
+
+const Home: React.FC<HomePageProps> = ({ router }) => {
+  const [showModal, setShowModal] = useState(false);
+  
+  return (
+    ...
+    
+    <IonModal
+      isOpen={showModal}
+      initialBreakpoint={0.5}
+      breakpoints={[0, 0.5, 1]}
+      onDidDismiss={() => setShowModal(false)}>
+      <p>This is modal content</p>
+    </IonModal>
+    
+    ...
+  );
+};
+
 ```
 
 
@@ -714,7 +795,7 @@ const { data } = await modal.onWillDismiss();
 console.log(data);
 ```
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -756,6 +837,59 @@ async presentModal() {
     presentingElement: await modalController.getTop() // Get the top-most ion-modal
   });
   await modal.present();
+}
+```
+
+
+### Sheet Modals
+
+**Controller**
+```tsx
+import { Component, Element, h } from '@stencil/core';
+
+import { modalController } from '@ionic/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @Element() el: any;
+
+  async presentModal() {
+    const modal = await modalController.create({
+      component: 'page-modal',
+      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.5, 1]
+      
+    });
+    await modal.present();
+  }
+}
+```
+
+**Inline**
+```tsx
+import { Component, State, h } from '@stencil/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @State() isModalOpen: boolean = false;
+
+  render() {
+    return [
+      <ion-modal
+        isOpen={isModalOpen} 
+        initialBreakpoint={0.5} 
+        breakpoints={[0, 0.5, 1]}
+      >
+        <page-modal></page-modal>
+      <ion-modal>
+    ]
+  }
 }
 ```
 
@@ -858,7 +992,7 @@ export default defineComponent({
 
 > If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -899,23 +1033,93 @@ export default defineComponent({
 </script>
 ```
 
+### Sheet Modals
+
+**Controller**
+```html
+<template>
+  <ion-page>
+    <ion-content class="ion-padding">
+      <ion-button @click="openModal()">Open Modal</ion-button>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { IonButton, IonContent, IonPage, modalController } from '@ionic/vue';
+import Modal from './modal.vue'
+
+export default {
+  components: { IonButton, IonContent, IonPage },
+  methods: {
+    async openModal() {
+      const modal = await modalController
+        .create({
+          component: Modal,
+          initialBreakpoint: 0.5,
+          breakpoints: [0, 0.5, 1]
+        })
+      return modal.present();
+    },
+  },
+}
+</script>
+```
+
+**Inline**
+```html
+<template>
+  <ion-page>
+    <ion-content>
+      <ion-button @click="setOpen(true)">Show Modal</ion-button>
+      <ion-modal
+        :is-open="isOpenRef"
+        :initial-breakpoint="0.5"
+        :breakpoints="[0, 0.5, 1]"
+        @didDismiss="setOpen(false)"
+      >
+        <Modal></Modal>
+      </ion-modal>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script lang="ts">
+import { IonModal, IonButton, IonContent, IonPage } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Modal from './modal.vue'
+
+export default defineComponent({
+  components: { IonModal, IonButton, Modal, IonContent, IonPage },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    return { isOpenRef, setOpen }
+  }
+});
+</script>
+```
+
 
 
 ## Properties
 
-| Property            | Attribute          | Description                                                                                                                                                                                                                                                                                                                     | Type                                                    | Default     |
-| ------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
-| `animated`          | `animated`         | If `true`, the modal will animate.                                                                                                                                                                                                                                                                                              | `boolean`                                               | `true`      |
-| `backdropDismiss`   | `backdrop-dismiss` | If `true`, the modal will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                            | `boolean`                                               | `true`      |
-| `enterAnimation`    | --                 | Animation to use when the modal is presented.                                                                                                                                                                                                                                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
-| `isOpen`            | `is-open`          | If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code. | `boolean`                                               | `false`     |
-| `keyboardClose`     | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                          | `boolean`                                               | `true`      |
-| `leaveAnimation`    | --                 | Animation to use when the modal is dismissed.                                                                                                                                                                                                                                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
-| `mode`              | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                               | `"ios" \| "md"`                                         | `undefined` |
-| `presentingElement` | --                 | The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.                                                                                                                                                               | `HTMLElement \| undefined`                              | `undefined` |
-| `showBackdrop`      | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal.                                                                                                                                                                                                                                                                       | `boolean`                                               | `true`      |
-| `swipeToClose`      | `swipe-to-close`   | If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.                                                                                                                                                                                                                                                        | `boolean`                                               | `false`     |
-| `trigger`           | `trigger`          | An ID corresponding to the trigger element that causes the modal to open when clicked.                                                                                                                                                                                                                                          | `string \| undefined`                                   | `undefined` |
+| Property            | Attribute            | Description                                                                                                                                                                                                                                                                                                                     | Type                                                    | Default     |
+| ------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| `animated`          | `animated`           | If `true`, the modal will animate.                                                                                                                                                                                                                                                                                              | `boolean`                                               | `true`      |
+| `backdropDismiss`   | `backdrop-dismiss`   | If `true`, the modal will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                            | `boolean`                                               | `true`      |
+| `breakpoints`       | --                   | The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]          | `number[] \| undefined`                                 | `undefined` |
+| `enterAnimation`    | --                   | Animation to use when the modal is presented.                                                                                                                                                                                                                                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `handle`            | `handle`             | The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.                                                                                                                                                                       | `boolean \| undefined`                                  | `undefined` |
+| `initialBreakpoint` | `initial-breakpoint` | A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.                                                                                                                                                 | `number \| undefined`                                   | `undefined` |
+| `isOpen`            | `is-open`            | If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code. | `boolean`                                               | `false`     |
+| `keyboardClose`     | `keyboard-close`     | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                          | `boolean`                                               | `true`      |
+| `leaveAnimation`    | --                   | Animation to use when the modal is dismissed.                                                                                                                                                                                                                                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `mode`              | `mode`               | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                               | `"ios" \| "md"`                                         | `undefined` |
+| `presentingElement` | --                   | The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.                                                                                                                                                               | `HTMLElement \| undefined`                              | `undefined` |
+| `showBackdrop`      | `show-backdrop`      | If `true`, a backdrop will be displayed behind the modal.                                                                                                                                                                                                                                                                       | `boolean`                                               | `true`      |
+| `swipeToClose`      | `swipe-to-close`     | If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.                                                                                                                                                                                                                                                        | `boolean`                                               | `false`     |
+| `trigger`           | `trigger`            | An ID corresponding to the trigger element that causes the modal to open when clicked.                                                                                                                                                                                                                                          | `string \| undefined`                                   | `undefined` |
 
 
 ## Events

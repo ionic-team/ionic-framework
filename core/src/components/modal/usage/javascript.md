@@ -82,7 +82,7 @@ console.log(data);
 ```
 
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -104,4 +104,13 @@ modalElement.component = 'modal-page';
 modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = await modalController.getTop(); // Get the top-most ion-modal
+```
+
+### Sheet Modals
+
+```javascript
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.initialBreakpoint = 0.5;
+modalElement.breakpoints = [0, 0.5, 1];
 ```

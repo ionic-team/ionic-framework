@@ -94,7 +94,7 @@ export default defineComponent({
 
 > If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -130,6 +130,73 @@ export default defineComponent({
     const setOpen = (state: boolean) => isOpenRef.value = state;
     const data = { content: 'New Content' };
     return { isOpenRef, setOpen, data }
+  }
+});
+</script>
+```
+
+### Sheet Modals
+
+**Controller**
+```html
+<template>
+  <ion-page>
+    <ion-content class="ion-padding">
+      <ion-button @click="openModal()">Open Modal</ion-button>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { IonButton, IonContent, IonPage, modalController } from '@ionic/vue';
+import Modal from './modal.vue'
+
+export default {
+  components: { IonButton, IonContent, IonPage },
+  methods: {
+    async openModal() {
+      const modal = await modalController
+        .create({
+          component: Modal,
+          initialBreakpoint: 0.5,
+          breakpoints: [0, 0.5, 1]
+        })
+      return modal.present();
+    },
+  },
+}
+</script>
+```
+
+**Inline**
+```html
+<template>
+  <ion-page>
+    <ion-content>
+      <ion-button @click="setOpen(true)">Show Modal</ion-button>
+      <ion-modal
+        :is-open="isOpenRef"
+        :initial-breakpoint="0.5"
+        :breakpoints="[0, 0.5, 1]"
+        @didDismiss="setOpen(false)"
+      >
+        <Modal></Modal>
+      </ion-modal>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script lang="ts">
+import { IonModal, IonButton, IonContent, IonPage } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Modal from './modal.vue'
+
+export default defineComponent({
+  components: { IonModal, IonButton, Modal, IonContent, IonPage },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    return { isOpenRef, setOpen }
   }
 });
 </script>
