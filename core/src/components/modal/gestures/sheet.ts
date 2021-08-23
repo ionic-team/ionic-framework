@@ -1,6 +1,6 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
-import { clamp } from '../../../utils/helpers';
+import { clamp, raf } from '../../../utils/helpers';
 
 // Defaults for the sheet swipe animation
 const SheetDefaults = {
@@ -102,23 +102,28 @@ export const createSheetGesture = (
         { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${1 - offset})` },
         { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${closest})` }
       ]);
+
+      animation.progressStep(0)
     }
 
     gesture.enable(false);
 
     animation
       .onFinish(() => {
-        animation.progressStart(true, 1);
         if (shouldRemainOpen) {
           if (wrapperAnimation && backdropAnimation) {
-            wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
-            backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
-            animation.progressStep(1 - closest);
-            currentBreakpoint = closest;
-            onBreakpointChange(currentBreakpoint);
-          }
+            raf(() => {
+              wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
+              backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+              animation.progressStart(true, 1 - closest);
+              currentBreakpoint = closest;
+              onBreakpointChange(currentBreakpoint);
 
-          gesture.enable(true);
+              gesture.enable(true);
+            });
+          } else {
+            gesture.enable(true);
+          }
         }
       }, { oneTimeCallback: true })
       .progressEnd(1, 0, 300);
