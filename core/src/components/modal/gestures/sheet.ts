@@ -104,8 +104,6 @@ export const createSheetGesture = (
       ]);
     }
 
-    // const duration = (shouldRemainOpen) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
-
     gesture.enable(false);
 
     animation
@@ -143,7 +141,3 @@ export const createSheetGesture = (
   });
   return gesture;
 };
-
-// const computeDuration = (remaining: number, velocity: number) => {
-//   return clamp(400, remaining / Math.abs(velocity * 1.1), 500);
-// };
