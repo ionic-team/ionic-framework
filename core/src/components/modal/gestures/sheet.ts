@@ -27,9 +27,9 @@ export const createSheetGesture = (
   const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
   let currentBreakpoint = el.initialBreakpoint!;
-  // const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
+  const isAtMaxBreakpoint = () => currentBreakpoint === breakpoints[breakpoints.length - 1];
 
   if (wrapperAnimation && backdropAnimation) {
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
@@ -37,12 +37,17 @@ export const createSheetGesture = (
     animation.progressStart(true, 1 - currentBreakpoint);
   }
 
-  const canStart = () => true;
+  const canStart = (detail: GestureDetail) => {
+    const content = (detail.event.target! as HTMLElement).closest('ion-content');
+
+    if (isAtMaxBreakpoint() && content) {
+      return false;
+    }
+
+    return true;
+  };
 
   const onStart = () => {
-    // When the gesture starts we need to turn off the content scrolling
-    // because the content shouldn't scroll unless it's fullscreen
-    // TODO this does not work properly because sometimes you can scroll the content quickly
     if (contentEl) {
       contentEl.scrollY = false;
     }
@@ -51,30 +56,6 @@ export const createSheetGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
-    const target = detail.event.target as HTMLElement | null;
-
-    // If we're not dragging inside of the content we need to allow
-    // the modal to drag higher than the maximum breakpoint
-    const content = target!.closest('ion-content');
-    if (content !== null) {
-      // Target is in the content, we need to allow the modal to increase height
-      // until the maximum breakpoint is reached and then allow scrolling the content
-      content.scrollY = false;
-
-      /*
-      if (wrapperAnimation && maxBreakpoint) {
-        wrapperAnimation.keyframes([
-          { offset: 0, transform: `translateY(${(1 - maxBreakpoint) * 100}vh)` },
-          { offset: 1, transform: `translateY(100vh)` }
-        ]);
-      }
-      */
-
-      if (offset === 0.0001) {
-        content.scrollY = true;
-      }
-    }
-
     const initialStep = 1 - currentBreakpoint;
     offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
     animation.progressStep(offset);
@@ -118,6 +99,10 @@ export const createSheetGesture = (
               animation.progressStart(true, 1 - closest);
               currentBreakpoint = closest;
               onBreakpointChange(currentBreakpoint);
+
+              if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
+                contentEl.scrollY = true;
+              }
 
               gesture.enable(true);
             });
