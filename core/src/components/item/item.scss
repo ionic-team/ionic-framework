@@ -308,6 +308,10 @@ button, a {
   z-index: 1;
 }
 
+::slotted(ion-label:not([slot="end"])) {
+  flex: 1;
+}
+
 
 // Item Input
 // --------------------------------------------------
