@@ -1,0 +1,39 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Titulo Materia/Usage" />
+
+# Titulo Materia
+
+## Propriedades
+
+| Propriedade   | Atributo      | Descrição                          | Tipo                        | Default       |
+| ------------- | ------------- | ---------------------------------- | --------------------------- | ------------- |
+| **color**     | **color**     | Define a cor do componente.        | **string \| undefined**     | **undefined** |
+| **descricao** | **descricao** | Define o descricao do item.        | **string \| undefined**     | **undefined** |
+| **neutral**   | **neutral**   | Define a cor neutra do componente. | **string \| undefined**     | **undefined** |
+| **titulo**    | **titulo**    | Define o titulo do item.           | **string** \| **undefined** | **undefined** |
+
+### Slots
+
+| Slot              | Descrição                                     |
+| ----------------- | --------------------------------------------- |
+| **slot="start"**  | Posiciona um elemento no começo do componente |
+| **slot="end"**    | Posiciona um elemento no final do componente. |
+
+## Default
+
+```
+<med-titulo-materia titulo="Define o título da matéria." descricao="Define a cor do componente."></med-titulo-materia>
+```
+
+### Color
+
+```
+<med-titulo-materia color="brand" titulo="Define o título da matéria." descricao="Define a cor do componente."></med-titulo-materia>
+```
+
+### Neutral
+
+```
+<med-titulo-materia neutral="5" titulo="Define o título da matéria." descricao="Define a cor do componente."></med-titulo-materia>
+```

@@ -58,8 +58,13 @@ export class ProgressBar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  /**
+   * Define a variação do componente.
+   */
+  @Prop() dsName?: 'minimalist';
+
   render() {
-    const { color, type, reversed, value, buffer, percentage } = this;
+    const { color, type, reversed, value, buffer, percentage, dsName } = this;
     const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
     return (
@@ -70,6 +75,8 @@ export class ProgressBar implements ComponentInterface {
         aria-valuemax="1"
         class={createColorClasses(color, {
           [mode]: true,
+          'med-progress-bar': true,
+          [`med-progress-bar--${dsName}`]: dsName !== undefined,
           [`progress-bar-${type}`]: true,
           'percentage': percentage,
           'progress-paused': paused,

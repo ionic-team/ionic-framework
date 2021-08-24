@@ -1,0 +1,69 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+    * @prop --color-excelent: Define a cor do icone de excelente.
+    * @prop --color-bom: Define a cor do icone de bom.
+    * @prop --color-regular: Define a cor do icone de regular.
+    * @prop --color-ruim: Define a cor do icone de ruim.
+  */
+  display: block;
+  --color-excelent: #{md-color(fb-success, 3)};
+  --color-bom: #{md-color(fb-attention, 3)};
+  --color-regular: #{md-color(fb-caution, 3)};
+  --color-ruim: #{md-color(fb-warning, 3)};
+}
+
+:host(.med-rate-result) {
+  font-size: $med-font-size-xxxs;
+  font-weight: $med-font-weight-regular;
+  line-height: $med-line-height-default;
+  display: flex;
+}
+
+:host(.med-rate-result) .med-rate-result__wrapper {
+  margin-right: $med-spacing-inline-base;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+:host(.med-rate-result) .med-rate-result__wrapper--excelente {
+  color: var(--color-excelent);
+  stroke: var(--color-excelent);
+  * {
+    color: inherit;
+    stroke: inherit;
+  }
+}
+
+:host(.med-rate-result) .med-rate-result__wrapper--bom {
+  color: var(--color-bom);
+  stroke: var(--color-bom);
+  * {
+    color: inherit;
+    stroke: inherit;
+  }
+}
+
+:host(.med-rate-result) .med-rate-result__wrapper--regular {
+  color: var(--color-regular);
+  stroke: var(--color-regular);
+  * {
+    color: inherit;
+    stroke: inherit;
+  }
+}
+
+:host(.med-rate-result) .med-rate-result__wrapper--ruim {
+  color: var(--color-ruim);
+  stroke: var(--color-ruim);
+  * {
+    color: inherit;
+    stroke: inherit;
+  }
+}

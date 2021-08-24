@@ -1,6 +1,5 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
 
 export default {
   title: 'Components/Core/Tooltip',
@@ -9,9 +8,6 @@ export default {
 
 const Template = ({ collapsed, placement, position, titulo, content }) => {
   return html`
-    <style>
-    </style>
-
     <ion-app style="align-items: center; justify-content: center;">
 
       <!-- component -->

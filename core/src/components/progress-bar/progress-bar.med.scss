@@ -20,12 +20,14 @@
   --progress-correct-background: #{medsoft-color(feedback-success, light)};
   --percentage-color: #{medsoft-color(neutral-light, 10)};
 
+  --height: 8px;
+
   display: block;
   position: relative;
   contain: strict;
   overflow: hidden;
   width: 100%;
-  height: 8px;
+  height: var(--height);
 }
 
 .progress-container {
@@ -58,7 +60,7 @@
   width: 100%;
   height: 100%;
   border-radius: 100px;
-  height: 8px;
+  height: var(--height);
   background: var(--progress-background);
 
   &__percentage {
@@ -83,4 +85,28 @@
 
 :host(.ion-color) {
   --progress-background: #{medsoft-current-color(light)};
+}
+
+// //////////////////////////////
+// minimalist
+// //////////////////////////////
+
+:host(.med-progress-bar--minimalist) {
+  --background: #{md-color(brand, 1)};
+  --height: 4px;
+  .progress {
+    border-radius: 0;
+  }
+  .progress__percentage {
+    display: none;
+  }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-progress-bar--minimalist.ion-color) {
+  --background: #{md-current-color(1)};
+  --progress-background: #{md-current-color(3)};
 }

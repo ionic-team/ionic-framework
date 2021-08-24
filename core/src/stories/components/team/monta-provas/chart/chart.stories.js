@@ -89,46 +89,46 @@ const TemplateDefault = ({valores}) => {
       }
     </style>
 
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
 
         <!-- component -->
-        <med-accordion icon="left">
+        <med-accordion-list accordion-list single-open="false">
+          <med-accordion-item icon="left">
+            <div class="med-accordion-header" slot="header">
+              <h4 class="med-accordion-header__heading">Nome da Prova</h4>
+            </div>
 
-          <div class="med-accordion-header" slot="header">
-            <h4 class="med-accordion-header__heading">Nome da Prova</h4>
-          </div>
+            <med-context-menu class="med-context-menu" slot="button">
+              <ul class="med-context-menu__list">
+                <li class="med-context-menu__item">
+                  <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+                  <span>Ver filtro selecionado</span>
+                </li>
+                <li class="med-context-menu__item">
+                  <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+                  <span>Renomear Prova</span>
+                </li>
+                <li class="med-context-menu__item">
+                  <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+                  <span>Excluir Prova</span>
+                </li>
+              </ul>
+              <p class="med-context-menu__info">Criada em 30/12/2020</p>
+            </med-context-menu>
 
-          <med-context-menu class="med-context-menu" slot="button">
-            <ul class="med-context-menu__list">
-              <li class="med-context-menu__item">
-                <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
-                <span>Ver filtro selecionado</span>
-              </li>
-              <li class="med-context-menu__item">
-                <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
-                <span>Renomear Prova</span>
-              </li>
-              <li class="med-context-menu__item">
-                <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
-                <span>Excluir Prova</span>
-              </li>
-            </ul>
-            <p class="med-context-menu__info">Criada em 30/12/2020</p>
-          </med-context-menu>
+            <div class="monta-provas-chart" slot="content">
+              <med-chart-radial>
+                <med-chart-radial-content class="monta-provas-chart-content" total="999999"></med-chart-radial-content>
+              </med-chart-radial>
 
-          <div class="monta-provas-chart" slot="content">
-            <med-chart-radial>
-              <med-chart-radial-content class="monta-provas-chart-content" total="999999"></med-chart-radial-content>
-            </med-chart-radial>
-
-            <med-chart-radial-label class="monta-provas-chart__label"></med-chart-radial-label>
-          </div>
-
-        </med-accordion>
+              <med-chart-radial-label class="monta-provas-chart__label"></med-chart-radial-label>
+            </div>
+          </med-accordion-item>
+        </med-accordion-list>
         <!-- component -->
 
-      </div>
+      </ion-content>
     </ion-app>
   `
 }

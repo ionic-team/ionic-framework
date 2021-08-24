@@ -1,19 +1,18 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
 
 export default {
   title: 'Components/Core/Vote',
   decorators: [withDesign],
 };
 
-const Template = ({ titulo, cabe, naoCabe }) => {
+const Template = ({ titulo: titulo, like: like, unlike: unlike }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <med-vote .titulo=${titulo} .cabe=${cabe} .nao-cabe=${naoCabe}></med-vote>
+        <med-vote .titulo=${titulo} .like=${like} .unlike=${unlike}></med-vote>
         <!-- component -->
 
       </div>
@@ -29,37 +28,19 @@ Vote.parameters = {
   },
 }
 Vote.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
-    description: "Define a cor do componente.",
-    table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
   titulo: {
     control: { type: 'text' },
     description: "Define o titulo do componente.",
     defaultValue: 'Cabe recurso?',
   },
-  cabe: {
+  like: {
     control: { type: 'text' },
     description: "Define a quantidade de recursos que cabem.",
-    defaultValue: '155',
+    defaultValue: '2',
   },
-  naoCabe: {
+  unlike: {
     control: { type: 'text' },
     description: "Define a quantidade de recursos que cabem.",
-    defaultValue: '155',
+    defaultValue: '4',
   },
 };

@@ -369,12 +369,12 @@ export default defineComponent({
 
 ### Used by
 
- - [med-context-menu](../00-autoral/global/med-context-menu)
- - [med-image-zoom](../00-autoral/global/med-image-zoom)
- - [med-list-item-accordion](../00-autoral/global/med-list-item-accordion)
- - [med-offline](../00-autoral/global/med-offline)
- - [med-tooltip](../00-autoral/global/med-tooltip)
- - [med-tooltip2](../00-autoral/global/med-tooltip-2)
+ - [med-context-menu](../@medgrupo/global/med-context-menu)
+ - [med-image-zoom](../@medgrupo/global/med-image-zoom)
+ - [med-list-item-accordion](../@medgrupo/global/med-list-item-accordion)
+ - [med-offline](../@medgrupo/global/med-offline)
+ - [med-tooltip](../@medgrupo/global/med-tooltip)
+ - [med-tooltip2](../@medgrupo/global/med-tooltip-2)
 
 ### Depends on
 

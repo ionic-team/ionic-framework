@@ -91,6 +91,8 @@ const TemplateDefault = () => {
                   </ul>
                 </med-context-menu>
 
+                <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
+
                 <ion-badge ds-size="xxs" ds-name="secondary">EM QUESTÃO X - 2021 INSTITUIÇÃO</ion-badge>
 
                 <ul class="med-message__footer" slot="footer">
@@ -144,6 +146,8 @@ const TemplateDefault = () => {
 
               <med-message nome="Alex" message-id="#413131" concurso="UFRJ" texto="Lorem ipsum" ds-name="response">
 
+                <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
+
                 <ul class="med-message__footer" slot="footer">
                   <li class="med-message__list-item">
                     <ion-button ds-name="icon-only">
@@ -175,6 +179,8 @@ const TemplateDefault = () => {
               <!-- COMMENT -->
 
               <med-message nome="Alex" message-id="#413131" concurso="UFRJ" texto="Lorem ipsum" ds-name="comment">
+
+                <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
 
                 <ul class="med-message__footer" slot="footer">
                   <li class="med-message__list-item">
@@ -208,6 +214,8 @@ const TemplateDefault = () => {
 
               <med-message nome="Alex" message-id="#413131" concurso="UFRJ" texto="Lorem ipsum" ds-name="user-message">
 
+               <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
+
                 <ul class="med-message__footer" slot="footer">
                   <li class="med-message__list-item">
                     <ion-button ds-name="icon-only">
@@ -239,6 +247,8 @@ const TemplateDefault = () => {
               <!-- COMMENT -->
 
               <med-message nome="Alex" message-id="#413131" concurso="UFRJ" texto="Lorem ipsum" ds-name="comment">
+
+                <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
 
                 <ul class="med-message__footer" slot="footer">
                   <li class="med-message__list-item">
@@ -272,6 +282,8 @@ const TemplateDefault = () => {
 
               <med-message nome="Alex" message-id="#413131" concurso="UFRJ" texto="Lorem ipsum" ds-name="response">
 
+                <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
+
                 <ul class="med-message__footer" slot="footer">
                   <li class="med-message__list-item">
                     <ion-button ds-name="icon-only">
@@ -303,6 +315,8 @@ const TemplateDefault = () => {
               <!-- MESSAGE -->
 
               <med-message nome="Alex" message-id="#31323132" concurso="UFRJ" texto="Lorem ispsum" ds-name="">
+
+                <med-avatar ds-size="xs" slot="avatar" letter="A"></med-avatar>
 
                 <med-context-menu slot="menu" class="med-context-menu">
                   <ul class="med-context-menu__list">

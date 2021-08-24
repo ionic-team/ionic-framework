@@ -1,12 +1,13 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { medColors } from '../../../med-colors';
 
 export default {
   title: 'Components/Core/Chart Radial',
   decorators: [withDesign],
 };
 
-const Default = ({valores}) => {
+const Default = ({valores, dsName, color}) => {
 
   setTimeout(() => {
     document.querySelector('med-chart-radial').valores = valores.valores;
@@ -22,7 +23,7 @@ const Default = ({valores}) => {
       <div class="storybook-only__container">
 
         <!-- component -->
-          <med-chart-radial></med-chart-radial>
+          <med-chart-radial .color=${color} ds-name=${dsName}></med-chart-radial>
         <!-- component -->
 
       </div>
@@ -42,15 +43,9 @@ ChartRadial.argTypes = {
     defaultValue: {
       valores: [
         {
-          cor: 'ion-color-success',
+          cor: '',
           label: 'acertos',
           quantia: 32,
-          ignoreBarra: false,
-        },
-        {
-          cor: 'ion-color-caution',
-          label: 'acertos',
-          quantia: 16,
           ignoreBarra: false,
         },
         {
@@ -68,4 +63,53 @@ ChartRadial.argTypes = {
       defaultValue: { summary: 'undefined' },
     },
   },
+  color: {
+    options: medColors,
+    control: { type: 'inline-radio'},
+    description: "Define a cor do componente.",
+    table: {
+      type:  { summary: 'Color' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  dsName: {
+    options: [undefined, 'simple'],
+    control: { type: 'inline-radio'},
+    description: "Define a variação do componente.",
+    defaultValue: "simple",
+    table: {
+      type:  { summary: 'simple' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+  // valores: {
+  //   defaultValue: {
+  //     valores: [
+  //       {
+  //         cor: 'ion-color-fb-success',
+  //         label: 'acertos',
+  //         quantia: 32,
+  //         ignoreBarra: false,
+  //       },
+  //       {
+  //         cor: 'ion-color-fb-caution',
+  //         label: 'acertos',
+  //         quantia: 16,
+  //         ignoreBarra: false,
+  //       },
+  //       {
+  //         cor: '',
+  //         label: 'restantes',
+  //         quantia: 52,
+  //         ignoreBarra: true,
+  //       }
+  //     ],
+  //   },
+  //   control: { type: 'array' },
+  //   description: 'Define a lista...',
+  //   table: {
+  //     type:  { summary: 'MedRadialItem[]' },
+  //     defaultValue: { summary: 'undefined' },
+  //   },
+  // },
 }

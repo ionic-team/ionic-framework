@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Item Aulas/Usage" />
+
+# Item Aulas
+
+## Propriedades
+
+| Propriedade                  | Atributo        | Descrição                                       | Tipo       | Default       |
+| ---------------------------- | --------------- | ------------------------------------------------| ---------- | ------------- |
+| **porcentagem** _(required)_ | **porcentagem** | Define a porcentagem de visualização de vídeos. | **number** | **undefined** |
+| **professor** _(required)_   | **professor**   | Define o nome do professor.                     | **string** | **undefined** |
+| **videos** _(required)_      | **videos**      | Define a quantidade de vídeos.                  | **string** | **undefined** |
+
+## Slots
+
+| Slot       | Description                          |
+| ---------- | ------------------------------------ |
+| `"avatar"` | Slot destinado ao avatar.            |
+| `"rate"`   | Slot destinado ao componete de rate. |
+
+## Default
+
+```
+<med-item-aulas professor="Felipe Marinho Bastos" professor="20" videos="15">
+  <med-avatar ds-size="lg" letter="A" slot="avatar"></med-avatar>
+  <med-rate-result excelente="10" bom="20" regular="30" ruim="40" slot="rate"></med-rate-result>
+</med-item-aulas>
+```

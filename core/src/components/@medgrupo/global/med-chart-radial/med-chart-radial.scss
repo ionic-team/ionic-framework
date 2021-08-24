@@ -1,0 +1,70 @@
+:host {
+  display: flex;
+  position: relative;
+  --size-default: 104px;
+  --size-sm: 48px;
+  --color-label: #{md-color(brand, 2)};
+
+  svg {
+    width: var(--size-default);
+    height: var(--size-default);
+  }
+
+  circle {
+      stroke-dashoffset: 0;
+      stroke: var(--med-color-neutral-1);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: 1s ease-in-out;
+      transform: rotate(-90deg);
+      transform-origin: 18px 18px;
+
+      &.size {
+        stroke: var(--med-color-3);
+        stroke-dasharray: var(--size) 100;
+    }
+  }
+}
+
+// ////////////////////
+// Variacao
+// ////////////////////
+
+:host(.med-chart-radial--simple) {
+  svg {
+    width: var(--size-sm);
+    height: var(--size-sm);
+  }
+  .size {
+    stroke: #{md-color(brand, 2)};
+  }
+  circle {
+    stroke: var(--med-color-neutral-2);
+  }
+}
+
+:host(.med-chart-radial--simple) .med-chart-radial__percent {
+  font-size: $med-font-size-xxxs;
+  line-height: $med-line-height-compressed;
+  font-weight: $med-font-weight-semibold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-label);
+}
+
+// ////////////////////
+// Color
+// ////////////////////
+
+:host(.ion-color.med-chart-radial--simple) {
+  .size {
+    stroke: md-current-color(2);
+  }
+  .med-chart-radial__percent {
+    --color-label: #{md-current-color(2)};
+  }
+}

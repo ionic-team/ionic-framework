@@ -1,0 +1,106 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  /**
+    * @prop --color: Define a cor do texto.
+    * @prop --background: Define a cor de background do componente.
+    */
+  --color: #{md-color(brand, contrast-1)};
+  --background: #{md-color(brand, 3)};
+
+  --size-xxs: 24px;
+  --size-xs: 32px;
+  --size-sm: 40px;
+  --size-base: 48px;
+  --size-md: 56px;
+  --size-lg: 64px;
+  --size-xl: 72px;
+  --size-xxl: 80px;
+
+  --font-size-xxs: #{$med-font-size-xs};
+  --font-size-xs: #{$med-font-size-xs};
+  --font-size-sm: #{$med-font-size-md};
+  --font-size-base: #{$med-font-size-md};
+  --font-size-md: #{$med-font-size-lg};
+  --font-size-lg: #{$med-font-size-lg};
+  --font-size-xl: #{$med-font-size-xl};
+  --font-size-xxl: #{$med-font-size-xl};
+}
+
+:host(.med-avatar) {
+  font-size: var(--font-size-base);
+  min-width: var(--size-base);
+  height: var(--size-base);
+  color: var(--color);
+  background: var(--background);
+  font-weight: $med-font-weight-semibold;
+  line-height: $med-line-height-compressed;
+  border-radius: $med-border-radius-full;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-avatar.ion-color) {
+  --background: #{md-current-color(3)};
+  --color: #{md-current-color(contrast-1)};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-avatar.med-neutral) {
+  --background: var(--med-neutral);
+  --color: var(--med-neutral-contrast);
+}
+
+// ////////////////////
+// Size
+// ////////////////////
+
+:host(.med-avatar--xxs) {
+  font-size: var(--font-size-xxs);
+  min-width: var(--size-xxs);
+  height: var(--size-xxs);
+}
+
+:host(.med-avatar--xs) {
+  font-size: var(--font-size-xs);
+  min-width: var(--size-xs);
+  height: var(--size-xs);
+}
+
+:host(.med-avatar--sm) {
+  font-size: var(--font-size-sm);
+  min-width: var(--size-sm);
+  height: var(--size-sm);
+}
+
+:host(.med-avatar--md) {
+  font-size: var(--font-size-md);
+  min-width: var(--size-md);
+  height: var(--size-md);
+}
+
+:host(.med-avatar--lg) {
+  font-size: var(--font-size-lg);
+  min-width: var(--size-lg);
+  height: var(--size-lg);
+}
+
+:host(.med-avatar--xl) {
+  font-size: var(--font-size-xl);
+  min-width: var(--size-xl);
+  height: var(--size-xl);
+}
+
+:host(.med-avatar--xxl) {
+  font-size: var(--font-size-xxl);
+  min-width: var(--size-xxl);
+  height: var(--size-xxl);
+}

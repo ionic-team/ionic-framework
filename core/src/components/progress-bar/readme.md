@@ -136,6 +136,7 @@ export default defineComponent({
 | ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------- |
 | `buffer`     | `buffer`     | If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].                                                                                                                                                         | `number`                           | `1`             |
 | `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`              | `undefined`     |
+| `dsName`     | `ds-name`    | Define a variação do componente.                                                                                                                                                                                                                                       | `"minimalist" \| undefined`        | `undefined`     |
 | `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                    | `undefined`     |
 | `percentage` | `percentage` |                                                                                                                                                                                                                                                                        | `boolean`                          | `false`         |
 | `reversed`   | `reversed`   | If true, reverse the progress bar direction.                                                                                                                                                                                                                           | `boolean`                          | `false`         |
@@ -165,12 +166,14 @@ export default defineComponent({
 
 ### Used by
 
- - [med-alternativas](../00-autoral/team/questoes/med-alternativas)
+ - [med-alternativas](../@medgrupo/team/questoes/med-alternativas)
+ - [med-item-aulas](../@medgrupo/global/med-item-aulas)
 
 ### Graph
 ```mermaid
 graph TD;
   med-alternativas --> ion-progress-bar
+  med-item-aulas --> ion-progress-bar
   style ion-progress-bar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

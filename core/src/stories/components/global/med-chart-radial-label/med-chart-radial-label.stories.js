@@ -37,13 +37,13 @@ ChartRadialLabel.argTypes = {
     defaultValue: {
       valores: [
         {
-          cor: 'ion-color-success',
+          cor: 'ion-color-fb-success',
           label: 'Acertos',
           quantia: 32,
           ignoreBarra: false,
         },
         {
-          cor: 'ion-color-caution',
+          cor: 'ion-color-fb-caution',
           label: 'Erros',
           quantia: 16,
           ignoreBarra: false,

@@ -262,7 +262,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [med-image-zoom](../00-autoral/global/med-image-zoom)
+ - [med-image-zoom](../@medgrupo/global/med-image-zoom)
 
 ### Graph
 ```mermaid

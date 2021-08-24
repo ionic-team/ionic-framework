@@ -853,6 +853,7 @@ ion-popover,css-prop,--width
 ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false
 ion-progress-bar,prop,color,string | undefined,undefined,false,false
+ion-progress-bar,prop,dsName,"minimalist" | undefined,undefined,false,false
 ion-progress-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-progress-bar,prop,percentage,boolean,false,false,false
 ion-progress-bar,prop,reversed,boolean,false,false,false
@@ -1378,10 +1379,14 @@ ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) =>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
 med-accordion-item,shadow
+med-accordion-item,prop,background,boolean,false,false,true
+med-accordion-item,prop,color,string | undefined,undefined,false,false
+med-accordion-item,prop,dsName,"secondary" | undefined,undefined,false,false
 med-accordion-item,prop,icon,"left" | "right" | undefined,undefined,false,true
 med-accordion-item,prop,noBorder,boolean,false,false,true
 med-accordion-item,event,toggle,any,true
-med-accordion-item,css-prop,--background
+med-accordion-item,css-prop,--background-content
+med-accordion-item,css-prop,--background-header
 med-accordion-item,css-prop,--border-radius
 med-accordion-item,css-prop,--icon-color
 
@@ -1403,14 +1408,16 @@ med-agrupador,css-prop,--color
 med-alternativas,shadow
 med-alternativas,prop,alternativaSelecionada,string,undefined,true,true
 med-alternativas,prop,alternativas,any,[],false,false
+med-alternativas,prop,color,string | undefined,undefined,false,false
+med-alternativas,prop,isDesktop,boolean,undefined,true,false
 med-alternativas,prop,keyAlternativa,string,'Alternativa',false,false
 med-alternativas,prop,keyEnunciado,string,'Enunciado',false,false
 med-alternativas,prop,keyImagem,string,'Imagem',false,false
 med-alternativas,prop,keyPorcentagem,string,'Porcentagem',false,false
 med-alternativas,prop,mostraResposta,boolean,undefined,true,true
+med-alternativas,prop,podeRiscar,boolean,undefined,true,false
 med-alternativas,prop,respostaCorreta,string,undefined,true,true
 med-alternativas,event,medChange,MedAlternativaInterface,true
-med-alternativas,event,medClick,MedAlternativaInterface,true
 med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
 
 med-autocomplete,shadow
@@ -1438,6 +1445,8 @@ med-cartao-resposta-item,prop,color,string | undefined,undefined,false,false
 med-cartao-resposta-lista,shadow
 
 med-chart-radial,scoped
+med-chart-radial,prop,color,string | undefined,undefined,false,false
+med-chart-radial,prop,dsName,string | undefined,undefined,false,false
 med-chart-radial,prop,valores,MedChartRadiaItem[],[],false,false
 
 med-chart-radial-content,shadow
@@ -1481,6 +1490,11 @@ med-image-zoom,prop,imagens,any,[],false,true
 med-image-zoom,prop,marcaAguaInferior,string | undefined,undefined,false,true
 med-image-zoom,prop,marcaAguaSuperior,string | undefined,undefined,false,true
 med-image-zoom,prop,titulo,string | undefined,undefined,false,true
+
+med-item-aulas,shadow
+med-item-aulas,prop,porcentagem,number,undefined,true,false
+med-item-aulas,prop,professor,string,undefined,true,false
+med-item-aulas,prop,videos,string,undefined,true,false
 
 med-list,shadow
 med-list,prop,color,string | undefined,undefined,false,false
@@ -1552,6 +1566,16 @@ med-rate-like,shadow
 med-rate-like,prop,status,RateStatus.DISLIKE | RateStatus.LIKE | undefined,undefined,false,true
 med-rate-like,event,medChange,RateStatus.DISLIKE | RateStatus.LIKE,true
 
+med-rate-result,shadow
+med-rate-result,prop,bom,string | undefined,undefined,false,false
+med-rate-result,prop,excelente,string | undefined,undefined,false,false
+med-rate-result,prop,regular,string | undefined,undefined,false,false
+med-rate-result,prop,ruim,string | undefined,undefined,false,false
+med-rate-result,css-prop,--color-bom
+med-rate-result,css-prop,--color-excelent
+med-rate-result,css-prop,--color-regular
+med-rate-result,css-prop,--color-ruim
+
 med-rating,shadow
 med-rating,prop,cabe,boolean,false,false,false
 med-rating,prop,concurso,string | undefined,undefined,false,false
@@ -1573,6 +1597,12 @@ med-tiles,prop,neutral,string | undefined,undefined,false,false
 med-tiles,prop,selected,boolean,false,false,true
 med-tiles,prop,solid,boolean,false,false,false
 med-tiles,prop,titulo,string | undefined,undefined,false,false
+
+med-titulo-materia,shadow
+med-titulo-materia,prop,color,string | undefined,undefined,false,false
+med-titulo-materia,prop,descricao,string | undefined,undefined,false,false
+med-titulo-materia,prop,neutral,string | undefined,undefined,false,false
+med-titulo-materia,prop,titulo,string | undefined,undefined,false,false
 
 med-toolbar,shadow
 med-toolbar,prop,color,string | undefined,undefined,false,false
@@ -1596,9 +1626,9 @@ med-tooltip2,prop,content,string,undefined,true,true
 med-tooltip2,prop,header,string,undefined,true,true
 
 med-vote,shadow
-med-vote,prop,cabe,number | undefined,undefined,false,false
-med-vote,prop,naoCabe,number | undefined,undefined,false,false
-med-vote,prop,titulo,string | undefined,undefined,false,false
+med-vote,prop,like,number,0,false,false
+med-vote,prop,titulo,string | undefined,'Cabe recurso?',false,false
+med-vote,prop,unlike,number,0,false,false
 
 monta-provas-plusminus,shadow
 monta-provas-plusminus,prop,dsSize,"xl" | undefined,undefined,false,false

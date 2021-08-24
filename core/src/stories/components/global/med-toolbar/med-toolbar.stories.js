@@ -22,26 +22,26 @@ const TemplateToolbar = ({ color, neutral, platform }) => {
       <!-- component -->
       <med-toolbar .color=${color} .neutral=${neutral}>
         <ion-button ds-name="icon-only" slot="start">
-          <ion-icon class="med-icon" slot="icon-only" name="med-arrow-left-circle"></ion-icon>
+          <ion-icon class="med-icon" slot="icon-only" name="med-setaesquerda"></ion-icon>
         </ion-button>
         <ul>
           <li>
             <ion-button ds-name="icon-only">
-              <ion-icon class="med-icon" slot="icon-only" name="med-star-outline"></ion-icon>
+              <ion-icon class="med-icon" slot="icon-only" name="med-estrela"></ion-icon>
             </ion-button>
             <ion-button ds-name="icon-only">
-              <ion-icon class="med-icon" slot="icon-only" name="med-eye-show-line"></ion-icon>
+              <ion-icon class="med-icon" slot="icon-only" name="med-visivel"></ion-icon>
             </ion-button>
             <ion-button ds-name="icon-only">
-              <ion-icon class="med-icon" slot="icon-only" name="med-notes"></ion-icon>
+              <ion-icon class="med-icon" slot="icon-only" color="brand" name="med-editar"></ion-icon>
             </ion-button>
             <ion-button ds-name="icon-only">
-              <ion-icon slot="icon-only" name="med-font-size"></ion-icon>
+              <ion-icon class="med-icon med-neutral med-neutral-4" slot="icon-only" name="med-fonte"></ion-icon>
             </ion-button>
           </li>
         </ul>
         <ion-button ds-name="icon-only" slot="end">
-          <ion-icon class="med-icon" slot="icon-only" name="med-arrow-right-circle"></ion-icon>
+          <ion-icon class="med-icon" slot="icon-only" name="med-setadireita"></ion-icon>
         </ion-button>
       </med-toolbar>
       <!-- component -->

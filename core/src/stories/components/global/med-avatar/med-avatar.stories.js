@@ -9,14 +9,11 @@ export default {
 
 const TemplateDefault = ({color, neutral, dsSize}) => {
   return html`
-
-    <ion-app class="storybook-only">
-      <ion-content class="storybook-only__container" style="text-align:left;">
+    <ion-app>
+      <ion-content>
 
         <!-- component -->
-
         <med-avatar letter="A" .color=${color} .neutral=${neutral} ds-size=${dsSize}></med-avatar>
-
         <!-- component -->
 
       </ion-content>

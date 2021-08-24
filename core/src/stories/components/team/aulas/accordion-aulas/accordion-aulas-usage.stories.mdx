@@ -1,0 +1,76 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Team/Aulas/Accordion Aulas/Usage" />
+
+# Accordion Aulas
+
+## Propriedades
+
+| Propriedade   | Atributo       | Descrição                                            | Tipo                                       | Default       |
+| ------------- | -------------- | ---------------------------------------------------- | ------------------------------------------ | ------------- |
+| **icon**      | **icon**       | Define a posição do ícone de abertura do componente. | **"left"** \| **"right"** \| **undefined** | **undefined** |
+| **noBorder**  | **no-border**  | Define a variação da borda do componente.            | **boolean**                                | **false**     |
+
+## Slots
+
+| Slot                | Descrição                                                           |
+| ------------------- | ------------------------------------------------------------------- |
+| **slot="header"**   | Define o conteúdo do header do componente.                          |
+| **slot="button"**   | Se houver botões no componente eles devem ser inseridos nesse slot. |
+| **slot="content"**  | Define o conteúdo do componente.                                    |
+| **slot="auxiliar"** | Define um slot auxiliar no bottom do header.                        |
+
+## CSS Custom Properties
+
+| Name                | Description                               |
+| ------------------- | ----------------------------------------- |
+| **--background**    | Define a cor de background do componente. |
+| **--border-radius** | Define o border-radius do componente.     |
+| **--icon-color**    | Define a cor de do icone do componente.   |
+
+## Default
+
+```
+<med-accordion-list>
+  <med-accordion-item>
+    <div slot="header">
+      <h4>Header</h4>
+    </div>
+    <div slot="content">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+    </div>
+  </med-accordion-item>
+</med-accordion-list>
+```
+
+## Icon
+
+```
+<med-accordion-list>
+  <med-accordion-item icon="left">
+    <div slot="header">
+      <h4>Header</h4>
+    </div>
+    <div slot="content">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+    </div>
+  </med-accordion-item>
+</med-accordion-list>
+```
+
+## No Border
+
+⚠️ Se os itens do accordion tiverem a propriedade `no-border` definida, é necessária a definição da propriedade também no componente `med-accordion-list`.
+
+```
+<med-accordion-list no-border>
+<med-accordion-item no-border>
+    <div slot="header">
+      <h4>Header</h4>
+    </div>
+    <div slot="content">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+    </div>
+  </med-accordion-item>
+</med-accordion-list>
+```

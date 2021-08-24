@@ -1,0 +1,48 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --spacing: #{$med-spacing-inline-base};
+  --color: var(--med-color-neutral-1);
+  --color-like: #{md-color(fb-success, 3)};
+  --color-dislike: #{md-color(fb-warning, 3)};
+  --color-hover: var(--med-color-neutral-7);
+
+  display: block;
+
+  .button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    &:first-child {
+      padding-right: var(--spacing);
+    }
+  }
+
+  .rate {
+    font-size: 24px;
+    color: var(--color);
+    transition: color 300ms;
+  }
+
+  .button--disabled {
+    pointer-events: none;
+  }
+
+  .button--like .rate {
+    stroke: var(--color-like);
+  }
+
+  .button--dislike .rate {
+    stroke: var(--color-dislike);
+  }
+}
+
+@media (any-hover: hover) {
+  :host {
+    .rate:hover {
+      color: var(--color-hover);
+    }
+  }
+}

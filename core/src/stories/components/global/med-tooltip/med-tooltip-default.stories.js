@@ -1,6 +1,5 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
 
 export default {
   title: 'Components/Core/Tooltip',
@@ -9,14 +8,11 @@ export default {
 
 const Template = ({ collapsed, placement, position, content }) => {
   return html`
-    <style>
-    </style>
-
     <ion-app style="align-items: center; justify-content: center;">
 
       <!-- component -->
       <med-tooltip .content=${content} .collapsed=${collapsed} .placement=${placement} .position=${position}>
-        <ion-icon slot="icon" class="med-icon med-tooltip__icon" name="med-context-menu"></ion-icon>
+        <ion-icon slot="icon" class="med-icon" name="med-context-menu"></ion-icon>
 
           <p>asihjdgasidhgasidhgasdhigas</p>
           <p>asihjdgasidhgasidhgasdhigas</p>
@@ -57,7 +53,7 @@ Default.argTypes = {
   placement: {
     options: [undefined, 'top', 'bottom', 'left', 'right'],
     control: { type: 'radio'},
-    description: "Define a variação de tamanho componente.",
+    description: "Define posicionamento em relação ao ícone.",
     table: {
       type:  { summary: 'top | bottom | left | right' },
       defaultValue: { summary: 'undefined' },
@@ -66,7 +62,7 @@ Default.argTypes = {
   position: {
     options: [undefined, 'start', 'center', 'end'],
     control: { type: 'radio'},
-    description: "Define a variação de tamanho componente.",
+    description: "Define posicionamento horizontal do componente.",
     table: {
       type:  { summary: 'start | center | end' },
       defaultValue: { summary: 'undefined' },
