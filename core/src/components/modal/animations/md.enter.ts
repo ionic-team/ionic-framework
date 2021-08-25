@@ -2,6 +2,21 @@ import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
+import { createSheetEnterAnimation } from './sheet';
+
+const createEnterAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+
+  const wrapperAnimation = createAnimation()
+    .keyframes([
+      { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
+      { offset: 1, opacity: 1, transform: `translateY(0px)` }
+    ]);
+
+  return { backdropAnimation, wrapperAnimation };
+}
+
 /**
  * Md Modal Enter Animation
  */
@@ -11,31 +26,19 @@ export const mdEnterAnimation = (
 ): Animation => {
   const { currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
-  const baseAnimation = createAnimation();
-  const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
-
-  // If an initial breakpoint was passed we need to transform the modal to be that
-  // far from the top, otherwise we will transform it to the top (0vh)
-  const initialHeight = currentBreakpoint !== undefined ? `${100 - (currentBreakpoint * 100)}vh` : '0vh';
-  const initialOpacity = currentBreakpoint !== undefined ? `calc(var(--backdrop-opacity) * ${currentBreakpoint})` : 'var(--backdrop-opacity)';
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetEnterAnimation(currentBreakpoint) : createEnterAnimation();
 
   backdropAnimation
     .addElement(root.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, initialOpacity)
     .beforeStyles({
       'pointer-events': 'none'
     })
     .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
-    .addElement(root.querySelector('.modal-wrapper')!)
-    .keyframes([
-      { offset: 0, opacity: 0.01, transform: currentBreakpoint !== undefined ? 'translateY(100vh)' : 'translateY(40px)' },
-      { offset: 1, opacity: 1, transform: `translateY(${initialHeight})` }
-    ]);
+    .addElement(root.querySelector('.modal-wrapper')!);
 
-  return baseAnimation
+  return createAnimation()
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(280)

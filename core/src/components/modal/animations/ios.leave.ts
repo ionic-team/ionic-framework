@@ -3,6 +3,18 @@ import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
+import { createSheetLeaveAnimation } from './sheet';
+
+const createLeaveAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
+
+  const wrapperAnimation = createAnimation()
+    .fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
+
+  return { backdropAnimation, wrapperAnimation };
+}
+
 /**
  * iOS Modal Leave Animation
  */
@@ -13,17 +25,13 @@ export const iosLeaveAnimation = (
 ): Animation => {
   const { presentingEl, currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
-  const lastHeight = currentBreakpoint !== undefined ? `${100 - (currentBreakpoint * 100)}%` : '0vh';
-  const lastOpacity = currentBreakpoint !== undefined ? `calc(var(--backdrop-opacity) * ${currentBreakpoint})` : 'var(--backdrop-opacity)';
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetLeaveAnimation(currentBreakpoint) : createLeaveAnimation();
 
-  const backdropAnimation = createAnimation()
-    .addElement(root.querySelector('ion-backdrop')!)
-    .fromTo('opacity', lastOpacity, 0.0);
+  backdropAnimation.addElement(root.querySelector('ion-backdrop')!)
 
-  const wrapperAnimation = createAnimation()
+  wrapperAnimation
     .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
-    .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', `translateY(${lastHeight})`, 'translateY(100vh)');
+    .beforeStyles({ 'opacity': 1 });
 
   const baseAnimation = createAnimation('leaving-base')
     .addElement(baseEl)

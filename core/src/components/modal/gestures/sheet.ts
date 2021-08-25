@@ -5,8 +5,8 @@ import { clamp, raf } from '../../../utils/helpers';
 // Defaults for the sheet swipe animation
 const SheetDefaults = {
   WRAPPER_KEYFRAMES: [
-    { offset: 0, transform: 'translateY(0vh)' },
-    { offset: 1, transform: 'translateY(100vh)' }
+    { offset: 0, transform: 'translateY(0%)' },
+    { offset: 1, transform: 'translateY(100%)' }
   ],
   BACKDROP_KEYFRAMES: [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
@@ -74,8 +74,8 @@ export const createSheetGesture = (
 
     if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([
-        { offset: 0, transform: `translateY(${offset * 100}vh)` },
-        { offset: 1, transform: `translateY(${(1 - closest) * 100}vh)` }
+        { offset: 0, transform: `translateY(${offset * 100}%)` },
+        { offset: 1, transform: `translateY(${(1 - closest) * 100}%)` }
       ]);
 
       backdropAnimation.keyframes([

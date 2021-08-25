@@ -3,6 +3,18 @@ import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
+import { createSheetEnterAnimation } from './sheet';
+
+const createEnterAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+
+  const wrapperAnimation = createAnimation()
+    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
+
+  return { backdropAnimation, wrapperAnimation };
+}
+
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
@@ -11,25 +23,19 @@ export const iosEnterAnimation = (
   opts: ModalAnimationOptions,
 ): Animation => {
   const { presentingEl, currentBreakpoint } = opts;
-
   const root = getElementRoot(baseEl);
-  // If an initial breakpoint was passed we need to transform the modal to be that
-  // far from the top, otherwise we will transform it to the top (0vh)
-  const initialHeight = currentBreakpoint !== undefined ? `${100 - (currentBreakpoint * 100)}vh` : '0vh';
-  const initialOpacity = currentBreakpoint !== undefined ? `calc(var(--backdrop-opacity) * ${currentBreakpoint})` : 'var(--backdrop-opacity)';
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetEnterAnimation(currentBreakpoint) : createEnterAnimation();
 
-  const backdropAnimation = createAnimation('backdropAnimation')
+  backdropAnimation
     .addElement(root.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, initialOpacity)
     .beforeStyles({
       'pointer-events': 'none'
     })
     .afterClearStyles(['pointer-events']);
 
-  const wrapperAnimation = createAnimation('wrapperAnimation')
+  wrapperAnimation
     .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
-    .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100vh)', `translateY(${initialHeight})`);
+    .beforeStyles({ 'opacity': 1 });
 
   const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)

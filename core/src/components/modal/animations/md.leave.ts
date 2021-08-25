@@ -2,6 +2,21 @@ import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
+import { createSheetLeaveAnimation } from './sheet';
+
+const createLeaveAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
+
+  const wrapperAnimation = createAnimation()
+    .keyframes([
+      { offset: 0, opacity: 0.99, transform: `translateY(0px)` },
+      { offset: 1, opacity: 0, transform: 'translateY(40px)' }
+    ]);
+
+  return { backdropAnimation, wrapperAnimation };
+}
+
 /**
  * Md Modal Leave Animation
  */
@@ -10,29 +25,13 @@ export const mdLeaveAnimation = (
   opts: ModalAnimationOptions
 ): Animation => {
   const { currentBreakpoint } = opts;
-
-  const lastHeight = currentBreakpoint !== undefined ? `${100 - (currentBreakpoint * 100)}vh` : '0px';
-  const lastOpacity = currentBreakpoint !== undefined ? `calc(var(--backdrop-opacity) * ${currentBreakpoint})` : 'var(--backdrop-opacity)';
-
   const root = getElementRoot(baseEl);
-  const baseAnimation = createAnimation();
-  const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
-  const wrapperEl = root.querySelector('.modal-wrapper')!;
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetLeaveAnimation(currentBreakpoint) : createLeaveAnimation();
 
-  backdropAnimation
-    .addElement(root.querySelector('ion-backdrop')!)
-    .fromTo('opacity', lastOpacity, 0.0);
+  backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
+  wrapperAnimation.addElement(root.querySelector('.modal-wrapper')!);
 
-  wrapperAnimation
-    .addElement(wrapperEl)
-    .keyframes([
-      { offset: 0, opacity: 0.99, transform: `translateY(${lastHeight})` },
-      { offset: 1, opacity: 0, transform: currentBreakpoint !== undefined ? 'translateY(100vh)' : 'translateY(40px)' }
-    ]);
-
-  return baseAnimation
-    .addElement(baseEl)
+  return createAnimation()
     .easing('cubic-bezier(0.47,0,0.745,0.715)')
     .duration(200)
     .addAnimation([backdropAnimation, wrapperAnimation]);
