@@ -27,7 +27,7 @@ export const createViewStacks = (router: Router) => {
      * and will not run route guards that
      * are written in the component.
      */
-    viewItem.matchedRoute.instances = { default: viewItem.vueComponent };
+    viewItem.matchedRoute.instances = { default: viewItem.vueComponentRef.value };
   }
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, useDeprecatedRouteSetup: boolean = false) => {
