@@ -53,7 +53,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gestureAnimationDismissing = false;
   lastFocus?: HTMLElement;
   animation?: Animation;
-  maxBreakpoint?: number;
 
   @State() presented = false;
 
@@ -83,7 +82,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * The breakpoints to use when creating a sheet modal. Each value in the
    * array must be a decimal between 0 and 1 where 0 indicates the modal is fully
-   * closed and 1 indicates the modal is fully open. One of the values in this
+   * closed and 1 indicates the modal is fully open. Values are relative
+   * to the height of the modal, not the height of the screen. One of the values in this
    * array must be the value of the `initialBreakpoint` property.
    * For example: [0, .25, .5, 1]
    */
