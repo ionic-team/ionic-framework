@@ -56,17 +56,12 @@
       background: red;
       z-index: 99999;
     }
-
-    .custom-handle {
-      --height: 75%;
-    }
-
-    .custom-handle .modal-handle {
+    .custom-handle::part(handle) {
       top: -16px;
       background: rgba(255, 255, 255, 0.53);
     }
 
-    .custom-handle .modal-wrapper {
+    .custom-handle::part(content) {
       overflow: visible;
     }
   </style>

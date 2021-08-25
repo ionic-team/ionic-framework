@@ -23,6 +23,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
  *
  * @part backdrop - The `ion-backdrop` element.
  * @part content - The wrapper element for the default slot.
+ * @part handle - The handle that is displayed at the top of the sheet modal when `handle="true"`.
  */
 @Component({
   tag: 'ion-modal',
@@ -561,7 +562,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
         >
-          {showHandle && <div class="modal-handle"></div>}
+          {showHandle && <div class="modal-handle" part="handle"></div>}
           <slot></slot>
         </div>
 
