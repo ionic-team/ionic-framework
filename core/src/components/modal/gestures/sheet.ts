@@ -29,7 +29,6 @@ export const createSheetGesture = (
   let currentBreakpoint = el.initialBreakpoint!;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
-  const isAtMaxBreakpoint = () => currentBreakpoint === breakpoints[breakpoints.length - 1];
 
   if (wrapperAnimation && backdropAnimation) {
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
@@ -40,7 +39,7 @@ export const createSheetGesture = (
   const canStart = (detail: GestureDetail) => {
     const content = (detail.event.target! as HTMLElement).closest('ion-content');
 
-    if (isAtMaxBreakpoint() && content) {
+    if (currentBreakpoint === 1 && content) {
       return false;
     }
 
