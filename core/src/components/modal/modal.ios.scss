@@ -75,6 +75,6 @@
 // iOS Sheet Modal
 // --------------------------------------------------
 
-:host(.modal-sheet) {
-  --border-radius: #{$modal-ios-border-radius};
+:host(.modal-sheet) .modal-wrapper {
+  @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
 }
