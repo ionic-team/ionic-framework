@@ -210,7 +210,7 @@ export const createViewStacks = (router: Router) => {
       viewItem.mount = false;
       viewItem.ionPageElement = undefined;
       viewItem.ionRoute = false;
-      viewItem.matchedRoute.instances = undefined;
+      viewItem.matchedRoute.instances = {};
     }
   }
 
