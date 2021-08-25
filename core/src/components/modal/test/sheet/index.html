@@ -15,6 +15,20 @@
     --ion-safe-area-top: 20px;
     --ion-safe-area-bottom: 20px;
   }
+
+  .custom-height {
+    --height: 50%;
+  }
+
+  .custom-handle::part(handle) {
+    top: -16px;
+    background: rgba(255, 255, 255, 0.53);
+  }
+
+  .custom-handle::part(content) {
+    overflow: visible;
+  }
+
   </style>
 </head>
 
@@ -22,11 +36,6 @@
   <ion-app>
 
     <div class="ion-page">
-      <!-- <div class="breakpoint" style="top: calc(10% - 2px)"></div>
-      <div class="breakpoint" style="top: calc(25% - 2px)"></div>
-      <div class="breakpoint" style="top: calc(50% - 2px)"></div>
-      <div class="breakpoint" style="top: calc(75% - 2px)"></div> -->
-
       <ion-header>
         <ion-toolbar>
           <ion-title>Modal - Sheet</ion-title>
@@ -34,43 +43,18 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <p>
-          <ion-button id="basic-modal" onclick="presentModal()">Present Modal</ion-button>
-          <ion-button id="sheet-modal" onclick="presentModal('sheet')">Present Sheet Modal</ion-button>
-          <ion-button id="card-modal" onclick="presentModal('sheet', {'cssClass': 'custom-handle'})">Present Sheet Modal (custom handle)</ion-button>
-          <ion-button id="card-modal" onclick="presentModal('card')">Present Card Modal</ion-button>
-          <ion-button id="card-modal" onclick="presentCardModal()">Present Card Modal w/ presentingElement</ion-button>
-        </p>
+        <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
+        <ion-button id="sheet-modal" onclick="presentModal({ cssClass: 'custom-height' })">Present Sheet Modal (Custom Height)</ion-button>
+        <ion-button id="sheet-modal" onclick="presentModal({ cssClass: 'custom-handle' })">Present Sheet Modal (Custom Handle)</ion-button>
       </ion-content>
     </div>
 
   </ion-app>
-
-  <style>
-    .breakpoint {
-      position: absolute;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: 2px;
-      background: red;
-      z-index: 99999;
-    }
-    .custom-handle::part(handle) {
-      top: -16px;
-      background: rgba(255, 255, 255, 0.53);
-    }
-
-    .custom-handle::part(content) {
-      overflow: visible;
-    }
-  </style>
-
   <script>
     window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
     window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
 
-    function createModal(type, options) {
+    function createModal(options) {
       let items = '';
 
       for (var i = 0; i < 25; i++ ) {
@@ -95,18 +79,10 @@
       </ion-content>
       `;
 
-      let extraOptions = {};
-      if (type === 'sheet') {
-        extraOptions = {
-          initialBreakpoint: 0.25,
-          breakpoints: [0, 0.25, .5, .75, 1]
-        };
-      } else if (type === 'card') {
-        extraOptions = {
-          component: element,
-          swipeToClose: true,
-        };
-      }
+      let extraOptions = {
+        initialBreakpoint: 0.25,
+        breakpoints: [0, 0.25, .5, .75, 1]
+      };
 
       if (options) {
         extraOptions = {
@@ -130,8 +106,8 @@
       return modalElement;
     }
 
-    async function presentModal(type = 'default', options) {
-      const modal = createModal(type, options);
+    async function presentModal(options) {
+      const modal = createModal(options);
       await modal.present();
     }
 
