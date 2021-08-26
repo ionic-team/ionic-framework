@@ -14,9 +14,6 @@ const SheetDefaults = {
   ]
 };
 
-// TODO
-let offset = 0;
-
 export const createSheetGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
@@ -27,9 +24,18 @@ export const createSheetGesture = (
   const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
   let currentBreakpoint = el.initialBreakpoint!;
+  let offset = 0;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
+  /**
+   * After the entering animation completes,
+   * we need to set the animation to go from
+   * offset 0 to offset 1 so that users can
+   * swipe in any direction. We then set the
+   * animation offset to the current breakpoint
+   * so there is no flickering.
+   */
   if (wrapperAnimation && backdropAnimation) {
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
@@ -37,6 +43,12 @@ export const createSheetGesture = (
   }
 
   const canStart = (detail: GestureDetail) => {
+    /**
+     * If the sheet is fully expanded and
+     * the user is swiping on the content,
+     * the gesture should not start to
+     * allow for scrolling on the content.
+     */
     const content = (detail.event.target! as HTMLElement).closest('ion-content');
 
     if (currentBreakpoint === 1 && content) {
@@ -47,6 +59,11 @@ export const createSheetGesture = (
   };
 
   const onStart = () => {
+    /**
+     * If swiping on the content
+     * we should disable scrolling otherwise
+     * the sheet will expand and the content will scroll.
+     */
     if (contentEl) {
       contentEl.scrollY = false;
     }
@@ -55,12 +72,21 @@ export const createSheetGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
+    /**
+     * Given the change in gesture position on the Y axis,
+     * compute where the offset of the animation should be
+     * relative to where the user dragged.
+     */
     const initialStep = 1 - currentBreakpoint;
     offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
     animation.progressStep(offset);
   };
 
   const onEnd = (detail: GestureDetail) => {
+    /**
+     * When the gesture releases, we need to determine
+     * the closest breakpoint to snap to.
+     */
     const velocity = detail.velocityY;
     const threshold = (detail.deltaY + velocity * 1000) / height;
     const diff = currentBreakpoint - threshold;
@@ -72,6 +98,10 @@ export const createSheetGesture = (
     const shouldRemainOpen = closest !== 0;
     currentBreakpoint = 0;
 
+    /**
+     * Update the animation so that it plays from
+     * the last offset to the closest snap point.
+     */
     if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([
         { offset: 0, transform: `translateY(${offset * 100}%)` },
@@ -86,11 +116,23 @@ export const createSheetGesture = (
       animation.progressStep(0)
     }
 
+    /**
+     * Gesture should remain disabled until the
+     * snapping animation completes.
+     */
     gesture.enable(false);
 
     animation
       .onFinish(() => {
         if (shouldRemainOpen) {
+
+          /**
+           * Once the snapping animation completes,
+           * we need to reset the animation to go
+           * from 0 to 1 so users can swipe in any direction.
+           * We then set the animation offset to the current
+           * breakpoint so that it starts at the snapped position.
+           */
           if (wrapperAnimation && backdropAnimation) {
             raf(() => {
               wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
@@ -99,16 +141,25 @@ export const createSheetGesture = (
               currentBreakpoint = closest;
               onBreakpointChange(currentBreakpoint);
 
+              /**
+               * If the sheet is fully expanded, we can safely
+               * enable scrolling again.
+               */
               if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
                 contentEl.scrollY = true;
               }
-
               gesture.enable(true);
             });
           } else {
             gesture.enable(true);
           }
         }
+
+      /**
+       * This must be a one time callback
+       * otherwise a new callback will
+       * be added every time onEnd runs.
+       */
       }, { oneTimeCallback: true })
       .progressEnd(1, 0, 300);
 
