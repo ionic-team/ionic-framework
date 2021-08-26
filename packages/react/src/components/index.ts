@@ -63,6 +63,7 @@ export {
   ToastButton
 } from '@ionic/core';
 export * from './proxies';
+export * from './routing-proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';

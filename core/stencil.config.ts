@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { vueOutputTarget } from '@stencil/vue-output-target';
+import { reactOutputTarget } from '@stencil/react-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
@@ -61,6 +62,40 @@ export const config: Config = {
     })
   ],
   outputTargets: [
+    reactOutputTarget({
+      componentCorePackage: '@ionic/core',
+      includePolyfills: false,
+      includeDefineCustomElements: false,
+      proxiesFile: '../packages/react/src/components/proxies.ts',
+      excludeComponents: [
+        // Routing
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-link',
+        'ion-router-outlet',
+        'ion-back-button',
+        'ion-tab-button',
+        'ion-tabs',
+        'ion-tab-bar',
+        'ion-button',
+        'ion-card',
+        'ion-fab-button',
+        'ion-item',
+        'ion-item-option',
+
+        // Overlays
+        'ion-action-sheet',
+        'ion-alert',
+        'ion-loading',
+        'ion-modal',
+        'ion-picker',
+        'ion-popover',
+        'ion-toast',
+
+        'ion-icon'
+      ]
+    }),
     vueOutputTarget({
       componentCorePackage: '@ionic/core',
       includeImportCustomElements: true,

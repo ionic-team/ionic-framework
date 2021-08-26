@@ -1,6 +1,6 @@
 import React from 'react';
 import { JSX } from '@ionic/core';
-import { createReactComponent } from '../createComponent';
+import { createReactComponent } from '../react-component-lib';
 import { render, fireEvent, cleanup, RenderResult } from '@testing-library/react';
 import { IonButton } from '../index';
 
