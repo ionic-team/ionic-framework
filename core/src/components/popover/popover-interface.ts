@@ -1,4 +1,8 @@
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode, OverlayInterface } from '../../interface';
+
+export interface PopoverInterface extends OverlayInterface {
+  present: (event?: MouseEvent | TouchEvent | PointerEvent) => Promise<void>;
+}
 
 export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   component: T;
