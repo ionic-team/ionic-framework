@@ -430,7 +430,7 @@ export const createAnimation = (animationId?: string): Animation => {
         }
       });
     } else {
-      console.warn('Reactive keyframes do not currently support CSS Animations. Please bug Liam about this on Slack');
+      initializeCSSAnimation();
     }
   };
 
