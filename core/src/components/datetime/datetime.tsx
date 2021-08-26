@@ -725,7 +725,7 @@ export class Datetime implements ComponentInterface {
             year
           });
 
-          workingMonth.scrollIntoView(false);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth;
           calendarBodyRef.style.removeProperty('overflow');
           calendarBodyRef.style.removeProperty('pointer-events');
 
@@ -967,11 +967,11 @@ export class Datetime implements ComponentInterface {
             const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${workingYear}']`);
 
             if (monthEl) {
-              monthEl.scrollIntoView({ block: 'center', inline: 'center' });
+              this.centerPickerItemInView(monthEl as HTMLElement, monthRef, 'auto');
             }
 
             if (yearEl) {
-              yearEl.scrollIntoView({ block: 'center', inline: 'center' });
+              this.centerPickerItemInView(yearEl as HTMLElement, yearRef, 'auto');
             }
           });
         }, 250);
@@ -1146,10 +1146,10 @@ export class Datetime implements ComponentInterface {
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
     if (!nextMonth) { return; }
 
-    nextMonth.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest'
+    calendarBodyRef.scrollTo({
+      top: 0,
+      left: (nextMonth as HTMLElement).offsetWidth * 2,
+      behavior: 'smooth'
     });
   }
 
@@ -1160,10 +1160,10 @@ export class Datetime implements ComponentInterface {
     const prevMonth = calendarBodyRef.querySelector('.calendar-month:first-of-type');
     if (!prevMonth) { return; }
 
-    prevMonth.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest'
+    calendarBodyRef.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
     });
   }
 
@@ -1226,6 +1226,15 @@ export class Datetime implements ComponentInterface {
     })
   }
 
+  private centerPickerItemInView(target: HTMLElement, container: HTMLElement, behavior: ScrollBehavior = 'smooth') {
+    container.scroll({
+      // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
+      top: target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2),
+      left: 0,
+      behavior
+    });
+  }
+
   private renderiOSYearView(calendarYears: number[] = []) {
     return [
       <div class="datetime-picker-before"></div>,
@@ -1240,10 +1249,7 @@ export class Datetime implements ComponentInterface {
             <div
             class="picker-col-item"
             data-value={month.value}
-            onClick={(ev: Event) => {
-              const target = ev.target as HTMLElement;
-              target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
-            }}
+            onClick={(ev: Event) => this.centerPickerItemInView(ev.target as HTMLElement, this.monthRef as HTMLElement)}
           >{month.text}</div>
           )
         })}
@@ -1260,10 +1266,7 @@ export class Datetime implements ComponentInterface {
             <div
               class="picker-col-item"
               data-value={year}
-              onClick={(ev: Event) => {
-                const target = ev.target as HTMLElement;
-                target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
-              }}
+              onClick={(ev: Event) => this.centerPickerItemInView(ev.target as HTMLElement, this.yearRef as HTMLElement)}
             >{year}</div>
           )
         })}
