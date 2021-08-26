@@ -20,6 +20,14 @@ export const createViewStacks = (router: Router) => {
   const registerIonPage = (viewItem: ViewItem, ionPage: HTMLElement) => {
     viewItem.ionPageElement = ionPage;
     viewItem.ionRoute = true;
+
+    /**
+     * This is needed otherwise Vue Router
+     * will not consider this component mounted
+     * and will not run route guards that
+     * are written in the component.
+     */
+    viewItem.matchedRoute.instances = { default: viewItem.vueComponentRef.value };
   }
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, useDeprecatedRouteSetup: boolean = false) => {
@@ -202,6 +210,7 @@ export const createViewStacks = (router: Router) => {
       viewItem.mount = false;
       viewItem.ionPageElement = undefined;
       viewItem.ionRoute = false;
+      viewItem.matchedRoute.instances = {};
     }
   }
 
