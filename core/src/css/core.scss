@@ -40,6 +40,7 @@ body.backdrop-no-scroll {
  * padding though because of the safe area.
  */
 html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
+html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ios ion-modal ion-footer ion-toolbar:first-of-type {
   padding-top: 6px;
 }
@@ -49,7 +50,8 @@ html.ios ion-modal ion-footer ion-toolbar:first-of-type {
 * bottom of the header. We accomplish this by targeting
 * the last toolbar in the header.
 */
-html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type {
+html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
+html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
   padding-bottom: 6px;
 }
 
