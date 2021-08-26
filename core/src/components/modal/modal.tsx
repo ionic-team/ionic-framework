@@ -42,6 +42,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
   private currentBreakpoint?: number;
+  private wrapperEl?: HTMLElement;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -397,8 +398,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSheetGesture() {
+    const { wrapperEl, initialBreakpoint } = this;
+
+    if (!wrapperEl || initialBreakpoint === undefined) {
+      return;
+    }
+
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
-    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint });
+    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: initialBreakpoint });
 
     ani.progressStart(true, 1);
 
@@ -406,6 +413,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.gesture = createSheetGesture(
       this.el,
+      wrapperEl,
+      initialBreakpoint,
       ani,
       sortBreakpoints,
       () => {
@@ -561,6 +570,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           role="dialog"
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
+          ref={el => this.wrapperEl = el}
         >
           {showHandle && <div class="modal-handle" part="handle"></div>}
           <slot></slot>

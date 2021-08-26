@@ -15,15 +15,17 @@ const SheetDefaults = {
 };
 
 export const createSheetGesture = (
-  el: HTMLIonModalElement,
+  baseEl: HTMLIonModalElement,
+  wrapperEl: HTMLElement,
+  initialBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
-  const contentEl = el.querySelector('ion-content');
+  const contentEl = baseEl.querySelector('ion-content');
   const height = window.innerHeight;
-  let currentBreakpoint = el.initialBreakpoint!;
+  let currentBreakpoint = initialBreakpoint;
   let offset = 0;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
@@ -169,7 +171,7 @@ export const createSheetGesture = (
   };
 
   const gesture = createGesture({
-    el,
+    el: wrapperEl,
     gestureName: 'modalSheet',
     gesturePriority: 40,
     direction: 'y',
