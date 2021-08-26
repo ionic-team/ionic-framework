@@ -161,7 +161,7 @@ export const createSheetGesture = (
        * be added every time onEnd runs.
        */
       }, { oneTimeCallback: true })
-      .progressEnd(1, 0, 300);
+      .progressEnd(1, 0, 500);
 
     if (!shouldRemainOpen) {
       onDismiss();
