@@ -126,5 +126,19 @@
 
   background: var(--ion-color-step-350);
 
-  z-index: 2;
+  z-index: 11;
+
+  /**
+   * This allows the handle to appear
+   * on top of user content in WebKit.
+   */
+  transform: translateZ(0);
+}
+
+/**
+ * Ensure that the sheet modal does not
+ * completely cover the content.
+ */
+:host(.modal-sheet) {
+  --height: calc(100% - 10px);
 }
