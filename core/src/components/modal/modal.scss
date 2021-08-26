@@ -124,15 +124,15 @@
   width: 36px;
   height: 5px;
 
-  background: var(--ion-color-step-350);
-
-  z-index: 11;
-
   /**
    * This allows the handle to appear
    * on top of user content in WebKit.
    */
   transform: translateZ(0);
+
+  background: var(--ion-color-step-350);
+
+  z-index: 11;
 }
 
 /**
