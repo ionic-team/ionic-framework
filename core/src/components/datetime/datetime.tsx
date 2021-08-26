@@ -967,11 +967,11 @@ export class Datetime implements ComponentInterface {
             const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${workingYear}']`);
 
             if (monthEl) {
-              this.pickerScrollIntoView(monthEl as HTMLElement, 'auto');
+              this.centerPickerItemInView(monthEl as HTMLElement, monthRef, 'auto');
             }
 
             if (yearEl) {
-              this.pickerScrollIntoView(yearEl as HTMLElement, 'auto');
+              this.centerPickerItemInView(yearEl as HTMLElement, yearRef, 'auto');
             }
           });
         }, 250);
@@ -1226,19 +1226,13 @@ export class Datetime implements ComponentInterface {
     })
   }
 
-  private pickerScrollIntoView(target: HTMLElement, behavior: ScrollBehavior = 'smooth') {
-    if (target.parentElement === null) { return }
-    target.parentElement.scroll({
+  private centerPickerItemInView(target: HTMLElement, container: HTMLElement, behavior: ScrollBehavior = 'smooth') {
+    container.scroll({
       // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
       top: target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2),
       left: 0,
       behavior
     });
-  }
-
-  private handlePickerClick(ev: Event) {
-    const target = ev.target as HTMLElement;
-    this.pickerScrollIntoView(target);
   }
 
   private renderiOSYearView(calendarYears: number[] = []) {
@@ -1255,7 +1249,7 @@ export class Datetime implements ComponentInterface {
             <div
             class="picker-col-item"
             data-value={month.value}
-            onClick={this.handlePickerClick.bind(this)}
+            onClick={(ev: Event) => this.centerPickerItemInView(ev.target as HTMLElement, this.monthRef as HTMLElement)}
           >{month.text}</div>
           )
         })}
@@ -1272,7 +1266,7 @@ export class Datetime implements ComponentInterface {
             <div
               class="picker-col-item"
               data-value={year}
-              onClick={this.handlePickerClick.bind(this)}
+              onClick={(ev: Event) => this.centerPickerItemInView(ev.target as HTMLElement, this.yearRef as HTMLElement)}
             >{year}</div>
           )
         })}
