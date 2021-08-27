@@ -530,10 +530,10 @@ const defaultGate = (h: any) => h();
 
 /**
  * Calls a developer provided method while avoiding
- * Angular Zones. We do not wrap the handler
- * in a try/catch because that would prevent
- * developer-provided bug tracking software
- * from catching any errors in the handler.
+ * Angular Zones. Since the handler is provided by
+ * the developer, we should throw any errors
+ * received so that developer-provided bug
+ * tracking software can log it.
  */
 export const safeCall = (handler: any, arg?: any) => {
   if (typeof handler === 'function') {
