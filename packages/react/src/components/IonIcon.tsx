@@ -4,8 +4,8 @@ import { NavContext } from '../contexts/NavContext';
 
 import { IonicReactProps } from './IonicReactProps';
 import { IonIconInner } from './inner-proxies';
+import { deprecationWarning } from './react-component-lib/utils/dev';
 import { createForwardRef, isPlatform } from './utils';
-import { deprecationWarning } from './utils/dev';
 
 interface IonIconProps {
   ariaLabel?: string;

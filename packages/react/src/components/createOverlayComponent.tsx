@@ -2,7 +2,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { attachProps, setRef } from './utils';
+import { attachProps, setRef } from './react-component-lib/utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;

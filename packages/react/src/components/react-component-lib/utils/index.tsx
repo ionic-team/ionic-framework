@@ -2,24 +2,29 @@ import React from 'react';
 
 import type { StyleReactProps } from '../interfaces';
 
-type Mutable<T> = { -readonly [P in keyof T]-?: T[P] }; // Remove readonly and ?
-
 export type StencilReactExternalProps<PropType, ElementType> = PropType &
   Omit<React.HTMLAttributes<ElementType>, 'style'> &
   StyleReactProps;
 
+export const setRef = (ref: React.ForwardedRef<any> | React.Ref<any> | undefined, value: any) => {
+  if (typeof ref === 'function') {
+    ref(value)
+  } else if (ref != null) {
+    // Cast as a MutableRef so we can assign current
+    (ref as React.MutableRefObject<any>).current = value
+  }
+};
+
 // The comma in the type is to trick typescript because it things a single generic in a tsx file is jsx
-export const mergeRefs = <ElementType,>(...refs: React.Ref<ElementType>[]) => (
-  value: ElementType,
-) =>
-  refs.forEach((ref) => {
-    if (typeof ref === 'function') {
-      ref(value);
-    } else if (ref != null) {
-      // This is typed as readonly so we need to allow for override
-      (ref as Mutable<React.RefObject<ElementType>>).current = value;
-    }
-  });
+export const mergeRefs = (
+  ...refs: (React.ForwardedRef<any> | React.Ref<any> | undefined)[]
+): React.RefCallback<any> => {
+  return (value: any) => {
+    refs.forEach(ref => {
+      setRef(ref, value)
+    })
+  }
+};
 
 export const createForwardRef = <PropType, ElementType>(
   ReactComponent: any,
@@ -27,7 +32,7 @@ export const createForwardRef = <PropType, ElementType>(
 ) => {
   const forwardRef = (
     props: StencilReactExternalProps<PropType, ElementType>,
-    ref: React.Ref<ElementType>,
+    ref: React.ForwardedRef<ElementType>,
   ) => {
     return <ReactComponent {...props} forwardedRef={ref} />;
   };

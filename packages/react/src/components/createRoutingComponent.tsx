@@ -8,10 +8,12 @@ import { RouterDirection } from '../models/RouterDirection';
 import {
   attachProps,
   camelToDashCase,
-  createForwardRef,
   dashToPascalCase,
   isCoveredByReact,
   mergeRefs,
+} from './react-component-lib/utils';
+import {
+  createForwardRef
 } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
