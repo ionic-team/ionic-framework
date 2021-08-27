@@ -1,6 +1,6 @@
-import { createRoutingComponent } from './createRoutingComponent';
-
 import type { JSX } from '@ionic/core';
+
+import { createRoutingComponent } from './createRoutingComponent';
 import { HrefProps } from './hrefprops';
 
 export const IonRouterLink = /*@__PURE__*/ createRoutingComponent<
@@ -32,5 +32,3 @@ export const IonItemOption = /*@__PURE__*/ createRoutingComponent<
   HrefProps<JSX.IonItemOption>,
   HTMLIonItemOptionElement
 >('ion-item-option');
-
-

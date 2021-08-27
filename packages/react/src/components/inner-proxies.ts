@@ -3,7 +3,6 @@ import { JSX as IoniconsJSX } from 'ionicons';
 
 import { /*@__PURE__*/ createReactComponent } from './react-component-lib';
 
-
 export const IonTabButtonInner = /*@__PURE__*/ createReactComponent<
   JSX.IonTabButton & { onIonTabButtonClick?: (e: CustomEvent) => void },
   HTMLIonTabButtonElement

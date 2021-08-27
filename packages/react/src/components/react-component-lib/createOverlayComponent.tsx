@@ -1,7 +1,7 @@
-import { OverlayEventDetail } from './interfaces';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { OverlayEventDetail } from './interfaces';
 import { attachProps } from './utils';
 
 interface OverlayElement extends HTMLElement {
