@@ -93,7 +93,6 @@ export const createSheetGesture = (
     const threshold = (detail.deltaY + velocity * 100) / height;
     const diff = currentBreakpoint - threshold;
 
-
     const closest = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
