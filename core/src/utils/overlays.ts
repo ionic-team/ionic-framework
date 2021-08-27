@@ -538,7 +538,13 @@ const defaultGate = (h: any) => h();
 export const safeCall = (handler: any, arg?: any) => {
   if (typeof handler === 'function') {
     const jmp = config.get('_zoneGate', defaultGate);
-    return jmp(() => handler(arg));
+    return jmp(() => {
+      try {
+        return handler(arg);
+      } catch (e) {
+        throw e;
+      }
+    });
   }
   return undefined;
 };
