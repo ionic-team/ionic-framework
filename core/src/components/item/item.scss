@@ -399,8 +399,8 @@ button, a {
   opacity: var(--show-inset-highlight);
 }
 
-:host(.ion-focused.item-fill-solid) .item-highlight,
-:host(.item-has-focus.item-fill-solid) .item-highlight {
+:host(.ion-focused:not(.item-fill-outline)) .item-highlight,
+:host(.item-has-focus:not(.item-fill-outline)) .item-highlight {
   border-width: calc(var(--full-highlight-height) - 1px);
 }
 

@@ -43,6 +43,8 @@
 
 :host(.item-has-focus) .item-native {
   caret-color: var(--highlight-color-focused);
+
+  border-color: var(--highlight-color-focused);
 }
 
 // Material Design Item Lines
@@ -418,16 +420,12 @@
 // Material Design Item: Invalid
 // --------------------------------------------------
 
-:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-native,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native {
+:host(.ion-invalid:not(.ion-color)) .item-native {
   caret-color: var(--highlight-color-invalid);
 }
 
-:host(.item-fill-outline.ion-invalid),
-:host(.item-fill-outline.ion-invalid) .item-native,
-:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-highlight,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)),
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-highlight {
+:host(.ion-invalid:not(.ion-color)),
+:host(.ion-invalid:not(.ion-color)) .item-native,
+:host(.ion-invalid:not(.ion-color)) .item-highlight {
   border-color: var(--highlight-color-invalid);
 }
