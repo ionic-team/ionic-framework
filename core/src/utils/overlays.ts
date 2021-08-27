@@ -528,6 +528,13 @@ export const isCancel = (role: string | undefined): boolean => {
 
 const defaultGate = (h: any) => h();
 
+/**
+ * Calls a developer provided method while avoiding
+ * Angular Zones. Since the handler is provided by
+ * the developer, we should throw any errors
+ * received so that developer-provided bug
+ * tracking software can log it.
+ */
 export const safeCall = (handler: any, arg?: any) => {
   if (typeof handler === 'function') {
     const jmp = config.get('_zoneGate', defaultGate);
@@ -535,7 +542,7 @@ export const safeCall = (handler: any, arg?: any) => {
       try {
         return handler(arg);
       } catch (e) {
-        console.error(e);
+        throw e;
       }
     });
   }
