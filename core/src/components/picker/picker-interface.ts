@@ -34,6 +34,7 @@ export interface PickerColumn {
   cssClass?: string | string[];
   columnWidth?: string;
   prefixWidth?: string;
+  prefixTextAlign?: string;
   suffixWidth?: string;
   optionsWidth?: string;
   refresh?: () => void;
