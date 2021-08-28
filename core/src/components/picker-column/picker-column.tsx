@@ -382,7 +382,7 @@ export class PickerColumnCmp implements ComponentInterface {
         }}
       >
         {col.prefix && (
-          <div class="picker-prefix" style={{ width: col.prefixWidth!, textAlign: col.prefixTextAlign}}>
+          <div class="picker-prefix" style={{ width: col.prefixWidth!, textAlign: col.prefixTextAlign }}>
             {col.prefix}
           </div>
         )}
