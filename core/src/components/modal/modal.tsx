@@ -43,6 +43,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
+  private backdropEl?: HTMLIonBackdropElement;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -423,6 +424,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.gesture = createSheetGesture(
       this.el,
+      this.backdropEl!,
       wrapperEl,
       initialBreakpoint,
       backdropBreakpoint || 0,
@@ -573,7 +575,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
       >
-        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} part="backdrop" />
+        <ion-backdrop ref={el => this.backdropEl = el} visible={this.showBackdrop} tappable={this.backdropDismiss} part="backdrop" />
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 

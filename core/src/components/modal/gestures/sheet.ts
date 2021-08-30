@@ -4,6 +4,7 @@ import { clamp, raf } from '../../../utils/helpers';
 
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
+  backdropEl: HTMLIonBackdropElement,
   wrapperEl: HTMLElement,
   initialBreakpoint: number,
   backdropBreakpoint: number,
@@ -20,8 +21,8 @@ export const createSheetGesture = (
 
   const customBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: backdropBreakpoint, opacity: 0.01 },
-    { offset: 1, opacity: 0.01 }
+    { offset: backdropBreakpoint, opacity: 0 },
+    { offset: 1, opacity: 0 }
   ]
 
   const SheetDefaults = {
@@ -52,6 +53,9 @@ export const createSheetGesture = (
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
     animation.progressStart(true, 1 - currentBreakpoint);
+
+    const backdropEnabled = currentBreakpoint >= backdropBreakpoint
+    backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
   }
 
   const canStart = (detail: GestureDetail) => {
@@ -160,6 +164,10 @@ export const createSheetGesture = (
               if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
                 contentEl.scrollY = true;
               }
+
+              const backdropEnabled = currentBreakpoint >= backdropBreakpoint;
+              backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
+
               gesture.enable(true);
             });
           } else {

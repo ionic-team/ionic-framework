@@ -13,7 +13,7 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const initialBackdrop = shouldShowBackdrop ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})` : '0.01';
 
   const backdropAnimation = createAnimation('backdropAnimation')
-    .fromTo('opacity', '0.01', initialBackdrop);
+    .fromTo('opacity', 0, initialBackdrop);
 
   const wrapperAnimation = createAnimation('wrapperAnimation')
     .keyframes([
