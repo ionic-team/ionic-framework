@@ -99,6 +99,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() initialBreakpoint?: number;
 
   /**
+   * A decimal value between 0 and 1 that indicates the
+   * point at which the backdrop will begin to fade in.
+   * Prior to this point, the backdrop will be hidden
+   * and the content underneath the sheet can be interacted
+   * with. This value must also be listed in the `breakpoints`
+   * array.
+   */
+  @Prop() backdropBreakpoint?: number;
+
+  /**
    * The horizontal line that displays at the top of a sheet modal. It is `true` by default when
    * setting the `breakpoints` and `initialBreakpoint` properties.
    */
@@ -351,7 +361,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint });
+    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint, backdropBreakpoint: this.backdropBreakpoint });
 
     await this.currentTransition;
 
@@ -398,14 +408,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSheetGesture() {
-    const { wrapperEl, initialBreakpoint } = this;
+    const { wrapperEl, initialBreakpoint, backdropBreakpoint } = this;
 
     if (!wrapperEl || initialBreakpoint === undefined) {
       return;
     }
 
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
-    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: initialBreakpoint });
+    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: initialBreakpoint, backdropBreakpoint });
 
     ani.progressStart(true, 1);
 
@@ -415,6 +425,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.el,
       wrapperEl,
       initialBreakpoint,
+      backdropBreakpoint || 0,
       ani,
       sortBreakpoints,
       () => {

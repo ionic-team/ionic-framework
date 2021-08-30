@@ -22,4 +22,5 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
 export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
+  backdropBreakpoint?: number;
 }

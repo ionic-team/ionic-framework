@@ -758,6 +758,7 @@ ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 
 ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
+ion-modal,prop,backdropBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false

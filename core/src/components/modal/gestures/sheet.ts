@@ -2,33 +2,43 @@ import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
 
-// Defaults for the sheet swipe animation
-const SheetDefaults = {
-  WRAPPER_KEYFRAMES: [
-    { offset: 0, transform: 'translateY(0%)' },
-    { offset: 1, transform: 'translateY(100%)' }
-  ],
-  BACKDROP_KEYFRAMES: [
-    { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1, opacity: 0.01 }
-  ]
-};
-
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
   wrapperEl: HTMLElement,
   initialBreakpoint: number,
+  backdropBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
+  // Defaults for the sheet swipe animation
+  const defaultBackdrop = [
+    { offset: 0, opacity: 'var(--backdrop-opacity)' },
+    { offset: 1, opacity: 0.01 }
+  ]
+
+  const customBackdrop = [
+    { offset: 0, opacity: 'var(--backdrop-opacity)' },
+    { offset: backdropBreakpoint, opacity: 0.01 },
+    { offset: 1, opacity: 0.01 }
+  ]
+
+  const SheetDefaults = {
+    WRAPPER_KEYFRAMES: [
+      { offset: 0, transform: 'translateY(0%)' },
+      { offset: 1, transform: 'translateY(100%)' }
+    ],
+    BACKDROP_KEYFRAMES: (backdropBreakpoint !== 0) ? customBackdrop : defaultBackdrop
+  };
+
   const contentEl = baseEl.querySelector('ion-content');
   const height = window.innerHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
+  const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
   /**
    * After the entering animation completes,
@@ -111,11 +121,11 @@ export const createSheetGesture = (
       ]);
 
       backdropAnimation.keyframes([
-        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${1 - offset})` },
-        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${closest})` }
+        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getYValueOnLine(1 - offset)})` },
+        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getYValueOnLine(closest)})` }
       ]);
 
-      animation.progressStep(0)
+      animation.progressStep(0);
     }
 
     /**
@@ -169,6 +179,55 @@ export const createSheetGesture = (
       onDismiss();
     }
   };
+
+  /**
+   * Use y = mx + b to
+   * figure out the backdrop value
+   * at a particular x coordinate. This
+   * is useful when the backdrop does
+   * not begin to fade in until after
+   * the 0 breakpoint.
+   */
+  const getYValueOnLine = (x: number) => {
+
+    /**
+     * We will use these points:
+     * (backdropBreakpoint, 0)
+     * (maxBreakpoint, 1)
+     * We know that at the beginning breakpoint,
+     * the backdrop will be hidden. We also
+     * know that at the maxBreakpoint, the backdrop
+     * must be fully visible.
+     * m = (y2 - y1) / (x2 - x1)
+     *
+     * This is simplified from:
+     * m = (1 - 0) / (maxBreakpoint - backdropBreakpoint)
+     */
+    const slope = 1 / (maxBreakpoint - backdropBreakpoint);
+
+    /**
+     * From here, compute b which is
+     * the backdrop opacity if the offset
+     * is 0. If the backdrop does not
+     * begin to fade in until after the
+     * 0 breakpoint, this b value will be
+     * negative. This is fine as we never pass
+     * b directly into the animation keyframes.
+     * b = y - mx
+     * Use a known point: (backdropBreakpoint, 0)
+     * This is simplified from:
+     * b = 0 - (backdropBreakpoint * slope)
+     */
+    const b = -(backdropBreakpoint * slope);
+
+    /**
+     * Finally, we can now determine the
+     * backdrop offset given an arbitrary
+     * gesture offset.
+     */
+
+    return (x * slope) + b;
+  }
 
   const gesture = createGesture({
     el: wrapperEl,

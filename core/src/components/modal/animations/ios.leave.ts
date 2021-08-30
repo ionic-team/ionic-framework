@@ -25,7 +25,7 @@ export const iosLeaveAnimation = (
 ): Animation => {
   const { presentingEl, currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
-  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetLeaveAnimation(currentBreakpoint) : createLeaveAnimation();
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetLeaveAnimation(opts) : createLeaveAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!)
 
