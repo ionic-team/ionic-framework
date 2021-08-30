@@ -112,18 +112,18 @@ const Home: React.FC<HomePageProps> = ({ router }) => {
   const [showModal, setShowModal] = useState(false);
   
   return (
-    ...
-    
-    <IonModal
-      isOpen={showModal}
-      cssClass='my-custom-class'
-      swipeToClose={true}
-      presentingElement={router || undefined}
-      onDidDismiss={() => setShowModal(false)}>
-      <p>This is modal content</p>
-    </IonModal>
-    
-    ...
+    <IonPage>
+      <IonContent>
+        <IonModal
+          isOpen={showModal}
+          cssClass='my-custom-class'
+          swipeToClose={true}
+          presentingElement={router || undefined}
+          onDidDismiss={() => setShowModal(false)}>
+          <p>This is modal content</p>
+        </IonModal>
+      </IonContent>
+    </IonPage>
   );
 };
 
@@ -174,25 +174,21 @@ const App: React.FC = () => {
 
 ...
 
-interface HomePageProps {
-  router: HTMLIonRouterOutletElement | null;
-}
-
-const Home: React.FC<HomePageProps> = ({ router }) => {
+const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   
   return (
-    ...
-    
-    <IonModal
-      isOpen={showModal}
-      initialBreakpoint={0.5}
-      breakpoints={[0, 0.5, 1]}
-      onDidDismiss={() => setShowModal(false)}>
-      <p>This is modal content</p>
-    </IonModal>
-    
-    ...
+    <IonPage>
+      <IonContent>
+        <IonModal
+          isOpen={showModal}
+          initialBreakpoint={0.5}
+          breakpoints={[0, 0.5, 1]}
+          onDidDismiss={() => setShowModal(false)}>
+          <p>This is modal content</p>
+        </IonModal>
+      </IonContent>
+    </IonPage>
   );
 };
 
