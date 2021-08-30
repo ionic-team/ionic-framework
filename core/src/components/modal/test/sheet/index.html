@@ -29,6 +29,49 @@
     overflow: visible;
   }
 
+  .red {
+    background-color: #ea445a;
+  }
+
+  .green {
+    background-color: #76d672;
+  }
+
+  .blue {
+    background-color: #3478f6;
+  }
+
+  .yellow {
+    background-color: #ffff80;
+  }
+
+  .pink {
+    background-color: #ff6b86;
+  }
+
+  .purple {
+    background-color: #7e34f6;
+  }
+
+  .black {
+    background-color: #000;
+  }
+
+  .orange {
+    background-color: #f69234;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
+  }
+
+  .grid-item {
+    height: 200px;
+  }
+
   </style>
 </head>
 
@@ -44,8 +87,21 @@
 
       <ion-content class="ion-padding">
         <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
+        <ion-button id="sheet-modal" onclick="presentModal({ showBackdrop: false })">Present Sheet Modal (No Backdrop)</ion-button>
         <ion-button id="sheet-modal" onclick="presentModal({ cssClass: 'custom-height' })">Present Sheet Modal (Custom Height)</ion-button>
         <ion-button id="sheet-modal" onclick="presentModal({ cssClass: 'custom-handle' })">Present Sheet Modal (Custom Handle)</ion-button>
+
+        <div class="grid">
+          <div class="grid-item red"></div>
+          <div class="grid-item green"></div>
+          <div class="grid-item blue"></div>
+          <div class="grid-item yellow"></div>
+          <div class="grid-item pink"></div>
+          <div class="grid-item purple"></div>
+          <div class="grid-item black"></div>
+          <div class="grid-item orange"></div>
+        </div>
+
       </ion-content>
     </div>
 
