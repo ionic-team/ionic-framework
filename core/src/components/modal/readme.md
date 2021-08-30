@@ -56,6 +56,8 @@ The `breakpoints` property accepts an array which states each breakpoint that th
 
 The `initialBreakpoint` property is required so that the sheet modal knows which breakpoint to start at when presenting. The `initalBreakpoint` value must also exist in the `breakpoints` array. Given a `breakpoints` value of `[0, 0.5, 1]`, an `initialBreakpoint` value of `0.5` would be valid as `0.5` is in the `breakpoints` array. An `initialBreakpoint` value of `0.25` would not be valid as `0.25` does not exist in the `breakpoints` array.
 
+The `backdropBreakpoint` property can be used to customize the point at which the `ion-backdrop` will begin to fade in. This is useful when creating interfaces that have content underneath the sheet that should remain interactive. A common use case is a sheet modal that overlays a map where the map is interactive until the sheet is fully expanded.
+
 See [Usage](#usage) for examples on how to use the sheet modal.
 
 > Note: The `swipeToClose` property has no effect when using a sheet modal as sheet modals must be swipeable in order to be usable.
