@@ -43,13 +43,9 @@
 :host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-highlight {
   transform: scaleX(1);
 
+  border-width: 0 0 var(--full-highlight-height) 0;
   border-style: var(--border-style);
   border-color: var(--highlight-background);
-  border-width: var(--full-highlight-height);
-
-  border-top: 0px;
-  border-right: 0px;
-  border-left: 0px;
 }
 
 :host(.item-fill-none.item-interactive.ion-focus) .item-native,
@@ -69,9 +65,9 @@
 :host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
 :host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight,
 :host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
+  border-width: var(--full-highlight-height);
   border-style: var(--border-style);
   border-color: var(--highlight-background);
-  border-width: var(--full-highlight-height);
 }
 
 :host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-native {
@@ -86,13 +82,9 @@
 :host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-highlight {
   transform: scaleX(1);
 
+  border-width: 0 0 var(--full-highlight-height) 0;
   border-style: var(--border-style);
   border-color: var(--highlight-background);
-  border-width: var(--full-highlight-height);
-
-  border-top: 0px;
-  border-right: 0px;
-  border-left: 0px;
 }
 
 :host(.item-fill-solid.item-interactive.ion-focus) .item-native,
