@@ -38,6 +38,7 @@
 // Item Fill: None
 // --------------------------------------------------
 
+:host(.item-fill-none.item-interactive.ion-focus) .item-highlight,
 :host(.item-fill-none.item-interactive.item-has-focus) .item-highlight,
 :host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-highlight {
   transform: scaleX(1);
@@ -51,6 +52,7 @@
   border-left: 0px;
 }
 
+:host(.item-fill-none.item-interactive.ion-focus) .item-native,
 :host(.item-fill-none.item-interactive.item-has-focus) .item-native,
 :host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-native {
   border-bottom-color: var(--highlight-background);
@@ -59,10 +61,12 @@
 // Item Fill: Outline
 // --------------------------------------------------
 
+:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
 :host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight {
   transform: scaleX(1);
 }
 
+:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
 :host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight,
 :host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
   border-style: var(--border-style);
@@ -77,6 +81,7 @@
 // Item Fill: Solid
 // --------------------------------------------------
 
+:host(.item-fill-solid.item-interactive.ion-focus) .item-highlight,
 :host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
 :host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-highlight {
   transform: scaleX(1);
@@ -90,6 +95,7 @@
   border-left: 0px;
 }
 
+:host(.item-fill-solid.item-interactive.ion-focus) .item-native,
 :host(.item-fill-solid.item-interactive.item-has-focus) .item-native,
 :host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-native {
   border-bottom-color: var(--highlight-background);
