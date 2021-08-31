@@ -33,6 +33,7 @@ export {
   mdTransitionAnimation,
   NavComponentWithProps,
   setupConfig,
+  IonicSwiper,
 
   SpinnerTypes,
 
