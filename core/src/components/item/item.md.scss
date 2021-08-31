@@ -20,7 +20,7 @@
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end};
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
-  --highlight-height: 2px;
+  --highlight-height: 1px;
   --highlight-color-focused: #{$item-md-input-highlight-color};
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
@@ -31,6 +31,67 @@
   text-transform: none;
 }
 
+:host(.item-fill-outline) {
+  --highlight-height: 2px;
+}
+
+// Item Fill: None
+// --------------------------------------------------
+
+:host(.item-fill-none.item-interactive.ion-focus) .item-highlight,
+:host(.item-fill-none.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-highlight {
+  transform: scaleX(1);
+
+  border-width: 0 0 var(--full-highlight-height) 0;
+  border-style: var(--border-style);
+  border-color: var(--highlight-background);
+}
+
+:host(.item-fill-none.item-interactive.ion-focus) .item-native,
+:host(.item-fill-none.item-interactive.item-has-focus) .item-native,
+:host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-native {
+  border-bottom-color: var(--highlight-background);
+}
+
+// Item Fill: Outline
+// --------------------------------------------------
+
+:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
+:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight {
+  transform: scaleX(1);
+}
+
+:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
+:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
+  border-width: var(--full-highlight-height);
+  border-style: var(--border-style);
+  border-color: var(--highlight-background);
+}
+
+:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-native {
+  border-color: var(--highlight-background);
+}
+
+// Item Fill: Solid
+// --------------------------------------------------
+
+:host(.item-fill-solid.item-interactive.ion-focus) .item-highlight,
+:host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-highlight {
+  transform: scaleX(1);
+
+  border-width: 0 0 var(--full-highlight-height) 0;
+  border-style: var(--border-style);
+  border-color: var(--highlight-background);
+}
+
+:host(.item-fill-solid.item-interactive.ion-focus) .item-native,
+:host(.item-fill-solid.item-interactive.item-has-focus) .item-native,
+:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-native {
+  border-bottom-color: var(--highlight-background);
+}
 
 // Material Design Item: States
 // --------------------------------------------------
@@ -329,7 +390,6 @@
 
 :host(.item-fill-solid.ion-color),
 :host(.item-fill-outline.ion-color) {
-  --highlight-background: #{current-color(base)};
   --highlight-color-focused: #{current-color(base)};
 }
 
@@ -353,8 +413,6 @@
 :host(.item-fill-solid.ion-focused) .item-native,
 :host(.item-fill-solid.item-has-focus) .item-native {
   --background: var(--background-focused);
-
-  border-bottom-color: var(--highlight-color-focused);
 }
 
 :host(.item-fill-solid.item-shape-round) {
@@ -412,22 +470,4 @@
   :host(.item-fill-outline:hover) .item-native {
     --border-color: #{$item-md-input-fill-border-color-hover};
   }
-}
-
-
-// Material Design Item: Invalid
-// --------------------------------------------------
-
-:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-native,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native {
-  caret-color: var(--highlight-color-invalid);
-}
-
-:host(.item-fill-outline.ion-invalid),
-:host(.item-fill-outline.ion-invalid) .item-native,
-:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-highlight,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)),
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-highlight {
-  border-color: var(--highlight-color-invalid);
 }
