@@ -27,28 +27,6 @@ export const createForwardRef = <PropType, ElementType>(
   return React.forwardRef(forwardRef);
 };
 
-export const setRef = (ref: React.ForwardedRef<any> | React.Ref<any> | undefined, value: any) => {
-  if (typeof ref === 'function') {
-    ref(value)
-  } else if (ref != null) {
-    // Cast as a MutableRef so we can assign current
-    (ref as React.MutableRefObject<any>).current = value
-  }
-};
-
-export const mergeRefs = (
-  ...refs: (React.ForwardedRef<any> | React.Ref<any> | undefined)[]
-): React.RefCallback<any> => {
-  return (value: any) => {
-    refs.forEach(ref => {
-      setRef(ref, value)
-    })
-  }
-};
-
-export * from './attachProps';
-export * from './case';
-
 export const isPlatform = (platform: Platforms) => {
   return isPlatformCore(window, platform);
 };

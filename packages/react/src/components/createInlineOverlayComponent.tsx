@@ -4,10 +4,12 @@ import React from 'react';
 import {
   attachProps,
   camelToDashCase,
-  createForwardRef,
   dashToPascalCase,
   isCoveredByReact,
   mergeRefs,
+} from './react-component-lib/utils';
+import {
+  createForwardRef
 } from './utils';
 
 type InlineOverlayState = {

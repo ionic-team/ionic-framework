@@ -1,7 +1,7 @@
 import { OverlayEventDetail } from '@ionic/core';
 import { useMemo, useRef } from 'react';
 
-import { attachProps } from '../components/utils';
+import { attachProps } from '../components/react-component-lib/utils';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 

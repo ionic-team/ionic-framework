@@ -1,8 +1,8 @@
-import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { attachProps, setRef } from './react-component-lib/utils';
+import { OverlayEventDetail } from './interfaces';
+import { StencilReactForwardedRef, attachProps, setRef } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -32,7 +32,7 @@ export const createOverlayComponent = <
 
   type Props = OverlayComponent &
     ReactOverlayProps & {
-      forwardedRef?: React.ForwardedRef<OverlayType>;
+      forwardedRef?: StencilReactForwardedRef<OverlayType>;
     };
 
   let isDismissing = false;
