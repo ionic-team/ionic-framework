@@ -375,44 +375,60 @@ button, a {
   pointer-events: none;
 }
 
-:host(.ion-focused) .item-highlight,
-:host(.ion-focused) .item-inner-highlight,
-:host(.item-has-focus) .item-highlight,
-:host(.item-has-focus) .item-inner-highlight {
+:host(.item-fill-none.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-highlight {
   transform: scaleX(1);
 
   border-style: var(--border-style);
   border-color: var(--highlight-background);
-}
-
-:host(.ion-focused) .item-highlight,
-:host(.item-has-focus) .item-highlight {
   border-width: var(--full-highlight-height);
 
-  opacity: var(--show-full-highlight);
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
 }
 
-:host(.ion-focused) .item-inner-highlight,
-:host(.item-has-focus) .item-inner-highlight {
-  border-bottom-width: var(--inset-highlight-height);
 
-  opacity: var(--show-inset-highlight);
+
+
+:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight {
+  transform: scaleX(1);
 }
 
-:host(.ion-focused.item-fill-solid) .item-highlight,
-:host(.item-has-focus.item-fill-solid) .item-highlight {
-  border-width: calc(var(--full-highlight-height) - 1px);
+:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
+  border-style: var(--border-style);
+  border-color: var(--highlight-background);
 }
 
-:host(.ion-focused) .item-inner-highlight,
-:host(.ion-focused:not(.item-fill-outline)) .item-highlight,
-:host(.item-has-focus) .item-inner-highlight,
-:host(.item-has-focus:not(.item-fill-outline)) .item-highlight {
-  border-top: none;
-  border-right: none;
-  border-left: none;
+:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-native {
+  border-color: var(--highlight-background);
 }
 
+:host(.item-interactive.item-has-focus) .item-native {
+  caret-color: var(--highlight-background);
+}
+
+
+
+
+/*:host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-solid.item-interactive.ion-touched) .item-highlight {
+  transform: scaleX(1);
+
+  border-style: var(--border-style);
+  border-color: var(--highlight-background);
+  border-width: var(--full-highlight-height);
+
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+}
+
+:host(.item-fill-solid.item-interactive.item-has-focus) .item-native,
+:host(.item-fill-solid.item-interactive.ion-touched) .item-native {
+  border-bottom-color: var(--highlight-background);
+}*/
 
 // Item Input Focused
 // --------------------------------------------------

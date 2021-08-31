@@ -353,8 +353,6 @@
 :host(.item-fill-solid.ion-focused) .item-native,
 :host(.item-fill-solid.item-has-focus) .item-native {
   --background: var(--background-focused);
-
-  border-bottom-color: var(--highlight-color-focused);
 }
 
 :host(.item-fill-solid.item-shape-round) {
@@ -412,22 +410,4 @@
   :host(.item-fill-outline:hover) .item-native {
     --border-color: #{$item-md-input-fill-border-color-hover};
   }
-}
-
-
-// Material Design Item: Invalid
-// --------------------------------------------------
-
-:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-native,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native {
-  caret-color: var(--highlight-color-invalid);
-}
-
-:host(.item-fill-outline.ion-invalid),
-:host(.item-fill-outline.ion-invalid) .item-native,
-:host(.item-fill-outline.ion-invalid:not(.ion-color)) .item-highlight,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)),
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-native,
-:host(.item-fill-solid.ion-invalid:not(.ion-color)) .item-highlight {
-  border-color: var(--highlight-color-invalid);
 }

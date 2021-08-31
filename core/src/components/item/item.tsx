@@ -324,7 +324,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       Object.assign(childStyles, value);
     });
     const ariaDisabled = (disabled || childStyles['item-interactive-disabled']) ? 'true' : null;
-
+    const fillValue = fill || 'none';
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -335,7 +335,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item': true,
             [mode]: true,
             [`item-lines-${lines}`]: lines !== undefined,
-            [`item-fill-${fill}`]: fill !== undefined,
+            [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
             'item-disabled': disabled,
             'in-list': hostContext('ion-list', this.el),
