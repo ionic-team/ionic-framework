@@ -399,6 +399,7 @@ button, a {
 :host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
   border-style: var(--border-style);
   border-color: var(--highlight-background);
+  border-width: var(--full-highlight-height);
 }
 
 :host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-native {
@@ -412,8 +413,8 @@ button, a {
 
 
 
-/*:host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-solid.item-interactive.ion-touched) .item-highlight {
+:host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
+:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-highlight {
   transform: scaleX(1);
 
   border-style: var(--border-style);
@@ -426,9 +427,9 @@ button, a {
 }
 
 :host(.item-fill-solid.item-interactive.item-has-focus) .item-native,
-:host(.item-fill-solid.item-interactive.ion-touched) .item-native {
+:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-native {
   border-bottom-color: var(--highlight-background);
-}*/
+}
 
 // Item Input Focused
 // --------------------------------------------------
