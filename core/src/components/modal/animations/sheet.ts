@@ -1,5 +1,6 @@
 import { ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;
@@ -25,10 +26,28 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
 }
 
 export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
-  const { currentBreakpoint } = opts;
+  const { currentBreakpoint, backdropBreakpoint, sortedBreakpoints } = opts;
+
+  /**
+   * Backdrop does not always fade in from 0 to 1 if backdropBreakpoint
+   * is defined, so we need to account for that offset by figuring out
+   * what the current backdrop value should be.
+   */
+  const maxBreakpoint = sortedBreakpoints![sortedBreakpoints.length - 1];
+  const backdropValue = `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, maxBreakpoint, backdropBreakpoint!)})`;
+  const defaultBackdrop = [
+    { offset: 0, opacity: backdropValue },
+    { offset: 1, opacity: 0 }
+  ]
+
+  const customBackdrop = [
+    { offset: 0, opacity: backdropValue },
+    { offset: backdropBreakpoint!, opacity: 0 },
+    { offset: 1, opacity: 0 }
+  ]
 
   const backdropAnimation = createAnimation('backdropAnimation')
-    .fromTo('opacity', `calc(var(--backdrop-opacity) * ${currentBreakpoint!})`, 0);
+    .keyframes(backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop);
 
   const wrapperAnimation = createAnimation('wrapperAnimation')
     .keyframes([

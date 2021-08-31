@@ -44,6 +44,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private sortedBreakpoints: number[] = [];
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -101,13 +102,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * A decimal value between 0 and 1 that indicates the
-   * point at which the backdrop will begin to fade in.
-   * Prior to this point, the backdrop will be hidden
-   * and the content underneath the sheet can be interacted
-   * with. This value must also be listed in the `breakpoints`
-   * array.
+   * point at which the backdrop will begin to fade in
+   * when using a sheet modal. Prior to this point, the
+   * backdrop will be hidden and the content underneath
+   * the sheet can be interacted with. This value must
+   * also be listed in the `breakpoints` array.
    */
-  @Prop() backdropBreakpoint?: number;
+  @Prop() backdropBreakpoint = 0;
 
   /**
    * The horizontal line that displays at the top of a sheet modal. It is `true` by default when
@@ -420,16 +421,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
+    const sortedBreakpoints = this.sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
       this.el,
       this.backdropEl!,
       wrapperEl,
       initialBreakpoint,
-      backdropBreakpoint || 0,
+      backdropBreakpoint,
       ani,
-      sortBreakpoints,
+      sortedBreakpoints,
       () => {
         /**
          * While the gesture animation is finishing
@@ -480,7 +481,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint });
+    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, sortedBreakpoints: this.sortedBreakpoints, backdropBreakpoint: this.backdropBreakpoint });
 
     const dismissed = await this.currentTransition;
 

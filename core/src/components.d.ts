@@ -1466,9 +1466,9 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * A decimal value between 0 and 1 that indicates the point at which the backdrop will begin to fade in. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value must also be listed in the `breakpoints` array.
+          * A decimal value between 0 and 1 that indicates the point at which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value must also be listed in the `breakpoints` array.
          */
-        "backdropBreakpoint"?: number;
+        "backdropBreakpoint": number;
         /**
           * If `true`, the modal will be dismissed when the backdrop is clicked.
          */
@@ -5078,7 +5078,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * A decimal value between 0 and 1 that indicates the point at which the backdrop will begin to fade in. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value must also be listed in the `breakpoints` array.
+          * A decimal value between 0 and 1 that indicates the point at which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value must also be listed in the `breakpoints` array.
          */
         "backdropBreakpoint"?: number;
         /**
