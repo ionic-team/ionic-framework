@@ -107,7 +107,7 @@ const { data } = await modal.onWillDismiss();
 console.log(data);
 ```
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -149,5 +149,58 @@ async presentModal() {
     presentingElement: await modalController.getTop() // Get the top-most ion-modal
   });
   await modal.present();
+}
+```
+
+
+### Sheet Modals
+
+**Controller**
+```tsx
+import { Component, Element, h } from '@stencil/core';
+
+import { modalController } from '@ionic/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @Element() el: any;
+
+  async presentModal() {
+    const modal = await modalController.create({
+      component: 'page-modal',
+      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.5, 1]
+      
+    });
+    await modal.present();
+  }
+}
+```
+
+**Inline**
+```tsx
+import { Component, State, h } from '@stencil/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @State() isModalOpen: boolean = false;
+
+  render() {
+    return [
+      <ion-modal
+        isOpen={isModalOpen} 
+        initialBreakpoint={0.5} 
+        breakpoints={[0, 0.5, 1]}
+      >
+        <page-modal></page-modal>
+      <ion-modal>
+    ]
+  }
 }
 ```

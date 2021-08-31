@@ -19,6 +19,9 @@
   @include transform(translate3d(0, 100%, 0));
 }
 
+// iOS Card Modal
+// --------------------------------------------------
+
 @media screen and (max-width: 767px) {
   @supports (width: max(0px, 1px)) {
     :host(.modal-card) {
@@ -67,4 +70,11 @@
   :host(.modal-card) .modal-shadow {
     box-shadow: var(--box-shadow);
   }
+}
+
+// iOS Sheet Modal
+// --------------------------------------------------
+
+:host(.modal-sheet) .modal-wrapper {
+  @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
 }

@@ -758,8 +758,12 @@ ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 
 ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
+ion-modal,prop,backdropBreakpoint,number,0,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
+ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-modal,prop,handle,boolean | undefined,undefined,false,false
+ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
 ion-modal,prop,keyboardClose,boolean,true,false,false
 ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -794,6 +798,7 @@ ion-modal,css-prop,--min-width
 ion-modal,css-prop,--width
 ion-modal,part,backdrop
 ion-modal,part,content
+ion-modal,part,handle
 
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false

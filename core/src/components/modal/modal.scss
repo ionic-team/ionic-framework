@@ -65,6 +65,9 @@
 .modal-shadow {
   @include border-radius(var(--border-radius));
 
+  position: absolute;
+  bottom: 0;
+
   width: var(--width);
   min-width: var(--min-width);
   max-width: var(--max-width);
@@ -106,4 +109,36 @@
     --width: #{$modal-inset-width};
     --height: #{$modal-inset-height-large};
   }
+}
+
+// Sheet Modal
+// --------------------------------------------------
+
+.modal-handle {
+  @include position(14px, 0px, null, 0px);
+  @include border-radius(8px, 8px, 8px, 8px);
+  @include margin(null, auto, null, auto);
+
+  position: absolute;
+
+  width: 36px;
+  height: 5px;
+
+  /**
+   * This allows the handle to appear
+   * on top of user content in WebKit.
+   */
+  transform: translateZ(0);
+
+  background: var(--ion-color-step-350, #c0c0be);
+
+  z-index: 11;
+}
+
+/**
+ * Ensure that the sheet modal does not
+ * completely cover the content.
+ */
+:host(.modal-sheet) {
+  --height: calc(100% - 10px);
 }

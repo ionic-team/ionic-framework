@@ -1466,9 +1466,17 @@ export namespace Components {
          */
         "animated": boolean;
         /**
+          * A decimal value between 0 and 1 that indicates the point at which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value must also be listed in the `breakpoints` array.
+         */
+        "backdropBreakpoint": number;
+        /**
           * If `true`, the modal will be dismissed when the backdrop is clicked.
          */
         "backdropDismiss": boolean;
+        /**
+          * The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]
+         */
+        "breakpoints"?: number[];
         /**
           * The component to display inside of the modal.
          */
@@ -1492,6 +1500,14 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
+         */
+        "handle"?: boolean;
+        /**
+          * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
+         */
+        "initialBreakpoint"?: number;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
@@ -5062,9 +5078,17 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
+          * A decimal value between 0 and 1 that indicates the point at which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value must also be listed in the `breakpoints` array.
+         */
+        "backdropBreakpoint"?: number;
+        /**
           * If `true`, the modal will be dismissed when the backdrop is clicked.
          */
         "backdropDismiss"?: boolean;
+        /**
+          * The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]
+         */
+        "breakpoints"?: number[];
         /**
           * The component to display inside of the modal.
          */
@@ -5082,6 +5106,14 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
+         */
+        "handle"?: boolean;
+        /**
+          * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
+         */
+        "initialBreakpoint"?: number;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */

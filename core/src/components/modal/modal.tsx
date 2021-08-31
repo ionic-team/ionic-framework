@@ -13,6 +13,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
@@ -22,6 +23,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
  *
  * @part backdrop - The `ion-backdrop` element.
  * @part content - The wrapper element for the default slot.
+ * @part handle - The handle that is displayed at the top of the sheet modal when `handle="true"`.
  */
 @Component({
   tag: 'ion-modal',
@@ -38,6 +40,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
+  private isSheetModal = false;
+  private currentBreakpoint?: number;
+  private wrapperEl?: HTMLElement;
+  private backdropEl?: HTMLIonBackdropElement;
+  private sortedBreakpoints: number[] = [];
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -74,6 +81,40 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Animation to use when the modal is dismissed.
    */
   @Prop() leaveAnimation?: AnimationBuilder;
+
+  /**
+   * The breakpoints to use when creating a sheet modal. Each value in the
+   * array must be a decimal between 0 and 1 where 0 indicates the modal is fully
+   * closed and 1 indicates the modal is fully open. Values are relative
+   * to the height of the modal, not the height of the screen. One of the values in this
+   * array must be the value of the `initialBreakpoint` property.
+   * For example: [0, .25, .5, 1]
+   */
+  @Prop() breakpoints?: number[];
+
+  /**
+   * A decimal value between 0 and 1 that indicates the
+   * initial point the modal will open at when creating a
+   * sheet modal. This value must also be listed in the
+   * `breakpoints` array.
+   */
+  @Prop() initialBreakpoint?: number;
+
+  /**
+   * A decimal value between 0 and 1 that indicates the
+   * point at which the backdrop will begin to fade in
+   * when using a sheet modal. Prior to this point, the
+   * backdrop will be hidden and the content underneath
+   * the sheet can be interacted with. This value must
+   * also be listed in the `breakpoints` array.
+   */
+  @Prop() backdropBreakpoint = 0;
+
+  /**
+   * The horizontal line that displays at the top of a sheet modal. It is `true` by default when
+   * setting the `breakpoints` and `initialBreakpoint` properties.
+   */
+  @Prop() handle?: boolean;
 
   /**
    * The component to display inside of the modal.
@@ -206,11 +247,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
+    const { breakpoints, initialBreakpoint } = this;
+
     /**
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
     this.modalId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
+    this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
+
+    if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
+      console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.')
+    }
   }
 
   componentDidLoad() {
@@ -315,15 +363,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint, backdropBreakpoint: this.backdropBreakpoint });
 
     await this.currentTransition;
 
-    this.currentTransition = undefined;
-
-    if (this.swipeToClose) {
+    if (this.isSheetModal) {
+      this.initSheetGesture();
+    } else if (this.swipeToClose) {
       this.initSwipeToClose();
     }
+
+    this.currentTransition = undefined;
   }
 
   private initSwipeToClose() {
@@ -333,7 +383,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
+    const ani = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement });
     this.gesture = createSwipeToCloseGesture(
       this.el,
       ani,
@@ -354,6 +404,53 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.gestureAnimationDismissing = false;
         });
       },
+
+    );
+    this.gesture.enable(true);
+  }
+
+  private initSheetGesture() {
+    const { wrapperEl, initialBreakpoint, backdropBreakpoint } = this;
+
+    if (!wrapperEl || initialBreakpoint === undefined) {
+      return;
+    }
+
+    const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
+    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: initialBreakpoint, backdropBreakpoint });
+
+    ani.progressStart(true, 1);
+
+    const sortedBreakpoints = this.sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
+
+    this.gesture = createSheetGesture(
+      this.el,
+      this.backdropEl!,
+      wrapperEl,
+      initialBreakpoint,
+      backdropBreakpoint,
+      ani,
+      sortedBreakpoints,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, 'gesture');
+          this.gestureAnimationDismissing = false;
+        });
+      },
+      (breakpoint: number) => {
+        this.currentBreakpoint = breakpoint;
+      }
     );
     this.gesture.enable(true);
   }
@@ -384,7 +481,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
+    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, sortedBreakpoints: this.sortedBreakpoints, backdropBreakpoint: this.backdropBreakpoint });
 
     const dismissed = await this.currentTransition;
 
@@ -394,12 +491,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.animation) {
         this.animation.destroy();
       }
+      if (this.gesture) {
+        this.gesture.destroy();
+      }
 
       enteringAnimation.forEach(ani => ani.destroy());
     }
 
-    this.animation = undefined;
     this.currentTransition = undefined;
+    this.animation = undefined;
 
     return dismissed;
   }
@@ -445,6 +545,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { handle, isSheetModal, presentingElement } = this;
+
+    const showHandle = handle || isSheetModal;
+
     const mode = getIonMode(this);
     const { presented, modalId } = this;
 
@@ -455,7 +559,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         tabindex="-1"
         class={{
           [mode]: true,
-          [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
+          [`modal-card`]: presentingElement !== undefined && mode === 'ios',
+          [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
           'modal-interactive': presented,
           ...getClassMap(this.cssClass)
@@ -471,7 +576,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
       >
-        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} part="backdrop" />
+        <ion-backdrop ref={el => this.backdropEl = el} visible={this.showBackdrop} tappable={this.backdropDismiss} part="backdrop" />
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
@@ -479,7 +584,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
           role="dialog"
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
+          ref={el => this.wrapperEl = el}
         >
+          {showHandle && <div class="modal-handle" part="handle"></div>}
           <slot></slot>
         </div>
 

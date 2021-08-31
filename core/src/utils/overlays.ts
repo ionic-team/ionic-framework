@@ -376,7 +376,6 @@ export const present = async (
   if (completed) {
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
-
   }
 
   /**
