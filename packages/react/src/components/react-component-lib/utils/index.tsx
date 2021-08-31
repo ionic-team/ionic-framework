@@ -6,7 +6,10 @@ export type StencilReactExternalProps<PropType, ElementType> = PropType &
   Omit<React.HTMLAttributes<ElementType>, 'style'> &
   StyleReactProps;
 
-export const setRef = (ref: React.ForwardedRef<any> | React.Ref<any> | undefined, value: any) => {
+// This will be replaced with React.ForwardedRef when react-output-target is upgraded to React v17
+export type StencilReactForwardedRef<T> = ((instance: T | null) => void) | React.MutableRefObject<T | null> | null;
+
+export const setRef = (ref: StencilReactForwardedRef<any> | React.Ref<any> | undefined, value: any) => {
   if (typeof ref === 'function') {
     ref(value)
   } else if (ref != null) {
@@ -15,9 +18,8 @@ export const setRef = (ref: React.ForwardedRef<any> | React.Ref<any> | undefined
   }
 };
 
-// The comma in the type is to trick typescript because it things a single generic in a tsx file is jsx
 export const mergeRefs = (
-  ...refs: (React.ForwardedRef<any> | React.Ref<any> | undefined)[]
+  ...refs: (StencilReactForwardedRef<any> | React.Ref<any> | undefined)[]
 ): React.RefCallback<any> => {
   return (value: any) => {
     refs.forEach(ref => {
@@ -32,7 +34,7 @@ export const createForwardRef = <PropType, ElementType>(
 ) => {
   const forwardRef = (
     props: StencilReactExternalProps<PropType, ElementType>,
-    ref: React.ForwardedRef<ElementType>,
+    ref: StencilReactForwardedRef<ElementType>,
   ) => {
     return <ReactComponent {...props} forwardedRef={ref} />;
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { OverlayEventDetail } from './interfaces';
-import { attachProps, setRef } from './utils';
+import { attachProps, setRef, StencilReactForwardedRef } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -32,7 +32,7 @@ export const createOverlayComponent = <
 
   type Props = OverlayComponent &
     ReactOverlayProps & {
-      forwardedRef?: React.ForwardedRef<OverlayType>;
+      forwardedRef?: StencilReactForwardedRef<OverlayType>;
     };
 
   let isDismissing = false;

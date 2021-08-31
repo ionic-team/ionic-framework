@@ -28,11 +28,10 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
           syncEvent(node, eventNameLc, newProps[name]);
         }
       } else {
+        (node as any)[name] = newProps[name];
         const propType = typeof newProps[name];
         if (propType === 'string') {
           node.setAttribute(camelToDashCase(name), newProps[name]);
-        } else {
-          (node as any)[name] = newProps[name];
         }
       }
     });
