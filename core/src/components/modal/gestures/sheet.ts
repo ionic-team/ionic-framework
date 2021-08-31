@@ -59,6 +59,10 @@ export const createSheetGesture = (
     backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
   }
 
+  if (contentEl && currentBreakpoint !== maxBreakpoint) {
+    contentEl.scrollY = false;
+  }
+
   const canStart = (detail: GestureDetail) => {
     /**
      * If the sheet is fully expanded and
