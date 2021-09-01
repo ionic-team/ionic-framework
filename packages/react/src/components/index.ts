@@ -36,8 +36,6 @@ export {
   setupConfig,
   IonicSwiper,
 
-  IonicSwiper,
-
   SpinnerTypes,
 
   ActionSheetOptions,
