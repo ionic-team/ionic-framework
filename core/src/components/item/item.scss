@@ -313,10 +313,11 @@ button, a {
 // to be clicked to open the select interface
 ::slotted(ion-label) {
   pointer-events: none;
-
-  flex: 1;
 }
 
+::slotted(ion-label:not([slot="end"])) {
+  flex: 1;
+}
 
 // Item Input
 // --------------------------------------------------
