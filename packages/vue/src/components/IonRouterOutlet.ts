@@ -63,7 +63,7 @@ export const IonRouterOutlet = defineComponent({
      * page/1 to page/2 would not cause this callback
      * to fire since the matchedRouteRef was the same.
      */
-    watch([route, matchedRouteRef], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
+    watch(() => [route, matchedRouteRef.value], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
       /**
        * If the matched route ref has changed,
        * then we need to set up a new view item.
