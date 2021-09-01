@@ -34,6 +34,7 @@ export {
   mdTransitionAnimation,
   NavComponentWithProps,
   setupConfig,
+  IonicSwiper,
 
   IonicSwiper,
 
