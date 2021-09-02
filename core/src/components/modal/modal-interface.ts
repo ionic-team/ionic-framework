@@ -20,7 +20,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
 
   breakpoints?: number[];
   initialBreakpoint?: number;
-  backdropBreakpoint: number;
+  backdropBreakpoint?: number;
   handle?: boolean;
 }
 
