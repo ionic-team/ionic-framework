@@ -7,6 +7,23 @@ consist of items, headers, and footers. For performance reasons, not every recor
 in the list is rendered at once; instead a small subset of records (enough to fill the viewport)
 are rendered and reused as the user scrolls.
 
+This guide will go over the recommended virtual scrolling packages for each framework integration as well as documentation for the deprecated `ion-virtual-scroll` component for Ionic Angular. We recommend using the framework-specific solutions listed below, but the `ion-virtual-scroll` documentation is available below for developers who are still using that component.
+
+## Angular
+
+For virtual scrolling options in Ionic Angular, please see [Angular Virtual Scroll Guide](../angular/virtual-scroll).
+
+## React
+
+For virtual scrolling options in Ionic React, please see [React Virtual Scroll Guide](../react/virtual-scroll).
+
+## Vue
+
+For virtual scrolling options in Ionic Vue, please see [Vue Virtual Scroll Guide](../vue/virtual-scroll).
+
+------
+
+The following documentation applies to the `ion-virtual-scroll` component.
 
 ## Approximate Widths and Heights
 
