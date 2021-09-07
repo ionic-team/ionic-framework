@@ -9,7 +9,8 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body>
   <h1>Default</h1>
@@ -17,6 +18,7 @@
   <ion-input value="value"></ion-input>
   <ion-input type="number" placeholder="Enter a Number"></ion-input>
   <ion-input type="number" value="44"></ion-input>
+  <ion-input class="custom-border" placeholder="Enter some text"></ion-input>
 
   <h1>Colors</h1>
   <ion-grid>
@@ -91,6 +93,10 @@
   <style>
     .custom {
       --color: green;
+    }
+
+    .custom-border {
+      border: 1px solid green;
     }
   </style>
 </body>

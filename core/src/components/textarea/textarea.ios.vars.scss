@@ -20,7 +20,7 @@ $textarea-ios-padding-end:                    ($item-ios-padding-end / 2) !defau
 $textarea-ios-padding-bottom:                 $item-ios-padding-bottom !default;
 
 /// @prop - Margin start of the textarea
-$textarea-ios-padding-start:                  0 !default;
+$textarea-ios-padding-start:                  ($item-ios-padding-start / 2) !default;
 
 /// @prop - Placeholder text color of the textarea
 $textarea-ios-placeholder-color:            $placeholder-text-color !default;
