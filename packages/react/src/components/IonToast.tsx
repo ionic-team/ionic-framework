@@ -28,7 +28,7 @@ const toastController = {
 };
 
 export const IonToast = /*@__PURE__*/ createControllerComponent<ToastOptions, HTMLIonToastElement>(
-  'IonToast',
+  'ion-toast',
   toastController,
   IonToastCmp
 );

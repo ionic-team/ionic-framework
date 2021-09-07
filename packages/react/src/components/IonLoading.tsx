@@ -6,4 +6,4 @@ import { createControllerComponent } from './createControllerComponent';
 export const IonLoading = /*@__PURE__*/ createControllerComponent<
   LoadingOptions,
   HTMLIonLoadingElement
->('IonLoading', loadingController, IonLoadingCmp);
+>('ion-loading', loadingController, IonLoadingCmp);

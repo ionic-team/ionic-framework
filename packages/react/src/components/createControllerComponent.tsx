@@ -1,7 +1,7 @@
 import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 
-import { attachProps, setRef } from './react-component-lib/utils';
+import { attachProps, dashToPascalCase, setRef } from './react-component-lib/utils';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -20,18 +20,19 @@ export const createControllerComponent = <
   OptionsType extends object,
   OverlayType extends OverlayBase
 >(
-  displayName: string,
+  tagName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> },
   customElement?: any
 ) => {
   if (
     customElement !== undefined &&
     typeof customElements !== 'undefined' &&
-    !customElements.get(displayName)
+    !customElements.get(tagName)
   ) {
-    customElements.define(displayName, customElement);
+    customElements.define(tagName, customElement);
   }
 
+  const displayName = dashToPascalCase(tagName);
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
   const willDismissEventName = `on${displayName}WillDismiss`;

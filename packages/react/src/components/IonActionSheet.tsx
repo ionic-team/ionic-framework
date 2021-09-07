@@ -31,4 +31,4 @@ const actionSheetController = {
 export const IonActionSheet = /*@__PURE__*/ createOverlayComponent<
   ActionSheetOptions,
   HTMLIonActionSheetElement
->('IonActionSheet', actionSheetController, IonActionSheetCmp);
+>('ion-action-sheet', actionSheetController, IonActionSheetCmp);

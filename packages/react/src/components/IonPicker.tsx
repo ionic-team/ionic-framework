@@ -6,4 +6,4 @@ import { createControllerComponent } from './createControllerComponent';
 export const IonPicker = /*@__PURE__*/ createControllerComponent<
   PickerOptions,
   HTMLIonPickerElement
->('IonPicker', pickerController, IonPickerCmp);
+>('ion-picker', pickerController, IonPickerCmp);
