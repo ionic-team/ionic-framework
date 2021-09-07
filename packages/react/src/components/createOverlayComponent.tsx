@@ -26,6 +26,14 @@ export const createOverlayComponent = <
   controller: { create: (options: any) => Promise<OverlayType> },
   customElement?: any
 ) => {
+  if (
+    customElement !== undefined &&
+    typeof customElements !== 'undefined' &&
+    !customElements.get(tagName)
+  ) {
+    customElements.define(tagName, customElement);
+  }
+
   const displayName = dashToPascalCase(tagName);
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
@@ -38,14 +46,6 @@ export const createOverlayComponent = <
     };
 
   let isDismissing = false;
-
-  if (
-    customElement !== undefined &&
-    typeof customElements !== 'undefined' &&
-    !customElements.get(displayName)
-  ) {
-    customElements.define(displayName, customElement);
-  }
 
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
