@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 import React, { useContext } from 'react';
 
 import { RouteAction, RouterDirection, RouterOptions } from '../models';
