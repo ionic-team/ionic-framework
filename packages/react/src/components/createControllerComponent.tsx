@@ -27,9 +27,9 @@ export const createControllerComponent = <
   if (
     customElement !== undefined &&
     typeof customElements !== 'undefined' &&
-    !customElements.get(tagName)
+    !customElements.get(displayName)
   ) {
-    customElements.define(tagName, customElement);
+    customElements.define(displayName, customElement);
   }
 
   const didDismissEventName = `on${displayName}DidDismiss`;

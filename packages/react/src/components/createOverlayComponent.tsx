@@ -41,9 +41,9 @@ export const createOverlayComponent = <
   if (
     customElement !== undefined &&
     typeof customElements !== 'undefined' &&
-    !customElements.get(tagName)
+    !customElements.get(displayName)
   ) {
-    customElements.define(tagName, customElement);
+    customElements.define(displayName, customElement);
   }
 
   class Overlay extends React.Component<Props> {
