@@ -1,4 +1,3 @@
-import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import {
   arrowBackSharp,
@@ -16,6 +15,7 @@ import {
   searchOutline,
   searchSharp,
 } from 'ionicons/icons';
+import { initialize } from '@ionic/core/components';
 export {
   Animation,
   AnimationBuilder,
@@ -34,6 +34,7 @@ export {
   mdTransitionAnimation,
   NavComponentWithProps,
   setupConfig,
+  initialize,
   IonicSwiper,
 
   SpinnerTypes,
@@ -60,7 +61,7 @@ export {
 
   ToastOptions,
   ToastButton
-} from '@ionic/core';
+} from '@ionic/core/components';
 export * from './proxies';
 export * from './routing-proxies';
 
@@ -122,8 +123,13 @@ addIcons({
   'search-sharp': searchSharp,
 });
 
-// TODO: defineCustomElements() is asyncronous
-// We need to use the promise
-if (typeof window !== 'undefined') {
-  defineCustomElements(window);
-}
+/**
+ * By default Ionic Framework hides elements that
+ * are not hydrated, but in the CE build there is no
+ * hydration.
+ * TODO: Remove when all integrations have been
+ * migrated to CE build.
+ */
+document.documentElement.classList.add('ion-ce');
+
+initialize();

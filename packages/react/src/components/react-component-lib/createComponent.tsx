@@ -24,7 +24,7 @@ export const createReactComponent = <
   ExpandedPropsTypes = {}
 >(
   tagName: string,
-  customElement: any,
+  customElement?: any,
   ReactComponentContext?: React.Context<ContextStateType>,
   manipulatePropsFunction?: (
     originalProps: StencilReactInternalProps<ElementType>,

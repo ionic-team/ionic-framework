@@ -23,8 +23,8 @@ export const createOverlayComponent = <
   OverlayType extends OverlayElement
 >(
   displayName: string,
-  customElement: any,
-  controller: { create: (options: any) => Promise<OverlayType> }
+  controller: { create: (options: any) => Promise<OverlayType> },
+  customElement?: any
 ) => {
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
