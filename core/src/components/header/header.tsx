@@ -20,6 +20,7 @@ export class Header implements ComponentInterface {
   private contentScrollCallback?: any;
   private intersectionObserver?: any;
   private collapsibleMainHeader?: HTMLElement;
+  private role?: string;
 
   @Element() el!: HTMLElement;
 
@@ -40,6 +41,12 @@ export class Header implements ComponentInterface {
    * attribute needs to be set on the content.
    */
   @Prop() translucent = false;
+
+  componentWillLoad() {
+    const { el } = this;
+
+    this.role = el.hasAttribute('role') ? el.getAttribute('role')! : 'banner';
+  }
 
   async componentDidLoad() {
     await this.checkCollapsibleHeader();
@@ -143,12 +150,12 @@ export class Header implements ComponentInterface {
   }
 
   render() {
-    const { translucent } = this;
+    const { translucent, role } = this;
     const mode = getIonMode(this);
     const collapse = this.collapse || 'none';
     return (
       <Host
-        role="banner"
+        role={role}
         class={{
           [mode]: true,
 
