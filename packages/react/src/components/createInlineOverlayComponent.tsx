@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core'
+import { OverlayEventDetail } from '@ionic/core/components'
 import React from 'react';
 
 import {
@@ -9,7 +9,8 @@ import {
   mergeRefs,
 } from './react-component-lib/utils';
 import {
-  createForwardRef
+  createForwardRef,
+  defineCustomElement
 } from './utils';
 
 type InlineOverlayState = {

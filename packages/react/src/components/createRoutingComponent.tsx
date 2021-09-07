@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
@@ -13,7 +13,8 @@ import {
   mergeRefs,
 } from './react-component-lib/utils';
 import {
-  createForwardRef
+  createForwardRef,
+  defineCustomElement
 } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
