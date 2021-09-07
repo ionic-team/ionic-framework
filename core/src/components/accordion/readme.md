@@ -690,7 +690,7 @@ export class MyComponent {
 ```tsx
 import React, { useRef } from 'react';
 
-import { IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonPage } from '@ionic/react';
+import { IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonList, IonPage } from '@ionic/react';
 import { arrowDownCircle } from 'ionicons/icons';
 
 export const AccordionExample: React.FC = () => {
@@ -716,7 +716,7 @@ export const AccordionExample: React.FC = () => {
               <IonLabel>Colors</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Red</IonLabel>
               </IonItem>
@@ -726,14 +726,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Blue</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="shapes">
             <IonItem slot="header">
               <IonLabel>Shapes</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Circle</IonLabel>
               </IonItem>
@@ -743,14 +743,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Square</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="numbers">
             <IonItem slot="header">
               <IonLabel>Numbers</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>1</IonLabel>
               </IonItem>
@@ -760,7 +760,7 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>3</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
         </IonAccordionGroup>
       
@@ -771,7 +771,7 @@ export const AccordionExample: React.FC = () => {
               <IonLabel>Colors</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Red</IonLabel>
               </IonItem>
@@ -781,14 +781,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Blue</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="shapes" toggleIcon={arrowDownCircle}>
             <IonItem slot="header">
               <IonLabel>Shapes</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Circle</IonLabel>
               </IonItem>
@@ -798,14 +798,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Square</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="numbers" toggleIcon={arrowDownCircle}>
             <IonItem slot="header">
               <IonLabel>Numbers</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>1</IonLabel>
               </IonItem>
@@ -815,7 +815,7 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>3</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
         </IonAccordionGroup>
       
@@ -826,7 +826,7 @@ export const AccordionExample: React.FC = () => {
               <IonLabel>Colors</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Red</IonLabel>
               </IonItem>
@@ -836,14 +836,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Blue</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="shapes">
             <IonItem slot="header">
               <IonLabel>Shapes</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Circle</IonLabel>
               </IonItem>
@@ -853,14 +853,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Square</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="numbers">
             <IonItem slot="header">
               <IonLabel>Numbers</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>1</IonLabel>
               </IonItem>
@@ -870,7 +870,7 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>3</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
         </IonAccordionGroup>
       
@@ -881,7 +881,7 @@ export const AccordionExample: React.FC = () => {
               <IonLabel>Colors</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Red</IonLabel>
               </IonItem>
@@ -891,14 +891,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Blue</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="shapes">
             <IonItem slot="header">
               <IonLabel>Shapes</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Circle</IonLabel>
               </IonItem>
@@ -908,14 +908,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Square</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="numbers">
             <IonItem slot="header">
               <IonLabel>Numbers</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>1</IonLabel>
               </IonItem>
@@ -925,7 +925,7 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>3</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
         </IonAccordionGroup>
         
@@ -936,7 +936,7 @@ export const AccordionExample: React.FC = () => {
               <IonLabel>Colors</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Red</IonLabel>
               </IonItem>
@@ -946,14 +946,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Blue</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="shapes">
             <IonItem slot="header">
               <IonLabel>Shapes</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>Circle</IonLabel>
               </IonItem>
@@ -963,14 +963,14 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>Square</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
           <IonAccordion value="numbers">
             <IonItem slot="header">
               <IonLabel>Numbers</IonLabel>
             </IonItem>
       
-            <ion-list slot="content">
+            <IonList slot="content">
               <IonItem>
                 <IonLabel>1</IonLabel>
               </IonItem>
@@ -980,7 +980,7 @@ export const AccordionExample: React.FC = () => {
               <IonItem>
                 <IonLabel>3</IonLabel>
               </IonItem>
-            </ion-list>
+            </IonList>
           </IonAccordion>
         </IonAccordionGroup>
         
