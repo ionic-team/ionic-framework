@@ -21,7 +21,7 @@ export const createControllerComponent = <
   OverlayType extends OverlayBase
 >(
   displayName: string,
-  controller: { create: (options: OptionsType) => Promise<OverlayType> }
+  controller: { create: (options: OptionsType) => Promise<OverlayType> },
   customElement?: any
 ) => {
   if (
