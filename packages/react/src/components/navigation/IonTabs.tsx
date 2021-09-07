@@ -1,4 +1,4 @@
-import { JSX as LocalJSX } from '@ionic/core';
+import { JSX as LocalJSX } from '@ionic/core/components';
 import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';

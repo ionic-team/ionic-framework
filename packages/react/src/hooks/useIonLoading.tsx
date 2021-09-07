@@ -1,4 +1,4 @@
-import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core';
+import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core/components';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';

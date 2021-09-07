@@ -1,4 +1,4 @@
-import { JSX } from '@ionic/core';
+import { JSX } from '@ionic/core/components';
 
 import { createInlineOverlayComponent } from './createInlineOverlayComponent'
 import { IonModal as IonModalCmp } from '@ionic/core/components/ion-modal.js';

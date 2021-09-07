@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core';
+import { OverlayEventDetail } from '@ionic/core/components';
 import { useMemo, useRef } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';

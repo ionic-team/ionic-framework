@@ -1,4 +1,4 @@
-import { AlertButton, AlertOptions, alertController } from '@ionic/core';
+import { AlertButton, AlertOptions, alertController } from '@ionic/core/components';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';

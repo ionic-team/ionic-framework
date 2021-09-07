@@ -3,7 +3,7 @@
 /* auto-generated react proxies */
 import { createReactComponent } from './react-component-lib';
 
-import type { JSX } from '@ionic/core';
+import type { JSX } from '@ionic/core/components';
 
 import { IonAccordion as IonAccordionCmp } from '@ionic/core/components/ion-accordion.js';
 import { IonAccordionGroup as IonAccordionGroupCmp } from '@ionic/core/components/ion-accordion-group.js';

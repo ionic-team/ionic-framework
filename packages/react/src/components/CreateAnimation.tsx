@@ -6,7 +6,7 @@ import {
   AnimationKeyFrames,
   AnimationLifecycle,
   createAnimation,
-} from '@ionic/core';
+} from '@ionic/core/components';
 import React from 'react';
 
 interface PartialPropertyValue {
