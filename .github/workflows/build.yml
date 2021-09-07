@@ -1,4 +1,4 @@
-name: 'Ionic Framework'
+name: 'Ionic Framework GHA'
 
 on:
   pull_request:
