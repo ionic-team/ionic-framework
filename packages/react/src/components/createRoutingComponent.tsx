@@ -30,13 +30,7 @@ export const createRoutingComponent = <PropType, ElementType>(
   tagName: string,
   customElement?: any
 ) => {
-  if (
-    customElement !== undefined &&
-    typeof customElements !== 'undefined' &&
-    !customElements.get(tagName)
-  ) {
-    customElements.define(tagName, customElement);
-  }
+  defineCustomElement(tagName, customElement);
 
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {

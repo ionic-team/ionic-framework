@@ -26,13 +26,7 @@ export const createOverlayComponent = <
   controller: { create: (options: any) => Promise<OverlayType> },
   customElement?: any
 ) => {
-  if (
-    customElement !== undefined &&
-    typeof customElements !== 'undefined' &&
-    !customElements.get(tagName)
-  ) {
-    customElements.define(tagName, customElement);
-  }
+  defineCustomElement(tagName, customElement);
 
   const displayName = dashToPascalCase(tagName);
   const didDismissEventName = `on${displayName}DidDismiss`;
