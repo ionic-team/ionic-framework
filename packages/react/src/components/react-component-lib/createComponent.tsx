@@ -24,6 +24,7 @@ export const createReactComponent = <
   ExpandedPropsTypes = {}
 >(
   tagName: string,
+  customElement: any,
   ReactComponentContext?: React.Context<ContextStateType>,
   manipulatePropsFunction?: (
     originalProps: StencilReactInternalProps<ElementType>,
@@ -31,6 +32,14 @@ export const createReactComponent = <
   ) => ExpandedPropsTypes,
 ) => {
   const displayName = dashToPascalCase(tagName);
+
+  if (
+    customElement !== undefined &&
+    typeof customElements !== 'undefined' &&
+    !customElements.get(tagName)
+  ) {
+    customElements.define(tagName, customElement);
+  }
 
   const ReactComponent = class extends React.Component<StencilReactInternalProps<ElementType>> {
     componentEl!: ElementType;
