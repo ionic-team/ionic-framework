@@ -181,7 +181,7 @@ AFTER:
     }
 
     if (this.el.contains(content)) {
-      console.error('Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.');
+      console.error(`Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`);
     }
 
     this.contentEl = content as HTMLElement;
