@@ -147,6 +147,11 @@ interface ModalOptions<T extends ComponentRef = ComponentRef> {
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
+
+  breakpoints?: number[];
+  initialBreakpoint?: number;
+  backdropBreakpoint?: number;
+  handle?: boolean;
 }
 ```
 
