@@ -22,7 +22,16 @@ export const createControllerComponent = <
 >(
   displayName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> }
+  customElement?: any
 ) => {
+  if (
+    customElement !== undefined &&
+    typeof customElements !== 'undefined' &&
+    !customElements.get(tagName)
+  ) {
+    customElements.define(tagName, customElement);
+  }
+
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
   const willDismissEventName = `on${displayName}WillDismiss`;

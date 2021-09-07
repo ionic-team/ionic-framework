@@ -2,7 +2,9 @@ import {
   ActionSheetButton as ActionSheetButtonCore,
   ActionSheetOptions as ActionSheetOptionsCore,
   actionSheetController as actionSheetControllerCore,
-} from '@ionic/core';
+} from '@ionic/core/components';
+
+import { IonActionSheet as IonActionSheetCmp } from '@ionic/core/components/ion-action-sheet.js';
 
 import { createOverlayComponent } from './createOverlayComponent';
 
@@ -29,4 +31,4 @@ const actionSheetController = {
 export const IonActionSheet = /*@__PURE__*/ createOverlayComponent<
   ActionSheetOptions,
   HTMLIonActionSheetElement
->('IonActionSheet', actionSheetController);
+>('IonActionSheet', actionSheetController, IonActionSheetCmp);

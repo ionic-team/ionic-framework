@@ -1,8 +1,9 @@
 import { JSX } from '@ionic/core';
 
 import { createInlineOverlayComponent } from './createInlineOverlayComponent'
+import { IonModal as IonModalCmp } from '@ionic/core/components/ion-modal.js';
 
 export const IonModal = /*@__PURE__*/ createInlineOverlayComponent<
   JSX.IonModal,
   HTMLIonModalElement
->('ion-modal');
+>('ion-modal', IonModalCmp);
