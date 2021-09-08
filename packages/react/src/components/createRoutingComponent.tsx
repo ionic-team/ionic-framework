@@ -9,13 +9,11 @@ import {
   attachProps,
   camelToDashCase,
   dashToPascalCase,
+  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
 } from './react-component-lib/utils';
-import {
-  createForwardRef,
-  defineCustomElement
-} from './utils';
+import { createForwardRef } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;

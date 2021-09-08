@@ -5,13 +5,11 @@ import {
   attachProps,
   camelToDashCase,
   dashToPascalCase,
+  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
 } from './react-component-lib/utils';
-import {
-  createForwardRef,
-  defineCustomElement
-} from './utils';
+import { createForwardRef } from './utils';
 
 type InlineOverlayState = {
   isOpen: boolean;

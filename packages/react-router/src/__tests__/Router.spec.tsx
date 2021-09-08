@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-import { IonApp, IonRouterOutlet, IonPage } from '@ionic/react';
+import React from 'react';
+import { IonApp, IonPage } from '@ionic/react';
 import { IonReactMemoryRouter } from '../ReactRouter/IonReactMemoryRouter';
-import { render, waitForElement } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Route } from 'react-router';
 // import {Router} from '../Router';
 import { MemoryHistory, createMemoryHistory } from 'history';
@@ -46,7 +46,7 @@ describe('Router', () => {
       expect(page).toHaveStyle('z-index: 101');
     });
 
-    it.skip('should fire initial lifecycle events', async () => {
+    /*it('should fire initial lifecycle events', async () => {
       const ionViewWillEnterListener = jest.fn();
       const ionViewDidEnterListener = jest.fn();
 
@@ -68,6 +68,6 @@ describe('Router', () => {
       render(<IonTestApp Page={MyPage} />);
       expect(ionViewWillEnterListener).toHaveBeenCalledTimes(1);
       expect(ionViewDidEnterListener).toHaveBeenCalledTimes(1);
-    });
+    });*/
   });
 });
