@@ -1,7 +1,7 @@
 import { JSX } from '@ionic/core/components';
+import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js';
 
 import { createInlineOverlayComponent } from './createInlineOverlayComponent'
-import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js';
 
 export const IonPopover = /*@__PURE__*/ createInlineOverlayComponent<
   JSX.IonPopover,

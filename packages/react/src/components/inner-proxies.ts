@@ -1,13 +1,12 @@
 import { JSX } from '@ionic/core/components';
-import { JSX as IoniconsJSX } from 'ionicons';
-
-import { /*@__PURE__*/ createReactComponent } from './react-component-lib';
-
-import { IonTabButton as IonTabButtonCmp } from '@ionic/core/components/ion-tab-button.js';
-import { IonTabBar as IonTabBarCmp } from '@ionic/core/components/ion-tab-bar.js';
 import { IonBackButton as IonBackButtonCmp } from '@ionic/core/components/ion-back-button.js';
 import { IonRouterOutlet as IonRouterOutletCmp } from '@ionic/core/components/ion-router-outlet.js';
+import { IonTabBar as IonTabBarCmp } from '@ionic/core/components/ion-tab-bar.js';
+import { IonTabButton as IonTabButtonCmp } from '@ionic/core/components/ion-tab-button.js';
+import { JSX as IoniconsJSX } from 'ionicons';
 import { IonIcon as IonIconCmp } from 'ionicons/components/ion-icon.js';
+
+import { /*@__PURE__*/ createReactComponent } from './react-component-lib';
 
 export const IonTabButtonInner = /*@__PURE__*/ createReactComponent<
   JSX.IonTabButton & { onIonTabButtonClick?: (e: CustomEvent) => void },

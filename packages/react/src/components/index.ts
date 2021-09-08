@@ -1,3 +1,4 @@
+import { initialize } from '@ionic/core/components';
 import { addIcons } from 'ionicons';
 import {
   arrowBackSharp,
@@ -15,7 +16,6 @@ import {
   searchOutline,
   searchSharp,
 } from 'ionicons/icons';
-import { initialize } from '@ionic/core/components';
 export {
   Animation,
   AnimationBuilder,

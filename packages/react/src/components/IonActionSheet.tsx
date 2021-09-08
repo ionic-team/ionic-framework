@@ -3,7 +3,6 @@ import {
   ActionSheetOptions as ActionSheetOptionsCore,
   actionSheetController as actionSheetControllerCore,
 } from '@ionic/core/components';
-
 import { IonActionSheet as IonActionSheetCmp } from '@ionic/core/components/ion-action-sheet.js';
 
 import { createOverlayComponent } from './createOverlayComponent';

@@ -1,11 +1,10 @@
 import type { JSX } from '@ionic/core/components';
-
-import { IonRouterLink as IonRouterLinkCmp } from '@ionic/core/components/ion-router-link.js';
 import { IonButton as IonButtonCmp } from '@ionic/core/components/ion-button.js';
 import { IonCard as IonCardCmp } from '@ionic/core/components/ion-card.js';
 import { IonFabButton as IonFabButtonCmp } from '@ionic/core/components/ion-fab-button.js';
-import { IonItem as IonItemCmp } from '@ionic/core/components/ion-item.js';
 import { IonItemOption as IonItemOptionCmp } from '@ionic/core/components/ion-item-option.js';
+import { IonItem as IonItemCmp } from '@ionic/core/components/ion-item.js';
+import { IonRouterLink as IonRouterLinkCmp } from '@ionic/core/components/ion-router-link.js';
 
 import { createRoutingComponent } from './createRoutingComponent';
 import { HrefProps } from './hrefprops';
