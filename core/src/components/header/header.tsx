@@ -1,8 +1,10 @@
 import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { inheritAttributes } from '../../utils/helpers';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -20,7 +22,7 @@ export class Header implements ComponentInterface {
   private contentScrollCallback?: any;
   private intersectionObserver?: any;
   private collapsibleMainHeader?: HTMLElement;
-  private role?: string;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
 
@@ -43,9 +45,7 @@ export class Header implements ComponentInterface {
   @Prop() translucent = false;
 
   componentWillLoad() {
-    const { el } = this;
-
-    this.role = el.hasAttribute('role') ? el.getAttribute('role')! : 'banner';
+    this.inheritedAttributes = inheritAttributes(this.el, ['role']);
   }
 
   async componentDidLoad() {
@@ -150,12 +150,13 @@ export class Header implements ComponentInterface {
   }
 
   render() {
-    const { translucent, role } = this;
+    const { translucent, inheritedAttributes } = this;
     const mode = getIonMode(this);
     const collapse = this.collapse || 'none';
+
     return (
       <Host
-        role={role}
+        role="banner"
         class={{
           [mode]: true,
 
@@ -166,6 +167,7 @@ export class Header implements ComponentInterface {
           [`header-collapse-${collapse}`]: true,
           [`header-translucent-${mode}`]: this.translucent,
         }}
+        {...inheritedAttributes}
       >
         { mode === 'ios' && translucent &&
           <div class="header-background"></div>
