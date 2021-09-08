@@ -140,6 +140,10 @@ export namespace Components {
          */
         "present": () => Promise<void>;
         /**
+          * The ARIA role of the alert. When unset, the role defaults to 'alertdialog' if the alert contains inputs and 'alert' if it does not.
+         */
+        "role"?: string;
+        /**
           * The subtitle in the heading of the alert. Displayed under the title.
          */
         "subHeader"?: string;
@@ -2599,6 +2603,10 @@ export namespace Components {
          */
         "present": () => Promise<void>;
         /**
+          * The ARIA role of the toast. When unset, the role defaults to 'dialog' if the toast contains buttons and 'status' if it does not.
+         */
+        "role"?: string;
+        /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
@@ -3446,6 +3454,10 @@ declare namespace LocalJSX {
          */
         "onIonAlertWillPresent"?: (event: CustomEvent<void>) => void;
         "overlayIndex": number;
+        /**
+          * The ARIA role of the alert. When unset, the role defaults to 'alertdialog' if the alert contains inputs and 'alert' if it does not.
+         */
+        "role"?: string;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
          */
@@ -5931,6 +5943,10 @@ declare namespace LocalJSX {
           * The position of the toast on the screen.
          */
         "position"?: 'top' | 'bottom' | 'middle';
+        /**
+          * The ARIA role of the toast. When unset, the role defaults to 'dialog' if the toast contains buttons and 'status' if it does not.
+         */
+        "role"?: string;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */

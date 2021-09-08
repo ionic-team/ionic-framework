@@ -111,6 +111,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * The ARIA role of the alert. When unset, the role defaults
+   * to 'alertdialog' if the alert contains inputs and 'alert' if it does not.
+   */
+  @Prop() role?: string;
+
+  /**
    * Emitted after the alert has presented.
    */
   @Event({ eventName: 'ionAlertDidPresent' }) didPresent!: EventEmitter<void>;
@@ -555,10 +561,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
+    const role = this.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
 
     return (
       <Host
-        role="dialog"
+        role={role}
+        aria-labelledby={header !== undefined ? hdrId : null}
+        aria-describedby={msgId}
         aria-modal="true"
         tabindex="-1"
         style={{

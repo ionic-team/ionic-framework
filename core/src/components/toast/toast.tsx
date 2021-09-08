@@ -107,6 +107,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * The ARIA role of the toast. When unset, the role defaults
+   * to 'dialog' if the toast contains buttons and 'status' if it does not.
+   */
+  @Prop() role?: string;
+
+  /**
    * Emitted after the toast has presented.
    */
   @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
@@ -263,6 +269,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
+    const hdrId = `toast-${this.overlayIndex}-hdr`;
+    const msgId = `toast-${this.overlayIndex}-msg`;
+    const role = this.role || (allButtons.length > 0 ? 'dialog' : 'status');
 
     return (
       <Host
@@ -278,15 +287,21 @@ export class Toast implements ComponentInterface, OverlayInterface {
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
         <div class={wrapperClass}>
-          <div class="toast-container" part="container">
+          <div
+            class="toast-container"
+            part="container"
+            role={role}
+            aria-labelledby={this.header !== undefined ? hdrId : null}
+            aria-describedby={this.message !== undefined ? msgId : null}
+          >
             {this.renderButtons(startButtons, 'start')}
 
             <div class="toast-content">
               {this.header !== undefined &&
-                <div class="toast-header" part="header">{this.header}</div>
+                <div id={hdrId} class="toast-header" part="header">{this.header}</div>
               }
               {this.message !== undefined &&
-                <div class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
+                <div id={msgId} class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
               }
             </div>
 
