@@ -140,5 +140,5 @@
  * completely cover the content.
  */
 :host(.modal-sheet) {
-  --height: calc(100% - 10px);
+  --height: calc(100% - (var(--ion-safe-area-top) + 10px));
 }
