@@ -179,6 +179,11 @@ AFTER:
       console.error('Menu: must have a "content" element to listen for drag events on.');
       return;
     }
+
+    if (this.el.contains(content)) {
+      console.error(`Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`);
+    }
+
     this.contentEl = content as HTMLElement;
 
     // add menu's content classes
