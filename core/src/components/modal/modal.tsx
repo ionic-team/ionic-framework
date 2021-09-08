@@ -547,7 +547,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   render() {
     const { handle, isSheetModal, presentingElement } = this;
 
-    const showHandle = handle || isSheetModal;
+    const showHandle = handle !== false && isSheetModal;
 
     const mode = getIonMode(this);
     const { presented, modalId } = this;
