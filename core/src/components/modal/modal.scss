@@ -112,7 +112,7 @@
 // --------------------------------------------------
 
 .modal-handle {
-  @include position(14px, 0px, null, 0px);
+  @include position(5px, 0px, null, 0px);
   @include border-radius(8px, 8px, 8px, 8px);
   @include margin(null, auto, null, auto);
 
