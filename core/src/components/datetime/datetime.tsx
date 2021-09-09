@@ -885,25 +885,23 @@ export class Datetime implements ComponentInterface {
   }
 
   private initializeMonthAndYearScrollListeners = () => {
-    const { monthRef, yearRef } = this;
-    if (!yearRef || !monthRef) { return; }
-
-    const { year, month } = this.workingParts;
+    const { monthRef, yearRef, workingParts } = this;
+    const { year, month } = workingParts;
 
     /**
      * Scroll initial month and year into view.
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollTop instead.
      */
-    let activeYearEl = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`) as HTMLElement | null;
+    let activeYearEl = yearRef?.querySelector(`.picker-col-item[data-value="${year}"]`) as HTMLElement | null;
     if (activeYearEl) {
-      yearRef.scrollTop = activeYearEl.offsetTop - (activeYearEl.clientHeight * 2);
+      yearRef!.scrollTop = activeYearEl.offsetTop - (activeYearEl.clientHeight * 2);
       activeYearEl.classList.add(PICKER_COL_ACTIVE);
     }
 
-    let activeMonthEl = monthRef.querySelector(`.picker-col-item[data-value="${month}"]`) as HTMLElement | null;
+    let activeMonthEl = monthRef?.querySelector(`.picker-col-item[data-value="${month}"]`) as HTMLElement | null;
     if (activeMonthEl) {
-      monthRef.scrollTop = activeMonthEl.offsetTop - (activeMonthEl.clientHeight * 2);
+      monthRef!.scrollTop = activeMonthEl.offsetTop - (activeMonthEl.clientHeight * 2);
       activeMonthEl.classList.add(PICKER_COL_ACTIVE)
     }
 
@@ -916,6 +914,8 @@ export class Datetime implements ComponentInterface {
         }
 
         const activeCol = colType === 'month' ? monthRef : yearRef;
+        if (!activeCol) { return; }
+
         const bbox = activeCol.getBoundingClientRect();
         /**
          * Select item in the center of the column
@@ -970,14 +970,14 @@ export class Datetime implements ComponentInterface {
            */
           raf(() => {
             const { month: workingMonth, year: workingYear } = this.workingParts;
-            const monthEl = monthRef.querySelector(`.picker-col-item[data-value='${workingMonth}']`);
-            const yearEl = yearRef.querySelector(`.picker-col-item[data-value='${workingYear}']`);
+            const monthEl = monthRef?.querySelector(`.picker-col-item[data-value='${workingMonth}']`);
+            const yearEl = yearRef?.querySelector(`.picker-col-item[data-value='${workingYear}']`);
 
-            if (monthEl) {
+            if (monthEl && monthRef) {
               this.centerPickerItemInView(monthEl as HTMLElement, monthRef, 'auto');
             }
 
-            if (yearEl) {
+            if (yearEl && yearRef) {
               this.centerPickerItemInView(yearEl as HTMLElement, yearRef, 'auto');
             }
           });
@@ -992,12 +992,12 @@ export class Datetime implements ComponentInterface {
     raf(() => {
       const monthScroll = () => scrollCallback('month');
       const yearScroll = () => scrollCallback('year');
-      monthRef.addEventListener('scroll', monthScroll);
-      yearRef.addEventListener('scroll', yearScroll);
+      monthRef?.addEventListener('scroll', monthScroll);
+      yearRef?.addEventListener('scroll', yearScroll);
 
       this.destroyMonthAndYearScroll = () => {
-        monthRef.removeEventListener('scroll', monthScroll);
-        yearRef.removeEventListener('scroll', yearScroll);
+        monthRef?.removeEventListener('scroll', monthScroll);
+        yearRef?.removeEventListener('scroll', yearScroll);
       }
     });
   }
@@ -1215,14 +1215,18 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderYearView() {
+    const { presentation } = this;
     const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
+    const showMonth = presentation === 'month' || presentation === 'month-year';
+    const showYear = presentation === 'year' || presentation === 'month-year';
+
     return (
       <div class="datetime-year">
         <div class="datetime-year-body">
           <div class="datetime-picker-before"></div>
           <div class="datetime-picker-after"></div>
           <div class="datetime-picker-highlight"></div>
-          <div class="datetime-picker-col month-col" ref={el => this.monthRef = el} tabindex="0">
+          {showMonth && <div class="datetime-picker-col month-col" ref={el => this.monthRef = el} tabindex="0">
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
@@ -1238,8 +1242,8 @@ export class Datetime implements ComponentInterface {
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-          </div>
-          <div class="datetime-picker-col year-col" ref={el => this.yearRef = el} tabindex="0">
+          </div>}
+          {showYear && <div class="datetime-picker-col year-col" ref={el => this.yearRef = el} tabindex="0">
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
@@ -1255,7 +1259,7 @@ export class Datetime implements ComponentInterface {
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
             <div class="picker-col-item picker-col-item-empty">&nbsp;</div>
-          </div>
+          </div>}
         </div>
       </div>
     );
@@ -1360,10 +1364,12 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCalendar(mode: Mode) {
+    const { presentation } = this;
+    const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     return (
       <div class="datetime-calendar">
         {this.renderCalendarHeader(mode)}
-        {this.renderCalendarBody()}
+        {!isMonthAndYearPresentation && this.renderCalendarBody()}
       </div>
     )
   }
@@ -1509,17 +1515,10 @@ export class Datetime implements ComponentInterface {
           this.renderTime(mode),
           this.renderFooter()
         ]
-      case 'date':
+      default:
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderYearView(),
-          this.renderFooter()
-        ]
-      case 'year':
-      case 'month':
-      case 'month-year':
-        return [
           this.renderYearView(),
           this.renderFooter()
         ]
@@ -1529,6 +1528,8 @@ export class Datetime implements ComponentInterface {
   render() {
     const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
     const mode = getIonMode(this);
+    const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
+    const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1541,7 +1542,7 @@ export class Datetime implements ComponentInterface {
             ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
-            'show-month-and-year': showMonthAndYear,
+            'show-month-and-year': shouldShowMonthAndYear,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true
           })
