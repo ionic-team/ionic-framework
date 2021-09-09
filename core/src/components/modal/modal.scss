@@ -65,9 +65,6 @@
 .modal-shadow {
   @include border-radius(var(--border-radius));
 
-  position: absolute;
-  bottom: 0;
-
   width: var(--width);
   min-width: var(--min-width);
   max-width: var(--max-width);
@@ -141,4 +138,10 @@
  */
 :host(.modal-sheet) {
   --height: calc(100% - (var(--ion-safe-area-top) + 10px));
+}
+
+:host(.modal-sheet) .modal-wrapper,
+:host(.modal-sheet) .modal-shadow {
+  position: absolute;
+  bottom: 0;
 }
