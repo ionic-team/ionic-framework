@@ -38,14 +38,14 @@ export const createOverlayComponent = <
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
     el!: HTMLDivElement;
-
+    isDismissing: boolean = false;
+    
     constructor(props: Props) {
       super(props);
       if (typeof document !== 'undefined') {
         this.el = document.createElement('div');
       }
       this.handleDismiss = this.handleDismiss.bind(this);
-      this.isDismissing = false;
     }
 
     static get displayName() {
