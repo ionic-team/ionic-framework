@@ -38,8 +38,7 @@ export const createOverlayComponent = <
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
     el!: HTMLDivElement;
-    isDismissing: boolean = false;
-    
+    isDismissing = false;
     constructor(props: Props) {
       super(props);
       if (typeof document !== 'undefined') {
