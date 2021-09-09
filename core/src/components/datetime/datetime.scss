@@ -398,54 +398,6 @@
   @include margin(0, 10px, 0, 10px);
 }
 
-:host .datetime-picker-before {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-
-  height: 82px;
-
-  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
-
-  z-index: 10;
-
-  pointer-events: none;
-}
-
-:host .datetime-picker-after {
-  @include position(116px, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-
-  height: 115px;
-
-  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
-
-  z-index: 10;
-
-  pointer-events: none;
-}
-
-:host .datetime-picker-highlight {
-  @include position(50%, 0, 0, 0);
-  @include margin(0, auto, 0, auto);
-
-  position: absolute;
-
-  width: 100%;
-  height: 34px;
-
-  transform: translateY(-50%);
-
-  background: var(--ion-color-step-150, #eeeeef);
-
-  z-index: -1;
-}
-
 :host .datetime-year-body {
   display: flex;
 
@@ -496,11 +448,10 @@
   display: none;
 }
 
-
 :host .picker-col-item {
-  height: 34px;
+  height: 38px;
 
-  line-height: 34px;
+  line-height: 38px;
 
   scroll-snap-align: center;
 }
@@ -508,7 +459,6 @@
 :host .picker-col-item-empty {
   scroll-snap-align: none;
 }
-
 
 :host .datetime-year-body .datetime-picker-col:first-of-type {
   text-align: left;

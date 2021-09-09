@@ -895,14 +895,16 @@ export class Datetime implements ComponentInterface {
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollTop instead.
      */
-    const initialYear = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`) as HTMLElement | null;
-    if (initialYear) {
-      yearRef.scrollTop = initialYear.offsetTop - (initialYear.clientHeight * 2);
+    let activeYearEl = yearRef.querySelector(`.picker-col-item[data-value="${year}"]`) as HTMLElement | null;
+    if (activeYearEl) {
+      yearRef.scrollTop = activeYearEl.offsetTop - (activeYearEl.clientHeight * 2);
+      activeYearEl.classList.add(PICKER_COL_ACTIVE);
     }
 
-    const initialMonth = monthRef.querySelector(`.picker-col-item[data-value="${month}"]`) as HTMLElement | null;
-    if (initialMonth) {
-      monthRef.scrollTop = initialMonth.offsetTop - (initialMonth.clientHeight * 2);
+    let activeMonthEl = monthRef.querySelector(`.picker-col-item[data-value="${month}"]`) as HTMLElement | null;
+    if (activeMonthEl) {
+      monthRef.scrollTop = activeMonthEl.offsetTop - (activeMonthEl.clientHeight * 2);
+      activeMonthEl.classList.add(PICKER_COL_ACTIVE)
     }
 
     let timeout: any;
@@ -914,18 +916,29 @@ export class Datetime implements ComponentInterface {
         }
 
         const activeCol = colType === 'month' ? monthRef : yearRef;
+        const bbox = activeCol.getBoundingClientRect();
+        /**
+         * Select item in the center of the column
+         * which is the month/year that we want to select
+         */
+        const centerX = bbox.x + (bbox.width / 2);
+        const centerY = bbox.y + (bbox.height / 2);
+
+        const activeElement = this.el!.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
+        const prevActiveEl = colType === 'month' ? activeMonthEl : activeYearEl;
+        if (prevActiveEl !== null) {
+          prevActiveEl.classList.remove(PICKER_COL_ACTIVE);
+        }
+
+        if (colType === 'month') {
+          activeMonthEl = activeElement;
+        } else if (colType === 'year') {
+          activeYearEl = activeElement;
+        }
+
+        activeElement.classList.add(PICKER_COL_ACTIVE);
+
         timeout = setTimeout(() => {
-
-          const bbox = activeCol.getBoundingClientRect();
-
-          /**
-           * Select item in the center of the column
-           * which is the month/year that we want to select
-           */
-          const centerX = bbox.x + (bbox.width / 2);
-          const centerY = bbox.y + (bbox.height / 2);
-
-          const activeElement = this.el!.shadowRoot!.elementFromPoint(centerX, centerY)!;
           const dataValue = activeElement.getAttribute('data-value');
 
           /**
@@ -1541,3 +1554,4 @@ export class Datetime implements ComponentInterface {
 }
 
 let datetimeIds = 0;
+const PICKER_COL_ACTIVE = 'picker-col-item-active';

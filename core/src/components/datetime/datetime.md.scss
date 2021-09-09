@@ -150,6 +150,17 @@
   background: var(--background-checked);
 }
 
+// Month and Year
+// -----------------------------------
+:host .datetime-picker-col {
+  @include border-radius($datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius);
+  @include padding(null, $datetime-md-wheel-padding, null, $datetime-md-wheel-padding);
+}
+
+:host .picker-col-item {
+  font-size: 20px;
+}
+
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
@@ -164,4 +175,8 @@
 
 :host .datetime-view-buttons ion-button {
   color: $text-color-step-200;
+}
+
+:host .picker-col-item-active {
+  color: current-color(base);
 }
