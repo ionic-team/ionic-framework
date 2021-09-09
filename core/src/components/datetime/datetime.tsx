@@ -188,7 +188,7 @@ export class Datetime implements ComponentInterface {
    * AM/PM. `'date-time'` will show the date picker first and time picker second.
    * `'time-date'` will show the time picker first and date picker second.
    */
-  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' = 'date-time';
+  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year' = 'date-time';
 
   /**
    * The text to display on the picker's cancel button.
