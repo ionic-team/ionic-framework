@@ -11,7 +11,7 @@ test('modal:rtl: sheet', async () => {
   await testModal(DIRECTORY, '#sheet-modal', true);
 });
 
-test.only('modal - open', async () => {
+test('modal - open', async () => {
   const screenshotCompares = [];
   const page = await newE2EPage({ url: '/src/components/modal/test/sheet?ionic:_testing=true' });
 
