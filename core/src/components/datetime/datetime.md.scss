@@ -161,6 +161,16 @@
   font-size: 20px;
 }
 
+/**
+ * Add some margin when only selecting month/year
+ * otherwise layout will too constricted.
+ */
+:host(.datetime-presentation-month) .datetime-year,
+:host(.datetime-presentation-year) .datetime-year,
+:host(.datetime-presentation-month-year) .datetime-year {
+  @include margin(20px, null, 20px, null);
+}
+
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
