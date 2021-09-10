@@ -1217,8 +1217,8 @@ export class Datetime implements ComponentInterface {
   private renderYearView() {
     const { presentation } = this;
     const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
-    const showMonth = presentation === 'month' || presentation === 'month-year';
-    const showYear = presentation === 'year' || presentation === 'month-year';
+    const showMonth = presentation !== 'year';
+    const showYear = presentation !== 'month';
 
     return (
       <div class="datetime-year">
@@ -1268,18 +1268,21 @@ export class Datetime implements ComponentInterface {
   private renderCalendarHeader(mode: Mode) {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
+    const { presentation } = this;
+    const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
+    const monthAndYearCallback = isMonthAndYearPresentation ? undefined : () => this.toggleMonthAndYearView();
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
+            <ion-item button={!isMonthAndYearPresentation} detail={false} lines="none" onClick={monthAndYearCallback}>
               <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
+                {getMonthAndYear(this.locale, this.workingParts)} {!isMonthAndYearPresentation && <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>}
               </ion-label>
             </ion-item>
           </div>
 
-          <div class="calendar-next-prev">
+          {!isMonthAndYearPresentation && <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button onClick={() => this.prevMonth()}>
                 <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
@@ -1288,13 +1291,13 @@ export class Datetime implements ComponentInterface {
                 <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
               </ion-button>
             </ion-buttons>
-          </div>
+          </div>}
         </div>
-        <div class="calendar-days-of-week">
+        {!isMonthAndYearPresentation && <div class="calendar-days-of-week">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map(d => {
             return <div class="day-of-week">{d}</div>
           })}
-        </div>
+        </div>}
       </div>
     )
   }
