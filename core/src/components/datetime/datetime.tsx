@@ -951,16 +951,35 @@ export class Datetime implements ComponentInterface {
           }
 
           const value = parseInt(dataValue, 10);
+          const { presentation } = this;
           if (colType === 'month') {
             this.setWorkingParts({
               ...this.workingParts,
               month: value
             });
+
+            /**
+             * If developers are only selecting month/month-year
+             * then we need to call ionChange as they will
+             * not be selecting dates too.
+             */
+            if (presentation === 'month' || presentation === 'month-year') {
+              this.setActiveParts({
+                ...this.activeParts,
+                month: value
+              });
+            }
           } else {
             this.setWorkingParts({
               ...this.workingParts,
               year: value
             });
+            if (presentation === 'year' || presentation === 'month-year') {
+              this.setActiveParts({
+                ...this.activeParts,
+                year: value
+              });
+            }
           }
 
           /**
