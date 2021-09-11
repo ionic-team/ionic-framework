@@ -1,4 +1,5 @@
 import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+import { PlatformDetectionConfig } from './platform';
 
 export interface IonicConfig {
   /**
@@ -174,6 +175,11 @@ export interface IonicConfig {
    * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
    */
   sanitizerEnabled?: boolean;
+
+  /**
+   * Overrides the default platform detection methods.
+   */
+  platformDetection?: PlatformDetectionConfig;
 
   // PRIVATE configs
   keyboardHeight?: number;
