@@ -161,6 +161,14 @@
   font-size: 18px;
 }
 
+:host .datetime-picker-before {
+  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
+}
+
+:host .datetime-picker-after {
+  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
+}
+
 /**
  * Add some margin when only selecting month/year
  * otherwise layout will too constricted.
