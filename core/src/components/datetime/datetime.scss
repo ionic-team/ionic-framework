@@ -19,7 +19,9 @@
   overflow: hidden;
 }
 
-:host(:not(.datetime-presentation-time)) {
+:host(.datetime-presentation-date-time),
+:host(.datetime-presentation-time-date),
+:host(.datetime-presentation-date) {
   height: 100%;
 }
 

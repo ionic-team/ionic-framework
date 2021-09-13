@@ -1287,21 +1287,18 @@ export class Datetime implements ComponentInterface {
   private renderCalendarHeader(mode: Mode) {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
-    const { presentation } = this;
-    const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
-    const monthAndYearCallback = isMonthAndYearPresentation ? undefined : () => this.toggleMonthAndYearView();
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button={!isMonthAndYearPresentation} detail={false} lines="none" onClick={monthAndYearCallback}>
+            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)} {!isMonthAndYearPresentation && <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>}
+                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>
 
-          {!isMonthAndYearPresentation && <div class="calendar-next-prev">
+          <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button onClick={() => this.prevMonth()}>
                 <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
@@ -1310,13 +1307,13 @@ export class Datetime implements ComponentInterface {
                 <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
               </ion-button>
             </ion-buttons>
-          </div>}
+          </div>
         </div>
-        {!isMonthAndYearPresentation && <div class="calendar-days-of-week">
+        <div class="calendar-days-of-week">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map(d => {
             return <div class="day-of-week">{d}</div>
           })}
-        </div>}
+        </div>
       </div>
     )
   }
@@ -1386,12 +1383,10 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCalendar(mode: Mode) {
-    const { presentation } = this;
-    const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     return (
       <div class="datetime-calendar">
         {this.renderCalendarHeader(mode)}
-        {!isMonthAndYearPresentation && this.renderCalendarBody()}
+        {this.renderCalendarBody()}
       </div>
     )
   }
@@ -1535,6 +1530,13 @@ export class Datetime implements ComponentInterface {
       case 'time':
         return [
           this.renderTime(mode),
+          this.renderFooter()
+        ]
+      case 'month':
+      case 'month-year':
+      case 'year':
+        return [
+          this.renderYearView(),
           this.renderFooter()
         ]
       default:
