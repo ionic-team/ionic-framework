@@ -469,3 +469,13 @@
 :host .datetime-year-body .datetime-picker-col:last-of-type {
   text-align: right;
 }
+
+/**
+ * Adding :last-of-type is needed here so that
+ * we can achieve higher specificity than the
+ * previous selectors and avoid using !important.
+ */
+:host(.datetime-presentation-year) .datetime-picker-col:last-of-type,
+:host(.datetime-presentation-month) .datetime-picker-col:last-of-type {
+  text-align: center;
+}
