@@ -64,6 +64,7 @@ export const config: Config = {
   outputTargets: [
     reactOutputTarget({
       componentCorePackage: '@ionic/core',
+      includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
       proxiesFile: '../packages/react/src/components/proxies.ts',

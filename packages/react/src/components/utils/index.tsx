@@ -3,7 +3,7 @@ import {
   Platforms,
   getPlatforms as getPlatformsCore,
   isPlatform as isPlatformCore,
-} from '@ionic/core';
+} from '@ionic/core/components';
 import React from 'react';
 
 import { IonicReactProps } from '../IonicReactProps';

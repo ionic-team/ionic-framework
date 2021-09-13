@@ -4,6 +4,7 @@ import {
   attachProps,
   createForwardRef,
   dashToPascalCase,
+  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
 } from './utils';
@@ -24,14 +25,16 @@ export const createReactComponent = <
   ExpandedPropsTypes = {}
 >(
   tagName: string,
+  customElement?: any,
   ReactComponentContext?: React.Context<ContextStateType>,
   manipulatePropsFunction?: (
     originalProps: StencilReactInternalProps<ElementType>,
     propsToPass: any,
   ) => ExpandedPropsTypes,
 ) => {
-  const displayName = dashToPascalCase(tagName);
+  defineCustomElement(tagName, customElement);
 
+  const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<StencilReactInternalProps<ElementType>> {
     componentEl!: ElementType;
 

@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
@@ -9,12 +9,11 @@ import {
   attachProps,
   camelToDashCase,
   dashToPascalCase,
+  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
 } from './react-component-lib/utils';
-import {
-  createForwardRef
-} from './utils';
+import { createForwardRef } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
@@ -27,8 +26,11 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 }
 
 export const createRoutingComponent = <PropType, ElementType>(
-  tagName: string
+  tagName: string,
+  customElement?: any
 ) => {
+  defineCustomElement(tagName, customElement);
+
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;

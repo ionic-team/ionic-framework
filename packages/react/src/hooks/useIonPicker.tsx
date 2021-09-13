@@ -3,7 +3,7 @@ import {
   PickerColumn,
   PickerOptions,
   pickerController,
-} from '@ionic/core';
+} from '@ionic/core/components';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
