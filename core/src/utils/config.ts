@@ -1,5 +1,6 @@
 import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
-import { PlatformDetectionConfig } from './platform';
+
+import type { PlatformDetectionConfig } from './platform';
 
 export interface IonicConfig {
   /**
