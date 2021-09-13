@@ -8,6 +8,7 @@ import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safe
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
+import { AlertAttributes } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -111,10 +112,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * The ARIA role of the alert. When unset, the role defaults
-   * to 'alertdialog' if the alert contains inputs and 'alert' if it does not.
+   * Additional attributes to pass to the alert.
    */
-  @Prop() role?: string;
+  @Prop() additionalAttributes?: AlertAttributes;
 
   /**
    * Emitted after the alert has presented.
@@ -556,12 +556,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { overlayIndex, header, subHeader } = this;
+    const { overlayIndex, header, subHeader, additionalAttributes } = this;
     const mode = getIonMode(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
-    const role = this.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
+    const role = additionalAttributes?.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
 
     return (
       <Host
@@ -580,6 +580,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         }}
         onIonAlertWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
+        {...additionalAttributes as any}
       >
 
         <ion-backdrop tappable={this.backdropDismiss}/>

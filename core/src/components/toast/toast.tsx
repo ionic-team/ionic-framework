@@ -10,6 +10,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { ToastAttributes } from './toast-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -107,10 +108,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * The ARIA role of the toast. When unset, the role defaults
-   * to 'dialog' if the toast contains buttons and 'status' if it does not.
+   * Additional attributes to pass to the toast.
    */
-  @Prop() role?: string;
+  @Prop() additionalAttributes?: ToastAttributes;
 
   /**
    * Emitted after the toast has presented.
@@ -271,7 +271,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     };
     const hdrId = `toast-${this.overlayIndex}-hdr`;
     const msgId = `toast-${this.overlayIndex}-msg`;
-    const role = this.role || (allButtons.length > 0 ? 'dialog' : 'status');
+    const role = this.additionalAttributes?.role || (allButtons.length > 0 ? 'dialog' : 'status');
 
     return (
       <Host
@@ -285,14 +285,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
         })}
         tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
+        role={role}
+        aria-labelledby={this.header !== undefined ? hdrId : null}
+        aria-describedby={this.message !== undefined ? msgId : null}
+        {...this.additionalAttributes as any}
       >
         <div class={wrapperClass}>
           <div
             class="toast-container"
             part="container"
-            role={role}
-            aria-labelledby={this.header !== undefined ? hdrId : null}
-            aria-describedby={this.message !== undefined ? msgId : null}
           >
             {this.renderButtons(startButtons, 'start')}
 

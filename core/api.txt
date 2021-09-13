@@ -44,6 +44,7 @@ ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
 ion-alert,scoped
+ion-alert,prop,additionalAttributes,AlertAttributes | undefined,undefined,false,false
 ion-alert,prop,animated,boolean,true,false,false
 ion-alert,prop,backdropDismiss,boolean,true,false,false
 ion-alert,prop,buttons,(string | AlertButton)[],[],false,false
@@ -55,7 +56,6 @@ ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-alert,prop,mode,"ios" | "md",undefined,false,false
-ion-alert,prop,role,string | undefined,undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
 ion-alert,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
@@ -1262,6 +1262,7 @@ ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow
+ion-toast,prop,additionalAttributes,ToastAttributes | undefined,undefined,false,false
 ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,true
@@ -1274,7 +1275,6 @@ ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
-ion-toast,prop,role,string | undefined,undefined,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>

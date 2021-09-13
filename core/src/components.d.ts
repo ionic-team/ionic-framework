@@ -7,8 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
+import { AlertAttributes } from "./components/alert/alert-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
+import { ToastAttributes } from "./components/toast/toast-interface";
 export namespace Components {
     interface IonActionSheet {
         /**
@@ -77,6 +79,10 @@ export namespace Components {
     }
     interface IonAlert {
         /**
+          * Additional attributes to pass to the alert.
+         */
+        "additionalAttributes"?: AlertAttributes;
+        /**
           * If `true`, the alert will animate.
          */
         "animated": boolean;
@@ -139,10 +145,6 @@ export namespace Components {
           * Present the alert overlay after it has been created.
          */
         "present": () => Promise<void>;
-        /**
-          * The ARIA role of the alert. When unset, the role defaults to 'alertdialog' if the alert contains inputs and 'alert' if it does not.
-         */
-        "role"?: string;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
          */
@@ -2536,6 +2538,10 @@ export namespace Components {
     }
     interface IonToast {
         /**
+          * Additional attributes to pass to the toast.
+         */
+        "additionalAttributes"?: ToastAttributes;
+        /**
           * If `true`, the toast will animate.
          */
         "animated": boolean;
@@ -2602,10 +2608,6 @@ export namespace Components {
           * Present the toast overlay after it has been created.
          */
         "present": () => Promise<void>;
-        /**
-          * The ARIA role of the toast. When unset, the role defaults to 'dialog' if the toast contains buttons and 'status' if it does not.
-         */
-        "role"?: string;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -3394,6 +3396,10 @@ declare namespace LocalJSX {
     }
     interface IonAlert {
         /**
+          * Additional attributes to pass to the alert.
+         */
+        "additionalAttributes"?: AlertAttributes;
+        /**
           * If `true`, the alert will animate.
          */
         "animated"?: boolean;
@@ -3454,10 +3460,6 @@ declare namespace LocalJSX {
          */
         "onIonAlertWillPresent"?: (event: CustomEvent<void>) => void;
         "overlayIndex": number;
-        /**
-          * The ARIA role of the alert. When unset, the role defaults to 'alertdialog' if the alert contains inputs and 'alert' if it does not.
-         */
-        "role"?: string;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
          */
@@ -5879,6 +5881,10 @@ declare namespace LocalJSX {
     }
     interface IonToast {
         /**
+          * Additional attributes to pass to the toast.
+         */
+        "additionalAttributes"?: ToastAttributes;
+        /**
           * If `true`, the toast will animate.
          */
         "animated"?: boolean;
@@ -5943,10 +5949,6 @@ declare namespace LocalJSX {
           * The position of the toast on the screen.
          */
         "position"?: 'top' | 'bottom' | 'middle';
-        /**
-          * The ARIA role of the toast. When unset, the role defaults to 'dialog' if the toast contains buttons and 'status' if it does not.
-         */
-        "role"?: string;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
