@@ -201,6 +201,11 @@ export class Datetime implements ComponentInterface {
   @Prop() doneText = 'Done';
 
   /**
+   * The text to display on the picker's "Clear" button.
+   */
+  @Prop() clearText = 'Clear';
+
+  /**
    * Values used to create the list of selectable years. By default
    * the year values range between the `min` and `max` datetime inputs. However, to
    * control exactly which years to display, the `yearValues` input can take a number, an array
@@ -315,6 +320,16 @@ export class Datetime implements ComponentInterface {
   @Prop() showDefaultButtons = false;
 
   /**
+   * If `true`, a "Clear" button will be rendered alongside
+   * the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime`
+   * component. Developers can also use the `button` slot
+   * if they want to customize these buttons. If custom
+   * buttons are set in the `button` slot then the
+   * default buttons will not be rendered.
+   */
+  @Prop() showClearButton = false;
+
+  /**
    * If `true`, the default "Time" label will be rendered
    * for the time selector of the `ion-datetime` component.
    * Developers can also use the `time-label` slot
@@ -392,7 +407,7 @@ export class Datetime implements ComponentInterface {
    * Resets the internal state of the datetime
    * but does not update the value. Passing a value
    * ISO-8601 string will reset the state of
-   * te component to the provided date.
+   * the component to the provided date.
    */
   @Method()
   async reset(value?: string) {
@@ -412,6 +427,16 @@ export class Datetime implements ComponentInterface {
     if (closeOverlay) {
       this.closeParentOverlay();
     }
+  }
+
+  /**
+   * Resets the internal state of the datetime
+   * and updates the value to `undefined`.
+   */
+  @Method()
+  async clear() {
+    this.reset();
+    this.value = undefined;
   }
 
   private closeParentOverlay = () => {
@@ -1181,10 +1206,11 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-footer">
         <div class="datetime-buttons">
-          <div class="datetime-action-buttons">
+          <div class={`datetime-action-buttons ${this.showClearButton ? 'has-clear-button' : ''}`}>
             <slot name="buttons">
               <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
+                {this.showClearButton && <ion-button color={this.color} onClick={() => this.clear()}>{this.clearText}</ion-button>}
                 <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
               </ion-buttons>
             </slot>

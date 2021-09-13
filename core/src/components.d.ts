@@ -709,6 +709,14 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * Resets the internal state of the datetime and updates the value to `undefined`.
+         */
+        "clear": () => Promise<void>;
+        /**
+          * The text to display on the picker's "Clear" button.
+         */
+        "clearText": string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -777,9 +785,13 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the internal state of the datetime but does not update the value. Passing a value ISO-8601 string will reset the state of te component to the provided date.
+          * Resets the internal state of the datetime but does not update the value. Passing a value ISO-8601 string will reset the state of the component to the provided date.
          */
         "reset": (value?: string | undefined) => Promise<void>;
+        /**
+          * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
+         */
+        "showClearButton": boolean;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
@@ -4301,6 +4313,10 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
+          * The text to display on the picker's "Clear" button.
+         */
+        "clearText"?: string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -4384,6 +4400,10 @@ declare namespace LocalJSX {
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly"?: boolean;
+        /**
+          * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
+         */
+        "showClearButton"?: boolean;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
