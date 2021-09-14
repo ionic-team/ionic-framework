@@ -28,5 +28,4 @@ export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
-  sortedBreakpoints: number[];
 }
