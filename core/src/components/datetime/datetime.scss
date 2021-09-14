@@ -19,7 +19,9 @@
   overflow: hidden;
 }
 
-:host(:not(.datetime-presentation-time)) {
+:host(.datetime-presentation-date-time),
+:host(.datetime-presentation-time-date),
+:host(.datetime-presentation-date) {
   height: 100%;
 }
 
@@ -386,4 +388,126 @@
 
 :host(.in-item) {
   position: static;
+}
+
+// Year Picker
+// -----------------------------------
+:host(.show-month-and-year) .calendar-action-buttons ion-item {
+  --color: #{current-color(base)};
+}
+
+:host .datetime-year-body .datetime-picker-col {
+  @include margin(0, 10px, 0, 10px);
+}
+
+:host .datetime-picker-before {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 82px;
+
+  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.7) 100%);
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+:host .datetime-picker-after {
+  @include position(116px, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 115px;
+
+  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.7) 100%);
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+:host .datetime-year-body {
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 22px;
+
+  /**
+   * This is required otherwise the
+   * highlight will appear behind
+   * the datetime.
+   */
+  z-index: 0;
+}
+
+:host .datetime-picker-col {
+  scroll-snap-type: y mandatory;
+
+  /**
+   * Need to explicitly set overflow-x: hidden
+   * for older implementations of scroll snapping.
+   */
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  // Hide scrollbars on Firefox
+  scrollbar-width: none;
+
+  height: 200px;
+
+  outline: none;
+}
+
+@media (any-hover: hover) {
+  :host .datetime-picker-col:focus {
+    background: current-color(base, 0.2);
+  }
+}
+
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+:host .datetime-picker-col::-webkit-scrollbar {
+  display: none;
+}
+
+:host .picker-col-item {
+  height: 38px;
+
+  line-height: 38px;
+
+  scroll-snap-align: center;
+}
+
+:host .picker-col-item-empty {
+  scroll-snap-align: none;
+}
+
+:host .datetime-year-body .datetime-picker-col:first-of-type {
+  text-align: left;
+}
+
+:host .datetime-year-body .datetime-picker-col:last-of-type {
+  text-align: right;
+}
+
+/**
+ * Adding :last-of-type is needed here so that
+ * we can achieve higher specificity than the
+ * previous selectors and avoid using !important.
+ */
+:host(.datetime-presentation-year) .datetime-picker-col:last-of-type,
+:host(.datetime-presentation-month) .datetime-picker-col:last-of-type {
+  text-align: center;
 }
