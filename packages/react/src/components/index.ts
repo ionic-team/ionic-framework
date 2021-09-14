@@ -35,6 +35,7 @@ export {
   NavComponentWithProps,
   setupConfig,
   IonicSwiper,
+  PlatformConfig,
 
   SpinnerTypes,
 
