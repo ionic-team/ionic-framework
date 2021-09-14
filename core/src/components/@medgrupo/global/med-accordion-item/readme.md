@@ -33,6 +33,16 @@
 | `"progress"` | Slot destinado a progress-bar.                                      |
 
 
+## CSS Custom Properties
+
+| Name                   | Description                                         |
+| ---------------------- | --------------------------------------------------- |
+| `--background-content` | Define a cor de background do conteudo componente.  |
+| `--background-header`  | Define a cor de background do header do componente. |
+| `--border-radius`      | Define o border-radius do componente.               |
+| `--icon-color`         | Define a cor de do icone do componente.             |
+
+
 ## Dependencies
 
 ### Depends on

@@ -293,6 +293,13 @@ export default defineComponent({
 | `position` | `position` | The position determines where and how the label behaves inside an item.                                                                                                                                                                                                | `"fixed" \| "floating" \| "stacked" \| undefined` | `undefined` |
 
 
+## CSS Custom Properties
+
+| Name      | Description        |
+| --------- | ------------------ |
+| `--color` | Color of the label |
+
+
 ## Dependencies
 
 ### Used by

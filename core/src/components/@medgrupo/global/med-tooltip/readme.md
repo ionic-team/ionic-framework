@@ -31,6 +31,14 @@ Type: `Promise<void>`
 
 
 
+## CSS Custom Properties
+
+| Name           | Description                          |
+| -------------- | ------------------------------------ |
+| `--background` | Define a cor da borda do componente. |
+| `--z-index`    | Define o z-index do componente.      |
+
+
 ## Dependencies
 
 ### Used by

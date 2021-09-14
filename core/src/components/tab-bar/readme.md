@@ -169,7 +169,7 @@ export default defineComponent({
 
 | Event       | Description | Type                                   |
 | ----------- | ----------- | -------------------------------------- |
-| `medResize` |             | `CustomEvent<TabBarResizeEventDetail>` |
+| `medResize` | TODO        | `CustomEvent<TabBarResizeEventDetail>` |
 
 
 ## CSS Custom Properties

@@ -27,6 +27,15 @@ Type: `Promise<void>`
 
 
 
+## CSS Custom Properties
+
+| Name           | Description                                          |
+| -------------- | ---------------------------------------------------- |
+| `--background` | Define a cor de background do componente.            |
+| `--color`      | Define a cor do componente.                          |
+| `--lines`      | Define o número de linhas visíveis com reticiências. |
+
+
 ## Dependencies
 
 ### Depends on

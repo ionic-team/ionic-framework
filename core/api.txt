@@ -392,6 +392,29 @@ ion-fab-button,prop,translucent,boolean,false,false,false
 ion-fab-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-fab-button,event,ionBlur,void,true
 ion-fab-button,event,ionFocus,void,true
+ion-fab-button,css-prop,--background
+ion-fab-button,css-prop,--background-activated
+ion-fab-button,css-prop,--background-activated-opacity
+ion-fab-button,css-prop,--background-focused
+ion-fab-button,css-prop,--background-focused-opacity
+ion-fab-button,css-prop,--background-hover
+ion-fab-button,css-prop,--background-hover-opacity
+ion-fab-button,css-prop,--border-color
+ion-fab-button,css-prop,--border-radius
+ion-fab-button,css-prop,--border-style
+ion-fab-button,css-prop,--border-width
+ion-fab-button,css-prop,--box-shadow
+ion-fab-button,css-prop,--close-icon-font-size
+ion-fab-button,css-prop,--color
+ion-fab-button,css-prop,--color-activated
+ion-fab-button,css-prop,--color-focused
+ion-fab-button,css-prop,--color-hover
+ion-fab-button,css-prop,--padding-bottom
+ion-fab-button,css-prop,--padding-end
+ion-fab-button,css-prop,--padding-start
+ion-fab-button,css-prop,--padding-top
+ion-fab-button,css-prop,--ripple-color
+ion-fab-button,css-prop,--transition
 ion-fab-button,part,close-icon
 ion-fab-button,part,native
 
@@ -591,6 +614,7 @@ ion-label,prop,color,string | undefined,undefined,false,false
 ion-label,prop,dsName,"helper" | "stacked" | undefined,undefined,false,false
 ion-label,prop,mode,"ios" | "md",undefined,false,false
 ion-label,prop,position,"fixed" | "floating" | "stacked" | undefined,undefined,false,false
+ion-label,css-prop,--color
 
 ion-list,none
 ion-list,prop,inset,boolean,false,false,false
@@ -819,6 +843,15 @@ ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,css-prop,--backdrop-opacity
+ion-popover,css-prop,--background
+ion-popover,css-prop,--box-shadow
+ion-popover,css-prop,--height
+ion-popover,css-prop,--max-height
+ion-popover,css-prop,--max-width
+ion-popover,css-prop,--min-height
+ion-popover,css-prop,--min-width
+ion-popover,css-prop,--width
 
 ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false
@@ -994,6 +1027,17 @@ ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
 ion-searchbar,event,ionInput,KeyboardEvent,true
+ion-searchbar,css-prop,--background
+ion-searchbar,css-prop,--border-radius
+ion-searchbar,css-prop,--box-shadow
+ion-searchbar,css-prop,--cancel-button-color
+ion-searchbar,css-prop,--clear-button-color
+ion-searchbar,css-prop,--color
+ion-searchbar,css-prop,--icon-color
+ion-searchbar,css-prop,--placeholder-color
+ion-searchbar,css-prop,--placeholder-font-style
+ion-searchbar,css-prop,--placeholder-font-weight
+ion-searchbar,css-prop,--placeholder-opacity
 
 ion-segment,shadow
 ion-segment,prop,color,string | undefined,undefined,false,false
@@ -1356,6 +1400,10 @@ med-accordion-item,prop,dsColor,string | undefined,undefined,false,true
 med-accordion-item,prop,icon,"left" | "right" | undefined,undefined,false,true
 med-accordion-item,prop,noBorder,boolean,false,false,true
 med-accordion-item,event,toggle,any,true
+med-accordion-item,css-prop,--background-content
+med-accordion-item,css-prop,--background-header
+med-accordion-item,css-prop,--border-radius
+med-accordion-item,css-prop,--icon-color
 
 med-accordion-list,shadow
 med-accordion-list,prop,margin,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
@@ -1369,6 +1417,7 @@ med-agrupador,shadow
 med-agrupador,prop,collapsed,boolean,true,false,true
 med-agrupador,prop,dsColor,string | undefined,undefined,false,true
 med-agrupador,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-agrupador,css-prop,--color
 
 med-alternativas,shadow
 med-alternativas,prop,alternativaSelecionada,string,undefined,true,true
@@ -1477,6 +1526,9 @@ med-config,prop,opcoes,MedConfigInterface,undefined,true,false
 med-context-menu,shadow
 med-context-menu,prop,collapsed,boolean,true,false,true
 med-context-menu,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-context-menu,css-prop,--background
+med-context-menu,css-prop,--color
+med-context-menu,css-prop,--z-index
 
 med-divider,shadow
 med-divider,prop,dsColor,string | undefined,undefined,false,false
@@ -1582,6 +1634,9 @@ med-question,prop,collapsed,boolean,false,false,true
 med-question,prop,dsColor,string | undefined,undefined,false,true
 med-question,prop,texto,string | undefined,undefined,false,false
 med-question,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-question,css-prop,--background
+med-question,css-prop,--color
+med-question,css-prop,--lines
 
 med-rate-bar,shadow
 med-rate-bar,prop,dsColor,string | undefined,undefined,false,true
@@ -1649,6 +1704,8 @@ med-tooltip,prop,placement,"bottom" | "left" | "right" | "top" | undefined,undef
 med-tooltip,prop,position,"center" | "end" | "start" | undefined,undefined,false,true
 med-tooltip,prop,titulo,string | undefined,undefined,false,true
 med-tooltip,method,toggle,toggle(event?: Event | undefined) => Promise<void>
+med-tooltip,css-prop,--background
+med-tooltip,css-prop,--z-index
 
 med-vote,shadow
 med-vote,prop,like,number,0,false,false

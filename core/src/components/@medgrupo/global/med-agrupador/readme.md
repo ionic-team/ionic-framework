@@ -26,6 +26,13 @@ Type: `Promise<void>`
 
 
 
+## CSS Custom Properties
+
+| Name      | Description                 |
+| --------- | --------------------------- |
+| `--color` | Define a cor do componente. |
+
+
 ## Dependencies
 
 ### Depends on
