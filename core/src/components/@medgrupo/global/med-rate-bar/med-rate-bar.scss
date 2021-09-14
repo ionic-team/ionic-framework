@@ -6,14 +6,13 @@
   --font-size: #{$med-font-size-xs};
   --font-weight: #{$med-font-weight-semibold};
   --line-height: #{$med-line-height-compressed};
-  --color: #{$med-color-neutral-dark-10};
 
   padding: var(--spacing);
   background: var(--background);
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   line-height: var(--line-height);
-  color: var(--color);
+  color: #{$med-color-neutral-dark-10};
 
   display: flex;
   justify-content: space-between;

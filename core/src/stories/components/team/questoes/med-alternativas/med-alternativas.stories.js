@@ -54,7 +54,7 @@ Alternativas.argTypes = {
       alternativas: [
         {
           Alternativa: 'A',
-          Enunciado: 'Enunciado A Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam. Enunciado A Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam.',
+          Enunciado: 'Enunciado A Lorem ipsum dolorllendus quidem nam.',
           Imagem: null,
           Porcentagem: 1
         },

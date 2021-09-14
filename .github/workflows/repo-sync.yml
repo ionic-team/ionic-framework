@@ -15,6 +15,6 @@ jobs:
         uses: repo-sync/github-sync@v2.3.0
         with:
           source_repo: "https://github.com/ionic-team/ionic-framework"
-          source_branch: "master"
+          source_branch: "main"
           destination_branch: "sync"
           github_token: ${{ secrets.GITHUB_TOKEN }}

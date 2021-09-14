@@ -24,6 +24,8 @@ export class MedChartRadialLabel {
   render() {
     const { color, neutral } = this;
 
+    //const arrayReverse = this.valores.slice(0).reverse();
+
     return (
       <Host from-stencil
         class={createColorClasses(color, {
@@ -32,7 +34,7 @@ export class MedChartRadialLabel {
       >
         <ul class="med-chart-radial-label__list">
           {
-            this.valores.reverse().map((item: MedChartRadiaItem) => {
+            this.valores.map((item: MedChartRadiaItem) => {
               return <li class="med-chart-radial-label__item"><span class={{'med-chart-radial-label__quantia': true, [item.cor]: true}}>{item.quantia}</span> {item.label}</li>
             })
           }

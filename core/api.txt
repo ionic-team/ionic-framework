@@ -1409,16 +1409,18 @@ med-alternativas,shadow
 med-alternativas,prop,alternativaSelecionada,string,undefined,true,true
 med-alternativas,prop,alternativas,any,[],false,false
 med-alternativas,prop,color,string | undefined,undefined,false,false
-med-alternativas,prop,isDesktop,boolean,undefined,true,false
 med-alternativas,prop,keyAlternativa,string,'Alternativa',false,false
 med-alternativas,prop,keyEnunciado,string,'Enunciado',false,false
 med-alternativas,prop,keyImagem,string,'Imagem',false,false
 med-alternativas,prop,keyPorcentagem,string,'Porcentagem',false,false
+med-alternativas,prop,keyRiscada,string,'Riscada',false,false
 med-alternativas,prop,mostraResposta,boolean,undefined,true,true
-med-alternativas,prop,podeRiscar,boolean,undefined,true,false
+med-alternativas,prop,neutral,string | undefined,undefined,false,false
+med-alternativas,prop,permiteRiscar,boolean,true,false,false
 med-alternativas,prop,respostaCorreta,string,undefined,true,true
 med-alternativas,event,medChange,MedAlternativaInterface,true
 med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
+med-alternativas,event,medRiscada,MedAlternativaInterface,true
 
 med-autocomplete,shadow
 med-autocomplete,prop,list,boolean,false,false,false

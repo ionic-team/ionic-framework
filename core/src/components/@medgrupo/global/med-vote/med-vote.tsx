@@ -28,8 +28,8 @@ export class MedVote {
     const like = isNaN(this.like) ? 0 : +this.like;
     const unlike = isNaN(this.unlike) ? 0 : +this.unlike;
     const total = like + unlike
-    const likePercent = ((like*100)/total)
-    const unlikePercent = ((unlike*100)/total)
+    const likePercent = unlike === 0 && like === 0 ? 50 : ((like*100)/total)
+    const unlikePercent = unlike === 0 && like === 0 ? 50 : ((unlike*100)/total)
 
     return (
       <Host

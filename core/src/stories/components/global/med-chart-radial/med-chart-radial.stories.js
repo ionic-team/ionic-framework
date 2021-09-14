@@ -39,30 +39,6 @@ ChartRadial.parameters = {
   },
 }
 ChartRadial.argTypes = {
-  valores: {
-    defaultValue: {
-      valores: [
-        {
-          cor: '',
-          label: 'acertos',
-          quantia: 32,
-          ignoreBarra: false,
-        },
-        {
-          cor: '',
-          label: 'restantes',
-          quantia: 52,
-          ignoreBarra: true,
-        }
-      ],
-    },
-    control: { type: 'array' },
-    description: 'Define a lista...',
-    table: {
-      type:  { summary: 'MedRadialItem[]' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
   color: {
     options: medColors,
     control: { type: 'inline-radio'},
@@ -76,40 +52,40 @@ ChartRadial.argTypes = {
     options: [undefined, 'simple'],
     control: { type: 'inline-radio'},
     description: "Define a variação do componente.",
-    defaultValue: "simple",
+    defaultValue: undefined,
     table: {
       type:  { summary: 'simple' },
       defaultValue: { summary: 'undefined' },
     },
   },
-  // valores: {
-  //   defaultValue: {
-  //     valores: [
-  //       {
-  //         cor: 'ion-color-fb-success',
-  //         label: 'acertos',
-  //         quantia: 32,
-  //         ignoreBarra: false,
-  //       },
-  //       {
-  //         cor: 'ion-color-fb-caution',
-  //         label: 'acertos',
-  //         quantia: 16,
-  //         ignoreBarra: false,
-  //       },
-  //       {
-  //         cor: '',
-  //         label: 'restantes',
-  //         quantia: 52,
-  //         ignoreBarra: true,
-  //       }
-  //     ],
-  //   },
-  //   control: { type: 'array' },
-  //   description: 'Define a lista...',
-  //   table: {
-  //     type:  { summary: 'MedRadialItem[]' },
-  //     defaultValue: { summary: 'undefined' },
-  //   },
-  // },
+   valores: {
+     defaultValue: {
+       valores: [
+        {
+         cor: 'ion-color-fb-success',
+          label: 'acertos',
+         quantia: 32,
+          ignoreBarra: false,
+         },
+        {
+          cor: 'ion-color-fb-caution',
+          label: 'acertos',
+           quantia: 16,
+           ignoreBarra: false,
+       },
+         {
+           cor: '',
+           label: 'restantes',
+         quantia: 52,
+           ignoreBarra: true,
+        }
+       ],
+   },
+    control: { type: 'array' },
+    description: 'Define a lista...',
+    table: {
+       type:  { summary: 'MedRadialItem[]' },
+      defaultValue: { summary: 'undefined' },
+    },
+   },
 }

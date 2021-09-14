@@ -1,224 +1,213 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
-import { Color } from '../../../../../interface';
+import { Component, Host, h, Prop, Event, EventEmitter, State, Element, Listen } from '@stencil/core';
+import { Color, Neutral } from '../../../../../interface';
+import { Coordenada, distanciaEuclidiana, getPositionFromEvent } from '../../../../../utils/medgrupo';
 import { createColorClasses } from '../../../../../utils/theme';
-import { MedAlternativaInterface, MedAlternativasInterface } from './med-alternativas-interface';
-
+import { MedAlternativaInterface, MedAlternativasInterface } from '../med-alternativas/med-alternativas-interface';
 @Component({
   tag: 'med-alternativas',
   styleUrl: 'med-alternativas.scss',
   shadow: true,
 })
 export class MedAlternativas implements MedAlternativasInterface {
-  @Prop() podeRiscar!: boolean;
-  @Prop() isDesktop!: boolean;
+  @Element() hostElement!: HTMLElement;
 
-  @Prop() alternativas: MedAlternativaInterface | any = [];
+  @Prop() color?: Color;
+  @Prop() neutral?: Neutral;
+
+  @Prop({ mutable: true }) alternativas: MedAlternativaInterface | any = [];
 
   @Prop() keyAlternativa = 'Alternativa';
   @Prop() keyEnunciado = 'Enunciado';
   @Prop() keyImagem = 'Imagem';
   @Prop() keyPorcentagem = 'Porcentagem';
+  @Prop() keyRiscada = 'Riscada';
 
   @Prop({ mutable: true, reflect: true }) respostaCorreta!: string;
   @Prop({ mutable: true, reflect: true }) mostraResposta!: boolean;
   @Prop({ mutable: true, reflect: true }) alternativaSelecionada!: string;
 
+  @Prop({ mutable: true }) permiteRiscar = true;
+
   @Event() medChange!: EventEmitter<MedAlternativaInterface>;
+  @Event() medRiscada!: EventEmitter<MedAlternativaInterface>;
   @Event() medGalleryRequest!: EventEmitter<MedAlternativaInterface>;
 
-  @State() alternativaRiscada: any;
-
-  @State() alternativaPressionada: any;
-
-  /**
-   * Define a cor neutra do componente.
-   */
-  @Prop() color?: Color;
+  @State() permiteAlterar = true;
+  @State() riscarAtivoIndice = -1;
 
   dataStart!: Date;
   dataEnd!: Date;
+  positionStart: Coordenada | undefined;
+  distanciaMinimaClick = 50;
   tempoLongPress = 1000;
   timer!: any;
 
-  private onTouchStart(alternativaPressionada: any) {
-    if (!this.isDesktop) {
-      this.dataStart = new Date();
-      this.timer = setTimeout(() => {
-        this.dataEnd = new Date();
-        const tempoTotal = this.dataEnd.getTime() - this.dataStart.getTime();
-        if (tempoTotal >= this.tempoLongPress) {
-          if (this.permiteRiscar(alternativaPressionada)) {
-            for (const alternativa of this.alternativas) {
-              if (alternativa.Alternativa != alternativaPressionada.Alternativa) {
-                alternativa.Pressionada = false;
-              }
-            }
-            alternativaPressionada.Pressionada = !alternativaPressionada.Pressionada;
-            this.alternativaPressionada = { alternativaPressionada };
-          }
-        }
-      }, this.tempoLongPress);
+  @Listen('click', { target: 'window' })
+  handleClick(event: any) {
+    if(!event.target.classList.contains('med-alternativas')) {
+      this.riscarAtivoIndice = -1;
+      this.permiteAlterar = true;
     }
   }
 
-  private onTouchEnd() {
+  private onTouchStart(event: any, indice: number) {
+    if(event.target.closest('.med-alternativas__riscar')?.classList.contains('med-alternativas__riscar')) {
+      return;
+    }
+
+    this.dataStart = new Date();
+    this.positionStart = getPositionFromEvent(event);
+    
+    this.timer = setTimeout(() => {
+      this.dataEnd = new Date();
+
+      const tempoTotal = this.dataEnd.getTime() - this.dataStart.getTime();
+
+      if (tempoTotal >= this.tempoLongPress) {
+        this.riscarAtivoIndice = indice;
+        this.permiteAlterar = false;
+      }
+
+    }, this.tempoLongPress);
+  }
+
+  private onTouchEnd(event: any, alternativa: MedAlternativaInterface) {
+    if(event.target.closest('.med-alternativas__riscar')?.classList.contains('med-alternativas__riscar')) {
+      return;
+    }
+
+    const positionEnd = getPositionFromEvent(event);
+    
     clearTimeout(this.timer);
-  }
 
-  private cssClassAlternativa(alternativa: string) {
-    this.podeRiscar = true;
-    let objAlternativa = this.getAlternativa(alternativa);
-    let classe = 'alternativa';
-
-    if (!objAlternativa.Riscada) {
-      if (this.mostraResposta && this.alternativaSelecionada) {
-        if (alternativa === this.respostaCorreta) {
-          classe += ' alternativa--correta';
-        } else if (alternativa === this.alternativaSelecionada) {
-          classe += ' alternativa--incorreto';
-        }
-      }
+    if(this.permiteAlterar &&
+      distanciaEuclidiana(this.positionStart, positionEnd) <
+        this.distanciaMinimaClick) {
+      this.riscarAtivoIndice = -1;
+      this.alterarAlternativa(alternativa);
     }
 
-    classe += this.getCssClassAlternativaRiscada(objAlternativa);
-
-    return classe;
+    this.permiteAlterar = true;
   }
 
-  private cssClassOption(alternativa: any) {
-    let classe = 'alternativa__option';
-    if (alternativa.Riscada) {
-      classe += ' alternativa__option--riscada';
+  private alterarAlternativa(item: any) {
+    const alternativa: MedAlternativaInterface = item;
+
+    if(alternativa.Riscada && this.permiteRiscar) {
+      return;
     }
-    return classe;
+
+    this.alternativaSelecionada = alternativa.Alternativa;
+
+    this.medChange.emit(alternativa);
   }
 
-  private getCssClassAlternativaRiscada(objAlternativa: any) {
-    let classe = '';
-    if (this.podeRiscar && objAlternativa) {
-      if (!this.isDesktop && objAlternativa.Pressionada) {
-        classe += ' alternativa--pode-riscar-mobile';
-      } else if (this.isDesktop) {
-        classe += ' alternativa--pode-riscar';
-      }
+  private riscar(event: any, alternativa: any) {
+    event.stopPropagation();
 
-      if(objAlternativa && objAlternativa.Riscada) {
-        classe += ' alternativa--riscada';
-      }
-    }
-    return classe;
+    alternativa[this.keyRiscada] = !alternativa[this.keyRiscada];
+
+    this.riscarAtivoIndice = -1;
+
+    this.medRiscada.emit(alternativa);
+
+    this.permiteAlterar = true;
+
+    this.alternativas = [...this.alternativas];
   }
 
-  private respostaAlterada(alternativa: string) {
-    this.alternativaSelecionada = alternativa;
-    let objAlternativa = this.getAlternativa(alternativa);
-    if (objAlternativa && !objAlternativa.Riscada) {
-      this.medChange.emit(objAlternativa);
-    }
-  }
+  private imageRequest(event: any, alternativa: any) {
+    event.stopPropagation();
 
-  private imageRequest(alternativa: any) {
     this.medGalleryRequest.emit(alternativa);
   }
 
-  private riscar(alternativa: any) {
-    if (this.permiteRiscar(alternativa)) {
-      alternativa.Riscada = !alternativa.Riscada;
-      if (alternativa.Alternativa === this.alternativaSelecionada) {
-        this.respostaAlterada('');
-      }
-      this.alternativaRiscada = { alternativa };
-      if (!this.isDesktop) {
-        alternativa.Pressionada = !alternativa.Pressionada;
-      }
-    }
-  }
-
-  permiteRiscar(alternativa: any) {
-    let countNaoRiscadas = 0;
-    for (const alternativa of this.alternativas) {
-      countNaoRiscadas += !alternativa.Riscada ? 1 : 0;
-    }
-    return alternativa.Riscada || (!alternativa.Riscada && countNaoRiscadas > 1);
-  }
-
-  private getAlternativa(key: string) {
-    let objAlternativa;
-    for (const item of this.alternativas) {
-      if(item[this.keyAlternativa] === key) {
-        objAlternativa = item;
-        break;
-      }
-    }
-    return objAlternativa;
-  }
-
   render() {
+    const {color, neutral, permiteRiscar, mostraResposta, alternativaSelecionada} = this;
+    const exibeAcerto = this.alternativaSelecionada && mostraResposta;
     let hasImage = false;
-    for(const alternativa of this.alternativas) {
-      if(alternativa[this.keyImagem]) {
-        hasImage = true
-        break;
-      }
-    }
 
-    const { color } = this;
+    if(this.alternativas) {
+      this.alternativas.forEach((element:any) => {
+        if(element.Imagem) hasImage = true;
+      });
+    }
 
     return (
-      <Host from-stencil
-      class={createColorClasses(color, {
-        'med-alternativas': true,
-      }, null)}
-      >
-        <ion-radio-group onIonChange={ev => this.respostaAlterada(ev.detail.value)} value={this.alternativaSelecionada}>
-          <ul class={`alternativas ${hasImage ? 'alternativas--imagem' : ''}`}>
+      <Host
+        from-stencil
+        class={createColorClasses(color, {
+          'med-alternativas': true,
+        }, neutral)}>
+         <div class={`
+           med-alternativas__list
+           ${hasImage ? 'med-alternativas__list--has-image' : ''}
+           `} role="list">
 
-            {this.alternativas.map((alternativa: any) => (
-              <div class="alternativa-wrapper" onPointerDown={() => this.onTouchStart(alternativa)} onPointerUp={() => this.onTouchEnd()}>
-                <li class={this.cssClassAlternativa(alternativa[this.keyAlternativa]) + (alternativa.Pressionada ? ' alternativa--pode-riscar-mobile' : '')}>
-                  <med-option class={this.cssClassOption(alternativa)}>
-                    <ion-radio
-                      value={alternativa[this.keyAlternativa]}
-                    ></ion-radio>
-                    <label slot="label">{alternativa[this.keyAlternativa]}</label>
-                  </med-option>
+          {this.alternativas.map((alternativa: any, indice: number) => (
+            <div role="listitem"
+              onTouchStart={(event) => this.onTouchStart(event, indice)}
+              onTouchEnd={(event) => this.onTouchEnd(event, alternativa)}
+              onMouseDown={(event) => this.onTouchStart(event, indice)}
+              onMouseUp={(event) => this.onTouchEnd(event, alternativa)}
+              class={`
+                med-alternativas__item med-alternativas__item--${alternativa[this.keyAlternativa]}
+                ${permiteRiscar ? 'med-alternativas__item--permite-riscar' : ''}
+                ${indice === this.riscarAtivoIndice && permiteRiscar ? 'med-alternativas__item--show' : ''}
+                ${alternativa[this.keyRiscada] && permiteRiscar ? 'med-alternativas__item--riscado' : ''}
+                ${exibeAcerto && alternativa[this.keyAlternativa] === this.respostaCorreta && this.respostaCorreta === this.alternativaSelecionada ? 'med-alternativas__item--correta' : ''}
+                ${exibeAcerto && alternativa[this.keyAlternativa] === this.respostaCorreta && this.respostaCorreta !== this.alternativaSelecionada ? 'med-alternativas__item--certa' : ''}
+                ${exibeAcerto && alternativa[this.keyAlternativa] !== this.respostaCorreta && alternativa[this.keyAlternativa] === this.alternativaSelecionada ? 'med-alternativas__item--incorreta' : ''}
+                ${!exibeAcerto && alternativa[this.keyAlternativa] === this.alternativaSelecionada ? 'med-alternativas__item--selecionada' : ''}
+              `}
+            >
+              <div class="med-alternativas__wrapper">
+                <div class="med-alternativas__container">
+                  <div class="med-alternativas__left">
 
-                  <div class='alternativa__right'>
-                    {alternativa[this.keyEnunciado] && <div class='alternativa__text' innerHTML={alternativa[this.keyEnunciado]}></div>}
+                    <div class="option">
+                      <span class="option__fake"></span>
+                      <span class="option__letter">{alternativa[this.keyAlternativa]}</span>
+                    </div>
 
-                    <div class='image-container' onClick={() => this.imageRequest(alternativa)}>
-                      {alternativa[this.keyImagem] && <img class='alternativa__image' src={alternativa[this.keyImagem]} />}
-                      <div class='overlay'>
-                        <div class="overlay__content">
-                          <p class="overlay__label">clique para ampliar</p>
-                          <ion-icon name="med-expand"></ion-icon>
+                  </div>
+                  <div class="med-alternativas__right">
+                    <div class="med-alternativas__text" innerHTML={alternativa[this.keyEnunciado]}></div>
+
+                  {alternativa[this.keyImagem] &&
+                    <div class={`image-container ${alternativa[this.keyEnunciado] ? 'image-container--margin' : ''}`} onClick={(event) => this.imageRequest(event, alternativa)}>
+                      <div class='image-container__wrapper'>
+                        <img class='image-container__image' src={alternativa[this.keyImagem]} />
+
+                        <div class='image-container__button'>
+                          <ion-icon name="med-expand image-container__icon"></ion-icon>
                         </div>
                       </div>
-                    </div>
+                    </div>}
 
-                    {!alternativa.Riscada &&
-                      <ion-progress-bar percentage class={`
-                        ion-progress-bar
-                        ${this.mostraResposta && this.alternativaSelecionada ? 'ion-progress-bar--toggle' : '' }
-                        ${alternativa[this.keyPorcentagem] === 1 ? 'ion-progress-bar--100' : '' }`}
-                        value={alternativa[this.keyPorcentagem]}>
-                      </ion-progress-bar>
-                    }
+                    <ion-progress-bar percentage class={`
+                      med-alternativas__progress-bar
+                      ${mostraResposta && alternativaSelecionada ? 'med-alternativas__progress-bar--toggle' : '' }
+                    `}
+                      value={alternativa[this.keyPorcentagem]}>
+                    </ion-progress-bar>
                   </div>
-
-                  {this.podeRiscar && (alternativa.Pressionada || this.isDesktop) &&
-                    <div class="riscar" onClick={() => this.riscar(alternativa)}>
-                      <ion-icon name="med-riscar"></ion-icon>
-                      <span class="riscar__label">{(alternativa.Riscada ? 'Retomar' : 'Riscar') + (this.isDesktop ? ' alternativa' : '')}</span>
+                  <div class={`med-alternativas__riscar ${indice === this.riscarAtivoIndice && permiteRiscar ? 'med-alternativas__riscar--show' : ''}`}
+                    onClick={(event) => this.riscar(event, alternativa)}>
+                    <ion-icon class="med-alternativas__riscar-icon med-icon" name="med-riscar"></ion-icon>
+                    <div class="med-alternativas__riscar-span">
+                      {(alternativa[this.keyRiscada] ? 'Restaurar ' : 'Riscar ')}
+                      <span class="med-alternativas__riscar-desktop"> alternativa</span>
                     </div>
-                  }
-                </li>
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
+          ))}
 
-          </ul>
-        </ion-radio-group>
+        </div>
       </Host>
     );
   }
+
 }

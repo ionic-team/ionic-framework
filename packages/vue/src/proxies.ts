@@ -839,18 +839,20 @@ export const MedAgrupador = /*@__PURE__*/ defineContainer<JSX.MedAgrupador>('med
 
 
 export const MedAlternativas = /*@__PURE__*/ defineContainer<JSX.MedAlternativas>('med-alternativas', [
-  'podeRiscar',
-  'isDesktop',
+  'color',
+  'neutral',
   'alternativas',
   'keyAlternativa',
   'keyEnunciado',
   'keyImagem',
   'keyPorcentagem',
+  'keyRiscada',
   'respostaCorreta',
   'mostraResposta',
   'alternativaSelecionada',
-  'color',
+  'permiteRiscar',
   'medChange',
+  'medRiscada',
   'medGalleryRequest'
 ]);
 

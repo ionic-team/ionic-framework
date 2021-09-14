@@ -2,7 +2,7 @@
 
 :host {
   --spacing: #{$med-spacing-inline-base};
-  --color: var(--med-color-neutral-1);
+  --color: var(--med-color-neutral-10);
   --color-like: #{md-color(fb-success, 3)};
   --color-dislike: #{md-color(fb-warning, 3)};
   --color-hover: var(--med-color-neutral-7);
@@ -22,7 +22,7 @@
 
   .rate {
     font-size: 24px;
-    color: var(--color);
+    stroke: var(--color);
     transition: color 300ms;
   }
 
@@ -42,7 +42,7 @@
 @media (any-hover: hover) {
   :host {
     .rate:hover {
-      color: var(--color-hover);
+      stroke: var(--color-hover);
     }
   }
 }

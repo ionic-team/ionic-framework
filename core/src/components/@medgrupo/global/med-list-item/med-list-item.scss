@@ -44,6 +44,7 @@
     font-weight: $med-font-weight-regular;
     line-height: $med-line-height-compressed;
     color: var(--color-label);
+    margin-top: var(--med-spacing-inline-nano);
   }
 
   .med-list-item__border-radius {

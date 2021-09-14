@@ -918,16 +918,17 @@ export class MedAgrupador {
 }
 export declare interface MedAlternativas extends Components.MedAlternativas {
 }
-@ProxyCmp({ inputs: ["alternativaSelecionada", "alternativas", "color", "isDesktop", "keyAlternativa", "keyEnunciado", "keyImagem", "keyPorcentagem", "mostraResposta", "podeRiscar", "respostaCorreta"] })
-@Component({ selector: "med-alternativas", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["alternativaSelecionada", "alternativas", "color", "isDesktop", "keyAlternativa", "keyEnunciado", "keyImagem", "keyPorcentagem", "mostraResposta", "podeRiscar", "respostaCorreta"] })
+@ProxyCmp({ inputs: ["alternativaSelecionada", "alternativas", "color", "keyAlternativa", "keyEnunciado", "keyImagem", "keyPorcentagem", "keyRiscada", "mostraResposta", "neutral", "permiteRiscar", "respostaCorreta"] })
+@Component({ selector: "med-alternativas", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["alternativaSelecionada", "alternativas", "color", "keyAlternativa", "keyEnunciado", "keyImagem", "keyPorcentagem", "keyRiscada", "mostraResposta", "neutral", "permiteRiscar", "respostaCorreta"] })
 export class MedAlternativas {
   medChange!: EventEmitter<CustomEvent>;
+  medRiscada!: EventEmitter<CustomEvent>;
   medGalleryRequest!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ["medChange", "medGalleryRequest"]);
+    proxyOutputs(this, this.el, ["medChange", "medRiscada", "medGalleryRequest"]);
   }
 }
 export declare interface MedAutocomplete extends Components.MedAutocomplete {
