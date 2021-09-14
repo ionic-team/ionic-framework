@@ -404,15 +404,13 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Resets the internal state of the datetime to `internalState`
-   * and optionally updates the value if `updateValue` is true.
-   * Passing a valid ISO-8601 string will reset the state of
-   * the component to the provided date.
+   * Resets the internal state of the datetime but does not update the value.
+   * Passing a valid ISO-8601 string will reset the state of the component to the provided date.
+   * If no value is provided, the internal state will be reset to today.
    */
   @Method()
-  async reset(internalState?: string, updateValue = false) {
-    this.processValue(internalState);
-    if (updateValue) { this.value = internalState; }
+  async reset(startDate?: string) {
+    this.processValue(startDate);
   }
 
   /**
@@ -1187,6 +1185,11 @@ export class Datetime implements ComponentInterface {
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !this.showDefaultButtons) { return; }
 
+    const clearButtonClick = () => {
+      this.reset();
+      this.value = undefined;
+    }
+
     /**
      * By default we render two buttons:
      * Cancel - Dismisses the datetime and
@@ -1205,7 +1208,7 @@ export class Datetime implements ComponentInterface {
               <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
                 <div>
-                  {this.showClearButton && <ion-button color={this.color} onClick={() => this.reset(undefined, true)}>{this.clearText}</ion-button>}
+                  {this.showClearButton && <ion-button color={this.color} onClick={() => clearButtonClick()}>{this.clearText}</ion-button>}
                   <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
                 </div>
               </ion-buttons>

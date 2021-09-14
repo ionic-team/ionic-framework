@@ -233,7 +233,7 @@ dates in JavaScript.
 </ion-datetime>
 
 <!-- Clear button -->
-<ion-datetime showClearButton></ion-datetime>
+<ion-datetime [showClearButton]="true"></ion-datetime>
 
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
@@ -427,7 +427,7 @@ export const DateTimeExamples: React.FC = () => {
       </IonDatetime>
 
       {/* Clear button */}
-      <IonDatetime showClearButton></IonDatetime>
+      <IonDatetime showClearButton={true}></IonDatetime>
       
       {/* Custom buttons */}
       <IonDatetime ref={customDatetime}>
@@ -520,7 +520,7 @@ export class DatetimeExample {
       </ion-datetime>,
 
       {/* Clear button */}
-      <ion-datetime showClearButton></ion-datetime>  
+      <ion-datetime showClearButton={true}></ion-datetime>  
       
       {/* Custom buttons */}
       <ion-datetime ref={el => this.customDatetime = el}>
@@ -589,7 +589,7 @@ export class DatetimeExample {
   </ion-datetime>
 
   <!-- Clear button -->
-  <ion-datetime show-clear-button></ion-datetime>
+  <ion-datetime :show-clear-button="true"></ion-datetime>
   
   <!-- Custom buttons -->
   <ion-datetime ref="customDatetime">
@@ -718,12 +718,11 @@ Type: `Promise<void>`
 
 
 
-### `reset(internalState?: string | undefined, updateValue?: boolean) => Promise<void>`
+### `reset(startDate?: string | undefined) => Promise<void>`
 
-Resets the internal state of the datetime to `internalState`
-and optionally updates the value if `updateValue` is true.
-Passing a valid ISO-8601 string will reset the state of
-the component to the provided date.
+Resets the internal state of the datetime but does not update the value.
+Passing a valid ISO-8601 string will reset the state of the component to the provided date.
+If no value is provided, the internal state will be reset to today.
 
 #### Returns
 

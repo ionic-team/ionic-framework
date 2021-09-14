@@ -781,9 +781,9 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the internal state of the datetime to `internalState` and optionally updates the value if `updateValue` is true. Passing a valid ISO-8601 string will reset the state of the component to the provided date.
+          * Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no value is provided, the internal state will be reset to today.
          */
-        "reset": (internalState?: string | undefined, updateValue?: boolean) => Promise<void>;
+        "reset": (startDate?: string | undefined) => Promise<void>;
         /**
           * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */

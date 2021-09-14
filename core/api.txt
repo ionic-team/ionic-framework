@@ -396,7 +396,7 @@ ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
 ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>
-ion-datetime,method,reset,reset(internalState?: string | undefined, updateValue?: boolean) => Promise<void>
+ion-datetime,method,reset,reset(startDate?: string | undefined) => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
