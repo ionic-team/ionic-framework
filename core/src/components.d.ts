@@ -79,10 +79,6 @@ export namespace Components {
     }
     interface IonAlert {
         /**
-          * Additional attributes to pass to the alert.
-         */
-        "additionalAttributes"?: AlertAttributes;
-        /**
           * If `true`, the alert will animate.
          */
         "animated": boolean;
@@ -112,6 +108,10 @@ export namespace Components {
           * The main title in the heading of the alert.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the alert.
+         */
+        "htmlAttributes"?: AlertAttributes;
         /**
           * Array of input to show in the alert.
          */
@@ -2538,10 +2538,6 @@ export namespace Components {
     }
     interface IonToast {
         /**
-          * Additional attributes to pass to the toast.
-         */
-        "additionalAttributes"?: ToastAttributes;
-        /**
           * If `true`, the toast will animate.
          */
         "animated": boolean;
@@ -2575,6 +2571,10 @@ export namespace Components {
           * Header to be shown in the toast.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the toast.
+         */
+        "htmlAttributes"?: ToastAttributes;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -3396,10 +3396,6 @@ declare namespace LocalJSX {
     }
     interface IonAlert {
         /**
-          * Additional attributes to pass to the alert.
-         */
-        "additionalAttributes"?: AlertAttributes;
-        /**
           * If `true`, the alert will animate.
          */
         "animated"?: boolean;
@@ -3423,6 +3419,10 @@ declare namespace LocalJSX {
           * The main title in the heading of the alert.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the alert.
+         */
+        "htmlAttributes"?: AlertAttributes;
         /**
           * Array of input to show in the alert.
          */
@@ -5881,10 +5881,6 @@ declare namespace LocalJSX {
     }
     interface IonToast {
         /**
-          * Additional attributes to pass to the toast.
-         */
-        "additionalAttributes"?: ToastAttributes;
-        /**
           * If `true`, the toast will animate.
          */
         "animated"?: boolean;
@@ -5912,6 +5908,10 @@ declare namespace LocalJSX {
           * Header to be shown in the toast.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the toast.
+         */
+        "htmlAttributes"?: ToastAttributes;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */

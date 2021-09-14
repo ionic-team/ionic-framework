@@ -110,7 +110,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the toast.
    */
-  @Prop() additionalAttributes?: ToastAttributes;
+  @Prop() htmlAttributes?: ToastAttributes;
 
   /**
    * Emitted after the toast has presented.
@@ -271,7 +271,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     };
     const hdrId = `toast-${this.overlayIndex}-hdr`;
     const msgId = `toast-${this.overlayIndex}-msg`;
-    const role = this.additionalAttributes?.role || (allButtons.length > 0 ? 'dialog' : 'status');
+    const role = this.htmlAttributes?.role || (allButtons.length > 0 ? 'dialog' : 'status');
 
     return (
       <Host
@@ -288,7 +288,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         role={role}
         aria-labelledby={this.header !== undefined ? hdrId : null}
         aria-describedby={this.message !== undefined ? msgId : null}
-        {...this.additionalAttributes as any}
+        {...this.htmlAttributes as any}
       >
         <div class={wrapperClass}>
           <div

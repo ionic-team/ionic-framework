@@ -13,7 +13,7 @@ export interface AlertOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
-  additionalAttributes?: AlertAttributes;
+  htmlAttributes?: AlertAttributes;
 
   mode?: Mode;
   keyboardClose?: boolean;

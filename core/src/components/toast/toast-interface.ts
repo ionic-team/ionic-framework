@@ -12,7 +12,7 @@ export interface ToastOptions {
   position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
   animated?: boolean;
-  additionalAttributes?: ToastAttributes;
+  htmlAttributes?: ToastAttributes;
 
   color?: Color;
   mode?: Mode;

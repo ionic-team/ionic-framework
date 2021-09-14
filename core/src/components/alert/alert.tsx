@@ -114,7 +114,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the alert.
    */
-  @Prop() additionalAttributes?: AlertAttributes;
+  @Prop() htmlAttributes?: AlertAttributes;
 
   /**
    * Emitted after the alert has presented.
@@ -556,12 +556,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { overlayIndex, header, subHeader, additionalAttributes } = this;
+    const { overlayIndex, header, subHeader, htmlAttributes } = this;
     const mode = getIonMode(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
-    const role = additionalAttributes?.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
+    const role = htmlAttributes?.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
 
     return (
       <Host
@@ -580,7 +580,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         }}
         onIonAlertWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
-        {...additionalAttributes as any}
+        {...htmlAttributes as any}
       >
 
         <ion-backdrop tappable={this.backdropDismiss}/>
