@@ -1,48 +1,48 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/List Item Accordion',
   decorators: [withDesign],
 };
 
-const Template = ({ color, neutral, titulo, label, selected }) => {
+const Template = ({ dsColor }) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
 
         <!-- component -->
         <med-list margin="sm">
 
-          <med-list-item titulo="Titulo" label="label">
+          <med-list-item .dsColor=${dsColor} titulo="Titulo" label="label">
             <ion-checkbox slot="start"></ion-checkbox>
           </med-list-item>
 
-          <med-list-item-accordion .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .selected=${selected}>
+          <med-list-item-accordion .dsColor=${dsColor} titulo="Titulo" label="label">
 
             <ion-checkbox slot="start"></ion-checkbox>
 
-            <med-list-item slot="end" titulo="Titulo" label="label">
+            <med-list-item .dsColor=${dsColor} slot="end" titulo="Titulo" label="label">
               <ion-checkbox slot="start"></ion-checkbox>
             </med-list-item>
-            <med-list-item slot="end" titulo="Titulo" label="label">
+            <med-list-item .dsColor=${dsColor} slot="end" titulo="Titulo" label="label">
               <ion-checkbox slot="start"></ion-checkbox>
             </med-list-item>
-            <med-list-item slot="end" titulo="Titulo" label="label">
+            <med-list-item .dsColor=${dsColor} slot="end" titulo="Titulo" label="label">
               <ion-checkbox slot="start"></ion-checkbox>
             </med-list-item>
 
           </med-list-item-accordion>
 
-          <med-list-item titulo="Titulo" label="label">
+          <med-list-item .dsColor=${dsColor} titulo="Titulo" label="label">
             <ion-checkbox slot="start"></ion-checkbox>
           </med-list-item>
 
         </med-list>
         <!-- component -->
 
-      </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -55,39 +55,13 @@ ListItemAccordion.parameters = {
   },
 }
 ListItemAccordion.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  titulo: {
-    control: { type: 'text' },
-    defaultValue: 'Teste',
-  },
-  label: {
-    control: { type: 'text' },
-    defaultValue: 'Teste',
-  },
-  selected: {
-    control: { type: 'boolean' },
-    description: 'Define o estado do componente.',
-    defaultValue: false,
-    table: {
-      type:  { summary: 'boolean' },
-      defaultValue: { summary: 'false' },
     },
   },
 };

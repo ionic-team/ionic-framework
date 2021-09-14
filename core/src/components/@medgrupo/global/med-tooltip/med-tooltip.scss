@@ -1,15 +1,15 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
    * @prop --background: Define a cor da borda do componente.
    * @prop --z-index: Define o z-index do componente.
    */
-  --background: #{var(--med-color-neutral-3)};
+  --background: #{color('neutral', '3')};
   --z-index: 1;
-  --box-shadow: #{$med-shadow-level-1};
-  --border-radius: #{$med-border-radius-quark};
-  --padding: #{$med-spacing-squish-nano};
+  --box-shadow: var(--med-shadow-level-1);
+  --border-radius: var(--med-border-radius-quark);
+  --padding:var(--med-spacing-squish-nano);
 }
 
 :host(.med-tooltip) {
@@ -60,28 +60,28 @@
     }
 
     &__icon {
-      stroke: var(--med-color-neutral-10);
+      stroke: #{color('neutral', '10')};
     }
 
     &__inner-icon {
-      stroke: var(--med-color-neutral-3);
+      stroke: #{color('neutral', '3')};
     }
 
     &__titulo {
-      font-size: $med-font-size-xxxs;
-      font-weight: $med-font-weight-bold;
+      font-size: var(--font-size-xxxs);
+      font-weight: var(--font-weight-bold);
       line-height: line-height($med-font-size-xxxs);
-      color: var(--med-neutral-10);
+      color: #{color('neutral', '10')};
       margin: 0;
-      padding-top: $med-spacing-stack-xxxs;
-      padding-bottom: $med-spacing-stack-xxxs;
+      padding-top: var(--spacing-stack-xxxs);
+      padding-bottom: var(--spacing-stack-xxxs);
     }
 
     &__text {
-      font-size: $med-font-size-xxxs;
-      font-weight: $med-font-weight-regular;
+      font-size: var(--font-size-xxxs);
+      font-weight: var(--font-weight-regular);
       line-height: line-height($med-font-size-xxxs);
-      color: var(--med-neutral-10);
+      color: #{color('neutral', '10')};
       margin: 0;
       white-space: nowrap;
     }
@@ -89,7 +89,7 @@
 }
 
 :host(.med-tooltip--definition) {
-  --padding: #{$med-spacing-inset-sm};
+  --padding: var(--med-spacing-inset-sm);
 
   .med-tooltip__content {
     min-width: 285px;
@@ -222,4 +222,28 @@
 :host(.med-tooltip--end:not(.med-tooltip--right):not(.med-tooltip--left)) .med-tooltip__content *,
 :host(.med-tooltip--end:not(.med-tooltip--right):not(.med-tooltip--left)) ::slotted([name="content"]) {
   transform: rotate(180deg);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
 }

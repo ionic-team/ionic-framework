@@ -1,19 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Titulo Materia',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ color, neutral, titulo, descricao }) => {
+const TemplateDefault = ({ dsColor, titulo, descricao }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container" style="text-align: left;">
 
         <!-- component -->
-          <med-titulo-materia .color=${color} .neutral=${neutral} .titulo=${titulo} .descricao=${descricao}></med-titulo-materia>
+          <med-titulo-materia .dsColor=${dsColor} .titulo=${titulo} .descricao=${descricao}></med-titulo-materia>
         <!-- component -->
 
       </div>
@@ -29,21 +29,12 @@ TituloMateria.parameters = {
   },
 }
 TituloMateria.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

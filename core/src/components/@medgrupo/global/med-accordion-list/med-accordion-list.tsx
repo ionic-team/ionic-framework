@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, h, Host, Listen, Prop } from '@stencil/core';
 import { createAnimation } from '../../../../utils/animation/animation';
 import { Animation } from '../../../../utils/animation/animation-interface';
-import { createColorClasses } from '../../../../utils/theme';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 /**
   * @slot -
@@ -159,12 +159,13 @@ export class Accordion implements ComponentInterface {
   render() {
     const { noBorder, margin } = this;
     return (
-      <Host from-stencil
-        class={createColorClasses(null, {
+      <Host
+        from-stencil
+        class={generateMedColor(null, {
           'med-accordion-list': true,
           'med-accordion-list--no-border': noBorder,
           [`med-accordion-list--${margin}`]: margin !== undefined
-        }, null)}>
+        })}>
         <slot></slot>
         <div class="med-accordion-list__blocker" ref={(el) => this.blocker = el as HTMLDivElement}></div>
       </Host>

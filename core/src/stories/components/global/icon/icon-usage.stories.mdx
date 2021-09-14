@@ -4,28 +4,3 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Icon
 
-## Propriedades
-
-| Propriedade  | Atributo   | Descrição                | Tipo                                                                                              | Default       |
-| ------------ | ---------- | ------------------------ | ------------------------------------------------------------------------------------------------- | ------------- |
-| **color**    | **color**  | Define a cor do botão.   | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)** | **undefined** |
-| **name**     | **name**   | Define o nome do icone.  | **"string"**                                                                                      | **undefined** |
-
-
-Default
-```
-<ion-icon class="med-icon" name="med-arrow-left-circle"></ion-icon>
-```
-
-Colored
-```
-<ion-icon class="med-icon" name="med-arrow-left-circle" color="brand"></ion-icon>
-```
-
-Neutral color
-
-⚠️ Para utilizar cores neutras, deve-se incluir no "class" as classes : "med-neutral" e "med-neutral-$". Onde $ = numero do token de cor
-
-```
-<ion-icon class="med-icon med-neutral med-neutral-4" name="med-arrow-left-circle"></ion-icon>
-```

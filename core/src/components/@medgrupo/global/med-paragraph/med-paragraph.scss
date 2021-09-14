@@ -1,0 +1,88 @@
+@import "../../../../../templarios/abstracts";
+
+:host {
+  --font-size: var(--med-font-size-xs);
+  --font-weight: var(--med-font-weight-regular);
+  --line-height: #{line-height($med-font-size-xs)};
+  --color: #{color('neutral', 10)};
+}
+
+:host {
+  display: block;
+}
+
+::slotted(*) {
+  font-size: var(--font-size) !important;
+  font-weight: var(--font-weight) !important;
+  line-height: var(--line-height) !important;
+  color: var(--color) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// ////////////////////
+// sizes
+// ////////////////////
+
+:host(.med-paragraph--xxs) {
+  --font-size: var(--med-font-size-nano);
+  --line-height: #{line-height($med-font-size-nano)};
+}
+
+:host(.med-paragraph--xs) {
+  --font-size: var(--med-font-size-xxxs);
+  --line-height: #{line-height($med-font-size-xxxs)};
+}
+
+:host(.med-paragraph--sm) {
+  --font-size: var(--med-font-size-xxs);
+  --line-height: #{line-height($med-font-size-xxs)};
+}
+
+:host(.med-paragraph--lg) {
+  --font-size: var(--med-font-size-sm);
+  --line-height: #{line-height($med-font-size-sm)};
+}
+
+:host(.med-paragraph--xl) {
+  --font-size: var(--med-font-size-md);
+  --line-height: #{line-height($med-font-size-md)};
+}
+
+// ////////////////////
+// name
+// ////////////////////
+
+:host(.med-paragraph--double) {
+  --font-size: var(--med-font-size-xs);
+  --line-height: var(--med-line-height-double);
+}
+
+:host(.med-paragraph--double.med-paragraph--xs) {
+  --font-size: var(--med-font-size-xxxs);
+  --line-height: var(--med-line-height-double);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback')};
+}

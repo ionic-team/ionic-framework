@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
@@ -6,8 +6,8 @@
    * @prop --color: Define a cor do componente.
    * @prop --z-index: Define o z-index do componente.
    */
-  --background: #{var(--med-color-neutral-9)};
-  --color: #{var(--med-color-neutral-3)};
+  --background: #{color('neutral', '9')};
+  --color: #{color('neutral', '9', 'contrast')};
   --z-index: 1;
 }
 
@@ -25,9 +25,9 @@
       min-width: 250px;
       max-width: 250px;
       width: 100%;
-      box-shadow: $med-shadow-level-4;
-      border-radius: $med-border-radius-nano;
-      padding: $med-spacing-inset-sm;
+      box-shadow: var(--med-shadow-level-4);
+      border-radius: var(--med-border-radius-nano);
+      padding: var(--med-spacing-inset-sm);
       visibility: visible;
       opacity: 1;
       transition: opacity 300ms ease-in-out;
@@ -44,12 +44,8 @@
       --font-size: 24px;
     }
 
-    &__icon {
-      stroke: var(--med-color-neutral-10);
-    }
-
     &__inner-icon {
-      stroke: var(--med-color-neutral-3);
+      stroke: color('neutral', '3');
     }
   }
 }

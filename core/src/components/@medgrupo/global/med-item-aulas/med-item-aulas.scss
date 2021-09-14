@@ -1,7 +1,7 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host(.med-item-aulas) {
-  background: var(--med-color-neutral-2);
+  background: color('neutral', '2');
   max-width: 1200px;
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
 
 :host(.med-item-aulas) .med-item-aulas__top {
   display: flex;
-  padding: $med-spacing-inset-sm;
+  padding: var(--spacing-inset-sm);
 
   ion-icon {
     min-width: 1em;
@@ -18,7 +18,7 @@
 
 :host(.med-item-aulas) .med-item-aulas__info {
   width: 100%;
-  margin: 0 $med-spacing-inset-sm;
+  margin: 0 var(--spacing-inset-sm);
 }
 
 :host(.med-item-aulas) {
@@ -30,25 +30,25 @@
 }
 
 :host(.med-item-aulas) .med-item-aulas__nome {
-  font-size: $med-font-size-xs;
-  font-weight: $med-font-weight-bold;
-  line-height: $med-line-height-compressed;
-  color: var(--med-color-neutral-10);
+  font-size: var(--med-font-size-xs);
+  font-weight: var(--med-font-weight-bold);
+  line-height: var(--med-line-height-compressed);
+  color: color('neutral', '10');
 }
 
 :host(.med-item-aulas) .med-item-aulas__professor {
-  font-size: $med-font-size-xxxs;
-  font-weight: $med-font-weight-regular;
-  line-height: $med-line-height-default;
-  color: var(--med-color-neutral-7);
-  opacity: $med-opacity-level-semiopaque;
+  font-size: var(--med-font-size-xxxs);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--line-height-default);
+  color: color('neutral', '7');
+  opacity: var(--opacity-level-semiopaque);
 }
 
 :host(.med-item-aulas) .med-item-aulas__total {
-  font-size: $med-font-size-nano;
-  font-weight: $med-font-weight-regular;
-  line-height: $med-line-height-default;
-  color: var(--med-color-neutral-7);
-  opacity: $med-opacity-level-semiopaque;
-  margin-bottom: $med-spacing-stack-base;
+  font-size: var(--med-font-size-nano);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--line-height-default);
+  color: color('neutral', '7');
+  opacity: var(--opacity-level-semiopaque);
+  margin-bottom: var(--spacing-stack-base);
 }

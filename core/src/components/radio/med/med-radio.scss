@@ -1,4 +1,4 @@
-@import "../../../../med-components/abstracts";
+@import "../../../../templarios/abstracts";
 @import "../../../themes/ionic.globals";
 @import "../radio.md.vars";
 
@@ -53,7 +53,7 @@ input {
 
 :host {
   --color: #fff;
-  --color-checked: #{$med-color-questoes-light};
+  --color-checked: hsl(var(--med-color-questoes-4));
   --border-color: transparent;
   --border-width: 0;
   --border-style: none;
@@ -159,3 +159,7 @@ input {
 :host(.in-item[slot="start"]) {
   @include margin($radio-md-item-start-margin-top, $radio-md-item-start-margin-end, $radio-md-item-start-margin-bottom, $radio-md-item-start-margin-start);
 }
+
+// ////////////////////
+// secondary
+// ////////////////////

@@ -2,9 +2,10 @@ import { Component, ComponentInterface, Host, Prop, h, Element } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, MedColor } from '../../interface';
 import { clamp } from '../../utils/helpers';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -25,7 +26,20 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class ProgressBar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
-  @Prop() percentage = false;
+   /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+   * Define a variação do componente.
+   */
+   @Prop() dsName?: 'minimalist' | 'skin';
+
+  /**
+    * Esconde ou mostra a porcentagem.
+    */
+  @Prop({ reflect: true }) percentage = false;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -58,13 +72,8 @@ export class ProgressBar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  /**
-   * Define a variação do componente.
-   */
-  @Prop() dsName?: 'minimalist';
-
   render() {
-    const { color, type, reversed, value, buffer, percentage, dsName } = this;
+    const { dsColor, type, reversed, value, buffer, percentage, dsName } = this;
     const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
     return (
@@ -73,7 +82,7 @@ export class ProgressBar implements ComponentInterface {
         aria-valuenow={type === 'determinate' ? value : null}
         aria-valuemin="0"
         aria-valuemax="1"
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
           'med-progress-bar': true,
           [`med-progress-bar--${dsName}`]: dsName !== undefined,
@@ -82,8 +91,7 @@ export class ProgressBar implements ComponentInterface {
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
           'in-med-header': hostContext('med-header', this.el),
-        })}
-      >
+        })}>
         {type === 'indeterminate'
           ? renderIndeterminate()
           : renderProgress(value, buffer)

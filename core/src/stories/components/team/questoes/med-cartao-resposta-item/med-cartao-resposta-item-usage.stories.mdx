@@ -4,16 +4,16 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Usage
 
-### Atributos
+### Propriedades
 
-| Event                        | Descrição                                                                    | Valores                |
-| ---------------------------- | ---------------------------------------------------------------------------- | ---------------------- |
-| **color="success-medium"**   | Este atributo deve ser utilizado quando a questão estiver **correta**.       | **success-medium**     |
-| **color="error-medium"**     | Este atributo deve ser utilizado quando a questão estiver **errada**.        | **error-medium**       |
-| **color="warning-medium"**   | Este atributo deve ser utilizado quando a questão estiver **anulada**.       | **warning-medium**     |
-| **active**                   | Este atributo deve ser utilizado quando a questão for a ativa (selecionada). | **Atributo sem valor** |
-| **anulada**                  | Este atributo deve ser utilizado quando a questao for anulada.               | **Atributo sem valor** |
-| **impressa**                 | Este item é um slot para quando a questaofor impressa                        | **Atributo sem valor** |
+| Propriedade                  | Atributo     | Descrição                                                                    | Tipo                                                                                                                   | Default       |
+| ---------------------------- | ------------ | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **dsColor**                  | **ds-color** | Define a cor do componente.                                                  | **[MedColor](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)** \| **undefined**  | **undefined** |
+| **dsName**                   | **ds-name**  | Define a variação do componente.                                             | **"secondary"**  \| **undefined**                                                                                      | **undefined** |
+| **dsSize**                   | **ds-size**  | Define a variação de tamanho do componente.                                  | **"xxs"** \| **"xs"** \| **"sm"** \| **"md"** \| **"lg"** \| **undefined**                                             | **undefined** |
+| **color="success-medium"**   |              | Este atributo deve ser utilizado quando a questão estiver **correta**.       | **success-medium**                                                                                                     | **undefined** |
+| **color="error-medium"**     |              | Este atributo deve ser utilizado quando a questão estiver **errada**.        | **error-medium**                                                                                                       | **undefined** |
+| **color="warning-medium"**   |              | Este atributo deve ser utilizado quando a questão estiver **anulada**.       | **warning-medium**                                                                                                     | **undefined** |
 
 ```
 <med-cartao-resposta-lista>
@@ -21,16 +21,16 @@ import { Meta } from "@storybook/addon-docs/blocks";
   <med-cartao-resposta-item>01</med-cartao-resposta-item>
 
   <!-- ativo -->
-  <med-cartao-resposta-item active>02</med-cartao-resposta-item>
+  <med-cartao-resposta-item ativa>02</med-cartao-resposta-item>
 
   <!-- correto -->
-  <med-cartao-resposta-item color="success-medium">03</med-cartao-resposta-item>
+  <med-cartao-resposta-item dsColor="fb-success">03</med-cartao-resposta-item>
 
   <!-- incorreto -->
-  <med-cartao-resposta-item color="error-medium">04</med-cartao-resposta-item>
+  <med-cartao-resposta-item dsColor="fb-caution">04</med-cartao-resposta-item>
 
   <!-- anulada -->
-  <med-cartao-resposta-item color="warning-medium" anulada>05</med-cartao-resposta-item>
+  <med-cartao-resposta-item dsColor="fb-warning" anulada>05</med-cartao-resposta-item>
 
   <!-- impressa -->
   <med-cartao-resposta-item impressa>06</med-cartao-resposta-item>

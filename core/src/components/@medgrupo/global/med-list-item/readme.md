@@ -7,15 +7,14 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                                | Default     |
-| ---------- | ---------- | ----------- | ----------------------------------- | ----------- |
-| `border`   | `border`   |             | `boolean`                           | `false`     |
-| `color`    | `color`    |             | `string \| undefined`               | `undefined` |
-| `dsSize`   | `ds-size`  |             | `"md" \| "sm" \| "xs" \| undefined` | `undefined` |
-| `label`    | `label`    |             | `string \| undefined`               | `undefined` |
-| `neutral`  | `neutral`  |             | `string \| undefined`               | `undefined` |
-| `selected` | `selected` |             | `boolean`                           | `false`     |
-| `titulo`   | `titulo`   |             | `string \| undefined`               | `undefined` |
+| Property   | Attribute  | Description                 | Type                                | Default     |
+| ---------- | ---------- | --------------------------- | ----------------------------------- | ----------- |
+| `border`   | `border`   | TODO                        | `boolean`                           | `false`     |
+| `dsColor`  | `ds-color` | Define a cor do componente. | `string \| undefined`               | `undefined` |
+| `dsSize`   | `ds-size`  | TODO                        | `"md" \| "sm" \| "xs" \| undefined` | `undefined` |
+| `label`    | `label`    | TODO                        | `string \| undefined`               | `undefined` |
+| `selected` | `selected` | TODO                        | `boolean`                           | `false`     |
+| `titulo`   | `titulo`   | TODO                        | `string \| undefined`               | `undefined` |
 
 
 ----------------------------------------------

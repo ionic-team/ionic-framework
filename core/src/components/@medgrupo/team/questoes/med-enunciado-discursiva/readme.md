@@ -9,14 +9,14 @@
 
 | Property               | Attribute | Description | Type                 | Default     |
 | ---------------------- | --------- | ----------- | -------------------- | ----------- |
-| `imagens` _(required)_ | `imagens` |             | `string \| string[]` | `undefined` |
+| `imagens` _(required)_ | `imagens` | TODO        | `string \| string[]` | `undefined` |
 
 
 ## Events
 
 | Event               | Description | Type                  |
 | ------------------- | ----------- | --------------------- |
-| `medGalleryRequest` |             | `CustomEvent<string>` |
+| `medGalleryRequest` | TODO        | `CustomEvent<string>` |
 
 
 ----------------------------------------------

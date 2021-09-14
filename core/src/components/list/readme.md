@@ -423,11 +423,13 @@ Type: `Promise<boolean>`
 ### Used by
 
  - ion-select-popover
+ - [med-config](../@medgrupo/global/med-config)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-select-popover --> ion-list
+  med-config --> ion-list
   style ion-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

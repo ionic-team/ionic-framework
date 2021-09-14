@@ -3,7 +3,7 @@
   position: relative;
   --size-default: 104px;
   --size-sm: 48px;
-  --color-label: #{md-color(brand, 2)};
+  --color-label: #{color('neutral', '2')};
 
   svg {
     width: var(--size-default);
@@ -11,19 +11,27 @@
   }
 
   circle {
-      stroke-dashoffset: 0;
-      stroke: var(--med-color-neutral-1);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      transition: 1s ease-in-out;
-      transform: rotate(-90deg);
-      transform-origin: 18px 18px;
+    stroke-dashoffset: 0;
+    stroke: #{color('neutral', '1')};
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    transition: 1s ease-in-out;
+    transform: rotate(-90deg);
+    transform-origin: 18px 18px;
 
-      &.size {
-        stroke: var(--med-color-3);
-        stroke-dasharray: var(--size) 100;
+    &.size {
+      stroke-dasharray: var(--size) 100;
+      stroke: hsl(var(--med-color-3));
+    }
+
+    &[class^="size med-color-neutral"] {
+      stroke: hsl(var(--med-color-neutral));
+    }
+
+    &[class^="size med-color-fb"] {
+      stroke: hsl(var(--med-color-feedback));
     }
   }
 }
@@ -32,23 +40,23 @@
 // Variacao
 // ////////////////////
 
-:host(.med-chart-radial--simple) {
+:host(.med-chart-radial--secondary) {
   svg {
     width: var(--size-sm);
     height: var(--size-sm);
   }
   .size {
-    stroke: #{md-color(brand, 2)};
+    stroke: #{color('brand', '2')};
   }
   circle {
-    stroke: var(--med-color-neutral-2);
+    stroke: #{color('neutral', '2')};
   }
 }
 
-:host(.med-chart-radial--simple) .med-chart-radial__percent {
-  font-size: $med-font-size-xxxs;
-  line-height: $med-line-height-compressed;
-  font-weight: $med-font-weight-semibold;
+:host(.med-chart-radial--secondary) .med-chart-radial__percent {
+  font-size: var(--med-font-size-xxxs);
+  line-height: var(--med-line-height-compressed);
+  font-weight: var(--med-font-weight-semibold);
   position: absolute;
   left: 50%;
   top: 50%;
@@ -60,11 +68,40 @@
 // Color
 // ////////////////////
 
-:host(.ion-color.med-chart-radial--simple) {
+:host(.med-color.med-chart-radial--secondary) {
   .size {
-    stroke: md-current-color(2);
+    stroke: curr-color('color', '2');
   }
+
   .med-chart-radial__percent {
-    --color-label: #{md-current-color(2)};
+    --color-label: #{curr-color('color', '2')};
+  }
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-chart-radial--secondary) {
+  .size {
+    stroke: curr-color('neutral');
+  }
+
+  .med-chart-radial__percent {
+    --color-label: #{curr-color('neutral')};
+  }
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback.med-chart-radial--secondary) {
+  .size {
+    stroke: curr-color('feedback');
+  }
+
+  .med-chart-radial__percent {
+    --color-label: #{curr-color('feedback')};
   }
 }

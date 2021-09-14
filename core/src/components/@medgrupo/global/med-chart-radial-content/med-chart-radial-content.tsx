@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Watch } from '@stencil/core';
-import { createColorClasses } from '../../../../utils/theme';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 @Component({
   tag: 'med-chart-radial-content',
@@ -7,7 +8,15 @@ import { createColorClasses } from '../../../../utils/theme';
   shadow: true,
 })
 export class MedChartRadialContent {
+  /**
+   * TODO
+   */
   @Prop({reflect: true}) total = 0;
+
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
 
   componentDidRender() {
     this.fontResize();
@@ -26,13 +35,14 @@ export class MedChartRadialContent {
   }
 
   render() {
-    const { total } = this;
+    const { total, dsColor } = this;
 
     return (
-      <Host from-stencil
-        class={createColorClasses(null, {
+      <Host
+        from-stencil
+        class={generateMedColor(dsColor, {
           'med-chart-radial-content': true,
-        }, null)}>
+        })}>
         <span class="med-chart-radial-content__label">Total de</span>
         <span class={`med-chart-radial-content__number ${this.fontResize()}`}>{total}</span>
         <span class="med-chart-radial-content__label">Questões</span>

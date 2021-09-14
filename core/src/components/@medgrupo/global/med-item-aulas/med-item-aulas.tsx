@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { createColorClasses } from '../../../../utils/theme';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 /**
  * @slot avatar - Slot destinado ao avatar.
@@ -11,6 +12,11 @@ import { createColorClasses } from '../../../../utils/theme';
   shadow: true,
 })
 export class MedItemAulas {
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
   /**
     * Define o nome do professor.
     */
@@ -27,13 +33,13 @@ export class MedItemAulas {
   @Prop() videos!: string;
 
   render() {
-    const { professor, porcentagem, videos } = this;
+    const { dsColor, professor, porcentagem, videos } = this;
 
     return (
       <Host from-stencil
-        class={createColorClasses(null, {
+        class={generateMedColor(dsColor, {
           'med-item-aulas': true,
-        }, null)}>
+        })}>
         <div class="med-item-aulas__top">
           <slot name="avatar"></slot>
           <div class="med-item-aulas__info">
@@ -45,7 +51,7 @@ export class MedItemAulas {
           <ion-icon class="med-icon" name="med-direita"></ion-icon>
         </div>
         <div class="med-item-aulas__bottom">
-          <ion-progress-bar ds-name="minimalist" value={porcentagem / 100}></ion-progress-bar>
+          <ion-progress-bar ds-color={dsColor} ds-name="minimalist" value={porcentagem / 100}></ion-progress-bar>
         </div>
       </Host>
     );

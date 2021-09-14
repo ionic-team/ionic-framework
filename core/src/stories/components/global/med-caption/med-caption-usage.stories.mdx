@@ -1,0 +1,68 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Caption/Usage" />
+
+# Caption
+
+## Propriedades
+
+| Propriedade  | Atributo     | Descrição                                   | Tipo                                                                                                                   | Default       |
+| ------------ | ------------ | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **dsColor**  | **ds-color** | Define a cor do componente.                 | **[MedColor](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)** \| **undefined**  | **undefined** |
+| **dsSize**   | **ds-size**  | Define a variação de tamanho do componente. | **"xxs"** \| **"xs"** \| **"sm"** \| **"md"** \| **"lg"** \| **"xl"** \| **undefined**                                 | **undefined** |
+
+## CSS Custom Properties
+
+| Name               | Description                                   |
+| ------------------ | --------------------------------------------- |
+| **--background**   | Define a cor de background do componente.     |
+| **--color**        | Define a cor de texto do componente.          |
+| **--border-color** | Define a cor da borda do componente.          |
+
+## Default
+
+```
+<ion-badge>UNIFESP 2020</ion-badge>
+```
+
+### Color
+
+```
+<ion-badge color="brand">UNIFESP 2020</ion-badge>
+```
+
+### Neutral
+
+```
+<ion-badge neutral="5">UNIFESP 2020</ion-badge>
+```
+
+### Size
+
+```
+<ion-badge ds-size="md">UNIFESP 2020</ion-badge>
+```
+
+## Variação Secondary
+
+```
+<ion-badge>UNIFESP 2020</ion-badge>
+```
+
+### Color
+
+```
+<ion-badge ds-name="secondary" color="brand">UNIFESP 2020</ion-badge>
+```
+
+### Neutral
+
+```
+<ion-badge ds-name="secondary" neutral="5">UNIFESP 2020</ion-badge>
+```
+
+### Size
+
+```
+<ion-badge ds-name="secondary" ds-size="md">UNIFESP 2020</ion-badge>
+```

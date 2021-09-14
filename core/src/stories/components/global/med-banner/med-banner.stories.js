@@ -9,8 +9,9 @@ export default {
 
 const TemplateDefault = ({ header, btnLeft, btnRight }) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
           <med-banner header=${header} btn-left=${btnLeft} btn-right=${btnRight}>
@@ -19,7 +20,8 @@ const TemplateDefault = ({ header, btnLeft, btnRight }) => {
           </med-banner>
         <!-- component -->
 
-      <ion-content>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }

@@ -1,22 +1,24 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Checkbox',
   decorators: [withDesign],
 };
 
-const Template = ({ color, neutral, indeterminate}) => {
+const Template = ({ dsColor, indeterminate}) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
-        <!-- component -->
-        <ion-checkbox .color=${color} .neutral=${neutral} .indeterminate=${indeterminate}></ion-checkbox>
-        <!-- component -->
+          <!-- component -->
+          <ion-checkbox .dsColor=${dsColor} .indeterminate=${indeterminate}></ion-checkbox>
+          <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -29,21 +31,12 @@ Default.parameters = {
   },
 }
 Default.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

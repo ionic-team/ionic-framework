@@ -1,4 +1,6 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
+import { MedColor } from '../../../../../interface';
+import { generateMedColor } from '../../../../../utils/med-theme';
 
 @Component({
   tag: 'med-option',
@@ -8,9 +10,22 @@ import { Component, Host, h } from '@stencil/core';
   }
 })
 export class MedOption {
+
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
   render() {
+
+    const { dsColor } = this;
+
     return (
-      <Host from-stencil>
+      <Host
+        from-stencil
+        class={generateMedColor(dsColor, {
+          'med-badge': true,
+        })}>
         <div class="option">
           <slot></slot>
           <slot name="label"></slot>

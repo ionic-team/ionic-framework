@@ -1,0 +1,29 @@
+@import "../../../../../templarios/abstracts";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--med-color-neutral-dark-prime);
+
+  .config-header {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+
+    &__title {
+      color: var(--med-color-neutral-light-prime);
+      font-size: var(--med-font-size-xs);
+      line-height: var(--med-line-height-compressed);
+      font-weight: var(--med-font-weight-semibold);
+    }
+  }
+
+  .config-content {
+    --background: var(--med-color-neutral-dark-prime);
+
+    height: 100%;
+    overflow-y: hidden;
+  }
+}

@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                  | Default     |
-| --------- | --------- | ----------- | --------------------- | ----------- |
-| `color`   | `color`   |             | `string \| undefined` | `undefined` |
-| `neutral` | `neutral` |             | `string \| undefined` | `undefined` |
+| Property  | Attribute  | Description                 | Type                  | Default     |
+| --------- | ---------- | --------------------------- | --------------------- | ----------- |
+| `dsColor` | `ds-color` | Define a cor do componente. | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

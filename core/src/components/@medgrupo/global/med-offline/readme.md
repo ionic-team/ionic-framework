@@ -9,7 +9,7 @@
 
 | Event      | Description | Type                |
 | ---------- | ----------- | ------------------- |
-| `medClick` |             | `CustomEvent<void>` |
+| `medClick` | TODO        | `CustomEvent<void>` |
 
 
 ## Dependencies

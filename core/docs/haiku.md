@@ -30,6 +30,6 @@ Manutenibilidade > Confiabilidade > Qualidade > Segurança
 
 ## LINKS
 
-- **[STORYBOOK](http://desenv.ordomederi.com/med-components/?path=/story/general-welcome--page)** 
+- **[STORYBOOK](http://desenv.ordomederi.com/templarios/?path=/story/general-welcome--page)** 
 - **[MED-COMPONENTS](https://github.com/MEDGRUPOGIT/med-components)**
 - **[IONIC-FRAMEWORK FORK](https://github.com/MEDGRUPOGIT/ionic-framework)**

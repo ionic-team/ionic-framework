@@ -6,7 +6,7 @@
 
 .swiper-pagination-bullet {
   background: transparent;
-  border: $med-border-width-thin solid #fff;
+  border: var(--med-border-width-thin) solid #fff;
 }
 
 .swiper-pagination-bullet-active {

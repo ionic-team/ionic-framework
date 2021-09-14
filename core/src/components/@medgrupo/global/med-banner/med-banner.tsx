@@ -6,11 +6,29 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
   shadow: true,
 })
 export class MedBanner {
+  /**
+   * TODO
+   */
   @Prop() header!: string;
+
+  /**
+   * TODO
+   */
   @Prop() btnLeft!: string;
+
+  /**
+   * TODO
+   */
   @Prop() btnRight!: string;
 
+  /**
+   * TODO
+   */
   @Event() btnLeftClick!: EventEmitter<void>;
+
+  /**
+   * TODO
+   */
   @Event() btnRightClick!: EventEmitter<void>;
 
   private onBtnLeftClick = () => {

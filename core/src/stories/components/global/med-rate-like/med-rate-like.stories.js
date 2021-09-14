@@ -8,15 +8,17 @@ export default {
 
 const TemplateDefault = ({ status }) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+  <ion-app>
+    <ion-content>
+      <div class="flex-center">
 
         <!-- component -->
           <med-rate-like .status=${status}></med-rate-like>
         <!-- component -->
 
-      <div>
-    </ion-app>
+      </div>
+    </ion-content>
+  </ion-app>
   `
 }
 

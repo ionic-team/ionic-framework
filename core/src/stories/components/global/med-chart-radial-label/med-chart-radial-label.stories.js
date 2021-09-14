@@ -13,14 +13,16 @@ const Default = ({ valores }) => {
   }, 1000);
 
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
-        <!-- component -->
-        <med-chart-radial-label></med-chart-radial-label>
-        <!-- component -->
+          <!-- component -->
+          <med-chart-radial-label></med-chart-radial-label>
+          <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -37,13 +39,13 @@ ChartRadialLabel.argTypes = {
     defaultValue: {
       valores: [
         {
-          cor: 'ion-color-fb-success',
+          cor: 'med-color-fb-success',
           label: 'Acertos',
           quantia: 32,
           ignoreBarra: false,
         },
         {
-          cor: 'ion-color-fb-caution',
+          cor: 'med-color-fb-caution',
           label: 'Erros',
           quantia: 16,
           ignoreBarra: false,

@@ -8,14 +8,16 @@ export default {
 
 const TemplateDefault = () => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div>
 
-        <!-- component -->
-        <med-autocomplete></med-autocomplete>
-        <!-- component -->
+          <!-- component -->
+          <med-autocomplete></med-autocomplete>
+          <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }

@@ -1,24 +1,32 @@
 import { html } from 'lit-html';
-import { medIcons } from '../../../med-icons';
+import { MedColor, MedIcons } from '../../../constants';
 
 export default {
   title: 'Components/Core/Icon',
   decorators: [],
 };
 
-const TemplateIcon = ({ color, neutral }) => {
+const TemplateIcon = ({ dsColor }) => {
   let colorClass;
 
-  if (color) {
-    colorClass = color + ' med-icon ion-color md hydrated'
-  } else if (neutral) {
-    colorClass = neutral + ' med-icon med-neutral md hydrated'
+  if (dsColor) {
+    const colorIdentifier = dsColor.split('-');
+
+    console.log(dsColor);
+
+    if (colorIdentifier[0] === 'neutral') {
+      colorClass = `med-icon med-color-neutral med-color-${dsColor} md hydrated`;
+    } else if (colorIdentifier[0] === 'fb') {
+      colorClass = `med-icon med-color-feedback med-color-fb-${colorIdentifier[1]} md hydrated`;
+    } else {
+      colorClass = `med-icon med-color med-color-${dsColor} md hydrated`;
+    }
   } else {
-    colorClass = 'med-icon md hydrated'
+    colorClass = 'med-icon med-color med-color-brand md hydrated'
   }
 
   const itemTemplates = [];
-  for (const item of medIcons) {
+  for (const item of MedIcons) {
     itemTemplates.push(html`
       <li class="list__item">
         <ion-icon class="med-icon" class=${colorClass} name=${item}></ion-icon>
@@ -38,12 +46,16 @@ const TemplateIcon = ({ color, neutral }) => {
 
       .list__item {
         margin: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .list__span {
         display: block;
         font-size: 14px;
         font-weight: 500;
+        color: hsl(var(--med-color-neutral-10));
       }
 
       ion-icon {
@@ -51,38 +63,28 @@ const TemplateIcon = ({ color, neutral }) => {
       }
     </style>
 
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container storybook-only__container--icons">
+    <ion-app>
+      <ion-content>
+        <div>
 
-        <ul class="list">
+          <ul class="list">
+            ${itemTemplates}
+          </ul>
 
-          ${itemTemplates}
-
-        </ul>
-      </div>
+        <div>
+      </ion-content>
     </ion-app>
   `
 }
 
 export const Icon = TemplateIcon.bind({});
 Icon.argTypes = {
-  color: {
-    options: [undefined, 'ion-color-brand', 'ion-color-aulas', 'ion-color-material', 'ion-color-questoes', 'ion-color-revalida',
-    'ion-color-provas', 'ion-color-success', 'ion-color-warning', 'ion-color-caution'],
+  dsColor: {
+    options: MedColor,
     control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: [undefined, 'med-neutral-1', 'med-neutral-2', 'med-neutral-3', 'med-neutral-4', 'med-neutral-5',
-    'med-neutral-6', 'med-neutral-7', 'med-neutral-8', 'med-neutral-9', 'med-neutral-10'],
-    control: { type: 'select'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

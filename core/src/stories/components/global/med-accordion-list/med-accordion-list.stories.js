@@ -10,20 +10,17 @@ const Template = ({singleOpen, margin, noBorder}) => {
   return html`
     <style>
       h4 {
-        text-align: left;
         margin: 0;
-        color: var(--med-color-neutral-10);
+        color: hsl(var(--med-color-neutral-10));
       }
 
       p {
-        text-align: left;
         margin: 0;
-        color: var(--med-color-neutral-10);
+        color: hsl(var(--med-color-neutral-10));
       }
 
       .med-accordion__content {
         padding: var(--med-spacing-inset-sm);
-        padding-top: 0;
       }
 
       .med-context-menu__list {
@@ -37,20 +34,16 @@ const Template = ({singleOpen, margin, noBorder}) => {
         margin-bottom: var(--med-spacing-stack-base);
         font-size: var(--med-font-size-xs);
         line-height: var(--med-line-height-compressed);
-        color: var(--med-color-neutral-3);
+        color: hsl(var(--med-color-neutral-3));
         display: flex;
         align-items: center;
         transition: color 300ms ease-out;
         cursor: pointer;
       }
 
-      .med-context-menu__item:hover {
-        color: var(--med-color-neutral-1);
-      }
-
       .med-context-menu__icon {
         padding-right: var(--med-spacing-inline-xxxs);
-        stroke: var(--med-color-neutral-3);
+        stroke: hsl(var(--med-color-neutral-3))
       }
 
       .med-context-menu__info {
@@ -58,7 +51,7 @@ const Template = ({singleOpen, margin, noBorder}) => {
         margin: 0;
         font-size: var(--med-font-size-xs);
         line-height: var(--med-line-height-compressed);
-        color: var(--med-color-neutral-5);
+        color: hsl(var(--med-color-neutral-3));
         padding: var(--med-spacing-inset-xs);
         text-align: center;
       }
@@ -74,7 +67,7 @@ const Template = ({singleOpen, margin, noBorder}) => {
               <!-- component -->
               <med-accordion-list ?no-border=${noBorder} ?single-open=${singleOpen} .margin=${margin}>
 
-                <med-accordion-item icon="left" background="true">
+                <med-accordion-item background icon="left">
                   <div slot="header">
                     <h4>Header 1</h4>
                   </div>
@@ -95,13 +88,15 @@ const Template = ({singleOpen, margin, noBorder}) => {
                     </ul>
                     <p class="med-context-menu__info">Criada em 30/12/2020</p>
                   </med-context-menu>
-                  <ion-progress-bar slot="progress" ds-name="minimalist"></ion-progress-bar>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="1"></ion-progress-bar>
+
                   <div slot="content" class="med-accordion__content">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
                   </div>
                 </med-accordion-item>
 
-                <med-accordion-item icon="left">
+                <med-accordion-item background icon="left">
                   <div slot="header">
                     <h4>Header 2</h4>
                   </div>
@@ -122,13 +117,15 @@ const Template = ({singleOpen, margin, noBorder}) => {
                     </ul>
                     <p class="med-context-menu__info">Criada em 30/12/2020</p>
                   </med-context-menu>
-                  <ion-progress-bar slot="progress" ds-name="minimalist"></ion-progress-bar>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.9"></ion-progress-bar>
+
                   <div slot="content" class="med-accordion__content">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
                   </div>
                 </med-accordion-item>
 
-                <med-accordion-item icon="left">
+                <med-accordion-item background icon="left">
                   <div slot="header">
                     <h4>Header 3</h4>
                   </div>
@@ -149,12 +146,15 @@ const Template = ({singleOpen, margin, noBorder}) => {
                     </ul>
                     <p class="med-context-menu__info">Criada em 30/12/2020</p>
                   </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.8"></ion-progress-bar>
+
                   <div slot="content" class="med-accordion__content">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
                   </div>
                 </med-accordion-item>
 
-                <med-accordion-item icon="left">
+                <med-accordion-item background icon="left">
                   <div slot="header">
                     <h4>Header 4</h4>
                   </div>
@@ -175,12 +175,15 @@ const Template = ({singleOpen, margin, noBorder}) => {
                     </ul>
                     <p class="med-context-menu__info">Criada em 30/12/2020</p>
                   </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.7"></ion-progress-bar>
+
                   <div slot="content" class="med-accordion__content">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
                   </div>
                 </med-accordion-item>
 
-                <med-accordion-item icon="left">
+                <med-accordion-item background icon="left">
                   <div slot="header">
                     <h4>Header 5</h4>
                   </div>
@@ -201,12 +204,15 @@ const Template = ({singleOpen, margin, noBorder}) => {
                     </ul>
                     <p class="med-context-menu__info">Criada em 30/12/2020</p>
                   </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.6"></ion-progress-bar>
+
                   <div slot="content" class="med-accordion__content">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
                   </div>
                 </med-accordion-item>
 
-                <med-accordion-item icon="left">
+                <med-accordion-item background icon="left">
                   <div slot="header">
                     <h4>Header 6</h4>
                   </div>
@@ -227,10 +233,130 @@ const Template = ({singleOpen, margin, noBorder}) => {
                     </ul>
                     <p class="med-context-menu__info">Criada em 30/12/2020</p>
                   </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.5"></ion-progress-bar>
+
                   <div slot="content" class="med-accordion__content">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
                   </div>
                 </med-accordion-item>
+
+                <med-accordion-item background icon="left">
+                  <div slot="header">
+                    <h4>Header 7</h4>
+                  </div>
+                  <med-context-menu class="med-context-menu" slot="button">
+                    <ul class="med-context-menu__list">
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+                        <span>Ver filtro selecionado</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+                        <span>Renomear Prova</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+                        <span>Excluir Prova</span>
+                      </li>
+                    </ul>
+                    <p class="med-context-menu__info">Criada em 30/12/2020</p>
+                  </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.4"></ion-progress-bar>
+
+                  <div slot="content" class="med-accordion__content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+                  </div>
+                </med-accordion-item>
+
+                <med-accordion-item background icon="left">
+                  <div slot="header">
+                    <h4>Header 8</h4>
+                  </div>
+                  <med-context-menu class="med-context-menu" slot="button">
+                    <ul class="med-context-menu__list">
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+                        <span>Ver filtro selecionado</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+                        <span>Renomear Prova</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+                        <span>Excluir Prova</span>
+                      </li>
+                    </ul>
+                    <p class="med-context-menu__info">Criada em 30/12/2020</p>
+                  </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.3"></ion-progress-bar>
+
+                  <div slot="content" class="med-accordion__content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+                  </div>
+                </med-accordion-item>
+
+                <med-accordion-item background icon="left">
+                  <div slot="header">
+                    <h4>Header 9</h4>
+                  </div>
+                  <med-context-menu class="med-context-menu" slot="button">
+                    <ul class="med-context-menu__list">
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+                        <span>Ver filtro selecionado</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+                        <span>Renomear Prova</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+                        <span>Excluir Prova</span>
+                      </li>
+                    </ul>
+                    <p class="med-context-menu__info">Criada em 30/12/2020</p>
+                  </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.2"></ion-progress-bar>
+
+                  <div slot="content" class="med-accordion__content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+                  </div>
+                </med-accordion-item>
+
+                <med-accordion-item background icon="left">
+                  <div slot="header">
+                    <h4>Header 10</h4>
+                  </div>
+                  <med-context-menu class="med-context-menu" slot="button">
+                    <ul class="med-context-menu__list">
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-filtro"></ion-icon>
+                        <span>Ver filtro selecionado</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-editar"></ion-icon>
+                        <span>Renomear Prova</span>
+                      </li>
+                      <li class="med-context-menu__item">
+                        <ion-icon class="med-icon med-context-menu__icon" name="med-lixeira"></ion-icon>
+                        <span>Excluir Prova</span>
+                      </li>
+                    </ul>
+                    <p class="med-context-menu__info">Criada em 30/12/2020</p>
+                  </med-context-menu>
+
+                  <ion-progress-bar slot="progress" ds-name="minimalist" value="0.1"></ion-progress-bar>
+
+                  <div slot="content" class="med-accordion__content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, nisi quos saepe similique eius illum voluptatibus unde cupiditate sit fuga ea, neque in odit, iste non delectus! Mollitia, ipsam natus delectus maiores veniam quaerat iusto dignissimos beatae cum corporis eaque quod nostrum inventore possimus voluptates dolore velit, praesentium minus adipisci ad enim nihil impedit in rerum. Aut, distinctio velit ab quis iusto dolorum voluptatum reiciendis neque repellendus culpa quo exercitationem corrupti molestiae maxime ut ratione optio. Commodi, vitae obcaecati ullam quis minus consequuntur tempora eum corporis doloribus mollitia voluptatem. Necessitatibus dolor vitae id quia facilis tempore explicabo aliquam quisquam dolores.</p>
+                  </div>
+                </med-accordion-item>
+
               </med-accordion-list>
               <!-- component -->
 

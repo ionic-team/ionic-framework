@@ -1,9 +1,10 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { CheckboxChangeEventDetail, Color, Neutral, StyleEventDetail } from '../../interface';
+import { CheckboxChangeEventDetail, Color, StyleEventDetail, MedColor } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -26,7 +27,10 @@ export class Checkbox implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop() neutral?: Neutral;
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
    * The color to use from your application's color palette.
@@ -135,7 +139,7 @@ export class Checkbox implements ComponentInterface {
   }
 
   render() {
-    const { color, neutral, checked, disabled, el, indeterminate, inputId, name, value } = this;
+    const { dsColor, checked, disabled, el, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
 
@@ -162,14 +166,14 @@ export class Checkbox implements ComponentInterface {
         aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
         role="checkbox"
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           'interactive': true
-        }, neutral)}
+        })}
       >
         {/* <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}

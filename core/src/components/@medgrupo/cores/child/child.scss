@@ -1,0 +1,157 @@
+@import '../../../../../templarios/abstracts';
+
+:host {
+  --background: #{color('neutral', '5')};
+  --color: #{color('neutral', '5', 'contrast')};
+  --border-color: #{color('neutral', '5')};
+}
+
+:host(.med-child) {
+  background: var(--background);
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid;
+  border-color: var(--border-color);
+
+  h3 {
+    color: var(--color);
+    margin: 0;
+  }
+}
+
+// //////////
+// color
+// //////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3', 'contrast')};
+  --border-color: #{curr-color('color', '3')};
+}
+
+// //////////
+// neutral
+// //////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --border-color:#{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+  --border-color: #{curr-color('feedback')};
+}
+
+// //////////////////////////////
+// outline
+// //////////////////////////////
+
+:host(.med-child--outline) {
+  --background: transparent;
+  --color: #{color('neutral', '5')};
+  --border-color: #{color('neutral', '5')};
+}
+
+// //////////
+// color
+// //////////
+
+:host(.med-child--outline.med-color) {
+  --background: transparent;
+  --color: #{curr-color('color', '3')};
+  --border-color: #{curr-color('color', '3')};
+}
+
+// //////////
+// neutral
+// //////////
+
+:host(.med-child--outline.med-color-neutral) {
+  --background: transparent;
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --border-color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-child--outline.med-color-feedback) {
+  --background: transparent;
+  --color: #{curr-color('feedback')};
+  --border-color: #{curr-color('feedback')};
+}
+
+// //////////////////////////////
+// gradient
+// //////////////////////////////
+
+:host(.med-child--gradient) {
+  --background: #{color('brand', 'gradient')};
+  --color: #{color('brand', 'gradient', 'contrast')};
+  border: 0;
+}
+
+// //////////
+// color
+// //////////
+
+:host(.med-child--gradient.med-color) {
+  --background: #{curr-color('color', 'gradient')};
+  --color: #{curr-color('color', 'gradient', 'contrast')};
+}
+
+// //////////
+// neutral
+// //////////
+
+:host(.med-child--gradient.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-child--gradient.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+}
+
+// //////////
+// exemplo storybook: nunca utilizar dessa maneira!!!
+// //////////
+
+:host(.med-child.med-color.darkest) {
+  --background: hsl(var(--med-color-1));
+  --color: hsl(var(--med-color-neutral-10));
+  --border-color: hsl(var(--med-color-1));
+}
+
+:host(.med-child.med-color.dark) {
+  --background: hsl(var(--med-color-2));
+  --color: hsl(var(--med-color-neutral-10));
+  --border-color: hsl(var(--med-color-2));
+}
+
+:host(.med-child.med-color.light) {
+  --background: hsl(var(--med-color-4));
+  --color: hsl(var(--med-color-neutral-1));
+  --border-color: hsl(var(--med-color-4));
+}
+
+:host(.med-child.med-color.lightest) {
+  --background: hsl(var(--med-color-5));
+  --color: hsl(var(--med-color-neutral-1));
+  --border-color: hsl(var(--med-color-5));
+}

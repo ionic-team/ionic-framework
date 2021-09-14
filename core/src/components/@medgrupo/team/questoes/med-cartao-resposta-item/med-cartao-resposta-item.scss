@@ -1,17 +1,19 @@
-@import "../../../../../../med-components/abstracts";
+@import "../../../../../../templarios/abstracts";
 @import "../../../../../themes/ionic.globals.scss";
 
 :host {
-  --border-width: #{$med-border-width-hairline};
+  --border-width: var(--med-border-width-hairline);
   --border-style: solid;
-  --border-color: rgba(#{$med-color-neutral-light-prime-rgb}, #{$med-opacity-level-light});
-  --color: rgba(#{$med-color-neutral-light-prime-rgb}, #{$med-opacity-level-semiopaque});
-  --spacing: #{$med-spacing-inset-nano};
+  //--border-color: rgba(var(--med-color-neutral-light-prime-rgb), var(--med-opacity-level-light));
+  --border-color: #{color('neutral', '10', null, var(--med-opacity-level-light))};
+  //--color: rgba(var(--med-color-neutral-light-prime-rgb), var(--med-opacity-level-semiopaque));
+  --color: #{color('neutral', '10', null, var(--med-opacity-level-semiopaque))};
+  --spacing: var(--med-spacing-inset-nano);
   --background: transparent;
-  --font-size: #{$med-font-size-sm};
-  --font-weight: #{$med-font-weight-regular};
-  --line-height: #{$med-line-height-compressed};
-  --icon-opacity: #{$med-opacity-level-half};
+  --font-size: var(--med-font-size-sm);
+  --font-weight: var(--med-font-weight-regular);
+  --line-height: var(--med-line-height-compressed);
+  --icon-opacity: var(--med-opacity-level-half);
 
   border-width: var(--border-width);
   border-style: var(--border-style);
@@ -101,30 +103,46 @@ slot[name] {
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: rgba(#{$med-color-neutral-light-prime-rgb, $med-opacity-level-light});
-    --border-color: #{$med-color-neutral-light-prime};
+    --background: #{color('neutral', '10', null, var(--med-opacity-level-light))};
+    --border-color: #{color('neutral', '10')};
   }
 }
 
-:host(.ion-color) {
-  --color: #{medsoft-current-color(medium)};
-}
-
-:host([class^="ion-color"]) {
-  --background: rgba(#{$med-color-neutral-light-prime-rgb, $med-opacity-level-semitransparent});
-}
-
-:host([anulada]) .item-button {
+:host(.med-cartao-resposta-item--anulada) .item-button {
   text-decoration: line-through;
 }
 
-:host([active]) {
+:host(.med-cartao-resposta-item--ativa) {
   --background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(50, 210, 243, 0.3) 100%);
-  --font-weight: #{$med-font-weight-bold};
-  box-shadow: #{$med-shadow-level-3};
+  --font-weight: var(--med-font-weight-bold);
+  box-shadow: var(--med-shadow-level-3);
   border-bottom: 1px solid #32d2f3;
 }
 
-:host([impressa]) {
+:host(.med-cartao-resposta-item--impressa) {
   --background: repeating-linear-gradient(-45deg, #222, #222 2px, #333 2px, #333 4px) !important;
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback')};
 }

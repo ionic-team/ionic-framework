@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description                        | Type                                        | Default     |
-| --------- | --------- | ---------------------------------- | ------------------------------------------- | ----------- |
-| `color`   | `color`   | Define a cor do componente.        | `string \| undefined`                       | `undefined` |
-| `dsName`  | `ds-name` | Define a variação do componente.   | `"secondary" \| "transparent" \| undefined` | `undefined` |
-| `neutral` | `neutral` | Define a cor neutra do componente. | `string \| undefined`                       | `undefined` |
+| Property  | Attribute  | Description                      | Type                                        | Default     |
+| --------- | ---------- | -------------------------------- | ------------------------------------------- | ----------- |
+| `dsColor` | `ds-color` | Define a cor do componente.      | `string \| undefined`                       | `undefined` |
+| `dsName`  | `ds-name`  | Define a variação do componente. | `"secondary" \| "transparent" \| undefined` | `undefined` |
 
 
 ## Slots
@@ -36,12 +35,14 @@
 
 ### Used by
 
+ - [med-config](../med-config)
  - [med-image-zoom](../med-image-zoom)
  - [med-offline](../med-offline)
 
 ### Graph
 ```mermaid
 graph TD;
+  med-config --> med-navbar
   med-image-zoom --> med-navbar
   med-offline --> med-navbar
   style med-navbar fill:#f9f,stroke:#333,stroke-width:4px

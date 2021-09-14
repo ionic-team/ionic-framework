@@ -6,11 +6,12 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ## Propriedades
 
-| Propriedade     | Atributo       | Descrição                                                | Tipo                                       | Default       |
-| --------------- | -------------- | -------------------------------------------------------- | ------------------------------------------ | ------------- |
-| **icon**        | **icon**       | Define a posição do ícone de abertura do componente.     | **"left"** \| **"right"** \| **undefined** | **undefined** |
-| **noBorder**    | **no-border**  | Define a variação da borda do componente.                | **boolean**                                | **false**     |
-| **background**  | **background** | Define se o componente irá ter background quando aberto. | **boolean**                                | **false**     |
+| Propriedade     | Atributo       | Descrição                                                | Tipo                                                                                                                   | Default       |
+| --------------- | -------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **dsColor**     | **ds-color**   | Define a cor do componente.                              | **[MedColor](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)** \| **undefined**  | **undefined** |
+| **icon**        | **icon**       | Define a posição do ícone de abertura do componente.     | **"left"** \| **"right"** \| **undefined**                                                                             | **undefined** |
+| **noBorder**    | **no-border**  | Define a variação da borda do componente.                | **boolean**                                                                                                            | **false**     |
+| **background**  | **background** | Define se o componente irá ter background quando aberto. | **boolean**                                                                                                            | **false**     |
 
 ## Slots
 
@@ -20,7 +21,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 | **slot="button"**   | Se houver botões no componente eles devem ser inseridos nesse slot. |
 | **slot="content"**  | Define o conteúdo do componente.                                    |
 | **slot="auxiliar"** | Define o conteúdo auxiliar do componente.                           |
-| **slot="progress"** | Define que o componente terá progress-bar                           |
+| **slot="progress"** | Slot destinado a progress-bar                                       |
 
 ## CSS Custom Properties
 
@@ -66,7 +67,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ```
 <med-accordion-list no-border>
-<med-accordion-item no-border>
+  <med-accordion-item no-border>
     <div slot="header">
       <h4>Header</h4>
     </div>
@@ -81,7 +82,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ```
 <med-accordion-list>
-  <med-accordion-item icon="left" ds-name="background">
+  <med-accordion-item background>
     <div slot="header">
       <h4>Header</h4>
     </div>
@@ -92,13 +93,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
 </med-accordion-list>
 ```
 
-## With Progress Bar
+## Com Progress Bar
 
 ⚠️ Se for utilizar a progress-bar, a mesma precisa ter o ds-name="minimalist" definido.
 
 ```
 <med-accordion-list>
-  <med-accordion-item icon="left" ds-name="background">
+  <med-accordion-item icon="left" background>
     <div slot="header">
       <h4>Header</h4>
     </div>

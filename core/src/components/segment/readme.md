@@ -570,6 +570,8 @@ export default defineComponent({
 | -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
 | `color`        | `color`         | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
 | `disabled`     | `disabled`      | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
+| `dsColor`      | `ds-color`      | Define a cor do componente.                                                                                                                                                                                                                                            | `string \| undefined`         | `undefined` |
+| `dsName`       | `ds-name`       | Define a variação do componente.                                                                                                                                                                                                                                       | `"default" \| undefined`      | `undefined` |
 | `mode`         | `mode`          | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
 | `scrollable`   | `scrollable`    | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
 | `swipeGesture` | `swipe-gesture` | If `true`, users will be able to swipe between segment buttons to activate them.                                                                                                                                                                                       | `boolean`                     | `true`      |
@@ -589,6 +591,19 @@ export default defineComponent({
 | -------------- | -------------------------------- |
 | `--background` | Background of the segment button |
 
+
+## Dependencies
+
+### Used by
+
+ - [med-config](../@medgrupo/global/med-config)
+
+### Graph
+```mermaid
+graph TD;
+  med-config --> ion-segment
+  style ion-segment fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

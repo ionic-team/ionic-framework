@@ -1,20 +1,21 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   --padding: 6px 16px;
   --background: transparent;
-  --border-radius: #{$med-border-radius-sm};
-  --font-size-title: #{$med-font-size-xs};
-  --color-title: var(--med-color-neutral-10);
-  --font-size-label: #{$med-font-size-xxxs};
-  --color-label: #{md-color(brand, 4)};
+  --border-radius: var(--med-border-radius-sm);
+  --font-size-title: var(--med-font-size-xs);
+  --color-title: #{color(neutral, 10)};
+  --font-size-label: var(--med-font-size-xxxs);
+  --color-label: #{color('brand', '4')};
   --margin: 0;
 }
 
 :host(.med-list-item-accordion) {
-  background-image: linear-gradient(to right, rgba(var(--med-color-neutral-2-rgb), 1),
-  rgba(var(--med-color-neutral-2-rgb), 0.1),
-  rgba(var(--med-color-neutral-2-rgb), 0));
+  background-image: linear-gradient(to right,
+    color('neutral', '2', null, 1),
+    color('neutral', '2', null, 0.1),
+    color('neutral', '2', null, 0));
   background-size: 200% 100%;
   background-position: 100% 0;
   transition: .5s;
@@ -49,8 +50,8 @@
     margin: 0;
     padding: 0;
     font-size: var(--font-size-title);
-    font-weight: $med-font-weight-light;
-    line-height: $med-line-height-compressed;
+    font-weight: var(--med-font-weight-light);
+    line-height: var(--med-line-height-compressed);
     color: var(--color-title);
   }
 
@@ -58,8 +59,8 @@
     margin: 0;
     padding: 0;
     font-size: var(--font-size-label);
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
     color: var(--color-label);
   }
 
@@ -93,11 +94,11 @@
 // ////////////////////
 
 ::slotted([slot="start"]) {
-  margin-right: $med-spacing-inline-base;
+  margin-right: var(--med-spacing-inline-base);
 }
 
 ::slotted([slot="end"]) {
-  margin-left: $med-spacing-inline-base;
+  margin-left: var(--med-spacing-inline-base);
 }
 
 // ////////////////////
@@ -105,38 +106,60 @@
 // ////////////////////
 
 :host(.med-list-item-accordion--xs) {
-  --padding: #{$med-spacing-squish-xs};
+  --padding: var(--med-spacing-squish-xs);
 }
 
 :host(.med-list-item-accordion--sm) {
-  --padding: #{$med-spacing-inset-sm};
+  --padding: var(--med-spacing-inset-sm);
 }
 
 :host(.med-list-item-accordion--md) {
-  --padding: #{$med-spacing-stretch-md};
+  --padding: var(--med-spacing-stretch-md);
 }
 
 // ////////////////////
 // color
 // ////////////////////
 
-:host(.med-list-item-accordion.ion-color) {
-  --border-background-selected: #{md-current-color(3)};
-  --color-label: #{md-current-color(3)};
+:host(.med-list-item-accordion.med-color) {
+  --border-background-selected: #{curr-color('color', '3')};
+  --color-label: #{curr-color('color', '4')};
 }
 
-:host(.med-list-item-accordion.ion-color) ::slotted(*) {
-  --border-color: #{md-current-color(4)};
+:host(.med-list-item-accordion.med-color) ::slotted(*) {
+  --border-color: #{curr-color('color', '4')};
+}
+
+:host(.med-list-item-accordion.med-color) med-list-item-accordion__button {
+
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-list-item-accordion.med-neutral) {
-  --border-background-selected: var(--med-neutral);
-  --color-label: var(--med-neutral);
+:host(.med-list-item-accordion.med-color-neutral) {
+  --border-background-selected: #{curr-color('neutral')};
+  --color-label: #{curr-color('neutral')};
 }
+
+:host(.med-list-item-accordion.med-color-neutral) ::slotted(*) {
+  --border-color: #{curr-color('neutral')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-list-item-accordion.med-color-feedback) {
+  --border-background-selected: #{curr-color('feedback')};
+  --color-label: #{curr-color('feedback')};
+}
+
+:host(.med-list-item-accordion.med-color-feedback) ::slotted(*) {
+  --border-color: #{curr-color('feedback')};
+}
+
 
 // ////////////////////
 // slotted
@@ -156,20 +179,20 @@
 
 :host(.med-list-item-accordion--xs) .med-list-item-accordion__item,
 :host(.med-list-item-accordion--xs) ::slotted(med-list-item) {
-  --margin: 0 0 #{$med-spacing-stack-nano} 0;
+  --margin: 0 0 var(--med-spacing-stack-nano) 0;
 }
 
 :host(.med-list-item-accordion--sm) .med-list-item-accordion__item,
 :host(.med-list-item-accordion--sm) ::slotted(med-list-item) {
-  --margin: 0 0 #{$med-spacing-stack-xxxs} 0;
+  --margin: 0 0 var(--med-spacing-stack-xxxs) 0;
 }
 
 :host(.med-list-item-accordion--md) .med-list-item-accordion__item,
 :host(.med-list-item-accordion--md) ::slotted(med-list-item) {
-  --margin: 0 0 #{$med-spacing-stack-base} 0;
+  --margin: 0 0 var(--med-spacing-stack-base) 0;
 }
 
 :host(.med-list-item-accordion--lg) .med-list-item-accordion__item,
 :host(.med-list-item-accordion--lg) ::slotted(med-list-item) {
-  --margin: 0 0 #{$med-spacing-stack-xxs } 0;
+  --margin: 0 0 var(--med-spacing-stack-xxs) 0;
 }

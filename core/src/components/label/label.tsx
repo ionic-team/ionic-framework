@@ -20,6 +20,9 @@ export class Label implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
+  /**
+   * TODO
+   */
   @Prop() dsName?: 'stacked' | 'helper' | undefined;
 
   /**

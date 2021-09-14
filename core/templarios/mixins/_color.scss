@@ -1,0 +1,65 @@
+////////////////////////////////////////////
+// tokens
+/////////////////////////////////////////////
+
+@mixin generate-color-tokens() {
+  @each $key, $value in $med-colors {
+    $darkest: map-get(map-get($med-colors, $key), '1');
+    $dark: map-get(map-get($med-colors, $key), '2');
+    $medium: map-get(map-get($med-colors, $key), '3');
+    $light: map-get(map-get($med-colors, $key), '4');
+    $lightest: map-get(map-get($med-colors, $key), '5');
+    $gradient: map-get(map-get($med-colors, $key), 'gradient');
+
+    --med-color-#{$key}-1: #{$darkest};
+    --med-color-#{$key}-2: #{$dark};
+    --med-color-#{$key}-3: #{$medium};
+    --med-color-#{$key}-4: #{$light};
+    --med-color-#{$key}-5: #{$lightest};
+    --med-color-#{$key}-gradient: #{$gradient};
+  }
+}
+
+////////////////////////////////////////////
+// classes
+/////////////////////////////////////////////
+
+@mixin generate-neutral-classes() {
+  $index: 1;
+
+  @each $key, $value in $med-neutrals {
+    .med-color-neutral-#{$key} {
+      --med-color-neutral: var(--med-color-neutral-#{$key}) !important;
+
+      @if ($index <= 5) {
+        --med-color-neutral-contrast: var(--med-color-neutral-10) !important;
+      } @else {
+        --med-color-neutral-contrast: var(--med-color-neutral-1) !important;
+      }
+    }
+
+    $index: $index + 1;
+  }
+}
+
+@mixin generate-feedback-classes() {
+  @each $key, $value in $med-feedbacks {
+    .med-color-fb-#{$key} {
+      --med-color-feedback: var(--med-color-fb-#{$key}) !important;
+      --med-color-feedback-contrast: var(--med-color-neutral-1) !important;
+    }
+  }
+}
+
+@mixin generate-color-classes() {
+  @each $key, $value in $med-colors {
+    .med-color-#{$key} {
+      --med-color-1: var(--med-color-#{$key}-1) !important;
+      --med-color-2: var(--med-color-#{$key}-2) !important;
+      --med-color-3: var(--med-color-#{$key}-3) !important;
+      --med-color-4: var(--med-color-#{$key}-4) !important;
+      --med-color-5: var(--med-color-#{$key}-5) !important;
+      --med-color-gradient: var(--med-color-#{$key}-gradient) !important;
+    }
+  }
+}

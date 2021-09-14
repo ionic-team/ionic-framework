@@ -1,19 +1,19 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Tiles',
   decorators: [withDesign],
 };
 
-const Template = ({ color, neutral, titulo, label, badge, selected, solid }) => {
+const Template = ({ dsColor, titulo, label, badge, selected, solid }) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
-        <med-tiles .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .badge=${badge} .selected=${selected} .solid=${solid}>
+        <med-tiles .dsColor=${dsColor} .titulo=${titulo} .label=${label} .badge=${badge} .selected=${selected} .solid=${solid}>
           <ion-button ds-name="primary" ds-size="xxxs">teste</ion-button>
         </med-tiles>
         <!-- component -->
@@ -31,21 +31,12 @@ Tiles.parameters = {
   },
 }
 Tiles.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

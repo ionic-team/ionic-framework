@@ -2,7 +2,7 @@ import { action } from "@storybook/addon-actions";
 import { html } from "lit-html";
 import { withDesign } from "storybook-addon-designs";
 import { popoverController } from "../../../../../../dist/ionic/index.esm.js";
-import { medFontSize } from "../../../../med-font-size";
+import { MedFontSize } from "../../../../constants";
 
 export default {
   title: "Components/Core/Font Zoom",

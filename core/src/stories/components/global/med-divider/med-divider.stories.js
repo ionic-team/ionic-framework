@@ -1,22 +1,24 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors,medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Divider',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({color, neutral, text}) => {
+const TemplateDefault = ({dsColor, text}) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
-          <med-divider .color=${color} .neutral=${neutral} text="${text}"></med-divider>
+          <med-divider .dsColor=${dsColor} text="${text}"></med-divider>
         <!-- component -->
 
-      <div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -29,21 +31,12 @@ Divider.parameters = {
   },
 }
 Divider.argTypes = {
-  color: {
-    options: medColors,
+  dsColor: {
+    options: MedColor,
     control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'select'},
-    description: "Define a cor neutral do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

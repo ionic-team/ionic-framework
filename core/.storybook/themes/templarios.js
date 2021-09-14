@@ -1,5 +1,5 @@
 import { create } from '@storybook/theming';
-import templarios from './templarios-horiz.svg';
+import templarios from './templarios-horizontal.svg';
 
 export default create({
   base: 'dark',
@@ -37,7 +37,7 @@ export default create({
 
   // brand
   brandTitle: 'templarios',
-  brandUrl: 'https://example.com',
+  brandUrl: 'http://desenv.ordomederi.com/templarios/',
   brandImage: templarios,
 
   gridCellSize: '1',

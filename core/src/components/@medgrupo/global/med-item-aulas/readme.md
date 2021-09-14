@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property                   | Attribute     | Description                                     | Type     | Default     |
-| -------------------------- | ------------- | ----------------------------------------------- | -------- | ----------- |
-| `porcentagem` _(required)_ | `porcentagem` | Define a porcentagem de visualização de vídeos. | `number` | `undefined` |
-| `professor` _(required)_   | `professor`   | Define o nome do professor.                     | `string` | `undefined` |
-| `videos` _(required)_      | `videos`      | Define a quantidade de vídeos.                  | `string` | `undefined` |
+| Property                   | Attribute     | Description                                     | Type                  | Default     |
+| -------------------------- | ------------- | ----------------------------------------------- | --------------------- | ----------- |
+| `dsColor`                  | `ds-color`    | Define a cor do componente.                     | `string \| undefined` | `undefined` |
+| `porcentagem` _(required)_ | `porcentagem` | Define a porcentagem de visualização de vídeos. | `number`              | `undefined` |
+| `professor` _(required)_   | `professor`   | Define o nome do professor.                     | `string`              | `undefined` |
+| `videos` _(required)_      | `videos`      | Define a quantidade de vídeos.                  | `string`              | `undefined` |
 
 
 ## Slots

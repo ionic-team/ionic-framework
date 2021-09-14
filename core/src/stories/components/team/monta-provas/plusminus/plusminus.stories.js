@@ -1,25 +1,28 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { MedColor } from '../../../../constants';
 
 export default {
   title: 'Components/Team/Monta Provas/Plus Minus',
   decorators: [withDesign],
 };
 
-const TemplateDefault = () => {
+const TemplateDefault = ({dsColor}) => {
 
   return html`
     <style>
     </style>
 
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
-        <monta-provas-plusminus ds-size="xl">500</monta-provas-plusminus>
+        <monta-provas-plusminus .dsColor=${dsColor} ds-size="xl">500</monta-provas-plusminus>
         <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -35,5 +38,13 @@ PlusMinus.parameters = {
   },
 }
 PlusMinus.argTypes = {
-
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
+    description: "Define a cor do componente.",
+    table: {
+      type:  { summary: 'MedColor' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
 }

@@ -15,3 +15,41 @@
 :host(.segment-scrollable) ::slotted(ion-segment-button) {
   min-width: auto;
 }
+
+@import './segment.med.scss';
+
+// ////////////////////
+// Custom
+// ////////////////////
+
+@import "../../../templarios/abstracts";
+
+:host(.med-segment--default) {
+  border: var(--med-border-width-thin) solid #{color('neutral', '10')};
+  height: 48px;
+  border-radius: var(--med-border-radius-sm);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color.med-segment--default) {
+  border-color: curr-color('color', '3');
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-segment--default) {
+  border-color: curr-color('neutral');
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback.med-segment--default) {
+  border-color: curr-color('feedback');
+}

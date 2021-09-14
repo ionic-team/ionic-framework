@@ -67,7 +67,7 @@ export class MedMessage {
               <div class="med-message__controls">
                 <med-tooltip class="med-message__tooltip" content="Possui resposta da Equipe Acadêmica" placement="top" position="end">
                   <ion-icon slot="icon" class="med-icon med-message__icon" name="med-equipe-homologada"></ion-icon>
-                 </med-tooltip>
+                </med-tooltip>
                 <slot name="menu"></slot>
               </div>
             </div>

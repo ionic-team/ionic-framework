@@ -1,0 +1,187 @@
+/// default
+/// color('neutral', 5);
+/// color('feedback', 'success');
+/// color('brand', 3);
+///
+/// contrast
+/// color('neutral', '5', 'contrast');
+/// color('feedback', 'success', 'contrast');
+/// color('brand', '3', 'contrast');
+///
+/// opacity
+/// color('neutral', '5', null, 0.5);
+/// color('feedback', 'success', null, 0.5);
+/// color('brand', '3', null, 0.5);
+///
+/// contrast + opacity
+/// color('neutral', '5', 'contrast', 0.5);
+/// color('feedback', 'success', 'contrast', 0.5);
+/// color('brand', '3', 'contrast', 0.5);
+///
+@function color($name, $variation: null, $contrast: null, $alpha: null) {
+  // neutral contrast
+  @if ($name == 'neutral' and $contrast != null and $alpha != null) {
+    @if ($variation == '1' or $variation == '2' or $variation == '3' or $variation == '4' or $variation == '5') {
+      @return hsla(var(--med-color-neutral-10), $alpha);
+    } @else {
+      @return hsla(var(--med-color-neutral-1), $alpha);
+    }
+  } @else if ($name == 'neutral' and $contrast != null) {
+    @if ($variation == '1' or $variation == '2' or $variation == '3' or $variation == '4' or $variation == '5') {
+      @return hsl(var(--med-color-neutral-10));
+    } @else {
+      @return hsl(var(--med-color-neutral-1));
+    }
+  }
+  // neutral
+  @if ($name == 'neutral' and $alpha != null) {
+    @return hsla(var(--med-color-#{$name}-#{$variation}), $alpha);
+  } @else if ($name == 'neutral') {
+    @return hsl(var(--med-color-#{$name}-#{$variation}));
+  }
+
+  // feedback contrast
+  @if ($name == 'feedback' and $contrast != null and $alpha != null) {
+    @return hsla(var(--med-color-neutral-1), $alpha);
+  } @else if ($name == 'feedback' and $contrast != null) {
+    @return hsl(var(--med-color-neutral-1));
+  }
+  // feedback
+  @if ($name == 'feedback' and $alpha != null) {
+    @return hsla(var(--med-color-fb-#{$variation}), $alpha);
+  } @else if ($name == 'feedback') {
+    @return hsl(var(--med-color-fb-#{$variation}));
+  }
+
+  // color contrast
+  @if ($name != 'neutral' and $name != 'feedback' and $contrast != null and $alpha != null) {
+    @if ($variation == '1') {
+      @return hsla(var(--med-color-neutral-10), $alpha);
+    } @else if ($variation == '2') {
+      @return hsla(var(--med-color-neutral-10), $alpha);
+    } @else if ($variation == '3') {
+      @return hsla(var(--med-color-contrast-fixed), $alpha);
+    } @else if ($variation == '4') {
+      @return hsla(var(--med-color-neutral-1), $alpha);
+    } @else if ($variation == '5') {
+      @return hsla(var(--med-color-neutral-1), $alpha);
+    } @else if ($variation == 'gradient') {
+      @return hsla(var(--med-color-contrast-fixed), $alpha);
+    }
+  } @else if ($name != 'neutral' and $name != 'feedback' and $contrast != null) {
+    @if ($variation == '1') {
+      @return hsl(var(--med-color-neutral-10));
+    } @else if ($variation == '2') {
+      @return hsl(var(--med-color-neutral-10));
+    } @else if ($variation == '3') {
+      @return hsl(var(--med-color-contrast-fixed));
+    } @else if ($variation == '4') {
+      @return hsl(var(--med-color-neutral-1));
+    } @else if ($variation == '5') {
+      @return hsl(var(--med-color-neutral-1));
+    } @else if ($variation == 'gradient') {
+      @return hsl(var(--med-color-contrast-fixed));
+    }
+  }
+  // color
+  @if ($name != 'neutral' and $name != 'feedback' and $alpha != null) {
+    @return hsla(var(--med-color-#{$name}-#{$variation}), $alpha);
+  } @else if ($name != 'neutral' and $name != 'feedback' and $variation == 'gradient') {
+    @return var(--med-color-#{$name}-#{$variation});
+  } @else if ($name != 'neutral' and $name != 'feedback') {
+    @return hsl(var(--med-color-#{$name}-#{$variation}));
+  }
+
+  @return 'fuck!';
+}
+
+/// default
+/// curr-color('neutral');
+/// curr-color('feedback');
+/// curr-color('color', '3');
+///
+/// contrast
+/// curr-color('neutral', null, 'contrast');
+/// curr-color('feedback', null, 'contrast');
+/// curr-color('color', '3', 'contrast');
+///
+/// opacity
+/// curr-color('neutral', null, null, 0.5);
+/// curr-color('feedback', null, null, 0.5);
+/// curr-color('color', '3', null, 0.5);
+///
+/// contrast + opacity
+/// curr-color('neutral', null, 'contrast', 0.5);
+/// curr-color('feedback', null, 'contrast', 0.5);
+/// curr-color('color', '3', 'contrast', 0.5);
+///
+@function curr-color($name, $variation: null, $contrast: null, $alpha: null) {
+  // neutral
+  @if (split-str($name) == 'neutral' and $contrast != null and $alpha != null) {
+    @return hsla(var(--med-color-neutral-contrast), $alpha);
+  } @else if (split-str($name) == 'neutral' and $contrast != null) {
+    @return hsl(var(--med-color-neutral-contrast));
+  } @else if (split-str($name) == 'neutral' and $alpha != null) {
+    @return hsla(var(--med-color-neutral), $alpha);
+  } @else if (split-str($name) == 'neutral') {
+    @return hsl(var(--med-color-neutral));
+  }
+
+  // feedback
+  @if (split-str($name) == 'feedback' and $contrast != null and $alpha != null) {
+    @return hsla(var(--med-color-feedback-contrast), $alpha);
+  } @else if (split-str($name) == 'feedback' and $contrast != null) {
+    @return hsl(var(--med-color-feedback-contrast));
+  } @else if (split-str($name) == 'feedback' and $alpha != null) {
+    @return hsla(var(--med-color-feedback), $alpha);
+  } @else if (split-str($name) == 'feedback') {
+    @return hsl(var(--med-color-feedback));
+  }
+
+  // color contrast
+  @if (split-str($name) == 'color' and $contrast != null and $alpha != null) {
+    @if ($variation == '1') {
+      @return hsla(var(--med-color-neutral-10), $alpha);
+    } @else if ($variation == '2') {
+      @return hsla(var(--med-color-neutral-10), $alpha);
+    } @else if ($variation == '3') {
+      @return hsla(var(--med-color-contrast-fixed), $alpha);
+    } @else if ($variation == '4') {
+      @return hsla(var(--med-color-neutral-1), $alpha);
+    } @else if ($variation == '5') {
+      @return hsla(var(--med-color-neutral-1), $alpha);
+    } @else if ($variation == 'gradient') {
+      @return hsla(var(--med-color-contrast-fixed), $alpha);
+    }
+  } @else if (split-str($name) == 'color' and $contrast != null) {
+    @if ($variation == '1') {
+      @return hsl(var(--med-color-neutral-10));
+    } @else if ($variation == '2') {
+      @return hsl(var(--med-color-neutral-10));
+    } @else if ($variation == '3') {
+      @return hsl(var(--med-color-contrast-fixed));
+    } @else if ($variation == '4') {
+      @return hsl(var(--med-color-neutral-1));
+    } @else if ($variation == '5') {
+      @return hsl(var(--med-color-neutral-1));
+    } @else if ($variation == 'gradient') {
+      @return hsl(var(--med-color-contrast-fixed));
+    }
+  } @else if (split-str($name) == 'color' and $alpha != null) {
+    @return hsla(var(--med-color-#{$variation}), $alpha);
+  } @else if (split-str($name) == 'color' and $variation == 'gradient') {
+    @return var(--med-color-#{$variation});
+  } @else if (split-str($name) == 'color') {
+    @return hsl(var(--med-color-#{$variation}));
+  }
+
+  @return 'fuck!';
+}
+
+@function hsl($args...) {
+  @return #{'hsl(#{$args})'};
+}
+
+@function hsla($args...) {
+  @return hsl($args...);
+}

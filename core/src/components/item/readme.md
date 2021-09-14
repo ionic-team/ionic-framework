@@ -1923,6 +1923,7 @@ export default defineComponent({
 ### Used by
 
  - ion-select-popover
+ - [med-config](../@medgrupo/global/med-config)
 
 ### Depends on
 
@@ -1935,6 +1936,7 @@ graph TD;
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
   ion-select-popover --> ion-item
+  med-config --> ion-item
   style ion-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

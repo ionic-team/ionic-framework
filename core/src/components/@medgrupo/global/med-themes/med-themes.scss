@@ -1,0 +1,114 @@
+@import "../../../../../templarios/abstracts";
+
+:host {
+  --background-left: #{color('brand', '1')};
+  --background-right: #{color('neutral', '1')};
+  --background-circle: #{color('brand', '3')};
+  --border-color: #{color('brand', '4')};
+  --color-text: #{color('neutral', '10')};
+}
+
+:host ion-radio-group {
+  width: 100%;
+}
+
+.med-theme {
+  display: flex;
+  &:not(:last-child) {
+    margin-bottom: var(--med-spacing-inset-sm);
+  }
+
+  .med-theme__left {
+    padding: var(--med-spacing-stretch-xs);
+    width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-left);
+    border: var(--med-border-width-thin) solid var(--border-color);
+    border-top-left-radius: var(--med-border-radius-sm);
+    border-bottom-left-radius: var(--med-border-radius-sm);
+  }
+
+  .med-theme__circle {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--med-border-radius-full);
+    background: var(--background-circle);
+  }
+
+  .med-theme__right {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: var(--med-spacing-inset-sm);
+    background: var(--background-right);
+    border-top-right-radius: var(--med-border-radius-sm);
+    border-bottom-right-radius: var(--med-border-radius-sm);
+    border-top: var(--med-border-width-thin) solid var(--border-color);
+    border-right: var(--med-border-width-thin) solid var(--border-color);
+    border-bottom: var(--med-border-width-thin) solid var(--border-color);
+  }
+
+  .med-theme__bar {
+    display: block;
+    width: 100%;
+    height: 8px;
+    border-radius: var(--med-border-radius-nano);
+    background: #{color('neutral', '6')};
+    margin: var(--med-spacing-stack-nano) 0;
+    &--small {
+      width: 80%;
+    }
+  }
+
+
+  .med-theme__wrapper {
+    margin-top: var(--med-spacing-stack-xxxs);
+    display: flex;
+    align-items: center;
+  }
+
+  .med-theme__name {
+    font-size: var(--med-font-size-xs);
+    line-height: var(--med-line-height-compressed);
+    font-weight: var(--med-font-weight-regular);
+    margin-left: var(--med-spacing-inline-base);
+    color: var(--color-text);
+  }
+}
+
+// ////////////////////
+// theme-gold
+// ////////////////////
+
+.med-theme--theme-gold {
+
+  --border-color: hsla(46, 65%, 60%, 1);
+
+  .med-theme__left {
+    --background-left: hsla(46, 65%, 20%, 1);
+  }
+
+  .med-theme__circle {
+    background: hsla(46, 65%, 40%, 1);
+  }
+
+  .med-theme__bar {
+    background: hsla(46, 10%, 58%, 1);
+  }
+
+  ion-radio {
+    --color: hsla(46, 65%, 60%, 1);
+    --color-checked: hsla(46, 65%, 60%, 1);
+  }
+}
+
+
+
+// ////////////////////
+// theme-recursos
+// ////////////////////
+
+

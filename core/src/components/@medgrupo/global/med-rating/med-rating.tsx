@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { createColorClasses } from '../../../../utils/theme';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 @Component({
   tag: 'med-rating',
@@ -7,6 +8,11 @@ import { createColorClasses } from '../../../../utils/theme';
   shadow: true,
 })
 export class MedRating {
+
+  /**
+    * Define a cor do componente.
+    */
+   @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
    * Define a variação do componente.
@@ -39,16 +45,16 @@ export class MedRating {
   @Prop() cabe = false;
 
     render() {
-      const { dsName, nome, data, concurso, texto, cabe } = this;
+      const { dsColor, dsName, nome, data, concurso, texto, cabe } = this;
 
       return (
         <Host from-stencil
-          class={createColorClasses(null, {
+          class={generateMedColor(dsColor, {
             'med-rating': true,
             'med-rating--cabe': cabe,
             'med-rating--nao-cabe': !cabe,
             [`med-rating--${dsName}`]: dsName !== undefined,
-          }, null)}>
+          })}>
 
             <div class="med-rating__left">
               <ion-icon name={cabe ? "med-positivo" : "med-negativo"} class="med-icon med-rating__icon"></ion-icon>

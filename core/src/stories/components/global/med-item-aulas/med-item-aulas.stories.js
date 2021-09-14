@@ -1,23 +1,23 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Item Aulas',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({ professor, porcentagem, videos}) => {
+const TemplateDefault = ({ dsColor, professor, porcentagem, videos}) => {
 
   return html`
-    <ion-app class="storybook-only">
-      <ion-content class="storybook-only__container" style="text-align:left;">
+    <ion-app>
+      <ion-content>
 
         <!-- component -->
-          <med-item-aulas .professor=${professor} .porcentagem=${porcentagem} .videos=${videos}>
-            <med-avatar ds-size="lg" letter="A" slot="avatar"></med-avatar>
-            <med-rate-result excelente="10" bom="20" regular="30" ruim="40" slot="rate"></med-rate-result>
-          </med-item-aulas>
+        <med-item-aulas .dsColor=${dsColor} .professor=${professor} .porcentagem=${porcentagem} .videos=${videos}>
+          <med-avatar ds-size="lg" letter="A" slot="avatar"></med-avatar>
+          <med-rate-result excelente="10" bom="20" regular="30" ruim="40" slot="rate"></med-rate-result>
+        </med-item-aulas>
         <!-- component -->
 
       </ion-content>
@@ -33,6 +33,15 @@ ItemAulas.parameters = {
   },
 }
 ItemAulas.argTypes = {
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
+    description: "Define a cor do componente.",
+    table: {
+      type:  { summary: 'MedColor' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   professor: {
     control: { type: 'text' },
     description: "Define o nome do professor.",

@@ -1,12 +1,12 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
    * @prop --background: Define a cor de background do componente.
    * @prop --color: Define a cor de texto do componente.
    */
-  --background: var(--med-color-neutral-1);
-  --color: var(--med-color-neutral-10);
+  --background: #{color('neutral', '1')};
+  --color: #{color('neutral', '1', 'contrast')};
 }
 
 :host(.med-navbar) {
@@ -18,7 +18,7 @@
     }
 
     &__container {
-      padding: var(--ion-safe-area-top, 0) #{$med-spacing-inset-sm} 0 #{$med-spacing-inset-sm};
+      padding: var(--ion-safe-area-top, 0) var(--spacing-inset-sm) 0 var(--spacing-inset-sm);
       position: relative;
       display: flex;
       align-items: center;
@@ -47,8 +47,8 @@
       padding-right: var(--padding-right);
       // setado via tsx //
 
-      padding-top: $med-spacing-stack-xxxs;
-      padding-bottom: $med-spacing-stack-xxxs;
+      padding-top: var(--spacing-stack-xxxs);
+      padding-bottom: var(--spacing-stack-xxxs);
 
       display: flex;
       align-items: center;
@@ -65,16 +65,16 @@
 // slotted
 // ////////////////////
 
-// OBS: !important é necessário para garantir que os elementos passados via slot mantenham a estilização definida no design system.
-
 :host(.med-navbar) ::slotted(*) {
+  // OBS: !important é necessário para garantir que os elementos passados via slot mantenham a estilização definida no design system.
+
   margin: 0 !important;
   padding: 0 !important;
 }
 
 :host(.med-navbar) ::slotted([slot="left"]) {
   color: var(--color);
-  margin-right: $med-spacing-inline-base;
+  margin-right: var(--spacing-inline-base);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -82,23 +82,23 @@
 
 :host(.med-navbar) ::slotted([slot="title"]) {
   color: var(--color);
-  font-size: $med-font-size-xs !important;
-  font-weight: $med-font-weight-semibold !important;
-  line-height: $med-line-height-compressed !important;
+  font-size: var(--med-font-size-xs) !important;
+  font-weight: var(--med-font-weight-semibold) !important;
+  line-height: var(--med-line-height-compressed) !important;
   display: block;
 }
 
 :host(.med-navbar) ::slotted([slot="subtitle"]) {
   color: var(--color);
-  font-size: $med-font-size-xxxs !important;
-  font-weight: $med-font-weight-semibold !important;
+  font-size: var(--med-font-size-xxxs) !important;
+  font-weight: var(--med-font-weight-semibold) !important;
   line-height: line-height($med-font-size-xxxs) !important;
   display: block;
 }
 
 :host(.med-navbar) ::slotted([slot="right"]) {
   color: var(--color);
-  margin-left: $med-spacing-inline-base !important;
+  margin-left: var(--spacing-inline-base) !important;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -108,71 +108,97 @@
 // color
 // ////////////////////
 
-:host(.ion-color) ::slotted([slot="left"]),
-:host(.ion-color) ::slotted([slot="right"]),
-:host(.ion-color) ::slotted([slot="title"]),
-:host(.ion-color) ::slotted([slot="subtitle"]) {
-  --color: #{md-current-color(3)};
+:host(.med-color) ::slotted([slot="left"]),
+:host(.med-color) ::slotted([slot="right"]),
+:host(.med-color) ::slotted([slot="title"]),
+:host(.med-color) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('color', '3')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-neutral) {
-  //--background: #{var(--med-neutral)};
+:host(.med-color-neutral) ::slotted([slot="left"]),
+:host(.med-color-neutral) ::slotted([slot="right"]),
+:host(.med-color-neutral) ::slotted([slot="title"]),
+:host(.med-color-neutral) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('neutral')};
 }
 
-:host(.med-neutral) ::slotted([slot="left"]),
-:host(.med-neutral) ::slotted([slot="right"]),
-:host(.med-neutral) ::slotted([slot="title"]),
-:host(.med-neutral) ::slotted([slot="subtitle"]) {
-  --color: #{var(--med-neutral)};
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback) ::slotted([slot="left"]),
+:host(.med-color-feedback) ::slotted([slot="right"]),
+:host(.med-color-feedback) ::slotted([slot="title"]),
+:host(.med-color-feedback) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('feedback')};
 }
+
 
 // //////////////////////////////
 // secondary
 // //////////////////////////////
 
 :host(.med-navbar--secondary) {
-  --background: var(--med-color-neutral-10);
+  --background: #{color('neutral', '10')};
 }
 
 :host(.med-navbar--secondary) ::slotted([slot="left"]),
 :host(.med-navbar--secondary) ::slotted([slot="right"]),
 :host(.med-navbar--secondary) ::slotted([slot="title"]),
 :host(.med-navbar--secondary) ::slotted([slot="subtitle"]) {
-  --color: var(--med-color-neutral-1);
+  --color: #{color('neutral', '10', 'contrast')};
 }
 
 // ////////////////////
 // color
 // ////////////////////
 
-:host(.med-navbar--secondary.ion-color) {
-  --background: #{md-current-color(3)};
+:host(.med-color.med-navbar--secondary) {
+  --background: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3', 'contrast')};
 }
 
-:host(.med-navbar--secondary.ion-color) ::slotted([slot="left"]),
-:host(.med-navbar--secondary.ion-color) ::slotted([slot="right"]),
-:host(.med-navbar--secondary.ion-color) ::slotted([slot="title"]),
-:host(.med-navbar--secondary.ion-color) ::slotted([slot="subtitle"]) {
-  --color: #{md-current-color(contrast-1)};
+:host(.med-color.med-navbar--secondary) ::slotted([slot="left"]),
+:host(.med-color.med-navbar--secondary) ::slotted([slot="right"]),
+:host(.med-color.med-navbar--secondary) ::slotted([slot="title"]),
+:host(.med-color.med-navbar--secondary) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('color', '3', 'contrast')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-navbar--secondary.med-neutral) {
-  --background: #{var(--med-neutral)};
+:host(.med-color-neutral.med-navbar--secondary) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
 }
 
-:host(.med-navbar--secondary.med-neutral) ::slotted([slot="left"]),
-:host(.med-navbar--secondary.med-neutral) ::slotted([slot="right"]),
-:host(.med-navbar--secondary.med-neutral) ::slotted([slot="title"]),
-:host(.med-navbar--secondary.med-neutral) ::slotted([slot="subtitle"]) {
-  --color: #{var(--med-neutral-contrast)};
+:host(.med-color-neutral.med-navbar--secondary) ::slotted([slot="left"]),
+:host(.med-color-neutral.med-navbar--secondary) ::slotted([slot="right"]),
+:host(.med-color-neutral.med-navbar--secondary) ::slotted([slot="title"]),
+:host(.med-color-neutral.med-navbar--secondary) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('neutral', null, 'contrast')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback.med-navbar--secondary) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+}
+
+:host(.med-color-feedback.med-navbar--secondary) ::slotted([slot="left"]),
+:host(.med-color-feedback.med-navbar--secondary) ::slotted([slot="right"]),
+:host(.med-color-feedback.med-navbar--secondary) ::slotted([slot="title"]),
+:host(.med-color-feedback.med-navbar--secondary) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('feedback', null, 'contrast')};
 }
 
 // //////////////////////////////
@@ -187,35 +213,50 @@
 :host(.med-navbar--transparent) ::slotted([slot="right"]),
 :host(.med-navbar--transparent) ::slotted([slot="title"]),
 :host(.med-navbar--transparent) ::slotted([slot="subtitle"]) {
-  --color: var(--med-color-neutral-10);
+  --color: #{color('neutral', '10')};
 }
 
 // ////////////////////
 // color
 // ////////////////////
 
-:host(.med-navbar--transparent.ion-color) {
+:host(.med-navbar--transparent.med-color) {
   --background: transparent;
 }
 
-:host(.med-navbar--transparent.ion-color) ::slotted([slot="left"]),
-:host(.med-navbar--transparent.ion-color) ::slotted([slot="right"]),
-:host(.med-navbar--transparent.ion-color) ::slotted([slot="title"]),
-:host(.med-navbar--transparent.ion-color) ::slotted([slot="subtitle"]) {
-  --color: #{md-current-color(3)};
+:host(.med-navbar--transparent.med-color) ::slotted([slot="left"]),
+:host(.med-navbar--transparent.med-color) ::slotted([slot="right"]),
+:host(.med-navbar--transparent.med-color) ::slotted([slot="title"]),
+:host(.med-navbar--transparent.med-color) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('color', '3')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-navbar--transparent.med-neutral) {
+:host(.med-navbar--transparent.med-color-neutral) {
   --background: transparent;
 }
 
-:host(.med-navbar--transparent.med-neutral) ::slotted([slot="left"]),
-:host(.med-navbar--transparent.med-neutral) ::slotted([slot="right"]),
-:host(.med-navbar--transparent.med-neutral) ::slotted([slot="title"]),
-:host(.med-navbar--transparent.med-neutral) ::slotted([slot="subtitle"]) {
-  --color: #{var(--med-neutral)};
+:host(.med-navbar--transparent.med-color-neutral) ::slotted([slot="left"]),
+:host(.med-navbar--transparent.med-color-neutral) ::slotted([slot="right"]),
+:host(.med-navbar--transparent.med-color-neutral) ::slotted([slot="title"]),
+:host(.med-navbar--transparent.med-color-neutral) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('neutral')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-navbar--transparent.med-color-feedback) {
+  --background: transparent;
+}
+
+:host(.med-navbar--transparent.med-color-feedback) ::slotted([slot="left"]),
+:host(.med-navbar--transparent.med-color-feedback) ::slotted([slot="right"]),
+:host(.med-navbar--transparent.med-color-feedback) ::slotted([slot="title"]),
+:host(.med-navbar--transparent.med-color-feedback) ::slotted([slot="subtitle"]) {
+  --color: #{curr-color('feedback')};
 }

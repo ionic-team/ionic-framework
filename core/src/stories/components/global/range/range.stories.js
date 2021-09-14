@@ -13,8 +13,8 @@ const TemplateDefault = ({}) => {
 
         <!-- component -->
           <ion-range max="5">
-            <ion-icon class="med-icon" slot="start" size="small" name="med-font-decrease"></ion-icon>
-            <ion-icon class="med-icon" slot="end" name="med-font-increase"></ion-icon>
+            <ion-icon class="med-icon" slot="start" size="small" name="med-fontemenor"></ion-icon>
+            <ion-icon class="med-icon" slot="end" name="med-fontemaior"></ion-icon>
           </ion-range>
         <!-- component -->
 

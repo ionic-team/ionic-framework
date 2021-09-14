@@ -1,14 +1,14 @@
-@import "../../../../../../med-components/abstracts";
+@import "../../../../../../templarios/abstracts";
 @import "../../../../../themes/ionic.mixins.scss";
 
 :host {
-  --font-size: #{$med-font-size-xs};
-  --font-weight: #{$med-font-weight-regular};
-  --line-height: #{$med-line-height-double};
-  --color: var(--med-theme-color, #{$med-color-neutral-dark-20});
+  --font-size: var(--med-font-size-xs);
+  --font-weight: var(--med-font-weight-regular);
+  --line-height: var(--med-line-height-double);
+  --color: #{color('neutral', '1', 'contrast')};
   --text-align: justify;
 
-  --image-list-padding-top: #{$med-spacing-stack-base};
+  --image-list-padding-top: var(--med-spacing-stack-base);
 
   display: block;
 
@@ -23,7 +23,7 @@
     margin: 0;
     list-style: none;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     padding-top: var(--image-list-padding-top);
     flex-direction: column;
 
@@ -38,28 +38,15 @@
     &__item {
       max-width: 100%;
       cursor: pointer;
-
-      &:not(:last-child) {
-        padding-right: 0;
-        padding-bottom: 16px;
-      }
+      position: relative;
+      max-height: 250px;
 
       @include media-breakpoint-up('md', $med-grid-breakpoints) {
         max-width: 50%;
-        padding-bottom: 0;
-
-        &:not(:last-child) {
-          padding-right: 16px;
-        }
       }
 
       @include media-breakpoint-up('lg', $med-grid-breakpoints) {
         max-width: 33.33%;
-        padding-bottom: 0;
-
-        &:not(:last-child) {
-          padding-right: 16px;
-        }
       }
     }
 
@@ -67,20 +54,34 @@
       width: 100%;
       height: auto;
       display: block;
+      max-height: 250px;
+    }
+
+    .image__zoom {
+      background: #{color('brand', '1')};
+      width: 24px;
+      height: 24px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+
+      .med-icon {
+        stroke: #{color('neutral', '10')};
+        font-size: 14px;
+      }
     }
   }
 }
 
-//
-// theme
-//
+// ////////////////////
+// skin
+// ////////////////////
 
-:host-context(body.light),
-:host-context(data-theme[light]) {
-  --color: var(--med-theme-color, #{$med-color-neutral-dark-20});
-}
-
-:host-context(body.dark),
-:host-context(data-theme[dark]) {
-  --color: var(--med-theme-color, #{$med-color-neutral-light-20});
+:host(.med-enunciado--skin) {
+  --font-size: var(--med-font-size-xxs);
+  --line-heigh: var(--med-line-height-default);
 }

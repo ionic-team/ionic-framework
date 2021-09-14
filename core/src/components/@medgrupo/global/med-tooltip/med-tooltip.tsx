@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Method, Listen } from '@stencil/core';
-import { createColorClasses } from '../../../../utils/theme';
+import { generateMedColor } from '../../../../utils/med-theme';
+import { MedColor } from '../../../../interface';
 
 @Component({
   tag: 'med-tooltip',
@@ -12,18 +13,39 @@ export class MedTooltip {
    */
   @Prop() dsName?: 'definition';
 
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+   * TODO
+   */
   @Prop({ reflect: true }) placement?: 'top' | 'bottom' | 'left' | 'right';
 
+  /**
+   * TODO
+   */
   @Prop({ reflect: true }) position?: 'start' | 'center' | 'end';
 
+  /**
+   * TODO
+   */
   @Prop({ reflect: true }) titulo?: string;
+
+  /**
+   * TODO
+   */
   @Prop({ reflect: true }) content?: string;
 
   /**
    * Define o estado do componente.
    */
-   @Prop({ reflect: true, mutable: true }) collapsed = true;
+  @Prop({ reflect: true, mutable: true }) collapsed = true;
 
+  /**
+   * TODO
+   */
   @Method()
   async toggle(event?: Event) {
     event?.stopPropagation();
@@ -38,21 +60,21 @@ export class MedTooltip {
   }
 
   render() {
-    const { dsName, placement, position, collapsed, titulo, content } = this;
+    const { dsName, placement, position, collapsed, titulo, content, dsColor } = this;
 
     return (
       <Host
         from-stencil
-        class={createColorClasses(null, {
+        class={generateMedColor(dsColor, {
           'med-tooltip': true,
           [`med-tooltip--${dsName}`]: dsName !== undefined,
           [`med-tooltip--${placement}`]: placement !== undefined,
           [`med-tooltip--${position}`]: position !== undefined,
           'med-tooltip--collapsed': collapsed
-        }, null)}
+        })}
       >
         <div class="med-tooltip__icon-container">
-          <ion-button onClick={(event) => {this.toggle(event)}} class="med-tooltip__button" ds-name="icon-only">
+          <ion-button ds-name="tertiary" onClick={(event) => {this.toggle(event)}} class="med-tooltip__button">
             <slot name="icon"></slot>
           </ion-button>
         </div>

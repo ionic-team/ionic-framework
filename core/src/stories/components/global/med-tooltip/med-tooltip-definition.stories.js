@@ -1,17 +1,18 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Tooltip',
   decorators: [withDesign],
 };
 
-const Template = ({ collapsed, placement, position, titulo, content }) => {
+const Template = ({ collapsed, placement, position, titulo, content, dsColor }) => {
   return html`
     <ion-app style="align-items: center; justify-content: center;">
 
       <!-- component -->
-      <med-tooltip ds-name="definition" .titulo=${titulo} .content=${content} .collapsed=${collapsed} .placement=${placement} .position=${position}>
+      <med-tooltip .dsColor=${dsColor} ds-name="definition" .titulo=${titulo} .content=${content} .collapsed=${collapsed} .placement=${placement} .position=${position}>
         <ion-icon slot="icon" class="med-icon med-tooltip__icon" name="med-context-menu"></ion-icon>
       </med-tooltip>
       <!-- component -->
@@ -28,6 +29,15 @@ Definition.parameters = {
   },
 }
 Definition.argTypes = {
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
+    description: "Define a cor do componente.",
+    table: {
+      type:  { summary: 'MedColor' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   collapsed: {
     control: { type: 'boolean' },
     description: 'Define o estado do componente.',

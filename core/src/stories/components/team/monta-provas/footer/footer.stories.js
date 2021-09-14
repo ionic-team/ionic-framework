@@ -10,7 +10,7 @@ const Default = ({}) => {
   return html`
     <style>
       .monta-provas-footer {
-        background: var(--med-color-neutral-2);
+        background: hsl(var(--med-color-neutral-2));
       }
 
       .monta-provas-footer__container {
@@ -30,7 +30,7 @@ const Default = ({}) => {
         font-size: var(--med-font-size-nano);
         font-weight: var(--med-font-weight-regular);
         line-height; var(--med-line-height-compressed);
-        color: var(--med-color-neutral-10);
+        color: hsl(var(--med-color-neutral-10));
         text-transform: uppercase;
         margin: 0;
       }
@@ -39,7 +39,7 @@ const Default = ({}) => {
         font-size: var(--med-font-size-xs);
         font-weight: var(--med-font-weight-semibold);
         line-height; var(--med-line-height-compressed);
-        color: var(--med-color-brand-4);
+        color: hsl(var(--med-color-brand-4));
         text-transform: uppercase;
         margin: 0;
         padding: var(--med-spacing-stack-nano) 0;

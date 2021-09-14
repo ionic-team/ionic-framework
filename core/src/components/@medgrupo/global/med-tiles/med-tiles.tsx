@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { createColorClasses } from '../../../../utils/theme';
-import { Color, Neutral } from '../../../../interface';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 @Component({
   tag: 'med-tiles',
@@ -9,23 +9,45 @@ import { Color, Neutral } from '../../../../interface';
 })
 export class MedTiles {
 
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+   * TODO
+   */
   @Prop() titulo?: string;
+
+  /**
+   * TODO
+   */
   @Prop() label?: string;
+
+  /**
+   * TODO
+   */
   @Prop() badge?: string;
-  @Prop() neutral?: Neutral;
-  @Prop() color?: Color;
+
+  /**
+   * TODO
+   */
   @Prop() solid = false;
+
+  /**
+   * TODO
+   */
   @Prop({ reflect:true }) selected = false;
 
   render() {
-    const { color, neutral, titulo, label, selected, solid } = this;
+    const { dsColor, titulo, label, selected, solid } = this;
     return (
       <Host
-      class={createColorClasses(color, {
+      class={generateMedColor(dsColor, {
         'med-tiles': true,
         'med-solid': solid,
         'med-tiles--selected': selected
-      }, neutral)}
+      },)}
       >
         <div class="med-tiles__border"></div>
         <div class="med-tiles__content">

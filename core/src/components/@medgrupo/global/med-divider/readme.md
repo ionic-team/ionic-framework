@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property            | Attribute | Description                        | Type                  | Default     |
-| ------------------- | --------- | ---------------------------------- | --------------------- | ----------- |
-| `color`             | `color`   | Define a cor do componente.        | `string \| undefined` | `undefined` |
-| `neutral`           | `neutral` | Define a cor neutra do componente. | `string \| undefined` | `undefined` |
-| `text` _(required)_ | `text`    | Define o texto do componente.      | `string`              | `undefined` |
+| Property            | Attribute  | Description                   | Type                  | Default     |
+| ------------------- | ---------- | ----------------------------- | --------------------- | ----------- |
+| `dsColor`           | `ds-color` | Define a cor do componente.   | `string \| undefined` | `undefined` |
+| `text` _(required)_ | `text`     | Define o texto do componente. | `string`              | `undefined` |
 
 
 ## CSS Custom Properties

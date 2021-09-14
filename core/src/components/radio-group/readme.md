@@ -239,11 +239,15 @@ export default defineComponent({
 ### Used by
 
  - ion-select-popover
+ - [med-config](../@medgrupo/global/med-config)
+ - [med-themes](../@medgrupo/global/med-themes)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-select-popover --> ion-radio-group
+  med-config --> ion-radio-group
+  med-themes --> ion-radio-group
   style ion-radio-group fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

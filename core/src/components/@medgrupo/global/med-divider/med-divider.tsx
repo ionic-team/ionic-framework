@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { Color, Neutral } from '../../../../interface';
-import { createColorClasses } from '../../../../utils/theme';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 @Component({
   tag: 'med-divider',
@@ -11,12 +11,7 @@ export class MedDivider {
   /**
    * Define a cor do componente.
    */
-  @Prop() color?: Color;
-
-  /**
-   * Define a cor neutra do componente.
-   */
-  @Prop() neutral?: Neutral;
+  @Prop() dsColor?: MedColor;
 
   /**
    * Define o texto do componente.
@@ -24,12 +19,12 @@ export class MedDivider {
   @Prop() text!: string;
 
   render() {
-    const { color, neutral, text } = this;
+    const { dsColor, text } = this;
 
     return (
-      <Host from-stencil class={createColorClasses(color, {
+      <Host from-stencil class={generateMedColor(dsColor, {
         'med-divider': true
-        }, neutral)}>
+        })}>
         <h3 class="med-divider__heading">{text}</h3>
       </Host>
     );

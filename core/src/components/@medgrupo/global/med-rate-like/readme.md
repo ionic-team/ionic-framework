@@ -9,14 +9,14 @@
 
 | Property | Attribute | Description | Type                                                 | Default     |
 | -------- | --------- | ----------- | ---------------------------------------------------- | ----------- |
-| `status` | `status`  |             | `RateStatus.DISLIKE \| RateStatus.LIKE \| undefined` | `undefined` |
+| `status` | `status`  | TODO        | `RateStatus.DISLIKE \| RateStatus.LIKE \| undefined` | `undefined` |
 
 
 ## Events
 
 | Event       | Description | Type                                                 |
 | ----------- | ----------- | ---------------------------------------------------- |
-| `medChange` |             | `CustomEvent<RateStatus.DISLIKE \| RateStatus.LIKE>` |
+| `medChange` | TODO        | `CustomEvent<RateStatus.DISLIKE \| RateStatus.LIKE>` |
 
 
 ## Dependencies

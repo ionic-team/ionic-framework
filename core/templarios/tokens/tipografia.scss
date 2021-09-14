@@ -1,0 +1,42 @@
+:root {
+  /* font family */
+  --med-font-family-brand: 'fsemeric';
+  --med-font-family-base: 'fsemeric';
+
+  /* font size */
+  --med-font-size-nano: 10px;
+  --med-font-size-xxxs: 12px;
+  --med-font-size-xxs: 14px;
+  --med-font-size-xs: 16px;
+  --med-font-size-sm: 20px;
+  --med-font-size-md: 24px;
+  --med-font-size-lg: 32px;
+  --med-font-size-xl: 40px;
+  --med-font-size-xxl: 48px;
+  --med-font-size-xxxl: 64px;
+  --med-font-size-huge: 96px;
+
+  /* font weight */
+  --med-font-weight-thin: 250;
+  --med-font-weight-light: 300;
+  --med-font-weight-regular: 400;
+  --med-font-weight-medium: 500;
+  --med-font-weight-semibold: 600;
+  --med-font-weight-bold: 700;
+  --med-font-weight-extrabold: 800;
+  --med-font-weight-heavy: 900;
+
+  /* letter spacing */
+  --med-letter-spacing-ultracompressed: -0.04;
+  --med-letter-spacing-compressed: -0.02;
+  --med-letter-spacing-default: 0;
+  --med-letter-spacing-medium: 0.02;
+  --med-letter-spacing-expanded: 0.05;
+  --med-letter-spacing-distant: 0.1;
+  --med-letter-spacing-far: 0.2;
+
+  /* line height */
+  --med-line-height-compressed: 100%;
+  --med-line-height-default: #{line-height()};
+  --med-line-height-double: 200%;
+}

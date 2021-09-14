@@ -233,7 +233,7 @@ export default defineComponent({
 | Property    | Attribute   | Description                                                         | Type                                    | Default     |
 | ----------- | ----------- | ------------------------------------------------------------------- | --------------------------------------- | ----------- |
 | `activated` | `activated` | If `true`, the fab list will show all fab buttons in the list.      | `boolean`                               | `false`     |
-| `dsSize`    | `ds-size`   |                                                                     | `"lg" \| "md" \| undefined`             | `undefined` |
+| `dsSize`    | `ds-size`   | TODO                                                                | `"lg" \| "md" \| undefined`             | `undefined` |
 | `side`      | `side`      | The side the fab list will show on relative to the main fab button. | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'`  |
 
 

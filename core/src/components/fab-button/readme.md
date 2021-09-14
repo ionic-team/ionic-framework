@@ -153,11 +153,12 @@ export default defineComponent({
 | `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                    | `string \| undefined`                                   | `undefined` |
 | `disabled`        | `disabled`         | If `true`, the user cannot interact with the fab button.                                                                                                                                                                                                                                  | `boolean`                                               | `false`     |
 | `download`        | `download`         | This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want). | `string \| undefined`                                   | `undefined` |
-| `dsName`          | `ds-name`          |                                                                                                                                                                                                                                                                                           | `"icon-label" \| "label" \| undefined`                  | `undefined` |
-| `dsSize`          | `ds-size`          |                                                                                                                                                                                                                                                                                           | `"lg" \| "md" \| undefined`                             | `undefined` |
+| `dsColor`         | `ds-color`         | Define a cor do componente.                                                                                                                                                                                                                                                               | `string \| undefined`                                   | `undefined` |
+| `dsName`          | `ds-name`          | TODO                                                                                                                                                                                                                                                                                      | `"icon-label" \| "label" \| undefined`                  | `undefined` |
+| `dsSize`          | `ds-size`          | TODO                                                                                                                                                                                                                                                                                      | `"lg" \| "md" \| undefined`                             | `undefined` |
 | `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                                   | `string \| undefined`                                   | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                         | `"ios" \| "md"`                                         | `undefined` |
-| `neutral`         | `neutral`          |                                                                                                                                                                                                                                                                                           | `string \| undefined`                                   | `undefined` |
+| `neutral`         | `neutral`          | TODO                                                                                                                                                                                                                                                                                      | `string \| undefined`                                   | `undefined` |
 | `rel`             | `rel`              | Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).                                                                                                    | `string \| undefined`                                   | `undefined` |
 | `routerAnimation` | --                 | When using a router, it specifies the transition animation when navigating to another page using `href`.                                                                                                                                                                                  | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                                                  | `"back" \| "forward" \| "root"`                         | `'forward'` |
@@ -182,35 +183,6 @@ export default defineComponent({
 | -------------- | ----------------------------------------------------------------------- |
 | `"close-icon"` | The close icon that is displayed when a fab list opens (uses ion-icon). |
 | `"native"`     | The native HTML button or anchor element that wraps all child elements. |
-
-
-## CSS Custom Properties
-
-| Name                             | Description                                                                                               |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `--background`                   | Background of the button                                                                                  |
-| `--background-activated`         | Background of the button when pressed. Note: setting this will interfere with the Material Design ripple. |
-| `--background-activated-opacity` | Opacity of the button background when pressed                                                             |
-| `--background-focused`           | Background of the button when focused with the tab key                                                    |
-| `--background-focused-opacity`   | Opacity of the button background when focused with the tab key                                            |
-| `--background-hover`             | Background of the button on hover                                                                         |
-| `--background-hover-opacity`     | Opacity of the button background on hover                                                                 |
-| `--border-color`                 | Border color of the button                                                                                |
-| `--border-radius`                | Border radius of the button                                                                               |
-| `--border-style`                 | Border style of the button                                                                                |
-| `--border-width`                 | Border width of the button                                                                                |
-| `--box-shadow`                   | Box shadow of the button                                                                                  |
-| `--close-icon-font-size`         | Font size of the close icon                                                                               |
-| `--color`                        | Text color of the button                                                                                  |
-| `--color-activated`              | Text color of the button when pressed                                                                     |
-| `--color-focused`                | Text color of the button when focused with the tab key                                                    |
-| `--color-hover`                  | Text color of the button on hover                                                                         |
-| `--padding-bottom`               | Bottom padding of the button                                                                              |
-| `--padding-end`                  | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
-| `--padding-start`                | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
-| `--padding-top`                  | Top padding of the button                                                                                 |
-| `--ripple-color`                 | Color of the button ripple effect                                                                         |
-| `--transition`                   | Transition of the button                                                                                  |
 
 
 ## Dependencies

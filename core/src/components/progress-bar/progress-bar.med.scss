@@ -1,5 +1,4 @@
-@import "../../../med-components/abstracts";
-@import "../../themes/ionic.globals.scss";
+@import "../../../templarios/abstracts";
 
 // Progress bar
 // ------------------------------------------------------------------------
@@ -13,12 +12,14 @@
    */
   // ionic css custom properties
   --background: transparent;
-  --progress-background: #{medsoft-color(questoes, light)};
+  --progress-background: #{color('brand', '4')};
   --buffer-background: transparent;
+  --color-label-skin: #{color('brand', '4')};
+  --color-progress-skin: #{color('brand', '4')};
 
   // design system css custom properties
-  --progress-correct-background: #{medsoft-color(feedback-success, light)};
-  --percentage-color: #{medsoft-color(neutral-light, 10)};
+  --progress-correct-background: #{color('feedback', 'success')};
+  --percentage-color: #{color('neutral', '10')};
 
   --height: 8px;
 
@@ -32,12 +33,14 @@
 
 .progress-container {
   display: flex;
+  border-radius: 100px;
   background-color: var(--background);
 }
 
 :host(.in-med-header) {
   .progress-container {
-    background: medsoft-color(neutral-light, 40);
+    background: color('neutral', '8');
+    border-radius: 0;
   }
 
   .progress {
@@ -49,7 +52,7 @@
     }
 
     &--correct {
-      background: medsoft-color(questoes, light);
+      background: color('brand', '4');
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
@@ -64,11 +67,11 @@
   background: var(--progress-background);
 
   &__percentage {
-    font-size: $med-font-size-nano;
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
+    font-size: var(--med-font-size-nano);
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
     color: var(--percentage-color);
-    margin-left: $med-spacing-inline-xxxs;
+    margin-left: var(--med-spacing-inline-xxxs);
     display: none;
   }
 
@@ -83,8 +86,28 @@
   }
 }
 
-:host(.ion-color) {
-  --progress-background: #{medsoft-current-color(light)};
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --progress-background: #{curr-color('color', '4')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --progress-background: #{curr-color('neutral')};
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color-feedback) {
+  --progress-background: #{curr-color('feedback')};
 }
 
 // //////////////////////////////
@@ -92,13 +115,20 @@
 // //////////////////////////////
 
 :host(.med-progress-bar--minimalist) {
-  --background: #{md-color(brand, 1)};
+  --background: #{color('brand', '1')};
+  --progress-correct-background: #{color('brand', '4')};
   --height: 4px;
+
   .progress {
     border-radius: 0;
   }
+
   .progress__percentage {
     display: none;
+  }
+
+  .progress-container {
+    border-radius: 0;
   }
 }
 
@@ -106,7 +136,75 @@
 // color
 // ////////////////////
 
-:host(.med-progress-bar--minimalist.ion-color) {
-  --background: #{md-current-color(1)};
-  --progress-background: #{md-current-color(3)};
+:host(.med-color.med-progress-bar--minimalist) {
+  --background: #{curr-color('color', '1')};
+  --progress-correct-background: #{curr-color('color', '4')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-progress-bar--minimalist) {
+  --background: transparent;
+  --progress-correct-background: #{curr-color('neutral')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback.med-progress-bar--minimalist) {
+  --background: transparent;
+  --progress-correct-background: #{curr-color('feedback')};
+}
+
+// // //////////////////////////////
+// // skin
+// // //////////////////////////////
+
+:host(.med-progress-bar--skin) {
+  --background: #{color('neutral', '2')};
+  --progress-background: var(--color-progress-skin);
+  --percentage-color: var(--color-label-skin);
+  --height: 10px;
+
+  .progress-container {
+    width: 96%;
+  }
+
+  .progress__percentage {
+    position: absolute;
+    right: 0px;
+  }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color.med-progress-bar--skin) {
+  --background: #{color('neutral', '2')};
+  --progress-background: #{curr-color('color', '4')};
+  --percentage-color: #{curr-color('color', '4')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-progress-bar--skin) {
+  --background: #{color('neutral', '2')};
+  --progress-background: #{curr-color('neutral')};
+  --percentage-color: #{curr-color('neutral')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback.med-progress-bar--skin) {
+  --background: #{color('neutral', '2')};
+  --progress-background: #{curr-color('feedback')};
+  --percentage-color: #{curr-color('feedback')};
 }

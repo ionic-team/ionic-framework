@@ -7,31 +7,23 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                        | Type                  | Default     |
-| ----------- | ----------- | ---------------------------------- | --------------------- | ----------- |
-| `collapsed` | `collapsed` | Define o estado do componente.     | `boolean`             | `true`      |
-| `color`     | `color`     | Define a cor do componente.        | `string \| undefined` | `undefined` |
-| `neutral`   | `neutral`   | Define a cor neutra do componente. | `string \| undefined` | `undefined` |
+| Property    | Attribute   | Description                    | Type                  | Default     |
+| ----------- | ----------- | ------------------------------ | --------------------- | ----------- |
+| `collapsed` | `collapsed` | Define o estado do componente. | `boolean`             | `true`      |
+| `dsColor`   | `ds-color`  | Define a cor do componente.    | `string \| undefined` | `undefined` |
 
 
 ## Methods
 
 ### `toggle(event?: Event | undefined) => Promise<void>`
 
-
+TODO
 
 #### Returns
 
 Type: `Promise<void>`
 
 
-
-
-## CSS Custom Properties
-
-| Name      | Description                 |
-| --------- | --------------------------- |
-| `--color` | Define a cor do componente. |
 
 
 ## Dependencies

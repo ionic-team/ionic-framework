@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../../med-colors';
+//import { medColors, medNeutrals } from '../../../../med-colors';
 
 export default {
   title: 'Components/Team/Aulas/Accordion Aulas',
@@ -76,7 +76,7 @@ Default.parameters = {
   },
 }
 Default.argTypes = {
-  color: {
+  /* color: {
     options: medColors,
     control: { type: 'inline-radio'},
     description: "Define a cor do componente.",
@@ -93,7 +93,7 @@ Default.argTypes = {
       type:  { summary: 'Neutrals' },
       defaultValue: { summary: 'undefined' },
     },
-  },
+  }, */
   icon: {
     options: [undefined, 'left', 'right'],
     control: { type: 'radio'},

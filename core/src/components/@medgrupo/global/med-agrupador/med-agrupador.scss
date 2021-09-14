@@ -1,16 +1,16 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
    * @prop --color: Define a cor do componente.
    */
-  --color: #{md-color(brand, 3)};
+  --color: #{color('brand', '3')};
 }
 
 :host(.med-agrupador) {
-  font-size: $med-font-size-xxs;
-  font-weight: $med-font-weight-medium;
-  line-height: $med-line-height-compressed;
+  font-size: var(--med-font-size-xxs);
+  font-weight: var(--med-font-weight-medium);
+  line-height: var(--med-line-height-compressed);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -36,25 +36,38 @@
 // color
 // ////////////////////
 
-:host(.ion-color) {
-  --color: #{md-current-color(3)};
+:host(.med-color) {
+  --color: #{curr-color('color', '3')};
 }
 
-:host(.ion-color) .med-agrupador__icon {
-  --color: #{md-current-color(3)};
+:host(.med-color) .med-agrupador__icon {
+  --color: #{curr-color('color', '3')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-neutral) {
-  --color: var(--med-neutral);
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral')};
 }
 
-:host(.med-neutral) .med-agrupador__icon {
-  --color: var(--med-neutral);
+:host(.med-color-neutral) .med-agrupador__icon {
+  --color: #{curr-color('neutral')};
 }
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback')};
+}
+
+:host(.med-color-feedback) .med-agrupador__icon {
+  --color: #{curr-color('feedback')};
+}
+
 
 // ////////////////////
 // state

@@ -44,5 +44,5 @@
 // --------------------------------------------------
 
 :host(.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(base)};
+  background: #{curr-color('brand', '3')};
 }

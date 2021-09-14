@@ -7,15 +7,14 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                  | Default     |
-| ---------- | ---------- | ----------- | --------------------- | ----------- |
-| `badge`    | `badge`    |             | `string \| undefined` | `undefined` |
-| `color`    | `color`    |             | `string \| undefined` | `undefined` |
-| `label`    | `label`    |             | `string \| undefined` | `undefined` |
-| `neutral`  | `neutral`  |             | `string \| undefined` | `undefined` |
-| `selected` | `selected` |             | `boolean`             | `false`     |
-| `solid`    | `solid`    |             | `boolean`             | `false`     |
-| `titulo`   | `titulo`   |             | `string \| undefined` | `undefined` |
+| Property   | Attribute  | Description                 | Type                  | Default     |
+| ---------- | ---------- | --------------------------- | --------------------- | ----------- |
+| `badge`    | `badge`    | TODO                        | `string \| undefined` | `undefined` |
+| `dsColor`  | `ds-color` | Define a cor do componente. | `string \| undefined` | `undefined` |
+| `label`    | `label`    | TODO                        | `string \| undefined` | `undefined` |
+| `selected` | `selected` | TODO                        | `boolean`             | `false`     |
+| `solid`    | `solid`    | TODO                        | `boolean`             | `false`     |
+| `titulo`   | `titulo`   | TODO                        | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

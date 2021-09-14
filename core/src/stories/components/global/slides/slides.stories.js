@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medsoftColors } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Slides',
@@ -53,7 +53,7 @@ Slides.parameters = {
 }
 Slides.argTypes = {
   color: {
-    options: medsoftColors,
+    options: MedColor,
     control: { type: 'select'},
     description: "Define a cor do botão.",
     table: {

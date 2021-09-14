@@ -22,7 +22,7 @@
 .swiper-pagination-bullet {
   background: transparent;
   opacity: 1;
-  border: $med-border-width-thin solid #fff;
+  border: var(--med-border-width-thin) solid #fff;
 }
 
 .swiper-pagination-bullet-active {

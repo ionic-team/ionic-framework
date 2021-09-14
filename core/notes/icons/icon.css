@@ -4,7 +4,7 @@
   --ionicon-stroke-width: 2;
 
   font-size: 24px;
-  stroke: #fff;
+  stroke: inherit;
 }
 
 :host(.med-icon) path {
@@ -15,14 +15,19 @@
   stroke: inherit;
 }
 
-:host(.med-icon.ion-color) {
+:host(.med-icon.med-color) {
   color: var(--med-color-3) !important;
   stroke: var(--med-color-3) !important;
 }
 
-:host(.med-icon.med-neutral) {
+:host(.med-icon.med-color-neutral) {
   color: var(--med-neutral) !important;
   stroke: var(--med-neutral) !important;
+}
+
+:host(.med-icon.med-color-feedback) {
+  color: var(--med-color-feedback) !important;
+  stroke: var(--med-color-feedback) !important;
 }
 
 :host(.med-icon.med-icon--xxs) {

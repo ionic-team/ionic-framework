@@ -6,8 +6,14 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
   shadow: true,
 })
 export class MedEnunciadoDiscursiva {
+  /**
+   * TODO
+   */
   @Prop({ mutable: true, reflect: true }) imagens!: string[] | string;
 
+  /**
+   * TODO
+   */
   @Event() medGalleryRequest!: EventEmitter<string>;
 
   private imageRequest(imagem: string) {

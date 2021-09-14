@@ -1,20 +1,20 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Fab',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({color, neutral}) => {
+const TemplateDefault = ({dsColor}) => {
   return html`
     <ion-app class="storybook-only">
       <div class="storybook-only__container">
 
         <!-- component -->
         <ion-fab vertical="center" horizontal="center" slot="fixed">
-          <ion-fab-button .color=${color} .neutral=${neutral}>
+          <ion-fab-button .dsColor=${dsColor}>
             <ion-icon class="med-icon" name="add"></ion-icon>
           </ion-fab-button>
           <ion-fab-list side="top">
@@ -39,21 +39,12 @@ FAB.parameters = {
   }
 }
 FAB.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'select'},
+  dsColor: {
+    options: MedColor,
+    control: { type: 'inline-radio'},
     description: "Define a cor do componente.",
     table: {
       type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'select'},
-    description: "Define a cor neutral do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
       defaultValue: { summary: 'undefined' },
     },
   },

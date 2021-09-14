@@ -27,21 +27,21 @@ const TemplateDefault = ({valores}) => {
         font-size: var(--med-font-size-xs);
         font-weight: var(--med-font-weight-medium);
         line-height: var(--med-line-height-compressed);
-        color: var(--med-color-neutral-10);
+        color: hsl(var(--med-color-neutral-10));
       }
 
       .monta-provas-quantidade-questao__auxiliar {
         font-size: var(--med-font-size-xxs);
         font-weight: var(--med-font-weight-medium);
         line-height: var(--med-line-height-compressed);
-        color: var(--med-color-neutral-7);
+        color: hsl(var(--med-color-neutral-7));
       }
 
       .monta-provas-quantidade-questao__questoes {
         font-size: var(--med-font-size-xs);
         font-weight: var(--med-font-weight-bold);
         line-height: var(--med-line-height-compressed);
-        color: var(--med-color-brand-5);
+        color: hsl(var(--med-color-brand-5));
         margin-top: var(--med-spacing-stack-xs);
         margin-bottom: var(--med-spacing-stack-xxxs);
       }
@@ -55,8 +55,9 @@ const TemplateDefault = ({valores}) => {
       }
     </style>
 
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center" style="text-align:center;">
 
         <!-- component -->
         <div class="monta-provas-quantidade-questao">
@@ -69,7 +70,8 @@ const TemplateDefault = ({valores}) => {
         </div>
         <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }

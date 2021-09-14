@@ -1,0 +1,30 @@
+@import '../functions';
+@import '../mixins';
+@import '../variables/color';
+
+.scheme-light {
+  /* neutral */
+  --neutral-luminosity: 98%;
+
+  /* color */
+  --color-saturation: 40%;
+  --color-luminosity-1: 80%;
+  --color-luminosity-2: 60%;
+  --color-luminosity-3: 40%;
+  --color-luminosity-4: 30%;
+  --color-luminosity-5: 20%;
+  --med-color-contrast-fixed: var(--med-color-neutral-1);
+
+  /* feedback */
+  --feedback-luminosity: 45%;
+  --med-color-fb-success: var(--feedback-success-hue), calc(var(--feedback-saturation) + var(--feedback-saturation-fator, 0%)), 35%;
+
+  /* neutral mutables */
+  --neutral-luminosity-mutable-1: var(--luminosity-fator-2, 0%);
+  --neutral-luminosity-mutable-2: var(--luminosity-fator-1, 0%);
+  --neutral-invert: -1;
+
+  /* color mutables */
+  --color-luminosity-mutable-1: var(--luminosity-fator-2, 0%);
+  --color-luminosity-mutable-2: var(--luminosity-fator-1, 0%);
+}

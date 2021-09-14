@@ -1,12 +1,12 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
     * @prop --color: Define a cor do texto.
     * @prop --background: Define a cor de background do componente.
     */
-  --color: #{md-color(brand, contrast-1)};
-  --background: #{md-color(brand, 3)};
+  --color: #{color('brand', '3', 'contrast')};
+  --background: #{color('brand', '3')};
 
   --size-xxs: 24px;
   --size-xs: 32px;
@@ -17,14 +17,14 @@
   --size-xl: 72px;
   --size-xxl: 80px;
 
-  --font-size-xxs: #{$med-font-size-xs};
-  --font-size-xs: #{$med-font-size-xs};
-  --font-size-sm: #{$med-font-size-md};
-  --font-size-base: #{$med-font-size-md};
-  --font-size-md: #{$med-font-size-lg};
-  --font-size-lg: #{$med-font-size-lg};
-  --font-size-xl: #{$med-font-size-xl};
-  --font-size-xxl: #{$med-font-size-xl};
+  --font-size-xxs: var(--med-font-size-xs);
+  --font-size-xs: var(--med-font-size-xs);
+  --font-size-sm: var(--med-font-size-md);
+  --font-size-base: var(--med-font-size-md);
+  --font-size-md: var(--med-font-size-lg);
+  --font-size-lg: var(--med-font-size-lg);
+  --font-size-xl: var(--med-font-size-xl);
+  --font-size-xxl: var(--med-font-size-xl);
 }
 
 :host(.med-avatar) {
@@ -33,9 +33,9 @@
   height: var(--size-base);
   color: var(--color);
   background: var(--background);
-  font-weight: $med-font-weight-semibold;
-  line-height: $med-line-height-compressed;
-  border-radius: $med-border-radius-full;
+  font-weight: var(--med-font-weight-semibold);
+  line-height: var(--med-line-height-compressed);
+  border-radius: var(--med-border-radius-full);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -45,18 +45,27 @@
 // color
 // ////////////////////
 
-:host(.med-avatar.ion-color) {
-  --background: #{md-current-color(3)};
-  --color: #{md-current-color(contrast-1)};
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3', 'contrast')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-avatar.med-neutral) {
-  --background: var(--med-neutral);
-  --color: var(--med-neutral-contrast);
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
 }
 
 // ////////////////////

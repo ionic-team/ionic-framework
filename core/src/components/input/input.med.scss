@@ -1,24 +1,24 @@
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
-  --spacing: #{$med-spacing-squish-xs};
-  --background: #{$med-color-neutral-light-prime};
+  --spacing: var(--med-spacing-squish-xs)
+  --background: var(--med-color-neutral-light-prime);
   --height: 48px;
-  --border-radius: #{$med-border-radius-sm};
-  --border-width: #{$med-border-width-hairline};
-  --border-color: #{$med-color-neutral-light-10};
+  --border-radius: var(--med-border-radius-sm);
+  --border-width: var(--med-border-width-hairline);
+  --border-color: var(--med-color-neutral-light-10);
   --border-style: solid;
-  --color: #{$med-color-neutral-dark-20};
+  --color: var(--med-color-neutral-dark-20);
 
-  --placeholder-spacing: #{$med-spacing-stack-nano};
-  --placeholder-font-size: #{$med-font-size-xs};
-  --placeholder-line-height: #{$med-line-height-compressed};
+  --placeholder-spacing: var(--med-spacing-stack-nano);
+  --placeholder-font-size: var(--med-font-size-xs);
+  --placeholder-line-height: var(--med-line-height-compressed);
 
 
   //ionic
-  --padding-end: #{$med-spacing-inline-base};
-  --placeholder-color: #{$med-color-neutral-light-20};
-  --placeholder-font-weight: #{$med-font-weight-regular};
+  --padding-end: var(--med-spacing-inline-base);
+  --placeholder-color: var(--med-color-neutral-light-20);
+  --placeholder-font-weight: var(--med-font-weight-regular);
 
   padding: var(--spacing);
   padding-right: 56px;
@@ -41,23 +41,23 @@
 }
 
 :host(.has-focus) {
-  --border-width: #{$med-border-width-thin};
+  --border-width: var(--med-border-width-thin);
 }
 
 :host([success]) {
-  --border-color: #{$med-color-feedback-success-medium};
-  --color: #{$med-color-neutral-dark-20};
+  --border-color: var(--med-color-feedback-success-medium);
+  --color: var(--med-color-neutral-dark-20);
   --padding-end: 56px;
 }
 
 :host([error]) {
-  --border-color: #{$med-color-feedback-error-medium};
+  --border-color: var(--med-color-feedback-error-medium);
 }
 
 ::slotted(ion-icon) {
   position: absolute;
   right: 16px;
-  fill: #{$med-color-feedback-success-medium};
+  fill: var(--med-color-feedback-success-medium);
   width: 24px;
   height: 24px;
 }

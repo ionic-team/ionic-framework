@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
@@ -7,10 +7,10 @@
     * @prop --icon-color: Define a cor de do icone do componente.
     * @prop --border-radius: Define o border-radius do componente.
   */
-  --background-header: linear-gradient(to right, #{md-color(brand, 1)}, var(--med-color-neutral-2), var(--med-color-neutral-2));
-  --background-content: var(--med-color-neutral-2);
-  --icon-color: var(--med-color-neutral-10);
-  --border-radius: #{$med-border-radius-sm};
+  --background-header: linear-gradient(to right, #{color('brand', '1')}, #{color('neutral', '2')}, #{color('neutral', '2')});
+  --background-content: #{color('neutral', '2')};
+  --icon-color: #{color('neutral', '10')};
+  --border-radius: var(--med-border-radius-sm);
 }
 
 :host(.med-accordion-item) {
@@ -18,7 +18,7 @@
   border-radius: var(--border-radius);
 
   .med-accordion-item__header-container {
-    padding: $med-spacing-inset-sm;
+    padding: var(--med-spacing-inset-sm);
     width: 100%;
     display: flex;
     cursor: pointer;
@@ -50,11 +50,11 @@
     display: flex;
 
     &--left {
-      padding-right: $med-spacing-inline-xxxs;
+      padding-right: var(--med-spacing-inline-xxxs);
     }
 
     &--right {
-      padding-left: $med-spacing-inline-xxxs;
+      padding-left: var(--med-spacing-inline-xxxs);
       margin-left: auto;
     }
   }
@@ -120,6 +120,6 @@
 // color
 // ////////////////////
 
-:host(.ion-color.med-accordion-item--background) {
-  --background-header: linear-gradient(to right, #{md-current-color(1)}, var(--med-color-neutral-2), var(--med-color-neutral-2));
+:host(.med-color.med-accordion-item--background) {
+  --background-header: linear-gradient(to right, #{curr-color('color', '1')}, #{color('neutral', '2')}, #{color('neutral', '2')});
 }

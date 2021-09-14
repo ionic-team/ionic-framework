@@ -1,0 +1,63 @@
+:root {
+  /* spacing inset */
+  --med-spacing-inset-nano: 4px;
+  --med-spacing-inset-xs: 8px;
+  --med-spacing-inset-sm: 16px;
+  --med-spacing-inset-base: 24px;
+  --med-spacing-inset-md: 32px;
+  --med-spacing-inset-lg: 40px;
+  --med-spacing-inset-xl: 48px;
+  --med-spacing-inset-xxl: 64px;
+
+  /* spacing squish */
+  --med-spacing-squish-nano: 4px 8px;
+  --med-spacing-squish-xs: 8px 16px;
+  --med-spacing-squish-sm: 8px 24px;
+  --med-spacing-squish-base: 8px 32px;
+  --med-spacing-squish-md: 16px 24px;
+  --med-spacing-squish-lg: 16px 32px;
+  --med-spacing-squish-xl: 24px 32px;
+  --med-spacing-squish-xxl: 32px 40px;
+
+  /* spacing stretch */
+  --med-spacing-stretch-nano: 8px 4px;
+  --med-spacing-stretch-xs: 16px 8px;
+  --med-spacing-stretch-sm: 24px 8px;
+  --med-spacing-stretch-base: 32px 8px;
+  --med-spacing-stretch-md: 24px 16px;
+  --med-spacing-stretch-lg: 32px 16px;
+  --med-spacing-stretch-xl: 32px 24px;
+  --med-spacing-stretch-xxl: 40px 32px;
+
+  /* spacing inline */
+  --med-spacing-inline-quark: 2px;
+  --med-spacing-inline-nano: 4px;
+  --med-spacing-inline-xxxs: 8px;
+  --med-spacing-inline-base: 16px;
+  --med-spacing-inline-xxs: 24px;
+  --med-spacing-inline-xs: 32px;
+  --med-spacing-inline-sm: 40px;
+  --med-spacing-inline-md: 48px;
+  --med-spacing-inline-lg: 56px;
+  --med-spacing-inline-xl: 64px;
+  --med-spacing-inline-xxl: 72px;
+  --med-spacing-inline-xxxl: 80px;
+  --med-spacing-inline-huge: 120px;
+  --med-spacing-inline-ultra: 160px;
+
+  /* spacing stack */
+  --med-spacing-stack-quark: 2px;
+  --med-spacing-stack-nano: 4px;
+  --med-spacing-stack-xxxs: 8px;
+  --med-spacing-stack-base: 16px;
+  --med-spacing-stack-xxs: 24px;
+  --med-spacing-stack-xs: 32px;
+  --med-spacing-stack-sm: 40px;
+  --med-spacing-stack-md: 48px;
+  --med-spacing-stack-lg: 56px;
+  --med-spacing-stack-xl: 64px;
+  --med-spacing-stack-xxl: 72px;
+  --med-spacing-stack-xxxl: 80px;
+  --med-spacing-stack-huge: 120px;
+  --med-spacing-stack-ultra: 160px;
+}

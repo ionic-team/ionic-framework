@@ -1,0 +1,181 @@
+@import '../../../../../templarios/abstracts';
+
+:host {
+  --background: #{color('brand', '3')};
+  --color: #{color('brand', '3', 'contrast')};
+  --border-color: #{color('brand', '3')};
+}
+
+:host(.med-parent) {
+  background: var(--background);
+  display: inline-block;
+  padding: 16px;
+  min-width: 100px;
+  text-align: center;
+  border: 1px solid;
+  border-color: var(--border-color);
+
+  h3 {
+    color: var(--color);
+    margin: 0;
+  }
+}
+
+:host(.med-parent) .med-parent__child {
+  --background: red;
+  --color: red;
+  --border-color: red;
+}
+
+// //////////
+// color
+// //////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3', 'contrast')};
+  --border-color: #{curr-color('color', '3')};
+}
+
+:host(.med-color) .med-parent__child {
+  --background: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3', 'contrast')};
+  --border-color: #{curr-color('color', '3')};
+}
+
+// //////////
+// neutral
+// //////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --border-color:#{curr-color('neutral')};
+}
+
+:host(.med-color-neutral) .med-parent__child {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --border-color:#{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+  --border-color: #{curr-color('feedback')};
+}
+
+:host(.med-color-feedback) .med-parent__child {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+  --border-color: #{curr-color('feedback')};
+}
+
+// //////////////////////////////
+// outline
+// //////////////////////////////
+
+:host(.med-parent--outline) {
+  --background: transparent;
+  --color: #{color('neutral', '5')};
+  --border-color: #{color('neutral', '5')};
+}
+
+// //////////
+// color
+// //////////
+
+:host(.med-parent--outline.med-color) {
+  --background: transparent;
+  --color: #{curr-color('color', '3')};
+  --border-color: #{curr-color('color', '3')};
+}
+
+// //////////
+// neutral
+// //////////
+
+:host(.med-parent--outline.med-color-neutral) {
+  --background: transparent;
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --border-color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-parent--outline.med-color-feedback) {
+  --background: transparent;
+  --color: #{curr-color('feedback')};
+  --border-color: #{curr-color('feedback')};
+}
+
+// //////////////////////////////
+// gradient
+// //////////////////////////////
+
+:host(.med-parent--gradient) {
+  --background: #{color('brand', 'gradient')};
+  --color: #{color('brand', 'gradient', 'contrast')};
+  border: 0;
+}
+
+// //////////
+// color
+// //////////
+
+:host(.med-parent--gradient.med-color) {
+  --background: #{curr-color('color', 'gradient')};
+  --color: #{curr-color('color', 'gradient', 'contrast')};
+}
+
+// //////////
+// neutral
+// //////////
+
+:host(.med-parent--gradient.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-parent--gradient.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+}
+
+// //////////
+// exemplo storybook: nunca utilizar dessa maneira!!!
+// //////////
+
+:host(.med-parent.med-color.darkest) {
+  --background: hsl(var(--med-color-1));
+  --color: hsl(var(--med-color-neutral-10));
+  --border-color: hsl(var(--med-color-1));
+}
+
+:host(.med-parent.med-color.dark) {
+  --background: hsl(var(--med-color-2));
+  --color: hsl(var(--med-color-neutral-10));
+  --border-color: hsl(var(--med-color-2));
+}
+
+:host(.med-parent.med-color.light) {
+  --background: hsl(var(--med-color-4));
+  --color: hsl(var(--med-color-neutral-1));
+  --border-color: hsl(var(--med-color-4));
+}
+
+:host(.med-parent.med-color.lightest) {
+  --background: hsl(var(--med-color-5));
+  --color: hsl(var(--med-color-neutral-1));
+  --border-color: hsl(var(--med-color-5));
+}

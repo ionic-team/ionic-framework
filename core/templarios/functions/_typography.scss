@@ -1,0 +1,24 @@
+@function line-height($font-size: $med-font-size-xs) {
+  $line-height: ceil(strip-unit($font-size) * 1.3);
+
+  @while ($line-height % 8) != 0 {
+    $line-height: $line-height + 1;
+  }
+
+  @return #{$line-height}px;
+}
+
+@function letter-spacing(
+  $font-size: $med-font-size-xs,
+  $letter-spacing: $med-line-spacing-default
+) {
+  @return $font-size * $letter-spacing;
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}

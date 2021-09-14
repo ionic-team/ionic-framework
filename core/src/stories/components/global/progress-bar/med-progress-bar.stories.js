@@ -1,22 +1,24 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medsoftColors } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Progress Bar',
   decorators: [withDesign],
 };
 
-const Template = ({value = 0, percentage, color, dsName}) => {
+const Template = ({dsColor, dsName, value = 0, percentage}) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
-          <ion-progress-bar ds-name=${dsName} .color=${color} value=${value / 100} ?percentage=${percentage}></ion-progress-bar>
+          <ion-progress-bar .dsColor=${dsColor} ds-name=${dsName} value=${value / 100} ?percentage=${percentage}></ion-progress-bar>
         <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
     `
   }
@@ -29,34 +31,39 @@ ProgressBar.parameters = {
   },
 }
 ProgressBar.argTypes = {
-  color: {
-    options: medColors,
+  dsColor: {
+    options: MedColor,
     control: { type: 'select'},
-    description: "Define a cor do botão.",
+    description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },
-  percentage: {
-    disabled: false,
-    control: { type: 'boolean' },
-    description: 'Esconde ou mostra a porcentagem.'
-  },
-  value: {
-    defaultValue: '0',
-    control: { type: 'range', min: 0, max: 100, step: 1 },
-    description: 'Define a porcentagem a ser mostrada.'
-  },
   dsName: {
-    options: [undefined, 'minimalist'],
+    options: [undefined, 'minimalist', 'skin'],
     control: { type: 'inline-radio'},
     description: "Define a variação do componente.",
-    defaultValue: "minimalist",
+    defaultValue: "undefined",
     table: {
-      type:  { summary: 'minimalist' },
+      type:  { summary: 'minimalist | skin' },
       defaultValue: { summary: 'minimalist' },
     },
   },
+  percentage: {
+    control: { type: 'boolean'},
+    description: "Esconde ou mostra a porcentagem.",
+    defaultValue: true,
+    table: {
+      type:  { summary: 'boolean' },
+      defaultValue: { summary: 'false' },
+    },
+  },
+  value: {
+    defaultValue: '50',
+    control: { type: 'range', min: 0, max: 100, step: 1 },
+    description: 'Define a porcentagem a ser mostrada.'
+  },
+
 };
 

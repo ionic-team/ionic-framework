@@ -1,65 +1,72 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/List',
   decorators: [withDesign],
 };
 
-const Template = ({ color, neutral, titulo, label, selected }) => {
+const Template = ({ dsColor, titulo, label, selected }) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
 
         <!-- component -->
-        <med-list margin="lg">
-          <med-list-item .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .selected=${selected}>
+        <med-list margin="sm">
+          <med-list-item .dsColor=${dsColor} .titulo=${titulo} .label=${label} .selected=${selected}>
             <ion-checkbox slot="start"></ion-checkbox>
           </med-list-item>
 
-          <med-list-item .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .selected=${selected}>
+          <med-list-item .dsColor=${dsColor} .titulo=${titulo} .label=${label} .selected=${selected}>
             <ion-checkbox slot="start"></ion-checkbox>
           </med-list-item>
 
-          <med-list-item .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .selected=${selected}>
+          <med-list-item-accordion .dsColor=${dsColor} .titulo=${titulo} .label=${label} .selected=${selected}>
+
+            <ion-checkbox slot="start"></ion-checkbox>
+
+            <med-list-item .dsColor=${dsColor} slot="end" titulo="Titulo" label="label">
+              <ion-checkbox slot="start"></ion-checkbox>
+            </med-list-item>
+            <med-list-item .dsColor=${dsColor} slot="end" titulo="Titulo" label="label">
+              <ion-checkbox slot="start"></ion-checkbox>
+            </med-list-item>
+            <med-list-item .dsColor=${dsColor} slot="end" titulo="Titulo" label="label">
+              <ion-checkbox slot="start"></ion-checkbox>
+            </med-list-item>
+
+          </med-list-item-accordion>
+
+          <med-list-item .dsColor=${dsColor} .titulo=${titulo} .label=${label} .selected=${selected}>
             <ion-checkbox slot="start"></ion-checkbox>
           </med-list-item>
 
-          <med-list-item .color=${color} .neutral=${neutral} .titulo=${titulo} .label=${label} .selected=${selected}>
+          <med-list-item .dsColor=${dsColor} .titulo=${titulo} .label=${label} .selected=${selected}>
             <ion-checkbox slot="start"></ion-checkbox>
           </med-list-item>
         </med-list>
         <!-- component -->
 
-      </div>
+      </ion-content>
     </ion-app>
   `
 }
 
-export const ListItem = Template.bind({});
-ListItem.parameters = {
+export const List = Template.bind({});
+List.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=4944%3A34290',
   },
 }
-ListItem.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
+List.argTypes = {
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

@@ -354,7 +354,7 @@ export default defineComponent({
 | `component` _(required)_ | `component`        | The component to display inside of the popover.                                                                                                                                                                        | `Function \| HTMLElement \| null \| string`             | `undefined` |
 | `componentProps`         | --                 | The data to pass to the popover component.                                                                                                                                                                             | `undefined \| { [key: string]: any; }`                  | `undefined` |
 | `cssClass`               | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                       | `string \| string[] \| undefined`                       | `undefined` |
-| `dsName` _(required)_    | `ds-name`          |                                                                                                                                                                                                                        | `"tooltip"`                                             | `undefined` |
+| `dsName` _(required)_    | `ds-name`          | TODO                                                                                                                                                                                                                   | `"tooltip"`                                             | `undefined` |
 | `enterAnimation`         | --                 | Animation to use when the popover is presented.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `event`                  | `event`            | The event to pass to the popover animation.                                                                                                                                                                            | `any`                                                   | `undefined` |
 | `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                 | `boolean`                                               | `true`      |
@@ -415,21 +415,6 @@ Present the popover overlay after it has been created.
 Type: `Promise<void>`
 
 
-
-
-## CSS Custom Properties
-
-| Name                 | Description                   |
-| -------------------- | ----------------------------- |
-| `--backdrop-opacity` | Opacity of the backdrop       |
-| `--background`       | Background of the popover     |
-| `--box-shadow`       | Box shadow of the popover     |
-| `--height`           | Height of the popover         |
-| `--max-height`       | Maximum height of the popover |
-| `--max-width`        | Maximum width of the popover  |
-| `--min-height`       | Minimum height of the popover |
-| `--min-width`        | Minimum width of the popover  |
-| `--width`            | Width of the popover          |
 
 
 ## Dependencies

@@ -200,3 +200,80 @@
 :host(.in-toolbar-color:not(.in-segment-color)) .segment-button-indicator-background {
   background: #{current-color(contrast)};
 }
+
+@import "./segment-button.med.scss";
+
+// ////////////////////
+// Custom
+// ////////////////////
+
+@import "../../../templarios/abstracts";
+
+:host(.med-segment-button--default) {
+  --color-checked: transparent;
+  --background-checked: #{color('neutral', '10')};
+  --color: #{color('neutral', '10')};
+  --padding-start: 0;
+  --padding-end: 0;
+  font-size: var(--med-font-size-xs);
+  font-weight: var(--med-font-weight-semibold);
+  line-height: var(--med-line-height-default);
+  border-right: var(--med-border-width-thin) solid #{color('neutral', '10')};
+  text-transform: inherit;
+  max-width: 100%;
+}
+
+:host(.segment-button-checked.med-segment-button--default) {
+  color: #{color('brand', '1')};
+  --color-hover: #{color('brand', '1')};
+  --color-checked: #{color('brand', '1')};
+  --color-disabled: #{color('brand', '1')};
+}
+
+@media (any-hover: hover) {
+  :host(.med-segment-button--default:hover) .button-native {
+    color: unset;
+
+    &::after {
+      background: unset;
+      opacity: 0;
+    }
+  }
+
+  :host(.segment-button-checked.med-segment-button--default:hover) .button-native {
+    color: unset;
+  }
+}
+
+:host(.in-segment-color.med-segment-button--default) ion-ripple-effect {
+  color: #{color('neutral', '10')};
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color.med-segment-button--default) {
+  --background-checked: #{curr-color('color', '3')};
+  border-color: curr-color('color', '3');
+  color: #{color('neutral', '10')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-segment-button--default) {
+  --background-checked: #{curr-color('neutral')};
+  border-color: curr-color('neutral');
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback.med-segment-button--default) {
+  --background-checked: #{curr-color('feedback')};
+  border-color: curr-color('feedback');
+}
+

@@ -1,33 +1,33 @@
 // Custom
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
   --width: 100%;
   --start: 0;
   --end: 0;
   --border-radius: 0;
-  --background: #{$med-color-neutral-dark-40};
+  --background: var(--med-color-neutral-dark-40);
 
-  //med-components
-  --spacing: #{$med-spacing-inset-sm};
+  //templarios
+  --spacing: var(--med-spacing-inset-sm);
 
-  border-radius: $med-border-radius-nano;
+  border-radius: var(--med-border-radius-nano);
 
   .toast-container {
     padding: var(--spacing);
   }
 
   .toast-header {
-    font-weight: $med-font-weight-semibold;
+    font-weight: var(--med-font-weight-semibold);
   }
 
   .toast-content {
     padding: 0;
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
-    color: $med-color-neutral-light-prime;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
+    color: var(--med-color-neutral-light-prime);
   }
 
   .toast-button-group-end,
@@ -37,15 +37,15 @@
 
   .toast-button-group-start .toast-button {
     padding: 0;
-    margin-right: $med-spacing-inline-xxxs;
+    margin-right: var(--med-spacing-inline-xxxs);
   }
 
   .toast-button-group-end .toast-button {
     padding-top: 0;
     padding-bottom: 0;
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-bold;
-    color: $med-color-brand-primary-medium;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-bold);
+    color: var(--med-color-brand-primary-medium);
   }
 
   .toast-button:hover,
@@ -74,7 +74,7 @@
   }
 
   .toast-button-group-end {
-    padding-top: $med-spacing-stack-base;
+    padding-top: var(--med-spacing-stack-base);
     justify-content: flex-end;
   }
 }
@@ -84,14 +84,14 @@
   --width: auto;
   --start: 8px;
   --end: 8px;
-  --border-radius: #{$med-border-radius-nano};
+  --border-radius: var(--border-radius-nano);
 
   // .toast-content {
   //   flex-direction: row;
   // }
 
   .toast-message {
-    padding-left: $med-spacing-inline-nano;
+    padding-left: var(--med-spacing-inline-nano);
   }
 
   .toast-wrapper.toast-bottom {
@@ -104,6 +104,6 @@
 }
 
 :host(.ion-color) .toast-wrapper {
-  background: #{medsoft-current-color(medium)};
+  background: #{curr-color('color', '3')};
 }
 

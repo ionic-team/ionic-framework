@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default |
-| -------- | --------- | ----------- | -------- | ------- |
-| `total`  | `total`   |             | `number` | `0`     |
+| Property  | Attribute  | Description                 | Type                  | Default     |
+| --------- | ---------- | --------------------------- | --------------------- | ----------- |
+| `dsColor` | `ds-color` | Define a cor do componente. | `string \| undefined` | `undefined` |
+| `total`   | `total`    | TODO                        | `number`              | `0`         |
 
 
 ----------------------------------------------

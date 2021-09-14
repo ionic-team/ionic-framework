@@ -73,13 +73,13 @@
 
 // CUSTOM
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
   --background: transparent;
-  --border-radius: #{$med-border-radius-sm};
-  --border-color: #{md-color(brand, 4)};
-  --border-width: #{$med-border-width-thin};
+  --border-radius: var(--med-border-radius-sm);
+  --border-color: #{color('brand', '4')};
+  --border-width: var(--med-border-width-thin);
   --size: 24px;
   min-width: var(--size);
 }
@@ -109,7 +109,7 @@
   transform: translate(-50%, -50%) scale(1);
   width: 15px;
   height: 15px;
-  border-radius: #{$med-border-radius-nano};
+  border-radius: var(--med-border-radius-nano);
   background: var(--border-color);
   transition: 300ms all ease;
 }
@@ -121,7 +121,7 @@
   transform: translate(-50%, -50%) scale(1);
   width: 12px;
   height: 2px;
-  border-radius: #{$med-border-radius-nano};
+  border-radius: var(--med-border-radius-nano);
   background: var(--border-color);
 }
 
@@ -129,14 +129,22 @@
 // color
 // ////////////////////
 
-:host(.ion-color) {
-  --border-color: #{md-current-color(3)};
+:host(.med-color) {
+  --border-color: #{curr-color('color', '3')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-neutral) {
-  --border-color: var(--med-neutral);
+:host(.med-color-neutral) {
+  --border-color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --border-color: #{curr-color('feedback')};
 }

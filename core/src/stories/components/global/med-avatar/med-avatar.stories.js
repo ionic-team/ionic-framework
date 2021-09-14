@@ -1,21 +1,23 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medColors, medNeutrals } from '../../../med-colors';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Avatar',
   decorators: [withDesign],
 };
 
-const TemplateDefault = ({color, neutral, dsSize}) => {
+const TemplateDefault = ({dsColor, dsSize}) => {
   return html`
     <ion-app>
       <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
-        <med-avatar letter="A" .color=${color} .neutral=${neutral} ds-size=${dsSize}></med-avatar>
+        <med-avatar letter="A" .dsColor=${dsColor} ds-size=${dsSize}></med-avatar>
         <!-- component -->
 
+        </div>
       </ion-content>
     </ion-app>
   `
@@ -29,21 +31,12 @@ avatar.parameters = {
   },
 }
 avatar.argTypes = {
-  color: {
-    options: medColors,
-    control: { type: 'inline-radio'},
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
     description: "Define a cor do componente.",
     table: {
-      type:  { summary: 'Color' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
-  neutral: {
-    options: medNeutrals,
-    control: { type: 'inline-radio'},
-    description: "Define a cor neutra do componente.",
-    table: {
-      type:  { summary: 'Neutrals' },
+      type:  { summary: 'MedColor' },
       defaultValue: { summary: 'undefined' },
     },
   },

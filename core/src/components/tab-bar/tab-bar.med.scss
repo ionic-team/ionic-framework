@@ -2,13 +2,31 @@
 // custom
 //
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
-  --background: #{$med-color-neutral-dark-prime};
-  --box-shadow: #{$med-shadow-level-4};
+  --background: #{color('neutral', '1')};
+  --box-shadow: var(--med-shadow-level-4);
 
   height: auto;
   contain: initial;
   box-shadow: var(--box-shadow);
 }
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+}
+
+:host(.med-color-neutral) ::slotted(ion-tab-button) {
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --color-hover: #{curr-color('brand', null, 'contrast')};
+  --color-focused: #{curr-color('brand', null, 'contrast')};
+  --color-selected: #{curr-color('brand', null, 'contrast')};
+  --color-activated: #{curr-color('brand', null, 'contrast')};
+  --color-icon: #{curr-color('neutral', null, 'contrast')};
+}
+

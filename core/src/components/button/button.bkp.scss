@@ -1,0 +1,654 @@
+@import "./button";
+@import "./button.md.vars";
+
+
+// Material Design Button
+// --------------------------------------------------
+
+:host {
+    --border-radius: #{$button-md-border-radius};
+    --padding-top: #{$button-md-padding-top};
+    --padding-bottom: #{$button-md-padding-bottom};
+    --padding-start: #{$button-md-padding-start};
+    --padding-end: #{$button-md-padding-end};
+    --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                    background-color 15ms linear,
+                    color 15ms linear;
+
+    @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+
+    height: #{$button-md-height};
+
+    font-size: #{$button-md-font-size};
+    font-weight: #{$button-md-font-weight};
+
+    letter-spacing: #{$button-md-letter-spacing};
+
+    text-transform: #{$button-md-text-transform};
+    }
+
+    // Material Design Solid Button
+    // --------------------------------------------------
+
+    :host(.med-button-solid) {
+    --background-activated: transparent;
+    --background-hover: #{ion-color(primary, contrast)};
+    --background-focused: #{ion-color(primary, contrast)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .24;
+    --background-hover-opacity: .08;
+    --box-shadow: #{$button-md-box-shadow};
+    }
+
+    :host(.med-button-solid.ion-activated) {
+    --box-shadow: #{$button-md-box-shadow-activated};
+    }
+
+    // Material Design Outline Button
+    // --------------------------------------------------
+
+    :host(.med-button-outline) {
+    --border-width: 2px;
+    --border-style: solid;
+    --box-shadow: none;
+    --background-activated: transparent;
+    --background-focused: #{ion-color(primary, base)};
+    --background-hover: #{ion-color(primary, base)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .12;
+    --background-hover-opacity: .04;
+    }
+
+    :host(.med-button-outline.ion-activated.ion-color) .button-native {
+    background: transparent;
+    }
+
+
+    // Material Design Clear Button
+    // --------------------------------------------------
+
+    :host(.med-button-clear) {
+    --background-activated: transparent;
+    --background-focused: #{ion-color(primary, base)};
+    --background-hover: #{ion-color(primary, base)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .12;
+    --background-hover-opacity: .04;
+    }
+
+
+    // Material Design Round Button
+    // --------------------------------------------------
+
+    :host(.button-round) {
+    --border-radius: #{$button-md-round-border-radius};
+    --padding-top: #{$button-md-round-padding-top};
+    --padding-start: #{$button-md-round-padding-start};
+    --padding-end: #{$button-md-round-padding-end};
+    --padding-bottom: #{$button-md-round-padding-bottom};
+    }
+
+
+    // Material Design Button Sizes
+    // --------------------------------------------------
+
+    :host(.button-large) {
+    --padding-top: #{$button-md-large-padding-top};
+    --padding-start: #{$button-md-large-padding-start};
+    --padding-end: #{$button-md-large-padding-end};
+    --padding-bottom: #{$button-md-large-padding-bottom};
+
+    height: #{$button-md-large-height};
+
+    font-size: #{$button-md-large-font-size};
+    }
+
+    :host(.button-small) {
+    --padding-top: #{$button-md-small-padding-top};
+    --padding-start: #{$button-md-small-padding-start};
+    --padding-end: #{$button-md-small-padding-end};
+    --padding-bottom: #{$button-md-small-padding-bottom};
+
+    height: #{$button-md-small-height};
+
+    font-size: #{$button-md-small-font-size};
+    }
+
+
+    // MD strong Button
+    // --------------------------------------------------
+
+    :host(.button-strong) {
+    font-weight: #{$button-md-strong-font-weight};
+    }
+
+    ::slotted(ion-icon[slot="icon-only"]) {
+    @include padding(0);
+    }
+
+
+    // Material Design Button: Hover
+    // --------------------------------------------------
+
+    :host(.med-button-solid.ion-color.ion-focused) .button-native::after {
+    background: #{current-color(contrast)};
+
+    opacity: .24;
+    }
+
+    :host(.med-button-clear.ion-color.ion-focused) .button-native::after,
+    :host(.med-button-outline.ion-color.ion-focused) .button-native::after {
+    background: #{current-color(base)};
+
+    opacity: .12;
+    }
+
+    @media (any-hover: hover) {
+    :host(.med-button-solid.ion-color:hover) .button-native::after {
+        background: #{current-color(contrast)};
+
+        opacity: .08;
+    }
+
+    :host(.med-button-clear.ion-color:hover) .button-native::after,
+    :host(.med-button-outline.ion-color:hover) .button-native::after {
+        background: #{current-color(base)};
+
+        opacity: .04;
+    }
+}
+
+//@import './medgrupo/button.med.scss';
+
+@import "../../../med-components/abstracts";
+
+:host {
+  // ionic css custom properties
+  --border-radius: #{$med-border-radius-pill};
+  --box-shadow: none;
+  --transition: background 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out, opacity 300ms ease-out;
+
+  // design system css custom properties
+  --padding: #{$med-spacing-squish-base};
+  --min-height: 48px;
+  --min-width: auto;
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-semibold};
+  --text-transform: uppercase;
+  --line-height: #{$med-line-height-compressed};
+
+  min-height: var(--min-height);
+  min-width: var(--min-width);
+  height: auto;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  text-transform: var(--text-transform);
+  margin: 0;
+}
+
+.button-native {
+  padding: var(--padding);
+  min-height: var(--min-height);
+  line-height: var(--line-height);
+  box-shadow: none;
+}
+
+.button-native::before {
+  transition: var(--transition);
+}
+
+:host(.med-button-disabled) {
+  opacity: 1;
+}
+
+//
+// primary
+//
+
+:host(.med-button-solid) {
+  // ionic css custom properties
+  --color: #{medsoft-color(brand-primary, contrast)};
+  --background: #{medsoft-color(brand-primary, gradient)};
+  --background-hover: #{medsoft-color(brand-primary, medium)};
+  --background-hover-opacity: 1;
+  --background-focused: #{medsoft-color(brand-primary, medium)};
+  --background-focused-opacity: 1;
+  --background-activated: #{medsoft-color(brand-primary, dark)};
+  --background-activated-opacity: 1;
+  --ripple-color: #{medsoft-color(brand-primary, dark)};
+}
+
+// storybook
+:host(.med-hovered.med-button-solid) {
+  --background: #{medsoft-color(brand-primary, medium)};
+}
+
+// disabled
+:host(.med-button-solid.med-button-disabled) {
+  --background: #{medsoft-color(neutral-light, 20)};
+}
+
+// color
+:host(.ion-color.med-button-solid)  {
+  --background: #{medsoft-current-color(gradient)};
+  --background-hover: #{medsoft-current-color(medium)};
+  --background-focused: #{medsoft-current-color(medium)};
+  --background-activated: #{medsoft-current-color(dark)};
+}
+
+:host(.ion-color.med-button-solid) .button-native {
+  background: #{medsoft-current-color(gradient)};
+}
+
+// color disabled
+:host(.ion-color.med-button-solid.med-button-disabled) {
+  --background: #{medsoft-color(neutral-light, 20)};
+}
+
+:host(.ion-color.med-button-disabled.med-button-solid) .button-native {
+  background: #{medsoft-color(neutral-light, 20)};
+}
+
+// expand
+:host([expand="full"].med-button-solid) {
+  --min-height: 48px;
+  --font-size: #{$med-font-size-xxs};
+  --padding: #{$med-spacing-squish-base};
+}
+
+:host([expand="block"].med-button-solid) {
+  --min-height: 48px;
+  --font-size: #{$med-font-size-xxs};
+  --padding: #{$med-spacing-squish-base};
+}
+
+// sizes
+:host([ds-size="sm"].med-button-solid) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-solid) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+  --padding: #{$med-spacing-squish-sm};
+}
+
+:host([ds-size="xxs"].med-button-solid) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-base};
+}
+
+//
+// secondary
+//
+
+:host(.med-button-outline) {
+  // ionic css custom properties
+  --color: #{medsoft-color(brand-primary, light)};
+  --background: transparent;
+  --background-hover: transparent;
+  --background-hover-opacity: 0;
+  --background-focused: transparent;
+  --background-focused-opacity: 0;
+  --background-activated: transparent;
+  --background-activated-opacity: 0;
+  --ripple-color: transparent;
+  --border-width: #{$med-border-width-thin};
+  --border-color: #{medsoft-color(brand-primary, light)};
+}
+
+// disabled
+:host(.med-button-outline.med-button-disabled) {
+  --border-color: #{medsoft-color(neutral-light, 20)};
+  --color: #{medsoft-color(neutral-light, 20)};
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(.med-button-outline:hover) {
+    --border-color: #{medsoft-color(brand-primary, medium)};
+    --color: #{medsoft-color(brand-primary, medium)};
+  }
+}
+
+// focused
+:host(.med-button-outline.ion-focused) {
+  --border-color: #{medsoft-color(brand-primary, medium)};
+  --color: #{medsoft-color(brand-primary, medium)};
+}
+
+// activated
+:host(.med-button-outline.ion-activated) {
+  --border-color: #{medsoft-color(brand-primary, dark)};
+  --color: #{medsoft-color(brand-primary, dark)};
+}
+
+// color
+:host(.ion-color.med-button-outline) {
+  --border-color: #{medsoft-current-color(light)};
+  --color: #{medsoft-current-color(light)};
+}
+
+// color hover
+@media (any-hover: hover) {
+  :host(.ion-color.med-button-outline:hover) {
+    --border-color: #{medsoft-current-color(medium)};
+    --color: #{medsoft-current-color(medium)};
+  }
+}
+
+// color focused
+:host(.ion-color.med-button-outline.ion-focused) {
+  --border-color: #{medsoft-current-color(medium)};
+  --color: #{medsoft-current-color(medium)};
+}
+
+// color activated
+:host(.ion-color.med-button-outline.ion-activated) {
+  --border-color: #{medsoft-current-color(dark)};
+  --color: #{medsoft-current-color(dark)};
+}
+
+// color disabled
+:host(.ion-color.med-button-outline.med-button-disabled) {
+  --border-color: #{medsoft-color(neutral-light, 20)};
+  --color: #{medsoft-color(neutral-light, 20)};
+}
+
+// sizes
+:host([ds-size="sm"].med-button-outline) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-outline) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+  --padding: #{$med-spacing-squish-sm};
+}
+
+:host([ds-size="xxs"].med-button-outline) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-base};
+}
+
+//
+// tertiary
+//
+
+:host(.med-button-clear) {
+  // ionic css custom properties
+  --color: #{medsoft-color(neutral-light, prime)};
+  --background: transparent;
+  --background-hover: #{medsoft-color(brand-primary, medium)};
+  --background-hover-opacity: #{$med-opacity-level-light};
+  --background-focused: #{medsoft-color(brand-primary, medium)};
+  --background-focused-opacity: #{$med-opacity-level-light};
+  --background-activated: transparent;
+  --background-activated-opacity: 0;
+  --ripple-color: #{medsoft-color(brand-primary, medium, $med-opacity-level-light)};
+  --border-radius: #{$med-border-radius-nano};
+
+  // design system css custom properties
+  --padding: #{$med-spacing-inset-xs};
+  --min-height: 32px;
+}
+
+// disabled
+:host(.med-button-clear.med-button-disabled) {
+  --color: #{medsoft-color(neutral-light, 10)};
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(.med-button-clear:hover) {
+    --color: #{medsoft-color(neutral-light, prime)};
+  }
+}
+
+// focused
+:host(.med-button-clear.ion-focused) {
+  --color: #{medsoft-color(neutral-light, prime)};
+}
+
+// activated
+:host(.med-button-clear.ion-activated) {
+  --color: #{medsoft-color(neutral-light, prime)};
+}
+
+// color
+:host(.ion-color.med-button-clear) {
+  --color: #{medsoft-color(neutral-light, prime)};
+  --background-hover: #{medsoft-current-color(medium)};
+}
+
+// expand
+:host([expand="full"].med-button-clear) {
+  --min-height: 48px;
+  --font-size: #{$med-font-size-xxs};
+}
+
+:host([expand="block"].med-button-clear) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxs};
+}
+
+// sizes
+:host([ds-size="sm"].med-button-clear) {
+  --min-height: 40px;
+}
+
+:host([ds-size="xs"].med-button-clear) {
+  --min-height: 32px;
+  --font-size: #{$med-font-size-xxxs};
+  --padding: #{$med-spacing-squish-sm};
+}
+
+:host([ds-size="xxs"].med-button-clear) {
+  --min-height: 24px;
+  --font-size: #{$med-font-size-nano};
+  --padding: 0 #{$med-spacing-inline-base};
+}
+
+//
+// icon-only
+//
+
+:host(.button-has-icon-only) {
+  // ionic css custom properties
+  --color: var(--med-color-neutral-10);
+  --background: transparent;
+  --background-hover: #{medsoft-color(neutral-light, 10, $med-opacity-level-semitransparent)};
+  --background-hover-opacity: 1;
+  --background-focused: transparent;
+  --background-focused-opacity: 0;
+  --background-activated: transparent;
+  --background-activated-opacity: 0;
+  --ripple-color: #{medsoft-color(neutral-light, 10, $med-opacity-level-light)};
+  --border-radius: #{$med-border-radius-full};
+
+  // design system css custom properties
+  --padding: 0;
+  --min-height: 32px;
+  --min-width: 32px;
+}
+
+:host(.button-has-icon-only) {
+  --font-size: 32px;
+}
+
+::slotted(ion-icon) {
+  font-size: 1em;
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1em;
+}
+
+// disabled
+:host(.button-has-icon-only.med-button-disabled) {
+  opacity: $med-opacity-level-medium;
+}
+
+// color
+:host(.ion-color.button-has-icon-only) {
+  --background-hover: #{medsoft-color(neutral-light, 10, $med-opacity-level-semitransparent)};
+}
+
+// sizes
+:host([ds-size="xs"].button-has-icon-only) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --padding: 0;
+  font-size: 16px;
+}
+
+:host([ds-size="sm"].button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --padding: 0;
+  font-size: 24px;
+}
+
+// in med-navbar default
+:host(.in-med-navbar.button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  font-size: 24px;
+}
+
+// in med-toolbar
+:host(.in-med-toolbar.button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  font-size: 24px;
+
+  ::slotted(ion-icon[slot="icon-only"]) {
+    color: $med-color-neutral-light-10;
+  }
+}
+
+:host(.in-med-toolbar.button-has-icon-only:not(:last-child)) {
+  margin-right: $med-spacing-inline-xxs;
+}
+
+//
+// icon-label
+//
+
+:host(.button-icon-label) {
+ // ionic css custom properties
+ --color: #{medsoft-color(neutral-light, prime)};
+ --background: transparent;
+ --background-hover: transparent;
+ --background-hover-opacity: 0;
+ --background-focused: transparent;
+ --background-focused-opacity: 0;
+ --background-activated: transparent;
+ --background-activated-opacity: 0;
+ --ripple-color: transparent;
+
+ // design system css custom properties
+ --padding: 0;
+ --font-weight: #{$med-font-weight-regular};
+ --text-transform: normal;
+ --min-height: 24px;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  margin: 0 $med-spacing-inline-nano 0 0;
+}
+
+::slotted(ion-icon[slot="end"]) {
+  margin: 0 0 0 $med-spacing-inline-nano;
+}
+
+:host(.button-icon-label) ::slotted(ion-icon) {
+  font-size: 24px;
+}
+
+// disabled
+:host(.button-icon-label.med-button-disabled) {
+  opacity: $med-opacity-level-medium;
+}
+
+// activated
+:host(.button-icon-label.ion-activated) .button-native {
+  opacity: $med-opacity-level-half;
+}
+
+// in med-toolbar
+:host(.in-med-toolbar.button-icon-label) {
+  color: $med-color-neutral-light-10;
+}
+
+//
+// remoção do ::after
+//
+
+:host(.button-block) .button-native::after,
+.button-native::after,
+:host(.ion-activated) .button-native::after,
+:host(.ion-focused) .button-native::after {
+	display: none;
+}
+
+:host(.med-hovered) .button-native::after {
+  display: none;
+}
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native::after {
+	  display: none;
+  }
+}
+
+:host(.med-button-solid.ion-color.ion-focused) .button-native::after,
+:host(.med-button-clear.ion-color.ion-focused) .button-native::after,
+:host(.med-button-outline.ion-color.ion-focused) .button-native::after {
+	display: none;
+}
+
+:host(.med-hovered.med-button-solid.ion-color) .button-native::after,
+:host(.med-hovered.med-button-clear.ion-color) .button-native::after,
+:host(.med-hovered.med-button-outline.ion-color) .button-native::after {
+  display: none;
+}
+
+@media (any-hover: hover) {
+  :host(.med-button-solid.ion-color:hover) .button-native::after,
+	:host(.med-button-clear.ion-color:hover) .button-native::after,
+  :host(.med-button-outline.ion-color:hover) .button-native::after {
+		display: none;
+	}
+}
+
+//
+// replace do ::after pelo ::before
+//
+
+:host(.button-block) .button-native::before {
+  clear: both;
+}
+
+.button-native::before {
+  @include button-state();
+}
+
+:host(.ion-activated) .button-native::before {
+  background: var(--background-activated);
+  opacity: var(--background-activated-opacity);
+}
+
+:host(.ion-focused) .button-native::before {
+  background: var(--background-focused);
+  opacity: var(--background-focused-opacity);
+}
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native::before {
+    background: var(--background-hover);
+    opacity: var(--background-hover-opacity);
+  }
+}

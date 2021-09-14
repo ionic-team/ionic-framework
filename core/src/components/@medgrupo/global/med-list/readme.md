@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                                        | Default     |
-| --------- | --------- | ----------- | ------------------------------------------- | ----------- |
-| `color`   | `color`   |             | `string \| undefined`                       | `undefined` |
-| `margin`  | `margin`  |             | `"lg" \| "md" \| "sm" \| "xs" \| undefined` | `undefined` |
-| `neutral` | `neutral` |             | `string \| undefined`                       | `undefined` |
+| Property  | Attribute  | Description                 | Type                                        | Default     |
+| --------- | ---------- | --------------------------- | ------------------------------------------- | ----------- |
+| `dsColor` | `ds-color` | Define a cor do componente. | `string \| undefined`                       | `undefined` |
+| `margin`  | `margin`   | TODO                        | `"lg" \| "md" \| "sm" \| "xs" \| undefined` | `undefined` |
 
 
 ----------------------------------------------

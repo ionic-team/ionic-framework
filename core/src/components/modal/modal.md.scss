@@ -29,7 +29,7 @@
 // custom
 //
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
   :host(.med-image-zoom) {

@@ -13,10 +13,10 @@ const TemplateDefault = () => {
 
     cartaoResposta = [
       { index: '01'},
-      { index: '02', active: true },
-      { index: '03', color: 'feedback-success' },
-      { index: '04', color: 'feedback-error' },
-      { index: '05', color: 'feedback-warning', anulada: true },
+      { index: '02', ativa: true },
+      { index: '03', color: 'fb-success' },
+      { index: '04', color: 'fb-caution' },
+      { index: '05', color: 'fb-warning', anulada: true },
       { index: '06', impressa: true },
     ];
 
@@ -38,19 +38,21 @@ const TemplateDefault = () => {
 
   const itemTemplates = [];
   for (const item of items) {
-    itemTemplates.push(html`<med-cartao-resposta-item ?active=${item.active} .color=${item.color} ?impressa=${item.impressa} ?anulada=${item.anulada}>${item.index}</med-cartao-resposta-item>`);
+    itemTemplates.push(html`<med-cartao-resposta-item ?ativa=${item.ativa} .dsColor=${item.color} ?impressa=${item.impressa} ?anulada=${item.anulada}>${item.index}</med-cartao-resposta-item>`);
   }
 
   return html`
     <ion-app>
-      <ion-content style="--background: var(--med-color-neutral-dark-prime);">
+      <ion-content>
+        <div class="flex-center">
 
-        <!-- component -->
-        <med-cartao-resposta-lista>
-          ${itemTemplates}
-        </med-cartao-resposta-lista>
-        <!-- component -->
+          <!-- component -->
+          <med-cartao-resposta-lista>
+            ${itemTemplates}
+          </med-cartao-resposta-lista>
+          <!-- component -->
 
+        </div>
       </ion-content>
     </ion-app>
     `

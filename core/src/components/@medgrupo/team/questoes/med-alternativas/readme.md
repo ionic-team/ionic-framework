@@ -9,41 +9,45 @@
 
 | Property                              | Attribute                 | Description | Type                  | Default         |
 | ------------------------------------- | ------------------------- | ----------- | --------------------- | --------------- |
-| `alternativaSelecionada` _(required)_ | `alternativa-selecionada` |             | `string`              | `undefined`     |
-| `alternativas`                        | `alternativas`            |             | `any`                 | `[]`            |
-| `color`                               | `color`                   |             | `string \| undefined` | `undefined`     |
-| `keyAlternativa`                      | `key-alternativa`         |             | `string`              | `'Alternativa'` |
-| `keyEnunciado`                        | `key-enunciado`           |             | `string`              | `'Enunciado'`   |
-| `keyImagem`                           | `key-imagem`              |             | `string`              | `'Imagem'`      |
-| `keyPorcentagem`                      | `key-porcentagem`         |             | `string`              | `'Porcentagem'` |
-| `keyRiscada`                          | `key-riscada`             |             | `string`              | `'Riscada'`     |
-| `mostraResposta` _(required)_         | `mostra-resposta`         |             | `boolean`             | `undefined`     |
-| `neutral`                             | `neutral`                 |             | `string \| undefined` | `undefined`     |
-| `permiteRiscar`                       | `permite-riscar`          |             | `boolean`             | `true`          |
-| `respostaCorreta` _(required)_        | `resposta-correta`        |             | `string`              | `undefined`     |
+| `alternativaSelecionada` _(required)_ | `alternativa-selecionada` | TODO        | `string`              | `undefined`     |
+| `alternativas`                        | `alternativas`            | TODO        | `any`                 | `[]`            |
+| `dsColor`                             | `ds-color`                | TODO        | `string \| undefined` | `undefined`     |
+| `dsSkinConfig` _(required)_           | `ds-skin-config`          | TODO        | `any`                 | `undefined`     |
+| `keyAlternativa`                      | `key-alternativa`         | TODO        | `string`              | `'Alternativa'` |
+| `keyEnunciado`                        | `key-enunciado`           | TODO        | `string`              | `'Enunciado'`   |
+| `keyImagem`                           | `key-imagem`              | TODO        | `string`              | `'Imagem'`      |
+| `keyPorcentagem`                      | `key-porcentagem`         | TODO        | `string`              | `'Porcentagem'` |
+| `keyRiscada`                          | `key-riscada`             | TODO        | `string`              | `'Riscada'`     |
+| `mostraResposta` _(required)_         | `mostra-resposta`         | TODO        | `boolean`             | `undefined`     |
+| `permiteRiscar`                       | `permite-riscar`          | TODO        | `boolean`             | `true`          |
+| `respostaCorreta` _(required)_        | `resposta-correta`        | TODO        | `string`              | `undefined`     |
 
 
 ## Events
 
 | Event               | Description | Type                                   |
 | ------------------- | ----------- | -------------------------------------- |
-| `medChange`         |             | `CustomEvent<MedAlternativaInterface>` |
-| `medGalleryRequest` |             | `CustomEvent<MedAlternativaInterface>` |
-| `medRiscada`        |             | `CustomEvent<MedAlternativaInterface>` |
+| `medChange`         | TODO        | `CustomEvent<MedAlternativaInterface>` |
+| `medGalleryRequest` | TODO        | `CustomEvent<MedAlternativaInterface>` |
+| `medRiscada`        | TODO        | `CustomEvent<MedAlternativaInterface>` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- ion-icon
-- [ion-progress-bar](../../../../progress-bar)
+- [med-alternativas-a](../med-alternativas-a)
+- [med-alternativas-b](../med-alternativas-b)
 
 ### Graph
 ```mermaid
 graph TD;
-  med-alternativas --> ion-icon
-  med-alternativas --> ion-progress-bar
+  med-alternativas --> med-alternativas-a
+  med-alternativas --> med-alternativas-b
+  med-alternativas-a --> ion-icon
+  med-alternativas-a --> ion-progress-bar
+  med-alternativas-b --> ion-icon
+  med-alternativas-b --> ion-progress-bar
   style med-alternativas fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

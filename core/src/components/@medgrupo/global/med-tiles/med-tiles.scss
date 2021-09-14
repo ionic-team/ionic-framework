@@ -1,15 +1,15 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
-  --padding: #{$med-spacing-inset-sm};
-  --background: var(--med-color-neutral-2);
-  --border-radius: #{$med-border-radius-sm};
-  --border-background: var(--med-color-neutral-5);
-  --border-background-selected: #{md-color(brand, 3)};
-  --font-size-title: #{$med-font-size-sm};
+  --padding: var(--med-spacing-inset-sm);
+  --background: #{color('neutral', '2')};
+  --border-radius: var(--med-border-radius-sm);
+  --border-background: #{color('neutral', '5')};
+  --border-background-selected: #{color('brand', '3')};
+  --font-size-title: var(--med-font-size-sm);
   --color-title: var(--med-color-neutral-10);
-  --font-size-label: #{$med-font-size-xxxs};
-  --color-label: #{md-color(brand, 3)};
+  --font-size-label: var(--med-font-size-xxxs);
+  --color-label: #{color('brand', '3')};
 }
 
 :host(.med-tiles) {
@@ -37,20 +37,20 @@
     margin: 0;
     padding: 0;
     font-size: var(--font-size-title);
-    font-weight: $med-font-weight-semibold;
-    line-height: $med-line-height-compressed;
+    font-weight: var(--med-font-weight-semibold);
+    line-height: var(--med-line-height-compressed);
     color: var(--color-title);
-    padding-bottom: $med-spacing-stack-nano;
+    padding-bottom: var(--med-spacing-stack-nano);
   }
 
   .med-tiles__label {
     margin: 0;
     padding: 0;
     font-size: var(--font-size-label);
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
     color: var(--color-label);
-    padding-bottom: $med-spacing-stack-base;
+    padding-bottom: var(--med-spacing-stack-base);
   }
 }
 
@@ -66,18 +66,27 @@
 // color
 // ////////////////////
 
-:host(.med-tiles.ion-color) {
-  --border-background-selected: #{md-current-color(3)};
-  --color-label: #{md-current-color(3)};
+:host(.med-color) {
+  --color-label: #{curr-color('color', '3')};
+  --border-background-selected: #{curr-color('color', '3')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-tiles.med-neutral) {
-  --border-background-selected: var(--med-neutral);
-  --color-label: var(--med-neutral);
+:host(.med-color-neutral) {
+  --color-label: #{curr-color('neutral')};
+  --border-background-selected: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color-label: #{curr-color('feedback')};
+  --border-background-selected: #{curr-color('feedback')};
 }
 
 
@@ -86,23 +95,23 @@
 // ////////////////////
 
 :host(.med-tiles.med-solid) {
-  --background: #{md-color(brand, 3)};
-  --border-background-selected:  #{md-color(brand, contrast)};
-  --color-label:  #{md-color(brand, contrast)};
+  --background: #{color('brand', '3')};
+  --border-background-selected:  #{color('brand', '3', 'contrast')};
+  --color-label:  #{color('brand', '3', 'contrast')};
 
   .med-tiles__badge {
-    --background: #{md-color(brand, 3)};
+    --background: #{color('brand', '3')};
   }
 }
 
 :host(.med-tiles.med-solid.ion-color) {
-  --background: #{md-current-color(3)};
-  --border-background-selected: #{md-current-color(contrast)};
-  --color-label: #{md-current-color(contrast)};
+  --background: #{curr-color('color', '3')};
+  --border-background-selected: #{curr-color('color', '3', 'contrast')};
+  --color-label: #{curr-color('color', '3', 'contrast')};
 }
 
 :host(.med-tiles.med-solid.ion-color) .med-tiles__badge {
-  --background: #{md-current-color(1)} !important;
+  --background: #{curr-color('color', '1')} !important;
 }
 
 :host(.med-tiles.med-solid.med-neutral) {

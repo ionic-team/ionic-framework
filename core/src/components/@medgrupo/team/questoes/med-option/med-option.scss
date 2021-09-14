@@ -1,18 +1,18 @@
 
-@import "../../../../../../med-components/abstracts";
+@import "../../../../../../templarios/abstracts";
 
 :host {
-  --spacing: #{$med-spacing-inline-base};
-  --padding: #{$med-spacing-inset-xs};
-  --background: #{$med-color-neutral-light-20};
-  --border-radius: #{$med-border-radius-sm};
+  --spacing: var(--med-spacing-inline-base);
+  --padding: var(--med-spacing-inset-xs);
+  --background: #{color('neutral', '7')};
+  --border-radius: var(--med-border-radius-sm);
   --height: 32px;
 
-  --label-font-size: #{$med-font-size-xs};
-  --label-font-weight: #{$med-font-weight-medium};
-  --label-line-height: #{$med-line-height-compressed};
-  --label-color: #{$med-color-neutral-light-prime};
-  --label-spacing: #{$med-spacing-inline-nano};
+  --label-font-size: var(--med-font-size-xs);
+  --label-font-weight: var(--med-font-weight-medium);
+  --label-line-height: var(--med-line-height-compressed);
+  --label-color: #{color('neutral', '10')};
+  --label-spacing: var(--med-spacing-inline-nano);
 
   height: var(--height);
 
@@ -34,4 +34,31 @@
   line-height: var(--label-line-height);
   color: var(--label-color);
   padding-left: var(--label-spacing);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+  --label-color: #{curr-color('color', '3', 'contrast')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --label-color: #{curr-color('neutral', null, 'contrast')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --label-color: #{curr-color('feedback', null, 'contrast')};
 }

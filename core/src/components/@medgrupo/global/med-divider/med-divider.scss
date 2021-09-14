@@ -1,10 +1,10 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
    * @prop --color: Define a cor do componente.
    */
-  --color: var(--med-color-neutral-5);
+  --color: #{color('neutral', '5')};
 }
 
 :host(.med-divider) {
@@ -14,17 +14,34 @@
   .med-divider__heading {
     padding: 0;
     margin: 0;
-    padding-top: $med-spacing-stack-base;
-    line-height: $med-line-height-compressed;
-    font-weight: $med-font-weight-semibold;
+    padding-top: var(--med-spacing-stack-base);
+    line-height: var(--med-line-height-compressed);
+    font-weight: var(--med-font-weight-semibold);
     color: var(--color);
   }
 }
 
-:host(.ion-color) {
-  --color: #{md-current-color(3)};
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color.med-divider) {
+  --color: #{curr-color('color', '3')};
 }
 
-:host(.med-neutral) {
-  --color: var(--med-neutral);
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-divider) {
+  --color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback.med-divider) {
+  --color: #{curr-color('feedback')};
 }

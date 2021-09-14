@@ -1,4 +1,4 @@
-@import "../../../../../../med-components/abstracts";
+@import "../../../../../../templarios/abstracts";
 
 :host {
   /**
@@ -6,18 +6,18 @@
     * @prop --background: Define a cor de background do componente.
     * @prop --lines: Define o número de linhas visíveis com reticiências.
     */
-  --color: var(--med-color-neutral-10);
-  --background: #{md-color(brand, 1)};
+  --color: #{color('neutral', '10')};
+  --background: #{color('brand', '1')};
   --lines: 1;
 }
 
 :host(.med-question) {
   background: var(--background);
   color: var(--color);
-  padding: $med-spacing-inset-base;
-  font-size: $med-font-size-xxs;
-  font-weight: $med-font-weight-regular;
-  line-height: $med-line-height-compressed;
+  padding: var(--med-spacing-inset-base);
+  font-size: var(--med-font-size-xxs);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--med-line-height-compressed);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 :host(.med-question) .med-question__icon {
-  margin-top: $med-spacing-stack-xxxs;
+  margin-top: var(--med-spacing-stack-xxxs);
   font-size: 24px;
   stroke: var(--color);
   transition: 200ms transform ease;
@@ -86,26 +86,25 @@
 // color
 // ////////////////////
 
-:host(.ion-color) {
-  --color: #{md-current-color(contrast-1)};
-  --background: #{md-current-color(1)};
-}
-
-:host(.ion-color) .med-question__icon {
-  --color: #{md-current-color(contrast-1)};
-  --background: #{md-current-color(1)};
+:host(.med-color) {
+  --color: #{curr-color('color', null, 'contrast')};
+  --background: #{curr-color('color', '1')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-neutral) {
-  --color: var(--med-neutral-contrast);
-  --background: var(--med-neutral);
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --background: #{curr-color('neutral')};
 }
 
-:host(.med-neutral) .med-question__icon {
-  --color: var(--med-neutral-contrast);
-  --background: var(--med-neutral);
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback', null, 'contrast')};
+  --background: #{curr-color('feedback')};
 }

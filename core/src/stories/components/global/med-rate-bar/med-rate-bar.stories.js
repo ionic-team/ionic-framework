@@ -1,24 +1,25 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
+import { MedColor } from '../../../constants';
 
 export default {
   title: 'Components/Core/Rate Bar',
   decorators: [withDesign],
 };
 
-const TemplateDefault = () => {
+const TemplateDefault = ({dsColor}) => {
   return html`
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
 
         <!-- component -->
-        <med-rate-bar>
+        <med-rate-bar .dsColor=${dsColor}>
           Avalie esse vídeo
           <med-rate-like slot="avaliacao"></med-rate-like>
         </med-rate-bar>
         <!-- component -->
 
-      <div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -33,3 +34,14 @@ RateBar.parameters = {
     handles: ['medChange'],
   },
 }
+RateBar.argTypes = {
+  dsColor: {
+    options: MedColor,
+    control: { type: 'select'},
+    description: "Define a cor do componente.",
+    table: {
+      type:  { summary: 'MedColor' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
+};

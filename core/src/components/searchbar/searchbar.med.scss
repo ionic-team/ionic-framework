@@ -1,24 +1,24 @@
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
-  --color: #{$med-color-neutral-light-30};
-  --background: #{$med-color-neutral-dark-40};
-  --border-radius: #{$med-border-radius-sm};
-  --icon-color: #{$med-color-neutral-light-30};
-  --cancel-button-color: #{$med-color-questoes-medium};
+  --color: var(--med-color-neutral-light-30);
+  --background: var(--med-color-neutral-dark-40);
+  --border-radius: var(--med-border-radius-sm);
+  --icon-color: var(--med-color-neutral-light-30);
+  --cancel-button-color: var(--med-color-questoes-medium);
   --placeholder-opacity: 1;
 
-  // med-components
-  --spacing: #{$med-spacing-inset-xs};
+  // templarios
+  --spacing: var(--med-spacing-inset-xs);
 
   padding: var(--spacing);
   height: 40px;
 
   .searchbar-input {
-    padding-inline-start: 30px + $med-spacing-inline-nano !important;
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
+    padding-inline-start: 30px + var(--med-spacing-inline-nano) !important;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
   }
 
   .searchbar-search-icon {

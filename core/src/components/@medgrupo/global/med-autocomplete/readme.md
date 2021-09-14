@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type      | Default |
 | -------- | --------- | ----------- | --------- | ------- |
-| `list`   | `list`    |             | `boolean` | `false` |
+| `list`   | `list`    | TODO        | `boolean` | `false` |
 
 
 ## Dependencies

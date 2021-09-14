@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host(.med-chart-radial-label) {
   display: inline-block;
@@ -9,23 +9,23 @@
   }
 
   .med-chart-radial-label__item {
-    font-size: $med-font-size-nano;
-    line-height: $med-line-height-compressed;
-    color: var(--med-color-neutral-5);
+    font-size: var(--med-font-size-nano);
+    line-height: var(--med-line-height-compressed);
+    color: color('neutral', '5');
     display: flex;
     align-items: center;
-    font-weight: $med-font-weight-bold;
+    font-weight: var(--med-font-weight-bold);
 
     &:not(:last-of-type) {
-      padding-bottom: $med-spacing-stack-xxxs;
+      padding-bottom: var(--med-spacing-stack-xxxs);
     }
   }
 
   .med-chart-radial-label__quantia {
-    font-size: $med-font-size-md;
-    line-height: $med-line-height-compressed;
-    margin-right: $med-spacing-inline-xxxs;
-    color: var(--med-color-3);
-    font-weight: $med-font-weight-bold;
+    font-size: var(--med-font-size-md);
+    line-height: var(--med-line-height-compressed);
+    margin-right: var(--med-spacing-inline-xxxs);
+    color: hsl(var(--med-color-feedback));
+    font-weight: var(--med-font-weight-bold);
   }
 }

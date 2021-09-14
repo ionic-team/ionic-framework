@@ -1,0 +1,227 @@
+@import "../../../../templarios/abstracts";
+
+:host(.med-button--secondary) {
+  --background: transparent;
+  --color: #{color('brand', '3')};
+  --border-color: #{color('brand', '3')};
+
+  --border-width: var(--med-border-width-thin);
+  --border-style: solid;
+
+}
+
+:host(.med-button--secondary) ion-ripple-effect {
+  --ripple-color: transparent;
+  --ripple-opacity: 0;
+}
+
+// ////////////////////
+// states
+// ////////////////////
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary:hover) {
+    --color: #{color('brand', '4')};
+    --background: transparent;
+    --border-color: #{color('brand', '4')};
+  }
+}
+
+:host(.med-button--secondary.ion-focused) {
+  --color: #{color('brand', '4')};
+  --background: transparent;
+  --border-color: #{color('brand', '4')};
+}
+
+:host(.med-button--secondary.ion-activated) {
+  --color: #{color('brand', '5')};
+  --background: transparent;
+  --border-color: #{color('brand', '5')};
+}
+
+:host(.med-button--secondary.button-disabled) {
+  opacity: var(--med-opacity-level-half);
+}
+
+// //////////
+// before disable
+// //////////
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary:hover) .button-native::before {
+    opacity: 0;
+  }
+}
+
+:host(.med-button--secondary.ion-focused) .button-native::before {
+  opacity: 0;
+}
+
+:host(.med-button--secondary.ion-activated) .button-native::before {
+  opacity: 0;
+}
+
+:host(.med-button--secondary.button-disabled) .button-native::before {
+  opacity: 0;
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-button--secondary.med-color)  {
+  --background: transparent;
+  --color: #{curr-color('color', '4')};
+  --border-color: #{curr-color('color', '4')};
+}
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary.med-color:hover) {
+    --color: #{curr-color('color', '3')};
+    --border-color: #{curr-color('color', '3')};
+    background: transparent;
+  }
+}
+
+:host(.med-button--secondary.med-color.ion-activated) {
+  --color: #{curr-color('color', '5')};
+  --border-color: #{curr-color('color', '5')};
+  background: transparent;
+}
+
+:host(.med-button--secondary.med-color.ion-focused) {
+  --color: #{curr-color('color', '3')};
+  --border-color: #{curr-color('color', '3')};
+  background: transparent;
+}
+
+:host(.med-button--secondary.med-color) ion-ripple-effect {
+  --ripple-color: transparent;
+  --ripple-opacity: 0;
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-button--secondary.med-color-neutral)  {
+  --background: transparent;
+  --color: #{curr-color('neutral')};
+  --border-color: #{curr-color('neutral')};
+}
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary.med-color-neutral:hover) {
+    --color: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+    --border-color: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+    background: transparent;
+  }
+}
+
+:host(.med-button--secondary.med-color-neutral.ion-activated) {
+  --color: #{curr-color('neutral', null, null, var(--med-opacity-level-intense))};
+  --border-color: #{curr-color('neutral', null, null, var(--med-opacity-level-intense))};
+  background: transparent;
+}
+
+:host(.med-button--secondary.med-color-neutral.ion-focused) {
+  --color: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+  --border-color: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+  background: transparent;
+}
+
+:host(.med-button--secondary.med-color-neutral) ion-ripple-effect {
+  --ripple-color: transparent;
+  --ripple-opacity: 0;
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-button--secondary.med-color-feedback)  {
+  --background: transparent;
+  --color: #{curr-color('feedback')};
+  --border-color: #{curr-color('feedback')};
+}
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary.med-color-feedback:hover) {
+    --color: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+    --border-color: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+    background: transparent;
+  }
+}
+
+:host(.med-button--secondary.med-color-feedback.ion-activated) {
+  --color: #{curr-color('feedback', null, null, var(--med-opacity-level-intense))};
+  --border-color: #{curr-color('feedback', null, null, var(--med-opacity-level-intense))};
+  background: transparent;
+}
+
+:host(.med-button--secondary.med-color-feedback.ion-focused) {
+  --color: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+  --border-color: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+  background: transparent;
+}
+
+:host(.med-button--secondary.med-color-feedback) ion-ripple-effect {
+  --ripple-color: transparent;
+  --ripple-opacity: 0;
+}
+
+// //////////
+// before disable
+// //////////
+
+:host(.med-button--secondary.ion-color) .button-native::before {
+  opacity: 0;
+}
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary.ion-color:hover) .button-native::before {
+    opacity: 0;
+  }
+}
+
+:host(.med-button--secondary.ion-color.ion-focused) .button-native::before {
+  opacity: 0;
+}
+
+:host(.med-button--secondary.ion-color.ion-activated) .button-native::before {
+  opacity: 0;
+}
+
+:host(.med-button--secondary.ion-color.button-disabled) .button-native::before {
+  cursor: initial;
+  pointer-events: none;
+  opacity: 0;
+}
+
+// //////////
+// before disable
+// //////////
+
+:host(.med-button--secondary.med-neutral) .button-native::before {
+  opacity: 0;
+}
+
+@media (any-hover: hover) {
+  :host(.med-button--secondary.med-neutral:hover) .button-native::before {
+    opacity: 0;
+  }
+}
+
+:host(.med-button--secondary.med-neutral.ion-focused) .button-native::before {
+  opacity: 0;
+}
+
+:host(.med-button--secondary.med-neutral.ion-activated) .button-native::before {
+  opacity: 0;
+}
+
+:host(.med-button--secondary.med-neutral.button-disabled) .button-native::before {
+  cursor: initial;
+  pointer-events: none;
+  opacity: 0;
+}

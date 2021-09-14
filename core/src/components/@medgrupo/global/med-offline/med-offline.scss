@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   --z-index: 1000;
@@ -10,8 +10,7 @@
   z-index: var(--z-index);
 
   .wrapper {
-    opacity: $med-opacity-level-semiopaque;
-    background: #0b0e0e;
+    background: color('neutral', '1', null, var(--med-opacity-level-semiopaque));
     position: fixed;
     width: 100%;
     height: 100%;
@@ -31,11 +30,11 @@
   .icon {
     width: 48px;
     height: 48px;
-    margin-bottom: $med-spacing-stack-xxs;
+    margin-bottom: var(--med-spacing-stack-xxs);
   }
 
   .icon-path {
-    stroke: white;
+    stroke: color('neutral', '1', 'contrast');
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -43,17 +42,17 @@
   }
 
   .title {
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-bold;
-    line-height: $med-line-height-compressed;
-    color: #f1f3f4;
-    margin-bottom: $med-spacing-stack-xxxs;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-bold);
+    line-height: var(--med-line-height-compressed);
+    color: color('neutral', '1', 'contrast');;
+    margin-bottom: var(--med-spacing-stack-xxxs);
   }
 
   .text {
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
-    color: #f1f3f4;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
+    color: color('neutral', '1', 'contrast');;
   }
 }

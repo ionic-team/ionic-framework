@@ -9,10 +9,10 @@
 
 | Property            | Attribute             | Description | Type                  | Default     |
 | ------------------- | --------------------- | ----------- | --------------------- | ----------- |
-| `imagens`           | `imagens`             |             | `any`                 | `[]`        |
-| `marcaAguaInferior` | `marca-agua-inferior` |             | `string \| undefined` | `undefined` |
-| `marcaAguaSuperior` | `marca-agua-superior` |             | `string \| undefined` | `undefined` |
-| `titulo`            | `titulo`              |             | `string \| undefined` | `undefined` |
+| `imagens`           | `imagens`             | TODO        | `any`                 | `[]`        |
+| `marcaAguaInferior` | `marca-agua-inferior` | TODO        | `string \| undefined` | `undefined` |
+| `marcaAguaSuperior` | `marca-agua-superior` | TODO        | `string \| undefined` | `undefined` |
+| `titulo`            | `titulo`              | TODO        | `string \| undefined` | `undefined` |
 
 
 ## Dependencies

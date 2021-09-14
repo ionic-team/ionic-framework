@@ -262,11 +262,13 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [med-config](../@medgrupo/global/med-config)
  - [med-image-zoom](../@medgrupo/global/med-image-zoom)
 
 ### Graph
 ```mermaid
 graph TD;
+  med-config --> ion-content
   med-image-zoom --> ion-content
   style ion-content fill:#f9f,stroke:#333,stroke-width:4px
 ```

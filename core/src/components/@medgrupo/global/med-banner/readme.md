@@ -9,17 +9,17 @@
 
 | Property                | Attribute   | Description | Type     | Default     |
 | ----------------------- | ----------- | ----------- | -------- | ----------- |
-| `btnLeft` _(required)_  | `btn-left`  |             | `string` | `undefined` |
-| `btnRight` _(required)_ | `btn-right` |             | `string` | `undefined` |
-| `header` _(required)_   | `header`    |             | `string` | `undefined` |
+| `btnLeft` _(required)_  | `btn-left`  | TODO        | `string` | `undefined` |
+| `btnRight` _(required)_ | `btn-right` | TODO        | `string` | `undefined` |
+| `header` _(required)_   | `header`    | TODO        | `string` | `undefined` |
 
 
 ## Events
 
 | Event           | Description | Type                |
 | --------------- | ----------- | ------------------- |
-| `btnLeftClick`  |             | `CustomEvent<void>` |
-| `btnRightClick` |             | `CustomEvent<void>` |
+| `btnLeftClick`  | TODO        | `CustomEvent<void>` |
+| `btnRightClick` | TODO        | `CustomEvent<void>` |
 
 
 ----------------------------------------------

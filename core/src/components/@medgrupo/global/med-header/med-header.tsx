@@ -8,6 +8,10 @@ import { headerResizeEventDetail } from './med-header-interface';
 })
 export class MedHeader {
   @Element() el!: HTMLElement;
+
+  /**
+   * TODO
+   */
   @Event() medResize!: EventEmitter<headerResizeEventDetail>;
 
   private hostHeight = 0;

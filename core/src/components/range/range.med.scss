@@ -1,7 +1,15 @@
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
-  --bar-background: #{$med-color-neutral-light-20};
-  --bar-background-active: #{$med-color-brand-primary-light};
+  --bar-background: #{color('neutral', '8')};
+  --bar-background-active: #{color('brand', '4')};
   padding: 0;
+}
+
+::slotted([slot="start"]) {
+  stroke: #fff;
+}
+
+::slotted([slot="end"]) {
+  stroke: #fff;
 }

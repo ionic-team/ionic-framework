@@ -1,12 +1,12 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
-  --background: var(--surface-color, #{$med-color-neutral-dark-40});
-  --color: var(--text-color, #{$med-color-neutral-light-prime});
+  --background: #{color('neutral', '2')};
+  --color: #{color('neutral', '2', 'contrast')};
 }
 
 :host {
-  padding: $med-spacing-stretch-md;
+  padding: var(--med-spacing-stretch-md);
   display: block;
   background: var(--background);
 
@@ -16,7 +16,7 @@
     }
 
     &__left {
-      margin-right: $med-spacing-inline-base;
+      margin-right: var(--med-spacing-inline-base);
     }
 
     &__bottom {
@@ -26,40 +26,40 @@
   }
 
   .header {
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-semibold;
-    line-height: $med-line-height-default;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-semibold);
+    line-height: var(--med-line-height-default);
     color: var(--color);
     margin: 0;
-    margin-bottom: $med-spacing-inline-nano;
+    margin-bottom: var(--med-spacing-inline-nano);
     text-align: left;
   }
 
   .button {
-    font-size: $med-font-size-xxs;
+    font-size: var(--med-font-size-xxs);
     line-height: line-height($med-font-size-xxs);
-    color: $med-color-neutral-light-prime;
+    color: color('neutral', '1', 'contrast');
     background: transparent;
     border: 0;
     cursor: pointer;
     text-transform: uppercase;
-    font-weight: $med-font-weight-regular;
+    font-weight: var(--med-font-weight-regular);
 
     &--right {
-      font-weight: $med-font-weight-semibold;
-      margin-left: $med-spacing-inline-xxs;
+      font-weight: var(--med-font-weight-semibold);
+      margin-left: var(--med-spacing-inline-xxs);
     }
   }
 }
 
 ::slotted([slot="content"]) {
-  font-size: $med-font-size-xxs;
-  font-weight: $med-font-weight-regular;
-  line-height: $med-line-height-compressed;
-  color: $med-color-neutral-light-prime;
+  font-size: var(--med-font-size-xxs);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--med-line-height-compressed);
+  color: color('neutral', '1', 'contrast');
   margin: 0;
   padding: 0;
-  padding-bottom: $med-spacing-inline-xxs;
+  padding-bottom: var(--med-spacing-inline-xxs);
   text-align: left;
 }
 

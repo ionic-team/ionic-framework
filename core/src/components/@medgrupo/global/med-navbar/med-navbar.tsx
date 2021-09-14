@@ -1,7 +1,7 @@
-import { Component, Host, h, Element, Prop } from '@stencil/core';
+import { Component, Element, h, Host, Prop } from '@stencil/core';
 import ResizeObserver from "resize-observer-polyfill";
-import { Color, Neutral } from '../../../../interface';
-import { createColorClasses } from '../../../../utils/theme';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 /**
  * @slot left - Posiciona um elemento ao lado esquerdo ao navbar
@@ -18,14 +18,9 @@ export class MedNavbar {
   @Element() el!: HTMLElement;
 
   /**
-   * Define a cor do componente.
-   */
-  @Prop() color?: Color;
-
-  /**
-   * Define a cor neutra do componente.
-   */
-  @Prop() neutral?: Neutral;
+    * Define a cor do componente.
+    */
+   @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
    * Define a variação do componente.
@@ -91,35 +86,30 @@ export class MedNavbar {
   }
 
   render() {
-    const { color, neutral, dsName } = this;
+    const { dsColor, dsName } = this;
 
     return (
-      <Host from-stencil
-        class={createColorClasses(color, {
+      <Host
+        from-stencil
+        class={generateMedColor(dsColor, {
           'med-navbar': true,
           [`med-navbar--${dsName}`]: dsName !== undefined,
-        }, neutral)}>
+        })}>
         <header class="med-navbar__header">
           <slot name="top"></slot>
 
           <div class="med-navbar__container">
             <div id="left" class="med-navbar__left" ref={(el) => this.leftEl = el as HTMLDivElement}>
-
               <slot name="left"></slot>
-
             </div>
 
             <div class="med-navbar__center" ref={(el) => this.centerEl = el as HTMLDivElement}>
-
               <slot name="title"></slot>
               <slot name="subtitle"></slot>
-
             </div>
 
             <div id="right" class="med-navbar__right" ref={(el) => this.rightEl = el as HTMLDivElement}>
-
               <slot name="right"></slot>
-
             </div>
           </div>
         </header>

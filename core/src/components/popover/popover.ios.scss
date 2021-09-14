@@ -72,15 +72,15 @@
 // custom
 //
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 //
 // med-popover
 //
 
 :host(.med-popover) {
-  --box-shadow: #{$med-shadow-level-3};
-  color: $med-color-neutral-light-prime;
+  --box-shadow: var(--med-shadow-level-3);
+  color: var(--med-color-neutral-light-prime);
 
   .popover-arrow::after {
     left: 1px;
@@ -91,9 +91,9 @@
   }
 
   .popover-content {
-    padding: $med-spacing-inset-sm;
-    border-radius: $med-border-radius-sm;
-    box-shadow: $med-shadow-level-3;
+    padding: var(--med-spacing-inset-sm);
+    border-radius: var(--med-border-radius-sm);
+    box-shadow: var(--med-shadow-level-3);
     --width: 224px;
 
     @include breakpoint-up('md') {
@@ -109,13 +109,13 @@
 @supports (backdrop-filter: blur(0)) {
   :host(.med-popover) .popover-content,
   :host(.med-popover) .popover-arrow::after {
-    background: $med-color-neutral-dark-40;
+    background: var(--med-color-neutral-dark-40);
   }
 }
 
 :host(.med-tooltip) {
-  --background: #{$med-color-neutral-dark-30};
-  --box-shadow: #{$med-shadow-level-1};
+  --background: var(--med-color-neutral-dark-30);
+  --box-shadow: var(--med-shadow-level-1);
   --width: auto;
   --max-width: 280px;
 
@@ -128,10 +128,6 @@
   }
 
   .popover-content {
-    border-radius: $med-border-radius-quark;
+    border-radius: var(--med-border-radius-quark);
   }
-}
-
-:host-context(.light-mode):host(.med-tooltip) {
-  --background: #{$med-color-neutral-light-prime};
 }

@@ -8,12 +8,28 @@ import { modalController } from '../../../../utils/overlays';
   scoped: true
 })
 export class MedImageZoom {
-  @Prop({ mutable: true, reflect: true }) imagens: MedImageZoomItemInterface[] | any = []
-  @Prop({ mutable: true, reflect: true }) marcaAguaSuperior?: string
-  @Prop({ mutable: true, reflect: true }) marcaAguaInferior?: string
-  @Prop({ mutable: true, reflect: true }) titulo?: string
 
-  @State() slider!: any
+  /**
+   * TODO
+   */
+  @Prop({ mutable: true, reflect: true }) imagens: MedImageZoomItemInterface[] | any = [];
+
+  /**
+   * TODO
+   */
+  @Prop({ mutable: true, reflect: true }) marcaAguaSuperior?: string;
+
+  /**
+   * TODO
+   */
+  @Prop({ mutable: true, reflect: true }) marcaAguaInferior?: string;
+
+  /**
+   * TODO
+   */
+  @Prop({ mutable: true, reflect: true }) titulo?: string;
+
+  @State() slider!: any;
 
   private sliderOpts = {
     zoom: {
@@ -21,6 +37,7 @@ export class MedImageZoom {
     },
     intialSlide: 1,
   }
+
   zoom(zoomIn: boolean) {
     const zoom = this.slider.swiper.zoom
     if (zoomIn) {
@@ -67,10 +84,10 @@ export class MedImageZoom {
         </ion-content>
         <div class="zoom-button-container">
           <button class="zoom-button" onClick={() => this.zoom(true)}>
-            <ion-icon class="med-icon" name="med-menos"></ion-icon>
+            <ion-icon class="med-icon" name="med-mais"></ion-icon>
           </button>
           <button class="zoom-button" onClick={() => this.zoom(false)}>
-            <ion-icon class="med-icon" name="med-mais"></ion-icon>
+            <ion-icon class="med-icon" name="med-menos"></ion-icon>
           </button>
           <button class="zoom-button zoom-button--close" onClick={() => this.dismiss()}>
             <ion-icon class="med-icon" name="med-fechar"></ion-icon>

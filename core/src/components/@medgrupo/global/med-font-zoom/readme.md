@@ -9,8 +9,8 @@
 
 | Property               | Attribute | Description | Type                                                                                        | Default          |
 | ---------------------- | --------- | ----------- | ------------------------------------------------------------------------------------------- | ---------------- |
-| `emitter` _(required)_ | --        |             | `{ emit: (value: MedFontSize) => void; }`                                                   | `undefined`      |
-| `value`                | `value`   |             | `MedFontSize.MD \| MedFontSize.SM \| MedFontSize.XS \| MedFontSize.XXS \| MedFontSize.XXXS` | `MedFontSize.XS` |
+| `emitter` _(required)_ | --        | TODO        | `{ emit: (value: MedFontSize) => void; }`                                                   | `undefined`      |
+| `value`                | `value`   | TODO        | `MedFontSize.MD \| MedFontSize.SM \| MedFontSize.XS \| MedFontSize.XXS \| MedFontSize.XXXS` | `MedFontSize.XS` |
 
 
 ## Dependencies

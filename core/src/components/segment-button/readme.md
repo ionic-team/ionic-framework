@@ -801,6 +801,8 @@ export default defineComponent({
 | Property   | Attribute  | Description                                                  | Type                                                                                                    | Default               |
 | ---------- | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
 | `disabled` | `disabled` | If `true`, the user cannot interact with the segment button. | `boolean`                                                                                               | `false`               |
+| `dsColor`  | `ds-color` | Define a cor do componente.                                  | `string \| undefined`                                                                                   | `undefined`           |
+| `dsName`   | `ds-name`  | Define a variação do componente.                             | `"default" \| undefined`                                                                                | `undefined`           |
 | `layout`   | `layout`   | Set the layout of the text and icon in the segment.          | `"icon-bottom" \| "icon-end" \| "icon-hide" \| "icon-start" \| "icon-top" \| "label-hide" \| undefined` | `'icon-top'`          |
 | `mode`     | `mode`     | The mode determines which platform styles to use.            | `"ios" \| "md"`                                                                                         | `undefined`           |
 | `type`     | `type`     | The type of the button.                                      | `"button" \| "reset" \| "submit"`                                                                       | `'button'`            |
@@ -852,6 +854,10 @@ export default defineComponent({
 
 ## Dependencies
 
+### Used by
+
+ - [med-config](../@medgrupo/global/med-config)
+
 ### Depends on
 
 - [ion-ripple-effect](../ripple-effect)
@@ -860,6 +866,7 @@ export default defineComponent({
 ```mermaid
 graph TD;
   ion-segment-button --> ion-ripple-effect
+  med-config --> ion-segment-button
   style ion-segment-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

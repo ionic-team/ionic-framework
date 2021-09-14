@@ -1,0 +1,29 @@
+@function breakpoint-next(
+  $name,
+  $breakpoints: $med-grid-breakpoints,
+  $breakpoint-names: map-keys($breakpoints)
+) {
+  $n: index($breakpoint-names, $name);
+  @if not $n {
+    @error 'breakpoint `#{$name}` not found in `#{$breakpoints}`';
+  }
+  @return if(
+    $n < length($breakpoint-names),
+    nth($breakpoint-names, $n + 1),
+    null
+  );
+}
+
+@function breakpoint-min($name, $breakpoints: $med-grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-max($name, $breakpoints: $med-grid-breakpoints) {
+  $max: map-get($breakpoints, $name);
+  @return if($max and $max > 0, $max - 0.02, null);
+}
+
+@function breakpoint-infix($name, $breakpoints: $med-grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}

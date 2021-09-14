@@ -1,0 +1,32 @@
+$med-font-size-nano: 10px !default;
+$med-font-size-xxxs: 12px !default;
+$med-font-size-xxs: 14px !default;
+$med-font-size-xs: 16px !default;
+$med-font-size-sm: 20px !default;
+$med-font-size-md: 24px !default;
+$med-font-size-lg: 32px !default;
+$med-font-size-xl: 40px !default;
+$med-font-size-xxl: 48px !default;
+$med-font-size-xxxl: 64px !default;
+$med-font-size-huge: 96px !default;
+
+$med-letter-spacing-ultracompressed: -0.04 !default;
+$med-letter-spacing-compressed: -0.02 !default;
+$med-letter-spacing-default: 0 !default;
+$med-letter-spacing-medium: 0.02 !default;
+$med-letter-spacing-expanded: 0.05 !default;
+$med-letter-spacing-distant: 0.1 !default;
+$med-letter-spacing-far: 0.2 !default;
+
+// line height
+$med-line-height-compressed: 100% !default;
+$med-line-height-default: #{line-height()} !default;
+$med-line-height-double: 200% !default;
+
+// platforms
+$med-iphone-x-top: 40px !default;
+$med-iphone-top: 20px !default;
+$med-mac-top: 15px !default;
+
+@import './variables/color';
+@import './variables/breakpoints';

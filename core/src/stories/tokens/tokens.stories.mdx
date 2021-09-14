@@ -11,23 +11,23 @@ Com isso os processos se dão com **Qualidade** e **Agilidade**, promovendo **Pa
 
 Os tokens estão presentes em:
 
-- **[Tokens de Cores](http://desenv.ordomederi.com/med-components/?path=/story/tokens-cores--cores)**
-- **[Tokens de Tipografia](http://desenv.ordomederi.com/med-components/?path=/story/tokens-tipografia--tipografia)**
-- **[Tokens de Espaçamento](http://desenv.ordomederi.com/med-components/?path=/story/tokens-espacamento--espacamento)**
-- **[Tokens Complementares](http://desenv.ordomederi.com/med-components/?path=/story/tokens-complementares--complementares)**
+- **[Tokens de Cores](http://desenv.ordomederi.com/templarios/?path=/story/tokens-cores--cores)**
+- **[Tokens de Tipografia](http://desenv.ordomederi.com/templarios/?path=/story/tokens-tipografia--tipografia)**
+- **[Tokens de Espaçamento](http://desenv.ordomederi.com/templarios/?path=/story/tokens-espacamento--espacamento)**
+- **[Tokens Complementares](http://desenv.ordomederi.com/templarios/?path=/story/tokens-complementares--complementares)**
 
-Para utilizá-los basta referência-los como **CSS Properties** no código.
+Para utilizá-los basta referência-los como **CSS Custom Properties** no código.
 
 ## ⚠️ IMPORTANTE!!!
 
-- Para utilizar o token **$med-line-height-default** em **[Tipografia](http://desenv.ordomederi.com/med-components/?path=/story/tokens-tipografia--tipografia)** é necessário o uso da função SASS **[line-height()](http://desenv.ordomederi.com/med-components/?path=/story/global-functions-tipografia--page#line-height)**.
-- Para utilizar os tokens **$med-letter-spacing-*** em **[Tipografia](http://desenv.ordomederi.com/med-components/?path=/story/tokens-tipografia--tipografia)** é necessário o uso da função SASS **[letter-spacing()](http://desenv.ordomederi.com/med-components/?path=/story/global-functions-tipografia--page#letter-spacing)**.
+- Para utilizar o token **$med-line-height-default** em **[Tipografia](http://desenv.ordomederi.com/templarios/?path=/story/tokens-tipografia--tipografia)** é necessário o uso da função SASS **[line-height()](http://desenv.ordomederi.com/templarios/?path=/story/global-functions-tipografia--page#line-height)**.
+- Para utilizar os tokens **$med-letter-spacing-*** em **[Tipografia](http://desenv.ordomederi.com/templarios/?path=/story/tokens-tipografia--tipografia)** é necessário o uso da função SASS **[letter-spacing()](http://desenv.ordomederi.com/templarios/?path=/story/global-functions-tipografia--page#letter-spacing)**.
 
 ## 💡 Exemplo
 
 **⚠️ IMPORTANTE!!! Exemplificação do uso dos tokens. Os componentes não devem ser criados dessa maneira...**
 
-Nesse exemplo vamos utilizar os tokens presentes na seguinte **[seção](http://desenv.ordomederi.com/med-components/?path=/story/tokens-exemplo--exemplo)**.
+Nesse exemplo vamos utilizar os tokens presentes na seguinte **[seção](http://desenv.ordomederi.com/templarios/?path=/story/tokens-exemplo--exemplo)**.
 
 ```
 <div class="nav-bar">
@@ -44,14 +44,14 @@ Nesse exemplo vamos utilizar os tokens presentes na seguinte **[seção](http://
   justify-content: space-between;
 
   padding: var(--med-spacing-squish-xs);
-  background: var(--med-color-neutral-dark-prime);
+  background: hsl(var(--med-color-neutral-1));
 
   &__heading {
     text-transform: uppercase;
 
     font-size: var(--med-font-size-xs);
     padding-top: var(--med-spacing-squish-xs);
-    color: var(--med-color-neutral-light-prime);
+    color: hsl(var(--med-color-neutral-10));
     letter-spacing: var(--med-line-height-compressed);
   }
 }

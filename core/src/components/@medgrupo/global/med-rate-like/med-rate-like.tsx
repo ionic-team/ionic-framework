@@ -1,5 +1,6 @@
 import { Component, Host, h, Event, EventEmitter, Prop } from '@stencil/core';
 import { RateStatus } from './med-rate-like.enum';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 @Component({
   tag: 'med-rate-like',
@@ -7,7 +8,14 @@ import { RateStatus } from './med-rate-like.enum';
   shadow: true,
 })
 export class MedRateLike {
+  /**
+   * TODO
+   */
   @Prop({ reflect: true, mutable: true }) status?: RateStatus;
+
+  /**
+   * TODO
+   */
   @Event() medChange!: EventEmitter<RateStatus>;
 
   private onClick = (status: RateStatus) => {
@@ -20,8 +28,13 @@ export class MedRateLike {
   }
 
   render() {
+
     return (
-      <Host from-stencil>
+      <Host
+        from-stencil
+        class={generateMedColor(null, {
+          'med-rate-like': true,
+        })}>
         <button class={`button
           ${this.status === RateStatus.LIKE ? 'button--like' : ''}
           ${this.status ? 'button--disabled' : ''}`}

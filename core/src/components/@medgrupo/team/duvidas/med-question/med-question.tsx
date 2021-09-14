@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Method } from '@stencil/core';
-import { Color, Neutral } from '../../../../../interface';
-import { createColorClasses } from '../../../../../utils/theme';
+import { MedColor } from '../../../../../interface';
+import { generateMedColor } from '../../../../../utils/med-theme';
 
 @Component({
   tag: 'med-question',
@@ -12,12 +12,7 @@ export class MedQuestion {
   /**
     * Define a cor do componente.
     */
-  @Prop() color?: Color;
-
-  /**
-    * Define a cor neutra do componente.
-    */
-  @Prop() neutral?: Neutral;
+   @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
     * Define o estado do componente.
@@ -29,6 +24,9 @@ export class MedQuestion {
     */
   @Prop() texto?: string;
 
+  /**
+   * TODO
+   */
   @Method()
   async toggle(event?: Event) {
     event?.stopPropagation();
@@ -36,14 +34,14 @@ export class MedQuestion {
   }
 
   render() {
-    const { color, neutral, collapsed, texto } = this;
+    const { collapsed, texto, dsColor } = this;
 
     return (
       <Host from-stencil
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           'med-question': true,
           'med-question--collapsed': collapsed
-        }, neutral)}
+        },)}
         onClick={(event: any) => {this.toggle(event)}}>
           <div class="med-question__text" innerHTML={texto}></div>
           <ion-icon class="med-icon med-question__icon" name="med-baixo"></ion-icon>

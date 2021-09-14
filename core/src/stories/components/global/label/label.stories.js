@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
-import { medLabels } from '../../../med-label';
+import { MedLabels } from '../../../constants';
 
 export default {
   title: 'Components/Core/Label',
@@ -30,7 +30,7 @@ Label.parameters = {
 }
 Label.argTypes = {
   dsName: {
-    options: medLabels,
+    options: MedLabels,
     control: { type: 'select'},
     defaultValue: 'helper',
     description: "Define o estilo estilo do label dentro do DS.",

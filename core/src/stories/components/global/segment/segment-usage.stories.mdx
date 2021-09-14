@@ -1,0 +1,25 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Core/Segment/Usage" />
+
+# Segment
+
+## Propriedades
+
+| Propriedade   | Atributo      | Descrição                                   | Tipo                                                                                                                  | Default       |
+| ------------- | ------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **dsColor**   | **ds-color**  | Define a cor do componente.                 | **[MedColor](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)** \| **undefined** | **undefined** |
+| **dsName**    | **ds-name**   | Define o tipo do componente.                |                                                                                                         **undefined** | **undefined** |
+
+## Default
+
+```
+<ion-segment ds-name="default" (ionChange)="segmentChanged($event)">
+  <ion-segment-button ds-name="default" value="friends">
+    <ion-label>Friends</ion-label>
+  </ion-segment-button>
+  <ion-segment-button ds-name="default" value="enemies">
+    <ion-label>Enemies</ion-label>
+  </ion-segment-button>
+</ion-segment>
+```

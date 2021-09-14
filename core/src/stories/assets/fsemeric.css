@@ -1,152 +1,152 @@
-  /**
-  * fsemeric-book
-  */
-  @font-face {
-    font-family: "fsemeric-book";
-    src: url("./fsemeric/Book/FSEmericWeb-Book.eot");
-    src: url("./fsemeric/Book/FSEmericWeb-Book.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Book/FSEmericWeb-Book.woff") format("woff"), url("./fsemeric/Book/FSEmericWeb-Book.svg#FSEmericWeb-Book") format("svg");
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric-book";
-    src: url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.eot");
-    src: url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.woff") format("woff"), url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.svg#FSEmericWeb-BoldItalic") format("svg");
-    font-weight: 400;
-    font-style: italic;
-  }
-  /**
-  * fsemeric-core
-  */
-  @font-face {
-    font-family: "fsemeric-core";
-    src: url("./fsemeric/Core/FSEmericWeb-Core.eot");
-    src: url("./fsemeric/Core/FSEmericWeb-Core.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Core/FSEmericWeb-Core.woff") format("woff"), url("./fsemeric/Core/FSEmericWeb-Core.svg#FSEmericWeb-Core") format("svg");
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric-core";
-    src: url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.eot");
-    src: url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.woff") format("woff"), url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.svg#FSEmericWeb-CoreItalic") format("svg");
-    font-weight: 400;
-    font-style: italic;
-  }
-  /**
-  * fsemeric-medium
-  */
-  @font-face {
-    font-family: "fsemeric-medium";
-    src: url("./fsemeric/Medium/FSEmericWeb-Medium.eot");
-    src: url("./fsemeric/Medium/FSEmericWeb-Medium.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Medium/FSEmericWeb-Medium.woff") format("woff"), url("./fsemeric/Medium/FSEmericWeb-Medium.svg#FSEmericWeb-Medium") format("svg");
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric-medium";
-    src: url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.eot");
-    src: url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.woff") format("woff"), url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.svg#FSEmericWeb-MediumItalic") format("svg");
-    font-weight: 400;
-    font-style: italic;
-  }
-  /**
-  * fsemeric
-  */
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/Heavy/FSEmericWeb-Heavy.eot");
-    src: url("./fsemeric/Heavy/FSEmericWeb-Heavy.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Heavy/FSEmericWeb-Heavy.woff") format("woff"), url("./fsemeric/Heavy/FSEmericWeb-Heavy.svg#FSEmericWeb-Heavy") format("svg");
-    font-weight: 900;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.eot");
-    src: url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.woff") format("woff"), url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.svg#FSEmericWeb-HeavyItalic") format("svg");
-    font-weight: 900;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.eot");
-    src: url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.eot?#iefix") format("embedded-opentype"), url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.woff") format("woff"), url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.svg#FSEmericWeb-ExtraBold") format("svg");
-    font-weight: 800;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.eot");
-    src: url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.woff") format("woff"), url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.svg#FSEmericWeb-ExtraBoldItalic") format("svg");
-    font-weight: 800;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/Bold/FSEmericWeb-Bold.eot");
-    src: url("./fsemeric/Bold/FSEmericWeb-Bold.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Bold/FSEmericWeb-Bold.woff") format("woff"), url("./fsemeric/Bold/FSEmericWeb-Bold.svg#FSEmericWeb-Bold") format("svg");
-    font-weight: 700;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.eot");
-    src: url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.woff") format("woff"), url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.svg#FSEmericWeb-BoldItalic") format("svg");
-    font-weight: 700;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.eot");
-    src: url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.eot?#iefix") format("embedded-opentype"), url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.woff") format("woff"), url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.svg#FSEmericWeb-SemiBold") format("svg");
-    font-weight: 500;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.eot");
-    src: url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.woff") format("woff"), url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.svg#FSEmericWeb-SemiBoldItalic") format("svg");
-    font-weight: 500;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/Regular/FSEmericWeb-Regular.eot");
-    src: url("./fsemeric/Regular/FSEmericWeb-Regular.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Regular/FSEmericWeb-Regular.woff") format("woff"), url("./fsemeric/Regular/FSEmericWeb-Regular.svg#FSEmericWeb") format("svg");
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/Italic/FSEmericWeb-Italic.eot");
-    src: url("./fsemeric/Italic/FSEmericWeb-Italic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Italic/FSEmericWeb-Italic.woff") format("woff"), url("./fsemeric/Italic/FSEmericWeb-Italic.svg#FSEmericWeb-Italic") format("svg");
-    font-weight: 400;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/Light/FSEmericWeb-Light.eot");
-    src: url("./fsemeric/Light/FSEmericWeb-Light.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Light/FSEmericWeb-Light.woff") format("woff"), url("./fsemeric/Light/FSEmericWeb-Light.svg#FSEmericWeb-Light") format("svg");
-    font-weight: 300;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.eot");
-    src: url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.woff") format("woff"), url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.svg#FSEmericWeb-LightItalic") format("svg");
-    font-weight: 300;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/Thin/FSEmericWeb-Thin.eot");
-    src: url("./fsemeric/Thin/FSEmericWeb-Thin.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Thin/FSEmericWeb-Thin.woff") format("woff"), url("./fsemeric/Thin/FSEmericWeb-Thin.svg#FSEmericWeb-Thin") format("svg");
-    font-weight: 100;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "fsemeric";
-    src: url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.eot");
-    src: url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.woff") format("woff"), url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.svg#FSEmericWeb-ThinItalic") format("svg");
-    font-weight: 100;
-    font-style: italic;
-  }
+/**
+* fsemeric-book
+*/
+@font-face {
+  font-family: "fsemeric-book";
+  src: url("./fsemeric/Book/FSEmericWeb-Book.eot");
+  src: url("./fsemeric/Book/FSEmericWeb-Book.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Book/FSEmericWeb-Book.woff") format("woff"), url("./fsemeric/Book/FSEmericWeb-Book.svg#FSEmericWeb-Book") format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric-book";
+  src: url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.eot");
+  src: url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.woff") format("woff"), url("./fsemeric/BookItalic/FSEmericWeb-BookItalic.svg#FSEmericWeb-BoldItalic") format("svg");
+  font-weight: 400;
+  font-style: italic;
+}
+/**
+* fsemeric-core
+*/
+@font-face {
+  font-family: "fsemeric-core";
+  src: url("./fsemeric/Core/FSEmericWeb-Core.eot");
+  src: url("./fsemeric/Core/FSEmericWeb-Core.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Core/FSEmericWeb-Core.woff") format("woff"), url("./fsemeric/Core/FSEmericWeb-Core.svg#FSEmericWeb-Core") format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric-core";
+  src: url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.eot");
+  src: url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.woff") format("woff"), url("./fsemeric/CoreItalic/FSEmericWeb-CoreItalic.svg#FSEmericWeb-CoreItalic") format("svg");
+  font-weight: 400;
+  font-style: italic;
+}
+/**
+* fsemeric-medium
+*/
+@font-face {
+  font-family: "fsemeric-medium";
+  src: url("./fsemeric/Medium/FSEmericWeb-Medium.eot");
+  src: url("./fsemeric/Medium/FSEmericWeb-Medium.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Medium/FSEmericWeb-Medium.woff") format("woff"), url("./fsemeric/Medium/FSEmericWeb-Medium.svg#FSEmericWeb-Medium") format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric-medium";
+  src: url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.eot");
+  src: url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.woff") format("woff"), url("./fsemeric/MediumItalic/FSEmericWeb-MediumItalic.svg#FSEmericWeb-MediumItalic") format("svg");
+  font-weight: 400;
+  font-style: italic;
+}
+/**
+* fsemeric
+*/
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/Heavy/FSEmericWeb-Heavy.eot");
+  src: url("./fsemeric/Heavy/FSEmericWeb-Heavy.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Heavy/FSEmericWeb-Heavy.woff") format("woff"), url("./fsemeric/Heavy/FSEmericWeb-Heavy.svg#FSEmericWeb-Heavy") format("svg");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.eot");
+  src: url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.woff") format("woff"), url("./fsemeric/HeavyItalic/FSEmericWeb-HeavyItalic.svg#FSEmericWeb-HeavyItalic") format("svg");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.eot");
+  src: url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.eot?#iefix") format("embedded-opentype"), url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.woff") format("woff"), url("./fsemeric/ExtraBold/FSEmericWeb-ExtraBold.svg#FSEmericWeb-ExtraBold") format("svg");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.eot");
+  src: url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.woff") format("woff"), url("./fsemeric/ExtraBoldItalic/FSEmericWeb-ExtraBoldItalic.svg#FSEmericWeb-ExtraBoldItalic") format("svg");
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/Bold/FSEmericWeb-Bold.eot");
+  src: url("./fsemeric/Bold/FSEmericWeb-Bold.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Bold/FSEmericWeb-Bold.woff") format("woff"), url("./fsemeric/Bold/FSEmericWeb-Bold.svg#FSEmericWeb-Bold") format("svg");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.eot");
+  src: url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.woff") format("woff"), url("./fsemeric/BoldItalic/FSEmericWeb-BoldItalic.svg#FSEmericWeb-BoldItalic") format("svg");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.eot");
+  src: url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.eot?#iefix") format("embedded-opentype"), url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.woff") format("woff"), url("./fsemeric/SemiBold/FSEmericWeb-SemiBold.svg#FSEmericWeb-SemiBold") format("svg");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.eot");
+  src: url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.woff") format("woff"), url("./fsemeric/SemiBoldItalic/FSEmericWeb-SemiBoldItalic.svg#FSEmericWeb-SemiBoldItalic") format("svg");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/Regular/FSEmericWeb-Regular.eot");
+  src: url("./fsemeric/Regular/FSEmericWeb-Regular.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Regular/FSEmericWeb-Regular.woff") format("woff"), url("./fsemeric/Regular/FSEmericWeb-Regular.svg#FSEmericWeb") format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/Italic/FSEmericWeb-Italic.eot");
+  src: url("./fsemeric/Italic/FSEmericWeb-Italic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Italic/FSEmericWeb-Italic.woff") format("woff"), url("./fsemeric/Italic/FSEmericWeb-Italic.svg#FSEmericWeb-Italic") format("svg");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/Light/FSEmericWeb-Light.eot");
+  src: url("./fsemeric/Light/FSEmericWeb-Light.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Light/FSEmericWeb-Light.woff") format("woff"), url("./fsemeric/Light/FSEmericWeb-Light.svg#FSEmericWeb-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.eot");
+  src: url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.woff") format("woff"), url("./fsemeric/LightItalic/FSEmericWeb-LightItalic.svg#FSEmericWeb-LightItalic") format("svg");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/Thin/FSEmericWeb-Thin.eot");
+  src: url("./fsemeric/Thin/FSEmericWeb-Thin.eot?#iefix") format("embedded-opentype"), url("./fsemeric/Thin/FSEmericWeb-Thin.woff") format("woff"), url("./fsemeric/Thin/FSEmericWeb-Thin.svg#FSEmericWeb-Thin") format("svg");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "fsemeric";
+  src: url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.eot");
+  src: url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.eot?#iefix") format("embedded-opentype"), url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.woff") format("woff"), url("./fsemeric/ThinItalic/FSEmericWeb-ThinItalic.svg#FSEmericWeb-ThinItalic") format("svg");
+  font-weight: 100;
+  font-style: italic;
+}

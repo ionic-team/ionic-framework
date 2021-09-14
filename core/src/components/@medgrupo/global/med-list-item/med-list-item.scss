@@ -1,22 +1,23 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
-  --padding: #{$med-spacing-squish-xs};
+  --padding: var(--med-spacing-squish-xs);
   --background: transparent;
-  --border-radius: #{$med-border-radius-sm};
-  --font-size-title: #{$med-font-size-xs};
-  --color-title: var(--med-color-neutral-10);
-  --font-size-label: #{$med-font-size-xxxs};
-  --color-label: #{md-color(brand, 4)};
+  --border-radius: var(--med-border-radius-sm);
+  --font-size-title: var(--med-font-size-xs);
+  --color-title: #{color('neutral', '10')};
+  --font-size-label: var(--med-font-size-xxxs);
+  --color-label: #{color('brand', '4')};
 }
 
 :host(.med-list-item) {
-  background-image: linear-gradient(to right, rgba(var(--med-color-neutral-2-rgb),1),
-  rgba(var(--med-color-neutral-2-rgb),0.1),
-  rgba(var(--med-color-neutral-2-rgb),0));
+  background-image: linear-gradient(to right,
+    color('neutral', '2', null, 1),
+    color('neutral', '2', null, 0.1),
+    color('neutral', '2', null, 0));
   background-size: 200% 100%;
   background-position: 100% 0;
-  transition: .5s;
+  transition: background-image .5s linear;
   display: flex;
   padding: var(--padding);
   align-items: center;
@@ -32,8 +33,8 @@
     margin: 0;
     padding: 0;
     font-size: var(--font-size-title);
-    font-weight: $med-font-weight-light;
-    line-height: $med-line-height-compressed;
+    font-weight: var(--font-weight-light);
+    line-height: var(--line-height-compressed);
     color: var(--color-title);
   }
 
@@ -41,8 +42,8 @@
     margin: 0;
     padding: 0;
     font-size: var(--font-size-label);
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-compressed);
     color: var(--color-label);
     margin-top: var(--med-spacing-inline-nano);
   }
@@ -61,11 +62,11 @@
 // ////////////////////
 
 ::slotted([slot="start"]) {
-  margin-right: $med-spacing-inline-base;
+  margin-right: var(--med-spacing-inline-base);
 }
 
 ::slotted([slot="end"]) {
-  margin-left: $med-spacing-inline-base;
+  margin-left: var(--med-spacing-inline-base);
 }
 
 // ////////////////////
@@ -73,39 +74,49 @@
 // ////////////////////
 
 :host(.med-list-item--xs) {
-  --padding: #{$med-spacing-squish-xs};
+  --padding: var(--med-spacing-squish-xs);
 }
 
 :host(.med-list-item--sm) {
-  --padding: #{$med-spacing-inset-sm};
+  --padding: var(--med-spacing-inset-sm);
 }
 
 :host(.med-list-item--md) {
-  --padding: #{$med-spacing-stretch-md};
+  --padding: var(--med-spacing-stretch-md);
 }
 
 // ////////////////////
 // color
 // ////////////////////
 
-:host(.med-list-item.ion-color) {
-  --border-background-selected: #{md-current-color(3)};
-  --color-label: #{md-current-color(3)};
+:host(.med-list-item.med-color) ::slotted(ion-checkbox) {
+  --border-color: #{curr-color('color', '4')};
 }
 
-:host(.med-list-item.ion-color) ::slotted(*) {
-  --border-color: #{md-current-color(4)};
+:host(.med-list-item.med-color) {
+  --color-label: #{curr-color('color', '4')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-list-item.med-neutral) {
-  --border-background-selected: var(--med-neutral);
-  --color-label: var(--med-neutral);
+:host(.med-list-item.med-color-neutral) ::slotted(ion-checkbox) {
+  --border-color: #{curr-color('neutral')};
 }
 
-:host(.med-list-item.med-neutral) ::slotted(*) {
-  --border-color: var(--med-neutral);
+:host(.med-list-item.med-color-neutral) {
+  --color-label: #{curr-color('neutral')};
+}
+
+// ////////////////////
+// feedback
+// ////////////////////
+
+:host(.med-list-item.med-color-feedback) ::slotted(ion-checkbox) {
+  --border-color: #{curr-color('feedback')};
+}
+
+:host(.med-list-item.med-color-feedback) {
+  --color-label: #{curr-color('feedback')};
 }

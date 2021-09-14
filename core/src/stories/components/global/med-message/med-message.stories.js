@@ -40,7 +40,7 @@ const TemplateDefault = ({ dsName, nome, concurso, texto, messageId }) => {
       margin-bottom: var(--med-spacing-stack-base);
       font-size: var(--med-font-size-xs);
       line-height: var(--med-line-height-compressed);
-      color: var(--med-color-neutral-3);
+      color: hsl(var(--med-color-neutral-3));
       display: flex;
       align-items: center;
       transition: color 300ms ease-out;
@@ -52,12 +52,11 @@ const TemplateDefault = ({ dsName, nome, concurso, texto, messageId }) => {
     }
 
     .med-context-menu__item:hover {
-      color: var(--med-color-neutral-1);
+      color: hsl(var(--med-color-neutral-1));
     }
 
     .med-context-menu__icon {
       padding-right: var(--med-spacing-inline-xxxs);
-      stroke: var(--med-color-neutral-3);
     }
   </style>
 
@@ -86,20 +85,20 @@ const TemplateDefault = ({ dsName, nome, concurso, texto, messageId }) => {
 
             <ul class="med-message__footer" slot="footer">
               <li class="med-message__list-item">
-                <ion-button ds-name="icon-only">
+                <ion-button ds-name="tertiary">
                   <ion-icon class="med-icon" slot="icon-only" name="med-estrela"></ion-icon>
                 </ion-button>
               </li>
 
               <li class="med-message__list-item">
-                <ion-button ds-name="icon-label">
+                <ion-button ds-name="tertiary">
                   <ion-icon class="med-icon" name="med-positivo" slot="start"></ion-icon>
                   4221
                 </ion-button>
               </li>
 
               <li class="med-message__list-item">
-                <ion-button ds-name="icon-label">
+                <ion-button ds-name="tertiary">
                   <ion-icon class="med-icon" name="med-gabarito" slot="start"></ion-icon>
                   123
                 </ion-button>

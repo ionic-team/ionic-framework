@@ -1,10 +1,11 @@
 import { Component, ComponentInterface, Element, Host, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { SegmentButtonLayout } from '../../interface';
+import { SegmentButtonLayout, MedColor } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { addEventListener, removeEventListener } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 let ids = 0;
 
@@ -18,7 +19,7 @@ let ids = 0;
 @Component({
   tag: 'ion-segment-button',
   styleUrls: {
-    ios: 'segment-button.ios.scss',
+    ios: 'segment-button.md.scss',
     md: 'segment-button.md.scss'
   },
   shadow: true
@@ -27,6 +28,16 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;
 
   @Element() el!: HTMLElement;
+
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+   /**
+    * Define a variação do componente.
+    */
+  @Prop({ reflect: true }) dsName?: 'default';
 
   @State() checked = false;
 
@@ -87,14 +98,17 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, dsColor, dsName } = this;
     const mode = getIonMode(this);
     const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
     return (
       <Host
+        from-stencil
         aria-disabled={disabled ? 'true' : null}
-        class={{
+        class={generateMedColor(dsColor,{
           [mode]: true,
+          'med-segment-button': true,
+          [`med-segment-button--${dsName}`]: dsName !== undefined,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'in-segment': hostContext('ion-segment', this.el),
@@ -109,7 +123,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           'ion-activatable': true,
           'ion-activatable-instant': true,
           'ion-focusable': true,
-        }}
+        })}
       >
         <button
           type={type}

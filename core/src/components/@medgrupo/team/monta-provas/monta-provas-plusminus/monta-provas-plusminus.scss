@@ -1,13 +1,13 @@
-@import "../../../../../../med-components/abstracts";
+@import "../../../../../../templarios/abstracts";
 
 :host {
-  --color: var(--med-color-neutral-10);
+  --color: #{color('neutral', '10')};
 }
 
 :host(.monta-provas-plusminus) {
-  font-size: $med-font-size-xxl;
-  font-weight: $med-font-weight-bold;
-  line-height: $med-line-height-compressed;
+  font-size: var(--med-font-size-xxl);
+  font-weight: var(--med-font-weight-bold);
+  line-height: var(--med-line-height-compressed);
   color: var(--color);
   max-height: 400px;
   width: 100%;
@@ -16,15 +16,15 @@
   align-items: center;
 
   .monta-provas-plusminus__icon-minus {
-    margin-right: $med-spacing-inline-base;
+    margin-right: var(--med-spacing-inline-base);
     cursor: pointer;
-    stroke: var(--med-color-neutral-10);
+    stroke: var(--color);
   }
 
   .monta-provas-plusminus__icon-plus {
-    margin-left: $med-spacing-inline-base;
+    margin-left: var(--med-spacing-inline-base);
     cursor: pointer;
-    stroke: var(--med-color-neutral-10);
+    stroke: var(--color);
   }
 }
 
@@ -33,5 +33,32 @@
 // ////////////////////
 
 :host(.monta-provas-plusminus--xl) {
-  font-size: $med-font-size-xxxl;
+  font-size: var(--med-font-size-xxxl);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3')};
+  stroke: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral')};
+  stroke: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback')};
+  stroke: #{curr-color('feedback')};
 }

@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
@@ -6,25 +6,25 @@
     * @prop --background: Define a cor de background do componente.
     * @prop --background-footer: Define a cor do background do footer do componente.
     */
-  --color: var(--med-color-neutral-10);
-  --background: var(--med-color-neutral-2);
-  --background-footer: var(--med-color-neutral-3);;
+  --color: #{color('neutral', '2', 'contrast')};
+  --background: #{color('neutral', '2')};
+  --background-footer: #{color('neutral', '3')};
 }
 
 :host(.med-message) {
   width: 100%;
   max-width: 1200px;
-  border-radius: $med-border-radius-sm;
+  border-radius: var(--med-border-radius-sm);
   background: var(--background);
-  font-size: $med-font-size-xxs;
-  line-height: $med-line-height-default;
+  font-size: var(--med-font-size-xxs);
+  line-height: line-height($med-font-size-xxs);
   color: var(--color);
   display: block;
   position: relative;
 }
 
 :host(.med-message) .med-message__balao {
-  background: var(--med-color-neutral-2);
+  background: color('neutral', '2');
   width: 16px;
   height: 8px;
   position: absolute;
@@ -35,14 +35,14 @@
 }
 
 :host(.med-message) .med-message__content {
-  padding: $med-spacing-inset-sm;
+  padding: var(--med-spacing-inset-sm);
 }
 
 :host(.med-message) .med-message__avatar {
   font-size: 30px;
   display: flex;
   align-items: center;
-  margin-right: $med-spacing-inline-xxxs;
+  margin-right: var(--med-spacing-inline-xxxs);
 }
 
 :host(.med-message) .med-message__letter {
@@ -55,7 +55,7 @@
 }
 
 :host(.med-message) .med-message__header {
-  padding-bottom: $med-spacing-stack-xxxs;
+  padding-bottom: var(--med-spacing-stack-xxxs);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,9 +71,9 @@
 }
 
 :host(.med-message) .med-message__number {
-  font-size: $med-font-size-xxxs;
-  font-weight: $med-font-weight-semibold;
-  line-height: $med-line-height-compressed;
+  font-size: var(--med-font-size-xxxs);
+  font-weight: var(--med-font-weight-semibold);
+  line-height: var(--med-line-height-compressed);
   margin: 0;
 }
 
@@ -83,28 +83,27 @@
 }
 
 :host(.med-message) .med-message__texto {
-  //padding-top: $med-spacing-stack-xxxs;
   margin: 0;
   text-align: left;
 }
 
 :host(.med-message) .med-message__text {
-  font-size: $med-font-size-xxs;
+  font-size: var(--med-font-size-xxs);
 }
 
 :host(.med-message) .med-message__icon {
-  stroke: #{md-color(brand, 4)};
+  stroke: color('brand', '4');
 }
 
 :host(.med-message) .med-message__tooltip {
-  margin-right: $med-spacing-inline-xxxs;
+  margin-right: var(--med-spacing-inline-xxxs);
 }
 
 :host(.med-message) .med-message__footer {
-  padding: $med-spacing-squish-xs;
+  padding: var(--med-spacing-squish-xs);
   background: var(--background-footer);
-  border-bottom-left-radius: $med-border-radius-sm;
-  border-bottom-right-radius: $med-border-radius-sm;
+  border-bottom-left-radius: var(--med-border-radius-sm);
+  border-bottom-right-radius: var(--med-border-radius-sm);
 }
 
 :host(.med-message) .med-message__img {
@@ -118,13 +117,13 @@
 // ////////////////////
 
 :host(.med-message--medgrupo) {
-  --background: #{md-color(brand, 1)};
-  --background-footer: #{md-color(brand, 2)};
+  --background: #{color('brand', '1')};
+  --background-footer: #{color('brand', '2')};
 }
 
 :host(.med-message--medgrupo) .med-message__balao {
   display: block;
-  background: #{md-color(brand, 1)};
+  background: #{color('brand', '1')};
 }
 
 :host(.med-message--response) .med-message__balao,
@@ -137,8 +136,4 @@
   transform: scaleX(-1);
   right: -8px;
   left: unset;
-}
-
-:host(.med-message--user-message) {
-  --background: linear-gradient(to right, #{md-color(brand, 1)} 0%, var(--med-color-neutral-2) 100%);
 }

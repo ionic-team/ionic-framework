@@ -1,0 +1,19 @@
+@import '../functions';
+@import '../mixins';
+@import '../variables/color';
+
+// system preference
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* @include generate-dark-scheme();
+    @include generate-neutrals(); */
+  }
+}
+
+/* theme-dark (fallback for prefers-color-scheme media query) */
+/* https://caniuse.com/prefers-color-scheme */
+
+.scheme-dark {
+  /* @include generate-dark-scheme();
+  @include generate-neutrals(); */
+}

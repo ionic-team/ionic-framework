@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { createColorClasses } from '../../../../utils/theme';
-import { Color, Neutral } from '../../../../interface';
+import { MedColor } from '../../../../interface';
 
 @Component({
   tag: 'med-list',
@@ -9,20 +9,25 @@ import { Color, Neutral } from '../../../../interface';
 })
 export class MedList {
 
-  @Prop() neutral?: Neutral;
-  @Prop() color?: Color;
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+   * TODO
+   */
   @Prop() margin?: 'xs' | 'sm' | 'md' | 'lg';
 
   render() {
-    const { color, neutral, margin } = this;
+    const { dsColor, margin } = this;
     return (
       <Host
-      from-stencil
-      class={createColorClasses(color, {
-        'med-list': true,
-        [`med-list--${margin}`]: margin !== undefined
-      }, neutral)}
-      >
+        from-stencil
+        class={createColorClasses(dsColor, {
+          'med-list': true,
+          [`med-list--${margin}`]: margin !== undefined
+        })}>
         <slot></slot>
       </Host>
     );

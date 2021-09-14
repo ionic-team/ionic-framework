@@ -4,9 +4,9 @@
    * @prop --border: Define a borda entre os itens do componente.
    * @prop --border-radius: Define o border-radius do componente.
    */
-  --background: var(--med-color-neutral-1);
-  --border: #{$med-spacing-stack-xxxs} solid var(--med-color-neutral-1);
-  --border-radius: #{$med-border-radius-sm};
+  --background: #{color('neutral', '1')};
+  --border: var(--med-spacing-stack-xxxs) solid #{color('neutral', '1')};
+  --border-radius: var(--med-border-radius-sm);
 }
 
 :host(.med-accordion-list) {
@@ -36,19 +36,19 @@
 // ////////////////////
 
 :host(.med-accordion-list--xs) ::slotted(med-accordion-item) {
-  --border: #{$med-spacing-stack-nano} solid var(--med-color-neutral-1);
+  --border: var(--med-spacing-stack-nano) solid #{color('neutral', '1')};
 }
 
 :host(.med-accordion-list--sm) ::slotted(med-accordion-item) {
-  --border: #{$med-spacing-stack-xxxs} solid var(--med-color-neutral-1);
+  --border: var(--med-spacing-stack-xxxs) solid #{color('neutral', '1')};
 }
 
 :host(.med-accordion-list--md) ::slotted(med-accordion-item) {
-  --border: #{$med-spacing-stack-base} solid var(--med-color-neutral-1);
+  --border: var(--med-spacing-stack-base) solid #{color('neutral', '1')};
 }
 
 :host(.med-accordion-list--lg) ::slotted(med-accordion-item) {
-  --border: #{$med-spacing-stack-xxs} solid var(--med-color-neutral-1);
+  --border: var(--med-spacing-stack-xxs) solid #{color('neutral', '1')};
 }
 
 // ////////////////////

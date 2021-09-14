@@ -1,0 +1,75 @@
+
+@import '../functions';
+@import '../variables';
+@import '../mixins';
+
+// colors
+:root {
+  /* neutral */
+  --neutral-saturation: 10%;
+  --neutral-luminosity: 8%;
+
+  /* color */
+  --brand-hue: 25;
+  --color-saturation: 80%;
+  --color-luminosity-1: 20%;
+  --color-luminosity-2: 30%;
+  --color-luminosity-3: 40%;
+  --color-luminosity-4: 60%;
+  --color-luminosity-5: 80%;
+
+  /* feedback */
+  --feedback-attention-hue: 44;
+  --feedback-caution-hue: 24;
+  --feedback-warning-hue: 4;
+  --feedback-success-hue: 128;
+  --feedback-saturation: 80%;
+  --feedback-luminosity: 65%;
+}
+
+// controls
+:root {
+  /* neutral mutables */
+  --neutral-invert: 1;
+  --neutral-luminosity-mutable-1: var(--luminosity-fator-1, 0%);
+  --neutral-luminosity-mutable-2: var(--luminosity-fator-2, 0%);
+
+  /* color mutables */
+  --color-luminosity-mutable-1: var(--luminosity-fator-1, 0%);
+  --color-luminosity-mutable-2: var(--luminosity-fator-2, 0%);
+  --color-luminosity-mutable-3: var(--luminosity-fator-1, 0%);
+}
+
+// tokens
+:root {
+  /* neutral tokens */
+  @each $key, $value in $med-neutrals {
+    $neutral: map-get($med-neutrals, $key);
+    --med-color-neutral-#{$key}: #{$neutral};
+  }
+
+  /* color tokens */
+  --med-color-contrast-fixed: var(--med-color-neutral-10);
+  @include generate-color-tokens();
+
+  /* feedback tokens */
+  @each $key, $value in $med-feedbacks {
+    $feedback: map-get($med-feedbacks, $key);
+    --med-color-fb-#{$key}: #{$feedback};
+  }
+}
+
+// base
+:root {
+  /* base */
+  --background: #{color('neutral', '1')};
+}
+
+ion-content {
+  --background: #{color('neutral', '1')};
+}
+
+//classes
+@include generate-neutral-classes();
+@include generate-feedback-classes();
+@include generate-color-classes();

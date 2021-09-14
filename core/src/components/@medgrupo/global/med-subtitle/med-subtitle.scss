@@ -1,0 +1,53 @@
+@import "../../../../../templarios/abstracts";
+
+:host {
+  --font-size: var(--med-font-size-md);
+  --font-weight: var(--med-font-weight-medium);
+  --line-height: #{line-height($med-font-size-md)};
+  --color: #{color('neutral', 10)};
+}
+
+:host {
+  display: block;
+}
+
+::slotted(*) {
+  font-size: var(--font-size) !important;
+  font-weight: var(--font-weight) !important;
+  line-height: var(--line-height) !important;
+  color: var(--color) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// ////////////////////
+// sizes
+// ////////////////////
+
+:host(.med-subtitle--sm) {
+  --font-size: var(--med-font-size-sm);
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback')};
+}

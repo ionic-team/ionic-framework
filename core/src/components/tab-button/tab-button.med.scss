@@ -2,13 +2,134 @@
 // custom
 //
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
-  --background: #{$med-color-neutral-dark-prime};
-  --box-shadow: #{$med-shadow-level-4};
+  --color: #{color('neutral', '9')};
+  --color-hover: #{color('brand', '5')};
+  --color-focused: #{color('brand', '5')};
+  --color-selected:#{color('brand', '2')};
+  --color-activated: #{color('brand', '4')};
+  --background-focused: transparent;
+  --background-focused-opacity: 1;
+  --ripple-color: transparent;
+  --padding-bottom:	var(--med-spacing-stack-xxxs);
+  --padding-end:	var(--med-spacing-inline-nano);
+  --padding-start:	var(--med-spacing-inline-nano);
+  --padding-top: var(--med-spacing-stack-xxxs);
+  --color-icon: #{color('neutral', '9')};
+  --color-icon-hover: #{color('brand', '5')};
+  --color-icon-focused: #{color('brand', '5')};
+  --color-icon-selected:#{color('brand', '2')};
+  --color-icon-activated: #{color('brand', '4')};
 
-  height: auto;
-  contain: initial;
-  box-shadow: var(--box-shadow);
+  min-width: 0;
+  max-width: 100%;
+  justify-content: start;
+  font-size: var(--med-font-size-nano);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--med-line-height-compressed);
+
+  @include breakpoint-up('sm') {
+    --padding-bottom:	var(--med-spacing-stack-base);
+    --padding-end: var(--med-spacing-inline-xxxs);
+    --padding-start: var(--med-spacing-inline-xxxs);
+    --padding-top: var(--med-spacing-stack-base);
+
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    font-size: var(--med-font-size-xxxs);
+  }
+}
+
+// icon
+:host ::slotted(ion-icon) {
+  min-height: 24px;
+  min-width: 24px;
+  max-width: initial;
+  display: block;
+  contain: unset;
+  overflow: unset;
+  stroke: var(--color-icon);
+}
+
+:host(.tab-layout-icon-top) ::slotted(ion-icon) {
+  margin-top: 0;
+  margin-bottom: var(--med-spacing-stack-nano);
+
+  @include breakpoint-up('sm') {
+    margin-bottom: 0;
+    margin-right: var(--med-spacing-inline-xxxs);
+  }
+}
+
+// label
+:host ::slotted(ion-label) {
+  text-overflow: initial;
+  white-space: initial;
+  overflow: initial;
+}
+
+:host(.tab-layout-icon-top) ::slotted(ion-label) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// states
+@media (any-hover: hover) {
+  a:hover {
+    color: var(--color-hover);
+    ::slotted(ion-icon) {
+      stroke: var(--color-icon-hover);
+    }
+  }
+}
+
+:host(.ion-focused) .button-native {
+  color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+    opacity: var(--background-focused-opacity);
+  }
+}
+:host(.ion-focused) {
+  ::slotted(ion-icon) {
+    stroke: var(--color-icon-focused);
+  }
+}
+
+:host(.ion-activated) .button-native {
+  color: var(--color-activated);
+
+}
+:host(.ion-activated) {
+  ::slotted(ion-icon) {
+    stroke: var(--color-icon-activated);
+  }
+}
+
+:host(.tab-selected) {
+  color: var(--color-selected);
+  ::slotted(ion-icon) {
+    stroke: var(--color-icon-selected);
+  }
+  @media (any-hover: hover) {
+    a:hover {
+      ::slotted(ion-icon) {
+        stroke: var(--color-icon-hover);
+      }
+    }
+  }
+}
+
+:host(.tab-disabled) {
+  color: var(--color);
+  opacity: var(--med-opacity-level-semiopaque);
+  ::slotted(ion-icon) {
+    stroke: (--color-icon);
+    opacity: var(--med-opacity-level-semiopaque);
+  }
 }

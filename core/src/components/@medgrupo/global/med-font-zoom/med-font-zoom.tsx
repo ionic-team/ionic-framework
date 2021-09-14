@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop } from "@stencil/core";
-import { MedFontSize } from "../../../../global/med-components/font-size.enum";
+import { MedFontSize } from "../../../../global/templarios/font-size.enum";
 import { RangeValue } from "../../../range/range-interface";
 
 @Component({
@@ -8,7 +8,14 @@ import { RangeValue } from "../../../range/range-interface";
   shadow: true,
 })
 export class MedFontZoom {
+  /**
+   * TODO
+   */
   @Prop() emitter!: { emit: (value: MedFontSize) => void };
+
+  /**
+   * TODO
+   */
   @Prop() value: MedFontSize = MedFontSize.XS;
 
   readonly min: number = 1;

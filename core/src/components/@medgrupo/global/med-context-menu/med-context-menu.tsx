@@ -12,6 +12,9 @@ export class MedContextMenu {
    */
   @Prop({ reflect: true, mutable: true }) collapsed = true;
 
+  /**
+   * TODO
+   */
   @Method()
   async toggle(event?: Event) {
     event?.stopPropagation();
@@ -26,7 +29,6 @@ export class MedContextMenu {
   }
 
   render() {
-
     return (
       <Host
         from-stencil
@@ -35,13 +37,13 @@ export class MedContextMenu {
           'med-context-menu--collapsed': this.collapsed
         }, null)}
       >
-        <ion-button onClick={(event) => {this.toggle(event)}} class="med-context-menu__button" ds-name="icon-only">
-          <ion-icon class="med-icon med-context-menu__icon" name="med-context-menu"></ion-icon>
+        <ion-button onClick={(event) => {this.toggle(event)}} class="med-context-menu__button" ds-name="tertiary" ds-size="xs">
+          <ion-icon slot="icon-only" class="med-icon med-context-menu__icon" name="med-context-menu"></ion-icon>
         </ion-button>
 
         <div class="med-context-menu__content">
-          <ion-button onClick={(event) => {this.toggle(event)}} class="med-context-menu__inner-button" ds-name="icon-only">
-            <ion-icon class="med-icon med-context-menu__inner-icon" name="med-context-menu"></ion-icon>
+          <ion-button onClick={(event) => {this.toggle(event)}} class="med-context-menu__inner-button" ds-name="tertiary" ds-size="xs">
+            <ion-icon slot="icon-only" class="med-icon med-context-menu__inner-icon" name="med-context-menu"></ion-icon>
           </ion-button>
 
           <slot></slot>

@@ -19,6 +19,9 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Searchbar implements ComponentInterface {
 
+  /**
+   * TODO
+   */
   @Prop() neutral?: Neutral;
 
   private nativeInput?: HTMLInputElement;

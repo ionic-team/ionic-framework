@@ -194,27 +194,27 @@
 
 //@import './searchbar.med.scss';
 
-@import "../../../med-components/abstracts";
+@import "../../../templarios/abstracts";
 
 :host {
   --color: var(--med-color-neutral-10);
   --background: var(--med-color-neutral-2);
-  --border-radius: #{$med-border-radius-sm};
+  --border-radius: var(--med-border-radius-sm);
   --icon-color: var(--med-color-neutral-10);
-  --cancel-button-color: #{md-color(brand, 3)};
+  --cancel-button-color: #{color('brand', '3')};
   --placeholder-opacity: 1;
 
-  // med-components
-  --spacing: #{$med-spacing-inset-xs};
+  // templarios
+  --spacing: var(--med-spacing-inset-xs);
 
   padding: var(--spacing);
   height: 40px;
 
   .searchbar-input {
-    padding-inline-start: 30px + $med-spacing-inline-nano !important;
-    font-size: $med-font-size-xs;
-    font-weight: $med-font-weight-regular;
-    line-height: $med-line-height-compressed;
+    padding-inline-start: 30px + var(--med-spacing-inline-nano) !important;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
   }
 
   .searchbar-search-icon {
@@ -235,7 +235,7 @@
 }
 
 :host(.ion-color) .searchbar-cancel-button {
-  color: md-current-color(3);
+  color: current-color(3);
 }
 
 //

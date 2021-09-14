@@ -1,0 +1,54 @@
+:root {
+  --med-border-radius-none: 0;
+  --med-border-radius-quark: 2px;
+  --med-border-radius-nano: 4px;
+  --med-border-radius-sm: 8px;
+  --med-border-radius-md: 16px;
+  --med-border-radius-lg: 24px;
+  --med-border-radius-pill: 31.25em;
+  --med-border-radius-full: 50%;
+
+  /* speech bubble */
+  --med-border-radius-speech-left-down: 8px 8px 8px 0;
+  --med-border-radius-speech-right-down: 8px 8px 0 8px;
+  --med-border-radius-speech-right-up: 8px 0 8px 0px;
+  --med-border-radius-speech-left-up: 0 8px 8px 0px;
+
+  /* table */
+  --med-border-radius-table-down-sm: 0 0 8px 8px;
+  --med-border-radius-table-up-sm: 8px 8px 0 0;
+
+  --med-border-radius-table-down-md: 16px 16px 0 0;
+  --med-border-radius-table-up-md: 0 0 16px 16px;
+
+  /* border widths */
+  --med-border-width-none: 0;
+  --med-border-width-quark: 0.25px;
+  --med-border-width-nano: 0.5px;
+  --med-border-width-hairline: 1px;
+  --med-border-width-thin: 2px;
+  --med-border-width-thick: 4px;
+  --med-border-width-bold: 8px;
+  --med-border-width-heavy: 16px;
+
+  /* opacity levels */
+  --med-opacity-level-semiopaque: 0.8;
+  --med-opacity-level-intense: 0.64;
+  --med-opacity-level-half: 0.5;
+  --med-opacity-level-medium: 0.32;
+  --med-opacity-level-light: 0.16;
+  --med-opacity-level-semitransparent: 0.08;
+
+  /* shadow levels */
+  --med-shadow-level-0: none;
+  --med-shadow-level-1: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-2: 0 2px 4px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-3: 0 3px 3px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 8px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-4: 0 0 2px rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.12), 0 1px 10px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-5: 0 6px 10px rgba(0, 0, 0, 0.14), 0 1px 18px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-6: 0 8px 10px rgba(0, 0, 0, 0.14), 0 3px 14px rgba(0, 0, 0, 0.12), 0 4px 5px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-7: 0 9px 12px rgba(0, 0, 0, 0.14), 0 3px 16px rgba(0, 0, 0, 0.12), 0 5px 6px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-8: 0 12px 17px rgba(0, 0, 0, 0.14), 0 5px 22px rgba(0, 0, 0, 0.12), 0 7px 8px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-9: 0 16px 24px rgba(0, 0, 0, 0.14), 0 6px 30px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.2);
+  --med-shadow-level-10: 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12), 0 11px 15px rgba(0, 0, 0, 0.2);
+}

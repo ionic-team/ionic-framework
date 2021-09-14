@@ -3,7 +3,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, RouterDirection, Neutral} from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import { hostContext, openURL } from '../../utils/theme';
+import { MedColor } from '../../interface';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -22,10 +24,25 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   @Element() el!: HTMLElement;
 
-  //custom
+  /**
+   * TODO
+   */
+
   @Prop() dsSize?: 'md' | 'lg';
+  /**
+   * TODO
+   */
+
   @Prop() dsName?: 'label' | 'icon-label';
+  /**
+   * TODO
+   */
   @Prop() neutral?: Neutral;
+
+  /**
+    * Define a cor do componente.
+    */
+   @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
    * The color to use from your application's color palette.
@@ -131,7 +148,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   }
 
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size } = this;
+    const { dsColor, el, disabled, href, activated, show, translucent, size } = this;
     const inList = hostContext('ion-fab-list', el);
     const mode = getIonMode(this);
     const TagType = href === undefined ? 'button' : 'a' as any;
@@ -147,7 +164,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     return (
       <Host
         aria-disabled={disabled ? 'true' : null}
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
@@ -158,7 +175,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           'ion-activatable': true,
           'ion-focusable': true,
           [`fab-button-${size}`]: size !== undefined,
-        }, this.neutral)}
+        })}
       >
 
         <TagType

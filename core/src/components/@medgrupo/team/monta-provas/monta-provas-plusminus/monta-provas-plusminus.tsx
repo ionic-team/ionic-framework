@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
-import { createColorClasses } from '../../../../../utils/theme';
 import { PlusMinusStatus } from './monta-provas-plusminus.enum';
+import { MedColor } from '../../../../../interface';
+import { generateMedColor } from '../../../../../utils/med-theme';
 
 @Component({
   tag: 'monta-provas-plusminus',
@@ -9,7 +10,19 @@ import { PlusMinusStatus } from './monta-provas-plusminus.enum';
 })
 export class MontaProvasPlusminus {
 
+  /**
+  * Define a cor do componente.
+  */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+   * TODO
+   */
   @Prop() dsSize?: 'xl';
+
+  /**
+   * TODO
+   */
   @Event() medChange!: EventEmitter<PlusMinusStatus>;
 
   private onClick = (status: PlusMinusStatus) => {
@@ -17,15 +30,15 @@ export class MontaProvasPlusminus {
   }
 
   render() {
-    const { dsSize } = this;
+    const { dsSize, dsColor } = this;
 
     return (
       <Host
         from-stencil
-        class={createColorClasses(null, {
+        class={generateMedColor(dsColor, {
           'monta-provas-plusminus': true,
           [`monta-provas-plusminus--${dsSize}`]: dsSize !== undefined,
-        }, null)}
+        },)}
       >
         <ion-icon
           class="med-icon med-icon--lg monta-provas-plusminus__icon-minus"

@@ -10,13 +10,13 @@ Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/button
 
 ### Propriedades
 
-| Propriedade  | Atributo     | Descrição                          | Tipo                                            | Default       |
-| ------------ | ------------ | ---------------------------------- | ----------------------------------------------  | ------------- |
-| **color**    | **color**    | Define a cor do botão.             | **[Color](http://desenv.ordomederi.com/med-components/?path=/story/enums-enums--page#medcolors)**  | **undefined** |
-| **dsName**   | **ds-name**  | Define o botão.                    | **"primary"**                                   | **"primary"** |
-| **expand**   | **expand**   | Define o tamanho do botão.         | **"full"** \| **"block"**                       | **undefined** |
-| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**                                     | **undefined** |
-| **dsSize**   | **ds-size**  | Define o tamanho do botão.         | **"xxxs"** \| **"xxs"** \| **"xs"** \| **"sm"** | **undefined** |
+| Propriedade  | Atributo     | Descrição                          | Tipo                              | Default       |
+| ------------ | ------------ | ---------------------------------- | --------------------------------- | ------------- |
+| **color**    | **color**    | Define a cor do botão.             | **[Color](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)**  | **undefined** |
+| **dsName**   | **ds-name**  | Define o botão.                    | **"primary"**                     | **"primary"** |
+| **expand**   | **expand**   | Define o tamanho do botão.         | **"full"** \| **"block"**         | **undefined** |
+| **disabled** | **disabled** | Define o estado disabled do botão. | **boolean**                       | **undefined** |
+| **dsSize**   | **ds-size**  | Define o tamanho do botão.         | **"xxs"** \| **"xs"** \| **"sm"** | **undefined** |
 
 ```
 <!-- primary -->
@@ -93,17 +93,17 @@ Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/button
 ```
 <!-- icon-only -->
 <ion-button ds-name="icon-only">
-  <ion-icon class="med-icon" slot="icon-only" name="med-chevron-left"></ion-icon>
+  <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
 </ion-button>
 
 <!-- disabled -->
 <ion-button ds-name="icon-only" disabled>
-  <ion-icon class="med-icon" slot="icon-only" name="med-chevron-left"></ion-icon>
+  <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
 </ion-button>
 
 <!-- ds-size -->
 <ion-button ds-name="icon-only" ds-size="md">
-  <ion-icon class="med-icon" slot="icon-only" name="med-chevron-left"></ion-icon>
+  <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
 </ion-button>
 ```
 
@@ -126,19 +126,19 @@ Documentação auxiliar ion-button: **https://ionicframework.com/docs/api/button
 ```
 <!-- slot="start" -->
 <ion-button ds-name="icon-label">
- <ion-icon class="med-icon" name="med-arrow-left-circle" slot="start"></ion-icon>
+ <ion-icon name="med-arrow-left-circle" slot="start"></ion-icon>
   voltar
 </ion-button>
 
 <!-- slot="end" -->
 <ion-button ds-name="icon-label">
   próxima
-  <ion-icon class="med-icon" name="med-arrow-right-circle" slot="end"></ion-icon>
+  <ion-icon name="med-arrow-right-circle" slot="end"></ion-icon>
 </ion-button>
 
 <!-- disabled -->
 <ion-button ds-name="icon-label" disabled>
   próxima
-  <ion-icon class="med-icon" name="med-chevron-left" slot="end"></ion-icon>
+  <ion-icon name="med-chevron-left" slot="end"></ion-icon>
 </ion-button>
 ```

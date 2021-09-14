@@ -1,11 +1,12 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
-  --spacing: #{$med-spacing-squish-xs};
-  --background: #{$med-color-neutral-dark-40};
-  --font-size: #{$med-font-size-xs};
-  --font-weight: #{$med-font-weight-semibold};
-  --line-height: #{$med-line-height-compressed};
+  --spacing: var(--med-spacing-squish-xs);
+  --background: #{color('neutral', '2')};
+  --font-size: var(--med-font-size-xs);
+  --font-weight: var(--med-font-weight-semibold);
+  --line-height: var(--med-line-height-compressed);
+  --color: #{color('neutral', '2', 'contrast')};
 
   padding: var(--spacing);
   background: var(--background);
@@ -17,4 +18,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+}
+
+:host(.med-color-neutral) ::slotted(med-rate-like) {
+  --color: #{curr-color('neutral', null, 'contrast')};
 }

@@ -1,15 +1,15 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
-  --background: var(--med-color-neutral-2);
+  --background: #{color('neutral', '2')};
   --center-width: auto;
-  --center-margin: 0 #{$med-spacing-inline-base};
+  --center-margin: 0 var(--spacing-inline-base);
 
-  padding: $med-spacing-squish-xs;
+  padding: var(--med-spacing-squish-xs);
   background: var(--background);
   min-height: 48px;
   height: auto;
-  box-shadow: $med-shadow-level-1;
+  box-shadow: var(--med-shadow-level-1);
   display: block;
   display: flex;
   align-items: center;
@@ -29,14 +29,67 @@
   }
 }
 
-:host(.ion-color) {
-  --background: #{md-current-color(1)};
+::slotted(*) {
+  color: #{color('neutral', '2', 'contrast')};
+  stroke: #{color('neutral', '2', 'contrast')};
 }
 
-:host(.med-neutral) {
-  --background: var(--med-neutral);
+/* ::slotted(ion-button) {
+  stroke: #{color('neutral', '2', 'contrast')};
+}
+ */
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', '1')};
 }
 
+:host(.med-color) ::slotted(*) {
+  color: #{color('neutral', '2', 'contrast')};
+  stroke: #{color('neutral', '2', 'contrast')};
+}
+
+/* :host(.med-color) ::slotted(ion-button) {
+  stroke: #{curr-color('color', '1', 'contrast')};
+} */
+
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+}
+
+:host(.med-color-neutral) ::slotted(*) {
+  color: #{color('neutral', '2', 'contrast')};
+  stroke: #{color('neutral', '2', 'contrast')};
+}
+
+/* :host(.med-color-neutral) ::slotted(ion-button) {
+  stroke: #{curr-color('neutral', null, 'contrast')};
+} */
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback', '1')};
+}
+
+:host(.med-color-neutral) ::slotted(*) {
+  color: #{color('feedback', '2', 'contrast')};
+  stroke: #{color('neutral', '2', 'contrast')};
+}
+
+/* :host(.med-color-feedback) ::slotted(ion-button) {
+  stroke: #{curr-color('feedback', null, 'contrast')};
+} */
 
 //
 // slotted

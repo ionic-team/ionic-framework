@@ -2,10 +2,11 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
+import { Color, MedColor, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { Gesture, GestureDetail } from '../../utils/gesture';
 import { pointerCoord } from '../../utils/helpers';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -13,7 +14,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-segment',
   styleUrls: {
-    ios: 'segment.ios.scss',
+    ios: 'segment.md.scss',
     md: 'segment.md.scss'
   },
   shadow: true
@@ -22,6 +23,16 @@ export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
+
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+   /**
+    * Define a variação do componente.
+    */
+  @Prop({ reflect: true }) dsName?: 'default';
 
   // Value to be emitted when gesture ends
   private valueAfterGesture?: any;
@@ -422,12 +433,15 @@ export class Segment implements ComponentInterface {
   }
 
   render() {
+    const {dsColor, dsName} = this;
     const mode = getIonMode(this);
     return (
       <Host
         onClick={this.onClick}
-        class={createColorClasses(this.color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
+          'med-segment': true,
+          [`med-segment--${dsName}`]: dsName !== undefined,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'segment-activated': this.activated,

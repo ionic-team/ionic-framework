@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { Color, Neutral } from '../../../../interface';
-import { createColorClasses } from '../../../../utils/theme';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 @Component({
   tag: 'med-titulo-materia',
   styleUrl: 'med-titulo-materia.scss',
@@ -11,12 +11,7 @@ export class MedTituloMateria {
   /**
     * Define a cor do componente.
     */
-  @Prop() color?: Color;
-
-  /**
-    * Define a cor neutra do componente.
-    */
-  @Prop() neutral?: Neutral;
+  @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
     * Define o titulo do item.
@@ -30,13 +25,13 @@ export class MedTituloMateria {
 
   render() {
 
-    const { color, neutral, titulo, descricao } = this;
+    const { dsColor, titulo, descricao } = this;
 
     return (
       <Host from-stencil
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           'med-titulo-materia': true,
-        }, neutral)}>
+        })}>
         <slot name="start"></slot>
         <div class="med-titulo-materia__content">
           <h3 class="med-titulo-materia__titulo">{titulo}</h3>

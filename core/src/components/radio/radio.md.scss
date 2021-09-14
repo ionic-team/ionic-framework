@@ -111,3 +111,59 @@
 :host(.in-item[slot="start"]) {
   @include margin($radio-md-item-start-margin-top, $radio-md-item-start-margin-end, $radio-md-item-start-margin-bottom, $radio-md-item-start-margin-start);
 }
+
+// @import './radio.med.scss';
+
+@import "../../../templarios/abstracts";
+
+:host {
+  --color: #{color('brand', '4')};
+  --color-checked: #{color('brand', '4')};
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '4')};
+  --color-checked: #{curr-color('color', '4')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral')};
+  --color-checked: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback')};
+  --color-checked: #{curr-color('feedback')};
+}
+
+
+// ////////////////////
+// secondary
+// ////////////////////
+
+:host(.med-radio--secondary) {
+  --width: 16px;
+  --height: 16px;
+  --inner-width: 10px;
+  --inner-height: 10px;
+
+  width: var(--width);
+  height: var(--height);
+
+  .radio-icon {
+    border-width: 0;
+    background: #fff;
+  }
+}

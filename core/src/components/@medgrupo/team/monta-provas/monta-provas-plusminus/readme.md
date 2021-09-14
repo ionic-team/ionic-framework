@@ -7,16 +7,17 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                | Default     |
-| -------- | --------- | ----------- | ------------------- | ----------- |
-| `dsSize` | `ds-size` |             | `"xl" \| undefined` | `undefined` |
+| Property  | Attribute  | Description                 | Type                  | Default     |
+| --------- | ---------- | --------------------------- | --------------------- | ----------- |
+| `dsColor` | `ds-color` | Define a cor do componente. | `string \| undefined` | `undefined` |
+| `dsSize`  | `ds-size`  | TODO                        | `"xl" \| undefined`   | `undefined` |
 
 
 ## Events
 
 | Event       | Description | Type                                                         |
 | ----------- | ----------- | ------------------------------------------------------------ |
-| `medChange` |             | `CustomEvent<PlusMinusStatus.MINUS \| PlusMinusStatus.PLUS>` |
+| `medChange` | TODO        | `CustomEvent<PlusMinusStatus.MINUS \| PlusMinusStatus.PLUS>` |
 
 
 ## Dependencies

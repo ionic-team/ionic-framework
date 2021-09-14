@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
@@ -8,21 +8,21 @@
     * @prop --color-ruim: Define a cor do icone de ruim.
   */
   display: block;
-  --color-excelent: #{md-color(fb-success, 3)};
-  --color-bom: #{md-color(fb-attention, 3)};
-  --color-regular: #{md-color(fb-caution, 3)};
-  --color-ruim: #{md-color(fb-warning, 3)};
+  --color-excelent: #{color('feedback', 'success')};
+  --color-bom: #{color('feedback', 'attention')};
+  --color-regular: #{color('feedback', 'caution')};
+  --color-ruim: #{color('feedback', 'warning')};
 }
 
 :host(.med-rate-result) {
-  font-size: $med-font-size-xxxs;
-  font-weight: $med-font-weight-regular;
-  line-height: $med-line-height-default;
+  font-size: var(--med-font-size-xxxs);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--med-line-height-default);
   display: flex;
 }
 
 :host(.med-rate-result) .med-rate-result__wrapper {
-  margin-right: $med-spacing-inline-base;
+  margin-right: var(--med-spacing-inline-base);
   display: flex;
   flex-direction: column;
   justify-content: center;

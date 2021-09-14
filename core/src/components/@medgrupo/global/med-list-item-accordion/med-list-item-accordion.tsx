@@ -1,24 +1,57 @@
 import { Component, Host, h, Prop, Method } from '@stencil/core';
-import { createColorClasses } from '../../../../utils/theme';
-import { Color, Neutral } from '../../../../interface';
+import { MedColor } from '../../../../interface';
+import { generateMedColor } from '../../../../utils/med-theme';
 
 @Component({
   tag: 'med-list-item-accordion',
   styleUrl: 'med-list-item-accordion.scss',
-  shadow: true,
+  scoped: true,
 })
 export class MedListItemAccordion {
 
+  /**
+   * TODO
+   */
   @Prop() titulo?: string;
+
+  /**
+   * TODO
+   */
   @Prop() label?: string;
-  @Prop() neutral?: Neutral;
-  @Prop() color?: Color;
+
+  /**
+   * TODO
+   */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+   * TODO
+   */
   @Prop({ reflect: true }) selected = false;
+
+  /**
+   * TODO
+   */
   @Prop() dsSize?: 'xs' | 'sm' | 'md';
+
+  /**
+   * TODO
+   */
   @Prop() margin?: 'xs' | 'sm' | 'md' | 'lg';
+
+  /**
+   * TODO
+   */
   @Prop({ reflect: true }) border = false;
+
+  /**
+   * TODO
+   */
   @Prop({ reflect: true, mutable: true }) collapsed = true;
 
+  /**
+   * TODO
+   */
   @Method()
   async toggle(event?: Event) {
     event?.stopPropagation();
@@ -26,19 +59,19 @@ export class MedListItemAccordion {
   }
 
   render() {
-    const { color, neutral, titulo, label, selected, dsSize, border, margin, collapsed } = this;
+    const { dsColor, titulo, label, selected, dsSize, border, margin, collapsed } = this;
 
     return (
       <Host
         from-stencil
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           'med-list-item-accordion': true,
           'med-list-item-accordion--selected': selected,
           'med-list-item-accordion--border-radius': border,
           [`med-list-item-accordion--${dsSize}`]: dsSize !== undefined,
           [`med-list-item-accordion--${margin}`]: margin !== undefined,
           'med-list-item-accordion--collapsed': collapsed
-        }, neutral)}>
+        })}>
         <div class="med-list-item-accordion__item">
           <slot name="start"></slot>
 
@@ -47,8 +80,8 @@ export class MedListItemAccordion {
             <h4 class="med-list-item-accordion__label">{label}</h4>
           </div>
 
-          <ion-button ds-name="icon-only" slot="left" onClick={(event: any) => {this.toggle(event)}}>
-            <ion-icon class="med-icon" name="med-cima"></ion-icon>
+          <ion-button ds-color={dsColor} ds-name="tertiary" ds-size="xs" slot="left" onClick={(event: any) => {this.toggle(event)}}>
+            <ion-icon slot="icon-only" class="med-icon" name="med-cima"></ion-icon>
           </ion-button>
         </div>
 

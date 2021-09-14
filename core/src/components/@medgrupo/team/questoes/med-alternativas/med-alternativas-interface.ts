@@ -17,4 +17,5 @@ export interface MedAlternativasInterface {
   mostraResposta: boolean;
   alternativaSelecionada?: string;
   permiteRiscar?: boolean;
+  dsSkinConfig?: { aleternativas: string }
 }

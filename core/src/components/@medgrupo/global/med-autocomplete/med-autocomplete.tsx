@@ -6,6 +6,9 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class MedAutocomplete {
+  /**
+   * TODO
+   */
   @Prop() list = false;
 
   render() {

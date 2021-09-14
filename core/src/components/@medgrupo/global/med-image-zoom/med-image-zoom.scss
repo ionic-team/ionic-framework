@@ -1,10 +1,10 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $med-color-neutral-dark-prime;
+  background-color: #{color('neutral', '1')};
 
   .zoom-header {
     position: fixed;
@@ -13,29 +13,34 @@
     top: 0;
 
     &__title {
-      color: $med-color-neutral-light-prime;
-      font-size: $med-font-size-xs;
-      line-height: $med-line-height-compressed;
-      font-weight: $med-font-weight-semibold;
+      color: #{color('neutral', '1', 'contrast')};;
+      font-size: var(--med-font-size-xs);
+      line-height: var(--med-line-height-compressed);
+      font-weight: var(--med-font-weight-semibold);
+    }
+
+    .med-icon {
+      stroke: #{color('neutral', '10')};
     }
   }
 
   .zoom-content {
-    --background: #{$med-color-neutral-dark-prime};
+    --background: #{color('neutral', '1')};
 
     height: 100%;
     overflow-y: hidden;
   }
 
   ion-slides {
-    --bullet-background-active: #{$med-color-brand-primary-medium};
+    --bullet-background-active: #{color('brand', '3')};
 
     display: flex;
     justify-content: center;
     height: 100%;
+
     .swiper-pagination-bullet-active {
-      border: 2px solid #fff;
-  }
+      border: 2px solid #{color('brand', '3')};
+    }
   }
 
   .swiper-zoom-container {
@@ -52,8 +57,6 @@
     -moz-user-drag: none;
     -o-user-drag: none;
     user-drag: none;
-
-
   }
 
 .swiper-slide-zoomed .zoom-legenda-container {
@@ -75,7 +78,7 @@
 
   .zoom-legenda {
     display: inline-block;
-    color: #fff;
+    color: #{color('neutral', '10')};
     font-size: 14px;
     max-width: 992px;
     overflow-y: auto;
@@ -90,7 +93,7 @@
     text-align: center;
     font-size: 2.5em;
     opacity: 0.01;
-    color: #673ab7;
+    color: #{color('brand', '3')};;
     pointer-events: none;
   }
 
@@ -102,13 +105,13 @@
     text-align: center;
     font-size: 2.5em;
     opacity: 0.02;
-    color: red;
+    color: #{color('brand', '3')};;
     pointer-events: none;
   }
 
   .zoom-button-container {
     position: fixed;
-    bottom: $med-spacing-stack-md;
+    bottom: var(--med-spacing-stack-md);
     right: 15px;
     height: 175px;
     width: 48px;
@@ -124,22 +127,22 @@
     align-items: center;
     justify-content: center;
     outline: none;
-    background-color: $med-color-neutral-light-40;
+    background-color: #{color('neutral', '6')};
 
     ion-icon {
       font-size: 24px;
-      color: $med-color-neutral-dark-40;
+      stroke: #{color('neutral', '10')};
     }
 
     &:not(:last-child) {
-      margin-bottom: $med-spacing-stack-base;
+      margin-bottom: var(--med-spacing-stack-base);
     }
 
     &--close {
-      background-color: $med-color-neutral-dark-40;
+      background-color: #{color('neutral', '5')};
 
       ion-icon {
-        color: $med-color-neutral-light-prime;
+        stroke: #{color('neutral', '10')};
       }
     }
   }

@@ -1,0 +1,60 @@
+@import '../functions';
+@import '../mixins';
+
+$med-colors: (
+  'aula': (
+    '1': 'var(--aula-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-1))',
+    '2': 'var(--aula-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-2))',
+    '3': 'var(--aula-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-3, 0%) + var(--color-luminosity-3))',
+    '4': 'var(--aula-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-4))',
+    '5': 'var(--aula-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-5))',
+    'gradient': 'linear-gradient(to right, hsl(var(--med-color-aula-3)), hsl(var(--med-color-aula-1)))',
+  ),
+  'material': (
+    '1': 'var(--material-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-1))',
+    '2': 'var(--material-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-2))',
+    '3': 'var(--material-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-3, 0%) + var(--color-luminosity-3))',
+    '4': 'var(--material-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-4))',
+    '5': 'var(--material-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-5))',
+    'gradient': 'linear-gradient(to right, hsl(var(--med-color-material-3)), hsl(var(--med-color-material-1)))',
+  ),
+  'questoes': (
+    '1': 'var(--questoes-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-1))',
+    '2': 'var(--questoes-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-2))',
+    '3': 'var(--questoes-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-3, 0%) + var(--color-luminosity-3))',
+    '4': 'var(--questoes-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-4))',
+    '5': 'var(--questoes-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-5))',
+    'gradient': 'linear-gradient(to right, hsl(var(--med-color-questoes-3)), hsl(var(--med-color-questoes-1)))',
+   ),
+  'revalida': (
+    '1': 'var(--revalida-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-1))',
+    '2': 'var(--revalida-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-2))',
+    '3': 'var(--revalida-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-3, 0%) + var(--color-luminosity-3))',
+    '4': 'var(--revalida-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-4))',
+    '5': 'var(--revalida-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-5))',
+    'gradient': 'linear-gradient(to right, hsl(var(--med-color-revalida-3)), hsl(var(--med-color-revalida-1)))',
+  ),
+  'provas': (
+    '1': 'var(--provas-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-1))',
+    '2': 'var(--provas-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-1, 0%) + var(--color-luminosity-2))',
+    '3': 'var(--provas-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-3, 0%) + var(--color-luminosity-3))',
+    '4': 'var(--provas-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-4))',
+    '5': 'var(--provas-hue), calc(var(--color-saturation) + var(--saturation-fator, 0%)), calc(var(--color-luminosity-mutable-2, 0%) + var(--color-luminosity-5))',
+    'gradient': 'linear-gradient(to right, hsl(var(--med-color-provas-3)), hsl(var(--med-color-provas-1)))',
+  ),
+) !default;
+
+.theme-medsoft {
+  /* color */
+  --brand-hue: 188;
+  --aula-hue: 168;
+  --material-hue: 24;
+  --questoes-hue: 200;
+  --revalida-hue: 342;
+  --provas-hue: 268;
+
+  /* color tokens */
+  @include generate-color-tokens();
+}
+
+@include generate-color-classes();

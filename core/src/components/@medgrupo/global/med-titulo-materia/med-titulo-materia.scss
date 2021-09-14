@@ -1,13 +1,13 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
-  --background: #{md-color(brand, 1)};
-  --color: #{md-color(brand, contrast-1)};
+  --background: #{color('brand', '1')};
+  --color: #{color('brand', '1', 'contrast')};
 }
 
 :host(.med-titulo-materia) {
   background: var(--background);
-  padding: $med-spacing-inline-base;
+  padding: var(--med-spacing-inline-base);
   display: flex;
   align-items: center;
   max-width: 1200px;
@@ -17,22 +17,22 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  //margin: 0 $med-spacing-inline-base;
+  //margin: 0 var(--med-spacing-inline-base;
 }
 
 :host(.med-titulo-materia) .med-titulo-materia__titulo {
   margin: 0;
-  font-size: $med-font-size-xs;
-  font-weight: $med-font-weight-bold;
-  line-height: $med-line-height-compressed;
+  font-size: var(--med-font-size-xs);
+  font-weight: var(--med-font-weight-bold);
+  line-height: var(--med-line-height-compressed);
   color: var(--color);
 }
 
 :host(.med-titulo-materia) .med-titulo-materia__descricao {
   margin: 0;
-  font-size: $med-font-size-xxxs;
-  font-weight: $med-font-weight-regular;
-  line-height: $med-line-height-default;
+  font-size: var(--med-font-size-xxxs);
+  font-weight: var(--med-font-weight-regular);
+  line-height: var(--med-line-height-default);
   color: var(--color);
 }
 
@@ -41,27 +41,36 @@
 // ////////////////////
 
 ::slotted([slot="start"]) {
-  margin-right: $med-spacing-inline-base;
+  margin-right: var(--med-spacing-inline-base);
 }
 
 ::slotted([slot="end"]) {
-  margin-left: $med-spacing-inline-base;
+  margin-left: var(--med-spacing-inline-base);
 }
 
 // ////////////////////
 // color
 // ////////////////////
 
-:host(.med-titulo-materia.ion-color) {
-  --background: #{md-current-color(1)};
-  --color: #{md-current-color(contrast-1)};
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '1', 'contrast')};
 }
 
 // ////////////////////
 // neutral
 // ////////////////////
 
-:host(.med-titulo-materia.med-neutral) {
-  --background: var(--med-neutral);
-  --color: var(--med-neutral-contrast);
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', '1', 'contrast')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', '1', 'contrast')};
 }

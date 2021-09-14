@@ -183,13 +183,15 @@ export default defineComponent({
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------- |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined`    |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`             | `false`        |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
-| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              | `this.inputId` |
-| `value`    | `value`    | the value of the radio.                                                                                                                                                                                                                                                | `any`                 | `undefined`    |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                       | Default        |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | -------------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`      | `undefined`    |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`                  | `false`        |
+| `dsColor`  | `ds-color` | Define a cor do componente.                                                                                                                                                                                                                                            | `string \| undefined`      | `undefined`    |
+| `dsName`   | `ds-name`  | Define a variação do componente.                                                                                                                                                                                                                                       | `"secondary" \| undefined` | `undefined`    |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`            | `undefined`    |
+| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`                   | `this.inputId` |
+| `value`    | `value`    | the value of the radio.                                                                                                                                                                                                                                                | `any`                      | `undefined`    |
 
 
 ## Events
@@ -208,16 +210,30 @@ export default defineComponent({
 | `"mark"`      | The checkmark or dot used to indicate the checked state. |
 
 
+## CSS Custom Properties
+
+| Name                    | Description                              |
+| ----------------------- | ---------------------------------------- |
+| `--border-radius`       | Border radius of the radio               |
+| `--color`               | Color of the radio                       |
+| `--color-checked`       | Color of the checked radio               |
+| `--inner-border-radius` | Border radius of the inner checked radio |
+
+
 ## Dependencies
 
 ### Used by
 
  - ion-select-popover
+ - [med-config](../@medgrupo/global/med-config)
+ - [med-themes](../@medgrupo/global/med-themes)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-select-popover --> ion-radio
+  med-config --> ion-radio
+  med-themes --> ion-radio
   style ion-radio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

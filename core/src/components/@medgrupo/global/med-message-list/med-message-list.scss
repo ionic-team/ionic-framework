@@ -1,4 +1,4 @@
-@import "../../../../../med-components/abstracts";
+@import "../../../../../templarios/abstracts";
 
 :host {
   /**
@@ -7,10 +7,10 @@
     * @prop --margin-left-response: Define a margin-left das respostas.
     * @prop --margin-left-comment: Define a margin-left dos comentários.
     */
-  --margin-top-message: #{$med-spacing-stack-xxs};
-  --margin-top-response: #{$med-spacing-stack-xxxs};
-  --margin-left-response: #{$med-spacing-inline-sm};
-  --margin-left-comment: #{$med-spacing-inline-xl};
+  --margin-top-message: var(--med-spacing-stack-xxs);
+  --margin-top-response: var(--med-spacing-stack-xxxs);
+  --margin-left-response: var(--med-spacing-inline-sm);
+  --margin-left-comment: var(--med-spacing-inline-xl);
 
   display: block;
 }
@@ -27,7 +27,7 @@
 
 ::slotted(.med-message--comment),
 ::slotted(.med-message--user-message) {
-  margin-left: $med-spacing-inline-xl;
+  margin-left: var(--med-spacing-inline-xl);
   width: calc( 100% - var(--margin-left-comment));
 }
 

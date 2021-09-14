@@ -1,7 +1,13 @@
+:host {
+  --color: #{color('neutral', 10)};
+}
+
 :host(.med-chart-radial-content) {
+  text-align: center;
+
   .med-chart-radial-content__label {
     font-size: var(--med-font-size-nano);
-    color: var(--med-color-neutral-dark-10);
+    color: var(--color);
     font-weight: var(--med-font-weight-bold);
     display: flex;
     justify-content: center;
@@ -11,11 +17,35 @@
   .med-chart-radial-content__number {
     font-weight: var(--med-font-weight-bold);
     font-size: var(--med-font-size-md);
-    color: var(--med-color-neutral-10);
+    color: var(--color);
     line-height: var(--med-line-height-compressed);
 
     &--small {
       font-size: var(--med-font-size-xs);
     }
   }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  color: #{curr-color('feedback')};
 }
