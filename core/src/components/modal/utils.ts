@@ -15,7 +15,11 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
    * We know that at the beginning breakpoint,
    * the backdrop will be hidden. We also
    * know that at the maxBreakpoint, the backdrop
-   * must be fully visible.
+   * must be fully visible. maxBreakpoint should
+   * always be 1 even if the maximum value
+   * of the breakpoints array is not 1 since
+   * the animation runs from a progress of 0
+   * to a progress of 1.
    * m = (y2 - y1) / (x2 - x1)
    *
    * This is simplified from:
