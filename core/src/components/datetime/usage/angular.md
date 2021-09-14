@@ -41,7 +41,7 @@
 </ion-datetime>
 
 <!-- Clear button -->
-<ion-datetime showClearButton></ion-datetime>
+<ion-datetime [showClearButton]="true"></ion-datetime>
 
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>

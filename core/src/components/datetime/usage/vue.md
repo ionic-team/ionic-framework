@@ -42,7 +42,7 @@
   </ion-datetime>
 
   <!-- Clear button -->
-  <ion-datetime show-clear-button></ion-datetime>
+  <ion-datetime :show-clear-button="true"></ion-datetime>
   
   <!-- Custom buttons -->
   <ion-datetime ref="customDatetime">
