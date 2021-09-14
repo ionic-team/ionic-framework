@@ -25,12 +25,12 @@ export const createReactComponent = <
   ExpandedPropsTypes = {}
 >(
   tagName: string,
-  customElement?: any,
   ReactComponentContext?: React.Context<ContextStateType>,
   manipulatePropsFunction?: (
     originalProps: StencilReactInternalProps<ElementType>,
     propsToPass: any,
   ) => ExpandedPropsTypes,
+  customElement?: any,
 ) => {
   defineCustomElement(tagName, customElement);
 
