@@ -37,6 +37,7 @@ interface ToastOptions {
   position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
   animated?: boolean;
+  htmlAttributes?: ToastAttributes;
 
   color?: Color;
   mode?: Mode;
@@ -46,6 +47,11 @@ interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### ToastAttributes
+```typescript
+interface ToastAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 <!-- Auto Generated Below -->

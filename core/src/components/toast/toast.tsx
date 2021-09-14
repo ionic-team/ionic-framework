@@ -269,8 +269,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
-    const hdrId = `toast-${this.overlayIndex}-hdr`;
-    const msgId = `toast-${this.overlayIndex}-msg`;
     const role = this.htmlAttributes?.role || (allButtons.length > 0 ? 'dialog' : 'status');
 
     return (
@@ -286,23 +284,18 @@ export class Toast implements ComponentInterface, OverlayInterface {
         tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
         role={role}
-        aria-labelledby={this.header !== undefined ? hdrId : null}
-        aria-describedby={this.message !== undefined ? msgId : null}
         {...this.htmlAttributes as any}
       >
         <div class={wrapperClass}>
-          <div
-            class="toast-container"
-            part="container"
-          >
+          <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
 
             <div class="toast-content">
               {this.header !== undefined &&
-                <div id={hdrId} class="toast-header" part="header">{this.header}</div>
+                <div class="toast-header" part="header">{this.header}</div>
               }
               {this.message !== undefined &&
-                <div id={msgId} class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
+                <div class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
               }
             </div>
 

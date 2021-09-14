@@ -95,14 +95,20 @@ interface AlertOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
-  
+  htmlAttributes?: AlertAttributes;
+
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  
+
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### AlertAttributes
+```typescript
+interface AlertAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 ### AlertTextareaAttributes

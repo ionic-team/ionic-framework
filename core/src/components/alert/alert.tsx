@@ -566,8 +566,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
     return (
       <Host
         role={role}
-        aria-labelledby={header !== undefined ? hdrId : null}
-        aria-describedby={msgId}
         aria-modal="true"
         tabindex="-1"
         style={{
