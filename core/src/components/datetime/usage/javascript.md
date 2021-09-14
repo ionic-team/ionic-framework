@@ -40,6 +40,9 @@
   <div slot="title">My Custom Title</div>
 </ion-datetime>
 
+<!-- Clear button -->
+<ion-datetime show-clear-button="true"></ion-datetime>
+
 <!-- Custom buttons -->
 <ion-datetime id="custom-datetime">
   <ion-buttons slot="buttons">

@@ -232,6 +232,9 @@ dates in JavaScript.
   <div slot="title">My Custom Title</div>
 </ion-datetime>
 
+<!-- Clear button -->
+<ion-datetime showClearButton></ion-datetime>
+
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">
@@ -319,6 +322,9 @@ export class MyComponent {
 <ion-datetime>
   <div slot="title">My Custom Title</div>
 </ion-datetime>
+
+<!-- Clear button -->
+<ion-datetime show-clear-button="true"></ion-datetime>
 
 <!-- Custom buttons -->
 <ion-datetime id="custom-datetime">
@@ -419,6 +425,9 @@ export const DateTimeExamples: React.FC = () => {
       <IonDatetime>
         <div slot="title">My Custom Title</div>
       </IonDatetime>
+
+      {/* Clear button */}
+      <IonDatetime showClearButton></IonDatetime>
       
       {/* Custom buttons */}
       <IonDatetime ref={customDatetime}>
@@ -509,6 +518,9 @@ export class DatetimeExample {
       <ion-datetime>
         <div slot="title">My Custom Title</div>
       </ion-datetime>,
+
+      {/* Clear button */}
+      <ion-datetime showClearButton></ion-datetime>  
       
       {/* Custom buttons */}
       <ion-datetime ref={el => this.customDatetime = el}>
@@ -575,6 +587,9 @@ export class DatetimeExample {
   <ion-datetime>
     <div slot="title">My Custom Title</div>
   </ion-datetime>
+
+  <!-- Clear button -->
+  <ion-datetime show-clear-button></ion-datetime>
   
   <!-- Custom buttons -->
   <ion-datetime ref="customDatetime">
@@ -691,17 +706,6 @@ Type: `Promise<void>`
 
 
 
-### `clear() => Promise<void>`
-
-Resets the internal state of the datetime
-and updates the value to `undefined`.
-
-#### Returns
-
-Type: `Promise<void>`
-
-
-
 ### `confirm(closeOverlay?: boolean) => Promise<void>`
 
 Confirms the selected datetime value, updates the
@@ -714,11 +718,11 @@ Type: `Promise<void>`
 
 
 
-### `reset(value?: string | undefined) => Promise<void>`
+### `reset(internalState?: string | undefined, updateValue?: boolean) => Promise<void>`
 
-Resets the internal state of the datetime
-but does not update the value. Passing a value
-ISO-8601 string will reset the state of
+Resets the internal state of the datetime to `internalState`
+and optionally updates the value if `updateValue` is true.
+Passing a valid ISO-8601 string will reset the state of
 the component to the provided date.
 
 #### Returns

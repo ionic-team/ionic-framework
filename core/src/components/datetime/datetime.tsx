@@ -404,14 +404,15 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Resets the internal state of the datetime
-   * but does not update the value. Passing a value
-   * ISO-8601 string will reset the state of
+   * Resets the internal state of the datetime to `internalState`
+   * and optionally updates the value if `updateValue` is true.
+   * Passing a valid ISO-8601 string will reset the state of
    * the component to the provided date.
    */
   @Method()
-  async reset(value?: string) {
-    this.processValue(value);
+  async reset(internalState?: string, updateValue = false) {
+    this.processValue(internalState);
+    if (updateValue) { this.value = internalState; }
   }
 
   /**
@@ -427,16 +428,6 @@ export class Datetime implements ComponentInterface {
     if (closeOverlay) {
       this.closeParentOverlay();
     }
-  }
-
-  /**
-   * Resets the internal state of the datetime
-   * and updates the value to `undefined`.
-   */
-  @Method()
-  async clear() {
-    this.reset();
-    this.value = undefined;
   }
 
   private closeParentOverlay = () => {
@@ -1206,12 +1197,17 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-footer">
         <div class="datetime-buttons">
-          <div class={`datetime-action-buttons ${this.showClearButton ? 'has-clear-button' : ''}`}>
+          <div class={{
+            ['datetime-action-buttons']: true,
+            ['has-clear-button']: this.showClearButton
+          }}>
             <slot name="buttons">
               <ion-buttons>
                 <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
-                {this.showClearButton && <ion-button color={this.color} onClick={() => this.clear()}>{this.clearText}</ion-button>}
-                <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
+                <div>
+                  {this.showClearButton && <ion-button color={this.color} onClick={() => this.reset(undefined, true)}>{this.clearText}</ion-button>}
+                  <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
+                </div>
               </ion-buttons>
             </slot>
           </div>

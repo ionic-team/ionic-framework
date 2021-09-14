@@ -114,8 +114,10 @@
   width: 100%;
 }
 
-:host .datetime-action-buttons ion-button:nth-child(2) {
-  @include margin(null, null, null, auto);
+:host .datetime-action-buttons ion-buttons {
+  display: flex;
+
+  justify-content: space-between;
 }
 
 /**
