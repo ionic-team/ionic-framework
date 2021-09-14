@@ -116,6 +116,7 @@ test('alert: htmlAttributes', async () => {
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  expect(alert.getAttribute('data-testid')).toEqual('basic-alert');
-  expect((alert as any).dataset?.testid).toEqual('basic-alert');
+  const attribute = await page.evaluate((el) => document.querySelector('ion-alert').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-alert');
 });
