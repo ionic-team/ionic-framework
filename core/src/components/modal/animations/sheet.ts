@@ -26,15 +26,14 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
 }
 
 export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
-  const { currentBreakpoint, backdropBreakpoint, sortedBreakpoints } = opts;
+  const { currentBreakpoint, backdropBreakpoint } = opts;
 
   /**
    * Backdrop does not always fade in from 0 to 1 if backdropBreakpoint
    * is defined, so we need to account for that offset by figuring out
    * what the current backdrop value should be.
    */
-  const maxBreakpoint = sortedBreakpoints![sortedBreakpoints.length - 1];
-  const backdropValue = `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, maxBreakpoint, backdropBreakpoint!)})`;
+  const backdropValue = `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, backdropBreakpoint!)})`;
   const defaultBackdrop = [
     { offset: 0, opacity: backdropValue },
     { offset: 1, opacity: 0 }

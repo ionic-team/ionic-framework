@@ -6,7 +6,7 @@
  * not begin to fade in until after
  * the 0 breakpoint.
  */
-export const getBackdropValueForSheet = (x: number, maxBreakpoint: number, backdropBreakpoint: number) => {
+export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) => {
 
   /**
    * We will use these points:
@@ -21,7 +21,7 @@ export const getBackdropValueForSheet = (x: number, maxBreakpoint: number, backd
    * This is simplified from:
    * m = (1 - 0) / (maxBreakpoint - backdropBreakpoint)
    */
-  const slope = 1 / (maxBreakpoint - backdropBreakpoint);
+  const slope = 1 / (1 - backdropBreakpoint);
 
   /**
    * From here, compute b which is

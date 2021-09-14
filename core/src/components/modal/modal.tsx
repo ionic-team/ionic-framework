@@ -44,7 +44,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
-  private sortedBreakpoints: number[] = [];
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -421,7 +420,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const sortedBreakpoints = this.sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
+    const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
       this.el,
@@ -481,7 +480,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, sortedBreakpoints: this.sortedBreakpoints, backdropBreakpoint: this.backdropBreakpoint });
+    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, backdropBreakpoint: this.backdropBreakpoint });
 
     const dismissed = await this.currentTransition;
 
