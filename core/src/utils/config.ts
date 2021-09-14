@@ -1,6 +1,6 @@
 import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
 
-import { PlatformDetectionConfig } from './platform';
+import { PlatformConfig } from './platform';
 
 export interface IonicConfig {
   /**
@@ -180,7 +180,7 @@ export interface IonicConfig {
   /**
    * Overrides the default platform detection methods.
    */
-  platformDetection?: PlatformDetectionConfig;
+  platform?: PlatformConfig;
 
   // PRIVATE configs
   keyboardHeight?: number;

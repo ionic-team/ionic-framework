@@ -31,7 +31,7 @@ export const setupPlatforms = (win: any = window) => {
 };
 
 const detectPlatforms = (win: Window) => {
-  const customPlatformMethods = config.get('platformDetection');
+  const customPlatformMethods = config.get('platform');
   return (Object.keys(PLATFORMS_MAP) as Platforms[]).filter(p => {
     const customMethod = customPlatformMethods && customPlatformMethods[p];
     return typeof customMethod === 'function' ? customMethod(win) : PLATFORMS_MAP[p](win);
@@ -123,7 +123,7 @@ export const testUserAgent = (win: Window, expr: RegExp) =>
 const matchMedia = (win: Window, query: string): boolean =>
   win.matchMedia && win.matchMedia(query).matches;
 
-export type PlatformDetectionConfig = Partial<typeof PLATFORMS_MAP>;
+export type PlatformConfig = Partial<typeof PLATFORMS_MAP>;
 
 const PLATFORMS_MAP = {
   'ipad': isIpad,
