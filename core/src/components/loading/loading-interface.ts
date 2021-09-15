@@ -1,4 +1,5 @@
 import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
 import { IonicSafeString } from '../../utils/sanitization';
 

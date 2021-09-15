@@ -1,4 +1,5 @@
 import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
