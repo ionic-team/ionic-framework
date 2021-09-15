@@ -1091,6 +1091,17 @@ export class Datetime implements ComponentInterface {
             const activeElement = this.el!.shadowRoot!.elementFromPoint(x, y)!;
             const value = parseInt(activeElement.getAttribute('data-value')!, 10);
 
+            /**
+             * When scrolling to a month that is out of
+             * bounds, the hour/minute column values may
+             * be updated, triggering a scroll callback.
+             * Check to make sure there is a valid
+             * hour/minute element so we do not emit NaN.
+             */
+            if (Number.isNaN(value)) {
+              return;
+            }
+
             if (colType === 'hour') {
               this.setWorkingParts({
                 ...this.workingParts,
