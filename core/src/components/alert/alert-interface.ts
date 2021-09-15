@@ -13,6 +13,7 @@ export interface AlertOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
+  htmlAttributes?: AlertAttributes;
 
   mode?: Mode;
   keyboardClose?: boolean;
@@ -21,6 +22,8 @@ export interface AlertOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+
+export interface AlertAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 
 export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';

@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
@@ -161,6 +161,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() presentingElement?: HTMLElement;
 
   /**
+   * Additional attributes to pass to the modal.
+   */
+  @Prop() htmlAttributes?: ModalAttributes;
+
+  /**
    * If `true`, the modal will open. If `false`, the modal will close.
    * Use this if you need finer grained control over presentation, otherwise
    * just use the modalController or the `trigger` property.
@@ -168,7 +173,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * the modal dismisses. You will need to do that in your code.
    */
   @Prop() isOpen = false;
-
   @Watch('isOpen')
   onIsOpenChange(newValue: boolean, oldValue: boolean) {
     if (newValue === true && oldValue === false) {
@@ -544,10 +548,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { handle, isSheetModal, presentingElement } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-
     const mode = getIonMode(this);
     const { presented, modalId } = this;
 
@@ -556,6 +559,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
         no-router
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
         class={{
           [mode]: true,
           [`modal-card`]: presentingElement !== undefined && mode === 'ios',
@@ -565,9 +572,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass)
         }}
         id={modalId}
-        style={{
-          zIndex: `${20000 + this.overlayIndex}`,
-        }}
         onIonBackdropTap={this.onBackdropTap}
         onIonDismiss={this.onDismiss}
         onIonModalDidPresent={this.onLifecycle}

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, PopoverInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, PopoverAttributes, PopoverInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
@@ -126,6 +126,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * If `true`, the popover will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * Additional attributes to pass to the popover.
+   */
+  @Prop() htmlAttributes?: PopoverAttributes;
 
   /**
    * Describes what kind of interaction with the trigger that
@@ -542,14 +547,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover && !desktop;
+
     return (
       <Host
         aria-modal="true"
         no-router
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
