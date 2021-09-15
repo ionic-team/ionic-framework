@@ -8,9 +8,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/download-artifact@v2
-      with:
-        name: ${{ inputs.name }}
-        path: ${{ inputs.path }}
-    - name: Extract Archive
-      run: tar -xvf ${{ inputs.path }}
+  - uses: actions/download-artifact@v2
+    with:
+      name: ${{ inputs.name }}
+      path: ${{ inputs.path }}
+  - name: Extract Archive
+    run: tar -xvf ${{ inputs.path }}
