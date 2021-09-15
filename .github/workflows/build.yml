@@ -34,7 +34,7 @@ jobs:
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-core
-        output: core/CoreBuild.zip
+        output: core/CoreBuild.tar
         paths: core/dist core/components core/css core/hydrate core/loader
 
   build-vue:
@@ -60,7 +60,7 @@ jobs:
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
-        path: core/CoreBuild.zip
+        path: core/CoreBuild.tar
     - name: Install Vue Dependencies
       working-directory: ./packages/vue
       run: npm install
@@ -76,5 +76,5 @@ jobs:
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-vue
-        output: packages/vue/VueBuild.zip
+        output: packages/vue/VueBuild.tar
         paths: packages/vue/dist packages/vue/css

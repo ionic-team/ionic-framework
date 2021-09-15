@@ -10,9 +10,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: edgarrc/action-7z@v1
-      with:
-        args: 7z a -tzip ${{ inputs.output }} ${{ inputs.paths }}
+    - name: Create Archive
+      run: tar -cvf ${{ inputs.output }} ${{ inputs.paths }}
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.name }}
