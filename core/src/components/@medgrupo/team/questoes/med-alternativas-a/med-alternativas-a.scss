@@ -56,11 +56,10 @@
 }
 
 :host(.med-alternativas) .med-alternativas__right {
-  margin-left: 16px;
   flex: 1 1 0%;
   overflow: hidden;
   text-align: left;
-  padding: var(--med-spacing-stack-base) var(--med-spacing-stack-base) calc(var(--med-spacing-stack-base) - 10px) var(--med-spacing-stack-base);
+  padding: var(--med-spacing-stack-base) var(--med-spacing-stack-base) calc(var(--med-spacing-stack-base) - 10px) 0;
   font-size: var(--med-font-size-xs);
   font-weight: var(--med-font-weight-regular);
   line-height: line-height($med-font-size-xs);
