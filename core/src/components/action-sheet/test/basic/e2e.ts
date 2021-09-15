@@ -111,3 +111,21 @@ test('action-sheet:rtl: basic, scroll without cancel', async () => {
 test('action-sheet:rtl: basic, custom backdrop', async () => {
   await testActionSheet(DIRECTORY, '#customBackdrop', true);
 });
+
+// Attributes
+
+test('action-sheet: htmlAttributes', async () => {
+  const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
+
+  await page.click('#basic');
+  await page.waitForSelector('#basic');
+
+  let toast = await page.find('ion-action-sheet');
+
+  expect(toast).not.toBe(null);
+  await toast.waitForVisible();
+
+  const attribute = await page.evaluate((el) => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-action-sheet');
+});

@@ -11,10 +11,13 @@ export interface ActionSheetOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: ActionSheetAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+
+export interface ActionSheetAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 
 export interface ActionSheetButton {
   text?: string;
