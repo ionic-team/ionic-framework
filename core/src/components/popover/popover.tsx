@@ -209,10 +209,10 @@ export class Popover implements ComponentInterface, OverlayInterface {
         aria-modal="true"
         no-router
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
-        {...htmlAttributes as any}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,

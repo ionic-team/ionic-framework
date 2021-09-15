@@ -273,6 +273,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     return (
       <Host
+        role={role}
+        tabindex="-1"
+        {...this.htmlAttributes as any}
         style={{
           zIndex: `${60000 + this.overlayIndex}`,
         }}
@@ -281,10 +284,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass),
           'toast-translucent': this.translucent
         })}
-        tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
-        role={role}
-        {...this.htmlAttributes as any}
       >
         <div class={wrapperClass}>
           <div class="toast-container" part="container">

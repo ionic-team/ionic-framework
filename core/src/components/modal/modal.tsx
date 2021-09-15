@@ -278,13 +278,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
         no-router
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
         class={{
           [mode]: true,
           [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
           ...getClassMap(this.cssClass)
-        }}
-        style={{
-          zIndex: `${20000 + this.overlayIndex}`,
         }}
         onIonBackdropTap={this.onBackdropTap}
         onIonDismiss={this.onDismiss}
@@ -292,7 +293,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillPresent={this.onLifecycle}
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
-        {...htmlAttributes as any}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
 

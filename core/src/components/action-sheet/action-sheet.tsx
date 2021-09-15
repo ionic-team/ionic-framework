@@ -244,6 +244,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         role="dialog"
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -255,7 +256,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         }}
         onIonActionSheetWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
-        {...htmlAttributes as any}
       >
         <ion-backdrop tappable={this.backdropDismiss}/>
 

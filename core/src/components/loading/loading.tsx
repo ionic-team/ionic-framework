@@ -188,17 +188,17 @@ export class Loading implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        onIonBackdropTap={this.onBackdropTap}
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${40000 + this.overlayIndex}`
         }}
+        onIonBackdropTap={this.onBackdropTap}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
           'loading-translucent': this.translucent
         }}
-        {...htmlAttributes as any}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
 

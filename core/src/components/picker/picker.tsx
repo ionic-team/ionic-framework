@@ -224,6 +224,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
       <Host
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`
+        }}
         class={{
           [mode]: true,
 
@@ -232,12 +236,8 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
           ...getClassMap(this.cssClass)
         }}
-        style={{
-          zIndex: `${20000 + this.overlayIndex}`
-        }}
         onIonBackdropTap={this.onBackdropTap}
         onIonPickerWillDismiss={this.dispatchCancelHandler}
-        {...htmlAttributes as any}
       >
         <ion-backdrop
           visible={this.showBackdrop}
