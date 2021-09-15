@@ -12,4 +12,4 @@ runs:
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}
-    run: tar -xvf ${{ inputs.path }}
+    - run: tar -xvf ${{ inputs.path }}
