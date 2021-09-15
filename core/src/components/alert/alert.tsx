@@ -8,6 +8,7 @@ import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safe
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
+import { AlertAttributes } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -109,6 +110,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * If `true`, the alert will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * Additional attributes to pass to the alert.
+   */
+  @Prop() htmlAttributes?: AlertAttributes;
 
   /**
    * Emitted after the alert has presented.
@@ -550,15 +556,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { overlayIndex, header, subHeader } = this;
+    const { overlayIndex, header, subHeader, htmlAttributes } = this;
     const mode = getIonMode(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
+    const role = htmlAttributes?.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
 
     return (
       <Host
-        role="dialog"
+        role={role}
         aria-modal="true"
         tabindex="-1"
         style={{
@@ -571,6 +578,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         }}
         onIonAlertWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
+        {...htmlAttributes as any}
       >
 
         <ion-backdrop tappable={this.backdropDismiss}/>
