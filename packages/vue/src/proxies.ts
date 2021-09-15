@@ -569,7 +569,7 @@ export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row');
 
 
 export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion-searchbar', [
-  'neutral',
+  'dsColor',
   'color',
   'animated',
   'autocomplete',

@@ -1,11 +1,12 @@
 @import "../../../templarios/abstracts";
 
+
 :host {
-  --color: var(--med-color-neutral-light-30);
-  --background: var(--med-color-neutral-dark-40);
+  --color: #{color('neutral', '1', 'contrast')};
+  --background: #{color('neutral', '2')};
   --border-radius: var(--med-border-radius-sm);
-  --icon-color: var(--med-color-neutral-light-30);
-  --cancel-button-color: var(--med-color-questoes-medium);
+  --icon-color: #{color('neutral', '10')};
+  --cancel-button-color: #{color('brand', '3')};
   --placeholder-opacity: 1;
 
   // templarios
@@ -24,4 +25,38 @@
   .searchbar-search-icon {
     width: 24px;
   }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3', 'contrast')};
+  --background: #{curr-color('color', '3')};
+  --icon-color: #{curr-color('color', '3')};
+  --cancel-button-color: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --background: #{curr-color('neutral')};
+  --icon-color: #{curr-color('neutral')};
+  --cancel-button-color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+
+  --color: #{curr-color('feedback', null, 'contrast')};
+  --background: #{curr-color('feedback')};
+  --icon-color: #{curr-color('feedback')};
+  --cancel-button-color: #{curr-color('feedback')};
 }

@@ -2,9 +2,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AutocompleteTypes, Color, SearchbarChangeEventDetail, StyleEventDetail, Neutral } from '../../interface';
+import { AutocompleteTypes, MedColor, Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent, raf } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -20,9 +20,9 @@ import { createColorClasses } from '../../utils/theme';
 export class Searchbar implements ComponentInterface {
 
   /**
-   * TODO
-   */
-  @Prop() neutral?: Neutral;
+    * Define a cor do componente.
+    */
+   @Prop({ reflect: true }) dsColor?: MedColor;
 
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
@@ -487,11 +487,13 @@ export class Searchbar implements ComponentInterface {
       </button>
     );
 
+    const { dsColor } = this;
+
     return (
       <Host
         role="search"
         aria-disabled={this.disabled ? 'true' : null}
-        class={createColorClasses(this.color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
           'searchbar-animated': animated,
           'searchbar-disabled': this.disabled,
@@ -501,7 +503,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-focus': this.focused,
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton()
-        }, this.neutral)}
+        })}
       >
 
         <div class="searchbar-input-container">
