@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface, PopoverAttributes } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -95,6 +95,11 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * If `true`, the popover will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * Additional attributes to pass to the popover.
+   */
+  @Prop() htmlAttributes?: PopoverAttributes;
 
   /**
    * Emitted after the popover has presented.
@@ -198,12 +203,13 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle } = this;
+    const { onLifecycle, htmlAttributes } = this;
     return (
       <Host
         aria-modal="true"
         no-router
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}

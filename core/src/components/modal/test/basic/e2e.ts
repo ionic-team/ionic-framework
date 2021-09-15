@@ -71,3 +71,19 @@ test('modal: basic', async () => {
 test('modal:rtl: basic', async () => {
   await testModal(DIRECTORY, '#basic-modal', true);
 });
+
+test('modal: htmlAttributes', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/basic?ionic:_testing=true' });
+
+  await page.click('#basic-modal');
+  await page.waitForSelector('#basic-modal');
+
+  let alert = await page.find('ion-modal');
+
+  expect(alert).not.toBe(null);
+  await alert.waitForVisible();
+
+  const attribute = await page.evaluate((el) => document.querySelector('ion-modal').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-modal');
+});
