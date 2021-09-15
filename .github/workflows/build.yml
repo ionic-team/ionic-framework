@@ -57,7 +57,7 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - uses: ./.github/workflows/upload-archive
+    - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
         path: core/CoreBuild.zip
