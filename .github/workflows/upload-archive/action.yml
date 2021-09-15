@@ -11,6 +11,7 @@ runs:
   using: 'composite'
   steps:
     - run: tar -cvf ${{ inputs.output }} ${{ inputs.paths }}
+      shell: bash
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.name }}

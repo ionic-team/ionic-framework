@@ -13,3 +13,4 @@ runs:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}
     - run: tar -xvf ${{ inputs.path }}
+      shell: bash
