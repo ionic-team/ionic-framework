@@ -269,7 +269,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
-    const role = this.htmlAttributes?.role || (allButtons.length > 0 ? 'dialog' : 'status');
+    const role = allButtons.length > 0 ? 'dialog' : 'status';
 
     return (
       <Host

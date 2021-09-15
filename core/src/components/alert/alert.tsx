@@ -561,7 +561,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
-    const role = htmlAttributes?.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
+    const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
 
     return (
       <Host
