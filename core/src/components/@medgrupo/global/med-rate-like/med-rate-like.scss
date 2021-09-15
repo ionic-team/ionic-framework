@@ -14,10 +14,10 @@
     border: none;
     cursor: pointer;
     padding: 0;
+  }
 
-    &:first-child {
-      padding-right: var(--spacing);
-    }
+  .button-spacing {
+    padding-right: var(--spacing);
   }
 
   .rate {

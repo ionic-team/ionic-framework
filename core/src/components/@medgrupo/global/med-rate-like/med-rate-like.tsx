@@ -35,7 +35,7 @@ export class MedRateLike {
         class={generateMedColor(null, {
           'med-rate-like': true,
         })}>
-        <button class={`button
+        <button class={`button button-spacing
           ${this.status === RateStatus.LIKE ? 'button--like' : ''}
           ${this.status ? 'button--disabled' : ''}`}
           onClick={() => this.onClick(RateStatus.LIKE)}>
