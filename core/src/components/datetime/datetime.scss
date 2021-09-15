@@ -112,6 +112,16 @@
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
+:host .datetime-action-buttons.has-clear-button {
+  width: 100%;
+}
+
+:host .datetime-action-buttons ion-buttons {
+  display: flex;
+
+  justify-content: space-between;
+}
+
 /**
  * Date/Year button should be on
  * the opposite side of the component

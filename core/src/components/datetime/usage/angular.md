@@ -40,6 +40,9 @@
   <div slot="title">My Custom Title</div>
 </ion-datetime>
 
+<!-- Clear button -->
+<ion-datetime [showClearButton]="true"></ion-datetime>
+
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">

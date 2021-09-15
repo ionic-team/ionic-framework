@@ -232,6 +232,9 @@ dates in JavaScript.
   <div slot="title">My Custom Title</div>
 </ion-datetime>
 
+<!-- Clear button -->
+<ion-datetime [showClearButton]="true"></ion-datetime>
+
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">
@@ -319,6 +322,9 @@ export class MyComponent {
 <ion-datetime>
   <div slot="title">My Custom Title</div>
 </ion-datetime>
+
+<!-- Clear button -->
+<ion-datetime show-clear-button="true"></ion-datetime>
 
 <!-- Custom buttons -->
 <ion-datetime id="custom-datetime">
@@ -419,6 +425,9 @@ export const DateTimeExamples: React.FC = () => {
       <IonDatetime>
         <div slot="title">My Custom Title</div>
       </IonDatetime>
+
+      {/* Clear button */}
+      <IonDatetime showClearButton={true}></IonDatetime>
       
       {/* Custom buttons */}
       <IonDatetime ref={customDatetime}>
@@ -509,6 +518,9 @@ export class DatetimeExample {
       <ion-datetime>
         <div slot="title">My Custom Title</div>
       </ion-datetime>,
+
+      {/* Clear button */}
+      <ion-datetime showClearButton={true}></ion-datetime>  
       
       {/* Custom buttons */}
       <ion-datetime ref={el => this.customDatetime = el}>
@@ -575,6 +587,9 @@ export class DatetimeExample {
   <ion-datetime>
     <div slot="title">My Custom Title</div>
   </ion-datetime>
+
+  <!-- Clear button -->
+  <ion-datetime :show-clear-button="true"></ion-datetime>
   
   <!-- Custom buttons -->
   <ion-datetime ref="customDatetime">
@@ -640,6 +655,7 @@ export class DatetimeExample {
 | Property               | Attribute                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type                                                                                  | Default        |
 | ---------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------- |
 | `cancelText`           | `cancel-text`             | The text to display on the picker's cancel button.                                                                                                                                                                                                                                                                                                                                                                                                                                                | `string`                                                                              | `'Cancel'`     |
+| `clearText`            | `clear-text`              | The text to display on the picker's "Clear" button.                                                                                                                                                                                                                                                                                                                                                                                                                                               | `string`                                                                              | `'Clear'`      |
 | `color`                | `color`                   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                                                                                                                                                                                                                            | `string \| undefined`                                                                 | `'primary'`    |
 | `dayValues`            | `day-values`              | Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.                                    | `number \| number[] \| string \| undefined`                                           | `undefined`    |
 | `disabled`             | `disabled`                | If `true`, the user cannot interact with the datetime.                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                                                                             | `false`        |
@@ -656,6 +672,7 @@ export class DatetimeExample {
 | `name`                 | `name`                    | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                                                                              | `this.inputId` |
 | `presentation`         | `presentation`            | Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.                                                                                                                                                        | `"date" \| "date-time" \| "month" \| "month-year" \| "time" \| "time-date" \| "year"` | `'date-time'`  |
 | `readonly`             | `readonly`                | If `true`, the datetime appears normal but is not interactive.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `boolean`                                                                             | `false`        |
+| `showClearButton`      | `show-clear-button`       | If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.                                                                                                                                                                      | `boolean`                                                                             | `false`        |
 | `showDefaultButtons`   | `show-default-buttons`    | If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.                                                                                                                                                                                                 | `boolean`                                                                             | `false`        |
 | `showDefaultTimeLabel` | `show-default-time-label` | If `true`, the default "Time" label will be rendered for the time selector of the `ion-datetime` component. Developers can also use the `time-label` slot if they want to customize this label. If a custom label is set in the `time-label` slot then the default label will not be rendered.                                                                                                                                                                                                    | `boolean`                                                                             | `true`         |
 | `showDefaultTitle`     | `show-default-title`      | If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.                                                                                                                                                                                                                                                                                                       | `boolean`                                                                             | `false`        |
@@ -701,12 +718,11 @@ Type: `Promise<void>`
 
 
 
-### `reset(value?: string | undefined) => Promise<void>`
+### `reset(startDate?: string | undefined) => Promise<void>`
 
-Resets the internal state of the datetime
-but does not update the value. Passing a value
-ISO-8601 string will reset the state of
-te component to the provided date.
+Resets the internal state of the datetime but does not update the value.
+Passing a valid ISO-8601 string will reset the state of the component to the provided date.
+If no value is provided, the internal state will be reset to today.
 
 #### Returns
 

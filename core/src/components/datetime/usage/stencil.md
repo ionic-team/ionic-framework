@@ -64,6 +64,9 @@ export class DatetimeExample {
       <ion-datetime>
         <div slot="title">My Custom Title</div>
       </ion-datetime>,
+
+      {/* Clear button */}
+      <ion-datetime showClearButton={true}></ion-datetime>  
       
       {/* Custom buttons */}
       <ion-datetime ref={el => this.customDatetime = el}>

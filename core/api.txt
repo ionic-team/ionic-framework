@@ -370,6 +370,7 @@ ion-content,part,scroll
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
+ion-datetime,prop,clearText,string,'Clear',false,false
 ion-datetime,prop,color,string | undefined,'primary',false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
@@ -386,6 +387,7 @@ ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,f
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
+ion-datetime,prop,showClearButton,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
@@ -394,7 +396,7 @@ ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
 ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>
-ion-datetime,method,reset,reset(value?: string | undefined) => Promise<void>
+ion-datetime,method,reset,reset(startDate?: string | undefined) => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
