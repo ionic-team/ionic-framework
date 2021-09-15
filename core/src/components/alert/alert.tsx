@@ -561,13 +561,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
-    const role = htmlAttributes?.role || (this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert');
+    const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
 
     return (
       <Host
         role={role}
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + overlayIndex}`,
         }}
@@ -578,7 +579,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
         }}
         onIonAlertWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
-        {...htmlAttributes as any}
       >
 
         <ion-backdrop tappable={this.backdropDismiss}/>
