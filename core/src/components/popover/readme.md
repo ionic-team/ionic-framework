@@ -145,7 +145,12 @@ interface PopoverOptions {
 }
 ```
 
-<<<<<<< HEAD
+### PopoverAttributes
+
+```typescript
+interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+```
+
 ## Types
 
 Below you will find all of the custom types for `ion-popover`:
@@ -183,15 +188,6 @@ type PositionAlign = 'start' | 'center' | 'end';
 | `ArrowLeft`        | When used in a child popover, closes the popover and returns focus to the parent popover. |
 | `Space`, `Enter`, and `ArrowRight`       | When focusing a trigger element, opens the associated popover. |
 
-
-=======
-### PopoverAttributes
-
-```typescript
-interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
-```
-
->>>>>>> origin/main
 <!-- Auto Generated Below -->
 
 
