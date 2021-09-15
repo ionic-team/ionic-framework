@@ -58,9 +58,9 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - uses: ./.github/workflows/upload-archive
-    with:
-      name: ionic-core
-      path: core/CoreBuild.zip
+      with:
+        name: ionic-core
+        path: core/CoreBuild.zip
     - name: Install Vue Dependencies
       working-directory: ./packages/vue
       run: npm install
