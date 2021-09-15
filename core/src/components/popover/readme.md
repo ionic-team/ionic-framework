@@ -52,10 +52,17 @@ interface PopoverOptions {
   mode?: 'ios' | 'md';
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: PopoverAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### PopoverAttributes
+
+```typescript
+interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 <!-- Auto Generated Below -->

@@ -80,3 +80,19 @@ test('popover:rtl: no event', async () => {
 test('popover:rtl: custom class', async () => {
   await testPopover(DIRECTORY, '#custom-class-popover', true);
 });
+
+test('popover: htmlAttributes', async () => {
+  const page = await newE2EPage({ url: '/src/components/popover/test/basic?ionic:_testing=true' });
+
+  await page.click('#basic-popover');
+  await page.waitForSelector('#basic-popover');
+
+  let alert = await page.find('ion-popover');
+
+  expect(alert).not.toBe(null);
+  await alert.waitForVisible();
+
+  const attribute = await page.evaluate((el) => document.querySelector('ion-popover').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-popover');
+});
