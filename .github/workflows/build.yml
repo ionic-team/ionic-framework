@@ -31,15 +31,9 @@ jobs:
       run: npm ci
     - name: Build Core
       run: npm run build -- --ci
-    - name: Create Build Archive
-      uses: edgarrc/action-7z@v1
-      with:
-        args: 7z a -tzip core/CoreBuild.zip core/dist core/components core/css core/hydrate core/loader
-    - name: Upload Build Output
-      uses: actions/upload-artifact@v2
-      with:
-        name: ionic-core
-        path: core/VueBuild.zip
+    - uses: ./.github/workflows/upload-archive
+      output: core/CoreBuild.zip
+      paths: core/dist core/components core/css core/hydrate core/loader
 
   build-vue:
     needs: [build-core]
@@ -82,12 +76,6 @@ jobs:
     - name: Build
       working-directory: ./packages/vue
       run: npm run build
-    - name: Create Build Archive
-      uses: edgarrc/action-7z@v1
-      with:
-        args: 7z a -tzip packages/vue/VueBuild.zip packages/vue/dist packages/vue/css
-    - name: Upload Build Output
-      uses: actions/upload-artifact@v2
-      with:
-        name: ionic-vue
-        path: packages/vue/VueBuild.zip
+    - uses: ./.github/workflows/upload-archive
+      output: packages/vue/VueBuild.zip
+      paths: packages/vue/dist packages/vue/css
