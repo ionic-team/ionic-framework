@@ -33,6 +33,7 @@ jobs:
       run: npm run build -- --ci
     - uses: ./.github/workflows/upload-archive
       with:
+        name: ionic-core
         output: core/CoreBuild.zip
         paths: core/dist core/components core/css core/hydrate core/loader
 
@@ -79,5 +80,6 @@ jobs:
       run: npm run build
     - uses: ./.github/workflows/upload-archive
       with:
+        name: ionic-vue
         output: packages/vue/VueBuild.zip
         paths: packages/vue/dist packages/vue/css
