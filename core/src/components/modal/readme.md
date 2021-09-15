@@ -60,10 +60,17 @@ interface ModalOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: ModalAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### ModalAttributes
+
+```typescript
+interface ModalAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 

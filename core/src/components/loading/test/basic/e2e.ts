@@ -96,7 +96,7 @@ test('loading:rtl: html content basic', async () => {
   await testLoading(DIRECTORY, '#html-content-loading', true);
 });
 
-test('alert: htmlAttributes', async () => {
+test('loading: htmlAttributes', async () => {
   const page = await newE2EPage({ url: '/src/components/loading/test/basic?ionic:_testing=true' });
 
   await page.click('#basic-loading');
