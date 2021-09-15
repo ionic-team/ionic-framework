@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes, LoadingAttributes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -93,6 +93,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * Additional attributes to pass to the loader.
+   */
+  @Prop() htmlAttributes?: LoadingAttributes;
+
+  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -179,7 +184,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { message, spinner } = this;
+    const { message, spinner, htmlAttributes } = this;
     const mode = getIonMode(this);
     return (
       <Host
@@ -193,6 +198,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           [mode]: true,
           'loading-translucent': this.translucent
         }}
+        {...htmlAttributes as any}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
 

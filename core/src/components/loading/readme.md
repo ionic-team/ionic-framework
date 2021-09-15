@@ -54,10 +54,17 @@ interface LoadingOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: LoadingAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### LoadingAttributes
+
+```typescript
+interface LoadingAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 <!-- Auto Generated Below -->
