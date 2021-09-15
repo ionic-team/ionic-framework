@@ -1,3 +1,5 @@
+import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
