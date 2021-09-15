@@ -16,4 +16,4 @@ runs:
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.name }}
-        path: ${{ inputs.paths }}
+        path: ${{ inputs.output }}
