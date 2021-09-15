@@ -12,5 +12,9 @@ runs:
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}
+    - run: cd ${{ inputs.path }}
+      shell: bash
+    - run: ls
+      shell: bash
     - run: tar -xvf ${{ inputs.path }}
       shell: bash
