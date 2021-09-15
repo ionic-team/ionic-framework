@@ -150,96 +150,33 @@
   background: var(--background-checked);
 }
 
-// Year Picker
+// Month and Year
 // -----------------------------------
-:host(.show-month-and-year) .datetime-calendar {
-  flex: 0;
-}
-:host(.show-month-and-year) .datetime-year {
-  flex: 1;
-
-  min-height: 0;
+:host .datetime-picker-col {
+  @include border-radius($datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius);
+  @include padding(null, $datetime-md-wheel-padding, null, $datetime-md-wheel-padding);
 }
 
-:host(.show-month-and-year) .datetime-footer {
-  border-top: 1px solid var(--ion-color-step-250, #dddddd);
+:host .picker-col-item {
+  font-size: 18px;
 }
 
-:host .datetime-year-body {
-  @include padding(0, $datetime-md-padding, $datetime-md-padding, $datetime-md-padding);
-
-  display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
-  grid-gap: 0px 6px;
-
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+:host .datetime-picker-before {
+  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
 }
 
-:host .datetime-year-item {
-  @include padding(0px, 0px, 0px, 0px);
-  @include margin(0px, 0px, 0px, 0px);
-
-  position: relative;
-
-  align-items: center;
-  justify-content: center;
-
-  border: none;
-
-  outline: none;
-
-  background: none;
-  color: currentColor;
-
-  cursor: pointer;
-
-  appearance: none;
-
-  z-index: 0;
+:host .datetime-picker-after {
+  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
 }
 
-:host .datetime-year-item[disabled] {
-  pointer-events: none;
-
-  opacity: 0.4;
-}
-
-:host .datetime-year-item .datetime-year-inner {
-  @include border-radius(20px, 20px, 20px, 20px);
-  @include margin(10px, 10px, 10px, 10px);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  height: 32px;
-
-  border: 1px solid transparent;
-
-  font-size: 16px;
-}
-
-:host .datetime-current-year .datetime-year-inner {
-  border: 1px solid current-color(base);
-
-  color: current-color(base);
-}
-
-:host .datetime-active-year .datetime-year-inner {
-  border: 1px solid current-color(base);
-
-  background: current-color(base);
-  color: current-color(contrast);
-}
-
-@media (any-hover: hover) {
-  :host .datetime-year-item:hover,
-  :host .datetime-year-item:focus {
-    background: current-color(base, 0.1);
-  }
+/**
+ * Add some margin when only selecting month/year
+ * otherwise layout will too constricted.
+ */
+:host(.datetime-presentation-month) .datetime-year,
+:host(.datetime-presentation-year) .datetime-year,
+:host(.datetime-presentation-month-year) .datetime-year {
+  @include margin(20px, null, 20px, null);
 }
 
 // Footer
@@ -256,4 +193,8 @@
 
 :host .datetime-view-buttons ion-button {
   color: $text-color-step-200;
+}
+
+:host .picker-col-item-active {
+  color: current-color(base);
 }

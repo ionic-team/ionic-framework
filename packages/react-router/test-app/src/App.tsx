@@ -36,7 +36,6 @@ import Refs from './pages/refs/Refs';
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
-debugger;
 const App: React.FC = () => {
   return (
     <IonApp>

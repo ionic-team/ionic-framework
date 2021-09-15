@@ -130,8 +130,8 @@ export const createSheetGesture = (
       ]);
 
       backdropAnimation.keyframes([
-        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - offset, maxBreakpoint, backdropBreakpoint)})` },
-        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(closest, maxBreakpoint, backdropBreakpoint)})` }
+        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - offset, backdropBreakpoint)})` },
+        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(closest, backdropBreakpoint)})` }
       ]);
 
       animation.progressStep(0);

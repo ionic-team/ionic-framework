@@ -377,28 +377,6 @@ jobs:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/react
 
-  test-react-router-spec:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          command: sudo npm link
-          working_directory: /tmp/workspace/core
-      - run:
-          command: sudo npm link @ionic/core
-          working_directory: /tmp/workspace/packages/react
-      - run:
-          command: sudo npm link
-          working_directory: /tmp/workspace/packages/react
-      - run:
-          command: sudo npm link @ionic/react
-          working_directory: /tmp/workspace/packages/react-router
-      - run:
-          command: npm run test.spec
-          working_directory: /tmp/workspace/packages/react-router
-
   install-react-test-app:
     <<: *defaults
     steps:
@@ -537,8 +515,6 @@ workflows:
           requires: [build-react-router]
       - test-react-spec:
           requires: [build-react]
-      - test-react-router-spec:
-          requires: [build-react-router]
       - install-react-test-app:
           requires: [build-core]
       - test-react-e2e:
