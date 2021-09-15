@@ -95,14 +95,20 @@ interface AlertOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
-  
+  htmlAttributes?: AlertAttributes;
+
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  
+
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### AlertAttributes
+```typescript
+interface AlertAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 ### AlertTextareaAttributes
@@ -1768,6 +1774,7 @@ export default defineComponent({
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                                                                                   | `string \| string[] \| undefined`                       | `undefined` |
 | `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                                                                                                                                                                                                                                      | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`          | `header`           | The main title in the heading of the alert.                                                                                                                                                                                                                                                                                        | `string \| undefined`                                   | `undefined` |
+| `htmlAttributes`  | --                 | Additional attributes to pass to the alert.                                                                                                                                                                                                                                                                                        | `AlertAttributes \| undefined`                          | `undefined` |
 | `inputs`          | --                 | Array of input to show in the alert.                                                                                                                                                                                                                                                                                               | `AlertInput[]`                                          | `[]`        |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                             | `boolean`                                               | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                                                                                                                                                                                                                                      | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |

@@ -60,7 +60,7 @@ If the issue is associated with Ionic Appflow the submitter should be told to us
 
 ### Support Questions
 
-If the issue is a support question, the submitter should be redirected to our [forum](https://forum.ionicframework.com) or [slack channel](https://ionicworldwide.herokuapp.com/). The issue should be closed and locked. Use the `ionitron: support` label to accomplish this.
+If the issue is a support question, the submitter should be redirected to our [forum](https://forum.ionicframework.com). The issue should be closed and locked. Use the `ionitron: support` label to accomplish this.
 
 ### Incomplete Template
 

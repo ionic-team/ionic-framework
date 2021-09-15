@@ -71,6 +71,9 @@
       await openActionSheet({
         header: "Albums",
         subHeader: 'This is a sub header inside of an action sheet',
+        htmlAttributes: {
+          'data-testid': 'basic-action-sheet'
+        },
         buttons: [{
           text: 'Delete',
           role: 'destructive',

@@ -37,6 +37,7 @@ interface ToastOptions {
   position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
   animated?: boolean;
+  htmlAttributes?: ToastAttributes;
 
   color?: Color;
   mode?: Mode;
@@ -46,6 +47,11 @@ interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### ToastAttributes
+```typescript
+interface ToastAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 <!-- Auto Generated Below -->
@@ -405,6 +411,7 @@ export default defineComponent({
 | `duration`       | `duration`       | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                | `0`         |
 | `enterAnimation` | --               | Animation to use when the toast is presented.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`         | `header`         | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
+| `htmlAttributes` | --               | Additional attributes to pass to the toast.                                                                                                                                                                                                                            | `ToastAttributes \| undefined`                          | `undefined` |
 | `keyboardClose`  | `keyboard-close` | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                               | `false`     |
 | `leaveAnimation` | --               | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `message`        | `message`        | Message to be shown in the toast.                                                                                                                                                                                                                                      | `IonicSafeString \| string \| undefined`                | `undefined` |
