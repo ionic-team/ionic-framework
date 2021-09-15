@@ -57,15 +57,10 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Download Core Build Output
-      uses: actions/download-artifact@v2
-      with:
-        name: ionic-core
-        path: core/CoreBuild.zip
-    - name: Unarchive Core Build Output
-      uses: edgarrc/action-7z@v1
-      with:
-        args: 7z x core/CoreBuild.zip -aoa
+    - uses: ./.github/workflows/upload-archive
+    with:
+      name: ionic-core
+      path: core/CoreBuild.zip
     - name: Install Vue Dependencies
       working-directory: ./packages/vue
       run: npm install
