@@ -32,8 +32,9 @@ jobs:
     - name: Build Core
       run: npm run build -- --ci
     - uses: ./.github/workflows/upload-archive
-      output: core/CoreBuild.zip
-      paths: core/dist core/components core/css core/hydrate core/loader
+      with:
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader
 
   build-vue:
     needs: [build-core]
@@ -77,5 +78,6 @@ jobs:
       working-directory: ./packages/vue
       run: npm run build
     - uses: ./.github/workflows/upload-archive
-      output: packages/vue/VueBuild.zip
-      paths: packages/vue/dist packages/vue/css
+      with:
+        output: packages/vue/VueBuild.zip
+        paths: packages/vue/dist packages/vue/css
