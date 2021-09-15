@@ -1,4 +1,4 @@
-# [5.8.0](https://github.com/ionic-team/ionic/compare/v5.7.0...v5.8.0) (2021-09-15)
+# [5.8.0 Calcium](https://github.com/ionic-team/ionic/compare/v5.7.0...v5.8.0) (2021-09-15)
 
 
 ### Bug Fixes
