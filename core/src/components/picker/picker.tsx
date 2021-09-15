@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn, PickerAttributes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -80,6 +80,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * If `true`, the picker will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * Additional attributes to pass to the picker.
+   */
+  @Prop() htmlAttributes?: PickerAttributes;
 
   /**
    * Emitted after the picker has presented.
@@ -213,6 +218,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { htmlAttributes } = this;
     const mode = getIonMode(this);
     return (
       <Host
@@ -231,6 +237,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
         }}
         onIonBackdropTap={this.onBackdropTap}
         onIonPickerWillDismiss={this.dispatchCancelHandler}
+        {...htmlAttributes as any}
       >
         <ion-backdrop
           visible={this.showBackdrop}
