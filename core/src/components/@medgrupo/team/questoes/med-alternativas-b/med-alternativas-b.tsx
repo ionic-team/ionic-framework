@@ -1,15 +1,15 @@
 import { Component, Host, h, Prop, Event, EventEmitter, State, Element, Listen, Watch } from '@stencil/core';
 import { Color } from '../../../../../interface';
 import { generateMedColor } from '../../../../../utils/med-theme';
-import { Coordenada, distanciaEuclidiana, getPositionFromEvent } from '../../../../../utils/medgrupo';
-import { MedAlternativaInterface, MedAlternativasInterface } from '../med-alternativas/med-alternativas-interface';
+import { MedAlternativasBase } from '../med-alternativas/med-alternativas-base';
+import { MedAlternativaInterface, MedAlternativasInternoInterface } from '../med-alternativas/med-alternativas-interface';
 
 @Component({
   tag: 'med-alternativas-b',
   styleUrl: 'med-alternativas-b.scss',
   shadow: true,
 })
-export class MedAlternativasB implements MedAlternativasInterface {
+export class MedAlternativasB implements MedAlternativasInternoInterface {
   @Element() hostElement!: HTMLElement;
 
   /**
@@ -94,108 +94,19 @@ export class MedAlternativasB implements MedAlternativasInterface {
 
   @State() permiteAlterar = true;
   @State() riscarAtivoIndice = -1;
-
-  dataStart!: Date;
-  dataEnd!: Date;
-  positionStart: Coordenada | undefined;
-  distanciaMinimaClick = 50;
-  tempoLongPress = 1000;
-  timer!: any;
+  baseClass = new MedAlternativasBase(this);
 
   @Listen('click', { target: 'window' })
   handleClick(event: any) {
-    if(!event.target.classList.contains('med-alternativas')) {
-      this.resetState();
-    }
+    this.baseClass.handleClick(event);
   }
 
   @Watch('alternativas')
   onAlternativasChanged(newValue: MedAlternativaInterface | any, oldValue: MedAlternativaInterface | any) {
-    if(newValue != oldValue){
-      this.resetState();
-    }
-  }
-
-  private resetState(){
-    this.riscarAtivoIndice = -1;
-    this.permiteAlterar = true;
-  }
-
-  protected onTouchStart(event: any, indice: number) {
-    if(event.target.closest('.med-alternativas__riscar')?.classList.contains('med-alternativas__riscar')) {
-      return;
-    }
-
-    this.dataStart = new Date();
-    this.positionStart = getPositionFromEvent(event);
-
-    this.timer = setTimeout(() => {
-      this.dataEnd = new Date();
-
-      const tempoTotal = this.dataEnd.getTime() - this.dataStart.getTime();
-
-      if (tempoTotal >= this.tempoLongPress) {
-        this.riscarAtivoIndice = indice;
-        this.permiteAlterar = false;
-      }
-
-    }, this.tempoLongPress);
-  }
-
-  protected onTouchEnd(event: any, alternativa: MedAlternativaInterface) {
-    if(event.target.closest('.med-alternativas__riscar')?.classList.contains('med-alternativas__riscar')) {
-      return;
-    }
-
-    const positionEnd = getPositionFromEvent(event);
-
-    clearTimeout(this.timer);
-
-    if(this.permiteAlterar &&
-      distanciaEuclidiana(this.positionStart, positionEnd) <
-        this.distanciaMinimaClick) {
-      this.riscarAtivoIndice = -1;
-      this.alterarAlternativa(alternativa);
-    }
-
-    this.permiteAlterar = true;
-  }
-
-  protected alterarAlternativa(item: any) {
-    const alternativa: MedAlternativaInterface = item;
-
-    if(alternativa.Riscada && this.permiteRiscar) {
-      return;
-    }
-
-    this.alternativaSelecionada = alternativa.Alternativa;
-
-    this.medChange.emit(alternativa);
-  }
-
-  protected riscar(event: any, alternativa: any) {
-    event.stopPropagation();
-
-    alternativa[this.keyRiscada] = !alternativa[this.keyRiscada];
-
-    this.riscarAtivoIndice = -1;
-
-    this.medRiscada.emit(alternativa);
-
-    this.permiteAlterar = true;
-
-    this.alternativas = [...this.alternativas];
-  }
-
-  protected imageRequest(event: any, alternativa: any) {
-    event.stopPropagation();
-
-    this.medGalleryRequest.emit(alternativa);
+    this.baseClass.onAlternativasChanged(newValue, oldValue)
   }
 
   render() {
-    console.log('eeeeeeeeeeeeeeeeeeeeeeeeee');
-
     const {dsColor, permiteRiscar, mostraResposta, alternativaSelecionada} = this;
     const exibeAcerto = this.alternativaSelecionada && mostraResposta;
 
@@ -209,10 +120,10 @@ export class MedAlternativasB implements MedAlternativasInterface {
 
           {this.alternativas.map((alternativa: any, indice: number) => (
             <div role="listitem"
-              onTouchStart={(event) => this.onTouchStart(event, indice)}
-              onTouchEnd={(event) => this.onTouchEnd(event, alternativa)}
-              onMouseDown={(event) => this.onTouchStart(event, indice)}
-              onMouseUp={(event) => this.onTouchEnd(event, alternativa)}
+              onTouchStart={(event) => this.baseClass.onTouchStart(event, indice)}
+              onTouchEnd={(event) => this.baseClass.onTouchEnd(event, alternativa)}
+              onMouseDown={(event) => this.baseClass.onTouchStart(event, indice)}
+              onMouseUp={(event) => this.baseClass.onTouchEnd(event, alternativa)}
               class={`
                 med-alternativas__item med-alternativas__item--${alternativa[this.keyAlternativa]}
                 ${permiteRiscar ? 'med-alternativas__item--permite-riscar' : ''}
@@ -229,7 +140,7 @@ export class MedAlternativasB implements MedAlternativasInterface {
                   <div class="med-alternativas__right" innerHTML={alternativa[this.keyEnunciado]}>
 
                     {alternativa[this.keyImagem] &&
-                      <div class={`image-container ${alternativa[this.keyEnunciado] ? 'image-container--margin' : ''}`} onClick={(event) => this.imageRequest(event, alternativa)}>
+                      <div class={`image-container ${alternativa[this.keyEnunciado] ? 'image-container--margin' : ''}`} onClick={(event) => this.baseClass.imageRequest(event, alternativa)}>
                         <div class='image-container__wrapper'>
                           <img class='image-container__image' src={alternativa[this.keyImagem]} />
 
@@ -241,7 +152,7 @@ export class MedAlternativasB implements MedAlternativasInterface {
                     }
                   </div>
                   <div class={`med-alternativas__riscar ${indice === this.riscarAtivoIndice && permiteRiscar ? 'med-alternativas__riscar--show' : ''}`}
-                    onClick={(event) => this.riscar(event, alternativa)}>{(alternativa[this.keyRiscada] ? 'Retomar' : 'Riscar') + ' alternativa'}</div>
+                    onClick={(event) => this.baseClass.riscar(event, alternativa)}>{(alternativa[this.keyRiscada] ? 'Retomar' : 'Riscar') + ' alternativa'}</div>
                 </div>
               </div>
 
