@@ -169,6 +169,7 @@ export class NavController {
    * @internal
    */
   consumeTransition() {
+    let isDirectionDefined = this.direction === 'forward' || this.direction === 'back';
     let direction: RouterDirection = 'root';
     let animation: NavDirection | undefined;
     const animationBuilder = this.animationBuilder;
@@ -187,7 +188,8 @@ export class NavController {
     return {
       direction,
       animation,
-      animationBuilder
+      animationBuilder,
+      isDirectionDefined
     };
   }
 

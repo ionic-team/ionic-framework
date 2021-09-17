@@ -53,10 +53,12 @@ export class StackController {
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
     const consumeResult = this.navCtrl.consumeTransition();
-    let { direction, animation, animationBuilder } = consumeResult;
+    let { direction, animation, animationBuilder, isDirectionDefined } = consumeResult;
     const leavingView = this.activeView;
     const tabSwitch = isTabSwitch(enteringView, leavingView);
-    if (tabSwitch) {
+
+    // if direction was defined explicitly, then ignore tab switch and play transition animation
+    if (!isDirectionDefined && tabSwitch) {
       direction = 'back';
       animation = undefined;
     }
