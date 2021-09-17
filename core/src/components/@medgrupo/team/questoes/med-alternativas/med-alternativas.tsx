@@ -117,7 +117,7 @@ export class MedAlternativas implements MedAlternativasInterface {
           alternativaSelecionada={alternativaSelecionada}
           permiteRiscar={permiteRiscar}
           onMedChange={ev => this.medChange.emit(ev.detail)}
-          onMedRiscada={ev => this.medRiscada.emit(ev.detail)}
+          onMedRiscada={(ev) => {this.medRiscada.emit(ev.detail),console.log('para ricar')}}
           onMedGalleryRequest={ev => this.medGalleryRequest.emit(ev.detail)}
         ></med-alternativas-a>}
 

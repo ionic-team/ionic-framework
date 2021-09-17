@@ -50,7 +50,7 @@ export const Tertiary = Template.bind({});
 Tertiary.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=729%3A189',
+    url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=6232%3A46685',
   },
 }
 Tertiary.argTypes = {
@@ -73,11 +73,11 @@ Tertiary.argTypes = {
     },
   },
   dsSize: {
-    options: [undefined, 'xxxs', 'xxs', 'xs', 'sm', 'md', 'lg'],
+    options: [undefined, 'lg', 'md', 'sm', 'xs', 'xxs', 'xxxs'],
     control: { type: 'radio'},
     description: "Define a variação de tamanho componente.",
     table: {
-      type:  { summary: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' },
+      type:  { summary: 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs' },
       defaultValue: { summary: 'undefined' },
     },
   },

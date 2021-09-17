@@ -9,6 +9,7 @@ export default {
 
 const TemplateDefault = ({ alternativas, dsColor}) => {
   const id = Math.random().toString(36).substr(2, 9);
+  const dsSkinConfig = alternativas.dsSkinConfig
   setTimeout(() => {
 
     const alternativasEl = document.getElementById(id);
@@ -25,7 +26,7 @@ const TemplateDefault = ({ alternativas, dsColor}) => {
         <div class="flex-center">
 
           <!-- component -->
-          <med-alternativas id=${id} .dsColor=${dsColor}></med-alternativas>
+          <med-alternativas id=${id} .dsColor=${dsColor} .dsSkinConfig=${dsSkinConfig}></med-alternativas>
           <!-- component -->
 
         <div>
