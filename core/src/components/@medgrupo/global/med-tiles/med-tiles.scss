@@ -7,7 +7,7 @@
   --border-background: #{color('neutral', '5')};
   --border-background-selected: #{color('brand', '3')};
   --font-size-title: var(--med-font-size-sm);
-  --color-title: var(--med-color-neutral-10);
+  --color-title: #{color('neutral', '10')};
   --font-size-label: var(--med-font-size-xxxs);
   --color-label: #{color('brand', '3')};
 }
