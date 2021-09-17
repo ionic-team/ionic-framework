@@ -635,22 +635,22 @@
 :host(.med-button--tertiary) {
   --background: transparent;
   --border-color: transparent;
-  --color: #{color('brand', '3', 'contrast')};
+  --color: #{color('neutral', '10')};
 
   --bg-hover: #{color('brand', '3')};
   --bg-hover-opacity: var(--med-opacity-level-light);
   --border-color-hover: transparent;
-  --color-hover: #{color('brand', '3', 'contrast')};
+  --color-hover: #{color('neutral', '10')};
 
   --bg-focused: #{color('brand', '3')};
   --bg-focused-opacity: var(--med-opacity-level-light);
   --border-color-focused: transparent;
-  --color-focused: #{color('brand', '3', 'contrast')};
+  --color-focused: #{color('neutral', '10')};
 
   --bg-activated: #{color('brand', '3')};
   --bg-activated-opacity: var(--med-opacity-level-light);
   --border-color-activated: transparent;
-  --color-activated: #{color('brand', '3', 'contrast')};
+  --color-activated: #{color('neutral', '10')};
 
   --line-height: #{line-height($med-font-size-xxs)};
   --padding: 0;
