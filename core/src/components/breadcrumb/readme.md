@@ -15,7 +15,6 @@ interface BreadcrumbCollapsedClickEventDetail {
 ### BreadcrumbCustomEvent
 
 While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing .
-While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing .
 
 ```typescript
 interface BreadcrumbCustomEvent extends CustomEvent {

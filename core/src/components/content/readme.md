@@ -41,12 +41,12 @@ interface ScrollBaseCustomEvent extends CustomEvent {
 }
 ```
 
-### ScrollEvent 
+### ScrollCustomEvent 
 
 While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing on the `ionScroll` event.
 
 ```typescript
-interface ScrollEvent extends ScrollBaseCustomEvent {
+interface ScrollCustomEvent extends ScrollBaseCustomEvent {
   detail: ScrollDetail;
 }
 ```
