@@ -9,6 +9,7 @@ export * from './components/breadcrumb/breadcrumb-interface';
 export * from './components/content/content-interface';
 export * from './components/checkbox/checkbox-interface';
 export * from './components/datetime/datetime-interface';
+export * from './components/infinite-scroll/infinite-scroll-interface';
 export * from './components/input/input-interface';
 export * from './components/loading/loading-interface';
 export * from './components/menu/menu-interface';
