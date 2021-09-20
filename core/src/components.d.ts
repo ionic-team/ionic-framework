@@ -175,6 +175,18 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Define a cor do componente.
+         */
+        "dsColor"?: MedColor;
+        /**
+          * Define a variação solida de background do componente.
+         */
+        "dsName"?: 'secondary' | 'tertiary';
+        /**
+          * Define a variação de tamanho componente.
+         */
+        "dsSize"?: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
+        /**
           * The icon name to use for the back button.
          */
         "icon"?: string | null;
@@ -186,6 +198,10 @@ export namespace Components {
           * When using a router, it specifies the transition animation when navigating to another page.
          */
         "routerAnimation": AnimationBuilder | undefined;
+        /**
+          * Define a cor do componente.
+         */
+        "solid": boolean;
         /**
           * The text to display in the back button.
          */
@@ -259,7 +275,7 @@ export namespace Components {
         /**
           * Define a variação de tamanho componente.
          */
-        "dsSize"?: 'xs' | 'sm' | 'md' | 'lg';
+        "dsSize"?: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -4718,6 +4734,18 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Define a cor do componente.
+         */
+        "dsColor"?: MedColor;
+        /**
+          * Define a variação solida de background do componente.
+         */
+        "dsName"?: 'secondary' | 'tertiary';
+        /**
+          * Define a variação de tamanho componente.
+         */
+        "dsSize"?: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
+        /**
           * The icon name to use for the back button.
          */
         "icon"?: string | null;
@@ -4729,6 +4757,10 @@ declare namespace LocalJSX {
           * When using a router, it specifies the transition animation when navigating to another page.
          */
         "routerAnimation"?: AnimationBuilder | undefined;
+        /**
+          * Define a cor do componente.
+         */
+        "solid"?: boolean;
         /**
           * The text to display in the back button.
          */
@@ -4806,7 +4838,7 @@ declare namespace LocalJSX {
         /**
           * Define a variação de tamanho componente.
          */
-        "dsSize"?: 'xs' | 'sm' | 'md' | 'lg';
+        "dsSize"?: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */

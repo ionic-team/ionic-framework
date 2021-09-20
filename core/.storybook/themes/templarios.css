@@ -149,7 +149,28 @@ html {
   background-color: var(--storybook-color-code) !important;
 }
 
-/* nopreview*/
+/* nopreview */
 .sb-nopreview_main {
   color: #fff !important;
+}
+
+/* stories */
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.flex-center-vertical {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.flex-center-horizontal {
+  display: flex;
+  justify-content: center;
+  height: 100%;
 }

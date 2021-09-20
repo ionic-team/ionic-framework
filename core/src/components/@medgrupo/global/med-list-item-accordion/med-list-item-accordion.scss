@@ -9,6 +9,7 @@
   --font-size-label: var(--med-font-size-xxxs);
   --color-label: #{color('brand', '4')};
   --margin: 0;
+  --button-margin: auto;
 }
 
 :host(.med-list-item-accordion) {
@@ -23,6 +24,10 @@
   padding: var(--padding);
   align-items: center;
   flex-direction: column;
+
+  .med-list-item-accordion__button {
+    margin-left: var(--button-margin);
+  }
 
   .med-list-item-accordion__item {
     display: flex;
@@ -43,7 +48,7 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    width: 100%;
+    //width: 100%;
   }
 
   .med-list-item-accordion__title {

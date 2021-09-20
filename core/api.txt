@@ -83,36 +83,31 @@ ion-back-button,shadow
 ion-back-button,prop,color,string | undefined,undefined,false,false
 ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
+ion-back-button,prop,dsColor,string | undefined,undefined,false,true
+ion-back-button,prop,dsName,"secondary" | "tertiary" | undefined,undefined,false,false
+ion-back-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | "xxs" | "xxxs" | undefined,undefined,false,false
 ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
 ion-back-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-back-button,prop,solid,boolean,false,false,true
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
+ion-back-button,css-prop,--background-activated
+ion-back-button,css-prop,--background-activated-opacity
 ion-back-button,css-prop,--background-focused
 ion-back-button,css-prop,--background-focused-opacity
 ion-back-button,css-prop,--background-hover
 ion-back-button,css-prop,--background-hover-opacity
+ion-back-button,css-prop,--border-color
 ion-back-button,css-prop,--border-radius
+ion-back-button,css-prop,--border-style
+ion-back-button,css-prop,--border-width
+ion-back-button,css-prop,--box-shadow
 ion-back-button,css-prop,--color
+ion-back-button,css-prop,--color-activated
 ion-back-button,css-prop,--color-focused
 ion-back-button,css-prop,--color-hover
-ion-back-button,css-prop,--icon-font-size
-ion-back-button,css-prop,--icon-font-weight
-ion-back-button,css-prop,--icon-margin-bottom
-ion-back-button,css-prop,--icon-margin-end
-ion-back-button,css-prop,--icon-margin-start
-ion-back-button,css-prop,--icon-margin-top
-ion-back-button,css-prop,--icon-padding-bottom
-ion-back-button,css-prop,--icon-padding-end
-ion-back-button,css-prop,--icon-padding-start
-ion-back-button,css-prop,--icon-padding-top
-ion-back-button,css-prop,--margin-bottom
-ion-back-button,css-prop,--margin-end
-ion-back-button,css-prop,--margin-start
-ion-back-button,css-prop,--margin-top
-ion-back-button,css-prop,--min-height
-ion-back-button,css-prop,--min-width
 ion-back-button,css-prop,--opacity
 ion-back-button,css-prop,--padding-bottom
 ion-back-button,css-prop,--padding-end
@@ -151,7 +146,7 @@ ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,dsColor,string | undefined,undefined,false,true
 ion-button,prop,dsName,"secondary" | "tertiary" | undefined,undefined,false,false
-ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
+ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | "xxs" | "xxxs" | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false

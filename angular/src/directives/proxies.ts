@@ -26,8 +26,8 @@ export class IonAvatar {
 }
 export declare interface IonBackButton extends Components.IonBackButton {
 }
-@ProxyCmp({ inputs: ["color", "defaultHref", "disabled", "icon", "mode", "routerAnimation", "text", "type"] })
-@Component({ selector: "ion-back-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "defaultHref", "disabled", "icon", "mode", "routerAnimation", "text", "type"] })
+@ProxyCmp({ inputs: ["color", "defaultHref", "disabled", "dsColor", "dsName", "dsSize", "icon", "mode", "routerAnimation", "solid", "text", "type"] })
+@Component({ selector: "ion-back-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "defaultHref", "disabled", "dsColor", "dsName", "dsSize", "icon", "mode", "routerAnimation", "solid", "text", "type"] })
 export class IonBackButton {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

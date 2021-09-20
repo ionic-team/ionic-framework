@@ -1,66 +1,1149 @@
-@import "./back-button";
-@import "./back-button.md.vars";
+ @import "../button/button.vars";
+ @import "../button/button.md.vars";
 
-// MD Back Button
+ // Button
+ // --------------------------------------------------
+
+ :host {
+   /**
+    * @prop --background: Background of the button
+    * @prop --background-activated: Background of the button when pressed. Note: setting this will interfere with the Material Design ripple.
+    * @prop --background-activated-opacity: Opacity of the button when pressed
+    * @prop --background-focused: Background of the button when focused with the tab key
+    * @prop --background-focused-opacity: Opacity of the button when focused with the tab key
+    * @prop --background-hover: Background of the button on hover
+    * @prop --background-hover-opacity: Opacity of the background on hover
+    *
+    * @prop --color: Text color of the button
+    * @prop --color-activated: Text color of the button when pressed
+    * @prop --color-focused: Text color of the button when focused with the tab key
+    * @prop --color-hover: Text color of the button when hover
+    *
+    * @prop --transition: Transition of the button
+    *
+    * @prop --border-radius: Border radius of the button
+    * @prop --border-width: Border width of the button
+    * @prop --border-style: Border style of the button
+    * @prop --border-color: Border color of the button
+    *
+    * @prop --ripple-color: Color of the button ripple effect
+    *
+    * @prop --box-shadow: Box shadow of the button
+    * @prop --opacity: Opacity of the button
+    *
+    * @prop --padding-top: Top padding of the button
+    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+    * @prop --padding-bottom: Bottom padding of the button
+    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
+    */
+   --overflow: hidden;
+   --ripple-color: currentColor;
+   --border-width: initial;
+   --border-color: initial;
+   --border-style: initial;
+   --color-activated: var(--color);
+   --color-focused: var(--color);
+   --color-hover: var(--color);
+   --box-shadow: none;
+
+   display: inline-block;
+
+   width: auto;
+
+   color: var(--color);
+
+   font-family: $font-family-base;
+
+   text-align: center;
+   text-decoration: none;
+   text-overflow: ellipsis;
+
+   white-space: nowrap;
+
+   user-select: none;
+   vertical-align: top; // the better option for most scenarios
+   vertical-align: -webkit-baseline-middle; // the best for those that support it
+   pointer-events: auto;
+
+   font-kerning: none;
+ }
+
+ :host(.med-button-disabled) {
+   cursor: default;
+   opacity: .5;
+   pointer-events: none;
+ }
+
+ // Solid Button
+ // --------------------------------------------------
+
+ // Default Solid Color
+ :host(.med-button-solid) {
+   --background: #{ion-color(primary, base)};
+   --color: #{ion-color(primary, contrast)};
+ }
+
+
+ // Outline Button
+ // --------------------------------------------------
+
+ // Default Outline Color
+ :host(.med-button-outline) {
+   --border-color: #{ion-color(primary, base)};
+   --background: transparent;
+   --color: #{ion-color(primary, base)};
+ }
+
+
+ // Clear Button
+ // --------------------------------------------------
+
+ // Default Clear Color
+ :host(.med-button-clear) {
+   --border-width: 0;
+   --background: transparent;
+   --color: #{ion-color(primary, base)};
+ }
+
+
+ // Block Button
+ // --------------------------------------------------
+
+ :host(.button-block) {
+   display: block;
+ }
+
+ :host(.button-block) .button-native {
+   @include margin-horizontal(0);
+
+   display: block;
+
+   width: 100%;
+
+   clear: both;
+
+   contain: content;
+ }
+
+ :host(.button-block) .button-native::after {
+   clear: both;
+ }
+
+
+ // Full Button
+ // --------------------------------------------------
+
+ :host(.button-full) {
+   display: block;
+ }
+
+ :host(.button-full) .button-native {
+   @include margin-horizontal(0);
+
+   display: block;
+
+   width: 100%;
+
+   contain: content;
+ }
+
+ :host(.button-full:not(.button-round)) .button-native {
+   @include border-radius(0);
+
+   border-right-width: 0;
+   border-left-width: 0;
+ }
+
+ .button-native {
+   @include border-radius(var(--border-radius));
+   @include font-smoothing();
+   @include margin(0);
+   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+   @include text-inherit();
+
+   display: block;
+   position: relative;
+
+   width: 100%;
+   height: 100%;
+
+   transition: var(--transition);
+
+   border-width: var(--border-width);
+   border-style: var(--border-style);
+   border-color: var(--border-color);
+
+   outline: none;
+
+   background: var(--background);
+
+   line-height: 1;
+
+   box-shadow: var(--box-shadow);
+
+   contain: layout style;
+   cursor: pointer;
+
+   opacity: var(--opacity);
+   overflow: var(--overflow);
+
+   z-index: 0;
+   box-sizing: border-box;
+   appearance: none;
+ }
+
+ .button-native::-moz-focus-inner {
+   border: 0;
+ }
+
+ .button-inner {
+   display: flex;
+   position: relative;
+
+   flex-flow: row nowrap;
+   flex-shrink: 0;
+   align-items: center;
+   justify-content: center;
+
+   width: 100%;
+   height: 100%;
+
+   z-index: 1;
+ }
+
+
+ // Button Icons
+ // --------------------------------------------------
+
+ ::slotted(ion-icon) {
+   font-size: 1.4em;
+   pointer-events: none;
+ }
+
+ ::slotted(ion-icon[slot="start"]) {
+   @include margin(0, .3em, 0, -.3em);
+ }
+
+ ::slotted(ion-icon[slot="end"]) {
+   @include margin(0, -.2em, 0, .3em);
+ }
+
+ ::slotted(ion-icon[slot="icon-only"]) {
+   font-size: 1.8em;
+ }
+
+
+ // Button Ripple effect
+ // --------------------------------------------------
+
+ ion-ripple-effect {
+   color: var(--ripple-color);
+ }
+
+
+ // Button: States
+ // --------------------------------------------------
+
+ .button-native::after {
+   @include button-state();
+ }
+
+ // Button Activated
+ :host(.ion-activated) {
+   color: var(--color-activated);
+ }
+
+ :host(.ion-activated) .button-native::after {
+   background: var(--background-activated);
+
+   opacity: var(--background-activated-opacity);
+ }
+
+ // Button Focused
+ :host(.ion-focused) {
+   color: var(--color-focused);
+ }
+
+ :host(.ion-focused) .button-native::after {
+   background: var(--background-focused);
+
+   opacity: var(--background-focused-opacity);
+ }
+
+ // Button Hover
+ @media (any-hover: hover) {
+   :host(:hover) {
+     color: var(--color-hover);
+   }
+
+   :host(:hover) .button-native::after {
+     background: var(--background-hover);
+
+     opacity: var(--background-hover-opacity);
+   }
+ }
+
+ // Button Colors
+ // --------------------------------------------------
+
+ // Solid Button with Color
+ :host(.med-button-solid.ion-color) .button-native {
+   background: current-color(base);
+   color: current-color(contrast);
+ }
+
+ // Outline Button with Color
+ :host(.med-button-outline.ion-color) .button-native {
+   border-color: current-color(base);
+
+   background: transparent;
+   color: current-color(base);
+ }
+
+ // Clear Button with Color
+ :host(.med-button-clear.ion-color) .button-native {
+   background: transparent;
+   color: current-color(base);
+ }
+
+ // Button in Toolbar
+ // --------------------------------------------------
+
+ :host(.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+   color: #{var(--ion-toolbar-color, var(--color))};
+ }
+
+ :host(.med-button-outline.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+   border-color: #{var(--ion-toolbar-color, var(--color, var(--border-color)))};
+ }
+
+ :host(.med-button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+   background: #{var(--ion-toolbar-color, var(--background))};
+   color: #{var(--ion-toolbar-background, var(--color))};
+ }
+
+
+// Material Design Button
 // --------------------------------------------------
 
 :host {
-  --border-radius: 4px;
-  --background-focused: currentColor;
-  --background-focused-opacity: .12;
-  --background-hover: currentColor;
-  --background-hover-opacity: 0.04;
-  --color: #{$back-button-md-color};
-  --icon-margin-end: 0;
-  --icon-margin-start: 0;
+    --border-radius: #{$button-md-border-radius};
+    --padding-top: #{$button-md-padding-top};
+    --padding-bottom: #{$button-md-padding-bottom};
+    --padding-start: #{$button-md-padding-start};
+    --padding-end: #{$button-md-padding-end};
+    --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                    background-color 15ms linear,
+                    color 15ms linear;
+
+    @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+
+    height: #{$button-md-height};
+
+    font-size: #{$button-md-font-size};
+    font-weight: #{$button-md-font-weight};
+
+    letter-spacing: #{$button-md-letter-spacing};
+
+    text-transform: #{$button-md-text-transform};
+    }
+
+    // Material Design Solid Button
+    // --------------------------------------------------
+
+    :host(.med-button-solid) {
+    --background-activated: transparent;
+    --background-hover: #{ion-color(primary, contrast)};
+    --background-focused: #{ion-color(primary, contrast)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .24;
+    --background-hover-opacity: .08;
+    --box-shadow: #{$button-md-box-shadow};
+    }
+
+    :host(.med-button-solid.ion-activated) {
+    --box-shadow: #{$button-md-box-shadow-activated};
+    }
+
+    // Material Design Outline Button
+    // --------------------------------------------------
+
+    :host(.med-button-outline) {
+    --border-width: 2px;
+    --border-style: solid;
+    --box-shadow: none;
+    --background-activated: transparent;
+    --background-focused: #{ion-color(primary, base)};
+    --background-hover: #{ion-color(primary, base)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .12;
+    --background-hover-opacity: .04;
+    }
+
+    :host(.med-button-outline.ion-activated.ion-color) .button-native {
+    background: transparent;
+    }
+
+
+    // Material Design Clear Button
+    // --------------------------------------------------
+
+    :host(.med-button-clear) {
+    --background-activated: transparent;
+    --background-focused: #{ion-color(primary, base)};
+    --background-hover: #{ion-color(primary, base)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .12;
+    --background-hover-opacity: .04;
+    }
+
+
+    // Material Design Round Button
+    // --------------------------------------------------
+
+    :host(.button-round) {
+    --border-radius: #{$button-md-round-border-radius};
+    --padding-top: #{$button-md-round-padding-top};
+    --padding-start: #{$button-md-round-padding-start};
+    --padding-end: #{$button-md-round-padding-end};
+    --padding-bottom: #{$button-md-round-padding-bottom};
+    }
+
+
+    // Material Design Button Sizes
+    // --------------------------------------------------
+
+    :host(.button-large) {
+    --padding-top: #{$button-md-large-padding-top};
+    --padding-start: #{$button-md-large-padding-start};
+    --padding-end: #{$button-md-large-padding-end};
+    --padding-bottom: #{$button-md-large-padding-bottom};
+
+    height: #{$button-md-large-height};
+
+    font-size: #{$button-md-large-font-size};
+    }
+
+    :host(.button-small) {
+    --padding-top: #{$button-md-small-padding-top};
+    --padding-start: #{$button-md-small-padding-start};
+    --padding-end: #{$button-md-small-padding-end};
+    --padding-bottom: #{$button-md-small-padding-bottom};
+
+    height: #{$button-md-small-height};
+
+    font-size: #{$button-md-small-font-size};
+    }
+
+
+    // MD strong Button
+    // --------------------------------------------------
+
+    :host(.button-strong) {
+    font-weight: #{$button-md-strong-font-weight};
+    }
+
+    ::slotted(ion-icon[slot="icon-only"]) {
+    @include padding(0);
+    }
+
+
+    // Material Design Button: Hover
+    // --------------------------------------------------
+
+    :host(.med-button-solid.ion-color.ion-focused) .button-native::after {
+    background: #{current-color(contrast)};
+
+    opacity: .24;
+    }
+
+    :host(.med-button-clear.ion-color.ion-focused) .button-native::after,
+    :host(.med-button-outline.ion-color.ion-focused) .button-native::after {
+    background: #{current-color(base)};
+
+    opacity: .12;
+    }
+
+    @media (any-hover: hover) {
+    :host(.med-button-solid.ion-color:hover) .button-native::after {
+        background: #{current-color(contrast)};
+
+        opacity: .08;
+    }
+
+    :host(.med-button-clear.ion-color:hover) .button-native::after,
+    :host(.med-button-outline.ion-color:hover) .button-native::after {
+        background: #{current-color(base)};
+
+        opacity: .04;
+    }
+}
+
+
+@import "../../../templarios/abstracts";
+
+:host {
+  --background: #{color('brand', 'gradient')};
+  --border-color: #{color('brand', '3')};
+  --color: #{color('brand', 'gradient', 'contrast')};
+
+  --bg-hover: #{color('brand', '3')};
+  --bg-hover-opacity: 1;
+  --border-color-hover: transparent;
+  --color-hover: #{color('brand', 'gradient', 'contrast')};
+
+  --bg-focused: #{color('brand', '3')};
+  --bg-focused-opacity: 1;
+  --border-color-focused: transparent;
+  --color-focused: #{color('brand', 'gradient', 'contrast')};
+
+  --bg-activated: transparent;
+  --bg-activated-opacity: 0;
+  --border-color-activated: transparent;
+  --color-activated: #{color('brand', 'gradient', 'contrast')};
+
+  --font-size: var(--med-font-size-xxs);
+  --font-weight: var(--med-font-weight-semibold);
+  --line-height: var(--med-line-height-compressed);
+  --padding: 0 var(--med-spacing-inline-xxs);
+  --padding-text: 0 var(--med-spacing-inline-xxxs);
+  --border-radius: var(--med-border-radius-pill);
+  --min-height: 48px;
+  --min-width: 48px;
+  --transition: background 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out, opacity 300ms ease-out;
+
   --icon-font-size: 24px;
-  --icon-font-weight: normal;
-  --min-height: 32px;
-  --min-width: 44px;
-  --padding-start: 12px;
-  --padding-end: 12px;
+}
 
-  font-size: 14px;
-  font-weight: 500;
-
+:host {
+  min-height: var(--min-height);
+  min-width: var(--min-width);
+  height: auto;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
   text-transform: uppercase;
+  margin: 0;
 }
 
-:host(.back-button-has-icon-only) {
-  --border-radius: 50%;
-
-  min-width: 48px;
-  height: 48px;
-}
-
-.button-native {
+:host .button-native {
+  padding: var(--padding);
+  min-height: var(--min-height);
+  line-height: var(--line-height);
   box-shadow: none;
 }
 
-.button-text {
-  @include padding(0, 4px);
+:host .button-inner__text {
+  padding: var(--padding-text);
+  display: flex;
+  align-items: center;
 }
+
+:host .button-native::after {
+  display: none;
+}
+
+:host .button-native::before {
+  @include button-state();
+  transition: var(--transition);
+}
+
+// ////////////////////
+// ion-ripple-effect
+// ////////////////////
+
+:host ion-ripple-effect {
+  --ripple-color: #{color('brand', '2')};
+  --ripple-opacity: 1;
+}
+
+// ////////////////////
+// ion-icon
+// ////////////////////
 
 ion-icon {
-  line-height: .67;
+  font-size: var(--icon-font-size);
+  stroke: var(--color);
+  transition: stroke 300ms ease-out;
+}
 
-  text-align: start;
+// ////////////////////
+// icon-only
+// ////////////////////
+
+:host(.back-button-has-icon-only) {
+  --padding: 0;
+  --padding-text: 0;
+  --border-radius: var(--med-border-radius-pill);
+  --min-height: 48px;
+  --min-width: 48px;
+  --icon-font-size: 32px;
+}
+
+// //////////////////////////////
+// sizes
+// //////////////////////////////
+
+:host(.med-button--md) {
+  --min-height: 48px;
+  --min-height: 48px;
+  --icon-font-size: 24px;
+}
+
+:host(.med-button--md.back-button-has-icon-only) {
+  --min-height: 48px;
+  --min-width: 48px;
+  --icon-font-size: 32px;
 }
 
 
-// Back Button Color: Hover
-// --------------------------------------------------
+
+
+
+:host(.med-button--sm) {
+  --min-height: 40px;
+  --min-height: 40px;
+  --icon-font-size: 24px;
+}
+
+:host(.med-button--sm.back-button-has-icon-only) {
+  --min-height: 40px;
+  --min-width: 40px;
+  --icon-font-size: 24px;
+}
+
+
+
+
+
+:host(.med-button--xs) {
+  --min-height: 32px;
+  --min-width: 32px;
+  --padding: 0 var(--med-spacing-inline-base);
+  --font-size: var(--med-font-size-xxxs);
+  --icon-font-size: 16px;
+}
+
+:host(.med-button--xs.back-button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  --icon-font-size: 24px;
+}
+
+
+
+
+:host(.med-button--xxs) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --padding: 0 var(--med-spacing-inline-xxxs);
+  --font-size: var(--med-font-size-nano);
+  --icon-font-size: 16px;
+}
+
+:host(.med-button--xxs.back-button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --icon-font-size: 16px;
+}
+
+
+
+
+
+:host(.med-button--xxxs) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --padding: 0;
+  --font-size: var(--med-font-size-nano);
+  --icon-font-size: 8px;
+}
+
+:host(.med-button--xxxs.back-button-has-icon-only) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --icon-font-size: 8px;
+}
+
+// //////////////////////////////
+// states
+// //////////////////////////////
+
+// ////////////////////
+// hover
+// ////////////////////
 
 @media (any-hover: hover) {
-  :host(.ion-color:hover) .button-native::after {
-    background: #{current-color(base)};
+  :host(.med-button:hover) {
+    color: var(--color-hover);
+  }
+
+  :host(.med-button:hover) .button-native {
+    border-color: var(--border-color-hover);
+  }
+
+  :host(.med-button:hover) .button-native::before {
+    background: var(--bg-hover);
+    opacity: var(--bg-hover-opacity);
+  }
+
+  :host(.med-button:hover) ion-icon {
+    stroke: var(--color-hover);
   }
 }
 
+// ////////////////////
+// focus
+// ////////////////////
 
-// Back Button Color: Focused
-// --------------------------------------------------
+:host(.ion-focused) {
+  color: var(--color-focused);
+}
 
-:host(.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(base)};
+:host(.ion-focused) .button-native {
+  border-color: var(--border-color-focused);
+}
+
+:host(.ion-focused) .button-native::before {
+  background: var(--bg-focused);
+  opacity: var(--bg-focused-opacity);
+  border-color: var(--border-color-focused);
+}
+
+:host(.ion-focused) ion-icon {
+  stroke: var(--color-focused);
+}
+
+// ////////////////////
+// activated
+// ////////////////////
+
+:host(.ion-activated) {
+  color: var(--color-activated);
+}
+
+:host(.ion-activated) .button-native {
+  border-color: var(--border-color-activated);
+}
+
+:host(.ion-activated) .button-native::before {
+  background: var(--bg-activated);
+  opacity: var(--bg-activated-opacity);
+}
+
+:host(.ion-activated) ion-icon {
+  stroke: var(--color-activated);
+}
+
+// ////////////////////
+// disabled
+// ////////////////////
+
+:host(.button-disabled) {
+  cursor: initial;
+  pointer-events: none;
+  opacity: var(--med-opacity-level-half);
+}
+
+// //////////////////////////////
+// color
+// //////////////////////////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', 'gradient')};
+  --border-color: #{curr-color('color', '3')};
+  --color: #{curr-color('color', 'gradient', 'contrast')};
+
+  --bg-hover: #{curr-color('color', '3')};
+  --color-hover: #{curr-color('color', 'gradient', 'contrast')};
+
+  --bg-focused: #{curr-color('color', '3')};
+  --color-focused: #{curr-color('color', 'gradient', 'contrast')};
+  --color-activated: #{curr-color('color', 'gradient', 'contrast')};
+}
+
+:host(.med-color) ion-ripple-effect {
+  --ripple-color: #{curr-color('color', '2')};
+}
+
+// //////////////////////////////
+// neutral
+// //////////////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --border-color: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+
+  --bg-hover: #{curr-color('neutral', null, 'contrast', var(--med-opacity-level-semitransparent))};
+  --color-hover: #{curr-color('neutral', null, 'contrast')};
+
+  --bg-focused: #{curr-color('neutral', null, 'contrast')};
+  --bg-focused-opacity: #{var(--med-opacity-level-semitransparent)};
+  --color-focused: #{curr-color('neutral', null, 'contrast')};
+
+  --color-activated: #{curr-color('neutral', null, 'contrast')};
+}
+
+:host(.med-color-neutral) ion-ripple-effect {
+  --ripple-color: #{curr-color('neutral', null, 'contrast')};
+  --ripple-opacity: #{var(--med-opacity-level-semitransparent)};
+}
+
+// //////////////////////////////
+// feedback
+// //////////////////////////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --border-color: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+
+  --bg-hover: #{curr-color('feedback', null, 'contrast', var(--med-opacity-level-semitransparent))};
+  --color-hover: #{curr-color('feedback', null, 'contrast')};
+
+  --bg-focused: #{curr-color('feedback', null, 'contrast')};
+  --bg-focused-opacity: #{var(--med-opacity-level-semitransparent)};
+  --color-focused: #{curr-color('feedback', null, 'contrast')};
+
+  --color-activated: #{curr-color('feedback', null, 'contrast')};
+}
+
+:host(.med-color-feedback) ion-ripple-effect {
+  --ripple-color: #{curr-color('feedback', null, 'contrast')};
+  --ripple-opacity: #{var(--med-opacity-level-semitransparent)};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:host(.med-button--secondary) {
+  --background: transparent;
+  --border-color: #{color('brand', '3')};
+  --color: #{color('brand', '3')};
+
+  --bg-hover: transparent;
+  --bg-hover-opacity: 0;
+  --border-color-hover: #{color('brand', '4')};
+  --color-hover: #{color('brand', '4')};
+
+  --bg-focused: transparent;
+  --bg-focused-opacity: 0;
+  --border-color-focused: #{color('brand', '4')};
+  --color-focused: #{color('brand', '4')};
+
+  --bg-activated: transparent;
+  --bg-activated-opacity: 0;
+  --border-color-activated: #{color('brand', '5')};
+
+  --color-activated: #{color('brand', '5')};
+
+  --border-width: var(--med-border-width-thin);
+  --border-style: solid;
+}
+
+:host(.med-button--secondary) ion-ripple-effect {
+  --ripple-color: transparent;
+  --ripple-opacity: transparent;
+}
+
+// ////////////////////
+// icon-only
+// ////////////////////
+
+:host(.back-button-has-icon-only) {
+  --min-height: 48px;
+  --min-width: 48px;
+  --icon-font-size: 32px;
+  --padding: 0;
+}
+
+// //////////////////////////////
+// color
+// //////////////////////////////
+
+:host(.med-button--secondary.med-color) {
+  --border-color: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3')};
+
+  --bg-hover: #{curr-color('color', '3')};
+  --color-hover: #{curr-color('color', 'gradient', 'contrast')};
+
+  --bg-focused: #{curr-color('color', '3')};
+  --color-focused: #{curr-color('color', 'gradient', 'contrast')};
+
+  --color-activated: #{curr-color('color', 'gradient', 'contrast')};
+}
+
+// //////////////////////////////
+// neutral
+// //////////////////////////////
+
+:host(.med-button--secondary.med-color-neutral) {
+  --border-color: #{curr-color('neutral')};
+  --color: #{curr-color('neutral')};
+
+  --border-color-hover: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+  --color-hover: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-focused: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+  --color-focused: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-activated: #{curr-color('neutral', null, null, var(--med-opacity-level-intense))};
+  --color-activated: #{curr-color('neutral', null, null, var(--med-opacity-level-intense))};
+}
+
+// //////////////////////////////
+// feedback
+// //////////////////////////////
+
+:host(.med-button--secondary.med-color-feedback) {
+  --border-color: #{curr-color('feedback')};
+  --color: #{curr-color('feedback')};
+
+  --border-color-hover: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+  --color-hover: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-focused: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+  --color-focused: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-activated: #{curr-color('feedback', null, null, var(--med-opacity-level-intense))};
+  --color-activated: #{curr-color('feedback', null, null, var(--med-opacity-level-intense))};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:host(.med-button--tertiary) {
+  --background: transparent;
+  --border-color: transparent;
+  --color: #{color('neutral', '10')};
+
+  --bg-hover: #{color('brand', '3')};
+  --bg-hover-opacity: var(--med-opacity-level-light);
+  --border-color-hover: transparent;
+  --color-hover: #{color('neutral', '10')};
+
+  --bg-focused: #{color('brand', '3')};
+  --bg-focused-opacity: var(--med-opacity-level-light);
+  --border-color-focused: transparent;
+  --color-focused: #{color('neutral', '10')};
+
+  --bg-activated: #{color('brand', '3')};
+  --bg-activated-opacity: var(--med-opacity-level-light);
+  --border-color-activated: transparent;
+  --color-activated: #{color('neutral', '10')};
+
+  --line-height: #{line-height($med-font-size-xxs)};
+  --padding: 0;
+  --padding-text: 0 var(--med-spacing-inline-xxxs);
+  --min-height: 24px;
+  --min-width: 24px;
+  --border-radius: var(--med-border-radius-nano);
+}
+
+:host(.med-button--tertiary) ion-ripple-effect {
+  --ripple-color: #{color('brand', '3')};
+  --ripple-opacity: var(--med-opacity-level-light);
+}
+
+// ////////////////////
+// icon-only
+// ////////////////////
+
+:host(.med-button--tertiary.back-button-has-icon-only) {
+  --padding: 0;
+  --padding-text: 0;
+  --border-radius: var(--med-border-radius-full);
+  --min-height: 32px;
+  --min-width: 32px;
+  --icon-font-size: 24px;
+}
+
+// ////////////////////
+// icon-only
+// ////////////////////
+
+:host(.med-button--tertiary.button-block) {
+  --border-radius: var(--med-border-radius-nano);
+}
+
+
+
+// //////////////////////////////
+// color
+// //////////////////////////////
+
+:host(.med-button--tertiary.med-color) {
+  --color: #{color('neutral', '10')};
+
+  --bg-hover: #{curr-color('color', '3')};
+  --color-hover: #{color('neutral', '10')};
+
+  --bg-focused: #{curr-color('color', '3')};
+  --color-focused: #{color('neutral', '10')};
+
+  --bg-activated: #{curr-color('color', '3')};
+  --color-activated: #{color('neutral', '10')};
+}
+
+:host(.med-button--tertiary.med-color) ion-ripple-effect {
+  --ripple-color: #{curr-color('color', '3')};
+  --ripple-opacity: var(--med-opacity-level-light);
+}
+
+// //////////////////////////////
+// neutral
+// //////////////////////////////
+
+:host(.med-button--tertiary.med-color-neutral) {
+  --color: #{color('neutral', '10')};
+
+  --bg-hover: #{color('neutral', '10')};
+  --color-hover: #{color('neutral', '10')};
+
+  --bg-focused: #{color('neutral', '10')};
+  --color-focused: #{color('neutral', '10')};
+
+  --bg-activated: #{color('neutral', '10')};
+  --color-activated: #{color('neutral', '10')};
+}
+
+:host(.med-button--tertiary.med-color-neutral) ion-ripple-effect {
+  --ripple-color: #{color('neutral', '10')};
+  --ripple-opacity: var(--med-opacity-level-light);
+}
+
+// //////////////////////////////
+// feedback
+// //////////////////////////////
+
+:host(.med-button--tertiary.med-color-feedback) {
+  --color: #{color('neutral', '10')};
+
+  --bg-hover: #{curr-color('feedback')};
+  --color-hover: #{color('neutral', '10')};
+
+  --bg-focused: #{curr-color('feedback')};
+  --color-focused: #{color('neutral', '10')};
+
+  --bg-activated: #{curr-color('feedback')};
+  --color-activated: #{color('neutral', '10')};
+}
+
+:host(.med-button--tertiary.med-color-feedback) ion-ripple-effect {
+  --ripple-color: #{curr-color('feedback')};
+  --ripple-opacity: var(--med-opacity-level-light);
+}
+
+// //////////////////////////////
+// sizes
+// //////////////////////////////
+
+:host(.med-button--tertiary.med-button--lg) {
+  --font-size: var(--med-font-size-xs);
+  --line-height: #{line-height($med-font-size-xs)};
+  --min-height: 24px;
+  --min-width: 24px;
+}
+
+:host(.med-button--tertiary.med-button--lg.back-button-has-icon-only) {
+  --min-height: 64px;
+  --min-width: 64px;
+  --icon-font-size: 48px;
+}
+
+
+
+
+
+:host(.med-button--tertiary.med-button--md) {
+  --font-size: var(--med-font-size-xxs);
+  --line-height: #{line-height($med-font-size-xxs)};
+  --min-height: 24px;
+  --min-width: 24px;
+}
+
+:host(.med-button--tertiary.med-button--md.back-button-has-icon-only) {
+  --min-height: 48px;
+  --min-width: 48px;;
+  --icon-font-size: 32px;
+}
+
+
+
+
+
+:host(.med-button--tertiary.med-button--sm) {
+  --font-size: var(--med-font-size-xxxs);
+  --line-height: #{line-height($med-font-size-xxxs)};
+  --min-height: 16px;
+  --min-width: 16px;
+}
+
+:host(.med-button--tertiary.med-button--sm.back-button-has-icon-only) {
+  --min-height: 40px;
+  --min-width: 40px;
+  --icon-font-size: 24px;
+}
+
+
+
+
+
+:host(.med-button--tertiary.med-button--xs) {
+  --font-size: var(--med-font-size-nano);
+  --line-height: #{line-height($med-font-size-nano)};
+  --min-height: 16px;
+  --min-width: 16px;
+}
+
+:host(.med-button--tertiary.med-button--xs.back-button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  --icon-font-size: 24px;
+}
+
+
+
+
+
+:host(.med-button--tertiary.med-button--xxs.back-button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --icon-font-size: 24px;
+}
+
+
+
+
+
+:host(.med-button--tertiary.med-button--xxxs.back-button-has-icon-only) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --icon-font-size: 16px;
 }

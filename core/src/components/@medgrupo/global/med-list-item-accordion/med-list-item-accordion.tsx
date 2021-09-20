@@ -80,7 +80,7 @@ export class MedListItemAccordion {
             <h4 class="med-list-item-accordion__label">{label}</h4>
           </div>
 
-          <ion-button ds-color={dsColor} ds-name="tertiary" ds-size="xs" slot="left" onClick={(event: any) => {this.toggle(event)}}>
+          <ion-button class="med-list-item-accordion__button" ds-color={dsColor} ds-name="tertiary" ds-size="xs" slot="left" onClick={(event: any) => {this.toggle(event)}}>
             <ion-icon slot="icon-only" class="med-icon" name="med-cima"></ion-icon>
           </ion-button>
         </div>

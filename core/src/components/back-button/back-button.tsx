@@ -2,9 +2,10 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color } from '../../interface';
+import { AnimationBuilder, Color, MedColor } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import { hostContext, openURL } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -16,7 +17,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
-    ios: 'back-button.ios.scss',
+    ios: 'back-button.md.scss',
     md: 'back-button.md.scss'
   },
   shadow: true
@@ -24,6 +25,26 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 export class BackButton implements ComponentInterface, ButtonInterface {
 
   @Element() el!: HTMLElement;
+
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) dsColor?: MedColor;
+
+  /**
+    * Define a cor do componente.
+    */
+  @Prop({ reflect: true }) solid = false;
+
+  /**
+    * Define a variação de tamanho componente.
+    */
+  @Prop() dsSize?: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
+
+  /**
+    * Define a variação solida de background do componente.
+    */
+  @Prop() dsName?: 'secondary' | 'tertiary';
 
   /**
    * The color to use from your application's color palette.
@@ -115,14 +136,14 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText } = this;
+    const { dsName, dsColor, dsSize, solid, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText } = this;
     const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
 
     return (
       <Host
         onClick={this.onClick}
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
           'button': true, // ion-buttons target .button
           'back-button-disabled': disabled,
@@ -131,7 +152,11 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true,
-          'show-back-button': showBackButton
+          'show-back-button': showBackButton,
+          'med-button': true,
+          [`med-button--${dsName}`]: dsName !== undefined,
+          [`med-button--${dsSize}`]: dsSize !== undefined,
+          'med-button--solid': solid,
         })}
       >
         <button
@@ -142,8 +167,10 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           aria-label={backButtonText || 'back'}
         >
           <span class="button-inner">
-            {backButtonIcon && <ion-icon class="med-icon" part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
-            {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
+            <div class="button-inner__text">
+              {backButtonIcon && <ion-icon class="med-icon" part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+              {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
+            </div>
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

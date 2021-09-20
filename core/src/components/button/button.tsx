@@ -51,7 +51,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
     * Define a variação de tamanho componente.
     */
-  @Prop() dsSize?: 'xs' | 'sm' | 'md' | 'lg';
+  @Prop() dsSize?: 'xxxs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
 
   /**
    * The color to use from your application's color palette.
