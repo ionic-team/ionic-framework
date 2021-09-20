@@ -28,6 +28,7 @@ export * from './components/segment/segment-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/spinner/spinner-interface';
+export * from './components/tabs/tabs-interface';
 export * from './components/tab-bar/tab-bar-interface';
 export * from './components/textarea/textarea-interface';
 export * from './components/toast/toast-interface';

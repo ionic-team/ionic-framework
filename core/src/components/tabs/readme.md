@@ -9,6 +9,19 @@ Both `ion-tabs` and `ion-tab-bar` can be used as standalone elements. They donâ€
 
 The `ion-tab-bar` needs a slot defined in order to be projected to the right place in an `ion-tabs` component.
 
+## Interfaces
+
+### TabsCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface TabsCustomEvent extends CustomEvent {
+  detail: { tab: string };
+  target: HTMLIonTabsElement;
+}
+```
+
 
 <!-- Auto Generated Below -->
 
