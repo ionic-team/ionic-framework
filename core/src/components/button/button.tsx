@@ -271,7 +271,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             </div>
             <slot name="end"></slot>
           </span>
-          {(mode === 'md' || mode === 'ios') && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>
         </TagType>
       </Host>
     );

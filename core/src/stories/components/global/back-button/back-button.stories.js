@@ -7,7 +7,7 @@ export default {
   decorators: [withDesign],
 };
 
-const Template = ({ dsName, dsColor, solid, disabled, expand, dsSize, iconLeft, iconRight, iconOnly }) => {
+const Template = ({ dsName, dsColor, solid, disabled, expand, dsSize, iconOnly }) => {
   return html`
     <style>
       ion-back-button {
@@ -19,7 +19,7 @@ const Template = ({ dsName, dsColor, solid, disabled, expand, dsSize, iconLeft, 
         <div class="flex-center">
 
           <!-- component -->
-          <ion-back-button .dsName=${dsName} .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize} icon="add"></ion-back-button>
+          <ion-back-button .dsName=${dsName} .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize} icon=${iconOnly}></ion-back-button>
           <!-- component -->
 
         </div>
@@ -82,38 +82,14 @@ Tertiary.argTypes = {
       defaultValue: { summary: 'undefined' },
     },
   },
-  iconLeft: {
-    options: MedIcons,
-    control: { type: 'select'},
-    defaultValue: 'med-setaesquerda',
-    description: '**Atributo utilizado apenas no storybook. Não é um atributo do componente!.**',
-    table: {
-      type:  { summary: ['string'] },
-      defaultValue: { summary: 'med-setaesquerda' },
-    },
-  },
-  iconRight: {
-    options: MedIcons,
-    control: { type: 'select'},
-    defaultValue: 'med-setadireita',
-    description: '**Atributo utilizado apenas no storybook. Não é um atributo do componente!.**',
-    table: {
-      type:  { summary: ['string'] },
-      defaultValue: { summary: 'med-setadireita' },
-    },
-  },
   iconOnly: {
     options: MedIcons,
     control: { type: 'select'},
-    defaultValue: 'med-fechar',
+    defaultValue: 'med-esquerda',
     description: '**Atributo utilizado apenas no storybook. Não é um atributo do componente!.**',
     table: {
       type:  { summary: ['string'] },
-      defaultValue: { summary: 'med-fechar' },
+      defaultValue: { summary: 'med-esquerda' },
     },
-  },
-  slot: {
-    control: { type: 'text' },
-    defaultValue: 'button',
   },
 };

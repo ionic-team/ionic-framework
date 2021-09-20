@@ -21,8 +21,8 @@
 }
 
 :host(.med-icon.med-color-neutral) {
-  color: var(--med-neutral) !important;
-  stroke: var(--med-neutral) !important;
+  color: var(--med-color-neutral) !important;
+  stroke: var(--med-color-neutral) !important;
 }
 
 :host(.med-icon.med-color-feedback) {

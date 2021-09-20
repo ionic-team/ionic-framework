@@ -60,6 +60,7 @@ const TemplateIcon = ({ dsColor }) => {
 
       ion-icon {
         font-size: 28px;
+        stroke: hsl(var(--med-color-neutral-10));
       }
     </style>
 

@@ -172,7 +172,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
               {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
             </div>
           </span>
-          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>
         </button>
       </Host>
     );
