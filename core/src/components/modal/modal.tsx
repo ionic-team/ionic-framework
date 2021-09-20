@@ -101,11 +101,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * A decimal value between 0 and 1 that indicates the
-   * point at which the backdrop will begin to fade in
+   * point after which the backdrop will begin to fade in
    * when using a sheet modal. Prior to this point, the
    * backdrop will be hidden and the content underneath
-   * the sheet can be interacted with. This value must
-   * also be listed in the `breakpoints` array.
+   * the sheet can be interacted with. This value is exclusive
+   * meaning the backdrop will become active after the value
+   * specified.
    */
   @Prop() backdropBreakpoint = 0;
 

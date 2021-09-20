@@ -55,7 +55,11 @@ export const createSheetGesture = (
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
     animation.progressStart(true, 1 - currentBreakpoint);
 
-    const backdropEnabled = currentBreakpoint >= backdropBreakpoint
+    /**
+     * Backdrop should become enabled
+     * after the backdropBreakpoint value
+     */
+    const backdropEnabled = currentBreakpoint > backdropBreakpoint
     backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
   }
 
@@ -170,7 +174,11 @@ export const createSheetGesture = (
                 contentEl.scrollY = true;
               }
 
-              const backdropEnabled = currentBreakpoint >= backdropBreakpoint;
+              /**
+               * Backdrop should become enabled
+               * after the backdropBreakpoint value
+               */
+              const backdropEnabled = currentBreakpoint > backdropBreakpoint;
               backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
 
               gesture.enable(true);
