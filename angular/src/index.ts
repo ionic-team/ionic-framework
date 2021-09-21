@@ -44,11 +44,19 @@ export * from './types/ionic-lifecycle-hooks';
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
 
-// UTILS
-export { PlatformConfig, IonicSafeString, getPlatforms, isPlatform, createAnimation, IonicSwiper } from '@ionic/core';
-
-// CORE TYPES
 export {
+  // UTILS
+  createAnimation,
+  createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  setupConfig,
+  IonicSwiper,
+  getPlatforms,
+  isPlatform,
+  getTimeGivenProgression,
+
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -59,13 +67,11 @@ export {
   Gesture,
   GestureConfig,
   GestureDetail,
-  mdTransitionAnimation,
-  iosTransitionAnimation,
   NavComponentWithProps,
 
   SpinnerTypes,
 
-  AccordionGroupChangeEvent,
+  AccordionGroupCustomEvent,
   AccordionGroupChangeEventDetail,
 
   BreadcrumbCustomEvent,
@@ -79,6 +85,8 @@ export {
   AlertTextareaAttributes,
   AlertInputAttributes,
   AlertButton,
+
+  BackButtonEvent,
 
   CheckboxCustomEvent,
   CheckboxChangeEventDetail,
@@ -96,6 +104,8 @@ export {
 
   ItemSlidingCustomEvent,
 
+  IonicSafeString,
+
   LoadingOptions,
 
   MenuCustomEvent,
@@ -108,6 +118,8 @@ export {
   PickerButton,
   PickerColumn,
   PickerColumnOption,
+
+  PlatformConfig,
 
   PopoverOptions,
 
@@ -144,5 +156,4 @@ export {
 
   ToggleChangeEventDetail,
   ToggleCustomEvent,
-
 } from '@ionic/core';

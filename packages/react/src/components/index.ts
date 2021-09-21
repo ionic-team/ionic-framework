@@ -16,7 +16,18 @@ import {
   searchOutline,
   searchSharp,
 } from 'ionicons/icons';
+
 export {
+  // UTILS
+  createAnimation,
+  createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  setupConfig,
+  IonicSwiper,
+  getTimeGivenProgression,
+
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -24,21 +35,18 @@ export {
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
-  createGesture,
   Gesture,
   GestureConfig,
   GestureDetail,
-  iosTransitionAnimation,
-  IonicSafeString,
-  mdTransitionAnimation,
   NavComponentWithProps,
-  setupConfig,
-  initialize,
-  IonicSwiper,
-  PlatformConfig,
 
   SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -49,9 +57,33 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
@@ -60,9 +92,41 @@ export {
 
   PopoverOptions,
 
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
   ToastOptions,
-  ToastButton
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
 } from '@ionic/core/components';
+
 export * from './proxies';
 export * from './routing-proxies';
 
