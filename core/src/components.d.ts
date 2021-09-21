@@ -1842,7 +1842,7 @@ export namespace Components {
          */
         "pullMin": number;
         /**
-          * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration": string;
     }
@@ -5160,7 +5160,7 @@ declare namespace LocalJSX {
          */
         "pullMin"?: number;
         /**
-          * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration"?: string;
     }
