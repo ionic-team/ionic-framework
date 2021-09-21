@@ -473,11 +473,11 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                                  | Type                                   |
-| ----------- | -------------------------------------------- | -------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                    |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail>` |
-| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                    |
+| Event       | Description                                  | Type                                        |
+| ----------- | -------------------------------------------- | ------------------------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                         |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail<any>>` |
+| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                         |
 
 
 ## Shadow Parts
