@@ -1,3 +1,5 @@
+import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 export interface ModalOptions<T extends ComponentRef = ComponentRef> {
@@ -14,7 +16,21 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: ModalAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
+
+  breakpoints?: number[];
+  initialBreakpoint?: number;
+  backdropBreakpoint?: number;
+  handle?: boolean;
 }
+
+export interface ModalAnimationOptions {
+  presentingEl?: HTMLElement;
+  currentBreakpoint?: number;
+  backdropBreakpoint?: number;
+}
+
+export interface ModalAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}

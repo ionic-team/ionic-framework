@@ -13,6 +13,8 @@ import { InputChangeEventDetail } from '../input/input-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
+ * @slot helper - Content is placed under the item and displayed when no error is detected.
+ * @slot error - Content is placed under the item and displayed when an error is detected.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
@@ -303,7 +305,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
-    const hasFill = fill === 'outline' || fill === 'solid';
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -323,7 +324,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       Object.assign(childStyles, value);
     });
     const ariaDisabled = (disabled || childStyles['item-interactive-disabled']) ? 'true' : null;
-
+    const fillValue = fill || 'none';
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -334,7 +335,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item': true,
             [mode]: true,
             [`item-lines-${lines}`]: lines !== undefined,
-            [`item-fill-${fill}`]: fill !== undefined,
+            [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
             'item-disabled': disabled,
             'in-list': hostContext('ion-list', this.el),
@@ -362,9 +363,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-          {hasFill && <div class="item-highlight"></div>}
+          <div class="item-highlight"></div>
         </TagType>
-        {!hasFill && <div class="item-highlight"></div>}
         <div class="item-bottom">
           <slot name="error"></slot>
           <slot name="helper"></slot>

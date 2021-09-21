@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 
 import { RouteAction } from './RouteAction';
 import { RouterDirection } from './RouterDirection';

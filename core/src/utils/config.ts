@@ -1,5 +1,7 @@
 import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
 
+import { PlatformConfig } from './platform';
+
 export interface IonicConfig {
   /**
    * When it's set to `false`, disables all animation and transition across the app.
@@ -174,6 +176,11 @@ export interface IonicConfig {
    * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
    */
   sanitizerEnabled?: boolean;
+
+  /**
+   * Overrides the default platform detection methods.
+   */
+  platform?: PlatformConfig;
 
   // PRIVATE configs
   keyboardHeight?: number;

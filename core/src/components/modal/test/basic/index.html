@@ -67,7 +67,10 @@
 
       // present the modal
       const modalElement = Object.assign(document.createElement('ion-modal'), {
-        component: element
+        component: element,
+        htmlAttributes: {
+          'data-testid': 'basic-modal'
+        }
       });
       // listen for close event
       const button = element.querySelector('ion-button');

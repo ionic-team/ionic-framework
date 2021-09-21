@@ -30,6 +30,10 @@ describe('getDaysOfWeek()', () => {
   it('should return Spanish narrow names given a locale and mode', () => {
     expect(getDaysOfWeek('es-ES', 'md')).toEqual(['D', 'L', 'M', 'X', 'J', 'V', 'S']);
   });
+
+  it('should return English short names given a locale, mode and startOfWeek', () => {
+    expect(getDaysOfWeek('en-US', 'ios', 1)).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+  })
 })
 
 describe('generateTime()', () => {

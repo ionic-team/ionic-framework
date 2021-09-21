@@ -1,8 +1,8 @@
-import { OverlayEventDetail } from '@ionic/core';
+import { OverlayEventDetail } from '@ionic/core/components';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { attachProps, setRef } from './utils';
+import { attachProps, dashToPascalCase, defineCustomElement, setRef } from './react-component-lib/utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -22,9 +22,13 @@ export const createOverlayComponent = <
   OverlayComponent extends object,
   OverlayType extends OverlayElement
 >(
-  displayName: string,
-  controller: { create: (options: any) => Promise<OverlayType> }
+  tagName: string,
+  controller: { create: (options: any) => Promise<OverlayType> },
+  customElement?: any
 ) => {
+  defineCustomElement(tagName, customElement);
+
+  const displayName = dashToPascalCase(tagName);
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
   const willDismissEventName = `on${displayName}WillDismiss`;
@@ -35,12 +39,10 @@ export const createOverlayComponent = <
       forwardedRef?: React.ForwardedRef<OverlayType>;
     };
 
-  let isDismissing = false;
-
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
     el!: HTMLDivElement;
-
+    isDismissing = false;
     constructor(props: Props) {
       super(props);
       if (typeof document !== 'undefined') {
@@ -75,7 +77,7 @@ export const createOverlayComponent = <
     shouldComponentUpdate(nextProps: Props) {
       // Check if the overlay component is about to dismiss
       if (this.overlay && nextProps.isOpen !== this.props.isOpen && nextProps.isOpen === false) {
-        isDismissing = true;
+        this.isDismissing = true;
       }
 
       return true;
@@ -91,7 +93,7 @@ export const createOverlayComponent = <
       }
       if (this.overlay && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.overlay.dismiss();
-        isDismissing = false;
+        this.isDismissing = false;
 
         /**
          * Now that the overlay is dismissed
@@ -142,7 +144,7 @@ export const createOverlayComponent = <
        * overlay is dismissing otherwise component
        * will be hidden before animation is done.
        */
-      return ReactDOM.createPortal(this.props.isOpen || isDismissing ? this.props.children : null, this.el);
+      return ReactDOM.createPortal(this.props.isOpen || this.isDismissing ? this.props.children : null, this.el);
     }
   }
 

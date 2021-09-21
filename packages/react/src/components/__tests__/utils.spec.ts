@@ -1,4 +1,4 @@
-import * as utils from '../utils';
+import * as utils from '../react-component-lib/utils';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('isCoveredByReact', () => {

@@ -102,10 +102,39 @@ describe('View Stacks', () => {
 
     const viewItemsAgain = viewStacks.getViewStack(2);
     expect(viewItemsAgain).toEqual(undefined);
-  })
+  });
+
+  it('should unmount orphaned views', () => {
+    const itemA = createRegisteredViewItem(viewStacks, 1, '/home/1', true);
+    const itemB = createRegisteredViewItem(viewStacks, 1, '/home/2', true);
+    const itemC = createRegisteredViewItem(viewStacks, 1, '/home/3', true);
+    const itemD = createRegisteredViewItem(viewStacks, 1, '/home/4', true);
+
+    viewStacks.unmountLeavingViews(1, itemA, itemD);
+
+    expect(itemB.mount).toEqual(false);
+    expect(itemB.ionPageElement).toEqual(undefined);
+    expect(itemB.ionRoute).toEqual(false);
+
+    expect(itemC.mount).toEqual(false);
+    expect(itemC.ionPageElement).toEqual(undefined);
+    expect(itemC.ionRoute).toEqual(false);
+  });
+
+  it('should remount intermediary views', () => {
+    const itemA = createRegisteredViewItem(viewStacks);
+    const itemB = createRegisteredViewItem(viewStacks);
+    const itemC = createRegisteredViewItem(viewStacks);
+    const itemD = createRegisteredViewItem(viewStacks);
+
+    viewStacks.mountIntermediaryViews(1, itemD, itemA);
+
+    expect(itemB.mount).toEqual(true);
+    expect(itemC.mount).toEqual(true);
+  });
 })
 
-const createRegisteredViewItem = (viewStacks, outletId = '1', route = `/home/${counter++}`) => {
+const createRegisteredViewItem = (viewStacks, outletId = '1', route = `/home/${counter++}`, mount = false) => {
   const item = viewStacks.createViewItem(
     outletId,
     () => {},
@@ -115,10 +144,15 @@ const createRegisteredViewItem = (viewStacks, outletId = '1', route = `/home/${c
 
   viewStacks.add(item);
 
-  const ionPage = document.createElement('div');
-  ionPage.classList.add('ion-page');
+  if (mount) {
+    const ionPage = document.createElement('div');
+    ionPage.classList.add('ion-page');
 
-  viewStacks.registerIonPage(item, ionPage);
+    viewStacks.registerIonPage(item, ionPage);
+
+    item.mount = true;
+    item.ionRoute = true;
+  }
 
   return item;
 }

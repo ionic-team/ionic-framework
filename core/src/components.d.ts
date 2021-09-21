@@ -5,11 +5,13 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
+import { AlertAttributes } from "./components/alert/alert-interface";
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
+import { ToastAttributes } from "./components/toast/toast-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -101,6 +103,10 @@ export namespace Components {
          */
         "header"?: string;
         /**
+          * Additional attributes to pass to the action sheet.
+         */
+        "htmlAttributes"?: ActionSheetAttributes;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
@@ -165,6 +171,10 @@ export namespace Components {
           * The main title in the heading of the alert.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the alert.
+         */
+        "htmlAttributes"?: AlertAttributes;
         /**
           * Array of input to show in the alert.
          */
@@ -709,6 +719,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The text to display on the picker's "Clear" button.
+         */
+        "clearText": string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -728,6 +742,10 @@ export namespace Components {
           * The text to display on the picker's "Done" button.
          */
         "doneText": string;
+        /**
+          * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
+         */
+        "firstDayOfWeek": number;
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
@@ -767,15 +785,19 @@ export namespace Components {
         /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "presentation": 'date-time' | 'time-date' | 'date' | 'time';
+        "presentation": 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly": boolean;
         /**
-          * Resets the internal state of the datetime but does not update the value. Passing a value ISO-8601 string will reset the state of te component to the provided date.
+          * Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no value is provided, the internal state will be reset to today.
          */
-        "reset": (value?: string | undefined) => Promise<void>;
+        "reset": (startDate?: string | undefined) => Promise<void>;
+        /**
+          * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
+         */
+        "showClearButton": boolean;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
@@ -1325,6 +1347,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Additional attributes to pass to the loader.
+         */
+        "htmlAttributes"?: LoadingAttributes;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
@@ -1462,9 +1488,17 @@ export namespace Components {
          */
         "animated": boolean;
         /**
+          * A decimal value between 0 and 1 that indicates the point after which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value is exclusive meaning the backdrop will become active after the value specified.
+         */
+        "backdropBreakpoint": number;
+        /**
           * If `true`, the modal will be dismissed when the backdrop is clicked.
          */
         "backdropDismiss": boolean;
+        /**
+          * The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]
+         */
+        "breakpoints"?: number[];
         /**
           * The component to display inside of the modal.
          */
@@ -1488,6 +1522,18 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
+         */
+        "handle"?: boolean;
+        /**
+          * Additional attributes to pass to the modal.
+         */
+        "htmlAttributes"?: ModalAttributes;
+        /**
+          * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
+         */
+        "initialBreakpoint"?: number;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
@@ -1714,6 +1760,10 @@ export namespace Components {
          */
         "getColumn": (name: string) => Promise<PickerColumn | undefined>;
         /**
+          * Additional attributes to pass to the picker.
+         */
+        "htmlAttributes"?: PickerAttributes;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
@@ -1800,6 +1850,10 @@ export namespace Components {
         "event": any;
         "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
         /**
+          * Additional attributes to pass to the popover.
+         */
+        "htmlAttributes"?: PopoverAttributes;
+        /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
         "isOpen": boolean;
@@ -1825,9 +1879,9 @@ export namespace Components {
         "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
-          * Present the popover overlay after it has been created.
+          * Present the popover overlay after it has been created. Developers can pass a mouse, touch, or pointer event to position the popover relative to where that event was dispatched.
          */
-        "present": () => Promise<void>;
+        "present": (event?: MouseEvent | TouchEvent | PointerEvent | undefined) => Promise<void>;
         /**
           * When opening a popover from a trigger, we should not be modifying the `event` prop from inside the component. Additionally, when pressing the "Right" arrow key, we need to shift focus to the first descendant in the newly presented popover.
          */
@@ -2775,6 +2829,10 @@ export namespace Components {
          */
         "header"?: string;
         /**
+          * Additional attributes to pass to the toast.
+         */
+        "htmlAttributes"?: ToastAttributes;
+        /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
@@ -3648,6 +3706,10 @@ declare namespace LocalJSX {
          */
         "header"?: string;
         /**
+          * Additional attributes to pass to the action sheet.
+         */
+        "htmlAttributes"?: ActionSheetAttributes;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
@@ -3710,6 +3772,10 @@ declare namespace LocalJSX {
           * The main title in the heading of the alert.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the alert.
+         */
+        "htmlAttributes"?: AlertAttributes;
         /**
           * Array of input to show in the alert.
          */
@@ -4281,6 +4347,10 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
+          * The text to display on the picker's "Clear" button.
+         */
+        "clearText"?: string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -4296,6 +4366,10 @@ declare namespace LocalJSX {
           * The text to display on the picker's "Done" button.
          */
         "doneText"?: string;
+        /**
+          * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
+         */
+        "firstDayOfWeek"?: number;
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
@@ -4355,11 +4429,15 @@ declare namespace LocalJSX {
         /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "presentation"?: 'date-time' | 'time-date' | 'date' | 'time';
+        "presentation"?: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly"?: boolean;
+        /**
+          * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
+         */
+        "showClearButton"?: boolean;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
@@ -4917,6 +4995,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Additional attributes to pass to the loader.
+         */
+        "htmlAttributes"?: LoadingAttributes;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
@@ -5054,9 +5136,17 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
+          * A decimal value between 0 and 1 that indicates the point after which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value is exclusive meaning the backdrop will become active after the value specified.
+         */
+        "backdropBreakpoint"?: number;
+        /**
           * If `true`, the modal will be dismissed when the backdrop is clicked.
          */
         "backdropDismiss"?: boolean;
+        /**
+          * The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1]
+         */
+        "breakpoints"?: number[];
         /**
           * The component to display inside of the modal.
          */
@@ -5074,6 +5164,18 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
+         */
+        "handle"?: boolean;
+        /**
+          * Additional attributes to pass to the modal.
+         */
+        "htmlAttributes"?: ModalAttributes;
+        /**
+          * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
+         */
+        "initialBreakpoint"?: number;
         /**
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
@@ -5233,6 +5335,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Additional attributes to pass to the picker.
+         */
+        "htmlAttributes"?: PickerAttributes;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
@@ -5318,6 +5424,10 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        /**
+          * Additional attributes to pass to the popover.
+         */
+        "htmlAttributes"?: PopoverAttributes;
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
@@ -6378,6 +6488,10 @@ declare namespace LocalJSX {
           * Header to be shown in the toast.
          */
         "header"?: string;
+        /**
+          * Additional attributes to pass to the toast.
+         */
+        "htmlAttributes"?: ToastAttributes;
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */

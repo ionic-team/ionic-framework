@@ -1,4 +1,4 @@
-import { ModalOptions, modalController } from '@ionic/core';
+import { ModalOptions, modalController } from '@ionic/core/components';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { ReactComponentOrElement, useOverlay } from './useOverlay';

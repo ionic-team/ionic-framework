@@ -1,4 +1,4 @@
-import { PopoverOptions, popoverController } from '@ionic/core';
+import { PopoverOptions, popoverController } from '@ionic/core/components';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { ReactComponentOrElement, useOverlay } from './useOverlay';

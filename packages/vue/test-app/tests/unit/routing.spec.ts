@@ -305,8 +305,11 @@ describe('Routing', () => {
     router.push('/xyz');
     await waitForRouter();
 
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'xyz' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(2);
+    expect(cmpAgain[0].props()).toEqual({ title: 'abc' });
+    expect(cmpAgain[1].props()).toEqual({ title: 'xyz' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
@@ -356,8 +359,11 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(propsFn.mock.calls.length).toBe(2);
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'abc Title' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(2);
+    expect(cmpAgain[0].props()).toEqual({ title: '123 Title' });
+    expect(cmpAgain[1].props()).toEqual({ title: 'abc Title' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
@@ -395,5 +401,53 @@ describe('Routing', () => {
     const pageAgain = wrapper.findAllComponents(Page);
     expect(pageAgain[0].props()).toEqual({ id: '1' });
     expect(pageAgain[1].props()).toEqual({ id: '2' });
+  });
+
+  it('should fire guard written in a component', async () => {
+    const beforeRouteEnterSpy = jest.fn();
+    const beforeRouteLeaveSpy = jest.fn();
+    const Page = {
+      beforeRouteEnter() {
+        beforeRouteEnterSpy();
+      },
+      beforeRouteLeave() {
+        beforeRouteLeaveSpy();
+      },
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/', redirect: '/page' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(1);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(beforeRouteLeaveSpy).toHaveBeenCalledTimes(1);
+
+    router.back();
+    await waitForRouter();
+
+    expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(2);
   });
 });

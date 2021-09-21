@@ -128,7 +128,7 @@ import { EventModalModule } from '../modals/event/event.module';
 export class CalendarComponentModule {}
 ```
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -168,6 +168,34 @@ async presentModal() {
   });
   return await modal.present();
 }
+```
+
+### Sheet Modals
+
+**Controller**
+```javascript
+import { IonRouterOutlet } from '@ionic/angular';
+
+constructor(private routerOutlet: IonRouterOutlet) {}
+
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: ModalPage,
+    initialBreakpoint: 0.5,
+    breakpoints: [0, 0.5, 1]
+  });
+  return await modal.present();
+}
+```
+
+
+**Inline**
+```html
+<ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 1]">
+  <ng-template>
+    <modal-page></modal-page>
+  </ng-template>
+</ion-modal>
 ```
 
 

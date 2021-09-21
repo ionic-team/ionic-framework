@@ -1,4 +1,4 @@
-import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core';
+import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core/components';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';

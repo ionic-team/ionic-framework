@@ -1,3 +1,5 @@
+import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, Color, Mode } from '../../interface';
 import { IonicSafeString } from '../../utils/sanitization';
 
@@ -11,6 +13,7 @@ export interface ToastOptions {
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
+  htmlAttributes?: ToastAttributes;
 
   color?: Color;
   mode?: Mode;
@@ -20,6 +23,8 @@ export interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+
+export interface ToastAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 
 export interface ToastButton {
   text?: string;

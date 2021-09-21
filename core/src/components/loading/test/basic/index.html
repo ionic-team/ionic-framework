@@ -24,7 +24,7 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <ion-button id="basic-loading" expand="block" onclick="openLoading({ message: 'Hellooo', duration: 2000 })">Show Loading</ion-button>
+      <ion-button id="basic-loading" expand="block" onclick="openLoading({ message: 'Hellooo', duration: 2000, htmlAttributes: { 'data-testid': 'basic-loading' } })">Show Loading</ion-button>
       <ion-button id="default" expand="block" onclick="openLoading({duration: 2000, content: 'Please wait...'})">Show Default Loading</ion-button>
       <ion-button id="long-content-loading" expand="block" onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long message</ion-button>
       <ion-button id="no-spinner-loading" expand="block" onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})">Show Loading with no spinner</ion-button>

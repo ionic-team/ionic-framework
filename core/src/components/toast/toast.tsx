@@ -10,6 +10,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { ToastAttributes } from './toast-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -112,6 +113,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * https://ionic.io/ionicons
    */
   @Prop() icon?: string;
+
+  /**
+   * Additional attributes to pass to the toast.
+   */
+  @Prop() htmlAttributes?: ToastAttributes;
 
   /**
    * Emitted after the toast has presented.
@@ -270,9 +276,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
+    const role = allButtons.length > 0 ? 'dialog' : 'status';
 
     return (
       <Host
+        role={role}
+        tabindex="-1"
+        {...this.htmlAttributes as any}
         style={{
           zIndex: `${60000 + this.overlayIndex}`,
         }}
@@ -281,7 +291,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass),
           'toast-translucent': this.translucent
         })}
-        tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
         <div class={wrapperClass}>

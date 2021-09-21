@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
@@ -8,11 +8,12 @@ import { RouterDirection } from '../models/RouterDirection';
 import {
   attachProps,
   camelToDashCase,
-  createForwardRef,
   dashToPascalCase,
+  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
-} from './utils';
+} from './react-component-lib/utils';
+import { createForwardRef } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
@@ -24,10 +25,12 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerAnimation?: AnimationBuilder;
 }
 
-export const createReactComponent = <PropType, ElementType>(
+export const createRoutingComponent = <PropType, ElementType>(
   tagName: string,
-  routerLinkComponent = false
+  customElement?: any
 ) => {
+  defineCustomElement(tagName, customElement);
+
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;
@@ -86,21 +89,19 @@ export const createReactComponent = <PropType, ElementType>(
         style,
       };
 
-      if (routerLinkComponent) {
-        if (this.props.routerLink && !this.props.href) {
-          newProps.href = this.props.routerLink;
-        }
-        if (newProps.onClick) {
-          const oldClick = newProps.onClick;
-          newProps.onClick = (e: React.MouseEvent<PropType>) => {
-            oldClick(e);
-            if (!e.defaultPrevented) {
-              this.handleClick(e);
-            }
-          };
-        } else {
-          newProps.onClick = this.handleClick;
-        }
+      if (this.props.routerLink && !this.props.href) {
+        newProps.href = this.props.routerLink;
+      }
+      if (newProps.onClick) {
+        const oldClick = newProps.onClick;
+        newProps.onClick = (e: React.MouseEvent<PropType>) => {
+          oldClick(e);
+          if (!e.defaultPrevented) {
+            this.handleClick(e);
+          }
+        };
+      } else {
+        newProps.onClick = this.handleClick;
       }
 
       return React.createElement(tagName, newProps, children);

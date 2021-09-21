@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, PopoverAttributes, PopoverInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
@@ -32,7 +32,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
   },
   shadow: true
 })
-export class Popover implements ComponentInterface, OverlayInterface {
+export class Popover implements ComponentInterface, PopoverInterface {
 
   private usersElement?: HTMLElement;
   private triggerEl?: HTMLElement | null;
@@ -48,7 +48,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
 
-  private triggerEv?: Event;
   private focusDescendantOnPresent = false;
 
   lastFocus?: HTMLElement;
@@ -127,6 +126,11 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * If `true`, the popover will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * Additional attributes to pass to the popover.
+   */
+  @Prop() htmlAttributes?: PopoverAttributes;
 
   /**
    * Describes what kind of interaction with the trigger that
@@ -305,12 +309,10 @@ export class Popover implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async presentFromTrigger(event?: any, focusDescendant = false) {
-    this.triggerEv = event;
     this.focusDescendantOnPresent = focusDescendant;
 
-    await this.present();
+    await this.present(event);
 
-    this.triggerEv = undefined;
     this.focusDescendantOnPresent = false;
   }
 
@@ -349,9 +351,12 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * Present the popover overlay after it has been created.
+   * Developers can pass a mouse, touch, or pointer event
+   * to position the popover relative to where that event
+   * was dispatched.
    */
   @Method()
-  async present(): Promise<void> {
+  async present(event?: MouseEvent | TouchEvent | PointerEvent): Promise<void> {
     if (this.presented) {
       return;
     }
@@ -381,7 +386,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
     this.configureDismissInteraction();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
-      event: this.event || this.triggerEv,
+      event: event || this.event,
       size: this.size,
       trigger: this.triggerEl,
       reference: this.reference,
@@ -542,14 +547,16 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover && !desktop;
+
     return (
       <Host
         aria-modal="true"
         no-router
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}

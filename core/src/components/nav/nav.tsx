@@ -872,14 +872,15 @@ export class Nav implements NavOutlet {
       mode,
       showGoBack: this.canGoBackSync(enteringView),
       baseEl: this.el,
-      animationBuilder: this.animation || opts.animationBuilder || config.get('navAnimation'),
       progressCallback,
       animated: this.animated && config.getBoolean('animated', true),
 
       enteringEl,
       leavingEl,
 
-      ...opts
+      ...opts,
+
+      animationBuilder: opts.animationBuilder || this.animation || config.get('navAnimation')
     };
     const { hasCompleted } = await transition(animationOpts);
     return this.transitionFinish(hasCompleted, enteringView, leavingView, opts);

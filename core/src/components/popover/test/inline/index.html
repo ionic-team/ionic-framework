@@ -18,7 +18,8 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button onclick="openPopover(event)">Open Popover</ion-button>
+        <ion-button id="props" onclick="openPopover(event)">Open Popover via Props</ion-button>
+        <ion-button id="method" onclick="openPopoverMethod(event)">Open Popover via Present Method</ion-button>
 
         <ion-popover>
           <ion-content class="ion-padding">
@@ -33,6 +34,10 @@
       const openPopover = (ev) => {
         popover.isOpen = true;
         popover.event = ev;
+      }
+
+      const openPopoverMethod = (ev) => {
+        popover.present(ev);
       }
 
       popover.addEventListener('didDismiss', () => {

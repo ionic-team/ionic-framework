@@ -1,14 +1,15 @@
-import { OverlayEventDetail } from '@ionic/core'
+import { OverlayEventDetail } from '@ionic/core/components'
 import React from 'react';
 
 import {
   attachProps,
   camelToDashCase,
-  createForwardRef,
   dashToPascalCase,
+  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
-} from './utils';
+} from './react-component-lib/utils';
+import { createForwardRef } from './utils';
 
 type InlineOverlayState = {
   isOpen: boolean;
@@ -24,8 +25,11 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 }
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
-  tagName: string
+  tagName: string,
+  customElement?: any
 ) => {
+  defineCustomElement(tagName, customElement);
+
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
     ref: React.RefObject<HTMLElement>;
