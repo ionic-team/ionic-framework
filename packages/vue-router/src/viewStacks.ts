@@ -219,15 +219,34 @@ export const createViewStacks = (router: Router) => {
    * developers to step forward over multiple views.
    * The intermediary views need to be remounted so that
    * swipe to go back works properly.
+   * We need to account for the delta value here too because
+   * we do not want to remount an unrelated view.
+   * Example:
+   * /home --> /page2 --> router.back() --> /page3
+   * Going to /page3 would remount /page2 since we do
+   * not prune /page2 from the stack. However, /page2
+   * needs to remain in the stack.
+   * Example:
+   * /home --> /page2 --> /page3 --> router.go(-2) --> router.go(2)
+   * We would end up on /page3, but users need to be able to swipe
+   * to go back to /page2 and /home, so we need both pages mounted
+   * in the DOM.
    */
-  const mountIntermediaryViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+  const mountIntermediaryViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem, delta: number = 1) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
     const { enteringIndex: endIndex, leavingIndex: startIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
+    let mountDiff = delta - 1;
 
     for (let i = startIndex + 1; i < endIndex; i++) {
       viewStack[i].mount = true;
+
+      mountDiff -= 1;
+
+      if (mountDiff === 0) {
+        return;
+      }
     }
   }
 

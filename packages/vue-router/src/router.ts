@@ -262,6 +262,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       }
 
       routeInfo.position = currentHistoryPosition;
+      routeInfo.delta = delta;
       const historySize = locationHistory.size();
       const historyDiff = currentHistoryPosition - initialHistoryPosition;
 
