@@ -63,6 +63,12 @@ export {
 
   SpinnerTypes,
 
+  AccordionGroupChangeEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
+
   ActionSheetOptions,
   ActionSheetButton,
 
@@ -72,9 +78,29 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
@@ -83,7 +109,38 @@ export {
 
   PopoverOptions,
 
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
   ToastOptions,
-  ToastButton
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
 
 } from '@ionic/core';
