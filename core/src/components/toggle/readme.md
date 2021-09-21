@@ -174,7 +174,7 @@ interface ToggleChangeEventDetail<T = any> {
 }
 ```
 
-### TextareaCustomEvent
+### ToggleCustomEvent
 
 While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
 
