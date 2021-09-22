@@ -62,10 +62,17 @@ interface PickerOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: PickerAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
+```
+
+### PickerAttributes
+
+```typescript
+interface PickerAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 <!-- Auto Generated Below -->
@@ -228,6 +235,7 @@ export default {
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                       | `undefined` |
 | `duration`        | `duration`         | Number of milliseconds to wait before dismissing the picker.                                                     | `number`                                                | `0`         |
 | `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `htmlAttributes`  | --                 | Additional attributes to pass to the picker.                                                                     | `PickerAttributes \| undefined`                         | `undefined` |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                               | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                         | `undefined` |

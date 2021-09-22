@@ -11,25 +11,25 @@ import { /*@__PURE__*/ createReactComponent } from './react-component-lib';
 export const IonTabButtonInner = /*@__PURE__*/ createReactComponent<
   JSX.IonTabButton & { onIonTabButtonClick?: (e: CustomEvent) => void },
   HTMLIonTabButtonElement
->('ion-tab-button', IonTabButtonCmp);
+>('ion-tab-button', undefined, undefined, IonTabButtonCmp);
 export const IonTabBarInner = /*@__PURE__*/ createReactComponent<
   JSX.IonTabBar,
   HTMLIonTabBarElement
->('ion-tab-bar', IonTabBarCmp);
+>('ion-tab-bar', undefined, undefined, IonTabBarCmp);
 export const IonBackButtonInner = /*@__PURE__*/ createReactComponent<
   Omit<JSX.IonBackButton, 'icon'>,
   HTMLIonBackButtonElement
->('ion-back-button', IonBackButtonCmp);
+>('ion-back-button', undefined, undefined, IonBackButtonCmp);
 export const IonRouterOutletInner = /*@__PURE__*/ createReactComponent<
   JSX.IonRouterOutlet & {
     setRef?: (val: HTMLIonRouterOutletElement) => void;
     forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   },
   HTMLIonRouterOutletElement
->('ion-router-outlet', IonRouterOutletCmp);
+>('ion-router-outlet', undefined, undefined, IonRouterOutletCmp);
 
 // ionicons
 export const IonIconInner = /*@__PURE__*/ createReactComponent<
   IoniconsJSX.IonIcon,
   HTMLIonIconElement
->('ion-icon', IonIconCmp);
+>('ion-icon', undefined, undefined, IonIconCmp);

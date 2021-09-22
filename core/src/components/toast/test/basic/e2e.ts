@@ -1,3 +1,4 @@
+import { newE2EPage } from '@stencil/core/testing';
 import { testToast } from '../test.utils';
 
 const DIRECTORY = 'basic';
@@ -100,4 +101,22 @@ test('toast:rtl: start end position', async () => {
 
 test('toast:rtl: html', async () => {
   await testToast(DIRECTORY, '#toast-html', true);
+});
+
+// Attributes
+
+test('toast: htmlAttributes', async () => {
+  const page = await newE2EPage({ url: '/src/components/toast/test/basic?ionic:_testing=true' });
+
+  await page.click('#show-bottom-toast');
+  await page.waitForSelector('#show-bottom-toast');
+
+  let toast = await page.find('ion-toast');
+
+  expect(toast).not.toBe(null);
+  await toast.waitForVisible();
+
+  const attribute = await page.evaluate((el) => document.querySelector('ion-toast').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-toast');
 });

@@ -77,17 +77,6 @@ export const isDayDisabled = (
   return false;
 }
 
-export const getCalendarYearState = (refYear: number, activeParts: DatetimeParts, todayParts: DatetimeParts) => {
-  const isActiveYear = refYear === activeParts.year;
-  const isCurrentYear = refYear === todayParts.year;
-
-  return {
-    isActiveYear,
-    isCurrentYear,
-    ariaSelected: isActiveYear ? 'true' : null
-  }
-}
-
 /**
  * Given a locale, a date, the selected date, and today's date,
  * generate the state for a given calendar day button.

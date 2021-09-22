@@ -66,6 +66,9 @@ export const DateTimeExamples: React.FC = () => {
       <IonDatetime>
         <div slot="title">My Custom Title</div>
       </IonDatetime>
+
+      {/* Clear button */}
+      <IonDatetime showClearButton={true}></IonDatetime>
       
       {/* Custom buttons */}
       <IonDatetime ref={customDatetime}>

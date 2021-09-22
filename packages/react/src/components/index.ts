@@ -36,6 +36,7 @@ export {
   setupConfig,
   initialize,
   IonicSwiper,
+  PlatformConfig,
 
   SpinnerTypes,
 

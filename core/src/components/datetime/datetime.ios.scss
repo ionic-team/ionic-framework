@@ -8,7 +8,9 @@
   --title-color: #{$text-color-step-400};
 }
 
-:host(:not(.datetime-presentation-time)) {
+:host(.datetime-presentation-date-time),
+:host(.datetime-presentation-time-date),
+:host(.datetime-presentation-date) {
   min-height: 300px;
 }
 
@@ -156,58 +158,29 @@
   line-height: $datetime-ios-time-height;
 }
 
-// Year Picker
+// Month and Year Picker
 // -----------------------------------
-:host(.show-month-and-year) .calendar-action-buttons ion-item {
-  --color: #{current-color(base)};
-}
 
 :host .datetime-year-body .datetime-picker-col {
-  @include margin(0, 10px, 0, 10px);
   @include padding(0, $datetime-ios-padding, 0, $datetime-ios-padding);
 }
 
 :host .datetime-picker-before {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-
-  height: 82px;
-
   background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
-
-  z-index: 10;
-
-  pointer-events: none;
 }
 
 :host .datetime-picker-after {
-  @include position(116px, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-
-  height: 115px;
-
   background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
-
-  z-index: 10;
-
-  pointer-events: none;
 }
 
 :host .datetime-picker-highlight {
-  @include position(50%, 0, 0, 0);
   @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
+  @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
 
   position: absolute;
 
   width: calc(100% - #{$datetime-ios-padding * 2});
-
   height: 34px;
 
   transform: translateY(-50%);
@@ -215,78 +188,6 @@
   background: var(--ion-color-step-150, #eeeeef);
 
   z-index: -1;
-}
-
-:host .datetime-year-body {
-  display: flex;
-
-  position: relative;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 22px;
-
-  /**
-   * This is required otherwise the
-   * highlight will appear behind
-   * the datetime.
-   */
-  z-index: 0;
-}
-
-:host .datetime-picker-col {
-  scroll-snap-type: y mandatory;
-
-  /**
-   * Need to explicitly set overflow-x: hidden
-   * for older implementations of scroll snapping.
-   */
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  // Hide scrollbars on Firefox
-  scrollbar-width: none;
-
-  height: 200px;
-
-  outline: none;
-}
-
-@media (any-hover: hover) {
-  :host .datetime-picker-col:focus {
-    background: current-color(base, 0.2);
-  }
-}
-
-/**
- * Hide scrollbars on Chrome and Safari
- */
-:host .datetime-picker-col::-webkit-scrollbar {
-  display: none;
-}
-
-
-:host .picker-col-item {
-  height: 34px;
-
-  line-height: 34px;
-
-  scroll-snap-align: center;
-}
-
-:host .picker-col-item-empty {
-  scroll-snap-align: none;
-}
-
-
-:host .datetime-year-body .datetime-picker-col:first-of-type {
-  text-align: left;
-}
-
-:host .datetime-year-body .datetime-picker-col:last-of-type {
-  text-align: right;
 }
 
 // Footer

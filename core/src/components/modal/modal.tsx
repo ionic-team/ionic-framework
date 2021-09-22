@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
@@ -44,7 +44,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
-  private sortedBreakpoints: number[] = [];
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -102,11 +101,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * A decimal value between 0 and 1 that indicates the
-   * point at which the backdrop will begin to fade in
+   * point after which the backdrop will begin to fade in
    * when using a sheet modal. Prior to this point, the
    * backdrop will be hidden and the content underneath
-   * the sheet can be interacted with. This value must
-   * also be listed in the `breakpoints` array.
+   * the sheet can be interacted with. This value is exclusive
+   * meaning the backdrop will become active after the value
+   * specified.
    */
   @Prop() backdropBreakpoint = 0;
 
@@ -162,6 +162,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() presentingElement?: HTMLElement;
 
   /**
+   * Additional attributes to pass to the modal.
+   */
+  @Prop() htmlAttributes?: ModalAttributes;
+
+  /**
    * If `true`, the modal will open. If `false`, the modal will close.
    * Use this if you need finer grained control over presentation, otherwise
    * just use the modalController or the `trigger` property.
@@ -169,7 +174,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * the modal dismisses. You will need to do that in your code.
    */
   @Prop() isOpen = false;
-
   @Watch('isOpen')
   onIsOpenChange(newValue: boolean, oldValue: boolean) {
     if (newValue === true && oldValue === false) {
@@ -421,7 +425,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const sortedBreakpoints = this.sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
+    const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
       this.el,
@@ -481,7 +485,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, sortedBreakpoints: this.sortedBreakpoints, backdropBreakpoint: this.backdropBreakpoint });
+    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, backdropBreakpoint: this.backdropBreakpoint });
 
     const dismissed = await this.currentTransition;
 
@@ -545,10 +549,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { handle, isSheetModal, presentingElement } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-
     const mode = getIonMode(this);
     const { presented, modalId } = this;
 
@@ -557,6 +560,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
         no-router
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
         class={{
           [mode]: true,
           [`modal-card`]: presentingElement !== undefined && mode === 'ios',
@@ -566,9 +573,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass)
         }}
         id={modalId}
-        style={{
-          zIndex: `${20000 + this.overlayIndex}`,
-        }}
         onIonBackdropTap={this.onBackdropTap}
         onIonDismiss={this.onDismiss}
         onIonModalDidPresent={this.onLifecycle}

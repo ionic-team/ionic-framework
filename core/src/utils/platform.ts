@@ -1,3 +1,4 @@
+import { config } from '../global/config';
 
 export type Platforms = keyof typeof PLATFORMS_MAP;
 
@@ -29,8 +30,13 @@ export const setupPlatforms = (win: any = window) => {
   return platforms;
 };
 
-const detectPlatforms = (win: Window) =>
-  (Object.keys(PLATFORMS_MAP) as Platforms[]).filter(p => PLATFORMS_MAP[p](win));
+const detectPlatforms = (win: Window) => {
+  const customPlatformMethods = config.get('platform');
+  return (Object.keys(PLATFORMS_MAP) as Platforms[]).filter(p => {
+    const customMethod = customPlatformMethods && customPlatformMethods[p];
+    return typeof customMethod === 'function' ? customMethod(win) : PLATFORMS_MAP[p](win);
+  });
+}
 
 const isMobileWeb = (win: Window): boolean =>
   isMobile(win) && !isHybrid(win);
@@ -116,6 +122,8 @@ export const testUserAgent = (win: Window, expr: RegExp) =>
 
 const matchMedia = (win: Window, query: string): boolean =>
   win.matchMedia && win.matchMedia(query).matches;
+
+export type PlatformConfig = Partial<typeof PLATFORMS_MAP>;
 
 const PLATFORMS_MAP = {
   'ipad': isIpad,

@@ -41,7 +41,7 @@ export {
   IonicSafeString,
 
   // Platform
-  isPlatform, Platforms, getPlatforms,
+  isPlatform, Platforms, PlatformConfig, getPlatforms,
 
   // Gesture
   Gesture,
