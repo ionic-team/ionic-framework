@@ -119,7 +119,14 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return React.createElement(tagName, newProps, (this.state.isOpen) ? React.createElement('div', { id: 'ion-react-wrapper', ref: this.wrapperRef }, children) : null);
+      return React.createElement(tagName, newProps, (this.state.isOpen) ?
+        React.createElement('div', {
+          id: 'ion-react-wrapper',
+          ref: this.wrapperRef,
+          style: { height: '100%' }
+        }, children) :
+        null
+      );
     }
 
     static get displayName() {
