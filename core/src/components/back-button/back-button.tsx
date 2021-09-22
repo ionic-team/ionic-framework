@@ -145,7 +145,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
         onClick={this.onClick}
         class={generateMedColor(dsColor, {
           [mode]: true,
-          'button': true, // ion-buttons target .button
+          //'button': true, // ion-buttons target .button
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
           'in-toolbar': hostContext('ion-toolbar', this.el),

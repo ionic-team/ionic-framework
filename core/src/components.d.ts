@@ -3129,6 +3129,10 @@ export namespace Components {
          */
         "dsName"?: string;
         /**
+          * Define a variação de tamanho do componente.
+         */
+        "dsSize"?: 'lg';
+        /**
           * Define os valores do gráfico
          */
         "valores": MedChartRadiaItem[];
@@ -3139,6 +3143,10 @@ export namespace Components {
          */
         "dsColor"?: MedColor;
         /**
+          * Define a variação de tamanho do componente.
+         */
+        "dsSize"?: 'lg';
+        /**
           * TODO
          */
         "total": number;
@@ -3148,6 +3156,10 @@ export namespace Components {
           * Define a cor do componente.
          */
         "dsColor"?: MedColor;
+        /**
+          * Define a variação de tamanho do componente.
+         */
+        "dsSize"?: 'lg';
         /**
           * TODO
          */
@@ -7766,6 +7778,10 @@ declare namespace LocalJSX {
          */
         "dsName"?: string;
         /**
+          * Define a variação de tamanho do componente.
+         */
+        "dsSize"?: 'lg';
+        /**
           * Define os valores do gráfico
          */
         "valores"?: MedChartRadiaItem[];
@@ -7776,6 +7792,10 @@ declare namespace LocalJSX {
          */
         "dsColor"?: MedColor;
         /**
+          * Define a variação de tamanho do componente.
+         */
+        "dsSize"?: 'lg';
+        /**
           * TODO
          */
         "total"?: number;
@@ -7785,6 +7805,10 @@ declare namespace LocalJSX {
           * Define a cor do componente.
          */
         "dsColor"?: MedColor;
+        /**
+          * Define a variação de tamanho do componente.
+         */
+        "dsSize"?: 'lg';
         /**
           * TODO
          */

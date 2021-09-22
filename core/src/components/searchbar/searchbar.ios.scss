@@ -192,4 +192,68 @@
 }
 
 
-@import './searchbar.med.scss';
+//@import './searchbar.med.scss';
+
+@import "../../../templarios/abstracts";
+
+
+:host {
+  --color: #{color('neutral', '1', 'contrast')};
+  --background: #{color('neutral', '2')};
+  --border-radius: var(--med-border-radius-sm);
+  --icon-color: #{color('neutral', '10')};
+  --cancel-button-color: #{color('brand', '3')};
+  --placeholder-opacity: 1;
+  --padding-left: 30px;
+
+  // templarios
+  --spacing: var(--med-spacing-inset-xs);
+
+  padding: var(--spacing);
+  height: 40px;
+
+  .searchbar-input {
+    padding-inline-start: calc(var(--padding-left) + var(--med-spacing-inline-nano)) !important;
+    font-size: var(--med-font-size-xs);
+    font-weight: var(--med-font-weight-regular);
+    line-height: var(--med-line-height-compressed);
+  }
+
+  .searchbar-search-icon {
+    width: 24px;
+    stroke: var(--color);
+  }
+}
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color) {
+  --color: #{curr-color('color', '3', 'contrast')};
+  --background: #{curr-color('color', '3')};
+  --icon-color: #{curr-color('color', '3')};
+  --cancel-button-color: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral) {
+  --color: #{curr-color('neutral', null, 'contrast')};
+  --background: #{curr-color('neutral')};
+  --icon-color: #{curr-color('neutral')};
+  --cancel-button-color: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback) {
+  --color: #{curr-color('feedback', null, 'contrast')};
+  --background: #{curr-color('feedback')};
+  --icon-color: #{curr-color('feedback')};
+  --cancel-button-color: #{curr-color('feedback')};
+}

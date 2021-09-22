@@ -21,12 +21,17 @@ export class MedChartRadial {
   @Prop() dsName?: string;
 
   /**
+   * Define a variação de tamanho do componente.
+   */
+  @Prop() dsSize?: 'lg';
+
+  /**
    * Define os valores do gráfico
    */
   @Prop({reflect: true}) valores: MedChartRadiaItem[] = [];
 
   render() {
-    const { dsName, dsColor } = this;
+    const { dsName, dsColor, dsSize } = this;
     const totais = {
       total: 0,
       subtotais: [] as number[]
@@ -45,6 +50,7 @@ export class MedChartRadial {
         class={generateMedColor(dsColor, {
           'med-chart-radial': true,
           [`med-chart-radial--${dsName}`]: dsName !== undefined,
+          [`med-chart-radial--${dsSize}`]: dsSize !== undefined,
         })}>
         <svg viewBox="0 0 36 36">
           <circle cx="18" cy="18" r="16" />

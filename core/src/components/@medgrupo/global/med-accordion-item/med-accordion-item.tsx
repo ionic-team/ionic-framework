@@ -40,7 +40,7 @@ export class MedAccordionItem implements ComponentInterface {
   /**
    * TODO
    */
-   @Event() toggle!: EventEmitter;
+  @Event() toggle!: EventEmitter;
 
   @State() isOpen = false;
 

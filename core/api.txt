@@ -162,6 +162,29 @@ ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
+ion-button,css-prop,--background
+ion-button,css-prop,--background-activated
+ion-button,css-prop,--background-activated-opacity
+ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-focused-opacity
+ion-button,css-prop,--background-hover
+ion-button,css-prop,--background-hover-opacity
+ion-button,css-prop,--border-color
+ion-button,css-prop,--border-radius
+ion-button,css-prop,--border-style
+ion-button,css-prop,--border-width
+ion-button,css-prop,--box-shadow
+ion-button,css-prop,--color
+ion-button,css-prop,--color-activated
+ion-button,css-prop,--color-focused
+ion-button,css-prop,--color-hover
+ion-button,css-prop,--opacity
+ion-button,css-prop,--padding-bottom
+ion-button,css-prop,--padding-end
+ion-button,css-prop,--padding-start
+ion-button,css-prop,--padding-top
+ion-button,css-prop,--ripple-color
+ion-button,css-prop,--transition
 ion-button,part,native
 
 ion-buttons,scoped
@@ -1477,14 +1500,17 @@ med-cartao-resposta-lista,shadow
 med-chart-radial,scoped
 med-chart-radial,prop,dsColor,string | undefined,undefined,false,true
 med-chart-radial,prop,dsName,string | undefined,undefined,false,false
+med-chart-radial,prop,dsSize,"lg" | undefined,undefined,false,false
 med-chart-radial,prop,valores,MedChartRadiaItem[],[],false,false
 
 med-chart-radial-content,shadow
 med-chart-radial-content,prop,dsColor,string | undefined,undefined,false,true
+med-chart-radial-content,prop,dsSize,"lg" | undefined,undefined,false,false
 med-chart-radial-content,prop,total,number,0,false,true
 
 med-chart-radial-label,scoped
 med-chart-radial-label,prop,dsColor,string | undefined,undefined,false,true
+med-chart-radial-label,prop,dsSize,"lg" | undefined,undefined,false,false
 med-chart-radial-label,prop,valores,MedChartRadiaItem[],[],false,false
 
 med-child,shadow

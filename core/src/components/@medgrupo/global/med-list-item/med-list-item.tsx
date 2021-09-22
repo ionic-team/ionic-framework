@@ -43,7 +43,6 @@ export class MedListItem {
     const { dsColor, titulo, label, selected, dsSize, border } = this;
     return (
       <Host
-        from-stencil
         class={generateMedColor(dsColor, {
           'med-list-item': true,
           'med-list-item--selected': selected,

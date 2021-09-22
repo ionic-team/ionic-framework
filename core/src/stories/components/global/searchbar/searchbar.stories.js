@@ -13,7 +13,7 @@ const TemplateDefault = ({dsColor}) => {
       <ion-content>
 
         <!-- component -->
-        <ion-searchbar .dsColor=${dsColor} show-clear-button="never" show-cancel-button="focus" cancel-button-text="Cancelar" mode="ios" search-icon="med-search"></ion-searchbar>
+        <ion-searchbar .dsColor=${dsColor} show-clear-button="never" show-cancel-button="focus" cancel-button-text="Cancelar" mode="ios" search-icon="med-busca"></ion-searchbar>
         <!-- component -->
 
       <ion-content>

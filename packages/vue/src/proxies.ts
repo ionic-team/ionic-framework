@@ -947,19 +947,22 @@ export const MedCartaoRespostaLista = /*@__PURE__*/ defineContainer<JSX.MedCarta
 export const MedChartRadial = /*@__PURE__*/ defineContainer<JSX.MedChartRadial>('med-chart-radial', [
   'dsColor',
   'dsName',
+  'dsSize',
   'valores'
 ]);
 
 
 export const MedChartRadialContent = /*@__PURE__*/ defineContainer<JSX.MedChartRadialContent>('med-chart-radial-content', [
   'total',
-  'dsColor'
+  'dsColor',
+  'dsSize'
 ]);
 
 
 export const MedChartRadialLabel = /*@__PURE__*/ defineContainer<JSX.MedChartRadialLabel>('med-chart-radial-label', [
   'valores',
-  'dsColor'
+  'dsColor',
+  'dsSize'
 ]);
 
 

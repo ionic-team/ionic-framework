@@ -24,6 +24,7 @@
 
   .searchbar-search-icon {
     width: 24px;
+    stroke: var(--color);
   }
 }
 
@@ -54,7 +55,6 @@
 // //////////
 
 :host(.med-color-feedback) {
-
   --color: #{curr-color('feedback', null, 'contrast')};
   --background: #{curr-color('feedback')};
   --icon-color: #{curr-color('feedback')};

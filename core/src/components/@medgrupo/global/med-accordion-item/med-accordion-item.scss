@@ -11,6 +11,8 @@
   --background-content: #{color('neutral', '2')};
   --icon-color: #{color('neutral', '10')};
   --border-radius: var(--med-border-radius-sm);
+  --padding:  var(--med-spacing-inset-sm);
+  --icon-font-size: 24px;
 }
 
 :host(.med-accordion-item) {
@@ -18,7 +20,7 @@
   border-radius: var(--border-radius);
 
   .med-accordion-item__header-container {
-    padding: var(--med-spacing-inset-sm);
+    padding: var(--padding);
     width: 100%;
     display: flex;
     cursor: pointer;
@@ -61,7 +63,7 @@
 
   .med-accordion-item__icon {
     stroke: var(--icon-color);
-    font-size: 32px;
+    font-size: var(--icon-font-size);
     transform: rotate(0);
   }
 

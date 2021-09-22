@@ -19,7 +19,7 @@
     color('neutral', '2', null, 0));
   background-size: 200% 100%;
   background-position: 100% 0;
-  transition: .5s;
+  transition: background-image 0.5s linear;
   display: flex;
   padding: var(--padding);
   align-items: center;

@@ -1,5 +1,10 @@
 @import "../../../../../templarios/abstracts";
 
+:host {
+  --font-size-item: var(--med-font-size-nano);
+  --font-size-quantia: var(--med-font-size-md);
+}
+
 :host(.med-chart-radial-label) {
   display: inline-block;
 
@@ -9,7 +14,7 @@
   }
 
   .med-chart-radial-label__item {
-    font-size: var(--med-font-size-nano);
+    font-size: var(--font-size-item);
     line-height: var(--med-line-height-compressed);
     color: color('neutral', '5');
     display: flex;
@@ -22,10 +27,15 @@
   }
 
   .med-chart-radial-label__quantia {
-    font-size: var(--med-font-size-md);
+    font-size: var(--font-size-quantia);
     line-height: var(--med-line-height-compressed);
     margin-right: var(--med-spacing-inline-xxxs);
     color: hsl(var(--med-color-feedback));
     font-weight: var(--med-font-weight-bold);
   }
+}
+
+:host(.med-chart-radial-label--lg) {
+  --font-size-item: var(--med-font-size-xxxs);
+  --font-size-quantia: var(--med-font-size-lg);
 }

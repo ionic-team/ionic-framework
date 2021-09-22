@@ -18,6 +18,11 @@ export class MedChartRadialContent {
     */
   @Prop({ reflect: true }) dsColor?: MedColor;
 
+  /**
+   * Define a variação de tamanho do componente.
+   */
+  @Prop() dsSize?: 'lg';
+
   componentDidRender() {
     this.fontResize();
   }
@@ -35,13 +40,14 @@ export class MedChartRadialContent {
   }
 
   render() {
-    const { total, dsColor } = this;
+    const { total, dsColor, dsSize } = this;
 
     return (
       <Host
         from-stencil
         class={generateMedColor(dsColor, {
           'med-chart-radial-content': true,
+          [`med-chart-radial-content--${dsSize}`]: dsSize !== undefined,
         })}>
         <span class="med-chart-radial-content__label">Total de</span>
         <span class={`med-chart-radial-content__number ${this.fontResize()}`}>{total}</span>

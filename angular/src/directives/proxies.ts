@@ -1031,8 +1031,8 @@ export class MedCartaoRespostaLista {
 }
 export declare interface MedChartRadial extends Components.MedChartRadial {
 }
-@ProxyCmp({ inputs: ["dsColor", "dsName", "valores"] })
-@Component({ selector: "med-chart-radial", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["dsColor", "dsName", "valores"] })
+@ProxyCmp({ inputs: ["dsColor", "dsName", "dsSize", "valores"] })
+@Component({ selector: "med-chart-radial", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["dsColor", "dsName", "dsSize", "valores"] })
 export class MedChartRadial {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -1042,8 +1042,8 @@ export class MedChartRadial {
 }
 export declare interface MedChartRadialContent extends Components.MedChartRadialContent {
 }
-@ProxyCmp({ inputs: ["dsColor", "total"] })
-@Component({ selector: "med-chart-radial-content", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["dsColor", "total"] })
+@ProxyCmp({ inputs: ["dsColor", "dsSize", "total"] })
+@Component({ selector: "med-chart-radial-content", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["dsColor", "dsSize", "total"] })
 export class MedChartRadialContent {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -1053,8 +1053,8 @@ export class MedChartRadialContent {
 }
 export declare interface MedChartRadialLabel extends Components.MedChartRadialLabel {
 }
-@ProxyCmp({ inputs: ["dsColor", "valores"] })
-@Component({ selector: "med-chart-radial-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["dsColor", "valores"] })
+@ProxyCmp({ inputs: ["dsColor", "dsSize", "valores"] })
+@Component({ selector: "med-chart-radial-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["dsColor", "dsSize", "valores"] })
 export class MedChartRadialLabel {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

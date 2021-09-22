@@ -7,7 +7,7 @@ export default {
   decorators: [withDesign],
 };
 
-const Default = ({ total, dsColor }) => {
+const Default = ({ total, dsColor, dsSize }) => {
 
   return html`
     <ion-app>
@@ -15,7 +15,7 @@ const Default = ({ total, dsColor }) => {
         <div class="flex-center">
 
         <!-- component -->
-        <med-chart-radial-content .dsColor=${dsColor} total=${total}></med-chart-radial-content>
+        <med-chart-radial-content .dsColor=${dsColor} total=${total} ds-size=${dsSize}></med-chart-radial-content>
         <!-- component -->
 
       </div>
@@ -32,6 +32,15 @@ ChartRadialContent.parameters = {
   },
 }
 ChartRadialContent.argTypes = {
+  dsSize: {
+    options: [undefined, 'lg'],
+    control: { type: 'radio'},
+    description: "Define a variação de tamanho componente.",
+    table: {
+      type:  { summary: 'lg' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   dsColor: {
     options: MedColor,
     control: { type: 'select'},

@@ -46,6 +46,7 @@ export class MedHeader {
         <slot name="navbar"></slot>
         <slot name="toolbar"></slot>
         <slot name="progress"></slot>
+        <slot name="auxiliar"></slot>
       </Host>
     );
   }

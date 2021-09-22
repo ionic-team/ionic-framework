@@ -6,7 +6,7 @@ export default {
   decorators: [withDesign],
 };
 
-const Default = ({ valores }) => {
+const Default = ({ valores, dsSize }) => {
 
   setTimeout(() => {
     document.querySelector('med-chart-radial-label').valores = valores.valores;
@@ -18,7 +18,7 @@ const Default = ({ valores }) => {
         <div class="flex-center">
 
           <!-- component -->
-          <med-chart-radial-label></med-chart-radial-label>
+          <med-chart-radial-label ds-size=${dsSize}></med-chart-radial-label>
           <!-- component -->
 
         </div>
@@ -35,6 +35,15 @@ ChartRadialLabel.parameters = {
   },
 }
 ChartRadialLabel.argTypes = {
+  dsSize: {
+    options: [undefined, 'lg'],
+    control: { type: 'radio'},
+    description: "Define a variação de tamanho componente.",
+    table: {
+      type:  { summary: 'lg' },
+      defaultValue: { summary: 'undefined' },
+    },
+  },
   valores: {
     defaultValue: {
       valores: [

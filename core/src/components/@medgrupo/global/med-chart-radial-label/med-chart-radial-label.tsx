@@ -19,9 +19,13 @@ export class MedChartRadialLabel {
     */
   @Prop({ reflect: true }) dsColor?: MedColor;
 
+  /**
+   * Define a variação de tamanho do componente.
+   */
+  @Prop() dsSize?: 'lg';
 
   render() {
-    const { dsColor } = this;
+    const { dsColor, dsSize } = this;
 
     //const arrayReverse = this.valores.slice(0).reverse();
 
@@ -29,6 +33,7 @@ export class MedChartRadialLabel {
       <Host from-stencil
         class={generateMedColor(dsColor, {
           'med-chart-radial-label': true,
+          [`med-chart-radial-label--${dsSize}`]: dsSize !== undefined,
         })}
       >
         <ul class="med-chart-radial-label__list">
