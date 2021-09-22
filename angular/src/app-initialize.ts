@@ -16,9 +16,8 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
         _zoneGate: (h: any) => zone.run(h)
       });
 
-      const aelFn = '__zone_symbol__addEventListener' in (doc.body as any)
-        ? '__zone_symbol__addEventListener'
-        : 'addEventListener';
+      const aelFn =
+        '__zone_symbol__addEventListener' in (doc.body as any) ? '__zone_symbol__addEventListener' : 'addEventListener';
 
       return applyPolyfills().then(() => {
         return defineCustomElements(win, {
@@ -31,7 +30,7 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
           },
           rel(elm, eventName, cb, opts) {
             elm.removeEventListener(eventName, cb, opts);
-          }
+          },
         });
       });
     }

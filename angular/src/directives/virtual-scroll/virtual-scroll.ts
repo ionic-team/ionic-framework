@@ -205,8 +205,8 @@ export class IonVirtualScroll {
       case 'item': return this.itmTmp.templateRef;
       case 'header': return this.hdrTmp.templateRef;
       case 'footer': return this.ftrTmp.templateRef;
+      default: throw new Error('template for virtual item was not provided');
     }
-    throw new Error('template for virtual item was not provided');
   }
 }
 

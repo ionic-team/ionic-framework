@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Injector } from '@angular/core';
+import { ElementRef, Injector, Directive, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValueAccessor } from './value-accessor';
@@ -9,19 +9,18 @@ import { ValueAccessor } from './value-accessor';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: TextValueAccessor,
-      multi: true
-    }
-  ]
+      useExisting: TextValueAccessorDirective,
+      multi: true,
+    },
+  ],
 })
-export class TextValueAccessor extends ValueAccessor {
-
+export class TextValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {
     super(injector, el);
   }
 
   @HostListener('ionChange', ['$event.target'])
-  _handleInputEvent(el: any) {
+  _handleInputEvent(el: any): void {
     this.handleChangeEvent(el, el.value);
   }
 }

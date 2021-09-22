@@ -2,12 +2,10 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
-    "flatModuleOutFile": "core.js",
-    "flatModuleId": "@ionic/angular",
     "skipTemplateCodegen": true,
     "fullTemplateTypeCheck": false,
     "enableResourceInlining": true,
-    "enableIvy": false
+    "compilationMode": "partial"
   },
   "compilerOptions": {
     "alwaysStrict": true,
@@ -36,7 +34,12 @@
     "paths": {
       "@ionic/core/hydrate": ["../core/hydrate"],
       "@ionic/core": ["../core"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "typescript-eslint-language-service"
+      }
+    ]
   },
   "exclude": ["node_modules", "src/schematics"],
   "files": ["src/index.ts"]

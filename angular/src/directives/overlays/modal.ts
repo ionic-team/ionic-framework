@@ -34,6 +34,15 @@ export class IonModal {
       c.detectChanges();
     });
 
-    proxyOutputs(this, this.el, ["ionModalDidPresent", "ionModalWillPresent", "ionModalWillDismiss", "ionModalDidDismiss", "didPresent", "willPresent", "willDismiss", "didDismiss"]);
+    proxyOutputs(this, this.el, [
+      'ionModalDidPresent',
+      'ionModalWillPresent',
+      'ionModalWillDismiss',
+      'ionModalDidDismiss',
+      'didPresent',
+      'willPresent',
+      'willDismiss',
+      'didDismiss',
+    ]);
   }
 }

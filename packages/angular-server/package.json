@@ -22,7 +22,7 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "test": "echo 'angular no tests yet'",
-    "build": "ng-packagr -p package.json",
+    "build": "ng-packagr -p package.json -c tsconfig.json",
     "build.prod": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
     "lint": "npm run lint.ts",
@@ -35,25 +35,23 @@
     }
   },
   "peerDependencies": {
-    "@angular/core": ">=8.2.7",
-    "@angular/platform-server": ">=8.2.7",
+    "@angular/core": ">=12.0.0",
+    "@angular/platform-server": ">=12.0.0",
     "@ionic/angular": "*",
-    "rxjs": ">=6.2.0",
-    "zone.js": ">=0.8.26"
+    "rxjs": ">=6.6.0",
+    "zone.js": ">=0.11.0"
   },
   "devDependencies": {
-    "@angular/animations": "8.2.13",
-    "@angular/common": "8.2.13",
-    "@angular/compiler": "8.2.13",
-    "@angular/compiler-cli": "8.2.13",
-    "@angular/core": "8.2.13",
-    "@angular/platform-browser": "8.2.13",
-    "@angular/platform-server": "8.2.13",
+    "@angular/animations": "^12.0.0",
+    "@angular/common": "^12.0.0",
+    "@angular/compiler": "^12.0.0",
+    "@angular/compiler-cli": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "@angular/platform-browser": "^12.0.0",
+    "@angular/platform-browser-dynamic": "^12.2.10",
+    "@angular/platform-server": "^12.0.0",
     "@ionic/core": "6.0.0-rc.0",
-    "ng-packagr": "5.7.1",
-    "tslint": "^5.12.1",
-    "tslint-ionic-rules": "0.0.21",
-    "typescript": "3.4.5",
-    "typescript-tslint-plugin": "^0.5.5"
+    "ng-packagr": "^12.0.0",
+    "typescript": "4.2.4"
   }
 }

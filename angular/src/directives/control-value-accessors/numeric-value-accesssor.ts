@@ -1,32 +1,30 @@
-import { Directive, ElementRef, HostListener, Injector } from '@angular/core';
+import { Directive, HostListener, ElementRef, Injector } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValueAccessor } from './value-accessor';
 
 @Directive({
-  /* tslint:disable-next-line:directive-selector */
   selector: 'ion-input[type=number]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: NumericValueAccessor,
-      multi: true
-    }
-  ]
+      useExisting: NumericValueAccessorDirective,
+      multi: true,
+    },
+  ],
 })
-export class NumericValueAccessor extends ValueAccessor {
-
+export class NumericValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {
     super(injector, el);
   }
 
   @HostListener('ionChange', ['$event.target'])
-  _handleIonChange(el: any) {
+  _handleIonChange(el: any): void {
     this.handleChangeEvent(el, el.value);
   }
 
-  registerOnChange(fn: (_: number | null) => void) {
-    super.registerOnChange(value => {
+  registerOnChange(fn: (_: number | null) => void): void {
+    super.registerOnChange((value) => {
       fn(value === '' ? null : parseFloat(value));
     });
   }

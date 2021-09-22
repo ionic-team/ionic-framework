@@ -1,4 +1,3 @@
-
 export interface IonicGlobal {
   config?: any;
   asyncQueue?: boolean;

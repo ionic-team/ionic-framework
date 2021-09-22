@@ -34,6 +34,15 @@ export class IonPopover {
       c.detectChanges();
     });
 
-    proxyOutputs(this, this.el, ["ionPopoverDidPresent", "ionPopoverWillPresent", "ionPopoverWillDismiss", "ionPopoverDidDismiss", "didPresent", "willPresent", "willDismiss", "didDismiss"]);
+    proxyOutputs(this, this.el, [
+      'ionPopoverDidPresent',
+      'ionPopoverWillPresent',
+      'ionPopoverWillDismiss',
+      'ionPopoverDidDismiss',
+      'didPresent',
+      'willPresent',
+      'willDismiss',
+      'didDismiss',
+    ]);
   }
 }

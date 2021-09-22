@@ -9,6 +9,7 @@ export class RouterLinkPage2Component implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('ngOnInit')
   }
 
 }
