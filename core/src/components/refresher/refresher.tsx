@@ -73,7 +73,7 @@ export class Refresher implements ComponentInterface {
   @Prop() closeDuration = '280ms';
 
   /**
-   * Time it takes the refresher to to snap back to the `refreshing` state.
+   * Time it takes the refresher to snap back to the `refreshing` state.
    * Does not apply when the refresher content uses a spinner,
    * enabling the native refresher.
    */

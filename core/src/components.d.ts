@@ -1842,7 +1842,7 @@ export namespace Components {
          */
         "pullMin": number;
         /**
-          * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration": string;
     }
@@ -1936,7 +1936,7 @@ export namespace Components {
          */
         "push": (url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>;
         /**
-          * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
+          * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
         "root": string;
         /**
@@ -5160,7 +5160,7 @@ declare namespace LocalJSX {
          */
         "pullMin"?: number;
         /**
-          * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration"?: string;
     }
@@ -5250,7 +5250,7 @@ declare namespace LocalJSX {
          */
         "onIonRouteWillChange"?: (event: CustomEvent<RouterEventDetail>) => void;
         /**
-          * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
+          * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
         "root"?: string;
         /**

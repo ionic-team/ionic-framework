@@ -270,6 +270,13 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onStart() {
+    /**
+     * We need to query for the ion-item
+     * every time the gesture starts. Developers
+     * may toggle ion-item elements via *ngIf.
+     */
+    this.item = this.el.querySelector('ion-item');
+
     // Prevent scrolling during gesture
     this.disableContentScrollY();
 
