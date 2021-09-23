@@ -205,6 +205,7 @@
   --cancel-button-color: #{color('brand', '3')};
   --placeholder-opacity: 1;
   --padding-left: 30px;
+  --clear-button-color: #{color('neutral', '5')};
 
   // templarios
   --spacing: var(--med-spacing-inset-xs);
@@ -221,7 +222,7 @@
 
   .searchbar-search-icon {
     width: 24px;
-    stroke: var(--color);
+    stroke: var(--icon-color);
   }
 }
 

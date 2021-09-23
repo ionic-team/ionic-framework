@@ -443,7 +443,7 @@
 // //////////////////////////////
 
 :host(.med-color) {
-  --background: #{curr-color('color', '1')};
+  --background: #{curr-color('color', '3')};
   --border-color: #{curr-color('color', '3')};
   --color: #{curr-color('color', 'gradient', 'contrast')};
 

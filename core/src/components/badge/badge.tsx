@@ -45,7 +45,6 @@ export class Badge implements ComponentInterface {
 
     return (
       <Host
-        from-stencil
         class={generateMedColor(dsColor, {
           [mode]: true,
           'med-badge': true,

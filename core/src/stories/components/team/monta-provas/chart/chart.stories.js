@@ -118,11 +118,11 @@ const TemplateDefault = ({valores}) => {
             </med-context-menu>
 
             <div class="monta-provas-chart" slot="content">
-              <med-chart-radial ds-size="lg">
-                <med-chart-radial-content class="monta-provas-chart-content" total="999999" ds-size="lg"></med-chart-radial-content>
+              <med-chart-radial >
+                <med-chart-radial-content class="monta-provas-chart-content" total="999999" ></med-chart-radial-content>
               </med-chart-radial>
 
-              <med-chart-radial-label class="monta-provas-chart__label" ds-size="lg"></med-chart-radial-label>
+              <med-chart-radial-label class="monta-provas-chart__label" ></med-chart-radial-label>
             </div>
           </med-accordion-item>
         </med-accordion-list>
