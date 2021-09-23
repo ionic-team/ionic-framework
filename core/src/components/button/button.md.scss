@@ -165,16 +165,16 @@
 @import "../../../templarios/abstracts";
 
 :host {
-  --background: #{color('brand', 'gradient')};
+  --background: #{color('brand', '3')};
   --border-color: #{color('brand', '3')};
   --color: #{color('brand', 'gradient', 'contrast')};
 
-  --bg-hover: #{color('brand', '3')};
+  --bg-hover: #{color('brand', '1')};
   --bg-hover-opacity: 1;
   --border-color-hover: transparent;
   --color-hover: #{color('brand', 'gradient', 'contrast')};
 
-  --bg-focused: #{color('brand', '3')};
+  --bg-focused: #{color('brand', '1')};
   --bg-focused-opacity: 1;
   --border-color-focused: transparent;
   --color-focused: #{color('brand', 'gradient', 'contrast')};
@@ -443,14 +443,14 @@
 // //////////////////////////////
 
 :host(.med-color) {
-  --background: #{curr-color('color', 'gradient')};
+  --background: #{curr-color('color', '1')};
   --border-color: #{curr-color('color', '3')};
   --color: #{curr-color('color', 'gradient', 'contrast')};
 
-  --bg-hover: #{curr-color('color', '3')};
+  --bg-hover: #{curr-color('color', '1')};
   --color-hover: #{curr-color('color', 'gradient', 'contrast')};
 
-  --bg-focused: #{curr-color('color', '3')};
+  --bg-focused: #{curr-color('color', '1')};
   --color-focused: #{curr-color('color', 'gradient', 'contrast')};
   --color-activated: #{curr-color('color', 'gradient', 'contrast')};
 }

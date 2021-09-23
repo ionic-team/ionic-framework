@@ -20,6 +20,8 @@
     display: flex;
     align-items: center;
     font-weight: var(--med-font-weight-bold);
+    min-width: 3ch;
+    text-align: right;
 
     &:not(:last-of-type) {
       padding-bottom: var(--med-spacing-stack-xxxs);
