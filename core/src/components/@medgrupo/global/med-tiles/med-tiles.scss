@@ -8,7 +8,7 @@
   --border-background-selected: #{color('brand', '3')};
   --font-size-title: var(--med-font-size-sm);
   --color-title: #{color('neutral', '10')};
-  --font-size-label: var(--med-font-size-xxxs);
+  --font-size-label: var(--med-font-size-xs);
   --color-label: #{color('brand', '3')};
 }
 
@@ -26,11 +26,11 @@
   }
 
   .med-tiles__border {
-    border-top-left-radius: var(--border-radius);
-    border-bottom-left-radius: var(--border-radius);
-    width: 8px;
-    min-height: 100%;
-    background: var(--border-background);
+      border-top-left-radius: var(--border-radius);
+      border-bottom-left-radius: var(--border-radius);
+      width: 8px;
+      min-height: 100%;
+      background: var(--border-background);
   }
 
   .med-tiles__title {
