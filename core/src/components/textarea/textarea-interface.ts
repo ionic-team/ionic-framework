@@ -1,4 +1,9 @@
 
 export interface TextareaChangeEventDetail {
-  value: string | undefined | null;
+  value?: string | null;
+}
+
+export interface TextareaCustomEvent extends CustomEvent {
+  detail: TextareaChangeEventDetail;
+  target: HTMLIonTextareaElement;
 }

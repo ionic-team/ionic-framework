@@ -22,6 +22,27 @@ The component has full keyboard support for navigating between and selecting `io
 | `End`              | Focuses the last focusable element.                            |
 | `Space` or `Enter` | Selects the element that is currently focused.                 |
 
+## Interfaces
+
+### SegmentChangeEventDetail
+
+```typescript
+interface SegmentChangeEventDetail {
+  value?: string;
+}
+```
+
+### SegmentCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface SegmentCustomEvent extends CustomEvent {
+  target: HTMLIonSegmentElement;
+  detail: SegmentChangeEventDetail;
+}
+```
+
 <!-- Auto Generated Below -->
 
 

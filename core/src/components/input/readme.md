@@ -4,6 +4,26 @@ The input component is a wrapper to the HTML input element with custom styling a
 
 It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, and `"url"`. It supports all standard text input events including keyup, keydown, keypress, and more.
 
+## Interfaces
+
+### InputChangeEventDetail
+
+```typescript
+interface InputChangeEventDetail {
+  value: string | undefined | null;
+}
+```
+
+### InputCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface InputCustomEvent extends CustomEvent {
+  detail: InputChangeEventDetail;
+  target: HTMLIonInputElement;
+}
+```
 
 <!-- Auto Generated Below -->
 

@@ -15,6 +15,34 @@ left or right of the range.
 
 When using a pin, the default behavior is to round the value that gets displayed using `Math.round()`. This behavior can be customized by passing in a formatter function to the `pinFormatter` property. See the [Usage](#usage) section for an example.
 
+## Interfaces
+
+### RangeChangeEventDetail
+
+```typescript
+interface RangeChangeEventDetail {
+  value: RangeValue;
+}
+```
+
+### RangeCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface RangeCustomEvent extends CustomEvent {
+  detail: RangeChangeEventDetail;
+  target: HTMLIonRangeElement;
+}
+```
+
+## Types
+
+### RangeValue
+
+```typescript
+type RangeValue = number | { lower: number, upper: number };
+```
 
 <!-- Auto Generated Below -->
 

@@ -6,6 +6,28 @@ Once the user drags an item and drops it in a new position, the `ionItemReorder`
 
 The `detail` property of the `ionItemReorder` event includes all of the relevant information about the reorder operation, including the `from` and `to` indexes. In the context of reordering, an item moves `from` an index `to` a new index.
 
+## Interfaces
+
+### ItemReorderEventDetail
+
+```typescript
+interface ItemReorderEventDetail {
+  from: number;
+  to: number;
+  complete: (data?: boolean | any[]) => any;
+}
+```
+
+### ItemReorderCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface ItemReorderCustomEvent extends CustomEvent {
+  detail: ItemReorderEventDetail;
+  target: HTMLIonReorderGroupElement;
+}
+```
 
 <!-- Auto Generated Below -->
 

@@ -35,21 +35,19 @@ export {
 export * from './globalExtensions';
 
 export {
-  menuController,
-
-  // Security
-  IonicSafeString,
-
-  // Platform
-  isPlatform, Platforms, PlatformConfig, getPlatforms,
-
-  // Gesture
-  Gesture,
-  GestureConfig,
-  GestureDetail,
+  // UTILS
+  createAnimation,
   createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  setupConfig,
+  IonicSwiper,
+  getPlatforms,
+  isPlatform,
+  menuController,
+  getTimeGivenProgression,
 
-  // Animations
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -57,18 +55,18 @@ export {
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
-  iosTransitionAnimation,
-  mdTransitionAnimation,
-  getTimeGivenProgression,
-
-  // Hardware Back Button
-  BackButtonEvent,
-
-  // Swiper
-  IonicSwiper,
+  Gesture,
+  GestureConfig,
+  GestureDetail,
+  NavComponentWithProps,
 
   SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -79,19 +77,77 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
 
+  Platforms,
+  PlatformConfig,
+
   PopoverOptions,
 
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
   ToastOptions,
-  ToastButton
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
 } from '@ionic/core/components';
 
 // Icons that are used by internal components

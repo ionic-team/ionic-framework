@@ -44,11 +44,19 @@ export * from './types/ionic-lifecycle-hooks';
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
 
-// UTILS
-export { PlatformConfig, IonicSafeString, getPlatforms, isPlatform, createAnimation, IonicSwiper } from '@ionic/core';
-
-// CORE TYPES
 export {
+  // UTILS
+  createAnimation,
+  createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  setupConfig,
+  IonicSwiper,
+  getPlatforms,
+  isPlatform,
+  getTimeGivenProgression,
+
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -59,11 +67,15 @@ export {
   Gesture,
   GestureConfig,
   GestureDetail,
-  mdTransitionAnimation,
-  iosTransitionAnimation,
   NavComponentWithProps,
 
   SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -74,18 +86,74 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
 
+  PlatformConfig,
+
   PopoverOptions,
 
-  ToastOptions,
-  ToastButton
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
 
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
+  ToastOptions,
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
 } from '@ionic/core';

@@ -183,6 +183,27 @@ dates in JavaScript.
 | `Shift` + `PageUp` | Changes the grid of dates to the previous year. |
 | `Shift` + `PageDown` | Changes the grid of dates to the next year. |
 
+## Interfaces
+
+### DatetimeChangeEventDetail
+
+```typescript
+interface DatetimeChangeEventDetail {
+  value?: string | null;
+}
+```
+
+### DatetimeCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface DatetimeCustomEvent extends CustomEvent {
+  detail: DatetimeChangeEventDetail;
+  target: HTMLIonDatetimeElement;
+}
+```
+
 <!-- Auto Generated Below -->
 
 

@@ -6,6 +6,11 @@ export interface DatetimeChangeEventDetail {
   value?: string | null;
 }
 
+export interface DatetimeCustomEvent extends CustomEvent {
+  detail: DatetimeChangeEventDetail;
+  target: HTMLIonDatetimeElement;
+}
+
 export interface DatetimeParts {
   month: number;
   day: number | null;

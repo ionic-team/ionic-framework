@@ -1407,7 +1407,7 @@ ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
-ion-toggle,event,ionChange,ToggleChangeEventDetail,true
+ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
 ion-toggle,event,ionFocus,void,true
 ion-toggle,css-prop,--background
 ion-toggle,css-prop,--background-checked
