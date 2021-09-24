@@ -124,12 +124,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * Emitted when the button has focus.
    */
-  @Event({ composed: false }) ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the button loses focus.
    */
-  @Event({ composed: false }) ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
