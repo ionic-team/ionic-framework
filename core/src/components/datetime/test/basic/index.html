@@ -327,7 +327,7 @@
           datetimes.forEach(datetime => {
             datetime.locale = (!!value) ? value : 'default';
           });
-        })
+        });
 
         const darkModeCheckbox = document.querySelector('ion-checkbox');
         darkModeCheckbox.addEventListener('ionChange', (ev) => {
@@ -342,18 +342,28 @@
           buttons.forEach(button => {
             button.color = ev.target.value;
           })
-        })
+        });
 
         titleToggle.addEventListener('ionChange', (ev) => {
           datetimes.forEach(datetime => {
             datetime.showDefaultTitle = ev.detail.checked;
           });
-        })
+        });
         buttonsToggle.addEventListener('ionChange', (ev) => {
           datetimes.forEach(datetime => {
             datetime.showDefaultButtons = ev.detail.checked;
           });
-        })
+        });
+
+        datetimes.forEach(datetime => {
+          datetime.addEventListener('ionFocus', () => {
+            console.log('Listen ionFocus: fired');
+          });
+
+          datetime.addEventListener('ionBlur', () => {
+            console.log('Listen ionBlur: fired');
+          });
+        });
 
         const defaultPopover = document.querySelector('ion-popover#default-popover');
         const customPopover = document.querySelector('ion-popover#custom-popover');
