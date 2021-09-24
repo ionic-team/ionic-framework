@@ -1190,6 +1190,14 @@ export class Datetime implements ComponentInterface {
     });
   }
 
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
+  }
+
   private nextMonth = () => {
     const { calendarBodyRef } = this;
     if (!calendarBodyRef) { return; }
@@ -1596,6 +1604,8 @@ export class Datetime implements ComponentInterface {
     return (
       <Host
         aria-disabled={disabled ? 'true' : null}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class={{
           ...createColorClasses(color, {
             [mode]: true,
