@@ -225,7 +225,7 @@ export const configureTriggerInteraction = (
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, 0)
         }
       ]
 
@@ -249,7 +249,7 @@ export const configureTriggerInteraction = (
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, 0)
         }
       ]
 
@@ -270,7 +270,7 @@ export const configureTriggerInteraction = (
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, 0)
         }
       ];
       break;

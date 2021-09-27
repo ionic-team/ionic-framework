@@ -48,8 +48,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
 
-  private focusDescendantOnPresent = false;
-  private descendantIndexToFocus: number | null = null;
+  private descendantIndexToFocus?: number;
 
   lastFocus?: HTMLElement;
 
@@ -309,14 +308,12 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @internal
    */
   @Method()
-  async presentFromTrigger(event?: any, focusDescendant = false, descendantIndexToFocus: number | null = null) {
-    this.focusDescendantOnPresent = focusDescendant;
+  async presentFromTrigger(event?: any, descendantIndexToFocus?: number) {
     this.descendantIndexToFocus = descendantIndexToFocus;
 
     await this.present(event);
 
-    this.focusDescendantOnPresent = false;
-    this.descendantIndexToFocus = null;
+    this.descendantIndexToFocus = undefined;
   }
 
   /**
@@ -406,8 +403,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * presented using the "Right" arrow key,
      * we need to move focus inside the popover.
      */
-    if (this.focusDescendantOnPresent) {
-      focusDescendant(this.el, this.el, this.descendantIndexToFocus || 0);
+    if (this.descendantIndexToFocus !== undefined) {
+      focusDescendant(this.el, this.el, this.descendantIndexToFocus);
     }
   }
 
