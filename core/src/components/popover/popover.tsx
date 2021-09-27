@@ -49,6 +49,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private workingDelegate?: FrameworkDelegate;
 
   private descendantIndexToFocus?: number;
+  private descendantSelector?: string;
 
   lastFocus?: HTMLElement;
 
@@ -308,12 +309,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @internal
    */
   @Method()
-  async presentFromTrigger(event?: any, descendantIndexToFocus?: number) {
+  async presentFromTrigger(event?: any, descendantIndexToFocus?: number, descendantSelector?: string) {
     this.descendantIndexToFocus = descendantIndexToFocus;
+    this.descendantSelector = descendantSelector;
 
     await this.present(event);
 
     this.descendantIndexToFocus = undefined;
+    this.descendantSelector = undefined;
   }
 
   /**
@@ -404,7 +407,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * we need to move focus inside the popover.
      */
     if (this.descendantIndexToFocus !== undefined) {
-      focusDescendant(this.el, this.el, this.descendantIndexToFocus);
+      focusDescendant(this.el, this.el, this.descendantIndexToFocus, this.descendantSelector);
     }
   }
 

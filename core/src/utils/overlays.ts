@@ -68,8 +68,8 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
 const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
 
-export const focusDescendant = (ref: Element, overlay: HTMLIonOverlayElement, descendantIndex = 0) => {
-  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
+export const focusDescendant = (ref: Element, overlay: HTMLIonOverlayElement, descendantIndex = 0, descendantSelector: string = focusableQueryString) => {
+  const inputs = Array.from(ref.querySelectorAll(descendantSelector)) as HTMLElement[];
   let inputToFocus = inputs.length > descendantIndex ? inputs[descendantIndex] : null;
 
   const shadowRoot = inputToFocus && inputToFocus.shadowRoot;

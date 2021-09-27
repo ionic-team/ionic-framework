@@ -1885,7 +1885,7 @@ export namespace Components {
         /**
           * When opening a popover from a trigger, we should not be modifying the `event` prop from inside the component. Additionally, when pressing the "Right" arrow key, we need to shift focus to the first descendant in the newly presented popover.
          */
-        "presentFromTrigger": (event?: any, descendantIndexToFocus?: number | undefined) => Promise<void>;
+        "presentFromTrigger": (event?: any, descendantIndexToFocus?: number | undefined, descendantSelector?: string | undefined) => Promise<void>;
         /**
           * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
          */

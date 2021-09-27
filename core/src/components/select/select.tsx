@@ -180,10 +180,11 @@ export class Select implements ComponentInterface {
     });
 
     if (this.interface === 'popover') {
+      // focus the selected item, or the first if nothing is selected (need to focus *something* for keyboard controls)
+      // filter search to actual options, excluding headers etc. that can also appear in popover
       const { childOpts } = this;
       const indexOfSelected = childOpts.map(o => o.value).indexOf(this.value);
-      // focus the selected item, or the first if nothing is selected (need to focus *something* for keyboard controls)
-      await (overlay as HTMLIonPopoverElement).presentFromTrigger(event, indexOfSelected > -1 ? indexOfSelected : 0);
+      await (overlay as HTMLIonPopoverElement).presentFromTrigger(event, indexOfSelected > -1 ? indexOfSelected : 0, '.select-interface-option');
     } else {
       await overlay.present();
     }
