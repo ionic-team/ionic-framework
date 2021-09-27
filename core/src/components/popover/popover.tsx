@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, PopoverAttributes, PopoverInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
-import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, focusNthDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -49,6 +49,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private workingDelegate?: FrameworkDelegate;
 
   private focusDescendantOnPresent = false;
+  private descendantIndexToFocus: number | null = null;
 
   lastFocus?: HTMLElement;
 
@@ -308,12 +309,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @internal
    */
   @Method()
-  async presentFromTrigger(event?: any, focusDescendant = false) {
+  async presentFromTrigger(event?: any, focusDescendant = false, descendantIndexToFocus: number | null = null) {
     this.focusDescendantOnPresent = focusDescendant;
+    this.descendantIndexToFocus = descendantIndexToFocus;
 
     await this.present(event);
 
     this.focusDescendantOnPresent = false;
+    this.descendantIndexToFocus = null;
   }
 
   /**
@@ -401,11 +404,12 @@ export class Popover implements ComponentInterface, PopoverInterface {
     /**
      * If popover is nested and was
      * presented using the "Right" arrow key,
-     * we need to move focus to the first
-     * descendant inside of the popover.
+     * we need to move focus inside the popover.
      */
     if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(this.el, this.el);
+      this.descendantIndexToFocus ? 
+        focusNthDescendant(this.el, this.el, this.descendantIndexToFocus) :
+        focusFirstDescendant(this.el, this.el);
     }
   }
 

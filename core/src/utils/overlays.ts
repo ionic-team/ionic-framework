@@ -118,6 +118,39 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   }
 };
 
+export const focusNthDescendant = (ref: Element, overlay: HTMLIonOverlayElement, index: number) => {
+  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
+  let inputToFocus = inputs.length > index ? inputs[index] : null;
+
+  const shadowRoot = inputToFocus && inputToFocus.shadowRoot;
+  if (shadowRoot) {
+    // If there are no inner focusable elements, just focus the host element.
+    inputToFocus = shadowRoot.querySelector(innerFocusableQueryString) || inputToFocus;
+  }
+
+  if (inputToFocus) {
+    inputToFocus.focus();
+
+    /**
+     * When programmatically focusing an element,
+     * the focus-visible utility will not run because
+     * it is expecting a keyboard event to have triggered this;
+     * however, there are times when we need to manually control
+     * this behavior so we call the `setFocus` method on ion-app
+     * which will let us explicitly set the elements to focus.
+     */
+    if (inputToFocus.classList.contains('ion-focusable')) {
+      const app = overlay.closest('ion-app');
+      if (app) {
+        app.setFocus([inputToFocus]);
+      }
+    }
+  } else {
+    // Focus overlay instead of letting focus escape
+    overlay.focus();
+  }
+};
+
 /**
  * Traps keyboard focus inside of overlay components.
  * Based on https://w3c.github.io/aria-practices/examples/dialog-modal/alertdialog.html

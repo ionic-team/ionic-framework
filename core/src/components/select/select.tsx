@@ -180,7 +180,9 @@ export class Select implements ComponentInterface {
     });
 
     if (this.interface === 'popover') {
-      await (overlay as HTMLIonPopoverElement).presentFromTrigger(event, true);
+      const { childOpts } = this;
+      const indexOfSelected = childOpts.map(o => o.value).indexOf(this.value);
+      await (overlay as HTMLIonPopoverElement).presentFromTrigger(event, true, indexOfSelected === -1 ? null : indexOfSelected);
     } else {
       await overlay.present();
     }
