@@ -10,7 +10,7 @@ import {
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
-import { raf, renderHiddenInput } from '../../utils/helpers';
+import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
@@ -880,6 +880,19 @@ export class Datetime implements ComponentInterface {
     }
     hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
     hiddenIO.observe(this.el);
+
+    /**
+     * Datetime uses Ionic components that emit
+     * ionFocus and ionBlur. These events are
+     * composed meaning they will cross
+     * the shadow dom boundary. We need to
+     * stop propagation on these events otherwise
+     * developers will see 2 ionFocus or 2 ionBlur
+     * events at a time.
+     */
+    const root = getElementRoot(this.el);
+    root.addEventListener('ionFocus', (ev: Event) => ev.stopPropagation());
+    root.addEventListener('ionBlur', (ev: Event) => ev.stopPropagation());
   }
 
   /**
@@ -1188,6 +1201,14 @@ export class Datetime implements ComponentInterface {
       'datetime': true,
       'interactive-disabled': this.disabled,
     });
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
   }
 
   private nextMonth = () => {
@@ -1596,6 +1617,8 @@ export class Datetime implements ComponentInterface {
     return (
       <Host
         aria-disabled={disabled ? 'true' : null}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class={{
           ...createColorClasses(color, {
             [mode]: true,
