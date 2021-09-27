@@ -43,11 +43,11 @@ export class MedTiles {
     const { dsColor, titulo, label, selected, solid } = this;
     return (
       <Host
-      class={generateMedColor(dsColor, {
-        'med-tiles': true,
-        'med-solid': solid,
-        'med-tiles--selected': selected
-      },)}
+        class={generateMedColor(dsColor, {
+          'med-tiles': true,
+          'med-solid': solid,
+          'med-tiles--selected': selected
+        },)}
       >
         <div class="med-tiles__border"></div>
         <div class="med-tiles__content">

@@ -1,0 +1,331 @@
+@import "../../../templarios/abstracts";
+
+:host {
+  --background: #{color('brand', '3')};
+  --border-color: #{color('brand', '3')};
+  --color: #{color('brand', 'gradient', 'contrast')};
+
+  --bg-hover: #{color('brand', '1')};
+  --bg-hover-opacity: 1;
+  --border-color-hover: transparent;
+  --color-hover: #{color('brand', 'gradient', 'contrast')};
+
+  --bg-focused: #{color('brand', '1')};
+  --bg-focused-opacity: 1;
+  --border-color-focused: transparent;
+  --color-focused: #{color('brand', 'gradient', 'contrast')};
+
+  --bg-activated: transparent;
+  --bg-activated-opacity: 0;
+  --border-color-activated: transparent;
+  --color-activated: #{color('brand', 'gradient', 'contrast')};
+
+  --font-size: var(--med-font-size-xxs);
+  --font-weight: var(--med-font-weight-semibold);
+  --line-height: var(--med-line-height-compressed);
+  --padding: 0 var(--med-spacing-inline-xxs);
+  --padding-text: 0 var(--med-spacing-inline-xxxs);
+  --border-radius: var(--med-border-radius-pill);
+  --min-height: 48px;
+  --min-width: 48px;
+  --transition: background 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out, opacity 300ms ease-out;
+
+  --icon-font-size: 24px;
+}
+
+:host {
+  min-height: var(--min-height);
+  min-width: var(--min-width);
+  height: auto;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+:host .button-native {
+  padding: var(--padding);
+  min-height: var(--min-height);
+  line-height: var(--line-height);
+  box-shadow: none;
+}
+
+:host .button-inner__text {
+  padding: var(--padding-text);
+  display: flex;
+  align-items: center;
+}
+
+:host .button-native::after {
+  display: none;
+}
+
+:host .button-native::before {
+  @include button-state();
+  transition: var(--transition);
+}
+
+// ////////////////////
+// ion-ripple-effect
+// ////////////////////
+
+:host ion-ripple-effect {
+  --ripple-color: #{color('brand', '2')};
+  --ripple-opacity: 1;
+}
+
+// ////////////////////
+// ion-icon
+// ////////////////////
+
+::slotted(ion-icon) {
+  min-width: var(--icon-font-size);
+  font-size: var(--icon-font-size);
+  stroke: var(--color);
+  transition: stroke 300ms ease-out;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  margin: 0;
+}
+
+::slotted(ion-icon[slot="end"]) {
+  margin: 0;
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  min-width: var(--icon-font-size);
+  font-size: var(--icon-font-size);
+}
+
+// ////////////////////
+// icon-only
+// ////////////////////
+
+:host(.button-has-icon-only) {
+  --padding: 0;
+  --padding-text: 0;
+  --border-radius: var(--med-border-radius-pill);
+  --min-height: 48px;
+  --min-width: 48px;
+  --icon-font-size: 32px;
+}
+
+// //////////////////////////////
+// sizes
+// //////////////////////////////
+
+:host(.med-button--md) {
+  --min-height: 48px;
+  --min-height: 48px;
+  --icon-font-size: 24px;
+}
+
+:host(.med-button--md.button-has-icon-only) {
+  --min-height: 48px;
+  --min-width: 48px;
+  --icon-font-size: 32px;
+}
+
+:host(.med-button--sm) {
+  --min-height: 40px;
+  --min-height: 40px;
+  --icon-font-size: 24px;
+}
+
+:host(.med-button--sm.button-has-icon-only) {
+  --min-height: 40px;
+  --min-width: 40px;
+  --icon-font-size: 24px;
+}
+
+:host(.med-button--xs) {
+  --min-height: 32px;
+  --min-width: 32px;
+  --padding: 0 var(--med-spacing-inline-base);
+  --font-size: var(--med-font-size-xxxs);
+  --icon-font-size: 16px;
+}
+
+:host(.med-button--xs.button-has-icon-only) {
+  --min-height: 32px;
+  --min-width: 32px;
+  --icon-font-size: 24px;
+}
+
+:host(.med-button--xxs) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --padding: 0 var(--med-spacing-inline-xxxs);
+  --font-size: var(--med-font-size-nano);
+  --icon-font-size: 16px;
+}
+
+:host(.med-button--xxs.button-has-icon-only) {
+  --min-height: 24px;
+  --min-width: 24px;
+  --icon-font-size: 16px;
+}
+
+:host(.med-button--xxxs) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --padding: 0;
+  --font-size: var(--med-font-size-nano);
+  --icon-font-size: 8px;
+}
+
+:host(.med-button--xxxs.button-has-icon-only) {
+  --min-height: 16px;
+  --min-width: 16px;
+  --icon-font-size: 8px;
+}
+
+// //////////////////////////////
+// states
+// //////////////////////////////
+
+// ////////////////////
+// hover
+// ////////////////////
+
+@media (any-hover: hover) {
+  :host(.med-button:hover) {
+    color: var(--color-hover);
+  }
+
+  :host(.med-button:hover) .button-native {
+    border-color: var(--border-color-hover);
+  }
+
+  :host(.med-button:hover) .button-native::before {
+    background: var(--bg-hover);
+    opacity: var(--bg-hover-opacity);
+  }
+
+  :host(.med-button:hover) ::slotted(ion-icon) {
+    stroke: var(--color-hover);
+  }
+}
+
+// ////////////////////
+// focus
+// ////////////////////
+
+:host(.ion-focused) {
+  color: var(--color-focused);
+}
+
+:host(.ion-focused) .button-native {
+  border-color: var(--border-color-focused);
+}
+
+:host(.ion-focused) .button-native::before {
+  background: var(--bg-focused);
+  opacity: var(--bg-focused-opacity);
+  border-color: var(--border-color-focused);
+}
+
+:host(.ion-focused) ::slotted(ion-icon) {
+  stroke: var(--color-focused);
+}
+
+// ////////////////////
+// activated
+// ////////////////////
+
+:host(.ion-activated) {
+  color: var(--color-activated);
+}
+
+:host(.ion-activated) .button-native {
+  border-color: var(--border-color-activated);
+}
+
+:host(.ion-activated) .button-native::before {
+  background: var(--bg-activated);
+  opacity: var(--bg-activated-opacity);
+}
+
+:host(.ion-activated) ::slotted(ion-icon) {
+  stroke: var(--color-activated);
+}
+
+// ////////////////////
+// disabled
+// ////////////////////
+
+:host(.button-disabled) {
+  cursor: initial;
+  pointer-events: none;
+  opacity: var(--med-opacity-level-half);
+}
+
+// //////////////////////////////
+// color
+// //////////////////////////////
+
+:host(.med-color) {
+  --background: #{curr-color('color', '3')};
+  --border-color: #{curr-color('color', '3')};
+  --color: #{curr-color('color', 'gradient', 'contrast')};
+
+  --bg-hover: #{curr-color('color', '1')};
+  --color-hover: #{curr-color('color', 'gradient', 'contrast')};
+
+  --bg-focused: #{curr-color('color', '1')};
+  --color-focused: #{curr-color('color', 'gradient', 'contrast')};
+  --color-activated: #{curr-color('color', 'gradient', 'contrast')};
+}
+
+:host(.med-color) ion-ripple-effect {
+  --ripple-color: #{curr-color('color', '2')};
+}
+
+// //////////////////////////////
+// neutral
+// //////////////////////////////
+
+:host(.med-color-neutral) {
+  --background: #{curr-color('neutral')};
+  --border-color: #{curr-color('neutral')};
+  --color: #{curr-color('neutral', null, 'contrast')};
+
+  --bg-hover: #{curr-color('neutral', null, 'contrast', var(--med-opacity-level-semitransparent))};
+  --color-hover: #{curr-color('neutral', null, 'contrast')};
+
+  --bg-focused: #{curr-color('neutral', null, 'contrast')};
+  --bg-focused-opacity: #{var(--med-opacity-level-semitransparent)};
+  --color-focused: #{curr-color('neutral', null, 'contrast')};
+
+  --color-activated: #{curr-color('neutral', null, 'contrast')};
+}
+
+:host(.med-color-neutral) ion-ripple-effect {
+  --ripple-color: #{curr-color('neutral', null, 'contrast')};
+  --ripple-opacity: #{var(--med-opacity-level-semitransparent)};
+}
+
+// //////////////////////////////
+// feedback
+// //////////////////////////////
+
+:host(.med-color-feedback) {
+  --background: #{curr-color('feedback')};
+  --border-color: #{curr-color('feedback')};
+  --color: #{curr-color('feedback', null, 'contrast')};
+
+  --bg-hover: #{curr-color('feedback', null, 'contrast', var(--med-opacity-level-semitransparent))};
+  --color-hover: #{curr-color('feedback', null, 'contrast')};
+
+  --bg-focused: #{curr-color('feedback', null, 'contrast')};
+  --bg-focused-opacity: #{var(--med-opacity-level-semitransparent)};
+  --color-focused: #{curr-color('feedback', null, 'contrast')};
+
+  --color-activated: #{curr-color('feedback', null, 'contrast')};
+}
+
+:host(.med-color-feedback) ion-ripple-effect {
+  --ripple-color: #{curr-color('feedback', null, 'contrast')};
+  --ripple-opacity: #{var(--med-opacity-level-semitransparent)};
+}
