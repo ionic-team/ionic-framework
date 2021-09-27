@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { MedColor, MedIcons } from '../../../constants';
 
 export default {
-  title: 'Components/Core/Button',
+  title: 'Components/Core/Button/Tertiary',
   decorators: [withDesign],
 };
 
@@ -11,11 +11,12 @@ const Template = ({ dsColor, disabled, expand, dsSize, iconLeft, iconRight, icon
   return html`
     <style>
       ion-button {
-        margin-bottom: 15px;
+        margin: 5px 15px;
       }
     </style>
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
           <ion-button ds-name="tertiary" .dsColor=${dsColor} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>${slot}</ion-button>
@@ -41,7 +42,8 @@ const Template = ({ dsColor, disabled, expand, dsSize, iconLeft, iconRight, icon
           </ion-button>
         <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }

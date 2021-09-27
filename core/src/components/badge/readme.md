@@ -159,7 +159,6 @@ export default defineComponent({
 | Name               | Description                                                                                              |
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
 | `--background`     | Background of the badge                                                                                  |
-| `--border-color`   | Define a cor da borda do componente.                                                                     |
 | `--color`          | Text color of the badge                                                                                  |
 | `--padding-bottom` | Bottom padding of the badge                                                                              |
 | `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the badge |

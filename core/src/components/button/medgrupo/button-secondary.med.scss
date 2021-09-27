@@ -1,0 +1,93 @@
+:host(.med-button--secondary) {
+  --background: transparent;
+  --border-color: #{color('brand', '3')};
+  --color: #{color('brand', '3')};
+
+  --bg-hover: transparent;
+  --bg-hover-opacity: 0;
+  --border-color-hover: #{color('brand', '4')};
+  --color-hover: #{color('brand', '4')};
+
+  --bg-focused: transparent;
+  --bg-focused-opacity: 0;
+  --border-color-focused: #{color('brand', '4')};
+  --color-focused: #{color('brand', '4')};
+
+  --bg-activated: transparent;
+  --bg-activated-opacity: 0;
+  --border-color-activated: #{color('brand', '5')};
+
+  --color-activated: #{color('brand', '5')};
+
+  --border-width: var(--med-border-width-thin);
+  --border-style: solid;
+}
+
+:host(.med-button--secondary) ion-ripple-effect {
+  --ripple-color: transparent;
+  --ripple-opacity: transparent;
+}
+
+// ////////////////////
+// icon-only
+// ////////////////////
+
+:host(.button-has-icon-only) {
+  --min-height: 48px;
+  --min-width: 48px;
+  --icon-font-size: 32px;
+  --padding: 0;
+}
+
+// //////////////////////////////
+// color
+// //////////////////////////////
+
+:host(.med-button--secondary.med-color) {
+  --border-color: #{curr-color('color', '3')};
+  --color: #{curr-color('color', '3')};
+
+  --bg-hover: #{curr-color('color', '3')};
+  --color-hover: #{curr-color('color', 'gradient', 'contrast')};
+
+  --bg-focused: #{curr-color('color', '3')};
+  --color-focused: #{curr-color('color', 'gradient', 'contrast')};
+
+  --color-activated: #{curr-color('color', 'gradient', 'contrast')};
+}
+
+// //////////////////////////////
+// neutral
+// //////////////////////////////
+
+:host(.med-button--secondary.med-color-neutral) {
+  --border-color: #{curr-color('neutral')};
+  --color: #{curr-color('neutral')};
+
+  --border-color-hover: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+  --color-hover: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-focused: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+  --color-focused: #{curr-color('neutral', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-activated: #{curr-color('neutral', null, null, var(--med-opacity-level-intense))};
+  --color-activated: #{curr-color('neutral', null, null, var(--med-opacity-level-intense))};
+}
+
+// //////////////////////////////
+// feedback
+// //////////////////////////////
+
+:host(.med-button--secondary.med-color-feedback) {
+  --border-color: #{curr-color('feedback')};
+  --color: #{curr-color('feedback')};
+
+  --border-color-hover: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+  --color-hover: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-focused: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+  --color-focused: #{curr-color('feedback', null, null, var(--med-opacity-level-semiopaque))};
+
+  --border-color-activated: #{curr-color('feedback', null, null, var(--med-opacity-level-intense))};
+  --color-activated: #{curr-color('feedback', null, null, var(--med-opacity-level-intense))};
+}

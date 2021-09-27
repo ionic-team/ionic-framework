@@ -16,18 +16,18 @@
 }
 
 :host(.med-icon.med-color) {
-  color: var(--med-color-3) !important;
-  stroke: var(--med-color-3) !important;
+  color: hsl(var(--med-color-3)) !important;
+  stroke: hsl(var(--med-color-3)) !important;
 }
 
 :host(.med-icon.med-color-neutral) {
-  color: var(--med-color-neutral) !important;
-  stroke: var(--med-color-neutral) !important;
+  color: hsl(var(--med-color-neutral)) !important;
+  stroke: hsl(var(--med-color-neutral)) !important;
 }
 
 :host(.med-icon.med-color-feedback) {
-  color: var(--med-color-feedback) !important;
-  stroke: var(--med-color-feedback) !important;
+  color: hsl(var(--med-color-feedback)) !important;
+  stroke: hsl(var(--med-color-feedback)) !important;
 }
 
 :host(.med-icon.med-icon--xxs) {

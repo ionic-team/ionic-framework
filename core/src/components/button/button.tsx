@@ -39,11 +39,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
-    * Define a cor do componente.
-    */
-   @Prop({ reflect: true }) solid = false;
-
-  /**
     * Define a variação solida de background do componente.
     */
   @Prop() dsName?: 'secondary' | 'tertiary';
@@ -213,7 +208,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   render() {
     const mode = getIonMode(this);
-    const { dsColor, dsName, dsSize, solid } = this;
+    const { dsColor, dsName, dsSize } = this;
     const { buttonType, type, disabled, rel, target, size, href, expand, hasIconOnly, shape, strong, inheritedAttributes } = this;
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : 'a' as any;
@@ -251,7 +246,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'med-button': true,
           [`med-button--${dsName}`]: dsName !== undefined,
           [`med-button--${dsSize}`]: dsSize !== undefined,
-          'med-button--solid': solid,
         })}
       >
         <TagType

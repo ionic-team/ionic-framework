@@ -11,9 +11,6 @@ const TemplateIcon = ({ dsColor }) => {
 
   if (dsColor) {
     const colorIdentifier = dsColor.split('-');
-
-    console.log(dsColor);
-
     if (colorIdentifier[0] === 'neutral') {
       colorClass = `med-icon med-color-neutral med-color-${dsColor} md hydrated`;
     } else if (colorIdentifier[0] === 'fb') {
@@ -22,7 +19,7 @@ const TemplateIcon = ({ dsColor }) => {
       colorClass = `med-icon med-color med-color-${dsColor} md hydrated`;
     }
   } else {
-    colorClass = 'med-icon med-color med-color-brand md hydrated'
+    colorClass = 'med-icon md hydrated'
   }
 
   const itemTemplates = [];

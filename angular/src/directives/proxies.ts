@@ -61,8 +61,8 @@ export class IonBadge {
 }
 export declare interface IonButton extends Components.IonButton {
 }
-@ProxyCmp({ inputs: ["buttonType", "color", "disabled", "download", "dsColor", "dsName", "dsSize", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "solid", "strong", "target", "type"] })
-@Component({ selector: "ion-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["buttonType", "color", "disabled", "download", "dsColor", "dsName", "dsSize", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "solid", "strong", "target", "type"] })
+@ProxyCmp({ inputs: ["buttonType", "color", "disabled", "download", "dsColor", "dsName", "dsSize", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "strong", "target", "type"] })
+@Component({ selector: "ion-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["buttonType", "color", "disabled", "download", "dsColor", "dsName", "dsSize", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "strong", "target", "type"] })
 export class IonButton {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
@@ -857,8 +857,8 @@ export class IonTitle {
 }
 export declare interface IonToggle extends Components.IonToggle {
 }
-@ProxyCmp({ inputs: ["checked", "color", "disabled", "mode", "name", "value"] })
-@Component({ selector: "ion-toggle", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["checked", "color", "disabled", "mode", "name", "value"] })
+@ProxyCmp({ inputs: ["checked", "color", "disabled", "dsColor", "mode", "name", "value"] })
+@Component({ selector: "ion-toggle", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["checked", "color", "disabled", "dsColor", "mode", "name", "value"] })
 export class IonToggle {
   ionChange!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;

@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 
-<Meta title="Components/Core/Badge/Usage" />
+<Meta title="Components/Core/Back Button/Usage" />
 
 # Badge
 
@@ -10,7 +10,7 @@ Documentação auxiliar ion-badge: **https://ionicframework.com/docs/api/badge**
 
 | Propriedade  | Atributo     | Descrição                                   | Tipo                                                                                                                   | Default       |
 | ------------ | ------------ | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------- |
-| **dsColor**  | **ds-color** | Define a cor do componente.                 | **[MedColor](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)** \| **undefined**      | **undefined** |
+| **dsColor**  | **ds-color** | Define a cor do componente.                 | **[MedColor](http://desenv.ordomederi.com/templarios/?path=/story/enums-enums--page#medcolors)** \| **undefined**  | **undefined** |
 | **dsName**   | **ds-name**  | Define a variação do componente.            | **"secondary"**  \| **undefined**                                                                                      | **undefined** |
 | **dsSize**   | **ds-size**  | Define a variação de tamanho do componente. | **"xxs"** \| **"xs"** \| **"sm"** \| **"md"** \| **"lg"** \| **undefined**                                             | **undefined** |
 
@@ -18,14 +18,46 @@ Documentação auxiliar ion-badge: **https://ionicframework.com/docs/api/badge**
 
 ```
 <ion-badge>UNIFESP 2020</ion-badge>
-<ion-badge ds-color="brand">UNIFESP 2020</ion-badge>
+```
+
+### Color
+
+```
+<ion-badge color="brand">UNIFESP 2020</ion-badge>
+```
+
+### Neutral
+
+```
+<ion-badge neutral="5">UNIFESP 2020</ion-badge>
+```
+
+### Size
+
+```
 <ion-badge ds-size="md">UNIFESP 2020</ion-badge>
 ```
 
-## Secondary
+## Variação Secondary
 
 ```
-<ion-badge ds-name="secondary">UNIFESP 2020</ion-badge>
+<ion-badge>UNIFESP 2020</ion-badge>
+```
+
+### Color
+
+```
 <ion-badge ds-name="secondary" color="brand">UNIFESP 2020</ion-badge>
+```
+
+### Neutral
+
+```
+<ion-badge ds-name="secondary" neutral="5">UNIFESP 2020</ion-badge>
+```
+
+### Size
+
+```
 <ion-badge ds-name="secondary" ds-size="md">UNIFESP 2020</ion-badge>
 ```

@@ -1,10 +1,11 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail, MedColor } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
+import { generateMedColor } from '../../utils/med-theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -16,7 +17,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-toggle',
   styleUrls: {
     ios: 'toggle.ios.scss',
-    md: 'toggle.md.scss'
+    md: 'toggle.ios.scss'
   },
   shadow: true
 })
@@ -30,6 +31,11 @@ export class Toggle implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @State() activated = false;
+
+  /**
+    * Define a cor do componente.
+    */
+   @Prop({ reflect: true }) dsColor?: MedColor;
 
   /**
    * The color to use from your application's color palette.
@@ -178,7 +184,7 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, inputId, name } = this;
+    const { activated, dsColor, checked, disabled, el, inputId, name } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
@@ -192,8 +198,9 @@ export class Toggle implements ComponentInterface {
         aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
         role="switch"
-        class={createColorClasses(color, {
+        class={generateMedColor(dsColor, {
           [mode]: true,
+          'med-toggle': true,
           'in-item': hostContext('ion-item', el),
           'toggle-activated': activated,
           'toggle-checked': checked,

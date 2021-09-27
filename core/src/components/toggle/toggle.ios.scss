@@ -115,3 +115,27 @@
 :host(.in-item[slot="start"]) {
   @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
 }
+
+// ////////////////////
+// color
+// ////////////////////
+
+:host(.med-color.med-toggle) {
+  --background-checked: #{curr-color('color', '3')};
+}
+
+// ////////////////////
+// neutral
+// ////////////////////
+
+:host(.med-color-neutral.med-toggle) {
+  --background-checked: #{curr-color('neutral')};
+}
+
+// //////////
+// feedback
+// //////////
+
+:host(.med-color-feedback.med-toggle) {
+  --background-checked: #{curr-color('feedback')};
+}

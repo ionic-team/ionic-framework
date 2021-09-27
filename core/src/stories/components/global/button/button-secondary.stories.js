@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { MedColor, MedIcons } from '../../../constants';
 
 export default {
-  title: 'Components/Core/Button',
+  title: 'Components/Core/Button/Secondary',
   decorators: [withDesign],
 };
 
@@ -11,14 +11,15 @@ const Template = ({ dsColor, disabled, expand, dsSize, iconLeft, iconRight, icon
   return html`
     <style>
       ion-button {
-        margin-bottom: 15px;
+        margin: 5px 15px;
       }
     </style>
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
-          <ion-button ds-name="secondary" .dsColor=${dsColor} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>${slot}</ion-button>
+          <ion-button ds-name="secondary" .dsColor=${dsColor}  ds-size=${dsSize} ?disabled=${disabled} .expand=${expand}>${slot}</ion-button>
 
           <ion-button ds-name="secondary" .dsColor=${dsColor} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
             <ion-icon slot="start" class="med-icon" name=${iconLeft}></ion-icon>
@@ -27,7 +28,7 @@ const Template = ({ dsColor, disabled, expand, dsSize, iconLeft, iconRight, icon
 
           <ion-button ds-name="secondary" .dsColor=${dsColor} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
             ${slot}
-            <ion-icon slot="end"class="med-icon"  name=${iconRight}></ion-icon>
+            <ion-icon slot="end"class="med-icon" name=${iconRight}></ion-icon>
           </ion-button>
 
           <ion-button ds-name="secondary" .dsColor=${dsColor} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
@@ -41,7 +42,8 @@ const Template = ({ dsColor, disabled, expand, dsSize, iconLeft, iconRight, icon
           </ion-button>
         <!-- component -->
 
-      </div>
+        </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -73,11 +75,11 @@ Secondary.argTypes = {
     },
   },
   dsSize: {
-    options: [undefined, 'lg', 'md', 'sm', 'xs', 'xxs', 'xxxs'],
+    options: [undefined, 'sm', 'xs', 'xxs', 'xxxs - utilizado apenas em botões sem ícone'],
     control: { type: 'radio'},
     description: "Define a variação de tamanho componente.",
     table: {
-      type:  { summary: 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs' },
+      type:  { summary: 'sm' | 'xs' | 'xxs' | 'xxxs - utilizado apenas em botões sem ícone' },
       defaultValue: { summary: 'undefined' },
     },
   },

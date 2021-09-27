@@ -29,7 +29,6 @@ export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge',
 
 export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-button', [
   'dsColor',
-  'solid',
   'dsName',
   'dsSize',
   'color',
@@ -781,6 +780,7 @@ export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title',
 
 
 export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggle', [
+  'dsColor',
   'color',
   'name',
   'checked',

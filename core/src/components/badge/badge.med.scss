@@ -1,11 +1,6 @@
 @import "../../../templarios/abstracts";
 
 :host {
-   /**
-   * OBS: sobreescrita das css custom properties do ionic.
-   * @prop --background: Define a cor de background do componente.
-   * @prop --color: Define a cor de texto do componente.
-   */
   --background: #{color('brand', '3')};
   --color: #{color('brand', '3', 'contrast')};
   --padding-bottom: 0;
@@ -13,10 +8,6 @@
   --padding-start: var(--med-spacing-inline-base);
   --padding-top: 0;
 
-  /**
-   * OBS: design system css custom properties.
-   * @prop --border-color: Define a cor da borda do componente.
-   */
   --border-color: #{color('brand', '3')};
 }
 

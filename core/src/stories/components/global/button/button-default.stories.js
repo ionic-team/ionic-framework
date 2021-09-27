@@ -7,41 +7,43 @@ export default {
   decorators: [withDesign],
 };
 
-const Template = ({ dsColor, solid, disabled, expand, dsSize, iconLeft, iconRight, iconOnly, slot }) => {
+const Template = ({ dsColor, disabled, expand, dsSize, iconLeft, iconRight, iconOnly, slot }) => {
   return html`
     <style>
       ion-button {
-        margin-bottom: 15px;
+        margin: 5px 15px;
       }
     </style>
-    <ion-app class="storybook-only">
-      <div class="storybook-only__container">
+    <ion-app>
+      <ion-content>
+        <div class="flex-center">
 
         <!-- component -->
-          <ion-button .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>${slot}</ion-button>
+          <ion-button .dsColor=${dsColor} ds-size=${dsSize} ?disabled=${disabled} .expand=${expand}>${slot}</ion-button>
 
-          <ion-button .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
+          <ion-button .dsColor=${dsColor} ds-size=${dsSize} ?disabled=${disabled} .expand=${expand}>
             <ion-icon slot="start" class="med-icon" name=${iconLeft}></ion-icon>
             ${slot}
           </ion-button>
 
-          <ion-button .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
+          <ion-button .dsColor=${dsColor} ds-size=${dsSize} ?disabled=${disabled} .expand=${expand}>
             ${slot}
             <ion-icon slot="end" class="med-icon" name=${iconRight}></ion-icon>
           </ion-button>
 
-          <ion-button .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
+          <ion-button .dsColor=${dsColor} ds-size=${dsSize} ?disabled=${disabled} .expand=${expand}>
             <ion-icon slot="start" class="med-icon" name=${iconLeft}></ion-icon>
             ${slot}
-            <ion-icon slot="end"class="med-icon" name=${iconRight}></ion-icon>
+            <ion-icon slot="end" class="med-icon" name=${iconRight}></ion-icon>
           </ion-button>
 
-          <ion-button .dsColor=${dsColor} ?solid=${solid} ?disabled=${disabled} .expand=${expand} ds-size=${dsSize}>
+          <ion-button .dsColor=${dsColor} ds-size=${dsSize} ?disabled=${disabled} .expand=${expand}>
             <ion-icon slot="icon-only" class="med-icon" name=${iconOnly}></ion-icon>
           </ion-button>
         <!-- component -->
 
       </div>
+      </ion-content>
     </ion-app>
   `
 }
@@ -63,30 +65,21 @@ Default.argTypes = {
       defaultValue: { summary: 'undefined' },
     },
   },
-  solid: {
-    disabled: false,
-    control: { type: 'boolean' },
-    description: 'Define a variação solida de background do componente.',
-    table: {
-      type:  { summary: 'boolean' },
-      defaultValue: { summary: 'undefined' },
-    },
-  },
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
-    description: 'Define o comportamento disabled do componente.',
+    description: 'Define o estado disabled do componente.',
     table: {
       type:  { summary: 'boolean' },
       defaultValue: { summary: 'undefined' },
     },
   },
   dsSize: {
-    options: [undefined, 'lg', 'md', 'sm', 'xs', 'xxs', 'xxxs'],
+    options: [undefined, 'sm', 'xs', 'xxs', 'xxxs - utilizado apenas em botões sem ícone'],
     control: { type: 'radio'},
     description: "Define a variação de tamanho componente.",
     table: {
-      type:  { summary: 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs' },
+      type:  { summary: 'sm' | 'xs' | 'xxs' | 'xxxs - utilizado apenas em botões sem ícone' },
       defaultValue: { summary: 'undefined' },
     },
   },
