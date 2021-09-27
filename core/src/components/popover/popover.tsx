@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, PopoverAttributes, PopoverInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
-import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, focusNthDescendant, prepareOverlay, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, focusDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -407,9 +407,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * we need to move focus inside the popover.
      */
     if (this.focusDescendantOnPresent) {
-      this.descendantIndexToFocus ? 
-        focusNthDescendant(this.el, this.el, this.descendantIndexToFocus) :
-        focusFirstDescendant(this.el, this.el);
+      focusDescendant(this.el, this.el, this.descendantIndexToFocus || 0);
     }
   }
 

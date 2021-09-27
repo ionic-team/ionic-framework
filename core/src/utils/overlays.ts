@@ -68,59 +68,9 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
 const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
 
-export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
-
-  const shadowRoot = firstInput && firstInput.shadowRoot;
-  if (shadowRoot) {
-    // If there are no inner focusable elements, just focus the host element.
-    firstInput = shadowRoot.querySelector(innerFocusableQueryString) || firstInput;
-  }
-
-  if (firstInput) {
-    firstInput.focus();
-
-    /**
-     * When programmatically focusing an element,
-     * the focus-visible utility will not run because
-     * it is expecting a keyboard event to have triggered this;
-     * however, there are times when we need to manually control
-     * this behavior so we call the `setFocus` method on ion-app
-     * which will let us explicitly set the elements to focus.
-     */
-    if (firstInput.classList.contains('ion-focusable')) {
-      const app = overlay.closest('ion-app');
-      if (app) {
-        app.setFocus([firstInput]);
-      }
-    }
-  } else {
-    // Focus overlay instead of letting focus escape
-    overlay.focus();
-  }
-};
-
-const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+export const focusDescendant = (ref: Element, overlay: HTMLIonOverlayElement, descendantIndex = 0) => {
   const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
-  let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
-
-  const shadowRoot = lastInput && lastInput.shadowRoot;
-  if (shadowRoot) {
-    // If there are no inner focusable elements, just focus the host element.
-    lastInput = shadowRoot.querySelector(innerFocusableQueryString) || lastInput;
-  }
-
-  if (lastInput) {
-    lastInput.focus();
-  } else {
-    // Focus overlay instead of letting focus escape
-    overlay.focus();
-  }
-};
-
-export const focusNthDescendant = (ref: Element, overlay: HTMLIonOverlayElement, index: number) => {
-  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
-  let inputToFocus = inputs.length > index ? inputs[index] : null;
+  let inputToFocus = inputs.length > descendantIndex ? inputs[descendantIndex] : null;
 
   const shadowRoot = inputToFocus && inputToFocus.shadowRoot;
   if (shadowRoot) {
@@ -145,6 +95,24 @@ export const focusNthDescendant = (ref: Element, overlay: HTMLIonOverlayElement,
         app.setFocus([inputToFocus]);
       }
     }
+  } else {
+    // Focus overlay instead of letting focus escape
+    overlay.focus();
+  }
+};
+
+const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
+  let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
+
+  const shadowRoot = lastInput && lastInput.shadowRoot;
+  if (shadowRoot) {
+    // If there are no inner focusable elements, just focus the host element.
+    lastInput = shadowRoot.querySelector(innerFocusableQueryString) || lastInput;
+  }
+
+  if (lastInput) {
+    lastInput.focus();
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();
@@ -219,7 +187,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
          */
 
         /**
-         * Once we call `focusFirstDescendant` and focus the first
+         * Once we call `focusDescendant` and focus the first
          * descendant, another focus event will fire which will
          * cause `lastOverlay.lastFocus` to be updated before
          * we can run the code after that. We will cache the value
@@ -228,7 +196,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
         const lastFocus = lastOverlay.lastFocus;
 
         // Focus the first element in the overlay wrapper
-        focusFirstDescendant(overlayWrapper, lastOverlay);
+        focusDescendant(overlayWrapper, lastOverlay);
 
         /**
          * If the cached last focused element is the
@@ -263,7 +231,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        */
 
       /**
-       * Once we call `focusFirstDescendant` and focus the first
+       * Once we call `focusDescendant` and focus the first
        * descendant, another focus event will fire which will
        * cause `lastOverlay.lastFocus` to be updated before
        * we can run the code after that. We will cache the value
@@ -272,7 +240,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       const lastFocus = lastOverlay.lastFocus;
 
       // Focus the first element in the overlay wrapper
-      focusFirstDescendant(lastOverlay, lastOverlay);
+      focusDescendant(lastOverlay, lastOverlay);
 
       /**
        * If the cached last focused element is the
