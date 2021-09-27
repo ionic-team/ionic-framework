@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { angularOutputTarget } from '@stencil/angular-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { reactOutputTarget } from '@stencil/react-output-target';
 
@@ -180,11 +181,10 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    {
-      type: 'angular',
+    angularOutputTarget({
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
+      directivesUtilsFile: '../angular/src/directives/proxies-utils2.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.txt',
       excludeComponents: [
         // overlays
@@ -212,7 +212,7 @@ export const config: Config = {
         'ion-picker-column',
         'ion-virtual-scroll'
       ]
-    }
+    }),
   ],
   buildEs5: 'prod',
   extras: {

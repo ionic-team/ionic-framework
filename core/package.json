@@ -31,6 +31,7 @@
     "loader/"
   ],
   "dependencies": {
+    "@stencil/angular-output-target": "^0.0.7",
     "@stencil/core": "^2.6.0",
     "ionicons": "^5.5.1",
     "tslib": "^2.1.0"
