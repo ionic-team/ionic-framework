@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
 import { Cell, CellType, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn } from '@ionic/core';
 
-import { ProxyCmp } from '../proxies-utils';
+import { ProxyCmp } from '../angular-component-lib/utils';
 
 import { VirtualFooter } from './virtual-footer';
 import { VirtualHeader } from './virtual-header';
