@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, PopoverAttributes, PopoverInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
-import { BACKDROP, dismiss, eventMethod, focusDescendant, prepareOverlay, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -48,8 +48,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
 
-  private descendantIndexToFocus?: number;
-  private descendantSelector?: string;
+  private focusDescendantOnPresent = false;
 
   lastFocus?: HTMLElement;
 
@@ -309,14 +308,12 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @internal
    */
   @Method()
-  async presentFromTrigger(event?: any, descendantIndexToFocus?: number, descendantSelector?: string) {
-    this.descendantIndexToFocus = descendantIndexToFocus;
-    this.descendantSelector = descendantSelector;
+  async presentFromTrigger(event?: any, focusDescendant = false) {
+    this.focusDescendantOnPresent = focusDescendant;
 
     await this.present(event);
 
-    this.descendantIndexToFocus = undefined;
-    this.descendantSelector = undefined;
+    this.focusDescendantOnPresent = false;
   }
 
   /**
@@ -404,10 +401,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
     /**
      * If popover is nested and was
      * presented using the "Right" arrow key,
-     * we need to move focus inside the popover.
+     * we need to move focus to the first
+     * descendant inside of the popover.
      */
-    if (this.descendantIndexToFocus !== undefined) {
-      focusDescendant(this.el, this.el, this.descendantIndexToFocus, this.descendantSelector);
+    if (this.focusDescendantOnPresent) {
+      focusFirstDescendant(this.el, this.el);
     }
   }
 
