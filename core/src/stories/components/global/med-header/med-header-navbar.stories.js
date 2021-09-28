@@ -20,16 +20,15 @@ const TemplateNavbar = ({ platform }) => {
       <med-header>
 
         <med-navbar slot="navbar">
-          <ion-button ds-name="icon-label" slot="left">
-            <ion-icon class="med-icon" name="med-chevron-left"></ion-icon>
-            voltar
+          <ion-button ds-name="tertiary" slot="left">
+            <ion-icon slot="icon-only" class="med-icon" name="med-esquerda"></ion-icon>
           </ion-button>
 
           <span slot="title">header com título muito grande</span>
           <span slot="subtitle">subheader</span>
 
-          <ion-button ds-name="icon-only" slot="right">
-            <ion-icon class="med-icon" slot="icon-only" name="med-star-filled"></ion-icon>
+          <ion-button ds-name="tertiary" slot="right">
+            <ion-icon slot="icon-only" class="med-icon" name="med-star-filled"></ion-icon>
           </ion-button>
         </med-navbar>
 

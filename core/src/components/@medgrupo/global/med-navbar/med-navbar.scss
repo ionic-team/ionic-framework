@@ -18,7 +18,7 @@
     }
 
     &__container {
-      padding: var(--ion-safe-area-top, 0) var(--spacing-inset-sm) 0 var(--spacing-inset-sm);
+      padding: var(--ion-safe-area-top, 0) var(--med-spacing-inset-sm) 0 var(--med-spacing-inset-sm);
       position: relative;
       display: flex;
       align-items: center;
@@ -74,7 +74,7 @@
 
 :host(.med-navbar) ::slotted([slot="left"]) {
   color: var(--color);
-  margin-right: var(--spacing-inline-base);
+  margin-right: var(--med-spacing-inline-base);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -98,7 +98,7 @@
 
 :host(.med-navbar) ::slotted([slot="right"]) {
   color: var(--color);
-  margin-left: var(--spacing-inline-base) !important;
+  margin-left: var(--med-spacing-inline-base) !important;
   display: flex;
   align-items: center;
   justify-content: flex-end;
