@@ -174,6 +174,25 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
   return null;
 };
 
+export const focusElement = (el: HTMLElement) => {
+  el.focus();
+
+  /**
+   * When programmatically focusing an element,
+   * the focus-visible utility will not run because
+   * it is expecting a keyboard event to have triggered this;
+   * however, there are times when we need to manually control
+   * this behavior so we call the `setFocus` method on ion-app
+   * which will let us explicitly set the elements to focus.
+   */
+  if (el.classList.contains('ion-focusable')) {
+    const app = el.closest('ion-app');
+    if (app) {
+      app.setFocus([el]);
+    }
+  }
+};
+
 /**
  * This method is used for Ionic's input components that use Shadow DOM. In
  * order to properly label the inputs to work with screen readers, we need
