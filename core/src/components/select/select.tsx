@@ -185,7 +185,7 @@ export class Select implements ComponentInterface {
     if (this.interface === 'popover') {
       let indexOfSelected = this.childOpts.map(o => o.value).indexOf(this.value);
       indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
-      const selectedEl = this.overlay.querySelector(`.select-interface-option:nth-child(${indexOfSelected + 1})`) as HTMLElement;
+      const selectedEl = this.overlay.querySelector<HTMLElement>(`.select-interface-option:nth-child(${indexOfSelected + 1})`);
       if (selectedEl) {
         focusElement(selectedEl);
       }
