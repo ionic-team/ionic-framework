@@ -1,0 +1,27 @@
+@import "./picker-internal.scss";
+@import "../../themes/ionic.globals.ios";
+
+:host .picker-before {
+  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
+}
+
+:host .picker-after {
+  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
+}
+
+:host .picker-highlight {
+  @include border-radius(8px, 8px, 8px, 8px);
+  @include position(50%, 0, 0, 0);
+  @include margin(0, auto, 0, auto);
+
+  position: absolute;
+
+  width: calc(100% - 16px);
+  height: 34px;
+
+  transform: translateY(-50%);
+
+  background: var(--ion-color-step-150, #eeeeef);
+
+  z-index: -1;
+}

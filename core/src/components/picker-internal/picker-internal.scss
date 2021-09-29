@@ -1,0 +1,49 @@
+@import "../../themes/ionic.globals";
+
+// Picker Internal
+// --------------------------------------------------
+
+:host {
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 200px;
+
+  /**
+   * This is required otherwise the
+   * highlight will appear behind
+   * the picker when used inline.
+   */
+  z-index: 0;
+}
+
+:host .picker-before {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 83px;
+
+  pointer-events: none;
+}
+
+:host .picker-after {
+  @include position(116px, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 84px;
+
+  pointer-events: none;
+}
+
+:host input {
+  @include visually-hidden();
+}
