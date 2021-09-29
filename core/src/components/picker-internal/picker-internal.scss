@@ -22,26 +22,32 @@
   z-index: 0;
 }
 
-:host .picker-before {
-  @include position(0, null, null, 0);
-
+:host .picker-before,
+:host .picker-after {
   position: absolute;
 
   width: 100%;
-  height: 83px;
+
+  /**
+   * This is needed for WebKit
+   * otherwise the fade will appear
+   * underneath the picker.
+   */
+  z-index: 1;
 
   pointer-events: none;
+}
+
+:host .picker-before {
+  @include position(0, null, null, 0);
+
+  height: 83px;
 }
 
 :host .picker-after {
   @include position(116px, null, null, 0);
 
-  position: absolute;
-
-  width: 100%;
   height: 84px;
-
-  pointer-events: none;
 }
 
 :host input {
