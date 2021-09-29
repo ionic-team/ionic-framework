@@ -59,6 +59,14 @@
               <ion-picker-column-internal id="second"></ion-picker-column-internal>
             </ion-picker-internal>
           </div>
+          <div class="grid">
+            <div class="grid-item">
+              <h2>Numeric Input</h2>
+              <ion-picker-internal>
+                <ion-picker-column-internal numeric-input="true" id="numeric-first"></ion-picker-column-internal>
+                <ion-picker-column-internal id="numeric-second"></ion-picker-column-internal>
+              </ion-picker-internal>
+            </div>
           <div class="grid-item">
             <h2>Popover</h2>
             <ion-button id="popover">Open Picker</ion-button>
@@ -118,6 +126,22 @@
         { text: 'Onion', value: 'onion' },
         { text: 'Potato', value: 'potato' },
         { text: 'Artichoke', value: 'artichoke' },
+      ], 'onion');
+
+      setPickerColumn('#numeric-first', [
+        { text: '01', value: 1 },
+        { text: '02', value: 2 },
+        { text: '03', value: 3 },
+        { text: '04', value: 4 },
+        { text: '05', value: 5 },
+      ], 3);
+
+      setPickerColumn('#numeric-second', [
+        { text: 'Tomatos', value: 'tomato' },
+        { text: 'Avocados', value: 'avocado' },
+        { text: 'Onions', value: 'onion' },
+        { text: 'Potatos', value: 'potato' },
+        { text: 'Artichokes', value: 'artichoke' },
       ], 'onion');
 
       setPickerColumn('#popover-first', [

@@ -211,7 +211,7 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   render() {
-    const { items, color, isActive } = this;
+    const { items, color, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
     return (
@@ -219,7 +219,8 @@ export class PickerColumnInternal implements ComponentInterface {
         tabindex={0}
         class={createColorClasses(color, {
           [mode]: true,
-          ['picker-column-active']: isActive
+          ['picker-column-active']: isActive,
+          ['picker-column-numeric-input']: numericInput
         })}
       >
         <div class="picker-item picker-item-empty">&nbsp;</div>
