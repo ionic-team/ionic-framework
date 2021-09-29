@@ -633,6 +633,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ion-datetime](../datetime)
+
 ### Depends on
 
 - [ion-backdrop](../backdrop)
@@ -641,6 +645,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   ion-popover --> ion-backdrop
+  ion-datetime --> ion-popover
   style ion-popover fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

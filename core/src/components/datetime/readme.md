@@ -776,27 +776,29 @@ Type: `Promise<void>`
 
 - [ion-buttons](../buttons)
 - [ion-button](../button)
+- ion-picker-internal
+- ion-picker-column-internal
 - [ion-item](../item)
 - [ion-label](../label)
 - ion-icon
-- [ion-segment](../segment)
-- [ion-segment-button](../segment-button)
+- [ion-popover](../popover)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-datetime --> ion-buttons
   ion-datetime --> ion-button
+  ion-datetime --> ion-picker-internal
+  ion-datetime --> ion-picker-column-internal
   ion-datetime --> ion-item
   ion-datetime --> ion-label
   ion-datetime --> ion-icon
-  ion-datetime --> ion-segment
-  ion-datetime --> ion-segment-button
+  ion-datetime --> ion-popover
   ion-button --> ion-ripple-effect
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
   ion-item --> ion-note
-  ion-segment-button --> ion-ripple-effect
+  ion-popover --> ion-backdrop
   style ion-datetime fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
