@@ -205,6 +205,13 @@ export class PickerInternal implements ComponentInterface {
     if (!inputEl) { return; }
 
     /**
+     * Only active input mode if there is at
+     * least one column that accepts numeric input.
+     */
+    const hasInputColumn = el.querySelector('ion-picker-column-internal[numericInput="true"]');
+    if (!hasInputColumn) return;
+
+    /**
      * If columnEl is undefined then
      * it is assumed that all numeric pickers
      * are eligible for text entry.
