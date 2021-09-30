@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from
 import { getIonMode } from '../../global/ionic-global';
 import { inheritAttributes } from '../../utils/helpers';
 
-import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
+import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity, handleHeaderFade } from './header.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -48,12 +48,12 @@ export class Header implements ComponentInterface {
     this.inheritedAttributes = inheritAttributes(this.el, ['role']);
   }
 
-  async componentDidLoad() {
-    await this.checkCollapsibleHeader();
+  componentDidLoad() {
+    this.checkCollapsibleHeader();
   }
 
-  async componentDidUpdate() {
-    await this.checkCollapsibleHeader();
+  componentDidUpdate() {
+    this.checkCollapsibleHeader();
   }
 
   disconnectedCallback() {
@@ -61,25 +61,49 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
+    const mode = getIonMode(this);
 
-    // Determine if the header can collapse
-    const hasCollapse = this.collapse === 'condense';
-    const canCollapse = (hasCollapse && getIonMode(this) === 'ios') ? hasCollapse : false;
-    if (!canCollapse && this.collapsibleHeaderInitialized) {
-      this.destroyCollapsibleHeader();
-    } else if (canCollapse && !this.collapsibleHeaderInitialized) {
+    if (mode !== 'ios') return;
+
+    const { collapse } = this;
+    const hasCondense = collapse === 'condense';
+    const hasFade = collapse === 'fade';
+
+    if (hasCondense) {
+      if (this.collapsibleHeaderInitialized) {
+        this.destroyCollapsibleHeader();
+      } else {
+        const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+        const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
+
+        // Cloned elements are always needed in iOS transition
+        writeTask(() => {
+          const title = cloneElement('ion-title') as HTMLIonTitleElement;
+          title.size = 'large';
+          cloneElement('ion-back-button');
+        });
+
+        await this.setupCondenseHeader(contentEl, pageEl);
+      }
+
+    } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
 
-      // Cloned elements are always needed in iOS transition
-      writeTask(() => {
-        const title = cloneElement('ion-title') as HTMLIonTitleElement;
-        title.size = 'large';
-        cloneElement('ion-back-button');
-      });
-
-      await this.setupCollapsibleHeader(contentEl, pageEl);
+      await this.setupFadeHeader(contentEl)
     }
+  }
+
+  private setupFadeHeader = async (contentEl: HTMLIonContentElement | null) => {
+    if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
+
+    this.scrollEl = await contentEl.getScrollElement();
+
+    /**
+     * Handle fading of toolbars on scroll
+     */
+    this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el); };
+    this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
   }
 
   private destroyCollapsibleHeader() {
@@ -99,7 +123,7 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private async setupCollapsibleHeader(contentEl: HTMLIonContentElement | null, pageEl: Element | null) {
+  private async setupCondenseHeader(contentEl: HTMLIonContentElement | null, pageEl: Element | null) {
     if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
     if (typeof (IntersectionObserver as any) === 'undefined') { return; }
 

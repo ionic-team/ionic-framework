@@ -160,3 +160,15 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
 };
+
+export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => {
+  readTask(() => {
+    const scrollTop = scrollEl.scrollTop;
+    const scale = clamp(0, scrollTop / 10, 1);
+
+    // TODO: Need to account for translucent
+    writeTask(() => {
+      baseEl.style.setProperty('--opacity', scale.toString());
+    })
+  });
+}
