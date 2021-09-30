@@ -463,6 +463,7 @@ ion-fab-list,prop,activated,boolean,false,false,false
 ion-fab-list,prop,side,"bottom" | "end" | "start" | "top",'bottom',false,false
 
 ion-footer,none
+ion-footer,prop,collapse,"fade" | undefined,undefined,false,false
 ion-footer,prop,mode,"ios" | "md",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
 
@@ -482,7 +483,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
-ion-header,prop,collapse,"condense" | undefined,undefined,false,false
+ion-header,prop,collapse,"condense" | "fade" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 

@@ -15,6 +15,12 @@ import { getIonMode } from '../../global/ionic-global';
 export class Footer implements ComponentInterface {
 
   /**
+   * Describes the scroll effect that will be applied to the footer.
+   * Only applies in iOS mode.
+   */
+  @Prop() collapse?: 'fade';
+
+  /**
    * If `true`, the footer will be translucent.
    * Only applies when the mode is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).

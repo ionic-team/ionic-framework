@@ -296,8 +296,8 @@ export class IonFabList {
 }
 export declare interface IonFooter extends Components.IonFooter {
 }
-@ProxyCmp({ inputs: ["mode", "translucent"] })
-@Component({ selector: "ion-footer", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["mode", "translucent"] })
+@ProxyCmp({ inputs: ["collapse", "mode", "translucent"] })
+@Component({ selector: "ion-footer", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["collapse", "mode", "translucent"] })
 export class IonFooter {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
