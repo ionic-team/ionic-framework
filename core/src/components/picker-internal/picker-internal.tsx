@@ -39,21 +39,13 @@ export class PickerInternal implements ComponentInterface {
     if (!highlightEl) { return false; }
 
     const bbox = highlightEl.getBoundingClientRect();
-    /**
-     * Check to see if the x-axis of where
-     * user clicked is out of bounds. This means
-     * that the user did not click on an area covered
-     * by the highlight.
-     */
-    if (ev.clientX < bbox.left || ev.clientX > bbox.right) { return false; }
-
-    /**
-     * Check to see if the x-axis of where
-     * user clicked is out of bounds. This means
-     * that the user did not click on an area covered
-     * by the highlight.
-     */
-    if (ev.clientY < bbox.top || ev.clientY > bbox.bottom) { return false; }
+  /**
+   * Check to see if the user clicked
+   * outside the bounds of the highlight.
+   */
+  const outsideX = ev.clientX < bbox.left || ev.clientX > bbox.right;
+  const outsideY = ev.clientY < bbox.top || ev.clientY > bbox.bottom;
+  if(outsideX || outsideY) return false;
 
     return true;
   }
