@@ -211,7 +211,6 @@ export class PickerInternal implements ComponentInterface {
     const { inputEl, el } = this;
     if (!inputEl) { return; }
 
-    console.log('enter', columnEl)
     /**
      * Only active input mode if there is at
      * least one column that accepts numeric input.
