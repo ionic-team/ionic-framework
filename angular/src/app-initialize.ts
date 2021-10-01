@@ -11,10 +11,14 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
     if (win && typeof (window as any) !== 'undefined') {
       const Ionic = win.Ionic = win.Ionic || {};
 
-      Ionic.config = {
-        ...config,
-        _zoneGate: (h: any) => zone.run(h)
-      };
+      // Only set the config key/value if one does not already exist
+      // Subsequent initilizations (eg in karma) should not overwrite the config if exists already in the window
+      if (!Ionic.config) {
+        Ionic.config = {
+          ...config,
+          _zoneGate: (h: any) => zone.run(h)
+        };
+      }
 
       const aelFn = '__zone_symbol__addEventListener' in (doc.body as any)
         ? '__zone_symbol__addEventListener'
