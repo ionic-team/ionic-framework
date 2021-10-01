@@ -110,7 +110,8 @@
       const column = document.querySelector('ion-picker-column-internal');
       column.addEventListener('ionChange', (ev) => {
         console.log('Column change', ev.detail);
-      })
+      });
+
       const setPickerColumn = (selector, items, value) => {
         const picker = document.querySelector(selector);
 

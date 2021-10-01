@@ -43,9 +43,9 @@ export class PickerInternal implements ComponentInterface {
    * Check to see if the user clicked
    * outside the bounds of the highlight.
    */
-  const outsideX = ev.clientX < bbox.left || ev.clientX > bbox.right;
-  const outsideY = ev.clientY < bbox.top || ev.clientY > bbox.bottom;
-  if(outsideX || outsideY) return false;
+    const outsideX = ev.clientX < bbox.left || ev.clientX > bbox.right;
+    const outsideY = ev.clientY < bbox.top || ev.clientY > bbox.bottom;
+    if (outsideX || outsideY) { return false; }
 
     return true;
   }
