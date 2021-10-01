@@ -488,6 +488,7 @@ export class PickerInternal implements ComponentInterface {
         onClick={() => this.onClick()}
       >
         <input
+          aria-hidden="true"
           tabindex={-1}
           inputmode="numeric"
           type="number"

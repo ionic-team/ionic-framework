@@ -205,7 +205,7 @@ export class PickerColumnInternal implements ComponentInterface {
           const selectedItem = this.items[index];
 
           if (selectedItem.value !== this.value) {
-            this.value = selectedItem.value
+            this.value = selectedItem.value;
             this.ionChange.emit(selectedItem);
             hapticSelectionEnd();
             this.hapticsStarted = false;
