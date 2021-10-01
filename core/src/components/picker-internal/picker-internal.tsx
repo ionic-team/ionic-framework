@@ -130,7 +130,7 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private onPointerDown = (ev: PointerEvent) => {
-    const { inputMode, inputModeColumn } = this;
+    const { inputMode, inputModeColumn, el } = this;
     if (this.isInHighlightBounds(ev)) {
       /**
        * If we were already in
@@ -175,8 +175,14 @@ export class PickerInternal implements ComponentInterface {
        * enter input mode for all columns.
        */
       } else {
+        /**
+         * If there is only 1 numeric input column
+         * then we should skip multi column input.
+         */
+        const columns = el.querySelectorAll('ion-picker-column-internal.picker-column-numeric-input');
+        const columnEl = (columns.length === 1) ? ev.target as HTMLIonPickerColumnInternalElement : undefined;
         this.actionOnClick = () => {
-          this.enterInputMode();
+          this.enterInputMode(columnEl);
         }
       }
 
@@ -205,6 +211,7 @@ export class PickerInternal implements ComponentInterface {
     const { inputEl, el } = this;
     if (!inputEl) { return; }
 
+    console.log('enter', columnEl)
     /**
      * Only active input mode if there is at
      * least one column that accepts numeric input.
@@ -283,7 +290,6 @@ export class PickerInternal implements ComponentInterface {
     if (!inputEl || !inputModeColumn) { return; }
 
     const values = inputModeColumn.items;
-    let valueToSelect;
 
     /**
      * If users pause for a bit, the search
