@@ -24,7 +24,7 @@ export class IonAccordion {
   }
 }
 
-import { AccordionGroupChangeEventDetail as IAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { AccordionGroupChangeEventDetail as IAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core';
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {}
 @ProxyCmp({
   inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value']
@@ -165,7 +165,7 @@ export class IonBreadcrumb {
   }
 }
 
-import { BreadcrumbCollapsedClickEventDetail as IBreadcrumbsBreadcrumbCollapsedClickEventDetail } from '@ionic/core/dist/types/interface';
+import { BreadcrumbCollapsedClickEventDetail as IBreadcrumbsBreadcrumbCollapsedClickEventDetail } from '@ionic/core';
 export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {}
 @ProxyCmp({
   inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode']
@@ -327,7 +327,7 @@ export class IonCardTitle {
   }
 }
 
-import { CheckboxChangeEventDetail as ICheckboxCheckboxChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { CheckboxChangeEventDetail as ICheckboxCheckboxChangeEventDetail } from '@ionic/core';
 export declare interface IonCheckbox extends Components.IonCheckbox {}
 @ProxyCmp({
   inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value']
@@ -392,8 +392,8 @@ export class IonCol {
   }
 }
 
-import { ScrollBaseDetail as IContentScrollBaseDetail } from '@ionic/core/dist/types/interface';
-import { ScrollDetail as IContentScrollDetail } from '@ionic/core/dist/types/interface';
+import { ScrollBaseDetail as IContentScrollBaseDetail } from '@ionic/core';
+import { ScrollDetail as IContentScrollDetail } from '@ionic/core';
 export declare interface IonContent extends Components.IonContent {}
 @ProxyCmp({
   inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
@@ -422,7 +422,7 @@ Look at the property: `scrollEvents` */
   }
 }
 
-import { DatetimeChangeEventDetail as IDatetimeDatetimeChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { DatetimeChangeEventDetail as IDatetimeDatetimeChangeEventDetail } from '@ionic/core';
 export declare interface IonDatetime extends Components.IonDatetime {}
 @ProxyCmp({
   inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues'],
@@ -665,7 +665,7 @@ export class IonInfiniteScrollContent {
   }
 }
 
-import { InputChangeEventDetail as IInputInputChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { InputChangeEventDetail as IInputInputChangeEventDetail } from '@ionic/core';
 export declare interface IonInput extends Components.IonInput {}
 @ProxyCmp({
   inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'size', 'spellcheck', 'step', 'type', 'value'],
@@ -1049,7 +1049,7 @@ export class IonRadio {
   }
 }
 
-import { RadioGroupChangeEventDetail as IRadioGroupRadioGroupChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { RadioGroupChangeEventDetail as IRadioGroupRadioGroupChangeEventDetail } from '@ionic/core';
 export declare interface IonRadioGroup extends Components.IonRadioGroup {}
 @ProxyCmp({
   inputs: ['allowEmptySelection', 'name', 'value']
@@ -1072,7 +1072,7 @@ export class IonRadioGroup {
   }
 }
 
-import { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core';
 export declare interface IonRange extends Components.IonRange {}
 @ProxyCmp({
   inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
@@ -1099,7 +1099,7 @@ export class IonRange {
   }
 }
 
-import { RefresherEventDetail as IRefresherRefresherEventDetail } from '@ionic/core/dist/types/interface';
+import { RefresherEventDetail as IRefresherRefresherEventDetail } from '@ionic/core';
 export declare interface IonRefresher extends Components.IonRefresher {}
 @ProxyCmp({
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
@@ -1165,7 +1165,7 @@ export class IonReorder {
   }
 }
 
-import { ItemReorderEventDetail as IReorderGroupItemReorderEventDetail } from '@ionic/core/dist/types/interface';
+import { ItemReorderEventDetail as IReorderGroupItemReorderEventDetail } from '@ionic/core';
 export declare interface IonReorderGroup extends Components.IonReorderGroup {}
 @ProxyCmp({
   inputs: ['disabled'],
@@ -1227,7 +1227,7 @@ export class IonRow {
   }
 }
 
-import { SearchbarChangeEventDetail as ISearchbarSearchbarChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { SearchbarChangeEventDetail as ISearchbarSearchbarChangeEventDetail } from '@ionic/core';
 export declare interface IonSearchbar extends Components.IonSearchbar {}
 @ProxyCmp({
   inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value'],
@@ -1261,7 +1261,7 @@ export class IonSearchbar {
   }
 }
 
-import { SegmentChangeEventDetail as ISegmentSegmentChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { SegmentChangeEventDetail as ISegmentSegmentChangeEventDetail } from '@ionic/core';
 export declare interface IonSegment extends Components.IonSegment {}
 @ProxyCmp({
   inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value']
@@ -1304,7 +1304,7 @@ export class IonSegmentButton {
   }
 }
 
-import { SelectChangeEventDetail as ISelectSelectChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { SelectChangeEventDetail as ISelectSelectChangeEventDetail } from '@ionic/core';
 export declare interface IonSelect extends Components.IonSelect {}
 @ProxyCmp({
   inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value'],
@@ -1541,7 +1541,7 @@ export class IonText {
   }
 }
 
-import { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
 export declare interface IonTextarea extends Components.IonTextarea {}
 @ProxyCmp({
   inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'spellcheck', 'value', 'wrap'],
@@ -1606,7 +1606,7 @@ export class IonTitle {
   }
 }
 
-import { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core/dist/types/interface';
+import { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core';
 export declare interface IonToggle extends Components.IonToggle {}
 @ProxyCmp({
   inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
