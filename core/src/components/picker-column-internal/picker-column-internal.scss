@@ -49,6 +49,8 @@
 
 @media (any-hover: hover) {
   :host(:focus) {
-    outline: 2px solid current-color(base);
+    outline: none;
+
+    background: current-color(base, 0.2);
   }
 }
