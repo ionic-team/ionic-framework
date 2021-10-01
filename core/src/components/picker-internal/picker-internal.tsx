@@ -23,6 +23,7 @@ export class PickerInternal implements ComponentInterface {
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
+  private singleColumnSearchTimeout?: any;
 
   @Element() el!: HTMLIonPickerInternalElement;
 
@@ -278,11 +279,40 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private selectSingleColumn = () => {
-    const { inputEl, inputModeColumn } = this;
+    const { inputEl, inputModeColumn, singleColumnSearchTimeout } = this;
     if (!inputEl || !inputModeColumn) { return; }
 
     const values = inputModeColumn.items;
     let valueToSelect;
+
+    /**
+     * If users pause for a bit, the search
+     * value should be reset similar to how a
+     * <select> behaves. So typing "34", waiting,
+     * then typing "5" should select "05".
+     */
+    if (singleColumnSearchTimeout) {
+      clearTimeout(singleColumnSearchTimeout);
+    }
+
+    this.singleColumnSearchTimeout = setTimeout(() => {
+      inputEl.value = '';
+      this.singleColumnSearchTimeout = undefined;
+    }, 1000);
+
+    /**
+     * For values that are longer than 2 digits long
+     * we should shift the value over 1 character
+     * to the left. So typing "456" would result in "56".
+     */
+    if (inputEl.value.length >= 3) {
+      const startIndex = inputEl.value.length - 2;
+      const newString = inputEl.value.substring(startIndex);
+
+      inputEl.value = newString;
+      this.selectSingleColumn();
+      return;
+    }
 
     /**
      * Checking the value of the input gets priority
@@ -290,49 +320,20 @@ export class PickerInternal implements ComponentInterface {
      * is "1" and we entered "2", then the complete value
      * is "12" and we should select hour 12.
      */
-    const findItemFromCompleteValue = values.find(v => v.text === inputEl.value || v.text === `0${inputEl.value}`);
-
+    const findItemFromCompleteValue = values.find(v => v.text === `0${inputEl.value}` || v.text === inputEl.value);
     if (findItemFromCompleteValue) {
-      valueToSelect = findItemFromCompleteValue.value;
-    /**
-     * On the other hand, if the value of the
-     * input is "4" and we type "9", then we should
-     * just search on the "9" value because
-     * there is no 49th hour. In other words, if we
-     * cannot find a value using the complete input value
-     * then fall back to just checking on the most recent
-     * character entered.
-     */
-    } else {
-      const changedCharacter = inputEl.value.substring(inputEl.value.length - 1);
-
-      /**
-       * Match `05` first, allowing users to
-       * then type `6` to match `56`.
-       */
-      const findItemFromSingleValue = values.find(v => v.text === `0${changedCharacter}` || v.text === changedCharacter);
-
-      /**
-       * If we found a value, then we should update the
-       * input value to be that single character. So if the value
-       * of the input was "8" and we typed "1", the picker
-       * should select hour "1". From there, we should be able
-       * to type "2" to have the picker select hour "12".
-       */
-      if (findItemFromSingleValue) {
-        inputEl.value = changedCharacter;
-        valueToSelect = findItemFromSingleValue.value;
-      }
+      inputModeColumn.value = findItemFromCompleteValue.value;
+      return;
     }
 
     /**
-     * If we found a value then we
-     * need to set the picker column
-     * value so the selection is
-     * reflected in the UI.
+     * If we typed "56" to get minute 56, then typed "7",
+     * we should select "07" as "567" is not a valid minute.
      */
-    if (valueToSelect !== undefined) {
-      inputModeColumn.value = valueToSelect;
+    if (inputEl.value.length === 2) {
+      const changedCharacter = inputEl.value.substring(inputEl.value.length - 1);
+      inputEl.value = changedCharacter;
+      this.selectSingleColumn();
     }
   }
 
