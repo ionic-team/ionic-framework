@@ -301,6 +301,9 @@ export class PickerInternal implements ComponentInterface {
      * For values that are longer than 2 digits long
      * we should shift the value over 1 character
      * to the left. So typing "456" would result in "56".
+     * TODO: If we want to support more than just
+     * time entry, we should update this value to be
+     * the max length of all of the picker items.
      */
     if (inputEl.value.length >= 3) {
       const startIndex = inputEl.value.length - 2;
