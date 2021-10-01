@@ -121,6 +121,15 @@ export class PickerInternal implements ComponentInterface {
     }
   }
 
+  /**
+   * Clicking a column also focuses the column on
+   * certain browsers, so we use onPointerDown
+   * to tell the onFocusIn function that users
+   * are trying to click the column rather than
+   * focus the column using the keyboard. When the
+   * user completes the click, the onClick function
+   * runs and runs the actionOnClick callback.
+   */
   private onPointerDown = (ev: PointerEvent) => {
     const { inputMode, inputModeColumn, el } = this;
     if (this.isInHighlightBounds(ev)) {
