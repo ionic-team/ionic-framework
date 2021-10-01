@@ -7,6 +7,7 @@ import { createColorClasses } from '../../utils/theme';
 import { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
 import { PickerColumnItem } from './picker-column-internal-interfaces';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -22,6 +23,7 @@ import { PickerColumnItem } from './picker-column-internal-interfaces';
 })
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
+  private hapticsStarted = false;
 
   @State() isActive = false;
 
@@ -152,11 +154,17 @@ export class PickerColumnInternal implements ComponentInterface {
 
     let timeout: any;
     let activeEl: HTMLElement | null = this.activeItem;
+
     const scrollCallback = () => {
       raf(() => {
         if (timeout) {
           clearTimeout(timeout);
           timeout = undefined;
+        }
+
+        if (!this.hapticsStarted) {
+          hapticSelectionStart();
+          this.hapticsStarted = true;
         }
 
         /**
@@ -170,6 +178,14 @@ export class PickerColumnInternal implements ComponentInterface {
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
+        }
+
+        /**
+         * If we are selecting a new value,
+         * we need to run haptics again.
+         */
+        if (activeElement !== activeEl) {
+          hapticSelectionChanged();
         }
 
         activeEl = activeElement;
@@ -191,6 +207,8 @@ export class PickerColumnInternal implements ComponentInterface {
           if (selectedItem.value !== this.value) {
             this.value = selectedItem.value
             this.ionChange.emit(selectedItem);
+            hapticSelectionEnd();
+            this.hapticsStarted = false;
           }
         }, 250);
       })
