@@ -68,3 +68,11 @@
 :host input {
   @include visually-hidden();
 }
+
+:host ::slotted(ion-picker-column-internal:first-of-type) {
+  text-align: start;
+}
+
+:host ::slotted(ion-picker-column-internal:last-of-type) {
+  text-align: end;
+}
