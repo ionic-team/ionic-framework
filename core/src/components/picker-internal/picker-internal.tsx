@@ -348,16 +348,16 @@ export class PickerInternal implements ComponentInterface {
     }
   }
 
-  private searchHourColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(({ text }) => text.replace(/^0+/, '') === value);
-
-    if (item) {
-      colEl.value = item.value;
-    }
-  }
-
-  private searchMinuteColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(({ text }) => text.replace(/0$/, '') === value);
+  /**
+   * Searches a list of column items for a particular
+   * value. This is currently used for numeric values.
+   * The zeroBehavior can be set to account for leading
+   * or trailing zeros when looking at the item text.
+   */
+  private searchColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string, zeroBehavior: 'start' | 'end' = 'start') => {
+    let item;
+    const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
+    item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
 
     if (item) {
       colEl.value = item.value;
@@ -376,7 +376,7 @@ export class PickerInternal implements ComponentInterface {
     let value = inputEl.value;
     switch (value.length) {
       case 1:
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
         break;
       case 2:
         /**
@@ -388,7 +388,7 @@ export class PickerInternal implements ComponentInterface {
         const firstCharacter = inputEl.value.substring(0, 1);
         value = (firstCharacter === '0' || firstCharacter === '1') ? inputEl.value : firstCharacter;
 
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
 
         /**
          * If only checked the first value,
@@ -397,7 +397,7 @@ export class PickerInternal implements ComponentInterface {
          */
         if (value.length === 1) {
           const minuteValue = inputEl.value.substring(inputEl.value.length - 1);
-          this.searchMinuteColumn(lastColumn, minuteValue);
+          this.searchColumn(lastColumn, minuteValue, 'end');
         }
         break;
       case 3:
@@ -410,7 +410,7 @@ export class PickerInternal implements ComponentInterface {
         const firstCharacterAgain = inputEl.value.substring(0, 1);
         value = (firstCharacterAgain === '0' || firstCharacterAgain === '1') ? inputEl.value.substring(0, 2) : firstCharacterAgain;
 
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
 
         /**
          * If only checked the first value,
@@ -419,7 +419,7 @@ export class PickerInternal implements ComponentInterface {
          */
         const minuteValue = (value.length === 1) ? inputEl.value.substring(1) : inputEl.value.substring(2);
 
-        this.searchMinuteColumn(lastColumn, minuteValue);
+        this.searchColumn(lastColumn, minuteValue, 'end');
         break;
       case 4:
         /**
@@ -430,7 +430,7 @@ export class PickerInternal implements ComponentInterface {
          */
         const firstCharacterAgainAgain = inputEl.value.substring(0, 1);
         value = (firstCharacterAgainAgain === '0' || firstCharacterAgainAgain === '1') ? inputEl.value.substring(0, 2) : firstCharacterAgainAgain;
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
 
         /**
          * If only checked the first value,
@@ -438,7 +438,7 @@ export class PickerInternal implements ComponentInterface {
          * for a match in the minutes column
          */
         const minuteValueAgain = (value.length === 1) ? inputEl.value.substring(1, inputEl.value.length) : inputEl.value.substring(2, inputEl.value.length);
-        this.searchMinuteColumn(lastColumn, minuteValueAgain);
+        this.searchColumn(lastColumn, minuteValueAgain, 'end');
 
         break;
       default:

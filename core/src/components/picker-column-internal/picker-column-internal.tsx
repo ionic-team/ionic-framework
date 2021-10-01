@@ -3,11 +3,11 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
 import { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
 import { PickerColumnItem } from './picker-column-internal-interfaces';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
