@@ -50,7 +50,7 @@ export class SelectPopover implements ComponentInterface {
 
   private findOptionFromEvent(ev: any) {
     const { options } = this;
-    return options.find(o => this.getValue(o.value) === this.getValue(ev.target.value));
+    return options.find(o => o.value === ev.target.value);
   }
 
   /**
@@ -100,10 +100,6 @@ export class SelectPopover implements ComponentInterface {
     // return the value that was clicked, otherwise undefined
     const option = this.findOptionFromEvent(ev);
     return option ? option.value : undefined;
-  }
-
-  private getValue(value: any): any {
-    return typeof value === 'number' ? value.toString() : value;
   }
 
   renderOptions(options: SelectPopoverOption[]) {
