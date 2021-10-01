@@ -320,7 +320,7 @@ export class PickerInternal implements ComponentInterface {
      * is "1" and we entered "2", then the complete value
      * is "12" and we should select hour 12.
      */
-    const findItemFromCompleteValue = values.find(v => v.text === inputEl.value.replace(/^0+/, '');
+    const findItemFromCompleteValue = values.find(v => v.text === `0${inputEl.value}` || v.text === inputEl.value);
     if (findItemFromCompleteValue) {
       inputModeColumn.value = findItemFromCompleteValue.value;
       return;
