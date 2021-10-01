@@ -35,7 +35,7 @@ export class PickerColumnInternal implements ComponentInterface {
   /**
    * The selected option in the picker.
    */
-  @Prop() value?: string | number;
+  @Prop({ mutable: true }) value?: string | number;
 
   /**
    * The color to use from your application's color palette.
@@ -186,9 +186,12 @@ export class PickerColumnInternal implements ComponentInterface {
           if (dataIndex === null) { return; }
 
           const index = parseInt(dataIndex, 10);
-          const value = this.items[index];
+          const selectedItem = this.items[index];
 
-          this.ionChange.emit(value);
+          if (selectedItem.value !== this.value) {
+            this.value = selectedItem.value
+            this.ionChange.emit(selectedItem);
+          }
         }, 250);
       })
     };
