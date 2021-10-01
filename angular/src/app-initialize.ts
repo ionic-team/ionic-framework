@@ -1,5 +1,6 @@
 import { NgZone } from '@angular/core';
 import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
+import { initialize } from '@ionic/core';
 
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
@@ -9,16 +10,11 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
   return (): any => {
     const win: IonicWindow | undefined = doc.defaultView as any;
     if (win && typeof (window as any) !== 'undefined') {
-      const Ionic = win.Ionic = win.Ionic || {};
 
-      // Only set the config key/value if one does not already exist
-      // Subsequent initilizations (eg in karma) should not overwrite the config if exists already in the window
-      if (!Ionic.config) {
-        Ionic.config = {
-          ...config,
-          _zoneGate: (h: any) => zone.run(h)
-        };
-      }
+      initialize({
+        ...config,
+        _zoneGate: (h: any) => zone.run(h)
+      });
 
       const aelFn = '__zone_symbol__addEventListener' in (doc.body as any)
         ? '__zone_symbol__addEventListener'
