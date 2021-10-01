@@ -328,8 +328,10 @@ export class PickerInternal implements ComponentInterface {
      * first. For example, if the value of the input
      * is "1" and we entered "2", then the complete value
      * is "12" and we should select hour 12.
+     *
+     * Regex removes any leading zeros from values like "02".
      */
-    const findItemFromCompleteValue = values.find(v => v.text === `0${inputEl.value}` || v.text === inputEl.value);
+    const findItemFromCompleteValue = values.find(({ text }) => text.replace(/^0+/, "") === inputEl.value);
     if (findItemFromCompleteValue) {
       inputModeColumn.value = findItemFromCompleteValue.value;
       return;
@@ -347,12 +349,7 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private searchHourColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(v => {
-      return (
-        v.text === `0${value}` ||
-        v.text === value
-      )
-    });
+    const item = colEl.items.find(({ text }) => text.replace(/^0+/, "") === value);
 
     if (item) {
       colEl.value = item.value;
@@ -360,12 +357,7 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private searchMinuteColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(v => {
-      return (
-        v.text === `${value}0` ||
-        v.text === value
-      )
-    });
+    const item = colEl.items.find(({ text }) => text.replace(/0$/, "") === value);
 
     if (item) {
       colEl.value = item.value;
