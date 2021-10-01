@@ -331,7 +331,7 @@ export class PickerInternal implements ComponentInterface {
      *
      * Regex removes any leading zeros from values like "02".
      */
-    const findItemFromCompleteValue = values.find(({ text }) => text.replace(/^0+/, "") === inputEl.value);
+    const findItemFromCompleteValue = values.find(({ text }) => text.replace(/^0+/, '') === inputEl.value);
     if (findItemFromCompleteValue) {
       inputModeColumn.value = findItemFromCompleteValue.value;
       return;
@@ -349,7 +349,7 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private searchHourColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(({ text }) => text.replace(/^0+/, "") === value);
+    const item = colEl.items.find(({ text }) => text.replace(/^0+/, '') === value);
 
     if (item) {
       colEl.value = item.value;
@@ -357,7 +357,7 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private searchMinuteColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(({ text }) => text.replace(/0$/, "") === value);
+    const item = colEl.items.find(({ text }) => text.replace(/0$/, '') === value);
 
     if (item) {
       colEl.value = item.value;
