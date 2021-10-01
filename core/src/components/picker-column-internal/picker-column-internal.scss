@@ -5,9 +5,9 @@
 
 :host {
   @include padding(0px, 16px, 0px, 16px);
+  min-width: 150px;
 
   height: 200px;
-  min-width: 150px;
 
   outline: none;
 
@@ -37,11 +37,13 @@
 
   line-height: 34px;
 
-  scroll-snap-align: center;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+
+  scroll-snap-align: center;
 }
 
 :host .picker-item-empty {
