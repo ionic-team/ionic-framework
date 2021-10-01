@@ -3,7 +3,7 @@ import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { addEventListener, componentOnReady, getElementRoot, removeEventListener } from './helpers';
+import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -78,22 +78,7 @@ export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElemen
   }
 
   if (firstInput) {
-    firstInput.focus();
-
-    /**
-     * When programmatically focusing an element,
-     * the focus-visible utility will not run because
-     * it is expecting a keyboard event to have triggered this;
-     * however, there are times when we need to manually control
-     * this behavior so we call the `setFocus` method on ion-app
-     * which will let us explicitly set the elements to focus.
-     */
-    if (firstInput.classList.contains('ion-focusable')) {
-      const app = overlay.closest('ion-app');
-      if (app) {
-        app.setFocus([firstInput]);
-      }
-    }
+    focusElement(firstInput);
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();
