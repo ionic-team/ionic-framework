@@ -7,6 +7,7 @@
   @include padding(0px, 16px, 0px, 16px);
 
   height: 200px;
+  min-width: 150px;
 
   outline: none;
 
@@ -37,6 +38,10 @@
   line-height: 34px;
 
   scroll-snap-align: center;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 :host .picker-item-empty {
