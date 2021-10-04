@@ -23,6 +23,7 @@ export class PickerInternal implements ComponentInterface {
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
+  private singleColumnSearchTimeout?: any;
 
   @Element() el!: HTMLIonPickerInternalElement;
 
@@ -38,21 +39,13 @@ export class PickerInternal implements ComponentInterface {
     if (!highlightEl) { return false; }
 
     const bbox = highlightEl.getBoundingClientRect();
-    /**
-     * Check to see if the x-axis of where
-     * user clicked is out of bounds. This means
-     * that the user did not click on an area covered
-     * by the highlight.
-     */
-    if (ev.clientX < bbox.left || ev.clientX > bbox.right) { return false; }
-
-    /**
-     * Check to see if the x-axis of where
-     * user clicked is out of bounds. This means
-     * that the user did not click on an area covered
-     * by the highlight.
-     */
-    if (ev.clientY < bbox.top || ev.clientY > bbox.bottom) { return false; }
+  /**
+   * Check to see if the user clicked
+   * outside the bounds of the highlight.
+   */
+    const outsideX = ev.clientX < bbox.left || ev.clientX > bbox.right;
+    const outsideY = ev.clientY < bbox.top || ev.clientY > bbox.bottom;
+    if (outsideX || outsideY) { return false; }
 
     return true;
   }
@@ -128,8 +121,18 @@ export class PickerInternal implements ComponentInterface {
     }
   }
 
+  /**
+   * Clicking a column also focuses the column on
+   * certain browsers, so we use onPointerDown
+   * to tell the onFocusIn function that users
+   * are trying to click the column rather than
+   * focus the column using the keyboard. When the
+   * user completes the click, the onClick function
+   * runs and runs the actionOnClick callback.
+   */
   private onPointerDown = (ev: PointerEvent) => {
-    const { inputMode, inputModeColumn } = this;
+    const { inputMode, inputModeColumn, el } = this;
+
     if (this.isInHighlightBounds(ev)) {
       /**
        * If we were already in
@@ -174,8 +177,14 @@ export class PickerInternal implements ComponentInterface {
        * enter input mode for all columns.
        */
       } else {
+        /*
+         * If there is only 1 numeric input column
+         * then we should skip multi column input.
+         */
+        const columns = el.querySelectorAll('ion-picker-column-internal.picker-column-numeric-input');
+        const columnEl = (columns.length === 1) ? ev.target as HTMLIonPickerColumnInternalElement : undefined;
         this.actionOnClick = () => {
-          this.enterInputMode();
+          this.enterInputMode(columnEl);
         }
       }
 
@@ -278,83 +287,78 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private selectSingleColumn = () => {
-    const { inputEl, inputModeColumn } = this;
+    const { inputEl, inputModeColumn, singleColumnSearchTimeout } = this;
     if (!inputEl || !inputModeColumn) { return; }
 
     const values = inputModeColumn.items;
-    let valueToSelect;
+
+    /**
+     * If users pause for a bit, the search
+     * value should be reset similar to how a
+     * <select> behaves. So typing "34", waiting,
+     * then typing "5" should select "05".
+     */
+    if (singleColumnSearchTimeout) {
+      clearTimeout(singleColumnSearchTimeout);
+    }
+
+    this.singleColumnSearchTimeout = setTimeout(() => {
+      inputEl.value = '';
+      this.singleColumnSearchTimeout = undefined;
+    }, 1000);
+
+    /**
+     * For values that are longer than 2 digits long
+     * we should shift the value over 1 character
+     * to the left. So typing "456" would result in "56".
+     * TODO: If we want to support more than just
+     * time entry, we should update this value to be
+     * the max length of all of the picker items.
+     */
+    if (inputEl.value.length >= 3) {
+      const startIndex = inputEl.value.length - 2;
+      const newString = inputEl.value.substring(startIndex);
+
+      inputEl.value = newString;
+      this.selectSingleColumn();
+      return;
+    }
 
     /**
      * Checking the value of the input gets priority
      * first. For example, if the value of the input
      * is "1" and we entered "2", then the complete value
      * is "12" and we should select hour 12.
+     *
+     * Regex removes any leading zeros from values like "02".
      */
-    const findItemFromCompleteValue = values.find(v => v.text === inputEl.value);
+    const findItemFromCompleteValue = values.find(({ text }) => text.replace(/^0+/, '') === inputEl.value);
     if (findItemFromCompleteValue) {
-      valueToSelect = findItemFromCompleteValue.value;
+      inputModeColumn.value = findItemFromCompleteValue.value;
+      return;
+    }
+
     /**
-     * On the other hand, if the value of the
-     * input is "4" and we type "9", then we should
-     * just search on the "9" value because
-     * there is no 49th hour. In other words, if we
-     * cannot find a value using the complete input value
-     * then fall back to just checking on the most recent
-     * character entered.
+     * If we typed "56" to get minute 56, then typed "7",
+     * we should select "07" as "567" is not a valid minute.
      */
-    } else {
+    if (inputEl.value.length === 2) {
       const changedCharacter = inputEl.value.substring(inputEl.value.length - 1);
-
-      /**
-       * Match `05` first, allowing users to
-       * then type `6` to match `56`.
-       */
-      const findItemFromSingleValue = values.find(v => v.text === `0${changedCharacter}` || v.text === changedCharacter);
-
-      /**
-       * If we found a value, then we should update the
-       * input value to be that single character. So if the value
-       * of the input was "8" and we typed "1", the picker
-       * should select hour "1". From there, we should be able
-       * to type "2" to have the picker select hour "12".
-       */
-      if (findItemFromSingleValue) {
-        inputEl.value = changedCharacter;
-        valueToSelect = findItemFromSingleValue.value;
-      }
-    }
-
-    /**
-     * If we found a value then we
-     * need to set the picker column
-     * value so the selection is
-     * reflected in the UI.
-     */
-    if (valueToSelect !== undefined) {
-      inputModeColumn.value = valueToSelect;
+      inputEl.value = changedCharacter;
+      this.selectSingleColumn();
     }
   }
 
-  private searchHourColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(v => {
-      return (
-        v.text === `0${value}` ||
-        v.text === value
-      )
-    });
-
-    if (item) {
-      colEl.value = item.value;
-    }
-  }
-
-  private searchMinuteColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string) => {
-    const item = colEl.items.find(v => {
-      return (
-        v.text === `${value}0` ||
-        v.text === value
-      )
-    });
+  /**
+   * Searches a list of column items for a particular
+   * value. This is currently used for numeric values.
+   * The zeroBehavior can be set to account for leading
+   * or trailing zeros when looking at the item text.
+   */
+  private searchColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string, zeroBehavior: 'start' | 'end' = 'start') => {
+    let item;
+    const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
+    item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
 
     if (item) {
       colEl.value = item.value;
@@ -373,7 +377,7 @@ export class PickerInternal implements ComponentInterface {
     let value = inputEl.value;
     switch (value.length) {
       case 1:
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
         break;
       case 2:
         /**
@@ -385,7 +389,7 @@ export class PickerInternal implements ComponentInterface {
         const firstCharacter = inputEl.value.substring(0, 1);
         value = (firstCharacter === '0' || firstCharacter === '1') ? inputEl.value : firstCharacter;
 
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
 
         /**
          * If only checked the first value,
@@ -394,7 +398,7 @@ export class PickerInternal implements ComponentInterface {
          */
         if (value.length === 1) {
           const minuteValue = inputEl.value.substring(inputEl.value.length - 1);
-          this.searchMinuteColumn(lastColumn, minuteValue);
+          this.searchColumn(lastColumn, minuteValue, 'end');
         }
         break;
       case 3:
@@ -407,7 +411,7 @@ export class PickerInternal implements ComponentInterface {
         const firstCharacterAgain = inputEl.value.substring(0, 1);
         value = (firstCharacterAgain === '0' || firstCharacterAgain === '1') ? inputEl.value.substring(0, 2) : firstCharacterAgain;
 
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
 
         /**
          * If only checked the first value,
@@ -416,7 +420,7 @@ export class PickerInternal implements ComponentInterface {
          */
         const minuteValue = (value.length === 1) ? inputEl.value.substring(1) : inputEl.value.substring(2);
 
-        this.searchMinuteColumn(lastColumn, minuteValue);
+        this.searchColumn(lastColumn, minuteValue, 'end');
         break;
       case 4:
         /**
@@ -427,7 +431,7 @@ export class PickerInternal implements ComponentInterface {
          */
         const firstCharacterAgainAgain = inputEl.value.substring(0, 1);
         value = (firstCharacterAgainAgain === '0' || firstCharacterAgainAgain === '1') ? inputEl.value.substring(0, 2) : firstCharacterAgainAgain;
-        this.searchHourColumn(firstColumn, value);
+        this.searchColumn(firstColumn, value);
 
         /**
          * If only checked the first value,
@@ -435,7 +439,7 @@ export class PickerInternal implements ComponentInterface {
          * for a match in the minutes column
          */
         const minuteValueAgain = (value.length === 1) ? inputEl.value.substring(1, inputEl.value.length) : inputEl.value.substring(2, inputEl.value.length);
-        this.searchMinuteColumn(lastColumn, minuteValueAgain);
+        this.searchColumn(lastColumn, minuteValueAgain, 'end');
 
         break;
       default:
@@ -485,6 +489,7 @@ export class PickerInternal implements ComponentInterface {
         onClick={() => this.onClick()}
       >
         <input
+          aria-hidden="true"
           tabindex={-1}
           inputmode="numeric"
           type="number"

@@ -22,6 +22,8 @@
 
   // Hide scrollbars on Firefox
   scrollbar-width: none;
+
+  text-align: center;
 }
 
 /**
@@ -36,6 +38,12 @@
 
   line-height: 34px;
 
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
   scroll-snap-align: center;
 }
 
@@ -49,6 +57,8 @@
 
 @media (any-hover: hover) {
   :host(:focus) {
-    outline: 2px solid current-color(base);
+    outline: none;
+
+    background: current-color(base, 0.2);
   }
 }

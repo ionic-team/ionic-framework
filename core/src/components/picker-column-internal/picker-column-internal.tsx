@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
 import { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
@@ -22,6 +23,7 @@ import { PickerColumnItem } from './picker-column-internal-interfaces';
 })
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
+  private hapticsStarted = false;
 
   @State() isActive = false;
 
@@ -35,7 +37,7 @@ export class PickerColumnInternal implements ComponentInterface {
   /**
    * The selected option in the picker.
    */
-  @Prop() value?: string | number;
+  @Prop({ mutable: true }) value?: string | number;
 
   /**
    * The color to use from your application's color palette.
@@ -152,11 +154,17 @@ export class PickerColumnInternal implements ComponentInterface {
 
     let timeout: any;
     let activeEl: HTMLElement | null = this.activeItem;
+
     const scrollCallback = () => {
       raf(() => {
         if (timeout) {
           clearTimeout(timeout);
           timeout = undefined;
+        }
+
+        if (!this.hapticsStarted) {
+          hapticSelectionStart();
+          this.hapticsStarted = true;
         }
 
         /**
@@ -170,6 +178,14 @@ export class PickerColumnInternal implements ComponentInterface {
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
+        }
+
+        /**
+         * If we are selecting a new value,
+         * we need to run haptics again.
+         */
+        if (activeElement !== activeEl) {
+          hapticSelectionChanged();
         }
 
         activeEl = activeElement;
@@ -186,9 +202,14 @@ export class PickerColumnInternal implements ComponentInterface {
           if (dataIndex === null) { return; }
 
           const index = parseInt(dataIndex, 10);
-          const value = this.items[index];
+          const selectedItem = this.items[index];
 
-          this.ionChange.emit(value);
+          if (selectedItem.value !== this.value) {
+            this.value = selectedItem.value;
+            this.ionChange.emit(selectedItem);
+            hapticSelectionEnd();
+            this.hapticsStarted = false;
+          }
         }, 250);
       })
     };

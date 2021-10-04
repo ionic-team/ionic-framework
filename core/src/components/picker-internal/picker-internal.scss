@@ -50,6 +50,29 @@
   height: 84px;
 }
 
+:host .picker-highlight {
+  @include border-radius(8px, 8px, 8px, 8px);
+  @include position(50%, 0, 0, 0);
+  @include margin(0, auto, 0, auto);
+
+  position: absolute;
+
+  width: calc(100% - 16px);
+  height: 34px;
+
+  transform: translateY(-50%);
+
+  z-index: -1;
+}
+
 :host input {
   @include visually-hidden();
+}
+
+:host ::slotted(ion-picker-column-internal:first-of-type) {
+  text-align: start;
+}
+
+:host ::slotted(ion-picker-column-internal:last-of-type) {
+  text-align: end;
 }
