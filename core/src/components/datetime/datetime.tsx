@@ -467,7 +467,6 @@ export class Datetime implements ComponentInterface {
      * Tab should jump between bodies of selectable content.
      */
     const checkCalendarBodyFocus = (ev: MutationRecord[]) => {
-      console.log('call focus')
       const record = ev[0];
 
       /**
