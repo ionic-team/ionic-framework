@@ -35,12 +35,8 @@
 
 // iOS Header - Collapse Fade
 // --------------------------------------------------
-.header-collapse-fade {
-  --opacity: 0;
-}
-
 .header-collapse-fade ion-toolbar {
-  --opacity: inherit;
+  --opacity-scale: inherit;
 }
 
 // iOS Header - Collapse Condense

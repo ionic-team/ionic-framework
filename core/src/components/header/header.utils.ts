@@ -166,9 +166,8 @@ export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => 
     const scrollTop = scrollEl.scrollTop;
     const scale = clamp(0, scrollTop / 10, 1);
 
-    // TODO: Need to account for translucent
     writeTask(() => {
-      baseEl.style.setProperty('--opacity', scale.toString());
+      baseEl.style.setProperty('--opacity-scale', scale.toString());
     })
   });
 }

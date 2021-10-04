@@ -85,12 +85,11 @@ export class Header implements ComponentInterface {
 
         await this.setupCondenseHeader(contentEl, pageEl);
       }
-
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
 
-      await this.setupFadeHeader(contentEl)
+      await this.setupFadeHeader(contentEl);
     }
   }
 
@@ -102,8 +101,11 @@ export class Header implements ComponentInterface {
     /**
      * Handle fading of toolbars on scroll
      */
+
     this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el); };
     this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
+
+    handleHeaderFade(this.scrollEl!, this.el);
   }
 
   private destroyCollapsibleHeader() {
