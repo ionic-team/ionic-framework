@@ -183,6 +183,17 @@ dates in JavaScript.
 | `Shift` + `PageUp` | Changes the grid of dates to the previous year. |
 | `Shift` + `PageDown` | Changes the grid of dates to the next year. |
 
+#### Time, Month, and Year Wheels
+
+When using the time wheel picker, you can use the number keys to select hour and minute values when the columns are focused.
+
+| Key                | Function                                                     |
+| ------------------ | ------------------------------------------------------------ |
+| `ArrowUp` | Scroll to the previous item. |
+| `ArrowDown` | Scroll to the next item. |
+| `Home` | Scroll to the first item. |
+| `End` | Scroll to the last item. |
+
 ## Interfaces
 
 ### DatetimeChangeEventDetail
