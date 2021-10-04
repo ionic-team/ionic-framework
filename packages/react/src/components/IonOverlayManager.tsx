@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+
 import { ReactComponentOrElement } from '../models';
 
 interface IonOverlayManagerProps {
@@ -19,7 +20,6 @@ interface IonOverlayManagerProps {
  * components to re-render when overlays are added. However, we need to communicate with the IonContext
  * that is set up in <IonApp />, so we register callbacks so when overlays are added to IonContext,
  * they ultimately added here.
- * @param param0
  */
 export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
   onAddOverlay,

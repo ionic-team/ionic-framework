@@ -1,8 +1,9 @@
 import { ModalOptions, modalController } from '@ionic/core/components';
 
+import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useOverlay } from './useOverlay';
-import { ReactComponentOrElement } from "../models/ReactComponentOrElement";
 
 /**
  * A hook for presenting/dismissing an IonModal component

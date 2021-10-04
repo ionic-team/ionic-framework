@@ -1,11 +1,12 @@
 import { OverlayEventDetail } from '@ionic/core/components';
-import React, { useMemo, useRef, useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+
 import { attachProps } from '../components/react-component-lib/utils';
+import { IonContext } from '../contexts/IonContext';
+import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+import { generateId } from '../utils/generateId';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
-import { IonContext } from '../contexts/IonContext';
-import { generateId } from '../utils/generateId';
-import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;

@@ -1,11 +1,12 @@
 import { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
-import { IonicReactProps } from './IonicReactProps';
-import { IonAppInner } from './inner-proxies';
-import { IonOverlayManager } from './IonOverlayManager';
 import { IonContext, IonContextInterface } from '../contexts/IonContext';
 import { ReactComponentOrElement } from '../models';
+
+import { IonOverlayManager } from './IonOverlayManager';
+import { IonicReactProps } from './IonicReactProps';
+import { IonAppInner } from './inner-proxies';
 
 type Props = LocalJSX.IonApp &
   IonicReactProps & {
