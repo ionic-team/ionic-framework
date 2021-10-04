@@ -44,7 +44,6 @@ export class Footer implements ComponentInterface {
 
   private checkCollapsibleFooter = () => {
     const mode = getIonMode(this);
-    console.log('hellooo')
     if (mode !== 'ios') return;
 
     const { collapse } = this;
@@ -68,6 +67,8 @@ export class Footer implements ComponentInterface {
      */
     this.contentScrollCallback = () => { handleFooterFade(scrollEl, this.el); };
     scrollEl.addEventListener('scroll', this.contentScrollCallback);
+
+    handleFooterFade(scrollEl, this.el);
   }
 
   render() {

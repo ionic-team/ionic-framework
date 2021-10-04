@@ -27,10 +27,7 @@
 
 // iOS Footer - Collapse Fade
 // --------------------------------------------------
-.footer-collapse-fade {
-  --opacity: 0;
-}
 
 .footer-collapse-fade ion-toolbar {
-  --opacity: inherit;
+  --opacity-scale: inherit;
 }
