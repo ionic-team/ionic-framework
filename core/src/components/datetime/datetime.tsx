@@ -1312,7 +1312,6 @@ export class Datetime implements ComponentInterface {
         {getFormattedTime(this.workingParts, use24Hour)}
       </button>,
       <ion-popover
-        side="top"
         alignment="center"
         translucent
         overlayIndex={1}
