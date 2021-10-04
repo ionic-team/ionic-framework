@@ -1210,7 +1210,8 @@ export class Datetime implements ComponentInterface {
   private renderTimePicker(
     hoursItems: PickerColumnItem[],
     minutesItems: PickerColumnItem[],
-    ampmItems: PickerColumnItem[]
+    ampmItems: PickerColumnItem[],
+    use24Hour: boolean
    ) {
     const { color, workingParts } = this;
     return (
@@ -1251,7 +1252,7 @@ export class Datetime implements ComponentInterface {
             ev.stopPropagation();
           }}
         ></ion-picker-column-internal>
-        <ion-picker-column-internal
+        { !use24Hour && <ion-picker-column-internal
           color={color}
           value={workingParts.ampm}
           items={ampmItems}
@@ -1272,7 +1273,7 @@ export class Datetime implements ComponentInterface {
 
             ev.stopPropagation();
           }}
-        ></ion-picker-column-internal>
+        ></ion-picker-column-internal> }
       </ion-picker-internal>
     )
   }
@@ -1321,7 +1322,7 @@ export class Datetime implements ComponentInterface {
         }}
         ref={el => this.popoverRef = el}
       >
-        {this.renderTimePicker(hoursItems, minutesItems, ampmItems)}
+        {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}
       </ion-popover>
     ]
   }
@@ -1370,7 +1371,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="datetime-time">
-          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
+          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
       </div>
     )
   }

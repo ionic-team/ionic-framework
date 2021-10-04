@@ -1,11 +1,7 @@
 import { DatetimeParts } from '../datetime-interface';
 
 const get12HourTime = (hour: number) => {
-  if (hour < 13) {
-    return hour;
-  }
-
-  return hour - 12;
+  return hour % 12 || 12;
 }
 
 const getFormattedAMPM = (ampm?: string) => {
