@@ -132,7 +132,6 @@ export class PickerInternal implements ComponentInterface {
    */
   private onPointerDown = (ev: PointerEvent) => {
     const { inputMode, inputModeColumn, el } = this;
-
     if (this.isInHighlightBounds(ev)) {
       /**
        * If we were already in
@@ -177,7 +176,7 @@ export class PickerInternal implements ComponentInterface {
        * enter input mode for all columns.
        */
       } else {
-        /*
+        /**
          * If there is only 1 numeric input column
          * then we should skip multi column input.
          */
