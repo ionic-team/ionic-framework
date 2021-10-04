@@ -173,6 +173,18 @@
           </ion-select>
         </ion-item>
 
+        <ion-item>
+          <ion-label>Numbers</ion-label>
+          <ion-select interface="popover" id="numberPopover">
+            <ion-select-option>0</ion-select-option>
+            <ion-select-option>1</ion-select-option>
+            <ion-select-option>2</ion-select-option>
+            <ion-select-option>3</ion-select-option>
+            <ion-select-option>4</ion-select-option>
+            <ion-select-option>5</ion-select-option>
+          </ion-select>
+        </ion-item>
+
       </ion-list>
 
       <ion-list>
@@ -381,6 +393,11 @@
 
       const options = numberSelect.getElementsByTagName('ion-select-option');
       Array.from(options).forEach((option, index) => {
+        option.value = index;
+      });
+
+      const numberPopoverOptions = document.querySelectorAll('#numberPopover ion-select-option');
+      Array.from(numberPopoverOptions).forEach((option, index) => {
         option.value = index;
       });
 
