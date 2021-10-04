@@ -5,6 +5,7 @@ import { IonTabBar as IonTabBarCmp } from '@ionic/core/components/ion-tab-bar.js
 import { IonTabButton as IonTabButtonCmp } from '@ionic/core/components/ion-tab-button.js';
 import { JSX as IoniconsJSX } from 'ionicons';
 import { IonIcon as IonIconCmp } from 'ionicons/components/ion-icon.js';
+import { IonApp as IonAppCmp } from '@ionic/core/components/ion-app.js';
 
 import { /*@__PURE__*/ createReactComponent } from './react-component-lib';
 
@@ -27,6 +28,13 @@ export const IonRouterOutletInner = /*@__PURE__*/ createReactComponent<
   },
   HTMLIonRouterOutletElement
 >('ion-router-outlet', undefined, undefined, IonRouterOutletCmp);
+
+export const IonAppInner = /*@__PURE__*/ createReactComponent<JSX.IonApp, HTMLIonAppElement>(
+  'ion-app',
+  undefined,
+  undefined,
+  IonAppCmp
+);
 
 // ionicons
 export const IonIconInner = /*@__PURE__*/ createReactComponent<
