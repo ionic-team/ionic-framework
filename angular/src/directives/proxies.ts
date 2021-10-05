@@ -519,13 +519,13 @@ export class IonFabList {
 
 export declare interface IonFooter extends Components.IonFooter {}
 @ProxyCmp({
-  inputs: ['mode', 'translucent']
+  inputs: ['collapse', 'mode', 'translucent']
 })
 @Component({
   selector: 'ion-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['mode', 'translucent']
+  inputs: ['collapse', 'mode', 'translucent']
 })
 export class IonFooter {
   protected el: HTMLElement;

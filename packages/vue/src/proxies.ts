@@ -334,6 +334,7 @@ export const IonFabList = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab
 
 
 export const IonFooter = /*@__PURE__*/ defineContainer<JSX.IonFooter>('ion-footer', IonFooterCmp, [
+  'collapse',
   'translucent'
 ]);
 

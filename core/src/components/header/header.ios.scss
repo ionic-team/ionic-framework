@@ -33,7 +33,13 @@
   --border-width: 0;
 }
 
-// iOS Header - Collapse
+// iOS Header - Collapse Fade
+// --------------------------------------------------
+.header-collapse-fade ion-toolbar {
+  --opacity-scale: inherit;
+}
+
+// iOS Header - Collapse Condense
 // --------------------------------------------------
 .header-collapse-condense {
   z-index: 9;
@@ -69,6 +75,15 @@
 
   padding-top: 0px;
   padding-bottom: 13px;
+}
+
+
+.header-collapse-main {
+  --opacity-scale: 1;
+}
+
+.header-collapse-main ion-toolbar {
+  --opacity-scale: inherit;
 }
 
 .header-collapse-main ion-toolbar.in-toolbar ion-title,

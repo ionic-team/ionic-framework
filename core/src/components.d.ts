@@ -921,6 +921,10 @@ export namespace Components {
     }
     interface IonFooter {
         /**
+          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+         */
+        "collapse"?: 'fade';
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -937,9 +941,9 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
-        "collapse"?: 'condense';
+        "collapse"?: 'condense' | 'fade';
         /**
           * The mode determines which platform styles to use.
          */
@@ -4607,6 +4611,10 @@ declare namespace LocalJSX {
     }
     interface IonFooter {
         /**
+          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+         */
+        "collapse"?: 'fade';
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -4623,9 +4631,9 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
-        "collapse"?: 'condense';
+        "collapse"?: 'condense' | 'fade';
         /**
           * The mode determines which platform styles to use.
          */
