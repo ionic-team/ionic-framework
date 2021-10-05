@@ -142,10 +142,7 @@ export class Header implements ComponentInterface {
     if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
 
     setHeaderActive(mainHeaderIndex, false);
-
-    mainHeaderIndex.toolbars.forEach(toolbar => {
-      setToolbarBackgroundOpacity(toolbar, 0);
-    });
+    setToolbarBackgroundOpacity(mainHeaderIndex.el, 0);
 
     /**
      * Handle interaction between toolbar collapse and

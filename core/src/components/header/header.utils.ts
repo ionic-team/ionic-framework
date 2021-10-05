@@ -64,11 +64,11 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
   });
 };
 
-export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: number) => {
+export const setToolbarBackgroundOpacity = (headerEl: HTMLElement, opacity?: number) => {
   if (opacity === undefined) {
-    toolbar.background.style.removeProperty('--opacity');
+    headerEl.style.removeProperty('--opacity-scale');
   } else {
-    toolbar.background.style.setProperty('--opacity', opacity.toString());
+    headerEl.style.setProperty('--opacity-scale', opacity.toString());
   }
 };
 
@@ -88,9 +88,7 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, 
    */
   const scale = (ev[0].intersectionRatio > 0.9 || scrollTop <= 0) ? 0 : ((1 - ev[0].intersectionRatio) * 100) / 75;
 
-  mainHeaderIndex.toolbars.forEach(toolbar => {
-    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
-  });
+  setToolbarBackgroundOpacity(mainHeaderIndex.el, (scale === 1) ? undefined : scale);
 };
 
 /**
@@ -136,7 +134,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection && scrollTop > 0) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
-        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
+        setToolbarBackgroundOpacity(mainHeaderIndex.el);
       }
     }
   });
@@ -164,9 +162,11 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
 export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, hasCondense: boolean) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
+    const baseElHeight = baseEl.clientHeight;
     const scale = clamp(0, scrollTop / 10, 1);
     if (hasCondense && scrollTop < 40) {
-      scrollEl.style.setProperty('clip-path', 'inset(44px 0px 0px 0px)');
+      baseEl.style.setProperty('--opacity-scale', '0');
+      scrollEl.style.setProperty('clip-path', `inset(${baseElHeight}px 0px 0px 0px)`);
       return;
     }
 

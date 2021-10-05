@@ -77,6 +77,15 @@
   padding-bottom: 13px;
 }
 
+
+.header-collapse-main {
+  --opacity-scale: 1;
+}
+
+.header-collapse-main ion-toolbar {
+  --opacity-scale: inherit;
+}
+
 .header-collapse-main ion-toolbar.in-toolbar ion-title,
 .header-collapse-main ion-toolbar.in-toolbar ion-buttons {
   transition: all 0.2s ease-in-out;
