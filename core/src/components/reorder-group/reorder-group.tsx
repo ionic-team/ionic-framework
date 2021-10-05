@@ -56,9 +56,8 @@ export class ReorderGroup implements ComponentInterface {
   async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
-      componentOnReady(contentEl, async () => {
-        this.scrollEl = await contentEl.getScrollElement();
-      });
+      await new Promise(resolve => componentOnReady(contentEl, resolve));
+      this.scrollEl = await contentEl.getScrollElement();
     }
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
