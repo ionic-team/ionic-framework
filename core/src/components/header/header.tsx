@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from
 import { getIonMode } from '../../global/ionic-global';
 import { inheritAttributes } from '../../utils/helpers';
 
-import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity, handleHeaderFade } from './header.utils';
+import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -63,7 +63,7 @@ export class Header implements ComponentInterface {
   private async checkCollapsibleHeader() {
     const mode = getIonMode(this);
 
-    if (mode !== 'ios') return;
+    if (mode !== 'ios') { return; }
 
     const { collapse } = this;
     const hasCondense = collapse === 'condense';

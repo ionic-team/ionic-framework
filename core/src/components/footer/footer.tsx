@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+
 import { handleFooterFade } from './footer.utils';
 
 /**
@@ -44,7 +45,7 @@ export class Footer implements ComponentInterface {
 
   private checkCollapsibleFooter = () => {
     const mode = getIonMode(this);
-    if (mode !== 'ios') return;
+    if (mode !== 'ios') { return; }
 
     const { collapse } = this;
     const hasFade = collapse === 'fade';
