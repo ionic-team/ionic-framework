@@ -16,7 +16,6 @@ import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade,
   }
 })
 export class Header implements ComponentInterface {
-
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: any;
   private intersectionObserver?: any;
