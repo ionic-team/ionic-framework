@@ -88,12 +88,12 @@ export class Header implements ComponentInterface {
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
-      const condenseHeader = (contentEl) ? contentEl.querySelector('ion-header[collapse="condense"]') : null;
-      await this.setupFadeHeader(contentEl, !!condenseHeader);
+      const condenseHeader = (contentEl) ? contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null : null;
+      await this.setupFadeHeader(contentEl, condenseHeader);
     }
   }
 
-  private setupFadeHeader = async (contentEl: HTMLIonContentElement | null, hasCondense: boolean) => {
+  private setupFadeHeader = async (contentEl: HTMLIonContentElement | null, condenseHeader: HTMLElement | null) => {
     if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
 
     this.scrollEl = await contentEl.getScrollElement();
@@ -102,10 +102,10 @@ export class Header implements ComponentInterface {
      * Handle fading of toolbars on scroll
      */
 
-    this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el, hasCondense); };
+    this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el, condenseHeader); };
     this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
-    handleHeaderFade(this.scrollEl!, this.el, hasCondense);
+    handleHeaderFade(this.scrollEl!, this.el, condenseHeader);
   }
 
   private destroyCollapsibleHeader() {

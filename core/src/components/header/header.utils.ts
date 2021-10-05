@@ -5,7 +5,7 @@ import { clamp } from '../../utils/helpers';
 const TRANSITION = 'all 0.2s ease-in-out';
 
 interface HeaderIndex {
-  el: HTMLElement;
+  el: HTMLIonHeaderElement;
   toolbars: ToolbarIndex[] | [];
 }
 
@@ -64,7 +64,15 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
   });
 };
 
-export const setToolbarBackgroundOpacity = (headerEl: HTMLElement, opacity?: number) => {
+export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opacity?: number) => {
+  /**
+   * Fading in the backdrop opacity
+   * should happen after the large title
+   * has collapsed, so it is handled
+   * by handleHeaderFade()
+   */
+  if (headerEl.collapse === 'fade') { return; }
+
   if (opacity === undefined) {
     headerEl.style.removeProperty('--opacity-scale');
   } else {
@@ -159,17 +167,33 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
   });
 };
 
-export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, hasCondense: boolean) => {
+export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, condenseHeader: HTMLElement | null) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
     const baseElHeight = baseEl.clientHeight;
-    const scale = clamp(0, scrollTop / 10, 1);
-    if (hasCondense && scrollTop < 40) {
+    const fadeStart = (condenseHeader) ? condenseHeader.clientHeight : 0;
+
+    /**
+     * If we are using fade header with a condense
+     * header, then the toolbar backgrounds should
+     * not begin to fade in until the condense
+     * header has fully collapsed.
+     *
+     * Additionally, the main content should not
+     * overflow out of the container until the
+     * condense header has fully collapsed. When
+     * using just the condense header the content
+     * should overflow out of the container.
+     */
+    if (condenseHeader !== null && scrollTop < fadeStart) {
       baseEl.style.setProperty('--opacity-scale', '0');
       scrollEl.style.setProperty('clip-path', `inset(${baseElHeight}px 0px 0px 0px)`);
       return;
     }
 
+    const distanceToStart = scrollTop - fadeStart;
+    const fadeDuration = 10;
+    const scale = clamp(0, (distanceToStart / fadeDuration), 1);
     writeTask(() => {
       scrollEl.style.removeProperty('clip-path');
       baseEl.style.setProperty('--opacity-scale', scale.toString());
