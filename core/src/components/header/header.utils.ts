@@ -185,7 +185,7 @@ export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, con
      * using just the condense header the content
      * should overflow out of the container.
      */
-    if (condenseHeader !== null && scrollTop < fadeStart) {
+    if ((condenseHeader !== null) && (scrollTop < fadeStart)) {
       baseEl.style.setProperty('--opacity-scale', '0');
       scrollEl.style.setProperty('clip-path', `inset(${baseElHeight}px 0px 0px 0px)`);
       return;
