@@ -3,6 +3,11 @@
 Header is a parent component that holds the toolbar component.
 It's important to note that ion-header needs to be the one of the three root elements of a page
 
+## Fade Header
+
+The `collapse` property can be set to `'fade'` on a page's main `ion-header` to have the background color of the toolbars fade in as users scroll. This provides the same fade effect that is found in many native iOS applications.
+
+This functionality can be combined with [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles) as well. The `collapse="condense"` value should be set on the `ion-header` inside of your `ion-content`. The `collapse="fade"` value should be set on the `ion-header` outside of your `ion-content`.
 
 
 <!-- Auto Generated Below -->
@@ -10,7 +15,7 @@ It's important to note that ion-header needs to be the one of the three root ele
 
 ## Usage
 
-### Angular / javascript
+### Angular
 
 ```html
 <ion-header>
@@ -37,6 +42,69 @@ It's important to note that ion-header needs to be the one of the three root ele
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">My Navigation Bar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
+
+<!-- Fade Header with collapse header -->
+<ion-header collapse="fade" [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Header</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Header</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
+```
+
+
+### Javascript
+
+```html
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Navigation Bar</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-title>Subheader</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Header without a border -->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Header - No Border</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Navigation Bar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
+
+<!-- Fade Header with collapse header -->
+<ion-header collapse="fade" translucent="true">
+  <ion-toolbar>
+    <ion-title>Header</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Header</ion-title>
     </ion-toolbar>
   </ion-header>
 </ion-content>
@@ -78,6 +146,21 @@ export const HeaderExample: React.FC = () => (
         </IonToolbar>
       </IonHeader>
     </IonContent>
+    
+    {/*-- Fade Header with collapse header --*/}
+    <IonHeader collapse="fade" translucent={true}>
+      <IonToolbar>
+        <IonTitle>Header</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    
+    <IonContent fullscreen={true}>
+      <IonHeader collapse="condense">
+        <IonToolbar>
+          <IonTitle size="large">Header</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonContent>
   </>
 );
 ```
@@ -108,7 +191,7 @@ export class HeaderExample {
         </ion-toolbar>
       </ion-header>,
 
-      // Header without a border
+      {/*-- Header without a border --*/}
       <ion-header class="ion-no-border">
         <ion-toolbar>
           <ion-title>Header - No Border</ion-title>
@@ -119,6 +202,21 @@ export class HeaderExample {
         <ion-header collapse="condense">
           <ion-toolbar>
             <ion-title size="large">My Navigation Bar</ion-title>
+          </ion-toolbar>
+        </ion-header>
+      </ion-content>,
+      
+      {/*-- Fade Header with collapse header --*/}
+      <ion-header collapse="fade" translucent={true}>
+        <ion-toolbar>
+          <ion-title>Header</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content fullscreen={true}>
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">Header</ion-title>
           </ion-toolbar>
         </ion-header>
       </ion-content>
@@ -156,6 +254,21 @@ export class HeaderExample {
     <ion-header collapse="condense">
       <ion-toolbar>
         <ion-title size="large">My Navigation Bar</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-content>
+  
+  <!-- Fade Header with collapse header -->
+  <ion-header collapse="fade" :translucent="true">
+    <ion-toolbar>
+      <ion-title>Header</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content :fullscreen="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Header</ion-title>
       </ion-toolbar>
     </ion-header>
   </ion-content>

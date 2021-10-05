@@ -27,6 +27,21 @@
       </ion-toolbar>
     </ion-header>
   </ion-content>
+  
+  <!-- Fade Header with collapse header -->
+  <ion-header collapse="fade" :translucent="true">
+    <ion-toolbar>
+      <ion-title>Header</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content :fullscreen="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Header</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-content>
 </template>
 
 <script>
