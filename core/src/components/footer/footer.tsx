@@ -62,7 +62,7 @@ export class Footer implements ComponentInterface {
   }
 
   private setupFadeFooter = async (contentEl: HTMLIonContentElement | null) => {
-    if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
+    if (!contentEl) { console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.'); return; }
 
     const scrollEl = this.scrollEl = await contentEl.getScrollElement();
 
@@ -97,7 +97,7 @@ export class Footer implements ComponentInterface {
           [`footer-translucent`]: translucent,
           [`footer-translucent-${mode}`]: translucent,
 
-          [`header-collapse-${collapse}`]: true,
+          [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
         { mode === 'ios' && translucent &&
