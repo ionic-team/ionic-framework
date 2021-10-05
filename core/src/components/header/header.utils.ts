@@ -161,12 +161,17 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
   });
 };
 
-export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => {
+export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, hasCondense: boolean) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
     const scale = clamp(0, scrollTop / 10, 1);
+    if (hasCondense && scrollTop < 40) {
+      scrollEl.style.setProperty('clip-path', 'inset(44px 0px 0px 0px)');
+      return;
+    }
 
     writeTask(() => {
+      scrollEl.style.removeProperty('clip-path');
       baseEl.style.setProperty('--opacity-scale', scale.toString());
     })
   });
