@@ -18,6 +18,13 @@ export const FooterExample: React.FC = () => (
         <IonTitle>Footer</IonTitle>
       </IonToolbar>
     </IonFooter>
+    
+    {/*-- Fade Footer --*/}
+    <IonFooter collapse="fade">
+      <IonToolbar>
+        <IonTitle>Footer</IonTitle>
+      </IonToolbar>
+    </IonFooter>
   </>
 );
 ```
