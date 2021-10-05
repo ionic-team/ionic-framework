@@ -64,7 +64,13 @@ export class PickerColumnInternal implements ComponentInterface {
 
   @Watch('value')
   valueChange() {
+    const { items, value } = this;
     this.scrollActiveItemIntoView();
+
+    const findItem = items.find(item => item.value === value);
+    if (findItem) {
+      this.ionChange.emit(findItem);
+    }
   }
 
   /**
@@ -206,7 +212,6 @@ export class PickerColumnInternal implements ComponentInterface {
 
           if (selectedItem.value !== this.value) {
             this.value = selectedItem.value;
-            this.ionChange.emit(selectedItem);
             hapticSelectionEnd();
             this.hapticsStarted = false;
           }
