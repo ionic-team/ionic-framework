@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { componentOnReady } from '../../utils/helpers';
 
 import { handleFooterFade } from './footer.utils';
 
@@ -64,6 +65,7 @@ export class Footer implements ComponentInterface {
   private setupFadeFooter = async (contentEl: HTMLIonContentElement | null) => {
     if (!contentEl) { console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.'); return; }
 
+    await new Promise(resolve => componentOnReady(contentEl, resolve));
     const scrollEl = this.scrollEl = await contentEl.getScrollElement();
 
     /**

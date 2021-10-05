@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { inheritAttributes } from '../../utils/helpers';
+import { componentOnReady, inheritAttributes } from '../../utils/helpers';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 
@@ -92,6 +92,7 @@ export class Header implements ComponentInterface {
   private setupFadeHeader = async (contentEl: HTMLIonContentElement | null, condenseHeader: HTMLElement | null) => {
     if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
 
+    await new Promise(resolve => componentOnReady(contentEl, resolve));
     const scrollEl = this.scrollEl = await contentEl.getScrollElement();
 
     /**
@@ -125,6 +126,7 @@ export class Header implements ComponentInterface {
     if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
     if (typeof (IntersectionObserver as any) === 'undefined') { return; }
 
+    await new Promise(resolve => componentOnReady(contentEl, resolve));
     this.scrollEl = await contentEl.getScrollElement();
 
     const headers = pageEl.querySelectorAll('ion-header');
