@@ -155,6 +155,7 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
+      autoDefineCustomElement: true,
       dir: 'components',
       copy: [{
         src: '../scripts/custom-elements',
