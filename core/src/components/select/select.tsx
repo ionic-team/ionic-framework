@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
-import { findItemLabel, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
@@ -179,11 +179,18 @@ export class Select implements ComponentInterface {
       this.setFocus();
     });
 
+    await overlay.present();
+
+    // focus selected option for popovers
     if (this.interface === 'popover') {
-      await (overlay as HTMLIonPopoverElement).presentFromTrigger(event, true);
-    } else {
-      await overlay.present();
+      let indexOfSelected = this.childOpts.map(o => o.value).indexOf(this.value);
+      indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
+      const selectedEl = overlay.querySelector<HTMLElement>(`.select-interface-option:nth-child(${indexOfSelected + 1})`);
+      if (selectedEl) {
+        focusElement(selectedEl);
+      }
     }
+
     return overlay;
   }
 

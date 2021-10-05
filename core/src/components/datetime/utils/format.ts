@@ -1,5 +1,28 @@
 import { DatetimeParts } from '../datetime-interface';
 
+const get12HourTime = (hour: number) => {
+  return hour % 12 || 12;
+}
+
+const getFormattedAMPM = (ampm?: string) => {
+  if (ampm === undefined) { return ''; }
+
+  return ampm.toUpperCase();
+}
+
+export const getFormattedTime = (refParts: DatetimeParts, use24Hour: boolean): string => {
+  if (refParts.hour === undefined || refParts.minute === undefined) { return 'Invalid Time'; }
+
+  const hour = use24Hour ? getFormattedHour(refParts.hour, use24Hour) : get12HourTime(refParts.hour);
+  const minute = addTimePadding(refParts.minute);
+
+  if (use24Hour) {
+    return `${hour}:${minute}`
+  }
+
+  return `${hour}:${minute} ${getFormattedAMPM(refParts.ampm)}`
+}
+
 /**
  * Adds padding to a time value so
  * that it is always 2 digits.

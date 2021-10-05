@@ -139,55 +139,10 @@
   @include padding($datetime-ios-padding / 2, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   font-size: 16px;
+}
+
+:host .datetime-time .time-header {
   font-weight: 600;
-}
-
-:host .time-base {
-  @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
-  @include margin(0, $datetime-ios-padding / 2, 0, 0);
-
-  width: $datetime-ios-time-width;
-  height: $datetime-ios-time-height;
-}
-
-:host .time-column {
-  @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
-}
-
-:host .time-item {
-  line-height: $datetime-ios-time-height;
-}
-
-// Month and Year Picker
-// -----------------------------------
-
-:host .datetime-year-body .datetime-picker-col {
-  @include padding(0, $datetime-ios-padding, 0, $datetime-ios-padding);
-}
-
-:host .datetime-picker-before {
-  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
-}
-
-:host .datetime-picker-after {
-  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.8) 100%);
-}
-
-:host .datetime-picker-highlight {
-  @include border-radius($datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius, $datetime-ios-time-border-radius);
-  @include position(50%, 0, 0, 0);
-  @include margin(0, auto, 0, auto);
-
-  position: absolute;
-
-  width: calc(100% - #{$datetime-ios-padding * 2});
-  height: 34px;
-
-  transform: translateY(-50%);
-
-  background: var(--ion-color-step-150, #eeeeef);
-
-  z-index: -1;
 }
 
 // Footer

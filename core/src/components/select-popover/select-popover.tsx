@@ -48,15 +48,18 @@ export class SelectPopover implements ComponentInterface {
     this.callOptionHandler(ev);
   }
 
+  private findOptionFromEvent(ev: any) {
+    const { options } = this;
+    return options.find(o => o.value === ev.target.value);
+  }
+
   /**
    * When an option is selected we need to get the value(s)
    * of the selected option(s) and return it in the option
    * handler
    */
   private callOptionHandler(ev: any) {
-    const { options } = this;
-    const option = options.find(o => this.getValue(o.value) === ev.target.value);
-
+    const option = this.findOptionFromEvent(ev);
     const values = this.getValues(ev);
 
     if (option && option.handler) {
@@ -74,8 +77,8 @@ export class SelectPopover implements ComponentInterface {
   }
 
   private setChecked(ev: any): void {
-    const { multiple, options } = this;
-    const option = options.find(o => this.getValue(o.value) === ev.target.value);
+    const { multiple } = this;
+    const option = this.findOptionFromEvent(ev);
 
     // this is a popover with checkboxes (multiple value select)
     // we need to set the checked value for this option
@@ -95,12 +98,8 @@ export class SelectPopover implements ComponentInterface {
 
     // this is a popover with radio buttons (single value select)
     // return the value that was clicked, otherwise undefined
-    const option = options.find(o => this.getValue(o.value) === ev.target.value);
+    const option = this.findOptionFromEvent(ev);
     return option ? option.value : undefined;
-  }
-
-  private getValue(value: any): any {
-    return typeof value === 'number' ? value.toString() : value;
   }
 
   renderOptions(options: SelectPopoverOption[]) {

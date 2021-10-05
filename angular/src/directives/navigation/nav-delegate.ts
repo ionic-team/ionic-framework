@@ -1,7 +1,7 @@
 import { ComponentFactoryResolver, Directive, ElementRef, Injector, ViewContainerRef } from '@angular/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
-import { ProxyCmp, proxyOutputs } from '../proxies-utils';
+import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
 
 @ProxyCmp({
   inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],

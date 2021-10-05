@@ -117,57 +117,8 @@
   color: #{$text-color-step-350};
 }
 
-:host .time-base {
-  @include border-radius($datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius);
-  @include margin(0, $datetime-md-padding / 2, 0, 0);
-
-  width: $datetime-md-time-width;
-  height: $datetime-md-time-height;
-}
-
-:host .time-column {
-  @include border-radius($datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius);
-}
-
-:host .time-item {
-  line-height: $datetime-md-time-height;
-}
-
-:host .time-ampm ion-segment {
-  @include border-radius($datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius, $datetime-md-time-border-radius);
-
-  border: 1px solid rgba($text-color-rgb, 0.1);
-}
-
-:host .time-ampm ion-segment-button {
-  --indicator-height: 0px;
-  --background-checked: #{current-color(base, 0.1)};
-
-  min-height: $datetime-md-time-height + 2;
-}
-
-:host .time-ampm ion-segment-button.segment-button-checked {
-  background: var(--background-checked);
-}
-
 // Month and Year
 // -----------------------------------
-:host .datetime-picker-col {
-  @include border-radius($datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius, $datetime-md-wheel-border-radius);
-  @include padding(null, $datetime-md-wheel-padding, null, $datetime-md-wheel-padding);
-}
-
-:host .picker-col-item {
-  font-size: 18px;
-}
-
-:host .datetime-picker-before {
-  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
-}
-
-:host .datetime-picker-after {
-  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
-}
 
 /**
  * Add some margin when only selecting month/year
@@ -193,8 +144,4 @@
 
 :host .datetime-view-buttons ion-button {
   color: $text-color-step-200;
-}
-
-:host .picker-col-item-active {
-  color: current-color(base);
 }
