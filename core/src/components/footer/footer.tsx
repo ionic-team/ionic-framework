@@ -87,7 +87,7 @@ export class Footer implements ComponentInterface {
           [`footer-translucent`]: translucent,
           [`footer-translucent-${mode}`]: translucent,
 
-          [`header-collapse-${collapse}`]: true,
+          [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
         { mode === 'ios' && translucent &&
