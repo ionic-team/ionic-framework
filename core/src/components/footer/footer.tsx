@@ -50,18 +50,20 @@ export class Footer implements ComponentInterface {
     const { collapse } = this;
     const hasFade = collapse === 'fade';
 
+    this.destroyCollapsibleFooter();
+
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
 
-      this.setupFadeFooter(contentEl)
+      this.setupFadeFooter(contentEl);
     }
   }
 
   private setupFadeFooter = async (contentEl: HTMLIonContentElement | null) => {
     if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
 
-    const scrollEl = await contentEl.getScrollElement();
+    const scrollEl = this.scrollEl = await contentEl.getScrollElement();
 
     /**
      * Handle fading of toolbars on scroll
@@ -70,6 +72,13 @@ export class Footer implements ComponentInterface {
     scrollEl.addEventListener('scroll', this.contentScrollCallback);
 
     handleFooterFade(scrollEl, this.el);
+  }
+
+  private destroyCollapsibleFooter() {
+    if (this.scrollEl && this.contentScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+      this.contentScrollCallback = undefined;
+    }
   }
 
   render() {
