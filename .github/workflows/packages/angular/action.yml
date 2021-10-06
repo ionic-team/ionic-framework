@@ -32,7 +32,7 @@ runs:
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
-        path: core/CoreBuild.zip
+        path: ./core/CoreBuild.zip
     - name: Install Angular Dependencies
       run: npm install
       shell: bash
@@ -52,5 +52,5 @@ runs:
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-angular
-        output: packages/angular/AngularBuild.zip
+        output: ./packages/angular/AngularBuild.zip
         paths: packages/angular/dist

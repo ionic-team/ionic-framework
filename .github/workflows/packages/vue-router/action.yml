@@ -21,7 +21,7 @@ runs:
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-vue
-        path: packages/vue/VueBuild.zip
+        path: ./packages/vue/VueBuild.zip
     - name: Install Vue Router Dependencies
       run: npm install
       shell: bash
@@ -41,5 +41,5 @@ runs:
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-vue-router
-        output: packages/vue-router/VueRouterBuild.zip
+        output: ./packages/vue-router/VueRouterBuild.zip
         paths: packages/vue-router/dist
