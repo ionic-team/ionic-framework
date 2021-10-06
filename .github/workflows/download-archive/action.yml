@@ -12,6 +12,6 @@ runs:
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}
-    - uses: edgarrc/action-7z@v1
-      with:
-        args: 7z x ${{ inputs.path }} -aoa
+    - name: Exract Archive
+      run: unzip -o ${{ inputs.path }}
+      shell: bash
