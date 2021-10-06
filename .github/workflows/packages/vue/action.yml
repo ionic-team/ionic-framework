@@ -3,7 +3,6 @@ description: 'Builds Ionic Vue'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
         node-version: 15.x
@@ -26,15 +25,19 @@ runs:
     - name: Install Vue Dependencies
       working-directory: ./packages/vue
       run: npm install
+      shell: bash
     - name: Link @ionic/core
       working-directory: ./core
       run: npm link
+      shell: bash
     - name: Link @ionic/core in @ionic/vue
       working-directory: ./packages/vue
       run: npm link @ionic/core
+      shell: bash
     - name: Build
       working-directory: ./packages/vue
       run: npm run build
+      shell: bash
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-vue
