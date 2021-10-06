@@ -15,17 +15,21 @@ runs:
         name: ionic-vue
         path: packages/vue/VueBuild.zip
     - name: Install Vue Router Dependencies
-      working-directory: ./packages/vue-router
       run: npm install
+      shell: bash
+      working-directory: ./packages/vue-router
     - name: Link @ionic/vue
-      working-directory: ./packages/vue
       run: npm link
+      shell: bash
+      working-directory: ./packages/vue
     - name: Link @ionic/vue in @ionic/vue-router
-      working-directory: ./packages/vue-router
       run: npm link @ionic/vue
-    - name: Build
+      shell: bash
       working-directory: ./packages/vue-router
+    - name: Build
       run: npm run build
+      shell: bash
+      working-directory: ./packages/vue-router
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-vue-router
