@@ -1,8 +1,5 @@
 name: 'Build Ionic Vue Router'
 description: 'Builds Ionic Vue Router'
-defaults:
-  run:
-    shell: bash
 runs:
   using: 'composite'
   steps:
