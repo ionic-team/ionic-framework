@@ -1,0 +1,33 @@
+name: 'Build Ionic Vue Router'
+description: 'Builds Ionic Vue Router'
+defaults:
+  run:
+    shell: bash
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - uses: ./.github/workflows/download-archive
+      with:
+        name: ionic-vue
+        path: packages/vue/VueBuild.zip
+    - name: Install Vue Router Dependencies
+      working-directory: ./packages/vue-router
+      run: npm install
+    - name: Link @ionic/vue
+      working-directory: ./packages/vue
+      run: npm link
+    - name: Link @ionic/vue in @ionic/vue-router
+      working-directory: ./packages/vue-router
+      run: npm link @ionic/vue
+    - name: Build
+      working-directory: ./packages/vue-router
+      run: npm run build
+    - uses: ./.github/workflows/upload-archive
+      with:
+        name: ionic-vue-router
+        output: packages/vue-router/VueRouterBuild.zip
+        paths: packages/vue-router/dist
