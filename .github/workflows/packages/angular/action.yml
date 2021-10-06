@@ -33,7 +33,7 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        input: CoreBuild.zip
+        filename: CoreBuild.zip
     - name: Install Angular Dependencies
       run: npm install
       shell: bash
