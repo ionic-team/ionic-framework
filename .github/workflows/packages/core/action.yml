@@ -30,5 +30,5 @@ runs:
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-core
-        output: ./core/CoreBuild.zip
+        output: core/CoreBuild.zip
         paths: core/dist core/components core/css core/hydrate core/loader

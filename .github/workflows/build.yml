@@ -5,29 +5,9 @@ on:
     branches: [ '**' ]
 
 jobs:
-  build-core:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/workflows/packages/core
 
   build-vue:
-    needs: [build-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/packages/vue
-
-  build-vue-router:
-    needs: [build-vue]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/vue-router
-
-  build-angular:
-    needs: [build-core]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/angular
