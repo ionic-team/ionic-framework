@@ -1,4 +1,7 @@
-import { alertController, modalController } from '@ionic/core';
+// TODO: Jest does not support ES Modules,
+// and Ionic custom elements are ES Modules only.
+
+/*import { alertController, modalController } from '@ionic/core';
 
 import React from 'react';
 
@@ -22,9 +25,7 @@ import type { UseIonToastResult } from '../useIonToast';
 
 import { renderHook } from '@testing-library/react-hooks';
 
-// TODO: Jest does not support ES Modules,
-// and Ionic custom elements are ES Modules only.
-describe.skip('useController', () => {
+describe('useController', () => {
   it('should be memorised', () => {
     const { result, rerender } = renderHook(() =>
       useController('AlertController', alertController)
@@ -42,7 +43,7 @@ describe.skip('useController', () => {
   });
 });
 
-describe.skip('useIonActionSheet', () => {
+describe('useIonActionSheet', () => {
   it('should be memorised', () => {
     const { result, rerender } = renderHook(() => useIonActionSheet());
 
@@ -55,7 +56,7 @@ describe.skip('useIonActionSheet', () => {
   });
 });
 
-describe.skip('useIonAlert', () => {
+describe('useIonAlert', () => {
   it('should be memorised', () => {
     const { result, rerender } = renderHook(() => useIonAlert());
 
@@ -68,7 +69,7 @@ describe.skip('useIonAlert', () => {
   });
 });
 
-describe.skip('useIonLoading', () => {
+describe('useIonLoading', () => {
   it('should be memorised', () => {
     const { result, rerender } = renderHook(() => useIonLoading());
 
@@ -81,7 +82,7 @@ describe.skip('useIonLoading', () => {
   });
 });
 
-describe.skip('useIonModal', () => {
+describe('useIonModal', () => {
   it('should be memorised', () => {
     const ModalComponent = () => <div />;
     const { result, rerender } = renderHook(() => useIonModal(ModalComponent, {}));
@@ -95,7 +96,7 @@ describe.skip('useIonModal', () => {
   });
 });
 
-describe.skip('useIonPicker', () => {
+describe('useIonPicker', () => {
   it('should be memorised', () => {
     const { result, rerender } = renderHook(() => useIonPicker());
 
@@ -108,7 +109,7 @@ describe.skip('useIonPicker', () => {
   });
 });
 
-describe.skip('useIonPopover', () => {
+describe('useIonPopover', () => {
   it('should be memorised', () => {
     const PopoverComponent = () => <div />;
     const { result, rerender } = renderHook(() => useIonPopover(PopoverComponent, {}));
@@ -122,7 +123,7 @@ describe.skip('useIonPopover', () => {
   });
 });
 
-describe.skip('useIonToast', () => {
+describe('useIonToast', () => {
   it('should be memorised', () => {
     const { result, rerender } = renderHook(() => useIonToast());
 
@@ -135,7 +136,7 @@ describe.skip('useIonToast', () => {
   });
 });
 
-describe.skip('useOverlay', () => {
+describe('useOverlay', () => {
   it('should be memorised', () => {
     const OverlayComponent = () => <div />;
     const { result, rerender } = renderHook(() =>
@@ -153,3 +154,4 @@ describe.skip('useOverlay', () => {
     expect(firstDismiss).toBe(secondDismiss);
   });
 });
+*/
