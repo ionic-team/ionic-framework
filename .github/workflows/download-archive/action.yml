@@ -3,7 +3,7 @@ description: 'Downloads and decompresses an archive from a previous job'
 inputs:
   path:
     description: 'Input archive name'
-  input:
+  filename:
     description: 'Input file name'
   name:
     description: 'Archive name'
@@ -18,5 +18,5 @@ runs:
       run: ls
       shell: bash
     - name: Exract Archive
-      run: unzip -o ${{ inputs.input }}
+      run: unzip -o ${{ inputs.path }}/${{ inputs.filename }}
       shell: bash
