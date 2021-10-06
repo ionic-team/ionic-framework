@@ -32,7 +32,8 @@ runs:
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
-        path: core
+        path: ./core
+        input: ./core/CoreBuild.zip
     - name: Install Vue Dependencies
       run: npm install
       shell: bash
