@@ -60,7 +60,7 @@ Notice how `IonBadge` is imported from `@ionic/core/components/ion-badge` rather
 
 ## How to contribute
 
-[Check out the CONTRIBUTE guide](CONTRIBUTING.md)
+[Check out the CONTRIBUTE guide](/.github/CONTRIBUTING.md)
 
 ## Related
 

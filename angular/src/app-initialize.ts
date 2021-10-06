@@ -1,4 +1,5 @@
 import { NgZone } from '@angular/core';
+import { initialize } from '@ionic/core';
 import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
 
 import { Config } from './providers/config';
@@ -9,12 +10,11 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
   return (): any => {
     const win: IonicWindow | undefined = doc.defaultView as any;
     if (win && typeof (window as any) !== 'undefined') {
-      const Ionic = win.Ionic = win.Ionic || {};
 
-      Ionic.config = {
+      initialize({
         ...config,
         _zoneGate: (h: any) => zone.run(h)
-      };
+      });
 
       const aelFn = '__zone_symbol__addEventListener' in (doc.body as any)
         ? '__zone_symbol__addEventListener'
