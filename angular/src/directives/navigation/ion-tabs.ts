@@ -87,8 +87,9 @@ export class IonTabs {
    *      to the default tabRootUrl
    */
   @HostListener('ionTabButtonClick', ['$event'])
-  select(ev: CustomEvent) {
-    const tab = ev.detail.tab;
+  select(tabOrEvent: string | CustomEvent) {
+    const isTabString = typeof tabOrEvent === 'string';
+    const tab = (isTabString) ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
 
@@ -98,7 +99,9 @@ export class IonTabs {
      * will respond to this event too, causing
      * the app to get directed to the wrong place.
      */
-    ev.stopPropagation();
+    if (!isTabString) {
+      (tabOrEvent as CustomEvent).stopPropagation();
+    }
 
     if (alreadySelected) {
       const activeStackId = this.outlet.getActiveStackId();

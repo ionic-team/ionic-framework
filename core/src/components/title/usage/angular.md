@@ -91,7 +91,7 @@ You can change the background color of the toolbar with the standard title by se
 When styling the text color of the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
 
 ```css
-ion-title.large-title {
+ion-title.title-large {
   color: purple;
   font-size: 30px;
 }
