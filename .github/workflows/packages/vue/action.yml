@@ -7,13 +7,24 @@ runs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
+    - name: Cache Core Node Modules
       uses: actions/cache@v2
       env:
         cache-name: core-node-modules
       with:
         path: ./core/node_modules
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Cache Vue Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: vue-node-modules
+      with:
+        path: ./packages/vue/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./packages/vue/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-

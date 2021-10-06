@@ -7,6 +7,17 @@ runs:
       with:
         node-version: 15.x
 
+    - name: Cache Vue Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: vue-node-modules
+      with:
+        path: ./packages/vue/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./packages/vue/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-vue
