@@ -1,9 +1,5 @@
 name: 'Build Ionic Core'
 description: 'Build Ionic Core'
-defaults:
-  run:
-    shell: bash
-    working-directory: ./core
 runs:
   using: 'composite'
   steps:
