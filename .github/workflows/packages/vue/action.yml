@@ -1,0 +1,42 @@
+name: 'Build Ionic Vue'
+description: 'Builds Ionic Vue'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - uses: ./.github/workflows/download-archive
+      with:
+        name: ionic-core
+        path: core/CoreBuild.zip
+    - name: Install Vue Dependencies
+      working-directory: ./packages/vue
+      run: npm install
+    - name: Link @ionic/core
+      working-directory: ./core
+      run: npm link
+    - name: Link @ionic/core in @ionic/vue
+      working-directory: ./packages/vue
+      run: npm link @ionic/core
+    - name: Build
+      working-directory: ./packages/vue
+      run: npm run build
+    - uses: ./.github/workflows/upload-archive
+      with:
+        name: ionic-vue
+        output: packages/vue/VueBuild.zip
+        paths: packages/vue/dist packages/vue/css
