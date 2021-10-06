@@ -37,7 +37,7 @@ runs:
     - name: Install Angular Dependencies
       run: npm install
       shell: bash
-      working-directory: ./packages/angular
+      working-directory: ./angular
     - name: Link @ionic/core
       run: npm link
       shell: bash
@@ -45,13 +45,13 @@ runs:
     - name: Link @ionic/core in @ionic/angular
       run: npm link @ionic/core
       shell: bash
-      working-directory: ./packages/angular
+      working-directory: ./angular
     - name: Build
       run: npm run build
       shell: bash
-      working-directory: ./packages/angular
+      working-directory: ./angular
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-angular
-        output: packages/angular/AngularBuild.zip
-        paths: packages/angular/dist
+        output: ./angular/AngularBuild.zip
+        paths: ./angular/dist
