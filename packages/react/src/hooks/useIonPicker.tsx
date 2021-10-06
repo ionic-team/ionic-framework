@@ -4,6 +4,7 @@ import {
   PickerOptions,
   pickerController,
 } from '@ionic/core/components';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -18,12 +19,10 @@ export function useIonPicker(): UseIonPickerResult {
     pickerController
   );
 
-  function present(columns: PickerColumn[], buttons?: PickerButton[]): void;
-  function present(options: PickerOptions & HookOverlayOptions): void;
-  function present(
+  const present = useCallback((
     columnsOrOptions: PickerColumn[] | (PickerOptions & HookOverlayOptions),
     buttons?: PickerButton[]
-  ) {
+  ) => {
     if (Array.isArray(columnsOrOptions)) {
       controller.present({
         columns: columnsOrOptions,
@@ -32,7 +31,7 @@ export function useIonPicker(): UseIonPickerResult {
     } else {
       controller.present(columnsOrOptions);
     }
-  }
+  }, [controller.present]);
 
   return [present, controller.dismiss];
 }

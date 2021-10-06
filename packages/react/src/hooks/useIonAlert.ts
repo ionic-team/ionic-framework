@@ -1,4 +1,5 @@
 import { AlertButton, AlertOptions, alertController } from '@ionic/core/components';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -8,28 +9,23 @@ import { useController } from './useController';
  * @returns Returns the present and dismiss methods in an array
  */
 export function useIonAlert(): UseIonAlertResult {
-  const controller = useController<AlertOptions, HTMLIonAlertElement>(
-    'IonAlert',
-    alertController
+  const controller = useController<AlertOptions, HTMLIonAlertElement>('IonAlert', alertController);
+
+  const present = useCallback(
+    (messageOrOptions: string | (AlertOptions & HookOverlayOptions), buttons?: AlertButton[]) => {
+      if (typeof messageOrOptions === 'string') {
+        controller.present({
+          message: messageOrOptions,
+          buttons: buttons ?? [{ text: 'Ok' }],
+        });
+      } else {
+        controller.present(messageOrOptions);
+      }
+    },
+    [controller.present]
   );
 
-  function present(message: string, buttons?: AlertButton[]): void;
-  function present(options: AlertOptions & HookOverlayOptions): void;
-  function present(messageOrOptions: string | AlertOptions & HookOverlayOptions, buttons?: AlertButton[]) {
-    if (typeof messageOrOptions === 'string') {
-      controller.present({
-        message: messageOrOptions,
-        buttons: buttons ?? [{ text: 'Ok' }]
-      });
-    } else {
-      controller.present(messageOrOptions);
-    }
-  };
-
-  return [
-    present,
-    controller.dismiss
-  ];
+  return [present, controller.dismiss];
 }
 
 export type UseIonAlertResult = [
