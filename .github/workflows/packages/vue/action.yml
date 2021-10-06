@@ -1,5 +1,8 @@
 name: 'Build Ionic Vue'
 description: 'Builds Ionic Vue'
+defaults:
+  run:
+    shell: bash
 runs:
   using: 'composite'
   steps:
@@ -25,19 +28,15 @@ runs:
     - name: Install Vue Dependencies
       working-directory: ./packages/vue
       run: npm install
-      shell: bash
     - name: Link @ionic/core
       working-directory: ./core
       run: npm link
-      shell: bash
     - name: Link @ionic/core in @ionic/vue
       working-directory: ./packages/vue
       run: npm link @ionic/core
-      shell: bash
     - name: Build
       working-directory: ./packages/vue
       run: npm run build
-      shell: bash
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-vue
