@@ -41,4 +41,4 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: packages/vue
+    - uses: ./.github/workflows/packages/vue
