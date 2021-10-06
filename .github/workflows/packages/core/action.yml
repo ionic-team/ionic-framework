@@ -21,8 +21,10 @@ runs:
           ${{ runner.os }}-
     - name: Install Dependencies
       run: npm ci
+      shell: bash
     - name: Build Core
       run: npm run build -- --ci
+      shell: bash
     - uses: ./.github/workflows/upload-archive
       with:
         name: ionic-core
