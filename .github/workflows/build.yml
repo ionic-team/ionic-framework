@@ -24,3 +24,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/packages/vue-router
+
+  build-angular:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/packages/angular
