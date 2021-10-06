@@ -21,9 +21,11 @@ runs:
           ${{ runner.os }}-
     - name: Install Dependencies
       run: npm ci
+      working-directory: ./core
       shell: bash
     - name: Build Core
       run: npm run build -- --ci
+      working-directory: ./core
       shell: bash
     - uses: ./.github/workflows/upload-archive
       with:
