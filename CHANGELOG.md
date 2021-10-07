@@ -1,3 +1,12 @@
+# [6.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v6.0.0-beta.7...v6.0.0-rc.0) (2021-10-07)
+
+
+### Bug Fixes
+
+* **angular:** setup config properly ([#24028](https://github.com/ionic-team/ionic/issues/24028)) ([907996c](https://github.com/ionic-team/ionic/commit/907996ce16446d0dc12939da325b7b5dae09ebd9))
+
+
+
 # [6.0.0-beta.7](https://github.com/ionic-team/ionic/compare/v5.8.2...v6.0.0-beta.7) (2021-10-06)
 
 
