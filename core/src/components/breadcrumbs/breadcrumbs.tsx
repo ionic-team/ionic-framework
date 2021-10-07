@@ -1,8 +1,10 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { BreadcrumbCollapsedClickEventDetail, Color, componentOnReady } from '../../interface';
+import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
+import { componentOnReady } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
+import { watchForOptions } from '../../utils/watch-options';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
