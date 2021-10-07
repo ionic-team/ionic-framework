@@ -23,8 +23,8 @@ runs:
       env:
         cache-name: angular-node-modules
       with:
-        path: ./packages/angular/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./packages/angular/package-lock.json') }}
+        path: ./angular/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./angular/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
