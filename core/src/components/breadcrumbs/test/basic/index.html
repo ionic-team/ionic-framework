@@ -424,10 +424,26 @@
           Product Info
         </ion-breadcrumb>
       </ion-breadcrumbs>
+      
+      <hr>
+
+      <h1>Breadcrumbs: Adding / removing</h1>
+
+      <ion-breadcrumbs id="breadcrumbs">
+        <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <ion-button expand="block" onclick="addItem()">Add breadcrumb</ion-button>
+      <ion-button expand="block" onclick="removeItem()">Remove breadcrumb</ion-button>
     </ion-content>
   </ion-app>
 
   <script>
+    let itemCount = 0;
+    const breadcrumbs = document.getElementById('breadcrumbs')
+    
     const expandOnClick = document.querySelector('#expandOnClick');
     expandOnClick.addEventListener('ionCollapsedClick', () => expandBreadcrumbs());
 
@@ -482,6 +498,17 @@
 
       await popover.present();
     }
+    
+    async function addItem() {
+      const breadcrumb = document.createElement('ion-breadcrumb');
+      breadcrumb.innerHTML = `Page ${itemCount}`;
+      breadcrumbs.appendChild(breadcrumb);
+      itemCount++;
+    };
+
+    async function removeItem() {
+      breadcrumbs.children[wraper.children.length-1].remove();
+    };
   </script>
 
   <style>
