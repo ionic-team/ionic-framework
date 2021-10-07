@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
+import { BreadcrumbCollapsedClickEventDetail, Color, componentOnReady } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -17,6 +17,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true
 })
 export class Breadcrumbs implements ComponentInterface {
+  private mutationO?: MutationObserver;
+  private didInit = false;
 
   @State() collapsed!: boolean;
 
@@ -70,7 +72,28 @@ export class Breadcrumbs implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.breadcrumbsInit();
+    this.mutationO = watchForOptions<HTMLIonBreadcrumbElement>(
+      this.el,
+      'ion-breadcrumb',
+      async () => {
+        this.resetActiveBreadcrumb();
+        this.breadcrumbsInit();
+
+        componentOnReady(this.el, () => {
+          if (!this.didInit) {
+            this.didInit = true;
+            this.breadcrumbsInit();
+          }
+        });
+      }
+    );
+  }
+
+  disconnectedCallback() {
+    if (this.mutationO) {
+      this.mutationO.disconnect();
+      this.mutationO = undefined;
+    }
   }
 
   private breadcrumbsInit = () => {
