@@ -7,28 +7,6 @@ runs:
       with:
         node-version: 15.x
 
-    - name: Cache Core Node Modules
-      uses: actions/cache@v2
-      env:
-        cache-name: core-node-modules
-      with:
-        path: ./core/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Cache React Node Modules
-      uses: actions/cache@v2
-      env:
-        cache-name: react-node-modules
-      with:
-        path: ./packages/react/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./packages/react/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
@@ -38,12 +16,8 @@ runs:
       run: npm install --legacy-peer-deps
       shell: bash
       working-directory: ./packages/react
-    - name: Link @ionic/core
-      run: npm link
-      shell: bash
-      working-directory: ./core
-    - name: Link @ionic/core in @ionic/react
-      run: npm link @ionic/core
+    - name: Sync
+      run: npm run sync
       shell: bash
       working-directory: ./packages/react
     - name: Lint

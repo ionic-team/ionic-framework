@@ -21,14 +21,10 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Link Core
-      run: npm link && cd ../packages/react-router && npm link @ionic/core
+    - name: Sync
+      run: npm run sync
       shell: bash
-      working-directory: ./core
-    - name: Link React
-      run: npm link && cd ../react-router && npm link @ionic/react
-      shell: bash
-      working-directory: ./packages/react
+      working-directory: ./packages/react-router
     - name: Lint
       run: npm run lint
       shell: bash
