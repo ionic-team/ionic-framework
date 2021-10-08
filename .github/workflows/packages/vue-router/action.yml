@@ -20,6 +20,11 @@ runs:
           ${{ runner.os }}-
     - uses: ./.github/workflows/download-archive
       with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/download-archive
+      with:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
