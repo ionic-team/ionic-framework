@@ -22,7 +22,7 @@ runs:
       with:
         name: ionic-vue
         path: ./packages/vue
-        input: VueBuild.zip
+        filename: VueBuild.zip
     - name: Install Vue Router Dependencies
       run: npm install
       shell: bash
