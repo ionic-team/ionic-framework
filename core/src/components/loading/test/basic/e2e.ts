@@ -95,3 +95,19 @@ test('loading:rtl: backdrop standalone', async () => {
 test('loading:rtl: html content basic', async () => {
   await testLoading(DIRECTORY, '#html-content-loading', true);
 });
+
+test('loading: htmlAttributes', async () => {
+  const page = await newE2EPage({ url: '/src/components/loading/test/basic?ionic:_testing=true' });
+
+  await page.click('#basic-loading');
+  await page.waitForSelector('#basic-loading');
+
+  let alert = await page.find('ion-loading');
+
+  expect(alert).not.toBe(null);
+  await alert.waitForVisible();
+
+  const attribute = await page.evaluate((el) => document.querySelector('ion-loading').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-loading');
+});

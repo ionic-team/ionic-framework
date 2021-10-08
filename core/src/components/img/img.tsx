@@ -60,10 +60,12 @@ export class Img implements ComponentInterface {
       'isIntersecting' in window.IntersectionObserverEntry.prototype) {
       this.removeIO();
       this.io = new IntersectionObserver(data => {
-        // because there will only ever be one instance
-        // of the element we are observing
-        // we can just use data[0]
-        if (data[0].isIntersecting) {
+        /**
+         * On slower devices, it is possible for an intersection observer entry to contain multiple
+         * objects in the array. This happens when quickly scrolling an image into view and then out of
+         * view. In this case, the last object represents the current state of the component.
+         */
+        if (data[data.length - 1].isIntersecting) {
           this.load();
           this.removeIO();
         }

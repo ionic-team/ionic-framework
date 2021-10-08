@@ -393,4 +393,52 @@ describe('Routing', () => {
 
     expect(page.props()).toEqual({ id: '2' });
   });
+
+  it('should fire guard written in a component', async () => {
+    const beforeRouteEnterSpy = jest.fn();
+    const beforeRouteLeaveSpy = jest.fn();
+    const Page = {
+      beforeRouteEnter() {
+        beforeRouteEnterSpy();
+      },
+      beforeRouteLeave() {
+        beforeRouteLeaveSpy();
+      },
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/', redirect: '/page' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(1);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(beforeRouteLeaveSpy).toHaveBeenCalledTimes(1);
+
+    router.back();
+    await waitForRouter();
+
+    expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(2);
+  });
 });

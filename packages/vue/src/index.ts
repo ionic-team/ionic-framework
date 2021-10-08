@@ -72,6 +72,9 @@ export {
   // Hardware Back Button
   BackButtonEvent,
 
+  // Swiper
+  IonicSwiper,
+
   SpinnerTypes,
 
   ActionSheetOptions,

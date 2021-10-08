@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { ActionSheetAttributes, ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
@@ -89,6 +89,11 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * If `true`, the action sheet will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * Additional attributes to pass to the action sheet.
+   */
+  @Prop() htmlAttributes?: ActionSheetAttributes;
 
   /**
    * Emitted after the alert has presented.
@@ -228,6 +233,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { htmlAttributes } = this;
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find(b => b.role === 'cancel');
@@ -238,6 +244,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         role="dialog"
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
