@@ -86,4 +86,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/test-react-router-e2e
+    - uses: ./.github/workflows/actions/test-react-router-e2e
