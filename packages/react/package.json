@@ -29,7 +29,8 @@
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
+    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js",
+    "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -39,7 +40,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.6.12",
+    "@ionic/core": "^5.8.3",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },
