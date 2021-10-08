@@ -1,2 +1,3 @@
 build.sh
 *.tgz
+cypress/videos

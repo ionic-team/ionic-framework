@@ -41,7 +41,6 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "copyIonicReactToLocal": "cp -r ../src ./src/ionic-react",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
