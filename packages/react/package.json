@@ -39,7 +39,9 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.8.2",
+    "@cypress/react": "^5.10.1",
+    "@cypress/webpack-dev-server": "^1.6.0",
+    "cypress": "^8.5.0",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },
