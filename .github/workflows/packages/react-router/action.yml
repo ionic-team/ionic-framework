@@ -11,7 +11,11 @@ runs:
       run: npm install --legacy-peer-deps
       shell: bash
       working-directory: ./packages/react-router
-
+    - uses: ./.github/workflows/download-archive
+      with:
+        name: ionic-react
+        path: ./packages/react
+        filename: ReactBuild.zip
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
@@ -19,15 +23,11 @@ runs:
         filename: CoreBuild.zip
     - name: Link Core
       run: npm link && cd ../packages/react-router && npm link @ionic/core
+      shell: bash
       working-directory: ./core
-
-    - uses: ./.github/workflows/download-archive
-      with:
-        name: ionic-react
-        path: ./packages/react
-        filename: ReactBuild.zip
     - name: Link React
       run: npm link && cd ../react-router && npm link @ionic/react
+      shell: bash
       working-directory: ./packages/react
     - name: Lint
       run: npm run lint
