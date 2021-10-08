@@ -60,13 +60,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/packages/angular-server
 
-  test-angular-lint:
-    needs: [build-angular]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./.github/workflows/actions/test-angular-lint
-
   test-angular-e2e:
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest

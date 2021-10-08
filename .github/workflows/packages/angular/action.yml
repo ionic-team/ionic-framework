@@ -46,6 +46,10 @@ runs:
       run: npm link @ionic/core
       shell: bash
       working-directory: ./angular
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./angular
     - name: Build
       run: npm run build
       shell: bash
