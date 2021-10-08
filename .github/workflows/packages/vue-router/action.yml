@@ -27,12 +27,12 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./packages/vue-router
-    - name: Link @ionic/vue
-      run: npm link
+    - name: Sync
+      run: npm run sync
       shell: bash
-      working-directory: ./packages/vue
-    - name: Link @ionic/vue in @ionic/vue-router
-      run: npm link @ionic/vue
+      working-directory: ./packages/vue-router
+    - name: Lint
+      run: npm run lint
       shell: bash
       working-directory: ./packages/vue-router
     - name: Build

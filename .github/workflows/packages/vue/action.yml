@@ -18,17 +18,6 @@ runs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Cache Vue Node Modules
-      uses: actions/cache@v2
-      env:
-        cache-name: vue-node-modules
-      with:
-        path: ./packages/vue/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./packages/vue/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - uses: ./.github/workflows/download-archive
       with:
         name: ionic-core
@@ -38,12 +27,12 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./packages/vue
-    - name: Link @ionic/core
-      run: npm link
+    - name: Sync
+      run: npm run sync
       shell: bash
-      working-directory: ./core
-    - name: Link @ionic/core in @ionic/vue
-      run: npm link @ionic/core
+      working-directory: ./packages/vue
+    - name: Lint
+      run: npm run lint
       shell: bash
       working-directory: ./packages/vue
     - name: Build
