@@ -1,3 +1,12 @@
+## [5.8.3](https://github.com/ionic-team/ionic/compare/v5.8.2...v5.8.3) (2021-10-07)
+
+
+### Bug Fixes
+
+* **react:** overlay hooks dismiss method now works ([#24038](https://github.com/ionic-team/ionic/issues/24038)) ([655631d](https://github.com/ionic-team/ionic/commit/655631ddf059ce58066d5384d0ae186d7abc09a9)), closes [#24030](https://github.com/ionic-team/ionic/issues/24030)
+
+
+
 ## [5.8.2](https://github.com/ionic-team/ionic/compare/v5.8.1...v5.8.2) (2021-10-06)
 
 
