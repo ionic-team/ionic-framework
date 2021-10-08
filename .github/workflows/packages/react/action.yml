@@ -46,8 +46,16 @@ runs:
       run: npm link @ionic/core
       shell: bash
       working-directory: ./packages/react
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/react
     - name: Build
       run: npm run build
+      shell: bash
+      working-directory: ./packages/react
+    - name: Test Spec
+      run: npm run test.spec
       shell: bash
       working-directory: ./packages/react
     - uses: ./.github/workflows/upload-archive

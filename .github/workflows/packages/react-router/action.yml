@@ -29,8 +29,16 @@ runs:
     - name: Link React
       run: npm link && cd ../react-router && npm link @ionic/react
       working-directory: ./packages/react
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/react-router
     - name: Build
       run: npm run build
+      shell: bash
+      working-directory: ./packages/react-router
+    - name: Test Spec
+      run: npm run test.spec
       shell: bash
       working-directory: ./packages/react-router
     - uses: ./.github/workflows/upload-archive
