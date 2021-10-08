@@ -87,3 +87,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/packages/react-router
+
+  test-react-router-e2e:
+    needs: [build-react, build-react-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/packages/test-react-router-e2e
