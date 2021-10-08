@@ -1,4 +1,5 @@
 import { ToastOptions, toastController } from '@ionic/core';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -13,9 +14,7 @@ export function useIonToast(): UseIonToastResult {
     toastController
   );
 
-  function present(message: string, duration?: number): void;
-  function present(options: ToastOptions & HookOverlayOptions): void;
-  function present(messageOrOptions: string | ToastOptions & HookOverlayOptions, duration?: number) {
+  const present = useCallback((messageOrOptions: string | ToastOptions & HookOverlayOptions, duration?: number) => {
     if (typeof messageOrOptions === 'string') {
       controller.present({
         message: messageOrOptions,
@@ -24,7 +23,7 @@ export function useIonToast(): UseIonToastResult {
     } else {
       controller.present(messageOrOptions);
     }
-  };
+  }, [controller.present]);
 
   return [
     present,

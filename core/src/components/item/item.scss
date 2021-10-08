@@ -308,7 +308,7 @@ button, a {
   z-index: 1;
 }
 
-::slotted(ion-label) {
+::slotted(ion-label:not([slot="end"])) {
   flex: 1;
 }
 

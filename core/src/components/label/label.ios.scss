@@ -89,10 +89,9 @@
   color: #{$item-ios-paragraph-text-color};
 }
 
-:host-context(.ion-color)::slotted(p) {
+:host(.in-item-color)::slotted(p) {
   color: inherit;
 }
-
 
 ::slotted(*) h2:last-child,
 ::slotted(*) h3:last-child,

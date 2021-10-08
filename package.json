@@ -9,11 +9,16 @@
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@octokit/rest": "^17.11.2",
     "colorette": "^1.2.1",
+    "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.1.1",
+    "cz-conventional-changelog": "^3.3.0",
     "execa": "^0.10.0",
     "fs-extra": "^7.0.0",
+    "husky": "^4.3.8",
     "inquirer": "^6.0.0",
     "listr": "^0.14.0",
     "rimraf": "^2.6.3",
@@ -21,5 +26,16 @@
   },
   "engines": {
     "node": ">= 10"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
   }
 }

@@ -104,6 +104,6 @@
   color: $item-md-paragraph-text-color;
 }
 
-:host-context(.ion-color)::slotted(p) {
+:host(.in-item-color)::slotted(p) {
   color: inherit;
 }

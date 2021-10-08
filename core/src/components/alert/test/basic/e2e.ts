@@ -102,3 +102,21 @@ test(`alert:rtl: basic, radio`, async () => {
 test(`alert:rtl: basic, checkbox`, async () => {
   await testAlert(DIRECTORY, '#checkbox', true);
 });
+
+// Attributes
+
+test('alert: htmlAttributes', async () => {
+  const page = await newE2EPage({ url: '/src/components/alert/test/basic?ionic:_testing=true' });
+
+  await page.click('#basic');
+  await page.waitForSelector('#basic');
+
+  let alert = await page.find('ion-alert');
+
+  expect(alert).not.toBe(null);
+  await alert.waitForVisible();
+
+  const attribute = await page.evaluate((el) => document.querySelector('ion-alert').getAttribute('data-testid'));
+
+  expect(attribute).toEqual('basic-alert');
+});

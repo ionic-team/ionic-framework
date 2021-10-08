@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -101,6 +101,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * and for stacking multiple modals on top of each other. Only applies in iOS mode.
    */
   @Prop() presentingElement?: HTMLElement;
+
+  /**
+   * Additional attributes to pass to the modal.
+   */
+  @Prop() htmlAttributes?: ModalAttributes;
 
   /**
    * Emitted after the modal has presented.
@@ -265,6 +270,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { htmlAttributes } = this;
     const mode = getIonMode(this);
 
     return (
@@ -272,13 +278,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
         no-router
         aria-modal="true"
         tabindex="-1"
+        {...htmlAttributes as any}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
         class={{
           [mode]: true,
           [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
           ...getClassMap(this.cssClass)
-        }}
-        style={{
-          zIndex: `${20000 + this.overlayIndex}`,
         }}
         onIonBackdropTap={this.onBackdropTap}
         onIonDismiss={this.onDismiss}
