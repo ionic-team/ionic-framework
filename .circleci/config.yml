@@ -423,8 +423,8 @@ jobs:
           command: npm run sync
           working_directory: /tmp/workspace/packages/react/test-app
       - run:
-          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react/test-app npm run e2e
-          working_directory: /tmp/workspace/packages/react/test-app
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react SKIP_PREFLIGHT_CHECK=true npm run e2e
+          working_directory: /tmp/workspace/packages/react
 
   install-react-router-test-app:
     <<: *defaults
@@ -450,7 +450,7 @@ jobs:
           command: npm run sync
           working_directory: /tmp/workspace/packages/react-router/test-app
       - run:
-          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react-router/test-app npm run e2e
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react-router/test-app SKIP_PREFLIGHT_CHECK=true npm run e2e
           working_directory: /tmp/workspace/packages/react-router/test-app
 
   test-vue-router-spec:
