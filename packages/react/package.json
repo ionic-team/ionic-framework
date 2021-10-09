@@ -50,8 +50,6 @@
     "react-dom": ">=16.8.6"
   },
   "devDependencies": {
-    "@cypress/react": "^5.10.1",
-    "@cypress/webpack-dev-server": "^1.6.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@testing-library/jest-dom": "^5.11.6",
