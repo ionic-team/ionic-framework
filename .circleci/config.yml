@@ -569,7 +569,7 @@ workflows:
       - install-react-test-app:
           requires: [build-core]
       - test-react-e2e:
-          requires: [install-react-test-app, build-react, build-react, build-react-router]
+          requires: [install-react-test-app, build-react, build-react-router]
       - install-react-router-test-app:
           requires: [build-core]
       - test-react-router-e2e:

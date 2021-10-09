@@ -7,10 +7,9 @@ import {
   IonListHeader,
   IonMenu,
   IonMenuToggle,
-  IonNote,
 } from '@ionic/react';
 import React from 'react';
-import { bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp } from 'ionicons/icons';
+import { heartOutline, heartSharp, mailOutline, mailSharp } from 'ionicons/icons';
 
 interface MenuProps {}
 

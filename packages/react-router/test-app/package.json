@@ -49,7 +49,7 @@
     "build": "node scripts/build.js",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "e2e": "npm run copyRouter && concurrently \"node scripts/start.js --no-cache\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "e2e": "npm run copyRouter && concurrently \"react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
     "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {
@@ -73,6 +73,7 @@
   "devDependencies": {
     "@capacitor/cli": "3.2.4",
     "concurrently": "^6.3.0",
+    "cpy-cli": "^3.1.1",
     "cypress": "^8.5.0",
     "wait-on": "^6.0.0"
   },

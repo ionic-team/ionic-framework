@@ -48,10 +48,12 @@ const ModalHook: React.FC = () => {
 
   const handleDismissWithComponent = useCallback(() => {
     dismissWithComponent();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDismissWithElement = useCallback(() => {
     dismissWithElement();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
