@@ -49,7 +49,7 @@
     "build": "node scripts/build.js",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "e2e": "npm run copyRouter && concurrently \"react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "e2e": "npm run copyRouter && concurrently \"SKIP_PREFLIGHT_CHECK=true react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
     "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {

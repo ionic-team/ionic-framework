@@ -19,6 +19,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "cypress": "^8.5.0",
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -45,7 +46,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sync": "sh ./scripts/sync.sh"
+    "sync": "sh ./scripts/sync.sh",
+    "cypress": "cypress run --headless --browser chrome",
+    "e2e": "concurrently \"SKIP_PREFLIGHT_CHECK=true npm run start -b\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
   },
   "eslintConfig": {
     "extends": [
@@ -66,7 +69,9 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "3.2.4"
+    "@capacitor/cli": "3.2.4",
+    "concurrently": "^6.3.0",
+    "wait-on": "^6.0.0"
   },
   "description": "An Ionic project"
 }

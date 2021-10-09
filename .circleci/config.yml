@@ -142,7 +142,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react npm install --legacy-peer-deps
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/packages/react
       - run:
           command: sudo npm link
@@ -406,7 +406,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react/test-app npm install
           working_directory: /tmp/workspace/packages/react/test-app
       - persist_to_workspace:
           root: /tmp/workspace
@@ -423,8 +423,8 @@ jobs:
           command: npm run sync
           working_directory: /tmp/workspace/packages/react/test-app
       - run:
-          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react SKIP_PREFLIGHT_CHECK=true npm run e2e
-          working_directory: /tmp/workspace/packages/react
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react/test-app npm run e2e
+          working_directory: /tmp/workspace/packages/react/test-app
 
   install-react-router-test-app:
     <<: *defaults
@@ -450,7 +450,7 @@ jobs:
           command: npm run sync
           working_directory: /tmp/workspace/packages/react-router/test-app
       - run:
-          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react-router/test-app SKIP_PREFLIGHT_CHECK=true npm run e2e
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react-router/test-app npm run e2e
           working_directory: /tmp/workspace/packages/react-router/test-app
 
   test-vue-router-spec:

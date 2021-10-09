@@ -27,4 +27,4 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
-/src/ionic-react
+cypress/videos

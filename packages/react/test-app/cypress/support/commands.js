@@ -23,19 +23,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-declare namespace Cypress {
-  interface Chainable {
-    /**
-     * Custom command to select DOM element by data-cy attribute.
-     * @example cy.dataCy('greeting')
-     */
-    swipeUp: any;
-  }
-}
-
-Cypress.Commands.add('swipeUp', (selector) => {
-    cy.get(selector)[0]
-    .trigger('mousedown')
-    .trigger('mousemove', {clientY: -275})
-    .trigger('mouseup', {force: true})
-})
