@@ -286,10 +286,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
-            viewStacks.unmountLeavingViews(id, enteringViewItem, leavingViewItem);
+            viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
           }
         } else {
-          viewStacks.mountIntermediaryViews(id, enteringViewItem, leavingViewItem, delta);
+          viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
