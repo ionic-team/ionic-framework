@@ -31,6 +31,14 @@ export class Config {
   set(key: keyof IonicConfig, value: any) {
     this.m.set(key, value);
   }
+
+  toJson() {
+    const obj: { [key: string]: any } = {};
+    for (const [key, value] of this.m.entries()) {
+      obj[key] = value;
+    }
+    return obj;
+  }
 }
 
 export const config = /*@__PURE__*/ new Config();

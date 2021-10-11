@@ -3,7 +3,7 @@ import { getMode, setMode } from '@stencil/core';
 import { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { config, configFromSession, configFromURL, saveConfig } from './config';
+import { Config, config, configFromSession, configFromURL, saveConfig } from './config';
 
 declare const Context: any;
 
@@ -24,12 +24,14 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   // Setup platforms
   setupPlatforms(win);
 
+  const ionicConfigEntries = Ionic.config ? (Ionic.Config as Config).toJson() : {};
+
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
   const configObj = {
     ...configFromSession(win),
     persistConfig: false,
-    ...Ionic.config,
+    ...ionicConfigEntries,
     ...configFromURL(win),
     ...userConfig
   };
