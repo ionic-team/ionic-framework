@@ -236,17 +236,10 @@ export const createViewStacks = (router: Router) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
-    const { enteringIndex: endIndex, leavingIndex: startIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
-    let mountDiff = delta - 1;
+    const { leavingIndex: startIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
 
-    for (let i = startIndex + 1; i < endIndex; i++) {
+    for (let i = startIndex + 1; i < startIndex + delta; i++) {
       viewStack[i].mount = true;
-
-      mountDiff -= 1;
-
-      if (mountDiff === 0) {
-        return;
-      }
     }
   }
 
