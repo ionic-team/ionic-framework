@@ -40,10 +40,6 @@ runs:
       run: npm run lint
       shell: bash
       working-directory: ./packages/vue-router
-    - name: ls
-      run: npm ls @ionic/vue && npm ls @ionic/core
-      shell: bash
-      working-directory: ./packages/vue-router
     - name: Build
       run: npm run build
       shell: bash
