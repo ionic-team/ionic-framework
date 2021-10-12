@@ -95,7 +95,8 @@ export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionG
   'readonly',
   'expand',
   'ionChange'
-]);
+],
+'value', 'v-ion-change', 'ionChange');
 
 
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', IonAvatarCmp);

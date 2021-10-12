@@ -137,7 +137,7 @@ export const config: Config = {
           externalEvent: 'ionChange'
         },
         {
-          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
+          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea', 'ion-accordion-group'],
           targetAttr: 'value',
           event: 'v-ion-change',
           externalEvent: 'ionChange'
