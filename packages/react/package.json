@@ -78,6 +78,7 @@
       "<rootDir>/jest.setup.js"
     ],
     "testPathIgnorePatterns": [
+      "cypress",
       "node_modules",
       "dist-transpiled",
       "dist",

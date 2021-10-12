@@ -19,9 +19,9 @@ import {
 import { Route, Redirect } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
 
-interface TabsContext {}
+interface TabsContextProps {}
 
-const TabsContext: React.FC<TabsContext> = () => {
+const TabsContext: React.FC<TabsContextProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
