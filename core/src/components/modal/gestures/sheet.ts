@@ -22,7 +22,7 @@ export const createSheetGesture = (
 
   const customBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: backdropBreakpoint, opacity: 0 },
+    { offset: 1 - backdropBreakpoint, opacity: 0 },
     { offset: 1, opacity: 0 }
   ]
 

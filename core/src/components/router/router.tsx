@@ -25,9 +25,8 @@ export class Router implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * By default `ion-router` will match the routes at the root path ("/").
-   * That can be changed when
-   *
+   * The root path to use when matching URLs. By default, this is set to "/", but you can specify
+   * an alternate prefix for all URL paths.
    */
   @Prop() root = '/';
 

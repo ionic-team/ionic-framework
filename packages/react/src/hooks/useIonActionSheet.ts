@@ -1,4 +1,5 @@
 import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core/components';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -13,23 +14,24 @@ export function useIonActionSheet(): UseIonActionSheetResult {
     actionSheetController
   );
 
-  function present(buttons: ActionSheetButton[], header?: string): void;
-  function present(options: ActionSheetOptions & HookOverlayOptions): void;
-  function present(buttonsOrOptions: ActionSheetButton[] | ActionSheetOptions & HookOverlayOptions, header?: string) {
-    if (Array.isArray(buttonsOrOptions)) {
-      controller.present({
-        buttons: buttonsOrOptions,
-        header
-      });
-    } else {
-      controller.present(buttonsOrOptions);
-    }
-  }
+  const present = useCallback(
+    (
+      buttonsOrOptions: ActionSheetButton[] | (ActionSheetOptions & HookOverlayOptions),
+      header?: string
+    ) => {
+      if (Array.isArray(buttonsOrOptions)) {
+        controller.present({
+          buttons: buttonsOrOptions,
+          header,
+        });
+      } else {
+        controller.present(buttonsOrOptions);
+      }
+    },
+    [controller.present]
+  );
 
-  return [
-    present,
-    controller.dismiss
-  ];
+  return [present, controller.dismiss];
 }
 
 export type UseIonActionSheetResult = [

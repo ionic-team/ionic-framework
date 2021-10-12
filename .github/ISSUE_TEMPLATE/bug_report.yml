@@ -4,7 +4,7 @@ title: 'bug: '
 body:
   - type: checkboxes
     attributes:
-      label: Prequisites
+      label: Prerequisites
       description: Please ensure you have completed all of the following.
       options:
         - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).

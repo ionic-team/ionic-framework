@@ -1,7 +1,7 @@
 /* eslint-disable */
 /* tslint:disable */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, NgZone, TemplateRef } from "@angular/core";
-import { ProxyCmp, proxyOutputs } from "../proxies-utils";
+import { ProxyCmp, proxyOutputs } from "../angular-component-lib/utils";
 import { Components } from "@ionic/core";
 export declare interface IonModal extends Components.IonModal {
 }

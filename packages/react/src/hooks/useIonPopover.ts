@@ -1,4 +1,5 @@
 import { PopoverOptions, popoverController } from '@ionic/core/components';
+import { useCallback } from 'react';
 
 import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
 
@@ -19,9 +20,9 @@ export function useIonPopover(component: ReactComponentOrElement, componentProps
     componentProps
   );
 
-  function present(options: Omit<PopoverOptions, 'component' | 'componentProps'> & HookOverlayOptions = {}) {
+  const present = useCallback((options: Omit<PopoverOptions, 'component' | 'componentProps'> & HookOverlayOptions = {}) => {
     controller.present(options as any);
-  };
+  }, [controller.present]);
 
   return [
     present,

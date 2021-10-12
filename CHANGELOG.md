@@ -1,3 +1,64 @@
+# [6.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v6.0.0-beta.7...v6.0.0-rc.0) (2021-10-07)
+
+
+### Bug Fixes
+
+* **angular:** setup config properly ([#24028](https://github.com/ionic-team/ionic/issues/24028)) ([907996c](https://github.com/ionic-team/ionic/commit/907996ce16446d0dc12939da325b7b5dae09ebd9))
+
+
+
+# [6.0.0-beta.7](https://github.com/ionic-team/ionic/compare/v5.8.2...v6.0.0-beta.7) (2021-10-06)
+
+
+### Bug Fixes
+
+* **datetime:** ionBlur and ionFocus now fires correctly ([#23980](https://github.com/ionic-team/ionic/issues/23980)) ([86a77bd](https://github.com/ionic-team/ionic/commit/86a77bd379c6dca57d5feb9694d18afe6d82934d))
+* **datetime:** ionChange is no longer called for out of range dates ([#23940](https://github.com/ionic-team/ionic/issues/23940)) ([ea39c6e](https://github.com/ionic-team/ionic/commit/ea39c6e5b3781ceb4c87277cf4a5e0be9c75bc20)), closes [#23939](https://github.com/ionic-team/ionic/issues/23939)
+* **datetime:** time picker uses new iOS 15 style ([#23996](https://github.com/ionic-team/ionic/issues/23996)) ([0ab37b5](https://github.com/ionic-team/ionic/commit/0ab37b5061728bd60fd42781645b96add130a79f)), closes [#23768](https://github.com/ionic-team/ionic/issues/23768)
+* **modal:** backdropBreakpoint is now an exclusive value ([#23954](https://github.com/ionic-team/ionic/issues/23954)) ([ed455ab](https://github.com/ionic-team/ionic/commit/ed455ab4c6df73f801a3c941da21261c205c9634))
+* **react:** ensure inline modal content is visible ([#23968](https://github.com/ionic-team/ionic/issues/23968)) ([285a371](https://github.com/ionic-team/ionic/commit/285a371101e714e74d6df68701cbee9dfe23605e))
+* **reorder-group:** wait for content to render before getting scroll position ([#24007](https://github.com/ionic-team/ionic/issues/24007)) ([225a278](https://github.com/ionic-team/ionic/commit/225a2787407c5ce68a953ee3448647d00af26517)), closes [#23875](https://github.com/ionic-team/ionic/issues/23875)
+* **select:** ensure popover options with number values are searched for correctly ([#23998](https://github.com/ionic-team/ionic/issues/23998)) ([c204083](https://github.com/ionic-team/ionic/commit/c20408369bd332b5e225a3d50ec94978f6f5ec97))
+* **select:** focus selected item in popovers ([#23991](https://github.com/ionic-team/ionic/issues/23991)) ([2497a53](https://github.com/ionic-team/ionic/commit/2497a53255dc43052755bba842dfcf556d930dcd))
+
+
+### Features
+
+* **all:** add CustomEvents types to components that emit events ([#23956](https://github.com/ionic-team/ionic/issues/23956)) ([8708095](https://github.com/ionic-team/ionic/commit/87080951112a409893a4bac2def1deca06642b16)), closes [#22925](https://github.com/ionic-team/ionic/issues/22925)
+* **header, footer:** add ios fading header style ([#24011](https://github.com/ionic-team/ionic/issues/24011)) ([7ce3959](https://github.com/ionic-team/ionic/commit/7ce3959b66a08e980c7dac3bb7d7df6bf0ae874e))
+
+
+### BREAKING CHANGES
+
+* **radio:** The `RadioChangeEventDetail` interface has been removed in favor of `RadioGroupChangeEventDetail`.
+
+
+
+## [5.8.2](https://github.com/ionic-team/ionic/compare/v5.8.1...v5.8.2) (2021-10-06)
+
+
+### Bug Fixes
+
+* **alert:** made it easier to tell if alert is scrollable in MD mode ([#23976](https://github.com/ionic-team/ionic/issues/23976)) ([a262753](https://github.com/ionic-team/ionic/commit/a26275378f10835343ad8a6cdea50303e6c10a14))
+* **angular:** use initialize function when setting up ionic angular to avoid config errors ([#24004](https://github.com/ionic-team/ionic/issues/24004)) ([f112ad4](https://github.com/ionic-team/ionic/commit/f112ad4490dc4a179dc3feab495530e14e655e5a)), closes [#22853](https://github.com/ionic-team/ionic/issues/22853)
+* **item-sliding:** closing an item can no longer be interrupted ([#23973](https://github.com/ionic-team/ionic/issues/23973)) ([3ca0419](https://github.com/ionic-team/ionic/commit/3ca04197a4186c85d04cdf04fa9cb2689ca1bbfb)), closes [#23969](https://github.com/ionic-team/ionic/issues/23969)
+* **react:** overlay hooks memorised properly to prevent re-renders ([#24010](https://github.com/ionic-team/ionic/issues/24010)) ([2c97712](https://github.com/ionic-team/ionic/commit/2c977126012ae0231d4e4fa63cc76a528bde699b)), closes [#23741](https://github.com/ionic-team/ionic/issues/23741)
+* **select-popover:** non-scrollable popovers no longer have forced overscroll ([#23972](https://github.com/ionic-team/ionic/issues/23972)) ([aa4ba89](https://github.com/ionic-team/ionic/commit/aa4ba890e9c18e8a911c5188b3e2e85433658be9)), closes [#23971](https://github.com/ionic-team/ionic/issues/23971)
+* **status-bar:** tapping status bar correctly scrolls content to top ([#24001](https://github.com/ionic-team/ionic/issues/24001)) ([25eb8cd](https://github.com/ionic-team/ionic/commit/25eb8cdf98fe455433ca6185e89d9e1223a6d3ae)), closes [#20423](https://github.com/ionic-team/ionic/issues/20423)
+
+
+
+## [5.8.1](https://github.com/ionic-team/ionic/compare/v5.8.0...v5.8.1) (2021-09-22)
+
+
+### Bug Fixes
+
+* **angular:** select method now has correct types ([#23953](https://github.com/ionic-team/ionic/issues/23953)) ([3c1be89](https://github.com/ionic-team/ionic/commit/3c1be89112d464e77d65c875223138aaedf350cd)), closes [#23952](https://github.com/ionic-team/ionic/issues/23952)
+* **item-sliding:** item-sliding accounts for multiple ion-item elements ([#23943](https://github.com/ionic-team/ionic/issues/23943)) ([8108edd](https://github.com/ionic-team/ionic/commit/8108edd876b10834015016385dc3cd5b8f31fbfa)), closes [#19312](https://github.com/ionic-team/ionic/issues/19312)
+* **label:** only inherit color if color property is set on ion-item ([#23944](https://github.com/ionic-team/ionic/issues/23944)) ([ae1325c](https://github.com/ionic-team/ionic/commit/ae1325cee698066a71aae4e7deb953c4185c0926)), closes [#20125](https://github.com/ionic-team/ionic/issues/20125)
+
+
+
 # [6.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v6.0.0-beta.5...v6.0.0-beta.6) (2021-09-15)
 
 

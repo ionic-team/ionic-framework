@@ -1,6 +1,9 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { componentOnReady } from '../../utils/helpers';
+
+import { handleFooterFade } from './footer.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -13,6 +16,16 @@ import { getIonMode } from '../../global/ionic-global';
   }
 })
 export class Footer implements ComponentInterface {
+  private scrollEl?: HTMLElement;
+  private contentScrollCallback: any;
+
+  @Element() el!: HTMLIonFooterElement;
+
+  /**
+   * Describes the scroll effect that will be applied to the footer.
+   * Only applies in iOS mode.
+   */
+  @Prop() collapse?: 'fade';
 
   /**
    * If `true`, the footer will be translucent.
@@ -24,9 +37,56 @@ export class Footer implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  render() {
+  componentDidLoad() {
+    this.checkCollapsibleFooter();
+  }
+
+  componentDidUpdate() {
+    this.checkCollapsibleFooter();
+  }
+
+  private checkCollapsibleFooter = () => {
     const mode = getIonMode(this);
-    const translucent = this.translucent;
+    if (mode !== 'ios') { return; }
+
+    const { collapse } = this;
+    const hasFade = collapse === 'fade';
+
+    this.destroyCollapsibleFooter();
+
+    if (hasFade) {
+      const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+      const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
+
+      this.setupFadeFooter(contentEl);
+    }
+  }
+
+  private setupFadeFooter = async (contentEl: HTMLIonContentElement | null) => {
+    if (!contentEl) { console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.'); return; }
+
+    await new Promise(resolve => componentOnReady(contentEl, resolve));
+    const scrollEl = this.scrollEl = await contentEl.getScrollElement();
+
+    /**
+     * Handle fading of toolbars on scroll
+     */
+    this.contentScrollCallback = () => { handleFooterFade(scrollEl, this.el); };
+    scrollEl.addEventListener('scroll', this.contentScrollCallback);
+
+    handleFooterFade(scrollEl, this.el);
+  }
+
+  private destroyCollapsibleFooter() {
+    if (this.scrollEl && this.contentScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+      this.contentScrollCallback = undefined;
+    }
+  }
+
+  render() {
+    const { translucent, collapse } = this;
+    const mode = getIonMode(this);
     return (
       <Host
         role="contentinfo"
@@ -38,6 +98,8 @@ export class Footer implements ComponentInterface {
 
           [`footer-translucent`]: translucent,
           [`footer-translucent-${mode}`]: translucent,
+
+          [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
         { mode === 'ios' && translucent &&

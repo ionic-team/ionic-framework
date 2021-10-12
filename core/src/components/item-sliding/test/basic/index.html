@@ -41,6 +41,7 @@
         <ion-button expand="block" onclick="openItem('start')">Open Item Start</ion-button>
         <ion-button expand="block" onclick="openItem('end')">Open Item End</ion-button>
         <ion-button expand="block" onclick="openItemOneSide()">Open Item with only one side</ion-button>
+        <ion-button expand="block" onclick="setDynaicItem()">Swap dynamic item</ion-button>
       </div>
 
       <ion-list id="list">
@@ -369,6 +370,17 @@
             </ion-item-options>
           </ion-item-sliding>
 
+          <ion-item-sliding id="dynamic-item">
+            <ion-item>
+              <ion-label>Dynamic First Item</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="tertiary" expandable>
+                First Item Options
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
           <ion-item>
             <ion-label class="ion-text-wrap">
               <h2>Normal ion-item (no sliding)</h2>
@@ -387,6 +399,20 @@
       </ion-list>
 
       <script>
+        const setDynaicItem = () => {
+          const sliding = document.querySelector('#dynamic-item');
+          sliding.innerHTML = `
+            <ion-item>
+              <ion-label>Dynamic Second Item</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="tertiary" expandable>
+                Second Item Options
+              </ion-item-option>
+            </ion-item-options>
+          `
+        }
+
         var dynamicSlidingEnabled = document.getElementsByClassName('sliding-enabled');
 
         // Toggle the dynamic options

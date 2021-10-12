@@ -1,7 +1,7 @@
-@import "./select-popover.vars";
+@import "../../themes/ionic.globals";
 
-ion-list {
-  @include margin($select-popover-list-margin-top, $select-popover-list-margin-end, $select-popover-list-margin-bottom, $select-popover-list-margin-start);
+:host ion-list {
+  @include margin(0);
 }
 
 ion-list-header,

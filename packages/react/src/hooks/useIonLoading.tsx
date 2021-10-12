@@ -1,4 +1,5 @@
 import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core/components';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -13,27 +14,24 @@ export function useIonLoading(): UseIonLoadingResult {
     loadingController
   );
 
-  function present(
-    message?: string,
-    duration?: number,
-    spinner?: SpinnerTypes
-  ): void;
-  function present(options: LoadingOptions & HookOverlayOptions): void;
-  function present(
-    messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = '',
-    duration?: number,
-    spinner?: SpinnerTypes
-  ) {
-    if (typeof messageOrOptions === 'string') {
-      controller.present({
-        message: messageOrOptions,
-        duration,
-        spinner: spinner ?? 'lines',
-      });
-    } else {
-      controller.present(messageOrOptions);
-    }
-  }
+  const present = useCallback(
+    (
+      messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = '',
+      duration?: number,
+      spinner?: SpinnerTypes
+    ) => {
+      if (typeof messageOrOptions === 'string') {
+        controller.present({
+          message: messageOrOptions,
+          duration,
+          spinner: spinner ?? 'lines',
+        });
+      } else {
+        controller.present(messageOrOptions);
+      }
+    },
+    [controller.present]
+  );
 
   return [present, controller.dismiss];
 }

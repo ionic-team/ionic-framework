@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
+import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
+import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
@@ -537,7 +539,7 @@ export namespace Components {
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
-        "value": string;
+        "value": any | null;
     }
     interface IonChip {
         /**
@@ -919,6 +921,10 @@ export namespace Components {
     }
     interface IonFooter {
         /**
+          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+         */
+        "collapse"?: 'fade';
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -935,9 +941,9 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
-        "collapse"?: 'condense';
+        "collapse"?: 'condense' | 'fade';
         /**
           * The mode determines which platform styles to use.
          */
@@ -1799,6 +1805,34 @@ export namespace Components {
          */
         "col": PickerColumn;
     }
+    interface IonPickerColumnInternal {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * A list of options to be displayed in the picker
+         */
+        "items": PickerColumnItem[];
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
+         */
+        "numericInput": boolean;
+        /**
+          * The selected option in the picker.
+         */
+        "value"?: string | number;
+    }
+    interface IonPickerInternal {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
     interface IonPopover {
         /**
           * Describes how to align the popover content with the `reference` point.
@@ -2071,7 +2105,7 @@ export namespace Components {
          */
         "pullMin": number;
         /**
-          * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration": string;
     }
@@ -2165,7 +2199,7 @@ export namespace Components {
          */
         "push": (url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>;
         /**
-          * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
+          * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
         "root": string;
         /**
@@ -3291,6 +3325,18 @@ declare global {
         prototype: HTMLIonPickerColumnElement;
         new (): HTMLIonPickerColumnElement;
     };
+    interface HTMLIonPickerColumnInternalElement extends Components.IonPickerColumnInternal, HTMLStencilElement {
+    }
+    var HTMLIonPickerColumnInternalElement: {
+        prototype: HTMLIonPickerColumnInternalElement;
+        new (): HTMLIonPickerColumnInternalElement;
+    };
+    interface HTMLIonPickerInternalElement extends Components.IonPickerInternal, HTMLStencilElement {
+    }
+    var HTMLIonPickerInternalElement: {
+        prototype: HTMLIonPickerInternalElement;
+        new (): HTMLIonPickerInternalElement;
+    };
     interface HTMLIonPopoverElement extends Components.IonPopover, HTMLStencilElement {
     }
     var HTMLIonPopoverElement: {
@@ -3578,6 +3624,8 @@ declare global {
         "ion-note": HTMLIonNoteElement;
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
+        "ion-picker-column-internal": HTMLIonPickerColumnInternalElement;
+        "ion-picker-internal": HTMLIonPickerInternalElement;
         "ion-popover": HTMLIonPopoverElement;
         "ion-progress-bar": HTMLIonProgressBarElement;
         "ion-radio": HTMLIonRadioElement;
@@ -4185,7 +4233,7 @@ declare namespace LocalJSX {
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
-        "value"?: string;
+        "value"?: any | null;
     }
     interface IonChip {
         /**
@@ -4563,6 +4611,10 @@ declare namespace LocalJSX {
     }
     interface IonFooter {
         /**
+          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+         */
+        "collapse"?: 'fade';
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -4579,9 +4631,9 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
-        "collapse"?: 'condense';
+        "collapse"?: 'condense' | 'fade';
         /**
           * The mode determines which platform styles to use.
          */
@@ -5382,6 +5434,39 @@ declare namespace LocalJSX {
          */
         "onIonPickerColChange"?: (event: CustomEvent<PickerColumn>) => void;
     }
+    interface IonPickerColumnInternal {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * A list of options to be displayed in the picker
+         */
+        "items"?: PickerColumnItem[];
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
+         */
+        "numericInput"?: boolean;
+        /**
+          * Emitted when the value has changed.
+         */
+        "onIonChange"?: (event: CustomEvent<PickerColumnItem>) => void;
+        /**
+          * The selected option in the picker.
+         */
+        "value"?: string | number;
+    }
+    interface IonPickerInternal {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        "onIonInputModeChange"?: (event: CustomEvent<PickerInternalChangeEventDetail>) => void;
+    }
     interface IonPopover {
         /**
           * Describes how to align the popover content with the `reference` point.
@@ -5692,7 +5777,7 @@ declare namespace LocalJSX {
          */
         "pullMin"?: number;
         /**
-          * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration"?: string;
     }
@@ -5782,7 +5867,7 @@ declare namespace LocalJSX {
          */
         "onIonRouteWillChange"?: (event: CustomEvent<RouterEventDetail>) => void;
         /**
-          * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
+          * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
         "root"?: string;
         /**
@@ -6698,6 +6783,8 @@ declare namespace LocalJSX {
         "ion-note": IonNote;
         "ion-picker": IonPicker;
         "ion-picker-column": IonPickerColumn;
+        "ion-picker-column-internal": IonPickerColumnInternal;
+        "ion-picker-internal": IonPickerInternal;
         "ion-popover": IonPopover;
         "ion-progress-bar": IonProgressBar;
         "ion-radio": IonRadio;
@@ -6795,6 +6882,8 @@ declare module "@stencil/core" {
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
             "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
+            "ion-picker-column-internal": LocalJSX.IonPickerColumnInternal & JSXBase.HTMLAttributes<HTMLIonPickerColumnInternalElement>;
+            "ion-picker-internal": LocalJSX.IonPickerInternal & JSXBase.HTMLAttributes<HTMLIonPickerInternalElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;

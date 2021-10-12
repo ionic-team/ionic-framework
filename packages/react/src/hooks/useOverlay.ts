@@ -1,4 +1,5 @@
 import { OverlayEventDetail } from '@ionic/core/components';
+
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
@@ -40,7 +41,7 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
     }
   }, [component, containerElRef.current, isOpen, componentProps]);
 
-  const present = async (options: OptionsType & HookOverlayOptions) => {
+  const present = useCallback(async (options: OptionsType & HookOverlayOptions) => {
     if (overlayRef.current) {
       return;
     }
@@ -76,13 +77,13 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
       setIsOpen(false);
       ionContext.removeOverlay(overlayId);
     }
-  };
+  }, []);
 
   const dismiss = async () => {
     overlayRef.current && (await overlayRef.current.dismiss());
     overlayRef.current = undefined;
     containerElRef.current = undefined;
-  };
+  }, []);
 
   return {
     present,
