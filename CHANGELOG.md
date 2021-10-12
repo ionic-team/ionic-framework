@@ -1,3 +1,13 @@
+## [5.8.4](https://github.com/ionic-team/ionic/compare/v5.8.3...v5.8.4) (2021-10-11)
+
+
+### Bug Fixes
+
+* **angular:** setup config properly ([#24054](https://github.com/ionic-team/ionic/issues/24054)) ([e001f24](https://github.com/ionic-team/ionic/commit/e001f24f2ca99abbc98b923dd1a132cc83b3b23f)), closes [#24051](https://github.com/ionic-team/ionic/issues/24051) [#24052](https://github.com/ionic-team/ionic/issues/24052)
+* **back-button:** pass aria-label to native element ([#24027](https://github.com/ionic-team/ionic/issues/24027)) ([68a7e43](https://github.com/ionic-team/ionic/commit/68a7e43345a0261fdeed6054198c5a22fbbcb584))
+
+
+
 ## [5.8.3](https://github.com/ionic-team/ionic/compare/v5.8.2...v5.8.3) (2021-10-07)
 
 
