@@ -1,5 +1,5 @@
 import { OverlayEventDetail } from '@ionic/core/components';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
 import { IonContext } from '../contexts/IonContext';
@@ -78,11 +78,11 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
     }
   }, []);
 
-  const dismiss = async () => {
+  const dismiss = useCallback(async () => {
     overlayRef.current && (await overlayRef.current.dismiss());
     overlayRef.current = undefined;
     containerElRef.current = undefined;
-  };
+  }, []);
 
   return {
     present,
