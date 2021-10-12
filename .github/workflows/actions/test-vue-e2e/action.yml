@@ -41,7 +41,11 @@ runs:
       run: npm run sync
       shell: bash
       working-directory: ./packages/vue/test-app
-    - name: Run Tests
-      run: npm run test
+    - name: Run Spec Tests
+      run: npm run test:spec
+      shell: bash
+      working-directory: ./packages/vue/test-app
+    - name: Run E2E ests
+      run: npm run test:e2e
       shell: bash
       working-directory: ./packages/vue/test-app
