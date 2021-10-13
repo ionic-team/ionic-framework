@@ -86,9 +86,9 @@ export class IonTabs {
    *      to the default tabRootUrl
    */
   @HostListener('ionTabButtonClick', ['$event'])
-  select(tabOrEvent: string | CustomEvent) {
+  select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
-    const tab = (isTabString) ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
+    const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
 

@@ -70,6 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
     "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.2",
     "fs-extra": "^7.0.0",
     "ng-packagr": "^12.0.0",
     "rxjs": "^6.6.2",

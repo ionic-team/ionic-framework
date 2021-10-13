@@ -15,12 +15,7 @@
       ],
       "rules": {
         "@typescript-eslint/consistent-type-imports": "off",
-        "@angular-eslint/component-class-suffix": [
-          "error",
-          {
-            "suffixes": ["Page", "Component"]
-          }
-        ],
+        "@angular-eslint/component-class-suffix": "off",
         "@angular-eslint/component-selector": [
           "error",
           {
