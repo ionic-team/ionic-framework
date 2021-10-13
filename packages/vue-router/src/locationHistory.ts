@@ -105,11 +105,15 @@ export const createLocationHistory = () => {
 
   const size = () => locationHistory.length;
 
-  const updateByHistoryPosition = (routeInfo: RouteInfo) => {
+  const updateByHistoryPosition = (routeInfo: RouteInfo, updateEntries: boolean) => {
     const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
     if (existingRouteIndex === -1) return;
 
     locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
+
+    if (updateEntries) {
+      locationHistory[existingRouteIndex].pushedByRoute = routeInfo.pushedByRoute;
+    }
   }
 
   /**
