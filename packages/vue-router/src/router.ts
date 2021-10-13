@@ -275,7 +275,23 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * new items within the stack.
        */
       if (historySize > historyDiff && routeInfo.tab === undefined) {
-        locationHistory.updateByHistoryPosition(routeInfo);
+        /**
+         * When going from /a --> /a/1 --> /b, then going
+         * back to /a, then going /a --> /a/2 --> /b, clicking
+         * the ion-back-button should return us to /a/2, not /a/1.
+         * However, since the route entry for /b already exists,
+         * we need to update other information such as the "pushedByRoute"
+         * so we know which route pushed this new route.
+         *
+         * However, when using router.go with a stride of >1 or <-1,
+         * we should not update this additional information because
+         * we are traversing through the history, not pushing new states.
+         * Going from /a --> /b --> /c, then doing router.go(-2), then doing
+         * router.go(2) to go from /a --> /c should not update the route
+         * listing to say that /c was pushed by /a.
+         */
+        const hasDeltaStride = delta !== undefined && Math.abs(delta) !== 1;
+        locationHistory.updateByHistoryPosition(routeInfo, !hasDeltaStride);
       } else {
         locationHistory.add(routeInfo);
       }
