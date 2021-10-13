@@ -246,6 +246,13 @@ AFTER:
     }
   }
 
+  @Listen('keydown')
+  onKeydown(ev: KeyboardEvent) {
+    if(ev.key === 'Escape') {
+      this.close();
+    }
+  }
+
   /**
    * Returns `true` is the menu is open.
    */
@@ -512,6 +519,11 @@ AFTER:
 
       // emit open event
       this.ionDidOpen.emit();
+
+      // focus menu content for screen readers
+      if (this.menuInnerEl) {
+        this.menuInnerEl.focus();
+      }
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
@@ -576,13 +588,14 @@ AFTER:
           'menu-pane-visible': isPaneVisible
         }}
       >
-        <div
+        <nav
           class="menu-inner"
           part="container"
+          tabindex="0"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
-        </div>
+        </nav>
 
         <ion-backdrop
           ref={el => this.backdropEl = el}
