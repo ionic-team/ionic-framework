@@ -33,13 +33,9 @@ runs:
         name: ionic-react-router
         path: ./packages/react-router
         filename: ReactRouterBuild.zip
-    - name: Install Dependencies
-      run: npm install --legacy-peer-deps
-      shell: bash
-      working-directory: ./packages/react-router/test-app
     - uses: cypress-io/github-action@v2
       with:
         browser: chrome
         headless: true
-        start: cd ./packages/react-router/test-app && npm run start
-        project: ./packages/react-router/test-app
+        start: npm run start
+        working-directory: ./packages/react-router/test-app
