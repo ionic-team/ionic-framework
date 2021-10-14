@@ -15,7 +15,7 @@ import {
   IonButton,
 } from '@ionic/react';
 import { Route, Redirect } from 'react-router';
-import { IonReactRouter } from '../../ReactRouter/IonReactRouter';
+import { IonReactRouter } from '@ionic/react-router';
 import { triangle, square } from 'ionicons/icons';
 
 const DynamicTabs: React.FC = () => {
