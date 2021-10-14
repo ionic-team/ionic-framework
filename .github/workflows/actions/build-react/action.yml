@@ -1,5 +1,5 @@
-name: 'Test Vue E2E'
-description: 'Test Vue E2E'
+name: 'Build Ionic React'
+description: 'Build Ionic React'
 runs:
   using: 'composite'
   steps:
@@ -18,34 +18,34 @@ runs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-vue
-        path: ./packages/vue
-        filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-vue-router
-        path: ./packages/vue-router
-        filename: VueRouterBuild.zip
-    - name: Install Dependencies
-      run: npm install
+    - name: Install React Dependencies
+      run: npm install --legacy-peer-deps
       shell: bash
-      working-directory: ./packages/vue/test-app
+      working-directory: ./packages/react
     - name: Sync
       run: npm run sync
       shell: bash
-      working-directory: ./packages/vue/test-app
-    - name: Run Spec Tests
-      run: npm run test:unit
+      working-directory: ./packages/react
+    - name: Lint
+      run: npm run lint
       shell: bash
-      working-directory: ./packages/vue/test-app
-    - name: Run E2E ests
-      run: npm run test:e2e
+      working-directory: ./packages/react
+    - name: Build
+      run: npm run build
       shell: bash
-      working-directory: ./packages/vue/test-app
+      working-directory: ./packages/react
+    - name: Test Spec
+      run: npm run test.spec
+      shell: bash
+      working-directory: ./packages/react
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react
+        output: packages/react/ReactBuild.zip
+        paths: packages/react/dist packages/react/css

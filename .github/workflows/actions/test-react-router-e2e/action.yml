@@ -18,17 +18,17 @@ runs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - uses: ./.github/workflows/download-archive
+    - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/download-archive
+    - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-react
         path: ./packages/react
         filename: ReactBuild.zip
-    - uses: ./.github/workflows/download-archive
+    - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-react-router
         path: ./packages/react-router

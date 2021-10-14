@@ -1,5 +1,5 @@
-name: 'Test Core Screenshot'
-description: 'Test Core Screenshot'
+name: 'Build Ionic Vue'
+description: 'Build Ionic Vue'
 runs:
   using: 'composite'
   steps:
@@ -23,7 +23,24 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Test
-      run: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --no-build || true
+    - name: Install Vue Dependencies
+      run: npm install
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/vue
+    - name: Sync
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/vue
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/vue
+    - name: Build
+      run: npm run build
+      shell: bash
+      working-directory: ./packages/vue
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-vue
+        output: packages/vue/VueBuild.zip
+        paths: packages/vue/dist packages/vue/css

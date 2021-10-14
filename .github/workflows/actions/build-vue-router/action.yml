@@ -1,5 +1,5 @@
-name: 'Test Vue E2E'
-description: 'Test Vue E2E'
+name: 'Build Ionic Vue Router'
+description: 'Builds Ionic Vue Router'
 runs:
   using: 'composite'
   steps:
@@ -28,24 +28,28 @@ runs:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-vue-router
-        path: ./packages/vue-router
-        filename: VueRouterBuild.zip
-    - name: Install Dependencies
+    - name: Install Vue Router Dependencies
       run: npm install
       shell: bash
-      working-directory: ./packages/vue/test-app
+      working-directory: ./packages/vue-router
     - name: Sync
       run: npm run sync
       shell: bash
-      working-directory: ./packages/vue/test-app
-    - name: Run Spec Tests
-      run: npm run test:unit
+      working-directory: ./packages/vue-router
+    - name: Lint
+      run: npm run lint
       shell: bash
-      working-directory: ./packages/vue/test-app
-    - name: Run E2E ests
-      run: npm run test:e2e
+      working-directory: ./packages/vue-router
+    - name: Build
+      run: npm run build
       shell: bash
-      working-directory: ./packages/vue/test-app
+      working-directory: ./packages/vue-router
+    - name: Test Spec
+      run: npm run test.spec
+      shell: bash
+      working-directory: ./packages/vue-router
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-vue-router
+        output: ./packages/vue-router/VueRouterBuild.zip
+        paths: packages/vue-router/dist

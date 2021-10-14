@@ -7,7 +7,7 @@ runs:
       with:
         node-version: 15.x
 
-    - uses: ./.github/workflows/download-archive
+    - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
