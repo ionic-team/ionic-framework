@@ -37,5 +37,5 @@ runs:
       with:
         browser: chrome
         headless: true
-        start: npm run start
+        start: react-scripts start
         working-directory: ./packages/react-router/test-app
