@@ -39,6 +39,24 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/test-core-e2e
 
+  test-core-screenshot:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    branches-ignore:
+      - 'main'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-screenshot
+
+  test-core-screenshot-main:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    branches:
+      - 'main'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-screenshot-main
+
   build-vue:
     needs: [build-core]
     runs-on: ubuntu-latest
