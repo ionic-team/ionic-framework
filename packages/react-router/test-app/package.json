@@ -45,7 +45,7 @@
   },
   "scripts": {
     "copyRouter": "cpy ../src/ReactRouter ./src/ReactRouter",
-    "start": "concurrently \"npm-watch copyRouter\" \"react-scripts start\"",
+    "start": "react-scripts start",
     "build": "node scripts/build.js",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
