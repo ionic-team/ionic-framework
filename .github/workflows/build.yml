@@ -42,8 +42,7 @@ jobs:
   test-core-screenshot:
     needs: [build-core]
     runs-on: ubuntu-latest
-    branches-ignore:
-      - 'main'
+    if: github.ref !== 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/test-core-screenshot
@@ -51,8 +50,7 @@ jobs:
   test-core-screenshot-main:
     needs: [build-core]
     runs-on: ubuntu-latest
-    branches:
-      - 'main'
+    if: github.ref === 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/test-core-screenshot-main
