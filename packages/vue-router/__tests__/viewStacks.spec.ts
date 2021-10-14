@@ -110,7 +110,7 @@ describe('View Stacks', () => {
     const itemC = createRegisteredViewItem(viewStacks, 1, '/home/3', true);
     const itemD = createRegisteredViewItem(viewStacks, 1, '/home/4', true);
 
-    viewStacks.unmountLeavingViews(1, itemA, itemD);
+    viewStacks.unmountLeavingViews(1, itemA, -3);
 
     expect(itemB.mount).toEqual(false);
     expect(itemB.ionPageElement).toEqual(undefined);
@@ -127,7 +127,7 @@ describe('View Stacks', () => {
     const itemC = createRegisteredViewItem(viewStacks);
     const itemD = createRegisteredViewItem(viewStacks);
 
-    viewStacks.mountIntermediaryViews(1, itemD, itemA);
+    viewStacks.mountIntermediaryViews(1, itemA, 3);
 
     expect(itemB.mount).toEqual(true);
     expect(itemC.mount).toEqual(true);
