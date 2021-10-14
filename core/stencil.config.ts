@@ -183,6 +183,7 @@ export const config: Config = {
     // },
     angularOutputTarget({
       componentCorePackage: '@ionic/core',
+      includeImportCustomElements: true,
       directivesProxyFile: '../angular/src/directives/proxies.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.txt',
       excludeComponents: [
