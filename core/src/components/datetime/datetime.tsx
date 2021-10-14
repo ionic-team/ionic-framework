@@ -980,8 +980,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderFooter() {
+    const { showDefaultButtons, showClearButton } = this;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
-    if (!hasSlottedButtons && !this.showDefaultButtons) { return; }
+    if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) { return; }
 
     const clearButtonClick = () => {
       this.reset();
@@ -1004,10 +1005,10 @@ export class Datetime implements ComponentInterface {
           }}>
             <slot name="buttons">
               <ion-buttons>
-                <ion-button color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>
+                {showDefaultButtons && <ion-button id="cancel-button" color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>}
                 <div>
-                  {this.showClearButton && <ion-button color={this.color} onClick={() => clearButtonClick()}>{this.clearText}</ion-button>}
-                  <ion-button color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>
+                  {showClearButton && <ion-button id="clear-button" color={this.color} onClick={() => clearButtonClick()}>{this.clearText}</ion-button>}
+                  {showDefaultButtons && <ion-button id="confirm-button" color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>}
                 </div>
               </ion-buttons>
             </slot>
