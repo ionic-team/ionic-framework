@@ -433,7 +433,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install ci
+          command: npm ci
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
           command: npm run test
