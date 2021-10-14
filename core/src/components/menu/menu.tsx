@@ -12,6 +12,7 @@ const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
+const focusableQueryString = 'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])';
 
 /**
  * @part container - The container for the menu content.
@@ -39,6 +40,9 @@ export class Menu implements ComponentInterface, MenuI {
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
+  lastFocus?: HTMLElement;
+
+  private handleFocus?: any;
 
   @Element() el!: HTMLIonMenuElement;
 
@@ -308,6 +312,65 @@ AFTER:
     return menuController._setOpen(this, shouldOpen, animated);
   }
 
+  private focusFirstDescendant() {
+    const { el, menuInnerEl } = this;
+    const firstInput = el.querySelector(focusableQueryString) as HTMLElement | null;
+
+    if(firstInput) {
+      firstInput.focus();
+    } else if(menuInnerEl) {
+      menuInnerEl.focus();
+    }
+  }
+
+  private focusLastDescendant() {
+    const { el, menuInnerEl } = this;
+    const inputs = Array.from(el.querySelectorAll<HTMLElement>(focusableQueryString));
+    const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
+
+    if(lastInput) {
+      lastInput.focus();
+    } else if(menuInnerEl) {
+      menuInnerEl.focus();
+    }
+  }
+
+  private trapKeyboardFocus(ev: Event, doc: Document) {
+    const target = ev.target as HTMLElement | null;
+    if(!this.el || !target) return;
+
+    /**
+     * If the target is inside the menu contents, let the browser
+     * focus as normal and keep a log of the last focused element.
+     */
+    if (this.el.contains(target)) {
+      this.lastFocus = target;
+    } else {
+      /**
+       * Otherwise, we are about to have focus go out of the menu.
+       * Wrap the focus to either the first or last element.
+       */
+
+      /**
+       * Once we call `focusFirstDescendant`, another focus event
+       * will fire, which will cause `lastFocus` to be updated
+       * before we can run the code after that. We cache the value
+       * here to avoid that.
+       */
+      this.focusFirstDescendant();
+
+      /**
+       * If the cached last focused element is the same as the now-
+       * active element, that means the user was on the first element
+       * already and pressed Shift + Tab, so we need to wrap to the
+       * last descendant.
+       */
+      if(this.lastFocus === doc.activeElement) {
+        this.focusLastDescendant();
+      }
+    }
+  }
+
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currently being animated, let's do nothing
     if (!this._isActive() || this.isAnimating || shouldOpen === this._isOpen) {
@@ -522,8 +585,12 @@ AFTER:
 
       // focus menu content for screen readers
       if (this.menuInnerEl) {
-        this.menuInnerEl.focus();
+        this.focusFirstDescendant();
       }
+
+      // setup focus trapping
+      this.handleFocus = (ev: Event) => this.trapKeyboardFocus(ev, document);
+      document.addEventListener('focus', this.handleFocus, true);
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
@@ -540,6 +607,10 @@ AFTER:
 
       // emit close event
       this.ionDidClose.emit();
+
+      // undo focus trapping so multiple menus don't collide
+      document.removeEventListener('focus', this.handleFocus, true);
+      this.handleFocus = undefined;
     }
   }
 
@@ -579,6 +650,7 @@ AFTER:
     return (
       <Host
         role="navigation"
+        tabindex="0"
         class={{
           [mode]: true,
           [`menu-type-${type}`]: true,
