@@ -15,8 +15,5 @@ runs:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}
     - name: Exract Archive
-      run: unzip -o ${{ inputs.path }}/${{ inputs.filename }}
-      shell: bash
-    - name: ls
-      run: ls ${{ inputs.path }}
+      run: unzip -q -o ${{ inputs.path }}/${{ inputs.filename }}
       shell: bash

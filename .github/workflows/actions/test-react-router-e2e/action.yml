@@ -41,5 +41,5 @@ runs:
       with:
         browser: chrome
         headless: true
-        start: npm run start
+        start: cd ./packages/react-router/test-app && npm run start
         project: ./packages/react-router/test-app
