@@ -252,7 +252,7 @@ AFTER:
 
   @Listen('keydown')
   onKeydown(ev: KeyboardEvent) {
-    if(ev.key === 'Escape') {
+    if (ev.key === 'Escape') {
       this.close();
     }
   }
@@ -316,9 +316,9 @@ AFTER:
     const { el, menuInnerEl } = this;
     const firstInput = el.querySelector(focusableQueryString) as HTMLElement | null;
 
-    if(firstInput) {
+    if (firstInput) {
       firstInput.focus();
-    } else if(menuInnerEl) {
+    } else if (menuInnerEl) {
       menuInnerEl.focus();
     }
   }
@@ -328,16 +328,16 @@ AFTER:
     const inputs = Array.from(el.querySelectorAll<HTMLElement>(focusableQueryString));
     const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
 
-    if(lastInput) {
+    if (lastInput) {
       lastInput.focus();
-    } else if(menuInnerEl) {
+    } else if (menuInnerEl) {
       menuInnerEl.focus();
     }
   }
 
   private trapKeyboardFocus(ev: Event, doc: Document) {
     const target = ev.target as HTMLElement | null;
-    if(!this.el || !target) return;
+    if (!target) { return; }
 
     /**
      * If the target is inside the menu contents, let the browser
@@ -365,7 +365,7 @@ AFTER:
        * already and pressed Shift + Tab, so we need to wrap to the
        * last descendant.
        */
-      if(this.lastFocus === doc.activeElement) {
+      if (this.lastFocus === doc.activeElement) {
         this.focusLastDescendant();
       }
     }
