@@ -38,6 +38,9 @@ runs:
       shell: bash
       working-directory: ./packages/react-router/test-app
     - name: Run Tests
-      run: npm run test
-      shell: bash
-      working-directory: ./packages/react-router/test-app
+      uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          headless: true
+          start: npm run start
+          project: ./packages/react-router/test-app
