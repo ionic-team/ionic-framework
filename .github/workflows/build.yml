@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/workflows/packages/actions/build-core
+      - uses: ./.github/workflows/actions/build-core
 
   test-core-clean-build:
     needs: [build-core]
@@ -60,14 +60,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/actions/build-vue
+    - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
     needs: [build-vue]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/actions/build-vue-router
+    - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
     needs: [build-vue, build-vue-router]
@@ -81,14 +81,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/actions/build-angular
+    - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
     needs: [build-angular]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/actions/build-angular-server
+    - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
     needs: [build-angular, build-angular-server]
@@ -102,14 +102,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/actions/build-react
+    - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
     needs: [build-react]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/packages/actions/build-react-router
+    - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
     needs: [build-react, build-react-router]
