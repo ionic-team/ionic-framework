@@ -42,7 +42,7 @@ export class Menu implements ComponentInterface, MenuI {
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
 
-  private handleFocus?: any;
+  private handleFocus = (ev: Event) => this.trapKeyboardFocus(ev, document);
 
   @Element() el!: HTMLIonMenuElement;
 
@@ -589,7 +589,6 @@ AFTER:
       }
 
       // setup focus trapping
-      this.handleFocus = (ev: Event) => this.trapKeyboardFocus(ev, document);
       document.addEventListener('focus', this.handleFocus, true);
     } else {
       // remove css classes
@@ -610,7 +609,6 @@ AFTER:
 
       // undo focus trapping so multiple menus don't collide
       document.removeEventListener('focus', this.handleFocus, true);
-      this.handleFocus = undefined;
     }
   }
 
