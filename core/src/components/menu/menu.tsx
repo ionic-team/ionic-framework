@@ -12,7 +12,7 @@ const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
-const focusableQueryString = 'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])';
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 
 /**
  * @part container - The container for the menu content.
@@ -650,7 +650,6 @@ AFTER:
     return (
       <Host
         role="navigation"
-        tabindex="0"
         class={{
           [mode]: true,
           [`menu-type-${type}`]: true,
@@ -663,7 +662,6 @@ AFTER:
         <nav
           class="menu-inner"
           part="container"
-          tabindex="0"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
