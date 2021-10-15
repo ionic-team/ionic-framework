@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, NavigationStart, Router, UrlSerializer, UrlTree } from '@angular/router';
-import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
+import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core/components';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
 

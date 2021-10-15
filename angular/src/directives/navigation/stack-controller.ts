@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AnimationBuilder, RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -305,7 +305,7 @@ export class StackController {
 
 const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   if (typeof (requestAnimationFrame as any) === 'function') {
-    return new Promise<any>(resolve => {
+    return new Promise<void>(resolve => {
       requestAnimationFrame(() => {
         cleanup(activeRoute, views, viewsSnapshot, location);
         resolve();

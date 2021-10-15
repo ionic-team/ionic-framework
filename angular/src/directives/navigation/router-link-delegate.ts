@@ -1,7 +1,7 @@
 import { LocationStrategy } from '@angular/common';
 import { Directive, ElementRef, HostListener, Optional } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AnimationBuilder, RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 import { Subscription } from 'rxjs';
 
 import { NavController } from '../../providers/nav-controller';
