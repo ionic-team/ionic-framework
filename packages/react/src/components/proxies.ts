@@ -7,7 +7,6 @@ import type { JSX } from '@ionic/core/components';
 
 import { IonAccordion as IonAccordionCmp } from '@ionic/core/components/ion-accordion.js';
 import { IonAccordionGroup as IonAccordionGroupCmp } from '@ionic/core/components/ion-accordion-group.js';
-import { IonApp as IonAppCmp } from '@ionic/core/components/ion-app.js';
 import { IonAvatar as IonAvatarCmp } from '@ionic/core/components/ion-avatar.js';
 import { IonBackdrop as IonBackdropCmp } from '@ionic/core/components/ion-backdrop.js';
 import { IonBadge as IonBadgeCmp } from '@ionic/core/components/ion-badge.js';
@@ -76,7 +75,6 @@ import { IonVirtualScroll as IonVirtualScrollCmp } from '@ionic/core/components/
 
 export const IonAccordion = /*@__PURE__*/createReactComponent<JSX.IonAccordion, HTMLIonAccordionElement>('ion-accordion', undefined, undefined, IonAccordionCmp);
 export const IonAccordionGroup = /*@__PURE__*/createReactComponent<JSX.IonAccordionGroup, HTMLIonAccordionGroupElement>('ion-accordion-group', undefined, undefined, IonAccordionGroupCmp);
-export const IonApp = /*@__PURE__*/createReactComponent<JSX.IonApp, HTMLIonAppElement>('ion-app', undefined, undefined, IonAppCmp);
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar, HTMLIonAvatarElement>('ion-avatar', undefined, undefined, IonAvatarCmp);
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop, HTMLIonBackdropElement>('ion-backdrop', undefined, undefined, IonBackdropCmp);
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge, HTMLIonBadgeElement>('ion-badge', undefined, undefined, IonBadgeCmp);
