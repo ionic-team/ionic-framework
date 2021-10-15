@@ -210,7 +210,9 @@ export const config: Config = {
 
         // auxiliar
         'ion-picker-column',
-        'ion-virtual-scroll'
+        'ion-virtual-scroll',
+
+        'ion-icon'
       ],
       /**
        * TODO: Abstract custom Ionic value accessor functionality

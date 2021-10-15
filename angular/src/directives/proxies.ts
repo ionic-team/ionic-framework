@@ -32,7 +32,6 @@ import { IonFabList as IonFabListCmp } from '@ionic/core/components/ion-fab-list
 import { IonFooter as IonFooterCmp } from '@ionic/core/components/ion-footer.js';
 import { IonGrid as IonGridCmp } from '@ionic/core/components/ion-grid.js';
 import { IonHeader as IonHeaderCmp } from '@ionic/core/components/ion-header.js';
-import { IonIcon as IonIconCmp } from '@ionic/core/components/ion-icon.js';
 import { IonImg as IonImgCmp } from '@ionic/core/components/ion-img.js';
 import { IonInfiniteScroll as IonInfiniteScrollCmp } from '@ionic/core/components/ion-infinite-scroll.js';
 import { IonInfiniteScrollContent as IonInfiniteScrollContentCmp } from '@ionic/core/components/ion-infinite-scroll-content.js';
@@ -698,27 +697,6 @@ export declare interface IonHeader extends Components.IonHeader {}
   inputs: ['collapse', 'mode', 'translucent']
 })
 export class IonHeader {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface IonIcon extends Components.IonIcon {}
-@ProxyCmp({
-  tagName: 'ion-icon',
-  customElement: IonIconCmp,
-  inputs: ['ariaHidden', 'ariaLabel', 'color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src']
-})
-@Component({
-  selector: 'ion-icon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['ariaHidden', 'ariaLabel', 'color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src']
-})
-export class IonIcon {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
