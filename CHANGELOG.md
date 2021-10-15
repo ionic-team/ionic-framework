@@ -1,9 +1,28 @@
+## [5.8.4](https://github.com/ionic-team/ionic/compare/v5.8.3...v5.8.4) (2021-10-11)
+
+
+### Bug Fixes
+
+* **angular:** setup config properly ([#24054](https://github.com/ionic-team/ionic/issues/24054)) ([e001f24](https://github.com/ionic-team/ionic/commit/e001f24f2ca99abbc98b923dd1a132cc83b3b23f)), closes [#24051](https://github.com/ionic-team/ionic/issues/24051) [#24052](https://github.com/ionic-team/ionic/issues/24052)
+* **back-button:** pass aria-label to native element ([#24027](https://github.com/ionic-team/ionic/issues/24027)) ([68a7e43](https://github.com/ionic-team/ionic/commit/68a7e43345a0261fdeed6054198c5a22fbbcb584))
+
+
+
 # [6.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v6.0.0-beta.7...v6.0.0-rc.0) (2021-10-07)
 
 
 ### Bug Fixes
 
 * **angular:** setup config properly ([#24028](https://github.com/ionic-team/ionic/issues/24028)) ([907996c](https://github.com/ionic-team/ionic/commit/907996ce16446d0dc12939da325b7b5dae09ebd9))
+
+
+
+## [5.8.3](https://github.com/ionic-team/ionic/compare/v5.8.2...v5.8.3) (2021-10-07)
+
+
+### Bug Fixes
+
+* **react:** overlay hooks dismiss method now works ([#24038](https://github.com/ionic-team/ionic/issues/24038)) ([655631d](https://github.com/ionic-team/ionic/commit/655631ddf059ce58066d5384d0ae186d7abc09a9)), closes [#24030](https://github.com/ionic-team/ionic/issues/24030)
 
 
 

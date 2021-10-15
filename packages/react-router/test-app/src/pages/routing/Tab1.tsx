@@ -9,13 +9,9 @@ import {
   IonItem,
   IonLabel,
   useIonViewWillEnter,
-  useIonViewWillLeave,
-  useIonViewDidEnter,
   IonButtons,
   IonMenuButton,
-  IonInput,
   IonButton,
-  useIonRouter,
   IonRouterContext,
 } from '@ionic/react';
 import './Tab1.css';
