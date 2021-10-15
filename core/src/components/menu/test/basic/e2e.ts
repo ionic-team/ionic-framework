@@ -28,15 +28,11 @@ test('menu: focus trap', async () => {
   await menu.waitForVisible();
   
   let activeElID = await getActiveElementID(page);
-  expect(activeElID).toEqual('start-menu');
-
-  await page.keyboard.press('Tab');
-  activeElID = await getActiveElementID(page);
   expect(activeElID).toEqual('start-menu-button');
 
   await page.keyboard.press('Tab');
   activeElID = await getActiveElementID(page);
-  expect(activeElID).toEqual('start-menu');
+  expect(activeElID).toEqual('start-menu-button');
 });
 
 /**
