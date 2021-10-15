@@ -4,6 +4,7 @@ import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
 
 @ProxyCmp({
+  tagName: 'ion-nav',
   inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
   methods: ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']
 })
