@@ -8,54 +8,53 @@ import { StackEvent } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs',
-  template: `
-    <ng-content select="[slot=top]"></ng-content>
+  template: ` <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner">
       <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
     </div>
     <ng-content></ng-content>`,
-  styles: [`
-    :host {
-      display: flex;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+  styles: [
+    `
+      :host {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
-      flex-direction: column;
+        flex-direction: column;
 
-      width: 100%;
-      height: 100%;
+        width: 100%;
+        height: 100%;
 
-      contain: layout size style;
-      z-index: $z-index-page-container;
-    }
-    .tabs-inner {
-      position: relative;
+        contain: layout size style;
+        z-index: $z-index-page-container;
+      }
+      .tabs-inner {
+        position: relative;
 
-      flex: 1;
+        flex: 1;
 
-      contain: layout size style;
-    }`
-  ]
+        contain: layout size style;
+      }
+    `,
+  ],
 })
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class IonTabs {
-
   @ViewChild('outlet', { read: IonRouterOutlet, static: false }) outlet: IonRouterOutlet;
   @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
 
   @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
   @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
-  constructor(
-    private navCtrl: NavController,
-  ) { }
+  constructor(private navCtrl: NavController) {}
 
   /**
    * @internal
    */
-  onPageSelected(detail: StackEvent) {
+  onPageSelected(detail: StackEvent): void {
     const stackId = detail.enteringView.stackId;
     if (detail.tabSwitch && stackId !== undefined) {
       if (this.tabBar) {
@@ -87,9 +86,9 @@ export class IonTabs {
    *      to the default tabRootUrl
    */
   @HostListener('ionTabButtonClick', ['$event'])
-  select(tabOrEvent: string | CustomEvent) {
+  select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
-    const tab = (isTabString) ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
+    const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
 
@@ -108,12 +107,14 @@ export class IonTabs {
       const activeView = this.outlet.getLastRouteView(activeStackId);
 
       // If on root tab, do not navigate to root tab again
-      if (activeView.url === tabRootUrl) { return; }
+      if (activeView?.url === tabRootUrl) {
+        return;
+      }
 
       const rootView = this.outlet.getRootView(tab);
       const navigationExtras = rootView && tabRootUrl === rootView.url && rootView.savedExtras;
       return this.navCtrl.navigateRoot(tabRootUrl, {
-        ...(navigationExtras),
+        ...navigationExtras,
         animated: true,
         animationDirection: 'back',
       });
@@ -123,11 +124,11 @@ export class IonTabs {
        * If there is a lastRoute, goto that, otherwise goto the fallback url of the
        * selected tab
        */
-      const url = lastRoute && lastRoute.url || tabRootUrl;
-      const navigationExtras = lastRoute && lastRoute.savedExtras;
+      const url = lastRoute?.url || tabRootUrl;
+      const navigationExtras = lastRoute?.savedExtras;
 
       return this.navCtrl.navigateRoot(url, {
-        ...(navigationExtras),
+        ...navigationExtras,
         animated: true,
         animationDirection: 'back',
       });

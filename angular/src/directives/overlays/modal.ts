@@ -1,12 +1,66 @@
 /* eslint-disable */
 /* tslint:disable */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, NgZone, TemplateRef } from "@angular/core";
-import { ProxyCmp, proxyOutputs } from "../angular-component-lib/utils";
-import { Components } from "@ionic/core";
-export declare interface IonModal extends Components.IonModal {
-}
-@ProxyCmp({ inputs: ["animated", "backdropBreakpoint", "backdropDismiss", "breakpoints", "cssClass", "enterAnimation", "event", "handle", "initialBreakpoint", "isOpen", "keyboardClose", "leaveAnimation", "mode", "presentingElement", "showBackdrop", "swipeToClose", "translucent", "trigger"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"] })
-@Component({ selector: "ion-modal", changeDetection: ChangeDetectionStrategy.OnPush, template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`, inputs: ["animated", "backdropBreakpoint", "backdropDismiss", "breakpoints", "cssClass", "enterAnimation", "event", "handle", "initialBreakpoint", "isOpen", "keyboardClose", "leaveAnimation", "mode", "presentingElement", "showBackdrop", "swipeToClose", "translucent", "trigger"] })
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  TemplateRef,
+} from '@angular/core';
+import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
+import { Components } from '@ionic/core';
+export declare interface IonModal extends Components.IonModal {}
+@ProxyCmp({
+  inputs: [
+    'animated',
+    'backdropBreakpoint',
+    'backdropDismiss',
+    'breakpoints',
+    'cssClass',
+    'enterAnimation',
+    'event',
+    'handle',
+    'initialBreakpoint',
+    'isOpen',
+    'keyboardClose',
+    'leaveAnimation',
+    'mode',
+    'presentingElement',
+    'showBackdrop',
+    'swipeToClose',
+    'translucent',
+    'trigger',
+  ],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+})
+@Component({
+  selector: 'ion-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`,
+  inputs: [
+    'animated',
+    'backdropBreakpoint',
+    'backdropDismiss',
+    'breakpoints',
+    'cssClass',
+    'enterAnimation',
+    'event',
+    'handle',
+    'initialBreakpoint',
+    'isOpen',
+    'keyboardClose',
+    'leaveAnimation',
+    'mode',
+    'presentingElement',
+    'showBackdrop',
+    'swipeToClose',
+    'translucent',
+    'trigger',
+  ],
+})
 export class IonModal {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
@@ -34,6 +88,15 @@ export class IonModal {
       c.detectChanges();
     });
 
-    proxyOutputs(this, this.el, ["ionModalDidPresent", "ionModalWillPresent", "ionModalWillDismiss", "ionModalDidDismiss", "didPresent", "willPresent", "willDismiss", "didDismiss"]);
+    proxyOutputs(this, this.el, [
+      'ionModalDidPresent',
+      'ionModalWillPresent',
+      'ionModalWillDismiss',
+      'ionModalDidDismiss',
+      'didPresent',
+      'willPresent',
+      'willDismiss',
+      'didDismiss',
+    ]);
   }
 }

@@ -2,7 +2,7 @@ import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
 
-export const insertView = (views: RouteView[], view: RouteView, direction: RouterDirection) => {
+export const insertView = (views: RouteView[], view: RouteView, direction: RouterDirection): RouteView[] => {
   if (direction === 'root') {
     return setRoot(views, view);
   } else if (direction === 'forward') {
@@ -13,7 +13,7 @@ export const insertView = (views: RouteView[], view: RouteView, direction: Route
 };
 
 const setRoot = (views: RouteView[], view: RouteView) => {
-  views = views.filter(v => v.stackId !== view.stackId);
+  views = views.filter((v) => v.stackId !== view.stackId);
   views.push(view);
   return views;
 };
@@ -21,7 +21,7 @@ const setRoot = (views: RouteView[], view: RouteView) => {
 const setForward = (views: RouteView[], view: RouteView) => {
   const index = views.indexOf(view);
   if (index >= 0) {
-    views = views.filter(v => v.stackId !== view.stackId || v.id <= view.id);
+    views = views.filter((v) => v.stackId !== view.stackId || v.id <= view.id);
   } else {
     views.push(view);
   }
@@ -31,25 +31,25 @@ const setForward = (views: RouteView[], view: RouteView) => {
 const setBack = (views: RouteView[], view: RouteView) => {
   const index = views.indexOf(view);
   if (index >= 0) {
-    return views.filter(v => v.stackId !== view.stackId || v.id <= view.id);
+    return views.filter((v) => v.stackId !== view.stackId || v.id <= view.id);
   } else {
     return setRoot(views, view);
   }
 };
 
-export const getUrl = (router: Router, activatedRoute: ActivatedRoute) => {
+export const getUrl = (router: Router, activatedRoute: ActivatedRoute): string => {
   const urlTree = router.createUrlTree(['.'], { relativeTo: activatedRoute });
   return router.serializeUrl(urlTree);
 };
 
-export const isTabSwitch = (enteringView: RouteView, leavingView: RouteView | undefined) => {
+export const isTabSwitch = (enteringView: RouteView, leavingView: RouteView | undefined): boolean => {
   if (!leavingView) {
     return true;
   }
   return enteringView.stackId !== leavingView.stackId;
 };
 
-export const computeStackId = (prefixUrl: string[] | undefined, url: string) => {
+export const computeStackId = (prefixUrl: string[] | undefined, url: string): string | undefined => {
   if (!prefixUrl) {
     return undefined;
   }
@@ -65,14 +65,14 @@ export const computeStackId = (prefixUrl: string[] | undefined, url: string) => 
   return undefined;
 };
 
-export const toSegments = (path: string) => {
+export const toSegments = (path: string): string[] => {
   return path
     .split('/')
-    .map(s => s.trim())
-    .filter(s => s !== '');
+    .map((s) => s.trim())
+    .filter((s) => s !== '');
 };
 
-export const destroyView = (view: RouteView | undefined) => {
+export const destroyView = (view: RouteView | undefined): void => {
   if (view) {
     // TODO lifecycle event
     view.ref.destroy();

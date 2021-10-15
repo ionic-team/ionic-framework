@@ -101,7 +101,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install --legacy-peer-deps
+          command: npm ci
           working_directory: /tmp/workspace/angular
       - run:
           command: sudo npm link
@@ -125,7 +125,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install --legacy-peer-deps
+          command: npm ci
           working_directory: /tmp/workspace/packages/angular-server
       - run:
           command: npm run build.prod
@@ -433,7 +433,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install --legacy-peer-deps
+          command: npm ci
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
           command: npm run test
