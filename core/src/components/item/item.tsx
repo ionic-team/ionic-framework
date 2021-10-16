@@ -311,7 +311,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </TagType>
-          <div class="item-highlight"></div>
+          <div class="item-highlight-wrapper">
+            <div class="item-highlight"></div>
+          </div>
       </Host>
     );
   }

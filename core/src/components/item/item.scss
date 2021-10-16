@@ -350,6 +350,18 @@ button, a {
 // Item Input Highlight
 // --------------------------------------------------
 
+.item-highlight-wrapper {
+  @include position(0, 0, 0, 0);
+  @include border-radius(var(--border-radius));
+
+  position: absolute;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  z-index: 1;
+}
+
 .item-highlight,
 .item-inner-highlight {
   @include position(null, 0, 0, 0);
@@ -357,8 +369,6 @@ button, a {
   position: absolute;
 
   background: var(--highlight-background);
-
-  z-index: 1;
 }
 
 .item-highlight {
@@ -367,6 +377,8 @@ button, a {
 
 .item-inner-highlight {
   height: var(--inset-highlight-height);
+
+  z-index: 1;
 }
 
 

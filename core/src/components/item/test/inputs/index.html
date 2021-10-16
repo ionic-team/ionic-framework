@@ -64,6 +64,11 @@
             <ion-input name="input2" id="placeholder" placeholder="Placeholder"></ion-input>
           </ion-item>
 
+          <ion-item class="rounded">
+            <ion-label>Input (rounded)</ion-label>
+            <ion-input name="input" id="text"></ion-input>
+          </ion-item>
+
           <ion-item>
             <ion-label>Checkbox</ion-label>
             <ion-checkbox name="checkbox" id="checkbox" slot="start"></ion-checkbox>
@@ -191,6 +196,15 @@
       </ion-list>
     </ion-content>
   </ion-app>
+
+  <style>
+  .rounded{
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #CED8DC;
+    --border-radius: 20px;
+  }
+  </style>
 
   <script>
     var ids = ['item', 'datetime', 'select', 'toggle', 'text', 'placeholder', 'checkbox', 'toggle', 'range'];
