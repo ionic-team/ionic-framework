@@ -163,6 +163,13 @@ export class Menu implements ComponentInterface, MenuI {
 
     const el = this.el;
     const parent = el.parentNode as any;
+
+    // prevent nested aria landmarks
+    const headers = el.querySelectorAll('ion-header');
+    if (headers.length > 0) {
+      headers.forEach(head => head.setAttribute('role', 'none'));
+    }
+
     if (this.contentId === undefined) {
       console.warn(`[DEPRECATED][ion-menu] Using the [main] attribute is deprecated, please use the "contentId" property instead:
 BEFORE:
@@ -648,6 +655,7 @@ AFTER:
     return (
       <Host
         role="navigation"
+        aria-label="menu"
         class={{
           [mode]: true,
           [`menu-type-${type}`]: true,
