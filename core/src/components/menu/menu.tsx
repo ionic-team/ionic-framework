@@ -665,13 +665,13 @@ AFTER:
           'menu-pane-visible': isPaneVisible
         }}
       >
-        <nav
+        <div
           class="menu-inner"
           part="container"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
-        </nav>
+        </div>
 
         <ion-backdrop
           ref={el => this.backdropEl = el}
