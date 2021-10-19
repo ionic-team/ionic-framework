@@ -60,16 +60,48 @@
     <ion-button (click)="reset()">Reset</ion-button>
   </ion-buttons>
 </ion-datetime>
+
+<!-- Datetime in popover with input -->
+<ion-input type="date" id="date-input" [value]="dateValue"></ion-input>
+<ion-popover trigger="date-input" show-backdrop="false">
+  <ng-template>
+    <ion-datetime
+      #popoverDatetime
+      presentation="date"
+      (ionChange)="dateValue = convertDateValue(popoverDatetime.value)"
+    ></ion-datetime>
+  </ng-template>
+</ion-popover>
+
+<!-- Datetime in popover with input; button trigger -->
+<ion-item>
+  <ion-input type="date" [value]="dateValue2"></ion-input>
+  <ion-button fill="clear" id="open-date-input-2">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime2
+        presentation="date"
+        (ionChange)="dateValue2 = convertDateValue(popoverDatetime2.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
+</ion-item>
 ```
 
 ```typescript
-
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
 
 @Component({…})
 export class MyComponent {
   @ViewChild(IonDatetime, { static: true }) datetime: IonDatetime;
+
+  dateValue = '';
+  dateValue2 = '';
+
   constructor() {}
   
   confirm() {
@@ -79,5 +111,18 @@ export class MyComponent {
   reset() {
     this.datetime.nativeEl.reset();
   }
+
+  convertDateValue(value: string) {
+    return value.split('T')[0];
+  }
+}
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```

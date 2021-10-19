@@ -276,10 +276,7 @@ interface DatetimeCustomEvent extends CustomEvent {
     </ion-content>
   </ng-template>
 </ion-modal>
-```
 
-**component.html**
-```html
 <!-- Custom buttons -->
 <ion-datetime>
   <ion-buttons slot="buttons">
@@ -287,17 +284,48 @@ interface DatetimeCustomEvent extends CustomEvent {
     <ion-button (click)="reset()">Reset</ion-button>
   </ion-buttons>
 </ion-datetime>
+
+<!-- Datetime in popover with input -->
+<ion-input type="date" id="date-input" [value]="dateValue"></ion-input>
+<ion-popover trigger="date-input" show-backdrop="false">
+  <ng-template>
+    <ion-datetime
+      #popoverDatetime
+      presentation="date"
+      (ionChange)="dateValue = convertDateValue(popoverDatetime.value)"
+    ></ion-datetime>
+  </ng-template>
+</ion-popover>
+
+<!-- Datetime in popover with input; button trigger -->
+<ion-item>
+  <ion-input type="date" [value]="dateValue2"></ion-input>
+  <ion-button fill="clear" id="open-date-input-2">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime2
+        presentation="date"
+        (ionChange)="dateValue2 = convertDateValue(popoverDatetime2.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
+</ion-item>
 ```
 
-**component.ts**
 ```typescript
-
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
 
 @Component({…})
 export class MyComponent {
   @ViewChild(IonDatetime, { static: true }) datetime: IonDatetime;
+
+  dateValue = '';
+  dateValue2 = '';
+
   constructor() {}
   
   confirm() {
@@ -307,6 +335,19 @@ export class MyComponent {
   reset() {
     this.datetime.nativeEl.reset();
   }
+
+  convertDateValue(value: string) {
+    return value.split('T')[0];
+  }
+}
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```
 
@@ -374,15 +415,54 @@ export class MyComponent {
   </ion-content>
 </ion-modal>
 
+<!-- Datetime in popover with input -->
+<ion-input type="date" id="date-input"></ion-input>
+<ion-popover trigger="date-input" show-backdrop="false">
+  <ion-datetime presentation="date" id="popover-datetime"></ion-datetime>
+</ion-popover>
+
+<!-- Datetime in popover with input; button trigger -->
+<ion-item>
+  <ion-input type="date" id="date-input-2"></ion-input>
+  <ion-button slot="end" fill="clear" id="open-date-input-2">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ion-datetime presentation="date" id="popover-datetime-2"></ion-datetime>
+  </ion-popover>
+</ion-item>
+```
+
 ```javascript
 const datetime = document.querySelector('#custom-datetime');
 
 const confirm = () => {
   datetime.confirm();
-}
+};
 
 const reset = () => {
   datetime.reset();
+};
+
+const updateValue = (input, newValue) => {
+  input.value = newValue.split('T')[0];
+};
+
+const popoverDatetime = document.querySelector('#popover-datetime');
+const dateInput = document.querySelector('#date-input');
+popoverDatetime.addEventListener('ionChange', ev => updateValue(dateInput, ev.detail.value));
+
+const popoverDatetime2 = document.querySelector('#popover-datetime-2');
+const dateInput2 = document.querySelector('#date-input-2');
+popoverDatetime2.addEventListener('ionChange', ev => updateValue(dateInput2, ev.detail.value));
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```
 
@@ -396,24 +476,35 @@ import {
   IonButtons,
   IonContent,
   IonDatetime,
+  IonInput,
+  IonItem,
   IonModal,
-  IonPage
+  IonPage,
+  IonPopover
 } from '@ionic/react';
+import { calendar } from 'ionicons/icons';
 
 export const DateTimeExamples: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<string>('2012-12-15T13:47:20.789');
+  const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
+  const [popoverDate, setPopoverDate] = useState('');
+  const [popoverDate2, setPopoverDate2] = useState('');
+
   const customDatetime = useRef();
   const confirm = () => {
     if (customDatetime === undefined) return;
     
     customDatetime.confirm();
-  }
+  };
   
   const reset = () => {
     if (customDatetime === undefined) return;
     
     customDatetime.reset();
-  }
+  };
+
+  const convertDateValue = (value: string) => {
+    return value.split('T')[0];
+  };
 
   return (
     <IonPage>
@@ -476,8 +567,40 @@ export const DateTimeExamples: React.FC = () => {
           <IonDatetime></IonDatetime>
         </IonContent>
       </IonModal>
+
+      {/* Datetime in popover with input */}
+      <IonInput type="date" id="date-input" value={popoverDate} />
+      <IonPopover trigger="date-input" showBackdrop={false}>
+        <IonDatetime
+          presentation="date"
+          onIonChange={ev => setPopoverDate(convertDateValue(ev.detail.value!))}
+        />
+      </IonPopover>
+
+      {/* Datetime in popover with input; button trigger */}
+      <IonItem>
+        <IonInput type="date" id="date-input-2" value={popoverDate2} />
+        <IonButton fill="clear" id="open-date-input-2">
+          <IonIcon icon={calendar} />
+        </IonButton>
+        <IonPopover trigger="open-date-input-2" showBackdrop={false}>
+          <IonDatetime
+            presentation="date"
+            onIonChange={ev => setPopoverDate2(convertDateValue(ev.detail.value!))}
+          />
+        </IonPopover>
+      </IonItem>
     </IonPage>
   )
+}
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```
 
@@ -493,6 +616,8 @@ import { Component, h } from '@stencil/core';
 })
 export class DatetimeExample {
   private customDatetime?: HTMLElement;
+  private dateInput?: HTMLElement;
+  private dateInput2?: HTMLElement;
   
   private confirm() {
     const { customDatetime } = this;
@@ -506,6 +631,10 @@ export class DatetimeExample {
     if (customDatetime === undefined) return;
     
     customDatetime.reset();
+  }
+
+  private updateValue(input: HTMLElement, newValue: string) {
+    input.value = newValue.split('T')[0];
   }
   
   render() {
@@ -569,8 +698,40 @@ export class DatetimeExample {
           <ion-datetime></ion-datetime>
         </ion-content>
       </ion-modal>
+
+      {/* Datetime in popover with input */}
+      <ion-input type="date" id="date-input" ref={el => this.dateInput = el}></ion-input>
+      <ion-popover trigger="date-input" show-backdrop="false">
+        <ion-datetime
+          presentation="date"
+          onIonChange={ev => updateValue(this.dateInput, ev.detail.value)}
+        />
+      </ion-popover>
+
+      {/* Datetime in popover with input; button trigger */}
+      <ion-item>
+        <ion-input type="date" ref={el => this.dateInput2 = el}></ion-input>
+        <ion-button slot="end" fill="clear" id="open-date-input-2">
+          <ion-icon icon="calendar"></ion-icon>
+        </ion-button>
+        <ion-popover trigger="open-date-input-2" show-backdrop="false">
+          <ion-datetime
+            presentation="date"
+            onIonChange={ev => updateValue(this.dateInput2, ev.detail.value)}
+          />
+        </ion-popover>
+      </ion-item>
     ]
   }
+}
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```
 
@@ -638,6 +799,29 @@ export class DatetimeExample {
       <ion-datetime></ion-datetime>
     </ion-content>
   </ion-modal>
+
+  <!-- Datetime in popover with input -->
+  <ion-input type="date" id="date-input" :value="date1" />
+  <ion-popver trigger="date-input-1" show-backdrop="false">
+    <ion-datetime
+      presentation="date"
+      @ionChange="(ev: any) => date1 = convertDateValue(ev.detail.value)"
+    />
+  </ion-popover>
+
+  <!-- Datetime in popover with input; button trigger -->
+  <ion-item>
+    <ion-input type="date" :value="date2" />
+    <ion-button fill="clear" id="open-date-input-2">
+      <ion-icon icon="calendar" />
+    </ion-button>
+    <ion-popover trigger="open-date-input-2" show-backdrop="false">
+      <ion-datetime
+        presentation="date"
+        @ionChange="(ev: any) => date2 = convertDateValue(ev.detail.value)"
+      />
+    </ion-popover>
+  </ion-item>
 </template>
 
 <script>
@@ -647,7 +831,10 @@ export class DatetimeExample {
     IonButtons,
     IonContent,
     IonDatetime,
-    IonModal
+    IonInput,
+    IonItem,
+    IonModal,
+    IonPopover
   } from '@ionic/vue';
 
   export default defineComponent({
@@ -656,20 +843,32 @@ export class DatetimeExample {
       IonButtons,
       IonContent,
       IonDatetime,
-      IonModal
+      IonInput,
+      IonItem,
+      IonModal,
+      IonPopover
     },
     setup() {
       const customDatetime = ref();
+      const date1 = '';
+      const date2 = '';
+
       const confirm = () => {
         if (customDatetime.value === undefined) return;
         
         customDatetime.value.$el.confirm();
-      }
+      };
+
       const reset = () => {
         if (customDatetime.value === undefined) return;
         
         customDatetime.value.$el.reset();
-      }
+      };
+
+      const convertDateValue = (value: string) => {
+        return value.split('T')[0];
+      };
+
       return {
         customDatetime,
         confirm,
@@ -678,6 +877,15 @@ export class DatetimeExample {
     }
   })
 </script>
+
+<style>
+  /* hide native calendar button */
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+</style>
 ```
 
 

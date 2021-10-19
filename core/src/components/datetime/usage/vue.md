@@ -59,6 +59,29 @@
       <ion-datetime></ion-datetime>
     </ion-content>
   </ion-modal>
+
+  <!-- Datetime in popover with input -->
+  <ion-input type="date" id="date-input" :value="date1" />
+  <ion-popver trigger="date-input-1" show-backdrop="false">
+    <ion-datetime
+      presentation="date"
+      @ionChange="(ev: any) => date1 = convertDateValue(ev.detail.value)"
+    />
+  </ion-popover>
+
+  <!-- Datetime in popover with input; button trigger -->
+  <ion-item>
+    <ion-input type="date" :value="date2" />
+    <ion-button fill="clear" id="open-date-input-2">
+      <ion-icon icon="calendar" />
+    </ion-button>
+    <ion-popover trigger="open-date-input-2" show-backdrop="false">
+      <ion-datetime
+        presentation="date"
+        @ionChange="(ev: any) => date2 = convertDateValue(ev.detail.value)"
+      />
+    </ion-popover>
+  </ion-item>
 </template>
 
 <script>
@@ -68,7 +91,10 @@
     IonButtons,
     IonContent,
     IonDatetime,
-    IonModal
+    IonInput,
+    IonItem,
+    IonModal,
+    IonPopover
   } from '@ionic/vue';
 
   export default defineComponent({
@@ -77,20 +103,32 @@
       IonButtons,
       IonContent,
       IonDatetime,
-      IonModal
+      IonInput,
+      IonItem,
+      IonModal,
+      IonPopover
     },
     setup() {
       const customDatetime = ref();
+      const date1 = '';
+      const date2 = '';
+
       const confirm = () => {
         if (customDatetime.value === undefined) return;
         
         customDatetime.value.$el.confirm();
-      }
+      };
+
       const reset = () => {
         if (customDatetime.value === undefined) return;
         
         customDatetime.value.$el.reset();
-      }
+      };
+
+      const convertDateValue = (value: string) => {
+        return value.split('T')[0];
+      };
+
       return {
         customDatetime,
         confirm,
@@ -99,4 +137,13 @@
     }
   })
 </script>
+
+<style>
+  /* hide native calendar button */
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+</style>
 ```

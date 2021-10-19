@@ -7,6 +7,8 @@ import { Component, h } from '@stencil/core';
 })
 export class DatetimeExample {
   private customDatetime?: HTMLElement;
+  private dateInput?: HTMLElement;
+  private dateInput2?: HTMLElement;
   
   private confirm() {
     const { customDatetime } = this;
@@ -20,6 +22,10 @@ export class DatetimeExample {
     if (customDatetime === undefined) return;
     
     customDatetime.reset();
+  }
+
+  private updateValue(input: HTMLElement, newValue: string) {
+    input.value = newValue.split('T')[0];
   }
   
   render() {
@@ -83,7 +89,39 @@ export class DatetimeExample {
           <ion-datetime></ion-datetime>
         </ion-content>
       </ion-modal>
+
+      {/* Datetime in popover with input */}
+      <ion-input type="date" id="date-input" ref={el => this.dateInput = el}></ion-input>
+      <ion-popover trigger="date-input" show-backdrop="false">
+        <ion-datetime
+          presentation="date"
+          onIonChange={ev => updateValue(this.dateInput, ev.detail.value)}
+        />
+      </ion-popover>
+
+      {/* Datetime in popover with input; button trigger */}
+      <ion-item>
+        <ion-input type="date" ref={el => this.dateInput2 = el}></ion-input>
+        <ion-button slot="end" fill="clear" id="open-date-input-2">
+          <ion-icon icon="calendar"></ion-icon>
+        </ion-button>
+        <ion-popover trigger="open-date-input-2" show-backdrop="false">
+          <ion-datetime
+            presentation="date"
+            onIonChange={ev => updateValue(this.dateInput2, ev.detail.value)}
+          />
+        </ion-popover>
+      </ion-item>
     ]
   }
+}
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```

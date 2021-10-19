@@ -5,24 +5,35 @@ import {
   IonButtons,
   IonContent,
   IonDatetime,
+  IonInput,
+  IonItem,
   IonModal,
-  IonPage
+  IonPage,
+  IonPopover
 } from '@ionic/react';
+import { calendar } from 'ionicons/icons';
 
 export const DateTimeExamples: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<string>('2012-12-15T13:47:20.789');
+  const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
+  const [popoverDate, setPopoverDate] = useState('');
+  const [popoverDate2, setPopoverDate2] = useState('');
+
   const customDatetime = useRef();
   const confirm = () => {
     if (customDatetime === undefined) return;
     
     customDatetime.confirm();
-  }
+  };
   
   const reset = () => {
     if (customDatetime === undefined) return;
     
     customDatetime.reset();
-  }
+  };
+
+  const convertDateValue = (value: string) => {
+    return value.split('T')[0];
+  };
 
   return (
     <IonPage>
@@ -85,7 +96,39 @@ export const DateTimeExamples: React.FC = () => {
           <IonDatetime></IonDatetime>
         </IonContent>
       </IonModal>
+
+      {/* Datetime in popover with input */}
+      <IonInput type="date" id="date-input" value={popoverDate} />
+      <IonPopover trigger="date-input" showBackdrop={false}>
+        <IonDatetime
+          presentation="date"
+          onIonChange={ev => setPopoverDate(convertDateValue(ev.detail.value!))}
+        />
+      </IonPopover>
+
+      {/* Datetime in popover with input; button trigger */}
+      <IonItem>
+        <IonInput type="date" id="date-input-2" value={popoverDate2} />
+        <IonButton fill="clear" id="open-date-input-2">
+          <IonIcon icon={calendar} />
+        </IonButton>
+        <IonPopover trigger="open-date-input-2" showBackdrop={false}>
+          <IonDatetime
+            presentation="date"
+            onIonChange={ev => setPopoverDate2(convertDateValue(ev.detail.value!))}
+          />
+        </IonPopover>
+      </IonItem>
     </IonPage>
   )
+}
+```
+
+```css
+/* hide native calendar button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 ```
