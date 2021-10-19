@@ -52,10 +52,7 @@
     </ion-content>
   </ng-template>
 </ion-modal>
-```
 
-**component.html**
-```html
 <!-- Custom buttons -->
 <ion-datetime>
   <ion-buttons slot="buttons">
@@ -65,7 +62,6 @@
 </ion-datetime>
 ```
 
-**component.ts**
 ```typescript
 
 import { Component, ViewChild } from '@angular/core';
