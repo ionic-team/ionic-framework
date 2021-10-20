@@ -668,6 +668,7 @@ AFTER:
         <div
           class="menu-inner"
           part="container"
+          tabindex="0"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
