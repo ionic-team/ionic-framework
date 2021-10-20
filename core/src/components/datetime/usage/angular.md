@@ -62,7 +62,7 @@
 </ion-datetime>
 
 <!-- Datetime in popover with input -->
-<ion-input type="date" id="date-input" [value]="dateValue"></ion-input>
+<ion-input id="date-input" [value]="dateValue"></ion-input>
 <ion-popover trigger="date-input" show-backdrop="false">
   <ng-template>
     <ion-datetime
@@ -75,7 +75,7 @@
 
 <!-- Datetime in popover with input; button trigger -->
 <ion-item>
-  <ion-input type="date" [value]="dateValue2"></ion-input>
+  <ion-input [value]="dateValue2"></ion-input>
   <ion-button fill="clear" id="open-date-input-2">
     <ion-icon icon="calendar"></ion-icon>
   </ion-button>
@@ -115,14 +115,5 @@ export class MyComponent {
   convertDateValue(value: string) {
     return value.split('T')[0];
   }
-}
-```
-
-```css
-/* hide native calendar button */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
-  -webkit-appearance: none;
 }
 ```

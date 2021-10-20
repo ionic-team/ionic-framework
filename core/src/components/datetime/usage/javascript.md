@@ -60,14 +60,14 @@
 </ion-modal>
 
 <!-- Datetime in popover with input -->
-<ion-input type="date" id="date-input"></ion-input>
+<ion-input id="date-input"></ion-input>
 <ion-popover trigger="date-input" show-backdrop="false">
   <ion-datetime presentation="date" id="popover-datetime"></ion-datetime>
 </ion-popover>
 
 <!-- Datetime in popover with input; button trigger -->
 <ion-item>
-  <ion-input type="date" id="date-input-2"></ion-input>
+  <ion-input id="date-input-2"></ion-input>
   <ion-button slot="end" fill="clear" id="open-date-input-2">
     <ion-icon icon="calendar"></ion-icon>
   </ion-button>
@@ -99,13 +99,4 @@ popoverDatetime.addEventListener('ionChange', ev => updateValue(dateInput, ev.de
 const popoverDatetime2 = document.querySelector('#popover-datetime-2');
 const dateInput2 = document.querySelector('#date-input-2');
 popoverDatetime2.addEventListener('ionChange', ev => updateValue(dateInput2, ev.detail.value));
-```
-
-```css
-/* hide native calendar button */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
-  -webkit-appearance: none;
-}
 ```

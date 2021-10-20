@@ -98,7 +98,7 @@ export const DateTimeExamples: React.FC = () => {
       </IonModal>
 
       {/* Datetime in popover with input */}
-      <IonInput type="date" id="date-input" value={popoverDate} />
+      <IonInput id="date-input" value={popoverDate} />
       <IonPopover trigger="date-input" showBackdrop={false}>
         <IonDatetime
           presentation="date"
@@ -108,7 +108,7 @@ export const DateTimeExamples: React.FC = () => {
 
       {/* Datetime in popover with input; button trigger */}
       <IonItem>
-        <IonInput type="date" id="date-input-2" value={popoverDate2} />
+        <IonInput id="date-input-2" value={popoverDate2} />
         <IonButton fill="clear" id="open-date-input-2">
           <IonIcon icon={calendar} />
         </IonButton>
@@ -121,14 +121,5 @@ export const DateTimeExamples: React.FC = () => {
       </IonItem>
     </IonPage>
   )
-}
-```
-
-```css
-/* hide native calendar button */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
-  -webkit-appearance: none;
 }
 ```
