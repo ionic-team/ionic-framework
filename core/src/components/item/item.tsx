@@ -153,6 +153,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  componentDidRender() {
+    // up here instead of in render() because we need to wait for
+    // children to fully render too, so their classes are available
+    if (this.isFocusable()) {
+      this.el.classList.add('ion-focusable');
+    }
+  }
+
   componentDidUpdate() {
     // Do not use @Listen here to avoid making all items
     // appear as clickable to screen readers
@@ -215,6 +223,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private canActivate(): boolean {
     return (this.isClickable() || this.hasCover());
+  }
+
+  private isFocusable(): boolean {
+    const focusableChildren = this.el.querySelectorAll('.ion-focusable');
+    return (this.canActivate() || focusableChildren.length > 0);
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
@@ -289,7 +302,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'in-list': hostContext('ion-list', this.el),
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
-            'ion-focusable': true,
           })
         }}
       >
