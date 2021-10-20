@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
+import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
@@ -41,6 +41,8 @@ export class Menu implements ComponentInterface, MenuI {
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
+
+  private inheritedAttributes: { [k: string]: any } = {};
 
   private handleFocus = (ev: Event) => this.trapKeyboardFocus(ev, document);
 
@@ -214,6 +216,10 @@ AFTER:
       onEnd: ev => this.onEnd(ev),
     });
     this.updateState();
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   async componentDidLoad() {
@@ -649,13 +655,13 @@ AFTER:
   }
 
   render() {
-    const { isEndSide, type, disabled, isPaneVisible } = this;
+    const { isEndSide, type, disabled, isPaneVisible, inheritedAttributes } = this;
     const mode = getIonMode(this);
 
     return (
       <Host
         role="navigation"
-        aria-label="menu"
+        aria-label={inheritedAttributes['aria-label'] || 'menu'}
         class={{
           [mode]: true,
           [`menu-type-${type}`]: true,
