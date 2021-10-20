@@ -65,7 +65,7 @@
   <ion-popver trigger="date-input-1" show-backdrop="false">
     <ion-datetime
       presentation="date"
-      @ionChange="(ev: any) => date1 = convertDateValue(ev.detail.value)"
+      @ionChange="(ev: any) => date1 = formatDate(ev.detail.value)"
     />
   </ion-popover>
 
@@ -78,7 +78,7 @@
     <ion-popover trigger="open-date-input-2" show-backdrop="false">
       <ion-datetime
         presentation="date"
-        @ionChange="(ev: any) => date2 = convertDateValue(ev.detail.value)"
+        @ionChange="(ev: any) => date2 = formatDate(ev.detail.value)"
       />
     </ion-popover>
   </ion-item>
@@ -96,6 +96,7 @@
     IonModal,
     IonPopover
   } from '@ionic/vue';
+  import { format } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -125,8 +126,8 @@
         customDatetime.value.$el.reset();
       };
 
-      const convertDateValue = (value: string) => {
-        return value.split('T')[0];
+      const formatDate = (value: string) => {
+        return format(new Date(value), 'MMM dd yyyy');
       };
 
       return {

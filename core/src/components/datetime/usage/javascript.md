@@ -78,6 +78,8 @@
 ```
 
 ```javascript
+import { format } from 'date-fns';
+
 const datetime = document.querySelector('#custom-datetime');
 
 const confirm = () => {
@@ -89,7 +91,7 @@ const reset = () => {
 };
 
 const updateValue = (input, newValue) => {
-  input.value = newValue.split('T')[0];
+  input.value = format(new Date(newValue), 'MMM dd yyyy');
 };
 
 const popoverDatetime = document.querySelector('#popover-datetime');

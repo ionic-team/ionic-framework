@@ -68,7 +68,7 @@
     <ion-datetime
       #popoverDatetime
       presentation="date"
-      (ionChange)="dateValue = convertDateValue(popoverDatetime.value)"
+      (ionChange)="dateValue = formatDate(popoverDatetime.value)"
     ></ion-datetime>
   </ng-template>
 </ion-popover>
@@ -84,7 +84,7 @@
       <ion-datetime
         #popoverDatetime2
         presentation="date"
-        (ionChange)="dateValue2 = convertDateValue(popoverDatetime2.value)"
+        (ionChange)="dateValue2 = formatDate(popoverDatetime2.value)"
       ></ion-datetime>
     </ng-template>
   </ion-popover>
@@ -94,6 +94,7 @@
 ```typescript
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
+import { format } from 'date-fns';
 
 @Component({…})
 export class MyComponent {
@@ -112,8 +113,8 @@ export class MyComponent {
     this.datetime.nativeEl.reset();
   }
 
-  convertDateValue(value: string) {
-    return value.split('T')[0];
+  formatDate(value: string) {
+    return format(new Date(value), 'MMM dd yyyy');
   }
 }
 ```

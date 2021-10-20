@@ -1,5 +1,6 @@
 ```javascript
 import { Component, h } from '@stencil/core';
+import { format } from 'date-fns';
 
 @Component({
   tag: 'datetime-example',
@@ -25,7 +26,7 @@ export class DatetimeExample {
   }
 
   private updateValue(input: HTMLElement, newValue: string) {
-    input.value = newValue.split('T')[0];
+    input.value = format(new Date(newValue), 'MMM dd yyyy');
   }
   
   render() {

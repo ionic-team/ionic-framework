@@ -12,6 +12,7 @@ import {
   IonPopover
 } from '@ionic/react';
 import { calendar } from 'ionicons/icons';
+import { format } from 'date-fns';
 
 export const DateTimeExamples: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
@@ -31,8 +32,8 @@ export const DateTimeExamples: React.FC = () => {
     customDatetime.reset();
   };
 
-  const convertDateValue = (value: string) => {
-    return value.split('T')[0];
+  const formatDate = (value: string) => {
+    return format(new Date(value), 'MMM dd yyyy');
   };
 
   return (
@@ -102,7 +103,7 @@ export const DateTimeExamples: React.FC = () => {
       <IonPopover trigger="date-input" showBackdrop={false}>
         <IonDatetime
           presentation="date"
-          onIonChange={ev => setPopoverDate(convertDateValue(ev.detail.value!))}
+          onIonChange={ev => setPopoverDate(formatDate(ev.detail.value!))}
         />
       </IonPopover>
 
@@ -115,7 +116,7 @@ export const DateTimeExamples: React.FC = () => {
         <IonPopover trigger="open-date-input-2" showBackdrop={false}>
           <IonDatetime
             presentation="date"
-            onIonChange={ev => setPopoverDate2(convertDateValue(ev.detail.value!))}
+            onIonChange={ev => setPopoverDate2(formatDate(ev.detail.value!))}
           />
         </IonPopover>
       </IonItem>

@@ -292,7 +292,7 @@ interface DatetimeCustomEvent extends CustomEvent {
     <ion-datetime
       #popoverDatetime
       presentation="date"
-      (ionChange)="dateValue = convertDateValue(popoverDatetime.value)"
+      (ionChange)="dateValue = formatDate(popoverDatetime.value)"
     ></ion-datetime>
   </ng-template>
 </ion-popover>
@@ -308,7 +308,7 @@ interface DatetimeCustomEvent extends CustomEvent {
       <ion-datetime
         #popoverDatetime2
         presentation="date"
-        (ionChange)="dateValue2 = convertDateValue(popoverDatetime2.value)"
+        (ionChange)="dateValue2 = formatDate(popoverDatetime2.value)"
       ></ion-datetime>
     </ng-template>
   </ion-popover>
@@ -318,6 +318,7 @@ interface DatetimeCustomEvent extends CustomEvent {
 ```typescript
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
+import { format } from 'date-fns';
 
 @Component({…})
 export class MyComponent {
@@ -336,8 +337,8 @@ export class MyComponent {
     this.datetime.nativeEl.reset();
   }
 
-  convertDateValue(value: string) {
-    return value.split('T')[0];
+  formatDate(value: string) {
+    return format(new Date(value), 'MMM dd yyyy');
   }
 }
 ```
@@ -425,6 +426,8 @@ export class MyComponent {
 ```
 
 ```javascript
+import { format } from 'date-fns';
+
 const datetime = document.querySelector('#custom-datetime');
 
 const confirm = () => {
@@ -436,7 +439,7 @@ const reset = () => {
 };
 
 const updateValue = (input, newValue) => {
-  input.value = newValue.split('T')[0];
+  input.value = format(new Date(newValue), 'MMM dd yyyy');
 };
 
 const popoverDatetime = document.querySelector('#popover-datetime');
@@ -465,6 +468,7 @@ import {
   IonPopover
 } from '@ionic/react';
 import { calendar } from 'ionicons/icons';
+import { format } from 'date-fns';
 
 export const DateTimeExamples: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
@@ -484,8 +488,8 @@ export const DateTimeExamples: React.FC = () => {
     customDatetime.reset();
   };
 
-  const convertDateValue = (value: string) => {
-    return value.split('T')[0];
+  const formatDate = (value: string) => {
+    return format(new Date(value), 'MMM dd yyyy');
   };
 
   return (
@@ -555,7 +559,7 @@ export const DateTimeExamples: React.FC = () => {
       <IonPopover trigger="date-input" showBackdrop={false}>
         <IonDatetime
           presentation="date"
-          onIonChange={ev => setPopoverDate(convertDateValue(ev.detail.value!))}
+          onIonChange={ev => setPopoverDate(formatDate(ev.detail.value!))}
         />
       </IonPopover>
 
@@ -568,7 +572,7 @@ export const DateTimeExamples: React.FC = () => {
         <IonPopover trigger="open-date-input-2" showBackdrop={false}>
           <IonDatetime
             presentation="date"
-            onIonChange={ev => setPopoverDate2(convertDateValue(ev.detail.value!))}
+            onIonChange={ev => setPopoverDate2(formatDate(ev.detail.value!))}
           />
         </IonPopover>
       </IonItem>
@@ -582,6 +586,7 @@ export const DateTimeExamples: React.FC = () => {
 
 ```javascript
 import { Component, h } from '@stencil/core';
+import { format } from 'date-fns';
 
 @Component({
   tag: 'datetime-example',
@@ -607,7 +612,7 @@ export class DatetimeExample {
   }
 
   private updateValue(input: HTMLElement, newValue: string) {
-    input.value = newValue.split('T')[0];
+    input.value = format(new Date(newValue), 'MMM dd yyyy');
   }
   
   render() {
@@ -769,7 +774,7 @@ export class DatetimeExample {
   <ion-popver trigger="date-input-1" show-backdrop="false">
     <ion-datetime
       presentation="date"
-      @ionChange="(ev: any) => date1 = convertDateValue(ev.detail.value)"
+      @ionChange="(ev: any) => date1 = formatDate(ev.detail.value)"
     />
   </ion-popover>
 
@@ -782,7 +787,7 @@ export class DatetimeExample {
     <ion-popover trigger="open-date-input-2" show-backdrop="false">
       <ion-datetime
         presentation="date"
-        @ionChange="(ev: any) => date2 = convertDateValue(ev.detail.value)"
+        @ionChange="(ev: any) => date2 = formatDate(ev.detail.value)"
       />
     </ion-popover>
   </ion-item>
@@ -800,6 +805,7 @@ export class DatetimeExample {
     IonModal,
     IonPopover
   } from '@ionic/vue';
+  import { format } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -829,8 +835,8 @@ export class DatetimeExample {
         customDatetime.value.$el.reset();
       };
 
-      const convertDateValue = (value: string) => {
-        return value.split('T')[0];
+      const formatDate = (value: string) => {
+        return format(new Date(value), 'MMM dd yyyy');
       };
 
       return {
