@@ -98,16 +98,19 @@ export const DateTimeExamples: React.FC = () => {
         </IonContent>
       </IonModal>
 
-      {/* Datetime in popover with input */}
-      <IonInput id="date-input" value={popoverDate} />
-      <IonPopover trigger="date-input" showBackdrop={false}>
-        <IonDatetime
-          presentation="date"
-          onIonChange={ev => setPopoverDate(formatDate(ev.detail.value!))}
-        />
-      </IonPopover>
+      {/* Datetime in popover with cover element */}
+      <IonItem button={true} id="open-date-input">
+        <IonLabel>Date</IonLabel>
+        <IonText slot="end">{popoverDate}</IonText>
+        <IonPopover trigger="open-date-input" showBackdrop={false}>
+          <IonDatetime
+            presentation="date"
+            onIonChange={ev => setPopoverDate(formatDate(ev.detail.value!))}
+          />
+        </IonPopover>
+      </IonItem>
 
-      {/* Datetime in popover with input; button trigger */}
+      {/* Datetime in popover with input */}
       <IonItem>
         <IonInput id="date-input-2" value={popoverDate2} />
         <IonButton fill="clear" id="open-date-input-2">

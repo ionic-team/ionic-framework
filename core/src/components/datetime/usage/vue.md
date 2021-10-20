@@ -60,16 +60,19 @@
     </ion-content>
   </ion-modal>
 
-  <!-- Datetime in popover with input -->
-  <ion-input id="date-input" :value="date1" />
-  <ion-popver trigger="date-input-1" show-backdrop="false">
-    <ion-datetime
-      presentation="date"
-      @ionChange="(ev: any) => date1 = formatDate(ev.detail.value)"
-    />
-  </ion-popover>
+  <!-- Datetime in popover with cover element -->
+  <ion-item button="true" id="open-date-input">
+    <ion-label>Date</ion-label>
+    <ion-text slot="end">{{ date1 }}</ion-text>
+    <ion-popover trigger="open-date-input" show-backdrop="false">
+      <ion-datetime
+        presentation="date"
+        @ionChange="(ev: any) => date1 = formatDate(ev.detail.value)"
+      />
+    </ion-popover>
+  </ion-item>
 
-  <!-- Datetime in popover with input; button trigger -->
+  <!-- Datetime in popover with input -->
   <ion-item>
     <ion-input :value="date2" />
     <ion-button fill="clear" id="open-date-input-2">

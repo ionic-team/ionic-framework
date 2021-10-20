@@ -61,19 +61,22 @@
   </ion-buttons>
 </ion-datetime>
 
-<!-- Datetime in popover with input -->
-<ion-input id="date-input" [value]="dateValue"></ion-input>
-<ion-popover trigger="date-input" show-backdrop="false">
-  <ng-template>
-    <ion-datetime
-      #popoverDatetime
-      presentation="date"
-      (ionChange)="dateValue = formatDate(popoverDatetime.value)"
-    ></ion-datetime>
-  </ng-template>
-</ion-popover>
+<!-- Datetime in popover with cover element -->
+<ion-item button="true" id="open-date-input">
+  <ion-label>Date</ion-label>
+  <ion-text slot="end">{{ dateValue }}</ion-text>
+  <ion-popover trigger="open-date-input" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime
+        presentation="date"
+        (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
+</ion-item>
 
-<!-- Datetime in popover with input; button trigger -->
+<!-- Datetime in popover with input -->
 <ion-item>
   <ion-input [value]="dateValue2"></ion-input>
   <ion-button fill="clear" id="open-date-input-2">

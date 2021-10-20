@@ -25,8 +25,8 @@ export class DatetimeExample {
     customDatetime.reset();
   }
 
-  private updateValue(input: HTMLElement, newValue: string) {
-    input.value = format(new Date(newValue), 'MMM dd yyyy');
+  private formatDate(value: string) {
+    return format(new Date(value), 'MMM dd yyyy');
   }
   
   render() {
@@ -91,16 +91,19 @@ export class DatetimeExample {
         </ion-content>
       </ion-modal>
 
-      {/* Datetime in popover with input */}
-      <ion-input id="date-input" ref={el => this.dateInput = el}></ion-input>
-      <ion-popover trigger="date-input" show-backdrop="false">
-        <ion-datetime
-          presentation="date"
-          onIonChange={ev => updateValue(this.dateInput, ev.detail.value)}
-        />
-      </ion-popover>
+      {/* Datetime in popover with cover element */}
+      <ion-item button="true" id="open-date-input">
+        <ion-label>Date</ion-label>
+        <ion-text slot="end" ref={el => this.dateInput = el}></ion-text>
+        <ion-popover trigger="open-date-input" show-backdrop="false">
+          <ion-datetime
+            presentation="date"
+            onIonChange={ev => this.dateInput.innerText = formatDate(ev.detail.value)}
+          />
+        </ion-popover>
+      </ion-item>
 
-      {/* Datetime in popover with input; button trigger */}
+      {/* Datetime in popover with input */}
       <ion-item>
         <ion-input ref={el => this.dateInput2 = el}></ion-input>
         <ion-button slot="end" fill="clear" id="open-date-input-2">
@@ -109,7 +112,7 @@ export class DatetimeExample {
         <ion-popover trigger="open-date-input-2" show-backdrop="false">
           <ion-datetime
             presentation="date"
-            onIonChange={ev => updateValue(this.dateInput2, ev.detail.value)}
+            onIonChange={ev => this.dateInput2.value = formatDate(ev.detail.value)}
           />
         </ion-popover>
       </ion-item>
