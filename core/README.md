@@ -35,7 +35,7 @@ Additionally, within this package is a `dist/ionic.js` file and accompanying `di
 
 ## Framework Bindings
 
-The `@ionic/core` package can by used in simple HTML, or by vanilla JavaScript without any framework at all. Ionic also has packages that make it easier to integrate Ionic into a framework's traditional ecosystem and patterns. (However, at the lowest-level framework bindings are still just using Ionic Core and Web Components).
+The `@ionic/core` package can be used in simple HTML, or by vanilla JavaScript without any framework at all. Ionic also has packages that make it easier to integrate Ionic into a framework's traditional ecosystem and patterns. (However, at the lowest-level framework bindings are still just using Ionic Core and Web Components).
 
 * [@ionic/angular](https://www.npmjs.com/package/@ionic/angular)
 
