@@ -108,6 +108,11 @@ export class Select implements ComponentInterface {
   @Event() ionCancel!: EventEmitter<void>;
 
   /**
+   * Emitted when the overlay is closed.
+   */
+  @Event() ionClose!: EventEmitter<void>;
+
+  /**
    * Emitted when the select has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -175,6 +180,7 @@ export class Select implements ComponentInterface {
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;
+      this.ionClose.emit();
       this.setFocus();
     });
     await overlay.present();
