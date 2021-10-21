@@ -785,7 +785,7 @@ export class DatetimeExample {
   <ion-item button="true" id="open-date-input">
     <ion-label>Date</ion-label>
     <ion-text slot="end">{{ date1 }}</ion-text>
-    <ion-popover trigger="open-date-input" show-backdrop="false">
+    <ion-popover trigger="open-date-input" :show-backdrop="false">
       <ion-datetime
         presentation="date"
         @ionChange="(ev: any) => date1 = formatDate(ev.detail.value)"
@@ -799,7 +799,7 @@ export class DatetimeExample {
     <ion-button fill="clear" id="open-date-input-2">
       <ion-icon icon="calendar" />
     </ion-button>
-    <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ion-popover trigger="open-date-input-2" :show-backdrop="false">
       <ion-datetime
         presentation="date"
         @ionChange="(ev: any) => date2 = formatDate(ev.detail.value)"
