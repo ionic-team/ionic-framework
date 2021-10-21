@@ -27,7 +27,7 @@ test('display', async () => {
 
   screenshotCompares.push(await page.compareScreenshot());
 
-  await page.select('#size', 'fixed');
+  await page.select('#size', 'cover');
   await page.select('#presentation', 'date-time');
   await page.waitForChanges();
 
