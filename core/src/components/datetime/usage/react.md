@@ -12,7 +12,7 @@ import {
   IonPopover
 } from '@ionic/react';
 import { calendar } from 'ionicons/icons';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const DateTimeExamples: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
@@ -33,7 +33,7 @@ export const DateTimeExamples: React.FC = () => {
   };
 
   const formatDate = (value: string) => {
-    return format(new Date(value), 'MMM dd yyyy');
+    return format(parseISO(value), 'MMM dd yyyy');
   };
 
   return (

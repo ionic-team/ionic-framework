@@ -99,7 +99,7 @@
     IonModal,
     IonPopover
   } from '@ionic/vue';
-  import { format } from 'date-fns';
+  import { format, parseISO } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -130,7 +130,7 @@
       };
 
       const formatDate = (value: string) => {
-        return format(new Date(value), 'MMM dd yyyy');
+        return format(parseISO(value), 'MMM dd yyyy');
       };
 
       return {

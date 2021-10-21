@@ -81,7 +81,7 @@
 ```
 
 ```javascript
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 const datetime = document.querySelector('#custom-datetime');
 
@@ -94,7 +94,7 @@ const reset = () => {
 };
 
 const formatDate = (value: string) => {
-  return format(new Date(value), 'MMM dd yyyy');
+  return format(parseISO(value), 'MMM dd yyyy');
 };
 
 const popoverDatetime = document.querySelector('#popover-datetime');

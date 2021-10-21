@@ -97,7 +97,7 @@
 ```typescript
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Component({…})
 export class MyComponent {
@@ -117,7 +117,7 @@ export class MyComponent {
   }
 
   formatDate(value: string) {
-    return format(new Date(value), 'MMM dd yyyy');
+    return format(parseISO(value), 'MMM dd yyyy');
   }
 }
 ```

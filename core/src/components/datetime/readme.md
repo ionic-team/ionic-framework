@@ -321,7 +321,7 @@ interface DatetimeCustomEvent extends CustomEvent {
 ```typescript
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Component({…})
 export class MyComponent {
@@ -341,7 +341,7 @@ export class MyComponent {
   }
 
   formatDate(value: string) {
-    return format(new Date(value), 'MMM dd yyyy');
+    return format(parseISO(value), 'MMM dd yyyy');
   }
 }
 ```
@@ -432,7 +432,7 @@ export class MyComponent {
 ```
 
 ```javascript
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 const datetime = document.querySelector('#custom-datetime');
 
@@ -445,7 +445,7 @@ const reset = () => {
 };
 
 const formatDate = (value: string) => {
-  return format(new Date(value), 'MMM dd yyyy');
+  return format(parseISO(value), 'MMM dd yyyy');
 };
 
 const popoverDatetime = document.querySelector('#popover-datetime');
@@ -474,7 +474,7 @@ import {
   IonPopover
 } from '@ionic/react';
 import { calendar } from 'ionicons/icons';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const DateTimeExamples: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
@@ -495,7 +495,7 @@ export const DateTimeExamples: React.FC = () => {
   };
 
   const formatDate = (value: string) => {
-    return format(new Date(value), 'MMM dd yyyy');
+    return format(parseISO(value), 'MMM dd yyyy');
   };
 
   return (
@@ -595,7 +595,7 @@ export const DateTimeExamples: React.FC = () => {
 
 ```javascript
 import { Component, h } from '@stencil/core';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Component({
   tag: 'datetime-example',
@@ -621,7 +621,7 @@ export class DatetimeExample {
   }
 
   private formatDate(value: string) {
-    return format(new Date(value), 'MMM dd yyyy');
+    return format(parseISO(value), 'MMM dd yyyy');
   }
   
   render() {
@@ -820,7 +820,7 @@ export class DatetimeExample {
     IonModal,
     IonPopover
   } from '@ionic/vue';
-  import { format } from 'date-fns';
+  import { format, parseISO } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -851,7 +851,7 @@ export class DatetimeExample {
       };
 
       const formatDate = (value: string) => {
-        return format(new Date(value), 'MMM dd yyyy');
+        return format(parseISO(value), 'MMM dd yyyy');
       };
 
       return {
