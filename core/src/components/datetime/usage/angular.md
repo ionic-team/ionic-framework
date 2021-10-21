@@ -52,10 +52,7 @@
     </ion-content>
   </ng-template>
 </ion-modal>
-```
 
-**component.html**
-```html
 <!-- Custom buttons -->
 <ion-datetime>
   <ion-buttons slot="buttons">
@@ -63,17 +60,52 @@
     <ion-button (click)="reset()">Reset</ion-button>
   </ion-buttons>
 </ion-datetime>
+
+<!-- Datetime in popover with cover element -->
+<ion-item button="true" id="open-date-input">
+  <ion-label>Date</ion-label>
+  <ion-text slot="end">{{ dateValue }}</ion-text>
+  <ion-popover trigger="open-date-input" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime
+        presentation="date"
+        (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
+</ion-item>
+
+<!-- Datetime in popover with input -->
+<ion-item>
+  <ion-input [value]="dateValue2"></ion-input>
+  <ion-button fill="clear" id="open-date-input-2">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime2
+        presentation="date"
+        (ionChange)="dateValue2 = formatDate(popoverDatetime2.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
+</ion-item>
 ```
 
-**component.ts**
 ```typescript
-
 import { Component, ViewChild } from '@angular/core';
 import { IonDatetime } from '@ionic/angular';
+import { format, parseISO } from 'date-fns';
 
 @Component({…})
 export class MyComponent {
   @ViewChild(IonDatetime, { static: true }) datetime: IonDatetime;
+
+  dateValue = '';
+  dateValue2 = '';
+
   constructor() {}
   
   confirm() {
@@ -82,6 +114,10 @@ export class MyComponent {
   
   reset() {
     this.datetime.nativeEl.reset();
+  }
+
+  formatDate(value: string) {
+    return format(parseISO(value), 'MMM dd yyyy');
   }
 }
 ```
