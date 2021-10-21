@@ -20,13 +20,14 @@
 }
 
 :host(.datetime-size-fixed) {
-  width: 350px;
+  max-width: 350px;
+
+  width: auto;
   height: auto;
 }
 
 :host(.datetime-size-cover) {
   width: 100%;
-  min-width: 350px;
 }
 
 :host .calendar-body,
