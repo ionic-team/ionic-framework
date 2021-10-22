@@ -222,8 +222,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private isFocusable(): boolean {
-    const focusableChildren = this.el.querySelectorAll('.ion-focusable');
-    return (this.canActivate() || focusableChildren.length > 0);
+    const focusableChild = this.el.querySelector('.ion-focusable');
+    return (this.canActivate() || focusableChild !== null);
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
