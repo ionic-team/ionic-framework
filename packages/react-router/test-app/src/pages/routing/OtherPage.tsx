@@ -10,7 +10,6 @@ import {
   useIonViewWillEnter,
   IonButton,
 } from '@ionic/react';
-import { Route } from 'react-router';
 
 interface OtherPageProps {}
 

@@ -27,6 +27,7 @@ export interface RouteInfo {
   pushedByRoute?: string;
   tab?: string;
   position?: number;
+  delta?: number;
 }
 
 export interface RouteParams {
