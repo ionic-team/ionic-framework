@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.8.4",
-    "@capacitor/android": "^2.2.0",
-    "@capacitor/core": "1.5.2",
-    "@capacitor/ios": "^2.2.0",
     "@ionic/react": "5.6.3",
     "@ionic/react-router": "^5.6.3",
     "@stencil/core": "^2.8.0",
