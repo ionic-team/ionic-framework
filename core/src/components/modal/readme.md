@@ -497,6 +497,9 @@ modalElement.breakpoints = [0, 0.5, 1];
 
 ### React
 
+> `useIonModal` requires being a descendant of `<IonApp>`. If you need to use a modal outside of an `<IonApp>`, consider using the component method instead.
+
+
 ```tsx
 /* Using with useIonModal Hook */ 
 
