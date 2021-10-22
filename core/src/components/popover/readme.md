@@ -273,6 +273,8 @@ async function presentPopover(ev) {
 
 ### React
 
+> `useIonPopover` requires being a descendant of `<IonApp>`. If you need to use a popover outside of an `<IonApp>`, consider using the component method instead.
+
 ```tsx
 /* Using with useIonPopover Hook */
 

@@ -334,6 +334,51 @@ describe('Routing', () => {
     cy.ionPageDoesNotExist('routing');
     cy.ionPageDoesNotExist('routingparameter-abc');
   })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23987
+  it('should choose correct view when navigating back', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/123/view');
+    cy.ionPageVisible('routingparameterview');
+    cy.ionPageHidden('routing');
+
+    cy.routerPush('/routing/child');
+    cy.ionPageVisible('routingchild');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingchild');
+    cy.ionPageVisible('routingparameterview');
+    cy.ionPageDoesNotExist('routingchild');
+
+    cy.ionBackClick('routingparameterview');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('routingparameterview');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/456/view');
+    cy.ionPageVisible('routingparameterview');
+    cy.ionPageHidden('routing');
+
+    cy.routerPush('/routing/child');
+    cy.ionPageVisible('routingchild');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingchild');
+    cy.ionPageVisible('routingparameterview');
+    cy.ionPageDoesNotExist('routingchild');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {

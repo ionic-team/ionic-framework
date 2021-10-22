@@ -1,0 +1,77 @@
+{
+  "name": "test-app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@capacitor/app": "1.0.3",
+    "@capacitor/core": "3.2.4",
+    "@capacitor/haptics": "1.1.0",
+    "@capacitor/keyboard": "1.1.0",
+    "@capacitor/status-bar": "1.0.3",
+    "@ionic/react": "^5.8.3",
+    "@ionic/react-router": "^5.8.3",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^12.19.15",
+    "@types/react": "^16.14.3",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-router": "^5.1.11",
+    "@types/react-router-dom": "^5.1.7",
+    "cypress": "^8.5.0",
+    "ionicons": "^5.4.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "typescript": "^4.1.3",
+    "web-vitals": "^0.2.4",
+    "workbox-background-sync": "^5.1.4",
+    "workbox-broadcast-update": "^5.1.4",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-core": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-google-analytics": "^5.1.4",
+    "workbox-navigation-preload": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
+    "workbox-range-requests": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "sync": "sh ./scripts/sync.sh",
+    "cypress": "cypress run --headless --browser chrome",
+    "e2e": "concurrently \"SKIP_PREFLIGHT_CHECK=true npm run start -b\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@capacitor/cli": "3.2.4",
+    "concurrently": "^6.3.0",
+    "wait-on": "^6.0.0"
+  },
+  "description": "An Ionic project"
+}
