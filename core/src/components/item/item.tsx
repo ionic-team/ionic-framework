@@ -35,6 +35,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Element() el!: HTMLIonItemElement;
 
   @State() multipleInputs = false;
+  @State() focusable = true;
 
   /**
    * The color to use from your application's color palette.
@@ -153,14 +154,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
-  componentDidRender() {
-    // up here instead of in render() because we need to wait for
-    // children to fully render too, so their classes are available
-    if (this.isFocusable()) {
-      this.el.classList.add('ion-focusable');
-    }
-  }
-
   componentDidUpdate() {
     // Do not use @Listen here to avoid making all items
     // appear as clickable to screen readers
@@ -181,7 +174,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    raf(() => this.setMultipleInputs());
+    raf(() => {
+      this.setMultipleInputs();
+      this.focusable = this.isFocusable();
+    });
   }
 
   // If the item contains multiple clickable elements and/or inputs, then the item
@@ -302,6 +298,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'in-list': hostContext('ion-list', this.el),
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
+            'ion-focusable': this.focusable
           })
         }}
       >
