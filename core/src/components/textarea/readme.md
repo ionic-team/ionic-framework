@@ -317,7 +317,7 @@ export default defineComponent({
 | `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<FocusEvent>`                |
 | `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
 | `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<FocusEvent>`                |
-| `ionInput`  | Emitted when a keyboard input occurred.   | `CustomEvent<KeyboardEvent>`             |
+| `ionInput`  | Emitted when a keyboard input occurred.   | `CustomEvent<InputEvent>`                |
 
 
 ## Methods
