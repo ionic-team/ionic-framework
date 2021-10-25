@@ -9,7 +9,7 @@
     "@capacitor/ios": "^2.2.0",
     "@ionic/react": "5.6.3",
     "@ionic/react-router": "^5.6.3",
-    "@stencil/core": "^2.8.0",
+    "@stencil/core": "^2.9.0",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
