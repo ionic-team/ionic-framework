@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { IonApp, IonRouterOutlet, useIonRouter } from '@ionic/vue';
+import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -13,10 +13,6 @@ export default defineComponent({
   components: {
     IonApp,
     IonRouterOutlet
-  },
-  setup() {
-    const ionRouter = useIonRouter();
-    (window as any).liam = ionRouter;
   }
 });
 </script>

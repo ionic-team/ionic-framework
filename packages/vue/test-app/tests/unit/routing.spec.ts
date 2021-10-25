@@ -544,7 +544,7 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
-  it.only('canGoBack() should return the correct value', async () => {
+  it('canGoBack() should return the correct value', async () => {
     const Page = {
       components: { IonPage },
       template: `<ion-page></ion-page>`
@@ -593,7 +593,7 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
-  it.only('canGoBack() should return the correct value when using router.go', async () => {
+  it('canGoBack() should return the correct value when using router.go', async () => {
     const Page = {
       components: { IonPage },
       template: `<ion-page></ion-page>`
