@@ -543,7 +543,57 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Page3).exists()).toBe(false);
   });
 
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
   it.only('canGoBack() should return the correct value', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page }
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.back();
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it.only('canGoBack() should return the correct value when using router.go', async () => {
     const Page = {
       components: { IonPage },
       template: `<ion-page></ion-page>`
@@ -590,9 +640,19 @@ describe('Routing', () => {
 
     expect(ionRouter.canGoBack()).toEqual(true);
 
-    router.back();
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.go(-2);
     await waitForRouter();
 
     expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.go(2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
   });
 });

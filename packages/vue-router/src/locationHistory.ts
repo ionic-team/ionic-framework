@@ -133,7 +133,9 @@ export const createLocationHistory = () => {
   }
   const previous = () => locationHistory[locationHistory.length - 2] || last();
   const last = () => locationHistory[locationHistory.length - 1];
-  const canGoBack = (deep: number = 1) => locationHistory.length > deep;
+  const canGoBack = (deep: number = 1, initialHistory: number, currentHistory: number) => {
+    return currentHistory - deep >= initialHistory;
+  }
 
   const getFirstRouteInfoForTab = (tab: string): RouteInfo | undefined => {
     const tabHistory = getTabsHistory(tab);
