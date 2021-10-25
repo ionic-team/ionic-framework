@@ -59,6 +59,32 @@
       <ion-datetime></ion-datetime>
     </ion-content>
   </ion-modal>
+
+  <!-- Datetime in popover with cover element -->
+  <ion-item button="true" id="open-date-input">
+    <ion-label>Date</ion-label>
+    <ion-text slot="end">{{ date1 }}</ion-text>
+    <ion-popover trigger="open-date-input" :show-backdrop="false">
+      <ion-datetime
+        presentation="date"
+        @ionChange="(ev: DatetimeCustomEvent) => date1 = formatDate(ev.detail.value)"
+      />
+    </ion-popover>
+  </ion-item>
+
+  <!-- Datetime in popover with input -->
+  <ion-item>
+    <ion-input :value="date2" />
+    <ion-button fill="clear" id="open-date-input-2">
+      <ion-icon icon="calendar" />
+    </ion-button>
+    <ion-popover trigger="open-date-input-2" :show-backdrop="false">
+      <ion-datetime
+        presentation="date"
+        @ionChange="(ev: DatetimeCustomEvent) => date2 = formatDate(ev.detail.value)"
+      />
+    </ion-popover>
+  </ion-item>
 </template>
 
 <script>
@@ -68,8 +94,12 @@
     IonButtons,
     IonContent,
     IonDatetime,
-    IonModal
+    IonInput,
+    IonItem,
+    IonModal,
+    IonPopover
   } from '@ionic/vue';
+  import { format, parseISO } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -77,20 +107,32 @@
       IonButtons,
       IonContent,
       IonDatetime,
-      IonModal
+      IonInput,
+      IonItem,
+      IonModal,
+      IonPopover
     },
     setup() {
       const customDatetime = ref();
+      const date1 = '';
+      const date2 = '';
+
       const confirm = () => {
         if (customDatetime.value === undefined) return;
         
         customDatetime.value.$el.confirm();
-      }
+      };
+
       const reset = () => {
         if (customDatetime.value === undefined) return;
         
         customDatetime.value.$el.reset();
-      }
+      };
+
+      const formatDate = (value: string) => {
+        return format(parseISO(value), 'MMM dd yyyy');
+      };
+
       return {
         customDatetime,
         confirm,

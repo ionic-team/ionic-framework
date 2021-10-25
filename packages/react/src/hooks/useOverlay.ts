@@ -1,53 +1,41 @@
 import { OverlayEventDetail } from '@ionic/core/components';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
+import { IonContext } from '../contexts/IonContext';
+import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+import { generateId } from '../utils/generateId';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
-
-export type ReactComponentOrElement = React.ComponentClass<any, any> | React.FC<any> | JSX.Element;
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
   dismiss: (data?: any, role?: string | undefined) => Promise<boolean>;
 }
 
-export function useOverlay<
-  OptionsType,
-  OverlayType extends OverlayBase
->(
+export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   displayName: string,
-  controller: { create: (options: OptionsType) => Promise<OverlayType>; },
+  controller: { create: (options: OptionsType) => Promise<OverlayType> },
   component: ReactComponentOrElement,
   componentProps?: any
 ) {
   const overlayRef = useRef<OverlayType>();
   const containerElRef = useRef<HTMLDivElement>();
-  const didDismissEventName = useMemo(
-    () => `on${displayName}DidDismiss`,
-    [displayName]
-  );
-  const didPresentEventName = useMemo(
-    () => `on${displayName}DidPresent`,
-    [displayName]
-  );
-  const willDismissEventName = useMemo(
-    () => `on${displayName}WillDismiss`,
-    [displayName]
-  );
-  const willPresentEventName = useMemo(
-    () => `on${displayName}WillPresent`,
-    [displayName]
-  );
+  const didDismissEventName = useMemo(() => `on${displayName}DidDismiss`, [displayName]);
+  const didPresentEventName = useMemo(() => `on${displayName}DidPresent`, [displayName]);
+  const willDismissEventName = useMemo(() => `on${displayName}WillDismiss`, [displayName]);
+  const willPresentEventName = useMemo(() => `on${displayName}WillPresent`, [displayName]);
   const [isOpen, setIsOpen] = useState(false);
+  const ionContext = useContext(IonContext);
+  const [overlayId] = useState(generateId('overlay'));
 
   useEffect(() => {
     if (isOpen && component && containerElRef.current) {
       if (React.isValidElement(component)) {
-        ReactDOM.render(component, containerElRef.current);
+        ionContext.addOverlay(overlayId, component, containerElRef.current!);
       } else {
-        ReactDOM.render(React.createElement(component as React.ComponentClass, componentProps), containerElRef.current);
+        const element = React.createElement(component as React.ComponentClass, componentProps);
+        ionContext.addOverlay(overlayId, element, containerElRef.current!);
       }
     }
   }, [component, containerElRef.current, isOpen, componentProps]);
@@ -57,13 +45,7 @@ export function useOverlay<
       return;
     }
 
-    const {
-      onDidDismiss,
-      onWillDismiss,
-      onDidPresent,
-      onWillPresent,
-      ...rest
-    } = options;
+    const { onDidDismiss, onWillDismiss, onDidPresent, onWillPresent, ...rest } = options;
 
     if (typeof document !== 'undefined') {
       containerElRef.current = document.createElement('div');
@@ -71,17 +53,14 @@ export function useOverlay<
 
     overlayRef.current = await controller.create({
       ...(rest as any),
-      component: containerElRef.current
+      component: containerElRef.current,
     });
 
     attachProps(overlayRef.current, {
       [didDismissEventName]: handleDismiss,
-      [didPresentEventName]: (e: CustomEvent) =>
-        onDidPresent && onDidPresent(e),
-      [willDismissEventName]: (e: CustomEvent) =>
-        onWillDismiss && onWillDismiss(e),
-      [willPresentEventName]: (e: CustomEvent) =>
-        onWillPresent && onWillPresent(e),
+      [didPresentEventName]: (e: CustomEvent) => onDidPresent && onDidPresent(e),
+      [willDismissEventName]: (e: CustomEvent) => onWillDismiss && onWillDismiss(e),
+      [willPresentEventName]: (e: CustomEvent) => onWillPresent && onWillPresent(e),
     });
 
     overlayRef.current.present();
@@ -95,11 +74,12 @@ export function useOverlay<
       overlayRef.current = undefined;
       containerElRef.current = undefined;
       setIsOpen(false);
+      ionContext.removeOverlay(overlayId);
     }
   }, []);
 
   const dismiss = useCallback(async () => {
-    overlayRef.current && await overlayRef.current.dismiss();
+    overlayRef.current && (await overlayRef.current.dismiss());
     overlayRef.current = undefined;
     containerElRef.current = undefined;
   }, []);

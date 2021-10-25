@@ -142,6 +142,7 @@ export { IonModal } from './IonModal';
 export { IonPopover } from './IonPopover';
 
 // Custom Components
+export { IonApp } from './IonApp';
 export { IonPage } from './IonPage';
 export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';

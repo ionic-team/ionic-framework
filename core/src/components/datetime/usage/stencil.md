@@ -1,5 +1,6 @@
 ```javascript
 import { Component, h } from '@stencil/core';
+import { format, parseISO } from 'date-fns';
 
 @Component({
   tag: 'datetime-example',
@@ -7,6 +8,8 @@ import { Component, h } from '@stencil/core';
 })
 export class DatetimeExample {
   private customDatetime?: HTMLElement;
+  private dateInput?: HTMLElement;
+  private dateInput2?: HTMLElement;
   
   private confirm() {
     const { customDatetime } = this;
@@ -20,6 +23,10 @@ export class DatetimeExample {
     if (customDatetime === undefined) return;
     
     customDatetime.reset();
+  }
+
+  private formatDate(value: string) {
+    return format(parseISO(value), 'MMM dd yyyy');
   }
   
   render() {
@@ -83,6 +90,32 @@ export class DatetimeExample {
           <ion-datetime></ion-datetime>
         </ion-content>
       </ion-modal>
+
+      {/* Datetime in popover with cover element */}
+      <ion-item button="true" id="open-date-input">
+        <ion-label>Date</ion-label>
+        <ion-text slot="end" ref={el => this.dateInput = el}></ion-text>
+        <ion-popover trigger="open-date-input" show-backdrop="false">
+          <ion-datetime
+            presentation="date"
+            onIonChange={ev => this.dateInput.innerText = formatDate(ev.detail.value)}
+          />
+        </ion-popover>
+      </ion-item>
+
+      {/* Datetime in popover with input */}
+      <ion-item>
+        <ion-input ref={el => this.dateInput2 = el}></ion-input>
+        <ion-button slot="end" fill="clear" id="open-date-input-2">
+          <ion-icon icon="calendar"></ion-icon>
+        </ion-button>
+        <ion-popover trigger="open-date-input-2" show-backdrop="false">
+          <ion-datetime
+            presentation="date"
+            onIonChange={ev => this.dateInput2.value = formatDate(ev.detail.value)}
+          />
+        </ion-popover>
+      </ion-item>
     ]
   }
 }

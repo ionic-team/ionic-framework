@@ -19,19 +19,14 @@
   overflow: hidden;
 }
 
-:host(.datetime-presentation-date-time),
-:host(.datetime-presentation-time-date),
-:host(.datetime-presentation-date) {
-  height: 100%;
-}
-
 :host(.datetime-size-fixed) {
-  width: 350px;
+  width: auto;
+  max-width: 350px;
+  height: auto;
 }
 
 :host(.datetime-size-cover) {
   width: 100%;
-  min-width: 350px;
 }
 
 :host .calendar-body,

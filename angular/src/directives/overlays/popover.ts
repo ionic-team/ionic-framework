@@ -1,20 +1,68 @@
 /* eslint-disable */
 /* tslint:disable */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, NgZone, TemplateRef } from "@angular/core";
-import { ProxyCmp, proxyOutputs } from "../angular-component-lib/utils";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  TemplateRef,
+} from '@angular/core';
+import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
 import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js';
 
 export declare interface IonPopover extends IonPopoverCmp {}
 @ProxyCmp({
   tagName: 'ion-popover',
   customElement: IonPopoverCmp,
-  inputs: ["alignment", "animated", "arrow", "backdropDismiss", "cssClass", "dismissOnSelect", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent", "trigger", "triggerAction", "reference", "size"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"]
+  inputs: [
+    'alignment',
+    'animated',
+    'arrow',
+    'backdropDismiss',
+    'cssClass',
+    'dismissOnSelect',
+    'enterAnimation',
+    'event',
+    'isOpen',
+    'keyboardClose',
+    'leaveAnimation',
+    'mode',
+    'showBackdrop',
+    'translucent',
+    'trigger',
+    'triggerAction',
+    'reference',
+    'size',
+  ],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
 })
 @Component({
-  selector: "ion-popover",
+  selector: 'ion-popover',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`,
-  inputs: ["alignment", "animated", "arrow", "backdropDismiss", "cssClass", "dismissOnSelect", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent", "trigger", "triggerAction", "reference", "size"]
+  inputs: [
+    'alignment',
+    'animated',
+    'arrow',
+    'backdropDismiss',
+    'cssClass',
+    'dismissOnSelect',
+    'enterAnimation',
+    'event',
+    'isOpen',
+    'keyboardClose',
+    'leaveAnimation',
+    'mode',
+    'showBackdrop',
+    'translucent',
+    'trigger',
+    'triggerAction',
+    'reference',
+    'size',
+  ],
 })
 export class IonPopover {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
@@ -43,6 +91,15 @@ export class IonPopover {
       c.detectChanges();
     });
 
-    proxyOutputs(this, this.el, ["ionPopoverDidPresent", "ionPopoverWillPresent", "ionPopoverWillDismiss", "ionPopoverDidDismiss", "didPresent", "willPresent", "willDismiss", "didDismiss"]);
+    proxyOutputs(this, this.el, [
+      'ionPopoverDidPresent',
+      'ionPopoverWillPresent',
+      'ionPopoverWillDismiss',
+      'ionPopoverDidDismiss',
+      'didPresent',
+      'willPresent',
+      'willDismiss',
+      'didDismiss',
+    ]);
   }
 }

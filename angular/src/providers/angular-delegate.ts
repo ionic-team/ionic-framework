@@ -1,27 +1,37 @@
-import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
-import { FrameworkDelegate, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from '@ionic/core/components';
+import {
+  ApplicationRef,
+  ComponentFactoryResolver,
+  NgZone,
+  ViewContainerRef,
+  Injectable,
+  InjectionToken,
+  Injector,
+} from '@angular/core';
+import {
+  FrameworkDelegate,
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  LIFECYCLE_WILL_UNLOAD,
+} from '@ionic/core/components';
 
 import { NavParams } from '../directives/navigation/nav-params';
 
 @Injectable()
 export class AngularDelegate {
-
-  constructor(
-    private zone: NgZone,
-    private appRef: ApplicationRef
-  ) {}
+  constructor(private zone: NgZone, private appRef: ApplicationRef) {}
 
   create(
     resolver: ComponentFactoryResolver,
     injector: Injector,
-    location?: ViewContainerRef,
-  ) {
+    location?: ViewContainerRef
+  ): AngularFrameworkDelegate {
     return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
   }
 }
 
 export class AngularFrameworkDelegate implements FrameworkDelegate {
-
   private elRefMap = new WeakMap<HTMLElement, any>();
   private elEventsMap = new WeakMap<HTMLElement, () => void>();
 
@@ -30,16 +40,24 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private injector: Injector,
     private location: ViewContainerRef | undefined,
     private appRef: ApplicationRef,
-    private zone: NgZone,
+    private zone: NgZone
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
     return this.zone.run(() => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         const el = attachView(
-          this.zone, this.resolver, this.injector, this.location, this.appRef,
-          this.elRefMap, this.elEventsMap,
-          container, component, params, cssClasses
+          this.zone,
+          this.resolver,
+          this.injector,
+          this.location,
+          this.appRef,
+          this.elRefMap,
+          this.elEventsMap,
+          container,
+          component,
+          params,
+          cssClasses
         );
         resolve(el);
       });
@@ -48,7 +66,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 
   removeViewFromDom(_container: any, component: any): Promise<void> {
     return this.zone.run(() => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         const componentRef = this.elRefMap.get(component);
         if (componentRef) {
           componentRef.destroy();
@@ -73,14 +91,17 @@ export const attachView = (
   appRef: ApplicationRef,
   elRefMap: WeakMap<HTMLElement, any>,
   elEventsMap: WeakMap<HTMLElement, () => void>,
-  container: any, component: any, params: any, cssClasses: string[] | undefined
-) => {
+  container: any,
+  component: any,
+  params: any,
+  cssClasses: string[] | undefined
+): any => {
   const factory = resolver.resolveComponentFactory(component);
   const childInjector = Injector.create({
     providers: getProviders(params),
-    parent: injector
+    parent: injector,
   });
-  const componentRef = (location)
+  const componentRef = location
     ? location.createComponent(factory, location.length, childInjector)
     : factory.create(childInjector);
 
@@ -111,35 +132,36 @@ const LIFECYCLES = [
   LIFECYCLE_DID_ENTER,
   LIFECYCLE_WILL_LEAVE,
   LIFECYCLE_DID_LEAVE,
-  LIFECYCLE_WILL_UNLOAD
+  LIFECYCLE_WILL_UNLOAD,
 ];
 
-export const bindLifecycleEvents = (zone: NgZone, instance: any, element: HTMLElement) => {
+export const bindLifecycleEvents = (zone: NgZone, instance: any, element: HTMLElement): (() => void) => {
   return zone.run(() => {
-    const unregisters = LIFECYCLES
-      .filter(eventName => typeof instance[eventName] === 'function')
-      .map(eventName => {
-        const handler = (ev: any) => instance[eventName](ev.detail);
-        element.addEventListener(eventName, handler);
-        return () => element.removeEventListener(eventName, handler);
-      });
-    return () => unregisters.forEach(fn => fn());
+    const unregisters = LIFECYCLES.filter((eventName) => typeof instance[eventName] === 'function').map((eventName) => {
+      const handler = (ev: any) => instance[eventName](ev.detail);
+      element.addEventListener(eventName, handler);
+      return () => element.removeEventListener(eventName, handler);
+    });
+    return () => unregisters.forEach((fn) => fn());
   });
 };
 
 const NavParamsToken = new InjectionToken<any>('NavParamsToken');
 
-const getProviders = (params: {[key: string]: any}) => {
+const getProviders = (params: { [key: string]: any }) => {
   return [
     {
-      provide: NavParamsToken, useValue: params
+      provide: NavParamsToken,
+      useValue: params,
     },
     {
-      provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavParamsToken]
-    }
+      provide: NavParams,
+      useFactory: provideNavParamsInjectable,
+      deps: [NavParamsToken],
+    },
   ];
 };
 
-const provideNavParamsInjectable = (params: {[key: string]: any}) => {
+const provideNavParamsInjectable = (params: { [key: string]: any }) => {
   return new NavParams(params);
 };

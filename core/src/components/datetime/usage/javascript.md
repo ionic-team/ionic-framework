@@ -59,14 +59,49 @@
   </ion-content>
 </ion-modal>
 
+<!-- Datetime in popover with cover element -->
+<ion-item button="true" id="open-date-input">
+  <ion-label>Date</ion-label>
+  <ion-text slot="end" id="date-input"></ion-text>
+  <ion-popover trigger="open-date-input" show-backdrop="false">
+    <ion-datetime presentation="date" id="popover-datetime"></ion-datetime>
+  </ion-popover>
+</ion-item>
+
+<!-- Datetime in popover with input -->
+<ion-item>
+  <ion-input id="date-input-2"></ion-input>
+  <ion-button slot="end" fill="clear" id="open-date-input-2">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ion-datetime presentation="date" id="popover-datetime-2"></ion-datetime>
+  </ion-popover>
+</ion-item>
+```
+
 ```javascript
+import { format, parseISO } from 'date-fns';
+
 const datetime = document.querySelector('#custom-datetime');
 
 const confirm = () => {
   datetime.confirm();
-}
+};
 
 const reset = () => {
   datetime.reset();
-}
+};
+
+const formatDate = (value: string) => {
+  return format(parseISO(value), 'MMM dd yyyy');
+};
+
+const popoverDatetime = document.querySelector('#popover-datetime');
+const dateInput = document.querySelector('#date-input');
+popoverDatetime.addEventListener('ionChange', ev => dateInput.innerText = formatDate(ev.detail.value));
+
+const popoverDatetime2 = document.querySelector('#popover-datetime-2');
+const dateInput2 = document.querySelector('#date-input-2');
+popoverDatetime2.addEventListener('ionChange', ev => dateInput2.value = formatDate(ev.detail.value));
 ```

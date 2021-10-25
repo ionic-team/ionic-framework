@@ -1,17 +1,19 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { NgZone, Inject, Injectable } from '@angular/core';
 import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core/components';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
-  subscribeWithPriority(priority: number, callback: (processNextHandler: () => void) => Promise<any> | void): Subscription;
+  subscribeWithPriority(
+    priority: number,
+    callback: (processNextHandler: () => void) => Promise<any> | void
+  ): Subscription;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class Platform {
-
   private _readyPromise: Promise<string>;
   private win: any;
 
@@ -57,9 +59,9 @@ export class Platform {
   constructor(@Inject(DOCUMENT) private doc: any, zone: NgZone) {
     zone.run(() => {
       this.win = doc.defaultView;
-      this.backButton.subscribeWithPriority = function(priority, callback) {
-        return this.subscribe(ev => {
-          return ev.register(priority, processNextHandler => zone.run(() => callback(processNextHandler)));
+      this.backButton.subscribeWithPriority = function (priority, callback) {
+        return this.subscribe((ev) => {
+          return ev.register(priority, (processNextHandler) => zone.run(() => callback(processNextHandler)));
         });
       };
 
@@ -71,12 +73,19 @@ export class Platform {
       proxyEvent(this.keyboardDidHide, this.win, 'ionKeyboardDidHide');
 
       let readyResolve: (value: string) => void;
-      this._readyPromise = new Promise(res => { readyResolve = res; });
-      if (this.win && this.win['cordova']) {
-        doc.addEventListener('deviceready', () => {
-          readyResolve('cordova');
-        }, { once: true });
+      this._readyPromise = new Promise((res) => {
+        readyResolve = res;
+      });
+      if (this.win?.['cordova']) {
+        doc.addEventListener(
+          'deviceready',
+          () => {
+            readyResolve('cordova');
+          },
+          { once: true }
+        );
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         readyResolve!('dom');
       }
     });
@@ -213,25 +222,25 @@ export class Platform {
    * Returns `true` if the app is in portrait mode.
    */
   isPortrait(): boolean {
-    return this.win.matchMedia && this.win.matchMedia('(orientation: portrait)').matches;
+    return this.win.matchMedia?.('(orientation: portrait)').matches;
   }
 
   testUserAgent(expression: string): boolean {
     const nav = this.win.navigator;
-    return !!(nav && nav.userAgent && nav.userAgent.indexOf(expression) >= 0);
+    return !!(nav?.userAgent && nav.userAgent.indexOf(expression) >= 0);
   }
 
   /**
    * Get the current url.
    */
-  url() {
+  url(): string {
     return this.win.location.href;
   }
 
   /**
    * Gets the width of the platform's viewport using `window.innerWidth`.
    */
-  width() {
+  width(): number {
     return this.win.innerWidth;
   }
 
@@ -244,17 +253,17 @@ export class Platform {
 }
 
 const readQueryParam = (url: string, key: string) => {
-  key = key.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
   const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
 };
 
 const proxyEvent = <T>(emitter: Subject<T>, el: EventTarget, eventName: string) => {
-  if ((el as any)) {
+  if (el as any) {
     el.addEventListener(eventName, (ev: Event | undefined | null) => {
       // ?? cordova might emit "null" events
-      emitter.next(ev != null ? (ev as any).detail as T : undefined);
+      emitter.next(ev != null ? ((ev as any).detail as T) : undefined);
     });
   }
 };

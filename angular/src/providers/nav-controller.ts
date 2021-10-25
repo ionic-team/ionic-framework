@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
-import { NavigationExtras, NavigationStart, Router, UrlSerializer, UrlTree } from '@angular/router';
+import { NavigationExtras, Router, UrlSerializer, UrlTree, NavigationStart } from '@angular/router';
 import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core/components';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
@@ -19,7 +19,6 @@ export interface NavigationOptions extends NavigationExtras, AnimationOptions {}
   providedIn: 'root',
 })
 export class NavController {
-
   private topOutlet?: IonRouterOutlet;
   private direction: 'forward' | 'back' | 'root' | 'auto' = DEFAULT_DIRECTION;
   private animated?: NavDirection = DEFAULT_ANIMATED;
@@ -32,13 +31,13 @@ export class NavController {
     platform: Platform,
     private location: Location,
     private serializer: UrlSerializer,
-    @Optional() private router?: Router,
+    @Optional() private router?: Router
   ) {
     // Subscribe to router events to detect direction
     if (router) {
-      router.events.subscribe(ev => {
+      router.events.subscribe((ev) => {
         if (ev instanceof NavigationStart) {
-          const id = (ev.restoredState) ? ev.restoredState.navigationId : ev.id;
+          const id = ev.restoredState ? ev.restoredState.navigationId : ev.id;
           this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
           this.guessAnimation = !ev.restoredState ? this.guessDirection : undefined;
           this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
@@ -47,7 +46,7 @@ export class NavController {
     }
 
     // Subscribe to backButton events
-    platform.backButton.subscribeWithPriority(0, processNextHandler => {
+    platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
       this.pop();
       processNextHandler();
     });
@@ -122,7 +121,7 @@ export class NavController {
    * It will use the standard `window.history.back()` under the hood, but featuring a `back` animation
    * by default.
    */
-  back(options: AnimationOptions = { animated: true, animationDirection: 'back' }) {
+  back(options: AnimationOptions = { animated: true, animationDirection: 'back' }): void {
     this.setDirection('back', options.animated, options.animationDirection, options.animation);
     return this.location.back();
   }
@@ -133,7 +132,7 @@ export class NavController {
    * It recursively finds the top active `ion-router-outlet` and calls `pop()`.
    * This is the recommended way to go back when you are using `ion-router-outlet`.
    */
-  async pop() {
+  async pop(): Promise<void> {
     let outlet = this.topOutlet;
 
     while (outlet) {
@@ -152,7 +151,12 @@ export class NavController {
    *
    * It's recommended to use `navigateForward()`, `navigateBack()` and `navigateRoot()` instead of `setDirection()`.
    */
-  setDirection(direction: RouterDirection, animated?: boolean, animationDirection?: 'forward' | 'back', animationBuilder?: AnimationBuilder) {
+  setDirection(
+    direction: RouterDirection,
+    animated?: boolean,
+    animationDirection?: 'forward' | 'back',
+    animationBuilder?: AnimationBuilder
+  ): void {
     this.direction = direction;
     this.animated = getAnimation(direction, animated, animationDirection);
     this.animationBuilder = animationBuilder;
@@ -161,14 +165,18 @@ export class NavController {
   /**
    * @internal
    */
-  setTopOutlet(outlet: IonRouterOutlet) {
+  setTopOutlet(outlet: IonRouterOutlet): void {
     this.topOutlet = outlet;
   }
 
   /**
    * @internal
    */
-  consumeTransition() {
+  consumeTransition(): {
+    direction: RouterDirection;
+    animation: NavDirection | undefined;
+    animationBuilder: AnimationBuilder | undefined;
+  } {
     let direction: RouterDirection = 'root';
     let animation: NavDirection | undefined;
     const animationBuilder = this.animationBuilder;
@@ -187,15 +195,15 @@ export class NavController {
     return {
       direction,
       animation,
-      animationBuilder
+      animationBuilder,
     };
   }
 
   private navigate(url: string | UrlTree | any[], options: NavigationOptions) {
     if (Array.isArray(url)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this.router!.navigate(url, options);
     } else {
-
       /**
        * navigateByUrl ignores any properties that
        * would change the url, so things like queryParams
@@ -217,12 +225,17 @@ export class NavController {
        * that do not modify the url, such as `replaceUrl` which is why
        * `options` is passed in here.
        */
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this.router!.navigateByUrl(urlTree, options);
     }
   }
 }
 
-const getAnimation = (direction: RouterDirection, animated: boolean | undefined, animationDirection: 'forward' | 'back' | undefined): NavDirection | undefined => {
+const getAnimation = (
+  direction: RouterDirection,
+  animated: boolean | undefined,
+  animationDirection: 'forward' | 'back' | undefined
+): NavDirection | undefined => {
   if (animated === false) {
     return undefined;
   }

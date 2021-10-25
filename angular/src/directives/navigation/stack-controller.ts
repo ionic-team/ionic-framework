@@ -6,10 +6,18 @@ import { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
 
-import { RouteView, StackEvent, computeStackId, destroyView, getUrl, insertView, isTabSwitch, toSegments } from './stack-utils';
+import {
+  RouteView,
+  StackEvent,
+  computeStackId,
+  destroyView,
+  getUrl,
+  insertView,
+  isTabSwitch,
+  toSegments,
+} from './stack-utils';
 
 export class StackController {
-
   private views: RouteView[] = [];
   private runningTask?: Promise<any>;
   private skipTransition = false;
@@ -30,7 +38,7 @@ export class StackController {
 
   createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     const url = getUrl(this.router, activatedRoute);
-    const element = (ref && ref.location && ref.location.nativeElement) as HTMLElement;
+    const element = ref?.location?.nativeElement as HTMLElement;
     const unlistenEvents = bindLifecycleEvents(this.zone, ref.instance, element);
     return {
       id: this.nextId++,
@@ -44,7 +52,7 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    const view = this.views.find(vw => vw.url === activatedUrlKey);
+    const view = this.views.find((vw) => vw.url === activatedUrlKey);
     if (view) {
       view.ref.changeDetectorRef.reattach();
     }
@@ -65,17 +73,14 @@ export class StackController {
 
     let currentNavigation;
 
-    const router = (this.router as any);
+    const router = this.router as any;
 
     // Angular >= 7.2.0
     if (router.getCurrentNavigation) {
       currentNavigation = router.getCurrentNavigation();
 
       // Angular < 7.2.0
-    } else if (
-      router.navigations &&
-      router.navigations.value
-    ) {
+    } else if (router.navigations?.value) {
       currentNavigation = router.navigations.value;
     }
 
@@ -86,11 +91,7 @@ export class StackController {
      * we remove the last item
      * from our views stack
      */
-    if (
-      currentNavigation &&
-      currentNavigation.extras &&
-      currentNavigation.extras.replaceUrl
-    ) {
+    if (currentNavigation?.extras?.replaceUrl) {
       if (this.views.length > 0) {
         this.views.splice(-1, 1);
       }
@@ -114,12 +115,7 @@ export class StackController {
      * provided another animation.
      */
     const customAnimation = enteringView.animationBuilder;
-    if (
-      animationBuilder === undefined &&
-      direction === 'back' &&
-      !tabSwitch &&
-      customAnimation !== undefined
-    ) {
+    if (animationBuilder === undefined && direction === 'back' && !tabSwitch && customAnimation !== undefined) {
       animationBuilder = customAnimation;
     }
 
@@ -148,7 +144,7 @@ export class StackController {
             enteringView,
             direction,
             animation,
-            tabSwitch
+            tabSwitch,
           }));
       });
     });
@@ -158,7 +154,7 @@ export class StackController {
     return this.getStack(stackId).length > deep;
   }
 
-  pop(deep: number, stackId = this.getActiveStackId()) {
+  pop(deep: number, stackId = this.getActiveStackId()): Promise<boolean> {
     return this.zone.run(() => {
       const views = this.getStack(stackId);
       if (views.length <= deep) {
@@ -170,13 +166,7 @@ export class StackController {
       const viewSavedData = view.savedData;
       if (viewSavedData) {
         const primaryOutlet = viewSavedData.get('primary');
-        if (
-          primaryOutlet &&
-          primaryOutlet.route &&
-          primaryOutlet.route._routerState &&
-          primaryOutlet.route._routerState.snapshot &&
-          primaryOutlet.route._routerState.snapshot.url
-        ) {
+        if (primaryOutlet?.route?._routerState?.snapshot.url) {
           url = primaryOutlet.route._routerState.snapshot.url;
         }
       }
@@ -185,7 +175,7 @@ export class StackController {
     });
   }
 
-  startBackTransition() {
+  startBackTransition(): Promise<boolean> | Promise<void> {
     const leavingView = this.activeView;
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
@@ -206,7 +196,7 @@ export class StackController {
     return Promise.resolve();
   }
 
-  endBackTransition(shouldComplete: boolean) {
+  endBackTransition(shouldComplete: boolean): void {
     if (shouldComplete) {
       this.skipTransition = true;
       this.pop(1);
@@ -215,7 +205,7 @@ export class StackController {
     }
   }
 
-  getLastUrl(stackId?: string) {
+  getLastUrl(stackId?: string): RouteView | undefined {
     const views = this.getStack(stackId);
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
@@ -223,7 +213,7 @@ export class StackController {
   /**
    * @internal
    */
-  getRootUrl(stackId?: string) {
+  getRootUrl(stackId?: string): RouteView | undefined {
     const views = this.getStack(stackId);
     return views.length > 0 ? views[0] : undefined;
   }
@@ -236,7 +226,8 @@ export class StackController {
     return this.runningTask !== undefined;
   }
 
-  destroy() {
+  destroy(): void {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.containerEl = undefined!;
     this.views.forEach(destroyView);
     this.activeView = undefined;
@@ -244,7 +235,7 @@ export class StackController {
   }
 
   private getStack(stackId: string | undefined) {
-    return this.views.filter(v => v.stackId === stackId);
+    return this.views.filter((v) => v.stackId === stackId);
   }
 
   private insertView(enteringView: RouteView, direction: RouterDirection) {
@@ -285,7 +276,7 @@ export class StackController {
           direction,
           showGoBack,
           progressAnimation,
-          animationBuilder
+          animationBuilder,
         });
       }
     }
@@ -297,15 +288,15 @@ export class StackController {
       await this.runningTask;
       this.runningTask = undefined;
     }
-    const promise = this.runningTask = task();
-    promise.finally(() => this.runningTask = undefined);
+    const promise = (this.runningTask = task());
+    promise.finally(() => (this.runningTask = undefined));
     return promise;
   }
 }
 
 const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   if (typeof (requestAnimationFrame as any) === 'function') {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
       requestAnimationFrame(() => {
         cleanup(activeRoute, views, viewsSnapshot, location);
         resolve();
@@ -316,11 +307,9 @@ const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot:
 };
 
 const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
-  viewsSnapshot
-    .filter(view => !views.includes(view))
-    .forEach(destroyView);
+  viewsSnapshot.filter((view) => !views.includes(view)).forEach(destroyView);
 
-  views.forEach(view => {
+  views.forEach((view) => {
     /**
      * In the event that a user navigated multiple
      * times in rapid succession, we want to make sure

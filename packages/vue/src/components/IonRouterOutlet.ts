@@ -202,7 +202,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
 
     const handlePageTransition = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname } = routeInfo;
+      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname, delta } = routeInfo;
 
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
       let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
@@ -274,10 +274,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
-            viewStacks.unmountLeavingViews(id, enteringViewItem, leavingViewItem);
+            viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
           }
         } else {
-          viewStacks.mountIntermediaryViews(id, enteringViewItem, leavingViewItem);
+          viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
