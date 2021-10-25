@@ -1,5 +1,4 @@
 import { Location } from '@angular/common';
-
 import {
   ComponentFactoryResolver,
   ComponentRef,
@@ -19,7 +18,6 @@ import {
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
 import { componentOnReady } from '@ionic/core/components';
 import { Observable, BehaviorSubject } from 'rxjs';
-
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 import { AnimationBuilder } from '../../ionic-core';

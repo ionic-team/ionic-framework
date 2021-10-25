@@ -8,6 +8,7 @@ import { NumericValueAccessorDirective } from './directives/control-value-access
 import { RadioValueAccessorDirective } from './directives/control-value-accessors/radio-value-accessor';
 import { SelectValueAccessorDirective } from './directives/control-value-accessors/select-value-accessor';
 import { TextValueAccessorDirective } from './directives/control-value-accessors/text-value-accessor';
+import { IonIcon } from './directives/ion-icon';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
@@ -15,7 +16,6 @@ import { NavDelegate } from './directives/navigation/nav-delegate';
 import { RouterLinkDelegateDirective } from './directives/navigation/router-link-delegate';
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
-import { IonIcon } from './directives/ion-icon';
 import {
   IonAccordion,
   IonAccordionGroup,
@@ -92,7 +92,6 @@ import {
   IonToggle,
   IonToolbar,
 } from './directives/proxies';
-
 import { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
 import { VirtualHeader } from './directives/virtual-scroll/virtual-header';
 import { VirtualItem } from './directives/virtual-scroll/virtual-item';

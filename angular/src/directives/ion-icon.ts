@@ -1,6 +1,9 @@
+/* eslint-disable */
+/* tslint:disable */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, } from "@angular/core";
-import { ProxyCmp } from "./angular-component-lib/utils";
 import { IonIcon as IonIconCmp } from 'ionicons/components/ion-icon.js';
+
+import { ProxyCmp } from "./angular-component-lib/utils";
 
 
 export declare interface IonIcon extends IonIconCmp {}
