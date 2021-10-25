@@ -582,9 +582,10 @@ AFTER:
     }
 
     if (isOpen) {
-      // add css class
+      // add css class and hide content behind menu from screen readers
       if (this.contentEl) {
         this.contentEl.classList.add(MENU_CONTENT_OPEN);
+        this.contentEl.setAttribute('aria-hidden', 'true');
       }
 
       // emit open event
@@ -598,11 +599,13 @@ AFTER:
       // setup focus trapping
       document.addEventListener('focus', this.handleFocus, true);
     } else {
-      // remove css classes
+      // remove css classes and unhide content from screen readers
       this.el.classList.remove(SHOW_MENU);
       if (this.contentEl) {
         this.contentEl.classList.remove(MENU_CONTENT_OPEN);
+        this.contentEl.removeAttribute('aria-hidden');
       }
+
       if (this.backdropEl) {
         this.backdropEl.classList.remove(SHOW_BACKDROP);
       }
