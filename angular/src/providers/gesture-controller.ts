@@ -12,9 +12,9 @@ export class GestureController {
   create(opts: GestureConfig, runInsideAngularZone = false): Gesture {
     if (runInsideAngularZone) {
       Object.getOwnPropertyNames(opts).forEach((key) => {
-        if (typeof opts[key] === 'function') {
-          const fn = opts[key];
-          opts[key] = (...props: any[]) => this.zone.run(() => fn(...props));
+        if (typeof (opts as any)[key] === 'function') {
+          const fn = (opts as any)[key];
+          (opts as any)[key] = (...props: any[]) => this.zone.run(() => fn(...props));
         }
       });
     }
