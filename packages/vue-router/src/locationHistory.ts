@@ -133,6 +133,15 @@ export const createLocationHistory = () => {
   }
   const previous = () => locationHistory[locationHistory.length - 2] || last();
   const last = () => locationHistory[locationHistory.length - 1];
+
+  /**
+   * With the introduction of router.go support, we no longer remove
+   * items from locationHistory as they may be needed again in the future.
+   * As a result, we need to look at the current position in location history
+   * to see if users can navigate back n pages. Previously we were checking
+   * the length of locationHistory, but that only worked since we were pruning
+   * the array.
+   */
   const canGoBack = (deep: number = 1, initialHistory: number, currentHistory: number) => {
     return currentHistory - deep >= initialHistory;
   }
