@@ -320,25 +320,25 @@ AFTER:
   }
 
   private focusFirstDescendant() {
-    const { el, menuInnerEl } = this;
+    const { el } = this;
     const firstInput = el.querySelector(focusableQueryString) as HTMLElement | null;
 
     if (firstInput) {
       firstInput.focus();
-    } else if (menuInnerEl) {
-      menuInnerEl.focus();
+    } else {
+      el.focus();
     }
   }
 
   private focusLastDescendant() {
-    const { el, menuInnerEl } = this;
+    const { el } = this;
     const inputs = Array.from(el.querySelectorAll<HTMLElement>(focusableQueryString));
     const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
 
     if (lastInput) {
       lastInput.focus();
-    } else if (menuInnerEl) {
-      menuInnerEl.focus();
+    } else {
+      el.focus();
     }
   }
 
@@ -556,6 +556,7 @@ AFTER:
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
+    this.el.setAttribute('tabindex', '0');
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
@@ -601,6 +602,7 @@ AFTER:
     } else {
       // remove css classes and unhide content from screen readers
       this.el.classList.remove(SHOW_MENU);
+      this.el.removeAttribute('tabindex');
       if (this.contentEl) {
         this.contentEl.classList.remove(MENU_CONTENT_OPEN);
         this.contentEl.removeAttribute('aria-hidden');
@@ -671,7 +673,6 @@ AFTER:
         <div
           class="menu-inner"
           part="container"
-          tabindex="0"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
