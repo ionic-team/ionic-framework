@@ -690,14 +690,14 @@ export declare interface IonSelect extends Components.IonSelect {
 export class IonSelect {
   ionChange!: EventEmitter<CustomEvent>;
   ionCancel!: EventEmitter<CustomEvent>;
-  ionClose!: EventEmitter<CustomEvent>;
+  ionDismiss!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ["ionChange", "ionCancel", "ionClose", "ionFocus", "ionBlur"]);
+    proxyOutputs(this, this.el, ["ionChange", "ionCancel", "ionDismiss", "ionFocus", "ionBlur"]);
   }
 }
 export declare interface IonSelectOption extends Components.IonSelectOption {

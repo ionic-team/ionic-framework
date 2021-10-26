@@ -1364,13 +1364,13 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                              | Type                                        |
-| ----------- | ---------------------------------------- | ------------------------------------------- |
-| `ionBlur`   | Emitted when the select loses focus.     | `CustomEvent<void>`                         |
-| `ionCancel` | Emitted when the selection is cancelled. | `CustomEvent<void>`                         |
-| `ionChange` | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail<any>>` |
-| `ionClose`  | Emitted when the overlay is closed.      | `CustomEvent<void>`                         |
-| `ionFocus`  | Emitted when the select has focus.       | `CustomEvent<void>`                         |
+| Event        | Description                              | Type                                        |
+| ------------ | ---------------------------------------- | ------------------------------------------- |
+| `ionBlur`    | Emitted when the select loses focus.     | `CustomEvent<void>`                         |
+| `ionCancel`  | Emitted when the selection is cancelled. | `CustomEvent<void>`                         |
+| `ionChange`  | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail<any>>` |
+| `ionDismiss` | Emitted when the overlay is dismissed.   | `CustomEvent<void>`                         |
+| `ionFocus`   | Emitted when the select has focus.       | `CustomEvent<void>`                         |
 
 
 ## Methods

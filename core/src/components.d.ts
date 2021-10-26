@@ -5521,9 +5521,9 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: CustomEvent<SelectChangeEventDetail>) => void;
         /**
-          * Emitted when the overlay is closed.
+          * Emitted when the overlay is dismissed.
          */
-        "onIonClose"?: (event: CustomEvent<void>) => void;
+        "onIonDismiss"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the select has focus.
          */
