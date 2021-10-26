@@ -556,6 +556,15 @@ AFTER:
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
+
+    /**
+     * We add a tabindex here so that focus trapping
+     * still works even if the menu does not have
+     * any focusable elements slotted inside. The
+     * focus trapping utility will fallback to focusing
+     * the menu so focus does not leave when the menu
+     * is open.
+     */
     this.el.setAttribute('tabindex', '0');
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
@@ -586,6 +595,15 @@ AFTER:
       // add css class and hide content behind menu from screen readers
       if (this.contentEl) {
         this.contentEl.classList.add(MENU_CONTENT_OPEN);
+
+        /**
+         * When the menu is open and overlaying the main
+         * content, the main content should not be announced
+         * by the screenreader as the menu is the main
+         * focus. This is useful with screenreaders that have
+         * "read from top" gestures that read the entire
+         * page from top to bottom when activated.
+         */
         this.contentEl.setAttribute('aria-hidden', 'true');
       }
 
@@ -602,9 +620,20 @@ AFTER:
     } else {
       // remove css classes and unhide content from screen readers
       this.el.classList.remove(SHOW_MENU);
+
+      /**
+       * Remove tabindex from the menu component
+       * so that is cannot be tabbed to.
+       */
       this.el.removeAttribute('tabindex');
       if (this.contentEl) {
         this.contentEl.classList.remove(MENU_CONTENT_OPEN);
+
+        /**
+         * Remove aria-hidden so screen readers
+         * can announce the main content again
+         * now that the menu is not the main focus.
+         */
         this.contentEl.removeAttribute('aria-hidden');
       }
 
