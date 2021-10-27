@@ -8,15 +8,15 @@ const fs = require('fs');
   // core
   {
     files: [
-      '../core/css/core.css', 
-      '../core/css/core.css.map', 
-      '../core/css/normalize.css', 
-      '../core/css/normalize.css.map', 
-      '../core/components/index.js', 
-      '../core/components/index.d.ts', 
+      '../core/css/core.css',
+      '../core/css/core.css.map',
+      '../core/css/normalize.css',
+      '../core/css/normalize.css.map',
+      '../core/components/index.js',
+      '../core/components/index.d.ts',
       '../core/components/package.json',
-      '../core/dist/index.js', 
-      '../core/dist/ionic/index.esm.js', 
+      '../core/dist/index.js',
+      '../core/dist/ionic/index.esm.js',
     ]
   },
   // hydrate
@@ -31,19 +31,17 @@ const fs = require('fs');
   {
     files: [
       '../angular/dist/schematics/collection.json',
-      '../angular/dist/fesm5/ionic-angular.js',
       '../angular/dist/fesm2015/ionic-angular.js',
-      '../angular/dist/ionic-angular.d.ts',
-      '../angular/dist/ionic-angular.metadata.json'
+      '../angular/dist/esm2015/ionic-angular.js',
+      '../angular/dist/ionic-angular.d.ts'
     ]
   },
   // angular-server
   {
     files: [
-      '../packages/angular-server/dist/fesm5/ionic-angular-server.js',
+      '../packages/angular-server/dist/esm2015/ionic-angular-server.js',
       '../packages/angular-server/dist/fesm2015/ionic-angular-server.js',
-      '../packages/angular-server/dist/ionic-angular-server.d.ts',
-      '../packages/angular-server/dist/ionic-angular-server.metadata.json'
+      '../packages/angular-server/dist/ionic-angular-server.d.ts'
     ]
   },
   // react
