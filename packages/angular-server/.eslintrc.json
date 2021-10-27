@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "ignorePatterns": ["test/**/*", "src/directives/virtual-scroll/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "@ionic/eslint-config/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@angular-eslint/component-class-suffix": "off"
+      }
+    }
+  ]
+}

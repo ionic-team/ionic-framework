@@ -17,8 +17,8 @@ import { hydrateDocument } from '@ionic/core/hydrate';
 export class IonicServerModule {}
 
 // @dynamic
-// tslint:disable-next-line: only-arrow-functions
 export function hydrateIonicComponents(doc: any, appId: any) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return () => {
     return hydrateDocument(doc, {
       clientHydrateAnnotations: false,
@@ -62,6 +62,7 @@ export function hydrateIonicComponents(doc: any, appId: any) {
 
       if (doc.head != null) {
         const styleElms = doc.head.querySelectorAll('style[data-styles]') as NodeListOf<HTMLStyleElement>;
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < styleElms.length; i++) {
           styleElms[i].setAttribute('ng-transition', appId);
         }
@@ -69,6 +70,7 @@ export function hydrateIonicComponents(doc: any, appId: any) {
 
       if (doc.body != null) {
         const ionPages = doc.body.querySelectorAll('.ion-page.ion-page-invisible') as NodeListOf<HTMLElement>;
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < ionPages.length; i++) {
           ionPages[i].classList.remove('ion-page-invisible');
         }
