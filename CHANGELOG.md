@@ -1,3 +1,18 @@
+# [6.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.0...v6.0.0-rc.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* **accordion-group:** ionChange is now fired properly in vue ([#24063](https://github.com/ionic-team/ionic/issues/24063)) ([61b99d1](https://github.com/ionic-team/ionic/commit/61b99d13bfab5c57617cbcdc7e54e43f88885f66)), closes [#23762](https://github.com/ionic-team/ionic/issues/23762)
+* **angular:** resolve issues with ng add on angular 12 ([#23970](https://github.com/ionic-team/ionic/issues/23970)) ([3451a34](https://github.com/ionic-team/ionic/commit/3451a34ad0c893be0b6c17dc91ac9a75d2b9b52c))
+* **datetime:** clear button is now rendered even if showDefaultButtons is false ([#24075](https://github.com/ionic-team/ionic/issues/24075)) ([e3996cf](https://github.com/ionic-team/ionic/commit/e3996cfbd50f5e9ae54ffcbe2594124e3b9969b0))
+* **datetime:** default sizing preserves shape of datetime ([#24104](https://github.com/ionic-team/ionic/issues/24104)) ([71fab0f](https://github.com/ionic-team/ionic/commit/71fab0fa124254f8cdc3b513627aa7b045993f4e))
+* **infinite-scroll:** infinite scroll event now fired with custom elements build ([#24043](https://github.com/ionic-team/ionic/issues/24043)) ([8a86cfb](https://github.com/ionic-team/ionic/commit/8a86cfb7050989e914fa85ccc1ea755d73f58c90)), closes [#24034](https://github.com/ionic-team/ionic/issues/24034)
+* **modal:** fix backdrop animation for sheets with off-center backdropBreakpoint ([#24061](https://github.com/ionic-team/ionic/issues/24061)) ([49db6d0](https://github.com/ionic-team/ionic/commit/49db6d02883b11b5f179300e2eaa298002a381e8))
+* **react:** overlays shown with useIonModal and useIonPopover no longer render outside of main react tree ([f3e492c](https://github.com/ionic-team/ionic/commit/f3e492c897c8cda2b98050156f130654f4d7014a)), closes [#23516](https://github.com/ionic-team/ionic/issues/23516) [#23516](https://github.com/ionic-team/ionic/issues/23516)
+
+
+
 ## [5.8.5](https://github.com/ionic-team/ionic/compare/v5.8.4...v5.8.5) (2021-10-27)
 
 
