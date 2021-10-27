@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from
 
 import { getIonMode } from '../../global/ionic-global';
 import { inheritAttributes } from '../../utils/helpers';
+import { hostContext } from '../../utils/theme';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 
@@ -154,9 +155,12 @@ export class Header implements ComponentInterface {
     const mode = getIonMode(this);
     const collapse = this.collapse || 'none';
 
+    // banner role must be at top level, so remove role if inside a menu
+    const roleType = hostContext('ion-menu', this.el) ? 'none' : 'banner';
+
     return (
       <Host
-        role="banner"
+        role={roleType}
         class={{
           [mode]: true,
 
