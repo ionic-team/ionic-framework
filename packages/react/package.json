@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "5.8.2",
+  "version": "5.8.5",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -39,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.8.2",
+    "@ionic/core": "5.8.5",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },
@@ -78,6 +78,7 @@
       "<rootDir>/jest.setup.js"
     ],
     "testPathIgnorePatterns": [
+      "cypress",
       "node_modules",
       "dist-transpiled",
       "dist",

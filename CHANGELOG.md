@@ -1,3 +1,33 @@
+## [5.8.5](https://github.com/ionic-team/ionic/compare/v5.8.4...v5.8.5) (2021-10-27)
+
+
+### Bug Fixes
+
+* **menu:** added focus trapping, improved compatibility with screen readers ([#24076](https://github.com/ionic-team/ionic/issues/24076)) ([bdb268a](https://github.com/ionic-team/ionic/commit/bdb268aa12c5bf411c96529672486d35e018cefa))
+* **vue:** back button now selects correct route when navigating from view multiple times ([#24060](https://github.com/ionic-team/ionic/issues/24060)) ([a09d7d4](https://github.com/ionic-team/ionic/commit/a09d7d4ab6dd0d90204015eaaf232ed190753c56)), closes [#23987](https://github.com/ionic-team/ionic/issues/23987)
+* **vue:** mount correct views when navigating ([#24056](https://github.com/ionic-team/ionic/issues/24056)) ([24659a5](https://github.com/ionic-team/ionic/commit/24659a527abe0c70df7e8ae6da3dcb4017bf500c)), closes [#23914](https://github.com/ionic-team/ionic/issues/23914)
+
+
+
+## [5.8.4](https://github.com/ionic-team/ionic/compare/v5.8.3...v5.8.4) (2021-10-11)
+
+
+### Bug Fixes
+
+* **angular:** setup config properly ([#24054](https://github.com/ionic-team/ionic/issues/24054)) ([e001f24](https://github.com/ionic-team/ionic/commit/e001f24f2ca99abbc98b923dd1a132cc83b3b23f)), closes [#24051](https://github.com/ionic-team/ionic/issues/24051) [#24052](https://github.com/ionic-team/ionic/issues/24052)
+* **back-button:** pass aria-label to native element ([#24027](https://github.com/ionic-team/ionic/issues/24027)) ([68a7e43](https://github.com/ionic-team/ionic/commit/68a7e43345a0261fdeed6054198c5a22fbbcb584))
+
+
+
+## [5.8.3](https://github.com/ionic-team/ionic/compare/v5.8.2...v5.8.3) (2021-10-07)
+
+
+### Bug Fixes
+
+* **react:** overlay hooks dismiss method now works ([#24038](https://github.com/ionic-team/ionic/issues/24038)) ([655631d](https://github.com/ionic-team/ionic/commit/655631ddf059ce58066d5384d0ae186d7abc09a9)), closes [#24030](https://github.com/ionic-team/ionic/issues/24030)
+
+
+
 ## [5.8.2](https://github.com/ionic-team/ionic/compare/v5.8.1...v5.8.2) (2021-10-06)
 
 

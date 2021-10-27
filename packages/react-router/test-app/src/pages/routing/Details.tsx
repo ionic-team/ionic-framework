@@ -8,9 +8,7 @@ import {
   IonButtons,
   IonBackButton,
   IonLabel,
-  IonCard,
   IonButton,
-  useIonViewWillEnter,
 } from '@ionic/react';
 import { useParams, useLocation } from 'react-router';
 

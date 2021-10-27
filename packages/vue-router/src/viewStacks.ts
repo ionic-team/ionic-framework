@@ -165,47 +165,19 @@ export const createViewStacks = (router: Router) => {
   }
 
   /**
-   * Given a view stack and entering/leaving views,
-   * determine the position of each item in the stack.
-   * This is useful for removing/adding views in between
-   * the view items when navigating using router.go.
-   * Use this method instead of doing an `Array.findIndex`
-   * for both view items.
-   */
-  const findViewIndex = (viewStack: ViewItem[], enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
-    let enteringIndex = -1;
-    let leavingIndex = -1;
-
-    for (let i = 0; i <= viewStack.length - 1; i++) {
-      const viewItem = viewStack[i];
-      if (viewItem === enteringViewItem) {
-        enteringIndex = i;
-      } else if (viewItem === leavingViewItem) {
-        leavingIndex = i;
-      }
-
-      if (enteringIndex > -1 && leavingIndex > -1) {
-        break;
-      }
-    }
-
-    return { enteringIndex, leavingIndex };
-  }
-
-  /**
    * When navigating backwards, we need to clean up and
    * leaving pages so that they are re-created if
    * we ever navigate back to them. This is especially
    * important when using router.go and stepping back
    * multiple pages at a time.
    */
-  const unmountLeavingViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+  const unmountLeavingViews = (outletId: number, viewItem: ViewItem, delta: number = 1) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
-    const { enteringIndex: startIndex, leavingIndex: endIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
+    const startIndex = viewStack.findIndex(v => v === viewItem);
 
-    for (let i = startIndex + 1; i < endIndex; i++) {
+    for (let i = startIndex + 1; i < startIndex - delta; i++) {
       const viewItem = viewStack[i];
       viewItem.mount = false;
       viewItem.ionPageElement = undefined;
@@ -219,14 +191,26 @@ export const createViewStacks = (router: Router) => {
    * developers to step forward over multiple views.
    * The intermediary views need to be remounted so that
    * swipe to go back works properly.
+   * We need to account for the delta value here too because
+   * we do not want to remount an unrelated view.
+   * Example:
+   * /home --> /page2 --> router.back() --> /page3
+   * Going to /page3 would remount /page2 since we do
+   * not prune /page2 from the stack. However, /page2
+   * needs to remain in the stack.
+   * Example:
+   * /home --> /page2 --> /page3 --> router.go(-2) --> router.go(2)
+   * We would end up on /page3, but users need to be able to swipe
+   * to go back to /page2 and /home, so we need both pages mounted
+   * in the DOM.
    */
-  const mountIntermediaryViews = (outletId: number, enteringViewItem: ViewItem, leavingViewItem: ViewItem) => {
+  const mountIntermediaryViews = (outletId: number, viewItem: ViewItem, delta: number = 1) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
-    const { enteringIndex: endIndex, leavingIndex: startIndex } = findViewIndex(viewStack, enteringViewItem, leavingViewItem);
+    const startIndex = viewStack.findIndex(v => v === viewItem);
 
-    for (let i = startIndex + 1; i < endIndex; i++) {
+    for (let i = startIndex + 1; i < startIndex + delta; i++) {
       viewStack[i].mount = true;
     }
   }

@@ -50,13 +50,10 @@ export function useController<OptionsType, OverlayType extends OverlayBase>(
     [controller]
   );
 
-  const dismiss = useCallback(
-    () => async () => {
-      overlayRef.current && (await overlayRef.current.dismiss());
-      overlayRef.current = undefined;
-    },
-    []
-  );
+  const dismiss = useCallback(async () => {
+    overlayRef.current && (await overlayRef.current.dismiss());
+    overlayRef.current = undefined;
+  }, []);
 
   return {
     present,

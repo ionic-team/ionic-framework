@@ -4,6 +4,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -22,6 +23,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
 
@@ -64,6 +66,8 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
   componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+
     if (this.defaultHref === undefined) {
       this.defaultHref = config.get('backButtonDefaultHref');
     }
@@ -115,9 +119,10 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText } = this;
+    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText, inheritedAttributes } = this;
     const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
+    const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
 
     return (
       <Host
@@ -139,7 +144,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           disabled={disabled}
           class="button-native"
           part="native"
-          aria-label={backButtonText || 'back'}
+          aria-label={ariaLabel}
         >
           <span class="button-inner">
             {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
