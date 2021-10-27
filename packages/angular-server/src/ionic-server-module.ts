@@ -10,9 +10,9 @@ import { hydrateDocument } from '@ionic/core/hydrate';
       provide: BEFORE_APP_SERIALIZED,
       useFactory: hydrateIonicComponents,
       multi: true,
-      deps: [DOCUMENT, APP_ID]
-    }
-  ]
+      deps: [DOCUMENT, APP_ID],
+    },
+  ],
 })
 export class IonicServerModule {}
 
@@ -46,11 +46,10 @@ export function hydrateIonicComponents(doc: any, appId: any) {
 
         // auxiliar
         'ion-picker-column',
-        'ion-virtual-scroll'
-      ]
-    })
-    .then(hydrateResults => {
-      hydrateResults.diagnostics.forEach(d => {
+        'ion-virtual-scroll',
+      ],
+    }).then((hydrateResults) => {
+      hydrateResults.diagnostics.forEach((d) => {
         if (d.type === 'error') {
           console.error(d.messageText);
         } else if (d.type === 'debug') {
