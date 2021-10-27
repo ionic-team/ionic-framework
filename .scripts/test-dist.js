@@ -33,8 +33,7 @@ const fs = require('fs');
       '../angular/dist/schematics/collection.json',
       '../angular/dist/fesm2015/ionic-angular.js',
       '../angular/dist/esm2015/ionic-angular.js',
-      '../angular/dist/ionic-angular.d.ts',
-      '../angular/dist/ionic-angular.metadata.json'
+      '../angular/dist/ionic-angular.d.ts'
     ]
   },
   // angular-server
@@ -42,8 +41,7 @@ const fs = require('fs');
     files: [
       '../packages/angular-server/dist/esm2015/ionic-angular-server.js',
       '../packages/angular-server/dist/fesm2015/ionic-angular-server.js',
-      '../packages/angular-server/dist/ionic-angular-server.d.ts',
-      '../packages/angular-server/dist/ionic-angular-server.metadata.json'
+      '../packages/angular-server/dist/ionic-angular-server.d.ts'
     ]
   },
   // react
