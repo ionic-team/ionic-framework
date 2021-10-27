@@ -25,9 +25,9 @@
     "build": "ng-packagr -p package.json -c tsconfig.json",
     "build.prod": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
-    "lint": "eslint . --ext .ts && npm run prettier -- --check",
-    "lint.fix": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"**/*.ts\"",
+    "lint": "eslint . --ext .ts && npm run prettier",
+    "lint.fix": "eslint . --ext .ts --fix && npm run prettier.fix",
+    "prettier": "prettier \"**/*.ts\" --check",
     "prettier.fix": "prettier \"**/*.ts\" --write"
   },
   "ngPackage": {
