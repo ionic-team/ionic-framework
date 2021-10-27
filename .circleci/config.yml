@@ -133,6 +133,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
+            - packages/angular-server/node_modules
             - packages/angular-server/dist
 
   build-react:
@@ -320,6 +321,16 @@ jobs:
       - run:
           command: npm run lint
           working_directory: /tmp/workspace/angular
+
+  test-angular-server-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/packages/angular-server
 
   test-react-lint:
     <<: *defaults
@@ -566,6 +577,8 @@ workflows:
           requires: [install-vue-test-app, build-vue, build-vue-router]
       - test-angular-lint:
           requires: [build-angular]
+      - test-angular-server-lint:
+          requires: [build-angular-server]
       - test-angular-e2e:
           requires:
             - build-angular
