@@ -311,6 +311,11 @@ export const present = async (
   }
 
   if (overlay.keyboardClose) {
+    
+    if (document.activeElement && overlay.el.contains(document.activeElement)) {
+      return;
+    }
+    
     overlay.el.focus();
   }
 };
