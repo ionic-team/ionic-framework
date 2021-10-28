@@ -1,5 +1,10 @@
 name: 'Test Core Screenshot'
 description: 'Test Core Screenshot'
+inputs:
+  access-key-id:
+    description: 'AWS_ACCESS_KEY_ID'
+  secret-access-key:
+    description: 'AWS_SECRET_ACCESS_KEY'
 runs:
   using: 'composite'
   steps:
@@ -24,9 +29,9 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Test
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --no-build || true
       shell: bash
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.access-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.secret-access-key }}
       working-directory: ./core
