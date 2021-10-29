@@ -13,51 +13,52 @@ type Props = LocalJSX.IonApp &
     ref?: React.Ref<HTMLIonAppElement>;
   };
 
-export class IonApp extends React.Component<Props> {
-  addOverlayCallback?: (id: string, overlay: any, containerElement: HTMLDivElement) => void;
-  removeOverlayCallback?: (id: string) => void;
+export const IonApp = /*@__PURE__*/ (() =>
+  class extends React.Component<Props> {
+    addOverlayCallback?: (id: string, overlay: any, containerElement: HTMLDivElement) => void;
+    removeOverlayCallback?: (id: string) => void;
 
-  constructor(props: Props) {
-    super(props);
-  }
+    constructor(props: Props) {
+      super(props);
+    }
 
-  /*
-    Wire up methods to call into IonOverlayManager
-  */
-  ionContext: IonContextInterface = {
-    addOverlay: (
-      id: string,
-      overlay: ReactComponentOrElement,
-      containerElement: HTMLDivElement
-    ) => {
-      if (this.addOverlayCallback) {
-        this.addOverlayCallback(id, overlay, containerElement);
-      }
-    },
-    removeOverlay: (id: string) => {
-      if (this.removeOverlayCallback) {
-        this.removeOverlayCallback(id);
-      }
-    },
-  };
+    /*
+      Wire up methods to call into IonOverlayManager
+    */
+    ionContext: IonContextInterface = {
+      addOverlay: (
+        id: string,
+        overlay: ReactComponentOrElement,
+        containerElement: HTMLDivElement
+      ) => {
+        if (this.addOverlayCallback) {
+          this.addOverlayCallback(id, overlay, containerElement);
+        }
+      },
+      removeOverlay: (id: string) => {
+        if (this.removeOverlayCallback) {
+          this.removeOverlayCallback(id);
+        }
+      },
+    };
 
-  render() {
-    return (
-      <IonContext.Provider value={this.ionContext}>
-        <IonAppInner {...this.props}>{this.props.children}</IonAppInner>
-        <IonOverlayManager
-          onAddOverlay={(callback) => {
-            this.addOverlayCallback = callback;
-          }}
-          onRemoveOverlay={(callback) => {
-            this.removeOverlayCallback = callback;
-          }}
-        />
-      </IonContext.Provider>
-    );
-  }
+    render() {
+      return (
+        <IonContext.Provider value={this.ionContext}>
+          <IonAppInner {...this.props}>{this.props.children}</IonAppInner>
+          <IonOverlayManager
+            onAddOverlay={(callback) => {
+              this.addOverlayCallback = callback;
+            }}
+            onRemoveOverlay={(callback) => {
+              this.removeOverlayCallback = callback;
+            }}
+          />
+        </IonContext.Provider>
+      );
+    }
 
-  static get displayName() {
-    return 'IonApp';
-  }
-}
+    static get displayName() {
+      return 'IonApp';
+    }
+  })();
