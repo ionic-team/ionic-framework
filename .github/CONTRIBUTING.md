@@ -174,7 +174,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 #### Preview Changes
 
-1. Run `npm run start` from `angular/test/test-app`. This will sync your previously built changes into a test Ionic app.
+1. Run `npm run start` inside of the `angular/test/test-app` directory. This will sync your previously built changes into a test Ionic app.
 2. In a browser, navigate to the page you wish to test.
 3. Alternatively, create a new page if you need to test something that is not already there.
 
@@ -186,14 +186,14 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 #### Modifying Tests
 
-1. Locate the test to modify inside `angular/test/test-app/e2e/src`
+1. Locate the test to modify inside `angular/test/test-app/e2e/src`.
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
-3. If a new test is needed, the easiest way to do so is to copy an existing test, rename it, and edit the content in the `spec.ts` file.
+3. If a new test is needed, copy an existing test, rename it, and edit the content in the test file.
 4. Run `npm run test` to run your tests.
 
 #### Building Changes
 
-1. Once all changes have been made and the documentation has been updated, run `npm run build` inside of the `angular` directory. This will add your changes to any auto-generated files, if necessary.
+1. Once all changes have been made, run `npm run build` inside of the `angular` directory. This will add your changes to any auto-generated files, if necessary.
 2. Review the changes and, if everything looks correct, [commit](#commit-message-format) the changes.
 3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
 4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
@@ -211,7 +211,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 #### Preview Changes
 
-1. Run `npm run start` from `packages/react/test-app`. This will sync your previously built changes into a test Ionic app.
+1. Run `npm run start` inside of the `packages/react/test-app` directory. This will sync your previously built changes into a test Ionic app.
 2. In a browser, navigate to the page you wish to test.
 3. Alternatively, create a new page if you need to test something that is not already there.
 
@@ -224,7 +224,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 1. Locate the test to modify inside `packages/react/test-app/cypress/integration`.
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
-3. If a new test is needed, the easiest way to do so is to copy an existing test, rename it, and edit the content in the test file.
+3. If a new test is needed, copy an existing test, rename it, and edit the content in the test file.
 4. Run `npm run test` to run your tests.
 
 #### Building Changes
@@ -245,6 +245,11 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 5. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
 6. [Submit a Pull Request](#submit-pull-request) of your changes.
 
+#### Preview Changes
+
+1. Run `npm run start` inside of the `packages/vue/test-app` directory. This will sync your previously built changes into a test Ionic app.
+2. In a browser, navigate to the page you wish to test.
+3. Alternatively, create a new page if you need to test something that is not already there.
 
 #### Lint changes
 
@@ -255,7 +260,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 1. Locate the test to modify inside `packages/vue/test-app/tests/e2e` for E2E tests or `packages/vue/test-app/tests/unit` for unit tests.
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
-3. If a new test is needed, the easiest way to do so is to copy an existing test, rename it, and edit the content in the test file.
+3. If a new test is needed, copy an existing test, rename it, and edit the content in the test file.
 4. Run `npm run test:unit` to run your unit tests.
 5. Run `npm run test:e2e` to run your E2E tests.
 
