@@ -42,7 +42,8 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "pnm run sync && react-scripts start",
+    "start.ci": "npm run sync && BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
