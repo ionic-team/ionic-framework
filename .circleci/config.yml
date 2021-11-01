@@ -33,7 +33,7 @@ aliases:
 
 defaults: &defaults
   docker:
-    - image: circleci/node:16.13.0
+    - image: cimg/node:lts
   working_directory: /tmp/workspace
   environment:
     NODE_ENV: development
