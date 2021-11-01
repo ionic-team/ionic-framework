@@ -13,12 +13,7 @@ runs:
         cache-name: core-node-modules
       with:
         path: ./core/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v1
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
