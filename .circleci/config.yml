@@ -33,7 +33,7 @@ aliases:
 
 defaults: &defaults
   docker:
-    - image: cimg/node:lts
+    - image: cimg/node:current
   working_directory: /tmp/workspace
   environment:
     NODE_ENV: development
