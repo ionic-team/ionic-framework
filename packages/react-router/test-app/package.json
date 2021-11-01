@@ -40,16 +40,13 @@
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4"
   },
-  "watch": {
-    "copyRouter": "../src/ReactRouter/*.*"
-  },
   "scripts": {
-    "copyRouter": "cpy ../src/ReactRouter ./src/ReactRouter",
-    "start": "concurrently \"npm-watch copyRouter\" \"react-scripts start\"",
+    "start": "npm run sync && react-scripts start",
+    "start.ci": "npm run sync && BROWSER=none react-scripts start",
     "build": "node scripts/build.js",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "e2e": "npm run copyRouter && concurrently \"SKIP_PREFLIGHT_CHECK=true react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "e2e": "npm run sync && concurrently \"SKIP_PREFLIGHT_CHECK=true react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
     "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {

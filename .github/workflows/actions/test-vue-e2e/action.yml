@@ -1,0 +1,51 @@
+name: 'Test Vue E2E'
+description: 'Test Vue E2E'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue
+        path: ./packages/vue
+        filename: VueBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue-router
+        path: ./packages/vue-router
+        filename: VueRouterBuild.zip
+    - name: Install Dependencies
+      run: npm install
+      shell: bash
+      working-directory: ./packages/vue/test-app
+    - name: Sync
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/vue/test-app
+    - name: Run Spec Tests
+      run: npm run test:unit
+      shell: bash
+      working-directory: ./packages/vue/test-app
+    - name: Run E2E ests
+      run: npm run test:e2e
+      shell: bash
+      working-directory: ./packages/vue/test-app
