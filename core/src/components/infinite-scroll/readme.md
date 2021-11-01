@@ -129,8 +129,6 @@ import {
   useIonViewWillEnter
 } from '@ionic/react';
 import { useState } from 'react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
 
 const InfiniteScrollExample: React.FC = () => {
   const [data, setData] = useState<string[]>([]);
