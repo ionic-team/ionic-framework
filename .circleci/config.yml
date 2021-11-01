@@ -5,28 +5,28 @@ orbs:
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-7
+        - dependency-cache-{{ checksum "package.json" }}-8
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-7
+      key: dependency-cache-{{ checksum "package.json" }}-8
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-7
+        - dependency-cache-{{ checksum "core/package.json" }}-8
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-7
+      key: dependency-cache-{{ checksum "core/package.json" }}-8
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-6
+        - stencil-cache-8
 
   - &save-cache-core-stencil
-      key: stencil-cache-6
+      key: stencil-cache-8
       paths:
         - core/.stencil
         - core/screenshot/images
