@@ -44,10 +44,6 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/react-router
-    - name: Test Spec
-      run: npm run test.spec
-      shell: bash
-      working-directory: ./packages/react-router
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react-router
