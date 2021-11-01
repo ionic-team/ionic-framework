@@ -20,7 +20,7 @@ runs:
         cache-name: angular-node-modules
       with:
         path: ./angular/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./angular/package-lock.json')-v1 }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./angular/package-lock.json')}}-v1
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
