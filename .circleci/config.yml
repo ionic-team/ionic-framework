@@ -33,7 +33,7 @@ aliases:
 
 defaults: &defaults
   docker:
-    - image: circleci/node:latest-browsers
+    - image: circleci/node:16.13.0
   working_directory: /tmp/workspace
   environment:
     NODE_ENV: development
