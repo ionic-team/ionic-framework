@@ -1,4 +1,4 @@
-name: 'Ionic Framework'
+name: 'Ionic Framework Build'
 
 on:
   pull_request:
