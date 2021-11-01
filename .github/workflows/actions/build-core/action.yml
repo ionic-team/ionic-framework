@@ -16,7 +16,7 @@ runs:
         path: ./core/node_modules
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v1
     - name: Install Dependencies
-      run: npm ci
+      run: npm install
       working-directory: ./core
       shell: bash
     - name: Build Core
