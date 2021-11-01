@@ -1,0 +1,37 @@
+name: 'Test Core Screenshot'
+description: 'Test Core Screenshot'
+inputs:
+  access-key-id:
+    description: 'AWS_ACCESS_KEY_ID'
+  secret-access-key:
+    description: 'AWS_SECRET_ACCESS_KEY'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Test
+      run: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --no-build || true
+      shell: bash
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.access-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.secret-access-key }}
+      working-directory: ./core

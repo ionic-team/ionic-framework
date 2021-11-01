@@ -1,0 +1,43 @@
+name: 'Test Angular E2E'
+description: 'Test Angular E2E'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-angular
+        path: ./angular
+        filename: AngularBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-angular-server
+        path: ./packages/angular-server
+        filename: AngularServerBuild.zip
+    - name: Install Dependencies
+      run: npm install --legacy-peer-deps
+      shell: bash
+      working-directory: ./angular/test/test-app
+    - name: Run Tests
+      run: npm run test
+      shell: bash
+      working-directory: ./angular/test/test-app
