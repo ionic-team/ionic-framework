@@ -15,6 +15,12 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
     + [Modifying Tests](#modifying-tests)
       - [Screenshot Tests](#screenshot-tests)
     + [Building Changes](#building-changes)
+  * [Angular, React, and Vue](#angular-react-and-vue)
+    + [Modifying Files](#modifying-files)
+    + [Preview Changes](#preview-changes-1)
+    + [Lint Changes](#lint-changes-1)
+    + [Modifying Tests](#modifying-tests-1)
+    + [Building Changes](#building-changes-1)
   * [Submit Pull Request](#submit-pull-request)
 - [Commit Message Guidelines](#commit-message-guidelines)
   * [Commit Message Format](#commit-message-format)
@@ -186,7 +192,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 3. Alternatively, create a new page if you need to test something that is not already there.
 
 
-#### Lint changes
+#### Lint Changes
 
 1. Run `npm run lint` to lint the TypeScript in the relevant directory:
   - Angular: `/angular/src`
