@@ -26,7 +26,8 @@
     "release": "np --any-branch --no-cleanup",
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
-    "tsc": "tsc -p ."
+    "tsc": "tsc -p .",
+    "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

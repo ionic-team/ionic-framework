@@ -1,0 +1,19 @@
+name: 'Ionic Framework Archive Download'
+description: 'Downloads and decompresses an archive from a previous job'
+inputs:
+  path:
+    description: 'Input archive name'
+  filename:
+    description: 'Input file name'
+  name:
+    description: 'Archive name'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ inputs.name }}
+        path: ${{ inputs.path }}
+    - name: Exract Archive
+      run: unzip -q -o ${{ inputs.path }}/${{ inputs.filename }}
+      shell: bash

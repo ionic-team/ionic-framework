@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "npm run sync && vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "concurrently \"npm run serve\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
+    "test:e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
     "lint": "vue-cli-service lint",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "sync": "sh ./scripts/sync.sh"
