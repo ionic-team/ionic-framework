@@ -15,6 +15,12 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
     + [Modifying Tests](#modifying-tests)
       - [Screenshot Tests](#screenshot-tests)
     + [Building Changes](#building-changes)
+  * [Angular, React, and Vue](#angular-react-and-vue)
+    + [Modifying Files](#modifying-files)
+    + [Preview Changes](#preview-changes-1)
+    + [Lint Changes](#lint-changes-1)
+    + [Modifying Tests](#modifying-tests-1)
+    + [Building Changes](#building-changes-1)
   * [Submit Pull Request](#submit-pull-request)
 - [Commit Message Guidelines](#commit-message-guidelines)
   * [Commit Message Format](#commit-message-format)
@@ -160,6 +166,56 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
 4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
 
+### Angular, React, and Vue
+
+#### Modifying Files
+
+1. Locate the files inside the relevant root directory:
+  - Angular: `/angular/src`
+  - React: `/packages/react/src`
+  - Vue: `/packages/vue/src`
+2. Make your changes to the files. If the change is overly complex or out of the ordinary, add comments so we can understand the changes.
+3. Run lint on the directory and make sure there are no errors.
+4. Build the project.
+5. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
+6. [Submit a Pull Request](#submit-pull-request) of your changes.
+
+
+
+#### Preview Changes
+
+1. Run `npm run start` inside of the relevant test app directory. This will sync your previously built changes into a test Ionic app:
+  - Angular: `/angular/test-app`
+  - React: `/packages/react/test-app`
+  - Vue: `/packages/vue/test-app`
+2. In a browser, navigate to the page you wish to test.
+3. Alternatively, create a new page if you need to test something that is not already there.
+
+
+#### Lint Changes
+
+1. Run `npm run lint` to lint the TypeScript in the relevant directory:
+  - Angular: `/angular/src`
+  - React: `/packages/react/src`
+  - Vue: `/packages/vue/src`
+2. If there are lint errors, run `npm run lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
+
+#### Modifying Tests
+
+1. Locate the test to modify inside the relevant test app directory:
+  - Angular: `/angular/test-app/e2e/src`
+  - React: `/packages/react/test-app/cypress/integration`
+  - Vue: `/packages/vue/test-app/tests/e2e`
+2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
+3. If a new test is needed, copy an existing test, rename it, and edit the content in the test file.
+4. Run `npm run test` to run your tests.
+
+#### Building Changes
+
+1. Once all changes have been made, run `npm run build` inside of the root directory. This will add your changes to any auto-generated files, if necessary.
+2. Review the changes and, if everything looks correct, [commit](#commit-message-format) the changes.
+3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
+4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
 
 ### Submit Pull Request
 
