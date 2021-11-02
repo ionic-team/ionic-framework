@@ -72,7 +72,8 @@
   "devDependencies": {
     "@capacitor/cli": "3.2.4",
     "concurrently": "^6.3.0",
-    "wait-on": "^6.0.0"
+    "wait-on": "^6.0.0",
+    "webpack-cli": "^4.9.1"
   },
   "description": "An Ionic project"
 }
