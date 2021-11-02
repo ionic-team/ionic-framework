@@ -30,7 +30,7 @@ runs:
         path: ./packages/angular-server
         filename: AngularServerBuild.zip
     - name: Install Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm install
       shell: bash
       working-directory: ./angular/test/test-app
     - name: Run Tests
