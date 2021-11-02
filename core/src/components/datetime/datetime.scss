@@ -90,7 +90,12 @@
 
   position: absolute;
 
-  opacity: 0;
+  /**
+   * Use visibility instead of
+   * opacity to ensure element
+   * cannot receive focus
+   */
+  visibility: hidden;
   pointer-events: none;
 }
 
