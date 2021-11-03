@@ -95,6 +95,7 @@ export const config: Config = {
         'ion-popover',
         'ion-toast',
 
+        'ion-app',
         'ion-icon'
       ]
     }),
