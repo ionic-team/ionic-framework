@@ -1,3 +1,13 @@
+# [6.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.1...v6.0.0-rc.2) (2021-11-03)
+
+
+### Bug Fixes
+
+* **all:** resolve compilation issues with Stencil 2.10 ([#24152](https://github.com/ionic-team/ionic/issues/24152)) ([8b940e5](https://github.com/ionic-team/ionic-framework/commit/8b940e505e79bdf5da829850ed949847d5df8b90)), closes [#24153](https://github.com/ionic-team/ionic-framework/issues/24153)
+* **datetime:** resolve month and year jumping issue on ios ([#24142](https://github.com/ionic-team/ionic/issues/24142)) ([27aef93](https://github.com/ionic-team/ionic/commit/27aef9343cada9a83adec8fe00e8bc3bafa8e049)), closes [#23910](https://github.com/ionic-team/ionic/issues/23910)
+
+
+
 # [6.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.0...v6.0.0-rc.1) (2021-10-27)
 
 
