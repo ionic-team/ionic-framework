@@ -338,7 +338,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 | Framework | Supported Version     |
 | --------- | --------------------- |
-| Angular   | 11+ with Ivy renderer |
+| Angular   | 12+                   |
 | React     | 17+                   |
 | Vue       | 3.0.6+                |
 
