@@ -38,6 +38,24 @@ export class App implements ComponentInterface {
         import('../../utils/focus-visible').then(module => this.focusVisible = module.startFocusVisible());
       });
     }
+
+    /**
+     *  Workaround for manual dependedancy declaration in the custom elements build.
+     *  Stencil will automatically define dependedent custom elements
+     *  based on calls to functions like `document.createElement`.
+     *  This does not currently work with Framework's overlay controllers,
+     *  so we can trick Stencil with the following.
+     */
+    if (false) {
+      //@ts-ignore
+      document.createElement('ion-alert');
+      document.createElement('ion-action-sheet');
+      document.createElement('ion-loading');
+      document.createElement('ion-modal');
+      document.createElement('ion-picker');
+      document.createElement('ion-popover');
+      document.createElement('ion-toast');
+    }
   }
 
   /**

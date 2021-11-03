@@ -1863,6 +1863,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ion-app](../app)
+
 ### Depends on
 
 - [ion-ripple-effect](../ripple-effect)
@@ -1873,6 +1877,7 @@ Type: `Promise<void>`
 graph TD;
   ion-alert --> ion-ripple-effect
   ion-alert --> ion-backdrop
+  ion-app --> ion-alert
   style ion-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

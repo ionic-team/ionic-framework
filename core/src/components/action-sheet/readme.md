@@ -661,6 +661,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ion-app](../app)
+
 ### Depends on
 
 - [ion-backdrop](../backdrop)
@@ -673,6 +677,7 @@ graph TD;
   ion-action-sheet --> ion-backdrop
   ion-action-sheet --> ion-icon
   ion-action-sheet --> ion-ripple-effect
+  ion-app --> ion-action-sheet
   style ion-action-sheet fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

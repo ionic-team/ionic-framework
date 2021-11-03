@@ -1227,6 +1227,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ion-app](../app)
+
 ### Depends on
 
 - [ion-backdrop](../backdrop)
@@ -1235,6 +1239,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   ion-modal --> ion-backdrop
+  ion-app --> ion-modal
   style ion-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

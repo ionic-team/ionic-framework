@@ -147,6 +147,18 @@ export class Select implements ComponentInterface {
     this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
       this.updateOverlayOptions();
     });
+
+    /**
+     *  Workaround for manual dependedancy declaration in the custom elements build.
+     *  Stencil will automatically define dependedent custom elements
+     *  based on calls to functions like `document.createElement`.
+     *  This does not currently work with Framework's overlay controllers,
+     *  so we can trick Stencil with the following.
+     */
+    if (false) {
+      //@ts-ignore
+      document.createElement('ion-select-popover');
+    }
   }
 
   disconnectedCallback() {

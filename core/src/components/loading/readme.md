@@ -462,6 +462,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ion-app](../app)
+
 ### Depends on
 
 - [ion-backdrop](../backdrop)
@@ -472,6 +476,7 @@ Type: `Promise<void>`
 graph TD;
   ion-loading --> ion-backdrop
   ion-loading --> ion-spinner
+  ion-app --> ion-loading
   style ion-loading fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
