@@ -3,7 +3,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
-import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
+import { actionSheetController } from "../action-sheet/action-sheet-controller";
+import { alertController } from "../alert/alert-controller";
+import { popoverController } from "../popover/popover-controller";
 import { hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 

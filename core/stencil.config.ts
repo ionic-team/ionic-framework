@@ -162,7 +162,8 @@ export const config: Config = {
         dest: 'components',
         warn: true
       }],
-      includeGlobalScripts: false
+      includeGlobalScripts: false,
+      autoDefineCustomElements: true
     },
     {
       type: 'docs-readme',
