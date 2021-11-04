@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('overlays: should dismss a presented overlay', async () => {
+test('overlays: hardware back button: should dismss a presented overlay', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
@@ -19,10 +19,12 @@ test('overlays: should dismss a presented overlay', async () => {
 
   await simulateButton.click();
 
-  expect(modal).toHaveClass('overlay-hidden');
+  await ionModalDidDismiss.next();
+
+  await page.waitForSelector('ion-modal', { hidden: true })
 });
 
-test('overlays: should dismss the presented overlay, even though another hidden modal was added last', async () => {
+test('overlays: hardware back button: should dismss the presented overlay, even though another hidden modal was added last', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
@@ -52,4 +54,51 @@ test('overlays: should dismss the presented overlay, even though another hidden 
 
   expect(await modals[0].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(true);
   expect(await modals[1].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(true);
+});
+
+test('overlays: Esc: should dismss a presented overlay', async () => {
+  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
+
+  const createAndPresentButton = await page.find('#create-and-present');
+
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+  await createAndPresentButton.click()
+  const modal = await page.find('ion-modal');
+  expect(modal).not.toBe(null);
+
+  await ionModalDidPresent.next();
+
+  await page.keyboard.press('Escape');
+
+  await ionModalDidDismiss.next();
+
+  await page.waitForSelector('ion-modal', { hidden: true })
+});
+
+
+test('overlays: Esc: should dismss the presented overlay, even though another hidden modal was added last', async () => {
+  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
+
+  const createAndPresentButton = await page.find('#create-and-present');
+
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+  await createAndPresentButton.click();
+  const modal = await page.find('ion-modal');
+  expect(modal).not.toBe(null);
+
+  await ionModalDidPresent.next();
+
+  const createButton = await page.find('#modal-create');
+  await createButton.click();
+
+  const modals = await page.$$('ion-modal');
+  expect(modals.length).toEqual(2);
+
+  await page.keyboard.press('Escape');
+
+  await page.waitForSelector('ion-modal#ion-overlay-1', { hidden: true });
 });
