@@ -256,7 +256,7 @@ export const connectListeners = (doc: Document) => {
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
-      const lastOverlay = getOverlay(doc);
+      const lastOverlay = getTopOpenOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
@@ -267,7 +267,7 @@ export const connectListeners = (doc: Document) => {
     // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        const lastOverlay = getOverlay(doc);
+        const lastOverlay = getTopOpenOverlay(doc);
         if (lastOverlay && lastOverlay.backdropDismiss) {
           lastOverlay.dismiss(undefined, BACKDROP);
         }
@@ -291,6 +291,29 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
   return (Array.from(doc.querySelectorAll(selector)) as HTMLIonOverlayElement[])
     .filter(c => c.overlayIndex > 0);
 };
+
+/**
+ * Gets the top-most/last opened
+ * overlay that is currently presented.
+ */
+const getTopOpenOverlay = (doc: Document): HTMLIonOverlayElement | undefined => {
+  const overlays = getOverlays(doc);
+  for (let i = overlays.length - 1; i >= 0; i--) {
+    const overlay = overlays[i];
+
+    /**
+     * Only consider overlays that
+     * are presented. Presented overlays
+     * will not have the .overlay-hidden
+     * class on the host.
+     */
+    if (!overlay.classList.contains('overlay-hidden')) {
+      return overlay;
+    }
+  }
+
+  return;
+}
 
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
   const overlays = getOverlays(doc, overlayTag);
