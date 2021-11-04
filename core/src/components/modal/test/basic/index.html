@@ -84,7 +84,7 @@
     async function presentModal() {
       const presentingEl = document.querySelectorAll('.ion-page')[1];
       const modal = createModal();
-      //await modal.present(presentingEl);
+      await modal.present(presentingEl);
     }
     async function presentCloseModal() {
       const modal = createModal();
@@ -92,15 +92,6 @@
       await modal.dismiss();
     }
 
-
-const backButton = () => {
-  const ev = new CustomEvent('backbutton');
-  document.dispatchEvent(ev);
-}
-
-window.Ionic.config = {
-  hardwareBackButton: true
-}
     async function presentCloseModal2() {
       const modal = createModal();
       modal.present();
