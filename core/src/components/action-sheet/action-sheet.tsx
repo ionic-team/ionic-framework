@@ -252,6 +252,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           [mode]: true,
 
           ...getClassMap(this.cssClass),
+          'overlay-hidden': true,
           'action-sheet-translucent': this.translucent
         }}
         onIonActionSheetWillDismiss={this.dispatchCancelHandler}

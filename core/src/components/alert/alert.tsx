@@ -575,6 +575,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
+          'overlay-hidden': true,
           'alert-translucent': this.translucent
         }}
         onIonAlertWillDismiss={this.dispatchCancelHandler}

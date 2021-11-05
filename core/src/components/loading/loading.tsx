@@ -197,6 +197,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
+          'overlay-hidden': true,
           'loading-translucent': this.translucent
         }}
       >
