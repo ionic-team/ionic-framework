@@ -57,6 +57,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
   @Element() el!: HTMLIonPopoverElement;
 
   /** @internal */
+  @Prop() hasController = false;
+
+  /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 
   /** @internal */
@@ -343,7 +346,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * the overlay is already in the correct place.
      */
     const parentEl = this.el.parentNode as HTMLElement | null;
-    const inline = this.inline = parentEl !== null && parentEl.tagName !== 'ION-APP' && parentEl.tagName !== 'BODY';
+    const inline = this.inline = parentEl !== null && !this.hasController;
     const delegate = this.workingDelegate = (inline) ? this.delegate || this.coreDelegate : this.delegate
 
     return { inline, delegate }
