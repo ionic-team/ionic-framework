@@ -680,7 +680,7 @@ export declare interface IonInput extends Components.IonInput {}
 })
 export class IonInput {
   /** Emitted when a keyboard input occurred. */
-  ionInput!: EventEmitter<CustomEvent<KeyboardEvent>>;
+  ionInput!: EventEmitter<CustomEvent<InputEvent>>;
   /** Emitted when the value has changed. */
   ionChange!: EventEmitter<CustomEvent<IInputInputChangeEventDetail>>;
   /** Emitted when the input loses focus. */
@@ -1558,7 +1558,7 @@ export class IonTextarea {
   /** Emitted when the input value has changed. */
   ionChange!: EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>;
   /** Emitted when a keyboard input occurred. */
-  ionInput!: EventEmitter<CustomEvent<KeyboardEvent>>;
+  ionInput!: EventEmitter<CustomEvent<InputEvent>>;
   /** Emitted when the input loses focus. */
   ionBlur!: EventEmitter<CustomEvent<FocusEvent>>;
   /** Emitted when the input has focus. */
