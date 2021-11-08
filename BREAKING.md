@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#components)
   * [Datetime](#datetime)
   * [Header](#header)
+  * [Icons](#icons)
   * [Input](#input)
   * [Modal](#modal)
   * [Popover](#popover)
@@ -90,6 +91,10 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
   --border-width: 0 0 0.55px;
 }
 ```
+
+#### Icons
+
+Ionic 6 now ships with Ionicons 6. Please be sure to review the [Ionicons 6.0.0 Changelog](https://github.com/ionic-team/ionicons/releases/tag/v6.0.0) and make any necessary changes.
 
 #### Input
 
