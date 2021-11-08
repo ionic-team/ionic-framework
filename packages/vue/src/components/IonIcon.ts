@@ -6,7 +6,6 @@ import { IonIcon as IonIconCmp } from 'ionicons/components/ion-icon.js';
 export const IonIcon = /*@__PURE__*/ defineComponent({
   name: 'IonIcon',
   props: {
-    ariaLabel: String,
     color: String,
     flipRtl: Boolean,
     icon: String,
