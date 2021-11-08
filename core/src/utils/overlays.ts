@@ -54,7 +54,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
        * Convert the passed in overlay options into props
        * that get passed down into the new overlay.
        */
-      Object.assign(element, { ...opts });
+      Object.assign(element, { ...opts, hasController: true });
 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);

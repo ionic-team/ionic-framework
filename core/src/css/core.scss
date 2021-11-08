@@ -86,6 +86,30 @@ html.ios ion-modal .ion-page {
   }
 }
 
+/**
+ * Subsequent modals should not have a backdrop/box shadow
+ * as it will cause the screen to appear to get progressively
+ * darker. With Ionic 6, declarative modals made it
+ * possible to have multiple non-presented modals in the DOM,
+ * so we could no longer rely on ion-modal:first-of-type.
+ * Here we disable the opacity/box-shadow for every modal
+ * that comes after the first presented modal.
+ *
+ * Note: ion-modal:not(.overlay-hidden):first-of-type
+ * does not match the first modal to not have
+ * the .overlay-hidden class, it will match the
+ * first modal in general only if it does not
+ * have the .overlay-hidden class.
+ * The :nth-child() pseudo-class has support
+ * for selectors which would help us here. At the
+ * time of writing it does not have great cross browser
+ * support.
+ */
+ion-modal:not(.overlay-hidden) ~ ion-modal {
+  --backdrop-opacity: 0;
+  --box-shadow: none;
+}
+
 // Ionic Colors
 // --------------------------------------------------
 // Generates the color classes and variables based on the

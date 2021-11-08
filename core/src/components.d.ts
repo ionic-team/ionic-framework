@@ -1532,6 +1532,7 @@ export namespace Components {
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the modal.
          */
@@ -1883,6 +1884,7 @@ export namespace Components {
          */
         "event": any;
         "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the popover.
          */
@@ -5220,6 +5222,7 @@ declare namespace LocalJSX {
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the modal.
          */
@@ -5509,6 +5512,7 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the popover.
          */

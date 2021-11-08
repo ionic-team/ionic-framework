@@ -101,11 +101,15 @@ Converted `ion-modal` to use [Shadow DOM](https://developer.mozilla.org/en-US/do
 
 If you were targeting the internals of `ion-modal` in your CSS, you will need to target the `backdrop` or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
+Developers dynamically creating modals using `document.createElement('ion-modal')` will now need to call `modal.remove()` after the modal has been dismissed if they want the modal to be removed from the DOM.
+
 #### Popover
 
 Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+Developers dynamically creating popovers using `document.createElement('ion-popover')` will now need to call `popover.remove()` after the popover has been dismissed if they want the popover to be removed from the DOM.
 
 #### Radio
 
