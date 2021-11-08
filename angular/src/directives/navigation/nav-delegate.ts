@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/no-outputs-metadata-property */
+/* eslint-disable @angular-eslint/no-inputs-metadata-property */
 import { ComponentFactoryResolver, ElementRef, Injector, ViewContainerRef, Directive } from '@angular/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
@@ -23,6 +25,8 @@ import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
 })
 @Directive({
   selector: 'ion-nav',
+  inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
+  outputs: ['ionNavDidChange', 'ionNavWillChange'],
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NavDelegate {
@@ -36,6 +40,6 @@ export class NavDelegate {
   ) {
     this.el = ref.nativeElement;
     ref.nativeElement.delegate = angularDelegate.create(resolver, injector, location);
-    proxyOutputs(this, this.el, ['ionNavDidChange', 'ionNavWillChange']);
+    proxyOutputs(this, ['ionNavDidChange', 'ionNavWillChange']);
   }
 }

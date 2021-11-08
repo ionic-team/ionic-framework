@@ -60,6 +60,16 @@ export declare interface IonModal extends Components.IonModal {}
     'translucent',
     'trigger',
   ],
+  outputs: [
+    'ionModalDidPresent',
+    'ionModalWillPresent',
+    'ionModalWillDismiss',
+    'ionModalDidDismiss',
+    'didPresent',
+    'willPresent',
+    'willDismiss',
+    'didDismiss',
+  ],
 })
 export class IonModal {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
@@ -87,8 +97,7 @@ export class IonModal {
       this.isCmpOpen = false;
       c.detectChanges();
     });
-
-    proxyOutputs(this, this.el, [
+    proxyOutputs(this, [
       'ionModalDidPresent',
       'ionModalWillPresent',
       'ionModalWillDismiss',

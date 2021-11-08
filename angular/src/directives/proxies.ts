@@ -43,7 +43,7 @@ export class IonAccordionGroup {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
+    proxyOutputs(this, ['ionChange']);
   }
 }
 
@@ -117,7 +117,7 @@ export class IonBackdrop {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionBackdropTap']);
+    proxyOutputs(this, ['ionBackdropTap']);
   }
 }
 
@@ -161,7 +161,7 @@ export class IonBreadcrumb {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -184,7 +184,7 @@ export class IonBreadcrumbs {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCollapsedClick']);
+    proxyOutputs(this, ['ionCollapsedClick']);
   }
 }
 
@@ -209,7 +209,7 @@ export class IonButton {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -350,7 +350,7 @@ export class IonCheckbox {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -418,7 +418,7 @@ Look at the property: `scrollEvents` */
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
+    proxyOutputs(this, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
   }
 }
 
@@ -448,7 +448,7 @@ export class IonDatetime {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -493,7 +493,7 @@ export class IonFabButton {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -615,7 +615,7 @@ export class IonImg {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionImgWillLoad', 'ionImgDidLoad', 'ionError']);
+    proxyOutputs(this, ['ionImgWillLoad', 'ionImgDidLoad', 'ionError']);
   }
 }
 
@@ -642,7 +642,7 @@ your async operation has completed. */
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInfinite']);
+    proxyOutputs(this, ['ionInfinite']);
   }
 }
 
@@ -691,7 +691,7 @@ export class IonInput {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
+    proxyOutputs(this, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus'])
   }
 }
 
@@ -787,7 +787,7 @@ export class IonItemOptions {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSwipe']);
+    proxyOutputs(this, ['ionSwipe']);
   }
 }
 
@@ -811,7 +811,7 @@ export class IonItemSliding {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionDrag']);
+    proxyOutputs(this, ['ionDrag']);
   }
 }
 
@@ -899,7 +899,7 @@ export class IonMenu {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose']);
+    proxyOutputs(this, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose']);
   }
 }
 
@@ -963,7 +963,7 @@ export class IonNav {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
+    proxyOutputs(this, ['ionNavWillChange', 'ionNavDidChange']);
   }
 }
 
@@ -1045,7 +1045,7 @@ export class IonRadio {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -1068,7 +1068,7 @@ export class IonRadioGroup {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
+    proxyOutputs(this, ['ionChange']);
   }
 }
 
@@ -1095,7 +1095,7 @@ export class IonRange {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -1126,7 +1126,7 @@ called when the async operation has completed. */
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
+    proxyOutputs(this, ['ionRefresh', 'ionPull', 'ionStart']);
   }
 }
 
@@ -1187,7 +1187,7 @@ to be called in order to finalize the reorder action. */
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionItemReorder']);
+    proxyOutputs(this, ['ionItemReorder']);
   }
 }
 
@@ -1257,7 +1257,7 @@ export class IonSearchbar {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
+    proxyOutputs(this, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
 }
 
@@ -1281,7 +1281,7 @@ dragging pointer has been released from `ion-segment`. */
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
+    proxyOutputs(this, ['ionChange']);
   }
 }
 
@@ -1330,7 +1330,7 @@ export class IonSelect {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -1438,7 +1438,7 @@ export class IonSlides {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
+    proxyOutputs(this, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
   }
 }
 
@@ -1480,7 +1480,7 @@ export class IonSplitPane {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSplitPaneVisible']);
+    proxyOutputs(this, ['ionSplitPaneVisible']);
   }
 }
 
@@ -1567,7 +1567,7 @@ export class IonTextarea {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
+    proxyOutputs(this, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
   }
 }
 
@@ -1629,7 +1629,7 @@ export class IonToggle {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 

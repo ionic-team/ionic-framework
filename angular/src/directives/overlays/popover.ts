@@ -60,6 +60,16 @@ export declare interface IonPopover extends Components.IonPopover {}
     'reference',
     'size',
   ],
+  outputs: [
+    'ionPopoverDidPresent',
+    'ionPopoverWillPresent',
+    'ionPopoverWillDismiss',
+    'ionPopoverDidDismiss',
+    'didPresent',
+    'willPresent',
+    'willDismiss',
+    'didDismiss',
+  ],
 })
 export class IonPopover {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
@@ -87,8 +97,7 @@ export class IonPopover {
       this.isCmpOpen = false;
       c.detectChanges();
     });
-
-    proxyOutputs(this, this.el, [
+    proxyOutputs(this, [
       'ionPopoverDidPresent',
       'ionPopoverWillPresent',
       'ionPopoverWillDismiss',
