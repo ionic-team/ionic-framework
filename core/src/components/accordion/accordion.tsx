@@ -187,7 +187,7 @@ export class Accordion implements ComponentInterface {
     iconEl.lazy = false;
     iconEl.classList.add('ion-accordion-toggle-icon');
     iconEl.icon = toggleIcon;
-    iconEl.ariaHidden = 'true';
+    iconEl.setAttribute('aria-hidden', 'true');
 
     ionItem.appendChild(iconEl);
   }
