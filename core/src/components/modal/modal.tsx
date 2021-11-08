@@ -325,10 +325,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * If using overlay inline
      * we potentially need to use the coreDelegate
      * so that this works in vanilla JS apps.
-     * If a user has already placed the overlay
-     * as a direct descendant of ion-app or
-     * the body, then we can assume that
-     * the overlay is already in the correct place.
+     * If a developer has presented this component
+     * via a controller, then we can assume
+     * the component is already in the
+     * correct place.
      */
     const parentEl = this.el.parentNode as HTMLElement | null;
     const inline = this.inline = parentEl !== null && !this.hasController;
