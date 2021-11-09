@@ -120,6 +120,8 @@ export const IonicSwiper = {
   name: 'ionic',
   on: {
     afterInit(swiper: any) {
+      console.warn('[Deprecation Warning]: The IonicSwiper module has been deprecated in favor of the IonSlides module. This change was made to better support the Swiper 7 release. The IonicSwiper module will be removed in Ionic 7.0. See https://ionicframework.com/docs/api/slides#migration for revised migration steps.');
+
       setupSwiperInIonic(swiper);
     }
   }
