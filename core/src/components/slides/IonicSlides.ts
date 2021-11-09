@@ -1,4 +1,4 @@
-export const IonSlides = (opts: any) => {
+export const IonicSlides = (opts: any) => {
   const { swiper, extendParams } = opts;
   const slidesParams: any = {
     effect: undefined,

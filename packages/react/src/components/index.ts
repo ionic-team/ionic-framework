@@ -34,7 +34,7 @@ export {
   NavComponentWithProps,
   setupConfig,
   IonicSwiper,
-  IonSlides,
+  IonicSlides,
 
   SpinnerTypes,
 
