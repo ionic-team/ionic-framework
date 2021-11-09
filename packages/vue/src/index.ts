@@ -74,6 +74,7 @@ export {
 
   // Swiper
   IonicSwiper,
+  IonSlides,
 
   SpinnerTypes,
 
