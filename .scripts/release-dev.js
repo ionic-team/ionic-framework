@@ -57,6 +57,11 @@ async function main() {
 }
 
 async function askDevVersion(devVersion) {
+  const skipPrompt = process.argv.find(arg => arg === '--skip-prompt');
+  if (skipPrompt) {
+    console.log(`\n--skip-prompt was passed. Skipping dev build prompt.`)
+    return true;
+  }
 
   const prompts = [
     {
