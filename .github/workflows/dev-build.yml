@@ -58,3 +58,6 @@ jobs:
         working-directory: ./packages/vue-router
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Get Your Dev Build!
+        run: npm show . version
+        working-directory: ./core
