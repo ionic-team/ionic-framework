@@ -226,8 +226,15 @@ function prepareDevPackage(tasks, package, version) {
     projectTasks.push({
       title: `${pkg.name}: update ionic/core dep to ${version}`,
       task: () => {
-        updateDependency(pkg, '@ionic/core', version);
-        writePkg(package, pkg);
+
+        /**
+         * At this point, the version for the package
+         * has been changed so we need to re-fetch the
+         * package contents so we do not overwrite it.
+         */
+        const updatedPackage = readPkg(package);
+        updateDependency(updatedPackage, '@ionic/core', version);
+        writePkg(package, updatedPackage);
       }
     });
 
