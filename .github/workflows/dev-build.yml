@@ -63,7 +63,7 @@ jobs:
       - name: Wrap Up
         id: devBuild
         run: |
-          val=$(npm show . version)
+          val=$(grep version package.json | sed 's/.*"version": "\(.*\)".*/\1/')
           echo "::set-output name=version::$val"
         working-directory: ./core
   get-version:
