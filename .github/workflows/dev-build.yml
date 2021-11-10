@@ -1,7 +1,7 @@
 name: 'Ionic Dev Build'
 
 on:
-  workflow_dispatch:
+  workflow_dispatch
 
 jobs:
   dev-build:
@@ -11,6 +11,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 15.x
+      - name: Install Dependencies
+        run: npm install
+        shell: bash
       - name: Create Dev Build
         run: npm run release.dev -- --skip-prompt
         shell: bash
