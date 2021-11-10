@@ -1,5 +1,5 @@
 export interface PickerInternalChangeEventDetail {
-  inputMode: boolean;
+  useInputMode: boolean;
   inputModeColumn?: HTMLIonPickerColumnInternalElement;
 }
 
