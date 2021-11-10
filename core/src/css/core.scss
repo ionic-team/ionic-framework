@@ -72,9 +72,7 @@ html.ios ion-modal ion-toolbar {
  * Do not use inherit as that will not
  * work with shadow dom in this case.
  */
-html.ios ion-modal .ion-page {
-  border-radius: 10px 10px 0 0;
-}
+
 
 /**
  * Card style modal on iPadOS
