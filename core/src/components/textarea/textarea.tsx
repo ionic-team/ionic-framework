@@ -226,7 +226,7 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && this.autoGrow) {
       writeTask(() => {
         if (this.textareaWrapper) {
-          this.textareaWrapper.dataset.replicatedValue = this.value ?? "";
+          this.textareaWrapper.dataset.replicatedValue = this.value ?? '';
         }
       });
     }
