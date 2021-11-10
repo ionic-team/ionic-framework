@@ -1,18 +1,75 @@
 name: 'Ionic Dev Build'
 
 on:
-  workflow_dispatch:
+  workflow_dispatch
 
 jobs:
   dev-build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.devBuild.outputs.version }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: 15.x
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install Dependencies
+        run: npm install
+        shell: bash
       - name: Create Dev Build
         run: npm run release.dev -- --skip-prompt
         shell: bash
+      - name: Publish Core
+        run: npm publish --tag dev
+        working-directory: ./core
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Docs
+        run: npm publish --tag dev
+        working-directory: ./docs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Angular
+        run: npm publish --tag dev
+        working-directory: ./angular
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Angular Server
+        run: npm publish --tag dev
+        working-directory: ./packages/angular-server
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish React
+        run: npm publish --tag dev
+        working-directory: ./packages/react
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish React Router
+        run: npm publish --tag dev
+        working-directory: ./packages/react-router
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Vue
+        run: npm publish --tag dev
+        working-directory: ./packages/vue
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Vue Router
+        run: npm publish --tag dev
+        working-directory: ./packages/vue-router
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Wrap Up
+        id: devBuild
+        run: |
+          val=$(grep version package.json | sed 's/.*"version": "\(.*\)".*/\1/')
+          echo "::set-output name=version::$val"
+        working-directory: ./core
+  get-version:
+    name: Get your dev build!
+    runs-on: ubuntu-latest
+    needs: [dev-build]
+    steps:
+      - run: echo ${{ needs.dev-build.outputs.version }}
+
