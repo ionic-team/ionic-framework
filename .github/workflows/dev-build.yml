@@ -21,4 +21,4 @@ jobs:
         run: npm publish --tag dev
         working-directory: ./core
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
