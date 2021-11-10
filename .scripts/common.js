@@ -281,17 +281,6 @@ function updatePackageVersions(tasks, packages, version) {
         }
       });
     }
-
-    if (package === 'packages/react-router') {
-      tasks.push({
-        title: `${package} update @ionic/react dependency, if present ${dim(`(${version})`)}`,
-        task: async () => {
-          const pkg = readPkg(package);
-          updateDependency(pkg, '@ionic/react', version);
-          writePkg(package, pkg);
-        }
-      });
-    }
   });
 }
 
