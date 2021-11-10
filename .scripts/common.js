@@ -199,6 +199,16 @@ function preparePackage(tasks, package, version, install) {
   });
 }
 
+function installDevPackage(tasks, package) {
+  const projectRoot = projectPath(package);
+  const pkg = readPkg(package);
+
+  tasks.push({
+    title: `${pkg.name}: npm install`,
+    task: () => execa('npm', ['install', '--legacy-peer-deps'], { cwd: projectRoot })
+  });
+}
+
 function prepareDevPackage(tasks, package, version) {
   const projectRoot = projectPath(package);
   const pkg = readPkg(package);
@@ -382,6 +392,7 @@ function copyCDNLoader(tasks, version) {
 }
 
 module.exports = {
+  installDevPackage,
   checkTestDist,
   checkGit,
   askNpmTag,

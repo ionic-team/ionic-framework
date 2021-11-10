@@ -33,7 +33,14 @@ async function main() {
 
     const tasks = [];
 
-    await setPackageVersionChanges(packages, devVersion);
+    packages.forEach(package => {
+      common.installDevPackage(tasks, package);
+    });
+
+    tasks.push({
+      title: 'Set package version changes',
+      task: async () => await setPackageVersionChanges(packages, devVersion)
+    })
 
     packages.forEach(package => {
       common.prepareDevPackage(tasks, package, devVersion);
