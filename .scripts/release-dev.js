@@ -57,10 +57,6 @@ async function main() {
     console.log('\n', red(err), '\n');
     process.exit(1);
   }
-
-  orgPkg.forEach(pkg => {
-    fs.writeFileSync(pkg.filePath, pkg.packageContent);
-  });
 }
 
 async function askDevVersion(devVersion) {
