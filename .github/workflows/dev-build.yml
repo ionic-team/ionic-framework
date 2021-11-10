@@ -6,6 +6,8 @@ on:
 jobs:
   dev-build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.devBuild.outputs.version }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -58,6 +60,16 @@ jobs:
         working-directory: ./packages/vue-router
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Get Your Dev Build!
-        run: npm show . version
+      - name: Wrap Up
+        id: devBuild
+        run: |
+          val=$(npm show . version)
+          echo "::set-output name=version::$val"
         working-directory: ./core
+  get-version:
+    name: Get your dev build!
+    runs-on: ubuntu-latest
+    needs: [dev-build]
+    steps:
+      - run: echo ${{ needs.dev-build.outputs.version }}
+
