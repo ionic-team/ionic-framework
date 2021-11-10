@@ -23,3 +23,38 @@ jobs:
         working-directory: ./core
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Docs
+        run: npm publish --tag dev
+        working-directory: ./docs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Angular
+        run: npm publish --tag dev
+        working-directory: ./angular
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Angular Server
+        run: npm publish --tag dev
+        working-directory: ./packages/angular-server
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish React
+        run: npm publish --tag dev
+        working-directory: ./packages/react
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish React Router
+        run: npm publish --tag dev
+        working-directory: ./packages/react-router
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Vue
+        run: npm publish --tag dev
+        working-directory: ./packages/vue
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Vue Router
+        run: npm publish --tag dev
+        working-directory: ./packages/vue-router
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
