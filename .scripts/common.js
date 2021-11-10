@@ -221,13 +221,6 @@ function prepareDevPackage(tasks, package, version) {
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core', '--legacy-peer-deps'], { cwd: projectRoot })
       });
-
-      if (package === 'packages/react-router') {
-        projectTasks.push({
-          title: `${pkg.name}: npm link @ionic/react`,
-          task: () => execa('npm', ['link', '@ionic/react', '--legacy-peer-deps'], { cwd: projectRoot })
-        });
-      }
     }
 
     projectTasks.push({
@@ -243,7 +236,7 @@ function prepareDevPackage(tasks, package, version) {
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    if (package === 'core' || package === 'packages/react') {
+    if (package === 'core') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
