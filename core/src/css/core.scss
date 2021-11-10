@@ -66,15 +66,6 @@ html.ios ion-modal ion-toolbar {
 }
 
 /**
- * .ion-page needs to explicitly set
- * the border radius in WebKit otherwise
- * modals will not show border radius properly.
- * Do not use inherit as that will not
- * work with shadow dom in this case.
- */
-
-
-/**
  * Card style modal on iPadOS
  * should only have backdrop on first instance.
  */
