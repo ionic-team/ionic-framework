@@ -17,5 +17,8 @@ jobs:
       - name: Create Dev Build
         run: npm run release.dev -- --skip-prompt
         shell: bash
+      - name: Publish Core
+        run: npm publish --tag dev
+        working-directory: ./core
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
