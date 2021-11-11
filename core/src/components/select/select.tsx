@@ -360,6 +360,12 @@ export class Select implements ComponentInterface {
         options: this.createPopoverOptions(this.childOpts, value)
       }
     };
+
+    if (false) {
+      //@ts-ignore
+      document.createElement('ion-select-popover');
+    }
+
     return popoverController.create(popoverOpts);
   }
 
