@@ -301,7 +301,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const getCurrentRouteInfo = () => currentRouteInfo;
 
-  const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep);
+  const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep, initialHistoryPosition, currentHistoryPosition);
 
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
     const { routerAnimation, routerDirection, routerLink } = navigationOptions;

@@ -42,7 +42,7 @@ jobs:
   test-core-screenshot:
     needs: [build-core]
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
+    if: github.ref != 'refs/heads/main' && !github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/test-core-screenshot

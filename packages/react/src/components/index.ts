@@ -25,6 +25,7 @@ export {
   mdTransitionAnimation,
   setupConfig,
   IonicSwiper,
+  IonicSlides,
   getTimeGivenProgression,
 
   // TYPES
