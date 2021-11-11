@@ -159,6 +159,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'readonly',
   'min',
   'max',
+  'defaultPickerValue',
   'displayFormat',
   'displayTimezone',
   'pickerFormat',
