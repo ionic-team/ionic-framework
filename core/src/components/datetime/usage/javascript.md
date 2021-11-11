@@ -75,6 +75,11 @@
   <ion-label>Specific days/months/years</ion-label>
   <ion-datetime month-values="6,7,8" year-values="2014,2015" day-values="01,02,03,04,05,06,08,09,10, 11, 12, 13, 14" display-format="DD/MMM/YYYY"></ion-datetime>
 </ion-item>
+
+<ion-item>
+  <ion-label>Default picker date without setting ion-datetime value</ion-label>
+  <ion-datetime default-picker-value="1995-04-05T00:00:00Z"></ion-datetime>
+</ion-item>
 ```
 
 ```javascript

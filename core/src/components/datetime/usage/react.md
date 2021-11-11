@@ -127,6 +127,11 @@ export const DateTimeExamples: React.FC = () => {
             value={selectedDate} onIonChange={e => setSelectedDate(e.detail.value!)}
           ></IonDatetime>
         </IonItem>
+
+        <IonItem>
+          <IonLabel>Default picker date without setting ion-datetime value</IonLabel>
+          <IonDatetime defaultPickerValue="1995-04-05T00:00:00Z"></IonDatetime>
+        </IonItem>
       </IonContent>
       <IonFooter>
         <IonToolbar>
