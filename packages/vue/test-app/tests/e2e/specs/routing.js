@@ -404,7 +404,7 @@ describe('Routing - Swipe to Go Back', () => {
     //cy.ionPageDoesNotExist('navigation');
   });
 
-  it('swipe to go back should work when using router.go()', () => {
+  it.skip('swipe to go back should work when using router.go()', () => {
     cy.visit('http://localhost:8080?ionic:mode=ios');
 
     cy.routerPush('/routing');
