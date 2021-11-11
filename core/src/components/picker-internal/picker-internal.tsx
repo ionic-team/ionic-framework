@@ -18,7 +18,7 @@ import { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
 })
 export class PickerInternal implements ComponentInterface {
   private inputEl?: HTMLInputElement;
-  private inputMode = false;
+  private useInputMode = false;
   private inputModeColumn?: HTMLIonPickerColumnInternalElement;
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
@@ -131,7 +131,7 @@ export class PickerInternal implements ComponentInterface {
    * runs and runs the actionOnClick callback.
    */
   private onPointerDown = (ev: PointerEvent) => {
-    const { inputMode, inputModeColumn, el } = this;
+    const { useInputMode, inputModeColumn, el } = this;
     if (this.isInHighlightBounds(ev)) {
       /**
        * If we were already in
@@ -140,7 +140,7 @@ export class PickerInternal implements ComponentInterface {
        * should switch to input mode for
        * that specific column.
        */
-      if (inputMode) {
+      if (useInputMode) {
         /**
          * If we tapped a picker column
          * then we should either switch to input
@@ -225,7 +225,7 @@ export class PickerInternal implements ComponentInterface {
      * are eligible for text entry.
      * (i.e. hour and minute columns)
      */
-    this.inputMode = true;
+    this.useInputMode = true;
     this.inputModeColumn = columnEl;
 
     /**
@@ -253,10 +253,10 @@ export class PickerInternal implements ComponentInterface {
   }
 
   private exitInputMode = () => {
-    const { inputEl, inputMode } = this;
-    if (!inputMode || !inputEl) { return; }
+    const { inputEl, useInputMode } = this;
+    if (!useInputMode || !inputEl) { return; }
 
-    this.inputMode = false;
+    this.useInputMode = false;
     this.inputModeColumn = undefined;
     inputEl.blur();
     inputEl.value = '';
@@ -457,8 +457,8 @@ export class PickerInternal implements ComponentInterface {
    * to select
    */
   private onInputChange = () => {
-    const { inputMode, inputEl, inputModeColumn } = this;
-    if (!inputMode || !inputEl) { return; }
+    const { useInputMode, inputEl, inputModeColumn } = this;
+    if (!useInputMode || !inputEl) { return; }
 
     if (inputModeColumn) {
       this.selectSingleColumn();
@@ -473,10 +473,10 @@ export class PickerInternal implements ComponentInterface {
    * or not their column is "active" for text input.
    */
   private emitInputModeChange = () => {
-    const { inputMode, inputModeColumn } = this;
+    const { useInputMode, inputModeColumn } = this;
 
     this.ionInputModeChange.emit({
-      inputMode,
+      useInputMode,
       inputModeColumn
     });
   }

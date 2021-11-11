@@ -1,3 +1,10 @@
+import { ActionSheet } from '../components/action-sheet/action-sheet';
+import { Alert } from '../components/alert/alert';
+import { Loading } from '../components/loading/loading';
+import { Modal } from '../components/modal/modal';
+import { Picker } from '../components/picker/picker';
+import { Popover } from '../components/popover/popover';
+import { Toast } from '../components/toast/toast';
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
@@ -9,10 +16,10 @@ let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
-const createController = <Opts extends object, HTMLElm extends any>(tagName: string) => {
+const createController = <Opts extends object, HTMLElm extends any>(tagName: string, customElement?: any) => {
   return {
     create(options: Opts): Promise<HTMLElm> {
-      return createOverlay(tagName, options) as any;
+      return createOverlay(tagName, options, customElement) as any;
     },
     dismiss(data?: any, role?: string, id?: string) {
       return dismissOverlay(document, data, role, tagName, id);
@@ -23,13 +30,13 @@ const createController = <Opts extends object, HTMLElm extends any>(tagName: str
   };
 };
 
-export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert');
-export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet');
-export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading');
-export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal');
-export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker');
-export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
-export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
+export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert', Alert);
+export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet', ActionSheet);
+export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading', Loading);
+export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal', Modal);
+export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker', Picker);
+export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover);
+export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast);
 
 export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   /* tslint:disable-next-line */
@@ -43,10 +50,18 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   }
 };
 
-export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
+export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any): Promise<T> => {
   /* tslint:disable-next-line */
-  if (typeof customElements !== 'undefined') {
-    return customElements.whenDefined(tagName).then(() => {
+  if (typeof window.customElements !== 'undefined') {
+    if (
+      typeof (window as any) !== 'undefined' &&
+      window.customElements &&
+      !window.customElements.get(tagName)
+    ) {
+      window.customElements.define(tagName, customElement);
+    }
+
+    return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
