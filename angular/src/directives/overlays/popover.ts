@@ -12,7 +12,40 @@ import {
 } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
 import { Components } from '@ionic/core';
-export declare interface IonPopover extends Components.IonPopover {}
+export declare interface IonPopover extends Components.IonPopover {
+  /**
+   * Emitted after the popover has presented.
+   */
+  ionPopoverDidPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the popover has presented.
+   */
+  ionPopoverWillPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the popover has dismissed.
+   */
+  ionPopoverWillDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the popover has dismissed.
+   */
+  ionPopoverDidDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+   */
+  didPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the popover has presented. Shorthand for ionPopoverWillPresent.
+   */
+  willPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+   */
+  willDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the popover has dismissed. Shorthand for ionPopoverDidDismiss.
+   */
+  didDismiss: EventEmitter<CustomEvent>;
+}
 @ProxyCmp({
   inputs: [
     'alignment',
@@ -64,17 +97,10 @@ export declare interface IonPopover extends Components.IonPopover {}
 export class IonPopover {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
-  ionPopoverDidPresent!: EventEmitter<CustomEvent>;
-  ionPopoverWillPresent!: EventEmitter<CustomEvent>;
-  ionPopoverWillDismiss!: EventEmitter<CustomEvent>;
-  ionPopoverDidDismiss!: EventEmitter<CustomEvent>;
-  didPresent!: EventEmitter<CustomEvent>;
-  willPresent!: EventEmitter<CustomEvent>;
-  willDismiss!: EventEmitter<CustomEvent>;
-  didDismiss!: EventEmitter<CustomEvent>;
   isCmpOpen: boolean = false;
 
   protected el: HTMLElement;
+
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -87,7 +113,6 @@ export class IonPopover {
       this.isCmpOpen = false;
       c.detectChanges();
     });
-
     proxyOutputs(this, this.el, [
       'ionPopoverDidPresent',
       'ionPopoverWillPresent',
