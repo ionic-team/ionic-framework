@@ -72,6 +72,10 @@
     transition: all 0.5s ease-in-out;
   }
 
+  :host(.modal-card) .modal-wrapper {
+    box-shadow: none;
+  }
+
   :host(.modal-card) .modal-shadow {
     box-shadow: var(--box-shadow);
   }
