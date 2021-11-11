@@ -168,6 +168,9 @@
     async function presentModal(options) {
       const modal = createModal(options);
       await modal.present();
+
+      await modal.onDidDismiss();
+      modal.remove();
     }
 
     async function presentCardModal() {

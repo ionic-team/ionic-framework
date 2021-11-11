@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "6.0.0-rc.0",
+  "version": "6.0.0-rc.2",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -29,7 +29,8 @@
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
+    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js",
+    "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -39,8 +40,8 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "6.0.0-rc.0",
-    "ionicons": "^5.1.2",
+    "@ionic/core": "6.0.0-rc.2",
+    "ionicons": "^6.0.0",
     "tslib": "*"
   },
   "peerDependencies": {

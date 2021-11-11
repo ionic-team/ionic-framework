@@ -7,7 +7,6 @@ import { IonIconInner } from './inner-proxies';
 import { createForwardRef, isPlatform } from './utils';
 
 interface IonIconProps {
-  ariaLabel?: string;
   color?: string;
   flipRtl?: boolean;
   icon?: string;

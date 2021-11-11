@@ -177,7 +177,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when a keyboard input occurred.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+  @Event() ionInput!: EventEmitter<InputEvent>;
 
   /**
    * Emitted when the styles change.
@@ -316,7 +316,7 @@ export class Textarea implements ComponentInterface {
       this.value = this.nativeInput.value;
     }
     this.emitStyle();
-    this.ionInput.emit(ev as KeyboardEvent);
+    this.ionInput.emit(ev as InputEvent);
   }
 
   private onFocus = (ev: FocusEvent) => {

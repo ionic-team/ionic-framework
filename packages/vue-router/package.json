@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "6.0.0-rc.0",
+  "version": "6.0.0-rc.2",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test.spec": "jest",
@@ -9,7 +9,8 @@
     "build": "npm run clean && npm run compile && npm run bundle",
     "clean": "rimraf dist",
     "compile": "npm run tsc",
-    "tsc": "tsc -p ."
+    "tsc": "tsc -p .",
+    "sync": "sh ./scripts/sync.sh"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",

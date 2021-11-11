@@ -95,6 +95,7 @@ export const config: Config = {
         'ion-popover',
         'ion-toast',
 
+        'ion-app',
         'ion-icon'
       ]
     }),
@@ -156,6 +157,7 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       dir: 'components',
+      autoDefineCustomElements: true,
       copy: [{
         src: '../scripts/custom-elements',
         dest: 'components',

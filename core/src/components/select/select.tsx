@@ -360,6 +360,16 @@ export class Select implements ComponentInterface {
         options: this.createPopoverOptions(this.childOpts, value)
       }
     };
+
+    /**
+     * Workaround for Stencil to autodefine ion-select-popover.
+     */
+    // tslint:disable-next-line
+    if (false) {
+      // @ts-ignore
+      document.createElement('ion-select-popover');
+    }
+
     return popoverController.create(popoverOpts);
   }
 

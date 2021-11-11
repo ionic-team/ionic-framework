@@ -289,6 +289,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           ...getClassMap(this.cssClass),
+          'overlay-hidden': true,
           'toast-translucent': this.translucent
         })}
         onIonToastWillDismiss={this.dispatchCancelHandler}

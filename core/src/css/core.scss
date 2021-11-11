@@ -66,17 +66,6 @@ html.ios ion-modal ion-toolbar {
 }
 
 /**
- * .ion-page needs to explicitly set
- * the border radius in WebKit otherwise
- * modals will not show border radius properly.
- * Do not use inherit as that will not
- * work with shadow dom in this case.
- */
-html.ios ion-modal .ion-page {
-  border-radius: 10px 10px 0 0;
-}
-
-/**
  * Card style modal on iPadOS
  * should only have backdrop on first instance.
  */
@@ -84,6 +73,48 @@ html.ios ion-modal .ion-page {
   html.ios ion-modal.modal-card:first-of-type {
     --backdrop-opacity: 0.18;
   }
+}
+
+/**
+ * Subsequent modals should not have a backdrop/box shadow
+ * as it will cause the screen to appear to get progressively
+ * darker. With Ionic 6, declarative modals made it
+ * possible to have multiple non-presented modals in the DOM,
+ * so we could no longer rely on ion-modal:first-of-type.
+ * Here we disable the opacity/box-shadow for every modal
+ * that comes after the first presented modal.
+ *
+ * Note: ion-modal:not(.overlay-hidden):first-of-type
+ * does not match the first modal to not have
+ * the .overlay-hidden class, it will match the
+ * first modal in general only if it does not
+ * have the .overlay-hidden class.
+ * The :nth-child() pseudo-class has support
+ * for selectors which would help us here. At the
+ * time of writing it does not have great cross browser
+ * support.
+ *
+ * Note 2: This should only apply to non-card and
+ * non-sheet modals. Card and sheet modals have their
+ * own criteria for displaying backdrops/box shadows.
+ */
+ion-modal.modal-default:not(.overlay-hidden) ~ ion-modal.modal-default {
+  --backdrop-opacity: 0;
+  --box-shadow: none;
+}
+
+/**
+ * This works around a bug in WebKit where the
+ * content will overflow outside of the bottom border
+ * radius when re-painting. As long as a single
+ * border radius value is set on .ion-page, this
+ * issue does not happen. We set the top left radius
+ * here because the top left corner will always have a
+ * radius no matter the platform.
+ * This behavior only applies to card modals.
+ */
+html.ios ion-modal.modal-card .ion-page {
+  border-top-left-radius: var(--border-radius);
 }
 
 // Ionic Colors

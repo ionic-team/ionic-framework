@@ -73,11 +73,30 @@
   display: flex;
 }
 
+/**
+ * Safari 14 has an issue where Intersection
+ * Observer is incorrectly fired when
+ * unhiding the calendar content.
+ * To workaround this, we set the opacity
+ * of the content to 0 and hide it offscreen.
+ * TODO: This is fixed in Safari 15+, so remove
+ * when Safari 14 support is dropped.
+ */
 :host(.show-month-and-year) .calendar-next-prev,
 :host(.show-month-and-year) .calendar-days-of-week,
 :host(.show-month-and-year) .calendar-body,
 :host(.show-month-and-year) .datetime-time {
-  display: none;
+  @include position(null, null, null, -99999px);
+
+  position: absolute;
+
+  /**
+   * Use visibility instead of
+   * opacity to ensure element
+   * cannot receive focus
+   */
+  visibility: hidden;
+  pointer-events: none;
 }
 
 :host(.datetime-readonly),

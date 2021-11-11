@@ -24,7 +24,7 @@
 
 <body>
   <ion-app>
-    <ion-menu side="start" menu-id="first" id="start-menu" content-id="main" class="menu-part">
+    <ion-menu side="start" menu-id="first" id="start-menu" content-id="main" class="menu-part" aria-label="start menu">
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>Start Menu</ion-title>
@@ -32,6 +32,9 @@
       </ion-header>
       <ion-content>
         <ion-list>
+          <ion-item>
+            <ion-button id="start-menu-button">Button</ion-button>
+          </ion-item>
           <ion-item>Menu Item</ion-item>
           <ion-item>Menu Item</ion-item>
           <ion-item>Menu Item</ion-item>
@@ -82,7 +85,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
+        <ion-button expand="block" id="open-first" onclick="openFirst()">Open Start Menu</ion-button>
         <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
         <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
       </ion-content>

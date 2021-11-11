@@ -540,7 +540,7 @@ ion-input,method,setFocus,setFocus() => Promise<void>
 ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,FocusEvent,true
-ion-input,event,ionInput,KeyboardEvent,true
+ion-input,event,ionInput,InputEvent,true
 ion-input,css-prop,--background
 ion-input,css-prop,--color
 ion-input,css-prop,--padding-bottom
@@ -1331,7 +1331,7 @@ ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
-ion-textarea,event,ionInput,KeyboardEvent,true
+ion-textarea,event,ionInput,InputEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
 ion-textarea,css-prop,--color

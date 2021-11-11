@@ -233,7 +233,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
           // Used internally for styling
           [`picker-${mode}`]: true,
-
+          'overlay-hidden': true,
           ...getClassMap(this.cssClass)
         }}
         onIonBackdropTap={this.onBackdropTap}

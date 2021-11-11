@@ -137,8 +137,8 @@
   color: #{current-color(base)};
 }
 
-:host-context(.ion-invalid).label-stacked:not(.ion-color),
-:host-context(.ion-invalid).label-floating:not(.ion-color) {
+:host-context(.ion-invalid.ion-touched).label-stacked:not(.ion-color),
+:host-context(.ion-invalid.ion-touched).label-floating:not(.ion-color) {
   color: var(--highlight-color-invalid);
 }
 

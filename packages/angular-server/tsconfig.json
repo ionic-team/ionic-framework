@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    "baseUrl": "./packages/angular-server",
     "module": "commonjs",
     "rootDir": "src",
     "outDir": "dist"
