@@ -29,7 +29,7 @@ export class Datetime implements ComponentInterface {
   private datetimeMin: DatetimeData = {};
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
-  private datetimeDefaultSelected: DatetimeData = {};
+  private datetimeDefaultPickerValue: DatetimeData = {};
   private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonDatetimeElement;
@@ -84,7 +84,7 @@ export class Datetime implements ComponentInterface {
    * datetime. For example, the maximum could just be the year, such as `1994`.
    * Defaults to the end of this year.
    */
-  @Prop() defaultSelectedDate?: string;
+  @Prop({ mutable: true }) defaultPickerValue?: string;
 
   /**
    * The display format of the date and time as text that shows
@@ -263,7 +263,7 @@ export class Datetime implements ComponentInterface {
 
 
     this.updateDatetimeValue(this.value);
-    this.updateDatetimeDefaultSelected(this.defaultSelectedDate);
+    this.updateDateTimeDefaultPickerValue(this.defaultPickerValue);
     this.emitStyle();
   }
 
@@ -321,8 +321,8 @@ export class Datetime implements ComponentInterface {
     updateDate(this.datetimeValue, value, this.displayTimezone);
   }
 
-  private updateDatetimeDefaultSelected(defaultSelectedDate: any) {
-    updateDate(this.datetimeDefaultSelected, defaultSelectedDate, this.displayTimezone);
+  private updateDateTimeDefaultPickerValue(defaultPickerValue: any) {
+    updateDate(this.datetimeDefaultPickerValue, defaultPickerValue, this.displayTimezone);
   }
 
   private generatePickerOptions(): PickerOptions {
@@ -425,10 +425,7 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optFromValue = getDateValue(this.datetimeValue, format);
-      const optFromDefault = getDateValue(this.datetimeDefaultSelected, format);
-      const optValue = optFromValue ? optFromValue : optFromDefault;
-
+      const optValue = this.getPreselectedOptValue(format);
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
       return {
@@ -449,6 +446,29 @@ export class Datetime implements ComponentInterface {
       });
 
     return this.validateColumns(divyColumns(columns));
+  }
+
+  /**
+   * Determines the preselected column values in the picker
+   *
+   * The `value` provided will always take precendence over `defaultPickerValue`
+   * DefaultPickerValue
+   * @param format
+   * @returns
+   */
+  private getPreselectedOptValue(format: any) {
+    const optFromValue = getDateValue(this.datetimeValue, format);
+    const optFromDefault = getDateValue(this.datetimeDefaultPickerValue, format);
+
+    if (this.value !== undefined) {
+      return optFromValue;
+    }
+
+    if (this.defaultPickerValue !== undefined) {
+      return optFromDefault;
+    }
+
+    return optFromValue;
   }
 
   private validateColumns(columns: PickerColumn[]) {
