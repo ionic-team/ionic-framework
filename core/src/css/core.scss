@@ -93,8 +93,12 @@ html.ios ion-modal ion-toolbar {
  * for selectors which would help us here. At the
  * time of writing it does not have great cross browser
  * support.
+ *
+ * Note 2: This should only apply to non-card and
+ * non-sheet modals. Card and sheet modals have their
+ * own criteria for displaying backdrops/box shadows.
  */
-ion-modal:not(.overlay-hidden) ~ ion-modal {
+ion-modal.modal-default:not(.overlay-hidden) ~ ion-modal.modal-default {
   --backdrop-opacity: 0;
   --box-shadow: none;
 }
