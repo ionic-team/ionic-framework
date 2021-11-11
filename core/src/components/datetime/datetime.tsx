@@ -29,6 +29,7 @@ export class Datetime implements ComponentInterface {
   private datetimeMin: DatetimeData = {};
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
+  private datetimeDefaultSelected: DatetimeData = {};
   private buttonEl?: HTMLButtonElement;
 
   @Element() el!: HTMLIonDatetimeElement;
@@ -74,6 +75,16 @@ export class Datetime implements ComponentInterface {
    * Defaults to the end of this year.
    */
   @Prop({ mutable: true }) max?: string;
+
+  /**
+   * The default date selected when the picker is opened and the value of the
+   * datetime is null. Value must be a date string following the
+   * [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
+   * `1996-12-19`. The format does not have to be specific to an exact
+   * datetime. For example, the maximum could just be the year, such as `1994`.
+   * Defaults to the end of this year.
+   */
+  @Prop() defaultSelectedDate?: string;
 
   /**
    * The display format of the date and time as text that shows
@@ -250,7 +261,9 @@ export class Datetime implements ComponentInterface {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
+
     this.updateDatetimeValue(this.value);
+    this.updateDatetimeDefaultSelected(this.defaultSelectedDate);
     this.emitStyle();
   }
 
@@ -306,6 +319,10 @@ export class Datetime implements ComponentInterface {
 
   private updateDatetimeValue(value: any) {
     updateDate(this.datetimeValue, value, this.displayTimezone);
+  }
+
+  private updateDatetimeDefaultSelected(defaultSelectedDate: any) {
+    updateDate(this.datetimeDefaultSelected, defaultSelectedDate, this.displayTimezone);
   }
 
   private generatePickerOptions(): PickerOptions {
@@ -408,7 +425,9 @@ export class Datetime implements ComponentInterface {
 
       // cool, we've loaded up the columns with options
       // preselect the option for this column
-      const optValue = getDateValue(this.datetimeValue, format);
+      const optFromValue = getDateValue(this.datetimeValue, format);
+      const optFromDefault = getDateValue(this.datetimeDefaultSelected, format);
+      const optValue = optFromValue ? optFromValue : optFromDefault;
 
       const selectedIndex = colOptions.findIndex(opt => opt.value === optValue);
 
