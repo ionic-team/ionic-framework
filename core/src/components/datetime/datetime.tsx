@@ -261,7 +261,6 @@ export class Datetime implements ComponentInterface {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
-
     this.updateDatetimeValue(this.value);
     this.updateDateTimeDefaultPickerValue(this.defaultPickerValue);
     this.emitStyle();
@@ -452,9 +451,6 @@ export class Datetime implements ComponentInterface {
    * Determines the preselected column values in the picker
    *
    * The `value` provided will always take precendence over `defaultPickerValue`
-   * DefaultPickerValue
-   * @param format
-   * @returns
    */
   private getPreselectedOptValue(format: any) {
     const optFromValue = getDateValue(this.datetimeValue, format);
