@@ -52,16 +52,16 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any): Promise<T> => {
   /* tslint:disable-next-line */
-  if (typeof customElements !== 'undefined') {
+  if (typeof window.customElements !== 'undefined') {
     if (
       typeof (window as any) !== 'undefined' &&
       window.customElements &&
       !window.customElements.get(tagName)
     ) {
-      customElements.define(tagName, customElement);
+      window.customElements.define(tagName, customElement);
     }
 
-    return customElements.whenDefined(tagName).then(() => {
+    return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
