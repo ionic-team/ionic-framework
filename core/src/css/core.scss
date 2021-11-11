@@ -99,6 +99,20 @@ ion-modal:not(.overlay-hidden) ~ ion-modal {
   --box-shadow: none;
 }
 
+/**
+ * This works around a bug in WebKit where the
+ * content will overflow outside of the bottom border
+ * radius when re-painting. As long as a single
+ * border radius value is set on .ion-page, this
+ * issue does not happen. We set the top left radius
+ * here because the top left corner will always have a
+ * radius no matter the platform.
+ * This behavior only applies to card modals.
+ */
+html.ios ion-modal.modal-card .ion-page {
+  border-top-left-radius: var(--border-radius);
+}
+
 // Ionic Colors
 // --------------------------------------------------
 // Generates the color classes and variables based on the
