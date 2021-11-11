@@ -42,6 +42,7 @@ export {
   mdTransitionAnimation,
   setupConfig,
   IonicSwiper,
+  IonicSlides,
   getPlatforms,
   isPlatform,
   menuController,
