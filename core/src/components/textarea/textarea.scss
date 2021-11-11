@@ -76,10 +76,32 @@
 // --------------------------------------------------
 
 .textarea-wrapper {
+  display: grid;
+
   min-width: inherit;
   max-width: inherit;
   min-height: inherit;
   max-height: inherit;
+
+  &::after {
+    white-space: pre-wrap;
+
+    content: attr(data-replicated-value) " ";
+
+    visibility: hidden;
+  }
+}
+
+.textarea-wrapper::after,
+.native-textarea {
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
+  @include text-inherit();
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 .native-textarea {
@@ -102,6 +124,8 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
+
+  overflow: hidden;
 
   &::placeholder {
     @include padding(0);
