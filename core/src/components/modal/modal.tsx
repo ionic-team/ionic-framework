@@ -557,6 +557,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
     const { presented, modalId } = this;
+    const isCardModal = presentingElement !== undefined && mode === 'ios';
 
     return (
       <Host
@@ -569,7 +570,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         }}
         class={{
           [mode]: true,
-          [`modal-card`]: presentingElement !== undefined && mode === 'ios',
+          ['modal-default']: !isCardModal && !isSheetModal,
+          [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
           'modal-interactive': presented,
