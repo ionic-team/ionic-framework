@@ -107,7 +107,7 @@ export const config: Config = {
     {
       type: 'docs-vscode',
       file: 'dist/html.html-data.json',
-      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/master/core/',
+      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/main/core/',
     },
     {
       type: 'dist',
