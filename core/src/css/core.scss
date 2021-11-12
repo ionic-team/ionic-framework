@@ -201,3 +201,10 @@ ion-card-header.ion-color .ion-inherit-color {
 .md .menu-content-push {
   box-shadow: $menu-md-box-shadow;
 }
+
+// Safari/iOS 15 changes the appearance of input[type="date"].
+// For backwards compatibility from Ionic 5/Safari 14 designs,
+// we override the appearance only when using within an ion-input.
+ion-input input::-webkit-date-and-time-value {
+  text-align: start;
+}
