@@ -107,8 +107,6 @@
 .native-textarea {
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include text-inherit();
 
   display: block;
 
