@@ -31,6 +31,12 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   if (userConfig._ce) {
     platformHelpers.ce = userConfig._ce;
   }
+  if (userConfig._raf) {
+    platformHelpers.raf = userConfig._raf;
+  }
+  if (userConfig._jmp) {
+    platformHelpers.jmp = userConfig._jmp;
+  }
   setPlatformHelpers(platformHelpers);
 
   // create the Ionic.config from raw config object (if it exists)
