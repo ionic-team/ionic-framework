@@ -145,7 +145,8 @@ export class Textarea implements ComponentInterface {
   @Prop() wrap?: 'hard' | 'soft' | 'off';
 
   /**
-   * If `true`, the element height will increase based on the value.
+   * If `true`, the textarea container will grow and shrink based
+   * on the contents of the textarea.
    */
   @Prop() autoGrow = false;
 
@@ -221,17 +222,6 @@ export class Textarea implements ComponentInterface {
     this.runAutoGrow();
   }
 
-  private runAutoGrow() {
-    const nativeInput = this.nativeInput;
-    if (nativeInput && this.autoGrow) {
-      writeTask(() => {
-        if (this.textareaWrapper) {
-          this.textareaWrapper.dataset.replicatedValue = this.value ?? '';
-        }
-      });
-    }
-  }
-
   /**
    * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
    * `textarea.focus()`.
@@ -273,6 +263,18 @@ export class Textarea implements ComponentInterface {
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus
     });
+  }
+
+  private runAutoGrow() {
+    if (this.nativeInput && this.autoGrow) {
+      writeTask(() => {
+        if (this.textareaWrapper) {
+          // Replicated value is an attribute to be used in the stylesheet
+          // to set the inner contents of a pseudo element.
+          this.textareaWrapper.dataset.replicatedValue = this.value ?? '';
+        }
+      });
+    }
   }
 
   /**
