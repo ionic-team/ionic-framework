@@ -29,7 +29,7 @@
     "@angular/platform-browser-dynamic": "^12.2.8",
     "@angular/platform-server": "^12.2.8",
     "@angular/router": "^12.2.8",
-    "@ionic/angular": "^5.3.1",
+    "@ionic/angular": "^6.0.0-rc.2",
     "@ionic/angular-server": "^5.3.1",
     "@nguniversal/express-engine": "^12.1.1",
     "angular-in-memory-web-api": "^0.11.0",

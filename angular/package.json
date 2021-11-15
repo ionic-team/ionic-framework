@@ -40,8 +40,8 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
-    "ionicons": "^5.1.2",
     "@ionic/core": "6.0.0-rc.2",
+    "ionicons": "^6.0.0",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.0.0"
   },

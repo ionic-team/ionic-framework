@@ -1,7 +1,7 @@
 // Re-exports from ionic/core
 
 // UTILS
-export { IonicSafeString, getPlatforms, isPlatform, createAnimation } from '@ionic/core';
+export { IonicSafeString, getPlatforms, isPlatform, createAnimation } from '@ionic/core/components';
 
 // CORE TYPES
 export {
@@ -18,4 +18,4 @@ export {
   mdTransitionAnimation,
   iosTransitionAnimation,
   NavComponentWithProps,
-} from '@ionic/core';
+} from '@ionic/core/components';

@@ -1,4 +1,5 @@
 import { initialize } from '@ionic/core/components';
+import 'ionicons';
 
 // DIRECTIVES
 export { BooleanValueAccessorDirective as BooleanValueAccessor } from './directives/control-value-accessors/boolean-value-accessor';
@@ -55,7 +56,6 @@ export {
   mdTransitionAnimation,
   setupConfig,
   IonicSwiper,
-  IonicSlides,
   getPlatforms,
   isPlatform,
   getTimeGivenProgression,
@@ -143,4 +143,4 @@ if (typeof window !== 'undefined') {
  */
 document.documentElement.classList.add('ion-ce');
 
-initialize();
+// initialize();
