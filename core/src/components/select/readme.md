@@ -1428,6 +1428,29 @@ Type: `Promise<any>`
 | `--placeholder-opacity` | Opacity of the select placeholder text                                                                    |
 
 
+## Dependencies
+
+### Depends on
+
+- ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select --> ion-select-popover
+  ion-select-popover --> ion-item
+  ion-select-popover --> ion-checkbox
+  ion-select-popover --> ion-label
+  ion-select-popover --> ion-radio-group
+  ion-select-popover --> ion-radio
+  ion-select-popover --> ion-list
+  ion-select-popover --> ion-list-header
+  ion-item --> ion-icon
+  ion-item --> ion-ripple-effect
+  ion-item --> ion-note
+  style ion-select fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

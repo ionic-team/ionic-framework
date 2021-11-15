@@ -84,7 +84,7 @@ describe('Location History', () => {
     locationHistory.add({ pathname: '/home' });
     locationHistory.add({ pathname: '/login' });
 
-    expect(locationHistory.canGoBack(1)).toEqual(true);
-    expect(locationHistory.canGoBack(2)).toEqual(false);
+    expect(locationHistory.canGoBack(1, 0, 1)).toEqual(true);
+    expect(locationHistory.canGoBack(2, 0, 1)).toEqual(false);
   });
 });

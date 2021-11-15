@@ -12,7 +12,41 @@ import {
 } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
 import { Components } from '@ionic/core';
-export declare interface IonModal extends Components.IonModal {}
+
+export declare interface IonModal extends Components.IonModal {
+  /**
+   * Emitted after the modal has presented.
+   **/
+  ionModalDidPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the modal has presented.
+   */
+  ionModalWillPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the modal has dismissed.
+   */
+  ionModalWillDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal has dismissed.
+   */
+  ionModalDidDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
+   */
+  didPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the modal has presented. Shorthand for ionModalWillPresent.
+   */
+  willPresent: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
+   */
+  willDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
+   */
+  didDismiss: EventEmitter<CustomEvent>;
+}
 @ProxyCmp({
   inputs: [
     'animated',
@@ -64,17 +98,10 @@ export declare interface IonModal extends Components.IonModal {}
 export class IonModal {
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
-  ionModalDidPresent!: EventEmitter<CustomEvent>;
-  ionModalWillPresent!: EventEmitter<CustomEvent>;
-  ionModalWillDismiss!: EventEmitter<CustomEvent>;
-  ionModalDidDismiss!: EventEmitter<CustomEvent>;
-  didPresent!: EventEmitter<CustomEvent>;
-  willPresent!: EventEmitter<CustomEvent>;
-  willDismiss!: EventEmitter<CustomEvent>;
-  didDismiss!: EventEmitter<CustomEvent>;
   isCmpOpen: boolean = false;
 
   protected el: HTMLElement;
+
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;

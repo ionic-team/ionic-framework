@@ -133,7 +133,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private inputModeChange = (ev: PickerInternalCustomEvent) => {
     if (!this.numericInput) { return; }
 
-    const { inputMode, inputModeColumn } = ev.detail;
+    const { useInputMode, inputModeColumn } = ev.detail;
 
     /**
      * If inputModeColumn is undefined then this means
@@ -141,7 +141,7 @@ export class PickerColumnInternal implements ComponentInterface {
      */
     const isColumnActive = inputModeColumn === undefined || inputModeColumn === this.el;
 
-    if (!inputMode || !isColumnActive) {
+    if (!useInputMode || !isColumnActive) {
       this.isActive = false;
       return;
     }

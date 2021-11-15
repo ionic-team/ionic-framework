@@ -66,17 +66,6 @@ html.ios ion-modal ion-toolbar {
 }
 
 /**
- * .ion-page needs to explicitly set
- * the border radius in WebKit otherwise
- * modals will not show border radius properly.
- * Do not use inherit as that will not
- * work with shadow dom in this case.
- */
-html.ios ion-modal .ion-page {
-  border-radius: 10px 10px 0 0;
-}
-
-/**
  * Card style modal on iPadOS
  * should only have backdrop on first instance.
  */
@@ -104,10 +93,28 @@ html.ios ion-modal .ion-page {
  * for selectors which would help us here. At the
  * time of writing it does not have great cross browser
  * support.
+ *
+ * Note 2: This should only apply to non-card and
+ * non-sheet modals. Card and sheet modals have their
+ * own criteria for displaying backdrops/box shadows.
  */
-ion-modal:not(.overlay-hidden) ~ ion-modal {
+ion-modal.modal-default:not(.overlay-hidden) ~ ion-modal.modal-default {
   --backdrop-opacity: 0;
   --box-shadow: none;
+}
+
+/**
+ * This works around a bug in WebKit where the
+ * content will overflow outside of the bottom border
+ * radius when re-painting. As long as a single
+ * border radius value is set on .ion-page, this
+ * issue does not happen. We set the top left radius
+ * here because the top left corner will always have a
+ * radius no matter the platform.
+ * This behavior only applies to card modals.
+ */
+html.ios ion-modal.modal-card .ion-page {
+  border-top-left-radius: var(--border-radius);
 }
 
 // Ionic Colors
@@ -302,4 +309,11 @@ ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-prev
 ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-expanding:first-of-type,
 ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-expanded:first-of-type {
   margin-top: 0;
+}
+
+// Safari/iOS 15 changes the appearance of input[type="date"].
+// For backwards compatibility from Ionic 5/Safari 14 designs,
+// we override the appearance only when using within an ion-input.
+ion-input input::-webkit-date-and-time-value {
+  text-align: start;
 }
