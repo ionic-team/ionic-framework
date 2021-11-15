@@ -1,4 +1,3 @@
-import { initialize } from '@ionic/core/components';
 import 'ionicons';
 
 // DIRECTIVES
@@ -130,17 +129,4 @@ export {
   ToggleCustomEvent,
 } from '@ionic/core/components';
 
-/**
-// We need to use the promise
- * By default Ionic Framework hides elements that
-if (typeof window !== 'undefined') {
- * are not hydrated, but in the CE build there is no
-  defineCustomElements(window);
- * hydration.
-}
- * TODO: Remove when all integrations have been
- * migrated to CE build.
- */
 document.documentElement.classList.add('ion-ce');
-
-// initialize();

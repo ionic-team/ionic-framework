@@ -21,28 +21,10 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
         _rel: (elm, eventName, cb, opts) => {
           elm.removeEventListener(eventName, cb, opts);
         },
-        // _ce: ce,
-        raf: raf
+        _jmp: (h: any) => zone.runOutsideAngular(h),
+        _raf: raf
       });
 
-      // TODO determine if we need to apply polyfills
-
-
-
-      // return applyPolyfills().then(() => {
-      //   return defineCustomElements(win, {
-      //     exclude: ['ion-tabs', 'ion-tab'],
-      //     syncQueue: true,
-      //     raf,
-      //     jmp: (h: any) => zone.runOutsideAngular(h),
-      //     ael(elm, eventName, cb, opts) {
-      //       (elm as any)[aelFn](eventName, cb, opts);
-      //     },
-          // rel(elm, eventName, cb, opts) {
-          //   elm.removeEventListener(eventName, cb, opts);
-          // },
-      //   });
-      // });
     }
   };
 };

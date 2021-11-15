@@ -8,6 +8,8 @@ import { VirtualHeader } from './virtual-header';
 import { VirtualItem } from './virtual-item';
 import { VirtualContext } from './virtual-utils';
 
+import { IonVirtualScroll as IonVirtualScrollCmp } from "@ionic/core/components/ion-virtual-scroll";
+
 export declare interface IonVirtualScroll {
   /**
    * It is important to provide this
@@ -114,7 +116,7 @@ export declare interface IonVirtualScroll {
 
 @ProxyCmp({
   tagName: 'ion-virtual-scroll',
-  customElement: undefined,
+  customElement: IonVirtualScrollCmp,
   inputs: ['approxItemHeight', 'approxHeaderHeight', 'approxFooterHeight', 'headerFn', 'footerFn', 'items', 'itemHeight', 'headerHeight', 'footerHeight'],
   methods: ['checkEnd', 'checkRange', 'positionForItem']
 })
