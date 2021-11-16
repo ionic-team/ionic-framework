@@ -309,12 +309,6 @@ button, a {
   z-index: 1;
 }
 
-// Setting pointer-events to none allows the label
-// to be clicked to open the select interface
-::slotted(ion-label) {
-  pointer-events: none;
-}
-
 ::slotted(ion-label:not([slot="end"])) {
   flex: 1;
 }
