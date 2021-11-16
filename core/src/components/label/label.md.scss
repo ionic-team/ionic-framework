@@ -69,6 +69,7 @@
   background-color: $item-md-background;
 
   overflow: visible;
+  // Places the label on top of the item outline
   z-index: 3;
 
   &::before,
