@@ -12,15 +12,18 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
     let routerOutlet;
 
     /**
-     * Developers must pass an ion-router-outlet
+     * Developers must pass an ion-router-outlet or router-view
      * inside of ion-tabs.
      */
     if (slottedContent && slottedContent.length > 0) {
       routerOutlet = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'IonRouterOutlet');
+      if (!routerOutlet) {
+        routerOutlet = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'RouterView');
+      }
     }
 
     if (!routerOutlet) {
-      throw new Error('IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
+      throw new Error('IonTabs must contain an IonRouterOutlet or RouterView. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
     }
 
     let childrenToRender = [
