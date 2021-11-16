@@ -11,9 +11,7 @@ class IonicConnector extends ScreenshotConnector {
     const ws = fs.createWriteStream(this.masterBuildFilePath);
     const p = `/data/builds/master.json?ts=${Date.now()}`;
     await this.downloadToStream(ws, p);
-    this.logger.debug('downloadToStream successful');
     const masterBuild = await this.getMasterBuild();
-    this.logger.debug('getMasterBuild successful');
 
     const masterImageNames = masterBuild.screenshots.map(s => s.image);
     const missingImages = masterImageNames.filter(masterImageName => {
@@ -22,15 +20,11 @@ class IonicConnector extends ScreenshotConnector {
         fs.accessSync(masterImagePath);
         return false;
       } catch (e) {}
-      return true;
+      return true
     });
-
-    this.logger.debug(`number of missing images: ${missingImages.length}`);
 
     while (missingImages.length > 0) {
       const images = missingImages.splice(0, 20);
-
-      this.logger.debug(`loading chunk of images[${images.length}], ${missingImages.length} missing images remaining`);
 
       await Promise.all(images.map(async image => {
         this.logger.debug(`downloading: ${image}`);
@@ -42,8 +36,6 @@ class IonicConnector extends ScreenshotConnector {
           throw e;
         }
       }));
-
-      this.logger.debug('loading next chunk in array');
     }
 
     timespan.finish(`pull master screenshot images finished`);
