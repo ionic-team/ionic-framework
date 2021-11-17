@@ -318,7 +318,7 @@ function copyPackageToDist(tasks, packages) {
   });
 }
 
-function publishPackages(tasks, packages, version, npmTag = 'latest') {
+function verifyPackages(tasks, packages, version, npmTag = 'latest') {
   // verify version
   packages.forEach(package => {
     if (package === 'core') {
@@ -333,6 +333,26 @@ function publishPackages(tasks, packages, version, npmTag = 'latest') {
         if (version !== pkg.version) {
           throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
         }
+      }
+    });
+  });
+}
+
+function publishPackages(tasks, packages, version, npmTag = 'latest') {
+  verifyPackages(tasks, packages, version, npmTag);
+
+  // Publish
+  packages.forEach(package => {
+    let projectRoot = projectPath(package);
+
+    if (package === 'packages/angular-server' || package === 'angular') {
+      projectRoot = path.join(projectRoot, 'dist')
+    }
+
+    tasks.push({
+      title: `${package}: publish to ${npmTag} tag`,
+      task: async () => {
+        await execa('npm', ['publish', '--tag', npmTag], { cwd: projectRoot });
       }
     });
   });
@@ -379,6 +399,7 @@ module.exports = {
   preparePackage,
   projectPath,
   publishPackages,
+  verifyPackages,
   readPkg,
   rootDir,
   updateDependency,

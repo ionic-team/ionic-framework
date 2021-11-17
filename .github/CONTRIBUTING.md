@@ -36,7 +36,7 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 ## Contributing Etiquette
 
-Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
+Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/main/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
 ## Creating an Issue
@@ -93,7 +93,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 1. [Download the installer](https://nodejs.org/) for the LTS version of Node.js. This is the best way to also [install npm](https://blog.npmjs.org/post/85484771375/how-to-install-npm#_=_).
 2. Fork this repository.
 3. Clone your fork.
-4. Create a new branch from master for your change.
+4. Create a new branch from main for your change.
 5. Navigate into the directory of the package you wish to modify (core, angular, etc.).
 6. Run `npm install` to install dependencies for this package.
 7. Follow the steps for the specific package below.
@@ -219,14 +219,14 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 ### Submit Pull Request
 
-1. [Create a new pull request](https://github.com/ionic-team/ionic/compare) with the `master` branch as the `base`. You may need to click on `compare across forks` to find your changes.
+1. [Create a new pull request](https://github.com/ionic-team/ionic/compare) with the `main` branch as the `base`. You may need to click on `compare across forks` to find your changes.
 2. See the [Creating a pull request from a fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) GitHub help article for more information.
 3. Please fill out the provided Pull Request template to the best of your ability and include any issues that are related.
 
 
 ## Commit Message Guidelines
 
-We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).
+We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/main/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit).
 
 ### Commit Message Format
 

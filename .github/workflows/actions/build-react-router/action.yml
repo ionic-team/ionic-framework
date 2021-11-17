@@ -28,6 +28,15 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-react
+        path: ./packages/react
+        filename: ReactBuild.zip
+    - name: Install Dependencies
+      run: npm install --legacy-peer-deps
+      shell: bash
+      working-directory: ./packages/react-router
     - name: Sync
       run: npm run sync
       shell: bash
