@@ -320,7 +320,11 @@ function copyPackageToDist(tasks, packages) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 function verifyPackages(tasks, packages, version, npmTag = 'latest') {
+=======
+function publishPackages(tasks, packages, version, npmTag = 'latest') {
+>>>>>>> parent of 2d7042760 (build(): publish to prod but not dev builds (#24232))
   // verify version
 =======
 function publishPackages(tasks, packages, version, npmTag = 'latest') {
@@ -342,26 +346,6 @@ function publishPackages(tasks, packages, version, npmTag = 'latest') {
       }
     });
   });
-
-  // Publish
-  packages.forEach(package => {
-    let projectRoot = projectPath(package);
-
-    if (package === 'packages/angular-server' || package === 'angular') {
-      projectRoot = path.join(projectRoot, 'dist')
-    }
-
-    tasks.push({
-      title: `${package}: publish to ${npmTag} tag`,
-      task: async () => {
-        await execa('npm', ['publish', '--tag', npmTag], { cwd: projectRoot });
-      }
-    });
-  });
-}
-
-function publishPackages(tasks, packages, version, npmTag = 'latest') {
-  verifyPackages(tasks, packages, version, npmTag);
 
   // Publish
   packages.forEach(package => {
@@ -420,7 +404,6 @@ module.exports = {
   preparePackage,
   projectPath,
   publishPackages,
-  verifyPackages,
   readPkg,
   rootDir,
   updateDependency,
