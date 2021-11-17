@@ -319,17 +319,8 @@ function copyPackageToDist(tasks, packages) {
   });
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-function verifyPackages(tasks, packages, version, npmTag = 'latest') {
-=======
-function publishPackages(tasks, packages, version, npmTag = 'latest') {
->>>>>>> parent of 2d7042760 (build(): publish to prod but not dev builds (#24232))
-  // verify version
-=======
 function publishPackages(tasks, packages, version, npmTag = 'latest') {
   // first verify version
->>>>>>> parent of 64dd070d6 (build(dev-build): correctly pass secrets to publish task (#24194))
   packages.forEach(package => {
     if (package === 'core') {
       return;
