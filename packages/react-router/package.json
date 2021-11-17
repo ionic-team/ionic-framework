@@ -47,7 +47,6 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "5.9.0",
     "@ionic/react": "5.8.5",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@testing-library/jest-dom": "^5.11.6",
