@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "5.8.5",
+  "version": "5.9.0",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -47,7 +47,6 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "5.8.5",
     "@ionic/react": "5.8.5",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@testing-library/jest-dom": "^5.11.6",
