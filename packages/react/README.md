@@ -54,4 +54,4 @@ ionic capacitor open <android|ios>
 
 ## License
 
-- [MIT](https://raw.githubusercontent.com/ionic-team/ionic/master/LICENSE)
+- [MIT](https://raw.githubusercontent.com/ionic-team/ionic/main/LICENSE)
