@@ -1,3 +1,12 @@
+## [5.9.1](https://github.com/ionic-team/ionic/compare/v5.9.0...v5.9.1) (2021-11-17)
+
+
+### Bug Fixes
+
+* **angular:** build is now in correct directory ([#24236](https://github.com/ionic-team/ionic/issues/24236)) ([1d983fa](https://github.com/ionic-team/ionic/commit/1d983fa4b3ef0457dc192f376e380c77b611d058))
+
+
+
 # [5.9.0](https://github.com/ionic-team/ionic/compare/v5.8.5...v5.9.0) (2021-11-17)
 
 
