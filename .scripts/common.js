@@ -199,16 +199,6 @@ function preparePackage(tasks, package, version, install) {
   });
 }
 
-function installDevPackage(tasks, package) {
-  const projectRoot = projectPath(package);
-  const pkg = readPkg(package);
-
-  tasks.push({
-    title: `${pkg.name}: npm install`,
-    task: () => execa('npm', ['install', '--legacy-peer-deps'], { cwd: projectRoot })
-  });
-}
-
 function prepareDevPackage(tasks, package, version) {
   const projectRoot = projectPath(package);
   const pkg = readPkg(package);
@@ -221,20 +211,20 @@ function prepareDevPackage(tasks, package, version) {
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core', '--legacy-peer-deps'], { cwd: projectRoot })
       });
+
+      if (package === 'packages/react-router') {
+        projectTasks.push({
+          title: `${pkg.name}: npm link @ionic/react`,
+          task: () => execa('npm', ['link', '@ionic/react', '--legacy-peer-deps'], { cwd: projectRoot })
+        });
+      }
     }
 
     projectTasks.push({
       title: `${pkg.name}: update ionic/core dep to ${version}`,
       task: () => {
-
-        /**
-         * At this point, the version for the package
-         * has been changed so we need to re-fetch the
-         * package contents so we do not overwrite it.
-         */
-        const updatedPackage = readPkg(package);
-        updateDependency(updatedPackage, '@ionic/core', version);
-        writePkg(package, updatedPackage);
+        updateDependency(pkg, '@ionic/core', version);
+        writePkg(package, pkg);
       }
     });
 
@@ -243,7 +233,7 @@ function prepareDevPackage(tasks, package, version) {
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    if (package === 'core') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -288,6 +278,17 @@ function updatePackageVersions(tasks, packages, version) {
         }
       });
     }
+
+    if (package === 'packages/react-router') {
+      tasks.push({
+        title: `${package} update @ionic/react dependency, if present ${dim(`(${version})`)}`,
+        task: async () => {
+          const pkg = readPkg(package);
+          updateDependency(pkg, '@ionic/react', version);
+          writePkg(package, pkg);
+        }
+      });
+    }
   });
 }
 
@@ -318,8 +319,8 @@ function copyPackageToDist(tasks, packages) {
   });
 }
 
-function verifyPackages(tasks, packages, version, npmTag = 'latest') {
-  // verify version
+function publishPackages(tasks, packages, version, npmTag = 'latest') {
+  // first verify version
   packages.forEach(package => {
     if (package === 'core') {
       return;
@@ -336,10 +337,6 @@ function verifyPackages(tasks, packages, version, npmTag = 'latest') {
       }
     });
   });
-}
-
-function publishPackages(tasks, packages, version, npmTag = 'latest') {
-  verifyPackages(tasks, packages, version, npmTag);
 
   // Publish
   packages.forEach(package => {
@@ -385,7 +382,6 @@ function copyCDNLoader(tasks, version) {
 }
 
 module.exports = {
-  installDevPackage,
   checkTestDist,
   checkGit,
   askNpmTag,
@@ -399,7 +395,6 @@ module.exports = {
   preparePackage,
   projectPath,
   publishPackages,
-  verifyPackages,
   readPkg,
   rootDir,
   updateDependency,
