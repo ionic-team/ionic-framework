@@ -1,0 +1,11 @@
+
+# npm packages in the root of the project and subdirectories
+node_modules/
+
+# output of building
+dist/
+loader/
+hydrate/
+
+# generated screenshot files
+/screenshot/
