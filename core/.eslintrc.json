@@ -1,28 +1,31 @@
 {
   "root": true,
-  "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-  },
-  "extends": [
-      "plugin:react/recommended",
-      "prettier"
-  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
       "project": "tsconfig.json",
       "sourceType": "module"
   },
   "plugins": [
-      "eslint-plugin-no-null",
-      "eslint-plugin-prefer-arrow",
-      "eslint-plugin-react",
-      "eslint-plugin-jsdoc",
-      "eslint-plugin-import",
-      "eslint-plugin-unicorn",
-      "@typescript-eslint",
+    "eslint-plugin-no-null",
+    "eslint-plugin-prefer-arrow",
+    "eslint-plugin-react",
+    "eslint-plugin-jsdoc",
+    "eslint-plugin-import",
+    "eslint-plugin-unicorn",
+    "@typescript-eslint"
   ],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
+  "settings": {
+    "react": {
+      "pragma": "h"
+    }
+  },
   "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -105,7 +108,11 @@
       "@typescript-eslint/prefer-namespace-keyword": "error",
       "@typescript-eslint/quotes": [
           "error",
-          "single"
+          "single",
+          {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+          }
       ],
       "@typescript-eslint/triple-slash-reference": [
           "error",
@@ -147,7 +154,7 @@
       "import/no-deprecated": "warn",
       "import/no-unassigned-import": "off",
       "import/order": "error",
-      "indent": "error",
+      "indent": "off",
       "jsdoc/check-alignment": "error",
       "jsdoc/check-indentation": "error",
       "jsdoc/newline-after-description": "error",
@@ -203,7 +210,7 @@
       "prefer-const": "error",
       "prefer-object-spread": "error",
       "quote-props": "off",
-      "quotes": "error",
+      "quotes": "off",
       "radix": "error",
       "react/jsx-boolean-value": [
           "error",
@@ -219,6 +226,7 @@
       "react/jsx-no-bind": "off",
       "react/jsx-wrap-multilines": "off",
       "react/self-closing-comp": "off",
+      "react/react-in-jsx-scope": "off",
       "space-in-parens": [
           "error",
           "never"
@@ -234,27 +242,6 @@
       ],
       "unicorn/prefer-ternary": "error",
       "use-isnan": "error",
-      "valid-typeof": "off",
-      "@typescript-eslint/tslint/config": [
-          "error",
-          {
-              "rules": {
-                  "encoding": true,
-                  "strict-type-predicates": true,
-                  "whitespace": [
-                      true,
-                      "check-branch",
-                      "check-decl",
-                      "check-operator",
-                      "check-module",
-                      "check-separator",
-                      "check-rest-spread",
-                      "check-type",
-                      "check-type-operator",
-                      "check-preblock"
-                  ]
-              }
-          }
-      ]
+      "valid-typeof": "off"
   }
 }
