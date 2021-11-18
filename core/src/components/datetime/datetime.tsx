@@ -291,6 +291,9 @@ export class Datetime implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
+    if (this.hasValue()) {
+      this.processValue(this.value);
+    }
     this.emitStyle();
     this.ionChange.emit({
       value: this.value
@@ -949,6 +952,10 @@ export class Datetime implements ComponentInterface {
 
   private onBlur = () => {
     this.ionBlur.emit();
+  }
+
+  private hasValue = () => {
+    return this.value != null && this.value !== '';
   }
 
   private nextMonth = () => {
