@@ -292,7 +292,30 @@ export class Datetime implements ComponentInterface {
   @Watch('value')
   protected valueChanged() {
     if (this.hasValue()) {
-      this.processValue(this.value);
+      const { month, day, year, hour, minute, tzOffset } = parseDate(this.value);
+      /**
+       * Mutates the activeParts to re-render the active selected date
+       * correctly when the value is programmatically updated.
+       */
+      this.activeParts = {
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        tzOffset,
+        ampm: hour >= 12 ? 'pm' : 'am'
+      }
+      /**
+       * We only mutate the hour, minute and am/pm of the workingParts so that the
+       * time dial can correctly reflect the updated value when active.
+       */
+      this.workingParts = {
+        ...this.workingParts,
+        hour,
+        minute,
+        ampm: hour >= 12 ? 'pm' : 'am'
+      }
     }
     this.emitStyle();
     this.ionChange.emit({
