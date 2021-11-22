@@ -35,6 +35,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Tabs Router Outlet](#tabs-router-outlet)
   * [Overlay Events](#overlay-events)
   * [Utility Function Types](#utility-function-types)
+- [React](#react)
+  * [App Initialization](#app-initialization)
 - [Browser and Platform Support](#browser-and-platform-support)
 
 
@@ -168,6 +170,31 @@ The `experimentalTransitionShadow` config option has been removed. The transitio
 
 The `Config.set()` method has been removed. See https://ionicframework.com/docs/angular/config for examples on how to set config globally, per-component, and per-platform.
 
+### React
+
+#### App Initialization
+
+All Ionic React applications must now import `setupIonicReact` from `@ionic/react` and call it. If you are setting a custom config with `setupConfig`, pass your config directly to `setupIonicReact` instead:
+
+**Old**
+```javascript
+import { setupConfig } from '@ionic/react';
+
+setupConfig({
+  mode: 'md'
+})
+```
+
+**New**
+```javascript
+import { setupIonicReact } from '@ionic/react';
+
+setupIonicReact({
+  mode: 'md'
+})
+```
+
+Note that all Ionic React applications must call `setupIonicReact` even if they are not setting custom configuration.
 
 ### Vue
 
