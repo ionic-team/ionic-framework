@@ -182,7 +182,7 @@ export class Content implements ComponentInterface {
     if (this.scrollEl) {
       return Promise.resolve(this.scrollEl);
     } else {
-      return new Promise(resolve => raf(resolve(this.scrollEl)));
+      return new Promise(resolve => raf(() => resolve(this.scrollEl)));
     }
   }
 
