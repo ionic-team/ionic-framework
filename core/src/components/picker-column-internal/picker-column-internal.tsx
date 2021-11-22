@@ -150,6 +150,25 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   /**
+   * When the user uses the up/down arrow keys on an active
+   * picker column, move the active item up/down to allow selection
+   * of a value with only the keyboard.
+   */
+  private pickerColumnKeydown = ({ key }: KeyboardEvent) => {
+    // `Up` key can be removed when deprecating Edge 78
+    if (key === 'ArrowUp' || key === 'Up') {
+      this.centerPickerItemInView(
+        this.activeItem?.previousElementSibling as HTMLElement
+      );
+    // `Down` key can be removed when deprecating Edge 78
+    } else if (key === 'ArrowDown' || key === 'Down') {
+      this.centerPickerItemInView(
+        this.activeItem?.nextElementSibling as HTMLElement
+      );
+    }
+  }
+
+  /**
    * When the column scrolls, the component
    * needs to determine which item is centered
    * in the view and will emit an ionChange with
@@ -243,6 +262,7 @@ export class PickerColumnInternal implements ComponentInterface {
     return (
       <Host
         tabindex={0}
+        onKeydown={this.pickerColumnKeydown}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
