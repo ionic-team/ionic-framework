@@ -2,9 +2,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, List
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { raf } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
-import { raf } from '../../utils/helpers';
 
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -26,7 +26,7 @@ export class Content implements ComponentInterface {
   private queued = false;
   private cTop = -1;
   private cBottom = -1;
-  private scrollEl!: HTMLElement;
+  private scrollEl?: HTMLElement;
   private isMainContent = true;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
@@ -169,7 +169,7 @@ export class Content implements ComponentInterface {
       readTask(ts => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.scrollEl, ts, shouldStart);
+        updateScrollDetail(this.detail, this.scrollEl!, ts, shouldStart);
         this.ionScroll.emit(this.detail);
       });
     }
@@ -179,7 +179,7 @@ export class Content implements ComponentInterface {
   // (ex: Vue onMounted)
   // this ensures scrollEl is present, only waiting as long as is necessary
   private awaitScrollEl() {
-    if(this.scrollEl) {
+    if (this.scrollEl) {
       return Promise.resolve(this.scrollEl);
     } else {
       return new Promise(resolve => raf(resolve(this.scrollEl)));
@@ -196,7 +196,7 @@ export class Content implements ComponentInterface {
    */
   @Method()
   getScrollElement(): Promise<HTMLElement> {
-    return Promise.resolve(this.scrollEl);
+    return Promise.resolve(this.scrollEl!);
   }
 
   /**
@@ -217,7 +217,7 @@ export class Content implements ComponentInterface {
   @Method()
   async scrollToBottom(duration = 0): Promise<void> {
     await this.awaitScrollEl();
-    const y = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
+    const y = this.scrollEl!.scrollHeight - this.scrollEl!.clientHeight;
     return this.scrollToPoint(undefined, y, duration);
   }
 
@@ -231,7 +231,7 @@ export class Content implements ComponentInterface {
   @Method()
   async scrollByPoint(x: number, y: number, duration: number): Promise<void> {
     await this.awaitScrollEl();
-    return this.scrollToPoint(x + this.scrollEl.scrollLeft, y + this.scrollEl.scrollTop, duration);
+    return this.scrollToPoint(x + this.scrollEl!.scrollLeft, y + this.scrollEl!.scrollTop, duration);
   }
 
   /**
@@ -244,7 +244,7 @@ export class Content implements ComponentInterface {
   @Method()
   async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
     await this.awaitScrollEl();
-    const el = this.scrollEl;
+    const el = this.scrollEl!;
     if (duration < 32) {
       if (y != null) {
         el.scrollTop = y;
