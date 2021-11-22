@@ -1,4 +1,4 @@
-import { initialize, IonicConfig } from '@ionic/core/components';
+import { IonicConfig, initialize } from '@ionic/core/components';
 import { addIcons } from 'ionicons';
 import {
   arrowBackSharp,
