@@ -4,6 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
+import { raf } from '../../utils/helpers';
 
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -174,6 +175,17 @@ export class Content implements ComponentInterface {
     }
   }
 
+  // some scroll methods can be called in lifecycle hooks where scrollEl isn't ready
+  // (ex: Vue onMounted)
+  // this ensures scrollEl is present, only waiting as long as is necessary
+  private awaitScrollEl() {
+    if(this.scrollEl) {
+      return Promise.resolve(this.scrollEl);
+    } else {
+      return new Promise(resolve => raf(resolve(this.scrollEl)));
+    }
+  }
+
   /**
    * Get the element where the actual scrolling takes place.
    * This element can be used to subscribe to `scroll` events or manually modify
@@ -203,7 +215,8 @@ export class Content implements ComponentInterface {
    * @param duration The amount of time to take scrolling to the bottom. Defaults to `0`.
    */
   @Method()
-  scrollToBottom(duration = 0): Promise<void> {
+  async scrollToBottom(duration = 0): Promise<void> {
+    await this.awaitScrollEl();
     const y = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
     return this.scrollToPoint(undefined, y, duration);
   }
@@ -216,7 +229,8 @@ export class Content implements ComponentInterface {
    * @param duration The amount of time to take scrolling by that amount.
    */
   @Method()
-  scrollByPoint(x: number, y: number, duration: number): Promise<void> {
+  async scrollByPoint(x: number, y: number, duration: number): Promise<void> {
+    await this.awaitScrollEl();
     return this.scrollToPoint(x + this.scrollEl.scrollLeft, y + this.scrollEl.scrollTop, duration);
   }
 
@@ -229,6 +243,7 @@ export class Content implements ComponentInterface {
    */
   @Method()
   async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
+    await this.awaitScrollEl();
     const el = this.scrollEl;
     if (duration < 32) {
       if (y != null) {
