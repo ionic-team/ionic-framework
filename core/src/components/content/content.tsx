@@ -175,17 +175,6 @@ export class Content implements ComponentInterface {
     }
   }
 
-  // scroll methods can be called in lifecycle hooks where scrollEl isn't ready
-  // (ex: Vue onMounted)
-  // ensure scrollEl is present
-  private async awaitScrollEl() {
-    if (!this.scrollEl) {
-      await new Promise(resolve => componentOnReady(this.el, resolve));
-    }
-
-    return Promise.resolve(this.scrollEl);
-  }
-
   /**
    * Get the element where the actual scrolling takes place.
    * This element can be used to subscribe to `scroll` events or manually modify
@@ -195,7 +184,13 @@ export class Content implements ComponentInterface {
    * and `scrollToPoint()` to scroll the content into a certain point.
    */
   @Method()
-  getScrollElement(): Promise<HTMLElement> {
+  async getScrollElement(): Promise<HTMLElement> {
+    // if this gets called in certain early lifecycle hooks (ex: Vue onMounted),
+    // scrollEl won't be defined yet, so wait for it to load in
+    if (!this.scrollEl) {
+      await new Promise(resolve => componentOnReady(this.el, resolve));
+    }
+
     return Promise.resolve(this.scrollEl!);
   }
 
@@ -216,8 +211,8 @@ export class Content implements ComponentInterface {
    */
   @Method()
   async scrollToBottom(duration = 0): Promise<void> {
-    await this.awaitScrollEl();
-    const y = this.scrollEl!.scrollHeight - this.scrollEl!.clientHeight;
+    const scrollEl = await this.getScrollElement();
+    const y = scrollEl!.scrollHeight - scrollEl!.clientHeight;
     return this.scrollToPoint(undefined, y, duration);
   }
 
@@ -230,8 +225,8 @@ export class Content implements ComponentInterface {
    */
   @Method()
   async scrollByPoint(x: number, y: number, duration: number): Promise<void> {
-    await this.awaitScrollEl();
-    return this.scrollToPoint(x + this.scrollEl!.scrollLeft, y + this.scrollEl!.scrollTop, duration);
+    const scrollEl = await this.getScrollElement();
+    return this.scrollToPoint(x + scrollEl!.scrollLeft, y + scrollEl!.scrollTop, duration);
   }
 
   /**
@@ -243,8 +238,7 @@ export class Content implements ComponentInterface {
    */
   @Method()
   async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
-    await this.awaitScrollEl();
-    const el = this.scrollEl!;
+    const el = await this.getScrollElement();
     if (duration < 32) {
       if (y != null) {
         el.scrollTop = y;
