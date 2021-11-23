@@ -41,7 +41,7 @@ runs:
       run: npm run test:unit
       shell: bash
       working-directory: ./packages/vue/test-app
-    - name: Run E2E ests
+    - name: Run E2E Tests
       run: npm run test:e2e
       shell: bash
       working-directory: ./packages/vue/test-app
