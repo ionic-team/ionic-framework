@@ -1865,10 +1865,6 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * If `true`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.  Disable this behavior to allow the contents of the popover to handle their own keyboard interactions (i.e. when using CSS scroll snap).
-         */
-        "disableKeyboardEvents": boolean;
-        /**
           * Dismiss the popover overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
           * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
@@ -1901,6 +1897,10 @@ export namespace Components {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
+        /**
+          * If `true` the popover will not register it's own keyboard event handlers. This allows the contents of the popover to handle their own keyboard interactions.  If `false`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.
+         */
+        "keyboardEventsEnabled": boolean;
         /**
           * Animation to use when the popover is dismissed.
          */
@@ -5505,10 +5505,6 @@ declare namespace LocalJSX {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * If `true`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.  Disable this behavior to allow the contents of the popover to handle their own keyboard interactions (i.e. when using CSS scroll snap).
-         */
-        "disableKeyboardEvents"?: boolean;
-        /**
           * If `true`, the popover will be automatically dismissed when the content has been clicked.
          */
         "dismissOnSelect"?: boolean;
@@ -5533,6 +5529,10 @@ declare namespace LocalJSX {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
+        /**
+          * If `true` the popover will not register it's own keyboard event handlers. This allows the contents of the popover to handle their own keyboard interactions.  If `false`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.
+         */
+        "keyboardEventsEnabled"?: boolean;
         /**
           * Animation to use when the popover is dismissed.
          */

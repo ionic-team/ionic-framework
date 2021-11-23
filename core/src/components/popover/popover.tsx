@@ -209,15 +209,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
   @Prop() isOpen = false;
 
   /**
-   * If `true`, the popover will register it's own keyboard event handlers for
+   * If `true` the popover will not register it's own keyboard event handlers.
+   * This allows the contents of the popover to handle their own keyboard interactions.
+   *
+   * If `false`, the popover will register it's own keyboard event handlers for
    * navigating `ion-list` items within a popover (up/down/home/end/etc.).
    * This will also cancel browser keyboard event bindings to prevent scroll
    * behavior in a popover using a list of items.
-   *
-   * Disable this behavior to allow the contents of the popover to handle their own
-   * keyboard interactions (i.e. when using CSS scroll snap).
    */
-  @Prop() disableKeyboardEvents = true;
+  @Prop() keyboardEventsEnabled = false;
 
   @Watch('trigger')
   @Watch('triggerAction')
@@ -396,7 +396,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
-    if (!this.disableKeyboardEvents) {
+    if (!this.keyboardEventsEnabled) {
       this.configureKeyboardInteraction();
     }
     this.configureDismissInteraction();

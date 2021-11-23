@@ -883,13 +883,13 @@ ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
 ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-ion-popover,prop,disableKeyboardEvents,boolean,true,false,false
 ion-popover,prop,dismissOnSelect,boolean,false,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
 ion-popover,prop,htmlAttributes,PopoverAttributes | undefined,undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
+ion-popover,prop,keyboardEventsEnabled,boolean,false,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,mode,"ios" | "md",undefined,false,false
 ion-popover,prop,reference,"event" | "trigger",'trigger',false,false
