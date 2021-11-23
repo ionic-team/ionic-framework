@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, List
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
-import { raf } from '../../utils/helpers';
+import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -175,15 +175,15 @@ export class Content implements ComponentInterface {
     }
   }
 
-  // some scroll methods can be called in lifecycle hooks where scrollEl isn't ready
+  // scroll methods can be called in lifecycle hooks where scrollEl isn't ready
   // (ex: Vue onMounted)
-  // this ensures scrollEl is present, only waiting as long as is necessary
-  private awaitScrollEl() {
-    if (this.scrollEl) {
-      return Promise.resolve(this.scrollEl);
-    } else {
-      return new Promise(resolve => raf(() => resolve(this.scrollEl)));
+  // ensure scrollEl is present
+  private async awaitScrollEl() {
+    if (!this.scrollEl) {
+      await new Promise(resolve => componentOnReady(this.el, resolve));
     }
+
+    return Promise.resolve(this.scrollEl);
   }
 
   /**
