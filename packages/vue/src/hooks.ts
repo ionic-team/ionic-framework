@@ -80,9 +80,11 @@ const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: Co
     // Add to public instance so it is accessible to IonRouterOutlet
     const target = component as any;
     const hooks = target.proxy[lifecycleType] || (target.proxy[lifecycleType] = []);
-    // Directly define property on an instance just make a private property, need use defineExpose to declase which is public but not work outside setup script
-    // So make a reference at exposed source to hook array to make them public
-    target.exposed[lifecycleType] = hooks;
+    // Directly define property on an instance just make a private property when use script-setup
+    // So make a reference to exposed source when used script-setup
+    if (target.exposed) {
+      target.exposed[lifecycleType] = hooks;
+    }
     const wrappedHook = (...args: unknown[]) => {
       if (target.isUnmounted) {
         return;
