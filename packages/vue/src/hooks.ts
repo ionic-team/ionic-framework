@@ -80,8 +80,9 @@ const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: Co
     // Add to public instance so it is accessible to IonRouterOutlet
     const target = component as any;
     const hooks = target.proxy[lifecycleType] || (target.proxy[lifecycleType] = []);
-    // Directly define property on an instance just make a private property when use script-setup
-    // So make a reference to exposed source when used script-setup
+    /**
+     * Define property on public instances using `setup` syntax in Vue 3.x
+     */
     if (target.exposed) {
       target.exposed[lifecycleType] = hooks;
     }
