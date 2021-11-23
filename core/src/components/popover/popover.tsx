@@ -209,13 +209,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
   @Prop() isOpen = false;
 
   /**
-   * If `true`, the popover will cancel browser keyboard event bindings to prevent
-   * scroll behavior in a popover using a list of items.
+   * If `true`, the popover will register it's own keyboard event handlers for
+   * navigating `ion-list` items within a popover (up/down/home/end/etc.).
+   * This will also cancel browser keyboard event bindings to prevent scroll
+   * behavior in a popover using a list of items.
    *
    * Disable this behavior to allow the contents of the popover to handle their own
    * keyboard interactions (i.e. when using CSS scroll snap).
    */
-  @Prop() cancelBrowserKeyboardEvents = true;
+  @Prop() disableKeyboardEvents = true;
 
   @Watch('trigger')
   @Watch('triggerAction')
@@ -394,7 +396,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
-    this.configureKeyboardInteraction();
+    if (!this.disableKeyboardEvents) {
+      this.configureKeyboardInteraction();
+    }
     this.configureDismissInteraction();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
@@ -536,15 +540,13 @@ export class Popover implements ComponentInterface, PopoverInterface {
   }
 
   private configureKeyboardInteraction = () => {
-    const { destroyKeyboardInteraction, el, cancelBrowserKeyboardEvents } = this;
+    const { destroyKeyboardInteraction, el } = this;
 
     if (destroyKeyboardInteraction) {
       destroyKeyboardInteraction();
     }
 
-    this.destroyKeyboardInteraction = configureKeyboardInteraction(el, {
-      preventDefault: cancelBrowserKeyboardEvents
-    });
+    this.destroyKeyboardInteraction = configureKeyboardInteraction(el);
   }
 
   private configureDismissInteraction = () => {

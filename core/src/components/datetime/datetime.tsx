@@ -1319,7 +1319,9 @@ export class Datetime implements ComponentInterface {
         style={{
           '--offset-y': '-10px'
         }}
-        cancelBrowserKeyboardEvents={false}
+        // Allow native browser keyboard events to support up/down/home/end key
+        // navigation within the time picker.
+        disableKeyboardEvents={false}
         ref={el => this.popoverRef = el}
       >
         {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}

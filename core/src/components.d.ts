@@ -1852,10 +1852,6 @@ export namespace Components {
          */
         "backdropDismiss": boolean;
         /**
-          * If `true`, the popover will cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.  Disable this behavior to allow the contents of the popover to handle their own keyboard interactions (i.e. when using CSS scroll snap).
-         */
-        "cancelBrowserKeyboardEvents": boolean;
-        /**
           * The component to display inside of the popover. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just slot your component inside of `ion-popover`.
          */
         "component"?: ComponentRef;
@@ -1868,6 +1864,10 @@ export namespace Components {
          */
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
+        /**
+          * If `true`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.  Disable this behavior to allow the contents of the popover to handle their own keyboard interactions (i.e. when using CSS scroll snap).
+         */
+        "disableKeyboardEvents": boolean;
         /**
           * Dismiss the popover overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -5492,10 +5492,6 @@ declare namespace LocalJSX {
          */
         "backdropDismiss"?: boolean;
         /**
-          * If `true`, the popover will cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.  Disable this behavior to allow the contents of the popover to handle their own keyboard interactions (i.e. when using CSS scroll snap).
-         */
-        "cancelBrowserKeyboardEvents"?: boolean;
-        /**
           * The component to display inside of the popover. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just slot your component inside of `ion-popover`.
          */
         "component"?: ComponentRef;
@@ -5508,6 +5504,10 @@ declare namespace LocalJSX {
          */
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
+        /**
+          * If `true`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.  Disable this behavior to allow the contents of the popover to handle their own keyboard interactions (i.e. when using CSS scroll snap).
+         */
+        "disableKeyboardEvents"?: boolean;
         /**
           * If `true`, the popover will be automatically dismissed when the content has been clicked.
          */
