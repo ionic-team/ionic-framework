@@ -36,6 +36,13 @@ export interface PopoverStyles {
   addPopoverBottomClass: boolean;
 }
 
+interface PopoverKeyboardOptions {
+  /**
+   * If `true` cancels the key press events using `ev.preventDefault()`.
+   */
+  preventDefault: boolean;
+}
+
 /**
  * Returns the dimensions of the popover
  * arrow on `ios` mode. If arrow is disabled
@@ -331,7 +338,8 @@ const focusItem = (item: HTMLIonItemElement) => {
 export const isTriggerElement = (el: HTMLElement) => el.hasAttribute('data-ion-popover-trigger');
 
 export const configureKeyboardInteraction = (
-  popoverEl: HTMLIonPopoverElement
+  popoverEl: HTMLIonPopoverElement,
+  options?: PopoverKeyboardOptions
 ) => {
 
   const callback = async (ev: KeyboardEvent) => {
@@ -372,6 +380,10 @@ export const configureKeyboardInteraction = (
        * ArrowDown should move focus to the next focusable ion-item.
        */
       case 'ArrowDown':
+        if (options?.preventDefault) {
+          // Disable movement/scroll with keyboard
+          ev.preventDefault();
+        }
         const nextItem = getNextItem(items, activeElement);
         // tslint:disable-next-line:strict-type-predicates
         if (nextItem !== undefined) {
@@ -382,6 +394,10 @@ export const configureKeyboardInteraction = (
        * ArrowUp should move focus to the previous focusable ion-item.
        */
       case 'ArrowUp':
+        if (options?.preventDefault) {
+          // Disable movement/scroll with keyboard
+          ev.preventDefault();
+        }
         const prevItem = getPrevItem(items, activeElement);
         // tslint:disable-next-line:strict-type-predicates
         if (prevItem !== undefined) {
@@ -392,7 +408,9 @@ export const configureKeyboardInteraction = (
        * Home should move focus to the first focusable ion-item.
        */
       case 'Home':
-        ev.preventDefault();
+        if (options?.preventDefault) {
+          ev.preventDefault();
+        }
         const firstItem = items[0];
         // tslint:disable-next-line:strict-type-predicates
         if (firstItem !== undefined) {
@@ -403,7 +421,9 @@ export const configureKeyboardInteraction = (
        * End should move focus to the last focusable ion-item.
        */
       case 'End':
-        ev.preventDefault();
+        if (options?.preventDefault) {
+          ev.preventDefault();
+        }
         const lastItem = items[items.length - 1];
         // tslint:disable-next-line:strict-type-predicates
         if (lastItem !== undefined) {

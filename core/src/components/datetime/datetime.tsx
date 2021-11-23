@@ -1319,6 +1319,7 @@ export class Datetime implements ComponentInterface {
         style={{
           '--offset-y': '-10px'
         }}
+        cancelBrowserKeyboardEvents={false}
         ref={el => this.popoverRef = el}
       >
         {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}

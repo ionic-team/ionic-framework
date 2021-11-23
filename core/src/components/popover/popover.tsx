@@ -208,6 +208,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Prop() isOpen = false;
 
+  /**
+   * If `true`, the popover will cancel browser keyboard event bindings to prevent
+   * scroll behavior in a popover using a list of items.
+   *
+   * Disable this behavior to allow the contents of the popover to handle their own
+   * keyboard interactions (i.e. when using CSS scroll snap).
+   */
+  @Prop() cancelBrowserKeyboardEvents = true;
+
   @Watch('trigger')
   @Watch('triggerAction')
   onTriggerChange() {
@@ -527,13 +536,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
   }
 
   private configureKeyboardInteraction = () => {
-    const { destroyKeyboardInteraction, el } = this;
+    const { destroyKeyboardInteraction, el, cancelBrowserKeyboardEvents } = this;
 
     if (destroyKeyboardInteraction) {
       destroyKeyboardInteraction();
     }
 
-    this.destroyKeyboardInteraction = configureKeyboardInteraction(el);
+    this.destroyKeyboardInteraction = configureKeyboardInteraction(el, {
+      preventDefault: cancelBrowserKeyboardEvents
+    });
   }
 
   private configureDismissInteraction = () => {
