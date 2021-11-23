@@ -86,11 +86,11 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
      */
     const formControl = ngControl.control;
     if (formControl) {
-      const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine'];
+      const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine'] as const;
       methodsToPatch.forEach(method => {
        if (formControl[method]) {
          const oldFn = formControl[method].bind(formControl);
-         formControl[method] = (...params) => {
+         formControl[method] = (...params: any[]) => {
            oldFn(...params);
            setIonicClasses(this.el);
           };
