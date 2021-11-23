@@ -313,7 +313,6 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-
     this.emitStyle();
     this.ionChange.emit({
       value: this.value
