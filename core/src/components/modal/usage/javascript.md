@@ -1,3 +1,40 @@
+### Inline Modal
+
+```html
+<!-- Default -->
+<ion-modal is-open="true">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open modal</ion-button>
+<ion-modal trigger="trigger-button">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Sheet Modal -->
+<ion-modal is-open="true" id="sheet-modal">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Card Modal -->
+<ion-modal is-open="true" id="card-modal">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<script>
+  const sheetModal = document.querySelector('#sheet-modal');
+  const cardModal = document.querySelector('#sheet-modal');
+
+  sheetModal.breakpoints = [0.1, 0.5, 1];
+  sheetModal.initialBreakpoint = 0.5;
+  
+  cardModal.swipeToClose = true;
+  cardModal.presentingElement = document.querySelector('ion-app');
+</script>
+```
+
+### Using JavaScript
 
 ```javascript
 customElements.define('modal-page', class extends HTMLElement {
