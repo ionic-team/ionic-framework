@@ -37,53 +37,19 @@ If you need fine grained control over when the popover is presented and dismisse
 We typically recommend that you write your popovers inline as it streamlines the amount of code in your application. You should only use the `popoverController` for complex use cases where writing a popover inline is impractical. When using a controller, your popover is not created ahead of time, so properties such as `trigger` and `trigger-action` are not applicable here. In addition, nested popovers are not compatible with the controller approach because the popover is automatically added to the root of your application when the `create` method is called.
 
 
-## Customization
+## Styling
 
-Popover uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
-
-We recommend setting a custom class on the host element if writing a popover inline or supplying a class to the `cssClass` option if using the `popoverController` and using that to add custom styles to the host and inner elements. The `cssClass` option can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
-
-```css
-/* DOES NOT WORK - not specific enough */
-.popover-content {
-  background: #222;
-}
-
-/* Works - pass "my-custom-class" in cssClass to increase specificity */
-.my-custom-class .popover-content {
-  background: #222;
-}
-```
-
-Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Popover without needing to target individual elements:
-
-```css
-.my-custom-class {
-  --background: #222;
-}
-```
+Popovers are presented at the root of your application so they overlay your entire app. This behavior applies to both inline popovers and popovers presented from a controller. As a result, custom popover styles can not be scoped to a particular component as they will not apply to the popover. Instead, styles must be applied globally. For most developers, placing the custom styles in `global.css` is sufficient.
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
+
 ## Triggers
 
-A trigger for an `ion-popover` is the element that will open a popover when interacted with. The interaction behavior can be customized by setting the `trigger-action` property. The following example shows how to create a right click menu using `trigger` and `trigger-action`. Note that `trigger-action="context-menu"` will prevent your system's default context menu from opening.
-
-```html
-<ion-button id="trigger-button">Right click me!</ion-button>
-<ion-popover
-  trigger="trigger-button"
-  trigger-action="context-menu"
->
-  <ion-content>
-    <ion-list>
-      ...
-    </ion-list>
-  </ion-content>
-</ion-popover>
-```
+A trigger for an `ion-popover` is the element that will open a popover when interacted with. The interaction behavior can be customized by setting the `trigger-action` property. Note that `trigger-action="context-menu"` will prevent your system's default context menu from opening. View the [Usage](#usage) section for an example of how to use triggers.
 
 > Triggers are not applicable when using the `popoverController` because the `ion-popover` is not created ahead of time.
+
 ## Positioning
 
 ### Reference
@@ -195,6 +161,104 @@ type PositionAlign = 'start' | 'center' | 'end';
 
 ### Angular
 
+### Inline Popover
+
+```html
+<!-- Default -->
+<ion-popover [isOpen]="true">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- No Arrow -->
+<ion-popover [isOpen]="true" [arrow]="false">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open popover</ion-button>
+<ion-popover trigger="trigger-button">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Hover over trigger to open -->
+<ion-button id="hover-button">Hover to open popover</ion-button>
+<ion-popover trigger="hover-button" triggerAction="hover">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Show popover above trigger -->
+<ion-button id="side-button">Click to open popover</ion-button>
+<ion-popover trigger="side-button" side="top">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Align popover to end of trigger -->
+<ion-button id="alignment-button">Click to open popover</ion-button>
+<ion-popover trigger="alignment-button" side="top" alignment="end">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Make popover the same size as the trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" size="cover">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Make popover show relative to click coordinates rather than trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" reference="event">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Nested Popover -->
+<ion-button id="nested-button">Click to open popover</ion-button>
+<ion-popover trigger="nested-button" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item [button]="true" [detail]="false">
+          <ion-label>Option 1</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="false">
+          <ion-label>Option 2</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="true" id="nested-trigger">
+          <ion-label>Option 3</ion-label>
+        </ion-item>
+        
+        <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">
+          <ng-template>
+            <ion-content>
+              <ion-item [button]="true">
+                <ion-label>Nested Option</ion-label>
+              </ion-item>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
+```
+
+### Popover Controller
+
 ```typescript
 import { Component } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
@@ -230,6 +294,84 @@ In Angular, the CSS of a specific page is scoped only to elements of that page. 
 
 
 ### Javascript
+
+### Inline Popover
+
+```html
+<!-- Default -->
+<ion-popover is-open="true">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- No Arrow -->
+<ion-popover is-open="true" arrow="false">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open popover</ion-button>
+<ion-popover trigger="trigger-button">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Hover over trigger to open -->
+<ion-button id="hover-button">Hover to open popover</ion-button>
+<ion-popover trigger="hover-button" trigger-action="hover">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Show popover above trigger -->
+<ion-button id="side-button">Click to open popover</ion-button>
+<ion-popover trigger="side-button" side="top">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Align popover to end of trigger -->
+<ion-button id="alignment-button">Click to open popover</ion-button>
+<ion-popover trigger="alignment-button" side="top" alignment="end">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Make popover the same size as the trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" size="cover">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Make popover show relative to click coordinates rather than trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" reference="event">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Nested Popover -->
+<ion-button id="nested-button">Click to open popover</ion-button>
+<ion-popover trigger="nested-button" dismiss-on-select="true">
+  <ion-content>
+    <ion-list>
+      <ion-item button="true" detail="false">
+        <ion-label>Option 1</ion-label>
+      </ion-item>
+      <ion-item button="true" detail="false">
+        <ion-label>Option 2</ion-label>
+      </ion-item>
+      <ion-item button="true" detail="true" id="nested-trigger">
+        <ion-label>Option 3</ion-label>
+      </ion-item>
+      
+      <ion-popover trigger="nested-trigger" dismiss-on-select="true" side="end">
+        <ion-content>
+          <ion-item button="true">
+            <ion-label>Nested Option</ion-label>
+          </ion-item>
+        </ion-content>
+      </ion-popover>
+    </ion-list>
+  </ion-content>
+</ion-popover>
+```
+
+### Using JavaScript
 
 ```javascript
 class PopoverExamplePage extends HTMLElement {
@@ -273,11 +415,128 @@ async function presentPopover(ev) {
 
 ### React
 
+### Inline Popover
+
+```tsx
+import React, { useState } from 'react';
+import { IonPopover, IonContent, IonItem, IonLabel, IonButton } from '@ionic/react';
+
+export const PopoverExample: React.FC = () => {
+  return (
+    <>
+      {/* Default */}
+      <IonPopover isOpen={true}>
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* No Arrow */}
+      <IonPopover isOpen={true} arrow={false}>
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Use a trigger */}
+      <IonButton id="trigger-button">Click to open popover</IonButton>
+      <IonPopover trigger="trigger-button">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Hover over trigger to open */}
+      <IonButton id="hover-button">Hover to open popover</IonButton>
+      <IonPopover trigger="hover-button" triggerAction="hover">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Show popover above trigger */}
+      <IonButton id="side-button">Click to open popover</IonButton>
+      <IonPopover trigger="side-button" side="top">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Align popover to end of trigger */}
+      <IonButton id="alignment-button">Click to open popover</IonButton>
+      <IonPopover trigger="alignment-button" side="top" alignment="end">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Make popover the same size as the trigger */}
+      <IonButton id="size-button">Click to open popover</IonButton>
+      <IonPopover trigger="size-button" size="cover">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Make popover show relative to click coordinates rather than trigger */}
+      <IonButton id="size-button">Click to open popover</IonButton>
+      <IonPopover trigger="size-button" reference="event">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Nested Popover */}
+      <IonButton id="nested-button">Click to open popover</IonButton>
+      <IonPopover trigger="nested-button" dismissOnSelect={true}>
+        <IonContent>
+          <ion-list>
+            <IonItem button={true} detail={false}>
+              <IonLabel>Option 1</IonLabel>
+            </IonItem>
+            <IonItem button={true} detail={false}>
+              <IonLabel>Option 2</IonLabel>
+            </IonItem>
+            <IonItem button={true} detail={true} id="nested-trigger">
+              <IonLabel>Option 3</IonLabel>
+            </IonItem>
+            
+            <IonPopover trigger="nested-trigger" dismissOnSelect={true} side="end">
+              <IonContent>
+                <IonItem button={true}>
+                  <IonLabel>Nested Option</IonLabel>
+                </IonItem>
+              </IonContent>
+            </IonPopover>
+          </ion-list>
+        </IonContent>
+      </IonPopover>
+    </>
+  );
+};
+```
+
+### Inline Popover with State
+
+```tsx
+import React, { useState } from 'react';
+import { IonPopover, IonButton } from '@ionic/react';
+
+export const PopoverExample: React.FC = () => {
+  const [popoverState, setShowPopover] = useState({ showPopover: false, event: undefined });
+
+  return (
+    <>
+      <IonPopover
+        cssClass='my-custom-class'
+        event={popoverState.event}
+        isOpen={popoverState.showPopover}
+        onDidDismiss={() => setShowPopover({ showPopover: false, event: undefined })}
+      >
+        <p>This is popover content</p>
+      </IonPopover>
+      <IonButton onClick={
+        (e: any) => {
+          e.persist();
+          setShowPopover({ showPopover: true, event: e })
+        }}
+      >
+        Show Popover
+      </IonButton>
+    </>
+  );
+};
+```
+
+### useIonPopover Hook
+
 > `useIonPopover` requires being a descendant of `<IonApp>`. If you need to use a popover outside of an `<IonApp>`, consider using the component method instead.
 
 ```tsx
-/* Using with useIonPopover Hook */
-
 import React from 'react';
 import {
   IonButton,
@@ -326,40 +585,126 @@ const PopoverExample: React.FC = () => {
 };
 ```
 
-```tsx
-/* Using with IonPopover Component */
-
-import React, { useState } from 'react';
-import { IonPopover, IonButton } from '@ionic/react';
-
-export const PopoverExample: React.FC = () => {
-  const [popoverState, setShowPopover] = useState({ showPopover: false, event: undefined });
-
-  return (
-    <>
-      <IonPopover
-        cssClass='my-custom-class'
-        event={popoverState.event}
-        isOpen={popoverState.showPopover}
-        onDidDismiss={() => setShowPopover({ showPopover: false, event: undefined })}
-      >
-        <p>This is popover content</p>
-      </IonPopover>
-      <IonButton onClick={
-        (e: any) => {
-          e.persist();
-          setShowPopover({ showPopover: true, event: e })
-        }}
-      >
-        Show Popover
-      </IonButton>
-    </>
-  );
-};
-```
-
 
 ### Stencil
+
+### Inline Popover
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'popover-example',
+  styleUrl: 'popover-example.css'
+})
+export class PopoverExample {
+  render() {
+    return [
+      <ion-content>
+        {/* Default */}
+        <ion-popover isOpen={true}>
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* No Arrow */}
+        <ion-popover isOpen={true} arrow={false}>
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Use a trigger */}
+        <ion-button id="trigger-button">Click to open popover</ion-button>
+        <ion-popover trigger="trigger-button">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Hover over trigger to open */}
+        <ion-button id="hover-button">Hover to open popover</ion-button>
+        <ion-popover trigger="hover-button" triggerAction="hover">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Show popover above trigger */}
+        <ion-button id="side-button">Click to open popover</ion-button>
+        <ion-popover trigger="side-button" side="top">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Align popover to end of trigger */}
+        <ion-button id="alignment-button">Click to open popover</ion-button>
+        <ion-popover trigger="alignment-button" side="top" alignment="end">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Make popover the same size as the trigger */}
+        <ion-button id="size-button">Click to open popover</ion-button>
+        <ion-popover trigger="size-button" size="cover">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Make popover show relative to click coordinates rather than trigger */}
+        <ion-button id="size-button">Click to open popover</ion-button>
+        <ion-popover trigger="size-button" reference="event">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Nested Popover */}
+        <ion-button id="nested-button">Click to open popover</ion-button>
+        <ion-popover trigger="nested-button" dismissOnSelect={true}>
+          <ion-content>
+            <ion-list>
+              <ion-item button={true} detail={false}>
+                <ion-label>Option 1</ion-label>
+              </ion-item>
+              <ion-item button={true} detail={false}>
+                <ion-label>Option 2</ion-label>
+              </ion-item>
+              <ion-item button={true} detail={true} id="nested-trigger">
+                <ion-label>Option 3</ion-label>
+              </ion-item>
+              
+              <ion-popover trigger="nested-trigger" dismissOnSelect={true} side="end">
+                <ion-content>
+                  <ion-item button={true}>
+                    <ion-label>Nested Option</ion-label>
+                  </ion-item>
+                </ion-content>
+              </ion-popover>
+            </ion-list>
+          </ion-content>
+        </ion-popover>
+      </ion-content>
+    ];
+  }
+}
+```
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'page-popover',
+  styleUrl: 'page-popover.css',
+})
+export class PagePopover {
+  render() {
+    return [
+      <ion-list>
+        <ion-item>
+          <ion-label>Documentation</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Feedback</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Settings</ion-label>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Popover Controller
 
 ```tsx
 import { Component, h } from '@stencil/core';
@@ -423,6 +768,132 @@ export class PagePopover {
 
 ### Vue
 
+### Inline Popover
+
+```html
+<template>
+  <!-- Default -->
+  <ion-popover :is-open="true">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- No Arrow -->
+  <ion-popover :is-open="true" :arrow="false">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Use a trigger -->
+  <ion-button id="trigger-button">Click to open popover</ion-button>
+  <ion-popover trigger="trigger-button">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Hover over trigger to open -->
+  <ion-button id="hover-button">Hover to open popover</ion-button>
+  <ion-popover trigger="hover-button" trigger-action="hover">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Show popover above trigger -->
+  <ion-button id="side-button">Click to open popover</ion-button>
+  <ion-popover trigger="side-button" side="top">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Align popover to end of trigger -->
+  <ion-button id="alignment-button">Click to open popover</ion-button>
+  <ion-popover trigger="alignment-button" side="top" alignment="end">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Make popover the same size as the trigger -->
+  <ion-button id="size-button">Click to open popover</ion-button>
+  <ion-popover trigger="size-button" size="cover">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Make popover show relative to click coordinates rather than trigger -->
+  <ion-button id="size-button">Click to open popover</ion-button>
+  <ion-popover trigger="size-button" reference="event">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Nested Popover -->
+  <ion-button id="nested-button">Click to open popover</ion-button>
+  <ion-popover trigger="nested-button" :dismiss-on-select="true">
+    <ion-content>
+      <ion-list>
+        <ion-item :button="true" :detail="false">
+          <ion-label>Option 1</ion-label>
+        </ion-item>
+        <ion-item :button="true" :detail="false">
+          <ion-label>Option 2</ion-label>
+        </ion-item>
+        <ion-item :button="true" :detail="true" id="nested-trigger">
+          <ion-label>Option 3</ion-label>
+        </ion-item>
+        
+        <ion-popover trigger="nested-trigger" :dismiss-on-select="true" side="end">
+          <ion-content>
+            <ion-item :button="true">
+              <ion-label>Nested Option</ion-label>
+            </ion-item>
+          </ion-content>
+        </ion-popover>
+      </ion-list>
+    </ion-content>
+  </ion-popover>
+</template>
+
+<script>
+import { IonButton, IonContent, IonItem, IonLabel, IonPopover } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonButton, IonContent, IonItem, IonLabel, IonPopover }
+});
+</script>
+```
+
+
+### Inline Popover with State
+
+```html
+<template>
+  <ion-button @click="setOpen(true, $event)">Show Popover</ion-button>
+  <ion-popover
+    :is-open="isOpenRef"
+    css-class="my-custom-class"
+    :event="event"
+    :translucent="true"
+    @didDismiss="setOpen(false)"
+  >
+    <Popover></Popover>
+  </ion-popover>
+</template>
+
+<script>
+import { IonButton, IonPopover } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Popover from './popover.vue';
+
+export default defineComponent({
+  components: { IonButton, IonPopover, Popover },
+  setup() {
+    const isOpenRef = ref(false);
+    const event = ref();
+    const setOpen = (state: boolean, ev?: Event) => {
+      event.value = ev; 
+      isOpenRef.value = state;
+    }
+    return { isOpenRef, setOpen, event }
+  }
+});
+</script>
+```
+
+### Popover Controller
+
 ```html
 <template>
   <ion-content class="ion-padding">
@@ -472,42 +943,6 @@ export default {
     },
   },
 }
-</script>
-```
-
-Developers can also use this component directly in their template:
-
-```html
-<template>
-  <ion-button @click="setOpen(true, $event)">Show Popover</ion-button>
-  <ion-popover
-    :is-open="isOpenRef"
-    css-class="my-custom-class"
-    :event="event"
-    :translucent="true"
-    @didDismiss="setOpen(false)"
-  >
-    <Popover></Popover>
-  </ion-popover>
-</template>
-
-<script>
-import { IonButton, IonPopover } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
-import Popover from './popover.vue';
-
-export default defineComponent({
-  components: { IonButton, IonPopover, Popover },
-  setup() {
-    const isOpenRef = ref(false);
-    const event = ref();
-    const setOpen = (state: boolean, ev?: Event) => {
-      event.value = ev; 
-      isOpenRef.value = state;
-    }
-    return { isOpenRef, setOpen, event }
-  }
-});
 </script>
 ```
 
