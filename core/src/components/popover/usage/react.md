@@ -2,7 +2,7 @@
 
 ```tsx
 import React, { useState } from 'react';
-import { IonPopover, IonButton } from '@ionic/react';
+import { IonPopover, IonContent, IonItem, IonLabel, IonButton } from '@ionic/react';
 
 export const PopoverExample: React.FC = () => {
   return (

@@ -419,7 +419,7 @@ async function presentPopover(ev) {
 
 ```tsx
 import React, { useState } from 'react';
-import { IonPopover, IonButton } from '@ionic/react';
+import { IonPopover, IonContent, IonItem, IonLabel, IonButton } from '@ionic/react';
 
 export const PopoverExample: React.FC = () => {
   return (
@@ -846,11 +846,11 @@ export class PagePopover {
 </template>
 
 <script>
-import { IonButton, IonContent, IonPopover } from '@ionic/vue';
+import { IonButton, IonContent, IonItem, IonLabel, IonPopover } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  components: { IonButton, IonContent, IonPopover }
+  components: { IonButton, IonContent, IonItem, IonLabel, IonPopover }
 });
 </script>
 ```
