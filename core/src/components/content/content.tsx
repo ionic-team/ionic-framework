@@ -185,8 +185,10 @@ export class Content implements ComponentInterface {
    */
   @Method()
   async getScrollElement(): Promise<HTMLElement> {
-    // if this gets called in certain early lifecycle hooks (ex: Vue onMounted),
-    // scrollEl won't be defined yet, so wait for it to load in
+    /**
+     * If this gets called in certain early lifecycle hooks (ex: Vue onMounted),
+     * scrollEl won't be defined yet with the custom elements build, so wait for it to load in.
+     */
     if (!this.scrollEl) {
       await new Promise(resolve => componentOnReady(this.el, resolve));
     }
