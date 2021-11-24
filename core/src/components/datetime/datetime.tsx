@@ -1243,22 +1243,22 @@ export class Datetime implements ComponentInterface {
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
    ) {
-    const { color, activePartsClone: timeParts } = this;
+    const { color, activePartsClone, workingParts } = this;
 
     return (
       <ion-picker-internal>
         <ion-picker-column-internal
           color={color}
-          value={timeParts.hour}
+          value={activePartsClone.hour}
           items={hoursItems}
           numericInput
           onIonChange={(ev: CustomEvent) => {
             this.setWorkingParts({
-              ...this.workingParts,
+              ...workingParts,
               hour: ev.detail.value
             });
             this.setActiveParts({
-              ...this.activePartsClone,
+              ...activePartsClone,
               hour: ev.detail.value
             });
 
@@ -1267,16 +1267,16 @@ export class Datetime implements ComponentInterface {
         ></ion-picker-column-internal>
         <ion-picker-column-internal
           color={color}
-          value={timeParts.minute}
+          value={activePartsClone.minute}
           items={minutesItems}
           numericInput
           onIonChange={(ev: CustomEvent) => {
             this.setWorkingParts({
-              ...this.workingParts,
+              ...workingParts,
               minute: ev.detail.value
             });
             this.setActiveParts({
-              ...this.activePartsClone,
+              ...activePartsClone,
               minute: ev.detail.value
             });
 
@@ -1285,19 +1285,19 @@ export class Datetime implements ComponentInterface {
         ></ion-picker-column-internal>
         { !use24Hour && <ion-picker-column-internal
           color={color}
-          value={timeParts.ampm}
+          value={activePartsClone.ampm}
           items={ampmItems}
           onIonChange={(ev: CustomEvent) => {
-            const hour = calculateHourFromAMPM(this.workingParts, ev.detail.value);
+            const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
 
             this.setWorkingParts({
-              ...this.workingParts,
+              ...workingParts,
               ampm: ev.detail.value,
               hour
             });
 
             this.setActiveParts({
-              ...this.workingParts,
+              ...activePartsClone,
               ampm: ev.detail.value,
               hour
             });
