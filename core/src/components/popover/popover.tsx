@@ -217,7 +217,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * This will also cancel browser keyboard event bindings to prevent scroll
    * behavior in a popover using a list of items.
    */
-  @Prop() keyboardEventsEnabled = false;
+  @Prop() keyboardEvents = false;
 
   @Watch('trigger')
   @Watch('triggerAction')
@@ -396,7 +396,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
-    if (!this.keyboardEventsEnabled) {
+    if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();
     }
     this.configureDismissInteraction();

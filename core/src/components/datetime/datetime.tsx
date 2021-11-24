@@ -1321,7 +1321,7 @@ export class Datetime implements ComponentInterface {
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.
-        keyboardEventsEnabled
+        keyboardEvents
         ref={el => this.popoverRef = el}
       >
         {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}

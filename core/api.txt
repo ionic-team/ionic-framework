@@ -889,7 +889,7 @@ ion-popover,prop,event,any,undefined,false,false
 ion-popover,prop,htmlAttributes,PopoverAttributes | undefined,undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
-ion-popover,prop,keyboardEventsEnabled,boolean,false,false,false
+ion-popover,prop,keyboardEvents,boolean,false,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,mode,"ios" | "md",undefined,false,false
 ion-popover,prop,reference,"event" | "trigger",'trigger',false,false
