@@ -24,6 +24,7 @@ import { PickerColumnItem } from './picker-column-internal-interfaces';
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
   private hapticsStarted = false;
+  private isColumnVisible = false;
 
   @State() isActive = false;
 
@@ -64,12 +65,18 @@ export class PickerColumnInternal implements ComponentInterface {
 
   @Watch('value')
   valueChange() {
-    const { items, value } = this;
-    this.scrollActiveItemIntoView();
+    if (this.isColumnVisible) {
+      /**
+       * Only scroll the active item into view and emit the value
+       * change, when the picker column is actively visible to the user.
+       */
+      const { items, value } = this;
+      this.scrollActiveItemIntoView();
 
-    const findItem = items.find(item => item.value === value);
-    if (findItem) {
-      this.ionChange.emit(findItem);
+      const findItem = items.find(item => item.value === value);
+      if (findItem) {
+        this.ionChange.emit(findItem);
+      }
     }
   }
 
@@ -86,11 +93,13 @@ export class PickerColumnInternal implements ComponentInterface {
       if (ev.isIntersecting) {
         this.scrollActiveItemIntoView();
         this.initializeScrollListener();
+        this.isColumnVisible = true;
       } else {
         if (this.destroyScrollListener) {
           this.destroyScrollListener();
           this.destroyScrollListener = undefined;
         }
+        this.isColumnVisible = false;
       }
     }
     new IntersectionObserver(visibleCallback, { threshold: 0.01 }).observe(this.el);
