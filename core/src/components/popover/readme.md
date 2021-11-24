@@ -37,33 +37,12 @@ If you need fine grained control over when the popover is presented and dismisse
 We typically recommend that you write your popovers inline as it streamlines the amount of code in your application. You should only use the `popoverController` for complex use cases where writing a popover inline is impractical. When using a controller, your popover is not created ahead of time, so properties such as `trigger` and `trigger-action` are not applicable here. In addition, nested popovers are not compatible with the controller approach because the popover is automatically added to the root of your application when the `create` method is called.
 
 
-## Customization
+## Styling
 
-Popover uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
-
-We recommend setting a custom class on the host element if writing a popover inline or supplying a class to the `cssClass` option if using the `popoverController` and using that to add custom styles to the host and inner elements. The `cssClass` option can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
-
-```css
-/* DOES NOT WORK - not specific enough */
-.popover-content {
-  background: #222;
-}
-
-/* Works - pass "my-custom-class" in cssClass to increase specificity */
-.my-custom-class .popover-content {
-  background: #222;
-}
-```
-
-Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Popover without needing to target individual elements:
-
-```css
-.my-custom-class {
-  --background: #222;
-}
-```
+Popovers are presented at the root of your application so they overlay your entire app. This behavior applies to both inline popovers and popovers presented from a controller. As a result, custom popover styles can not be scoped to a particular component as they will not apply to the popover. Instead, styles must be applied globally. For most developers, placing the custom styles in `global.css` is sufficient.
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
+
 
 ## Triggers
 
