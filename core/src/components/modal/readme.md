@@ -590,6 +590,7 @@ interface Props {
 }
 
 import React from 'react';
+import AppReactComponent from './AppReactComponent';
 import { IonModal, IonContent, IonButton } from '@ionic/react';
 export const ModalExample: React.FC<Props> = ({ router }) => {
   return (
@@ -600,7 +601,7 @@ export const ModalExample: React.FC<Props> = ({ router }) => {
       </IonModal>
       
       {/* Use a trigger */}
-      <ion-button id="trigger-button">Click to open modal</ion-button>
+      <IonButton id="trigger-button">Click to open modal</IonButton>
       <IonModal trigger="trigger-button">
         <IonContent>Modal Content</IonContent>
       </IonModal>
@@ -1145,12 +1146,12 @@ export class ModalExample {
 </ion-modal>
 
 <script>
-  import { IonModal, IonButton } from '@ionic/vue';
+  import { IonModal, IonButton, IonContent } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import AppVueComponent from './AppVueComponent.vue'
   
   export default defineComponent({
-    components: { IonModal, IonButton, AppVueComponent }
+    components: { IonModal, IonButton, IonContent, AppVueComponent }
   });
 </script>
 ```

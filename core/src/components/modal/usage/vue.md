@@ -36,12 +36,12 @@
 </ion-modal>
 
 <script>
-  import { IonModal, IonButton } from '@ionic/vue';
+  import { IonModal, IonButton, IonContent } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import AppVueComponent from './AppVueComponent.vue'
   
   export default defineComponent({
-    components: { IonModal, IonButton, AppVueComponent }
+    components: { IonModal, IonButton, IonContent, AppVueComponent }
   });
 </script>
 ```
