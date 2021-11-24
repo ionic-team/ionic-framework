@@ -46,6 +46,38 @@ export const PopoverExample: React.FC = () => {
       <IonPopover trigger="size-button" size="cover">
         <IonContent>Popover Content</IonContent>
       </IonPopover>
+      
+      {/* Make popover show relative to click coordinates rather than trigger */}
+      <IonButton id="size-button">Click to open popover</IonButton>
+      <IonPopover trigger="size-button" reference="event">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Nested Popover */}
+      <IonButton id="nested-button">Click to open popover</IonButton>
+      <IonPopover trigger="nested-button" dismissOnSelect={true}>
+        <IonContent>
+          <ion-list>
+            <IonItem button={true} detail={false}>
+              <IonLabel>Option 1</IonLabel>
+            </IonItem>
+            <IonItem button={true} detail={false}>
+              <IonLabel>Option 2</IonLabel>
+            </IonItem>
+            <IonItem button={true} detail={true} id="nested-trigger">
+              <IonLabel>Option 3</IonLabel>
+            </IonItem>
+            
+            <IonPopover trigger="nested-trigger" dismissOnSelect={true} side="end">
+              <IonContent>
+                <IonItem button={true}>
+                  <IonLabel>Nested Option</IonLabel>
+                </IonItem>
+              </IonContent>
+            </IonPopover>
+          </ion-list>
+        </IonContent>
+      </IonPopover>
     </>
   );
 };

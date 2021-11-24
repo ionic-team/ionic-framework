@@ -237,6 +237,44 @@ type PositionAlign = 'start' | 'center' | 'end';
     <ion-content>Popover Content</ion-content>
   </ng-template>
 </ion-popover>
+
+<!-- Make popover show relative to click coordinates rather than trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" reference="event">
+  <ng-template>
+    <ion-content>Popover Content</ion-content>
+  </ng-template>
+</ion-popover>
+
+<!-- Nested Popover -->
+<ion-button id="nested-button">Click to open popover</ion-button>
+<ion-popover trigger="nested-button" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item [button]="true" [detail]="false">
+          <ion-label>Option 1</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="false">
+          <ion-label>Option 2</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="true" id="nested-trigger">
+          <ion-label>Option 3</ion-label>
+        </ion-item>
+        
+        <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">
+          <ng-template>
+            <ion-content>
+              <ion-item [button]="true">
+                <ion-label>Nested Option</ion-label>
+              </ion-item>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
 ```
 
 ### Popover Controller
@@ -318,6 +356,38 @@ In Angular, the CSS of a specific page is scoped only to elements of that page. 
 <ion-button id="size-button">Click to open popover</ion-button>
 <ion-popover trigger="size-button" size="cover">
   <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Make popover show relative to click coordinates rather than trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" reference="event">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Nested Popover -->
+<ion-button id="nested-button">Click to open popover</ion-button>
+<ion-popover trigger="nested-button" dismiss-on-select="true">
+  <ion-content>
+    <ion-list>
+      <ion-item button="true" detail="false">
+        <ion-label>Option 1</ion-label>
+      </ion-item>
+      <ion-item button="true" detail="false">
+        <ion-label>Option 2</ion-label>
+      </ion-item>
+      <ion-item button="true" detail="true" id="nested-trigger">
+        <ion-label>Option 3</ion-label>
+      </ion-item>
+      
+      <ion-popover trigger="nested-trigger" dismiss-on-select="true" side="end">
+        <ion-content>
+          <ion-item button="true">
+            <ion-label>Nested Option</ion-label>
+          </ion-item>
+        </ion-content>
+      </ion-popover>
+    </ion-list>
+  </ion-content>
 </ion-popover>
 ```
 
@@ -412,6 +482,38 @@ export const PopoverExample: React.FC = () => {
       <IonButton id="size-button">Click to open popover</IonButton>
       <IonPopover trigger="size-button" size="cover">
         <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Make popover show relative to click coordinates rather than trigger */}
+      <IonButton id="size-button">Click to open popover</IonButton>
+      <IonPopover trigger="size-button" reference="event">
+        <IonContent>Popover Content</IonContent>
+      </IonPopover>
+      
+      {/* Nested Popover */}
+      <IonButton id="nested-button">Click to open popover</IonButton>
+      <IonPopover trigger="nested-button" dismissOnSelect={true}>
+        <IonContent>
+          <ion-list>
+            <IonItem button={true} detail={false}>
+              <IonLabel>Option 1</IonLabel>
+            </IonItem>
+            <IonItem button={true} detail={false}>
+              <IonLabel>Option 2</IonLabel>
+            </IonItem>
+            <IonItem button={true} detail={true} id="nested-trigger">
+              <IonLabel>Option 3</IonLabel>
+            </IonItem>
+            
+            <IonPopover trigger="nested-trigger" dismissOnSelect={true} side="end">
+              <IonContent>
+                <IonItem button={true}>
+                  <IonLabel>Nested Option</IonLabel>
+                </IonItem>
+              </IonContent>
+            </IonPopover>
+          </ion-list>
+        </IonContent>
       </IonPopover>
     </>
   );
@@ -558,6 +660,38 @@ export class PopoverExample {
         <ion-popover trigger="size-button" size="cover">
           <ion-content>Popover Content</ion-content>
         </ion-popover>
+        
+        {/* Make popover show relative to click coordinates rather than trigger */}
+        <ion-button id="size-button">Click to open popover</ion-button>
+        <ion-popover trigger="size-button" reference="event">
+          <ion-content>Popover Content</ion-content>
+        </ion-popover>
+        
+        {/* Nested Popover */}
+        <ion-button id="nested-button">Click to open popover</ion-button>
+        <ion-popover trigger="nested-button" dismissOnSelect={true}>
+          <ion-content>
+            <ion-list>
+              <ion-item button={true} detail={false}>
+                <ion-label>Option 1</ion-label>
+              </ion-item>
+              <ion-item button={true} detail={false}>
+                <ion-label>Option 2</ion-label>
+              </ion-item>
+              <ion-item button={true} detail={true} id="nested-trigger">
+                <ion-label>Option 3</ion-label>
+              </ion-item>
+              
+              <ion-popover trigger="nested-trigger" dismissOnSelect={true} side="end">
+                <ion-content>
+                  <ion-item button={true}>
+                    <ion-label>Nested Option</ion-label>
+                  </ion-item>
+                </ion-content>
+              </ion-popover>
+            </ion-list>
+          </ion-content>
+        </ion-popover>
       </ion-content>
     ];
   }
@@ -696,6 +830,38 @@ export class PagePopover {
   <ion-button id="size-button">Click to open popover</ion-button>
   <ion-popover trigger="size-button" size="cover">
     <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Make popover show relative to click coordinates rather than trigger -->
+  <ion-button id="size-button">Click to open popover</ion-button>
+  <ion-popover trigger="size-button" reference="event">
+    <ion-content>Popover Content</ion-content>
+  </ion-popover>
+  
+  <!-- Nested Popover -->
+  <ion-button id="nested-button">Click to open popover</ion-button>
+  <ion-popover trigger="nested-button" :dismiss-on-select="true">
+    <ion-content>
+      <ion-list>
+        <ion-item :button="true" :detail="false">
+          <ion-label>Option 1</ion-label>
+        </ion-item>
+        <ion-item :button="true" :detail="false">
+          <ion-label>Option 2</ion-label>
+        </ion-item>
+        <ion-item :button="true" :detail="true" id="nested-trigger">
+          <ion-label>Option 3</ion-label>
+        </ion-item>
+        
+        <ion-popover trigger="nested-trigger" :dismiss-on-select="true" side="end">
+          <ion-content>
+            <ion-item :button="true">
+              <ion-label>Nested Option</ion-label>
+            </ion-item>
+          </ion-content>
+        </ion-popover>
+      </ion-list>
+    </ion-content>
   </ion-popover>
 </template>
 
