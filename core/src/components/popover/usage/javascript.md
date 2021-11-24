@@ -1,3 +1,49 @@
+### Inline Popover
+
+```html
+<!-- Default -->
+<ion-popover is-open="true">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- No Arrow -->
+<ion-popover is-open="true" arrow="false">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open popover</ion-button>
+<ion-popover trigger="trigger-button">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Hover over trigger to open -->
+<ion-button id="hover-button">Hover to open popover</ion-button>
+<ion-popover trigger="hover-button" trigger-action="hover">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Show popover above trigger -->
+<ion-button id="side-button">Click to open popover</ion-button>
+<ion-popover trigger="side-button" side="top">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Align popover to end of trigger -->
+<ion-button id="alignment-button">Click to open popover</ion-button>
+<ion-popover trigger="alignment-button" side="top" alignment="end">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+
+<!-- Make popover the same size as the trigger -->
+<ion-button id="size-button">Click to open popover</ion-button>
+<ion-popover trigger="size-button" size="cover">
+  <ion-content>Popover Content</ion-content>
+</ion-popover>
+```
+
+### Using JavaScript
+
 ```javascript
 class PopoverExamplePage extends HTMLElement {
   constructor() {
