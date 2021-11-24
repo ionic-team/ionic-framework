@@ -46,9 +46,10 @@ Popovers are presented at the root of your application so they overlay your enti
 
 ## Triggers
 
-A trigger for an `ion-popover` is the element that will open a popover when interacted with. The interaction behavior can be customized by setting the `trigger-action` property. The following example shows how to create a right click menu using `trigger` and `trigger-action`. Note that `trigger-action="context-menu"` will prevent your system's default context menu from opening. View the [Usage](#usage) section for an example of how to use triggers.
+A trigger for an `ion-popover` is the element that will open a popover when interacted with. The interaction behavior can be customized by setting the `trigger-action` property. Note that `trigger-action="context-menu"` will prevent your system's default context menu from opening. View the [Usage](#usage) section for an example of how to use triggers.
 
 > Triggers are not applicable when using the `popoverController` because the `ion-popover` is not created ahead of time.
+
 ## Positioning
 
 ### Reference
