@@ -1,10 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Datetime } from '../../datetime';
 
 describe('Footer', () => {
   test('should render default buttons', async () => {
     const page = await newE2EPage({
-      components: [Datetime],
       html: '<ion-datetime show-default-buttons="true"></ion-datetime>'
     });
 
@@ -19,7 +17,6 @@ describe('Footer', () => {
 
   test('should render clear button', async () => {
     const page = await newE2EPage({
-      components: [Datetime],
       html: '<ion-datetime show-clear-button="true"></ion-datetime>'
     });
 
@@ -31,7 +28,6 @@ describe('Footer', () => {
 
   test('should render clear and default buttons', async () => {
     const page = await newE2EPage({
-      components: [Datetime],
       html: '<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>'
     });
 
@@ -49,7 +45,6 @@ describe('Footer', () => {
 
   test('should render custom buttons', async () => {
     const page = await newE2EPage({
-      components: [Datetime],
       html: `
         <ion-datetime show-default-buttons="true" show-clear-button="true">
           <ion-buttons slot="buttons">
@@ -67,7 +62,6 @@ describe('Footer', () => {
 
   test('should render custom buttons', async () => {
     const page = await newE2EPage({
-      components: [Datetime],
       html: `
         <ion-datetime show-default-buttons="true" show-clear-button="true">
           <ion-buttons slot="buttons">
