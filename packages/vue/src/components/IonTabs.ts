@@ -16,7 +16,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
      * inside of ion-tabs.
      */
     if (slottedContent && slottedContent.length > 0) {
-      routerOutlet = slottedContent.find((child: VNode) => child.type && ((child.type as any).name === 'IonRouterOutlet' || child.type as any).name === 'RouterView');
+      routerOutlet = slottedContent.find((child: VNode) => child.type && ((child.type as any).name === 'IonRouterOutlet' || (child.type as any).name === 'RouterView'));
     }
 
     if (!routerOutlet) {
