@@ -137,7 +137,7 @@ The back button is no longer added by default to a navigation bar. It should be 
 </ion-toolbar>
 ```
 
-See the [back button documentation](https://github.com/ionic-team/ionic/blob/master/core/src/components/back-button) for more usage examples.
+See the [back button documentation](https://github.com/ionic-team/ionic/blob/main/core/src/components/back-button) for more usage examples.
 
 ## Button
 
@@ -507,7 +507,7 @@ _In the following examples, `{breakpoint}` refers to the optional screen breakpo
 - `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
 - `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
 
-Customizing the padding and width of a grid should now be done with CSS variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/pages/layout/grid.md).
+Customizing the padding and width of a grid should now be done with CSS variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/main/src/pages/layout/grid.md).
 
 ## Icon
 
@@ -1689,7 +1689,7 @@ The tab attribute defines the route to be shown upon clicking on this tab.
 </ion-tabs>
 ```
 
-See more usage examples in the [Tabs](https://github.com/ionic-team/ionic/blob/master/core/src/components/tabs) documentation.
+See more usage examples in the [Tabs](https://github.com/ionic-team/ionic/blob/main/core/src/components/tabs) documentation.
 
 
 ## Text / Typography

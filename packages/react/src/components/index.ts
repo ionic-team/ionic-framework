@@ -1,4 +1,4 @@
-import { initialize } from '@ionic/core/components';
+import { IonicConfig, initialize } from '@ionic/core/components';
 import { addIcons } from 'ionicons';
 import {
   arrowBackSharp,
@@ -23,7 +23,6 @@ export {
   createGesture,
   iosTransitionAnimation,
   mdTransitionAnimation,
-  setupConfig,
   IonicSwiper,
   IonicSlides,
   getTimeGivenProgression,
@@ -190,13 +189,17 @@ addIcons({
   'search-sharp': searchSharp,
 });
 
-/**
- * By default Ionic Framework hides elements that
- * are not hydrated, but in the CE build there is no
- * hydration.
- * TODO: Remove when all integrations have been
- * migrated to CE build.
- */
-document.documentElement.classList.add('ion-ce');
+export const setupIonicReact = (config: IonicConfig = {}) => {
+  /**
+   * By default Ionic Framework hides elements that
+   * are not hydrated, but in the CE build there is no
+   * hydration.
+   * TODO: Remove when all integrations have been
+   * migrated to CE build.
+   */
+  document.documentElement.classList.add('ion-ce');
 
-initialize();
+  initialize({
+    ...config
+  });
+}

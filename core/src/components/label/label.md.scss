@@ -23,7 +23,6 @@
    /* stylelint-disable property-disallowed-list */
    transform-origin: top left;
    /* stylelint-enable property-disallowed-list */
-   z-index: 3;
  }
 
  :host(.label-stacked.label-rtl),
@@ -70,6 +69,7 @@
   background-color: $item-md-background;
 
   overflow: visible;
+  // Places the label on top of the item outline
   z-index: 3;
 
   &::before,

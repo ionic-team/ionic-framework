@@ -4,4 +4,4 @@ This package publishes the JSON data used to build the [Ionic API documentation]
 
 ## License
 
-* [MIT](https://raw.githubusercontent.com/ionic-team/ionic/master/LICENSE)
+* [MIT](https://raw.githubusercontent.com/ionic-team/ionic/main/LICENSE)

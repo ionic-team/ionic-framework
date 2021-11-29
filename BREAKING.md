@@ -29,12 +29,15 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
 - [Angular](#angular)
-  * [Config Provider](#config-provider)
+  * [Config](#config-1)
 - [Vue](#vue)
+  * [Config](#config-2)
   * [Tabs Config](#tabs-config)
   * [Tabs Router Outlet](#tabs-router-outlet)
   * [Overlay Events](#overlay-events)
   * [Utility Function Types](#utility-function-types)
+- [React](#react)
+  * [Config](#config-3)
 - [Browser and Platform Support](#browser-and-platform-support)
 
 
@@ -164,12 +167,45 @@ The `experimentalTransitionShadow` config option has been removed. The transitio
 
 ### Angular
 
-#### Config Provider
+#### Config
 
 The `Config.set()` method has been removed. See https://ionicframework.com/docs/angular/config for examples on how to set config globally, per-component, and per-platform.
 
+Additionally, the `setupConfig` function is no longer exported from `@ionic/angular`. Developers should use `IonicModule.forRoot` to set the config instead. See https://ionicframework.com/docs/angular/config for more information.
+
+### React
+
+#### Config
+
+All Ionic React applications must now import `setupIonicReact` from `@ionic/react` and call it. If you are setting a custom config with `setupConfig`, pass your config directly to `setupIonicReact` instead:
+
+**Old**
+```javascript
+import { setupConfig } from '@ionic/react';
+
+setupConfig({
+  mode: 'md'
+})
+```
+
+**New**
+```javascript
+import { setupIonicReact } from '@ionic/react';
+
+setupIonicReact({
+  mode: 'md'
+})
+```
+
+Note that all Ionic React applications must call `setupIonicReact` even if they are not setting custom configuration.
+
+Additionally, the `setupConfig` function is no longer exported from `@ionic/react`.
 
 ### Vue
+
+#### Config
+
+The `setupConfig` function is no longer exported from `@ionic/vue`. Developers should pass their config into the `IonicVue` plugin. See https://ionicframework.com/docs/vue/config for more information.
 
 #### Tabs Config
 

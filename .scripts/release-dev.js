@@ -33,14 +33,7 @@ async function main() {
 
     const tasks = [];
 
-    packages.forEach(package => {
-      common.installDevPackage(tasks, package);
-    });
-
-    tasks.push({
-      title: 'Set package version changes',
-      task: async () => await setPackageVersionChanges(packages, devVersion)
-    })
+    await setPackageVersionChanges(packages, devVersion);
 
     packages.forEach(package => {
       common.prepareDevPackage(tasks, package, devVersion);
@@ -57,14 +50,13 @@ async function main() {
     console.log('\n', red(err), '\n');
     process.exit(1);
   }
+
+  orgPkg.forEach(pkg => {
+    fs.writeFileSync(pkg.filePath, pkg.packageContent);
+  });
 }
 
 async function askDevVersion(devVersion) {
-  const skipPrompt = process.argv.find(arg => arg === '--skip-prompt');
-  if (skipPrompt) {
-    console.log(`\n--skip-prompt was passed. Skipping dev build prompt.`)
-    return true;
-  }
 
   const prompts = [
     {
@@ -86,6 +78,9 @@ async function setPackageVersionChanges(packages, version) {
     if (package !== 'core') {
       const pkg = common.readPkg(package);
       common.updateDependency(pkg, '@ionic/core', version);
+      if(package === 'packages/react-router') {
+        common.updateDependency(pkg, '@ionic/react', version);
+      }
       common.writePkg(package, pkg);
     }
     const projectRoot = common.projectPath(package);
