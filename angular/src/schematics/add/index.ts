@@ -15,7 +15,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addArchitectBuilder, addAsset, addStyle, getDefaultAngularAppName } from './../utils/config';
+import { addAsset, addStyle, getDefaultAngularAppName } from './../utils/config';
 import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
@@ -76,36 +76,6 @@ function addIonicons(projectName: string): Rule {
   };
 }
 
-function addIonicBuilder(projectName: string): Rule {
-  return (host: Tree) => {
-    addArchitectBuilder(host, projectName, 'ionic-cordova-serve', {
-      builder: '@ionic/angular-toolkit:cordova-serve',
-      options: {
-        cordovaBuildTarget: `${projectName}:ionic-cordova-build`,
-        devServerTarget: `${projectName}:serve`,
-      },
-      configurations: {
-        production: {
-          cordovaBuildTarget: `${projectName}:ionic-cordova-build:production`,
-          devServerTarget: `${projectName}:serve:production`,
-        },
-      },
-    });
-    addArchitectBuilder(host, projectName, 'ionic-cordova-build', {
-      builder: '@ionic/angular-toolkit:cordova-build',
-      options: {
-        browserTarget: `${projectName}:build`,
-      },
-      configurations: {
-        production: {
-          browserTarget: `${projectName}:build:production`,
-        },
-      },
-    });
-    return host;
-  };
-}
-
 function installNodeDeps() {
   return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
@@ -130,7 +100,6 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
-      addIonicBuilder(options.project),
       addIonicStyles(options.project, sourcePath),
       addIonicons(options.project),
       mergeWith(rootTemplateSource),
