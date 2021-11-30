@@ -90,31 +90,9 @@ interface ModalOptions {
 
 The modal can be dismissed after creation by calling the `dismiss()` method on the modal controller. The `onDidDismiss` function can be called to perform an action after the modal is dismissed.
 
-## Customization
+## Styling
 
-Modal uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
-
-We recommend passing a custom class to `cssClass` in the `create` method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
-
-```css
-/* DOES NOT WORK - not specific enough */
-.modal-wrapper {
-  background: #222;
-}
-
-/* Works - pass "my-custom-class" in cssClass to increase specificity */
-.my-custom-class .modal-wrapper {
-  background: #222;
-}
-```
-
-Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Modal without needing to target individual elements:
-
-```css
-.my-custom-class {
-  --background: #222;
-}
-```
+Modals are presented at the root of your application so they overlay your entire app. This behavior applies to both inline modals and modals presented from a controller. As a result, custom modal styles can not be scoped to a particular component as they will not apply to the modal. Instead, styles must be applied globally. For most developers, placing the custom styles in `global.css` is sufficient.
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
@@ -170,6 +148,70 @@ interface ModalAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 
 ### Angular
 
+### Inline Modal
+
+```html
+<!-- Default -->
+<ion-modal [isOpen]="true">
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open modal</ion-button>
+<ion-modal trigger="trigger-button">
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Sheet Modal -->
+<ion-modal
+  [isOpen]="true"
+  [breakpoints]="[0.1, 0.5, 1]"
+  [initialBreakpoint]="0.5"
+>
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Card Modal -->
+<ion-modal
+  [isOpen]="true"
+  [swipeToClose]="true"
+  [presentingElement]="routerOutlet.nativeEl"
+>
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Passing Props -->
+<ion-modal [isOpen]="true">
+  <ng-template>
+    <app-angular-component title="Ionic"></app-angular-component>
+  </ng-template>
+</ion-modal>
+```
+
+```typescript
+import { Component } from '@angular/core';
+import { IonRouterOutlet } from '@ionic/angular';
+
+@Component({
+  selector: 'modal-example',
+  templateUrl: 'modal-example.html',
+  styleUrls: ['./modal-example.css']
+})
+export class ModalExample {
+  constructor(public routerOutlet: IonRouterOutlet) {}
+}
+```
+
+### Modal Controller
+
 ```typescript
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -210,7 +252,7 @@ export class ModalPage {
 
 > If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
 
-### Passing Data
+#### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`.
 The previous example can be written to include data:
@@ -243,7 +285,7 @@ export class ModalPage {
 }
 ```
 
-### Dismissing a Modal
+#### Dismissing a Modal
 
 A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
 
@@ -300,7 +342,7 @@ import { EventModalModule } from '../modals/event/event.module';
 export class CalendarComponentModule {}
 ```
 
-### Card Modals
+#### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -342,9 +384,8 @@ async presentModal() {
 }
 ```
 
-### Sheet Modals
+#### Sheet Modals
 
-**Controller**
 ```javascript
 import { IonRouterOutlet } from '@ionic/angular';
 
@@ -360,23 +401,50 @@ async presentModal() {
 }
 ```
 
-
-**Inline**
-```html
-<ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 1]">
-  <ng-template>
-    <modal-page></modal-page>
-  </ng-template>
-</ion-modal>
-```
-
-
 ### Style Placement
 
 In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Modal can be presented from within a page, the `ion-modal` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).
 
 
 ### Javascript
+
+### Inline Modal
+
+```html
+<!-- Default -->
+<ion-modal is-open="true">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open modal</ion-button>
+<ion-modal trigger="trigger-button">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Sheet Modal -->
+<ion-modal is-open="true" id="sheet-modal">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Card Modal -->
+<ion-modal is-open="true" id="card-modal">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<script>
+  const sheetModal = document.querySelector('#sheet-modal');
+  const cardModal = document.querySelector('#sheet-modal');
+
+  sheetModal.breakpoints = [0.1, 0.5, 1];
+  sheetModal.initialBreakpoint = 0.5;
+  
+  cardModal.swipeToClose = true;
+  cardModal.presentingElement = document.querySelector('ion-app');
+</script>
+```
+
+### Using JavaScript
 
 ```javascript
 customElements.define('modal-page', class extends HTMLElement {
@@ -497,6 +565,77 @@ modalElement.breakpoints = [0, 0.5, 1];
 
 ### React
 
+### Inline Modal
+
+```tsx
+import { React, useRef } from 'react';
+const App: React.FC = () => {
+  const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+  
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet ref={routerRef}>
+          <Route path="/home" render={() => <Home router={routerRef.current} />}  exact={true} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
+
+...
+
+interface Props {
+  router: HTMLIonRouterOutletElement | null;
+}
+
+import React from 'react';
+import AppReactComponent from './AppReactComponent';
+import { IonModal, IonContent, IonButton } from '@ionic/react';
+export const ModalExample: React.FC<Props> = ({ router }) => {
+  return (
+    <>
+      {/* Default */}
+      <IonModal isOpen={true}>
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Use a trigger */}
+      <IonButton id="trigger-button">Click to open modal</IonButton>
+      <IonModal trigger="trigger-button">
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Sheet Modal */}
+      <IonModal
+        isOpen={true}
+        breakpoints={[0.1, 0.5, 1]}
+        initialBreakpoint={0.5}
+      >
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Card Modal */}
+      <IonModal
+        isOpen={true}
+        swipeToClose={true}
+        presentingElement={router || undefined}
+      >
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Passing Props */}
+      <IonModal isOpen={true}>
+        <AppReactComponent title="Ionic"></AppReactComponent>
+      </IonModal>
+    </>
+  );
+};
+```
+
+
+### useIonModal Hook
+
 > `useIonModal` requires being a descendant of `<IonApp>`. If you need to use a modal outside of an `<IonApp>`, consider using the component method instead.
 
 
@@ -583,7 +722,7 @@ export const ModalExample: React.FC = () => {
 };
 ```
 
-### Card Modals
+#### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -631,7 +770,7 @@ const Home: React.FC<HomePageProps> = ({ router }) => {
 
 ```
 
-In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `ion-modal` ref as the `presentingElement`.
+In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `IonModal` ref as the `presentingElement`.
 
 ```tsx
 <IonModal
@@ -657,7 +796,7 @@ In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `cu
 ```
 
 
-### Sheet Modals
+#### Sheet Modals
 
 ```tsx
 const App: React.FC = () => {
@@ -698,6 +837,66 @@ const Home: React.FC = () => {
 
 
 ### Stencil
+
+### Inline Modal
+
+```tsx
+import { Component, Element, h } from '@stencil/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @Element() el: any;
+  
+  componentDidLoad() {
+    this.routerOutlet = this.el.closest('ion-router-outlet');
+  }
+  
+  render() {
+    return (
+      <div>
+        {/* Default */}
+        <ion-modal isOpen={true}>
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Use a trigger */}
+        <ion-button id="trigger-button">Click to open modal</ion-button>
+        <ion-modal trigger="trigger-button">
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Sheet Modal */}
+        <ion-modal
+          isOpen={true}
+          breakpoints={[0.1, 0.5, 1]}
+          initialBreakpoint={0.5}
+        >
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Card Modal */}
+        <ion-modal
+          isOpen={true}
+          swipeToClose={true}
+          presentingElement={this.routerOutlet}
+        >
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Passing Props */}
+        <ion-modal isOpen={true}>
+          <app-stencil-component title="Ionic"></app-stencil-component>
+        </ion-modal>
+      </div>
+    )
+  }
+}
+```
+
+### Modal Controller 
 
 ```tsx
 import { Component, h } from '@stencil/core';
@@ -909,6 +1108,56 @@ export class ModalExample {
 
 ### Vue
 
+### Inline Modal
+
+```html
+<!-- Default -->
+<ion-modal :is-open="true">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open modal</ion-button>
+<ion-modal trigger="trigger-button">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Sheet Modal -->
+<ion-modal 
+  :is-open="true"
+  :breakpoints="[0.1, 0.5, 1]"
+  :initialBreakpoint="0.5"
+>
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Card Modal -->
+<ion-modal
+  :is-open="true"
+  :swipe-to-close="true"
+  :presenting-element="$parent.$refs.ionRouterOutlet"
+>
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Passing Props -->
+<ion-modal :is-open="true">
+  <app-vue-component title="Ionic"></app-vue-component>
+</ion-modal>
+
+<script>
+  import { IonModal, IonButton, IonContent } from '@ionic/vue';
+  import { defineComponent } from 'vue';
+  import AppVueComponent from './AppVueComponent.vue'
+  
+  export default defineComponent({
+    components: { IonModal, IonButton, IonContent, AppVueComponent }
+  });
+</script>
+```
+
+### Modal Controller
+
 ```html
 <template>
   <ion-header>
@@ -1005,7 +1254,7 @@ export default defineComponent({
 
 > If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
 
-### Card Modals
+#### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -1046,9 +1295,8 @@ export default defineComponent({
 </script>
 ```
 
-### Sheet Modals
+#### Sheet Modals
 
-**Controller**
 ```html
 <template>
   <ion-page>
@@ -1076,40 +1324,6 @@ export default {
     },
   },
 }
-</script>
-```
-
-**Inline**
-```html
-<template>
-  <ion-page>
-    <ion-content>
-      <ion-button @click="setOpen(true)">Show Modal</ion-button>
-      <ion-modal
-        :is-open="isOpenRef"
-        :initial-breakpoint="0.5"
-        :breakpoints="[0, 0.5, 1]"
-        @didDismiss="setOpen(false)"
-      >
-        <Modal></Modal>
-      </ion-modal>
-    </ion-content>
-  </ion-page>
-</template>
-
-<script lang="ts">
-import { IonModal, IonButton, IonContent, IonPage } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
-import Modal from './modal.vue'
-
-export default defineComponent({
-  components: { IonModal, IonButton, Modal, IonContent, IonPage },
-  setup() {
-    const isOpenRef = ref(false);
-    const setOpen = (state: boolean) => isOpenRef.value = state;
-    return { isOpenRef, setOpen }
-  }
-});
 </script>
 ```
 

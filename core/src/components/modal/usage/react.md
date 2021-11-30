@@ -1,3 +1,74 @@
+### Inline Modal
+
+```tsx
+import { React, useRef } from 'react';
+const App: React.FC = () => {
+  const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+  
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet ref={routerRef}>
+          <Route path="/home" render={() => <Home router={routerRef.current} />}  exact={true} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
+
+...
+
+interface Props {
+  router: HTMLIonRouterOutletElement | null;
+}
+
+import React from 'react';
+import AppReactComponent from './AppReactComponent';
+import { IonModal, IonContent, IonButton } from '@ionic/react';
+export const ModalExample: React.FC<Props> = ({ router }) => {
+  return (
+    <>
+      {/* Default */}
+      <IonModal isOpen={true}>
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Use a trigger */}
+      <IonButton id="trigger-button">Click to open modal</IonButton>
+      <IonModal trigger="trigger-button">
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Sheet Modal */}
+      <IonModal
+        isOpen={true}
+        breakpoints={[0.1, 0.5, 1]}
+        initialBreakpoint={0.5}
+      >
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Card Modal */}
+      <IonModal
+        isOpen={true}
+        swipeToClose={true}
+        presentingElement={router || undefined}
+      >
+        <IonContent>Modal Content</IonContent>
+      </IonModal>
+      
+      {/* Passing Props */}
+      <IonModal isOpen={true}>
+        <AppReactComponent title="Ionic"></AppReactComponent>
+      </IonModal>
+    </>
+  );
+};
+```
+
+
+### useIonModal Hook
+
 > `useIonModal` requires being a descendant of `<IonApp>`. If you need to use a modal outside of an `<IonApp>`, consider using the component method instead.
 
 
@@ -84,7 +155,7 @@ export const ModalExample: React.FC = () => {
 };
 ```
 
-### Card Modals
+#### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -132,7 +203,7 @@ const Home: React.FC<HomePageProps> = ({ router }) => {
 
 ```
 
-In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `ion-modal` ref as the `presentingElement`.
+In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `IonModal` ref as the `presentingElement`.
 
 ```tsx
 <IonModal
@@ -158,7 +229,7 @@ In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `cu
 ```
 
 
-### Sheet Modals
+#### Sheet Modals
 
 ```tsx
 const App: React.FC = () => {
