@@ -141,10 +141,21 @@
 
 :host(.content-sizing) {
   contain: none;
+
+  /**
+   * Using position: relative on .inner-scroll below breaks
+   * its scrolling, but is needed to ensure content in a 
+   * popover has appropriate height. When in a popover, make
+   * the outer wrapper scrollable instead to get around this.
+   */
   overflow: auto;
 }
 :host(.content-sizing) .inner-scroll {
+  /**
+   * Needed to allow scrolling with mouse wheel on Windows.
+   */
   overscroll-behavior-y: auto;
+
   position: relative;
 }
 
