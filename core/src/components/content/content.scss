@@ -141,8 +141,12 @@
 
 :host(.content-sizing) {
   contain: none;
+  overflow: auto;
 }
 :host(.content-sizing) .inner-scroll {
+  overscroll-behavior-y: auto;
+  touch-action: auto;
+
   position: relative;
 }
 

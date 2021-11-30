@@ -1,0 +1,8 @@
+@import "./content";
+
+// iOS Content
+// --------------------------------------------------
+
+:host(.content-sizing) {
+  -webkit-overflow-scrolling: touch;
+}
