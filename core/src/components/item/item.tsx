@@ -107,7 +107,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
    */
-  @Prop() counter = true;
+  @Prop() counter = false;
 
   /**
    * When using a router, it specifies the transition animation when navigating to
