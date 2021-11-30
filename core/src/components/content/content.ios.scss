@@ -3,9 +3,6 @@
 // iOS Content
 // --------------------------------------------------
 
-:host(.content-sizing) {
-  -webkit-overflow-scrolling: touch;
-}
 :host(.content-sizing) .inner-scroll {
   overflow: hidden;
 }
