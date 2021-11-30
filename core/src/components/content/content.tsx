@@ -15,10 +15,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  */
 @Component({
   tag: 'ion-content',
-  styleUrls: {
-    ios: 'content.ios.scss',
-    md: 'content.scss'
-  },
+  styleUrl: 'content.scss',
   shadow: true
 })
 export class Content implements ComponentInterface {
