@@ -140,9 +140,11 @@
 }
 
 :host(.content-sizing) {
-  contain: none;
   display: flex;
+
   flex-direction: column;
+  
+  contain: none;
   overflow: hidden;
 }
 :host(.content-sizing) .inner-scroll {
