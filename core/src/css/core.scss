@@ -297,7 +297,7 @@ ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
   }
 }
 /**
- * The > [slot="header"] > selector ensures that we do
+ * The > [slot="header"] selector ensures that we do
  * not modify toggle icons for any nested accordions. The state
  * of one accordion should not affect any accordions inside
  * of a nested accordion group.
