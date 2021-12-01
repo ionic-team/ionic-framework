@@ -1897,9 +1897,6 @@ export namespace Components {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
-        /**
-          * If `true` the popover will not register it's own keyboard event handlers. This allows the contents of the popover to handle their own keyboard interactions.  If `false`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.
-         */
         "keyboardEvents": boolean;
         /**
           * Animation to use when the popover is dismissed.
@@ -5529,9 +5526,6 @@ declare namespace LocalJSX {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
-        /**
-          * If `true` the popover will not register it's own keyboard event handlers. This allows the contents of the popover to handle their own keyboard interactions.  If `false`, the popover will register it's own keyboard event handlers for navigating `ion-list` items within a popover (up/down/home/end/etc.). This will also cancel browser keyboard event bindings to prevent scroll behavior in a popover using a list of items.
-         */
         "keyboardEvents"?: boolean;
         /**
           * Animation to use when the popover is dismissed.
