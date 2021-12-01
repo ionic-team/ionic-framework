@@ -287,7 +287,7 @@ describe('Tabs', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23699
-  it.only('should preserve query string when switching tabs', () => {
+  it('should preserve query string when switching tabs', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
 
     cy.ionPageVisible('tab1');
