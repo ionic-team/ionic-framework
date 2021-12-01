@@ -113,9 +113,10 @@ export const IonTabBar = defineComponent({
          * land on /tabs/tab1/child instead of /tabs/tab1.
          */
         if (activeTab !== prevActiveTab || (prevHref !== currentRoute.pathname)) {
+          const search = (currentRoute.search !== undefined) ? `?${currentRoute.search}` : '';
           tabs[activeTab] = {
             ...tabs[activeTab],
-            currentHref: currentRoute.pathname + (currentRoute.search || '')
+            currentHref: currentRoute.pathname + search
           }
         }
 
