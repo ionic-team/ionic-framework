@@ -199,4 +199,15 @@
 
 ::slotted([slot="fixed"]) {
   position: absolute;
+
+  /**
+   * When presenting ion-content inside of an ion-modal, the .inner-scroll
+   * element is composited. In WebKit, the fixed content is not composited
+   * causing it to appear under the main scrollable content as a result.
+   * The fixed content is correctly composited in other browsers. Adding
+   * the translateZ forces the fixed content to be composited so it correctly
+   * shows on top of the scrollable content. Setting a negative z-index will
+   * still allow the fixed content to appear under the scroll content if specified.
+   */
+  transform: translateZ(0);
 }
