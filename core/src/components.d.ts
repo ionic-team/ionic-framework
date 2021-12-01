@@ -1897,6 +1897,7 @@ export namespace Components {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
+        "keyboardEvents": boolean;
         /**
           * Animation to use when the popover is dismissed.
          */
@@ -5525,6 +5526,7 @@ declare namespace LocalJSX {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
+        "keyboardEvents"?: boolean;
         /**
           * Animation to use when the popover is dismissed.
          */
