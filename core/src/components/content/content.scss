@@ -150,6 +150,9 @@
    * This resolves a sizing issue in popovers where extra long content
    * would overflow the popover's height, preventing scrolling. It's a
    * quirk of flexbox that forces the content to shrink to fit.
+   *
+   * overflow: hidden can't be used here because it prevents the visual
+   * effect from showing on translucent headers.
    */
   min-height: 0;
 }
