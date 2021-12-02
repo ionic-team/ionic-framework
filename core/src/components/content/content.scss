@@ -145,7 +145,13 @@
   flex-direction: column;
   
   contain: none;
-  overflow: hidden;
+
+  /**
+   * This resolves a sizing issue in popovers where extra long content
+   * would overflow the popover's height, preventing scrolling. It's a
+   * quirk of flexbox that forces the content to shrink to fit.
+   */
+  min-height: 0;
 }
 :host(.content-sizing) .inner-scroll {
   position: relative;
