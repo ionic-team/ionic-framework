@@ -66,17 +66,17 @@ export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteCh
        */
       const pathWithParams = Object.keys(routeId.params).map(key => `:${key}`);
       /**
-       * Takes the lower length of the constructed path or the chain's path, to
-       * avoid comparisons that exceed the bounds.
+       * Only compare routes with the chain that have the same number of parameters.
        */
-      const paramLen = Math.min(pathWithParams.length, routeChain.path.length);
-      for (let j = 0; j < paramLen; j++) {
-        // Skip results where the path variable is not a match
-        if (pathWithParams[j].toLowerCase() !== routeChain.path[j]) {
-          break;
+      if (pathWithParams.length === routeChain.path.length) {
+        for (let j = 0; j < pathWithParams.length; j++) {
+          // Skip results where the path variable is not a match
+          if (pathWithParams[j].toLowerCase() !== routeChain.path[j]) {
+            break;
+          }
+          // Weight path matches for the same index higher.
+          score++;
         }
-        // Weight path matches for the same index higher.
-        score++;
       }
     }
     // Weight id matches

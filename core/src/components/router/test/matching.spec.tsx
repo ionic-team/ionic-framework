@@ -44,9 +44,9 @@ describe('matchesIDs', () => {
     const ids = [{ id: 'my-page', params: { s1: 'a', s2: 'b' } }];
 
     expect(matchesIDs(ids, [{ id: 'my-page', path: [''], params: {} }])).toBe(1);
-    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1'], params: {} }])).toBe(2);
+    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1'], params: {} }])).toBe(1);
     expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1', ':s2'], params: {} }])).toBe(3);
-    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1', ':s2', ':s3'], params: {} }])).toBe(3);
+    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1', ':s2', ':s3'], params: {} }])).toBe(1);
   })
 });
 
