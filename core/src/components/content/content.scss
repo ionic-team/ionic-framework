@@ -163,11 +163,14 @@
    * Because the outer content has display: flex here (to help enable
    * scrolling in a popover), offsetting via `top` (such as when using
    * a translucent header) creates white space under the content. Use
-   * a negative margin instead to keep the bottom in place.
+   * a negative margin instead to keep the bottom in place. (A similar
+   * thing happens with `bottom` and footers.)
    */
   top: 0;
+  bottom: 0;
   
   margin-top: calc(var(--offset-top) * -1);
+  margin-bottom: calc(var(--offset-bottom) * -1);
 }
 
 .transition-effect {
