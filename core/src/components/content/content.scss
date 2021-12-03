@@ -158,6 +158,15 @@
 }
 :host(.content-sizing) .inner-scroll {
   position: relative;
+
+  /**
+   * Because the outer content has display: flex here (to help enable
+   * scrolling in a popover), offsetting via `top` (such as when using
+   * a translucent header) creates white space under the content. Use
+   * a negative margin instead to keep the bottom in place.
+   */
+  top: 0;
+  margin-top: calc(var(--offset-top) * -1);
 }
 
 .transition-effect {
