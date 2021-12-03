@@ -1,7 +1,5 @@
 /* eslint-disable */
 /* tslint:disable */
-import { fromEvent } from 'rxjs';
-
 export const proxyInputs = (Cmp: any, inputs: string[]) => {
   const Prototype = Cmp.prototype;
   inputs.forEach(item => {
@@ -28,17 +26,28 @@ export const proxyMethods = (Cmp: any, methods: string[]) => {
   });
 };
 
-export const proxyOutputs = (instance: any, el: any, events: string[]) => {
-  events.forEach(eventName => instance[eventName] = fromEvent(el, eventName));
+export const defineCustomElement = (tagName: string, customElement: any) => {
+  if (
+    customElement !== undefined &&
+    typeof customElements !== 'undefined' &&
+    !customElements.get(tagName)
+  ) {
+    customElements.define(tagName, customElement);
+  }
 }
 
-export function ProxyCmp(opts: { inputs?: any; methods?: any }) {
-  const decorator = function(cls: any) {
-    if (opts.inputs) {
-      proxyInputs(cls, opts.inputs);
+// tslint:disable-next-line: only-arrow-functions
+export function ProxyCmp(opts: { tagName: string, customElement?: any, inputs?: any; methods?: any }) {
+  const decorator = function (cls: any) {
+    const { tagName, customElement, inputs, methods } = opts;
+
+    defineCustomElement(tagName, customElement);
+
+    if (inputs) {
+      proxyInputs(cls, inputs);
     }
-    if (opts.methods) {
-      proxyMethods(cls, opts.methods);
+    if (methods) {
+      proxyMethods(cls, methods);
     }
     return cls;
   };

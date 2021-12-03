@@ -8,45 +8,14 @@ import {
   ElementRef,
   EventEmitter,
   NgZone,
+  Output,
   TemplateRef,
 } from '@angular/core';
-import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
+import { ProxyCmp } from '../angular-component-lib/utils';
 import { Components } from '@ionic/core';
-export declare interface IonPopover extends Components.IonPopover {
-  /**
-   * Emitted after the popover has presented.
-   */
-  ionPopoverDidPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted before the popover has presented.
-   */
-  ionPopoverWillPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the popover has dismissed.
-   */
-  ionPopoverWillDismiss: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the popover has dismissed.
-   */
-  ionPopoverDidDismiss: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
-   */
-  didPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted before the popover has presented. Shorthand for ionPopoverWillPresent.
-   */
-  willPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
-   */
-  willDismiss: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the popover has dismissed. Shorthand for ionPopoverDidDismiss.
-   */
-  didDismiss: EventEmitter<CustomEvent>;
-}
+export declare interface IonPopover extends Components.IonPopover {}
 @ProxyCmp({
+  tagName: 'ion-popover',
   inputs: [
     'alignment',
     'animated',
@@ -95,6 +64,39 @@ export declare interface IonPopover extends Components.IonPopover {
   ],
 })
 export class IonPopover {
+  /**
+   * Emitted after the popover has presented.
+   */
+  @Output() ionPopoverDidPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted before the popover has presented.
+   */
+  @Output() ionPopoverWillPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the popover has dismissed.
+   */
+  @Output() ionPopoverWillDismiss = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the popover has dismissed.
+   */
+  @Output() onPopoverDidDismiss = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+   */
+  @Output() didPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted before the popover has presented. Shorthand for ionPopoverWillPresent.
+   */
+  @Output() willPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+   */
+  @Output() willDismiss = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the popover has dismissed. Shorthand for ionPopoverDidDismiss.
+   */
+  @Output() didDismiss = new EventEmitter<CustomEvent>();
+
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
   isCmpOpen: boolean = false;
@@ -113,15 +115,5 @@ export class IonPopover {
       this.isCmpOpen = false;
       c.detectChanges();
     });
-    proxyOutputs(this, this.el, [
-      'ionPopoverDidPresent',
-      'ionPopoverWillPresent',
-      'ionPopoverWillDismiss',
-      'ionPopoverDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
   }
 }

@@ -8,46 +8,15 @@ import {
   ElementRef,
   EventEmitter,
   NgZone,
+  Output,
   TemplateRef,
 } from '@angular/core';
-import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
+import { ProxyCmp } from '../angular-component-lib/utils';
 import { Components } from '@ionic/core';
 
-export declare interface IonModal extends Components.IonModal {
-  /**
-   * Emitted after the modal has presented.
-   **/
-  ionModalDidPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted before the modal has presented.
-   */
-  ionModalWillPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted before the modal has dismissed.
-   */
-  ionModalWillDismiss: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the modal has dismissed.
-   */
-  ionModalDidDismiss: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
-   */
-  didPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted before the modal has presented. Shorthand for ionModalWillPresent.
-   */
-  willPresent: EventEmitter<CustomEvent>;
-  /**
-   * Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
-   */
-  willDismiss: EventEmitter<CustomEvent>;
-  /**
-   * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
-   */
-  didDismiss: EventEmitter<CustomEvent>;
-}
+export declare interface IonModal extends Components.IonModal {}
 @ProxyCmp({
+  tagName: 'ion-modal',
   inputs: [
     'animated',
     'backdropBreakpoint',
@@ -96,6 +65,39 @@ export declare interface IonModal extends Components.IonModal {
   ],
 })
 export class IonModal {
+  /**
+   * Emitted after the modal has presented.
+   **/
+  @Output() ionModalDidPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted before the modal has presented.
+   */
+  @Output() ionModalWillPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted before the modal has dismissed.
+   */
+  @Output() ionModalWillDismiss = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the modal has dismissed.
+   */
+  @Output() ionModalDidDismiss = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
+   */
+  @Output() didPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted before the modal has presented. Shorthand for ionModalWillPresent.
+   */
+  @Output() willPresent = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
+   */
+  @Output() willDismiss = new EventEmitter<CustomEvent>();
+  /**
+   * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
+   */
+  @Output() didDismiss = new EventEmitter<CustomEvent>();
+
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
   isCmpOpen: boolean = false;
@@ -114,16 +116,5 @@ export class IonModal {
       this.isCmpOpen = false;
       c.detectChanges();
     });
-
-    proxyOutputs(this, this.el, [
-      'ionModalDidPresent',
-      'ionModalWillPresent',
-      'ionModalWillDismiss',
-      'ionModalDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
   }
 }

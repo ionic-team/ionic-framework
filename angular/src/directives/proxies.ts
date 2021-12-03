@@ -1,14 +1,19 @@
 /* tslint:disable */
 /* auto-generated angular directive proxies */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
-import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone, Output } from '@angular/core';
+
+import { ProxyCmp } from './angular-component-lib/utils';
 
 import { Components } from '@ionic/core';
+
+
 
 
 export declare interface IonAccordion extends Components.IonAccordion {}
 
 @ProxyCmp({
+  tagName: 'ion-accordion',
+  customElement: undefined,
   inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value']
 })
 @Component({
@@ -25,16 +30,12 @@ export class IonAccordion {
   }
 }
 
-import { AccordionGroupChangeEventDetail as IAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core';
-export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
-  /**
-   * Emitted when the value property has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<IAccordionGroupAccordionGroupChangeEventDetail>>;
-
-}
+import type { AccordionGroupChangeEventDetail as IAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core';
+export declare interface IonAccordionGroup extends Components.IonAccordionGroup {}
 
 @ProxyCmp({
+  tagName: 'ion-accordion-group',
+  customElement: undefined,
   inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value']
 })
 @Component({
@@ -44,18 +45,26 @@ export declare interface IonAccordionGroup extends Components.IonAccordionGroup 
   inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value']
 })
 export class IonAccordionGroup {
+  /**
+   * Emitted when the value property has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<IAccordionGroupAccordionGroupChangeEventDetail>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
   }
 }
 
 
 export declare interface IonApp extends Components.IonApp {}
 
-
+@ProxyCmp({
+  tagName: 'ion-app',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-app',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -72,7 +81,10 @@ export class IonApp {
 
 export declare interface IonAvatar extends Components.IonAvatar {}
 
-
+@ProxyCmp({
+  tagName: 'ion-avatar',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -90,6 +102,8 @@ export class IonAvatar {
 export declare interface IonBackButton extends Components.IonBackButton {}
 
 @ProxyCmp({
+  tagName: 'ion-back-button',
+  customElement: undefined,
   inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type']
 })
 @Component({
@@ -107,15 +121,11 @@ export class IonBackButton {
 }
 
 
-export declare interface IonBackdrop extends Components.IonBackdrop {
-  /**
-   * Emitted when the backdrop is tapped. 
-   */
-  ionBackdropTap: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonBackdrop extends Components.IonBackdrop {}
 
 @ProxyCmp({
+  tagName: 'ion-backdrop',
+  customElement: undefined,
   inputs: ['stopPropagation', 'tappable', 'visible']
 })
 @Component({
@@ -125,11 +135,16 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
   inputs: ['stopPropagation', 'tappable', 'visible']
 })
 export class IonBackdrop {
+  /**
+   * Emitted when the backdrop is tapped. 
+   */
+  @Output() ionBackdropTap = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionBackdropTap']);
   }
 }
 
@@ -137,6 +152,8 @@ export class IonBackdrop {
 export declare interface IonBadge extends Components.IonBadge {}
 
 @ProxyCmp({
+  tagName: 'ion-badge',
+  customElement: undefined,
   inputs: ['color', 'mode']
 })
 @Component({
@@ -154,19 +171,11 @@ export class IonBadge {
 }
 
 
-export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
-  /**
-   * Emitted when the breadcrumb has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the breadcrumb loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonBreadcrumb extends Components.IonBreadcrumb {}
 
 @ProxyCmp({
+  tagName: 'ion-breadcrumb',
+  customElement: undefined,
   inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target']
 })
 @Component({
@@ -176,24 +185,29 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target']
 })
 export class IonBreadcrumb {
+  /**
+   * Emitted when the breadcrumb has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the breadcrumb loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
 
-import { BreadcrumbCollapsedClickEventDetail as IBreadcrumbsBreadcrumbCollapsedClickEventDetail } from '@ionic/core';
-export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
-  /**
-   * Emitted when the collapsed indicator is clicked on. 
-   */
-  ionCollapsedClick: EventEmitter<CustomEvent<IBreadcrumbsBreadcrumbCollapsedClickEventDetail>>;
-
-}
+import type { BreadcrumbCollapsedClickEventDetail as IBreadcrumbsBreadcrumbCollapsedClickEventDetail } from '@ionic/core';
+export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {}
 
 @ProxyCmp({
+  tagName: 'ion-breadcrumbs',
+  customElement: undefined,
   inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode']
 })
 @Component({
@@ -203,28 +217,25 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode']
 })
 export class IonBreadcrumbs {
+  /**
+   * Emitted when the collapsed indicator is clicked on. 
+   */
+  @Output() ionCollapsedClick = new EventEmitter<CustomEvent<IBreadcrumbsBreadcrumbCollapsedClickEventDetail>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCollapsedClick']);
   }
 }
 
 
-export declare interface IonButton extends Components.IonButton {
-  /**
-   * Emitted when the button has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the button loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonButton extends Components.IonButton {}
 
 @ProxyCmp({
+  tagName: 'ion-button',
+  customElement: undefined,
   inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })
 @Component({
@@ -234,11 +245,20 @@ export declare interface IonButton extends Components.IonButton {
   inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })
 export class IonButton {
+  /**
+   * Emitted when the button has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the button loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -246,6 +266,8 @@ export class IonButton {
 export declare interface IonButtons extends Components.IonButtons {}
 
 @ProxyCmp({
+  tagName: 'ion-buttons',
+  customElement: undefined,
   inputs: ['collapse']
 })
 @Component({
@@ -266,6 +288,8 @@ export class IonButtons {
 export declare interface IonCard extends Components.IonCard {}
 
 @ProxyCmp({
+  tagName: 'ion-card',
+  customElement: undefined,
   inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type']
 })
 @Component({
@@ -286,6 +310,8 @@ export class IonCard {
 export declare interface IonCardContent extends Components.IonCardContent {}
 
 @ProxyCmp({
+  tagName: 'ion-card-content',
+  customElement: undefined,
   inputs: ['mode']
 })
 @Component({
@@ -306,6 +332,8 @@ export class IonCardContent {
 export declare interface IonCardHeader extends Components.IonCardHeader {}
 
 @ProxyCmp({
+  tagName: 'ion-card-header',
+  customElement: undefined,
   inputs: ['color', 'mode', 'translucent']
 })
 @Component({
@@ -326,6 +354,8 @@ export class IonCardHeader {
 export declare interface IonCardSubtitle extends Components.IonCardSubtitle {}
 
 @ProxyCmp({
+  tagName: 'ion-card-subtitle',
+  customElement: undefined,
   inputs: ['color', 'mode']
 })
 @Component({
@@ -346,6 +376,8 @@ export class IonCardSubtitle {
 export declare interface IonCardTitle extends Components.IonCardTitle {}
 
 @ProxyCmp({
+  tagName: 'ion-card-title',
+  customElement: undefined,
   inputs: ['color', 'mode']
 })
 @Component({
@@ -362,24 +394,12 @@ export class IonCardTitle {
   }
 }
 
-import { CheckboxChangeEventDetail as ICheckboxCheckboxChangeEventDetail } from '@ionic/core';
-export declare interface IonCheckbox extends Components.IonCheckbox {
-  /**
-   * Emitted when the checked property has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<ICheckboxCheckboxChangeEventDetail>>;
-  /**
-   * Emitted when the checkbox has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the checkbox loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+import type { CheckboxChangeEventDetail as ICheckboxCheckboxChangeEventDetail } from '@ionic/core';
+export declare interface IonCheckbox extends Components.IonCheckbox {}
 
 @ProxyCmp({
+  tagName: 'ion-checkbox',
+  customElement: undefined,
   inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value']
 })
 @Component({
@@ -389,11 +409,24 @@ export declare interface IonCheckbox extends Components.IonCheckbox {
   inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value']
 })
 export class IonCheckbox {
+  /**
+   * Emitted when the checked property has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<ICheckboxCheckboxChangeEventDetail>>();
+  /**
+   * Emitted when the checkbox has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the checkbox loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -401,6 +434,8 @@ export class IonCheckbox {
 export declare interface IonChip extends Components.IonChip {}
 
 @ProxyCmp({
+  tagName: 'ion-chip',
+  customElement: undefined,
   inputs: ['color', 'disabled', 'mode', 'outline']
 })
 @Component({
@@ -421,6 +456,8 @@ export class IonChip {
 export declare interface IonCol extends Components.IonCol {}
 
 @ProxyCmp({
+  tagName: 'ion-col',
+  customElement: undefined,
   inputs: ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs']
 })
 @Component({
@@ -437,26 +474,13 @@ export class IonCol {
   }
 }
 
-import { ScrollBaseDetail as IContentScrollBaseDetail } from '@ionic/core';
-import { ScrollDetail as IContentScrollDetail } from '@ionic/core';
-export declare interface IonContent extends Components.IonContent {
-  /**
-   * Emitted when the scroll has started. 
-   */
-  ionScrollStart: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
-  /**
-   * Emitted while scrolling. This event is disabled by default.
-Look at the property: `scrollEvents` 
-   */
-  ionScroll: EventEmitter<CustomEvent<IContentScrollDetail>>;
-  /**
-   * Emitted when the scroll has ended. 
-   */
-  ionScrollEnd: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
-
-}
+import type { ScrollBaseDetail as IContentScrollBaseDetail } from '@ionic/core';
+import type { ScrollDetail as IContentScrollDetail } from '@ionic/core';
+export declare interface IonContent extends Components.IonContent {}
 
 @ProxyCmp({
+  tagName: 'ion-content',
+  customElement: undefined,
   inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
   methods: ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']
 })
@@ -467,36 +491,34 @@ Look at the property: `scrollEvents`
   inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY']
 })
 export class IonContent {
+  /**
+   * Emitted when the scroll has started. 
+   */
+  @Output() ionScrollStart = new EventEmitter<CustomEvent<IContentScrollBaseDetail>>();
+  /**
+   * Emitted while scrolling. This event is disabled by default.
+Look at the property: `scrollEvents` 
+   */
+  @Output() ionScroll = new EventEmitter<CustomEvent<IContentScrollDetail>>();
+  /**
+   * Emitted when the scroll has ended. 
+   */
+  @Output() ionScrollEnd = new EventEmitter<CustomEvent<IContentScrollBaseDetail>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
   }
 }
 
-import { DatetimeChangeEventDetail as IDatetimeDatetimeChangeEventDetail } from '@ionic/core';
-export declare interface IonDatetime extends Components.IonDatetime {
-  /**
-   * Emitted when the datetime selection was cancelled. 
-   */
-  ionCancel: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the value (selected date) has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<IDatetimeDatetimeChangeEventDetail>>;
-  /**
-   * Emitted when the datetime has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the datetime loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+import type { DatetimeChangeEventDetail as IDatetimeDatetimeChangeEventDetail } from '@ionic/core';
+export declare interface IonDatetime extends Components.IonDatetime {}
 
 @ProxyCmp({
+  tagName: 'ion-datetime',
+  customElement: undefined,
   inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues'],
   methods: ['confirm', 'reset', 'cancel']
 })
@@ -507,11 +529,28 @@ export declare interface IonDatetime extends Components.IonDatetime {
   inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues']
 })
 export class IonDatetime {
+  /**
+   * Emitted when the datetime selection was cancelled. 
+   */
+  @Output() ionCancel = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the value (selected date) has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<IDatetimeDatetimeChangeEventDetail>>();
+  /**
+   * Emitted when the datetime has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the datetime loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -519,6 +558,8 @@ export class IonDatetime {
 export declare interface IonFab extends Components.IonFab {}
 
 @ProxyCmp({
+  tagName: 'ion-fab',
+  customElement: undefined,
   inputs: ['activated', 'edge', 'horizontal', 'vertical'],
   methods: ['close']
 })
@@ -537,19 +578,11 @@ export class IonFab {
 }
 
 
-export declare interface IonFabButton extends Components.IonFabButton {
-  /**
-   * Emitted when the button has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the button loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonFabButton extends Components.IonFabButton {}
 
 @ProxyCmp({
+  tagName: 'ion-fab-button',
+  customElement: undefined,
   inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type']
 })
 @Component({
@@ -559,11 +592,20 @@ export declare interface IonFabButton extends Components.IonFabButton {
   inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type']
 })
 export class IonFabButton {
+  /**
+   * Emitted when the button has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the button loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -571,6 +613,8 @@ export class IonFabButton {
 export declare interface IonFabList extends Components.IonFabList {}
 
 @ProxyCmp({
+  tagName: 'ion-fab-list',
+  customElement: undefined,
   inputs: ['activated', 'side']
 })
 @Component({
@@ -591,6 +635,8 @@ export class IonFabList {
 export declare interface IonFooter extends Components.IonFooter {}
 
 @ProxyCmp({
+  tagName: 'ion-footer',
+  customElement: undefined,
   inputs: ['collapse', 'mode', 'translucent']
 })
 @Component({
@@ -611,6 +657,8 @@ export class IonFooter {
 export declare interface IonGrid extends Components.IonGrid {}
 
 @ProxyCmp({
+  tagName: 'ion-grid',
+  customElement: undefined,
   inputs: ['fixed']
 })
 @Component({
@@ -631,6 +679,8 @@ export class IonGrid {
 export declare interface IonHeader extends Components.IonHeader {}
 
 @ProxyCmp({
+  tagName: 'ion-header',
+  customElement: undefined,
   inputs: ['collapse', 'mode', 'translucent']
 })
 @Component({
@@ -651,6 +701,8 @@ export class IonHeader {
 export declare interface IonIcon extends Components.IonIcon {}
 
 @ProxyCmp({
+  tagName: 'ion-icon',
+  customElement: undefined,
   inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src']
 })
 @Component({
@@ -668,23 +720,11 @@ export class IonIcon {
 }
 
 
-export declare interface IonImg extends Components.IonImg {
-  /**
-   * Emitted when the img src has been set 
-   */
-  ionImgWillLoad: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the image has finished loading 
-   */
-  ionImgDidLoad: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the img fails to load 
-   */
-  ionError: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonImg extends Components.IonImg {}
 
 @ProxyCmp({
+  tagName: 'ion-img',
+  customElement: undefined,
   inputs: ['alt', 'src']
 })
 @Component({
@@ -694,27 +734,33 @@ export declare interface IonImg extends Components.IonImg {
   inputs: ['alt', 'src']
 })
 export class IonImg {
+  /**
+   * Emitted when the img src has been set 
+   */
+  @Output() ionImgWillLoad = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the image has finished loading 
+   */
+  @Output() ionImgDidLoad = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the img fails to load 
+   */
+  @Output() ionError = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionImgWillLoad', 'ionImgDidLoad', 'ionError']);
   }
 }
 
 
-export declare interface IonInfiniteScroll extends Components.IonInfiniteScroll {
-  /**
-   * Emitted when the scroll reaches
-the threshold distance. From within your infinite handler,
-you must call the infinite scroll's `complete()` method when
-your async operation has completed. 
-   */
-  ionInfinite: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonInfiniteScroll extends Components.IonInfiniteScroll {}
 
 @ProxyCmp({
+  tagName: 'ion-infinite-scroll',
+  customElement: undefined,
   inputs: ['disabled', 'position', 'threshold'],
   methods: ['complete']
 })
@@ -725,11 +771,19 @@ your async operation has completed.
   inputs: ['disabled', 'position', 'threshold']
 })
 export class IonInfiniteScroll {
+  /**
+   * Emitted when the scroll reaches
+the threshold distance. From within your infinite handler,
+you must call the infinite scroll's `complete()` method when
+your async operation has completed. 
+   */
+  @Output() ionInfinite = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInfinite']);
   }
 }
 
@@ -737,6 +791,8 @@ export class IonInfiniteScroll {
 export declare interface IonInfiniteScrollContent extends Components.IonInfiniteScrollContent {}
 
 @ProxyCmp({
+  tagName: 'ion-infinite-scroll-content',
+  customElement: undefined,
   inputs: ['loadingSpinner', 'loadingText']
 })
 @Component({
@@ -753,28 +809,12 @@ export class IonInfiniteScrollContent {
   }
 }
 
-import { InputChangeEventDetail as IInputInputChangeEventDetail } from '@ionic/core';
-export declare interface IonInput extends Components.IonInput {
-  /**
-   * Emitted when a keyboard input occurred. 
-   */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
-  /**
-   * Emitted when the value has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<IInputInputChangeEventDetail>>;
-  /**
-   * Emitted when the input loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
-  /**
-   * Emitted when the input has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
-
-}
+import type { InputChangeEventDetail as IInputInputChangeEventDetail } from '@ionic/core';
+export declare interface IonInput extends Components.IonInput {}
 
 @ProxyCmp({
+  tagName: 'ion-input',
+  customElement: undefined,
   inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'size', 'spellcheck', 'step', 'type', 'value'],
   methods: ['setFocus', 'getInputElement']
 })
@@ -785,11 +825,28 @@ export declare interface IonInput extends Components.IonInput {
   inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'size', 'spellcheck', 'step', 'type', 'value']
 })
 export class IonInput {
+  /**
+   * Emitted when a keyboard input occurred. 
+   */
+  @Output() ionInput = new EventEmitter<CustomEvent<InputEvent>>();
+  /**
+   * Emitted when the value has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<IInputInputChangeEventDetail>>();
+  /**
+   * Emitted when the input loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<FocusEvent>>();
+  /**
+   * Emitted when the input has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<FocusEvent>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
   }
 }
 
@@ -797,6 +854,8 @@ export class IonInput {
 export declare interface IonItem extends Components.IonItem {}
 
 @ProxyCmp({
+  tagName: 'ion-item',
+  customElement: undefined,
   inputs: ['button', 'color', 'counter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
 })
 @Component({
@@ -817,6 +876,8 @@ export class IonItem {
 export declare interface IonItemDivider extends Components.IonItemDivider {}
 
 @ProxyCmp({
+  tagName: 'ion-item-divider',
+  customElement: undefined,
   inputs: ['color', 'mode', 'sticky']
 })
 @Component({
@@ -836,7 +897,10 @@ export class IonItemDivider {
 
 export declare interface IonItemGroup extends Components.IonItemGroup {}
 
-
+@ProxyCmp({
+  tagName: 'ion-item-group',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-item-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -854,6 +918,8 @@ export class IonItemGroup {
 export declare interface IonItemOption extends Components.IonItemOption {}
 
 @ProxyCmp({
+  tagName: 'ion-item-option',
+  customElement: undefined,
   inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type']
 })
 @Component({
@@ -871,15 +937,11 @@ export class IonItemOption {
 }
 
 
-export declare interface IonItemOptions extends Components.IonItemOptions {
-  /**
-   * Emitted when the item has been fully swiped. 
-   */
-  ionSwipe: EventEmitter<CustomEvent<any>>;
-
-}
+export declare interface IonItemOptions extends Components.IonItemOptions {}
 
 @ProxyCmp({
+  tagName: 'ion-item-options',
+  customElement: undefined,
   inputs: ['side']
 })
 @Component({
@@ -889,24 +951,25 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   inputs: ['side']
 })
 export class IonItemOptions {
+  /**
+   * Emitted when the item has been fully swiped. 
+   */
+  @Output() ionSwipe = new EventEmitter<CustomEvent<any>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSwipe']);
   }
 }
 
 
-export declare interface IonItemSliding extends Components.IonItemSliding {
-  /**
-   * Emitted when the sliding position changes. 
-   */
-  ionDrag: EventEmitter<CustomEvent<any>>;
-
-}
+export declare interface IonItemSliding extends Components.IonItemSliding {}
 
 @ProxyCmp({
+  tagName: 'ion-item-sliding',
+  customElement: undefined,
   inputs: ['disabled'],
   methods: ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened']
 })
@@ -917,11 +980,16 @@ export declare interface IonItemSliding extends Components.IonItemSliding {
   inputs: ['disabled']
 })
 export class IonItemSliding {
+  /**
+   * Emitted when the sliding position changes. 
+   */
+  @Output() ionDrag = new EventEmitter<CustomEvent<any>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionDrag']);
   }
 }
 
@@ -929,6 +997,8 @@ export class IonItemSliding {
 export declare interface IonLabel extends Components.IonLabel {}
 
 @ProxyCmp({
+  tagName: 'ion-label',
+  customElement: undefined,
   inputs: ['color', 'mode', 'position']
 })
 @Component({
@@ -949,6 +1019,8 @@ export class IonLabel {
 export declare interface IonList extends Components.IonList {}
 
 @ProxyCmp({
+  tagName: 'ion-list',
+  customElement: undefined,
   inputs: ['inset', 'lines', 'mode'],
   methods: ['closeSlidingItems']
 })
@@ -970,6 +1042,8 @@ export class IonList {
 export declare interface IonListHeader extends Components.IonListHeader {}
 
 @ProxyCmp({
+  tagName: 'ion-list-header',
+  customElement: undefined,
   inputs: ['color', 'lines', 'mode']
 })
 @Component({
@@ -987,27 +1061,11 @@ export class IonListHeader {
 }
 
 
-export declare interface IonMenu extends Components.IonMenu {
-  /**
-   * Emitted when the menu is about to be opened. 
-   */
-  ionWillOpen: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the menu is about to be closed. 
-   */
-  ionWillClose: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the menu is open. 
-   */
-  ionDidOpen: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the menu is closed. 
-   */
-  ionDidClose: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonMenu extends Components.IonMenu {}
 
 @ProxyCmp({
+  tagName: 'ion-menu',
+  customElement: undefined,
   inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'],
   methods: ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen']
 })
@@ -1018,11 +1076,28 @@ export declare interface IonMenu extends Components.IonMenu {
   inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type']
 })
 export class IonMenu {
+  /**
+   * Emitted when the menu is about to be opened. 
+   */
+  @Output() ionWillOpen = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the menu is about to be closed. 
+   */
+  @Output() ionWillClose = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the menu is open. 
+   */
+  @Output() ionDidOpen = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the menu is closed. 
+   */
+  @Output() ionDidClose = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose']);
   }
 }
 
@@ -1030,6 +1105,8 @@ export class IonMenu {
 export declare interface IonMenuButton extends Components.IonMenuButton {}
 
 @ProxyCmp({
+  tagName: 'ion-menu-button',
+  customElement: undefined,
   inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type']
 })
 @Component({
@@ -1050,6 +1127,8 @@ export class IonMenuButton {
 export declare interface IonMenuToggle extends Components.IonMenuToggle {}
 
 @ProxyCmp({
+  tagName: 'ion-menu-toggle',
+  customElement: undefined,
   inputs: ['autoHide', 'menu']
 })
 @Component({
@@ -1067,19 +1146,11 @@ export class IonMenuToggle {
 }
 
 
-export declare interface IonNav extends Components.IonNav {
-  /**
-   * Event fired when the nav will change components 
-   */
-  ionNavWillChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Event fired when the nav has changed components 
-   */
-  ionNavDidChange: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonNav extends Components.IonNav {}
 
 @ProxyCmp({
+  tagName: 'ion-nav',
+  customElement: undefined,
   inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
   methods: ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']
 })
@@ -1090,11 +1161,20 @@ export declare interface IonNav extends Components.IonNav {
   inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture']
 })
 export class IonNav {
+  /**
+   * Event fired when the nav will change components 
+   */
+  @Output() ionNavWillChange = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Event fired when the nav has changed components 
+   */
+  @Output() ionNavDidChange = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
   }
 }
 
@@ -1102,6 +1182,8 @@ export class IonNav {
 export declare interface IonNavLink extends Components.IonNavLink {}
 
 @ProxyCmp({
+  tagName: 'ion-nav-link',
+  customElement: undefined,
   inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection']
 })
 @Component({
@@ -1122,6 +1204,8 @@ export class IonNavLink {
 export declare interface IonNote extends Components.IonNote {}
 
 @ProxyCmp({
+  tagName: 'ion-note',
+  customElement: undefined,
   inputs: ['color', 'mode']
 })
 @Component({
@@ -1142,6 +1226,8 @@ export class IonNote {
 export declare interface IonProgressBar extends Components.IonProgressBar {}
 
 @ProxyCmp({
+  tagName: 'ion-progress-bar',
+  customElement: undefined,
   inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value']
 })
 @Component({
@@ -1159,19 +1245,11 @@ export class IonProgressBar {
 }
 
 
-export declare interface IonRadio extends Components.IonRadio {
-  /**
-   * Emitted when the radio button has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the radio button loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonRadio extends Components.IonRadio {}
 
 @ProxyCmp({
+  tagName: 'ion-radio',
+  customElement: undefined,
   inputs: ['color', 'disabled', 'mode', 'name', 'value']
 })
 @Component({
@@ -1181,24 +1259,29 @@ export declare interface IonRadio extends Components.IonRadio {
   inputs: ['color', 'disabled', 'mode', 'name', 'value']
 })
 export class IonRadio {
+  /**
+   * Emitted when the radio button has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the radio button loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
 
-import { RadioGroupChangeEventDetail as IRadioGroupRadioGroupChangeEventDetail } from '@ionic/core';
-export declare interface IonRadioGroup extends Components.IonRadioGroup {
-  /**
-   * Emitted when the value has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<IRadioGroupRadioGroupChangeEventDetail>>;
-
-}
+import type { RadioGroupChangeEventDetail as IRadioGroupRadioGroupChangeEventDetail } from '@ionic/core';
+export declare interface IonRadioGroup extends Components.IonRadioGroup {}
 
 @ProxyCmp({
+  tagName: 'ion-radio-group',
+  customElement: undefined,
   inputs: ['allowEmptySelection', 'name', 'value']
 })
 @Component({
@@ -1208,32 +1291,25 @@ export declare interface IonRadioGroup extends Components.IonRadioGroup {
   inputs: ['allowEmptySelection', 'name', 'value']
 })
 export class IonRadioGroup {
+  /**
+   * Emitted when the value has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<IRadioGroupRadioGroupChangeEventDetail>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
   }
 }
 
-import { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core';
-export declare interface IonRange extends Components.IonRange {
-  /**
-   * Emitted when the value property has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<IRangeRangeChangeEventDetail>>;
-  /**
-   * Emitted when the range has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the range loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+import type { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core';
+export declare interface IonRange extends Components.IonRange {}
 
 @ProxyCmp({
+  tagName: 'ion-range',
+  customElement: undefined,
   inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 @Component({
@@ -1243,35 +1319,33 @@ export declare interface IonRange extends Components.IonRange {
   inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 export class IonRange {
+  /**
+   * Emitted when the value property has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<IRangeRangeChangeEventDetail>>();
+  /**
+   * Emitted when the range has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the range loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
-import { RefresherEventDetail as IRefresherRefresherEventDetail } from '@ionic/core';
-export declare interface IonRefresher extends Components.IonRefresher {
-  /**
-   * Emitted when the user lets go of the content and has pulled down
-further than the `pullMin` or pulls the content down and exceeds the pullMax.
-Updates the refresher state to `refreshing`. The `complete()` method should be
-called when the async operation has completed. 
-   */
-  ionRefresh: EventEmitter<CustomEvent<IRefresherRefresherEventDetail>>;
-  /**
-   * Emitted while the user is pulling down the content and exposing the refresher. 
-   */
-  ionPull: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user begins to start pulling down. 
-   */
-  ionStart: EventEmitter<CustomEvent<void>>;
-
-}
+import type { RefresherEventDetail as IRefresherRefresherEventDetail } from '@ionic/core';
+export declare interface IonRefresher extends Components.IonRefresher {}
 
 @ProxyCmp({
+  tagName: 'ion-refresher',
+  customElement: undefined,
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
   methods: ['complete', 'cancel', 'getProgress']
 })
@@ -1282,11 +1356,27 @@ called when the async operation has completed.
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration']
 })
 export class IonRefresher {
+  /**
+   * Emitted when the user lets go of the content and has pulled down
+further than the `pullMin` or pulls the content down and exceeds the pullMax.
+Updates the refresher state to `refreshing`. The `complete()` method should be
+called when the async operation has completed. 
+   */
+  @Output() ionRefresh = new EventEmitter<CustomEvent<IRefresherRefresherEventDetail>>();
+  /**
+   * Emitted while the user is pulling down the content and exposing the refresher. 
+   */
+  @Output() ionPull = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the user begins to start pulling down. 
+   */
+  @Output() ionStart = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
   }
 }
 
@@ -1294,6 +1384,8 @@ export class IonRefresher {
 export declare interface IonRefresherContent extends Components.IonRefresherContent {}
 
 @ProxyCmp({
+  tagName: 'ion-refresher-content',
+  customElement: undefined,
   inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText']
 })
 @Component({
@@ -1313,7 +1405,10 @@ export class IonRefresherContent {
 
 export declare interface IonReorder extends Components.IonReorder {}
 
-
+@ProxyCmp({
+  tagName: 'ion-reorder',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-reorder',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1327,18 +1422,12 @@ export class IonReorder {
   }
 }
 
-import { ItemReorderEventDetail as IReorderGroupItemReorderEventDetail } from '@ionic/core';
-export declare interface IonReorderGroup extends Components.IonReorderGroup {
-  /**
-   * Event that needs to be listened to in order to complete the reorder action.
-Once the event has been emitted, the `complete()` method then needs
-to be called in order to finalize the reorder action. 
-   */
-  ionItemReorder: EventEmitter<CustomEvent<IReorderGroupItemReorderEventDetail>>;
-
-}
+import type { ItemReorderEventDetail as IReorderGroupItemReorderEventDetail } from '@ionic/core';
+export declare interface IonReorderGroup extends Components.IonReorderGroup {}
 
 @ProxyCmp({
+  tagName: 'ion-reorder-group',
+  customElement: undefined,
   inputs: ['disabled'],
   methods: ['complete']
 })
@@ -1349,11 +1438,18 @@ to be called in order to finalize the reorder action.
   inputs: ['disabled']
 })
 export class IonReorderGroup {
+  /**
+   * Event that needs to be listened to in order to complete the reorder action.
+Once the event has been emitted, the `complete()` method then needs
+to be called in order to finalize the reorder action. 
+   */
+  @Output() ionItemReorder = new EventEmitter<CustomEvent<IReorderGroupItemReorderEventDetail>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionItemReorder']);
   }
 }
 
@@ -1361,6 +1457,8 @@ export class IonReorderGroup {
 export declare interface IonRippleEffect extends Components.IonRippleEffect {}
 
 @ProxyCmp({
+  tagName: 'ion-ripple-effect',
+  customElement: undefined,
   inputs: ['type'],
   methods: ['addRipple']
 })
@@ -1381,7 +1479,10 @@ export class IonRippleEffect {
 
 export declare interface IonRow extends Components.IonRow {}
 
-
+@ProxyCmp({
+  tagName: 'ion-row',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1395,36 +1496,12 @@ export class IonRow {
   }
 }
 
-import { SearchbarChangeEventDetail as ISearchbarSearchbarChangeEventDetail } from '@ionic/core';
-export declare interface IonSearchbar extends Components.IonSearchbar {
-  /**
-   * Emitted when a keyboard input occurred. 
-   */
-  ionInput: EventEmitter<CustomEvent<KeyboardEvent>>;
-  /**
-   * Emitted when the value has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<ISearchbarSearchbarChangeEventDetail>>;
-  /**
-   * Emitted when the cancel button is clicked. 
-   */
-  ionCancel: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the clear input button is clicked. 
-   */
-  ionClear: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the input loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the input has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-
-}
+import type { SearchbarChangeEventDetail as ISearchbarSearchbarChangeEventDetail } from '@ionic/core';
+export declare interface IonSearchbar extends Components.IonSearchbar {}
 
 @ProxyCmp({
+  tagName: 'ion-searchbar',
+  customElement: undefined,
   inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value'],
   methods: ['setFocus', 'getInputElement']
 })
@@ -1435,25 +1512,45 @@ export declare interface IonSearchbar extends Components.IonSearchbar {
   inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value']
 })
 export class IonSearchbar {
+  /**
+   * Emitted when a keyboard input occurred. 
+   */
+  @Output() ionInput = new EventEmitter<CustomEvent<KeyboardEvent>>();
+  /**
+   * Emitted when the value has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<ISearchbarSearchbarChangeEventDetail>>();
+  /**
+   * Emitted when the cancel button is clicked. 
+   */
+  @Output() ionCancel = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the clear input button is clicked. 
+   */
+  @Output() ionClear = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the input loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the input has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
 }
 
-import { SegmentChangeEventDetail as ISegmentSegmentChangeEventDetail } from '@ionic/core';
-export declare interface IonSegment extends Components.IonSegment {
-  /**
-   * Emitted when the value property has changed and any
-dragging pointer has been released from `ion-segment`. 
-   */
-  ionChange: EventEmitter<CustomEvent<ISegmentSegmentChangeEventDetail>>;
-
-}
+import type { SegmentChangeEventDetail as ISegmentSegmentChangeEventDetail } from '@ionic/core';
+export declare interface IonSegment extends Components.IonSegment {}
 
 @ProxyCmp({
+  tagName: 'ion-segment',
+  customElement: undefined,
   inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value']
 })
 @Component({
@@ -1463,11 +1560,17 @@ dragging pointer has been released from `ion-segment`.
   inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value']
 })
 export class IonSegment {
+  /**
+   * Emitted when the value property has changed and any
+dragging pointer has been released from `ion-segment`. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<ISegmentSegmentChangeEventDetail>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
   }
 }
 
@@ -1475,6 +1578,8 @@ export class IonSegment {
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 
 @ProxyCmp({
+  tagName: 'ion-segment-button',
+  customElement: undefined,
   inputs: ['disabled', 'layout', 'mode', 'type', 'value']
 })
 @Component({
@@ -1491,28 +1596,12 @@ export class IonSegmentButton {
   }
 }
 
-import { SelectChangeEventDetail as ISelectSelectChangeEventDetail } from '@ionic/core';
-export declare interface IonSelect extends Components.IonSelect {
-  /**
-   * Emitted when the value has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<ISelectSelectChangeEventDetail>>;
-  /**
-   * Emitted when the selection is cancelled. 
-   */
-  ionCancel: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the select has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the select loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+import type { SelectChangeEventDetail as ISelectSelectChangeEventDetail } from '@ionic/core';
+export declare interface IonSelect extends Components.IonSelect {}
 
 @ProxyCmp({
+  tagName: 'ion-select',
+  customElement: undefined,
   inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value'],
   methods: ['open']
 })
@@ -1523,11 +1612,28 @@ export declare interface IonSelect extends Components.IonSelect {
   inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value']
 })
 export class IonSelect {
+  /**
+   * Emitted when the value has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<ISelectSelectChangeEventDetail>>();
+  /**
+   * Emitted when the selection is cancelled. 
+   */
+  @Output() ionCancel = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the select has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the select loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -1535,6 +1641,8 @@ export class IonSelect {
 export declare interface IonSelectOption extends Components.IonSelectOption {}
 
 @ProxyCmp({
+  tagName: 'ion-select-option',
+  customElement: undefined,
   inputs: ['disabled', 'value']
 })
 @Component({
@@ -1555,6 +1663,8 @@ export class IonSelectOption {
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
 
 @ProxyCmp({
+  tagName: 'ion-skeleton-text',
+  customElement: undefined,
   inputs: ['animated']
 })
 @Component({
@@ -1574,7 +1684,10 @@ export class IonSkeletonText {
 
 export declare interface IonSlide extends Components.IonSlide {}
 
-
+@ProxyCmp({
+  tagName: 'ion-slide',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-slide',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1589,75 +1702,11 @@ export class IonSlide {
 }
 
 
-export declare interface IonSlides extends Components.IonSlides {
-  /**
-   * Emitted after Swiper initialization 
-   */
-  ionSlidesDidLoad: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user taps/clicks on the slide's container. 
-   */
-  ionSlideTap: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user double taps on the slide's container. 
-   */
-  ionSlideDoubleTap: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted before the active slide has changed. 
-   */
-  ionSlideWillChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted after the active slide has changed. 
-   */
-  ionSlideDidChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the next slide has started. 
-   */
-  ionSlideNextStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the previous slide has started. 
-   */
-  ionSlidePrevStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the next slide has ended. 
-   */
-  ionSlideNextEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the previous slide has ended. 
-   */
-  ionSlidePrevEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slide transition has started. 
-   */
-  ionSlideTransitionStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slide transition has ended. 
-   */
-  ionSlideTransitionEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slider is actively being moved. 
-   */
-  ionSlideDrag: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slider is at its initial position. 
-   */
-  ionSlideReachStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slider is at the last slide. 
-   */
-  ionSlideReachEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user first touches the slider. 
-   */
-  ionSlideTouchStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user releases the touch. 
-   */
-  ionSlideTouchEnd: EventEmitter<CustomEvent<void>>;
-
-}
+export declare interface IonSlides extends Components.IonSlides {}
 
 @ProxyCmp({
+  tagName: 'ion-slides',
+  customElement: undefined,
   inputs: ['mode', 'options', 'pager', 'scrollbar'],
   methods: ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes', 'getSwiper']
 })
@@ -1668,11 +1717,76 @@ export declare interface IonSlides extends Components.IonSlides {
   inputs: ['mode', 'options', 'pager', 'scrollbar']
 })
 export class IonSlides {
+  /**
+   * Emitted after Swiper initialization 
+   */
+  @Output() ionSlidesDidLoad = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the user taps/clicks on the slide's container. 
+   */
+  @Output() ionSlideTap = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the user double taps on the slide's container. 
+   */
+  @Output() ionSlideDoubleTap = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted before the active slide has changed. 
+   */
+  @Output() ionSlideWillChange = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted after the active slide has changed. 
+   */
+  @Output() ionSlideDidChange = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the next slide has started. 
+   */
+  @Output() ionSlideNextStart = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the previous slide has started. 
+   */
+  @Output() ionSlidePrevStart = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the next slide has ended. 
+   */
+  @Output() ionSlideNextEnd = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the previous slide has ended. 
+   */
+  @Output() ionSlidePrevEnd = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the slide transition has started. 
+   */
+  @Output() ionSlideTransitionStart = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the slide transition has ended. 
+   */
+  @Output() ionSlideTransitionEnd = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the slider is actively being moved. 
+   */
+  @Output() ionSlideDrag = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the slider is at its initial position. 
+   */
+  @Output() ionSlideReachStart = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the slider is at the last slide. 
+   */
+  @Output() ionSlideReachEnd = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the user first touches the slider. 
+   */
+  @Output() ionSlideTouchStart = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the user releases the touch. 
+   */
+  @Output() ionSlideTouchEnd = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
   }
 }
 
@@ -1680,6 +1794,8 @@ export class IonSlides {
 export declare interface IonSpinner extends Components.IonSpinner {}
 
 @ProxyCmp({
+  tagName: 'ion-spinner',
+  customElement: undefined,
   inputs: ['color', 'duration', 'name', 'paused']
 })
 @Component({
@@ -1697,15 +1813,11 @@ export class IonSpinner {
 }
 
 
-export declare interface IonSplitPane extends Components.IonSplitPane {
-  /**
-   * Expression to be called when the split-pane visibility has changed 
-   */
-  ionSplitPaneVisible: EventEmitter<CustomEvent<{visible: boolean}>>;
-
-}
+export declare interface IonSplitPane extends Components.IonSplitPane {}
 
 @ProxyCmp({
+  tagName: 'ion-split-pane',
+  customElement: undefined,
   inputs: ['contentId', 'disabled', 'when']
 })
 @Component({
@@ -1715,11 +1827,16 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   inputs: ['contentId', 'disabled', 'when']
 })
 export class IonSplitPane {
+  /**
+   * Expression to be called when the split-pane visibility has changed 
+   */
+  @Output() ionSplitPaneVisible = new EventEmitter<CustomEvent<{visible: boolean}>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSplitPaneVisible']);
   }
 }
 
@@ -1727,6 +1844,8 @@ export class IonSplitPane {
 export declare interface IonTabBar extends Components.IonTabBar {}
 
 @ProxyCmp({
+  tagName: 'ion-tab-bar',
+  customElement: undefined,
   inputs: ['color', 'mode', 'selectedTab', 'translucent']
 })
 @Component({
@@ -1747,6 +1866,8 @@ export class IonTabBar {
 export declare interface IonTabButton extends Components.IonTabButton {}
 
 @ProxyCmp({
+  tagName: 'ion-tab-button',
+  customElement: undefined,
   inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target']
 })
 @Component({
@@ -1767,6 +1888,8 @@ export class IonTabButton {
 export declare interface IonText extends Components.IonText {}
 
 @ProxyCmp({
+  tagName: 'ion-text',
+  customElement: undefined,
   inputs: ['color', 'mode']
 })
 @Component({
@@ -1783,28 +1906,12 @@ export class IonText {
   }
 }
 
-import { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
-export declare interface IonTextarea extends Components.IonTextarea {
-  /**
-   * Emitted when the input value has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>;
-  /**
-   * Emitted when a keyboard input occurred. 
-   */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
-  /**
-   * Emitted when the input loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
-  /**
-   * Emitted when the input has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
-
-}
+import type { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
+export declare interface IonTextarea extends Components.IonTextarea {}
 
 @ProxyCmp({
+  tagName: 'ion-textarea',
+  customElement: undefined,
   inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'spellcheck', 'value', 'wrap'],
   methods: ['setFocus', 'getInputElement']
 })
@@ -1815,18 +1922,38 @@ export declare interface IonTextarea extends Components.IonTextarea {
   inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'spellcheck', 'value', 'wrap']
 })
 export class IonTextarea {
+  /**
+   * Emitted when the input value has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>();
+  /**
+   * Emitted when a keyboard input occurred. 
+   */
+  @Output() ionInput = new EventEmitter<CustomEvent<InputEvent>>();
+  /**
+   * Emitted when the input loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<FocusEvent>>();
+  /**
+   * Emitted when the input has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<FocusEvent>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
   }
 }
 
 
 export declare interface IonThumbnail extends Components.IonThumbnail {}
 
-
+@ProxyCmp({
+  tagName: 'ion-thumbnail',
+  customElement: undefined
+})
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1844,6 +1971,8 @@ export class IonThumbnail {
 export declare interface IonTitle extends Components.IonTitle {}
 
 @ProxyCmp({
+  tagName: 'ion-title',
+  customElement: undefined,
   inputs: ['color', 'size']
 })
 @Component({
@@ -1860,24 +1989,12 @@ export class IonTitle {
   }
 }
 
-import { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core';
-export declare interface IonToggle extends Components.IonToggle {
-  /**
-   * Emitted when the value property has changed. 
-   */
-  ionChange: EventEmitter<CustomEvent<IToggleToggleChangeEventDetail>>;
-  /**
-   * Emitted when the toggle has focus. 
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the toggle loses focus. 
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-
-}
+import type { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core';
+export declare interface IonToggle extends Components.IonToggle {}
 
 @ProxyCmp({
+  tagName: 'ion-toggle',
+  customElement: undefined,
   inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
 })
 @Component({
@@ -1887,11 +2004,24 @@ export declare interface IonToggle extends Components.IonToggle {
   inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
 })
 export class IonToggle {
+  /**
+   * Emitted when the value property has changed. 
+   */
+  @Output() ionChange = new EventEmitter<CustomEvent<IToggleToggleChangeEventDetail>>();
+  /**
+   * Emitted when the toggle has focus. 
+   */
+  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
+  /**
+   * Emitted when the toggle loses focus. 
+   */
+  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+
+
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -1899,6 +2029,8 @@ export class IonToggle {
 export declare interface IonToolbar extends Components.IonToolbar {}
 
 @ProxyCmp({
+  tagName: 'ion-toolbar',
+  customElement: undefined,
   inputs: ['color', 'mode']
 })
 @Component({

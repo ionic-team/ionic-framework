@@ -113,6 +113,7 @@ export declare interface IonVirtualScroll {
 }
 
 @ProxyCmp({
+  tagName: 'ion-virtual-scroll',
   inputs: ['approxItemHeight', 'approxHeaderHeight', 'approxFooterHeight', 'headerFn', 'footerFn', 'items', 'itemHeight', 'headerHeight', 'footerHeight'],
   methods: ['checkEnd', 'checkRange', 'positionForItem']
 })
