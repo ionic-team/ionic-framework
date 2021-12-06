@@ -3,64 +3,6 @@ import { AccordionGroup } from '../../accordion-group/accordion-group.tsx';
 import { Accordion } from '../accordion.tsx';
 import { Item } from '../../item/item.tsx';
 
-it('should properly set readonly on child accordions', async () => {
-  const page = await newSpecPage({
-    components: [Item, Accordion, AccordionGroup],
-    html: `
-      <ion-accordion-group animated="false">
-        <ion-accordion>
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-    `
-  });
-
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
-  const accordions = accordionGroup.querySelectorAll('ion-accordion');
-
-  expect(accordions.length).toEqual(1);
-  accordions.forEach(accordion => {
-    expect(accordion.readonly).toEqual(false);
-  });
-
-  accordionGroup.readonly = true;
-  await page.waitForChanges();
-
-  accordions.forEach(accordion => {
-    expect(accordion.readonly).toEqual(true);
-  });
-});
-
-it('should properly set disabled on child accordions', async () => {
-  const page = await newSpecPage({
-    components: [Item, Accordion, AccordionGroup],
-    html: `
-      <ion-accordion-group animated="false">
-        <ion-accordion>
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-    `
-  });
-
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
-  const accordions = accordionGroup.querySelectorAll('ion-accordion');
-
-  expect(accordions.length).toEqual(1);
-  accordions.forEach(accordion => {
-    expect(accordion.disabled).toEqual(false);
-  });
-
-  accordionGroup.disabled = true;
-  await page.waitForChanges();
-
-  accordions.forEach(accordion => {
-    expect(accordion.disabled).toEqual(true);
-  });
-});
-
 it('should open correct accordions', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
