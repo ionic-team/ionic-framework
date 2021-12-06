@@ -356,9 +356,9 @@ ion-ripple-effect {
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/button)
-- [ion-back-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/back-button)
-- [ion-menu-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/menu-button)
+- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
+- [ion-back-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/back-button)
+- [ion-menu-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/menu-button)
 
 ### References
 
@@ -372,7 +372,7 @@ ion-ripple-effect {
 
 #### Example Components
 
-- [ion-checkbox](https://github.com/ionic-team/ionic/tree/master/core/src/components/checkbox)
+- [ion-checkbox](https://github.com/ionic-team/ionic/tree/main/core/src/components/checkbox)
 
 #### VoiceOver
 
@@ -498,7 +498,7 @@ This is a compromise we have to make in order for it to work with the other scre
 
 #### Example Components
 
-- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
+- [ion-toggle](https://github.com/ionic-team/ionic/tree/main/core/src/components/toggle)
 
 #### Voiceover
 
@@ -631,11 +631,11 @@ Certain components can render an `<a>` or a `<button>` depending on the presence
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/button)
-- [ion-card](https://github.com/ionic-team/ionic/tree/master/core/src/components/card)
-- [ion-fab-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/fab-button)
-- [ion-item-option](https://github.com/ionic-team/ionic/tree/master/core/src/components/item-option)
-- [ion-item](https://github.com/ionic-team/ionic/tree/master/core/src/components/item)
+- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
+- [ion-card](https://github.com/ionic-team/ionic/tree/main/core/src/components/card)
+- [ion-fab-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/fab-button)
+- [ion-item-option](https://github.com/ionic-team/ionic/tree/main/core/src/components/item-option)
+- [ion-item](https://github.com/ionic-team/ionic/tree/main/core/src/components/item)
 
 ### Component Structure
 

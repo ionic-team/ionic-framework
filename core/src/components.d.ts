@@ -176,7 +176,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The icon name to use for the back button.
+          * The built-in named SVG icon name or the exact `src` of an SVG file to use for the back button.
          */
         "icon"?: string | null;
         /**
@@ -3511,7 +3511,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The icon name to use for the back button.
+          * The built-in named SVG icon name or the exact `src` of an SVG file to use for the back button.
          */
         "icon"?: string | null;
         /**

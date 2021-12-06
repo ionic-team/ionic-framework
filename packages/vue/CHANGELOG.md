@@ -1,6 +1,6 @@
 # Ionic Vue
 
-> This file contains the changelog for the Ionic Vue beta. For the latest changes, see our [main changelog file](https://github.com/ionic-team/ionic-framework/blob/master/CHANGELOG.md).
+> This file contains the changelog for the Ionic Vue beta. For the latest changes, see our [main changelog file](https://github.com/ionic-team/ionic-framework/blob/main/CHANGELOG.md).
 
 ## 0.5.2
 

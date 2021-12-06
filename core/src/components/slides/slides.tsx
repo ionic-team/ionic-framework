@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { componentOnReady } from '../../utils/helpers'
@@ -24,8 +24,6 @@ export class Slides implements ComponentInterface {
   private mutationO?: MutationObserver;
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
-  private syncSwiper?: SwiperInterface;
-  private didInit = false;
 
   @Element() el!: HTMLIonSlidesElement;
 
@@ -141,8 +139,7 @@ export class Slides implements ComponentInterface {
   }
 
   connectedCallback() {
-    // tslint:disable-next-line: strict-type-predicates
-    if (typeof MutationObserver !== 'undefined') {
+    if (Build.isBrowser) {
       const mut = this.mutationO = new MutationObserver(() => {
         if (this.swiperReady) {
           this.update();
@@ -154,10 +151,7 @@ export class Slides implements ComponentInterface {
       });
 
       componentOnReady(this.el, () => {
-        if (!this.didInit) {
-          this.didInit = true;
           this.initSwiper();
-        }
       })
     }
   }
@@ -167,23 +161,6 @@ export class Slides implements ComponentInterface {
       this.mutationO.disconnect();
       this.mutationO = undefined;
     }
-
-    /**
-     * We need to synchronously destroy
-     * swiper otherwise it is possible
-     * that it will be left in a
-     * destroyed state if connectedCallback
-     * is called multiple times
-     */
-    const swiper = this.syncSwiper;
-    if (swiper !== undefined) {
-      swiper.destroy(true, true);
-      this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
-      this.swiperReady = false;
-      this.syncSwiper = undefined;
-    }
-
-    this.didInit = false;
   }
 
   /**
@@ -369,7 +346,6 @@ export class Slides implements ComponentInterface {
     await waitForSlides(this.el);
     const swiper = new Swiper(this.el, finalOptions);
     this.swiperReady = true;
-    this.syncSwiper = swiper;
     this.readySwiper(swiper);
   }
 
@@ -483,6 +459,8 @@ export class Slides implements ComponentInterface {
         init: () => {
           setTimeout(() => {
             this.ionSlidesDidLoad.emit();
+            // Forces the swiper instance to update after initializing.
+            this.update();
           }, 20);
         },
         slideChangeTransitionStart: this.ionSlideWillChange.emit,

@@ -45,7 +45,8 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   @Prop({ reflect: true }) disabled = false;
 
   /**
-   * The icon name to use for the back button.
+   * The built-in named SVG icon name or the exact `src` of an SVG file
+   * to use for the back button.
    */
   @Prop() icon?: string | null;
 
