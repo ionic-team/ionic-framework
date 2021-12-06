@@ -51,7 +51,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 */
 export const defineContainer = <Props>(
   name: string,
-  customElement: any,
+  defineCustomElement: any,
   componentProps: string[] = [],
   modelProp?: string,
   modelUpdateEvent?: string,
@@ -63,12 +63,8 @@ export const defineContainer = <Props>(
   * They refer to whatever properties are set on an instance of a component.
   */
 
-  if (
-    customElement !== undefined &&
-    typeof customElements !== 'undefined' &&
-    !customElements.get(name)
-  ) {
-    customElements.define(name, customElement);
+  if (defineCustomElement !== undefined) {
+    defineCustomElement();
   }
 
   const Container = defineComponent<Props & InputProps>((props: any, { attrs, slots, emit }) => {
