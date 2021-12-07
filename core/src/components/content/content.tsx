@@ -384,10 +384,17 @@ const getPageElement = (el: HTMLElement) => {
   if (tabs) {
     return tabs;
   }
-  const page = el.closest('ion-app,ion-page,.ion-page,page-inner');
+
+  /**
+   * If we're in a popover, we need to use its wrapper so we can account for space
+   * between the popover and the edges of the screen. But if the popover contains
+   * its own page element, we should use that instead.
+   */
+  const page = el.closest('ion-app, ion-page, .ion-page, page-inner, .popover-content');
   if (page) {
     return page;
   }
+
   return getParentElement(el);
 };
 

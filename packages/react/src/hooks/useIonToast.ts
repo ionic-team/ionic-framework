@@ -16,12 +16,12 @@ export function useIonToast(): UseIonToastResult {
 
   const present = useCallback((messageOrOptions: string | ToastOptions & HookOverlayOptions, duration?: number) => {
     if (typeof messageOrOptions === 'string') {
-      controller.present({
+      return controller.present({
         message: messageOrOptions,
         duration
       });
     } else {
-      controller.present(messageOrOptions);
+      return controller.present(messageOrOptions);
     }
   }, [controller.present]);
 
@@ -38,15 +38,15 @@ export type UseIonToastResult = [
      * @param message Message to be shown in the toast.
      * @param duration Optional - How many milliseconds to wait before hiding the toast. By default, it will show until dismissToast() is called.
      */
-    (message: string, duration?: number): void;
+    (message: string, duration?: number): Promise<void>;
     /**
      * Presents the Toast
      * @param options The options to pass to the IonToast.
      */
-    (options: ToastOptions & HookOverlayOptions): void;
+    (options: ToastOptions & HookOverlayOptions): Promise<void>;
   },
   /**
    * Dismisses the toast
    */
-  () => void
+  () => Promise<void>
 ];

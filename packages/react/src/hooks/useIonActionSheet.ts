@@ -20,12 +20,12 @@ export function useIonActionSheet(): UseIonActionSheetResult {
       header?: string
     ) => {
       if (Array.isArray(buttonsOrOptions)) {
-        controller.present({
+        return controller.present({
           buttons: buttonsOrOptions,
           header,
         });
       } else {
-        controller.present(buttonsOrOptions);
+        return controller.present(buttonsOrOptions);
       }
     },
     [controller.present]
@@ -41,15 +41,15 @@ export type UseIonActionSheetResult = [
      * @param buttons An array of buttons for the action sheet
      * @param header Optional - Title for the action sheet
      */
-    (buttons: ActionSheetButton[], header?: string | undefined): void;
+    (buttons: ActionSheetButton[], header?: string | undefined): Promise<void>;
     /**
      * Presents the action sheet
      * @param options The options to pass to the IonActionSheet
      */
-    (options: ActionSheetOptions & HookOverlayOptions): void;
+    (options: ActionSheetOptions & HookOverlayOptions): Promise<void>;
   },
   /**
    * Dismisses the action sheet
    */
-  () => void
+  () => Promise<void>
 ];
