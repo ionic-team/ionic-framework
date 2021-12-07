@@ -63,7 +63,6 @@
   --inner-padding-start: 0px;
   --inner-padding-end: 0px;
   --inner-box-shadow: none;
-  --bottom-padding-start: 0px;
   --show-full-highlight: 0;
   --show-inset-highlight: 0;
   --detail-icon-color: initial;
@@ -292,7 +291,7 @@ button, a {
     0,
     var(--inner-padding-end),
     0,
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px) + var(--bottom-padding-start))
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
   );
 
   display: flex;
