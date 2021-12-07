@@ -18,6 +18,7 @@ import { InputChangeEventDetail } from '../input/input-interface';
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
+ * @part counter - The `ion-note` element for the character counter.
  */
 @Component({
   tag: 'ion-item',
@@ -297,7 +298,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
     if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
       const length = inputEl?.value?.toString().length ?? '0';
-      this.counterString = `${length}/${inputEl.maxlength}`;
+      this.counterString = `${length} / ${inputEl.maxlength}`;
     }
   }
 
@@ -326,7 +327,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
     const clickFn = clickable ? {
-      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
+      onClick: (ev: Event) => { openURL(href, ev, routerDirection, routerAnimation); }
     } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
@@ -377,7 +378,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         <div class="item-bottom">
           <slot name="error"></slot>
           <slot name="helper"></slot>
-          {counterString && <ion-note class="item-counter">{counterString}</ion-note>}
+          {counterString && <ion-note class="item-counter" part="counter">{counterString}</ion-note>}
         </div>
       </Host>
     );
