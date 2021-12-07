@@ -7,6 +7,8 @@ import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { InputChangeEventDetail } from '../input/input-interface';
 
+import { CounterFormatter } from './item-interface';
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -132,6 +134,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * The type of the button. Only used when an `onclick` or `button` property is present.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter: CounterFormatter = (itemLength: number, maxLength: number) => `${itemLength} / ${maxLength}`;
 
   @State() counterString: string | null | undefined;
 
@@ -296,8 +304,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
     if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
-      const length = inputEl?.value?.toString().length ?? '0';
-      this.counterString = `${length}/${inputEl.maxlength}`;
+      const length = inputEl?.value?.toString().length ?? 0;
+      this.counterString = this.counterFormatter(length, inputEl.maxlength);
     }
   }
 
@@ -326,7 +334,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
     const clickFn = clickable ? {
-      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
+      onClick: (ev: Event) => { openURL(href, ev, routerDirection, routerAnimation); }
     } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
