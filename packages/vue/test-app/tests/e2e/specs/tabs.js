@@ -268,6 +268,27 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
     cy.get('ion-tab-button#tab-button-tab4').should('have.class', 'tab-selected');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23699
+  it('should preserve query string when switching tabs', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.ionPageVisible('tab1');
+
+    cy.get('#child-one-query-string').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1childone');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab2');
+
+    cy.url().should('include', '/tabs/tab1/child-one?key=value');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {
