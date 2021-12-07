@@ -1967,6 +1967,7 @@ export default defineComponent({
 | --------------- | ---------------------------------------------------------------------------- |
 | `"counter"`     | The `ion-note` element for the character counter.                            |
 | `"detail-icon"` | The chevron icon for the item. Only applies when `detail="true"`.            |
+| `"item-bottom"` | The bottom container that wraps the helper/error slots and counter text.     |
 | `"native"`      | The native HTML button, anchor or div element that wraps all child elements. |
 
 

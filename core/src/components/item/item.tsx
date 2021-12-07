@@ -18,6 +18,7 @@ import { InputChangeEventDetail } from '../input/input-interface';
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
+ * @part item-bottom - The bottom container that wraps the helper/error slots and counter text.
  * @part counter - The `ion-note` element for the character counter.
  */
 @Component({
@@ -375,7 +376,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           <div class="item-highlight"></div>
         </TagType>
-        <div class="item-bottom">
+        <div class="item-bottom" part="item-bottom">
           <slot name="error"></slot>
           <slot name="helper"></slot>
           {counterString && <ion-note class="item-counter" part="counter">{counterString}</ion-note>}
