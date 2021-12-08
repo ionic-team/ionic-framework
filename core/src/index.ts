@@ -14,3 +14,4 @@ export { LIFECYCLE_WILL_ENTER, LIFECYCLE_DID_ENTER, LIFECYCLE_WILL_LEAVE, LIFECY
 export { menuController } from './utils/menu-controller';
 export { alertController, actionSheetController, modalController, loadingController, pickerController, popoverController, toastController } from './utils/overlays';
 export { IonicSwiper } from './components/slides/IonicSwiper';
+export { IonicSlides } from './components/slides/IonicSlides';

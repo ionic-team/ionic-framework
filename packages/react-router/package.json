@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "5.8.5",
+  "version": "5.9.2",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -27,7 +27,8 @@
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
-    "test.spec": "jest --ci"
+    "test.spec": "jest --ci",
+    "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -39,15 +40,14 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/react": "5.8.5",
+    "@ionic/react": "5.9.2",
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "5.8.5",
-    "@ionic/react": "5.8.5",
+    "@ionic/react": "5.9.2",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",

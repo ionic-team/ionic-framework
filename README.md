@@ -30,11 +30,11 @@ an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 ### Contributing
 
 Thanks for your interest in contributing! Read up on our guidelines for
-[contributing](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md)
+[contributing](https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md)
 and then look through our issues with a [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 label.
 
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/main/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 
 ### Examples

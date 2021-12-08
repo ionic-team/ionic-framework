@@ -1,3 +1,45 @@
+## [5.9.2](https://github.com/ionic-team/ionic/compare/v5.9.1...v5.9.2) (2021-12-07)
+
+
+### Bug Fixes
+
+* **angular:** improve typing when compiling with legacy View Engine ([#24221](https://github.com/ionic-team/ionic/issues/24221)) ([816096f](https://github.com/ionic-team/ionic/commit/816096f89747e943a4a273175d384189f25e4628))
+* **content:** ensure fixed slot renders on top of content in iOS ([#24300](https://github.com/ionic-team/ionic/issues/24300)) ([e41b0e0](https://github.com/ionic-team/ionic/commit/e41b0e0cf2a794972d7f4d8943a0bec3d1e08016)), closes [#24286](https://github.com/ionic-team/ionic-framework/issues/24286)
+* **popover:** improve scrolling in popover when using header and footer ([#24294](https://github.com/ionic-team/ionic/issues/24294)) ([f6a00ea](https://github.com/ionic-team/ionic/commit/f6a00ea9544aa70620b5f8f65a7702fa3bedd974))
+* **react:** present and dismiss hooks return promises ([#24299](https://github.com/ionic-team/ionic/issues/24299)) ([4b26fea](https://github.com/ionic-team/ionic/commit/4b26feaa47efed4806aba565a52554db232b99e2)), closes [#24293](https://github.com/ionic-team/ionic-framework/issues/24293)
+* **react:** properly check for custom elements to avoid errors in unit tests ([#24156](https://github.com/ionic-team/ionic/issues/24156)) ([8f188ea](https://github.com/ionic-team/ionic/commit/8f188eaae7422c9e81053868b9dd93b4ac738e98)), closes [#24149](https://github.com/ionic-team/ionic/issues/24149)
+* **router:** popping route now accounts for route params ([#24315](https://github.com/ionic-team/ionic/issues/24315)) ([5e5054d](https://github.com/ionic-team/ionic/commit/5e5054d369ad68c9ac43e12439d71fb42d6ca26b)), closes [#24223](https://github.com/ionic-team/ionic-framework/issues/24223)
+* **slides:** update swiper instance after initialization ([#24257](https://github.com/ionic-team/ionic/issues/24257)) ([89e4bc5](https://github.com/ionic-team/ionic/commit/89e4bc56a1c3cd4fb26fc5514f38c6a01f047297)), closes [#19638](https://github.com/ionic-team/ionic-framework/issues/19638)
+* **vue:** ionic lifecycle hooks now run when using vue 3.2 setup syntax ([#24253](https://github.com/ionic-team/ionic/issues/24253)) ([fb96ab5](https://github.com/ionic-team/ionic/commit/fb96ab5a26d87818a8b64ee82df0020355054183)), closes [#23824](https://github.com/ionic-team/ionic/issues/23824)
+* **vue:** switching between tabs preserves query string ([#24297](https://github.com/ionic-team/ionic/issues/24297)) ([047d3c7](https://github.com/ionic-team/ionic/commit/047d3c77729db08e4fd84f426f6c5c2af0eacc52)), closes [#23699](https://github.com/ionic-team/ionic/issues/23699)
+
+
+
+## [5.9.1](https://github.com/ionic-team/ionic/compare/v5.9.0...v5.9.1) (2021-11-17)
+
+
+### Bug Fixes
+
+* **angular:** build is now in correct directory ([#24236](https://github.com/ionic-team/ionic/issues/24236)) ([1d983fa](https://github.com/ionic-team/ionic/commit/1d983fa4b3ef0457dc192f376e380c77b611d058))
+
+
+
+# [5.9.0](https://github.com/ionic-team/ionic/compare/v5.8.5...v5.9.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **action-sheet:** safe area is now accounted for in MD mode ([#24176](https://github.com/ionic-team/ionic/issues/24176)) ([642255e](https://github.com/ionic-team/ionic/commit/642255e514fd67238d9bd8ea90781111687c6d03)), closes [#24175](https://github.com/ionic-team/ionic/issues/24175)
+* **input:** date type in ion-input now aligns correctly on iOS 15 ([#24217](https://github.com/ionic-team/ionic/issues/24217)) ([0566ec0](https://github.com/ionic-team/ionic/commit/0566ec0da3b8a66a1a1ebb1b235e7297ec483c79))
+* **vue:** canGoBack method now works correctly ([#24188](https://github.com/ionic-team/ionic/issues/24188)) ([7c43589](https://github.com/ionic-team/ionic/commit/7c43589b0a486f71ee2ae5a4cdcd73071fcd31b9)), closes [#24109](https://github.com/ionic-team/ionic/issues/24109)
+
+
+### Features
+
+* **slides:** add support for Swiper 7 ([#24190](https://github.com/ionic-team/ionic/issues/24190)) ([d0b6130](https://github.com/ionic-team/ionic/commit/d0b61307c6b7ff1589646c43f989260b59db1473))
+
+
+
 ## [5.8.5](https://github.com/ionic-team/ionic/compare/v5.8.4...v5.8.5) (2021-10-27)
 
 

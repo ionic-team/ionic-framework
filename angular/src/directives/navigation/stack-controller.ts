@@ -305,7 +305,7 @@ export class StackController {
 
 const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   if (typeof (requestAnimationFrame as any) === 'function') {
-    return new Promise<any>(resolve => {
+    return new Promise<void>(resolve => {
       requestAnimationFrame(() => {
         cleanup(activeRoute, views, viewsSnapshot, location);
         resolve();
