@@ -1,3 +1,11 @@
+# [6.0.0 Titanium](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.4...v6.0.0) (2021-12-08)
+
+Enjoy! 🚀
+
+> We recommend updating to version `5.9.2` before updating to version `6.0.0` in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
+
+Please see the [Ionic 6 Upgrade Guide](https://ionicframework.com/docs/next/intro/upgrading-to-ionic-6) for a step-by-step list of what you need to do to get started with Ionic 6.
+
 # [6.0.0-rc.4](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.3...v6.0.0-rc.4) (2021-12-07)
 
 
