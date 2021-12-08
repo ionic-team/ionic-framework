@@ -281,6 +281,26 @@ button, a {
   box-sizing: border-box;
 }
 
+
+// Item Bottom
+// --------------------------------------------------
+
+.item-bottom {
+  @include margin(0);
+  @include padding(
+    0,
+    var(--inner-padding-end),
+    0,
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
+
+  display: flex;
+
+  justify-content: space-between;
+
+}
+
+
 // Item Detail Icon
 // --------------------------------------------------
 
@@ -488,22 +508,6 @@ button, a {
 
 ion-ripple-effect {
   color: var(--ripple-color);
-}
-
-// Item Button Ripple effect
-// --------------------------------------------------
-
-.item-bottom {
-  @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--inner-padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px) + var(--bottom-padding-start, 0px))
-  );
-  display: flex;
-
-  justify-content: space-between;
 }
 
 :host(.item-fill-solid) ::slotted([slot="start"]),
