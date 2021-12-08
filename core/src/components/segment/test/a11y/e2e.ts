@@ -12,6 +12,7 @@ test('segment: axe', async () => {
   });
 
   const results = await new AxePuppeteer(page)
+    // TODO(FW-403): Re-enable rule once segment button is updated to avoid nested-interactive
     .disableRules('nested-interactive')
     .analyze();
   expect(results.violations.length).toEqual(0);
