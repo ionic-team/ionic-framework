@@ -46,7 +46,6 @@
     "@stencil/vue-output-target": "^0.6.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.6.0",
-    "@types/puppeteer": "^5.4.4",
     "@types/swiper": "5.4.0",
     "aws-sdk": "^2.738.0",
     "clean-css-cli": "^4.1.11",
