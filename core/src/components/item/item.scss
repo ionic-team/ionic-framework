@@ -357,6 +357,17 @@ button, a {
   position: absolute;
 
   background: var(--highlight-background);
+}
+
+.item-highlight-wrapper {
+  @include border-radius(var(--border-radius));
+  @include position(0, 0, 0, 0);
+
+  pointer-events: none;
+
+  position: absolute;
+
+  overflow: hidden;
 
   z-index: 1;
 }
@@ -367,6 +378,8 @@ button, a {
 
 .item-inner-highlight {
   height: var(--inset-highlight-height);
+
+  z-index: 1;
 }
 
 

@@ -9,7 +9,7 @@ test('item: inputs', async () => {
   await page.click('#submit');
   await checkFormResult(
     page,
-    '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
+    '{"date":"","select":"n64","toggle":"","input":"","input2":"","input3":"","checkbox":"","range":"10"}'
   );
   await page.waitForTimeout(100);
 
@@ -42,7 +42,7 @@ test('item: inputs', async () => {
   await page.click('#submit');
   await checkFormResult(
     page,
-    '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}'
+    '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","input3":"Some text","checkbox":"on","range":"20"}'
   );
   await page.waitForTimeout(100);
 

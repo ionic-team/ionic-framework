@@ -64,6 +64,11 @@
             <ion-input name="input2" id="placeholder" placeholder="Placeholder"></ion-input>
           </ion-item>
 
+          <ion-item class="rounded">
+            <ion-label>Input (rounded)</ion-label>
+            <ion-input name="input3" id="rounded"></ion-input>
+          </ion-item>
+
           <ion-item>
             <ion-label>Checkbox</ion-label>
             <ion-checkbox name="checkbox" id="checkbox" slot="start"></ion-checkbox>
@@ -192,8 +197,17 @@
     </ion-content>
   </ion-app>
 
+  <style>
+  .rounded{
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #CED8DC;
+    --border-radius: 20px;
+  }
+  </style>
+
   <script>
-    var ids = ['item', 'datetime', 'select', 'toggle', 'text', 'placeholder', 'checkbox', 'toggle', 'range'];
+    var ids = ['item', 'datetime', 'select', 'toggle', 'text', 'placeholder', 'checkbox', 'toggle', 'range', 'rounded'];
     var isDisabled = false;
 
     const clickableItem = document.querySelector('#clickableItem')
@@ -233,8 +247,8 @@
     }
 
     function setSomeValue() {
-      const {datetime, select, toggle, text, placeholder, checkbox, range} = getInputs();
-      text.value = placeholder.value = 'Some text';
+      const {datetime, select, toggle, text, placeholder, checkbox, range, rounded} = getInputs();
+      text.value = placeholder.value = rounded.value = 'Some text';
       toggle.checked = checkbox.checked = true;
       datetime.value = '2016-12-09';
       range.value = 20;
