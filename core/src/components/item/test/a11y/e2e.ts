@@ -6,6 +6,8 @@ test('item: axe', async () => {
     url: '/src/components/item/test/a11y?ionic:_testing=true'
   });
 
-  const results = await new AxePuppeteer(page).analyze();
+  const results = await new AxePuppeteer(page)
+    .disableRules('nested-interactive')
+    .analyze();
   expect(results.violations.length).toEqual(0);
 });
