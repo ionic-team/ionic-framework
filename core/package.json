@@ -36,7 +36,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/puppeteer": "^4.1.1",
+    "@axe-core/puppeteer": "^4.3.2",
     "@jest/core": "^26.6.3",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
@@ -46,7 +46,6 @@
     "@stencil/vue-output-target": "^0.6.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.6.0",
-    "@types/puppeteer": "5.4.3",
     "@types/swiper": "5.4.0",
     "aws-sdk": "^2.738.0",
     "clean-css-cli": "^4.1.11",
@@ -57,7 +56,7 @@
     "jest-cli": "^26.4.1",
     "np": "^6.4.0",
     "pixelmatch": "4.0.2",
-    "puppeteer": "^7.0.1",
+    "puppeteer": "^10.4.0",
     "rollup": "^2.26.4",
     "sass": "^1.26.10",
     "stylelint": "^13.6.1",
