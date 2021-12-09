@@ -234,6 +234,11 @@ export const IonRouterOutlet = defineComponent({
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
+      if (enteringViewItem === leavingViewItem) return;
+
+      if (!leavingViewItem && prevRouteLastPathname) {
+        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id, usingDeprecatedRouteSetup);
+      }
 
       /**
        * If the entering view is already
@@ -247,15 +252,15 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * the previous tabs page is incorrectly
        * unmounted since it would automatically
        * unmount the previous view.
+       *
+       * This should also only apply to entering and
+       * leaving items in the same router outlet (i.e.
+       * Tab1 and Tab2), otherwise this will
+       * return early for swipe to go back when
+       * going from a non-tabs page to a tabs page.
        */
-      if (isViewVisible(enteringEl)) {
+      if (isViewVisible(enteringEl) && !isViewVisible(leavingViewItem.ionPageElement)) {
         return;
-      }
-
-      if (enteringViewItem === leavingViewItem) return;
-
-      if (!leavingViewItem && prevRouteLastPathname) {
-        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id, usingDeprecatedRouteSetup);
       }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
