@@ -259,7 +259,7 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * return early for swipe to go back when
        * going from a non-tabs page to a tabs page.
        */
-      if (isViewVisible(enteringEl) && !isViewVisible(leavingViewItem.ionPageElement)) {
+      if (isViewVisible(enteringEl) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
         return;
       }
 
