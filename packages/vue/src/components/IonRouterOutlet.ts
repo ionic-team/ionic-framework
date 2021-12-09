@@ -14,6 +14,10 @@ import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_W
 import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
 import { fireLifecycle, generateId, getConfig } from '../utils';
 
+const isViewVisible = (enteringEl: HTMLElement) => {
+  return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
+}
+
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
@@ -229,6 +233,23 @@ export const IonRouterOutlet = defineComponent({
         console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
+      }
+
+      /**
+       * If the entering view is already
+       * visible, then no transition is needed.
+       * This is most common when navigating
+       * from a tabs page to a non-tabs page
+       * and then back to the tabs page.
+       * Even when the tabs context navigated away,
+       * the inner tabs page was still active.
+       * This also avoids an issue where
+       * the previous tabs page is incorrectly
+       * unmounted since it would automatically
+       * unmount the previous view.
+       */
+      if (isViewVisible(enteringEl)) {
+        return;
       }
 
       if (enteringViewItem === leavingViewItem) return;
