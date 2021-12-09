@@ -1,22 +1,63 @@
-# Ionic Framework
+<p align="center">
+  <a href="#">
+    <img alt="Ionic" src="https://ionic.io/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Fionicframeworkcom%2F66cfdbef-e59d-463a-8e24-12cb233e9d97_ionic%2Blogo%2Bblue.png&w=128&q=75" width="60" />
+  </a>
+</p>
 
-[Ionic Framework](https://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
-build top quality native and progressive web apps with web technologies.
+<h1 align="center">
+  Ionic Framework
+</h1>
 
-Ionic Framework is based on [Web Components](https://www.webcomponents.org/introduction) and comes with many significant performance, usability, and feature improvements over the past versions.
+<p align="center">
+  Ionic Framework is the open-source mobile app development framework that makes it easy to
+build top quality native and progressive web apps with web technologies. 
+</p>
+<p align="center">
+Ionic Framework is based on <a href="https://www.webcomponents.org/introduction">Web Components</a> and comes with many significant performance, usability, and feature improvements over the past versions.
+</p>
 
-## Looking for the Ionic Framework v6 beta?
+<p align="center">
+  <a href="https://github.com/ionic-team/ionic-framework/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Ionic Framework is released under the MIT license." />
+  </a>
+  <a href="https://ionicframework.com/docs/contributing/how-to-contribute">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="https://twitter.com/Ionicframework">
+    <img src="https://img.shields.io/twitter/follow/ionicframework.svg?label=Follow%20@IonicFramework" alt="Follow @IonicFramework">
+  </a>
+  <a href="https://ionic.link/discord">
+    <img src="https://img.shields.io/discord/520266681499779082?color=7289DA&label=%23ionic&logo=discord&logoColor=white" alt="Official Ionic Discord" />
+  </a>
+</p>
 
-[Click here to get started!](https://github.com/ionic-team/ionic-framework/blob/next/BETA.md)
+<h2 align="center">
+  <a href="https://ionicframework.com/getting-started/">Quickstart</a>
+  <span> · </span>
+  <a href="https://ionicframework.com/docs/">
+    Documentation
+  </a>
+  <span> · </span>
+  <a href="https://ionicframework.com/docs/contributing/how-to-contribute">Contribute</a>
+  <span> · </span>
+  <a href="https://blog.ionicframework.com/">Blog</a>
+  <br />
+  Community: 
+  <a href="https://ionic.link/discord">Discord</a>
+  <span> · </span>
+  <a href="https://forum.ionicframework.com/">Forums</a>
+  <span> · </span>
+  <a href="https://twitter.com/Ionicframework">Twitter</a>
+</h2>
 
 ### Packages
 
-| Project | Package | Version | Links |
-| ------- | ------- | ------- |:-----:|
-| **Core** | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core) | [![version](https://img.shields.io/npm/v/@ionic/core/latest.svg)](https://www.npmjs.com/package/@ionic/core) | [`README.md`](core/README.md)
-| **Angular** | [`@ionic/angular`](https://www.npmjs.com/package/@ionic/angular) | [![version](https://img.shields.io/npm/v/@ionic/angular/latest.svg)](https://www.npmjs.com/package/@ionic/angular) | [`README.md`](angular/README.md)
-| **Vue** | [`@ionic/vue`](https://www.npmjs.com/package/@ionic/vue) | [![version](https://img.shields.io/npm/v/@ionic/vue/latest.svg)](https://www.npmjs.com/package/@ionic/vue) | [`README.md`](packages/vue/README.md)
-| **React** | [`@ionic/react`](https://www.npmjs.com/package/@ionic/react) | [![version](https://img.shields.io/npm/v/@ionic/react/latest.svg)](https://www.npmjs.com/package/@ionic/react) | [`README.md`](packages/react/README.md)
+| Project | Package | Version | Downloads| Links |
+| ------- | ------- | ------- | -------- |:-----:|
+| **Core** | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core) | [![version](https://img.shields.io/npm/v/@ionic/core/latest.svg)](https://www.npmjs.com/package/@ionic/core) | <a href="https://www.npmjs.com/package/@ionic/core" target="_blank"><img src="https://img.shields.io/npm/dm/@ionic/core.svg" alt="NPM Downloads" /></a> | [`README.md`](core/README.md)
+| **Angular** | [`@ionic/angular`](https://www.npmjs.com/package/@ionic/angular) | [![version](https://img.shields.io/npm/v/@ionic/angular/latest.svg)](https://www.npmjs.com/package/@ionic/angular) | <a href="https://www.npmjs.com/package/@ionic/angular" target="_blank"><img src="https://img.shields.io/npm/dm/@ionic/angular.svg" alt="NPM Downloads" /></a> | [`README.md`](angular/README.md)
+| **Vue** | [`@ionic/vue`](https://www.npmjs.com/package/@ionic/vue) | [![version](https://img.shields.io/npm/v/@ionic/vue/latest.svg)](https://www.npmjs.com/package/@ionic/vue) | <a href="https://www.npmjs.com/package/@ionic/vue" target="_blank"><img src="https://img.shields.io/npm/dm/@ionic/vue.svg" alt="NPM Downloads" /></a> | [`README.md`](packages/vue/README.md)
+| **React** | [`@ionic/react`](https://www.npmjs.com/package/@ionic/react) | [![version](https://img.shields.io/npm/v/@ionic/react/latest.svg)](https://www.npmjs.com/package/@ionic/react) | <a href="https://www.npmjs.com/package/@ionic/react" target="_blank"><img src="https://img.shields.io/npm/dm/@ionic/react.svg" alt="NPM Downloads" /></a> |[`README.md`](packages/react/README.md)
 
 Looking for the `ionic-angular` package? Ionic 3 has been moved to the [`ionic-v3`](https://github.com/ionic-team/ionic-v3) repo. See [Earlier Versions](#earlier-versions).
 
@@ -26,6 +67,18 @@ Start a new project by following our quick [Getting Started guide](https://ionic
 We would love to hear from you! If you have any feedback or run into issues using our framework, please file
 an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 
+### Migration Guides
+
+Already have an Ionic app? These guides will help you migrate to the latest versions.
+
+- [Migrate from v5 to v6](https://ionicframework.com/docs/next/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
+- [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-4x-to-ionic-5x)
+- [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40)
+
+### Examples
+
+The [Ionic Conference App](https://github.com/ionic-team/ionic-conference-app) is a full featured Ionic app.
+It is the perfect starting point for learning and building your own app.
 
 ### Contributing
 
@@ -35,13 +88,6 @@ and then look through our issues with a [help wanted](https://github.com/ionic-t
 label.
 
 Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/main/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
-
-
-### Examples
-
-The [Ionic Conference App](https://github.com/ionic-team/ionic-conference-app) is a full featured Ionic app.
-It is the perfect starting point for learning and building your own app.
-
 
 ### Future Goals
 
