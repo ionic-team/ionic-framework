@@ -8,11 +8,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 15.x
-      - name: Create Dev Build
-        run: npm run release.dev -- --skip-prompt
+          node-version: 16
+      - name: Install Dependencies
+        run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
+        shell: bash
+      - name: Prepare NPM Token
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create Dev Hash
+        run: >
+          HASH=$(git log -1 --format=%H)
+          TIMESTAMP=$(date +%s)
+          SUBSTRING=${HASH:0:7}
+        shell: bash
+      - name: Create Dev Build
+        run: HUSKY_SKIP_HOOKS=1 lerna publish prerelease --no-verify-access --yes --force-publish='*' --dist-tag dev --preid dev.$(echo $TIMESTAMP).$(echo $SUBSTRING) --amend
+        shell: bash
