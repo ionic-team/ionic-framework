@@ -42,8 +42,10 @@
     "url": "https://github.com/ionic-team/ionic/issues"
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
+  "dependencies": {
+    "@ionic/vue": "^5.4.2"
+  },
   "devDependencies": {
-    "@ionic/vue": "5.4.1",
     "@types/jest": "^26.0.13",
     "@types/node": "^14.10.1",
     "jest": "^27.0.4",
