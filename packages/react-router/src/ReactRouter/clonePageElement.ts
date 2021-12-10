@@ -1,3 +1,4 @@
+// Test
 export function clonePageElement(leavingViewHtml: string | HTMLElement) {
   let html: string;
   if (typeof leavingViewHtml === 'string') {
