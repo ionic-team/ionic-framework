@@ -11,22 +11,5 @@
 # In each subsection folders are ordered first by depth, then alphabetically.
 # This should make it easy to add new rules without breaking existing ones.
 
-# Dependencies:
-package.json @ionic-team/framework-core
-
-# Routing / Routing Integration:
-packages/react-router/** @ionic-team/framework-core
-
-packages/vue-router/** @ionic-team/framework-core
-
-packages/react/src/routing/** @ionic-team/framework-core
-
-packages/vue/src/components/IonRouterOutlet.ts @ionic-team/framework-core
-
-angular/src/providers/nav-controller.ts @ionic-team/framework-core
-angular/src/directives/navigation/** @ionic-team/framework-core
-
-core/src/components/route/** @ionic-team/framework-core
-core/src/components/router/** @ionic-team/framework-core
-core/src/components/router-link/** @ionic-team/framework-core
-core/src/components/router-outlet/** @ionic-team/framework-core
+# Global owners
+* @ionic-team/framework-core
