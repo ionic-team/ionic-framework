@@ -6,6 +6,8 @@ on:
 jobs:
   dev-build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.dev-build.outputs.version }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -28,3 +30,12 @@ jobs:
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish prerelease --no-verify-access --yes --force-publish='*' --dist-tag dev --preid dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-git-tag-version --no-push
         shell: bash
+      - id: dev-build
+        run: echo "::set-output name=version::hello"
+  get-build:
+    name: Get your dev build!
+    runs-on: ubuntu-latest
+    needs: dev-build
+    steps:
+      - run: echo ${{ needs.dev-build.outputs.version }}
+
