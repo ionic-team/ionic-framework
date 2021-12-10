@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#">
-    <img alt="Ionic" src="https://github.com/ionic-team/ionic-framework/tree/next/.github/assets/logo.png" width="60" />
+    <img alt="Ionic" src="https://github.com/ionic-team/ionic-framework/blob/next/.github/assets/logo.png?raw=true" width="60" />
   </a>
 </p>
 
