@@ -5,15 +5,14 @@
 </p>
 
 <h1 align="center">
-  Ionic Framework
+  Ionic
 </h1>
 
 <p align="center">
-  Ionic Framework is the open-source mobile app development framework that makes it easy to
-build top quality native and progressive web apps with web technologies. 
+  Ionic is an open source app development toolkit for building modern, high performance, top quality native and progressive web apps from a single codebase with JavaScript and the Web.
 </p>
 <p align="center">
-Ionic Framework is based on <a href="https://www.webcomponents.org/introduction">Web Components</a> and comes with many significant performance, usability, and feature improvements over the past versions.
+The most recent versions of Ionic are based on <a href="https://www.webcomponents.org/introduction">Web Components</a> and come with many significant performance, usability, and feature improvements over the past versions.
 </p>
 
 <p align="center">
@@ -71,9 +70,9 @@ an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 
 Already have an Ionic app? These guides will help you migrate to the latest versions.
 
-- [Migrate from v5 to v6](https://ionicframework.com/docs/next/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
-- [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-4x-to-ionic-5x)
-- [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40)
+* [Migrate from v5 to v6](https://ionicframework.com/docs/next/reference/migration#migrating*from*ionic-5x-to-ionic-6x)
+* [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating*from*ionic-4x-to-ionic-5x)
+* [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating*from*ionic-30-to-ionic-40)
 
 ### Examples
 
