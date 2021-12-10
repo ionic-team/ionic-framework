@@ -67,6 +67,7 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
+    "prepare": "npm run build",
     "build": "npm run clean && npm run build.css && stencil build --docs --es5 --docs-json dist/docs.json && npm run cdnloader",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",

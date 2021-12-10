@@ -21,6 +21,7 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
+    "prepare": "npm run build.prod",
     "test": "echo 'angular no tests yet'",
     "build": "ng-packagr -p package.json",
     "build.prod": "npm run clean && npm run build",

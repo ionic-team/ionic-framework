@@ -3,6 +3,7 @@
   "version": "5.9.2",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
+    "prepare": "npm run build",
     "test.spec": "jest",
     "lint": "echo add linter",
     "bundle": "rollup --config rollup.config.js",

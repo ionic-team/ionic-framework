@@ -3,6 +3,7 @@
   "version": "5.9.2",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
+    "prepare": "npm run build",
     "lint": "echo add linter",
     "lint.fix": "npm run lint -- --fix",
     "test": "jest",
