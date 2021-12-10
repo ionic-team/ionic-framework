@@ -27,7 +27,7 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",
