@@ -31,7 +31,7 @@ jobs:
           HUSKY_SKIP_HOOKS=1 lerna publish prerelease --no-verify-access --yes --force-publish='*' --dist-tag dev --preid dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-git-tag-version --no-push
         shell: bash
       - id: dev-build
-        run: echo "::set-output name=version::hello"
+        run: echo "::set-output name=version::$(node -p -e "require('./core/package.json').version")"
   get-build:
     name: Get your dev build!
     runs-on: ubuntu-latest
