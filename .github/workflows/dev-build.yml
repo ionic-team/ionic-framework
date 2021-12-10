@@ -29,10 +29,10 @@ jobs:
         shell: bash
       - name: Create Dev Build
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --preid dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-git-tag-version --no-push
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --no-git-tag-version --no-push
         shell: bash
       - id: dev-build
-        run: echo "::set-output name=version::$(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}").0"
+        run: echo "::set-output name=version::$(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}")"
   get-build:
     name: Get your dev build!
     runs-on: ubuntu-latest
