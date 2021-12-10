@@ -19,10 +19,12 @@ jobs:
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create Dev Hash
+        run: |
+          echo "HASH=$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
+          echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+        shell: bash
       - name: Create Dev Build
-        run: >
-          HASH=$(git log -1 --format=%H)
-          TIMESTAMP=$(date +%s)
-          SUBSTRING=${HASH:0:7}
-          HUSKY_SKIP_HOOKS=1 lerna publish prerelease --no-verify-access --yes --force-publish='*' --dist-tag dev --preid dev.$(echo $TIMESTAMP).$(echo $SUBSTRING) --no-git-tag-version --no-push
+        run: |
+          HUSKY_SKIP_HOOKS=1 lerna publish prerelease --no-verify-access --yes --force-publish='*' --dist-tag dev --preid dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-git-tag-version --no-push
         shell: bash
