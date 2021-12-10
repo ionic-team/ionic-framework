@@ -22,6 +22,7 @@
     "git-branch-is": "^4.0.0",
     "husky": "^4.3.8",
     "inquirer": "^6.0.0",
+    "lerna": "^4.0.0",
     "listr": "^0.14.0",
     "rimraf": "^2.6.3",
     "semver": "^5.5.0"
