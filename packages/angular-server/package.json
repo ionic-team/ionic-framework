@@ -21,6 +21,7 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
+    "prepublishOnly": "npm run build.prod",
     "test": "echo 'angular no tests yet'",
     "build": "ng-packagr -p package.json",
     "build.prod": "npm run clean && npm run build",
@@ -37,7 +38,7 @@
   "peerDependencies": {
     "@angular/core": ">=8.2.7",
     "@angular/platform-server": ">=8.2.7",
-    "@ionic/angular": "*",
+    "@ionic/angular": "^5.9.2",
     "rxjs": ">=6.2.0",
     "zone.js": ">=0.8.26"
   },

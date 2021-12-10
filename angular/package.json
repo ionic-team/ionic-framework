@@ -22,8 +22,12 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
+  "publishConfig": {
+    "directory": "dist"
+  },
   "homepage": "https://ionicframework.com/",
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.fesm": "rollup --config ./scripts/rollup.config.js",

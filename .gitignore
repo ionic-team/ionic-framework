@@ -66,3 +66,5 @@ core/loader/
 core/www/
 .stencil/
 angular/build/
+
+.npmrc

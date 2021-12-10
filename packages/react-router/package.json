@@ -20,6 +20,7 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc && rollup -c",
@@ -37,17 +38,16 @@
     "dist/"
   ],
   "dependencies": {
+    "@ionic/react": "5.9.2",
     "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/react": "5.9.2",
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/react": "5.9.2",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
