@@ -20,7 +20,7 @@
   <a href="https://github.com/ionic-team/ionic-framework/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Ionic Framework is released under the MIT license." />
   </a>
-  <a href="https://ionicframework.com/docs/contributing/how-to-contribute">
+  <a href="https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="https://twitter.com/Ionicframework">
@@ -38,7 +38,7 @@
     Documentation
   </a>
   <span> · </span>
-  <a href="https://ionicframework.com/docs/contributing/how-to-contribute">Contribute</a>
+  <a href="https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md">Contribute</a>
   <span> · </span>
   <a href="https://blog.ionicframework.com/">Blog</a>
   <br />
@@ -71,9 +71,9 @@ an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 
 Already have an Ionic app? These guides will help you migrate to the latest versions.
 
-* [Migrate from v5 to v6](https://ionicframework.com/docs/next/reference/migration#migrating*from*ionic-5x-to-ionic-6x)
-* [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating*from*ionic-4x-to-ionic-5x)
-* [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating*from*ionic-30-to-ionic-40)
+* [Migrate from v5 to v6](https://ionicframework.com/docs/next/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
+* [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-4x-to-ionic-5x)
+* [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40)
 
 ### Examples
 
