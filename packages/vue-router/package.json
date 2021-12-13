@@ -3,6 +3,7 @@
   "version": "6.0.0",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
+    "prepublishOnly": "npm run build",
     "test.spec": "jest",
     "lint": "echo add linter",
     "bundle": "rollup --config rollup.config.js",
@@ -42,8 +43,10 @@
     "url": "https://github.com/ionic-team/ionic/issues"
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
+  "dependencies": {
+    "@ionic/vue": "6.0.0"
+  },
   "devDependencies": {
-    "@ionic/vue": "5.4.1",
     "@types/jest": "^26.0.13",
     "@types/node": "^14.10.1",
     "jest": "^27.0.4",

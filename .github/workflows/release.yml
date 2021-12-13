@@ -1,0 +1,52 @@
+name: 'Ionic Release'
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: choice
+        description: Which version should be published?
+        options:
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
+      tag:
+        required: true
+        type: choice
+        description: Which npm tag should this be published to?
+        options:
+          - latest
+          - next
+          - dev
+      prefix:
+        type: choice
+        description: For pre-releases, what kind of pre-release is this?
+        default: ''
+        options:
+          - alpha
+          - beta
+          - rc
+jobs:
+  dev-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Install Dependencies
+        run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
+        shell: bash
+      - name: Prepare NPM Token
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        shell: bash
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release
+        run: |
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.events.inputs.tag }}") --no-git-tag-version --no-push --skip-npm --preid $(echo "${{ github.events.inputs.prefix }}")
+        shell: bash
