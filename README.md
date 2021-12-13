@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#">
-    <img alt="Ionic" src="https://github.com/ionic-team/ionic-framework/blob/next/.github/assets/logo.png?raw=true" width="60" />
+    <img alt="Ionic" src="https://github.com/ionic-team/ionic-framework/blob/main/.github/assets/logo.png?raw=true" width="60" />
   </a>
 </p>
 
@@ -71,7 +71,7 @@ an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 
 Already have an Ionic app? These guides will help you migrate to the latest versions.
 
-* [Migrate from v5 to v6](https://ionicframework.com/docs/next/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
+* [Migrate from v5 to v6](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
 * [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-4x-to-ionic-5x)
 * [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40)
 
