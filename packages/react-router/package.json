@@ -37,7 +37,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "5.9.2",
+    "@ionic/react": "6.0.0",
     "tslib": "*"
   },
   "peerDependencies": {
