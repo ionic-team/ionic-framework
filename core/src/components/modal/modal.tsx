@@ -494,7 +494,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
-      await detachComponent(delegate, this.usersElement);
+
+      /**
+       * If the modal is presented through a controller, we don't need to detach
+       * since the el was already removed during the `dismiss` call above. Skipping
+       * this step also prevents an issue where rapdily dismissing right after
+       * presenting could cause `detachComponent` to be called after the present
+       * finished, blanking out the newly opened modal.
+       */
+      if (this.inline) {
+        await detachComponent(delegate, this.usersElement);
+      }
+
       if (this.animation) {
         this.animation.destroy();
       }
