@@ -191,23 +191,6 @@ describe('Tabs', () => {
     cy.ionPageVisible('tabs');
   });
 
-  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
-  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts - new tabs setup', () => {
-    cy.visit('http://localhost:8080/tabs-new/tab1');
-
-    cy.routerPush('/');
-    cy.ionPageHidden('tabs');
-    cy.ionPageVisible('home');
-
-    cy.routerPush('/tabs-new/tab2');
-    cy.ionPageHidden('tab1');
-
-    cy.ionPageHidden('home');
-
-    cy.ionPageVisible('tab2');
-    cy.ionPageVisible('tabs');
-  });
-
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22597
   it('should deselect old tab button when going to a tab that does not have a tab button', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
@@ -293,15 +276,15 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1');
 
     cy.get('#child-one-query-string').click();
-    cy.ionPageVisible('tab1childone');
+    cy.ionPageVisible('tab1child-one');
     cy.ionPageHidden('tab1');
 
     cy.get('ion-tab-button#tab-button-tab2').click();
     cy.ionPageVisible('tab2');
-    cy.ionPageHidden('tab1childone');
+    cy.ionPageHidden('tab1child-one');
 
     cy.get('ion-tab-button#tab-button-tab1').click();
-    cy.ionPageVisible('tab1childone');
+    cy.ionPageVisible('tab1child-one');
     cy.ionPageHidden('tab2');
 
     cy.url().should('include', '/tabs/tab1/child-one?key=value');
@@ -350,7 +333,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1');
   });*/
 
-  it('should swipe and go back to home', () => {
+  it.skip('should swipe and go back to home', () => {
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('home');
 
@@ -369,7 +352,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1childone');
   });
 
-  it('should swipe and go back within a tab', () => {
+  it.skip('should swipe and go back within a tab', () => {
     cy.get('#child-one').click();
     cy.ionPageVisible('tab1childone');
     cy.ionPageHidden('tab1');
@@ -380,7 +363,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageDoesNotExist('tab1childone');
   });
 
-  it('should swipe and go back to correct tab after switching tabs', () => {
+  it.skip('should swipe and go back to correct tab after switching tabs', () => {
     cy.get('#child-one').click();
     cy.ionPageVisible('tab1childone');
     cy.ionPageHidden('tab1');

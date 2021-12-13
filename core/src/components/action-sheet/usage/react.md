@@ -72,18 +72,24 @@ export const ActionSheetExample: React.FC = () => {
           text: 'Delete',
           role: 'destructive',
           icon: trash,
+          id: 'delete-button',
+          data: {
+            type: 'delete'
+          },
           handler: () => {
             console.log('Delete clicked');
           }
         }, {
           text: 'Share',
           icon: share,
+          data: 10,
           handler: () => {
             console.log('Share clicked');
           }
         }, {
           text: 'Play (open modal)',
           icon: caretForwardCircle,
+          data: 'Data value',
           handler: () => {
             console.log('Play clicked');
           }

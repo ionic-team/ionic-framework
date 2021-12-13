@@ -51,7 +51,7 @@ const ModalComponent: React.FC = () => {
     <MyContext.Provider value={{ value: 'overriden value' }}>
       <IonPage>
         <IonContent fullscreen>
-          <IonModal isOpen={show} cssClass="my-class" onDidDismiss={() => setShow(false)}>
+          <IonModal isOpen={show} className="my-class" onDidDismiss={() => setShow(false)}>
             <Body
               count={count}
               onDismiss={() => setShow(false)}

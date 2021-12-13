@@ -409,9 +409,29 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const keyframes = (keyframeValues: AnimationKeyFrames) => {
+    const different = _keyframes !== keyframeValues;
     _keyframes = keyframeValues;
 
+    if (different) {
+      updateKeyframes(_keyframes);
+    }
+
     return ani;
+  };
+
+  const updateKeyframes = (keyframeValues: AnimationKeyFrames) => {
+    if (supportsWebAnimations) {
+      getWebAnimations().forEach(animation => {
+        if (animation.effect.setKeyframes) {
+          animation.effect.setKeyframes(keyframeValues);
+        } else {
+          const newEffect = new KeyframeEffect(animation.effect.target, keyframeValues, animation.effect.getTiming());
+          animation.effect = newEffect;
+        }
+      });
+    } else {
+      initializeCSSAnimation();
+    }
   };
 
   /**
@@ -668,9 +688,8 @@ export const createAnimation = (animationId?: string): Animation => {
 
     if (!initialized) {
       initializeAnimation();
-    } else {
-      update(false, true, step);
     }
+    update(false, true, step);
 
     return ani;
   };

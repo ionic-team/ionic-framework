@@ -161,11 +161,11 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   private async buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
-      return this.dismiss(undefined, role);
+      return this.dismiss(button.data, role);
     }
     const shouldDismiss = await this.callButtonHandler(button);
     if (shouldDismiss) {
-      return this.dismiss(undefined, button.role);
+      return this.dismiss(button.data, button.role);
     }
     return Promise.resolve();
   }
@@ -252,6 +252,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           [mode]: true,
 
           ...getClassMap(this.cssClass),
+          'overlay-hidden': true,
           'action-sheet-translucent': this.translucent
         }}
         onIonActionSheetWillDismiss={this.dispatchCancelHandler}
@@ -274,7 +275,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </div>
               }
               {buttons.map(b =>
-                <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                <button type="button" id={b.id} class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                     {b.text}

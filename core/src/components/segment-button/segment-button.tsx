@@ -87,15 +87,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   private get tabIndex() {
-    if (this.disabled) { return -1; }
-
-    const hasTabIndex = this.el.hasAttribute('tabindex');
-
-    if (hasTabIndex) {
-      return this.el.getAttribute('tabindex');
-    }
-
-    return 0;
+    return this.checked && !this.disabled ? 0 : -1;
   }
 
   render() {

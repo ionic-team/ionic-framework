@@ -163,6 +163,28 @@ ion-toggle {
 }
 ```
 
+## Interfaces
+
+### ToggleChangeEventDetail
+
+```typescript
+interface ToggleChangeEventDetail<T = any> {
+  value: T;
+  checked: boolean;
+}
+```
+
+### ToggleCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface ToggleCustomEvent<T = any> extends CustomEvent {
+  detail: ToggleChangeEventDetail<T>;
+  target: HTMLIonToggleElement;
+}
+```
+
 
 <!-- Auto Generated Below -->
 
@@ -451,11 +473,11 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                                  | Type                                   |
-| ----------- | -------------------------------------------- | -------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                    |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail>` |
-| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                    |
+| Event       | Description                                  | Type                                        |
+| ----------- | -------------------------------------------- | ------------------------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                         |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail<any>>` |
+| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                         |
 
 
 ## Shadow Parts

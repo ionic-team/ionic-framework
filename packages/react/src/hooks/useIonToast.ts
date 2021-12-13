@@ -1,4 +1,4 @@
-import { ToastOptions, toastController } from '@ionic/core';
+import { ToastOptions, toastController } from '@ionic/core/components';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';

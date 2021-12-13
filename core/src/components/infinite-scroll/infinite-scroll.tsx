@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { componentOnReady } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -82,6 +83,7 @@ export class InfiniteScroll implements ComponentInterface {
       console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
       return;
     }
+    await new Promise(resolve => componentOnReady(contentEl, resolve));
     this.scrollEl = await contentEl.getScrollElement();
     this.thresholdChanged();
     this.disabledChanged();

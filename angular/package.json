@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "5.9.2",
+  "version": "6.0.0",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -30,61 +30,68 @@
     "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
-    "build.fesm": "rollup --config ./scripts/rollup.config.js",
     "build.link": "npm run build && node scripts/link-copy.js",
-    "build.ng": "ng-packagr -p package.json",
-    "build.es2015": "ngc -p tsconfig.json && rollup --config ./scripts/rollup.config.js",
-    "build.es5": "ngc -p tsconfig.legacy.json && rollup --config ./scripts/rollup.config.legacy.js",
+    "build.ng": "ng-packagr -p package.json -c tsconfig.json",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
-    "lint": "npm run lint.ts",
-    "lint.ts": "tslint --project .",
-    "lint.fix": "tslint --project . --fix",
+    "lint": "npm run eslint && npm run prettier -- --check",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write",
+    "prettier": "prettier \"**/*.ts\"",
+    "eslint": "eslint . --ext .ts",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
-    "@ionic/core": "5.9.2",
-    "tslib": "^1.9.3"
+    "@ionic/core": "6.0.0",
+    "jsonc-parser": "^3.0.0",
+    "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/core": ">=8.2.7",
-    "@angular/forms": ">=8.2.7",
-    "@angular/router": ">=8.2.7",
-    "rxjs": ">=6.2.0",
-    "zone.js": ">=0.8.26"
+    "@angular/core": ">=12.0.0",
+    "@angular/forms": ">=12.0.0",
+    "@angular/router": ">=12.0.0",
+    "rxjs": ">=6.6.0",
+    "zone.js": ">=0.11.0"
   },
   "devDependencies": {
-    "@angular-devkit/core": "8.3.17",
-    "@angular-devkit/schematics": "8.3.17",
-    "@angular/common": "8.2.13",
-    "@angular/compiler": "8.2.13",
-    "@angular/compiler-cli": "8.2.13",
-    "@angular/core": "8.2.13",
-    "@angular/forms": "8.2.13",
-    "@angular/router": "8.2.13",
+    "@angular-devkit/core": "^12.0.0",
+    "@angular-devkit/schematics": "^12.0.0",
+    "@angular-eslint/eslint-plugin": "^12.5.0",
+    "@angular-eslint/eslint-plugin-template": "^12.5.0",
+    "@angular-eslint/template-parser": "^12.5.0",
+    "@angular/common": "^12.0.0",
+    "@angular/compiler": "^12.0.0",
+    "@angular/compiler-cli": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "@angular/forms": "^12.0.0",
+    "@angular/router": "^12.0.0",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
+    "@schematics/angular": "^12.2.9",
     "@types/node": "12.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.2",
     "fs-extra": "^7.0.0",
-    "glob": "^7.1.4",
-    "ng-packagr": "^9.1.5",
-    "rollup": "~1.17.0",
-    "rollup-plugin-node-resolve": "~5.2.0",
+    "ng-packagr": "^12.0.0",
+    "prettier": "^2.4.1",
     "rxjs": "^6.6.2",
-    "tsickle": "^0.39.1",
-    "tslint": "^5.12.1",
-    "tslint-ionic-rules": "0.0.21",
-    "typescript": "3.4.5",
-    "zone.js": "^0.11.1"
+    "typescript": "4.2.4",
+    "typescript-eslint-language-service": "^4.1.5",
+    "zone.js": "~0.11.4"
   },
+  "prettier": "@ionic/prettier-config",
   "schematics": "./schematics/collection.json",
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts"
     },
-    "whitelistedNonPeerDependencies": [
-      "@ionic/core"
+    "allowedNonPeerDependencies": [
+      "@ionic/core",
+      "jsonc-parser"
     ]
   }
 }

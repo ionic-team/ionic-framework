@@ -85,7 +85,7 @@ via CSS.
 ### Use `ion-img` for images
 
 When including images within Virtual Scroll, be sure to use
-[`ion-img`](../img/Img/) rather than the standard `<img>` HTML element.
+[`ion-img`](../img) rather than the standard `<img>` HTML element.
 With `ion-img`, images are lazy loaded so only the viewable ones are
 rendered, and HTTP requests are efficiently controlled while scrolling.
 
@@ -113,14 +113,6 @@ Each virtual item must stay extremely efficient, but one way to really
 kill its performance is to perform any DOM operations within section header
 and footer functions. These functions are called for every record in the
 dataset, so please make sure they're performant.
-
-## React
-
-The Virtual Scroll component is not supported in React.
-
-## Vue
-
-`ion-virtual-scroll` is not supported in Vue. We plan on integrating with existing community-driven solutions for virtual scroll in the near future. Follow our [GitHub issue thread](https://github.com/ionic-team/ionic-framework/issues/17887) for the latest updates.
 
 <!-- Auto Generated Below -->
 

@@ -25,6 +25,18 @@ By default if an icon is placed with text in the [item option](../item-option), 
 
 Options can be expanded to take up the full width of the item if you swipe past a certain point. This can be combined with the `ionSwipe` event to call methods on the class.
 
+## Interfaces
+
+### ItemSlidingCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface ItemSlidingCustomEvent extends CustomEvent {
+  target: HTMLIonItemSlidingElement;
+}
+```
+
 
 <!-- Auto Generated Below -->
 

@@ -1,3 +1,67 @@
+### Inline Modal
+
+```html
+<!-- Default -->
+<ion-modal [isOpen]="true">
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open modal</ion-button>
+<ion-modal trigger="trigger-button">
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Sheet Modal -->
+<ion-modal
+  [isOpen]="true"
+  [breakpoints]="[0.1, 0.5, 1]"
+  [initialBreakpoint]="0.5"
+>
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Card Modal -->
+<ion-modal
+  [isOpen]="true"
+  [swipeToClose]="true"
+  [presentingElement]="routerOutlet.nativeEl"
+>
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Passing Props -->
+<ion-modal [isOpen]="true">
+  <ng-template>
+    <app-angular-component title="Ionic"></app-angular-component>
+  </ng-template>
+</ion-modal>
+```
+
+```typescript
+import { Component } from '@angular/core';
+import { IonRouterOutlet } from '@ionic/angular';
+
+@Component({
+  selector: 'modal-example',
+  templateUrl: 'modal-example.html',
+  styleUrls: ['./modal-example.css']
+})
+export class ModalExample {
+  constructor(public routerOutlet: IonRouterOutlet) {}
+}
+```
+
+### Modal Controller
+
 ```typescript
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -38,7 +102,7 @@ export class ModalPage {
 
 > If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
 
-### Passing Data
+#### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`.
 The previous example can be written to include data:
@@ -71,7 +135,7 @@ export class ModalPage {
 }
 ```
 
-### Dismissing a Modal
+#### Dismissing a Modal
 
 A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
 
@@ -128,7 +192,7 @@ import { EventModalModule } from '../modals/event/event.module';
 export class CalendarComponentModule {}
 ```
 
-### Swipeable Modals
+#### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -170,6 +234,22 @@ async presentModal() {
 }
 ```
 
+#### Sheet Modals
+
+```javascript
+import { IonRouterOutlet } from '@ionic/angular';
+
+constructor(private routerOutlet: IonRouterOutlet) {}
+
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: ModalPage,
+    initialBreakpoint: 0.5,
+    breakpoints: [0, 0.5, 1]
+  });
+  return await modal.present();
+}
+```
 
 ### Style Placement
 

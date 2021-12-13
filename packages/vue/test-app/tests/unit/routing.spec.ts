@@ -192,10 +192,11 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22492
   it('should show correct view when replacing', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel },
+      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="top">
               <ion-tab-button tab="tab1" href="/tabs/tab1">
                 <ion-label>Tab 1</ion-label>
@@ -305,8 +306,10 @@ describe('Routing', () => {
     router.push('/xyz');
     await waitForRouter();
 
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'xyz' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(1);
+    expect(cmpAgain[0].props()).toEqual({ title: 'xyz' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
@@ -356,8 +359,10 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(propsFn.mock.calls.length).toBe(2);
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'abc Title' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(1);
+    expect(cmpAgain[0].props()).toEqual({ title: 'abc Title' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
@@ -392,7 +397,9 @@ describe('Routing', () => {
     router.push('/page/2');
     await waitForRouter();
 
-    expect(page.props()).toEqual({ id: '2' });
+    const pageAgain = wrapper.findAllComponents(Page);
+    expect(pageAgain[0].props()).toEqual({ id: '1' });
+    expect(pageAgain[1].props()).toEqual({ id: '2' });
   });
 
   it('should fire guard written in a component', async () => {

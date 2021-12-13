@@ -25,6 +25,7 @@
   --border-width: 0;
   --border-style: solid;
   --opacity: 1;
+  --opacity-scale: 1;
 
   @include font-smoothing();
   @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
@@ -91,7 +92,7 @@
   background: var(--background);
 
   contain: strict;
-  opacity: var(--opacity);
+  opacity: calc(var(--opacity) * var(--opacity-scale));
   z-index: $z-index-toolbar-background;
   pointer-events: none;
 }

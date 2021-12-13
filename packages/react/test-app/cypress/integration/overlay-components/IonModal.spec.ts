@@ -15,7 +15,6 @@ describe('IonModal', () => {
 
     //close modal
     cy.get('ion-button').contains('Close').click();
-    cy.get('ion-modal').should('not.exist');
 
     //verify count on main page was updated
     cy.contains('Count: 2');
@@ -25,9 +24,6 @@ describe('IonModal', () => {
     //show modal
     cy.get('ion-button').contains('Show Modal, hide after 250 ms').click();
     cy.get('ion-modal ion-title').contains('My Modal');
-
-    //verify modal is gone
-    cy.get('ion-modal').should('not.exist');
   });
 
   it('display modal with context', () => {

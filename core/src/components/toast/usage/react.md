@@ -43,6 +43,7 @@ const ToastExample: React.FC = () => {
 
 import React, { useState } from 'react';
 import { IonToast, IonContent, IonButton } from '@ionic/react';
+import { informationCircle } from 'ionicons/icons';
 
 export const ToastExample: React.FC = () => {
   const [showToast1, setShowToast1] = useState(false);
@@ -63,6 +64,7 @@ export const ToastExample: React.FC = () => {
         isOpen={showToast2}
         onDidDismiss={() => setShowToast2(false)}
         message="Click to Close"
+        icon={informationCircle}
         position="top"
         buttons={[
           {

@@ -33,6 +33,7 @@
       <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
       <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
       <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</ion-button>
+      <ion-button expand="block" id="buttonData" onclick="presentWithButtonData()">Button data</ion-button>
     </ion-content>
 
   </ion-app>
@@ -58,6 +59,10 @@
       --ion-backdrop-opacity: 1;
     }
 
+    #delete-button {
+      color: #eb445a;
+    }
+
   </style>
   <script>
     window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
@@ -78,6 +83,7 @@
           text: 'Delete',
           role: 'destructive',
           icon: 'trash',
+          id: 'delete-button',
           handler: () => {
             console.log('Delete clicked');
           }
@@ -420,6 +426,28 @@
             role: 'destructive',
             handler: () => {
               console.log('Delete File clicked');
+            }
+          }
+        ]
+      });
+    }
+
+    async function presentWithButtonData() {
+      await openActionSheet({
+        buttons: [
+          {
+            text: 'Option 1',
+            id: 'option',
+            data: {
+              type: '1'
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            id: 'cancel',
+            data: {
+              type: 'cancel'
             }
           }
         ]

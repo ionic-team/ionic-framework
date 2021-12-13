@@ -1,9 +1,10 @@
-import { defineCustomElements } from '@ionic/core/loader';
+import { IonicConfig, initialize } from '@ionic/core/components';
 import { addIcons } from 'ionicons';
 import {
   arrowBackSharp,
   caretBackSharp,
   chevronBack,
+  chevronDown,
   chevronForward,
   close,
   closeCircle,
@@ -15,7 +16,18 @@ import {
   searchOutline,
   searchSharp,
 } from 'ionicons/icons';
+
 export {
+  // UTILS
+  createAnimation,
+  createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  IonicSwiper,
+  IonicSlides,
+  getTimeGivenProgression,
+
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -23,20 +35,18 @@ export {
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
-  createGesture,
   Gesture,
   GestureConfig,
   GestureDetail,
-  iosTransitionAnimation,
-  IonicSafeString,
-  mdTransitionAnimation,
   NavComponentWithProps,
-  setupConfig,
-  IonicSwiper,
-  IonicSlides,
 
   SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -47,9 +57,33 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
@@ -58,11 +92,43 @@ export {
 
   PopoverOptions,
 
-  ToastOptions,
-  ToastButton
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
 
-} from '@ionic/core';
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
+  ToastOptions,
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
+} from '@ionic/core/components';
+
 export * from './proxies';
+export * from './routing-proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';
@@ -76,6 +142,7 @@ export { IonModal } from './IonModal';
 export { IonPopover } from './IonPopover';
 
 // Custom Components
+export { IonApp } from './IonApp';
 export { IonPage } from './IonPage';
 export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
@@ -109,6 +176,7 @@ addIcons({
   'arrow-back-sharp': arrowBackSharp,
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
+  'chevron-down': chevronDown,
   'chevron-forward': chevronForward,
   close,
   'close-circle': closeCircle,
@@ -121,8 +189,17 @@ addIcons({
   'search-sharp': searchSharp,
 });
 
-// TODO: defineCustomElements() is asyncronous
-// We need to use the promise
-if (typeof window !== 'undefined') {
-  defineCustomElements(window);
+export const setupIonicReact = (config: IonicConfig = {}) => {
+  /**
+   * By default Ionic Framework hides elements that
+   * are not hydrated, but in the CE build there is no
+   * hydration.
+   * TODO: Remove when all integrations have been
+   * migrated to CE build.
+   */
+  document.documentElement.classList.add('ion-ce');
+
+  initialize({
+    ...config
+  });
 }

@@ -2,7 +2,7 @@
 <template>
   <ion-list>
     <ion-item>
-      <ion-range color="danger" pin="true"></ion-range>
+      <ion-range color="danger" :pin="true"></ion-range>
     </ion-item>
 
     <ion-item>
@@ -30,10 +30,14 @@
     <ion-item>
       <ion-range ref="rangeDualKnobs" dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
     </ion-item>
+    
+    <ion-item>
+      <ion-range min="0" max="100" :pin-formatter="customFormatter" :pin="true"></ion-range>
+    </ion-item>
   </ion-list>
 </template>
 
-<script>
+<script lang="ts">
 import { IonItem, IonLabel, IonList, IonRange } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
@@ -42,6 +46,11 @@ export default defineComponent({
   mounted() {
     // Sets initial value for dual-knob ion-range
     this.$refs.rangeDualKnobs.value = { lower: 24, upper: 42 };
+  },
+  setup() {
+    const customFormatter = (value: number) => `${value}%`;
+    
+    return { customFormatter };
   }
 });
 </script>

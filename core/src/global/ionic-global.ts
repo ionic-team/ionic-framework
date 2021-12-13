@@ -1,4 +1,4 @@
-import { getMode, setMode } from '@stencil/core';
+import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 
 import { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
@@ -21,8 +21,17 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   Context.config = config;
   const Ionic = (win as any).Ionic = (win as any).Ionic || {};
 
-  // Setup platforms
-  setupPlatforms(win);
+  const platformHelpers: any = {};
+  if (userConfig._ael) {
+    platformHelpers.ael = userConfig._ael;
+  }
+  if (userConfig._rel) {
+    platformHelpers.rel = userConfig._rel;
+  }
+  if (userConfig._ce) {
+    platformHelpers.ce = userConfig._ce;
+  }
+  setPlatformHelpers(platformHelpers);
 
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
@@ -38,6 +47,9 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   if (config.getBoolean('persistConfig')) {
     saveConfig(win, configObj);
   }
+
+  // Setup platforms
+  setupPlatforms(win);
 
   // first see if the mode was set as an attribute on <html>
   // which could have been set by the user, or by pre-rendering

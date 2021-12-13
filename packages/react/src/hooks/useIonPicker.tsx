@@ -1,4 +1,9 @@
-import { PickerButton, PickerColumn, PickerOptions, pickerController } from '@ionic/core';
+import {
+  PickerButton,
+  PickerColumn,
+  PickerOptions,
+  pickerController,
+} from '@ionic/core/components';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';

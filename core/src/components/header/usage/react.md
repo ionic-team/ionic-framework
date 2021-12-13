@@ -31,6 +31,21 @@ export const HeaderExample: React.FC = () => (
         </IonToolbar>
       </IonHeader>
     </IonContent>
+    
+    {/*-- Fade Header with collapse header --*/}
+    <IonHeader collapse="fade" translucent={true}>
+      <IonToolbar>
+        <IonTitle>Header</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    
+    <IonContent fullscreen={true}>
+      <IonHeader collapse="condense">
+        <IonToolbar>
+          <IonTitle size="large">Header</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonContent>
   </>
 );
 ```

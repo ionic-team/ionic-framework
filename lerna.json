@@ -5,5 +5,5 @@
     "angular",
     "packages/*"
   ],
-  "version": "5.9.2"
+  "version": "6.0.0"
 }

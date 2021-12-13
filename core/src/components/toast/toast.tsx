@@ -19,6 +19,7 @@ import { ToastAttributes } from './toast-interface';
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
+ * @part icon - The icon that appears next to the toast content.
  */
 @Component({
   tag: 'ion-toast',
@@ -106,6 +107,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * If `true`, the toast will animate.
    */
   @Prop() animated = true;
+
+  /**
+   * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`.
+   * https://ionic.io/ionicons
+   */
+  @Prop() icon?: string;
 
   /**
    * Additional attributes to pass to the toast.
@@ -249,7 +256,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 <ion-icon
                   icon={b.icon}
                   slot={b.text === undefined ? 'icon-only' : undefined}
-                  class="toast-icon"
+                  class="toast-button-icon"
                 />}
               {b.text}
             </div>
@@ -282,6 +289,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           ...getClassMap(this.cssClass),
+          'overlay-hidden': true,
           'toast-translucent': this.translucent
         })}
         onIonToastWillDismiss={this.dispatchCancelHandler}
@@ -289,6 +297,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
         <div class={wrapperClass}>
           <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
+
+            {this.icon !== undefined &&
+              <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
+            }
 
             <div class="toast-content">
               {this.header !== undefined &&

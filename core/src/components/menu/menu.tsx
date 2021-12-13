@@ -154,6 +154,12 @@ export class Menu implements ComponentInterface, MenuI {
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async connectedCallback() {
+    // TODO: connectedCallback is fired in CE build
+    // before WC is defined. This needs to be fixed in Stencil.
+    if (typeof (customElements as any) !== 'undefined') {
+      await customElements.whenDefined('ion-menu');
+    }
+
     if (this.type === undefined) {
       this.type = config.get('menuType', 'overlay');
     }
@@ -186,6 +192,11 @@ AFTER:
       console.error('Menu: must have a "content" element to listen for drag events on.');
       return;
     }
+
+    if (this.el.contains(content)) {
+      console.error(`Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`);
+    }
+
     this.contentEl = content as HTMLElement;
 
     // add menu's content classes
