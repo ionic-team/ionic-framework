@@ -326,7 +326,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
     const clickFn = clickable ? {
-      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
+      onClick: (ev: Event) => { openURL(href, ev, routerDirection, routerAnimation); }
     } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {

@@ -1,3 +1,48 @@
+# [6.0.0 Titanium](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.4...v6.0.0) (2021-12-08)
+
+Enjoy! 🚀
+
+> We recommend updating to version `5.9.2` before updating to version `6.0.0` in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
+
+Please see the [Ionic 6 Upgrade Guide](https://ionicframework.com/docs/next/intro/upgrading-to-ionic-6) for a step-by-step list of what you need to do to get started with Ionic 6.
+
+# [6.0.0-rc.4](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.3...v6.0.0-rc.4) (2021-12-07)
+
+
+### Bug Fixes
+
+* **accordion:** improve functionality with nested accordions ([#24302](https://github.com/ionic-team/ionic/issues/24302)) ([0920797](https://github.com/ionic-team/ionic/commit/0920797612a5ee3aac1c38d8bffe4fd1e80b6987))
+* **content:** ensure scrollEl is always available in scroll methods ([#24255](https://github.com/ionic-team/ionic/issues/24255)) ([36a096c](https://github.com/ionic-team/ionic/commit/36a096c9b60bd6b3b086f2c966a1cd40dbc54473)), closes [#24168](https://github.com/ionic-team/ionic-framework/issues/24168)
+* **datetime:** keyboard navigation now works in time picker ([#24251](https://github.com/ionic-team/ionic/issues/24251)) ([8bdcd3c](https://github.com/ionic-team/ionic/commit/8bdcd3c6c99d84a0a46b0f08dceca6b6929fd8f8)), closes [#24070](https://github.com/ionic-team/ionic-framework/issues/24070)
+* **datetime:** prevent multiple items from being highlighted at once in month/year and time pickers ([#24268](https://github.com/ionic-team/ionic/issues/24268)) ([c2bef8d](https://github.com/ionic-team/ionic/commit/c2bef8df14111dc00c382a3ab36c27a08a92f0b7)), closes [#24067](https://github.com/ionic-team/ionic-framework/issues/24067)
+* **datetime:** update active calendar display when value changes ([#24244](https://github.com/ionic-team/ionic/issues/24244)) ([ec3bc52](https://github.com/ionic-team/ionic/commit/ec3bc52ff194f1e4db4ce49548c1418c259b8795)), closes [#24241](https://github.com/ionic-team/ionic-framework/issues/24241)
+* **item:** counter property now defaults to false to make upgrade easier ([#24263](https://github.com/ionic-team/ionic/issues/24263)) ([f61f356](https://github.com/ionic-team/ionic/commit/f61f35600072c5df069a24c3b24eb8f283d586f8))
+* **react, vue:** remove side effects to improve treeshaking ([#24313](https://github.com/ionic-team/ionic/issues/24313)) ([13d4418](https://github.com/ionic-team/ionic/commit/13d4418588b98d301b05ebd94e0eac670163a553)), closes [#24280](https://github.com/ionic-team/ionic-framework/issues/24280)
+
+
+### Features
+
+* **react:** add setupIonicReact function ([#24254](https://github.com/ionic-team/ionic/issues/24254)) ([55db38d](https://github.com/ionic-team/ionic/commit/55db38ddc541c2632c7d3e4e4c9400ff5b5dfe8c)), closes [#24139](https://github.com/ionic-team/ionic/issues/24139)
+
+
+
+## [5.9.2](https://github.com/ionic-team/ionic/compare/v5.9.1...v5.9.2) (2021-12-07)
+
+
+### Bug Fixes
+
+* **angular:** improve typing when compiling with legacy View Engine ([#24221](https://github.com/ionic-team/ionic/issues/24221)) ([816096f](https://github.com/ionic-team/ionic/commit/816096f89747e943a4a273175d384189f25e4628))
+* **content:** ensure fixed slot renders on top of content in iOS ([#24300](https://github.com/ionic-team/ionic/issues/24300)) ([e41b0e0](https://github.com/ionic-team/ionic/commit/e41b0e0cf2a794972d7f4d8943a0bec3d1e08016)), closes [#24286](https://github.com/ionic-team/ionic-framework/issues/24286)
+* **popover:** improve scrolling in popover when using header and footer ([#24294](https://github.com/ionic-team/ionic/issues/24294)) ([f6a00ea](https://github.com/ionic-team/ionic/commit/f6a00ea9544aa70620b5f8f65a7702fa3bedd974))
+* **react:** present and dismiss hooks return promises ([#24299](https://github.com/ionic-team/ionic/issues/24299)) ([4b26fea](https://github.com/ionic-team/ionic/commit/4b26feaa47efed4806aba565a52554db232b99e2)), closes [#24293](https://github.com/ionic-team/ionic-framework/issues/24293)
+* **react:** properly check for custom elements to avoid errors in unit tests ([#24156](https://github.com/ionic-team/ionic/issues/24156)) ([8f188ea](https://github.com/ionic-team/ionic/commit/8f188eaae7422c9e81053868b9dd93b4ac738e98)), closes [#24149](https://github.com/ionic-team/ionic/issues/24149)
+* **router:** popping route now accounts for route params ([#24315](https://github.com/ionic-team/ionic/issues/24315)) ([5e5054d](https://github.com/ionic-team/ionic/commit/5e5054d369ad68c9ac43e12439d71fb42d6ca26b)), closes [#24223](https://github.com/ionic-team/ionic-framework/issues/24223)
+* **slides:** update swiper instance after initialization ([#24257](https://github.com/ionic-team/ionic/issues/24257)) ([89e4bc5](https://github.com/ionic-team/ionic/commit/89e4bc56a1c3cd4fb26fc5514f38c6a01f047297)), closes [#19638](https://github.com/ionic-team/ionic-framework/issues/19638)
+* **vue:** ionic lifecycle hooks now run when using vue 3.2 setup syntax ([#24253](https://github.com/ionic-team/ionic/issues/24253)) ([fb96ab5](https://github.com/ionic-team/ionic/commit/fb96ab5a26d87818a8b64ee82df0020355054183)), closes [#23824](https://github.com/ionic-team/ionic/issues/23824)
+* **vue:** switching between tabs preserves query string ([#24297](https://github.com/ionic-team/ionic/issues/24297)) ([047d3c7](https://github.com/ionic-team/ionic/commit/047d3c77729db08e4fd84f426f6c5c2af0eacc52)), closes [#23699](https://github.com/ionic-team/ionic/issues/23699)
+
+
+
 # [6.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v6.0.0-rc.2...v6.0.0-rc.3) (2021-11-17)
 
 

@@ -16,9 +16,9 @@ class IonTabsElement extends HTMLElementSSR {
 }
 
 if (typeof (window as any) !== 'undefined' && window.customElements) {
-  const element = customElements.get('ion-tabs');
+  const element = window.customElements.get('ion-tabs');
   if (!element) {
-    customElements.define('ion-tabs', IonTabsElement);
+    window.customElements.define('ion-tabs', IonTabsElement);
   }
 }
 

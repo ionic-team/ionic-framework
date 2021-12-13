@@ -115,9 +115,17 @@ export const IonTabBar = defineComponent({
          * land on /tabs/tab1/child instead of /tabs/tab1.
          */
         if (activeTab !== prevActiveTab || (prevHref !== currentRoute.pathname)) {
+
+          /**
+           * By default the search is `undefined` in Ionic Vue,
+           * but Vue Router can set the search to the empty string.
+           * We check for truthy here because empty string is falsy
+           * and currentRoute.search cannot ever be a boolean.
+           */
+          const search = (currentRoute.search) ? `?${currentRoute.search}` : '';
           tabs[activeTab] = {
             ...tabs[activeTab],
-            currentHref: currentRoute.pathname + (currentRoute.search || '')
+            currentHref: currentRoute.pathname + search
           }
         }
 
