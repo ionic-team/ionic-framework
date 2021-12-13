@@ -10,7 +10,7 @@ import {
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, renderHiddenInput } from '../../utils/helpers';
+import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 import { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
@@ -870,7 +870,14 @@ export class Datetime implements ComponentInterface {
       });
     }
     visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
-    visibleIO.observe(this.el);
+
+    /**
+     * Use raf to avoid a race condition between the component loading and
+     * its display animation starting (such as when shown in a modal). This
+     * could cause the datetime to start at a visibility of 0, erroneously
+     * triggering the `hiddenIO` observer below.
+     */
+    raf(() => visibleIO?.observe(this.el));
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -891,7 +898,7 @@ export class Datetime implements ComponentInterface {
       });
     }
     hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
-    hiddenIO.observe(this.el);
+    raf(() => hiddenIO?.observe(this.el));
 
     /**
      * Datetime uses Ionic components that emit
