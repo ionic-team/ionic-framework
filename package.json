@@ -3,8 +3,6 @@
   "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
   "scripts": {
     "build": "node .scripts/build.js",
-    "release.dev": "node .scripts/release-dev.js",
-    "release.prepare": "node .scripts/prepare.js",
     "release": "node .scripts/release.js",
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s",
     "commitizenBranches": "git-branch-is -q --not -r \"^(main|next|release-)\""
@@ -22,6 +20,7 @@
     "git-branch-is": "^4.0.0",
     "husky": "^4.3.8",
     "inquirer": "^6.0.0",
+    "lerna": "^4.0.0",
     "listr": "^0.14.0",
     "rimraf": "^2.6.3",
     "semver": "^5.5.0"

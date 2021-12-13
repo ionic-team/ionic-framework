@@ -6,13 +6,37 @@ on:
 jobs:
   dev-build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.dev-build.outputs.version }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 15.x
-      - name: Create Dev Build
-        run: npm run release.dev -- --skip-prompt
+          node-version: 16
+      - name: Install Dependencies
+        run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
+        shell: bash
+      - name: Prepare NPM Token
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create Dev Hash
+        run: |
+          echo "HASH=$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
+          echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(node -p -e "require('./core/package.json').version")" >> $GITHUB_ENV
+        shell: bash
+      - name: Create Dev Build
+        run: |
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --no-git-tag-version --no-push
+        shell: bash
+      - id: dev-build
+        run: echo "::set-output name=version::$(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}")"
+  get-build:
+    name: Get your dev build!
+    runs-on: ubuntu-latest
+    needs: dev-build
+    steps:
+      - run: echo ${{ needs.dev-build.outputs.version }}
+

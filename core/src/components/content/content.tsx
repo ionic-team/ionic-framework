@@ -119,14 +119,6 @@ export class Content implements ComponentInterface {
     this.resize();
   }
 
-  @Listen('click', { capture: true })
-  onClick(ev: Event) {
-    if (this.isScrolling) {
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
-  }
-
   private shouldForceOverscroll() {
     const { forceOverscroll } = this;
     const mode = getIonMode(this);
