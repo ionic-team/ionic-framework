@@ -12,16 +12,27 @@
 <ion-datetime locale="en-GB"></ion-datetime>
 
 <!-- Max and min -->
-<ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>
+<ion-datetime
+  min="1994-03-14"
+  max="2012-12-09"
+  value="2008-09-02"
+></ion-datetime>
 
 <!-- 15 minute increments -->
 <ion-datetime minute-values="0,15,30,45"></ion-datetime>
 
-<!-- Specific days/months/years --> 
-<ion-datetime month-values="6,7,8" year-values="2014,2015" day-values="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>
+<!-- Specific days/months/years -->
+<ion-datetime
+  month-values="6,7,8"
+  year-values="2014,2015"
+  day-values="01,02,03,04,05,06,08,09,10,11,12,13,14"
+></ion-datetime>
 
 <!-- Selecting time, no date -->
 <ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time, no date -->
+<ion-datetime presentation="time-compact"></ion-datetime>
 
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
@@ -81,9 +92,9 @@
 ```
 
 ```javascript
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from "date-fns";
 
-const datetime = document.querySelector('#custom-datetime');
+const datetime = document.querySelector("#custom-datetime");
 
 const confirm = () => {
   datetime.confirm();
@@ -94,14 +105,20 @@ const reset = () => {
 };
 
 const formatDate = (value: string) => {
-  return format(parseISO(value), 'MMM dd yyyy');
+  return format(parseISO(value), "MMM dd yyyy");
 };
 
-const popoverDatetime = document.querySelector('#popover-datetime');
-const dateInput = document.querySelector('#date-input');
-popoverDatetime.addEventListener('ionChange', ev => dateInput.innerText = formatDate(ev.detail.value));
+const popoverDatetime = document.querySelector("#popover-datetime");
+const dateInput = document.querySelector("#date-input");
+popoverDatetime.addEventListener(
+  "ionChange",
+  (ev) => (dateInput.innerText = formatDate(ev.detail.value))
+);
 
-const popoverDatetime2 = document.querySelector('#popover-datetime-2');
-const dateInput2 = document.querySelector('#date-input-2');
-popoverDatetime2.addEventListener('ionChange', ev => dateInput2.value = formatDate(ev.detail.value));
+const popoverDatetime2 = document.querySelector("#popover-datetime-2");
+const dateInput2 = document.querySelector("#date-input-2");
+popoverDatetime2.addEventListener(
+  "ionChange",
+  (ev) => (dateInput2.value = formatDate(ev.detail.value))
+);
 ```

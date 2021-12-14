@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Datetime - Standalone</title>
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
@@ -25,8 +27,8 @@
       <option value="time-date">time-date</option>
       <option value="date">date</option>
       <option value="time">time</option>
+      <option value="time-compact">time-compact</option>
     </select>
-
 
     <label for="size">Size</label>
     <select id="size" onchange="changeSize(event)">
@@ -39,14 +41,14 @@
     <ion-datetime></ion-datetime>
 
     <script>
-      const datetime = document.querySelector('ion-datetime');
+      const datetime = document.querySelector("ion-datetime");
 
       const changePresentation = (ev) => {
         datetime.presentation = ev.target.value;
-      }
+      };
       const changeSize = (ev) => {
         datetime.size = ev.target.value;
-      }
+      };
     </script>
   </body>
 </html>

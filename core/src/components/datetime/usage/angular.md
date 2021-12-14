@@ -12,16 +12,27 @@
 <ion-datetime locale="en-GB"></ion-datetime>
 
 <!-- Max and min -->
-<ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>
+<ion-datetime
+  min="1994-03-14"
+  max="2012-12-09"
+  value="2008-09-02"
+></ion-datetime>
 
 <!-- 15 minute increments -->
 <ion-datetime minuteValues="0,15,30,45"></ion-datetime>
 
-<!-- Specific days/months/years --> 
-<ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>
+<!-- Specific days/months/years -->
+<ion-datetime
+  monthValues="6,7,8"
+  yearValues="2014,2015"
+  dayValues="01,02,03,04,05,06,08,09,10,11,12,13,14"
+></ion-datetime>
 
 <!-- Selecting time, no date -->
 <ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time, no date (with compact layout) -->
+<ion-datetime presentation="time-compact"></ion-datetime>
 
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
@@ -107,11 +118,11 @@ export class MyComponent {
   dateValue2 = '';
 
   constructor() {}
-  
+
   confirm() {
     this.datetime.nativeEl.confirm();
   }
-  
+
   reset() {
     this.datetime.nativeEl.reset();
   }

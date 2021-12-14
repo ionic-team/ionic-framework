@@ -785,9 +785,16 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM.`'time-compact'` will show a time picker to select hour, minute and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "presentation": 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+        "presentation": | 'date-time'
+    | 'time-date'
+    | 'date'
+    | 'time'
+    | 'month'
+    | 'year'
+    | 'month-year'
+    | 'time-compact';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
@@ -4478,9 +4485,16 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
-          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM.`'time-compact'` will show a time picker to select hour, minute and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "presentation"?: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+        "presentation"?: | 'date-time'
+    | 'time-date'
+    | 'date'
+    | 'time'
+    | 'month'
+    | 'year'
+    | 'month-year'
+    | 'time-compact';
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
