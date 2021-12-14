@@ -6,15 +6,17 @@ import { toFloat } from './validator-utils';
 export const ION_MIN_VALIDATOR: StaticProvider = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => IonMinValidator),
-  multi: true
+  multi: true,
 };
 
 @Directive({
-  selector: 'ion-input[type=number][min][formControlName],ion-input[type=number][min][formControl],ion-input[type=number][min][ngModel]',
+  selector:
+    'ion-input[type=number][min][formControlName],ion-input[type=number][min][formControl],ion-input[type=number][min][ngModel]',
   providers: [ION_MIN_VALIDATOR],
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[attr.min]': 'enabled() ? min : null'
-  }
+    '[attr.min]': 'enabled() ? min : null',
+  },
 })
 export class IonMinValidator implements Validator, OnChanges {
   // tslint:disable-next-line: no-unbound-method
@@ -46,5 +48,4 @@ export class IonMinValidator implements Validator, OnChanges {
   enabled(): boolean {
     return this.min !== null;
   }
-
 }

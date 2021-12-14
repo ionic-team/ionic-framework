@@ -16,6 +16,7 @@ export { VirtualHeader } from './directives/virtual-scroll/virtual-header';
 export { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
 export { IonModal } from './directives/overlays/modal';
 export { IonPopover } from './directives/overlays/popover';
+export { IonMinValidator, IonMaxValidator } from './directives/validators';
 export * from './directives/proxies';
 
 // PROVIDERS

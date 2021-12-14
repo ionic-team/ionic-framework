@@ -6,15 +6,17 @@ import { toFloat } from './validator-utils';
 export const ION_MAX_VALIDATOR: StaticProvider = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => IonMaxValidator),
-  multi: true
+  multi: true,
 };
 
 @Directive({
-  selector: 'ion-input[type=number][max][formControlName],ion-input[type=number][max][formControl],ion-input[type=number][max][ngModel]',
+  selector:
+    'ion-input[type=number][max][formControlName],ion-input[type=number][max][formControl],ion-input[type=number][max][ngModel]',
   providers: [ION_MAX_VALIDATOR],
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[attr.max]': 'enabled() ? max : null'
-  }
+    '[attr.max]': 'enabled() ? max : null',
+  },
 })
 export class IonMaxValidator implements Validator, OnChanges {
   // tslint:disable-next-line: no-unbound-method
@@ -46,5 +48,4 @@ export class IonMaxValidator implements Validator, OnChanges {
   enabled(): boolean {
     return this.max !== null;
   }
-
 }
