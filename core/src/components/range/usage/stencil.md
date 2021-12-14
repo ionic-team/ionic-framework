@@ -6,6 +6,8 @@ import { Component, h } from '@stencil/core';
   styleUrl: 'range-example.css'
 })
 export class RangeExample {
+  private customFormatter = (value: number) => `${value}%`;
+  
   render() {
     return [
       <ion-list>
@@ -37,6 +39,10 @@ export class RangeExample {
 
         <ion-item>
           <ion-range dualKnobs={true} min={21} max={72} step={3} snaps={true}></ion-range>
+        </ion-item>
+        
+        <ion-item>
+          <ion-range min="0" max="100" pinFormatter={this.customFormatter} pin={true}></ion-range>
         </ion-item>
       </ion-list>
     ];

@@ -47,6 +47,9 @@
         <ion-item button router-link="/lifecycle" id="lifecycle">
           <ion-label>Lifecycle</ion-label>
         </ion-item>
+        <ion-item button router-link="/lifecycle-setup" id="lifecycle-setup">
+          <ion-label>Lifecycle (Setup)</ion-label>
+        </ion-item>
         <ion-item button router-link="/delayed-redirect" id="delayed-redirect">
           <ion-label>Delayed Redirect</ion-label>
         </ion-item>

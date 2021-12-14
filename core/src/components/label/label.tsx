@@ -103,7 +103,8 @@ export class Label implements ComponentInterface {
           [mode]: true,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           [`label-${position}`]: position !== undefined,
-          [`label-no-animate`]: (this.noAnimate)
+          [`label-no-animate`]: (this.noAnimate),
+          'label-rtl': document.dir === 'rtl'
         })}
       >
       </Host>

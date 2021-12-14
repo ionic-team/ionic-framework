@@ -112,7 +112,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder?: string | null;
+  @Prop() placeholder?: string;
 
   /**
    * If `true`, the user cannot modify the value.
@@ -177,7 +177,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when a keyboard input occurred.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+  @Event() ionInput!: EventEmitter<InputEvent>;
 
   /**
    * Emitted when the styles change.
@@ -271,7 +271,7 @@ export class Textarea implements ComponentInterface {
       'textarea': true,
       'input': true,
       'interactive-disabled': this.disabled,
-      'has-placeholder': this.placeholder != null,
+      'has-placeholder': this.placeholder !== undefined,
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus
     });
@@ -316,7 +316,7 @@ export class Textarea implements ComponentInterface {
       this.value = this.nativeInput.value;
     }
     this.emitStyle();
-    this.ionInput.emit(ev as KeyboardEvent);
+    this.ionInput.emit(ev as InputEvent);
   }
 
   private onFocus = (ev: FocusEvent) => {

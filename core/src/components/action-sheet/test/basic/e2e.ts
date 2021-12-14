@@ -7,6 +7,38 @@ const getActiveElementText = async (page) => {
   return await page.evaluate(el => el && el.textContent, activeElement);
 }
 
+test('action-sheet: data', async () => {
+  const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
+  const didDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+
+  await page.click('#buttonData');
+  await page.waitForSelector('#buttonData');
+
+  const actionSheet = await page.find('ion-action-sheet');
+  await actionSheet.waitForVisible();
+
+  const button = await actionSheet.find('button#option');
+  await button.click();
+
+  expect(didDismiss).toHaveReceivedEventDetail({ data: { type: '1' } });
+});
+
+test('action-sheet: data cancel', async () => {
+  const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
+  const didDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+
+  await page.click('#buttonData');
+  await page.waitForSelector('#buttonData');
+
+  const actionSheet = await page.find('ion-action-sheet');
+  await actionSheet.waitForVisible();
+
+  const button = await actionSheet.find('button.action-sheet-cancel');
+  await button.click();
+
+  expect(didDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
+})
+
 test('action-sheet: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
 

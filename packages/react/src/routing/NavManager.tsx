@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
 import { IonRouterContext, IonRouterContextState } from '../components/IonRouterContext';

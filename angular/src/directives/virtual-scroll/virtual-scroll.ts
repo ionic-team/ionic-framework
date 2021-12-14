@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
 import { Cell, CellType, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn } from '@ionic/core';
 
-import { ProxyCmp } from '../proxies-utils';
+import { ProxyCmp } from '../angular-component-lib/utils';
 
 import { VirtualFooter } from './virtual-footer';
 import { VirtualHeader } from './virtual-header';
@@ -205,8 +205,8 @@ export class IonVirtualScroll {
       case 'item': return this.itmTmp.templateRef;
       case 'header': return this.hdrTmp.templateRef;
       case 'footer': return this.ftrTmp.templateRef;
+      default: throw new Error('template for virtual item was not provided');
     }
-    throw new Error('template for virtual item was not provided');
   }
 }
 

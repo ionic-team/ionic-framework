@@ -24,7 +24,7 @@ npm run build
 
 ## Contributing
 
-See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/master/.github/CONTRIBUTING.md).
+See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md).
 
 ## Need Help?
 

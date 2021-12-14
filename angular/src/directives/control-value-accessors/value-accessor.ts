@@ -1,19 +1,23 @@
-import { AfterViewInit, ElementRef, HostListener, Injector, OnDestroy, Type } from '@angular/core';
+import { AfterViewInit, ElementRef, Injector, OnDestroy, Directive, HostListener } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { raf } from '../../util/util';
 
+@Directive()
 export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
-
-  private onChange: (value: any) => void = () => {/**/};
-  private onTouched: () => void = () => {/**/};
+  private onChange: (value: any) => void = () => {
+    /**/
+  };
+  private onTouched: () => void = () => {
+    /**/
+  };
   protected lastValue: any;
   private statusChanges?: Subscription;
 
   constructor(protected injector: Injector, protected el: ElementRef) {}
 
-  writeValue(value: any) {
+  writeValue(value: any): void {
     /**
      * TODO for Ionic 6:
      * Change `value == null ? '' : value;`
@@ -25,7 +29,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     setIonicClasses(this.el);
   }
 
-  handleChangeEvent(el: HTMLElement, value: any) {
+  handleChangeEvent(el: HTMLElement, value: any): void {
     if (el === this.el.nativeElement) {
       if (value !== this.lastValue) {
         this.lastValue = value;
@@ -36,38 +40,42 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 
   @HostListener('ionBlur', ['$event.target'])
-  _handleBlurEvent(el: any) {
+  _handleBlurEvent(el: any): void {
     if (el === this.el.nativeElement) {
       this.onTouched();
       setIonicClasses(this.el);
     }
   }
 
-  registerOnChange(fn: (value: any) => void) {
+  registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void) {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean) {
+  setDisabledState(isDisabled: boolean): void {
     this.el.nativeElement.disabled = isDisabled;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.statusChanges) {
       this.statusChanges.unsubscribe();
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     let ngControl;
     try {
-      ngControl = this.injector.get<NgControl>(NgControl as Type<NgControl>);
-    } catch { /* No FormControl or ngModel binding */ }
+      ngControl = this.injector.get<NgControl>(NgControl);
+    } catch {
+      /* No FormControl or ngModel binding */
+    }
 
-    if (!ngControl) { return; }
+    if (!ngControl) {
+      return;
+    }
 
     // Listen for changes in validity, disabled, or pending states
     if (ngControl.statusChanges) {
@@ -84,15 +92,15 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
      * This patches the methods to manually sync
      * the classes until this feature is implemented in Angular.
      */
-    const formControl = ngControl.control;
+    const formControl = ngControl.control as any;
     if (formControl) {
       const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine'];
-      methodsToPatch.forEach(method => {
-       if (formControl[method]) {
-         const oldFn = formControl[method].bind(formControl);
-         formControl[method] = (...params) => {
-           oldFn(...params);
-           setIonicClasses(this.el);
+      methodsToPatch.forEach((method) => {
+        if (formControl.get(method)) {
+          const oldFn = formControl[method].bind(formControl);
+          formControl[method] = (...params: any[]) => {
+            oldFn(...params);
+            setIonicClasses(this.el);
           };
         }
       });
@@ -100,7 +108,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 }
 
-export const setIonicClasses = (element: ElementRef) => {
+export const setIonicClasses = (element: ElementRef): void => {
   raf(() => {
     const input = element.nativeElement as HTMLElement;
     const classes = getClasses(input);
@@ -127,16 +135,11 @@ const getClasses = (element: HTMLElement) => {
 
 const setClasses = (element: HTMLElement, classes: string[]) => {
   const classList = element.classList;
-  [
-    'ion-valid',
-    'ion-invalid',
-    'ion-touched',
-    'ion-untouched',
-    'ion-dirty',
-    'ion-pristine'
-  ].forEach(c => classList.remove(c));
+  ['ion-valid', 'ion-invalid', 'ion-touched', 'ion-untouched', 'ion-dirty', 'ion-pristine'].forEach((c) =>
+    classList.remove(c)
+  );
 
-  classes.forEach(c => classList.add(c));
+  classes.forEach((c) => classList.add(c));
 };
 
 const startsWith = (input: string, search: string): boolean => {

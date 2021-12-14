@@ -13,4 +13,11 @@
     <ion-title>Footer</ion-title>
   </ion-toolbar>
 </ion-footer>
+
+<!-- Fade Footer -->
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>
 ```

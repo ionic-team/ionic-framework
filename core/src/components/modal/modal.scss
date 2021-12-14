@@ -48,6 +48,13 @@
   outline: none;
 
   contain: strict;
+
+  pointer-events: none;
+}
+
+:host(.modal-interactive) .modal-wrapper,
+:host(.modal-interactive) ion-backdrop {
+  pointer-events: auto;
 }
 
 :host(.overlay-hidden) {
@@ -99,4 +106,42 @@
     --width: #{$modal-inset-width};
     --height: #{$modal-inset-height-large};
   }
+}
+
+// Sheet Modal
+// --------------------------------------------------
+
+.modal-handle {
+  @include position(5px, 0px, null, 0px);
+  @include border-radius(8px, 8px, 8px, 8px);
+  @include margin(null, auto, null, auto);
+
+  position: absolute;
+
+  width: 36px;
+  height: 5px;
+
+  /**
+   * This allows the handle to appear
+   * on top of user content in WebKit.
+   */
+  transform: translateZ(0);
+
+  background: var(--ion-color-step-350, #c0c0be);
+
+  z-index: 11;
+}
+
+/**
+ * Ensure that the sheet modal does not
+ * completely cover the content.
+ */
+:host(.modal-sheet) {
+  --height: calc(100% - (var(--ion-safe-area-top) + 10px));
+}
+
+:host(.modal-sheet) .modal-wrapper,
+:host(.modal-sheet) .modal-shadow {
+  position: absolute;
+  bottom: 0;
 }

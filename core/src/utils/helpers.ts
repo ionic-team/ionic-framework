@@ -5,6 +5,56 @@ import { Side } from '../interface';
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
+export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
+  return new Promise(resolve => {
+    transitionEnd(el, expectedDuration, resolve);
+  });
+};
+
+/**
+ * Allows developer to wait for a transition
+ * to finish and fallback to a timer if the
+ * transition is cancelled or otherwise
+ * never finishes. Also see transitionEndAsync
+ * which is an await-able version of this.
+ */
+const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
+  let unRegTrans: (() => void) | undefined;
+  let animationTimeout: any;
+  const opts: any = { passive: true };
+  const ANIMATION_FALLBACK_TIMEOUT = 500;
+
+  const unregister = () => {
+    if (unRegTrans) {
+      unRegTrans();
+    }
+  };
+
+  const onTransitionEnd = (ev?: Event) => {
+    if (ev === undefined || el === ev.target) {
+      unregister();
+      callback(ev as TransitionEvent);
+    }
+  };
+
+  if (el) {
+    el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+    el.addEventListener('transitionend', onTransitionEnd, opts);
+    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
+
+    unRegTrans = () => {
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+        animationTimeout = undefined;
+      }
+      el.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+      el.removeEventListener('transitionend', onTransitionEnd, opts);
+    };
+  }
+
+  return unregister;
+};
+
 /**
  * Waits for a component to be ready for
  * both custom element and non-custom element builds.
@@ -122,6 +172,25 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
     return itemEl.querySelector('ion-label');
   }
   return null;
+};
+
+export const focusElement = (el: HTMLElement) => {
+  el.focus();
+
+  /**
+   * When programmatically focusing an element,
+   * the focus-visible utility will not run because
+   * it is expecting a keyboard event to have triggered this;
+   * however, there are times when we need to manually control
+   * this behavior so we call the `setFocus` method on ion-app
+   * which will let us explicitly set the elements to focus.
+   */
+  if (el.classList.contains('ion-focusable')) {
+    const app = el.closest('ion-app');
+    if (app) {
+      app.setFocus([el]);
+    }
+  }
 };
 
 /**

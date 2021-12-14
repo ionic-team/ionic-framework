@@ -1,3 +1,5 @@
+import initialize from '../../global/ionic-global';
+
 import { testUserAgent, getPlatforms, isPlatform } from '../platform';
 import { PlatformConfiguration, configureBrowser } from './platform.utils';
 
@@ -122,7 +124,7 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'pwa')).toEqual(true);
       expect(isPlatform(win, 'cordova')).toEqual(false);
     });
-    
+
     it('should return true for "ios", "ipad", and "tablet" and false for "iphone" and "android"', () => {
       const win = configureBrowser(PlatformConfiguration.iPadOS);
       expect(isPlatform(win, 'ios')).toEqual(true);
@@ -130,6 +132,23 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'tablet')).toEqual(true);
       expect(isPlatform(win, 'iphone')).toEqual(false);
       expect(isPlatform(win, 'android')).toEqual(false);
+    });
+  })
+
+  describe('Custom Platform Config', () => {
+    it('should use custom platform detection methods', () => {
+      const win = configureBrowser(PlatformConfiguration.DesktopSafari);
+
+      initialize({
+        'platform': {
+          'desktop': (win) => false,
+          'cordova': (win) => true
+        }
+      });
+
+      expect(isPlatform(win, 'desktop')).toEqual(false);
+      expect(isPlatform(win, 'cordova')).toEqual(true);
+      expect(getPlatforms(win).includes('cordova')).toEqual(true);
     });
   })
 });

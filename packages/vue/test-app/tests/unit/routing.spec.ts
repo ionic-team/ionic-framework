@@ -8,7 +8,8 @@ import {
   IonTabs,
   IonTabBar,
   IonTabButton,
-  IonLabel
+  IonLabel,
+  useIonRouter
 } from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router';
 import { waitForRouter } from './utils';
@@ -191,10 +192,11 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22492
   it('should show correct view when replacing', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel },
+      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel, IonRouterOutlet },
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="top">
               <ion-tab-button tab="tab1" href="/tabs/tab1">
                 <ion-label>Tab 1</ion-label>
@@ -304,8 +306,10 @@ describe('Routing', () => {
     router.push('/xyz');
     await waitForRouter();
 
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'xyz' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(1);
+    expect(cmpAgain[0].props()).toEqual({ title: 'xyz' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
@@ -355,8 +359,10 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(propsFn.mock.calls.length).toBe(2);
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'abc Title' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(1);
+    expect(cmpAgain[0].props()).toEqual({ title: 'abc Title' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
@@ -391,7 +397,9 @@ describe('Routing', () => {
     router.push('/page/2');
     await waitForRouter();
 
-    expect(page.props()).toEqual({ id: '2' });
+    const pageAgain = wrapper.findAllComponents(Page);
+    expect(pageAgain[0].props()).toEqual({ id: '1' });
+    expect(pageAgain[1].props()).toEqual({ id: '2' });
   });
 
   it('should fire guard written in a component', async () => {
@@ -540,5 +548,118 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Page).exists()).toBe(true);
     expect(wrapper.findComponent(Page2).exists()).toBe(false);
     expect(wrapper.findComponent(Page3).exists()).toBe(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it('canGoBack() should return the correct value', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page }
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.back();
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it('canGoBack() should return the correct value when using router.go', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page }
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.go(-2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.go(2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
   });
 });

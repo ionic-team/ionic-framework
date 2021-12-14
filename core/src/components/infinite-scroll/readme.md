@@ -12,6 +12,18 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## Interfaces
+
+### InfiniteScrollCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface InfiniteScrollCustomEvent extends CustomEvent {
+  target: HTMLIonInfiniteScrollElement;
+}
+```
+
 <!-- Auto Generated Below -->
 
 
@@ -108,6 +120,104 @@ infiniteScroll.addEventListener('ionInfinite', function(event) {
 function toggleInfiniteScroll() {
   infiniteScroll.disabled = !infiniteScroll.disabled;
 }
+```
+
+
+### React
+
+```tsx
+import { 
+  IonButton,
+  IonContent, 
+  IonHeader,
+  IonInfiniteScroll, 
+  IonInfiniteScrollContent, 
+  IonItem,
+  IonLabel,
+  IonList,  
+  IonPage, 
+  IonTitle, 
+  IonToolbar,
+  useIonViewWillEnter
+} from '@ionic/react';
+import { useState } from 'react';
+
+const InfiniteScrollExample: React.FC = () => {
+  const [data, setData] = useState<string[]>([]);
+  const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
+  
+  const pushData = () => {
+    const max = data.length + 20;
+    const min = max - 20;
+    const newData = [];
+    for (let i = min; i < max; i++) {
+      newData.push('Item' + i);
+    }
+    
+    setData([
+      ...data,
+      ...newData
+    ]);
+  }
+  const loadData = (ev: any) => {
+    setTimeout(() => {
+      pushData();
+      console.log('Loaded data');
+      ev.target.complete();
+      if (data.length == 1000) {
+        setInfiniteDisabled(true);
+      }
+    }, 500);
+  }  
+  
+  useIonViewWillEnter(() => {
+    pushData();
+  });
+  
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Blank</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Blank</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        
+        <IonButton onClick={() => setInfiniteDisabled(!isInfiniteDisabled)} expand="block">
+          Toggle Infinite Scroll
+        </IonButton>
+        
+        <IonList>
+          {data.map((item, index) => {
+            return (
+              <IonItem key={index}>
+                <IonLabel>{item}</IonLabel>
+              </IonItem>
+            )
+          })}
+        </IonList>
+        
+        <IonInfiniteScroll
+          onIonInfinite={loadData}
+          threshold="100px"
+          disabled={isInfiniteDisabled}
+        >
+          <IonInfiniteScrollContent
+            loadingSpinner="bubbles"
+            loadingText="Loading more data..."
+          ></IonInfiniteScrollContent>
+        </IonInfiniteScroll>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+export default InfiniteScrollExample;
 ```
 
 

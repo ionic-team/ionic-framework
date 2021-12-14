@@ -1,25 +1,39 @@
-import { Animation } from '../../../interface';
+import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
+
+import { createSheetLeaveAnimation } from './sheet';
+
+const createLeaveAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
+
+  const wrapperAnimation = createAnimation()
+    .fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
+
+  return { backdropAnimation, wrapperAnimation };
+}
 
 /**
  * iOS Modal Leave Animation
  */
 export const iosLeaveAnimation = (
   baseEl: HTMLElement,
-  presentingEl?: HTMLElement,
+  opts: ModalAnimationOptions,
   duration = 500
 ): Animation => {
-  const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
+  const { presentingEl, currentBreakpoint } = opts;
+  const root = getElementRoot(baseEl);
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetLeaveAnimation(opts) : createLeaveAnimation();
 
-  const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
-    .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
+  backdropAnimation.addElement(root.querySelector('ion-backdrop')!)
 
-  const baseAnimation = createAnimation()
+  wrapperAnimation
+    .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
+    .beforeStyles({ 'opacity': 1 });
+
+  const baseAnimation = createAnimation('leaving-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration)
@@ -28,6 +42,7 @@ export const iosLeaveAnimation = (
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+    const presentingElRoot = getElementRoot(presentingEl);
 
     const presentingAnimation = createAnimation()
       .beforeClearStyles(['transform'])
@@ -70,7 +85,7 @@ export const iosLeaveAnimation = (
         const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
 
         presentingAnimation
-          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .afterStyles({
             'transform': 'translate3d(0, 0, 0)'
           })
@@ -80,7 +95,7 @@ export const iosLeaveAnimation = (
           ]);
 
         const shadowAnimation = createAnimation()
-          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .afterStyles({
             'transform': 'translateY(0) scale(1)'
           })

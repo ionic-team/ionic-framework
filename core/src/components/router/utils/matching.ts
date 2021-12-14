@@ -32,16 +32,60 @@ export const findRouteRedirect = (path: string[], redirects: RouteRedirect[]) =>
   return redirects.find(redirect => matchesRedirect(path, redirect));
 };
 
-export const matchesIDs = (ids: string[], chain: RouteChain): number => {
+export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteChain): number => {
   const len = Math.min(ids.length, chain.length);
-  let i = 0;
-  for (; i < len; i++) {
-    if (ids[i].toLowerCase() !== chain[i].id) {
+
+  let score = 0;
+
+  for (let i = 0; i < len; i++) {
+    const routeId = ids[i];
+    const routeChain = chain[i];
+    // Skip results where the route id does not match the chain at the same index
+    if (routeId.id.toLowerCase() !== routeChain.id) {
       break;
     }
+    if (routeId.params) {
+      const routeIdParams = Object.keys(routeId.params);
+      /**
+       * Only compare routes with the chain that have the same number of parameters.
+       */
+      if (routeIdParams.length === routeChain.path.length) {
+        /**
+         * Maps the route's params into a path based on the path variable names,
+         * to compare against the route chain format.
+         *
+         * Before:
+         * ```ts
+         * {
+         *  params: {
+         *    s1: 'a',
+         *    s2: 'b'
+         *  }
+         * }
+         * ```
+         *
+         * After:
+         * ```ts
+         * [':s1',':s2']
+         * ```
+         */
+        const pathWithParams = routeIdParams.map(key => `:${key}`);
+        for (let j = 0; j < pathWithParams.length; j++) {
+          // Skip results where the path variable is not a match
+          if (pathWithParams[j].toLowerCase() !== routeChain.path[j]) {
+            break;
+          }
+          // Weight path matches for the same index higher.
+          score++;
+        }
+
+      }
+    }
+    // Weight id matches
+    score++;
   }
-  return i;
-};
+  return score;
+}
 
 export const matchesPath = (inputPath: string[], chain: RouteChain): RouteChain | null => {
   const segments = new RouterSegments(inputPath);
@@ -90,16 +134,16 @@ export const matchesPath = (inputPath: string[], chain: RouteChain): RouteChain 
 
 // Merges the route parameter objects.
 // Returns undefined when both parameters are undefined.
-export const mergeParams = (a: {[key: string]: any} | undefined, b: {[key: string]: any} | undefined): {[key: string]: any} | undefined => {
+export const mergeParams = (a: { [key: string]: any } | undefined, b: { [key: string]: any } | undefined): { [key: string]: any } | undefined => {
   return a || b ? { ...a, ...b } : undefined;
 };
 
 export const routerIDsToChain = (ids: RouteID[], chains: RouteChain[]): RouteChain | null => {
   let match: RouteChain | null = null;
   let maxMatches = 0;
-  const plainIDs = ids.map(i => i.id);
+
   for (const chain of chains) {
-    const score = matchesIDs(plainIDs, chain);
+    const score = matchesIDs(ids, chain);
     if (score > maxMatches) {
       match = chain;
       maxMatches = score;

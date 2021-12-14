@@ -5,7 +5,7 @@ import { clamp } from '../../utils/helpers';
 const TRANSITION = 'all 0.2s ease-in-out';
 
 interface HeaderIndex {
-  el: HTMLElement;
+  el: HTMLIonHeaderElement;
   toolbars: ToolbarIndex[] | [];
 }
 
@@ -64,11 +64,19 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
   });
 };
 
-export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: number) => {
+export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opacity?: number) => {
+  /**
+   * Fading in the backdrop opacity
+   * should happen after the large title
+   * has collapsed, so it is handled
+   * by handleHeaderFade()
+   */
+  if (headerEl.collapse === 'fade') { return; }
+
   if (opacity === undefined) {
-    toolbar.background.style.removeProperty('--opacity');
+    headerEl.style.removeProperty('--opacity-scale');
   } else {
-    toolbar.background.style.setProperty('--opacity', opacity.toString());
+    headerEl.style.setProperty('--opacity-scale', opacity.toString());
   }
 };
 
@@ -88,9 +96,7 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, 
    */
   const scale = (ev[0].intersectionRatio > 0.9 || scrollTop <= 0) ? 0 : ((1 - ev[0].intersectionRatio) * 100) / 75;
 
-  mainHeaderIndex.toolbars.forEach(toolbar => {
-    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
-  });
+  setToolbarBackgroundOpacity(mainHeaderIndex.el, (scale === 1) ? undefined : scale);
 };
 
 /**
@@ -136,7 +142,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection && scrollTop > 0) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
-        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
+        setToolbarBackgroundOpacity(mainHeaderIndex.el);
       }
     }
   });
@@ -160,3 +166,37 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
 };
+
+export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, condenseHeader: HTMLElement | null) => {
+  readTask(() => {
+    const scrollTop = scrollEl.scrollTop;
+    const baseElHeight = baseEl.clientHeight;
+    const fadeStart = (condenseHeader) ? condenseHeader.clientHeight : 0;
+
+    /**
+     * If we are using fade header with a condense
+     * header, then the toolbar backgrounds should
+     * not begin to fade in until the condense
+     * header has fully collapsed.
+     *
+     * Additionally, the main content should not
+     * overflow out of the container until the
+     * condense header has fully collapsed. When
+     * using just the condense header the content
+     * should overflow out of the container.
+     */
+    if ((condenseHeader !== null) && (scrollTop < fadeStart)) {
+      baseEl.style.setProperty('--opacity-scale', '0');
+      scrollEl.style.setProperty('clip-path', `inset(${baseElHeight}px 0px 0px 0px)`);
+      return;
+    }
+
+    const distanceToStart = scrollTop - fadeStart;
+    const fadeDuration = 10;
+    const scale = clamp(0, (distanceToStart / fadeDuration), 1);
+    writeTask(() => {
+      scrollEl.style.removeProperty('clip-path');
+      baseEl.style.setProperty('--opacity-scale', scale.toString());
+    })
+  });
+}

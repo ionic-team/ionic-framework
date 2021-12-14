@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "ionicNgAdd",
+  "$id": "ionicNgAdd",
   "title": "Ionic Add options",
   "type": "object",
   "properties": {

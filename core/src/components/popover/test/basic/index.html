@@ -34,6 +34,8 @@
       <ion-button id="long-list-popover" expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
       <ion-button id="no-event-popover" expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
       <ion-button id="custom-class-popover" expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
+      <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">Popover With Header</ion-button>
+      <ion-button id="translucent-header-popover" expand="block" onclick="presentPopover({ component: 'translucent-header-page' })">Popover With Translucent Header</ion-button>
     </ion-content>
 
     <ion-footer>
@@ -126,6 +128,56 @@
     }
 
     customElements.define('translucent-page', TranslucentPage);
+
+    class HeaderPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content class="ion-padding" color="primary">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.In rutrum tortor lacus, ac interdum ipsum bibendum vel.Aenean non nibh gravida, ullamcorper mi at, tempor nulla.Proin malesuada tellus ut ullamcorper accumsan.Donec semper justo vulputate neque tempus ultricies.Proin non aliquet ipsum.Praesent mauris sem, facilisis eu justo nec, euismod imperdiet tellus.Duis eget justo congue, lacinia orci sed, fermentum urna.Quisque sed massa faucibus, interdum dolor rhoncus, molestie erat.Proin suscipit ante non mauris volutpat egestas.Donec a ultrices ligula.Mauris in felis vel dui consectetur viverra.Nam vitae quam in arcu aliquam aliquam.Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.Cras non velit nisl.Donec viverra, magna quis vestibulum volutpat, metus ante tincidunt augue, non porta nisi mi sit amet neque.Proin dapibus eros vitae nibh tincidunt, blandit rhoncus est porttitor.
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('header-page', HeaderPage);
+
+    class TranslucentHeaderPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header translucent>
+            <ion-toolbar>
+              <ion-title>Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content class="ion-padding" fullscreen color="primary">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.In rutrum tortor lacus, ac interdum ipsum bibendum vel.Aenean non nibh gravida, ullamcorper mi at, tempor nulla.Proin malesuada tellus ut ullamcorper accumsan.Donec semper justo vulputate neque tempus ultricies.Proin non aliquet ipsum.Praesent mauris sem, facilisis eu justo nec, euismod imperdiet tellus.Duis eget justo congue, lacinia orci sed, fermentum urna.Quisque sed massa faucibus, interdum dolor rhoncus, molestie erat.Proin suscipit ante non mauris volutpat egestas.Donec a ultrices ligula.Mauris in felis vel dui consectetur viverra.Nam vitae quam in arcu aliquam aliquam.Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.Cras non velit nisl.Donec viverra, magna quis vestibulum volutpat, metus ante tincidunt augue, non porta nisi mi sit amet neque.Proin dapibus eros vitae nibh tincidunt, blandit rhoncus est porttitor.
+          </ion-content>
+
+          <ion-footer translucent>
+            <ion-toolbar>
+              <ion-title>Footer</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+        `;
+      }
+    }
+
+    customElements.define('translucent-header-page', TranslucentHeaderPage);
   </script>
 </body>
 

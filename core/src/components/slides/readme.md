@@ -44,9 +44,11 @@ We plan to remove `ion-slides` and `ion-slide` in Ionic Framework v7. `ion-slide
 
 Since the underlying technology that powers your slides is the same, the migration process is easy! Follow the guides below for your specific framework.
 
-Migration for Ionic Angular users: https://ionicframework.com/docs/angular/slides
-Migration for Ionic React users: https://ionicframework.com/docs/react/slides
-Migration for Ionic Vue users: https://ionicframework.com/docs/vue/slides
+[Migration for Ionic Angular users](../angular/slides)
+
+[Migration for Ionic React users](../react/slides)
+
+[Migration for Ionic Vue users](../vue/slides)
 
 ------
 

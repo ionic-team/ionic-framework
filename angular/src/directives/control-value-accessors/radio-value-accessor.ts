@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Injector } from '@angular/core';
+import { ElementRef, Injector, Directive, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValueAccessor } from './value-accessor';
@@ -9,19 +9,18 @@ import { ValueAccessor } from './value-accessor';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: RadioValueAccessor,
-      multi: true
-    }
-  ]
+      useExisting: RadioValueAccessorDirective,
+      multi: true,
+    },
+  ],
 })
-export class RadioValueAccessor extends ValueAccessor {
-
+export class RadioValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {
     super(injector, el);
   }
 
   @HostListener('ionSelect', ['$event.target'])
-  _handleIonSelect(el: any) {
+  _handleIonSelect(el: any): void {
     this.handleChangeEvent(el, el.checked);
   }
 }
