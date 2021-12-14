@@ -154,6 +154,13 @@ export class Range implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
+  /**
+   * bar-active is shown between `barActiveStart` and knob for single knob range-bar.
+   * Valid values are between `min` and `max`.
+   * By default `barActiveStart` is set to `min` (Minimum integer value of the range).
+   */
+  @Prop() barActiveStart: number = this.min;
+
   private clampBounds = (value: any): number => {
     return clamp(this.min, value, this.max);
   }
@@ -356,7 +363,7 @@ export class Range implements ComponentInterface {
     if (this.dualKnobs) {
       return Math.min(this.ratioA, this.ratioB);
     }
-    return 0;
+    return valueToRatio(this.barActiveStart, this.min, this.max);
   }
 
   private get ratioUpper() {
@@ -429,8 +436,18 @@ export class Range implements ComponentInterface {
       labelText = inheritedAttributes['aria-label'];
     }
     const mode = getIonMode(this);
-    const barStart = `${ratioLower * 100}%`;
-    const barEnd = `${100 - ratioUpper * 100}%`;
+    let barStart = `${ratioLower * 100}%`;
+    let barEnd = `${100 - ratioUpper * 100}%`;
+
+    if (!this.dualKnobs) {
+      if (this.valA < this.barActiveStart) {
+        barStart = `${ratioUpper * 100}%`;
+        barEnd = `${100 - ratioLower * 100}%`;
+      } else {
+        barStart = `${ratioLower * 100}%`;
+        barEnd = `${100 - ratioUpper * 100}%`;
+      }
+    }
 
     const doc = document;
     const isRTL = doc.dir === 'rtl';
@@ -455,7 +472,7 @@ export class Range implements ComponentInterface {
 
         const tick: any = {
           ratio,
-          active: ratio >= ratioLower && ratio <= ratioUpper,
+          active: ratio >= Math.min(ratioLower, ratioUpper) && ratio <= Math.max(ratioLower, ratioUpper),
         };
 
         tick[start] = `${ratio * 100}%`;
