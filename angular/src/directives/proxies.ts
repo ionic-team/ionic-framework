@@ -1569,6 +1569,10 @@ export declare interface IonSelect extends Components.IonSelect {
    */
   ionCancel: EventEmitter<CustomEvent<void>>;
   /**
+   * Emitted when the overlay is dismissed. 
+   */
+  ionDismiss: EventEmitter<CustomEvent<void>>;
+  /**
    * Emitted when the select has focus. 
    */
   ionFocus: EventEmitter<CustomEvent<void>>;
@@ -1595,7 +1599,7 @@ export class IonSelect {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ["ionChange", "ionCancel", "ionDismiss", "ionFocus", "ionBlur"]);
   }
 }
 
