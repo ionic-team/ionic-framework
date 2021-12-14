@@ -19,14 +19,32 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
 
   writeValue(value: any): void {
     /**
-     * TODO for Ionic 6:
-     * Change `value == null ? '' : value;`
-     * to `value`. This was a fix for IE9, but IE9
-     * is no longer supported; however, this change
-     * is potentially a breaking change
+     * Stencil hydrated web components can execute the connectedCallback()
+     * after the write value operation has occurred (on first init).
+     *
+     * This logic defers the writeValue behavior until the hydrated web
+     * component is fully initialized.
+     *
+     * This can be removed when Ionic's CE build is introduced into Angular.
      */
-    this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
-    setIonicClasses(this.el);
+    const chain = [];
+    if (typeof window.customElements !== 'undefined') {
+      chain.push(window.customElements.whenDefined(this.el.nativeElement.tagName.toLowerCase()));
+    }
+    if (typeof this.el.nativeElement.componentOnReady !== 'undefined') {
+      chain.push(this.el.nativeElement.componentOnReady());
+    }
+    Promise.all(chain).then(() => {
+      /**
+       * TODO for Ionic 6:
+       * Change `value == null ? '' : value;`
+       * to `value`. This was a fix for IE9, but IE9
+       * is no longer supported; however, this change
+       * is potentially a breaking change
+       */
+      this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
+      setIonicClasses(this.el);
+    });
   }
 
   handleChangeEvent(el: HTMLElement, value: any): void {
