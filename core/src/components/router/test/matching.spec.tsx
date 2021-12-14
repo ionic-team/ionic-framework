@@ -30,15 +30,24 @@ const CHAIN_3: RouteChain = [
 describe('matchesIDs', () => {
   it('should match simple set of ids', () => {
     const chain: RouteChain = CHAIN_1;
-    expect(matchesIDs(['2'], chain)).toBe(1);
-    expect(matchesIDs(['2', '1'], chain)).toBe(2);
-    expect(matchesIDs(['2', '1', '3'], chain)).toBe(3);
-    expect(matchesIDs(['2', '1', '3', '4'], chain)).toBe(4);
-    expect(matchesIDs(['2', '1', '3', '4', '5'], chain)).toBe(4);
+    expect(matchesIDs([{ id: '2' }], chain)).toBe(1);
+    expect(matchesIDs([{ id: '2' }, { id: '1' }], chain)).toBe(2);
+    expect(matchesIDs([{ id: '2' }, { id: '1' }, { id: '3' }], chain)).toBe(3);
+    expect(matchesIDs([{ id: '2' }, { id: '1' }, { id: '3' }, { id: '4' }], chain)).toBe(4);
+    expect(matchesIDs([{ id: '2' }, { id: '1' }, { id: '3' }, { id: '4' }, { id: '5' }], chain)).toBe(4);
 
     expect(matchesIDs([], chain)).toBe(0);
-    expect(matchesIDs(['1'], chain)).toBe(0);
+    expect(matchesIDs([{ id: '1' }], chain)).toBe(0);
   });
+
+  it('should match path with params', () => {
+    const ids = [{ id: 'my-page', params: { s1: 'a', s2: 'b' } }];
+
+    expect(matchesIDs(ids, [{ id: 'my-page', path: [''], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1', ':s2'], params: {} }])).toBe(3);
+    expect(matchesIDs(ids, [{ id: 'my-page', path: [':s1', ':s2', ':s3'], params: {} }])).toBe(1);
+  })
 });
 
 describe('matchesPath', () => {
@@ -227,7 +236,7 @@ describe('mergeParams', () => {
 });
 
 describe('RouterSegments', () => {
-  it ('should initialize with empty array', () => {
+  it('should initialize with empty array', () => {
     const s = new RouterSegments([]);
     expect(s.next()).toEqual('');
     expect(s.next()).toEqual('');
@@ -236,7 +245,7 @@ describe('RouterSegments', () => {
     expect(s.next()).toEqual('');
   });
 
-  it ('should initialize with array', () => {
+  it('should initialize with array', () => {
     const s = new RouterSegments(['', 'path', 'to', 'destination']);
     expect(s.next()).toEqual('');
     expect(s.next()).toEqual('path');

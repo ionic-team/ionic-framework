@@ -1,8 +1,9 @@
 {
   "name": "@ionic/vue",
-  "version": "5.9.1",
+  "version": "6.0.0",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
+    "prepublishOnly": "npm run build",
     "lint": "echo add linter",
     "lint.fix": "npm run lint -- --fix",
     "test": "jest",
@@ -59,12 +60,15 @@
     "vue-router": "^4.0.0-rc.4"
   },
   "dependencies": {
-    "@ionic/core": "5.9.1",
-    "ionicons": "^5.1.2"
+    "@ionic/core": "6.0.0",
+    "ionicons": "^6.0.0"
   },
   "vetur": {
     "tags": "dist/vetur/tags.json",
     "attributes": "dist/vetur/attributes.json"
   },
-  "web-types": "dist/web-types.json"
+  "web-types": "dist/web-types.json",
+  "sideEffects": [
+    "css/*.css"
+  ]
 }

@@ -1,12 +1,9 @@
-import { ModalOptions, modalController } from '@ionic/core';
+import { JSX } from '@ionic/core/components';
+import { IonModal as IonModalCmp } from '@ionic/core/components/ion-modal.js';
 
-import { createOverlayComponent } from './createOverlayComponent';
+import { createInlineOverlayComponent } from './createInlineOverlayComponent'
 
-export type ReactModalOptions = Omit<ModalOptions, 'component' | 'componentProps'> & {
-  children: React.ReactNode;
-};
-
-export const IonModal = /*@__PURE__*/ createOverlayComponent<
-  ReactModalOptions,
+export const IonModal = /*@__PURE__*/ createInlineOverlayComponent<
+  JSX.IonModal,
   HTMLIonModalElement
->('IonModal', modalController);
+>('ion-modal', IonModalCmp);

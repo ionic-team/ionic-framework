@@ -1,104 +1,123 @@
 ```html
-<ion-item>
-  <ion-label>MMMM</ion-label>
-  <ion-datetime displayFormat="MMMM" value="2012-12-15T13:47:20.789"></ion-datetime>
+<!-- Initial value -->
+<ion-datetime value="2012-12-15T13:47:20.789"></ion-datetime>
+
+<!-- Readonly -->
+<ion-datetime readonly></ion-datetime>
+
+<!-- Disabled -->
+<ion-datetime disabled></ion-datetime>
+
+<!-- Custom locale -->
+<ion-datetime locale="en-GB"></ion-datetime>
+
+<!-- Max and min -->
+<ion-datetime min="1994-03-14" max="2012-12-09" value="2008-09-02"></ion-datetime>
+
+<!-- 15 minute increments -->
+<ion-datetime minuteValues="0,15,30,45"></ion-datetime>
+
+<!-- Specific days/months/years --> 
+<ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10,11,12,13,14"></ion-datetime>
+
+<!-- Selecting time, no date -->
+<ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time first, date second -->
+<ion-datetime presentation="time-date"></ion-datetime>
+
+<!-- Full width size -->
+<ion-datetime size="cover"></ion-datetime>
+
+<!-- Custom Hour Cycle -->
+<ion-datetime hourCycle="h23"></ion-datetime>
+
+<!-- Custom first day of week -->
+<ion-datetime [firstDayOfWeek]="1"></ion-datetime>
+
+<!-- Custom title -->
+<ion-datetime>
+  <div slot="title">My Custom Title</div>
+</ion-datetime>
+
+<!-- Clear button -->
+<ion-datetime [showClearButton]="true"></ion-datetime>
+
+<!-- Datetime in overlay -->
+<ion-button id="open-modal">Open Datetime Modal</ion-button>
+<ion-modal trigger="open-modal">
+  <ng-template>
+    <ion-content>
+      <ion-datetime></ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Custom buttons -->
+<ion-datetime>
+  <ion-buttons slot="buttons">
+    <ion-button (click)="confirm()">Good to go!</ion-button>
+    <ion-button (click)="reset()">Reset</ion-button>
+  </ion-buttons>
+</ion-datetime>
+
+<!-- Datetime in popover with cover element -->
+<ion-item button="true" id="open-date-input">
+  <ion-label>Date</ion-label>
+  <ion-text slot="end">{{ dateValue }}</ion-text>
+  <ion-popover trigger="open-date-input" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime
+        presentation="date"
+        (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
 </ion-item>
 
+<!-- Datetime in popover with input -->
 <ion-item>
-  <ion-label>MM DD YY</ion-label>
-  <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>Disabled</ion-label>
-  <ion-datetime id="dynamicDisabled" displayFormat="MM DD YY" disabled value="1994-12-15"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>YYYY</ion-label>
-  <ion-datetime [pickerOptions]="customPickerOptions" placeholder="Custom Options" displayFormat="YYYY" min="1981" max="2002"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label position="stacked">MMMM YY</ion-label>
-  <ion-datetime displayFormat="MMMM YY" min="1989-06-04" max="2004-08-23" value="1994-12-15T13:47:20.789"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label position="floating">MM/DD/YYYY</ion-label>
-  <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" value="2002-09-23T15:03:46.789"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label position="floating">MM/DD/YYYY</ion-label>
-  <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>DDD. MMM DD, YY (custom locale)</ion-label>
-  <ion-datetime value="1995-04-15" min="1990-02" max="2000"
-    [dayShortNames]="customDayShortNames"
-    displayFormat="DDD. MMM DD, YY"
-    monthShortNames="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>D MMM YYYY H:mm</ion-label>
-  <ion-datetime displayFormat="D MMM YYYY H:mm" min="1997" max="2010" value="2005-06-17T11:06Z"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>DDDD MMM D, YYYY</ion-label>
-  <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2005" max="2016" value="2008-09-02"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>HH:mm</ion-label>
-  <ion-datetime displayFormat="HH:mm"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>h:mm a</ion-label>
-  <ion-datetime displayFormat="h:mm a"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>hh:mm A (15 min steps)</ion-label>
-  <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>Leap years, summer months</ion-label>
-  <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" monthValues="6,7,8" [yearValues]="customYearValues"></ion-datetime>
-</ion-item>
-
-<ion-item>
-  <ion-label>Specific days/months/years</ion-label>
-  <ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10, 11, 12, 13, 14" displayFormat="DD/MMM/YYYY"></ion-datetime>
+  <ion-input [value]="dateValue2"></ion-input>
+  <ion-button fill="clear" id="open-date-input-2">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover trigger="open-date-input-2" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        #popoverDatetime2
+        presentation="date"
+        (ionChange)="dateValue2 = formatDate(popoverDatetime2.value)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
 </ion-item>
 ```
 
 ```typescript
+import { Component, ViewChild } from '@angular/core';
+import { IonDatetime } from '@ionic/angular';
+import { format, parseISO } from 'date-fns';
+
 @Component({…})
 export class MyComponent {
-  customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
-  customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
-  customPickerOptions: any;
+  @ViewChild(IonDatetime, { static: true }) datetime: IonDatetime;
 
-  constructor() {
-    this.customPickerOptions = {
-      buttons: [{
-        text: 'Save',
-        handler: () => console.log('Clicked Save!')
-      }, {
-        text: 'Log',
-        handler: () => {
-          console.log('Clicked Log. Do not Dismiss.');
-          return false;
-        }
-      }]
-    }
+  dateValue = '';
+  dateValue2 = '';
+
+  constructor() {}
+  
+  confirm() {
+    this.datetime.nativeEl.confirm();
+  }
+  
+  reset() {
+    this.datetime.nativeEl.reset();
   }
 
+  formatDate(value: string) {
+    return format(parseISO(value), 'MMM dd yyyy');
+  }
 }
 ```

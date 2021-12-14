@@ -1,0 +1,10 @@
+@import "./picker-internal.scss";
+@import "../../themes/ionic.globals.md";
+
+:host .picker-before {
+  background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 20%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
+}
+
+:host .picker-after {
+  background: linear-gradient(to top, var(--background, var(--ion-background-color, #fff)) 30%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0) 90%);
+}

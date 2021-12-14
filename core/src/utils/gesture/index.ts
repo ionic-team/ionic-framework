@@ -308,6 +308,7 @@ export interface Gesture {
 }
 
 export interface GestureConfig {
+  [index: string]: any;
   el: Node;
   disableScroll?: boolean;
 

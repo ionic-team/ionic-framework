@@ -1,28 +1,43 @@
-import { Animation } from '../../../interface';
+import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
+
+import { createSheetEnterAnimation } from './sheet';
+
+const createEnterAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+
+  const wrapperAnimation = createAnimation()
+    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
+
+  return { backdropAnimation, wrapperAnimation };
+}
 
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
 export const iosEnterAnimation = (
-    baseEl: HTMLElement,
-    presentingEl?: HTMLElement,
-  ): Animation => {
-  const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+  baseEl: HTMLElement,
+  opts: ModalAnimationOptions,
+): Animation => {
+  const { presentingEl, currentBreakpoint } = opts;
+  const root = getElementRoot(baseEl);
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
+
+  backdropAnimation
+    .addElement(root.querySelector('ion-backdrop')!)
     .beforeStyles({
       'pointer-events': 'none'
     })
     .afterClearStyles(['pointer-events']);
 
-  const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
-    .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
+  wrapperAnimation
+    .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
+    .beforeStyles({ 'opacity': 1 });
 
-  const baseAnimation = createAnimation()
+  const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
@@ -31,6 +46,7 @@ export const iosEnterAnimation = (
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+    const presentingElRoot = getElementRoot(presentingEl);
 
     const presentingAnimation = createAnimation()
       .beforeStyles({
@@ -45,7 +61,7 @@ export const iosEnterAnimation = (
       /**
        * Fallback for browsers that does not support `max()` (ex: Firefox)
        * No need to worry about statusbar padding since engines like Gecko
-       * are not used as the engine for standlone Cordova/Capacitor apps
+       * are not used as the engine for standalone Cordova/Capacitor apps
        */
       const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
       const modalTransform = hasCardModal ? '-10px' : transformOffset;
@@ -77,7 +93,7 @@ export const iosEnterAnimation = (
           .afterStyles({
             'transform': finalTransform
           })
-          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .keyframes([
             { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
             { offset: 1, filter: 'contrast(0.85)', transform: finalTransform }
@@ -87,7 +103,7 @@ export const iosEnterAnimation = (
           .afterStyles({
             'transform': finalTransform
           })
-          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .keyframes([
             { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)' },
             { offset: 1, opacity: '0', transform: finalTransform }

@@ -24,3 +24,10 @@
 .footer-ios.ion-no-border ion-toolbar:first-of-type {
   --border-width: 0;
 }
+
+// iOS Footer - Collapse Fade
+// --------------------------------------------------
+
+.footer-collapse-fade ion-toolbar {
+  --opacity-scale: inherit;
+}

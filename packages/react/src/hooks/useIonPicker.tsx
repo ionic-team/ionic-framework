@@ -1,4 +1,9 @@
-import { PickerButton, PickerColumn, PickerOptions, pickerController } from '@ionic/core';
+import {
+  PickerButton,
+  PickerColumn,
+  PickerOptions,
+  pickerController,
+} from '@ionic/core/components';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
@@ -19,12 +24,12 @@ export function useIonPicker(): UseIonPickerResult {
     buttons?: PickerButton[]
   ) => {
     if (Array.isArray(columnsOrOptions)) {
-      controller.present({
+      return controller.present({
         columns: columnsOrOptions,
         buttons: buttons ?? [{ text: 'Ok' }],
       });
     } else {
-      controller.present(columnsOrOptions);
+      return controller.present(columnsOrOptions);
     }
   }, [controller.present]);
 
@@ -38,15 +43,15 @@ export type UseIonPickerResult = [
      * @param columns Array of columns to be displayed in the picker.
      * @param buttons Optional - Array of buttons to be displayed at the top of the picker.
      */
-    (columns: PickerColumn[], buttons?: PickerButton[]): void;
+    (columns: PickerColumn[], buttons?: PickerButton[]): Promise<void>;
     /**
      * Presents the picker
      * @param options The options to pass to the IonPicker
      */
-    (options: PickerOptions & HookOverlayOptions): void;
+    (options: PickerOptions & HookOverlayOptions): Promise<void>;
   },
   /**
    * Dismisses the picker
    */
-  () => void
+  () => Promise<void>
 ];

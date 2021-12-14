@@ -1,7 +1,13 @@
 import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
+import { arrowBackSharp, caretBackSharp, chevronBack, chevronDown, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 export * from './proxies';
+
+export { UseBackButtonResult, useBackButton } from './hooks/back-button';
+export { UseKeyboardResult, useKeyboard } from './hooks/keyboard';
+export { onIonViewWillEnter, onIonViewDidEnter, onIonViewWillLeave, onIonViewDidLeave } from './hooks/lifecycle';
+export { UseIonRouterResult, useIonRouter } from './hooks/router';
+
 export { IonicVue } from './ionic-vue';
 
 export { IonBackButton } from './components/IonBackButton';
@@ -17,46 +23,31 @@ export { IonApp } from './components/IonApp';
 export * from './components/Overlays';
 
 export {
-  IonKeyboardRef,
-  IonRouter,
-  useBackButton,
-  useIonRouter,
-  useKeyboard,
-  onIonViewWillEnter,
-  onIonViewDidEnter,
-  onIonViewWillLeave,
-  onIonViewDidLeave
-} from './hooks';
-
-export {
   modalController,
-  popoverController
+  popoverController,
+  alertController,
+  actionSheetController,
+  loadingController,
+  pickerController,
+  toastController
 } from './controllers';
 
 export * from './globalExtensions';
 
 export {
-  // Overlay Controllers
-  alertController,
-  actionSheetController,
-  menuController,
-  loadingController,
-  pickerController,
-  toastController,
-
-  // Security
-  IonicSafeString,
-
-  // Platform
-  isPlatform, Platforms, getPlatforms,
-
-  // Gesture
-  Gesture,
-  GestureConfig,
-  GestureDetail,
+  // UTILS
+  createAnimation,
   createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  IonicSwiper,
+  IonicSlides,
+  getPlatforms,
+  isPlatform,
+  menuController,
+  getTimeGivenProgression,
 
-  // Animations
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -64,19 +55,18 @@ export {
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
-  iosTransitionAnimation,
-  mdTransitionAnimation,
-  getTimeGivenProgression,
-
-  // Hardware Back Button
-  BackButtonEvent,
-
-  // Swiper
-  IonicSwiper,
-  IonicSlides,
+  Gesture,
+  GestureConfig,
+  GestureDetail,
+  NavComponentWithProps,
 
   SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -87,20 +77,78 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
 
+  Platforms,
+  PlatformConfig,
+
   PopoverOptions,
 
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
   ToastOptions,
-  ToastButton
-} from '@ionic/core';
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
+} from '@ionic/core/components';
 
 // Icons that are used by internal components
 addIcons({
@@ -108,6 +156,7 @@ addIcons({
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
+  'chevron-down': chevronDown,
   'close': close,
   'close-circle': closeCircle,
   'close-sharp': closeSharp,

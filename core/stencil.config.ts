@@ -1,6 +1,8 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { angularOutputTarget } from '@stencil/angular-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
+import { reactOutputTarget } from '@stencil/react-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
@@ -52,6 +54,8 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+    { components: ['ion-accordion-group', 'ion-accordion'] },
+    { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
     sass({
@@ -59,8 +63,47 @@ export const config: Config = {
     })
   ],
   outputTargets: [
+    reactOutputTarget({
+      componentCorePackage: '@ionic/core',
+      includeImportCustomElements: true,
+      includePolyfills: false,
+      includeDefineCustomElements: false,
+      proxiesFile: '../packages/react/src/components/proxies.ts',
+      excludeComponents: [
+        // Routing
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-link',
+        'ion-router-outlet',
+        'ion-back-button',
+        'ion-tab-button',
+        'ion-tabs',
+        'ion-tab-bar',
+        'ion-button',
+        'ion-card',
+        'ion-fab-button',
+        'ion-item',
+        'ion-item-option',
+
+        // Overlays
+        'ion-action-sheet',
+        'ion-alert',
+        'ion-loading',
+        'ion-modal',
+        'ion-picker',
+        'ion-popover',
+        'ion-toast',
+
+        'ion-app',
+        'ion-icon'
+      ]
+    }),
     vueOutputTarget({
       componentCorePackage: '@ionic/core',
+      includeImportCustomElements: true,
+      includePolyfills: false,
+      includeDefineCustomElements: false,
       proxiesFile: '../packages/vue/src/proxies.ts',
       excludeComponents: [
         // Routing
@@ -91,15 +134,13 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          // TODO Ionic v6 remove in favor of v-ion-change
-          event: ['v-ionChange', 'v-ion-change'],
+          event: 'v-ion-change',
           externalEvent: 'ionChange'
         },
         {
-          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
+          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea', 'ion-accordion-group'],
           targetAttr: 'value',
-          // TODO Ionic v6 remove in favor of v-ion-change
-          event: ['v-ionChange', 'v-ion-change'],
+          event: 'v-ion-change',
           externalEvent: 'ionChange'
         }
       ],
@@ -141,11 +182,9 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    {
-      type: 'angular',
+    angularOutputTarget({
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesUtilsFile: '../angular/src/directives/proxies-utils.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.txt',
       excludeComponents: [
         // overlays
@@ -172,17 +211,50 @@ export const config: Config = {
         // auxiliar
         'ion-picker-column',
         'ion-virtual-scroll'
-      ]
-    }
+      ],
+      /**
+       * TODO: Abstract custom Ionic value accessor functionality
+       * to be configurable with Stencil generated value accessors.
+       */
+      // valueAccessorConfigs: [
+      //   {
+      //     elementSelectors: ['ion-input:not([type=number])', 'ion-textarea', 'ion-searchbar'],
+      //     event: 'ionChange',
+      //     targetAttr: 'value',
+      //     type: 'text',
+      //   },
+      //   {
+      //     elementSelectors: ['ion-input[type=number]'],
+      //     event: 'ionChange',
+      //     targetAttr: 'value',
+      //     type: 'number',
+      //   },
+      //   {
+      //     elementSelectors: ['ion-checkbox', 'ion-toggle'],
+      //     event: 'ionChange',
+      //     targetAttr: 'checked',
+      //     type: 'boolean',
+      //   },
+      //   {
+      //     elementSelectors: ['ion-range', 'ion-select', 'ion-radio-group', 'ion-segment', 'ion-datetime'],
+      //     event: 'ionChange',
+      //     targetAttr: 'value',
+      //     type: 'select',
+      //   },
+      //   {
+      //     elementSelectors: ['ion-radio'],
+      //     event: 'ionSelect',
+      //     targetAttr: 'checked',
+      //     type: 'radio',
+      //   },
+      // ]
+    }),
   ],
   buildEs5: 'prod',
   extras: {
-    cssVarsShim: true,
     dynamicImportShim: true,
     initializeNextTick: true,
-    safari10: true,
-    scriptDataOpts: true,
-    shadowDomShim: true,
+    scriptDataOpts: true
   },
   testing: {
     allowableMismatchedPixels: 200,

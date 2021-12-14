@@ -1,77 +1,81 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-const getActiveElementText = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
-}
+describe('Footer', () => {
+  test('should render default buttons', async () => {
+    const page = await newE2EPage({
+      html: '<ion-datetime show-default-buttons="true"></ion-datetime>'
+    });
 
-const getActiveElementClass = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.className, activeElement);
-}
+    const cancelButton = await page.find('ion-datetime >>> #cancel-button');
+    expect(cancelButton).toEqualText('Cancel');
 
-test('datetime/picker: focus trap', async () => {
-  const page = await newE2EPage({ url: '/src/components/datetime/test/basic?ionic:_testing=true' });
-  await page.click('#datetime-part');
-  await page.waitForSelector('#datetime-part');
+    const confirmButton = await page.find('ion-datetime >>> #confirm-button');
+    expect(confirmButton).toEqualText('Done');
 
-  let datetime = await page.find('ion-datetime');
-
-  expect(datetime).not.toBe(null);
-
-  // TODO fix
-  await page.waitForTimeout(250);
-
-  await page.keyboard.press('Tab');
-
-  const activeElementText = await getActiveElementText(page);
-  expect(activeElementText).toEqual('Cancel');
-
-  await page.keyboard.down('Shift');
-  await page.keyboard.press('Tab');
-  await page.keyboard.up('Shift');
-
-  const activeElementClass = await getActiveElementClass(page);
-  expect(activeElementClass).toEqual('picker-opt');
-
-  await page.keyboard.press('Tab');
-
-  const activeElementTextThree = await getActiveElementText(page);
-  expect(activeElementTextThree).toEqual('Cancel');
-});
-
-test('datetime: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/datetime/test/basic?ionic:_testing=true'
+    expect(await page.compareScreenshot()).toMatchScreenshot();
   });
 
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  test('should render clear button', async () => {
+    const page = await newE2EPage({
+      html: '<ion-datetime show-clear-button="true"></ion-datetime>'
+    });
 
-  const datetime = await page.find('#customPickerOptions');
-  await datetime.waitForVisible();
-  await datetime.click();
+    const clearButton = await page.find('ion-datetime >>> #clear-button');
+    expect(clearButton).toEqualText('Clear');
 
-  const picker = await page.find('ion-picker');
-  await picker.waitForVisible();
-  await page.waitForTimeout(250);
-
-  compare = await page.compareScreenshot('should open custom picker');
-  expect(compare).toMatchScreenshot();
-});
-
-test('datetime: basic-rtl', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/datetime/test/basic?ionic:_testing=true&rtl=true'
+    expect(await page.compareScreenshot()).toMatchScreenshot();
   });
 
-  const datetime = await page.find('#customPickerOptions');
-  await datetime.click();
+  test('should render clear and default buttons', async () => {
+    const page = await newE2EPage({
+      html: '<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>'
+    });
 
-  const picker = await page.find('ion-picker');
-  await picker.waitForVisible();
-  await page.waitForTimeout(250);
+    const cancelButton = await page.find('ion-datetime >>> #cancel-button');
+    expect(cancelButton).toEqualText('Cancel');
 
-  const compare = await page.compareScreenshot('should open custom picker');
-  expect(compare).toMatchScreenshot();
+    const confirmButton = await page.find('ion-datetime >>> #confirm-button');
+    expect(confirmButton).toEqualText('Done');
+
+    const clearButton = await page.find('ion-datetime >>> #clear-button');
+    expect(clearButton).toEqualText('Clear');
+
+    expect(await page.compareScreenshot()).toMatchScreenshot();
+  });
+
+  test('should render custom buttons', async () => {
+    const page = await newE2EPage({
+      html: `
+        <ion-datetime show-default-buttons="true" show-clear-button="true">
+          <ion-buttons slot="buttons">
+            <ion-button id="custom-button">Hello!</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      `
+    });
+
+    const customButton = await page.find('ion-datetime #custom-button');
+    expect(customButton).not.toBeNull();
+
+    expect(await page.compareScreenshot()).toMatchScreenshot();
+  });
+
+  test('should render custom buttons', async () => {
+    const page = await newE2EPage({
+      html: `
+        <ion-datetime show-default-buttons="true" show-clear-button="true">
+          <ion-buttons slot="buttons">
+            <ion-button id="custom-button">Hello!</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      `
+    });
+
+    const customButton = await page.find('ion-datetime #custom-button');
+    expect(customButton).not.toBeNull();
+
+    expect(await page.compareScreenshot()).toMatchScreenshot();
+  });
 });
+
+

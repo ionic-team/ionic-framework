@@ -42,7 +42,7 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "pnm run sync && react-scripts start",
+    "start": "npm run sync && react-scripts start",
     "start.ci": "npm run sync && BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -72,7 +72,8 @@
   "devDependencies": {
     "@capacitor/cli": "3.2.4",
     "concurrently": "^6.3.0",
-    "wait-on": "^6.0.0"
+    "wait-on": "^6.0.0",
+    "webpack-cli": "^4.9.1"
   },
   "description": "An Ionic project"
 }
