@@ -24,7 +24,9 @@ import { IonToast } from '@ionic/core/components/ion-toast.js'
  * register the underlying Web Component and
  * (optionally) provide a framework delegate.
  */
-const createController = (tagName: string, customElement: any, oldController: any, useDelegate = false) => {
+const createController: {
+  <T>(tagName: string, customElement: any, oldController: T, useDelegate?: boolean): T
+} = (tagName: string, customElement: any, oldController: any, useDelegate = false) => {
   const delegate = useDelegate ? VueDelegate() : undefined;
   const oldCreate = oldController.create.bind(oldController);
   oldController.create = (options: any) => {
