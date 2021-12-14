@@ -47,7 +47,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
-  private waitPromise?: Promise<void>;
 
   // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
@@ -343,7 +342,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    const unlock = await this.lock();
     if (this.presented) {
       return;
     }
@@ -383,7 +381,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     this.currentTransition = undefined;
-    unlock();
   }
 
   private initSwipeToClose() {
@@ -473,7 +470,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const unlock = await this.lock();
     if (this.gestureAnimationDismissing && role !== 'gesture') {
       return false;
     }
@@ -498,7 +494,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
-      await detachComponent(delegate, this.usersElement);
+
+      /**
+       * If the modal is presented through a controller, we don't need to detach
+       * since the el was already removed during the `dismiss` call above. Skipping
+       * this step also prevents an issue where rapdily dismissing right after
+       * presenting could cause `detachComponent` to be called after the present
+       * finished, blanking out the newly opened modal.
+       *
+       * TODO(FW-423) try and find a way to resolve the race condition directly
+       */
+      if (this.inline) {
+        await detachComponent(delegate, this.usersElement);
+      }
 
       if (this.animation) {
         this.animation.destroy();
@@ -512,8 +520,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = undefined;
     this.animation = undefined;
-
-    unlock();
     return dismissed;
   }
 
@@ -555,17 +561,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       });
       el.dispatchEvent(ev);
     }
-  }
-
-  private async lock() {
-    const p = this.waitPromise;
-    let resolve!: () => void;
-    this.waitPromise = new Promise(r => resolve = r);
-
-    if (p !== undefined) {
-      await p;
-    }
-    return resolve;
   }
 
   render() {
