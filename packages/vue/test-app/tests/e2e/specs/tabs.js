@@ -307,7 +307,7 @@ describe('Tabs', () => {
     cy.url().should('include', '/tabs/tab1/child-one?key=value');
   });
 
-  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23699
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24353
   it('should handle clicking tab multiple times without query string', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
 
@@ -326,6 +326,33 @@ describe('Tabs', () => {
     cy.ionPageHidden('tab2');
 
     cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24332
+  it('should not unmount tab 1 when leaving tabs context', () => {
+    cy.visit('http://localhost:8080/tabs');
+    cy.ionPageVisible('tab1');
+
+    // Dynamically add tab 4 because tab 3 redirects to tab 1
+    cy.get('#add-tab').click();
+
+    cy.get('ion-tab-button#tab-button-tab4').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab4');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab4');
+    cy.ionPageVisible('tab2');
+
+    cy.get('[data-pageid="tab2"] #routing').click();
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('tabs');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('tabs');
     cy.ionPageVisible('tab2');
     cy.ionPageHidden('tab1');
   });
