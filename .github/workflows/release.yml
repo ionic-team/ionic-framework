@@ -25,9 +25,9 @@ on:
       prefix:
         type: choice
         description: For pre-releases, what kind of pre-release is this?
-        default: ''
+        default: none
         options:
-          - ''
+          - none
           - alpha
           - beta
           - rc
@@ -48,12 +48,12 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Pre-Release
-        if: ${{ github.events.inputs.prefix != '' }}
+        if: ${{ github.events.inputs.prefix != none }}
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.events.inputs.tag }}") --no-git-tag-version --no-push --skip-npm --preid $(echo "${{ github.events.inputs.prefix }}")
         shell: bash
       - name: Release
-        if: ${{ github.events.inputs.prefix == '' }}
+        if: ${{ github.events.inputs.prefix == none }}
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.events.inputs.tag }}") --no-git-tag-version --no-push --skip-npm
         shell: bash
