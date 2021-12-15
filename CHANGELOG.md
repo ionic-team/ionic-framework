@@ -1,3 +1,18 @@
+## [5.9.3](https://github.com/ionic-team/ionic/compare/v5.9.2...v5.9.3) (2021-12-15)
+
+
+### Bug Fixes
+
+* **vue:** improve query params handling in tabs ([#24355](https://github.com/ionic-team/ionic/issues/24355)) ([1c28750](https://github.com/ionic-team/ionic/commit/1c2875044ad4d93fdca866017159a89f4dc8872d)), closes [#24353](https://github.com/ionic-team/ionic/issues/24353)
+* **vue:** tabs no longer get unmounted when navigating back to a tabs context ([#24337](https://github.com/ionic-team/ionic/issues/24337)) ([4aab72b](https://github.com/ionic-team/ionic/commit/4aab72b06159729d2dcd18b2ef0b76f693e5a74e)), closes [#24332](https://github.com/ionic-team/ionic/issues/24332)
+
+
+### Performance Improvements
+
+* **content:** remove global click listener to improve interaction performance ([#24360](https://github.com/ionic-team/ionic/issues/24360)) ([9c9e28c](https://github.com/ionic-team/ionic/commit/9c9e28ccc9f899c403c757d911ac02d9099415af)), closes [#24359](https://github.com/ionic-team/ionic/issues/24359)
+
+
+
 ## [5.9.2](https://github.com/ionic-team/ionic/compare/v5.9.1...v5.9.2) (2021-12-07)
 
 
