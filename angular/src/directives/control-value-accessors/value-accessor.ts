@@ -1,11 +1,29 @@
-import { AfterViewInit, ElementRef, Injector, OnDestroy, Directive, HostListener } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {
+  AfterViewInit,
+  ElementRef,
+  Injector,
+  OnDestroy,
+  Directive,
+  HostListener,
+  Input,
+  forwardRef,
+  Provider,
+} from '@angular/core';
+import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { raf } from '../../util/util';
 
+export const valueAccessorProvider = (token: any): Provider => ({
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => token),
+  multi: true,
+});
+
 @Directive()
 export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
+  @Input() ngModel: any;
+
   private onChange: (value: any) => void = () => {
     /**/
   };
@@ -18,33 +36,39 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any): void {
-    /**
-     * Stencil hydrated web components can execute the connectedCallback()
-     * after the write value operation has occurred (on first init).
-     *
-     * This logic defers the writeValue behavior until the hydrated web
-     * component is fully initialized.
-     *
-     * This can be removed when Ionic's CE build is introduced into Angular.
-     */
-    const chain = [];
-    if (typeof window.customElements !== 'undefined') {
-      chain.push(window.customElements.whenDefined(this.el.nativeElement.tagName.toLowerCase()));
-    }
-    if (typeof this.el.nativeElement.componentOnReady !== 'undefined') {
-      chain.push(this.el.nativeElement.componentOnReady());
-    }
-    Promise.all(chain).then(() => {
+    if (typeof this.ngModel !== 'undefined') {
       /**
-       * TODO for Ionic 6:
-       * Change `value == null ? '' : value;`
-       * to `value`. This was a fix for IE9, but IE9
-       * is no longer supported; however, this change
-       * is potentially a breaking change
+       * Usages of the value accessor with `[ngModel]` can write
+       * the value immediately.
+       *
+       * https://github.com/angular/angular/issues/14988
+       * NgModel does have the flaw that it writes the value twice.
+       * First with `null` and then with the actual value.
        */
       this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
       setIonicClasses(this.el);
-    });
+    } else {
+      /**
+       * Stencil hydrated web components can execute the connectedCallback()
+       * after the write value operation has occurred (on first init).
+       *
+       * This logic defers the writeValue behavior until the hydrated web
+       * component is fully initialized.
+       *
+       * This can be removed when Ionic's CE build is introduced into Angular.
+       */
+      const chain = [];
+      if (typeof window.customElements !== 'undefined') {
+        chain.push(window.customElements.whenDefined(this.el.nativeElement.tagName.toLowerCase()));
+      }
+      if (typeof this.el.nativeElement.componentOnReady !== 'undefined') {
+        chain.push(this.el.nativeElement.componentOnReady());
+      }
+      Promise.all(chain).then(() => {
+        this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
+        setIonicClasses(this.el);
+      });
+    }
   }
 
   handleChangeEvent(el: HTMLElement, value: any): void {

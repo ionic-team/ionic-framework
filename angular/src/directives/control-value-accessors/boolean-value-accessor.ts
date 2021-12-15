@@ -1,17 +1,10 @@
 import { Directive, HostListener, ElementRef, Injector } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ValueAccessor, setIonicClasses } from './value-accessor';
+import { ValueAccessor, setIonicClasses, valueAccessorProvider } from './value-accessor';
 
 @Directive({
   selector: 'ion-checkbox,ion-toggle',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: BooleanValueAccessorDirective,
-      multi: true,
-    },
-  ],
+  providers: [valueAccessorProvider(BooleanValueAccessorDirective)],
 })
 export class BooleanValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {

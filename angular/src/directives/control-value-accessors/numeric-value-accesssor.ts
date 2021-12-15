@@ -1,17 +1,10 @@
 import { Directive, HostListener, ElementRef, Injector } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ValueAccessor } from './value-accessor';
+import { ValueAccessor, valueAccessorProvider } from './value-accessor';
 
 @Directive({
   selector: 'ion-input[type=number]',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: NumericValueAccessorDirective,
-      multi: true,
-    },
-  ],
+  providers: [valueAccessorProvider(NumericValueAccessorDirective)],
 })
 export class NumericValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {
