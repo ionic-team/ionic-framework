@@ -1,33 +1,14 @@
-import {
-  Component,
-  ComponentInterface,
-  Element,
-  Event,
-  EventEmitter,
-  Host,
-  Method,
-  Prop,
-  State,
-  Watch,
-  h,
-  writeTask,
-} from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import {
   caretDownSharp,
   caretUpSharp,
   chevronBack,
   chevronDown,
-  chevronForward,
+  chevronForward
 } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import {
-  Color,
-  DatetimeChangeEventDetail,
-  DatetimeParts,
-  Mode,
-  StyleEventDetail,
-} from '../../interface';
+import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
@@ -40,16 +21,18 @@ import {
   getDaysOfMonth,
   getDaysOfWeek,
   getPickerMonths,
-  getToday,
+  getToday
 } from './utils/data';
 import {
   addTimePadding,
   getFormattedHour,
   getFormattedTime,
   getMonthAndDay,
-  getMonthAndYear,
+  getMonthAndYear
 } from './utils/format';
-import { is24Hour } from './utils/helpers';
+import {
+  is24Hour
+} from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -63,14 +46,17 @@ import {
   getPreviousMonth,
   getPreviousWeek,
   getPreviousYear,
-  getStartOfWeek,
+  getStartOfWeek
 } from './utils/manipulation';
 import {
   convertToArrayOfNumbers,
   getPartsFromCalendarDay,
-  parseDate,
+  parseDate
 } from './utils/parse';
-import { getCalendarDayState, isDayDisabled } from './utils/state';
+import {
+  getCalendarDayState,
+  isDayDisabled
+} from './utils/state';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -83,11 +69,12 @@ import { getCalendarDayState, isDayDisabled } from './utils/state';
   tag: 'ion-datetime',
   styleUrls: {
     ios: 'datetime.ios.scss',
-    md: 'datetime.md.scss',
+    md: 'datetime.md.scss'
   },
-  shadow: true,
+  shadow: true
 })
 export class Datetime implements ComponentInterface {
+
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
@@ -120,8 +107,8 @@ export class Datetime implements ComponentInterface {
     year: 2021,
     hour: 13,
     minute: 52,
-    ampm: 'pm',
-  };
+    ampm: 'pm'
+  }
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -129,10 +116,10 @@ export class Datetime implements ComponentInterface {
     year: 2021,
     hour: 13,
     minute: 52,
-    ampm: 'pm',
-  };
+    ampm: 'pm'
+  }
 
-  private todayParts = parseDate(getToday());
+  private todayParts = parseDate(getToday())
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -199,20 +186,12 @@ export class Datetime implements ComponentInterface {
   /**
    * Which values you want to select. `'date'` will show
    * a calendar picker to select the month, day, and year. `'time'`
-   * will show a time picker to select the hour, minute, and (optionally)
-   * AM/PM.`'time-compact'` will show a time picker to select hour, minute and (optionally) AM/PM.
-   * `'date-time'` will show the date picker first and time picker second.
+   * will show a time picker to select the hour, `'time-compact'` shows a time picker
+   * visually identical to the one used in `'date-time'`, minute, and (optionally)
+   * AM/PM. `'date-time'` will show the date picker first and time picker second.
    * `'time-date'` will show the time picker first and date picker second.
    */
-  @Prop() presentation:
-    | 'date-time'
-    | 'time-date'
-    | 'date'
-    | 'time'
-    | 'month'
-    | 'year'
-    | 'month-year'
-    | 'time-compact' = 'date-time';
+  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'time-compact' | 'month' | 'year' | 'month-year' = 'date-time';
 
   /**
    * The text to display on the picker's cancel button.
@@ -334,13 +313,13 @@ export class Datetime implements ComponentInterface {
         day,
         year,
         hour,
-        minute,
-      };
+        minute
+      }
     }
 
     this.emitStyle();
     this.ionChange.emit({
-      value: this.value,
+      value: this.value
     });
   }
 
@@ -472,40 +451,32 @@ export class Datetime implements ComponentInterface {
   }
 
   private closeParentOverlay = () => {
-    const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
-      | HTMLIonModalElement
-      | HTMLIonPopoverElement
-      | null;
+    const popoverOrModal = this.el.closest('ion-modal, ion-popover') as HTMLIonModalElement | HTMLIonPopoverElement | null;
     if (popoverOrModal) {
       popoverOrModal.dismiss();
     }
-  };
+  }
 
   private setWorkingParts = (parts: DatetimeParts) => {
     this.workingParts = {
-      ...parts,
-    };
-  };
+      ...parts
+    }
+  }
 
   private setActiveParts = (parts: DatetimeParts) => {
     this.activeParts = {
-      ...parts,
-    };
-
-    const hasSlottedButtons =
-      this.el.querySelector('[slot="buttons"]') !== null;
-    if (hasSlottedButtons || this.showDefaultButtons) {
-      return;
+      ...parts
     }
 
+    const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
+    if (hasSlottedButtons || this.showDefaultButtons) { return; }
+
     this.confirm();
-  };
+  }
 
   private initializeKeyboardListeners = () => {
     const { calendarBodyRef } = this;
-    if (!calendarBodyRef) {
-      return;
-    }
+    if (!calendarBodyRef) { return; }
 
     const root = this.el!.shadowRoot!;
 
@@ -513,9 +484,7 @@ export class Datetime implements ComponentInterface {
      * Get a reference to the month
      * element we are currently viewing.
      */
-    const currentMonth = calendarBodyRef.querySelector(
-      '.calendar-month:nth-of-type(2)'
-    )!;
+    const currentMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(2)')!;
 
     /**
      * When focusing the calendar body, we want to pass focus
@@ -540,16 +509,13 @@ export class Datetime implements ComponentInterface {
       }
 
       this.focusWorkingDay(currentMonth);
-    };
+    }
     const mo = new MutationObserver(checkCalendarBodyFocus);
-    mo.observe(calendarBodyRef, {
-      attributeFilter: ['class'],
-      attributeOldValue: true,
-    });
+    mo.observe(calendarBodyRef, { attributeFilter: ['class'], attributeOldValue: true });
 
     this.destroyKeyboardMO = () => {
       mo?.disconnect();
-    };
+    }
 
     /**
      * We must use keydown not keyup as we want
@@ -557,11 +523,9 @@ export class Datetime implements ComponentInterface {
      */
     this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
       const activeElement = root.activeElement;
-      if (!activeElement || !activeElement.classList.contains('calendar-day')) {
-        return;
-      }
+      if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
-      const parts = getPartsFromCalendarDay(activeElement as HTMLElement);
+      const parts = getPartsFromCalendarDay(activeElement as HTMLElement)
 
       let partsToFocus: DatetimeParts | undefined;
       switch (ev.key) {
@@ -591,9 +555,7 @@ export class Datetime implements ComponentInterface {
           break;
         case 'PageUp':
           ev.preventDefault();
-          partsToFocus = ev.shiftKey
-            ? getPreviousYear(parts)
-            : getPreviousMonth(parts);
+          partsToFocus = ev.shiftKey ? getPreviousYear(parts) : getPreviousMonth(parts);
           break;
         case 'PageDown':
           ev.preventDefault();
@@ -619,16 +581,16 @@ export class Datetime implements ComponentInterface {
 
       this.setWorkingParts({
         ...this.workingParts,
-        ...partsToFocus,
-      });
+        ...partsToFocus
+      })
 
       /**
        * Give view a chance to re-render
        * then move focus to the new working day
        */
       requestAnimationFrame(() => this.focusWorkingDay(currentMonth));
-    });
-  };
+    })
+  }
 
   private focusWorkingDay = (currentMonth: Element) => {
     /**
@@ -639,21 +601,17 @@ export class Datetime implements ComponentInterface {
     const padding = currentMonth.querySelectorAll('.calendar-day-padding');
     const { day } = this.workingParts;
 
-    if (day === null) {
-      return;
-    }
+    if (day === null) { return; }
 
     /**
      * Get the calendar day element
      * and focus it.
      */
-    const dayEl = currentMonth.querySelector(
-      `.calendar-day:nth-of-type(${padding.length + day})`
-    ) as HTMLElement | null;
+    const dayEl = currentMonth.querySelector(`.calendar-day:nth-of-type(${padding.length + day})`) as HTMLElement | null;
     if (dayEl) {
       dayEl.focus();
     }
-  };
+  }
 
   private processMinParts = () => {
     if (this.min === undefined) {
@@ -668,9 +626,9 @@ export class Datetime implements ComponentInterface {
       day,
       year,
       hour,
-      minute,
-    };
-  };
+      minute
+    }
+  }
 
   private processMaxParts = () => {
     if (this.max === undefined) {
@@ -685,15 +643,13 @@ export class Datetime implements ComponentInterface {
       day,
       year,
       hour,
-      minute,
-    };
-  };
+      minute
+    }
+  }
 
   private initializeCalendarIOListeners = () => {
     const { calendarBodyRef } = this;
-    if (!calendarBodyRef) {
-      return;
-    }
+    if (!calendarBodyRef) { return; }
 
     const mode = getIonMode(this);
 
@@ -730,22 +686,16 @@ export class Datetime implements ComponentInterface {
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
-      const ioCallback = (
-        callbackType: 'start' | 'end',
-        entries: IntersectionObserverEntry[]
-      ) => {
-        const refIO = callbackType === 'start' ? startIO : endIO;
-        const refMonth = callbackType === 'start' ? startMonth : endMonth;
-        const refMonthFn =
-          callbackType === 'start' ? getPreviousMonth : getNextMonth;
+      const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
+        const refIO = (callbackType === 'start') ? startIO : endIO;
+        const refMonth = (callbackType === 'start') ? startMonth : endMonth;
+        const refMonthFn = (callbackType === 'start') ? getPreviousMonth : getNextMonth;
 
         /**
          * If the month is not fully in view, do not do anything
          */
         const ev = entries[0];
-        if (!ev.isIntersecting) {
-          return;
-        }
+        if (!ev.isIntersecting) { return; }
 
         /**
          * When presenting an inline overlay,
@@ -789,9 +739,7 @@ export class Datetime implements ComponentInterface {
          * otherwise you can sometimes get duplicate
          * events when rubber banding.
          */
-        if (refIO === undefined) {
-          return;
-        }
+        if (refIO === undefined) { return; }
         refIO.disconnect();
 
         /**
@@ -810,7 +758,7 @@ export class Datetime implements ComponentInterface {
             ...this.workingParts,
             month,
             day: day!,
-            year,
+            year
           });
 
           calendarBodyRef.scrollLeft = workingMonth.clientWidth;
@@ -823,12 +771,10 @@ export class Datetime implements ComponentInterface {
            * we can resume the IO.
            */
           // tslint:disable-next-line
-          if (refIO === undefined) {
-            return;
-          }
+          if (refIO === undefined) { return; }
           refIO.observe(refMonth);
         });
-      };
+      }
 
       /**
        * Listen on the first month to
@@ -850,22 +796,22 @@ export class Datetime implements ComponentInterface {
        */
       endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
-        root: calendarBodyRef,
+        root: calendarBodyRef
       });
       endIO.observe(endMonth);
 
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
-        root: calendarBodyRef,
-      });
+        root: calendarBodyRef
+       });
       startIO.observe(startMonth);
 
       this.destroyCalendarIO = () => {
         endIO?.disconnect();
         startIO?.disconnect();
-      };
-    });
-  };
+      }
+   });
+  }
 
   connectedCallback() {
     this.clearFocusVisible = startFocusVisible(this.el).destroy;
@@ -893,7 +839,7 @@ export class Datetime implements ComponentInterface {
     if (destroyKeyboardMO !== undefined) {
       destroyKeyboardMO();
     }
-  };
+  }
 
   componentDidLoad() {
     /**
@@ -906,9 +852,7 @@ export class Datetime implements ComponentInterface {
     let visibleIO: IntersectionObserver | undefined;
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
-      if (!ev.isIntersecting) {
-        return;
-      }
+      if (!ev.isIntersecting) { return; }
 
       this.initializeCalendarIOListeners();
       this.initializeKeyboardListeners();
@@ -925,7 +869,7 @@ export class Datetime implements ComponentInterface {
       writeTask(() => {
         this.el.classList.add('datetime-ready');
       });
-    };
+    }
     visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
 
     /**
@@ -946,16 +890,14 @@ export class Datetime implements ComponentInterface {
     let hiddenIO: IntersectionObserver | undefined;
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
-      if (ev.isIntersecting) {
-        return;
-      }
+      if (ev.isIntersecting) { return; }
 
       this.destroyListeners();
 
       writeTask(() => {
         this.el.classList.remove('datetime-ready');
       });
-    };
+    }
     hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
     raf(() => hiddenIO?.observe(this.el));
 
@@ -982,19 +924,16 @@ export class Datetime implements ComponentInterface {
    */
   private initializeOverlayListener = () => {
     const overlay = this.el.closest('ion-popover, ion-modal');
-    if (overlay === null) {
-      return;
-    }
+    if (overlay === null) { return; }
 
     overlay.addEventListener('willPresent', () => {
       this.overlayIsPresenting = true;
     });
-  };
+  }
 
   private processValue = (value?: string | null) => {
     const valueToProcess = value || getToday();
-    const { month, day, year, hour, minute, tzOffset } =
-      parseDate(valueToProcess);
+    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
     this.workingParts = {
       month,
@@ -1003,8 +942,8 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
-    };
+      ampm: hour >= 12 ? 'pm' : 'am'
+    }
 
     this.activePartsClone = this.activeParts = {
       month,
@@ -1013,9 +952,10 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
-    };
-  };
+      ampm: hour >= 12 ? 'pm' : 'am'
+    }
+
+  }
 
   componentWillLoad() {
     this.processValue(this.value);
@@ -1031,76 +971,61 @@ export class Datetime implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
-      interactive: true,
-      datetime: true,
+      'interactive': true,
+      'datetime': true,
       'interactive-disabled': this.disabled,
     });
   }
 
   private onFocus = () => {
     this.ionFocus.emit();
-  };
+  }
 
   private onBlur = () => {
     this.ionBlur.emit();
-  };
+  }
 
   private hasValue = () => {
     return this.value != null && this.value !== '';
-  };
+  }
 
   private nextMonth = () => {
     const { calendarBodyRef } = this;
-    if (!calendarBodyRef) {
-      return;
-    }
+    if (!calendarBodyRef) { return; }
 
-    const nextMonth = calendarBodyRef.querySelector(
-      '.calendar-month:last-of-type'
-    );
-    if (!nextMonth) {
-      return;
-    }
+    const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
+    if (!nextMonth) { return; }
 
     calendarBodyRef.scrollTo({
       top: 0,
       left: (nextMonth as HTMLElement).offsetWidth * 2,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
-  };
+  }
 
   private prevMonth = () => {
     const { calendarBodyRef } = this;
-    if (!calendarBodyRef) {
-      return;
-    }
+    if (!calendarBodyRef) { return; }
 
-    const prevMonth = calendarBodyRef.querySelector(
-      '.calendar-month:first-of-type'
-    );
-    if (!prevMonth) {
-      return;
-    }
+    const prevMonth = calendarBodyRef.querySelector('.calendar-month:first-of-type');
+    if (!prevMonth) { return; }
 
     calendarBodyRef.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
-  };
+  }
 
   private renderFooter() {
     const { showDefaultButtons, showClearButton } = this;
-    const hasSlottedButtons =
-      this.el.querySelector('[slot="buttons"]') !== null;
-    if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
-      return;
-    }
+    const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
+    if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) { return; }
 
     const clearButtonClick = () => {
       this.reset();
       this.value = undefined;
-    };
+    }
 
     /**
      * By default we render two buttons:
@@ -1112,42 +1037,16 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-footer">
         <div class="datetime-buttons">
-          <div
-            class={{
-              ['datetime-action-buttons']: true,
-              ['has-clear-button']: this.showClearButton,
-            }}
-          >
+          <div class={{
+            ['datetime-action-buttons']: true,
+            ['has-clear-button']: this.showClearButton
+          }}>
             <slot name="buttons">
               <ion-buttons>
-                {showDefaultButtons && (
-                  <ion-button
-                    id="cancel-button"
-                    color={this.color}
-                    onClick={() => this.cancel(true)}
-                  >
-                    {this.cancelText}
-                  </ion-button>
-                )}
+                {showDefaultButtons && <ion-button id="cancel-button" color={this.color} onClick={() => this.cancel(true)}>{this.cancelText}</ion-button>}
                 <div>
-                  {showClearButton && (
-                    <ion-button
-                      id="clear-button"
-                      color={this.color}
-                      onClick={() => clearButtonClick()}
-                    >
-                      {this.clearText}
-                    </ion-button>
-                  )}
-                  {showDefaultButtons && (
-                    <ion-button
-                      id="confirm-button"
-                      color={this.color}
-                      onClick={() => this.confirm(true)}
-                    >
-                      {this.doneText}
-                    </ion-button>
-                  )}
+                  {showClearButton && <ion-button id="clear-button" color={this.color} onClick={() => clearButtonClick()}>{this.clearText}</ion-button>}
+                  {showDefaultButtons && <ion-button id="confirm-button" color={this.color} onClick={() => this.confirm(true)}>{this.doneText}</ion-button>}
                 </div>
               </ion-buttons>
             </slot>
@@ -1159,37 +1058,27 @@ export class Datetime implements ComponentInterface {
 
   private toggleMonthAndYearView = () => {
     this.showMonthAndYear = !this.showMonthAndYear;
-  };
+  }
 
   private renderYearView() {
     const { presentation, workingParts } = this;
-    const calendarYears = getCalendarYears(
-      this.todayParts,
-      this.minParts,
-      this.maxParts,
-      this.parsedYearValues
-    );
+    const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
     const showMonth = presentation !== 'year';
     const showYear = presentation !== 'month';
 
-    const months = getPickerMonths(
-      this.locale,
-      workingParts,
-      this.minParts,
-      this.maxParts,
-      this.parsedMonthValues
-    );
+    const months = getPickerMonths(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
     const years = calendarYears.map(year => {
       return {
         text: `${year}`,
-        value: year,
-      };
-    });
+        value: year
+      }
+    })
     return (
       <div class="datetime-year">
         <div class="datetime-year-body">
           <ion-picker-internal>
-            {showMonth && (
+            {
+              showMonth &&
               <ion-picker-column-internal
                 color={this.color}
                 items={months}
@@ -1197,24 +1086,22 @@ export class Datetime implements ComponentInterface {
                 onIonChange={(ev: CustomEvent) => {
                   this.setWorkingParts({
                     ...this.workingParts,
-                    month: ev.detail.value,
+                    month: ev.detail.value
                   });
 
-                  if (
-                    presentation === 'month' ||
-                    presentation === 'month-year'
-                  ) {
+                  if (presentation === 'month' || presentation === 'month-year') {
                     this.setActiveParts({
                       ...this.activeParts,
-                      month: ev.detail.value,
+                      month: ev.detail.value
                     });
                   }
 
                   ev.stopPropagation();
                 }}
               ></ion-picker-column-internal>
-            )}
-            {showYear && (
+            }
+            {
+              showYear &&
               <ion-picker-column-internal
                 color={this.color}
                 items={years}
@@ -1222,23 +1109,20 @@ export class Datetime implements ComponentInterface {
                 onIonChange={(ev: CustomEvent) => {
                   this.setWorkingParts({
                     ...this.workingParts,
-                    year: ev.detail.value,
+                    year: ev.detail.value
                   });
 
-                  if (
-                    presentation === 'year' ||
-                    presentation === 'month-year'
-                  ) {
+                  if (presentation === 'year' || presentation === 'month-year') {
                     this.setActiveParts({
                       ...this.activeParts,
-                      year: ev.detail.value,
+                      year: ev.detail.value
                     });
                   }
 
                   ev.stopPropagation();
                 }}
               ></ion-picker-column-internal>
-            )}
+            }
           </ion-picker-internal>
         </div>
       </div>
@@ -1252,18 +1136,9 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item
-              button
-              detail={false}
-              lines="none"
-              onClick={() => this.toggleMonthAndYearView()}
-            >
+            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)}{' '}
-                <ion-icon
-                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
-                  lazy={false}
-                ></ion-icon>
+                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>
@@ -1271,117 +1146,85 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button onClick={() => this.prevMonth()}>
-                <ion-icon
-                  slot="icon-only"
-                  icon={chevronBack}
-                  lazy={false}
-                ></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
               </ion-button>
               <ion-button onClick={() => this.nextMonth()}>
-                <ion-icon
-                  slot="icon-only"
-                  icon={chevronForward}
-                  lazy={false}
-                ></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
         </div>
         <div class="calendar-days-of-week">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map(d => {
-              return <div class="day-of-week">{d}</div>;
-            }
-          )}
+            return <div class="day-of-week">{d}</div>
+          })}
         </div>
       </div>
-    );
+    )
   }
 
   private renderMonth(month: number, year: number) {
-    const yearAllowed =
-      this.parsedYearValues === undefined ||
-      this.parsedYearValues.includes(year);
-    const monthAllowed =
-      this.parsedMonthValues === undefined ||
-      this.parsedMonthValues.includes(month);
+    const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
+    const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isMonthDisabled = !yearAllowed || !monthAllowed;
     return (
       <div class="calendar-month">
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map(
-            (dateObject, index) => {
-              const { day, dayOfWeek } = dateObject;
-              const referenceParts = { month, day, year };
-              const { isActive, isToday, ariaLabel, ariaSelected, disabled } =
-                getCalendarDayState(
-                  this.locale,
-                  referenceParts,
-                  this.activePartsClone,
-                  this.todayParts,
-                  this.minParts,
-                  this.maxParts,
-                  this.parsedDayValues
-                );
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
+            const { day, dayOfWeek } = dateObject;
+            const referenceParts = { month, day, year };
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activePartsClone, this.todayParts, this.minParts, this.maxParts, this.parsedDayValues);
 
-              return (
-                <button
-                  tabindex="-1"
-                  data-day={day}
-                  data-month={month}
-                  data-year={year}
-                  data-index={index}
-                  data-day-of-week={dayOfWeek}
-                  disabled={isMonthDisabled || disabled}
-                  class={{
-                    'calendar-day-padding': day === null,
-                    'calendar-day': true,
-                    'calendar-day-active': isActive,
-                    'calendar-day-today': isToday,
-                  }}
-                  aria-selected={ariaSelected}
-                  aria-label={ariaLabel}
-                  onClick={() => {
-                    if (day === null) {
-                      return;
-                    }
+            return (
+              <button
+                tabindex="-1"
+                data-day={day}
+                data-month={month}
+                data-year={year}
+                data-index={index}
+                data-day-of-week={dayOfWeek}
+                disabled={isMonthDisabled || disabled}
+                class={{
+                  'calendar-day-padding': day === null,
+                  'calendar-day': true,
+                  'calendar-day-active': isActive,
+                  'calendar-day-today': isToday
+                }}
+                aria-selected={ariaSelected}
+                aria-label={ariaLabel}
+                onClick={() => {
+                  if (day === null) { return; }
 
-                    this.setWorkingParts({
-                      ...this.workingParts,
-                      month,
-                      day,
-                      year,
-                    });
+                  this.setWorkingParts({
+                    ...this.workingParts,
+                    month,
+                    day,
+                    year
+                  });
 
-                    this.setActiveParts({
-                      ...this.activeParts,
-                      month,
-                      day,
-                      year,
-                    });
-                  }}
-                >
-                  {day}
-                </button>
-              );
-            }
-          )}
+                  this.setActiveParts({
+                    ...this.activeParts,
+                    month,
+                    day,
+                    year
+                  })
+                }}
+              >{day}</button>
+            )
+          })}
         </div>
       </div>
-    );
+    )
   }
 
   private renderCalendarBody() {
     return (
-      <div
-        class="calendar-body ion-focusable"
-        ref={el => (this.calendarBodyRef = el)}
-        tabindex="0"
-      >
+      <div class="calendar-body ion-focusable" ref={el => this.calendarBodyRef = el} tabindex="0">
         {generateMonths(this.workingParts).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
       </div>
-    );
+    )
   }
 
   private renderCalendar(mode: Mode) {
@@ -1390,17 +1233,16 @@ export class Datetime implements ComponentInterface {
         {this.renderCalendarHeader(mode)}
         {this.renderCalendarBody()}
       </div>
-    );
+    )
   }
 
   private renderTimeLabel() {
-    const hasSlottedTimeLabel =
-      this.el.querySelector('[slot="time-label"]') !== null;
-    if (!hasSlottedTimeLabel && !this.showDefaultTimeLabel) {
-      return;
-    }
+    const hasSlottedTimeLabel = this.el.querySelector('[slot="time-label"]') !== null;
+    if (!hasSlottedTimeLabel && !this.showDefaultTimeLabel) { return; }
 
-    return <slot name="time-label">Time</slot>;
+    return (
+      <slot name="time-label">Time</slot>
+    );
   }
 
   private renderTimePicker(
@@ -1408,7 +1250,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-  ) {
+   ) {
     const { color, activePartsClone, workingParts } = this;
 
     return (
@@ -1421,11 +1263,11 @@ export class Datetime implements ComponentInterface {
           onIonChange={(ev: CustomEvent) => {
             this.setWorkingParts({
               ...workingParts,
-              hour: ev.detail.value,
+              hour: ev.detail.value
             });
             this.setActiveParts({
               ...activePartsClone,
-              hour: ev.detail.value,
+              hour: ev.detail.value
             });
 
             ev.stopPropagation();
@@ -1439,42 +1281,40 @@ export class Datetime implements ComponentInterface {
           onIonChange={(ev: CustomEvent) => {
             this.setWorkingParts({
               ...workingParts,
-              minute: ev.detail.value,
+              minute: ev.detail.value
             });
             this.setActiveParts({
               ...activePartsClone,
-              minute: ev.detail.value,
+              minute: ev.detail.value
             });
 
             ev.stopPropagation();
           }}
         ></ion-picker-column-internal>
-        {!use24Hour && (
-          <ion-picker-column-internal
-            color={color}
-            value={activePartsClone.ampm}
-            items={ampmItems}
-            onIonChange={(ev: CustomEvent) => {
-              const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
+        { !use24Hour && <ion-picker-column-internal
+          color={color}
+          value={activePartsClone.ampm}
+          items={ampmItems}
+          onIonChange={(ev: CustomEvent) => {
+            const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
 
-              this.setWorkingParts({
-                ...workingParts,
-                ampm: ev.detail.value,
-                hour,
-              });
+            this.setWorkingParts({
+              ...workingParts,
+              ampm: ev.detail.value,
+              hour
+            });
 
-              this.setActiveParts({
-                ...activePartsClone,
-                ampm: ev.detail.value,
-                hour,
-              });
+            this.setActiveParts({
+              ...activePartsClone,
+              ampm: ev.detail.value,
+              hour
+            });
 
-              ev.stopPropagation();
-            }}
-          ></ion-picker-column-internal>
-        )}
+            ev.stopPropagation();
+          }}
+        ></ion-picker-column-internal> }
       </ion-picker-internal>
-    );
+    )
   }
 
   private renderTimeOverlay(
@@ -1482,13 +1322,15 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-  ) {
+   ) {
     return [
-      <div class="time-header">{this.renderTimeLabel()}</div>,
+      <div class="time-header">
+        {this.renderTimeLabel()}
+      </div>,
       <button
         class={{
           'time-body': true,
-          'time-body-active': this.isTimePopoverOpen,
+          'time-body-active': this.isTimePopoverOpen
         }}
         aria-expanded="false"
         aria-haspopup="true"
@@ -1496,6 +1338,7 @@ export class Datetime implements ComponentInterface {
           const { popoverRef } = this;
 
           if (popoverRef) {
+
             this.isTimePopoverOpen = true;
             popoverRef.present(ev);
 
@@ -1513,16 +1356,16 @@ export class Datetime implements ComponentInterface {
         overlayIndex={1}
         arrow={false}
         style={{
-          '--offset-y': '-10px',
+          '--offset-y': '-10px'
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.
         keyboardEvents
-        ref={el => (this.popoverRef = el)}
+        ref={el => this.popoverRef = el}
       >
         {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}
-      </ion-popover>,
-    ];
+      </ion-popover>
+    ]
   }
 
   /**
@@ -1536,79 +1379,56 @@ export class Datetime implements ComponentInterface {
     const { workingParts, presentation } = this;
     const timeOnlyPresentation = presentation === 'time';
     const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const { hours, minutes, am, pm } = generateTime(
-      this.workingParts,
-      use24Hour ? 'h23' : 'h12',
-      this.minParts,
-      this.maxParts,
-      this.parsedHourValues,
-      this.parsedMinuteValues
-    );
+    const { hours, minutes, am, pm } = generateTime(this.workingParts, use24Hour ? 'h23' : 'h12', this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
 
     const hoursItems = hours.map(hour => {
       return {
         text: getFormattedHour(hour, use24Hour),
-        value: getInternalHourValue(hour, use24Hour, workingParts.ampm),
-      };
+        value: getInternalHourValue(hour, use24Hour, workingParts.ampm)
+      }
     });
 
     const minutesItems = minutes.map(minute => {
       return {
         text: addTimePadding(minute),
-        value: minute,
-      };
+        value: minute
+      }
     });
 
     const ampmItems = [];
     if (am) {
       ampmItems.push({
         text: 'AM',
-        value: 'am',
-      });
+        value: 'am'
+      })
     }
 
     if (pm) {
       ampmItems.push({
         text: 'PM',
-        value: 'pm',
-      });
+        value: 'pm'
+      })
     }
 
     return (
       <div class="datetime-time">
-        {timeOnlyPresentation
-          ? this.renderTimePicker(
-              hoursItems,
-              minutesItems,
-              ampmItems,
-              use24Hour
-            )
-          : this.renderTimeOverlay(
-              hoursItems,
-              minutesItems,
-              ampmItems,
-              use24Hour
-            )}
+          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
       </div>
-    );
+    )
   }
 
   private renderCalendarViewHeader(mode: Mode) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
-    if (!hasSlottedTitle && !this.showDefaultTitle) {
-      return;
-    }
+    if (!hasSlottedTitle && !this.showDefaultTitle) { return; }
 
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && (
-          <div class="datetime-selected-date">
-            {getMonthAndDay(this.locale, this.activeParts)}
-          </div>
-        )}
+        {mode === 'md' && <div class="datetime-selected-date">
+          {getMonthAndDay(this.locale, this.activeParts)}
+        </div>}
       </div>
     );
   }
@@ -1622,54 +1442,48 @@ export class Datetime implements ComponentInterface {
           this.renderCalendar(mode),
           this.renderYearView(),
           this.renderTime(),
-          this.renderFooter(),
-        ];
+          this.renderFooter()
+        ]
       case 'time-date':
         return [
           this.renderCalendarViewHeader(mode),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderYearView(),
-          this.renderFooter(),
-        ];
+          this.renderFooter()
+        ]
       case 'time':
-        return [this.renderTime(), this.renderFooter()];
+        return [
+          this.renderTime(),
+          this.renderFooter()
+        ]
       case 'time-compact':
-        return [this.renderTime(), this.renderFooter()];
+        return [
+          this.renderTime(),
+          this.renderFooter()
+        ]
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderYearView(), this.renderFooter()];
+        return [
+          this.renderYearView(),
+          this.renderFooter()
+        ]
       default:
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
           this.renderYearView(),
-          this.renderFooter(),
-        ];
+          this.renderFooter()
+        ]
     }
   }
 
   render() {
-    const {
-      name,
-      value,
-      disabled,
-      el,
-      color,
-      isPresented,
-      readonly,
-      showMonthAndYear,
-      presentation,
-      size,
-    } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
     const mode = getIonMode(this);
-    const isMonthAndYearPresentation =
-      presentation === 'year' ||
-      presentation === 'month' ||
-      presentation === 'month-year';
-    const shouldShowMonthAndYear =
-      showMonthAndYear || isMonthAndYearPresentation;
+    const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
+    const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1686,8 +1500,8 @@ export class Datetime implements ComponentInterface {
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,
             [`datetime-presentation-${presentation}`]: true,
-            [`datetime-size-${size}`]: true,
-          }),
+            [`datetime-size-${size}`]: true
+          })
         }}
       >
         {this.renderDatetime(mode)}
