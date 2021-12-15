@@ -44,7 +44,7 @@ async function askNpmTag(version) {
       type: 'list',
       name: 'npmTag',
       message: 'Select npm tag or specify a new tag',
-      choices: ['latest', 'next', 'v4-lts']
+      choices: ['latest', 'next', 'v4-lts', 'v5-lts']
         .concat([
           new inquirer.Separator(),
           {
