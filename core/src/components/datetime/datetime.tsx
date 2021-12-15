@@ -936,9 +936,40 @@ export class Datetime implements ComponentInterface {
     });
   }
 
+  private getDefaultDateParts = (value?: string | null) => {
+    let dateParts;
+
+    if (typeof value !== 'undefined') {
+      dateParts = parseDate(value);
+    } else {
+      const todayParts: DatetimeParts = parseDate(getToday());
+      dateParts = todayParts;
+
+      if (todayParts.month < this.minParts?.month && todayParts.year <= this.minParts?.year || todayParts.month > this.maxParts?.month && todayParts.year >= this.maxParts?.year) {
+        /**
+         * Today's date is either below the minimum date range or exceeds the maximum
+         * date range.
+         *
+         * Take the minimum date value to default the user at the lower bounds
+         * of the date range.
+         */
+        dateParts = {
+          month: Math.min(this.minParts?.month, this.maxParts?.month),
+          year: Math.min(this.minParts?.year, this.maxParts?.year),
+          day: Math.min(this.minParts?.day, this.maxParts?.day) || 1,
+          dayOfWeek: Math.min(this.minParts?.dayOfWeek, this.maxParts?.dayOfWeek) || 1,
+          hour: this.minParts?.hour ?? todayParts.hour,
+          minute: this.minParts?.minute ?? todayParts.minute,
+          ampm: this.minParts?.ampm ?? todayParts.ampm,
+          tzOffset: todayParts.tzOffset,
+        }
+      }
+    }
+    return dateParts;
+  }
+
   private processValue = (value?: string | null) => {
-    const valueToProcess = value || getToday();
-    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+    const { month, day, year, hour, minute, tzOffset } = this.getDefaultDateParts(value);
 
     this.workingParts = {
       month,
@@ -963,9 +994,9 @@ export class Datetime implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.processValue(this.value);
     this.processMinParts();
     this.processMaxParts();
+    this.processValue(this.value);
     this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
     this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
@@ -992,6 +1023,14 @@ export class Datetime implements ComponentInterface {
 
   private hasValue = () => {
     return this.value != null && this.value !== '';
+  }
+
+  private isPrevMonthDisabled = () => {
+    return this.workingParts.month <= this.minParts?.month && this.workingParts.year <= this.minParts?.year;
+  }
+
+  private isNextMonthDisabled = () => {
+    return this.workingParts.month >= this.maxParts?.month && this.workingParts.year >= this.maxParts?.year;
   }
 
   private nextMonth = () => {
@@ -1139,6 +1178,10 @@ export class Datetime implements ComponentInterface {
   private renderCalendarHeader(mode: Mode) {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
+
+    const prevMonthDisabled = this.isPrevMonthDisabled();
+    const nextMonthDisabled = this.isNextMonthDisabled();
+
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
@@ -1152,10 +1195,14 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button onClick={() => this.prevMonth()}>
+              <ion-button
+                disabled={prevMonthDisabled}
+                onClick={() => this.prevMonth()}>
                 <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
-              <ion-button onClick={() => this.nextMonth()}>
+              <ion-button
+                disabled={nextMonthDisabled}
+                onClick={() => this.nextMonth()}>
                 <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
@@ -1174,8 +1221,14 @@ export class Datetime implements ComponentInterface {
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isMonthDisabled = !yearAllowed || !monthAllowed;
+    const monthDisabled = month < this.minParts?.month && year <= this.minParts?.year || month > this.maxParts?.month && year >= this.maxParts?.year;
+
     return (
-      <div class="calendar-month">
+      <div class={{
+        'calendar-month': true,
+        // Prevents scroll snap swipe gestures for months outside of the min/max bounds
+        'calendar-month-disabled': monthDisabled
+      }}>
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
