@@ -238,7 +238,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           const lastRoute = locationHistory.getCurrentRouteInfoForTab(routeInfo.tab);
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
         } else if (routeInfo.routerAction === 'replace') {
-          const currentRouteInfo = locationHistory.last();
+          const currentRouteInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
 
           /**
            * If going from /home to /child, then replacing from
