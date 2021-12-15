@@ -27,6 +27,7 @@ on:
         description: For pre-releases, what kind of pre-release is this?
         default: ''
         options:
+          - ''
           - alpha
           - beta
           - rc
