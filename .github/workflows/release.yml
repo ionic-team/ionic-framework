@@ -22,16 +22,19 @@ on:
           - latest
           - next
           - dev
+          - v4-lts
+          - v5-lts
       prefix:
         type: choice
         description: For pre-releases, what kind of pre-release is this?
         default: ''
         options:
+          - ''
           - alpha
           - beta
           - rc
 jobs:
-  dev-build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -47,6 +50,12 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release
+        if: ${{ github.events.inputs.prefix != '' }}
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.events.inputs.tag }}") --no-git-tag-version --no-push --skip-npm --preid $(echo "${{ github.events.inputs.prefix }}")
         shell: bash
+    - name: Release
+      if: ${{ github.events.inputs.prefix == '' }}
+      run: |
+        HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.events.inputs.tag }}") --no-git-tag-version --no-push --skip-npm
+      shell: bash
