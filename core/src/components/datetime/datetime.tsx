@@ -56,7 +56,10 @@ import {
 } from './utils/parse';
 import {
   getCalendarDayState,
-  isDayDisabled
+  isDayDisabled,
+  isMonthSwipeDisabled,
+  isNextMonthDisabled,
+  isPrevMonthDisabled
 } from './utils/state';
 
 /**
@@ -724,7 +727,8 @@ export class Datetime implements ComponentInterface {
          */
         if (mode === 'ios') {
           const ratio = ev.intersectionRatio;
-          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1;
+          // `maxTouchPoints` will be 1 in device preview, but > 1 on device
+          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1 && navigator.maxTouchPoints > 1;
 
           if (shouldDisable) {
             calendarBodyRef.style.setProperty('pointer-events', 'none');
@@ -936,40 +940,9 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private getDefaultDateParts = (value?: string | null) => {
-    let dateParts;
-
-    if (typeof value !== 'undefined') {
-      dateParts = parseDate(value);
-    } else {
-      const todayParts: DatetimeParts = parseDate(getToday());
-      dateParts = todayParts;
-
-      if (todayParts.month < this.minParts?.month && todayParts.year <= this.minParts?.year || todayParts.month > this.maxParts?.month && todayParts.year >= this.maxParts?.year) {
-        /**
-         * Today's date is either below the minimum date range or exceeds the maximum
-         * date range.
-         *
-         * Take the minimum date value to default the user at the lower bounds
-         * of the date range.
-         */
-        dateParts = {
-          month: Math.min(this.minParts?.month, this.maxParts?.month),
-          year: Math.min(this.minParts?.year, this.maxParts?.year),
-          day: Math.min(this.minParts?.day, this.maxParts?.day) || 1,
-          dayOfWeek: Math.min(this.minParts?.dayOfWeek, this.maxParts?.dayOfWeek) || 1,
-          hour: this.minParts?.hour ?? todayParts.hour,
-          minute: this.minParts?.minute ?? todayParts.minute,
-          ampm: this.minParts?.ampm ?? todayParts.ampm,
-          tzOffset: todayParts.tzOffset,
-        }
-      }
-    }
-    return dateParts;
-  }
-
   private processValue = (value?: string | null) => {
-    const { month, day, year, hour, minute, tzOffset } = this.getDefaultDateParts(value);
+    const valueToProcess = value || getToday();
+    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
     this.workingParts = {
       month,
@@ -1023,14 +996,6 @@ export class Datetime implements ComponentInterface {
 
   private hasValue = () => {
     return this.value != null && this.value !== '';
-  }
-
-  private isPrevMonthDisabled = () => {
-    return this.workingParts.month <= this.minParts?.month && this.workingParts.year <= this.minParts?.year;
-  }
-
-  private isNextMonthDisabled = () => {
-    return this.workingParts.month >= this.maxParts?.month && this.workingParts.year >= this.maxParts?.year;
   }
 
   private nextMonth = () => {
@@ -1179,8 +1144,8 @@ export class Datetime implements ComponentInterface {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
-    const prevMonthDisabled = this.isPrevMonthDisabled();
-    const nextMonthDisabled = this.isNextMonthDisabled();
+    const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
+    const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
 
     return (
       <div class="calendar-header">
@@ -1221,13 +1186,13 @@ export class Datetime implements ComponentInterface {
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isMonthDisabled = !yearAllowed || !monthAllowed;
-    const monthDisabled = month < this.minParts?.month && year <= this.minParts?.year || month > this.maxParts?.month && year >= this.maxParts?.year;
+    const swipeDisabled = isMonthSwipeDisabled(month, year, this.workingParts, this.minParts, this.maxParts);
 
     return (
       <div class={{
         'calendar-month': true,
         // Prevents scroll snap swipe gestures for months outside of the min/max bounds
-        'calendar-month-disabled': monthDisabled
+        'calendar-month-disabled': swipeDisabled
       }}>
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {

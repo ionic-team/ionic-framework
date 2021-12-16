@@ -15,6 +15,40 @@ export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxPar
   return false;
 }
 
+export const isMonthSwipeDisabled = (refMonth: number, refYear: number, workingParts?: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+  if (workingParts && refMonth === workingParts.month && refYear === workingParts.year) {
+    /**
+     * Do not disable the working month, if it's the current month being rendered.
+     *
+     * If the working month is disabled, scroll snap will not clip to the month
+     * and will scroll the user to the first "enabled" calendar month.
+     */
+    return false;
+  }
+
+  if (minParts) {
+    if (minParts.month) {
+      // If the minimum parts contains a month, compare both the month and year
+      if (refMonth < minParts.month && refYear <= minParts.year) {
+        return true;
+      }
+      // Otherwise only compare the year range
+    } else if (minParts.year && refYear < minParts.year) {
+      return true;
+    }
+  }
+
+  if (maxParts) {
+    if (maxParts.month && refMonth > maxParts.month && refYear >= maxParts.year) {
+      return true;
+    } else if (maxParts.year && refYear > maxParts.year) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 /**
  * Returns true if a given day should
  * not be interactive according to its value,
@@ -101,4 +135,99 @@ export const getCalendarDayState = (
     ariaSelected: isActive ? 'true' : null,
     ariaLabel: generateDayAriaLabel(locale, isToday, refParts)
   }
+}
+
+/**
+ * Given a working date and a minimum date range,
+ * determine if the previous navigation button is disabled.
+ */
+export const isPrevMonthDisabled = (refParts: {
+  month: number,
+  year: number
+}, minParts?: {
+  month?: number,
+  year: number
+}, maxParts?: {
+  month?: number,
+  year: number
+}) => {
+  if (minParts) {
+    if (minParts.month) {
+      /**
+       * Disables the previous month is the current date is either at the minimum
+       * month or before the minimum range.
+       *
+       * i.e.:
+       * - Ref: 09/2021
+       * - Min: 10/2021
+       */
+      if (refParts.month <= minParts.month && refParts.year <= minParts.year) {
+        return true;
+      }
+    } else if (minParts.year) {
+      /**
+       * The minimum range only includes a year. Compare that the current date's year
+       * is either at the minimum year or before the minimum year.
+       *
+       * i.e:
+       * - Ref: 2021
+       * - Min: 2021
+       */
+      if (refParts.month === 1) {
+        if (refParts.year <= minParts.year) {
+          return true;
+        }
+      } else if (refParts.year < minParts.year) {
+        return true;
+      }
+    }
+  }
+  if (maxParts) {
+    if (maxParts.month) {
+      /**
+       * In situations where the current date is outside the bounds of the upper (max) range,
+       * we need to check if the previous month would return the date range into the valid range.
+       *
+       * i.e.:
+       * - Date: 12/16/2021
+       * - Max: 10/2021
+       * - Min: 09/2021
+       *
+       * If it does, we allow the previous button to navigate back one step, otherwise we lock
+       * navigation and require they use the month/year selector.
+       */
+      if (refParts.month - 1 === 0) {
+        // The reference month is in January, so we need to step back to December of the previous year.
+        if (12 > maxParts.month && refParts.year - 1 === maxParts.year) {
+          return true;
+        }
+      } else if (refParts.month - 1 > maxParts.month && refParts.year === maxParts.year) {
+        // Otherwise we are comparing if the previous month in the same year is within
+        // the maximum date range.
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Given a working date and a maximum date range,
+ * determine if the next navigation button is disabled.
+ */
+export const isNextMonthDisabled = (refParts: {
+  month: number,
+  year: number
+}, maxParts?: {
+  month?: number,
+  year: number
+}) => {
+  if (maxParts) {
+    if (maxParts.month && refParts.month >= maxParts.month && refParts.year >= maxParts.year) {
+      return true;
+    } else if (maxParts.year && refParts.year > maxParts.year) {
+      return true;
+    }
+  }
+  return false;
 }
