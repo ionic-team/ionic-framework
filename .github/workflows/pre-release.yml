@@ -1,4 +1,4 @@
-name: 'Ionic Production Release'
+name: 'Ionic Pre-Release'
 
 on:
   workflow_dispatch:
@@ -8,17 +8,18 @@ on:
         type: choice
         description: Which version should be published?
         options:
-          - patch
-          - minor
-          - major
-      tag:
+          - prepatch
+          - preminor
+          - premajor
+      prefix:
         required: true
         type: choice
-        description: Which npm tag should this be published to?
+        description: What kind of pre-release is this?
+        default: beta
         options:
-          - latest
-          - v5-lts
-          - v4-lts
+          - alpha
+          - beta
+          - rc
 
 jobs:
   build-ionic:
@@ -43,5 +44,5 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.event.inputs.tag }}") --no-git-tag-version --no-push --skip-npm
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag next --no-git-tag-version --no-push --skip-npm --preid $(echo "${{ github.events.inputs.prefix }}")
         shell: bash
