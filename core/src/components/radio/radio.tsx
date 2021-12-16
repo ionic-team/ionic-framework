@@ -22,6 +22,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
+  private nativeInput!: HTMLInputElement;
 
   @Element() el!: HTMLIonRadioElement;
 
@@ -128,6 +129,10 @@ export class Radio implements ComponentInterface {
     }
   }
 
+  private onClick = () => {
+    this.checked = this.nativeInput.checked;
+  };
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -150,6 +155,7 @@ export class Radio implements ComponentInterface {
         tabindex={buttonTabindex}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -171,6 +177,7 @@ export class Radio implements ComponentInterface {
           disabled={disabled}
           tabindex="-1"
           id={inputId}
+          ref={el => this.nativeInput = el as HTMLInputElement}
         />
       </Host>
     );
