@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { expectFiles } from '@stencil/core/testing/testing-utils';
 
 test('datetime: minmax', async () => {
   const page = await newE2EPage({
