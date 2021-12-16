@@ -51,6 +51,31 @@ interface ScrollCustomEvent extends ScrollBaseCustomEvent {
 }
 ```
 
+### IonContent
+If you would like to implement your own content component, you can the `ion-content` attribute to the element. This component should follow the `IonComponent` interface to leverage scrolling behaviors and inter-component interaction with other Ionic components.
+
+```html
+<div id="my-content" ion-content></div>
+```
+
+```typescript
+interface IonContent {
+  "color"?: Color;
+  "forceOverscroll"?: boolean;
+  "fullscreen"?: boolean;
+  "getScrollElement": () => Promise<HTMLElement>;
+  "onIonScroll"?: (event: CustomEvent<ScrollDetail>) => void;
+  "onIonScrollEnd"?: (event: CustomEvent<ScrollBaseDetail>) => void;
+  "onIonScrollStart"?: (event: CustomEvent<ScrollBaseDetail>) => void;
+  "scrollByPoint": (x: number, y: number, duration: number) => Promise<void>;
+  "scrollEvents"?: boolean;
+  "scrollToBottom": (duration?: number) => Promise<void>;
+  "scrollToPoint": (x: number | undefined | null, y: number | undefined | null, duration?: number) => Promise<void>;
+  "scrollToTop": (duration?: number) => Promise<void>;
+  "scrollX"?: boolean;
+  "scrollY"?: boolean;
+}
+```
 
 <!-- Auto Generated Below -->
 
