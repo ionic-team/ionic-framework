@@ -59,6 +59,10 @@ export const createViewStacks = (router: Router) => {
   }
 
   const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute: boolean = true, useDeprecatedRouteSetup: boolean = false) => {
+    let hasLeavingView = routeInfo.lastPathname !== undefined;
+    if (hasLeavingView === false) {
+      return undefined;
+    }
     return findViewItemByPath(routeInfo.lastPathname, outletId, mustBeIonRoute, useDeprecatedRouteSetup);
   }
 
@@ -103,16 +107,20 @@ export const createViewStacks = (router: Router) => {
 
     if (outletId) {
       const stack = viewStacks[outletId];
-      if (!stack) return undefined;
+      if (!stack) {
+        return undefined;
+      }
 
       const match = (router) ? stack.find(matchView) : findViewItemInStack(path, stack)
-      if (match) return match;
+      if (match) {
+        return match;
+      }
     } else {
       for (let outletId in viewStacks) {
         const stack = viewStacks[outletId];
         const viewItem = findViewItemInStack(path, stack);
         if (viewItem) {
-            return viewItem;
+          return viewItem;
         }
       }
     }
@@ -139,7 +147,8 @@ export const createViewStacks = (router: Router) => {
 
   const add = (viewItem: ViewItem): void => {
     const { outletId } = viewItem;
-    if (!viewStacks[outletId]) {
+    let hasOutlet = viewStacks[outletId] !== undefined;
+    if (hasOutlet) {
       viewStacks[outletId] = [viewItem];
     } else {
       viewStacks[outletId].push(viewItem);
@@ -147,7 +156,9 @@ export const createViewStacks = (router: Router) => {
   }
 
   const remove = (viewItem: ViewItem, outletId?: number): void => {
-    if (!outletId) { throw Error('outletId required') }
+    if (!outletId) {
+      throw Error('outletId required')
+    }
 
     const viewStack = viewStacks[outletId];
     if (viewStack) {
@@ -157,11 +168,33 @@ export const createViewStacks = (router: Router) => {
 
   const getChildrenToRender = (outletId: number): ViewItem[] => {
     const viewStack = viewStacks[outletId];
+
+    let components: ViewItem[] = [];
     if (viewStack) {
-      const components = viewStacks[outletId].filter(v => v.mount);
-      return components;
+      components = viewStacks[outletId].filter(v => v.mount);
     }
-    return [];
+    return components;
+  }
+
+  /**
+   * Mount a viewItem
+   * @param viewItem
+   */
+  const mountViewItem = (viewItem: ViewItem) => {
+    viewItem.mount = true;
+  }
+
+  /**
+   * Unmount a viewItem, if it has any matchedRoute instances reset
+   * @param viewItem
+   */
+  const unmountViewItem = (viewItem: ViewItem) => {
+    viewItem.mount = false;
+    viewItem.ionPageElement = undefined;
+    viewItem.ionRoute = false;
+    if (viewItem.matchedRoute !== undefined) {
+      viewItem.matchedRoute.instances = {};
+    }
   }
 
   /**
@@ -179,10 +212,7 @@ export const createViewStacks = (router: Router) => {
 
     for (let i = startIndex + 1; i < startIndex - delta; i++) {
       const viewItem = viewStack[i];
-      viewItem.mount = false;
-      viewItem.ionPageElement = undefined;
-      viewItem.ionRoute = false;
-      viewItem.matchedRoute.instances = {};
+      unmountViewItem(viewItem);
     }
   }
 
@@ -206,16 +236,21 @@ export const createViewStacks = (router: Router) => {
    */
   const mountIntermediaryViews = (outletId: number, viewItem: ViewItem, delta: number = 1) => {
     const viewStack = viewStacks[outletId];
-    if (!viewStack) return;
+    if (!viewStack) {
+      return;
+    }
 
     const startIndex = viewStack.findIndex(v => v === viewItem);
 
     for (let i = startIndex + 1; i < startIndex + delta; i++) {
-      viewStack[i].mount = true;
+      let viewItem = viewStack[i];
+      mountViewItem(viewItem)
     }
   }
 
   return {
+    mountViewItem,
+    unmountViewItem,
     unmountLeavingViews,
     mountIntermediaryViews,
     clear,
