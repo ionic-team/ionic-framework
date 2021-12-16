@@ -99,7 +99,7 @@
 </template>
 
 <script>
-  import { defineComponent, ref } from "vue";
+  import { defineComponent, ref } from 'vue';
   import {
     IonButton,
     IonButtons,
@@ -109,8 +109,8 @@
     IonItem,
     IonModal,
     IonPopover,
-  } from "@ionic/vue";
-  import { format, parseISO } from "date-fns";
+  } from '@ionic/vue';
+  import { format, parseISO } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -125,8 +125,8 @@
     },
     setup() {
       const customDatetime = ref();
-      const date1 = "";
-      const date2 = "";
+      const date1 = '';
+      const date2 = '';
 
       const confirm = () => {
         if (customDatetime.value === undefined) return;
@@ -141,7 +141,7 @@
       };
 
       const formatDate = (value: string) => {
-        return format(parseISO(value), "MMM dd yyyy");
+        return format(parseISO(value), 'MMM dd yyyy');
       };
 
       return {

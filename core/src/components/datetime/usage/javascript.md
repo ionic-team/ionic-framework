@@ -92,9 +92,9 @@
 ```
 
 ```javascript
-import { format, parseISO } from "date-fns";
+import { format, parseISO } from 'date-fns';
 
-const datetime = document.querySelector("#custom-datetime");
+const datetime = document.querySelector('#custom-datetime');
 
 const confirm = () => {
   datetime.confirm();
@@ -105,20 +105,14 @@ const reset = () => {
 };
 
 const formatDate = (value: string) => {
-  return format(parseISO(value), "MMM dd yyyy");
+  return format(parseISO(value), 'MMM dd yyyy');
 };
 
-const popoverDatetime = document.querySelector("#popover-datetime");
-const dateInput = document.querySelector("#date-input");
-popoverDatetime.addEventListener(
-  "ionChange",
-  (ev) => (dateInput.innerText = formatDate(ev.detail.value))
-);
+const popoverDatetime = document.querySelector('#popover-datetime');
+const dateInput = document.querySelector('#date-input');
+popoverDatetime.addEventListener('ionChange', (ev) => (dateInput.innerText = formatDate(ev.detail.value)));
 
-const popoverDatetime2 = document.querySelector("#popover-datetime-2");
-const dateInput2 = document.querySelector("#date-input-2");
-popoverDatetime2.addEventListener(
-  "ionChange",
-  (ev) => (dateInput2.value = formatDate(ev.detail.value))
-);
+const popoverDatetime2 = document.querySelector('#popover-datetime-2');
+const dateInput2 = document.querySelector('#date-input-2');
+popoverDatetime2.addEventListener('ionChange', (ev) => (dateInput2.value = formatDate(ev.detail.value)));
 ```
