@@ -25,6 +25,10 @@ export interface RouteInfo {
   search?: string;
   params?: { [k: string]: any };
   pushedByRoute?: string;
+  /**
+   * When a Route is replaced by a previous route, store that pathname here to demount/transition  away from the replaced route
+   */
+  replacedRoute?: string;
   tab?: string;
   position?: number;
   delta?: number;
@@ -57,6 +61,7 @@ export interface ViewItem {
   vueComponentData: VueComponentData;
 }
 
+//@TODO: Define types of ViewStacks
 export interface ViewStacks {
   [k: string]: ViewItem[];
 }

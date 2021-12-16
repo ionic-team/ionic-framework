@@ -1,5 +1,6 @@
-import { RouteInfo } from './types';
+import {RouteInfo} from './types';
 
+//@TODO: declare types
 export const createLocationHistory = () => {
   const locationHistory: RouteInfo[] = [];
   const tabsHistory: { [k: string]: RouteInfo[] } = {};
@@ -91,6 +92,7 @@ export const createLocationHistory = () => {
       tabsHistory[key] = [];
     });
   }
+
   const getTabsHistory = (tab: string): RouteInfo[] => {
     let history;
     if (tab) {
@@ -105,15 +107,23 @@ export const createLocationHistory = () => {
 
   const size = () => locationHistory.length;
 
-  const updateByHistoryPosition = (routeInfo: RouteInfo, updateEntries: boolean) => {
+  /**
+   * When performing a router.replace, we need to replace the routeInfo at the route index
+   * @param routeInfo
+   */
+  const updateByHistoryPosition = (routeInfo: RouteInfo) => {
+    // const updateByHistoryPosition = (routeInfo: RouteInfo, updateEntries: boolean) => {
     const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
-    if (existingRouteIndex === -1) return;
-
-    locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
-
-    if (updateEntries) {
-      locationHistory[existingRouteIndex].pushedByRoute = routeInfo.pushedByRoute;
+    if (existingRouteIndex === -1) {
+      console.error('Trying to update history position for non-existing route');
+      return;
     }
+
+    locationHistory[existingRouteIndex] = routeInfo;
+    //
+    // if (updateEntries) {
+    //   locationHistory[existingRouteIndex].pushedByRoute = routeInfo.pushedByRoute;
+    // }
   }
 
   /**
@@ -133,7 +143,6 @@ export const createLocationHistory = () => {
   }
   const previous = () => locationHistory[locationHistory.length - 2] || last();
   const last = () => locationHistory[locationHistory.length - 1];
-
   /**
    * With the introduction of router.go support, we no longer remove
    * items from locationHistory as they may be needed again in the future.

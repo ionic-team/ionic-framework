@@ -59,11 +59,12 @@ export const createViewStacks = (router: Router) => {
   }
 
   const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute: boolean = true, useDeprecatedRouteSetup: boolean = false) => {
-    let hasLeavingView = routeInfo.lastPathname !== undefined;
+    const hasLeavingView = routeInfo.replacedRoute !== undefined || routeInfo.lastPathname !== undefined;
     if (hasLeavingView === false) {
       return undefined;
     }
-    return findViewItemByPath(routeInfo.lastPathname, outletId, mustBeIonRoute, useDeprecatedRouteSetup);
+    const leavingViewPathname = routeInfo.replacedRoute ? routeInfo.replacedRoute :  routeInfo.lastPathname;
+    return findViewItemByPath(leavingViewPathname, outletId, mustBeIonRoute, useDeprecatedRouteSetup);
   }
 
   const findViewItemByPathname = (pathname: string, outletId?: number, useDeprecatedRouteSetup: boolean = false) => {
@@ -147,8 +148,8 @@ export const createViewStacks = (router: Router) => {
 
   const add = (viewItem: ViewItem): void => {
     const { outletId } = viewItem;
-    let hasOutlet = viewStacks[outletId] !== undefined;
-    if (hasOutlet) {
+    const hasOutlet = viewStacks[outletId] !== undefined;
+    if (hasOutlet === false) {
       viewStacks[outletId] = [viewItem];
     } else {
       viewStacks[outletId].push(viewItem);
@@ -206,7 +207,9 @@ export const createViewStacks = (router: Router) => {
    */
   const unmountLeavingViews = (outletId: number, viewItem: ViewItem, delta: number = 1) => {
     const viewStack = viewStacks[outletId];
-    if (!viewStack) return;
+    if (!viewStack) {
+      return;
+    }
 
     const startIndex = viewStack.findIndex(v => v === viewItem);
 
