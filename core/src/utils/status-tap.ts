@@ -12,7 +12,7 @@ export const startStatusTap = () => {
       if (!el) {
         return;
       }
-      const contentEl = el.closest('ion-content');
+      const contentEl = el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
       if (contentEl) {
         new Promise(resolve => componentOnReady(contentEl, resolve)).then(() => {
           writeTask(async () => {

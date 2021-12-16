@@ -136,7 +136,7 @@ export class Refresher implements ComponentInterface {
   private async checkNativeRefresher() {
     const useNativeRefresher = await shouldUseNativeRefresher(this.el, getIonMode(this));
     if (useNativeRefresher && !this.nativeRefresher) {
-      const contentEl = this.el.closest('ion-content');
+      const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
       this.setupNativeRefresher(contentEl);
     } else if (!useNativeRefresher) {
       this.destroyNativeRefresher();
@@ -419,7 +419,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
     if (!contentEl) {
       console.error('<ion-refresher> must be used inside an <ion-content>');
       return;

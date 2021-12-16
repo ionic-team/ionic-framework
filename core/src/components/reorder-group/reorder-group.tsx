@@ -54,7 +54,7 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
     if (contentEl) {
       await new Promise(resolve => componentOnReady(contentEl, resolve));
       this.scrollEl = await contentEl.getScrollElement();

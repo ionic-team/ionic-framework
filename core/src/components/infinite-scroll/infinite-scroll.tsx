@@ -78,7 +78,7 @@ export class InfiniteScroll implements ComponentInterface {
   @Event() ionInfinite!: EventEmitter<void>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
     if (!contentEl) {
       console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
       return;

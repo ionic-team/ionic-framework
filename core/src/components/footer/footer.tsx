@@ -56,7 +56,7 @@ export class Footer implements ComponentInterface {
 
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
+      const contentEl = (pageEl) ? pageEl.querySelector<HTMLIonContentElement>('ion-content, [ion-content]') : null;
 
       this.setupFadeFooter(contentEl);
     }

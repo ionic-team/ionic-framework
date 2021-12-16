@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Content - Custom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body>
+  <ion-app mode="ios">
+    <ion-header collapse="fade">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button onclick="scrollToTop()">
+            <ion-icon slot="icon-only" name="arrow-up"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title onclick="statusTap()">Content - Custom</ion-title>
+
+        <ion-buttons slot="end">
+          <ion-button onclick="scrollToBottom()">
+            <ion-icon slot="icon-only" name="arrow-down"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <div ion-content style="height: 100%; position: relative; overflow: hidden;" id="content">
+      <div id="background-content"></div>
+      <div style="position: absolute; left: 0; top: 0; width: 100%;">
+        <ion-refresher slot="fixed" id="ion-refresher">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+      </div>
+      <div id="inner-scroll">
+        <f style="height: 50%"></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <ion-list>
+          <ion-item>
+            <ion-label>Input</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <f></f>
+
+        <ion-infinite-scroll>
+        </ion-infinite-scroll>
+      </div>
+    </div>
+
+    <ion-footer collapse="fade">
+      <ion-toolbar>
+        <ion-title>Footer</ion-title>
+
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon slot="icon-only" name="help-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+
+    <script>
+      const content = document.getElementById('content');
+
+      content.getScrollElement = async function() {
+        return this.querySelector('#inner-scroll');
+      };
+
+      content.scrollToPoint = async function (x, y, duration){
+        const el = await this.getScrollElement();
+
+        if (duration < 32) {
+          if (y != null) {
+            el.scrollTop = y;
+          }
+          if (x != null) {
+            el.scrollLeft = x;
+          }
+          return;
+        }
+
+        let resolve;
+        let startTime = 0;
+        const promise = new Promise(r => resolve = r);
+        const fromY = el.scrollTop;
+        const fromX = el.scrollLeft;
+
+        const deltaY = y != null ? y - fromY : 0;
+        const deltaX = x != null ? x - fromX : 0;
+
+        // scroll loop
+        const step = (timeStamp) => {
+          const linearTime = Math.min(1, ((timeStamp - startTime) / duration)) - 1;
+          const easedT = Math.pow(linearTime, 3) + 1;
+
+          if (deltaY !== 0) {
+            el.scrollTop = Math.floor((easedT * deltaY) + fromY);
+          }
+          if (deltaX !== 0) {
+            el.scrollLeft = Math.floor((easedT * deltaX) + fromX);
+          }
+
+          if (easedT < 1) {
+            // do not use DomController here
+            // must use nativeRaf in order to fire in the next frame
+            // TODO: remove as any
+            requestAnimationFrame(step);
+
+          } else {
+            resolve();
+          }
+        };
+        // chill out for a frame first
+        requestAnimationFrame(ts => {
+          startTime = ts;
+          step(ts);
+        });
+        return promise;
+      };
+
+      content.scrollByPoint = async function(x, y, duration){
+        const scrollEl = await this.getScrollElement();
+        return this.scrollToPoint(x + scrollEl.scrollLeft, y + scrollEl.scrollTop, duration);
+      }
+
+      content.scrollToBottom = async function (duration) {
+        const content = await this.getScrollElement();
+        const y = content.scrollHeight - content.clientHeight;
+        return this.scrollToPoint(undefined, y, duration);
+      };
+
+      content.scrollToTop = async function (duration) {
+        return this.scrollToPoint(undefined, 0, duration);
+      };
+
+      function scrollToBottom () {
+        content.scrollToBottom(1000);
+      }
+
+      function scrollToTop () {
+        content.scrollToTop(1000);
+      }
+
+      function statusTap () {
+        window.dispatchEvent(new CustomEvent('statusTap'));
+      }
+
+      document.getElementById('ion-refresher')
+        .addEventListener('ionRefresh', (event) => {
+          setTimeout(()=>  event.target.complete(), 1000);
+        });
+    </script>
+    <style>
+      f {
+        display: block;
+        margin: 15px auto;
+        max-width: 150px;
+        height: 150px;
+        background: blue;
+      }
+
+      f:last-of-type {
+        background: yellow;
+      }
+
+      #inner-scroll {
+        height: 100%;
+        overflow: auto;
+        padding-bottom: var(--keyboard-offset);
+        touch-action: manipulation;
+      }
+    </style>
+
+    <script>
+      window.Ionic = {
+        config: {
+          inputShims: true,
+          keyboardHeight: 500,
+          statusTap: true,
+        }
+      }
+    </script>
+  </ion-app>
+</body>
+
+</html>

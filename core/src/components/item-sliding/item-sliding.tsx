@@ -68,7 +68,7 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
-    this.closestContent = this.el.closest('ion-content');
+    this.closestContent = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
 
     await this.updateOptions();
 
