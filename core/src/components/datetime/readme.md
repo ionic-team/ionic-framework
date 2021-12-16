@@ -138,7 +138,7 @@ import { format, utcToZonedTime } from 'date-fns-tz';
 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 // Create a date object from a UTC date string
-const date = new Date('2014-10-25T10:46:20Z')
+const date = new Date('2014-10-25T10:46:20Z');
 
 // Use date-fns-tz to convert from UTC to a zoned time
 const zonedTime = dateFnsTz.utcToZonedTime(date, userTimeZone);
