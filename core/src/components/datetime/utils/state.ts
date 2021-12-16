@@ -138,8 +138,9 @@ export const getCalendarDayState = (
 }
 
 /**
- * Given a working date and a minimum date range,
- * determine if the previous navigation button is disabled.
+ * Given a working date, an optional minimum date range,
+ * and an optional maximum date range; determine if the
+ * previous navigation button is disabled.
  */
 export const isPrevMonthDisabled = (refParts: {
   month: number,
@@ -154,7 +155,7 @@ export const isPrevMonthDisabled = (refParts: {
   if (minParts) {
     if (minParts.month) {
       /**
-       * Disables the previous month is the current date is either at the minimum
+       * Disables the previous month if the current date is either at the minimum
        * month or before the minimum range.
        *
        * i.e.:
