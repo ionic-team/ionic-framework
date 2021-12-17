@@ -242,6 +242,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       }
 
       const isNewTab = nextRouteInfo.tab !== leavingRouteInfo.tab;
+      const isLeavingRouteTab = leavingRouteInfo.tab !== '';
       const isPushed = incomingRouteParams.routerAction === 'push' && incomingRouteParams.routerDirection === 'forward';
       if (isPushed) {
         /**
@@ -251,7 +252,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          */
         nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
         nextRouteInfo.tab = leavingRouteInfo.tab;
-        //@TODO: Check if bug, why would pathname be blank?
         nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
       } else if (nextRouteInfo.routerAction === 'pop') {
         /**
@@ -265,8 +265,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         nextRouteInfo.pushedByRoute = leavingRouteInfo?.pathname;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
-        // const lastTabRouteInfo = locationHistory.getCurrentRouteInfoForTab(nextRouteInfo.tab);
-        nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        if (isLeavingRouteTab) {
+          nextRouteInfo.pushedByRoute = leavingRouteInfo.pushedByRoute;
+        } else {
+          nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        }
         nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
       } else if (nextRouteInfo.routerAction === 'replace') {
         /**
