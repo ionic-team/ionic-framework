@@ -13,13 +13,13 @@ import {
   RouteAction,
   RouteDirection,
   IonicVueRouterOptions,
-  NavigationInformation,
+  NavigationInformation
 } from './types';
 import { AnimationBuilder } from '@ionic/vue';
 
 //@TODO: declare types
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
-  let currentNavigationInfo: NavigationInformation = {direction: undefined, action: undefined, delta: undefined};
+  let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined, delta: undefined };
 
   /**
    * Ionic Vue should only react to navigation
@@ -104,40 +104,51 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     };
   });
 
+  /**
+   *
+   * @param defaultHref
+   * @param routerAnimation
+   */
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
     // todo grab default back button href from config
     const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
-    if (routeInfo && routeInfo.pushedByRoute) {
-      const prevInfo = locationHistory.findLastLocation(routeInfo);
-      if (prevInfo) {
-        incomingRouteParams = {
-          ...prevInfo,
-          routerAction: 'pop',
-          routerDirection: 'back',
-          routerAnimation: routerAnimation || routeInfo.routerAnimation
-        };
-        if (
-          routeInfo.lastPathname === routeInfo.pushedByRoute ||
-          (
-            /**
-             * We need to exclude tab switches/tab
-             * context changes here because tabbed
-             * navigation is not linear, but router.back()
-             * will go back in a linear fashion.
-             */
-            prevInfo.pathname === routeInfo.pushedByRoute &&
-            routeInfo.tab === '' && prevInfo.tab === ''
-          )
-        ) {
-          router.back();
-        } else {
-          router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });
-        }
-      } else {
-        handleNavigate(defaultHref, 'pop', 'back');
-      }
+    const hasRoute = routeInfo !== undefined;
+    const wasRoutePushed = hasRoute && routeInfo.pushedByRoute !== undefined;
+
+    if (!hasRoute || !wasRoutePushed) {
+      return handleNavigate(defaultHref, 'pop', 'back');
+    }
+
+    const lastLocation = locationHistory.findLastLocation(routeInfo);
+    const hasLastLocation = lastLocation !== undefined;
+    if (hasLastLocation === false) {
+      return handleNavigate(defaultHref, 'pop', 'back');
+    }
+
+    incomingRouteParams = {
+      ...lastLocation,
+      routerAction: 'pop',
+      routerDirection: 'back',
+      routerAnimation: routerAnimation || routeInfo.routerAnimation
+    };
+    const wasPushedByLastPath = routeInfo.lastPathname === routeInfo.pushedByRoute;
+    const isCurrentPushedByLast = lastLocation.pathname === routeInfo.pushedByRoute;
+    const isLastNotTab = lastLocation.tab === '';
+    const isNotTab = routeInfo.tab === '';
+    if (wasPushedByLastPath ||
+      (
+        /**
+         * We need to exclude tab switches/tab
+         * context changes here because tabbed
+         * navigation is not linear, but router.back()
+         * will go back in a linear fashion.
+         */
+        isCurrentPushedByLast && isNotTab && isLastNotTab
+      )
+    ) {
+      router.back();
     } else {
-      handleNavigate(defaultHref, 'pop', 'back');
+      router.replace({ path: lastLocation.pathname, query: parseQuery(lastLocation.search) });
     }
   }
 
@@ -254,8 +265,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         nextRouteInfo.pushedByRoute = leavingRouteInfo?.pathname;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
-        const lastTabRouteInfo = locationHistory.getCurrentRouteInfoForTab(nextRouteInfo.tab);
-        nextRouteInfo.pushedByRoute = lastTabRouteInfo?.pushedByRoute;
+        // const lastTabRouteInfo = locationHistory.getCurrentRouteInfoForTab(nextRouteInfo.tab);
+        nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
       } else if (nextRouteInfo.routerAction === 'replace') {
         /**
          * Replace occurs when replacing a route, page -> page/a -(replace)-> page/b
@@ -357,12 +369,16 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   }
 
   const changeTab = (tab: string, path?: string) => {
-    if (!path) return;
+    if (path === undefined) {
+      console.warn('No tab path defined for:', tab);
+      return;
+    }
 
     const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname] = path.split('?');
+    const isExistingTab = routeInfo !== undefined;
 
-    if (routeInfo) {
+    if (isExistingTab) {
       incomingRouteParams = {
         ...incomingRouteParams,
         routerAction: 'push',
