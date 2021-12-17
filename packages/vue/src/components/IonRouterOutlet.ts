@@ -207,6 +207,7 @@ export const IonRouterOutlet = defineComponent({
           return resolve(false);
         }
 
+        //
         requestAnimationFrame(() => {
           requestAnimationFrame(async () => {
             enteringEl.classList.add('ion-page-invisible');
@@ -244,12 +245,15 @@ export const IonRouterOutlet = defineComponent({
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
-      if (enteringViewItem === leavingViewItem) {
+      const isSameView = enteringViewItem === leavingViewItem;
+      let hasLeavingView = leavingViewItem !== undefined;
+      if (isSameView) {
         return;
       }
 
-      if (!leavingViewItem && prevRouteLastPathname) {
+      if (!hasLeavingView && prevRouteLastPathname) {
         leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id, usingDeprecatedRouteSetup);
+        hasLeavingView = leavingViewItem !== undefined;
       }
 
       /**
@@ -271,13 +275,13 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * return early for swipe to go back when
        * going from a non-tabs page to a tabs page.
        */
-      if (isViewVisible(enteringEl) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
+      if (isViewVisible(enteringEl) && hasLeavingView && !isViewVisible(leavingViewItem.ionPageElement)) {
         return;
       }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
-      if (leavingViewItem && enteringViewItem !== leavingViewItem) {
+      if (hasLeavingView && !isSameView) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
@@ -317,7 +321,7 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         if (routerAction === 'replace') {
           viewStacks.unmountViewItem(leavingViewItem);
         } else if (!(routerAction === 'push' && routerDirection === 'forward')) {
-          const shouldLeavingViewBeRemoved = routerDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
+          const shouldLeavingViewBeRemoved = routerDirection !== 'none' && hasLeavingView && !isSameView;
           if (shouldLeavingViewBeRemoved) {
             viewStacks.unmountViewItem(leavingViewItem);
             viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
@@ -349,7 +353,7 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
 
       /**
        * If no matched route, do not do anything in this outlet.
-       * If there is a match, but it the first matched path
+       * If there is a match, but the first matched path
        * is not the root path for this outlet, then this view
        * change needs to be rendered in a different outlet.
        * We also add an exception for when the matchedRouteRef is
@@ -357,10 +361,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * This logic is mainly to help nested outlets/multi-tab
        * setups work better.
        */
-      if (
-        !matchedRouteRef.value ||
-        (matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath)
-      ) {
+      const hasMatchedRoute = matchedRouteRef.value !== undefined;
+      const isNotRootPath = !hasMatchedRoute && matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath;
+      if (!hasMatchedRoute || isNotRootPath) {
+        console.warn('No matched route or is not root path for outlet');
         return;
       }
 
@@ -438,7 +442,7 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
     }
   },
   render() {
-    const {components, registerIonPage, injectedRoute} = this;
+    const { components, registerIonPage, injectedRoute } = this;
 
     return h(
       'ion-router-outlet',
