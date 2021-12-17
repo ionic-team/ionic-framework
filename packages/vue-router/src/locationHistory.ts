@@ -1,4 +1,4 @@
-import {RouteInfo} from './types';
+import { RouteInfo } from './types';
 
 //@TODO: declare types
 export const createLocationHistory = () => {
