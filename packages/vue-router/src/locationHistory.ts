@@ -5,6 +5,10 @@ export const createLocationHistory = () => {
   const locationHistory: RouteInfo[] = [];
   const tabsHistory: { [k: string]: RouteInfo[] } = {};
 
+  /**
+   * @TODO: refactor method, add is misleading as the behavior could remove,replace or add, maybe a method called `handle`
+   * @param routeInfo
+   */
   const add = (routeInfo: RouteInfo) => {
     switch (routeInfo.routerAction) {
       case "replace":
@@ -42,6 +46,10 @@ export const createLocationHistory = () => {
     }
   }
 
+  /**
+   *
+   * @param routeInfo
+   */
   const replaceRoute = (routeInfo: RouteInfo) => {
     const routeInfos = getTabsHistory(routeInfo.tab);
     routeInfos && routeInfos.pop();
@@ -49,36 +57,49 @@ export const createLocationHistory = () => {
     addRoute(routeInfo);
   }
 
+  /**
+   *
+   * @param routeInfo
+   */
   const pop = (routeInfo: RouteInfo) => {
     const tabHistory = getTabsHistory(routeInfo.tab);
-    let ri;
+    let _routeInfo
     if (tabHistory) {
+      /**
+       * When navigating between tabs, each tab is added onto history stack, but using device back we will pop all instances of that tab from the stack
+       */
       // Pop all routes until we are back
-      ri = tabHistory[tabHistory.length - 1];
-      while (ri && ri.id !== routeInfo.id) {
+      _routeInfo = lastTab(routeInfo.tab);// tabHistory[tabHistory.length - 1];
+      while (_routeInfo && _routeInfo.id !== routeInfo.id) {
         tabHistory.pop();
-        ri = tabHistory[tabHistory.length - 1];
+        _routeInfo = lastTab(routeInfo.tab);
       }
       // Replace with updated route
       tabHistory.pop();
       tabHistory.push(routeInfo);
     }
 
-    ri = locationHistory[locationHistory.length - 1];
-    while (ri && ri.id !== routeInfo.id) {
+    _routeInfo = last();
+    while (_routeInfo && _routeInfo.id !== routeInfo.id) {
       locationHistory.pop();
-      ri = locationHistory[locationHistory.length - 1];
+      _routeInfo = last();
     }
     // Replace with updated route
     locationHistory.pop();
     locationHistory.push(routeInfo);
   }
 
+  /**
+   *
+   * @param routeInfo
+   */
   const addRoute = (routeInfo: RouteInfo) => {
     const tabHistory = getTabsHistory(routeInfo.tab);
     if (tabHistory) {
       // If the latest routeInfo is the same (going back and forth between tabs), replace it
-      if (tabHistory[tabHistory.length - 1] && tabHistory[tabHistory.length - 1].id === routeInfo.id) {
+      const previousTabHistory = tabHistory[tabHistory.length - 1];
+      const hasPreviousHistory = previousTabHistory !== undefined;
+      if (hasPreviousHistory && previousTabHistory.id === routeInfo.id) {
         tabHistory.pop();
       }
       tabHistory.push(routeInfo);
@@ -93,6 +114,10 @@ export const createLocationHistory = () => {
     });
   }
 
+  /**
+   *
+   * @param tab
+   */
   const getTabsHistory = (tab: string): RouteInfo[] => {
     let history;
     if (tab) {
@@ -112,7 +137,6 @@ export const createLocationHistory = () => {
    * @param routeInfo
    */
   const updateByHistoryPosition = (routeInfo: RouteInfo) => {
-    // const updateByHistoryPosition = (routeInfo: RouteInfo, updateEntries: boolean) => {
     const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
     if (existingRouteIndex === -1) {
       console.error('Trying to update history position for non-existing route');
@@ -120,10 +144,6 @@ export const createLocationHistory = () => {
     }
 
     locationHistory[existingRouteIndex] = routeInfo;
-    //
-    // if (updateEntries) {
-    //   locationHistory[existingRouteIndex].pushedByRoute = routeInfo.pushedByRoute;
-    // }
   }
 
   /**
@@ -143,6 +163,14 @@ export const createLocationHistory = () => {
   }
   const previous = () => locationHistory[locationHistory.length - 2] || last();
   const last = () => locationHistory[locationHistory.length - 1];
+  const lastTab = (tab: string) => {
+    let tabHistory = getTabsHistory(tab);
+    if (tabHistory === undefined) {
+      return undefined;
+    }
+
+    return tabHistory[tabHistory.length - 1];
+  }
   /**
    * With the introduction of router.go support, we no longer remove
    * items from locationHistory as they may be needed again in the future.
@@ -172,6 +200,32 @@ export const createLocationHistory = () => {
   }
 
   /**
+   *
+   * @param routeInfo
+   * @param delta
+   */
+  const findTabLastLocation = (routeInfo: RouteInfo, delta: number = -1): RouteInfo | undefined => {
+    const routeInfos = getTabsHistory(routeInfo.tab);
+    if (routeInfos === undefined) {
+      return undefined;
+    }
+    if (delta < -1) {
+      return routeInfos[routeInfos.length - 1 + delta];
+    }
+
+    for (let i = routeInfos.length - 2; i >= 0; i--) {
+      const ri = routeInfos[i];
+      if (ri) {
+        if (ri.pathname === routeInfo.pushedByRoute) {
+          return ri;
+        }
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
    * Finds and returns the previous view based upon
    * what originally pushed it (pushedByRoute).
    * When `delta` < -1 then we should just index into
@@ -182,33 +236,24 @@ export const createLocationHistory = () => {
    * not update pushedByRoute anyways.
    */
   const findLastLocation = (routeInfo: RouteInfo, delta: number = -1): RouteInfo | undefined => {
-    const routeInfos = getTabsHistory(routeInfo.tab);
-    if (routeInfos) {
-      if (delta < -1) {
-        return routeInfos[routeInfos.length - 1 + delta];
-      } else {
-        for (let i = routeInfos.length - 2; i >= 0; i--) {
-          const ri = routeInfos[i];
-          if (ri) {
-            if (ri.pathname === routeInfo.pushedByRoute) {
-              return ri;
-            }
-          }
-        }
-      }
+    const lastTabLocation = findTabLastLocation(routeInfo, delta);
+    if (lastTabLocation !== undefined) {
+      return lastTabLocation;
     }
+
     if (delta < -1) {
       return locationHistory[locationHistory.length - 1 + delta];
-    } else {
-      for (let i = locationHistory.length - 2; i >= 0; i--) {
-        const ri = locationHistory[i];
-        if (ri) {
-          if (ri.pathname === routeInfo.pushedByRoute) {
-            return ri;
-          }
+    }
+
+    for (let i = locationHistory.length - 2; i >= 0; i--) {
+      const ri = locationHistory[i];
+      if (ri) {
+        if (ri.pathname === routeInfo.pushedByRoute) {
+          return ri;
         }
       }
     }
+
     return undefined;
   }
 
