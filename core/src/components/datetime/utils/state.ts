@@ -15,7 +15,12 @@ export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxPar
   return false;
 }
 
-export const isMonthSwipeDisabled = (refMonth: number, refYear: number, workingParts?: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const isMonthSwipeDisabled = (
+  refMonth: number,
+  refYear: number,
+  workingParts?: DatetimeParts,
+  minParts?: { month?: number, year: number },
+  maxParts?: { month?: number, year: number }) => {
   if (workingParts && refMonth === workingParts.month && refYear === workingParts.year) {
     /**
      * Do not disable the working month, if it's the current month being rendered.
@@ -27,21 +32,21 @@ export const isMonthSwipeDisabled = (refMonth: number, refYear: number, workingP
   }
 
   if (minParts) {
-    if (minParts.month) {
+    if (typeof minParts.month !== 'undefined') {
       // If the minimum parts contains a month, compare both the month and year
       if (refMonth < minParts.month && refYear <= minParts.year) {
         return true;
       }
       // Otherwise only compare the year range
-    } else if (minParts.year && refYear < minParts.year) {
+    } else if (refYear < minParts.year) {
       return true;
     }
   }
 
   if (maxParts) {
-    if (maxParts.month && refMonth > maxParts.month && refYear >= maxParts.year) {
+    if (typeof maxParts.month !== 'undefined' && refMonth > maxParts.month && refYear >= maxParts.year) {
       return true;
-    } else if (maxParts.year && refYear > maxParts.year) {
+    } else if (refYear > maxParts.year) {
       return true;
     }
   }
@@ -142,18 +147,21 @@ export const getCalendarDayState = (
  * and an optional maximum date range; determine if the
  * previous navigation button is disabled.
  */
-export const isPrevMonthDisabled = (refParts: {
-  month: number,
-  year: number
-}, minParts?: {
-  month?: number,
-  year: number
-}, maxParts?: {
-  month?: number,
-  year: number
-}) => {
+export const isPrevMonthDisabled = (
+  refParts: {
+    month: number,
+    year: number
+  },
+  minParts?: {
+    month?: number,
+    year: number
+  },
+  maxParts?: {
+    month?: number,
+    year: number
+  }) => {
   if (minParts) {
-    if (minParts.month) {
+    if (typeof minParts.month !== 'undefined') {
       /**
        * Disables the previous month if the current date is either at the minimum
        * month or before the minimum range.
@@ -165,32 +173,31 @@ export const isPrevMonthDisabled = (refParts: {
       if (refParts.month <= minParts.month && refParts.year <= minParts.year) {
         return true;
       }
-    } else if (minParts.year) {
-      /**
-       * The minimum range only includes a year. Compare that the current date's year
-       * is either at the minimum year or before the minimum year.
-       *
-       * i.e:
-       * - Ref: 2021
-       * - Min: 2021
-       */
-      if (refParts.month === 1) {
-        if (refParts.year <= minParts.year) {
-          return true;
-        }
-      } else if (refParts.year < minParts.year) {
+    }
+    /**
+     * The minimum range only includes a year. Compare that the current date's year
+     * is either at the minimum year or before the minimum year.
+     *
+     * i.e:
+     * - Ref: 2021
+     * - Min: 2021
+     */
+    if (refParts.month === 1) {
+      if (refParts.year <= minParts.year) {
         return true;
       }
+    } else if (refParts.year < minParts.year) {
+      return true;
     }
   }
   if (maxParts) {
-    if (maxParts.month) {
+    if (typeof maxParts.month !== 'undefined') {
       /**
        * In situations where the current date is outside the bounds of the upper (max) range,
        * we need to check if the previous month would return the date range into the valid range.
        *
        * i.e.:
-       * - Date: 12/16/2021
+       * - Date: 11/16/2021
        * - Max: 10/2021
        * - Min: 09/2021
        *
@@ -216,17 +223,19 @@ export const isPrevMonthDisabled = (refParts: {
  * Given a working date and a maximum date range,
  * determine if the next navigation button is disabled.
  */
-export const isNextMonthDisabled = (refParts: {
-  month: number,
-  year: number
-}, maxParts?: {
-  month?: number,
-  year: number
-}) => {
+export const isNextMonthDisabled = (
+  refParts: {
+    month: number,
+    year: number
+  },
+  maxParts?: {
+    month?: number,
+    year: number
+  }) => {
   if (maxParts) {
-    if (maxParts.month && refParts.month >= maxParts.month && refParts.year >= maxParts.year) {
+    if (typeof maxParts.month !== 'undefined' && refParts.month >= maxParts.month && refParts.year >= maxParts.year) {
       return true;
-    } else if (maxParts.year && refParts.year > maxParts.year) {
+    } else if (refParts.year > maxParts.year) {
       return true;
     }
   }
