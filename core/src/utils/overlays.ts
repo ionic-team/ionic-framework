@@ -1,10 +1,13 @@
 import { ActionSheet } from '../components/action-sheet/action-sheet';
 import { Alert } from '../components/alert/alert';
+import { Backdrop } from '../components/backdrop/backdrop';
 import { Loading } from '../components/loading/loading';
 import { Modal } from '../components/modal/modal';
 import { PickerColumnCmp } from '../components/picker-column/picker-column';
 import { Picker } from '../components/picker/picker';
 import { Popover } from '../components/popover/popover';
+import { RippleEffect } from '../components/ripple-effect/ripple-effect';
+import { Spinner } from '../components/spinner/spinner';
 import { Toast } from '../components/toast/toast';
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -36,13 +39,13 @@ const createController = <Opts extends object, HTMLElm extends any>(tagName: str
   };
 };
 
-export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert', Alert);
-export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet', ActionSheet);
-export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading', Loading);
-export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal', Modal);
-export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker', Picker, [{ tagName: 'ion-picker-column', customElement: PickerColumnCmp }]);
-export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover);
-export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast);
+export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert', Alert, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet', ActionSheet, [{ tagName: 'ion-backdrop', customElement: Backdrop }, { tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
+export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading', Loading, [{ tagName: 'ion-backdrop', customElement: Backdrop }, { tagName: 'ion-spinner', customElement: Spinner }]);
+export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal', Modal, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker', Picker, [{ tagName: 'ion-picker-column', customElement: PickerColumnCmp }, { tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast, [{ tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
 
 export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   /* tslint:disable-next-line */
