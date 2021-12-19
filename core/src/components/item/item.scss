@@ -72,6 +72,8 @@
   --color-focused: var(--color);
   --color-hover: var(--color);
   --ripple-color: currentColor;
+  --background-autofill: rgb(232, 240, 254);
+  --color-autofill: black;
 
   @include font-smoothing();
 
@@ -171,6 +173,13 @@
       background: #{current-color(contrast)};
     }
   }
+}
+
+// Item: Autofill
+// --------------------------------------------------
+:host(.item-has-autofill) {
+  --background: var(--background-autofill);
+  --color: var(--color-autofill);
 }
 
 
@@ -532,7 +541,6 @@ ion-ripple-effect {
 
   color: var(--highlight-color-invalid);
 }
-
 
 // Item: Reduced Motion
 // --------------------------------------------------

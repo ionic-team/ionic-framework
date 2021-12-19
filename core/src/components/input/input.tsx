@@ -21,6 +21,7 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
+  private hasAutofill = false;
   private inheritedAttributes: { [k: string]: any } = {};
 
   /**
@@ -306,6 +307,7 @@ export class Input implements ComponentInterface {
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus,
       'interactive-disabled': this.disabled,
+      'has-autofill': this.hasAutofill
     });
   }
 
@@ -383,6 +385,23 @@ export class Input implements ComponentInterface {
     }
   }
 
+  private onAnimationStart = ({ animationName }: AnimationEvent) => {
+    switch (animationName) {
+      // `onAutoFillStart` is a custom keyframe animation defined in `input.scss`
+      // to detect when autofill is initially applied to the input.
+      case 'onAutoFillStart':
+        this.hasAutofill = true;
+        this.emitStyle();
+        break;
+      // `onAutofillCancel` is a custom keyframe animation applied in `input.scss`
+      // to detect when autofill is removed from the input.
+      case 'onAutoFillCancel':
+        this.hasAutofill = false;
+        this.emitStyle();
+        break;
+    }
+  }
+
   private hasValue(): boolean {
     return this.getValue().length > 0;
   }
@@ -436,6 +455,7 @@ export class Input implements ComponentInterface {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
+          onAnimationStart={this.onAnimationStart}
           {...this.inheritedAttributes}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
