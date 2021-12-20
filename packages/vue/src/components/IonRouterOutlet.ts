@@ -41,11 +41,16 @@ export const IonRouterOutlet = defineComponent({
     const matchedRouteRef: any = computed(() => {
       const matchedRoute = route.matched[depth];
 
-      if (matchedRoute && attrs.tabs && route.matched[depth + 1] && usingDeprecatedRouteSetup) {
-        return route.matched[route.matched.length - 1];
+      const hasMatchedRoute = (matchedRoute !== undefined),
+        hasTabs = (attrs.tabs !== undefined),
+        hasNextMatchedRoute = (route.matched[depth + 1] !== undefined);
+
+      //first first to prevent large if blocks
+      if (!hasMatchedRoute || !hasTabs || !hasNextMatchedRoute || !usingDeprecatedRouteSetup) {
+        return matchedRoute;
       }
 
-      return matchedRoute;
+      return route.matched[route.matched.length - 1];
     });
 
     provide(viewDepthKey, depth + 1)
@@ -86,10 +91,9 @@ export const IonRouterOutlet = defineComponent({
        * view item otherwise if we had this in a nested outlet the
        * parent outlet would re-render as well as the child page.
        */
-      if (
-        currentMatchedRouteRef !== previousMatchedRouteRef ||
-        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef
-      ) {
+      const isNotPreviousRouteRef = currentMatchedRouteRef !== previousMatchedRouteRef;
+      const isLastMatchedCurrentRouteRef = currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef;
+      if (isNotPreviousRouteRef || isLastMatchedCurrentRouteRef) {
         setupViewItem(matchedRouteRef);
       }
     });
@@ -229,7 +233,7 @@ export const IonRouterOutlet = defineComponent({
 
     const handlePageTransition = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname, delta } = routeInfo;
+      const { routerDirection, routerAction, routerAnimation, delta } = routeInfo;
 
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
       let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
@@ -247,12 +251,14 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       }
       const isSameView = enteringViewItem === leavingViewItem;
       let hasLeavingView = leavingViewItem !== undefined;
+      //What scenario would the same view occur, if the user pushes page/1 to page/1, shouldn't the transition still occur?
       if (isSameView) {
         return;
       }
 
-      if (!hasLeavingView && prevRouteLastPathname) {
-        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id, usingDeprecatedRouteSetup);
+      const hasLastPath = (routeInfo.lastPathname !== undefined);
+      if (hasLeavingView === false && hasLastPath) {
+        leavingViewItem = viewStacks.findViewItemByPathname(routeInfo.lastPathname, id, usingDeprecatedRouteSetup);
         hasLeavingView = leavingViewItem !== undefined;
       }
 
@@ -345,6 +351,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       components.value = viewStacks.getChildrenToRender(id);
     }
 
+    /**
+     * Mounts the viewItem and registers the callbacks
+     * @param matchedRouteRef
+     */
     const setupViewItem = async (matchedRouteRef: any) => {
       const firstMatchedRoute = route.matched[0];
       if (!parentOutletPath) {
@@ -376,14 +386,17 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         viewStacks.add(enteringViewItem);
       }
 
-      if (!enteringViewItem.mount) {
+      /**
+       * Already mounted, directly handle page transition
+       */
+      if (enteringViewItem.mount) {
+        await handlePageTransition();
+      } else {
         viewStacks.mountViewItem(enteringViewItem);
         enteringViewItem.registerCallback = async () => {
           await handlePageTransition();
           enteringViewItem.registerCallback = undefined;
         }
-      } else {
-        await handlePageTransition();
       }
 
       components.value = viewStacks.getChildrenToRender(id);
