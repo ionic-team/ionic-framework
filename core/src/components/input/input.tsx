@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
@@ -317,6 +317,16 @@ export class Input implements ComponentInterface {
       this.value = input.value || '';
     }
     this.ionInput.emit(ev as InputEvent);
+
+    readTask(() => {
+      if (this.nativeInput?.matches(':-webkit-autofill')) {
+        this.hasAutofill = true;
+        this.emitStyle();
+      } else {
+        this.hasAutofill = false;
+        this.emitStyle();
+      }
+    });
   }
 
   private onBlur = (ev: FocusEvent) => {
@@ -385,23 +395,6 @@ export class Input implements ComponentInterface {
     }
   }
 
-  private onAnimationStart = ({ animationName }: AnimationEvent) => {
-    switch (animationName) {
-      // `onAutoFillStart` is a custom keyframe animation defined in `input.scss`
-      // to detect when autofill is initially applied to the input.
-      case 'onAutoFillStart':
-        this.hasAutofill = true;
-        this.emitStyle();
-        break;
-      // `onAutofillCancel` is a custom keyframe animation applied in `input.scss`
-      // to detect when autofill is removed from the input.
-      case 'onAutoFillCancel':
-        this.hasAutofill = false;
-        this.emitStyle();
-        break;
-    }
-  }
-
   private hasValue(): boolean {
     return this.getValue().length > 0;
   }
@@ -455,7 +448,6 @@ export class Input implements ComponentInterface {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
-          onAnimationStart={this.onAnimationStart}
           {...this.inheritedAttributes}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button

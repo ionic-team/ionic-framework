@@ -57,24 +57,6 @@
   color: current-color(base);
 }
 
-@keyframes onAutoFillStart {
-  from {
-    /**/
-  }
-  to {
-    /**/
-  }
-}
-
-@keyframes onAutoFillCancel {
-  from {
-    /**/
-  }
-  to {
-    /**/
-  }
-}
-
 // Native Text Input
 // --------------------------------------------------
 
@@ -111,20 +93,11 @@
   }
 
   &:-webkit-autofill {
-     // Expose a hook for JavaScript when auto fill is shown.
-    // JavaScript can capture 'animationstart' events
-    animation-name: onAutoFillStart;
-
+    // Long transition time allows label to move a z-index layer
+    // without the user seeing the label clipping from the input box.
     transition: background-color 50000s ease-in-out 0s;
 
     background-color: transparent;
-
-  }
-
-  &:not(:-webkit-autofill) {
-    // Expose a hook for JS onAutoFillCancel
-    // JavaScript can capture 'animationstart' events
-    animation-name: onAutoFillCancel;
   }
 
   &:invalid {

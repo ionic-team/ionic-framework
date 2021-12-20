@@ -73,7 +73,7 @@
   --color-hover: var(--color);
   --ripple-color: currentColor;
   --background-autofill: rgb(232, 240, 254);
-  --color-autofill: black;
+  --color-autofill: var(--color);
 
   @include font-smoothing();
 
@@ -180,6 +180,11 @@
 :host(.item-has-autofill) {
   --background: var(--background-autofill);
   --color: var(--color-autofill);
+}
+
+:host(.item-has-autofill) ::slotted(ion-label) {
+  // Moves label on top of browsers hardset autofill background
+  z-index: 3;
 }
 
 
