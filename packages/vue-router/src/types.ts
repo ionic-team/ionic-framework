@@ -19,14 +19,26 @@ export interface RouteInfo {
   routerAction?: RouteAction;
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
+  /**
+   * The pathname of the last route
+   */
   lastPathname?: string;
+  /**
+   * @TODO: check if this is still used, if not remove/deprecate
+   */
   prevRouteLastPathname?: string;
+  /**
+   * The pathname of the current route
+   */
   pathname?: string;
   search?: string;
   params?: { [k: string]: any };
+  /**
+   * Which route name push this route
+   */
   pushedByRoute?: string;
   /**
-   * When a Route is replaced by a previous route, store that pathname here to demount/transition  away from the replaced route
+   * When a Route is replaced by a previous route, store that pathname here to demount/transition away from the replaced route
    */
   replacedRoute?: string;
   tab?: string;
