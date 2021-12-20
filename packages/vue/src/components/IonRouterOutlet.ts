@@ -374,7 +374,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       const hasMatchedRoute = matchedRouteRef.value !== undefined;
       const isNotRootPath = !hasMatchedRoute && matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath;
       if (!hasMatchedRoute || isNotRootPath) {
-        console.warn('No matched route or is not root path for outlet');
         return;
       }
 
