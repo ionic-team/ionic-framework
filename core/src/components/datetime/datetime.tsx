@@ -273,6 +273,11 @@ export class Datetime implements ComponentInterface {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
   }
 
+  @Watch('activeParts')
+  protected activePartsChanged() {
+    this.activePartsClone = this.activeParts;
+  }
+
   /**
    * The locale to use for `ion-datetime`. This
    * impacts month and day name formatting.
@@ -944,7 +949,7 @@ export class Datetime implements ComponentInterface {
       ampm: hour >= 12 ? 'pm' : 'am'
     }
 
-    this.activePartsClone = this.activeParts = {
+    this.activeParts = {
       month,
       day,
       year,
@@ -1201,7 +1206,7 @@ export class Datetime implements ComponentInterface {
                     year
                   });
 
-                  this.setActiveParts(this.activePartsClone = {
+                  this.setActiveParts({
                     ...this.activeParts,
                     month,
                     day,
@@ -1264,7 +1269,7 @@ export class Datetime implements ComponentInterface {
               ...workingParts,
               hour: ev.detail.value
             });
-            this.setActiveParts(this.activePartsClone = {
+            this.setActiveParts({
               ...activePartsClone,
               hour: ev.detail.value
             });
@@ -1282,7 +1287,7 @@ export class Datetime implements ComponentInterface {
               ...workingParts,
               minute: ev.detail.value
             });
-            this.setActiveParts(this.activePartsClone = {
+            this.setActiveParts({
               ...activePartsClone,
               minute: ev.detail.value
             });
@@ -1303,7 +1308,7 @@ export class Datetime implements ComponentInterface {
               hour
             });
 
-            this.setActiveParts(this.activePartsClone = {
+            this.setActiveParts({
               ...activePartsClone,
               ampm: ev.detail.value,
               hour
