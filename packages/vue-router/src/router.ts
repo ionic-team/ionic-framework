@@ -133,8 +133,8 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     };
     const wasPushedByLastPath = routeInfo.lastPathname === routeInfo.pushedByRoute;
     const isCurrentPushedByLast = lastLocation.pathname === routeInfo.pushedByRoute;
-    const isLastNotTab = lastLocation.tab === '';
-    const isNotTab = routeInfo.tab === '';
+    const isLastNotTab = lastLocation.tab === '' || lastLocation.tab === undefined;
+    const isNotTab = routeInfo.tab === '' ||  routeInfo.tab === undefined;
     if (wasPushedByLastPath ||
       (
         /**
@@ -262,7 +262,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         //could point to itself
         nextRouteInfo.prevRouteLastPathname = leavingRouteInfo?.lastPathname;
         nextRouteInfo.routerAnimation = leavingRouteInfo?.routerAnimation;
-        nextRouteInfo.pushedByRoute = leavingRouteInfo?.pathname;
+        // nextRouteInfo.pushedByRoute = leavingRouteInfo?.pathname;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
         if (isLeavingRouteTab) {
@@ -281,7 +281,8 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         nextRouteInfo.replacedRoute = (leavingRouteInfo?.pathname === '') ? undefined : leavingRouteInfo?.pathname;
 
         nextRouteInfo.lastPathname = lastRouteInfo?.lastPathname;
-        nextRouteInfo.pushedByRoute = lastRouteInfo?.prevRouteLastPathname;
+        // nextRouteInfo.pushedByRoute = lastRouteInfo?.prevRouteLastPathname;
+        nextRouteInfo.pushedByRoute = lastRouteInfo?.prevRouteLastPathname ?? lastRouteInfo?.pushedByRoute;
         nextRouteInfo.routerDirection = lastRouteInfo?.routerDirection;
         nextRouteInfo.routerAnimation = lastRouteInfo?.routerAnimation;
         nextRouteInfo.prevRouteLastPathname = lastRouteInfo?.lastPathname;
