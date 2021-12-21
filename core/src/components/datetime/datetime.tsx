@@ -1264,7 +1264,7 @@ export class Datetime implements ComponentInterface {
               ...workingParts,
               hour: ev.detail.value
             });
-            this.setActiveParts({
+            this.setActiveParts(this.activePartsClone = {
               ...activePartsClone,
               hour: ev.detail.value
             });
@@ -1282,7 +1282,7 @@ export class Datetime implements ComponentInterface {
               ...workingParts,
               minute: ev.detail.value
             });
-            this.setActiveParts({
+            this.setActiveParts(this.activePartsClone = {
               ...activePartsClone,
               minute: ev.detail.value
             });
@@ -1303,7 +1303,7 @@ export class Datetime implements ComponentInterface {
               hour
             });
 
-            this.setActiveParts({
+            this.setActiveParts(this.activePartsClone = {
               ...activePartsClone,
               ampm: ev.detail.value,
               hour
