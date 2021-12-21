@@ -66,5 +66,15 @@
     "tags": "dist/vetur/tags.json",
     "attributes": "dist/vetur/attributes.json"
   },
-  "web-types": "dist/web-types.json"
+  "web-types": "dist/web-types.json",
+  "eslintConfig": {
+    "root": true,
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "env": {
+      "es6": true
+    }
+  }
 }

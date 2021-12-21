@@ -66,5 +66,15 @@
       "json",
       "jsx"
     ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "env": {
+      "es6": true
+    }
   }
 }
