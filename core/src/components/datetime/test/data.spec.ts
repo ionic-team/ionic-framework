@@ -203,9 +203,59 @@ describe('generateTime()', () => {
       minute: 43
     }
 
-    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1,2,3], [10,15,20]);
+    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
 
-    expect(hours).toStrictEqual([1,2,3]);
-    expect(minutes).toStrictEqual([10,15,20]);
+    expect(hours).toStrictEqual([1, 2, 3]);
+    expect(minutes).toStrictEqual([10, 15, 20]);
+  })
+
+  describe('hourCycle is 23', () => {
+
+    it('should return hours in 24 hour format', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 19,
+        minute: 50
+      }
+
+      const minParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 19,
+        minute: 50
+      };
+
+      const { hours } = generateTime(refValue, 'h23', minParts);
+
+      expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
+    });
+
+    describe('current hour is above min hour range', () => {
+      it('should return minutes above the min minute range', () => {
+        const refValue = {
+          day: undefined,
+          month: undefined,
+          year: undefined,
+          hour: 20,
+          minute: 22
+        }
+
+        const minParts = {
+          day: undefined,
+          month: undefined,
+          year: undefined,
+          hour: 19,
+          minute: 30
+        };
+
+        const { hours, minutes } = generateTime(refValue, 'h23', minParts);
+
+        expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
+        expect(minutes.length).toEqual(60);
+      });
+    });
   })
 })
