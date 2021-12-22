@@ -19,7 +19,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot = Content is placed inside of the `.modal-content` element.
+ * @slot - Content is placed inside of the `.modal-content` element.
  *
  * @part backdrop - The `ion-backdrop` element.
  * @part content - The wrapper element for the default slot.
