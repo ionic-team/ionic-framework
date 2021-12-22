@@ -65,10 +65,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime(today, false, min);
 
     expect(hours.length).toEqual(11);
-    expect(minutes.length).toEqual(60);
+    expect(minutes.length).toEqual(20);
   })
   it('should not filter according to min if not on reference day', () => {
     const today = {
