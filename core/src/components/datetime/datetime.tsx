@@ -675,6 +675,8 @@ export class Datetime implements ComponentInterface {
      */
     const months = calendarBodyRef.querySelectorAll('.calendar-month');
 
+    const isRTL = document.dir === 'rtl';
+
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
@@ -686,7 +688,7 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      calendarBodyRef.scrollLeft = startMonth.clientWidth;
+      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL ? -1 : 1);
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
@@ -765,7 +767,7 @@ export class Datetime implements ComponentInterface {
             year
           });
 
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth;
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL ? -1 : 1);
           calendarBodyRef.style.removeProperty('overflow');
           calendarBodyRef.style.removeProperty('pointer-events');
 
@@ -1000,9 +1002,12 @@ export class Datetime implements ComponentInterface {
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
     if (!nextMonth) { return; }
 
+    const isRTL = document.dir === 'rtl';
+    const left = (nextMonth as HTMLElement).offsetWidth * 2;
+
     calendarBodyRef.scrollTo({
       top: 0,
-      left: (nextMonth as HTMLElement).offsetWidth * 2,
+      left: left * (isRTL ? -1 : 1),
       behavior: 'smooth'
     });
   }
@@ -1150,10 +1155,10 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
               <ion-button onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
