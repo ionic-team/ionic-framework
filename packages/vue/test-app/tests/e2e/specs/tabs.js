@@ -438,7 +438,10 @@ describe('Multi Tabs', () => {
     cy.ionPageHidden('tabs');
     cy.ionPageVisible('tabs-secondary');
 
-    cy.get('[data-pageid="tab1-secondary"] #tabs-primary').click();
+    /**
+     * Multiple instance of tab1-secondary exist, find the correct instance
+     */
+    cy.get('[data-pageid="tab1-secondary"]:nth-of-type(2) #tabs-primary').click();
     cy.ionPageHidden('tabs-secondary');
     cy.ionPageVisible('tabs');
 

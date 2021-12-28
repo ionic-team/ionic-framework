@@ -46,11 +46,11 @@ export const IonRouterOutlet = defineComponent({
         hasNextMatchedRoute = (route.matched[depth + 1] !== undefined);
 
       //first first to prevent large if blocks
-      if (!hasMatchedRoute || !hasTabs || !hasNextMatchedRoute || !usingDeprecatedRouteSetup) {
-        return matchedRoute;
+      if (hasMatchedRoute && hasTabs && hasNextMatchedRoute && usingDeprecatedRouteSetup) {
+        return route.matched[route.matched.length - 1];
       }
 
-      return route.matched[route.matched.length - 1];
+      return matchedRoute;
     });
 
     provide(viewDepthKey, depth + 1)

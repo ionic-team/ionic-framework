@@ -199,7 +199,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
     let nextRouteInfo: RouteInfo;
     if (isNewRoute) {
-      if (!incomingRouteParams) {
+      if (incomingRouteParams === undefined) {
         if (action === 'replace') {
           incomingRouteParams = {
             routerAction: 'replace',
@@ -224,6 +224,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
             }
           }
         }
+
         if (!incomingRouteParams) {
           incomingRouteParams = {
             routerAction: 'push',
@@ -232,9 +233,15 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           }
         }
       }
+      /**
+       * If there is no route id, assign one, else use incoming route id for location history lookup
+       */
+      if(incomingRouteParams.hasOwnProperty('id') === false){
+        incomingRouteParams['id'] = generateId('routeInfo');
+      }
+
       nextRouteInfo = {
         ...incomingRouteParams,
-        id: generateId('routeInfo'),
         replacedRoute: undefined,//reset to undefined
         pathname: location.path,
         search: location.fullPath && location.fullPath.split('?')[1] || '',

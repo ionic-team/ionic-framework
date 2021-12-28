@@ -28,7 +28,7 @@
       ],
       "@ionic/vue-router": [
         "../../vue-router/dist-transpiled/index.js"
-      ]
+      ],
     },
     "lib": [
       "esnext",

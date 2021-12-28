@@ -15,7 +15,7 @@ export const createLocationHistory = () => {
         replaceRoute(routeInfo);
         break;
       case "pop":
-        pop(routeInfo);
+          pop(routeInfo);
         break;
       default:
         addRoute(routeInfo);
