@@ -7,15 +7,35 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env", "jest"],
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "vue": [
+        "node_modules/vue/dist/vue.runtime.esm-bundler.js"
+      ],
+      "vue-router": [
+        "node_modules/vue-router/dist/vue-router.esm-bundler.js"
+      ],
+      "@ionic/vue-router": [
+        "../../vue-router/dist-transpiled/index.js"
+      ]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -24,5 +44,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

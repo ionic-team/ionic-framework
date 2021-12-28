@@ -17,15 +17,31 @@
       </ion-header>
 
       <div class="ion-padding">
-        ionViewWillEnter: <div id="willEnter">{{ willEnter }}</div><br />
-        ionViewDidEnter: <div id="didEnter">{{ didEnter }}</div><br />
-        ionViewWillLeave: <div id="willLeave">{{ willLeave }}</div><br />
-        ionViewDidLeave: <div id="didLeave">{{ didLeave }}</div><br />
+        ionViewWillEnter:
+        <div id="willEnter">{{ willEnter }}</div>
+        <br />
+        ionViewDidEnter:
+        <div id="didEnter">{{ didEnter }}</div>
+        <br />
+        ionViewWillLeave:
+        <div id="willLeave">{{ willLeave }}</div>
+        <br />
+        ionViewDidLeave:
+        <div id="didLeave">{{ didLeave }}</div>
+        <br />
 
-        onIonViewWillEnter: <div id="onWillEnter">{{ onWillEnter }}</div><br />
-        onIonViewDidEnter: <div id="onDidEnter">{{ onDidEnter }}</div><br />
-        onIonViewWillLeave: <div id="onWillLeave">{{ onWillLeave }}</div><br />
-        onIonViewDidLeave: <div id="onDidLeave">{{ onDidLeave }}</div><br />
+        onIonViewWillEnter:
+        <div id="onWillEnter">{{ onWillEnter }}</div>
+        <br />
+        onIonViewDidEnter:
+        <div id="onDidEnter">{{ onDidEnter }}</div>
+        <br />
+        onIonViewWillLeave:
+        <div id="onWillLeave">{{ onWillLeave }}</div>
+        <br />
+        onIonViewDidLeave:
+        <div id="onDidLeave">{{ onDidLeave }}</div>
+        <br />
 
         <ion-button router-link="/navigation" id="lifecycle-navigation">Go to another page</ion-button>
       </div>
@@ -49,6 +65,7 @@ import {
   onIonViewDidLeave
 } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   components: {
     IonButton,
@@ -60,25 +77,16 @@ export default defineComponent({
     IonTitle,
     IonToolbar
   },
-  methods: {
-    ionViewWillEnter() {
-      this.willEnter++;
-    },
-    ionViewDidEnter() {
-      this.didEnter++;
-    },
-    ionViewWillLeave() {
-      this.willLeave++;
-    },
-    ionViewDidLeave() {
-      this.didLeave++;
-    }
-  },
+
   setup() {
     const onWillEnter = ref(0);
     const onDidEnter = ref(0);
     const onWillLeave = ref(0);
     const onDidLeave = ref(0);
+    const willEnter = ref(0);
+    const didEnter = ref(0);
+    const willLeave = ref(0);
+    const didLeave = ref(0);
 
     onIonViewWillEnter(() => onWillEnter.value += 1);
     onIonViewDidEnter(() => onDidEnter.value += 1);
@@ -89,16 +97,26 @@ export default defineComponent({
       onWillEnter,
       onDidEnter,
       onWillLeave,
-      onDidLeave
+      onDidLeave,
+
+      willEnter,
+      didEnter,
+      willLeave,
+      didLeave,
     }
   },
-  data() {
-    return {
-      willEnter: 0,
-      didEnter: 0,
-      willLeave: 0,
-      didLeave: 0
-    }
-  }
+
+  ionViewWillEnter() {
+    this.willEnter++;
+  },
+  ionViewDidEnter() {
+    this.didEnter++;
+  },
+  ionViewWillLeave() {
+    this.willLeave++;
+  },
+  ionViewDidLeave() {
+    this.didLeave++;
+  },
 });
 </script>

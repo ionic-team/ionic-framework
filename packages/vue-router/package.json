@@ -16,7 +16,8 @@
   "module": "./dist/index.esm.js",
   "types": "./dist/types/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "dist-transpiled/"
   ],
   "repository": {
     "type": "git",

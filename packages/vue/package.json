@@ -22,6 +22,7 @@
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist/",
+    "dist-transpiled/",
     "css/"
   ],
   "repository": {
@@ -56,7 +57,7 @@
     "rollup": "^2.32.1",
     "typescript": "^4.0.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-rc.4"
+    "vue-router": "^4.0.0-beta.11"
   },
   "dependencies": {
     "@ionic/core": "5.9.3",
