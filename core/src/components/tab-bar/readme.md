@@ -164,6 +164,15 @@ export default defineComponent({
 | `translucent` | `translucent`  | If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                 | `boolean`             | `false`     |
 
 
+## Slots
+
+| Slot       | Description                                                           |
+| ---------- | --------------------------------------------------------------------- |
+|            | Content is placed between the named slots if provided without a slot. |
+| `"bottom"` | Content is placed at the bottom of the screen.                        |
+| `"top"`    | Content is placed at the top of the screen.                           |
+
+
 ## CSS Custom Properties
 
 | Name           | Description               |
