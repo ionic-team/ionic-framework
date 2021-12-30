@@ -83,6 +83,16 @@ export const createViewStacks = (router: Router) => {
   }
 
   const findViewItemByPath = (path: string, outletId?: number, mustBeIonRoute: boolean = false, useDeprecatedRouteSetup: boolean = false): ViewItem | undefined => {
+    const matchExact = (viewItem: ViewItem) => {
+      /**
+       * Search for exact match first
+       */
+      if (viewItem.pathname === path) {
+        return viewItem;
+      }
+
+      return undefined
+    }
     const matchView = (viewItem: ViewItem) => {
       if (
         (mustBeIonRoute && !viewItem.ionRoute) ||
@@ -100,7 +110,8 @@ export const createViewStacks = (router: Router) => {
         findMatchedRoute = resolvedPath.matched.find((matchedRoute: RouteLocationMatched) => matchedRoute === viewItem.matchedRoute);
       }
 
-      if (findMatchedRoute) {
+      let hasMatch = findMatchedRoute !== undefined;
+      if (hasMatch) {
         return viewItem;
       }
 
@@ -108,12 +119,40 @@ export const createViewStacks = (router: Router) => {
     }
 
     if (outletId) {
+      let match;
       const stack = viewStacks[outletId];
       if (!stack) {
         return undefined;
       }
 
-      const match = (router) ? stack.find(matchView) : findViewItemInStack(path, stack)
+      /**
+       * Ingore the outlet id, not sure why the view stacks are broken apart by the ion-router-outlets
+       */
+      if (router) {
+        match = stack.find(matchExact);
+        //check the stack first, else check all stacks
+        if (match !== undefined) {
+          return match;
+        }
+        for (let index in viewStacks) {
+          let _stack = viewStacks[index];
+          match = _stack.find(matchExact);
+          if (match !== undefined) {
+            return match;
+          }
+        }
+      }
+
+      if (router) {
+        //check exact first
+        match = stack.find(matchExact);
+        if (match === undefined) {
+          match = stack.find(matchView);
+        }
+      } else {
+        match = findViewItemInStack(path, stack);
+      }
+
       if (match) {
         return match;
       }
@@ -168,6 +207,10 @@ export const createViewStacks = (router: Router) => {
     }
   }
 
+  /**
+   * Get the children needed for an outlet, for tabs it could return more than one component (usually the parent with the back button and the inner tab component)
+   * @param outletId
+   */
   const getChildrenToRender = (outletId: number): ViewItem[] => {
     const viewStack = viewStacks[outletId];
 
@@ -187,7 +230,7 @@ export const createViewStacks = (router: Router) => {
   }
 
   /**
-   * Unmount a viewItem, if it has any matchedRoute instances reset
+   * Unmount a viewItem, if it has any matchedRoute instances reset, unmounting occurs only when removing an item from the history stack, usually a replace event
    * @param viewItem
    */
   const unmountViewItem = (viewItem: ViewItem) => {

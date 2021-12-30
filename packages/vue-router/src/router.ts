@@ -134,7 +134,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const wasPushedByLastPath = routeInfo.lastPathname === routeInfo.pushedByRoute;
     const isCurrentPushedByLast = lastLocation.pathname === routeInfo.pushedByRoute;
     const isLastNotTab = lastLocation.tab === '' || lastLocation.tab === undefined;
-    const isNotTab = routeInfo.tab === '' ||  routeInfo.tab === undefined;
+    const isNotTab = routeInfo.tab === '' || routeInfo.tab === undefined;
     if (wasPushedByLastPath ||
       (
         /**
@@ -236,7 +236,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       /**
        * If there is no route id, assign one, else use incoming route id for location history lookup
        */
-      if(incomingRouteParams.hasOwnProperty('id') === false){
+      if (incomingRouteParams.hasOwnProperty('id') === false) {
         incomingRouteParams['id'] = generateId('routeInfo');
       }
 
@@ -269,14 +269,20 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         //could point to itself
         nextRouteInfo.prevRouteLastPathname = leavingRouteInfo?.lastPathname;
         nextRouteInfo.routerAnimation = leavingRouteInfo?.routerAnimation;
-        // nextRouteInfo.pushedByRoute = leavingRouteInfo?.pathname;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
+        const lastTabRouteInfo = locationHistory.getCurrentRouteInfoForTab(nextRouteInfo.tab);
+        console.log('lastTabRouteInfo:', lastTabRouteInfo);
         if (isLeavingRouteTab) {
-          nextRouteInfo.pushedByRoute = leavingRouteInfo.pushedByRoute;
-        } else {
-          nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+          /**
+           * The ID of the new route must match the old routes id to make sure the tabHistory is updated(replaced) correctly
+           */
+          nextRouteInfo.id = leavingRouteInfo.id;
         }
+        // nextRouteInfo.pushedByRoute = leavingRouteInfo.pushedByRoute;
+        // } else {
+        nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        // }
         nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
       } else if (nextRouteInfo.routerAction === 'replace') {
         /**
@@ -284,29 +290,16 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * The history stack would have page -> page/b as page/a was replaced with page/b
          */
         const lastRouteInfo = locationHistory.last();
-        //the last item could be wrong for replacedRoute, we only care about the route we are leaving to define this
+        /**
+         * the last item could be wrong for replacedRoute, we only care about the route we are leaving to define this
+         */
         nextRouteInfo.replacedRoute = (leavingRouteInfo?.pathname === '') ? undefined : leavingRouteInfo?.pathname;
 
         nextRouteInfo.lastPathname = lastRouteInfo?.lastPathname;
-        // nextRouteInfo.pushedByRoute = lastRouteInfo?.prevRouteLastPathname;
         nextRouteInfo.pushedByRoute = lastRouteInfo?.prevRouteLastPathname ?? lastRouteInfo?.pushedByRoute;
         nextRouteInfo.routerDirection = lastRouteInfo?.routerDirection;
         nextRouteInfo.routerAnimation = lastRouteInfo?.routerAnimation;
         nextRouteInfo.prevRouteLastPathname = lastRouteInfo?.lastPathname;
-
-        /**
-         * If going from /home to /child, then replacing from
-         * /child to /home, we don't want the route info to
-         * say that /home was pushed by /home which is not correct.
-         */
-        // const lastPushedBy = lastRouteInfo?.pushedByRoute;
-        // const pushedByRoute = (lastPushedBy !== undefined && lastPushedBy !== nextRouteInfo.pathname) ? lastPushedBy : nextRouteInfo.pushedByRoute;
-
-        // routeInfo.lastPathname = lastRouteInfo?.pathname;//lastRouteInfo?.pathname || routeInfo.lastPathname;
-        // routeInfo.pushedByRoute = pushedByRoute;
-        // routeInfo.routerDirection = lastRouteInfo?.routerDirection || routeInfo.routerDirection;
-        // routeInfo.routerAnimation = lastRouteInfo?.routerAnimation || routeInfo.routerAnimation;
-        // routeInfo.prevRouteLastPathname = lastRouteInfo?.lastPathname;
       }
 
       nextRouteInfo.position = currentHistoryPosition;
