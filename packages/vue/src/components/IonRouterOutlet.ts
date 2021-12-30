@@ -8,7 +8,7 @@ import {
   watch,
   shallowRef,
   InjectionKey,
-  onUnmounted
+  onUnmounted,
 } from 'vue';
 import {
   AnimationBuilder,
@@ -45,7 +45,6 @@ export const IonRouterOutlet = defineComponent({
         hasTabs = (attrs.tabs !== undefined),
         hasNextMatchedRoute = (route.matched[depth + 1] !== undefined);
 
-      //first first to prevent large if blocks
       if (hasMatchedRoute && hasTabs && hasNextMatchedRoute && usingDeprecatedRouteSetup) {
         return route.matched[route.matched.length - 1];
       }
@@ -120,6 +119,7 @@ export const IonRouterOutlet = defineComponent({
 
       return !!enteringViewItem;
     }
+
     const onStart = async () => {
       const routeInfo = ionRouter.getLeavingRouteInfo();
       const { routerAnimation } = routeInfo;
@@ -211,11 +211,8 @@ export const IonRouterOutlet = defineComponent({
           return resolve(false);
         }
 
-        //
         requestAnimationFrame(() => {
           requestAnimationFrame(async () => {
-            enteringEl.classList.add('ion-page-invisible');
-
             const result = await ionRouterOutlet.value.commit(enteringEl, leavingEl, {
               deepWait: true,
               duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
@@ -235,8 +232,10 @@ export const IonRouterOutlet = defineComponent({
       const routeInfo = ionRouter.getCurrentRouteInfo();
       const { routerDirection, routerAction, routerAnimation, delta } = routeInfo;
 
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
-      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
+      const enteringViewOutletId = viewStacks.getOutletByPath(routeInfo.pathname);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, enteringViewOutletId, usingDeprecatedRouteSetup);
+      const leavingViewOutletId = viewStacks.getOutletByPath(routeInfo.lastPathname);
+      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, leavingViewOutletId, true, usingDeprecatedRouteSetup);
       const enteringEl = enteringViewItem.ionPageElement;
 
       /**
@@ -254,17 +253,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       //What scenario would the same view occur, if the user pushes page/1 to page/1, shouldn't the transition still occur?
       if (isSameView) {
         return;
-      }
-
-      const hasLastPath = (routeInfo.lastPathname !== undefined);
-      if (hasLeavingView === false && hasLastPath) {
-        /**
-         * This used to be the prevRouteLastpathname but this was a bandaid for viewStacks code
-         * When going from page1 -> page2/tab/a -> page2/tab/b -> page1 -> page2/tab/a
-         * prevRouteLastPathname would point to page2/tab/b but the lifecycle events for it would fire when going from page1 -> page2/tab/a, that would be wrong
-         */
-        leavingViewItem = viewStacks.findViewItemByPathname(routeInfo.lastPathname, id, usingDeprecatedRouteSetup);
-        hasLeavingView = leavingViewItem !== undefined;
       }
 
       /**
@@ -325,10 +313,8 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
           false,
           animationBuilder
         );
-
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
-
         if (routerAction === 'replace') {
           viewStacks.unmountViewItem(leavingViewItem);
         } else if (!(routerAction === 'push' && routerDirection === 'forward')) {
@@ -362,8 +348,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
      */
     const setupViewItem = async (matchedRouteRef: any) => {
       const firstMatchedRoute = route.matched[0];
-      if (!parentOutletPath) {
+      if (parentOutletPath === undefined) {
         parentOutletPath = firstMatchedRoute.path;
+        // rootPath = matchedRouteRef.value.path;
+        viewStacks.setRootPath(id, parentOutletPath);
       }
 
       /**
@@ -432,6 +420,9 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
 
       viewStacks.registerIonPage(viewItem, ionPageEl);
 
+      if (viewItem.ionPageElement !== undefined && viewItem.ionPageElement.classList.contains('ion-page-invisible')) {
+        viewItem.ionPageElement.classList.remove('ion-page-invisible');
+      }
       /**
        * If there is a registerCallback,
        * then this component is being registered
