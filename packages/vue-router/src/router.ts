@@ -111,7 +111,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
     // todo grab default back button href from config
-    const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
+    const routeInfo = getLeavingRouteInfo();// locationHistory.current(initialHistoryPosition, currentHistoryPosition);
     const hasRoute = routeInfo !== undefined;
     const wasRoutePushed = hasRoute && routeInfo.pushedByRoute !== undefined;
 
@@ -271,18 +271,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         nextRouteInfo.routerAnimation = leavingRouteInfo?.routerAnimation;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
-        const lastTabRouteInfo = locationHistory.getCurrentRouteInfoForTab(nextRouteInfo.tab);
-        console.log('lastTabRouteInfo:', lastTabRouteInfo);
         if (isLeavingRouteTab) {
           /**
            * The ID of the new route must match the old routes id to make sure the tabHistory is updated(replaced) correctly
            */
           nextRouteInfo.id = leavingRouteInfo.id;
         }
-        // nextRouteInfo.pushedByRoute = leavingRouteInfo.pushedByRoute;
-        // } else {
         nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
-        // }
         nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
       } else if (nextRouteInfo.routerAction === 'replace') {
         /**

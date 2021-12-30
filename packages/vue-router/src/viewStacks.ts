@@ -12,7 +12,9 @@ export const createViewStacks = (router: Router) => {
   /**
    * Used to track which outlet should handle which routes/viewitems
    */
-  let rootPaths: Array<any> = [];
+  let rootPaths: any = {
+    1: "/",
+  }
 
   /**
    *
@@ -43,7 +45,11 @@ export const createViewStacks = (router: Router) => {
     return bestIndex;
   }
 
-  const setRootPath = (outletId: number, rootPath: string,) => {
+  const setRootPath = (outletId: string, rootPath: string,) => {
+    //first outlet should always be root, if the user navigate straight to a page it could have the wrong outlet id to rootPath
+    if (outletId === "1") {
+      return;
+    }
     rootPaths[outletId] = rootPath;
   }
 
