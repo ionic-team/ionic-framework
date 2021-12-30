@@ -21,6 +21,9 @@ import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
 import { fireLifecycle, generateId, getConfig } from '../utils';
 
 const isViewVisible = (enteringEl: HTMLElement) => {
+  if (enteringEl === undefined) {
+    return false;
+  }
   return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
 }
 
@@ -315,28 +318,35 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         );
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
+        /**
+         * Not sure what is setting display: none; in some scenarios, but removing it here
+         */
+        enteringEl.style.display = null;
         if (routerAction === 'replace') {
           viewStacks.unmountViewItem(leavingViewItem);
-        } else if (!(routerAction === 'push' && routerDirection === 'forward')) {
-          const shouldLeavingViewBeRemoved = routerDirection !== 'none' && hasLeavingView && !isSameView;
-          if (shouldLeavingViewBeRemoved) {
-            viewStacks.unmountViewItem(leavingViewItem);
-            viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
-          }
-        } else {
+        }
+          // else if (!(routerAction === 'push' && routerDirection === 'forward')) {
+          //   const shouldLeavingViewBeRemoved = routerDirection !== 'none' && hasLeavingView && !isSameView;
+          //   if (shouldLeavingViewBeRemoved) {
+          //     viewStacks.unmountViewItem(leavingViewItem);
+          //     viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
+          //   }
+        // }
+        else {
           viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
-      } else {
-        /**
-         * If there is no leaving element, just show
-         * the entering element. Wrap it in an raf
-         * in case ion-content's fullscreen callback
-         * is running. Otherwise we'd have a flicker.
-         */
-        requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
       }
+      // else {
+      /**
+       * If there is no leaving element, just show
+       * the entering element. Wrap it in an raf
+       * in case ion-content's fullscreen callback
+       * is running. Otherwise we'd have a flicker.
+       */
+      // requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
+      // }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
       components.value = viewStacks.getChildrenToRender(id);
