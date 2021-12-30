@@ -348,6 +348,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const getCurrentRouteInfo = () => currentRouteInfo;
 
+  const getLeavingRouteInfo = () => {
+    return locationHistory.current(initialHistoryPosition, currentHistoryPosition);
+  }
+
   const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep, initialHistoryPosition, currentHistoryPosition);
 
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
@@ -420,10 +424,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   // TODO types
   const registerHistoryChangeListener = (cb: any) => {
     historyChangeListeners.push(cb);
-  }
-
-  const getLeavingRouteInfo = () => {
-    return locationHistory.current(initialHistoryPosition, currentHistoryPosition);
   }
 
   return {

@@ -9,6 +9,43 @@ import { shallowRef } from 'vue';
 
 export const createViewStacks = (router: Router) => {
   let viewStacks: ViewStacks = {};
+  /**
+   * Used to track which outlet should handle which routes/viewitems
+   */
+  let rootPaths: Array<any> = [];
+
+  /**
+   *
+   * @param path
+   */
+  const getOutletByPath = (path: string) => {
+    let bestMatch,
+      bestIndex;
+
+    for (let index in rootPaths) {
+      let _path = rootPaths[index];
+      if (bestIndex === undefined) {
+        bestIndex = index;
+        bestMatch = _path;
+      } else {
+        let exists = path.indexOf(_path) !== -1;
+        if (exists && _path.length > bestMatch.length) {
+          bestMatch = _path;
+          bestIndex = index;
+        }
+      }
+
+      if (path === undefined) {
+        return bestIndex;
+      }
+    }
+
+    return bestIndex;
+  }
+
+  const setRootPath = (outletId: number, rootPath: string,) => {
+    rootPaths[outletId] = rootPath;
+  }
 
   const clear = (outletId: number) => {
     delete viewStacks[outletId];
@@ -83,16 +120,6 @@ export const createViewStacks = (router: Router) => {
   }
 
   const findViewItemByPath = (path: string, outletId?: number, mustBeIonRoute: boolean = false, useDeprecatedRouteSetup: boolean = false): ViewItem | undefined => {
-    const matchExact = (viewItem: ViewItem) => {
-      /**
-       * Search for exact match first
-       */
-      if (viewItem.pathname === path) {
-        return viewItem;
-      }
-
-      return undefined
-    }
     const matchView = (viewItem: ViewItem) => {
       if (
         (mustBeIonRoute && !viewItem.ionRoute) ||
@@ -121,31 +148,11 @@ export const createViewStacks = (router: Router) => {
     if (outletId) {
       let match;
       const stack = viewStacks[outletId];
-      if (!stack) {
+      if (stack === undefined) {
         return undefined;
       }
 
-      /**
-       * Ingore the outlet id, not sure why the view stacks are broken apart by the ion-router-outlets
-       */
       if (router) {
-        match = stack.find(matchExact);
-        //check the stack first, else check all stacks
-        if (match !== undefined) {
-          return match;
-        }
-        for (let index in viewStacks) {
-          let _stack = viewStacks[index];
-          match = _stack.find(matchExact);
-          if (match !== undefined) {
-            return match;
-          }
-        }
-      }
-
-      if (router) {
-        //check exact first
-        match = stack.find(matchExact);
         if (match === undefined) {
           match = stack.find(matchView);
         }
@@ -313,6 +320,8 @@ export const createViewStacks = (router: Router) => {
     add,
     remove,
     registerIonPage,
-    getViewStack
+    getViewStack,
+    setRootPath,
+    getOutletByPath,
   }
 }
