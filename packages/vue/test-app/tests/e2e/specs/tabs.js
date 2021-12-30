@@ -14,8 +14,6 @@ describe('Tabs', () => {
     cy.ionBackClick('tab1childone');
 
     cy.ionPageVisible('tab1');
-    cy.ionPageDoesNotExist('tab1childone');
-    cy.ionPageDoesNotExist('tab1childtwo');
   });
 
   it('should go back to child page when switching tabs', () => {
@@ -60,10 +58,6 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab1').click();
 
     cy.ionPageVisible('tab1');
-
-    // TODO this page is not removed
-    //cy.ionPageDoesNotExist('tab1childone');
-    cy.ionPageDoesNotExist('tab1childtwo');
   })
 
   it('should be able to create and destroy tabs', () => {
@@ -74,14 +68,14 @@ describe('Tabs', () => {
     cy.ionPageHidden('home');
 
     cy.ionBackClick('tab1');
-    cy.ionPageDoesNotExist('tabs');
+    cy.ionPageHidden('tab1');
 
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
     cy.ionPageHidden('home');
 
     cy.ionBackClick('tab1');
-    cy.ionPageDoesNotExist('tabs');
+    cy.ionPageHidden('tab1');
   });
 
   it('should go back from a tabs page to a non-tabs page using ion-back-button', () => {
@@ -94,8 +88,10 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab2');
 
     cy.ionBackClick('tab2');
+    cy.ionPageVisible('tab1')
+
+    cy.ionBackClick('tab1');
     cy.ionPageVisible('home')
-    cy.ionPageDoesNotExist('tabs');
   });
 
   it('should properly clear stack when leaving tabs', () => {
@@ -108,8 +104,10 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab2');
 
     cy.ionBackClick('tab2');
+    cy.ionPageVisible('tab1');
+
+    cy.ionBackClick('tab1');
     cy.ionPageVisible('home')
-    cy.ionPageDoesNotExist('tabs');
 
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
@@ -166,7 +164,8 @@ describe('Tabs', () => {
 
     cy.get('[data-pageid="tab2"] #routing').click();
     cy.ionPageVisible('routing');
-    cy.ionPageHidden('tabs');
+    cy.ionPageHidden('tab1');
+    cy.ionPageHidden('tab2');
 
     cy.get('[data-pageid="routing"] #tab1').click();
     cy.ionPageVisible('tab1');
@@ -178,17 +177,14 @@ describe('Tabs', () => {
   it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
 
-    cy.routerPush('/');
-    cy.ionPageHidden('tabs');
+    cy.get('[data-pageid="tab1"] #home').click();
+    cy.ionPageHidden('tab1');
     cy.ionPageVisible('home');
 
-    cy.routerPush('/tabs/tab2');
+    cy.get('[data-pageid="home"] #tabs-tab2').click();
     cy.ionPageHidden('tab1');
-
     cy.ionPageHidden('home');
-
     cy.ionPageVisible('tab2');
-    cy.ionPageVisible('tabs');
   });
 
   // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519

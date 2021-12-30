@@ -36,6 +36,10 @@
       <ion-item router-link="/tabs/tab1/child-one?key=value" id="child-one-query-string">
         <ion-label>Go to Tab 1 Child 1 with Query Params</ion-label>
       </ion-item>
+
+      <ion-item @click="this.goHome" id="home">
+        <ion-label>GO HOME</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
@@ -46,6 +50,11 @@ import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
   name: 'Tab1',
-  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent, IonPage },
+  methods: {
+    goHome(){
+      this.$router.push('/');
+    }
+  }
 }
 </script>

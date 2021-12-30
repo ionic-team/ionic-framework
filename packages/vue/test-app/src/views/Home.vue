@@ -56,6 +56,9 @@
         <ion-item button router-link="/delayed-redirect" id="delayed-redirect">
           <ion-label>Delayed Redirect</ion-label>
         </ion-item>
+        <ion-item  button router-link="/tabs/tab2" id="tabs-tab2">
+          <ion-label>Go to /tabs/tab2</ion-label>
+        </ion-item>
       </ion-list>
 
     </ion-content>

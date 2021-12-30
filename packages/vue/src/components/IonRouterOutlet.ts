@@ -236,9 +236,23 @@ export const IonRouterOutlet = defineComponent({
       const { routerDirection, routerAction, routerAnimation, delta } = routeInfo;
 
       const enteringViewOutletId = viewStacks.getOutletByPath(routeInfo.pathname);
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, enteringViewOutletId, usingDeprecatedRouteSetup);
+      let enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, enteringViewOutletId, usingDeprecatedRouteSetup);
+
+      if (enteringViewItem === undefined) {
+        /**
+         * The parent outlet might contain it
+         */
+        enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
+      }
+
       const leavingViewOutletId = viewStacks.getOutletByPath(routeInfo.lastPathname);
       let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, leavingViewOutletId, true, usingDeprecatedRouteSetup);
+      if (leavingViewItem === undefined) {
+        /**
+         * Parent outlet has the 'Tabs' but children are on a different viewStack by path name
+         */
+        leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
+      }
       const enteringEl = enteringViewItem.ionPageElement;
 
       /**
@@ -324,29 +338,12 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         enteringEl.style.display = null;
         if (routerAction === 'replace') {
           viewStacks.unmountViewItem(leavingViewItem);
-        }
-          // else if (!(routerAction === 'push' && routerDirection === 'forward')) {
-          //   const shouldLeavingViewBeRemoved = routerDirection !== 'none' && hasLeavingView && !isSameView;
-          //   if (shouldLeavingViewBeRemoved) {
-          //     viewStacks.unmountViewItem(leavingViewItem);
-          //     viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
-          //   }
-        // }
-        else {
+        } else {
           viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
       }
-      // else {
-      /**
-       * If there is no leaving element, just show
-       * the entering element. Wrap it in an raf
-       * in case ion-content's fullscreen callback
-       * is running. Otherwise we'd have a flicker.
-       */
-      // requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
-      // }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
       components.value = viewStacks.getChildrenToRender(id);
@@ -360,7 +357,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       const firstMatchedRoute = route.matched[0];
       if (parentOutletPath === undefined) {
         parentOutletPath = firstMatchedRoute.path;
-        // rootPath = matchedRouteRef.value.path;
         viewStacks.setRootPath(id, parentOutletPath);
       }
 
@@ -385,9 +381,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
+      // const enteringViewOutletId = viewStacks.getOutletByPath(currentRoute.pathname);
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id, usingDeprecatedRouteSetup);
 
-      if (!enteringViewItem) {
+      if (enteringViewItem === undefined) {
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }
