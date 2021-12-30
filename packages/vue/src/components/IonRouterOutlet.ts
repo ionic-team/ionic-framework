@@ -258,6 +258,11 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
 
       const hasLastPath = (routeInfo.lastPathname !== undefined);
       if (hasLeavingView === false && hasLastPath) {
+        /**
+         * This used to be the prevRouteLastpathname but this was a bandaid for viewStacks code
+         * When going from page1 -> page2/tab/a -> page2/tab/b -> page1 -> page2/tab/a
+         * prevRouteLastPathname would point to page2/tab/b but the lifecycle events for it would fire when going from page1 -> page2/tab/a, that would be wrong
+         */
         leavingViewItem = viewStacks.findViewItemByPathname(routeInfo.lastPathname, id, usingDeprecatedRouteSetup);
         hasLeavingView = leavingViewItem !== undefined;
       }
@@ -370,6 +375,10 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * equal to the first matched route (i.e. the base router outlet).
        * This logic is mainly to help nested outlets/multi-tab
        * setups work better.
+       */
+      /**
+       * This route change still needs to be handled to properly detect which route you are leaving from a different ion-router-outlet instance,
+       * however the transitions will be backwards as it will enter ion-router-outlet 1 first then exit ion-router-outlet 2
        */
       const hasMatchedRoute = matchedRouteRef.value !== undefined;
       const isNotRootPath = !hasMatchedRoute && matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath;

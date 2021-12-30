@@ -41,6 +41,9 @@
         <ion-item button router-link="/tabs" id="tabs">
           <ion-label>Tabs</ion-label>
         </ion-item>
+        <ion-item button router-link="/tabs-new" id="tabs-news">
+          <ion-label>Tabs New</ion-label>
+        </ion-item>
         <ion-item button router-link="/tabs-secondary" id="tab-secondary">
           <ion-label>Tabs Secondary</ion-label>
         </ion-item>
