@@ -794,13 +794,13 @@ export class Datetime implements ComponentInterface {
        * something WebKit does.
        */
       endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
-        threshold: mode === 'ios' ? [0.7, 1] : 1,
+        threshold: mode === 'ios' ? [0.7, 1] : 0.99,
         root: calendarBodyRef
       });
       endIO.observe(endMonth);
 
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
-        threshold: mode === 'ios' ? [0.7, 1] : 1,
+        threshold: mode === 'ios' ? [0.7, 1] : 0.99,
         root: calendarBodyRef
        });
       startIO.observe(startMonth);
@@ -1474,6 +1474,7 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
+    console.log('render datetime');
     const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation = presentation === 'year' || presentation === 'month' || presentation === 'month-year';
