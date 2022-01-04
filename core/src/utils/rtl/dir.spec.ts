@@ -11,6 +11,9 @@ describe('rtl: dir', () => {
     it('should return false', () => {
       expect(isRTL({ dir: 'ltr' })).toBe(false);
       expect(isRTL({ dir: '' })).toBe(false);
+      // Validates casing is aligned with spec
+      expect(isRTL({ dir: 'RTL' })).toBe(false);
+      expect(isRTL({ dir: 'Rtl' })).toBe(false);
     });
 
   });
