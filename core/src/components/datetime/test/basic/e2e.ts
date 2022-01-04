@@ -78,7 +78,6 @@ describe('Footer', () => {
   });
 });
 
-
 describe('datetime: selecting a day', () => {
 
   it('should update the active day', async () => {
@@ -100,4 +99,14 @@ describe('datetime: selecting a day', () => {
 
     expect(newActiveDay.innerText).toEqual('13');
   });
+
+});
+
+test('datetime:rtl: basic', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/datetime/test/basic?ionic:_testing=true&rtl=true'
+  });
+
+  const compare = await page.compareScreenshot();
+  expect(compare).toMatchScreenshot();
 });
