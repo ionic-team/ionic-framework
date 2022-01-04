@@ -10,6 +10,7 @@ describe('rtl: dir', () => {
 
     it('should return false', () => {
       expect(isRTL({ dir: 'ltr' })).toBe(false);
+      expect(isRTL({ dir: '' })).toBe(false);
     });
 
   });
