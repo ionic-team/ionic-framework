@@ -66,6 +66,7 @@ export declare interface IonPopover extends Components.IonPopover {
     'triggerAction',
     'reference',
     'size',
+    'side',
   ],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
 })
@@ -92,6 +93,7 @@ export declare interface IonPopover extends Components.IonPopover {
     'triggerAction',
     'reference',
     'size',
+    'side',
   ],
 })
 export class IonPopover {
