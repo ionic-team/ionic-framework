@@ -12,6 +12,7 @@ import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
+import { isRTL } from '../../utils/rtl';
 import { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import {
@@ -675,8 +676,6 @@ export class Datetime implements ComponentInterface {
      */
     const months = calendarBodyRef.querySelectorAll('.calendar-month');
 
-    const isRTL = document.dir === 'rtl';
-
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
@@ -688,7 +687,7 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL ? -1 : 1);
+      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
@@ -767,7 +766,7 @@ export class Datetime implements ComponentInterface {
             year
           });
 
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL ? -1 : 1);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
           calendarBodyRef.style.removeProperty('overflow');
           calendarBodyRef.style.removeProperty('pointer-events');
 
@@ -1002,12 +1001,11 @@ export class Datetime implements ComponentInterface {
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
     if (!nextMonth) { return; }
 
-    const isRTL = document.dir === 'rtl';
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
     calendarBodyRef.scrollTo({
       top: 0,
-      left: left * (isRTL ? -1 : 1),
+      left: left * (isRTL(this.el) ? -1 : 1),
       behavior: 'smooth'
     });
   }
