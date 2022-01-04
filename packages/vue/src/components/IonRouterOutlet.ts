@@ -375,8 +375,9 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * however the transitions will be backwards as it will enter ion-router-outlet 1 first then exit ion-router-outlet 2
        */
       const hasMatchedRoute = matchedRouteRef.value !== undefined;
-      const isNotRootPath = !hasMatchedRoute && matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath;
-      if (!hasMatchedRoute || isNotRootPath) {
+      const isBaseRoute = matchedRouteRef.value === firstMatchedRoute;
+      const isNotRootPath = firstMatchedRoute.path !== parentOutletPath;
+      if (!hasMatchedRoute || (!isBaseRoute && isNotRootPath)) {
         return;
       }
 
