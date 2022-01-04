@@ -273,6 +273,11 @@ export class Datetime implements ComponentInterface {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
   }
 
+  @Watch('activeParts')
+  protected activePartsChanged() {
+    this.activePartsClone = this.activeParts;
+  }
+
   /**
    * The locale to use for `ion-datetime`. This
    * impacts month and day name formatting.
@@ -802,14 +807,14 @@ export class Datetime implements ComponentInterface {
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
         root: calendarBodyRef
-       });
+      });
       startIO.observe(startMonth);
 
       this.destroyCalendarIO = () => {
         endIO?.disconnect();
         startIO?.disconnect();
       }
-   });
+    });
   }
 
   connectedCallback() {
@@ -944,7 +949,7 @@ export class Datetime implements ComponentInterface {
       ampm: hour >= 12 ? 'pm' : 'am'
     }
 
-    this.activePartsClone = this.activeParts = {
+    this.activeParts = {
       month,
       day,
       year,
@@ -1206,7 +1211,7 @@ export class Datetime implements ComponentInterface {
                     month,
                     day,
                     year
-                  })
+                  });
                 }}
               >{day}</button>
             )
@@ -1249,7 +1254,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-   ) {
+  ) {
     const { color, activePartsClone, workingParts } = this;
 
     return (
@@ -1290,7 +1295,7 @@ export class Datetime implements ComponentInterface {
             ev.stopPropagation();
           }}
         ></ion-picker-column-internal>
-        { !use24Hour && <ion-picker-column-internal
+        {!use24Hour && <ion-picker-column-internal
           color={color}
           value={activePartsClone.ampm}
           items={ampmItems}
@@ -1311,7 +1316,7 @@ export class Datetime implements ComponentInterface {
 
             ev.stopPropagation();
           }}
-        ></ion-picker-column-internal> }
+        ></ion-picker-column-internal>}
       </ion-picker-internal>
     )
   }
@@ -1321,7 +1326,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-   ) {
+  ) {
     return [
       <div class="time-header">
         {this.renderTimeLabel()}
@@ -1411,7 +1416,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="datetime-time">
-          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
+        {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
       </div>
     )
   }
