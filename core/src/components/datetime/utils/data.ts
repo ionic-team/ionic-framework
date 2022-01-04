@@ -172,11 +172,23 @@ export const generateTime = (
         isAMAllowed = minParts.hour < 13;
       }
       if (minParts.minute !== undefined) {
+        /**
+         * The minimum minute range should not be enforced when
+         * the hour is greater than the min hour.
+         *
+         * For example with a minimum range of 09:30, users
+         * should be able to select 10:00-10:29 and beyond.
+         */
+        let isPastMinHour = false;
+        if (minParts.hour !== undefined && refParts.hour !== undefined) {
+          if (refParts.hour > minParts.hour) {
+            isPastMinHour = true;
+          }
+        }
+
         processedMinutes = processedMinutes.filter(minute => {
-          if (minParts.hour !== undefined && refParts.hour !== undefined) {
-            if (refParts.hour > minParts.hour) {
-              return true;
-            }
+          if (isPastMinHour) {
+            return true;
           }
           return minute >= minParts.minute!;
         });
