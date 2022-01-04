@@ -17,7 +17,6 @@ type InlineOverlayState = {
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   ref?: React.Ref<any>;
-  children?: React.ReactNode;
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   onDidPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
