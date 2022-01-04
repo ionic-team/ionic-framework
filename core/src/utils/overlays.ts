@@ -35,9 +35,6 @@ const createController = <Opts extends object, HTMLElm extends any>(tagName: str
     },
     async getTop(): Promise<HTMLElm | undefined> {
       return getOverlay(document, tagName) as any;
-    },
-    defineCustomElements() {
-      return registerOverlayComponents(tagName, customElement, childrenCustomElements);
     }
   };
 };

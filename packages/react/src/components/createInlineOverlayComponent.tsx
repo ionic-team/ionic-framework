@@ -25,10 +25,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
-  controller: { defineCustomElements: () => Promise<any> }
 ) => {
-  controller.defineCustomElements();
-
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
     ref: React.RefObject<HTMLElement>;
