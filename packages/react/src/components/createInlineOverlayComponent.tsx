@@ -1,5 +1,5 @@
 import { OverlayEventDetail } from '@ionic/core/components'
-import React from 'react';
+import React, { createElement } from 'react';
 
 import {
   attachProps,
@@ -119,8 +119,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return React.createElement(tagName, newProps, (this.state.isOpen) ?
-        React.createElement('div', {
+      return createElement(tagName, newProps, (this.state.isOpen) ?
+        createElement('div', {
           id: 'ion-react-wrapper',
           ref: this.wrapperRef,
           style: {
