@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement } from 'react';
 
 import {
   attachProps,
@@ -80,7 +80,7 @@ export const createReactComponent = <
         style,
       };
 
-      return React.createElement(tagName, newProps, children);
+      return createElement(tagName, newProps, children);
     }
 
     static get displayName() {

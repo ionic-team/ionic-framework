@@ -1,5 +1,5 @@
 import { OverlayEventDetail } from '@ionic/core/components';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { createElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
 import { IonContext } from '../contexts/IonContext';
@@ -34,7 +34,7 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
       if (React.isValidElement(component)) {
         ionContext.addOverlay(overlayId, component, containerElRef.current!);
       } else {
-        const element = React.createElement(component as React.ComponentClass, componentProps);
+        const element = createElement(component as React.ComponentClass, componentProps);
         ionContext.addOverlay(overlayId, element, containerElRef.current!);
       }
     }
