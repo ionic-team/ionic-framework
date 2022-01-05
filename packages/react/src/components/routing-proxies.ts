@@ -1,4 +1,5 @@
 import type { JSX } from '@ionic/core/components';
+import { IonBreadcrumb as IonBreadcrumbCmp } from '@ionic/core/components/ion-breadcrumb.js';
 import { IonButton as IonButtonCmp } from '@ionic/core/components/ion-button.js';
 import { IonCard as IonCardCmp } from '@ionic/core/components/ion-card.js';
 import { IonFabButton as IonFabButtonCmp } from '@ionic/core/components/ion-fab-button.js';
@@ -38,3 +39,8 @@ export const IonItemOption = /*@__PURE__*/ createRoutingComponent<
   HrefProps<JSX.IonItemOption>,
   HTMLIonItemOptionElement
 >('ion-item-option', IonItemOptionCmp);
+
+export const IonBreadcrumb = /*@__PURE__*/ createRoutingComponent<
+  HrefProps<JSX.IonBreadcrumb>,
+  HTMLIonBreadcrumbElement
+>('ion-breadcrumb', IonBreadcrumbCmp);
