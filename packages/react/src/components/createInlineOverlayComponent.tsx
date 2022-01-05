@@ -123,7 +123,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         React.createElement('div', {
           id: 'ion-react-wrapper',
           ref: this.wrapperRef,
-          style: { height: '100%' }
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%'
+          }
         }, children) :
         null
       );
