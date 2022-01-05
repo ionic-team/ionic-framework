@@ -231,28 +231,9 @@ export const IonRouterOutlet = defineComponent({
       });
     }
 
-    const handlePageTransition = async () => {
+    const handleTransitions = async (enteringViewItem: any, leavingViewItem: any) => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation, delta } = routeInfo;
-
-      const enteringViewOutletId = viewStacks.getOutletByPath(routeInfo.pathname);
-      let enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, enteringViewOutletId, usingDeprecatedRouteSetup);
-
-      if (enteringViewItem === undefined) {
-        /**
-         * The parent outlet might contain it
-         */
-        enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
-      }
-
-      const leavingViewOutletId = viewStacks.getOutletByPath(routeInfo.lastPathname);
-      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, leavingViewOutletId, true, usingDeprecatedRouteSetup);
-      if (leavingViewItem === undefined) {
-        /**
-         * Parent outlet has the 'Tabs' but children are on a different viewStack by path name
-         */
-        leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
-      }
+      const { routerDirection, routerAction, routerAnimation, delta } = ionRouter.getCurrentRouteInfo;
       const enteringEl = enteringViewItem.ionPageElement;
 
       /**
@@ -261,9 +242,7 @@ export const IonRouterOutlet = defineComponent({
        * methods to work properly.
        */
       if (enteringEl === undefined) {
-        console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected.
-
-See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
+        console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected. See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
       const isSameView = enteringViewItem === leavingViewItem;
       let hasLeavingView = leavingViewItem !== undefined;
@@ -349,6 +328,15 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       components.value = viewStacks.getChildrenToRender(id);
     }
 
+    const handlePageTransition = async () => {
+      const routeInfo = ionRouter.getCurrentRouteInfo();
+
+      let enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
+
+      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
+      await handleTransitions(enteringViewItem, leavingViewItem);
+    }
+
     /**
      * Mounts the viewItem and registers the callbacks
      * @param matchedRouteRef
@@ -375,19 +363,36 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * however the transitions will be backwards as it will enter ion-router-outlet 1 first then exit ion-router-outlet 2
        */
       const hasMatchedRoute = matchedRouteRef.value !== undefined;
-      const isBaseRoute = matchedRouteRef.value === firstMatchedRoute;
-      const isNotRootPath = firstMatchedRoute.path !== parentOutletPath;
-      if (!hasMatchedRoute || (!isBaseRoute && isNotRootPath)) {
+      if (!hasMatchedRoute) {
         return;
       }
+      const isNotFirstRoute = matchedRouteRef.value !== firstMatchedRoute;
+      const isFirstNotParentPath = firstMatchedRoute.path !== parentOutletPath;
+
+      /**
+       * We need to handle page transition from lower level ion-router-outlets or else some ion-pages never get cleaned up/life cycles firing
+       */
+      const createViewItem = !(isNotFirstRoute && isFirstNotParentPath);
+
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      // const enteringViewOutletId = viewStacks.getOutletByPath(currentRoute.pathname);
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id, usingDeprecatedRouteSetup);
 
       if (enteringViewItem === undefined) {
+        if (createViewItem === false) {
+          return;
+        }
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
+      }
+
+      if (createViewItem === false) {
+        /**
+         * For lower level outlets we still want to handle transitions
+         */
+        let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(currentRoute, id, true, usingDeprecatedRouteSetup);
+        await handleTransitions(enteringViewItem, leavingViewItem);
+        return;
       }
 
       /**
