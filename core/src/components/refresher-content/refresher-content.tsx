@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -51,7 +52,7 @@ export class RefresherContent implements ComponentInterface {
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
       const mode = getIonMode(this);
-      const overflowRefresher = (this.el.style as any).webkitOverflowScrolling !== undefined ? 'lines' : 'arrow-down';
+      const overflowRefresher = (this.el.style as any).webkitOverflowScrolling !== undefined ? 'lines' : arrowDown;
       this.pullingIcon = config.get(
         'refreshingIcon',
         mode === 'ios' && isPlatform('mobile') ? config.get('spinner', overflowRefresher) : 'circular'
@@ -80,7 +81,7 @@ export class RefresherContent implements ComponentInterface {
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
                 {mode === 'md' && this.pullingIcon === 'circular' &&
                   <div class="arrow-container">
-                    <ion-icon name="caret-back-sharp"></ion-icon>
+                    <ion-icon icon={caretBackSharp}></ion-icon>
                   </div>
                 }
               </div>
