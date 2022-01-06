@@ -222,7 +222,7 @@ describe('Tabs', () => {
   it('should return to previous tab instance when using the ion-back-button', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
 
-      cy.get('#tabs-secondary').click();
+    cy.get('#tabs-secondary').click();
     // cy.ionPageHidden('tabs');
     cy.ionPageHidden('tab1');
     cy.ionPageVisible('tab1-secondary');
@@ -402,7 +402,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionSwipeToGoBack(true, 'ion-tabs#tabs ion-router-outlet');
 
     cy.ionPageVisible('tab1');
-    cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageHidden('tab1childone');
   });
 
   it('should swipe and go back to correct tab after switching tabs', () => {
@@ -420,11 +420,11 @@ describe('Tabs - Swipe to Go Back', () => {
 
     cy.ionSwipeToGoBack(true, 'ion-tabs#tabs ion-router-outlet');
 
-    cy.ionPageVisible('tab1');
-    cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1childone');
 
     cy.ionSwipeToGoBack(true, 'ion-tabs#tabs ion-router-outlet');
-    cy.ionPageVisible('home');
+    cy.ionPageVisible('tab1childone');
   });
 })
 
@@ -439,21 +439,21 @@ describe('Multi Tabs', () => {
     /**
      * Multiple instance of tab1-secondary exist, find the correct instance
      */
-    cy.get('[data-pageid="tab1-secondary"]:nth-of-type(2) #tabs-primary').click();
+    cy.get('[data-pageid="tab1-secondary"]:nth-of-type(1) #tabs-primary').click();
     cy.ionPageHidden('tabs-secondary');
     cy.ionPageVisible('tabs');
 
     cy.ionBackClick('tab1');
     cy.ionPageVisible('tabs-secondary');
-    cy.ionPageDoesNotExist('tabs');
+    cy.ionPageHidden('tabs');
 
     cy.ionBackClick('tab1-secondary');
     cy.ionPageVisible('tabs');
-    cy.ionPageDoesNotExist('tabs-secondary');
+    cy.ionPageHidden('tabs-secondary');
 
     cy.ionBackClick('tab1');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('tabs');
+    cy.ionPageHidden('tabs');
   });
 })
