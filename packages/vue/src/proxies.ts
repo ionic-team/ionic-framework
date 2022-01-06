@@ -603,7 +603,8 @@ export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion
   'disabled',
   'ionRefresh',
   'ionPull',
-  'ionStart'
+  'ionStart',
+  'ionEnd'
 ]);
 
 
