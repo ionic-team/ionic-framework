@@ -133,6 +133,14 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
+  /**
+   * Emitted after the pull gesture has ended and the refresher has returned to
+   * the INACTIVE state. It doesn't matter where the pull gesture ended; whether
+   * the user pulled far enough for a refresh, let go in the middle of a pull,
+   * or reversed the pull and released with the content at the top.
+   */
+  @Event() ionEnd!: EventEmitter<void>;
+
   private async checkNativeRefresher() {
     const useNativeRefresher = await shouldUseNativeRefresher(this.el, getIonMode(this));
     if (useNativeRefresher && !this.nativeRefresher) {
@@ -159,6 +167,10 @@ export class Refresher implements ComponentInterface {
       await translateElement(el, undefined, 300);
     } else {
       await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
+      // TODO Does something have to happen here to emit the ionEnd event?
+      // And if so, can it happen anywhere in resetNativeRefresher()?
+      // Or does something have to happen in the onEnd gesture events that
+      // are created within the setup[iOS/MD]NativeRefresher functions?
     }
 
     this.didRefresh = false;
@@ -561,6 +573,8 @@ export class Refresher implements ComponentInterface {
       this.progress = 0;
       this.state = RefresherState.Inactive;
 
+      console.log('deltaY <= 0'); // TODO remove
+
       if (this.appliedStyles) {
         // reset the styles only if they were applied
         this.setCss(0, '', false, '');
@@ -636,19 +650,40 @@ export class Refresher implements ComponentInterface {
   }
 
   private onEnd() {
+    console.log('onEnd'); // TODO remove
     // only run in a zone when absolutely necessary
     if (this.state === RefresherState.Ready) {
       // they pulled down far enough, so it's ready to refresh
       this.beginRefresh();
+      console.log('onEnd > Ready'); // TODO remove
 
     } else if (this.state === RefresherState.Pulling) {
       // they were pulling down, but didn't pull down far enough
       // set the content back to it's original location
       // and close the refresher
       // set that the refresh is actively cancelling
+      console.log('onEnd > Pulling'); // TODO remove
       this.cancel();
+    } else if (this.state === RefresherState.Inactive) {
+      // they pulled down, but reversed the gesture and released
+      // when deltaY was <= 0 (i.e. getProgress was at 0).
+      console.log('onEnd > Inactive'); // TODO remove
+      this.ionEnd.emit();
+    } else {
+      // TODO remove whole else clause
+      // just curious what else can happen here
+      console.log(`onEnd (other) > ${this.getEnumKeyByEnumValue(RefresherState, this.state)})}`);
     }
   }
+
+  // TODO remove
+  // RefresherState can't be a const for this to work,
+  // but this is just for experimenting.
+  getEnumKeyByEnumValue(myEnum: any, enumValue: any) {
+    let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
+    return keys.length > 0 ? keys[0] : null;
+  }
+
 
   private beginRefresh() {
     // assumes we're already back in a zone
@@ -669,6 +704,16 @@ export class Refresher implements ComponentInterface {
 
     // create fallback timer incase something goes wrong with transitionEnd event
     setTimeout(() => {
+
+      // The comment above setTimeout() is worrisome because I don't want this to
+      // emit more than once (though that wouldn't be a big deal). I don't know
+      // enough about transitionEnd to know if that's possible and this
+      // conditional might not be necessary.
+      if (this.state !== RefresherState.Inactive) {
+        console.log(`ionEnd emit after setTimeout() fallback`); // TODO remove
+        this.ionEnd.emit();
+      }
+      
       this.state = RefresherState.Inactive;
       this.progress = 0;
       this.didStart = false;
@@ -723,7 +768,7 @@ export class Refresher implements ComponentInterface {
   }
 }
 
-const enum RefresherState {
+enum RefresherState {
   Inactive = 1 << 0,
   Pulling = 1 << 1,
   Ready = 1 << 2,

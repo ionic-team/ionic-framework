@@ -92,6 +92,10 @@
     refresher.addEventListener('ionStart', () => {
       console.log('ionStart');
     });
+
+    refresher.addEventListener('ionEnd', () => {
+      console.log('ionEnd');
+    });
     
     refresher.addEventListener('ionRefresh', async function () {
       console.log('Loading data...');
