@@ -234,14 +234,15 @@ export const IonRouterOutlet = defineComponent({
     const handleTransitions = async (enteringViewItem: any, leavingViewItem: any) => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
       const { routerDirection, routerAction, routerAnimation, delta } = ionRouter.getCurrentRouteInfo;
-      const enteringEl = enteringViewItem.ionPageElement;
+      const hasEnteringView = enteringViewItem !== undefined;
+      const enteringEl = hasEnteringView && enteringViewItem.ionPageElement;
 
       /**
        * All views that can be transitioned to must have
        * an `<ion-page>` element for transitions and lifecycle
        * methods to work properly.
        */
-      if (enteringEl === undefined) {
+      if (hasEnteringView && enteringEl === undefined) {
         console.warn(`[@ionic/vue Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <ion-page> component. Transitions and lifecycle methods may not work as expected. See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
       const isSameView = enteringViewItem === leavingViewItem;
@@ -270,11 +271,13 @@ export const IonRouterOutlet = defineComponent({
        * return early for swipe to go back when
        * going from a non-tabs page to a tabs page.
        */
-      if (isViewVisible(enteringEl) && hasLeavingView && !isViewVisible(leavingViewItem.ionPageElement)) {
+      if (hasEnteringView && isViewVisible(enteringEl) && hasLeavingView && !isViewVisible(leavingViewItem.ionPageElement)) {
         return;
       }
 
-      fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
+      if (hasEnteringView) {
+        fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
+      }
 
       if (hasLeavingView && !isSameView) {
         let animationBuilder = routerAnimation;
@@ -289,11 +292,13 @@ export const IonRouterOutlet = defineComponent({
          * unless the developer explicitly
          * provided another animation.
          */
-        const customAnimation = enteringViewItem.routerAnimation;
+        const customAnimation = hasEnteringView && enteringViewItem.routerAnimation;
         if (
           animationBuilder === undefined &&
           routerDirection === 'back' &&
-          // todo check for tab switch
+          /**
+           * @TODO: check for tab switch
+           */
           customAnimation !== undefined
         ) {
           animationBuilder = customAnimation;
@@ -301,20 +306,24 @@ export const IonRouterOutlet = defineComponent({
 
         leavingViewItem.routerAnimation = animationBuilder;
 
-        await transition(
-          enteringEl,
-          leavingEl,
-          routerDirection,
-          !!routeInfo.pushedByRoute,
-          false,
-          animationBuilder
-        );
+        if (hasEnteringView) {
+          await transition(
+            enteringEl,
+            leavingEl,
+            routerDirection,
+            !!routeInfo.pushedByRoute,
+            false,
+            animationBuilder
+          );
+        }
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
         /**
          * Not sure what is setting display: none; in some scenarios, but removing it here
          */
-        enteringEl.style.display = null;
+        if (hasEnteringView && enteringEl !== null) {
+          enteringEl.style.display = null;
+        }
         if (routerAction === 'replace') {
           viewStacks.unmountViewItem(leavingViewItem);
         } else {
@@ -323,8 +332,10 @@ export const IonRouterOutlet = defineComponent({
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
       }
-
-      fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
+      if (hasEnteringView) {
+        enteringEl.classList.remove('ion-page-hidden');
+        fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
+      }
       components.value = viewStacks.getChildrenToRender(id);
     }
 
@@ -363,25 +374,19 @@ export const IonRouterOutlet = defineComponent({
        * however the transitions will be backwards as it will enter ion-router-outlet 1 first then exit ion-router-outlet 2
        */
       const hasMatchedRoute = matchedRouteRef.value !== undefined;
-      if (!hasMatchedRoute) {
-        return;
-      }
       const isNotFirstRoute = matchedRouteRef.value !== firstMatchedRoute;
       const isFirstNotParentPath = firstMatchedRoute.path !== parentOutletPath;
 
       /**
        * We need to handle page transition from lower level ion-router-outlets or else some ion-pages never get cleaned up/life cycles firing
        */
-      const createViewItem = !(isNotFirstRoute && isFirstNotParentPath);
+      const createViewItem = !(isNotFirstRoute && isFirstNotParentPath) && hasMatchedRoute;
 
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id, usingDeprecatedRouteSetup);
 
-      if (enteringViewItem === undefined) {
-        if (createViewItem === false) {
-          return;
-        }
+      if (enteringViewItem === undefined && createViewItem) {
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }
@@ -395,6 +400,10 @@ export const IonRouterOutlet = defineComponent({
         return;
       }
 
+      if (enteringViewItem === undefined) {
+        //outlet doesnt have a entering view item
+        return;
+      }
       /**
        * Already mounted, directly handle page transition
        */
