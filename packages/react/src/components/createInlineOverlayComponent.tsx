@@ -25,7 +25,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
-  defineCustomElement?: any
+  defineCustomElement?: () => void
 ) => {
   if (defineCustomElement) {
     defineCustomElement();

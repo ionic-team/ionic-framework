@@ -24,9 +24,9 @@ export const createOverlayComponent = <
 >(
   tagName: string,
   controller: { create: (options: any) => Promise<OverlayType> },
-  defineCustomElement?: any
+  defineCustomElement?: () => void
 ) => {
-  if (defineCustomElement) {
+  if (defineCustomElement !== undefined) {
     defineCustomElement();
   }
 
