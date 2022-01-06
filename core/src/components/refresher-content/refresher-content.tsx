@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -6,7 +7,6 @@ import { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { SPINNERS } from '../spinner/spinner-configs';
-import { caretBackSharp, arrowDown } from 'ionicons/icons';
 
 @Component({
   tag: 'ion-refresher-content'
