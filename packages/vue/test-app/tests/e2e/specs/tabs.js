@@ -192,7 +192,8 @@ describe('Tabs', () => {
     cy.visit('http://localhost:8080/tabs-new/tab1');
 
     cy.routerPush('/');
-    cy.ionPageHidden('tabs');
+    // cy.ionPageHidden('tabs');
+    cy.ionPageHidden('tab1');
     cy.ionPageVisible('home');
 
     cy.routerPush('/tabs-new/tab2');
@@ -221,8 +222,9 @@ describe('Tabs', () => {
   it('should return to previous tab instance when using the ion-back-button', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
 
-    cy.get('#tabs-secondary').click();
-    cy.ionPageHidden('tabs');
+      cy.get('#tabs-secondary').click();
+    // cy.ionPageHidden('tabs');
+    cy.ionPageHidden('tab1');
     cy.ionPageVisible('tab1-secondary');
 
     cy.get('ion-tab-button#tab-button-tab2-secondary').click();
@@ -234,8 +236,8 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1-secondary');
 
     cy.ionBackClick('tab1-secondary');
-    cy.ionPageDoesNotExist('tabs-secondary');
-    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('tab1-secondary');
+    cy.ionPageVisible('tab2-secondary');
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23087
@@ -255,10 +257,10 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1childone');
 
     cy.ionBackClick('tab1childone');
-    cy.ionPageDoesNotExist('tab1childone');
-    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('tab1childone');
+    cy.ionPageVisible('tab2');
 
-    cy.url().should('include', '/tabs/tab1');
+    cy.url().should('include', '/tabs/tab2');
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22847
@@ -347,7 +349,7 @@ describe('Tabs', () => {
     cy.ionPageHidden('tabs');
 
     cy.ionBackClick('routing');
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
     cy.ionPageVisible('tabs');
     cy.ionPageVisible('tab2');
     cy.ionPageHidden('tab1');
