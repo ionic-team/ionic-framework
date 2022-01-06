@@ -60,26 +60,22 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
 };
 
 const registerOverlayComponents = (tagName: string, customElement: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<any> => {
-  /* tslint:disable-next-line */
-  if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
-    const { customElements } = window;
-    if (!customElements.get(tagName)) {
-      customElements.define(tagName, customElement);
-    }
-    /**
-     * If the parent element has nested usage of custom elements,
-     * we need to manually define those custom elements.
-     */
-    if (childrenCustomElements) {
-      for (const customElementDefinition of childrenCustomElements) {
-        if (!customElements.get(customElementDefinition.tagName)) {
-          customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
-        }
+  const { customElements } = window;
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, customElement);
+  }
+  /**
+   * If the parent element has nested usage of custom elements,
+   * we need to manually define those custom elements.
+   */
+  if (childrenCustomElements) {
+    for (const customElementDefinition of childrenCustomElements) {
+      if (!customElements.get(customElementDefinition.tagName)) {
+        customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
       }
     }
-    return customElements.whenDefined(tagName);
   }
-  return Promise.resolve() as any;
+  return customElements.whenDefined(tagName);
 }
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
