@@ -311,7 +311,10 @@ export const IonRouterOutlet = defineComponent({
             enteringEl,
             leavingEl,
             routerDirection,
-            !!routeInfo.pushedByRoute,
+            /**
+            *
+            */
+            (routeInfo.pushedByRoute !== undefined && routeInfo.lastPathname !== routeInfo.pathname),
             false,
             animationBuilder
           );
