@@ -250,7 +250,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
       const isNewTab = nextRouteInfo.tab !== leavingRouteInfo.tab;
       const isLeavingRouteTab = leavingRouteInfo.tab !== '';
-      const isPushed = incomingRouteParams.routerAction === 'push' && incomingRouteParams.routerDirection === 'forward';
+      const isPushed = incomingRouteParams.routerAction === 'push' && (incomingRouteParams.routerDirection === 'forward' || incomingRouteParams.routerDirection === 'root');
       if (isPushed) {
         /**
          * Push/Forward occurs whenever navigating forward, page -> page/a -> page/b
