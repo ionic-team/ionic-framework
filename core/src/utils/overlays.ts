@@ -59,27 +59,29 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   }
 };
 
-export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
-  /* tslint:disable-next-line */
-  if (typeof window.customElements !== 'undefined') {
-    if (typeof (window as any) !== 'undefined' && window.customElements) {
-      if (!window.customElements.get(tagName)) {
-        window.customElements.define(tagName, customElement);
-      }
-      /**
-       * If the parent element has nested usage of custom elements,
-       * we need to manually define those custom elements.
-       */
-      if (childrenCustomElements) {
-        for (const customElementDefinition of childrenCustomElements) {
-          if (!window.customElements.get(customElementDefinition.tagName)) {
-            window.customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
-          }
-        }
+const registerOverlayComponents = (tagName: string, customElement: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<any> => {
+  const { customElements } = window;
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, customElement);
+  }
+  /**
+   * If the parent element has nested usage of custom elements,
+   * we need to manually define those custom elements.
+   */
+  if (childrenCustomElements) {
+    for (const customElementDefinition of childrenCustomElements) {
+      if (!customElements.get(customElementDefinition.tagName)) {
+        customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
       }
     }
+  }
+  return customElements.whenDefined(tagName);
+}
 
-    return window.customElements.whenDefined(tagName).then(() => {
+export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
+  /* tslint:disable-next-line */
+  if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
+    return registerOverlayComponents(tagName, customElement, childrenCustomElements).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 

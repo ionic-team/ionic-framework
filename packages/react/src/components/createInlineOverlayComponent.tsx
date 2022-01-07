@@ -5,7 +5,6 @@ import {
   attachProps,
   camelToDashCase,
   dashToPascalCase,
-  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
 } from './react-component-lib/utils';
@@ -26,10 +25,11 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
-  customElement?: any
+  defineCustomElement?: () => void
 ) => {
-  defineCustomElement(tagName, customElement);
-
+  if (defineCustomElement) {
+    defineCustomElement();
+  }
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
     ref: React.RefObject<HTMLElement>;
