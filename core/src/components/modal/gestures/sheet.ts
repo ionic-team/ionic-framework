@@ -1,6 +1,7 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
+import { findClosestIonContent, findIonContent } from '../../content/utils';
 import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetGesture = (
@@ -34,7 +35,7 @@ export const createSheetGesture = (
     BACKDROP_KEYFRAMES: (backdropBreakpoint !== 0) ? customBackdrop : defaultBackdrop
   };
 
-  const contentEl = baseEl.querySelector<HTMLIonContentElement>('ion-content, [ion-content]');
+  const contentEl = findIonContent(baseEl);
   const height = wrapperEl.clientHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
@@ -74,7 +75,7 @@ export const createSheetGesture = (
      * the gesture should not start to
      * allow for scrolling on the content.
      */
-    const content = (detail.event.target! as HTMLElement).closest<HTMLIonContentElement>('ion-content, [ion-content]');
+    const content = findClosestIonContent(detail.event.target! as Element);
 
     if (currentBreakpoint === 1 && content) {
       return false;

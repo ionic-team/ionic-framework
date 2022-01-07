@@ -4,6 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+import { findClosestIonContent } from '../content/utils';
 
 const enum ReorderGroupState {
   Idle = 0,
@@ -54,7 +55,7 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+    const contentEl = findClosestIonContent(this.el);
     if (contentEl) {
       await new Promise(resolve => componentOnReady(contentEl, resolve));
       this.scrollEl = await contentEl.getScrollElement();

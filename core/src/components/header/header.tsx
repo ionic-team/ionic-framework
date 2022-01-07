@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from
 import { getIonMode } from '../../global/ionic-global';
 import { componentOnReady, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
+import { findIonContent } from '../content/utils';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 
@@ -72,7 +73,7 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector<HTMLIonContentElement>('ion-content, [ion-content]') : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
@@ -84,7 +85,7 @@ export class Header implements ComponentInterface {
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector<HTMLIonContentElement>('ion-content, [ion-content]') : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
       const condenseHeader = (contentEl) ? contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null : null;
       await this.setupFadeHeader(contentEl, condenseHeader);
     }

@@ -1,5 +1,7 @@
 import { readTask, writeTask } from '@stencil/core';
 
+import { findClosestIonContent } from '../components/content/utils';
+
 import { componentOnReady } from './helpers';
 
 export const startStatusTap = () => {
@@ -12,7 +14,7 @@ export const startStatusTap = () => {
       if (!el) {
         return;
       }
-      const contentEl = el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+      const contentEl = findClosestIonContent(el);
       if (contentEl) {
         new Promise(resolve => componentOnReady(contentEl, resolve)).then(() => {
           writeTask(async () => {

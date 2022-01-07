@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { getIonMode } from '../../global/ionic-global';
 import { componentOnReady } from '../../utils/helpers';
+import { findIonContent } from '../content/utils';
 
 import { handleFooterFade } from './footer.utils';
 
@@ -56,7 +57,7 @@ export class Footer implements ComponentInterface {
 
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector<HTMLIonContentElement>('ion-content, [ion-content]') : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
       this.setupFadeFooter(contentEl);
     }

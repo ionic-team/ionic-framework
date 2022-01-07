@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, FunctionalComponent, Host, List
 
 import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
+import { findClosestIonContent } from '../content/utils';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -158,7 +159,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   async connectedCallback() {
-    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+    const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
       console.error('<ion-virtual-scroll> must be used inside an <ion-content>');
       return;

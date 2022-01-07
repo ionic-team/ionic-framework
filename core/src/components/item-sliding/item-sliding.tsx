@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
+import { findClosestIonContent } from '../content/utils';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -68,7 +69,7 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
-    this.closestContent = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+    this.closestContent = findClosestIonContent(this.el);
 
     await this.updateOptions();
 

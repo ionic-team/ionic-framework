@@ -5,6 +5,7 @@ import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../i
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
+import { findClosestIonContent } from '../content/utils';
 
 import {
   createPullingAnimation,
@@ -136,7 +137,7 @@ export class Refresher implements ComponentInterface {
   private async checkNativeRefresher() {
     const useNativeRefresher = await shouldUseNativeRefresher(this.el, getIonMode(this));
     if (useNativeRefresher && !this.nativeRefresher) {
-      const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+      const contentEl = findClosestIonContent(this.el);
       this.setupNativeRefresher(contentEl);
     } else if (!useNativeRefresher) {
       this.destroyNativeRefresher();
@@ -419,7 +420,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+    const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
       console.error('<ion-refresher> must be used inside an <ion-content>');
       return;

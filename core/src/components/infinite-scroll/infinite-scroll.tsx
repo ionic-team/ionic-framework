@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { componentOnReady } from '../../utils/helpers';
+import { findClosestIonContent } from '../content/utils';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -78,7 +79,7 @@ export class InfiniteScroll implements ComponentInterface {
   @Event() ionInfinite!: EventEmitter<void>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest<HTMLIonContentElement>('ion-content, [ion-content]');
+    const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
       console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
       return;
