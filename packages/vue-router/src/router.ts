@@ -31,7 +31,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * and any user guards have run.
    */
   router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized, failure?: NavigationFailure) => {
-    if (failure) return;
+    if (failure) {
+      return;
+    }
 
     const {direction, action, delta} = currentNavigationInfo;
 
@@ -191,7 +193,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         //last routes, route?
         leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() - 2);
       } else if (incomingRouteParams.routerAction === 'pop') {
-        leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() + 1);
+        /**
+         * Unique scenario where you start on a specific page page/x and try to click go back to a default href, but you cant pop to a non-exist page
+         */
+        leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() + 1) || locationHistory.last();
       } else {
         //probably a push scenario
         leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() - 1);
@@ -294,7 +299,8 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          *
          * Going back from page/b to page/a would be a `pop` action
          */
-        nextRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex());
+
+        // nextRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex());
         nextRouteInfo.routerAnimation = leavingRouteInfo?.routerAnimation;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
@@ -316,7 +322,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         /**
          * Should never be '/'
          */
-        nextRouteInfo.replacedRoute =  (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        nextRouteInfo.replacedRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
 
         nextRouteInfo.lastPathname = lastRouteInfo?.lastPathname;
         nextRouteInfo.pushedByRoute = lastRouteInfo?.pushedByRoute;
