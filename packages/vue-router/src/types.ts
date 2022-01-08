@@ -20,13 +20,9 @@ export interface RouteInfo {
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
   /**
-   * The pathname of the last route
+   * The pathname of the last route, used to handle transitions
    */
   lastPathname?: string;
-  /**
-   * @TODO: check if this is still used, if not remove/deprecate
-   */
-  prevRouteLastPathname?: string;
   /**
    * The pathname of the current route
    */
