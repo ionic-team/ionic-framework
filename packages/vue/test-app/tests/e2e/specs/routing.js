@@ -22,7 +22,7 @@ describe('Routing', () => {
     cy.ionBackClick('routing');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
   });
 
   it('should go back home with default href', () => {
@@ -31,7 +31,7 @@ describe('Routing', () => {
     cy.ionBackClick('defaulthref');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('defaulthref');
+    cy.ionPageHidden('defaulthref');
   });
 
   it('should show back button', () => {
@@ -44,8 +44,8 @@ describe('Routing', () => {
     cy.ionBackClick('routing');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routing');
-    cy.ionPageDoesNotExist('routingchild')
+    cy.ionPageHidden('routing');
+    cy.ionPageHidden('routingchild')
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
@@ -57,7 +57,7 @@ describe('Routing', () => {
     cy.get('[data-pageid=routingparameter] #parameter-value').should('have.text', 'abc');
     cy.ionBackClick('routingparameter');
 
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
 
     cy.get('#parameter-xyz').click();
     cy.ionPageVisible('routingparameter');
@@ -87,7 +87,7 @@ describe('Routing', () => {
 
     cy.ionBackClick('routingparameterview');
 
-    cy.ionPageDoesNotExist('routingparameterview');
+    cy.ionPageHidden('routingparameterview');
     cy.ionPageVisible('routing');
   });
 
@@ -104,7 +104,7 @@ describe('Routing', () => {
     cy.ionBackClick('routing');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22412
@@ -114,7 +114,7 @@ describe('Routing', () => {
     cy.get('#replace').click();
 
     cy.ionPageVisible('navigation');
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
 
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('navigation');
@@ -134,18 +134,18 @@ describe('Routing', () => {
 
     cy.get('[data-pageid="routeroutlet"] #other').click();
     cy.ionPageVisible('nestedchildtwo');
-    cy.ionPageDoesNotExist('folder');
+    cy.ionPageHidden('folder');
 
     cy.get('[data-pageid="routeroutlet"] #spam').click();
     cy.ionPageVisible('folder');
-    cy.ionPageDoesNotExist('nestedchildtwo');
+    cy.ionPageHidden('nestedchildtwo');
 
     cy.get('[data-pageid="routeroutlet"] #outbox').click();
     cy.ionPageVisible('folder');
 
     cy.get('[data-pageid="routeroutlet"] #other').click();
     cy.ionPageVisible('nestedchildtwo');
-    cy.ionPageDoesNotExist('folder');
+    cy.ionPageHidden('folder');
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22658
@@ -186,7 +186,7 @@ describe('Routing', () => {
     cy.ionPageHidden('home');
 
     cy.routerReplace('/');
-    cy.ionPageDoesNotExist('navigation');
+    cy.ionPageHidden('navigation');
     cy.ionPageVisible('home');
 
     cy.ionBackButtonHidden('home');
@@ -205,14 +205,14 @@ describe('Routing', () => {
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
 
     cy.routerGo(2);
     cy.ionPageVisible('routingparameter');
     cy.ionPageHidden('home');
 
     cy.ionBackClick('routingparameter');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
     cy.ionPageVisible('routing');
   })
 
@@ -229,7 +229,7 @@ describe('Routing', () => {
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
 
     cy.routerGo(1);
     cy.ionPageHidden('home');
@@ -240,11 +240,11 @@ describe('Routing', () => {
     cy.ionPageVisible('routingparameter');
 
     cy.routerGo(-1);
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
     cy.ionPageVisible('routing');
 
     cy.routerGo(-1);
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
     cy.ionPageVisible('home');
   })
 
@@ -261,7 +261,7 @@ describe('Routing', () => {
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
 
     cy.routerPush('/inputs');
     cy.ionPageHidden('home');
@@ -269,7 +269,7 @@ describe('Routing', () => {
 
     cy.ionBackClick('inputs');
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('inputs');
+    cy.ionPageHidden('inputs');
   })
 
   it('should properly go back using ion-back-button after using router.go()', () => {
@@ -285,18 +285,18 @@ describe('Routing', () => {
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
 
     cy.routerGo(2);
     cy.ionPageVisible('routingparameter');
     cy.ionPageHidden('home');
 
     cy.ionBackClick('routingparameter');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
     cy.ionPageVisible('routing');
 
     cy.ionBackClick('routing');
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
     cy.ionPageVisible('home');
   });
 
@@ -313,8 +313,8 @@ describe('Routing', () => {
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routing');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routing');
+    cy.ionPageHidden('routingparameter');
   })
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23987
@@ -335,15 +335,15 @@ describe('Routing', () => {
 
     cy.ionBackClick('routingchild');
     cy.ionPageVisible('routingparameterview');
-    cy.ionPageDoesNotExist('routingchild');
+    cy.ionPageHidden('routingchild');
 
     cy.ionBackClick('routingparameterview');
     cy.ionPageVisible('routing');
-    cy.ionPageDoesNotExist('routingparameterview');
+    cy.ionPageHidden('routingparameterview');
 
     cy.ionBackClick('routing');
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routing');
+    cy.ionPageHidden('routing');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -359,7 +359,7 @@ describe('Routing', () => {
 
     cy.ionBackClick('routingchild');
     cy.ionPageVisible('routingparameterview');
-    cy.ionPageDoesNotExist('routingchild');
+    cy.ionPageHidden('routingchild');
   })
 });
 
@@ -383,7 +383,7 @@ describe('Routing - Swipe to Go Back', () => {
     cy.ionPageVisible('home');
 
     // TODO: Vue router does not go back in cypress with router.back()
-    //cy.ionPageDoesNotExist('navigation');
+    //cy.ionPageHidden('navigation');
   });
 
   it('swipe to go back should work when using router.go()', () => {
@@ -399,7 +399,7 @@ describe('Routing - Swipe to Go Back', () => {
 
     cy.routerGo(-2);
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
 
     cy.routerGo(2);
     cy.ionPageVisible('routingparameter');
@@ -408,7 +408,7 @@ describe('Routing - Swipe to Go Back', () => {
     // TODO: This does not work yet
     cy.ionSwipeToGoBack(true);
 
-    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageHidden('routingparameter');
     cy.ionPageVisible('routing');
   })
 })

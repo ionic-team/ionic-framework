@@ -161,7 +161,22 @@ export const createLocationHistory = () => {
     const index = currentHistory - initialHistory;
     return locationHistory[index] || last();
   }
+
+  /**
+   *
+   * @param offset
+   */
+  const getHistoryByIndex = (index: number) => {
+    return locationHistory[index];
+  }
+
+  /**
+   * This assumes the user is at the current index
+   */
   const previous = () => locationHistory[locationHistory.length - 2] || last();
+  /**
+   * This assumes the user is at the current index
+   */
   const last = () => locationHistory[locationHistory.length - 1];
   const lastTab = (tab: string) => {
     let tabHistory = getTabsHistory(tab);
@@ -260,6 +275,7 @@ export const createLocationHistory = () => {
   return {
     current,
     updateByHistoryPosition,
+    getHistoryByIndex,
     size,
     last,
     previous,

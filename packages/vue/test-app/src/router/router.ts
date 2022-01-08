@@ -6,6 +6,7 @@ import { DelayGuard } from '@/guards/Delay';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    name: 'Home',
     component: Home
   },
   {
@@ -46,16 +47,16 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/routing/child',
-    component: () => import('@/views/RoutingChild.vue')
+    component: () => import('@/views/routing/RoutingChild.vue')
   },
   {
     path: '/routing/:id',
-    component: () => import('@/views/RoutingParameter.vue'),
+    component: () => import('@/views/routing/RoutingParameter.vue'),
     props: true
   },
   {
     path: '/routing/:id/view',
-    component: () => import('@/views/RoutingParameterView.vue')
+    component: () => import('@/views/routing/RoutingParameterView.vue')
   },
   {
     path: '/navigation',

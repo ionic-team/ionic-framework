@@ -20,6 +20,7 @@
 
       <ion-button router-link="/routing/abc">Go to Parameter Page ABC</ion-button>
       <ion-button router-link="/routing/xyz">Go to Parameter Page XYZ</ion-button>
+      <ion-button @click="$router.go(-2)" id="router-go-back-2">$router.go(-2)</ion-button>
 
       <div class="ion-padding" id="parameter-value">
         {{ $props.id }}

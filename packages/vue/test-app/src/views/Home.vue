@@ -59,6 +59,9 @@
         <ion-item  button router-link="/tabs/tab2" id="tabs-tab2">
           <ion-label>Go to /tabs/tab2</ion-label>
         </ion-item>
+        <ion-item  @click="$router.go(2)" id="router-go-forward-2">
+          <ion-label>$router.go(2)</ion-label>
+        </ion-item>
       </ion-list>
 
     </ion-content>

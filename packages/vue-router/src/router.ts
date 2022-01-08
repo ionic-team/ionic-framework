@@ -4,8 +4,8 @@ import {
   RouteLocationNormalized,
   NavigationFailure
 } from 'vue-router';
-import { createLocationHistory } from './locationHistory';
-import { generateId } from './utils';
+import {createLocationHistory} from './locationHistory';
+import {generateId} from './utils';
 import {
   ExternalNavigationOptions,
   RouteInfo,
@@ -15,11 +15,11 @@ import {
   IonicVueRouterOptions,
   NavigationInformation
 } from './types';
-import { AnimationBuilder } from '@ionic/vue';
+import {AnimationBuilder} from '@ionic/vue';
 
 //@TODO: declare types
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
-  let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined, delta: undefined };
+  let currentNavigationInfo: NavigationInformation = {direction: undefined, action: undefined, delta: undefined};
 
   /**
    * Ionic Vue should only react to navigation
@@ -33,7 +33,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized, failure?: NavigationFailure) => {
     if (failure) return;
 
-    const { direction, action, delta } = currentNavigationInfo;
+    const {direction, action, delta} = currentNavigationInfo;
 
     /**
      * When calling router.replace, we are not informed
@@ -49,10 +49,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const replaceAction = opts.history.state.replaced ? 'replace' : undefined;
     handleHistoryChange(to, action || replaceAction, direction, delta);
 
-    currentNavigationInfo = { direction: undefined, action: undefined, delta: undefined };
+    currentNavigationInfo = {direction: undefined, action: undefined, delta: undefined};
   });
 
   const locationHistory = createLocationHistory();
+
 
   /**
    * Keeping track of the history position
@@ -62,6 +63,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   const initialHistoryPosition = opts.history.state.position as number;
   let currentHistoryPosition = opts.history.state.position as number;
+
+  const currentHistoryIndex = () => {
+    let index = (currentHistoryPosition) - initialHistoryPosition;
+    console.log('Current index is: ', index);
+
+    return index;
+  }
 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
@@ -111,7 +119,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
     // todo grab default back button href from config
-    const routeInfo = getLeavingRouteInfo();// locationHistory.current(initialHistoryPosition, currentHistoryPosition);
+    const routeInfo = getLeavingRouteInfo();
     const hasRoute = routeInfo !== undefined;
     const wasRoutePushed = hasRoute && routeInfo.pushedByRoute !== undefined;
 
@@ -148,7 +156,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     ) {
       router.back();
     } else {
-      router.replace({ path: lastLocation.pathname, query: parseQuery(lastLocation.search) });
+      router.replace({path: lastLocation.pathname, query: parseQuery(lastLocation.search)});
     }
   }
 
@@ -167,7 +175,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     }
   }
 
-  // TODO RouteLocationNormalized
+  /**
+   * @TODO: RouteLocationNormalized
+   */
+
   const handleHistoryChange = (
     location: any,
     action?: RouteAction,
@@ -177,11 +188,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     let leavingRouteInfo: RouteInfo;
     if (incomingRouteParams) {
       if (incomingRouteParams.routerAction === 'replace') {
-        leavingRouteInfo = locationHistory.previous();
+        //last routes, route?
+        leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() - 2);
       } else if (incomingRouteParams.routerAction === 'pop') {
-        leavingRouteInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition + 1);
+        leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() + 1);
       } else {
-        leavingRouteInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - 1);
+        //probably a push scenario
+        leavingRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex() - 1);
       }
     } else {
       leavingRouteInfo = currentRouteInfo;
@@ -207,22 +220,28 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
             tab: currentTab
           }
         } else if (action === 'pop') {
-          const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - delta);
+          // const prevRouteInfo = locationHistory.getHistoryByIndex((initialHistoryPosition - currentHistoryPosition) - delta);
+          // incomingRouteParams = {
+          //   ...prevRouteInfo,
+          //   routerAction: 'pop',
+          //   routerDirection: 'back'
+          // };
+          // const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - delta);
 
-          if (routeInfo && routeInfo.pushedByRoute) {
-            const prevRouteInfo = locationHistory.findLastLocation(routeInfo, delta);
-            incomingRouteParams = {
-              ...prevRouteInfo,
-              routerAction: 'pop',
-              routerDirection: 'back'
-            };
-          } else {
-            incomingRouteParams = {
-              routerAction: 'pop',
-              routerDirection: 'none',
-              tab: currentTab
-            }
-          }
+          // if (routeInfo && routeInfo.pushedByRoute) {
+          //   const prevRouteInfo = locationHistory.findLastLocation(routeInfo, delta);
+          incomingRouteParams = {
+            // ...prevRouteInfo,
+            routerAction: 'pop',
+            routerDirection: 'back'
+          };
+          // } else {
+          //   incomingRouteParams = {
+          //     routerAction: 'pop',
+          //     routerDirection: 'none',
+          //     tab: currentTab
+          //   }
+          // }
         }
 
         if (!incomingRouteParams) {
@@ -252,22 +271,30 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       const isLeavingRouteTab = leavingRouteInfo.tab !== '';
       const isPushed = incomingRouteParams.routerAction === 'push' && (incomingRouteParams.routerDirection === 'forward' || incomingRouteParams.routerDirection === 'root');
       if (isPushed) {
-        /**
-         * Push/Forward occurs whenever navigating forward, page -> page/a -> page/b
-         *
-         * Going to page/a and page/b would be push events
-         */
-        nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
-        nextRouteInfo.tab = leavingRouteInfo.tab;
-        nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        if (delta === undefined) {
+          //is new route
+          /**
+           * Push/Forward occurs whenever navigating forward, page -> page/a -> page/b
+           *
+           * Going to page/a and page/b would be push events
+           */
+          nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
+          nextRouteInfo.tab = leavingRouteInfo.tab;
+          nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : '/';
+        } else {
+          //is existing route
+          nextRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex());
+          nextRouteInfo.routerAnimation = leavingRouteInfo?.routerAnimation;
+          nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
+          nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : '/';
+        }
       } else if (nextRouteInfo.routerAction === 'pop') {
         /**
          * Pop can occur by the user going from page -> page/a -> page/b -> page/a
          *
          * Going back from page/b to page/a would be a `pop` action
          */
-        //could point to itself
-        nextRouteInfo.prevRouteLastPathname = leavingRouteInfo?.lastPathname;
+        nextRouteInfo = locationHistory.getHistoryByIndex(currentHistoryIndex());
         nextRouteInfo.routerAnimation = leavingRouteInfo?.routerAnimation;
         nextRouteInfo.lastPathname = leavingRouteInfo?.pathname;
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
@@ -277,7 +304,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
            */
           nextRouteInfo.id = leavingRouteInfo.id;
         }
-        nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
+        nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : '/';
         nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
       } else if (nextRouteInfo.routerAction === 'replace') {
         /**
@@ -285,20 +312,21 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * The history stack would have page -> page/b as page/a was replaced with page/b
          */
         const lastRouteInfo = locationHistory.last();
+
         /**
-         * the last item could be wrong for replacedRoute, we only care about the route we are leaving to define this
+         * Should never be '/'
          */
-        nextRouteInfo.replacedRoute = (leavingRouteInfo?.pathname === '') ? undefined : leavingRouteInfo?.pathname;
+        nextRouteInfo.replacedRoute =  (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : undefined;
 
         nextRouteInfo.lastPathname = lastRouteInfo?.lastPathname;
-        nextRouteInfo.pushedByRoute = lastRouteInfo?.prevRouteLastPathname ?? lastRouteInfo?.pushedByRoute;
+        nextRouteInfo.pushedByRoute = lastRouteInfo?.pushedByRoute;
         nextRouteInfo.routerDirection = lastRouteInfo?.routerDirection;
         nextRouteInfo.routerAnimation = lastRouteInfo?.routerAnimation;
-        nextRouteInfo.prevRouteLastPathname = lastRouteInfo?.lastPathname;
       }
 
       nextRouteInfo.position = currentHistoryPosition;
-      nextRouteInfo.delta = delta;
+      //why store the delta of this route info?
+      // nextRouteInfo.delta = delta;
       const historySize = locationHistory.size();
       const historyDiff = currentHistoryPosition - initialHistoryPosition;
       const isExistingRoute = historySize > historyDiff;
@@ -350,7 +378,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep, initialHistoryPosition, currentHistoryPosition);
 
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
-    const { routerAnimation, routerDirection, routerLink } = navigationOptions;
+    const {routerAnimation, routerDirection, routerLink} = navigationOptions;
 
     incomingRouteParams = {
       routerAnimation,
@@ -364,10 +392,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   const resetTab = (tab: string, originalHref: string) => {
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
-      const newRouteInfo = { ...routeInfo };
+      const newRouteInfo = {...routeInfo};
       newRouteInfo.pathname = originalHref;
-      incomingRouteParams = { ...newRouteInfo, routerAction: 'pop', routerDirection: 'back' };
-      router.push({ path: newRouteInfo.pathname, query: parseQuery(newRouteInfo.search) });
+      incomingRouteParams = {...newRouteInfo, routerAction: 'pop', routerDirection: 'back'};
+      router.push({path: newRouteInfo.pathname, query: parseQuery(newRouteInfo.search)});
     }
   }
 
@@ -397,9 +425,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * tab you are on.
        */
       if (routeInfo.pathname === pathname) {
-        router.push({ path: routeInfo.pathname, query: parseQuery(routeInfo.search) });
+        router.push({path: routeInfo.pathname, query: parseQuery(routeInfo.search)});
       } else {
-        router.push({ path: pathname, query: parseQuery(routeInfo.search) });
+        router.push({path: pathname, query: parseQuery(routeInfo.search)});
       }
     } else {
       handleNavigate(pathname, 'push', 'none', undefined, tab);
@@ -409,7 +437,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   const handleSetCurrentTab = (tab: string) => {
     currentTab = tab;
 
-    const lastViewItemClone = { ...locationHistory.last() };
+    const lastViewItemClone = {...locationHistory.last()};
     if (lastViewItemClone.tab !== tab) {
       lastViewItemClone.tab = tab;
       locationHistory.update(lastViewItemClone);
