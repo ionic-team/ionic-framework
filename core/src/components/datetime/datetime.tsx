@@ -1347,7 +1347,12 @@ export class Datetime implements ComponentInterface {
           if (popoverRef) {
 
             this.isTimePopoverOpen = true;
-            popoverRef.present(ev);
+            popoverRef.present({
+              ...ev,
+              detail: {
+                ionShadowTarget: ev.target
+              }
+            });
 
             await popoverRef.onWillDismiss();
 
