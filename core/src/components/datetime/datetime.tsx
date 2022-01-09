@@ -373,6 +373,11 @@ export class Datetime implements ComponentInterface {
   @Prop() size: 'cover' | 'fixed' = 'fixed';
 
   /**
+   * If `numpad`, the ìon-datetime` will show a numpad instead of a picker wheel.
+   * If `picker`, the ìon-datetime` will show a picker wheel.
+   */
+  @Prop() display: 'numpad' | 'picker' = 'picker';
+  /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel!: EventEmitter<void>;
@@ -1367,6 +1372,37 @@ export class Datetime implements ComponentInterface {
     ]
   }
 
+  private renderTimeNumpad (
+    // hoursItems: PickerColumnItem[],
+    // minutesItems: PickerColumnItem[],
+    // ampmItems: PickerColumnItem[],
+    // use24Hour: boolean
+  ) {
+    return [
+      <div class="time-header">
+        {this.renderTimeLabel()}
+      </div>,
+      <div
+        class={{
+          'time-body': true,
+          'time-body-numpad': true,
+          'time-body-active': false,
+        }}
+      >
+        <input inputMode="numeric"
+        type="text"
+        autoComplete="off"
+        autoCorrect="off"/>
+        :
+        <input inputMode="numeric"
+        type="text"
+        autoComplete="off"
+        autoCorrect="off"/>
+      </div>,
+
+    ]
+  }
+
   /**
    * Render time picker inside of datetime.
    * Do not pass color prop to segment on
@@ -1375,8 +1411,9 @@ export class Datetime implements ComponentInterface {
    * should just be the default segment.
    */
   private renderTime() {
-    const { workingParts, presentation } = this;
+    const { workingParts, presentation, display } = this;
     const timeOnlyPresentation = presentation === 'time';
+    const pickerDispaly = display === 'picker';
     const use24Hour = is24Hour(this.locale, this.hourCycle);
     const { hours, minutes, am, pm } = generateTime(this.workingParts, use24Hour ? 'h23' : 'h12', this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
 
@@ -1411,7 +1448,9 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="datetime-time">
-          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
+          {timeOnlyPresentation && pickerDispaly ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : null}
+          {!timeOnlyPresentation && pickerDispaly ? this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour) : null}
+          {pickerDispaly ? null : this.renderTimeNumpad()}
       </div>
     )
   }

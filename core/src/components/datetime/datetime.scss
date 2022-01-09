@@ -334,6 +334,30 @@
 
   appearance: none;
 }
+:host .time-body-numpad {
+  @include padding(6px, 6px, 6px, 6px);
+  display: flex;
+  justify-items: center;
+
+  align-items: center;
+
+  text-align: center;
+  input {
+    @include padding(0px,0px,0px,0px);
+
+    max-width: 18pt;
+
+    border: none;
+
+    background: none;
+
+    font-family: inherit;
+    font-size: inherit;
+  }
+  input:focus {
+    border: 2px solid currentColor(base);
+  }
+}
 
 :host .time-body-active {
   color: current-color(base);

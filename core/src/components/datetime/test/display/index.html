@@ -34,6 +34,12 @@
       <option value="cover">cover</option>
     </select>
 
+    <label for="display">Display</label>
+    <select id="display" onchange="changeDisplay(event)">
+      <option value="numpad">numpad</option>
+      <option value="picker" selected>picker</option>
+    </select>
+
     <br /><br />
 
     <ion-datetime></ion-datetime>
@@ -46,6 +52,9 @@
       }
       const changeSize = (ev) => {
         datetime.size = ev.target.value;
+      }
+      const changeDisplay = (ev) => {
+        datetime.display = ev.target.value;
       }
     </script>
   </body>
