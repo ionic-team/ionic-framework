@@ -32,6 +32,19 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
     };
   };
 
+  /**
+   * Because of the way we're passing around the addOverlay and removeOverlay
+   * callbacks, by the time they finally get called, they use a stale reference
+   * to the state that only has the initial values. So if two overlays are opened
+   * at the same time, both using useIonOverlay (such as through nesting), the second
+   * will erase the first from the overlays list. This causes the content of the first
+   * overlay to unmount.
+   * 
+   * We wrap the state in useRef to ensure the two callbacks always use the most
+   * up-to-date version.
+   * 
+   * Further reading: https://stackoverflow.com/a/56554056
+   */
   const [overlays, setOverlays] = useState<OverlaysList>({});
   const overlaysRef = useRef<OverlaysList>({});
   overlaysRef.current = overlays;
