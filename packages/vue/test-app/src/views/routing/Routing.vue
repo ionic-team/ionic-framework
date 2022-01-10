@@ -47,6 +47,10 @@
       <ion-item button router-link="/tabs-new/tab1" id="tab1-new">
         <ion-label>Go to /tabs-new/tab1</ion-label>
       </ion-item>
+
+      <ion-item  @click="$router.replace({path: '/' })" id="routing-replace-home">
+        <ion-label>$router.replace({path: '/' })</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>

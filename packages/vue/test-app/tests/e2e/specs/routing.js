@@ -361,6 +361,28 @@ describe('Routing', () => {
     cy.ionPageVisible('routingparameterview');
     cy.ionPageHidden('routingchild');
   })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24432
+  it('should transition correctly when navigating between replaced routes', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.get('ion-item#home-replace-routing').click();
+
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.get('ion-item#child').click();
+    cy.ionPageVisible('routingchild');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingchild');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('routingchild');
+
+    cy.get('ion-item#routing-replace-home').click();
+    cy.ionPageVisible('home');
+    cy.ionPageHidden('routing');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {

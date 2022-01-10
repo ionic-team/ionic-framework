@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/routing',
-    component: () => import('@/views/Routing.vue')
+    component: () => import('@/views/routing/Routing.vue')
   },
   {
     path: '/routing/child',
