@@ -78,4 +78,35 @@ describe('Footer', () => {
   });
 });
 
+describe('datetime: selecting a day', () => {
 
+  it('should update the active day', async () => {
+    const page = await newE2EPage({
+      html: `
+        <ion-datetime show-default-buttons="true" value="2021-12-25T12:40:00.000Z"></ion-datetime>
+      `
+    });
+
+    const activeDay = await page.find('ion-datetime >>> .calendar-day-active');
+
+    expect(activeDay.innerText).toEqual('25');
+
+    const dayBtn = await page.find('ion-datetime >>> .calendar-day[data-day="13"][data-month="12"]');
+    dayBtn.click();
+    await page.waitForChanges();
+
+    const newActiveDay = await page.find('ion-datetime >>> .calendar-day-active');
+
+    expect(newActiveDay.innerText).toEqual('13');
+  });
+
+});
+
+test('datetime:rtl: basic', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/datetime/test/basic?ionic:_testing=true&rtl=true'
+  });
+
+  const compare = await page.compareScreenshot();
+  expect(compare).toMatchScreenshot();
+});

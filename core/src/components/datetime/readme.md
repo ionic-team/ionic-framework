@@ -21,7 +21,7 @@ for its value. The value is simply a string, rather than using JavaScript's
 and parse within JSON objects and databases.
 
 An ISO format can be used as a simple year, or just the hour and minute, or get
-more detailed down to the millisecond and timezone. Any of the ISO formats below
+more detailed down to the millisecond and time zone. Any of the ISO formats below
 can be used, and after a user selects a new value, Ionic Framework will continue to use
 the same ISO format which datetime value was originally given as.
 
@@ -121,6 +121,30 @@ For example, if you wanted to have the first day of the week be Monday, you coul
 
 ```html
 <ion-datetime first-day-of-week="1"></ion-datetime>
+```
+
+## Time Zones
+
+Ionic's `ion-datetime` follows the [datetime-local](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local) behavior of not manipulating or setting the time zone inside of a datetime control. In other words, a time value of "07:00" will not be adjusted according to different time zones.
+
+We recommend using a library such as [date-fns-tz](https://github.com/marnusw/date-fns-tz) to convert a datetime value to the desired time zone.
+
+Below is an example of formatting an ISO-8601 string to display in the time zone set on a user's device:
+
+```typescript
+import { format, utcToZonedTime } from 'date-fns-tz';
+
+// Get the time zone set on the user's device
+const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+// Create a date object from a UTC date string
+const date = new Date('2014-10-25T10:46:20Z');
+
+// Use date-fns-tz to convert from UTC to a zoned time
+const zonedTime = dateFnsTz.utcToZonedTime(date, userTimeZone);
+
+// Create a formatted string from the zoned time
+format(zonedTime, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: userTimeZone });
 ```
 
 ## Parsing Dates

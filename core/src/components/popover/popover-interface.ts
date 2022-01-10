@@ -30,12 +30,13 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   reference?: PositionReference;
   side?: PositionSide;
   align?: PositionAlign;
+  arrow?: boolean;
 
   trigger?: string;
   triggerAction?: string;
 }
 
-export interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+export interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> { }
 
 export type PopoverSize = 'cover' | 'auto';
 

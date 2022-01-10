@@ -108,6 +108,7 @@ interface PopoverOptions {
   reference?: PositionReference;
   side?: PositionSide;
   align?: PositionAlign;
+  arrow?: boolean;
 }
 ```
 

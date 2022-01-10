@@ -15,6 +15,10 @@ import { IonRouterOutlet as IonRouterOutletCmp } from '@ionic/core/components/io
 import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
 import { fireLifecycle, generateId, getConfig, defineCustomElement } from '../utils';
 
+const isViewVisible = (enteringEl: HTMLElement) => {
+  return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
+}
+
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   name: 'IonRouterOutlet',
@@ -218,11 +222,33 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
-
       if (enteringViewItem === leavingViewItem) return;
 
       if (!leavingViewItem && prevRouteLastPathname) {
         leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id);
+      }
+
+      /**
+       * If the entering view is already
+       * visible, then no transition is needed.
+       * This is most common when navigating
+       * from a tabs page to a non-tabs page
+       * and then back to the tabs page.
+       * Even when the tabs context navigated away,
+       * the inner tabs page was still active.
+       * This also avoids an issue where
+       * the previous tabs page is incorrectly
+       * unmounted since it would automatically
+       * unmount the previous view.
+       *
+       * This should also only apply to entering and
+       * leaving items in the same router outlet (i.e.
+       * Tab1 and Tab2), otherwise this will
+       * return early for swipe to go back when
+       * going from a non-tabs page to a tabs page.
+       */
+      if (isViewVisible(enteringEl) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
+        return;
       }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);

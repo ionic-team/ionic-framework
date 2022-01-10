@@ -7,6 +7,14 @@ test('radio: basic', async () => {
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
+
+  const groupedRadio = await page.find('#groupedRadio');
+  await groupedRadio.click();
+  expect(groupedRadio).toHaveClass('radio-checked');
+
+  const ungroupedRadio = await page.find('#ungroupedRadio');
+  await ungroupedRadio.click();
+  expect(ungroupedRadio).toHaveClass('radio-checked');
 });
 
 test('radio:rtl: basic', async () => {

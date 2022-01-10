@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement } from 'react';
 
 import {
   attachProps,
@@ -80,7 +80,14 @@ export const createReactComponent = <
         style,
       };
 
-      return React.createElement(tagName, newProps, children);
+      /**
+       * We use createElement here instead of
+       * React.createElement to work around a
+       * bug in Vite (https://github.com/vitejs/vite/issues/6104).
+       * React.createElement causes all elements to be rendered
+       * as <tagname> instead of the actual Web Component.
+       */
+      return createElement(tagName, newProps, children);
     }
 
     static get displayName() {
