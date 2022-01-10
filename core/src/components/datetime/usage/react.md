@@ -62,6 +62,9 @@ export const DateTimeExamples: React.FC = () => {
       {/* Selecting time, no date */}
       <IonDatetime presentation="time"></IonDatetime>
       
+      {/* Selecting time, but with numpad */}
+      <IonDatetime presentation="time" display="numpad"></IonDatetime>
+
       {/* Selecting time first, date second */}
       <IonDatetime presentation="time-date"></IonDatetime>
 

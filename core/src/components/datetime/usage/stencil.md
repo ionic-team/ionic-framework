@@ -55,6 +55,9 @@ export class DatetimeExample {
       {/* Selecting time, no date */}
       <ion-datetime presentation="time"></ion-datetime>,
       
+      {/* Selecting time, but with numpad */}
+      <IonDatetime presentation="time" display="numpad"></IonDatetime>
+
       {/* Selecting time first, date second */}
       <ion-datetime presentation="time-date"></ion-datetime>,
 

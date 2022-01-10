@@ -194,6 +194,11 @@ When using the time wheel picker, you can use the number keys to select hour and
 | `Home` | Scroll to the first item. |
 | `End` | Scroll to the last item. |
 
+
+#### Text Input Fields
+
+By specifying the `display`property as `"numpad"`, the picker wheels of the time inputs will be replaced by text input fields.
+
 ## Interfaces
 
 ### DatetimeChangeEventDetail
@@ -246,6 +251,9 @@ interface DatetimeCustomEvent extends CustomEvent {
 
 <!-- Selecting time, no date -->
 <ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time, but with numpad -->
+<ion-datetime presentation="time" display="numpad"></ion-datetime>
 
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
@@ -373,6 +381,9 @@ export class MyComponent {
 
 <!-- Selecting time, no date -->
 <ion-datetime presentation="time"></ion-datetime>
+
+<!-- Selecting time, but with numpad -->
+<ion-datetime presentation="time" display="numpad"></ion-datetime>
 
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
@@ -524,6 +535,9 @@ export const DateTimeExamples: React.FC = () => {
       {/* Selecting time, no date */}
       <IonDatetime presentation="time"></IonDatetime>
       
+      {/* Selecting time, but with numpad */}
+      <IonDatetime presentation="time" display="numpad"></IonDatetime>
+      
       {/* Selecting time first, date second */}
       <IonDatetime presentation="time-date"></IonDatetime>
 
@@ -650,6 +664,9 @@ export class DatetimeExample {
       {/* Selecting time, no date */}
       <ion-datetime presentation="time"></ion-datetime>,
       
+      {/* Selecting time, but with numpad*/}
+      <ion-datetime presentation="time" display="numpad"></ion-datetime>,
+      
       {/* Selecting time first, date second */}
       <ion-datetime presentation="time-date"></ion-datetime>,
 
@@ -744,6 +761,9 @@ export class DatetimeExample {
   
   <!-- Selecting time, no date -->
   <ion-datetime presentation="time"></ion-datetime>
+  
+  <!-- Selecting time, but with numpad -->
+  <ion-datetime presentation="time" display="numpad"></ion-datetime>
   
   <!-- Selecting time first, date second -->
   <ion-datetime presentation="time-date"></ion-datetime>
@@ -888,6 +908,7 @@ export class DatetimeExample {
 | `monthValues`          | `month-values`            | Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`. | `number \| number[] \| string \| undefined`                                           | `undefined`    |
 | `name`                 | `name`                    | The name of the control, which is submitted with the form data.                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                                                                              | `this.inputId` |
 | `presentation`         | `presentation`            | Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.                                                                                                                                                        | `"date" \| "date-time" \| "month" \| "month-year" \| "time" \| "time-date" \| "year"` | `'date-time'`  |
+| `display`              | `display`                 | Wether the picker or a textinput should be shown for the time input                                                                                                                                                                                                                                                                                                                                                                                                                               | `"picker" \| "numpad"` | `'picker'`                                                   | `"picker"      |`
 | `readonly`             | `readonly`                | If `true`, the datetime appears normal but is not interactive.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `boolean`                                                                             | `false`        |
 | `showClearButton`      | `show-clear-button`       | If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.                                                                                                                                                                      | `boolean`                                                                             | `false`        |
 | `showDefaultButtons`   | `show-default-buttons`    | If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.                                                                                                                                                                                                 | `boolean`                                                                             | `false`        |

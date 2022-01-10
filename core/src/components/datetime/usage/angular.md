@@ -23,6 +23,9 @@
 <!-- Selecting time, no date -->
 <ion-datetime presentation="time"></ion-datetime>
 
+<!-- Selecting time, but with numpad -->
+<ion-datetime presentation="time" display="numpad"></ion-datetime>
+
 <!-- Selecting time first, date second -->
 <ion-datetime presentation="time-date"></ion-datetime>
 
