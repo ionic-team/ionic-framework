@@ -21,7 +21,7 @@ export class App implements ComponentInterface {
           import('../../utils/tap-click').then(module => module.startTapClick(config));
         }
         if (config.getBoolean('statusTap', isHybrid)) {
-          import('../../utils/status-tap').then(module => module.startStatusTap());
+          import('../../utils/status-tap').then(module => module.startStatusTap(config));
         }
         if (config.getBoolean('inputShims', needInputShims())) {
           import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));

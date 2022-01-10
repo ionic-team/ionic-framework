@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, FunctionalComponent, Host, List
 
 import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
+import { getScrollElement } from '../content/content.utils';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -137,6 +138,20 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() renderFooter?: (item: any, index: number) => any;
 
   /**
+   * The target element for the primary content container. This will
+   * default to the `ion-content` selector.
+   */
+  @Prop() contentTarget = 'ion-content';
+
+  /**
+   * @internal
+   *
+   * The inner scroll target selector. This selector will be used for
+   * the scroll container and queries inside of the `contentTarget` element.
+   */
+  @Prop() scrollTarget: string | null = null;
+
+  /**
    * NOTE: only Vanilla JS API.
    */
   @Prop() nodeRender?: ItemRenderFn;
@@ -158,12 +173,12 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = this.el.closest<HTMLElement>(this.contentTarget);
     if (!contentEl) {
       console.error('<ion-virtual-scroll> must be used inside an <ion-content>');
       return;
     }
-    this.scrollEl = await contentEl.getScrollElement();
+    this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
     this.contentEl = contentEl;
     this.calcCells();
     this.updateState();
@@ -195,7 +210,7 @@ export class VirtualScroll implements ComponentInterface {
    * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
    * dirty any time the content or their style changes.
    *
-   * The subset of items to be updated can are specifing by an offset and a length.
+   * The subset of items to be updated can are specifying by an offset and a length.
    */
   @Method()
   async checkRange(offset: number, len = -1) {
@@ -443,7 +458,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{ dom: VirtualNode[] }> = ({ dom }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};

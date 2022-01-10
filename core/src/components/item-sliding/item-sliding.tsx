@@ -62,13 +62,21 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * @internal
+   *
+   * The target element for the primary content container. This will
+   * default to the `ion-content` selector.
+   */
+  @Prop() contentTarget = 'ion-content';
+
+  /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
-    this.closestContent = this.el.closest('ion-content');
+    this.closestContent = this.el.closest(this.contentTarget);
 
     await this.updateOptions();
 
@@ -188,12 +196,12 @@ export class ItemSliding implements ComponentInterface {
     return false;
   }
 
-   /**
-    * Given an optional side, return the ion-item-options element.
-    *
-    * @param side This side of the options to get. If a side is not provided it will
-    * return the first one available.
-    */
+  /**
+   * Given an optional side, return the ion-item-options element.
+   *
+   * @param side This side of the options to get. If a side is not provided it will
+   * return the first one available.
+   */
   private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
     if (side === undefined) {
       return this.leftOptions || this.rightOptions;

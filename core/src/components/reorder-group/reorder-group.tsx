@@ -2,8 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
-import { componentOnReady } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+import { getScrollElement } from '../content/content.utils';
 
 const enum ReorderGroupState {
   Idle = 0,
@@ -47,6 +47,20 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   /**
+   * The target element for the primary content container. This will
+   * default to the `ion-content` selector.
+   */
+  @Prop() contentTarget = 'ion-content';
+
+  /**
+   * @internal
+   *
+   * The inner scroll target selector. This selector will be used for
+   * the scroll container and queries inside of the `contentTarget` element.
+   */
+  @Prop() scrollTarget: string | null = null;
+
+  /**
    * Event that needs to be listened to in order to complete the reorder action.
    * Once the event has been emitted, the `complete()` method then needs
    * to be called in order to finalize the reorder action.
@@ -54,10 +68,9 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = this.el.closest<HTMLElement>(this.contentTarget);
     if (contentEl) {
-      await new Promise(resolve => componentOnReady(contentEl, resolve));
-      this.scrollEl = await contentEl.getScrollElement();
+      this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
     }
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,

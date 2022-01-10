@@ -1,9 +1,11 @@
 import { readTask, writeTask } from '@stencil/core';
+import { Config } from '../interface';
 
 import { componentOnReady } from './helpers';
 
-export const startStatusTap = () => {
+export const startStatusTap = (config: Config) => {
   const win = window;
+  const contentTargetSelector = config.get('contentTargetSelector', 'ion-content');
   win.addEventListener('statusTap', () => {
     readTask(() => {
       const width = win.innerWidth;
@@ -12,7 +14,7 @@ export const startStatusTap = () => {
       if (!el) {
         return;
       }
-      const contentEl = el.closest('ion-content');
+      const contentEl = el.closest(contentTargetSelector);
       if (contentEl) {
         new Promise(resolve => componentOnReady(contentEl, resolve)).then(() => {
           writeTask(async () => {

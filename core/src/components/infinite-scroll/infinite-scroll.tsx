@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { componentOnReady } from '../../utils/helpers';
+import { getScrollElement } from '../content/content.utils';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -70,6 +70,20 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop() position: 'top' | 'bottom' = 'bottom';
 
   /**
+   * The target element for the primary content container. This will
+   * default to the `ion-content` selector.
+   */
+  @Prop() contentTarget = 'ion-content';
+
+  /**
+   * @internal
+   *
+   * The inner scroll target selector. This selector will be used for
+   * the scroll container and queries inside of the `contentTarget` element.
+   */
+  @Prop() scrollTarget: string | null = null;
+
+  /**
    * Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -78,13 +92,12 @@ export class InfiniteScroll implements ComponentInterface {
   @Event() ionInfinite!: EventEmitter<void>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = this.el.closest<HTMLElement>(this.contentTarget);
     if (!contentEl) {
       console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
       return;
     }
-    await new Promise(resolve => componentOnReady(contentEl, resolve));
-    this.scrollEl = await contentEl.getScrollElement();
+    this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
     this.thresholdChanged();
     this.disabledChanged();
     if (this.position === 'top') {

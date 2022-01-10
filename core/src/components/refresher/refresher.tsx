@@ -3,8 +3,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
+import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
+import { getScrollElement } from '../content/content.utils';
 
 import {
   createPullingAnimation,
@@ -114,6 +115,20 @@ export class Refresher implements ComponentInterface {
       this.gesture.enable(!this.disabled);
     }
   }
+
+  /**
+   * The target element for the primary content container. This will
+   * default to the `ion-content` selector.
+   */
+  @Prop() contentTarget = 'ion-content';
+
+  /**
+   * @internal
+   *
+   * The inner scroll target selector. This selector will be used for
+   * the scroll container and queries inside of the `contentTarget` element.
+   */
+  @Prop() scrollTarget: string | null = null;
 
   /**
    * Emitted when the user lets go of the content and has pulled down
@@ -253,50 +268,50 @@ export class Refresher implements ComponentInterface {
     this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
-          el: this.scrollEl!,
-          gestureName: 'refresher',
-          gesturePriority: 31,
-          direction: 'y',
-          threshold: 5,
-          onStart: () => {
-            this.pointerDown = true;
+      el: this.scrollEl!,
+      gestureName: 'refresher',
+      gesturePriority: 31,
+      direction: 'y',
+      threshold: 5,
+      onStart: () => {
+        this.pointerDown = true;
 
-            if (!this.didRefresh) {
-              translateElement(this.elementToTransform, '0px');
-            }
+        if (!this.didRefresh) {
+          translateElement(this.elementToTransform, '0px');
+        }
 
-            /**
-             * If the content had `display: none` when
-             * the refresher was initialized, its clientHeight
-             * will be 0. When the gesture starts, the content
-             * will be visible, so try to get the correct
-             * client height again. This is most common when
-             * using the refresher in an ion-menu.
-             */
-            if (MAX_PULL === 0) {
-              MAX_PULL = this.scrollEl!.clientHeight * 0.16;
-            }
-          },
-          onMove: ev => {
-            this.lastVelocityY = ev.velocityY;
-          },
-          onEnd: () => {
-            this.pointerDown = false;
-            this.didStart = false;
+        /**
+         * If the content had `display: none` when
+         * the refresher was initialized, its clientHeight
+         * will be 0. When the gesture starts, the content
+         * will be visible, so try to get the correct
+         * client height again. This is most common when
+         * using the refresher in an ion-menu.
+         */
+        if (MAX_PULL === 0) {
+          MAX_PULL = this.scrollEl!.clientHeight * 0.16;
+        }
+      },
+      onMove: ev => {
+        this.lastVelocityY = ev.velocityY;
+      },
+      onEnd: () => {
+        this.pointerDown = false;
+        this.didStart = false;
 
-            if (this.needsCompletion) {
-              this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
-              this.needsCompletion = false;
-            } else if (this.didRefresh) {
-              readTask(() => translateElement(this.elementToTransform, `${this.el.clientHeight}px`));
-            }
-          },
-        });
+        if (this.needsCompletion) {
+          this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
+          this.needsCompletion = false;
+        } else if (this.didRefresh) {
+          readTask(() => translateElement(this.elementToTransform, `${this.el.clientHeight}px`));
+        }
+      },
+    });
 
     this.disabledChanged();
   }
 
-  private async setupMDNativeRefresher(contentEl: HTMLIonContentElement, pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
+  private async setupMDNativeRefresher(contentEl: HTMLElement, pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
     const circle = getElementRoot(pullingSpinner).querySelector('circle');
     const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
     const refreshingCircle = getElementRoot(refreshingSpinner).querySelector('circle');
@@ -383,7 +398,7 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  private async setupNativeRefresher(contentEl: HTMLIonContentElement | null) {
+  private async setupNativeRefresher(contentEl: HTMLElement | null) {
     if (this.scrollListenerCallback || !contentEl || this.nativeRefresher || !this.scrollEl) {
       return;
     }
@@ -419,15 +434,15 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const contentEl = this.el.closest('ion-content');
+
+    const contentEl = this.el.closest<HTMLElement>(this.contentTarget);
     if (!contentEl) {
       console.error('<ion-refresher> must be used inside an <ion-content>');
       return;
     }
 
-    await new Promise(resolve => componentOnReady(contentEl, resolve));
+    this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
 
-    this.scrollEl = await contentEl.getScrollElement();
     this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
 
     if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {

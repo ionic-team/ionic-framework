@@ -189,6 +189,7 @@ export interface IonicConfig {
   inputBlurring?: boolean;
   scrollAssist?: boolean;
   hideCaretOnScroll?: boolean;
+  contentTargetSelector?: string;
 
   // INTERNAL configs
   persistConfig?: boolean;
