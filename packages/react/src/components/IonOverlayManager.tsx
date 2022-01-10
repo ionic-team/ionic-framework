@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ReactComponentOrElement } from '../models';
@@ -25,12 +25,16 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
   onAddOverlay,
   onRemoveOverlay,
 }) => {
-  const [overlays, setOverlays] = useState<{
+  type OverlaysList = {
     [key: string]: {
       component: any;
       containerElement: HTMLDivElement;
     };
-  }>({});
+  };
+
+  const [overlays, setOverlays] = useState<OverlaysList>({});
+  const overlaysRef = useRef<OverlaysList>({});
+  overlaysRef.current = overlays;
 
   useEffect(() => {
     /* Setup the callbacks that get called from <IonApp /> */
@@ -43,7 +47,7 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
     component: ReactComponentOrElement,
     containerElement: HTMLDivElement
   ) => {
-    const newOverlays = { ...overlays };
+    const newOverlays = { ...overlaysRef.current };
     newOverlays[id] = { component, containerElement };
     setOverlays(newOverlays);
   };
