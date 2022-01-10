@@ -11,6 +11,9 @@
   align-items: center;
   justify-content: center;
 
+  width: 100%;
+  height: 200px;
+
   /**
    * Picker columns should display
    * in the order in which developers
@@ -18,9 +21,6 @@
    * LTR vs RTL directions.
    */
   direction: ltr;
-
-  width: 100%;
-  height: 200px;
 
   /**
    * This is required otherwise the
