@@ -350,16 +350,23 @@
     border: none;
 
     background: none;
+    color: inherit;
 
     font-family: inherit;
     font-size: inherit;
   }
+  :first-child {
+    text-align: right;
+  }
   input:focus {
-    border: 2px solid currentColor(base);
+    outline: none;
   }
 }
 
-:host .time-body-active {
+:host .time-body-numpad-active {
+  @include padding(2px,2px,2px,2px);
+  border: 4px solid current-color(base);
+
   color: current-color(base);
 }
 

@@ -125,6 +125,7 @@ export class Datetime implements ComponentInterface {
 
   @State() isPresented = false;
   @State() isTimePopoverOpen = false;
+  @State() isTimeInputFocus = false;
 
   /**
    * The color to use from your application's color palette.
@@ -1371,34 +1372,111 @@ export class Datetime implements ComponentInterface {
       </ion-popover>
     ]
   }
-
+  private handleNumpadHourInput = (ev: any) => {
+    const { form, value, } = ev.target;
+    let shiftFocus = value.length === 2;
+    shiftFocus = shiftFocus || value[0] > 2;
+    if (shiftFocus) {
+      const index = [...form].indexOf(ev.target);
+      (form.elements[index + 1] as HTMLElement).focus();
+    }
+  }
+  private handleNumpadMinuteInput = (ev: any) => {
+    const { form, value, } = ev.target;
+    if (value.length === 0) {
+      const index = [...form].indexOf(ev.target);
+      (form.elements[index - 1] as HTMLElement).focus();
+    } else if (value.length === 2) {
+      ev.target.blur();
+    }
+  }
   private renderTimeNumpad (
-    // hoursItems: PickerColumnItem[],
-    // minutesItems: PickerColumnItem[],
-    // ampmItems: PickerColumnItem[],
-    // use24Hour: boolean
+    use24Hour: boolean
   ) {
+    const { activePartsClone, workingParts } = this;
+
     return [
       <div class="time-header">
         {this.renderTimeLabel()}
       </div>,
-      <div
+      <form
         class={{
           'time-body': true,
           'time-body-numpad': true,
-          'time-body-active': false,
+          'time-body-numpad-active': this.isTimeInputFocus,
         }}
       >
         <input inputMode="numeric"
-        type="text"
-        autoComplete="off"
-        autoCorrect="off"/>
+          type="text"
+          autoComplete="off"
+          autoCorrect="off"
+          maxLength={2}
+          value={(activePartsClone.hour || 0) < 10 ? '0' + activePartsClone.hour : activePartsClone.hour}
+          onInput={this.handleNumpadHourInput}
+          onChange={(ev: any) => {
+            if (ev.target.value > (use24Hour ? 23 : 11)) {
+              ev.target.value = '0';
+            }
+
+            this.setWorkingParts({
+              ...workingParts,
+              hour: ev.target.value
+            });
+            this.setActiveParts({
+              ...activePartsClone,
+              hour: ev.target.value
+            });
+
+            ev.stopPropagation();
+          }}
+          onFocus={(ev: any) => {
+            ev.target.value = '';
+            this.isTimeInputFocus = true;
+          }}
+          onBlur={(ev: any) => {
+            if (ev.target.value.length === 0) {
+              ev.target.value = (activePartsClone.hour || 0) < 10 ? '0' + activePartsClone.hour : activePartsClone.hour;
+            }
+            this.isTimeInputFocus = false;
+          }}
+        />
         :
         <input inputMode="numeric"
-        type="text"
-        autoComplete="off"
-        autoCorrect="off"/>
-      </div>,
+          type="text"
+          autoComplete="off"
+          autoCorrect="off"
+          maxLength={2}
+          value={(activePartsClone.minute || 0) < 10 ? '0' + activePartsClone.minute : activePartsClone.minute}
+          onInput={this.handleNumpadMinuteInput}
+          onChange={(ev: any) => {
+            if (ev.target.value > 59) {
+              ev.target.value = '00';
+            }
+
+            this.setWorkingParts({
+              ...workingParts,
+              minute: ev.target.value
+            });
+            this.setActiveParts({
+              ...activePartsClone,
+              minute: ev.target.value
+            });
+
+            ev.stopPropagation();
+          }}
+          onFocus={(ev: any) => {
+            ev.target.value = '';
+            this.isTimeInputFocus = true;
+          }}
+          onBlur={(ev: any) => {
+            if (ev.target.value.length === 0) {
+              ev.target.value = (activePartsClone.minute || 0) < 10 ? '0' + activePartsClone.minute : activePartsClone.minute;
+            }
+            this.isTimeInputFocus = false;
+          }}
+        />
+
+      </form>,
 
     ]
   }
@@ -1450,7 +1528,7 @@ export class Datetime implements ComponentInterface {
       <div class="datetime-time">
           {timeOnlyPresentation && pickerDispaly ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : null}
           {!timeOnlyPresentation && pickerDispaly ? this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour) : null}
-          {pickerDispaly ? null : this.renderTimeNumpad()}
+          {pickerDispaly ? null : this.renderTimeNumpad(use24Hour)}
       </div>
     )
   }

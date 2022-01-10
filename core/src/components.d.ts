@@ -741,6 +741,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * If `numpad`, the ìon-datetime` will show a numpad instead of a picker wheel. If `picker`, the ìon-datetime` will show a picker wheel.
+         */
+        "display": 'numpad' | 'picker';
+        /**
           * The text to display on the picker's "Done" button.
          */
         "doneText": string;
@@ -4413,6 +4417,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the datetime.
          */
         "disabled"?: boolean;
+        /**
+          * If `numpad`, the ìon-datetime` will show a numpad instead of a picker wheel. If `picker`, the ìon-datetime` will show a picker wheel.
+         */
+        "display"?: 'numpad' | 'picker';
         /**
           * The text to display on the picker's "Done" button.
          */
