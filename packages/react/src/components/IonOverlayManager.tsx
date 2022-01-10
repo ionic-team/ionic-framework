@@ -53,7 +53,7 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
   };
 
   const removeOverlay = (id: string) => {
-    const newOverlays = { ...overlays };
+    const newOverlays = { ...overlaysRef.current };
     delete newOverlays[id];
     setOverlays(newOverlays);
   };
