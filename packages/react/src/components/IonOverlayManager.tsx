@@ -30,7 +30,14 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
       component: any;
       containerElement: HTMLDivElement;
     };
-  }>({});
+  }>({
+    "-1": {
+      component: null,
+      containerElement: null!
+    }
+  });
+
+  const [testStr, setTestStr] = useState('test');
 
   useEffect(() => {
     /* Setup the callbacks that get called from <IonApp /> */
@@ -44,6 +51,8 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
     containerElement: HTMLDivElement
   ) => {
     const newOverlays = { ...overlays };
+    console.log('addOverlay called:', { id, component, newOverlays, testStr });
+    setTestStr('test updated');
     newOverlays[id] = { component, containerElement };
     setOverlays(newOverlays);
   };
@@ -59,6 +68,7 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
   return (
     <>
       {overlayKeys.map((key) => {
+        if(key === '-1') return;
         const overlay = overlays[key];
         return ReactDOM.createPortal(overlay.component, overlay.containerElement, `overlay-${key}`);
       })}
