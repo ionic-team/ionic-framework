@@ -120,6 +120,8 @@ export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElemen
   }
 };
 
+const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
+
 const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
   let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
@@ -291,7 +293,7 @@ export const connectListeners = (doc: Document) => {
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
-      const lastOverlay = getTopOpenOverlay(doc);
+      const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
@@ -302,7 +304,7 @@ export const connectListeners = (doc: Document) => {
     // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        const lastOverlay = getTopOpenOverlay(doc);
+        const lastOverlay = getOverlay(doc);
         if (lastOverlay && lastOverlay.backdropDismiss) {
           lastOverlay.dismiss(undefined, BACKDROP);
         }
@@ -327,31 +329,8 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
     .filter(c => c.overlayIndex > 0);
 };
 
-/**
- * Gets the top-most/last opened
- * overlay that is currently presented.
- */
-const getTopOpenOverlay = (doc: Document): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc);
-  for (let i = overlays.length - 1; i >= 0; i--) {
-    const overlay = overlays[i];
-
-    /**
-     * Only consider overlays that
-     * are presented. Presented overlays
-     * will not have the .overlay-hidden
-     * class on the host.
-     */
-    if (!overlay.classList.contains('overlay-hidden')) {
-      return overlay;
-    }
-  }
-
-  return;
-}
-
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc, overlayTag);
+  const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
   return (id === undefined)
     ? overlays[overlays.length - 1]
     : overlays.find(o => o.id === id);
