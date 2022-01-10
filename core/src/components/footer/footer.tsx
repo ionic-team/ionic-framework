@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { getScrollElement } from '../content/content.utils';
+import { findIonContent, getScrollElement } from '../content/content.utils';
 
 import { handleFooterFade } from './footer.utils';
 
@@ -37,20 +37,6 @@ export class Footer implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  /**
-   * The target element for the primary content container. This will
-   * default to the `ion-content` selector.
-   */
-  @Prop() contentTarget = 'ion-content';
-
-  /**
-   * @internal
-   *
-   * The inner scroll target selector. This selector will be used for
-   * the scroll container and queries inside of the `contentTarget` element.
-   */
-  @Prop() scrollTarget: string | null = null;
-
   componentDidLoad() {
     this.checkCollapsibleFooter();
   }
@@ -70,16 +56,16 @@ export class Footer implements ComponentInterface {
 
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector<HTMLElement>(this.contentTarget) : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
       this.setupFadeFooter(contentEl);
     }
   }
 
   private setupFadeFooter = async (contentEl: HTMLElement | null) => {
-    if (!contentEl) { console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.'); return; }
+    if (!contentEl) { console.error('ion-footer requires a content to collapse. Make sure there is an ion-content or .ion-content element.'); return; }
 
-    const scrollEl = this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
+    const scrollEl = this.scrollEl = await getScrollElement(contentEl);
 
     /**
      * Handle fading of toolbars on scroll

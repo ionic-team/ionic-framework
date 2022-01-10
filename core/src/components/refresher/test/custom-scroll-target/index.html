@@ -28,6 +28,11 @@
       position: absolute;
       background: var(--background);
     }
+
+    #inner-scroll {
+      height: 100%;
+      overflow-y: auto;
+    }
   </style>
 </head>
 
@@ -39,10 +44,10 @@
       </ion-toolbar>
     </ion-header>
 
-    <div id="content">
+    <div id="content" class="ion-content">
       <div id="background-content"></div>
       <div style="position: absolute; left: 0; top: 0; width: 100%;">
-        <ion-refresher id="refresher" slot="fixed" content-target="#content" scroll-target="#inner-scroll">
+        <ion-refresher id="refresher" slot="fixed">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
       </div>

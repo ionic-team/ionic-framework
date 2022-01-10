@@ -1,13 +1,15 @@
+import { findClosestIonContent } from "../../../components/content/content.utils";
+
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
-export const enableScrollPadding = (keyboardHeight: number, contentTargetSelector: string) => {
+export const enableScrollPadding = (keyboardHeight: number) => {
   const doc = document;
 
   const onFocusin = (ev: any) => {
-    setScrollPadding(ev.target, keyboardHeight, contentTargetSelector);
+    setScrollPadding(ev.target, keyboardHeight);
   };
   const onFocusout = (ev: any) => {
-    setScrollPadding(ev.target, 0, contentTargetSelector);
+    setScrollPadding(ev.target, 0);
   };
 
   doc.addEventListener('focusin', onFocusin);
@@ -19,7 +21,7 @@ export const enableScrollPadding = (keyboardHeight: number, contentTargetSelecto
   };
 };
 
-const setScrollPadding = (input: HTMLElement, keyboardHeight: number, contentTargetSelector: string) => {
+const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
   if (input.tagName !== 'INPUT') {
     return;
   }
@@ -34,7 +36,7 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number, contentTar
     return;
   }
 
-  const el = input.closest<HTMLElement>(contentTargetSelector);
+  const el = findClosestIonContent(input);
   if (el === null) {
     return;
   }

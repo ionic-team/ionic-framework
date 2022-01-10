@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from
 import { getIonMode } from '../../global/ionic-global';
 import { inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
-import { getScrollElement } from '../content/content.utils';
+import { findIonContent, getScrollElement } from '../content/content.utils';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 
@@ -44,20 +44,6 @@ export class Header implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  /**
-   * The target element for the primary content container. This will
-   * default to the `ion-content` selector.
-   */
-  @Prop() contentTarget = 'ion-content';
-
-  /**
-   * @internal
-   *
-   * The inner scroll target selector. This selector will be used for
-   * the scroll container and queries inside of the `contentTarget` element.
-   */
-  @Prop() scrollTarget: string | null = null;
-
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['role']);
   }
@@ -87,7 +73,7 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector<HTMLElement>(this.contentTarget) : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
@@ -99,16 +85,16 @@ export class Header implements ComponentInterface {
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector<HTMLElement>(this.contentTarget) : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
       const condenseHeader = (contentEl) ? contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null : null;
       await this.setupFadeHeader(contentEl, condenseHeader);
     }
   }
 
   private setupFadeHeader = async (contentEl: HTMLElement | null, condenseHeader: HTMLElement | null) => {
-    if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
+    if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content or .ion-content element.'); return; }
 
-    const scrollEl = this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
+    const scrollEl = this.scrollEl = await getScrollElement(contentEl);
 
     /**
      * Handle fading of toolbars on scroll

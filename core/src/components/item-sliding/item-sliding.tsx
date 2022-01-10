@@ -62,21 +62,13 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * @internal
-   *
-   * The target element for the primary content container. This will
-   * default to the `ion-content` selector.
-   */
-  @Prop() contentTarget = 'ion-content';
-
-  /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
-    this.closestContent = this.el.closest(this.contentTarget);
+    this.closestContent = this.el.closest('ion-content');
 
     await this.updateOptions();
 

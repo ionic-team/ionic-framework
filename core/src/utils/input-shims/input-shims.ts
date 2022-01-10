@@ -1,3 +1,4 @@
+import { findClosestIonContent } from '../../components/content/content.utils';
 import { Config } from '../../interface';
 import { componentOnReady } from '../helpers';
 
@@ -18,7 +19,6 @@ export const startInputShims = (config: Config) => {
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);
   const inputBlurring = config.getBoolean('inputBlurring', true);
   const scrollPadding = config.getBoolean('scrollPadding', true);
-  const contentTargetSelector = config.get('contentTargetSelector', 'ion-content');
   const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
 
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
@@ -29,7 +29,7 @@ export const startInputShims = (config: Config) => {
 
     const inputRoot = componentEl.shadowRoot || componentEl;
     const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
-    const scrollEl = componentEl.closest(contentTargetSelector);
+    const scrollEl = findClosestIonContent(componentEl);
     const footerEl = (!scrollEl) ? componentEl.closest('ion-footer') as HTMLIonFooterElement | null : null;
 
     if (!inputEl) {
@@ -70,7 +70,7 @@ export const startInputShims = (config: Config) => {
   }
 
   if (scrollPadding && SCROLL_PADDING) {
-    enableScrollPadding(keyboardHeight, contentTargetSelector);
+    enableScrollPadding(keyboardHeight);
   }
 
   // Input might be already loaded in the DOM before ion-device-hacks did.

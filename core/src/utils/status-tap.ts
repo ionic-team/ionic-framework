@@ -1,11 +1,10 @@
 import { readTask, writeTask } from '@stencil/core';
-import { Config } from '../interface';
+import { findClosestIonContent, scrollToTop } from '../components/content/content.utils';
 
 import { componentOnReady } from './helpers';
 
-export const startStatusTap = (config: Config) => {
+export const startStatusTap = () => {
   const win = window;
-  const contentTargetSelector = config.get('contentTargetSelector', 'ion-content');
   win.addEventListener('statusTap', () => {
     readTask(() => {
       const width = win.innerWidth;
@@ -14,7 +13,7 @@ export const startStatusTap = (config: Config) => {
       if (!el) {
         return;
       }
-      const contentEl = el.closest(contentTargetSelector);
+      const contentEl = findClosestIonContent(el);
       if (contentEl) {
         new Promise(resolve => componentOnReady(contentEl, resolve)).then(() => {
           writeTask(async () => {
@@ -28,7 +27,7 @@ export const startStatusTap = (config: Config) => {
              */
             contentEl.style.setProperty('--overflow', 'hidden');
 
-            await contentEl.scrollToTop(300);
+            await scrollToTop(contentEl, 300);
 
             contentEl.style.removeProperty('--overflow');
           });

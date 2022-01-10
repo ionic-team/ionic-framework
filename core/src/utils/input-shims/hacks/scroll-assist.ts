@@ -1,3 +1,4 @@
+import { getScrollElement, scrollByPoint } from '../../../components/content/content.utils';
 import { pointerCoord, raf } from '../../helpers';
 
 import { isFocused, relocateInput } from './common';
@@ -6,7 +7,7 @@ import { getScrollData } from './scroll-data';
 export const enableScrollAssist = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
-  contentEl: HTMLIonContentElement | null,
+  contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number
 ) => {
@@ -44,7 +45,7 @@ export const enableScrollAssist = (
 const jsSetFocus = async (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
-  contentEl: HTMLIonContentElement | null,
+  contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number
 ) => {
@@ -85,7 +86,7 @@ const jsSetFocus = async (
 
       // scroll the input into place
       if (contentEl) {
-        await contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration);
+        await scrollByPoint(contentEl, 0, scrollData.scrollAmount, scrollData.scrollDuration);
       }
 
       // the scroll view is in the correct position now
@@ -102,7 +103,7 @@ const jsSetFocus = async (
     };
 
     if (contentEl) {
-      const scrollEl = await contentEl.getScrollElement();
+      const scrollEl = await getScrollElement(contentEl);
 
       /**
        * scrollData will only consider the amount we need

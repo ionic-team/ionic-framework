@@ -5,7 +5,7 @@ import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../i
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
-import { getScrollElement } from '../content/content.utils';
+import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../content/content.utils';
 
 import {
   createPullingAnimation,
@@ -115,20 +115,6 @@ export class Refresher implements ComponentInterface {
       this.gesture.enable(!this.disabled);
     }
   }
-
-  /**
-   * The target element for the primary content container. This will
-   * default to the `ion-content` selector.
-   */
-  @Prop() contentTarget = 'ion-content';
-
-  /**
-   * @internal
-   *
-   * The inner scroll target selector. This selector will be used for
-   * the scroll container and queries inside of the `contentTarget` element.
-   */
-  @Prop() scrollTarget: string | null = null;
 
   /**
    * Emitted when the user lets go of the content and has pulled down
@@ -434,14 +420,13 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-
-    const contentEl = this.el.closest<HTMLElement>(this.contentTarget);
+    const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
-      console.error('<ion-refresher> must be used inside an <ion-content>');
+      printIonContentErrorMsg(this.el);
       return;
     }
 
-    this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
+    this.scrollEl = await getScrollElement(contentEl);
 
     this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
 

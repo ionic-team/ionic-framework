@@ -925,14 +925,9 @@ export namespace Components {
          */
         "collapse"?: 'fade';
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget": string;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        "scrollTarget": string | null;
         /**
           * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
          */
@@ -950,14 +945,9 @@ export namespace Components {
          */
         "collapse"?: 'condense' | 'fade';
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget": string;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        "scrollTarget": string | null;
         /**
           * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
          */
@@ -979,10 +969,6 @@ export namespace Components {
          */
         "complete": () => Promise<void>;
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget": string;
-        /**
           * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
          */
         "disabled": boolean;
@@ -990,7 +976,6 @@ export namespace Components {
           * The position of the infinite scroll element. The value can be either `top` or `bottom`.
          */
         "position": 'top' | 'bottom';
-        "scrollTarget": string | null;
         /**
           * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page.
          */
@@ -1276,7 +1261,6 @@ export namespace Components {
           * Close all of the sliding items in the list. Items can also be closed from the [List](../list).
          */
         "closeOpened": () => Promise<boolean>;
-        "contentTarget": string;
         /**
           * If `true`, the user cannot interact with the sliding item.
          */
@@ -2104,10 +2088,6 @@ export namespace Components {
          */
         "complete": () => Promise<void>;
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget": string;
-        /**
           * If `true`, the refresher will be hidden.
          */
         "disabled": boolean;
@@ -2127,7 +2107,6 @@ export namespace Components {
           * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "pullMin": number;
-        "scrollTarget": string | null;
         /**
           * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
@@ -2160,14 +2139,9 @@ export namespace Components {
          */
         "complete": (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget": string;
-        /**
           * If `true`, the reorder will be hidden.
          */
         "disabled": boolean;
-        "scrollTarget": string | null;
     }
     interface IonRippleEffect {
         /**
@@ -2994,10 +2968,6 @@ export namespace Components {
           * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifying by an offset and a length.
          */
         "checkRange": (offset: number, len?: number) => Promise<void>;
-        /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget": string;
         "domRender"?: DomRenderFn;
         /**
           * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
@@ -3043,7 +3013,6 @@ export namespace Components {
           * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
          */
         "renderItem"?: (item: any, index: number) => any;
-        "scrollTarget": string | null;
     }
 }
 declare global {
@@ -4649,14 +4618,9 @@ declare namespace LocalJSX {
          */
         "collapse"?: 'fade';
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget"?: string;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        "scrollTarget"?: string | null;
         /**
           * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
          */
@@ -4674,14 +4638,9 @@ declare namespace LocalJSX {
          */
         "collapse"?: 'condense' | 'fade';
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget"?: string;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        "scrollTarget"?: string | null;
         /**
           * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
          */
@@ -4711,10 +4670,6 @@ declare namespace LocalJSX {
     }
     interface IonInfiniteScroll {
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget"?: string;
-        /**
           * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
          */
         "disabled"?: boolean;
@@ -4726,7 +4681,6 @@ declare namespace LocalJSX {
           * The position of the infinite scroll element. The value can be either `top` or `bottom`.
          */
         "position"?: 'top' | 'bottom';
-        "scrollTarget"?: string | null;
         /**
           * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page.
          */
@@ -5015,7 +4969,6 @@ declare namespace LocalJSX {
         "side"?: Side;
     }
     interface IonItemSliding {
-        "contentTarget"?: string;
         /**
           * If `true`, the user cannot interact with the sliding item.
          */
@@ -5802,10 +5755,6 @@ declare namespace LocalJSX {
          */
         "closeDuration"?: string;
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget"?: string;
-        /**
           * If `true`, the refresher will be hidden.
          */
         "disabled"?: boolean;
@@ -5833,7 +5782,6 @@ declare namespace LocalJSX {
           * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "pullMin"?: number;
-        "scrollTarget"?: string | null;
         /**
           * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
@@ -5861,10 +5809,6 @@ declare namespace LocalJSX {
     }
     interface IonReorderGroup {
         /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget"?: string;
-        /**
           * If `true`, the reorder will be hidden.
          */
         "disabled"?: boolean;
@@ -5872,7 +5816,6 @@ declare namespace LocalJSX {
           * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
          */
         "onIonItemReorder"?: (event: CustomEvent<ItemReorderEventDetail>) => void;
-        "scrollTarget"?: string | null;
     }
     interface IonRippleEffect {
         /**
@@ -6751,10 +6694,6 @@ declare namespace LocalJSX {
           * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
          */
         "approxItemHeight"?: number;
-        /**
-          * The target element for the primary content container. This will default to the `ion-content` selector.
-         */
-        "contentTarget"?: string;
         "domRender"?: DomRenderFn;
         /**
           * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
@@ -6796,7 +6735,6 @@ declare namespace LocalJSX {
           * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
          */
         "renderItem"?: (item: any, index: number) => any;
-        "scrollTarget"?: string | null;
     }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;

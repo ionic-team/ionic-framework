@@ -138,20 +138,6 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() renderFooter?: (item: any, index: number) => any;
 
   /**
-   * The target element for the primary content container. This will
-   * default to the `ion-content` selector.
-   */
-  @Prop() contentTarget = 'ion-content';
-
-  /**
-   * @internal
-   *
-   * The inner scroll target selector. This selector will be used for
-   * the scroll container and queries inside of the `contentTarget` element.
-   */
-  @Prop() scrollTarget: string | null = null;
-
-  /**
    * NOTE: only Vanilla JS API.
    */
   @Prop() nodeRender?: ItemRenderFn;
@@ -173,12 +159,12 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   async connectedCallback() {
-    const contentEl = this.el.closest<HTMLElement>(this.contentTarget);
+    const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
       console.error('<ion-virtual-scroll> must be used inside an <ion-content>');
       return;
     }
-    this.scrollEl = await getScrollElement(contentEl, this.scrollTarget);
+    this.scrollEl = await contentEl.getScrollElement();
     this.contentEl = contentEl;
     this.calcCells();
     this.updateState();
