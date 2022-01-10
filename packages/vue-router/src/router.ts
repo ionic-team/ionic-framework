@@ -225,28 +225,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
             tab: currentTab
           }
         } else if (action === 'pop') {
-          // const prevRouteInfo = locationHistory.getHistoryByIndex((initialHistoryPosition - currentHistoryPosition) - delta);
-          // incomingRouteParams = {
-          //   ...prevRouteInfo,
-          //   routerAction: 'pop',
-          //   routerDirection: 'back'
-          // };
-          // const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - delta);
-
-          // if (routeInfo && routeInfo.pushedByRoute) {
-          //   const prevRouteInfo = locationHistory.findLastLocation(routeInfo, delta);
           incomingRouteParams = {
-            // ...prevRouteInfo,
             routerAction: 'pop',
             routerDirection: 'back'
           };
-          // } else {
-          //   incomingRouteParams = {
-          //     routerAction: 'pop',
-          //     routerDirection: 'none',
-          //     tab: currentTab
-          //   }
-          // }
         }
 
         if (!incomingRouteParams) {
@@ -273,7 +255,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       }
 
       const isNewTab = nextRouteInfo.tab !== leavingRouteInfo.tab;
-      const isLeavingRouteTab = leavingRouteInfo.tab !== '';
       const isPushed = incomingRouteParams.routerAction === 'push' && (incomingRouteParams.routerDirection === 'forward' || incomingRouteParams.routerDirection === 'root');
       if (isPushed) {
         if (delta === undefined) {
@@ -306,12 +287,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           nextRouteInfo.pushedByRoute = oldRouteInfo.pushedByRoute;
         }
       } else if (nextRouteInfo.routerAction === 'push' && isNewTab) {
-        if (isLeavingRouteTab) {
-          /**
-           * The ID of the new route must match the old routes id to make sure the tabHistory is updated(replaced) correctly
-           */
-          nextRouteInfo.id = leavingRouteInfo.id;
-        }
         nextRouteInfo.pushedByRoute = (leavingRouteInfo.pathname !== '') ? leavingRouteInfo.pathname : '/';
         nextRouteInfo.lastPathname = leavingRouteInfo.pathname;
       } else if (nextRouteInfo.routerAction === 'replace') {
@@ -365,8 +340,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * router.go(2) to go from /a --> /c should not update the route
          * listing to say that /c was pushed by /a.
          */
-        // const hasDeltaStride = delta !== undefined && Math.abs(delta) !== 1;
-        locationHistory.updateByHistoryPosition(nextRouteInfo);//, !hasDeltaStride);
+        locationHistory.updateByHistoryPosition(nextRouteInfo);
       } else {
         locationHistory.add(nextRouteInfo);
       }
