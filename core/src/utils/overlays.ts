@@ -34,7 +34,7 @@ const createController = <Opts extends object, HTMLElm extends any>(tagName: str
       return dismissOverlay(document, data, role, tagName, id);
     },
     async getTop(): Promise<HTMLElm | undefined> {
-      return getOverlay(document, tagName, undefined, false) as any;
+      return getOverlay(document, tagName) as any;
     }
   };
 };
@@ -148,7 +148,7 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getOverlay(doc, undefined, undefined, false);
+  const lastOverlay = getOverlay(doc);
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -293,7 +293,7 @@ export const connectListeners = (doc: Document) => {
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
-      const lastOverlay = getOverlay(doc, undefined, undefined, false);
+      const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
@@ -304,7 +304,7 @@ export const connectListeners = (doc: Document) => {
     // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        const lastOverlay = getOverlay(doc, undefined, undefined, false);
+        const lastOverlay = getOverlay(doc);
         if (lastOverlay && lastOverlay.backdropDismiss) {
           lastOverlay.dismiss(undefined, BACKDROP);
         }
@@ -314,7 +314,7 @@ export const connectListeners = (doc: Document) => {
 };
 
 export const dismissOverlay = (doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<boolean> => {
-  const overlay = getOverlay(doc, overlayTag, id, false);
+  const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
   }
@@ -334,14 +334,10 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
  * @param doc The document to find the element within.
  * @param overlayTag The selector for the overlay, defaults to Ionic overlay components.
  * @param id The unique identifier for the overlay instance.
- * @param includeHidden `true` to include hidden overlays. `true` by default.
  * @returns The overlay element or `undefined` if no overlay element is found.
  */
-export const getOverlay = (doc: Document, overlayTag?: string, id?: string, includeHidden = true): HTMLIonOverlayElement | undefined => {
-  let overlays = getOverlays(doc, overlayTag);
-  if (!includeHidden) {
-    overlays = overlays.filter(o => !isOverlayHidden(o));
-  }
+const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
+  const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
   return (id === undefined)
     ? overlays[overlays.length - 1]
     : overlays.find(o => o.id === id);
