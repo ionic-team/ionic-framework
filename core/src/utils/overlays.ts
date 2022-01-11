@@ -330,10 +330,12 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
 };
 
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
-  return (id === undefined)
-    ? overlays[overlays.length - 1]
-    : overlays.find(o => o.id === id);
+  const overlays = getOverlays(doc, overlayTag);
+  if (id === undefined) {
+    const visibleOverlays = overlays.filter(o => !isOverlayHidden(o));
+    return visibleOverlays[visibleOverlays.length - 1];
+  }
+  return overlays.find(o => o.id === id);
 };
 
 /**
