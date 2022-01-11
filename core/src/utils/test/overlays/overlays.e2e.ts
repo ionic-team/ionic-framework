@@ -102,3 +102,21 @@ test('overlays: Esc: should dismiss the presented overlay, even though another h
 
   await page.waitForSelector('ion-modal#ion-overlay-1', { hidden: true });
 });
+
+test('overlays: Nested: should dismiss the top overlay', async () => {
+  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
+
+  const createNestedButton = await page.find('#create-nested');
+
+  await createNestedButton.click();
+
+  const modal = await page.find('ion-modal');
+  expect(modal).not.toBe(null);
+
+  const dismissNestedOverlayButton = await page.find('#dismiss-modal-nested-overlay');
+  await dismissNestedOverlayButton.click();
+
+  const modals = await page.$$('ion-modal');
+  expect(modals.length).toEqual(0);
+
+});
