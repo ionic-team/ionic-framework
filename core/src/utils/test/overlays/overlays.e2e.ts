@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('overlays: hardware back button: should dismss a presented overlay', async () => {
+test('overlays: hardware back button: should dismiss a presented overlay', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
@@ -24,7 +24,7 @@ test('overlays: hardware back button: should dismss a presented overlay', async 
   await page.waitForSelector('ion-modal', { hidden: true })
 });
 
-test('overlays: hardware back button: should dismss the presented overlay, even though another hidden modal was added last', async () => {
+test('overlays: hardware back button: should dismiss the presented overlay, even though another hidden modal was added last', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
@@ -56,7 +56,7 @@ test('overlays: hardware back button: should dismss the presented overlay, even 
   expect(await modals[1].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(true);
 });
 
-test('overlays: Esc: should dismss a presented overlay', async () => {
+test('overlays: Esc: should dismiss a presented overlay', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
@@ -78,7 +78,7 @@ test('overlays: Esc: should dismss a presented overlay', async () => {
 });
 
 
-test('overlays: Esc: should dismss the presented overlay, even though another hidden modal was added last', async () => {
+test('overlays: Esc: should dismiss the presented overlay, even though another hidden modal was added last', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
