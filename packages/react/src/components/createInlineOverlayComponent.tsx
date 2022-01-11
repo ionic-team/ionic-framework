@@ -78,8 +78,10 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * cleanup properly.
        */
       this.ref.current?.addEventListener('didDismiss', (evt: any) => {
-        const wrapper = this.wrapperRef.current!;
-        this.ref.current!.append(wrapper);
+        const wrapper = this.wrapperRef.current;
+        if (wrapper) { 
+          this.ref.current?.append(wrapper);
+        }
 
         this.setState({ isOpen: false });
 
