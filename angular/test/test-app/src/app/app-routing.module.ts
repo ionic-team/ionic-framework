@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'modals', component: ModalComponent },
   { path: 'modal-inline', loadChildren: () => import('./modal-inline').then(m => m.ModalInlineModule) },
   { path: 'view-child', component: ViewChildComponent },
+  { path: 'overlay-nested', loadChildren: () => import('./overlay-nested').then(m => m.OverlayNestedPageModule) },
   { path: 'popover-inline', loadChildren: () => import('./popover-inline').then(m => m.PopoverInlineModule) },
   { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },
