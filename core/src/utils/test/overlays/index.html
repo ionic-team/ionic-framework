@@ -118,7 +118,7 @@
       dismissModalNestedOverlay.onclick = () => {
         window.modalController.getTop().then(top => {
           top.dismiss();
-        });;
+        });
       }
 
       const modal = await modalController.create({

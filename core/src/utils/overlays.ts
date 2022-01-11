@@ -338,17 +338,13 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
  * @returns The overlay element or `undefined` if no overlay element is found.
  */
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string, includeHidden = true): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc, overlayTag);
-  if (includeHidden) {
-    return (id === undefined)
-      ? overlays[overlays.length - 1]
-      : overlays.find(o => o.id === id);
-  } else {
-    const visibleOverlays = overlays.filter(o => !isOverlayHidden(o));
-    return (id === undefined)
-      ? visibleOverlays[visibleOverlays.length - 1]
-      : visibleOverlays.find(o => o.id === id);
+  let overlays = getOverlays(doc, overlayTag);
+  if (!includeHidden) {
+    overlays = overlays.filter(o => !isOverlayHidden(o));
   }
+  return (id === undefined)
+    ? overlays[overlays.length - 1]
+    : overlays.find(o => o.id === id);
 };
 
 /**
