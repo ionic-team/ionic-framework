@@ -12,6 +12,18 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## Interfaces
+
+### InfiniteScrollCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface InfiniteScrollCustomEvent extends CustomEvent {
+  target: HTMLIonInfiniteScrollElement;
+}
+```
+
 <!-- Auto Generated Below -->
 
 

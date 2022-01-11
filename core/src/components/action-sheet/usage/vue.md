@@ -21,6 +21,10 @@ export default defineComponent({
               text: 'Delete',
               role: 'destructive',
               icon: trash,
+              id: 'delete-button', 
+              data: {
+                type: 'delete'
+              },
               handler: () => {
                 console.log('Delete clicked')
               },
@@ -28,6 +32,7 @@ export default defineComponent({
             {
               text: 'Share',
               icon: share,
+              data: 10,  
               handler: () => {
                 console.log('Share clicked')
               },
@@ -35,6 +40,7 @@ export default defineComponent({
             {
               text: 'Play (open modal)',
               icon: caretForwardCircle,
+              data: 'Data value',
               handler: () => {
                 console.log('Play clicked')
               },
@@ -58,8 +64,8 @@ export default defineComponent({
         });
       await actionSheet.present();
 
-      const { role } = await actionSheet.onDidDismiss();
-      console.log('onDidDismiss resolved with role', role);
+      const { role, data } = await actionSheet.onDidDismiss();
+      console.log('onDidDismiss resolved with role and data', role, data);
     },
   },
 });
@@ -96,6 +102,9 @@ export default defineComponent({
         text: 'Delete',
         role: 'destructive',
         icon: trash,
+        data: {
+          type: 'delete'
+        }
         handler: () => {
           console.log('Delete clicked')
         },
@@ -103,6 +112,7 @@ export default defineComponent({
       {
         text: 'Share',
         icon: share,
+        data: 10,  
         handler: () => {
           console.log('Share clicked')
         },
@@ -110,6 +120,7 @@ export default defineComponent({
       {
         text: 'Play (open modal)',
         icon: caretForwardCircle,
+        data: 'Data value',  
         handler: () => {
           console.log('Play clicked')
         },

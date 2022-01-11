@@ -1,4 +1,4 @@
-import { AlertButton, AlertOptions, alertController } from '@ionic/core';
+import { AlertButton, AlertOptions, alertController } from '@ionic/core/components';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';

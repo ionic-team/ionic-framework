@@ -10,7 +10,7 @@ export class FooterExample {
     return [
       <ion-content></ion-content>,
 
-      // Footer without a border
+      {/*-- Footer without a border --*/}
       <ion-footer class="ion-no-border">
         <ion-toolbar>
           <ion-title>Footer - No Border</ion-title>
@@ -18,6 +18,13 @@ export class FooterExample {
       </ion-footer>,
 
       <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>,
+      
+      {/*-- Fade Footer --*/}
+      <ion-footer collapse="fade">
         <ion-toolbar>
           <ion-title>Footer</ion-title>
         </ion-toolbar>

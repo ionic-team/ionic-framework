@@ -48,12 +48,28 @@ test('select: basic', async () => {
   select = await page.find('#customPopoverSelect');
   await select.click();
 
-  const popover = await page.find('ion-popover');
+  let popover = await page.find('ion-popover');
   await popover.waitForVisible();
   await page.waitForTimeout(250);
 
   compares.push(await page.compareScreenshot('should open custom popover select'));
 
+  // select has no value, so first option should be focused by default
+  const popoverOption1 = await popover.find('.select-interface-option:first-child');
+  expect(popoverOption1).toHaveClass('ion-focused');
+
+  let popoverOption2 = await popover.find('.select-interface-option:nth-child(2)');
+  await popoverOption2.click();
+  await page.waitForTimeout(500);
+
+  await select.click();
+  popover = await page.find('ion-popover');
+  await popover.waitForVisible();
+  await page.waitForTimeout(250);
+
+  popoverOption2 = await popover.find('.select-interface-option:nth-child(2)');
+  expect(popoverOption2).toHaveClass('ion-focused');
+  
   await popover.callMethod('dismiss');
 
   // Custom Action Sheet Select

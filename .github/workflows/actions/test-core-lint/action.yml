@@ -13,7 +13,7 @@ runs:
         cache-name: core-node-modules
       with:
         path: ./core/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v1
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
     - name: Lint
       run: npm run lint
       shell: bash

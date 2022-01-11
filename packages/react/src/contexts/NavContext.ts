@@ -1,4 +1,4 @@
-import { AnimationBuilder, RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 import React from 'react';
 
 import { RouteInfo } from '../models';

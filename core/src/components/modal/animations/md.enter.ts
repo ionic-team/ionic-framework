@@ -1,30 +1,44 @@
-import { Animation } from '../../../interface';
+import { Animation, ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
+
+import { createSheetEnterAnimation } from './sheet';
+
+const createEnterAnimation = () => {
+  const backdropAnimation = createAnimation()
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+
+  const wrapperAnimation = createAnimation()
+    .keyframes([
+      { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
+      { offset: 1, opacity: 1, transform: `translateY(0px)` }
+    ]);
+
+  return { backdropAnimation, wrapperAnimation };
+}
 
 /**
  * Md Modal Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
-  const baseAnimation = createAnimation();
-  const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
+export const mdEnterAnimation = (
+  baseEl: HTMLElement,
+  opts: ModalAnimationOptions
+): Animation => {
+  const { currentBreakpoint } = opts;
+  const root = getElementRoot(baseEl);
+  const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .addElement(root.querySelector('ion-backdrop')!)
     .beforeStyles({
       'pointer-events': 'none'
     })
     .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.modal-wrapper')!)
-    .keyframes([
-      { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
-      { offset: 1, opacity: 1, transform: 'translateY(0px)' }
-    ]);
+    .addElement(root.querySelector('.modal-wrapper')!);
 
-  return baseAnimation
+  return createAnimation()
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(280)

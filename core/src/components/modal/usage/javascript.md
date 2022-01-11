@@ -1,3 +1,40 @@
+### Inline Modal
+
+```html
+<!-- Default -->
+<ion-modal is-open="true">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Use a trigger -->
+<ion-button id="trigger-button">Click to open modal</ion-button>
+<ion-modal trigger="trigger-button">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Sheet Modal -->
+<ion-modal is-open="true" id="sheet-modal">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<!-- Card Modal -->
+<ion-modal is-open="true" id="card-modal">
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
+<script>
+  const sheetModal = document.querySelector('#sheet-modal');
+  const cardModal = document.querySelector('#sheet-modal');
+
+  sheetModal.breakpoints = [0.1, 0.5, 1];
+  sheetModal.initialBreakpoint = 0.5;
+  
+  cardModal.swipeToClose = true;
+  cardModal.presentingElement = document.querySelector('ion-app');
+</script>
+```
+
+### Using JavaScript
 
 ```javascript
 customElements.define('modal-page', class extends HTMLElement {
@@ -82,7 +119,7 @@ console.log(data);
 ```
 
 
-### Swipeable Modals
+### Card Modals
 
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
@@ -104,4 +141,13 @@ modalElement.component = 'modal-page';
 modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = await modalController.getTop(); // Get the top-most ion-modal
+```
+
+### Sheet Modals
+
+```javascript
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.initialBreakpoint = 0.5;
+modalElement.breakpoints = [0, 0.5, 1];
 ```

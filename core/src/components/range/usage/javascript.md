@@ -29,5 +29,14 @@
   <ion-item>
     <ion-range dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
+  
+  <ion-item>
+    <ion-range min="0" max="100" pin="true" id="custom-range"></ion-range>
+  </ion-item>
 </ion-list>
+
+<script>
+  const customRange = document.querySelector('#custom-range');
+  customRange.pinFormatter = (value) => `${value}%`; 
+</script>
 ```

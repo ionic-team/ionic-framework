@@ -60,7 +60,7 @@ export class Checkbox implements ComponentInterface {
    * The value of a checkbox is analogous to the value of an `<input type="checkbox">`,
    * it's only used when the checkbox participates in a native `<form>`.
    */
-  @Prop() value = 'on';
+  @Prop() value: any | null = 'on';
 
   /**
    * Emitted when the checked property has changed.
