@@ -45,5 +45,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.event.inputs.tag }}") --no-changelog --no-git-tag-version --no-push --skip-npm
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.event.inputs.tag }}") --conventional-commits --create-release github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
