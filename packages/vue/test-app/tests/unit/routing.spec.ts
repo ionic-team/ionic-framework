@@ -485,7 +485,8 @@ describe('Routing', () => {
     router.back();
     await waitForRouter();
 
-    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    //it was not replaced so it will still exist
+    // expect(wrapper.findComponent(Page2).exists()).toBe(false);
 
     router.push('/page3');
     await waitForRouter();
@@ -539,8 +540,9 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(wrapper.findComponent(Page).exists()).toBe(true);
-    expect(wrapper.findComponent(Page2).exists()).toBe(false);
-    expect(wrapper.findComponent(Page3).exists()).toBe(false);
+    // they will exist but be hidden, this is incase the user wants to use router.go(2) to go back
+    // expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    // expect(wrapper.findComponent(Page3).exists()).toBe(false);
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109

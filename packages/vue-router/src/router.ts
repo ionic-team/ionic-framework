@@ -333,12 +333,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * we need to update other information such as the "pushedByRoute"
          * so we know which route pushed this new route.
          *
-         * However, when using router.go with a stride of >1 or <-1,
-         * we should not update this additional information because
-         * we are traversing through the history, not pushing new states.
-         * Going from /a --> /b --> /c, then doing router.go(-2), then doing
-         * router.go(2) to go from /a --> /c should not update the route
-         * listing to say that /c was pushed by /a.
          */
         locationHistory.updateByHistoryPosition(nextRouteInfo);
       } else {
@@ -431,7 +425,24 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     historyChangeListeners.push(cb);
   }
 
+  /**
+   *
+   */
+  const getReplacedRoutes = () => {
+    return locationHistory.getReplacedRoutes();
+  }
+
+  /**
+   *
+   * @param index
+   */
+  const clearReplacedRouteByIndex = (index: any) => {
+    return locationHistory.clearReplacedRouteByIndex(index);
+  }
+
   return {
+    getReplacedRoutes,
+    clearReplacedRouteByIndex,
     getLeavingRouteInfo,
     handleNavigateBack,
     handleSetCurrentTab,

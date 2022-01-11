@@ -233,7 +233,7 @@ export const IonRouterOutlet = defineComponent({
 
     const handleTransitions = async (enteringViewItem: any, leavingViewItem: any) => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation, delta } = ionRouter.getCurrentRouteInfo;
+      const { routerDirection, routerAction, routerAnimation, delta } = ionRouter.getCurrentRouteInfo();
       const hasEnteringView = enteringViewItem !== undefined;
       const enteringEl = hasEnteringView && enteringViewItem.ionPageElement;
 
@@ -312,8 +312,8 @@ export const IonRouterOutlet = defineComponent({
             leavingEl,
             routerDirection,
             /**
-            *
-            */
+             *
+             */
             (routeInfo.pushedByRoute !== undefined && routeInfo.lastPathname !== routeInfo.pathname),
             false,
             animationBuilder
@@ -327,10 +327,23 @@ export const IonRouterOutlet = defineComponent({
         if (hasEnteringView && enteringEl !== null) {
           enteringEl.style.display = null;
         }
+        /**
+         * @TODO When using router.go(-3) and then pushing forward it should know what was overridden and unmount them
+         */
         if (routerAction === 'replace') {
           viewStacks.unmountViewItem(leavingViewItem);
         } else {
           viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
+        }
+
+        let replacedRoutes = ionRouter.getReplacedRoutes();
+        for (let i = replacedRoutes.length - 1; i >= 0; i--) {
+          let replacedRouteInfo = replacedRoutes[i];
+          const replacedViewItem = viewStacks.findLeavingViewItemByRouteInfo(replacedRouteInfo, id, true, usingDeprecatedRouteSetup);
+          if (replacedViewItem !== undefined) {
+            viewStacks.unmountViewItem(replacedViewItem);
+            ionRouter.clearReplacedRouteByIndex(i);
+          }
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
@@ -378,7 +391,7 @@ export const IonRouterOutlet = defineComponent({
        */
       const hasMatchedRoute = matchedRouteRef.value !== undefined;
       const isNotFirstRoute = matchedRouteRef.value !== firstMatchedRoute;
-      const isFirstNotParentPath = firstMatchedRoute.path !== parentOutletPath;
+      const isFirstNotParentPath = firstMatchedRoute?.path !== parentOutletPath;
 
       /**
        * We need to handle page transition from lower level ion-router-outlets or else some ion-pages never get cleaned up/life cycles firing

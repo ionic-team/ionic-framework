@@ -3,6 +3,7 @@ import { RouteInfo } from './types';
 //@TODO: declare types
 export const createLocationHistory = () => {
   const locationHistory: RouteInfo[] = [];
+  const replacedRoutes: RouteInfo[] = [];
   const tabsHistory: { [k: string]: RouteInfo[] } = {};
 
   /**
@@ -146,7 +147,28 @@ export const createLocationHistory = () => {
       return;
     }
 
+    let previous = locationHistory[existingRouteIndex];
+
+    if (previous.pathname !== routeInfo.pathname) {
+      replacedRoutes.push(previous);
+    }
+
     locationHistory[existingRouteIndex] = routeInfo;
+  }
+
+  /**
+   * When a route is `updateByHistoryPosition` and replaced, it is added to replacedRoutes
+   */
+  const getReplacedRoutes = () => {
+    return replacedRoutes;
+  }
+
+  /**
+   * When the RouteInfo is properly demounted, remove from here
+   * @param index
+   */
+  const clearReplacedRouteByIndex = (index: any) => {
+    replacedRoutes.splice(index, 1);
   }
 
   /**
@@ -279,6 +301,8 @@ export const createLocationHistory = () => {
     current,
     updateByHistoryPosition,
     getHistoryByIndex,
+    getReplacedRoutes,
+    clearReplacedRouteByIndex,
     size,
     last,
     previous,
