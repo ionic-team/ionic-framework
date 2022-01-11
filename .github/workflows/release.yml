@@ -25,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -43,5 +45,5 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.event.inputs.tag }}") --no-git-tag-version --no-push --skip-npm
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.event.inputs.tag }}") --no-changelog --no-git-tag-version --no-push --skip-npm
         shell: bash
