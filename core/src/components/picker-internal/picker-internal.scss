@@ -15,6 +15,14 @@
   height: 200px;
 
   /**
+   * Picker columns should display
+   * in the order in which developers
+   * added them and should ignore
+   * LTR vs RTL directions.
+   */
+  direction: ltr;
+
+  /**
    * This is required otherwise the
    * highlight will appear behind
    * the picker when used inline.
