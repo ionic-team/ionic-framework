@@ -40,6 +40,10 @@ export interface RouteInfo {
   tab?: string;
   position?: number;
   delta?: number;
+  /**
+   * Keeps track of routes matched path, so /route/abc and /route/xyz know they share the some Component/route
+   */
+  matchedPath?: string
 }
 
 export interface RouteParams {

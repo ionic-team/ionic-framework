@@ -307,6 +307,8 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         nextRouteInfo.routerAnimation = lastRouteInfo?.routerAnimation;
       }
 
+      //
+      nextRouteInfo.matchedPath = location.matched[0].path;
       nextRouteInfo.position = currentHistoryPosition;
       //why store the delta of this route info?
       // nextRouteInfo.delta = delta;

@@ -149,7 +149,8 @@ export const createLocationHistory = () => {
 
     let previous = locationHistory[existingRouteIndex];
 
-    if (previous.pathname !== routeInfo.pathname) {
+    //is a different matchedPath, same matched paths do not need to be replaced
+    if (previous.matchedPath !== routeInfo.matchedPath) {
       replacedRoutes.push(previous);
     }
 
