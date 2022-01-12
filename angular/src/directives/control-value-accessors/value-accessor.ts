@@ -96,13 +96,11 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     if (formControl) {
       const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine'];
       methodsToPatch.forEach((method) => {
-        if (formControl.get(method)) {
-          const oldFn = formControl[method].bind(formControl);
-          formControl[method] = (...params: any[]) => {
-            oldFn(...params);
-            setIonicClasses(this.el);
-          };
-        }
+        const oldFn = formControl[method].bind(formControl);
+        formControl[method] = (...params: any[]) => {
+          oldFn(...params);
+          setIonicClasses(this.el);
+        };
       });
     }
   }
