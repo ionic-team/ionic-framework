@@ -3,7 +3,7 @@ module.exports = {
   transform: {
     "^.+\\.vue$": "vue-jest"
   },
-  transformIgnorePatterns: ["node_modules/(?!@ionic/vue)"],
+  transformIgnorePatterns: ["node_modules/(?!@ionic/vue)", "node_modules/(?!@babel)"],
   globals: {
     "ts-jest": {
       diagnostics: {

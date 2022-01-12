@@ -114,7 +114,7 @@ describe('Routing', () => {
     cy.get('#replace').click();
 
     cy.ionPageVisible('navigation');
-    cy.ionPageHidden('routing');
+    cy.ionPageDoesNotExist('routing');
 
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('navigation');
@@ -180,15 +180,11 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22528
   it('should not show ion-back-button when replacing to root page', () => {
     cy.visit('http://localhost:8080');
-
-    cy.routerPush('/navigation');
-    cy.ionPageVisible('navigation');
-    cy.ionPageHidden('home');
-
-    cy.routerReplace('/');
-    cy.ionPageHidden('navigation');
     cy.ionPageVisible('home');
-
+    //replace to self
+    cy.routerReplace('/');
+    cy.ionPageVisible('home');
+    //no back button since there is not pushed by route
     cy.ionBackButtonHidden('home');
   });
 

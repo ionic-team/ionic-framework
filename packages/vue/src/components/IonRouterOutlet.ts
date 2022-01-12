@@ -339,7 +339,7 @@ export const IonRouterOutlet = defineComponent({
         let replacedRoutes = ionRouter.getReplacedRoutes();
         for (let i = replacedRoutes.length - 1; i >= 0; i--) {
           let replacedRouteInfo = replacedRoutes[i];
-          const replacedViewItem = viewStacks.findLeavingViewItemByRouteInfo(replacedRouteInfo, id, true, usingDeprecatedRouteSetup);
+          const replacedViewItem = viewStacks.findViewItemByRouteInfo(replacedRouteInfo, id, usingDeprecatedRouteSetup);
           if (replacedViewItem !== undefined) {
             viewStacks.unmountViewItem(replacedViewItem);
             ionRouter.clearReplacedRouteByIndex(i);

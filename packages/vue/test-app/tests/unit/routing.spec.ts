@@ -25,9 +25,11 @@ const BasePage = {
 }
 
 describe('Routing', () => {
+  
   beforeAll(() => {
     (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
   });
+
   it('should pass no props', async () => {
     const Page1 = {
       ...BasePage,
@@ -121,6 +123,7 @@ describe('Routing', () => {
     router.back();
     await waitForRouter();
 
+    //page still exists until it was overridden, user might use router.go(1) to go back
     expect(propsFn.mock.calls.length).toBe(1);
 
     expect(cmp.props()).toEqual({ title: '123 Title' });
@@ -195,26 +198,28 @@ describe('Routing', () => {
       components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel },
       template: `
         <ion-page>
-          <ion-tabs>
-            <ion-tab-bar slot="top">
-              <ion-tab-button tab="tab1" href="/tabs/tab1">
-                <ion-label>Tab 1</ion-label>
-              </ion-tab-button>
-              <ion-tab-button tab="tab2" href="/tabs/tab2">
-                <ion-label>Tab 2</ion-label>
-              </ion-tab-button>
-            </ion-tab-bar>
-          </ion-tabs>
+        <ion-tabs>
+          <ion-tab-bar slot="top">
+            <ion-tab-button tab="tab1" href="/tabs/tab1">
+              <ion-label>Tab 1</ion-label>
+            </ion-tab-button>
+            <ion-tab-button tab="tab2" href="/tabs/tab2">
+              <ion-label>Tab 2</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
+        </ion-tabs>
         </ion-page>
       `,
     }
     const Tab1 = {
       components: { IonPage },
-      template: `<ion-page>Tab 1</ion-page>`
+      template: `
+        <ion-page>Tab 1</ion-page>`
     }
     const Tab2 = {
       components: { IonPage },
-      template: `<ion-page>Tab 2</ion-page>`
+      template: `
+        <ion-page>Tab 2</ion-page>`
     }
     const Parent = {
       ...BasePage,
@@ -226,11 +231,13 @@ describe('Routing', () => {
       routes: [
         { path: '/', redirect: '/tabs/tab1' },
         { path: '/parent', component: Parent },
-        { path: '/tabs/', component: Tabs, children: [
-          { path: '/', redirect: 'tab1' },
-          { path: 'tab1', component: Tab1 },
-          { path: 'tab2', component: Tab2 }
-        ]}
+        {
+          path: '/tabs/', component: Tabs, children: [
+            { path: '/', redirect: 'tab1' },
+            { path: 'tab1', component: Tab1 },
+            { path: 'tab2', component: Tab2 }
+          ]
+        }
       ]
     });
 
@@ -367,7 +374,8 @@ describe('Routing', () => {
         id: { type: String, default: 'Default ID' }
       },
       components: { IonPage },
-      template: `<ion-page>{{ $props.id }}</ion-page>`
+      template: `
+        <ion-page>{{ $props.id }}</ion-page>`
     }
 
     const router = createRouter({
@@ -406,11 +414,13 @@ describe('Routing', () => {
         beforeRouteLeaveSpy();
       },
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
 
     const router = createRouter({
@@ -446,15 +456,18 @@ describe('Routing', () => {
   it('should not mount intermediary components when delta is 1', async () => {
     const Page = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page3 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
 
     const router = createRouter({
@@ -485,12 +498,13 @@ describe('Routing', () => {
     router.back();
     await waitForRouter();
 
-    //it was not replaced so it will still exist
-    // expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    //it was not replaced so it will still exist, but will have ion-page-hidden. If the user goes forward router.go(1) then this component becomes visible again
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
 
     router.push('/page3');
     await waitForRouter();
 
+    //now that the user did navigate to page3, page2 should be gone, e2e tests work fine for this, but unit are not working
     expect(wrapper.findComponent(Page2).exists()).toBe(false);
     expect(wrapper.findComponent(Page3).exists()).toBe(true);
   });
@@ -498,15 +512,18 @@ describe('Routing', () => {
   it('should unmount intermediary components when using router.go', async () => {
     const Page = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page3 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
 
     const router = createRouter({
@@ -549,11 +566,13 @@ describe('Routing', () => {
   it('canGoBack() should return the correct value', async () => {
     const Page = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const AppWithInject = {
       components: { IonApp, IonRouterOutlet },
@@ -598,15 +617,18 @@ describe('Routing', () => {
   it('canGoBack() should return the correct value when using router.go', async () => {
     const Page = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const Page3 = {
       components: { IonPage },
-      template: `<ion-page></ion-page>`
+      template: `
+        <ion-page></ion-page>`
     }
     const AppWithInject = {
       components: { IonApp, IonRouterOutlet },
