@@ -1081,7 +1081,7 @@ export namespace Components {
          */
         "pattern"?: string;
         /**
-          * Instructional text that shows before the input has a value.
+          * Instructional text that shows before the input has a value. This property applies only when the `type` property is set to `"email"`, `"number"`, `"password"`, `"search"`, `"tel"`, `"text"`, or `"url"`, otherwise it is ignored.
          */
         "placeholder"?: string;
         /**
@@ -4802,7 +4802,7 @@ declare namespace LocalJSX {
          */
         "pattern"?: string;
         /**
-          * Instructional text that shows before the input has a value.
+          * Instructional text that shows before the input has a value. This property applies only when the `type` property is set to `"email"`, `"number"`, `"password"`, `"search"`, `"tel"`, `"text"`, or `"url"`, otherwise it is ignored.
          */
         "placeholder"?: string;
         /**
