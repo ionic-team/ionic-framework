@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "HASH=$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
           echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
-          echo "CURRENT_VERSION=$(node -p -e "require('./core/package.json').version")" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Create Dev Build
         run: |
