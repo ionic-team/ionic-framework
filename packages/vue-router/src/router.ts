@@ -294,7 +294,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * Replace occurs when replacing a route, page -> page/a -(replace)-> page/b
          * The history stack would have page -> page/b as page/a was replaced with page/b
          */
-        const lastRouteInfo = locationHistory.last();
+        const lastRouteInfo = getLeavingRouteInfo();
 
         /**
          * Should never be '/'
@@ -349,6 +349,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const getCurrentRouteInfo = () => currentRouteInfo;
 
+  /**
+   * The leaving route info
+   */
   const getLeavingRouteInfo = () => {
     return locationHistory.current(initialHistoryPosition, currentHistoryPosition);
   }
