@@ -87,7 +87,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
          * example, if an item contains an inline popover with a button
          * that removes the item.)
          */
-        if (wrapper && el) { 
+        if (wrapper && el) {
           el.append(wrapper);
           this.setState({ isOpen: false });
         }
