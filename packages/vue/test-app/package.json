@@ -5,6 +5,7 @@
   "description": "An Ionic project",
   "scripts": {
     "build": "vue-cli-service build",
+    "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --no-cache --watch --runInBand",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
     "lint": "vue-cli-service lint",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@ionic/vue": "5.9.3",
     "@ionic/vue-router": "5.9.3",
+    "jest": "^27.4.7",
     "vue": "^3.2.22",
     "vue-router": "^4.0.12"
   },
