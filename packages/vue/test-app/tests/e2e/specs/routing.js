@@ -31,7 +31,7 @@ describe('Routing', () => {
     cy.ionBackClick('defaulthref');
 
     cy.ionPageVisible('home');
-    cy.ionPageHidden('defaulthref');
+    cy.ionPageDoesNotExist('defaulthref');
   });
 
   it('should show back button', () => {
@@ -365,7 +365,7 @@ describe('Routing', () => {
     cy.get('ion-item#home-replace-routing').click();
 
     cy.ionPageVisible('routing');
-    cy.ionPageHidden('home');
+    cy.ionPageDoesNotExist('home');
 
     cy.get('ion-item#child').click();
     cy.ionPageVisible('routingchild');
@@ -377,7 +377,7 @@ describe('Routing', () => {
 
     cy.get('ion-item#routing-replace-home').click();
     cy.ionPageVisible('home');
-    cy.ionPageHidden('routing');
+    cy.ionPageDoesNotExist('routing');
   })
 });
 
