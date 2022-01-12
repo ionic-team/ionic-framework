@@ -107,14 +107,21 @@ test('overlays: Nested: should dismiss the top overlay', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createNestedButton = await page.find('#create-nested');
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
   await createNestedButton.click();
+
+  await ionModalDidPresent.next();
 
   const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
   const dismissNestedOverlayButton = await page.find('#dismiss-modal-nested-overlay');
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
   await dismissNestedOverlayButton.click();
+
+  await ionModalDidDismiss.next();
 
   const modals = await page.$$('ion-modal');
   expect(modals.length).toEqual(0);
