@@ -216,28 +216,28 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-    /**
-     * Emitted after the modal has presented.
-     * Shorthand for ionModalWillDismiss.
-     */
+  /**
+   * Emitted after the modal has presented.
+   * Shorthand for ionModalWillDismiss.
+   */
   @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
 
-    /**
-     * Emitted before the modal has presented.
-     * Shorthand for ionModalWillPresent.
-     */
+  /**
+   * Emitted before the modal has presented.
+   * Shorthand for ionModalWillPresent.
+   */
   @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
 
-    /**
-     * Emitted before the modal has dismissed.
-     * Shorthand for ionModalWillDismiss.
-     */
+  /**
+   * Emitted before the modal has dismissed.
+   * Shorthand for ionModalWillDismiss.
+   */
   @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
-    /**
-     * Emitted after the modal has dismissed.
-     * Shorthand for ionModalDidDismiss.
-     */
+  /**
+   * Emitted after the modal has dismissed.
+   * Shorthand for ionModalDidDismiss.
+   */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Watch('swipeToClose')
@@ -494,19 +494,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
-
-      /**
-       * If the modal is presented through a controller, we don't need to detach
-       * since the el was already removed during the `dismiss` call above. Skipping
-       * this step also prevents an issue where rapdily dismissing right after
-       * presenting could cause `detachComponent` to be called after the present
-       * finished, blanking out the newly opened modal.
-       *
-       * TODO(FW-423) try and find a way to resolve the race condition directly
-       */
-      if (this.inline) {
-        await detachComponent(delegate, this.usersElement);
-      }
+      await detachComponent(delegate, this.usersElement);
 
       if (this.animation) {
         this.animation.destroy();
