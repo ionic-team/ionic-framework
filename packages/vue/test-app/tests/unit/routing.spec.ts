@@ -124,7 +124,7 @@ describe('Routing', () => {
     await waitForRouter();
 
     //page still exists until it was overridden, user might use router.go(1) to go back
-    expect(propsFn.mock.calls.length).toBe(1);
+    expect(propsFn.mock.calls.length).toBe(2);
 
     expect(cmp.props()).toEqual({ title: '123 Title' });
   });
@@ -499,7 +499,7 @@ describe('Routing', () => {
     await waitForRouter();
 
     //it was not replaced so it will still exist, but will have ion-page-hidden. If the user goes forward router.go(1) then this component becomes visible again
-    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    expect(wrapper.findComponent(Page2).exists()).toBe(true);
 
     router.push('/page3');
     await waitForRouter();
