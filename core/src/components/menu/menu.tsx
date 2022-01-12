@@ -169,8 +169,6 @@ export class Menu implements ComponentInterface, MenuI {
       return;
     }
 
-    const el = this.el;
-
     const content = this.contentId !== undefined
       ? document.getElementById(this.contentId)
       : null;
