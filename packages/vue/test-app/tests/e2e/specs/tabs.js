@@ -354,6 +354,24 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab2');
     cy.ionPageHidden('tab1');
   });
+
+  it('should properly hide tabs when leaving', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.get('ion-item#tabs').click();
+    cy.ionPageVisible('tabs');
+    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('home');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.get('[data-pageid="tab2"] #routing').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageHidden('tab2');
+    cy.ionPageVisible('routing');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {
