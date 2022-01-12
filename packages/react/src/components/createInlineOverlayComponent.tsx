@@ -78,10 +78,19 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * cleanup properly.
        */
       this.ref.current?.addEventListener('didDismiss', (evt: any) => {
-        const wrapper = this.wrapperRef.current!;
-        this.ref.current!.append(wrapper);
+        const wrapper = this.wrapperRef.current;
+        const el = this.ref.current;
 
-        this.setState({ isOpen: false });
+        /**
+         * This component might be unmounted already, if the containing
+         * element was removed while the popover was still open. (For
+         * example, if an item contains an inline popover with a button
+         * that removes the item.)
+         */
+        if (wrapper && el) {
+          el.append(wrapper);
+          this.setState({ isOpen: false });
+        }
 
         this.props.onDidDismiss && this.props.onDidDismiss(evt);
       });
