@@ -170,14 +170,12 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     const el = this.el;
-    const parent = el.parentNode as any;
 
     const content = this.contentId !== undefined
       ? document.getElementById(this.contentId)
-      : undefined;
+      : null;
 
-    if (!content || !content.tagName) {
-      // requires content element
+    if (content === null) {
       console.error('Menu: must have a "content" element to listen for drag events on.');
       return;
     }
