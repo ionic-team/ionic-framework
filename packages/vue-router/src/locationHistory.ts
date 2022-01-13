@@ -168,7 +168,7 @@ export const createLocationHistory = () => {
    * When the RouteInfo is properly demounted, remove from here
    * @param index
    */
-  const clearReplacedRouteByIndex = (index: any) => {
+  const clearReplacedRouteByIndex = (index: number) => {
     replacedRoutes.splice(index, 1);
   }
 
@@ -190,7 +190,7 @@ export const createLocationHistory = () => {
 
   /**
    *
-   * @param offset
+   * @param index
    */
   const getHistoryByIndex = (index: number) => {
     return locationHistory[index];
