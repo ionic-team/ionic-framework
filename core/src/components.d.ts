@@ -2722,7 +2722,7 @@ export namespace Components {
          */
         "autoGrow": boolean;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
         /**
@@ -6430,7 +6430,7 @@ declare namespace LocalJSX {
          */
         "autoGrow"?: boolean;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize"?: string;
         /**
