@@ -32,8 +32,7 @@ import {
   IonMenuToggle,
   IonButton,
   IonTitle, 
-  IonToolbar,
-  menuController
+  IonToolbar
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 

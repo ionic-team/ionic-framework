@@ -1,10 +1,10 @@
 ```tsx
 import React from 'react';
-import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonMenuToggle, IonButton } from '@ionic/react';
+import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonMenuToggle, IonButton, IonPage } from '@ionic/react';
 
 export const MenuExample: React.FC = () => (
   <>
-    <IonMenu side="start" menuId="first">
+    <IonMenu side="start" menuId="first" contentId="main">
       <IonHeader>
         <IonToolbar color="primary">
           <IonTitle>Example Menu</IonTitle>
@@ -16,11 +16,13 @@ export const MenuExample: React.FC = () => (
         </IonList>
       </IonContent>
     </IonMenu>
-    <IonContent>
-      <IonMenuToggle>
-        <IonButton>Toggle Menu</IonButton>
-      </IonMenuToggle>
-    </IonContent>
+    <IonPage id="main">
+      <IonContent>
+        <IonMenuToggle>
+          <IonButton>Toggle Menu</IonButton>
+        </IonMenuToggle>
+      </IonContent>
+    </IonPage>
   </>
 );
 ```
