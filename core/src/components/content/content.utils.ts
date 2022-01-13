@@ -1,4 +1,8 @@
+
+import { config } from "../../global/config";
 import { componentOnReady } from "../../utils/helpers";
+
+const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
 
 const hasOverflowScroll = (node: Element) => {
   const isElement = node instanceof HTMLElement;
@@ -40,7 +44,7 @@ const getScrollContainer = (node: Element): HTMLElement | null => {
 export const getScrollElement = async (el: Element) => {
   await new Promise(resolve => componentOnReady(el, resolve));
 
-  if (el?.tagName === 'ION-CONTENT') {
+  if (el?.tagName === ION_CONTENT_TAG_NAME) {
     return await (el as HTMLIonContentElement).getScrollElement();
   }
 
@@ -53,18 +57,18 @@ export const getScrollElement = async (el: Element) => {
   return el as HTMLElement;
 }
 
-export const ION_CONTENT_SELECTOR = 'ion-content, .ion-content';
+export const ION_CONTENT_SELECTOR = () => config.get('contentSelector', 'ion-content, .ion-content');
 
 export const findIonContent = (el: Element) => {
-  return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR);
+  return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR());
 }
 
 export const findClosestIonContent = (el: Element) => {
-  return el.closest<HTMLElement>(ION_CONTENT_SELECTOR);
+  return el.closest<HTMLElement>(ION_CONTENT_SELECTOR());
 }
 
 export const scrollToTop = (el: HTMLElement, durationMs: number) => {
-  if (el.tagName === 'ION-CONTENT') {
+  if (el.tagName === ION_CONTENT_TAG_NAME) {
     const content = el as HTMLIonContentElement;
     return content.scrollToTop(durationMs);
   }
@@ -72,7 +76,7 @@ export const scrollToTop = (el: HTMLElement, durationMs: number) => {
 }
 
 export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs: number) => {
-  if (el.tagName === 'ION-CONTENT') {
+  if (el.tagName === ION_CONTENT_TAG_NAME) {
     const content = el as HTMLIonContentElement;
     return content.scrollByPoint(x, y, durationMs);
   }
