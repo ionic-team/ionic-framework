@@ -39,7 +39,7 @@
   "peerDependencies": {
     "@angular/core": ">=12.0.0",
     "@angular/platform-server": ">=12.0.0",
-    "@ionic/angular": "6.0.0",
+    "@ionic/angular": "^6.0.2",
     "rxjs": ">=6.6.0",
     "zone.js": ">=0.11.0"
   },
