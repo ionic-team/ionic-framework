@@ -5,6 +5,9 @@ import { menuController } from '../../utils/menu-controller';
 
 import { updateVisibility } from './menu-toggle-util';
 
+/**
+ * @slot - Content is placed inside the toggle to act as the click target.
+ */
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
