@@ -26,7 +26,7 @@
     "semver": "^5.5.0"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 15"
   },
   "config": {
     "commitizen": {
