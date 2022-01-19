@@ -25,11 +25,11 @@ jobs:
         run: |
           echo "HASH=$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
           echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
-          echo "CURRENT_VERSION=$(node -p -e "require('./core/package.json').version")" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Create Dev Build
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --no-git-tag-version --no-push
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --no-git-tag-version --no-push --exact
         shell: bash
       - id: dev-build
         run: echo "::set-output name=version::$(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}")"

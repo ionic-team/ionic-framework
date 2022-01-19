@@ -1,44 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Overlays</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { modalController, createAnimation } from '../../../../../dist/ionic/index.esm.js';
-      window.modalController = modalController;
-    </script>
-  </head>
-  <body>
-    <ion-app>
-      <ion-menu content-id="main-content">
-        <ion-content>
-          <ion-button onclick="openModal(event)">Open Modal</ion-button>
-        </ion-content>
-      </ion-menu>
-      <div class="ion-page" id="main-content">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Modal - Inline</ion-title>
-          </ion-toolbar>
-        </ion-header>
 
-        <ion-content class="ion-padding">
-          <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
-          <ion-button id="present" onclick="presentHiddenModal()">Present a Hidden Modal</ion-button>
-          <ion-button id="create-and-present" onclick="createAndPresentModal()">Create and Present a Modal</ion-button>
-          <ion-button id="simulate" onclick="backButton()">Simulate Hardware Back Button</ion-button>
-        </ion-content>
-      </div>
-    </ion-app>
+<head>
+  <meta charset="UTF-8">
+  <title>Overlays</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { modalController, createAnimation } from '../../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+</head>
 
-    <script>
-      const createModal = async () => {
-        const div = document.createElement('div');
-        div.innerHTML = `
+<body>
+  <ion-app>
+    <ion-menu content-id="main-content">
+      <ion-content>
+        <ion-button onclick="openModal(event)">Open Modal</ion-button>
+      </ion-content>
+    </ion-menu>
+    <div class="ion-page" id="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Inline</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
+        <ion-button id="create-nested" onclick="createNestedOverlayModal()">Create Nested Overlay Modal</ion-button>
+        <ion-button id="present" onclick="presentHiddenModal()">Present a Hidden Modal</ion-button>
+        <ion-button id="create-and-present" onclick="createAndPresentModal()">Create and Present a Modal</ion-button>
+        <ion-button id="simulate" onclick="backButton()">Simulate Hardware Back Button</ion-button>
+      </ion-content>
+    </div>
+  </ion-app>
+
+  <script>
+    const createModal = async () => {
+      const div = document.createElement('div');
+      div.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-title>Modal</ion-title>
@@ -53,46 +57,88 @@
           </ion-content>
         `;
 
-        const createButton = div.querySelector('ion-button#modal-create');
-        createButton.onclick = () => {
-          createModal();
-        }
+      const createButton = div.querySelector('ion-button#modal-create');
+      createButton.onclick = () => {
+        createModal();
+      }
 
-        const simulateButton = div.querySelector('ion-button#modal-simulate');
-        simulateButton.onclick = () => {
-          backButton();
-        }
+      const simulateButton = div.querySelector('ion-button#modal-simulate');
+      simulateButton.onclick = () => {
+        backButton();
+      }
 
-        const modal = await modalController.create({
-          component: div
+      const modal = await modalController.create({
+        component: div
+      });
+
+      return modal;
+    }
+
+    const createAndPresentModal = async () => {
+      const modal = await createModal();
+      await modal.present();
+    }
+
+    const backButton = () => {
+      const ev = new CustomEvent('backbutton');
+      document.dispatchEvent(ev);
+    }
+
+    const presentHiddenModal = () => {
+      const modal = document.querySelector('ion-modal.overlay-hidden');
+      if (modal) {
+        modal.present();
+      }
+    }
+
+    const createNestedOverlayModal = async () => {
+      const div = document.createElement('div');
+      div.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            Modal Content
+
+            <ion-button id="modal-nested-overlay">Datetime inline modal</ion-button>
+            <ion-button id="dismiss-modal-nested-overlay">Dismiss nested overlay</ion-button>
+
+            <ion-modal trigger="modal-nested-overlay">
+              <ion-content>
+                <ion-datetime show-default-buttons></ion-datetime>
+              </ion-content>
+            </ion-modal>
+
+          </ion-content>
+        `;
+
+      const dismissModalNestedOverlay = div.querySelector('ion-button#dismiss-modal-nested-overlay');
+      dismissModalNestedOverlay.onclick = () => {
+        window.modalController.getTop().then(top => {
+          top.dismiss();
         });
-
-        return modal;
       }
 
-      const createAndPresentModal = async () => {
-        const modal = await createModal();
-        await modal.present();
-      }
+      const modal = await modalController.create({
+        component: div
+      });
 
-      const backButton = () => {
-        const ev = new CustomEvent('backbutton');
-        document.dispatchEvent(ev);
-      }
 
-      const presentHiddenModal = () => {
-        const modal = document.querySelector('ion-modal.overlay-hidden');
-        if (modal) {
-          modal.present();
-        }
-      }
+      await modal.present();
 
-      window.Ionic = {
-        config: {
-          hardwareBackButton: true
-        }
-      }
-    </script>
+      return modal;
 
-  </body>
+    };
+
+    window.Ionic = {
+      config: {
+        hardwareBackButton: true
+      }
+    }
+  </script>
+
+</body>
+
 </html>
