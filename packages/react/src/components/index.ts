@@ -197,7 +197,9 @@ export const setupIonicReact = (config: IonicConfig = {}) => {
    * TODO: Remove when all integrations have been
    * migrated to CE build.
    */
-  document.documentElement.classList.add('ion-ce');
+  if (typeof (document as any) !== 'undefined') {
+    document.documentElement.classList.add('ion-ce');
+  }
 
   initialize({
     ...config
