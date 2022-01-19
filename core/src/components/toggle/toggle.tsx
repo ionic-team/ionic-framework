@@ -4,6 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -138,7 +139,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (shouldToggle(document, this.checked, detail.deltaX, -10)) {
+    if (shouldToggle(isRTL(this.el), this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
       hapticSelection();
     }
@@ -224,9 +225,7 @@ export class Toggle implements ComponentInterface {
   }
 }
 
-const shouldToggle = (doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean => {
-  const isRTL = doc.dir === 'rtl';
-
+const shouldToggle = (isRTL: boolean, checked: boolean, deltaX: number, margin: number): boolean => {
   if (checked) {
     return (!isRTL && (margin > deltaX)) ||
       (isRTL && (- margin < deltaX));

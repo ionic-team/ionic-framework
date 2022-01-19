@@ -47,10 +47,16 @@ export const pickerController = /*@__PURE__*/createController<PickerOptions, HTM
 export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast, [{ tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
 
-export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
+export interface OverlayListenerOptions {
+  trapKeyboardFocus: boolean;
+}
+
+export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T, options: OverlayListenerOptions = {
+  trapKeyboardFocus: true
+}) => {
   /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
-    connectListeners(document);
+    connectListeners(document, options);
   }
   const overlayIndex = lastId++;
   el.overlayIndex = overlayIndex;
@@ -161,8 +167,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
    * We need to add a listener to the shadow root
    * itself to ensure the focus trap works.
    */
-  if (!lastOverlay || !target
-  ) { return; }
+  if (!lastOverlay || !target) { return; }
 
   const trapScopedFocus = () => {
     /**
@@ -286,10 +291,12 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
   }
 };
 
-export const connectListeners = (doc: Document) => {
+const connectListeners = (doc: Document, options: OverlayListenerOptions) => {
   if (lastId === 0) {
     lastId = 1;
-    doc.addEventListener('focus', ev => trapKeyboardFocus(ev, doc), true);
+    if (options.trapKeyboardFocus) {
+      doc.addEventListener('focus', ev => trapKeyboardFocus(ev, doc), true);
+    }
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
