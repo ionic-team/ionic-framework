@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Host, Listen, Prop, forceUpdate, h } fro
 import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
-const win = window as any;
+const win = (typeof (window as any) !== 'undefined') ? window as any : undefined;
 const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
