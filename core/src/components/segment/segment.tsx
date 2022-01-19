@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { Gesture, GestureDetail } from '../../utils/gesture';
 import { pointerCoord } from '../../utils/helpers';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -314,7 +315,7 @@ export class Segment implements ComponentInterface {
   }
 
   private setNextIndex(detail: GestureDetail, isEnd = false) {
-    const isRTL = document.dir === 'rtl';
+    const rtl = isRTL(this.el);
     const activated = this.activated;
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.value === this.value);
@@ -350,8 +351,8 @@ export class Segment implements ComponentInterface {
     const root = this.el.getRootNode() as Document | ShadowRoot;
     const nextEl = root.elementFromPoint(currentX, previousY) as HTMLIonSegmentButtonElement;
 
-    const decreaseIndex = isRTL ? currentX > (left + width) : currentX < left;
-    const increaseIndex = isRTL ? currentX < left : currentX > (left + width);
+    const decreaseIndex = rtl ? currentX > (left + width) : currentX < left;
+    const increaseIndex = rtl ? currentX < left : currentX > (left + width);
 
     // If the indicator is currently activated then we have started the gesture
     // on top of the checked button so we need to slide the indicator
@@ -364,7 +365,7 @@ export class Segment implements ComponentInterface {
         if (newIndex >= 0) {
           nextIndex = newIndex;
         }
-      // Increase index, moves right in LTR & left in RTL
+        // Increase index, moves right in LTR & left in RTL
       } else if (increaseIndex) {
         if (activated && !isEnd) {
 
@@ -458,17 +459,17 @@ export class Segment implements ComponentInterface {
 
   @Listen('keydown')
   onKeyDown(ev: KeyboardEvent) {
-    const isRTL = document.dir === 'rtl';
+    const rtl = isRTL(this.el);
     let keyDownSelectsButton = this.selectOnFocus;
     let current;
     switch (ev.key) {
       case 'ArrowRight':
         ev.preventDefault();
-        current = isRTL ? this.getSegmentButton('previous') : this.getSegmentButton('next');
+        current = rtl ? this.getSegmentButton('previous') : this.getSegmentButton('next');
         break;
       case 'ArrowLeft':
         ev.preventDefault();
-        current = isRTL ? this.getSegmentButton('next') : this.getSegmentButton('previous')
+        current = rtl ? this.getSegmentButton('next') : this.getSegmentButton('previous')
         break;
       case 'Home':
         ev.preventDefault();
