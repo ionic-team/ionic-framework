@@ -321,7 +321,7 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (document.dir === 'rtl') {
+    if (isRTL(this.el)) {
       ratio = 1 - ratio;
     }
 
