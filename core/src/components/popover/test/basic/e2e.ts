@@ -73,6 +73,14 @@ test('popover: custom class', async () => {
   await testPopover(DIRECTORY, '#custom-class-popover');
 });
 
+test('popover: header', async () => {
+  await testPopover(DIRECTORY, '#header-popover');
+});
+
+test('popover: translucent header', async () => {
+  await testPopover(DIRECTORY, '#translucent-header-popover');
+});
+
 /**
  * RTL Tests
  */
@@ -95,6 +103,14 @@ test('popover:rtl: no event', async () => {
 
 test('popover:rtl: custom class', async () => {
   await testPopover(DIRECTORY, '#custom-class-popover', true, true);
+});
+
+test('popover:rtl: header', async () => {
+  await testPopover(DIRECTORY, '#header-popover', true);
+});
+
+test('popover:rtl: translucent header', async () => {
+  await testPopover(DIRECTORY, '#translucent-header-popover', true);
 });
 
 test('popover: htmlAttributes', async () => {

@@ -103,7 +103,6 @@ export class IonModal {
   protected el: HTMLElement;
 
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
     this.el = r.nativeElement;
 
     this.el.addEventListener('willPresent', () => {

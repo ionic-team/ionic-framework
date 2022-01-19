@@ -268,6 +268,77 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
     cy.get('ion-tab-button#tab-button-tab4').should('have.class', 'tab-selected');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23699
+  it('should preserve query string when switching tabs', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.ionPageVisible('tab1');
+
+    cy.get('#child-one-query-string').click();
+    cy.ionPageVisible('tab1child-one');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1child-one');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1child-one');
+    cy.ionPageHidden('tab2');
+
+    cy.url().should('include', '/tabs/tab1/child-one?key=value');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24353
+  it('should handle clicking tab multiple times without query string', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('tab2');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('tab2');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24332
+  it('should not unmount tab 1 when leaving tabs context', () => {
+    cy.visit('http://localhost:8080/tabs');
+    cy.ionPageVisible('tab1');
+
+    // Dynamically add tab 4 because tab 3 redirects to tab 1
+    cy.get('#add-tab').click();
+
+    cy.get('ion-tab-button#tab-button-tab4').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab4');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab4');
+    cy.ionPageVisible('tab2');
+
+    cy.get('[data-pageid="tab2"] #routing').click();
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('tabs');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('tabs');
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {

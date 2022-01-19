@@ -10,7 +10,8 @@ import {
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, renderHiddenInput } from '../../utils/helpers';
+import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
@@ -271,6 +272,11 @@ export class Datetime implements ComponentInterface {
   @Watch('minuteValues')
   protected minuteValuesChanged() {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
+  }
+
+  @Watch('activeParts')
+  protected activePartsChanged() {
+    this.activePartsClone = this.activeParts;
   }
 
   /**
@@ -681,7 +687,7 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      calendarBodyRef.scrollLeft = startMonth.clientWidth;
+      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
@@ -760,7 +766,7 @@ export class Datetime implements ComponentInterface {
             year
           });
 
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth;
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
           calendarBodyRef.style.removeProperty('overflow');
           calendarBodyRef.style.removeProperty('pointer-events');
 
@@ -802,14 +808,14 @@ export class Datetime implements ComponentInterface {
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
         root: calendarBodyRef
-       });
+      });
       startIO.observe(startMonth);
 
       this.destroyCalendarIO = () => {
         endIO?.disconnect();
         startIO?.disconnect();
       }
-   });
+    });
   }
 
   connectedCallback() {
@@ -870,7 +876,14 @@ export class Datetime implements ComponentInterface {
       });
     }
     visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
-    visibleIO.observe(this.el);
+
+    /**
+     * Use raf to avoid a race condition between the component loading and
+     * its display animation starting (such as when shown in a modal). This
+     * could cause the datetime to start at a visibility of 0, erroneously
+     * triggering the `hiddenIO` observer below.
+     */
+    raf(() => visibleIO?.observe(this.el));
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -891,7 +904,7 @@ export class Datetime implements ComponentInterface {
       });
     }
     hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
-    hiddenIO.observe(this.el);
+    raf(() => hiddenIO?.observe(this.el));
 
     /**
      * Datetime uses Ionic components that emit
@@ -937,7 +950,7 @@ export class Datetime implements ComponentInterface {
       ampm: hour >= 12 ? 'pm' : 'am'
     }
 
-    this.activePartsClone = this.activeParts = {
+    this.activeParts = {
       month,
       day,
       year,
@@ -988,9 +1001,11 @@ export class Datetime implements ComponentInterface {
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
     if (!nextMonth) { return; }
 
+    const left = (nextMonth as HTMLElement).offsetWidth * 2;
+
     calendarBodyRef.scrollTo({
       top: 0,
-      left: (nextMonth as HTMLElement).offsetWidth * 2,
+      left: left * (isRTL(this.el) ? -1 : 1),
       behavior: 'smooth'
     });
   }
@@ -1138,10 +1153,10 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
               <ion-button onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
@@ -1199,7 +1214,7 @@ export class Datetime implements ComponentInterface {
                     month,
                     day,
                     year
-                  })
+                  });
                 }}
               >{day}</button>
             )
@@ -1242,7 +1257,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-   ) {
+  ) {
     const { color, activePartsClone, workingParts } = this;
 
     return (
@@ -1283,7 +1298,7 @@ export class Datetime implements ComponentInterface {
             ev.stopPropagation();
           }}
         ></ion-picker-column-internal>
-        { !use24Hour && <ion-picker-column-internal
+        {!use24Hour && <ion-picker-column-internal
           color={color}
           value={activePartsClone.ampm}
           items={ampmItems}
@@ -1304,7 +1319,7 @@ export class Datetime implements ComponentInterface {
 
             ev.stopPropagation();
           }}
-        ></ion-picker-column-internal> }
+        ></ion-picker-column-internal>}
       </ion-picker-internal>
     )
   }
@@ -1314,7 +1329,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-   ) {
+  ) {
     return [
       <div class="time-header">
         {this.renderTimeLabel()}
@@ -1404,7 +1419,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="datetime-time">
-          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
+        {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
       </div>
     )
   }

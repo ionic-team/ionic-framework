@@ -87,6 +87,11 @@
   --ion-safe-area-right: 0px;
   --ion-safe-area-bottom: 0px;
   --ion-safe-area-left: 0px;
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
 }
 
 // Nested Popovers
@@ -114,4 +119,3 @@
     --offset-x: 5px;
   }
 }
-

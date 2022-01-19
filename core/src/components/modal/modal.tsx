@@ -19,7 +19,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot = Content is placed inside of the `.modal-content` element.
+ * @slot - Content is placed inside of the `.modal-content` element.
  *
  * @part backdrop - The `ion-backdrop` element.
  * @part content - The wrapper element for the default slot.
@@ -216,28 +216,28 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-    /**
-     * Emitted after the modal has presented.
-     * Shorthand for ionModalWillDismiss.
-     */
+  /**
+   * Emitted after the modal has presented.
+   * Shorthand for ionModalWillDismiss.
+   */
   @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
 
-    /**
-     * Emitted before the modal has presented.
-     * Shorthand for ionModalWillPresent.
-     */
+  /**
+   * Emitted before the modal has presented.
+   * Shorthand for ionModalWillPresent.
+   */
   @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
 
-    /**
-     * Emitted before the modal has dismissed.
-     * Shorthand for ionModalWillDismiss.
-     */
+  /**
+   * Emitted before the modal has dismissed.
+   * Shorthand for ionModalWillDismiss.
+   */
   @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
-    /**
-     * Emitted after the modal has dismissed.
-     * Shorthand for ionModalDidDismiss.
-     */
+  /**
+   * Emitted after the modal has dismissed.
+   * Shorthand for ionModalDidDismiss.
+   */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Watch('swipeToClose')
@@ -495,6 +495,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (dismissed) {
       const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
+
       if (this.animation) {
         this.animation.destroy();
       }
@@ -507,7 +508,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = undefined;
     this.animation = undefined;
-
     return dismissed;
   }
 

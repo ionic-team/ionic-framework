@@ -1410,9 +1410,9 @@ Type: `Promise<void>`
 
 ## Slots
 
-| Slot                                                            | Description |
-| --------------------------------------------------------------- | ----------- |
-| `"= Content is placed inside of the `.modal-content` element."` |             |
+| Slot | Description                                               |
+| ---- | --------------------------------------------------------- |
+|      | Content is placed inside of the `.modal-content` element. |
 
 
 ## Shadow Parts

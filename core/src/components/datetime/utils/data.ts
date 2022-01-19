@@ -137,7 +137,8 @@ export const generateTime = (
   hourValues?: number[],
   minuteValues?: number[]
 ) => {
-  let processedHours = hourCycle === 'h23' ? hour23 : hour12;
+  const use24Hour = hourCycle === 'h23';
+  let processedHours = use24Hour ? hour23 : hour12;
   let processedMinutes = minutes;
   let isAMAllowed = true;
   let isPMAllowed = true;
@@ -166,17 +167,36 @@ export const generateTime = (
       if (minParts.hour !== undefined) {
         processedHours = processedHours.filter(hour => {
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-          return convertedHour >= minParts.hour!;
+          return (use24Hour ? hour : convertedHour) >= minParts.hour!;
         });
         isAMAllowed = minParts.hour < 13;
       }
       if (minParts.minute !== undefined) {
-        processedMinutes = processedMinutes.filter(minute => minute >= minParts.minute!);
+        /**
+         * The minimum minute range should not be enforced when
+         * the hour is greater than the min hour.
+         *
+         * For example with a minimum range of 09:30, users
+         * should be able to select 10:00-10:29 and beyond.
+         */
+        let isPastMinHour = false;
+        if (minParts.hour !== undefined && refParts.hour !== undefined) {
+          if (refParts.hour > minParts.hour) {
+            isPastMinHour = true;
+          }
+        }
+
+        processedMinutes = processedMinutes.filter(minute => {
+          if (isPastMinHour) {
+            return true;
+          }
+          return minute >= minParts.minute!;
+        });
       }
-    /**
-     * If ref day is before minimum
-     * day do not render any hours/minute values
-     */
+      /**
+       * If ref day is before minimum
+       * day do not render any hours/minute values
+       */
     } else if (isBefore(refParts, minParts)) {
       processedHours = [];
       processedMinutes = [];
@@ -207,10 +227,10 @@ export const generateTime = (
         processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
       }
 
-    /**
-     * If ref day is after minimum
-     * day do not render any hours/minute values
-     */
+      /**
+       * If ref day is after minimum
+       * day do not render any hours/minute values
+       */
     } else if (isAfter(refParts, maxParts)) {
       processedHours = [];
       processedMinutes = [];
@@ -283,7 +303,7 @@ export const getCalendarYears = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   yearValues?: number[]
- ) => {
+) => {
   if (yearValues !== undefined) {
     let processedYears = yearValues;
     if (maxParts?.year !== undefined) {

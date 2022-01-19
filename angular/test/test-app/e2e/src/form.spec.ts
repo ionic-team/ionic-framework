@@ -8,6 +8,16 @@ describe('Form', () => {
       cy.get('#input-touched').click();
       cy.get('#touched-input-test').should('have.class', 'ion-touched');
     });
+
+    describe('markAllAsTouched', () => {
+      it('should apply .ion-touched to nearest ion-item', () => {
+        cy.get('#mark-all-touched-button').click();
+        cy.get('form ion-item').each(item => {
+          cy.wrap(item).should('have.class', 'ion-touched');
+        });
+      });
+    });
+
   });
 
   describe('change', () => {

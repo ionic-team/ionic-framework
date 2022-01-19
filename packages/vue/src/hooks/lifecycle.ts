@@ -11,6 +11,12 @@ const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: Co
     // Add to public instance so it is accessible to IonRouterOutlet
     const target = component as any;
     const hooks = target.proxy[lifecycleType] || (target.proxy[lifecycleType] = []);
+    /**
+     * Define property on public instances using `setup` syntax in Vue 3.x
+     */
+    if (target.exposed) {
+      target.exposed[lifecycleType] = hooks;
+    }
     const wrappedHook = (...args: unknown[]) => {
       if (target.isUnmounted) {
         return;

@@ -1,9 +1,13 @@
 import { ActionSheet } from '../components/action-sheet/action-sheet';
 import { Alert } from '../components/alert/alert';
+import { Backdrop } from '../components/backdrop/backdrop';
 import { Loading } from '../components/loading/loading';
 import { Modal } from '../components/modal/modal';
+import { PickerColumnCmp } from '../components/picker-column/picker-column';
 import { Picker } from '../components/picker/picker';
 import { Popover } from '../components/popover/popover';
+import { RippleEffect } from '../components/ripple-effect/ripple-effect';
+import { Spinner } from '../components/spinner/spinner';
 import { Toast } from '../components/toast/toast';
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -16,10 +20,15 @@ let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
-const createController = <Opts extends object, HTMLElm extends any>(tagName: string, customElement?: any) => {
+type ChildCustomElementDefinition = {
+  tagName: string;
+  customElement: any;
+}
+
+const createController = <Opts extends object, HTMLElm extends any>(tagName: string, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]) => {
   return {
     create(options: Opts): Promise<HTMLElm> {
-      return createOverlay(tagName, options, customElement) as any;
+      return createOverlay(tagName, options, customElement, childrenCustomElements) as any;
     },
     dismiss(data?: any, role?: string, id?: string) {
       return dismissOverlay(document, data, role, tagName, id);
@@ -30,13 +39,13 @@ const createController = <Opts extends object, HTMLElm extends any>(tagName: str
   };
 };
 
-export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert', Alert);
-export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet', ActionSheet);
-export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading', Loading);
-export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal', Modal);
-export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker', Picker);
-export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover);
-export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast);
+export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert', Alert, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet', ActionSheet, [{ tagName: 'ion-backdrop', customElement: Backdrop }, { tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
+export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading', Loading, [{ tagName: 'ion-backdrop', customElement: Backdrop }, { tagName: 'ion-spinner', customElement: Spinner }]);
+export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal', Modal, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker', Picker, [{ tagName: 'ion-picker-column', customElement: PickerColumnCmp }, { tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
+export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast, [{ tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
 
 export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   /* tslint:disable-next-line */
@@ -50,18 +59,29 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   }
 };
 
-export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any): Promise<T> => {
-  /* tslint:disable-next-line */
-  if (typeof window.customElements !== 'undefined') {
-    if (
-      typeof (window as any) !== 'undefined' &&
-      window.customElements &&
-      !window.customElements.get(tagName)
-    ) {
-      window.customElements.define(tagName, customElement);
+const registerOverlayComponents = (tagName: string, customElement: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<any> => {
+  const { customElements } = window;
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, customElement);
+  }
+  /**
+   * If the parent element has nested usage of custom elements,
+   * we need to manually define those custom elements.
+   */
+  if (childrenCustomElements) {
+    for (const customElementDefinition of childrenCustomElements) {
+      if (!customElements.get(customElementDefinition.tagName)) {
+        customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
+      }
     }
+  }
+  return customElements.whenDefined(tagName);
+}
 
-    return window.customElements.whenDefined(tagName).then(() => {
+export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
+  /* tslint:disable-next-line */
+  if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
+    return registerOverlayComponents(tagName, customElement, childrenCustomElements).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
@@ -99,6 +119,8 @@ export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElemen
     overlay.focus();
   }
 };
+
+const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
 
 const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
@@ -271,7 +293,7 @@ export const connectListeners = (doc: Document) => {
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
-      const lastOverlay = getTopOpenOverlay(doc);
+      const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
@@ -282,7 +304,7 @@ export const connectListeners = (doc: Document) => {
     // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        const lastOverlay = getTopOpenOverlay(doc);
+        const lastOverlay = getOverlay(doc);
         if (lastOverlay && lastOverlay.backdropDismiss) {
           lastOverlay.dismiss(undefined, BACKDROP);
         }
@@ -308,30 +330,14 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
 };
 
 /**
- * Gets the top-most/last opened
- * overlay that is currently presented.
+ * Returns an overlay element
+ * @param doc The document to find the element within.
+ * @param overlayTag The selector for the overlay, defaults to Ionic overlay components.
+ * @param id The unique identifier for the overlay instance.
+ * @returns The overlay element or `undefined` if no overlay element is found.
  */
-const getTopOpenOverlay = (doc: Document): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc);
-  for (let i = overlays.length - 1; i >= 0; i--) {
-    const overlay = overlays[i];
-
-    /**
-     * Only consider overlays that
-     * are presented. Presented overlays
-     * will not have the .overlay-hidden
-     * class on the host.
-     */
-    if (!overlay.classList.contains('overlay-hidden')) {
-      return overlay;
-    }
-  }
-
-  return;
-}
-
-export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc, overlayTag);
+const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
+  const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
   return (id === undefined)
     ? overlays[overlays.length - 1]
     : overlays.find(o => o.id === id);

@@ -46,7 +46,9 @@ function generateOverlays() {
     const docsBlock = getDocsBlock(component.tag);
     const props = getPropsFromDocsBlock(docsBlock);
 
-    componentImports.push(`import { ${component.name} as ${component.name}Cmp } from '@ionic/core/components/${component.tag}.js'`);
+    const defineCustomElementFn = `define${component.name}CustomElement`;
+
+    componentImports.push(`import { defineCustomElement as ${defineCustomElementFn} } from '@ionic/core/components/${component.tag}.js'`);
 
     if (component.controller) {
       controllerImports.push(component.controller);
@@ -55,7 +57,7 @@ function generateOverlays() {
     const controllerParam = (component.controller) ? `, ${component.controller}` : '';
 
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${component.name}Cmp, [${props.join(', ')}]${controllerParam});
+export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}]${controllerParam});
     `);
   });
 

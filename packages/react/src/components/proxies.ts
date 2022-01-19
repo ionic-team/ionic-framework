@@ -10,7 +10,6 @@ import { defineCustomElement as defineIonAccordionGroup } from '@ionic/core/comp
 import { defineCustomElement as defineIonAvatar } from '@ionic/core/components/ion-avatar.js';
 import { defineCustomElement as defineIonBackdrop } from '@ionic/core/components/ion-backdrop.js';
 import { defineCustomElement as defineIonBadge } from '@ionic/core/components/ion-badge.js';
-import { defineCustomElement as defineIonBreadcrumb } from '@ionic/core/components/ion-breadcrumb.js';
 import { defineCustomElement as defineIonBreadcrumbs } from '@ionic/core/components/ion-breadcrumbs.js';
 import { defineCustomElement as defineIonButtons } from '@ionic/core/components/ion-buttons.js';
 import { defineCustomElement as defineIonCardContent } from '@ionic/core/components/ion-card-content.js';
@@ -78,7 +77,6 @@ export const IonAccordionGroup = /*@__PURE__*/createReactComponent<JSX.IonAccord
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar, HTMLIonAvatarElement>('ion-avatar', undefined, undefined, defineIonAvatar);
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop, HTMLIonBackdropElement>('ion-backdrop', undefined, undefined, defineIonBackdrop);
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge, HTMLIonBadgeElement>('ion-badge', undefined, undefined, defineIonBadge);
-export const IonBreadcrumb = /*@__PURE__*/createReactComponent<JSX.IonBreadcrumb, HTMLIonBreadcrumbElement>('ion-breadcrumb', undefined, undefined, defineIonBreadcrumb);
 export const IonBreadcrumbs = /*@__PURE__*/createReactComponent<JSX.IonBreadcrumbs, HTMLIonBreadcrumbsElement>('ion-breadcrumbs', undefined, undefined, defineIonBreadcrumbs);
 export const IonButtons = /*@__PURE__*/createReactComponent<JSX.IonButtons, HTMLIonButtonsElement>('ion-buttons', undefined, undefined, defineIonButtons);
 export const IonCardContent = /*@__PURE__*/createReactComponent<JSX.IonCardContent, HTMLIonCardContentElement>('ion-card-content', undefined, undefined, defineIonCardContent);
