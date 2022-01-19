@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.3](https://github.com/ionic-team/ionic-framework/compare/v6.0.2...v6.0.3) (2022-01-19)
+
+
+### Bug Fixes
+
+* **angular-server:** use correct @ionic/angular dependency version ([#24593](https://github.com/ionic-team/ionic-framework/issues/24593)) ([be022f7](https://github.com/ionic-team/ionic-framework/commit/be022f7de8df85ae842b0e111722b03448d60387)), closes [#24592](https://github.com/ionic-team/ionic-framework/issues/24592)
+* **angular:** apply touch, dirty and pristine form control classes ([#24558](https://github.com/ionic-team/ionic-framework/issues/24558)) ([273ae2c](https://github.com/ionic-team/ionic-framework/commit/273ae2cc087b2a5a30fb50a1b0eaeb0a221900fc)), closes [#24483](https://github.com/ionic-team/ionic-framework/issues/24483)
+* **datetime:** showing calendar grid no longer causes month to switch on ios 15 ([#24554](https://github.com/ionic-team/ionic-framework/issues/24554)) ([3d20959](https://github.com/ionic-team/ionic-framework/commit/3d2095922147ea3763e977412977edd9586fec5d)), closes [#24405](https://github.com/ionic-team/ionic-framework/issues/24405)
+* **item:** error slot visible in Safari ([#24579](https://github.com/ionic-team/ionic-framework/issues/24579)) ([af01a8b](https://github.com/ionic-team/ionic-framework/commit/af01a8b3073dce784cc042923d712b9492638d32)), closes [#24575](https://github.com/ionic-team/ionic-framework/issues/24575)
+* **menu:** remove main attribute that was supposed to removed in v5 ([#24565](https://github.com/ionic-team/ionic-framework/issues/24565)) ([7704ac3](https://github.com/ionic-team/ionic-framework/commit/7704ac3a3710396248590daecb945b76825a0539)), closes [#24563](https://github.com/ionic-team/ionic-framework/issues/24563)
+* **modal:** life cycle events for controller modals ([#24508](https://github.com/ionic-team/ionic-framework/issues/24508)) ([9a15753](https://github.com/ionic-team/ionic-framework/commit/9a15753fd95e32155abdeb490ec57cb72385ad1a)), closes [#24460](https://github.com/ionic-team/ionic-framework/issues/24460)
+* **overlays:** getTop now returns the top-most presented overlay ([#24547](https://github.com/ionic-team/ionic-framework/issues/24547)) ([f5b4382](https://github.com/ionic-team/ionic-framework/commit/f5b4382fd5728365e4badf39bc1dd0c149b45c2c)), closes [#19111](https://github.com/ionic-team/ionic-framework/issues/19111)
+* **react:** add useRef wrapper to useIonOverlay state to avoid stale references ([#24553](https://github.com/ionic-team/ionic-framework/issues/24553)) ([bce849c](https://github.com/ionic-team/ionic-framework/commit/bce849c5f324522002eff7f8a5e5023150e9201c))
+* **react:** prevent errors when dismissing inline popover after containing element is removed ([#24569](https://github.com/ionic-team/ionic-framework/issues/24569)) ([c8a392a](https://github.com/ionic-team/ionic-framework/commit/c8a392aef5fbf25f59a573897d970c41abac04d2))
+
+
+
+
+
 ## [6.0.2](https://github.com/ionic-team/ionic-framework/compare/v6.0.1...v6.0.2) (2022-01-11)
 
 
