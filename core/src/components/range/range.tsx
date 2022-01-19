@@ -433,8 +433,10 @@ export class Range implements ComponentInterface {
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
-    const start = isRTL(this.el) ? 'right' : 'left';
-    const end = isRTL(this.el) ? 'left' : 'right';
+    const rtl = isRTL(this.el);
+
+    const start = rtl ? 'right' : 'left';
+    const end = rtl ? 'left' : 'right';
 
     const tickStyle = (tick: any) => {
       return {
@@ -501,7 +503,7 @@ export class Range implements ComponentInterface {
             part="bar-active"
           />
 
-          {renderKnob(isRTL(this.el), {
+          {renderKnob(rtl, {
             knob: 'A',
             pressed: pressedKnob === 'A',
             value: this.valA,
@@ -515,7 +517,7 @@ export class Range implements ComponentInterface {
             labelText
           })}
 
-          {this.dualKnobs && renderKnob(isRTL(this.el), {
+          {this.dualKnobs && renderKnob(rtl, {
             knob: 'B',
             pressed: pressedKnob === 'B',
             value: this.valB,
