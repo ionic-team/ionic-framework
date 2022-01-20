@@ -353,7 +353,7 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
  * @param id The unique identifier for the overlay instance.
  * @returns The overlay element or `undefined` if no overlay element is found.
  */
-const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
+export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
   const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
   return (id === undefined)
     ? overlays[overlays.length - 1]
@@ -595,4 +595,3 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
-export const FOCUSABLE_OVERLAY_TAGNAMES = ['ION-MODAL', 'ION-POPOVER', 'ION-ALERT', 'ION-ACTION-SHEET', 'ION-LOADING', 'ION-PICKER'];

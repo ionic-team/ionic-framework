@@ -7,7 +7,7 @@ import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
-import { FOCUSABLE_OVERLAY_TAGNAMES } from '../../utils/overlays';
+import { getOverlay } from '../../utils/overlays';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -49,9 +49,12 @@ export class Menu implements ComponentInterface, MenuI {
     /**
      * Overlays have their own focus trapping listener
      * so we do not want the two listeners to conflict
-     * with each other.
+     * with each other. If the top-most overlay that is
+     * open does not contain this ion-menu, then ion-menu's
+     * focus trapping should not run.
      */
-    if (ev.target && FOCUSABLE_OVERLAY_TAGNAMES.includes((ev.target as HTMLElement).tagName)) {
+    const lastOverlay = getOverlay(document);
+    if (lastOverlay && !lastOverlay.contains(this.el)) {
       return;
     }
 
