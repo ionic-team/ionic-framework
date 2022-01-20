@@ -374,6 +374,7 @@ export class PickerInternal implements ComponentInterface {
     const lastColumn = numericPickers[1];
 
     let value = inputEl.value;
+    let minuteValue;
     switch (value.length) {
       case 1:
         this.searchColumn(firstColumn, value);
@@ -396,7 +397,7 @@ export class PickerInternal implements ComponentInterface {
          * for a match in the minutes column
          */
         if (value.length === 1) {
-          const minuteValue = inputEl.value.substring(inputEl.value.length - 1);
+          minuteValue = inputEl.value.substring(inputEl.value.length - 1);
           this.searchColumn(lastColumn, minuteValue, 'end');
         }
         break;
@@ -417,7 +418,7 @@ export class PickerInternal implements ComponentInterface {
          * we can check the second value
          * for a match in the minutes column
          */
-        const minuteValue = (value.length === 1) ? inputEl.value.substring(1) : inputEl.value.substring(2);
+        minuteValue = (value.length === 1) ? inputEl.value.substring(1) : inputEl.value.substring(2);
 
         this.searchColumn(lastColumn, minuteValue, 'end');
         break;
