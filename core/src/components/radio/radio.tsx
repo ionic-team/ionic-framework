@@ -177,7 +177,7 @@ export class Radio implements ComponentInterface {
           disabled={disabled}
           tabindex="-1"
           id={inputId}
-          ref={el => this.nativeInput = el as HTMLInputElement}
+          ref={nativeEl => this.nativeInput = nativeEl as HTMLInputElement}
         />
       </Host>
     );
