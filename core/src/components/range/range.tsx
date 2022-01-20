@@ -552,8 +552,8 @@ interface RangeKnob {
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob) => {
-  const start = isRTL ? 'right' : 'left';
+const renderKnob = (rtl: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob) => {
+  const start = rtl ? 'right' : 'left';
 
   const knobStyle = () => {
     const style: any = {};
