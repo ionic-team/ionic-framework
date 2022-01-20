@@ -290,14 +290,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const triggerEl = (trigger !== undefined) ? document.getElementById(trigger) : null;
     if (!triggerEl) { return; }
 
-    const configureTriggerInteraction = (triggerEl: HTMLElement, modalEl: HTMLIonModalElement) => {
+    const configureTriggerInteraction = (trigEl: HTMLElement, modalEl: HTMLIonModalElement) => {
       const openModal = () => {
         modalEl.present();
       }
-      triggerEl.addEventListener('click', openModal);
+      trigEl.addEventListener('click', openModal);
 
       return () => {
-        triggerEl.removeEventListener('click', openModal);
+        trigEl.removeEventListener('click', openModal);
       }
     }
 
