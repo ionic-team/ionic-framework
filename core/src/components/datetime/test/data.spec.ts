@@ -257,5 +257,35 @@ describe('generateTime()', () => {
         expect(minutes.length).toEqual(60);
       });
     });
+
+    it('should respect the min & max bounds', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 20,
+        minute: 30
+      }
+
+      const minParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 19,
+        minute: 30
+      }
+
+      const maxParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 20,
+        minute: 40
+      };
+
+      const { hours } = generateTime(refValue, 'h23', minParts, maxParts);
+
+      expect(hours).toStrictEqual([19, 20]);
+    });
   })
 })
