@@ -596,7 +596,3 @@ export const safeCall = (handler: any, arg?: any) => {
 
 export const BACKDROP = 'backdrop';
 export const FOCUSABLE_OVERLAY_TAGNAMES = ['ION-MODAL', 'ION-POPOVER', 'ION-ALERT', 'ION-ACTION-SHEET', 'ION-LOADING', 'ION-PICKER'];
-
-
-
-
