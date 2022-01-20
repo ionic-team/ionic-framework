@@ -225,13 +225,13 @@ export class Toggle implements ComponentInterface {
   }
 }
 
-const shouldToggle = (isRTL: boolean, checked: boolean, deltaX: number, margin: number): boolean => {
+const shouldToggle = (rtl: boolean, checked: boolean, deltaX: number, margin: number): boolean => {
   if (checked) {
-    return (!isRTL && (margin > deltaX)) ||
-      (isRTL && (- margin < deltaX));
+    return (!rtl && (margin > deltaX)) ||
+      (rtl && (- margin < deltaX));
   } else {
-    return (!isRTL && (- margin < deltaX)) ||
-      (isRTL && (margin > deltaX));
+    return (!rtl && (- margin < deltaX)) ||
+      (rtl && (margin > deltaX));
   }
 };
 
