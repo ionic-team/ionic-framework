@@ -295,7 +295,17 @@ const connectListeners = (doc: Document, options: OverlayListenerOptions) => {
   if (lastId === 0) {
     lastId = 1;
     if (options.trapKeyboardFocus) {
-      doc.addEventListener('focus', ev => trapKeyboardFocus(ev, doc), true);
+      doc.addEventListener('focus', (ev: FocusEvent) => {
+        /**
+         * ion-menu has its own focus trapping listener
+         * so we do not want the two listeners to conflict
+         * with each other.
+         */
+        if (ev.target && (ev.target as HTMLElement).tagName === 'ION-MENU') {
+          return;
+        }
+        trapKeyboardFocus(ev, doc);
+      }, true);
     }
 
     // handle back-button click
@@ -585,3 +595,8 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
+export const FOCUSABLE_OVERLAY_TAGNAMES = ['ION-MODAL', 'ION-POPOVER', 'ION-ALERT', 'ION-ACTION-SHEET', 'ION-LOADING', 'ION-PICKER'];
+
+
+
+
