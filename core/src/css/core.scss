@@ -282,7 +282,7 @@ ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-ion-accordion-group > ion-accordion:last-of-type ion-item {
+ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
   --border-width: 0px;
 }
 
