@@ -1,5 +1,3 @@
-
-import { config } from "../../global/config";
 import { componentOnReady } from "../../utils/helpers";
 
 const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
@@ -57,14 +55,18 @@ export const getScrollElement = async (el: Element) => {
   return el as HTMLElement;
 }
 
-export const ION_CONTENT_SELECTOR = () => config.get('contentSelector', 'ion-content, .ion-content');
+/**
+ * Overrides the element selector for Ionic components reliant on `<ion-content>` for
+ * scroll event changes.
+ */
+export const ION_CONTENT_SELECTOR = 'ion-content, .ion-content';
 
 export const findIonContent = (el: Element) => {
-  return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR());
+  return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 
 export const findClosestIonContent = (el: Element) => {
-  return el.closest<HTMLElement>(ION_CONTENT_SELECTOR());
+  return el.closest<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 
 export const scrollToTop = (el: HTMLElement, durationMs: number) => {

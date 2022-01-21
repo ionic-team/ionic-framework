@@ -182,12 +182,6 @@ export interface IonicConfig {
    */
   platform?: PlatformConfig;
 
-  /**
-   * Overrides the element selector for Ionic components reliant on `<ion-content>` for
-   * scroll event changes.
-   */
-  contentSelector?: string;
-
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;
