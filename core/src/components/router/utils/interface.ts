@@ -39,8 +39,9 @@ export interface RouteID {
 }
 
 export interface RouteEntry {
+  /** Component tag name or tab name. */
   id: string;
-  path: string[];
+  segments: string[];
   params: {[key: string]: any} | undefined;
   beforeLeave?: NavigationHookCallback;
   beforeEnter?: NavigationHookCallback;
@@ -51,9 +52,9 @@ export interface RouteNode extends RouteEntry {
 }
 
 export interface ParsedRoute {
-  // Parts of the route (non empty "/" separated parts of an URL).
+  /** Parts of the route (non empty "/" separated parts of an URL). */
   segments: string[];
-  // Unparsed query string.
+  /** Unparsed query string. */
   queryString?: string;
 }
 
