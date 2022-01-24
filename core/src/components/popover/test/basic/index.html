@@ -36,6 +36,7 @@
       <ion-button id="custom-class-popover" expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
       <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">Popover With Header</ion-button>
       <ion-button id="translucent-header-popover" expand="block" onclick="presentPopover({ component: 'translucent-header-page' })">Popover With Translucent Header</ion-button>
+      <ion-button id="popover-with-textarea" expand="block" onclick="presentPopover({ component: 'textarea-page' })">Popover With textarea</ion-button>
     </ion-content>
 
     <ion-footer>
@@ -178,6 +179,23 @@
     }
 
     customElements.define('translucent-header-page', TranslucentHeaderPage);
+
+    class TextAreaPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-content>
+            <ion-textarea rows="4" value="the cursor in this <ion-textarea>\nmust be able to be moved\nwith the arrow keys and\nhome and end keys"></ion-textarea>
+            <textarea rows="4" style="display:block;width: 100%;border: 0;padding: 8px;">the cursor in this <textarea>\nmust be able to be moved\nwith the arrow keys and\nhome and end keys</textarea>
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('textarea-page', TextAreaPage);
   </script>
 </body>
 

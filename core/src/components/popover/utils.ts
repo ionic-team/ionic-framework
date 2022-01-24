@@ -335,6 +335,13 @@ export const configureKeyboardInteraction = (
 ) => {
 
   const callback = async (ev: KeyboardEvent) => {
+    if (ev.target instanceof HTMLTextAreaElement) {
+      /**
+       * Do not interfere with keys pressed in a textarea
+       * Fixes issue #24633
+       */
+      return;
+    }
     const activeElement = document.activeElement as HTMLElement | null;
     let items: HTMLIonItemElement[] = [];
 
