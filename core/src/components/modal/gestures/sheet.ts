@@ -1,6 +1,7 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
+import { KEYBOARD_DID_OPEN } from '../../../utils/keyboard/keyboard';
 import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetGesture = (
@@ -42,6 +43,27 @@ export const createSheetGesture = (
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
+  /* tslint:disable-next-line */
+  if (typeof window !== 'undefined') {
+    const keyboardOpenCallback = () => {
+      /**
+       * When the native keyboard is opened and the webview
+       * is resized, the gesture implementation will become unresponsive
+       * and enter a free-scroll mode.
+       *
+       * When the keyboard is opened, we disable the gesture for
+       * a single frame and re-enable once the contents have repositioned
+       * from the keyboard placement.
+       */
+      gesture.enable(false);
+      raf(() => {
+        gesture.enable(true)
+      });
+    };
+
+    window.addEventListener(KEYBOARD_DID_OPEN, keyboardOpenCallback);
+  }
+
   /**
    * After the entering animation completes,
    * we need to set the animation to go from
@@ -78,6 +100,15 @@ export const createSheetGesture = (
 
     if (currentBreakpoint === 1 && content) {
       return false;
+    }
+
+    /* tslint:disable-next-line */
+    if (typeof document !== 'undefined') {
+      const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+      if (activeElement.matches('input,ion-input,textarea,ion-textarea')) {
+        // Dismisses the open keyboard when the sheet drag gesture is started.
+        activeElement.blur();
+      }
     }
 
     return true;
@@ -188,11 +219,11 @@ export const createSheetGesture = (
           }
         }
 
-      /**
-       * This must be a one time callback
-       * otherwise a new callback will
-       * be added every time onEnd runs.
-       */
+        /**
+         * This must be a one time callback
+         * otherwise a new callback will
+         * be added every time onEnd runs.
+         */
       }, { oneTimeCallback: true })
       .progressEnd(1, 0, 500);
 
