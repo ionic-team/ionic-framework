@@ -372,7 +372,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * was dispatched.
    */
   @Method()
-  async present(event?: MouseEvent | TouchEvent | PointerEvent): Promise<void> {
+  async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
     if (this.presented) {
       return;
     }
