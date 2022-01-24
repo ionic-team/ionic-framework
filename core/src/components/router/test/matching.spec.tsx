@@ -43,11 +43,46 @@ describe('matchesIDs', () => {
   it('should match path with params', () => {
     const ids = [{ id: 'my-page', params: { s1: 'a', s2: 'b' } }];
 
+    // The route has only parameter segments.
     expect(matchesIDs(ids, [{ id: 'my-page', segments: [''], params: {} }])).toBe(1);
     expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1'], params: {} }])).toBe(1);
-    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2'], params: {} }])).toBe(3);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2'], params: {} }])).toBe(2);
     expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2', ':s3'], params: {} }])).toBe(1);
+
+    // The route has a mix of parameter and fixed segments.
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2'], params: {} }])).toBe(2);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2', ':s3'], params: {} }])).toBe(1);
+
+    // The route has parameters (componentProps).
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix'], params: {s2: 'route param'} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1'], params: {s2: 'route param'} }])).toBe(2);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2'], params: {s2: 'route param'} }])).toBe(2);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2', ':s3'], params: {s2: 'route param'} }])).toBe(1);    
   })
+
+  it('should match path without params', () => {
+    const ids = [{ id: 'my-page', params: {} }];
+
+    // The route has only parameter segments.
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [''], params: {} }])).toBe(2);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2', ':s3'], params: {} }])).toBe(1);
+
+    // The route has a mix of parameter and fixed segments.
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix'], params: {} }])).toBe(2);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2', ':s3'], params: {} }])).toBe(1);
+
+    // The route has parameters (componentProps).
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix'], params: {s2: 'route param'} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1'], params: {s2: 'route param'} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2'], params: {s2: 'route param'} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: ['prefix', ':s1', ':s2', ':s3'], params: {s2: 'route param'} }])).toBe(1);    
+  })  
 });
 
 describe('matchesSegments', () => {

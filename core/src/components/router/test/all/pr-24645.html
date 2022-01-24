@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Navigation Guards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <style>
+    .toolbar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 300px;
+      background: white;
+      box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  
+  <script>
+    class MyComponent extends HTMLElement {
+      connectedCallback() {
+        const props = {
+          seg1: this.seg1,
+          seg2: this.seg2,
+          seg3: this.seg3,
+          route: this.route,
+        }
+        this.innerHTML = `<p>${JSON.stringify(props, null, 2)}</p>`;
+      }
+    }
+
+    customElements.define('my-component', MyComponent);
+  </script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-router>
+      <ion-route url="/" component="my-component"></ion-route>
+      <ion-route url="/:seg1" component="my-component"></ion-route>
+      <ion-route url="/:seg1/:seg2" component="my-component"></ion-route>
+      <ion-route url="/fixed/:seg1/:seg2/:seg3" component="my-component"></ion-route>   
+      <ion-route id="rp1" url="/routeparam/:seg1" component="my-component"></ion-route>
+      <ion-route id="rp2" url="/routeparam/:seg1/:seg2" component="my-component"></ion-route>
+    </ion-router>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>ion-nav navigation tests</ion-title>
+      </ion-toolbar>
+    </ion-header>    
+    
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-select id="route" placeholder="Select the navigation target" interface="popover">
+            <ion-select-option value="/">/</ion-select-option>
+            <ion-select-option value="/a">/a</ion-select-option>
+            <ion-select-option value="/a/b">/a/b</ion-select-option>
+            <ion-select-option value="/fixed/a/b/c">/fixed/a/b/c</ion-select-option>
+            <ion-select-option value="/routeparam/a">/routeparam/a</ion-select-option>
+            <ion-select-option value="/routeparam/a/b">/routeparam/a/b</ion-select-option>
+          </ion-select>
+        </ion-item>         
+        <ion-item>
+          <ion-button id="router-push">router.push</ion-button>
+        </ion-item>   
+        <ion-item>
+          <ion-button id="nav-push-x">nav.push(/x)</ion-button>
+        </ion-item> 
+        <ion-item>
+          <ion-button id="nav-push-fixed">nav.push(/fixed/x/y/z)</ion-button>
+        </ion-item> 
+        <ion-item>
+          <ion-button id="nav-push-routeparam">nav.push(/routeparam/x)</ion-button>
+        </ion-item>         
+        <ion-item>
+          <ion-button id="nav-pop">nav.pop</ion-button>
+        </ion-item> 
+        <ion-item>
+          <ion-nav></ion-nav>
+        </ion-item>                
+      </ion-list>
+    </ion-content>    
+
+
+    <script>
+      document.querySelector('ion-route#rp1').componentProps = {route: "route param"};
+      document.querySelector('ion-route#rp2').componentProps = {route: "route param"};
+
+      const route = document.querySelector('#route');
+      const routerPush = document.querySelector('#router-push');
+      const router = document.querySelector('ion-router');
+      const nav = document.querySelector('ion-nav');
+      const navPop = document.querySelector('#nav-pop');
+
+      routerPush.addEventListener('click', () => {
+        if (route.value != null) {
+          router.push(route.value);
+        }
+      });
+
+      navPop.addEventListener('click', async () => {
+        if (await nav.canGoBack()) {
+          nav.pop();
+        }
+      });
+
+      document.querySelector('#nav-push-x').addEventListener('click', () => {
+        nav.push(new MyComponent(), {seg1: 'x'});
+      });
+
+      document.querySelector('#nav-push-fixed').addEventListener('click', () => {
+        nav.push(new MyComponent(), {seg1: 'x', seg2: 'y', seg3: 'z'});
+      });
+
+      document.querySelector('#nav-push-routeparam').addEventListener('click', () => {
+        nav.push(new MyComponent(), {seg1: 'x', route: "y"});
+      });
+
+    </script>
+  </ion-app>
+</body>
+</html>

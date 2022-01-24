@@ -34,6 +34,14 @@ export const findRouteRedirect = (segments: string[], redirects: RouteRedirect[]
   return redirects.find(redirect => matchesRedirect(segments, redirect));
 };
 
+/**
+ * Returns the matching score for a RouteID vs a RouteChain.
+ *
+ * The best score is returned when the id and the entry match for all the levels.
+ * They match when:
+ * - they both use the same id (component tag or tab name),
+ * - they both have the same parameters.
+ */
 export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteChain): number => {
   const len = Math.min(ids.length, chain.length);
 
@@ -41,48 +49,36 @@ export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteCh
 
   for (let i = 0; i < len; i++) {
     const routeId = ids[i];
-    const routeChain = chain[i];
+    const routeEntry = chain[i];
+
     // Skip results where the route id does not match the chain at the same index
-    if (routeId.id.toLowerCase() !== routeChain.id) {
+    if (routeId.id.toLowerCase() === routeEntry.id.toLowerCase()) {
+      score++;
+    } else {
       break;
     }
-    if (routeId.params) {
-      const routeIdParams = Object.keys(routeId.params);
-      // Only compare routes with the chain that have the same number of parameters.
-      if (routeIdParams.length === routeChain.segments.length) {
-        // Maps the route's params into a path based on the path variable names,
-        // to compare against the route chain format.
-        //
-        // Before:
-        // ```ts
-        // {
-        //  params: {
-        //    s1: 'a',
-        //    s2: 'b'
-        //  }
-        // }
-        // ```
-        //
-        // After:
-        // ```ts
-        // [':s1',':s2']
-        // ```
-        //
-        const pathWithParams = routeIdParams.map(key => `:${key}`);
-        for (let j = 0; j < pathWithParams.length; j++) {
-          // Skip results where the path variable is not a match
-          if (pathWithParams[j].toLowerCase() !== routeChain.segments[j]) {
-            break;
-          }
-          // Weight path matches for the same index higher.
-          score++;
-        }
 
+    // Get the parameters of the route (that is the componentProps property of the <ion-route>).
+    const routeEntryParams = new Set(routeEntry.params ? Object.keys(routeEntry.params) : []);
+    // Add the parameter segments from the url.
+    for (const segment of routeEntry.segments) {
+      if (segment[0] === ':') {
+        routeEntryParams.add(segment.substring(1));
       }
     }
-    // Weight id matches
-    score++;
+
+    // The parameters should be the same for RouteID and RouteEntry.
+    if (routeId.params) {
+      const routeIdParams = Object.keys(routeId.params);
+      if (routeIdParams.length === routeEntryParams.size) {
+        const paramsMatch = routeIdParams.every(p => routeEntryParams.has(p));
+        if (paramsMatch) {
+          score++;
+        }
+      }
+    }
   }
+
   return score;
 }
 
