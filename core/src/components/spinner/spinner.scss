@@ -115,7 +115,7 @@ svg {
 // Spinner: circular
 // --------------------------------------------------
 
-:host(.spinner-circular) {
+:host(.spinner-circular) svg {
   animation: spinner-circular linear infinite;
 }
 
