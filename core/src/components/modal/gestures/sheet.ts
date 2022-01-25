@@ -1,6 +1,7 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
+import { KEYBOARD_DID_OPEN } from '../../../utils/keyboard/keyboard';
 import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetGesture = (
@@ -41,6 +42,27 @@ export const createSheetGesture = (
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
+
+  const keyboardOpenCallback = () => {
+    /**
+     * When the native keyboard is opened and the webview
+     * is resized, the gesture implementation will become unresponsive
+     * and enter a free-scroll mode.
+     *
+     * When the keyboard is opened, we disable the gesture for
+     * a single frame and re-enable once the contents have repositioned
+     * from the keyboard placement.
+     */
+    gesture.enable(false);
+    raf(() => {
+      gesture.enable(true)
+    });
+  };
+
+  /* tslint:disable-next-line */
+  if (typeof window !== 'undefined') {
+    window.addEventListener(KEYBOARD_DID_OPEN, keyboardOpenCallback);
+  }
 
   /**
    * After the entering animation completes,
@@ -91,6 +113,17 @@ export const createSheetGesture = (
      */
     if (contentEl) {
       contentEl.scrollY = false;
+    }
+
+    /* tslint:disable-next-line */
+    if (typeof document !== 'undefined') {
+      const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+      if (activeElement.matches('input,ion-input,textarea,ion-textarea')) {
+        raf(() => {
+          // Dismisses the open keyboard when the sheet drag gesture is started.
+          activeElement.blur();
+        });
+      }
     }
 
     animation.progressStart(true, 1 - currentBreakpoint);
@@ -188,11 +221,11 @@ export const createSheetGesture = (
           }
         }
 
-      /**
-       * This must be a one time callback
-       * otherwise a new callback will
-       * be added every time onEnd runs.
-       */
+        /**
+         * This must be a one time callback
+         * otherwise a new callback will
+         * be added every time onEnd runs.
+         */
       }, { oneTimeCallback: true })
       .progressEnd(1, 0, 500);
 
@@ -200,6 +233,13 @@ export const createSheetGesture = (
       onDismiss();
     }
   };
+
+  const onDestroy = () => {
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined') {
+      window.removeEventListener(KEYBOARD_DID_OPEN, keyboardOpenCallback);
+    }
+  }
 
   const gesture = createGesture({
     el: wrapperEl,
@@ -210,7 +250,8 @@ export const createSheetGesture = (
     canStart,
     onStart,
     onMove,
-    onEnd
+    onEnd,
+    onDestroy
   });
   return gesture;
 };
