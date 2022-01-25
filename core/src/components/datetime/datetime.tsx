@@ -1376,6 +1376,7 @@ export class Datetime implements ComponentInterface {
            * before the popover is fully presented.
            */
           const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column-internal');
+          // TODO (FW-615): Potentially remove this when intersection observers are fixed in picker column
           cols.forEach(col => col.scrollActiveItemIntoView());
         }}
         style={{
