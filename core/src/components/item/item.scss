@@ -533,6 +533,16 @@ ion-ripple-effect {
   z-index: 1;
 }
 
+// Item Max Length Counter
+// --------------------------------------------------
+
+.item-counter {
+  @include margin-horizontal(auto, null);
+
+  padding-inline-start: 16px;
+
+  white-space: nowrap;
+}
 
 // Item: Reduced Motion
 // --------------------------------------------------

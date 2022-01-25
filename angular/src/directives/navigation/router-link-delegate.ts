@@ -41,7 +41,7 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy
   }
 
   private updateTargetUrlAndHref() {
-    if (this.routerLink) {
+    if (this.routerLink?.urlTree) {
       const href = this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(this.routerLink.urlTree));
       this.elementRef.nativeElement.href = href;
     }
