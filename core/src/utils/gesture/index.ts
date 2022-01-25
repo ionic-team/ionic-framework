@@ -231,9 +231,6 @@ export const createGesture = (config: GestureConfig): Gesture => {
     destroy() {
       gesture.destroy();
       pointerEvents.destroy();
-      if (config.onDestroy !== undefined) {
-        config.onDestroy();
-      }
     }
   };
 };
@@ -328,11 +325,6 @@ export interface GestureConfig {
   onStart?: GestureCallback;
   onMove?: GestureCallback;
   onEnd?: GestureCallback;
-  /**
-   * Callback to extend the behavior when a gesture
-   * handler is destroyed.
-   */
-  onDestroy?: () => void;
   notCaptured?: GestureCallback;
 }
 
