@@ -295,7 +295,17 @@ const connectListeners = (doc: Document, options: OverlayListenerOptions) => {
   if (lastId === 0) {
     lastId = 1;
     if (options.trapKeyboardFocus) {
-      doc.addEventListener('focus', ev => trapKeyboardFocus(ev, doc), true);
+      doc.addEventListener('focus', (ev: FocusEvent) => {
+        /**
+         * ion-menu has its own focus trapping listener
+         * so we do not want the two listeners to conflict
+         * with each other.
+         */
+        if (ev.target && (ev.target as HTMLElement).tagName === 'ION-MENU') {
+          return;
+        }
+        trapKeyboardFocus(ev, doc);
+      }, true);
     }
 
     // handle back-button click
@@ -343,7 +353,7 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
  * @param id The unique identifier for the overlay instance.
  * @returns The overlay element or `undefined` if no overlay element is found.
  */
-const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
+export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
   const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
   return (id === undefined)
     ? overlays[overlays.length - 1]
