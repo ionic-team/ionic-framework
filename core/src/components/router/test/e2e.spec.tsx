@@ -1,9 +1,9 @@
 import { mockWindow } from '@stencil/core/testing';
 
 import { RouteChain, RouteID } from '../utils/interface';
-import { routerIDsToChain, routerPathToChain } from '../utils/matching';
+import { findChainForSegments, findChainForIDs } from '../utils/matching';
 import { readRoutes } from '../utils/parser';
-import { chainToPath, generatePath, parsePath } from '../utils/path';
+import { chainToSegments, generatePath, parsePath } from '../utils/path';
 
 import { mockRouteElement } from './parser.spec';
 
@@ -76,10 +76,9 @@ describe('ionic-conference-app', () => {
 }
 });
 
-export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
-  return routerPathToChain(parsePath(path).segments, routes)!.map(r => r.id);
+function getRouteIDs(path: string, routes: RouteChain[]): string[] {
+  return findChainForSegments(parsePath(path).segments, routes)!.map(r => r.id);
 }
-
-export function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
-  return generatePath(chainToPath(routerIDsToChain(ids, routes)!)!);
+function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
+  return generatePath(chainToSegments(findChainForIDs(ids, routes)!)!);
 }
