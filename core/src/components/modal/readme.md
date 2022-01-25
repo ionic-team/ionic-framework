@@ -1377,6 +1377,16 @@ Type: `Promise<boolean>`
 
 
 
+### `getBreakpoint() => Promise<number | undefined>`
+
+Returns the current Breakpoint of a sheet style modal
+
+#### Returns
+
+Type: `Promise<number | undefined>`
+
+
+
 ### `onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the modal did dismiss.
@@ -1400,6 +1410,16 @@ Type: `Promise<OverlayEventDetail<T>>`
 ### `present() => Promise<void>`
 
 Present the modal overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `setBreakpoint(breakpoint: number) => Promise<void>`
+
+Move a sheet style modal to a specific breakpoint.
 
 #### Returns
 

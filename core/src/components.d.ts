@@ -1529,6 +1529,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Returns the current Breakpoint of a sheet style modal
+         */
+        "getBreakpoint": () => Promise<number | undefined>;
+        /**
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
@@ -1574,6 +1578,10 @@ export namespace Components {
           * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
          */
         "presentingElement"?: HTMLElement;
+        /**
+          * Move a sheet style modal to a specific breakpoint.
+         */
+        "setBreakpoint": (breakpoint: number) => Promise<void>;
         /**
           * If `true`, a backdrop will be displayed behind the modal.
          */

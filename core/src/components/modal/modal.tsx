@@ -15,6 +15,7 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import { moveSheetToBreakpoint } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -41,7 +42,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
-  private currentBreakpoint?: number;
+  currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
 
@@ -263,6 +264,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.modalId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
     this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
 
+    if (this.isSheetModal) {
+      this.currentBreakpoint = this.initialBreakpoint;
+    }
+
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
       console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.')
     }
@@ -431,35 +436,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
-      this.el,
+      this,
       this.backdropEl!,
       wrapperEl,
-      initialBreakpoint,
       backdropBreakpoint,
       ani,
       sortedBreakpoints,
       () => {
-        /**
-         * While the gesture animation is finishing
-         * it is possible for a user to tap the backdrop.
-         * This would result in the dismiss animation
-         * being played again. Typically this is avoided
-         * by setting `presented = false` on the overlay
-         * component; however, we cannot do that here as
-         * that would prevent the element from being
-         * removed from the DOM.
-         */
-        this.gestureAnimationDismissing = true;
-        this.animation!.onFinish(async () => {
-          await this.dismiss(undefined, 'gesture');
-          this.gestureAnimationDismissing = false;
-        });
+        this.sheetOnDismiss();
       },
       (breakpoint: number) => {
         this.currentBreakpoint = breakpoint;
       }
     );
     this.gesture.enable(true);
+  }
+
+  private sheetOnDismiss() {
+    /**
+     * While the gesture animation is finishing
+     * it is possible for a user to tap the backdrop.
+     * This would result in the dismiss animation
+     * being played again. Typically this is avoided
+     * by setting `presented = false` on the overlay
+     * component; however, we cannot do that here as
+     * that would prevent the element from being
+     * removed from the DOM.
+     */
+    this.gestureAnimationDismissing = true;
+    this.animation!.onFinish(async () => {
+      await this.dismiss(undefined, 'gesture');
+      this.gestureAnimationDismissing = false;
+    });
   }
 
   /**
@@ -525,6 +533,41 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionModalWillDismiss');
+  }
+
+  /**
+   * Move a sheet style modal to a specific breakpoint.
+   */
+  @Method()
+  async setBreakpoint(breakpoint: number): Promise<void> {
+    if (!this.isSheetModal || !this.breakpoints!.includes(breakpoint)) {
+      return
+    }
+    const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
+
+    moveSheetToBreakpoint(
+      this.el,
+      this.backdropEl!,
+      this.animation!,
+      this.gesture!,
+      sortedBreakpoints,
+      1 - this.currentBreakpoint!,
+      breakpoint,
+      this.backdropBreakpoint,
+      () => {
+        this.sheetOnDismiss();
+      },
+      (newBreakpoint: number) => {
+      this.currentBreakpoint = newBreakpoint;
+    });
+  }
+
+  /**
+   * Returns the current Breakpoint of a sheet style modal
+   */
+  @Method()
+  async getBreakpoint(): Promise<number | undefined> {
+    return this.currentBreakpoint;
   }
 
   private onBackdropTap = () => {
