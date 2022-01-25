@@ -1022,7 +1022,7 @@ Type: `Promise<OverlayEventDetail<T>>`
 
 
 
-### `present(event?: MouseEvent | TouchEvent | PointerEvent | undefined) => Promise<void>`
+### `present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent<any> | undefined) => Promise<void>`
 
 Present the popover overlay after it has been created.
 Developers can pass a mouse, touch, or pointer event
