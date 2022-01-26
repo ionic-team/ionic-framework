@@ -30,9 +30,9 @@ test('datetime: minmax months disabled', async () => {
 
   await page.waitForChanges();
 
-  expect(calendarMonths[0]).toHaveClass('calendar-month-disabled');
+  expect(calendarMonths[0]).not.toHaveClass('calendar-month-disabled');
   expect(calendarMonths[1]).not.toHaveClass('calendar-month-disabled');
-  expect(calendarMonths[2]).not.toHaveClass('calendar-month-disabled');
+  expect(calendarMonths[2]).toHaveClass('calendar-month-disabled');
 
 });
 
