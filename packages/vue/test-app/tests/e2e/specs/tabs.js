@@ -339,6 +339,32 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab2');
     cy.ionPageHidden('tab1');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24654
+  it('should not error when going back to a tabs view from a non tabs view', () => {
+    cy.visit('http://localhost:8080/tabs');
+
+    cy.routerPush('/tabs/tab1/childone');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.routerGo(-1);
+    cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageVisible('tab1');
+
+    cy.routerPush('/tabs/tab1/childtwo');
+    cy.ionPageVisible('tab1childtwo');
+    cy.ionPageHidden('tab1');
+
+    cy.routerPush('/inputs');
+    cy.ionPageVisible('tab1childtwo');
+    cy.ionPageHidden('tabs');
+
+    cy.routerGo(-1);
+    cy.ionPageDoesNotExist('inputs');
+    cy.ionPageVisible('tab1childtwo');
+    cy.ionPageVisible('tabs');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {
