@@ -502,8 +502,13 @@ export const dismiss = async (
 
     activeAnimations.delete(overlay);
 
-    // Make overlay hidden again in case it is being reused
+    /**
+     * Make overlay hidden again in case it is being reused.
+     * We can safely remove pointer-events: none as
+     * overlay-hidden will set display: none.
+     */
     overlay.el.classList.add('overlay-hidden');
+    overlay.el.style.removeProperty('pointer-events');
 
   } catch (err) {
     console.error(err);
