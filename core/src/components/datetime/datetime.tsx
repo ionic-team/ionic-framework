@@ -717,6 +717,12 @@ export class Datetime implements ComponentInterface {
           return;
         }
 
+        const { month, year, day } = refMonthFn(this.workingParts);
+
+        if (isMonthSwipeDisabled(month, year, this.workingParts, this.minParts, this.maxParts)) {
+          return;
+        }
+
         /**
          * On iOS, we need to set pointer-events: none
          * when the user is almost done with the gesture
@@ -761,7 +767,6 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          const { month, year, day } = refMonthFn(this.workingParts);
 
           this.setWorkingParts({
             ...this.workingParts,
@@ -770,9 +775,11 @@ export class Datetime implements ComponentInterface {
             year
           });
 
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-          calendarBodyRef.style.removeProperty('overflow');
-          calendarBodyRef.style.removeProperty('pointer-events');
+          raf(() => {
+            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+            calendarBodyRef.style.removeProperty('overflow');
+            calendarBodyRef.style.removeProperty('pointer-events');
+          });
 
           /**
            * Now that state has been updated

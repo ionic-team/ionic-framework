@@ -243,9 +243,9 @@
 
 :host .calendar-body .calendar-month-disabled {
   /**
-   * Disables swipe gestures for scroll-snap containers
+   * Disables swipe gesture snapping for scroll-snap containers
    */
-  display: none;
+  scroll-snap-align: none;
 }
 
 /**
