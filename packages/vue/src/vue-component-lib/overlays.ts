@@ -1,5 +1,4 @@
 import { defineComponent, h, ref, VNode, onMounted } from 'vue';
-import { defineCustomElement } from '../utils';
 
 export interface OverlayProps {
   isOpen?: boolean;
@@ -8,7 +7,7 @@ export interface OverlayProps {
 const EMPTY_PROP = Symbol();
 const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
-export const defineOverlayContainer = <Props extends object>(name: string, customElement: any, componentProps: string[] = [], controller?: any) => {
+export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], controller?: any) => {
 
   const createControllerComponent = () => {
     return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
@@ -19,7 +18,9 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
         { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
       ];
 
-      defineCustomElement(name, customElement);
+      if (defineCustomElement !== undefined) {
+        defineCustomElement();
+      }
 
       const overlay = ref();
       const onVnodeMounted = async () => {
@@ -131,7 +132,9 @@ export const defineOverlayContainer = <Props extends object>(name: string, custo
   };
   const createInlineComponent = () => {
     return defineComponent((props, { slots }) => {
-      defineCustomElement(name, customElement);
+      if (defineCustomElement !== undefined) {
+        defineCustomElement();
+      }
       const isOpen = ref(false);
       const elementRef = ref();
 

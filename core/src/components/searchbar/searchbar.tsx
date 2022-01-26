@@ -4,6 +4,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { AutocompleteTypes, Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent, raf } from '../../utils/helpers';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -350,7 +351,7 @@ export class Searchbar implements ComponentInterface {
     if (!inputEl) {
       return;
     }
-    const isRTL = document.dir === 'rtl';
+    const rtl = isRTL(this.el);
     const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
@@ -376,7 +377,7 @@ export class Searchbar implements ComponentInterface {
         const iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
 
         // Set the input padding start and icon margin start
-        if (isRTL) {
+        if (rtl) {
           inputEl.style.paddingRight = inputLeft;
           iconEl.style.marginRight = iconLeft;
         } else {
@@ -391,7 +392,7 @@ export class Searchbar implements ComponentInterface {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   private positionCancelButton() {
-    const isRTL = document.dir === 'rtl';
+    const rtl = isRTL(this.el);
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
     const shouldShowCancel = this.shouldShowCancelButton();
 
@@ -399,7 +400,7 @@ export class Searchbar implements ComponentInterface {
       const cancelStyle = cancelButton.style;
       this.isCancelVisible = shouldShowCancel;
       if (shouldShowCancel) {
-        if (isRTL) {
+        if (rtl) {
           cancelStyle.marginLeft = '0';
         } else {
           cancelStyle.marginRight = '0';
@@ -407,7 +408,7 @@ export class Searchbar implements ComponentInterface {
       } else {
         const offset = cancelButton.offsetWidth;
         if (offset > 0) {
-          if (isRTL) {
+          if (rtl) {
             cancelStyle.marginLeft = -offset + 'px';
           } else {
             cancelStyle.marginRight = -offset + 'px';
@@ -474,7 +475,7 @@ export class Searchbar implements ComponentInterface {
         class="searchbar-cancel-button"
       >
         <div aria-hidden="true">
-          { mode === 'md'
+          {mode === 'md'
             ? <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
             : cancelButtonText
           }

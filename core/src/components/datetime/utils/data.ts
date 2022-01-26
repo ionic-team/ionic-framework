@@ -219,7 +219,7 @@ export const generateTime = (
       if (maxParts.hour !== undefined) {
         processedHours = processedHours.filter(hour => {
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
-          return convertedHour <= maxParts.hour!;
+          return (use24Hour ? hour : convertedHour) <= maxParts.hour!;
         });
         isPMAllowed = maxParts.hour >= 13;
       }

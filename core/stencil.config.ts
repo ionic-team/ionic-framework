@@ -77,6 +77,7 @@ export const config: Config = {
         'ion-router-link',
         'ion-router-outlet',
         'ion-back-button',
+        'ion-breadcrumb',
         'ion-tab-button',
         'ion-tabs',
         'ion-tab-bar',

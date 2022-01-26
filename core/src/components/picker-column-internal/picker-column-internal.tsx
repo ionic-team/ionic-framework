@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -118,7 +118,9 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  scrollActiveItemIntoView() {
+  /** @internal  */
+  @Method()
+  async scrollActiveItemIntoView() {
     const activeEl = this.activeItem;
 
     if (activeEl) {

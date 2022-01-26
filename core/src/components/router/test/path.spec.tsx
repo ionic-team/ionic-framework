@@ -1,8 +1,8 @@
 import { ROUTER_INTENT_FORWARD } from '../utils/constants';
 import { RouteChain } from '../utils/interface';
-import { chainToPath, generatePath, parsePath, readPath, writePath } from '../utils/path';
+import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from '../utils/path';
 
-describe('parseURL', () => {
+describe('parsePath', () => {
   it('should parse empty path', () => {
     expect(parsePath('').segments).toEqual(['']);
   });
@@ -38,7 +38,7 @@ describe('parseURL', () => {
   it('should parse absolute path', () => {
     expect(parsePath('/path/to/file.js').segments).toEqual(['path', 'to', 'file.js']);
   });
-  it('should parse relative path', () => {
+  it('should parse absolute path with multiple slashes', () => {
     expect(parsePath('/PATH///to//file.js//').segments).toEqual(['PATH', 'to', 'file.js']);
   });
 
@@ -53,10 +53,10 @@ describe('parseURL', () => {
 describe('generatePath', () => {
   it('should generate an empty URL', () => {
     expect(generatePath([])).toEqual('/');
-    expect(generatePath([{ path: '' } as any])).toEqual('/');
-    expect(generatePath([{ path: '/' } as any])).toEqual('/');
-    expect(generatePath([{ path: '//' } as any])).toEqual('/');
-    expect(generatePath([{ path: '  ' } as any])).toEqual('/');
+    expect(generatePath([{ segments: '' } as any])).toEqual('/');
+    expect(generatePath([{ segments: '/' } as any])).toEqual('/');
+    expect(generatePath([{ segments: '//' } as any])).toEqual('/');
+    expect(generatePath([{ segments: '  ' } as any])).toEqual('/');
   });
 
   it('should genenerate a basic url', () => {
@@ -74,184 +74,184 @@ describe('generatePath', () => {
   });
 });
 
-describe('chainToPath', () => {
+describe('chainToSegments', () => {
   it('should generate a simple URL', () => {
     const chain: RouteChain = [
-      { id: '2', path: [''], params: undefined },
-      { id: '1', path: [''], params: undefined },
-      { id: '3', path: ['segment', 'to'], params: undefined },
-      { id: '4', path: [''], params: undefined },
-      { id: '5', path: ['hola', '', 'hey'], params: undefined },
-      { id: '6', path: [''], params: undefined },
-      { id: '7', path: [':param'], params: { param: 'name' } },
-      { id: '8', path: ['adios', ':name', ':id'], params: { name: 'manu', id: '123' } },
+      { id: '2', segments: [''], params: undefined },
+      { id: '1', segments: [''], params: undefined },
+      { id: '3', segments: ['segment', 'to'], params: undefined },
+      { id: '4', segments: [''], params: undefined },
+      { id: '5', segments: ['hola', '', 'hey'], params: undefined },
+      { id: '6', segments: [''], params: undefined },
+      { id: '7', segments: [':param'], params: { param: 'name' } },
+      { id: '8', segments: ['adios', ':name', ':id'], params: { name: 'manu', id: '123' } },
     ];
-    expect(chainToPath(chain)).toEqual(
+    expect(chainToSegments(chain)).toEqual(
       ['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']
     );
   });
 
-  it('should raise an exception', () => {
+  it('should return null on missing parameters', () => {
     const chain: RouteChain = [
-      { id: '3', path: ['segment'], params: undefined },
-      { id: '8', path: [':name'], params: undefined },
+      { id: '3', segments: ['segment'], params: undefined },
+      { id: '8', segments: [':name'], params: undefined },
     ];
-    expect(chainToPath(chain)).toBeNull();
+    expect(chainToSegments(chain)).toBeNull();
   });
 
-  it('should raise an exception 2', () => {
+  it('should return null on missing parameters 2', () => {
     const chain: RouteChain = [
-      { id: '3', path: ['segment'], params: undefined },
-      { id: '8', path: [':name', ':id'], params: { name: 'hey' } },
+      { id: '3', segments: ['segment'], params: undefined },
+      { id: '8', segments: [':name', ':id'], params: { name: 'hey' } },
     ];
-    expect(chainToPath(chain)).toBeNull();
+    expect(chainToSegments(chain)).toBeNull();
   });
 });
 
-describe('readPath', () => {
+describe('readSegments', () => {
   it('should read the URL from root (no hash)', () => {
     const loc = mockLocation('/', '');
-    expect(readPath(loc, '', false)).toEqual(['']);
-    expect(readPath(loc, '/', false)).toEqual(['']);
-    expect(readPath(loc, '  / ', false)).toEqual(['']);
+    expect(readSegments(loc, '', false)).toEqual(['']);
+    expect(readSegments(loc, '/', false)).toEqual(['']);
+    expect(readSegments(loc, '  / ', false)).toEqual(['']);
 
-    expect(readPath(loc, '', true)).toEqual(['']);
-    expect(readPath(loc, '/', true)).toEqual(['']);
-    expect(readPath(loc, '  /  ', true)).toEqual(['']);
+    expect(readSegments(loc, '', true)).toEqual(['']);
+    expect(readSegments(loc, '/', true)).toEqual(['']);
+    expect(readSegments(loc, '  /  ', true)).toEqual(['']);
   });
 
   it('should read the URL from root (hash)', () => {
     const loc = mockLocation('/', '#');
-    expect(readPath(loc, '', true)).toEqual(['']);
-    expect(readPath(loc, '/', true)).toEqual(['']);
-    expect(readPath(loc, '  /  ', true)).toEqual(['']);
+    expect(readSegments(loc, '', true)).toEqual(['']);
+    expect(readSegments(loc, '/', true)).toEqual(['']);
+    expect(readSegments(loc, '  /  ', true)).toEqual(['']);
 
     const loc2 = mockLocation('/', '#/');
-    expect(readPath(loc2, '', true)).toEqual(['']);
-    expect(readPath(loc2, '/', true)).toEqual(['']);
-    expect(readPath(loc2, '  /  ', true)).toEqual(['']);
+    expect(readSegments(loc2, '', true)).toEqual(['']);
+    expect(readSegments(loc2, '/', true)).toEqual(['']);
+    expect(readSegments(loc2, '  /  ', true)).toEqual(['']);
   });
 
   it('should not read the URL from root', () => {
     const loc = mockLocation('/', '');
-    expect(readPath(loc, '/hola', false)).toBeNull();
-    expect(readPath(loc, 'hola', false)).toBeNull();
+    expect(readSegments(loc, '/hola', false)).toBeNull();
+    expect(readSegments(loc, 'hola', false)).toBeNull();
 
-    expect(readPath(loc, '/hola', true)).toBeNull();
-    expect(readPath(loc, 'hola', true)).toBeNull();
+    expect(readSegments(loc, '/hola', true)).toBeNull();
+    expect(readSegments(loc, 'hola', true)).toBeNull();
   });
 
   it('should read the URL from non root (no hash)', () => {
     const loc = mockLocation('/path/to/component', '#hello');
-    expect(readPath(loc, '', false)).toEqual(['path', 'to', 'component']);
-    expect(readPath(loc, '/', false)).toEqual(['path', 'to', 'component']);
-    expect(readPath(loc, 'path', false)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path', false)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path/', false)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path/to', false)).toEqual(['component']);
-    expect(readPath(loc, '/path/to/component', false)).toEqual(['']);
-    expect(readPath(loc, '/path/to/component/', false)).toEqual(['']);
-    expect(readPath(loc, '/path/to/component/path', false)).toBeNull();
+    expect(readSegments(loc, '', false)).toEqual(['path', 'to', 'component']);
+    expect(readSegments(loc, '/', false)).toEqual(['path', 'to', 'component']);
+    expect(readSegments(loc, 'path', false)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path', false)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path/', false)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path/to', false)).toEqual(['component']);
+    expect(readSegments(loc, '/path/to/component', false)).toEqual(['']);
+    expect(readSegments(loc, '/path/to/component/', false)).toEqual(['']);
+    expect(readSegments(loc, '/path/to/component/path', false)).toBeNull();
   });
 
   it('should read the URL from non root (hash)', () => {
     const loc = mockLocation('/index.html', '#path/to/component');
-    expect(readPath(loc, '', true)).toEqual(['path', 'to', 'component']);
-    expect(readPath(loc, '/', true)).toEqual(['path', 'to', 'component']);
-    expect(readPath(loc, 'path', true)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path', true)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path/', true)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path/to', true)).toEqual(['component']);
-    expect(readPath(loc, '/path/to/component', true)).toEqual(['']);
-    expect(readPath(loc, '/path/to/component/', true)).toEqual(['']);
-    expect(readPath(loc, '/path/to/component/path', true)).toBeNull();
-    expect(readPath(loc, '/path/to/component2', true)).toBeNull();
+    expect(readSegments(loc, '', true)).toEqual(['path', 'to', 'component']);
+    expect(readSegments(loc, '/', true)).toEqual(['path', 'to', 'component']);
+    expect(readSegments(loc, 'path', true)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path', true)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path/', true)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path/to', true)).toEqual(['component']);
+    expect(readSegments(loc, '/path/to/component', true)).toEqual(['']);
+    expect(readSegments(loc, '/path/to/component/', true)).toEqual(['']);
+    expect(readSegments(loc, '/path/to/component/path', true)).toBeNull();
+    expect(readSegments(loc, '/path/to/component2', true)).toBeNull();
   });
 
   it('should read the URL from non root (hash) 2', () => {
     const loc = mockLocation('/index.html', '#/path/to/component');
-    expect(readPath(loc, '', true)).toEqual(['path', 'to', 'component']);
-    expect(readPath(loc, '/', true)).toEqual(['path', 'to', 'component']);
-    expect(readPath(loc, 'path', true)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path', true)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path/', true)).toEqual(['to', 'component']);
-    expect(readPath(loc, '/path/to', true)).toEqual(['component']);
-    expect(readPath(loc, '/path/to/component', true)).toEqual(['']);
-    expect(readPath(loc, '/path/to/component/', true)).toEqual(['']);
-    expect(readPath(loc, '/path/to/component/path', true)).toBeNull();
+    expect(readSegments(loc, '', true)).toEqual(['path', 'to', 'component']);
+    expect(readSegments(loc, '/', true)).toEqual(['path', 'to', 'component']);
+    expect(readSegments(loc, 'path', true)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path', true)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path/', true)).toEqual(['to', 'component']);
+    expect(readSegments(loc, '/path/to', true)).toEqual(['component']);
+    expect(readSegments(loc, '/path/to/component', true)).toEqual(['']);
+    expect(readSegments(loc, '/path/to/component/', true)).toEqual(['']);
+    expect(readSegments(loc, '/path/to/component/path', true)).toBeNull();
   });
 });
 
-describe('writePath', () => {
+describe('writeSegments', () => {
   it('should write root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '', false, [''], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '', false, [''], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/');
 
-    writePath(history, '', false, ['schedule'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '', false, ['schedule'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/schedule');
 
-    writePath(history, '/', false, [''], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/', false, [''], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/');
 
-    writePath(history, '/', false, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/', false, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule');
 
-    writePath(history, '/', false, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
+    writeSegments(history, '/', false, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule?flag=true');
   });
 
   it('should write non root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '/path', false, [''], ROUTER_INTENT_FORWARD, 2);
+    writeSegments(history, '/path', false, [''], ROUTER_INTENT_FORWARD, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path');
 
-    writePath(history, '/path', false, ['to', 'page'], ROUTER_INTENT_FORWARD, 2);
+    writeSegments(history, '/path', false, ['to', 'page'], ROUTER_INTENT_FORWARD, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/page');
 
-    writePath(history, 'path/to', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2);
+    writeSegments(history, 'path/to', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page');
 
-    writePath(history, '/path/to/', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2);
+    writeSegments(history, '/path/to/', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page');
 
-    writePath(history, '/path/to/', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2, 'flag=true');
+    writeSegments(history, '/path/to/', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2, 'flag=true');
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page?flag=true');
   });
 
   it('should write root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '', true, [''], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '', true, [''], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/');
 
-    writePath(history, '', true, ['schedule'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '', true, ['schedule'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/schedule');
 
-    writePath(history, '/', true, [''], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/', true, [''], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/');
 
-    writePath(history, '/', true, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/', true, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/to/schedule');
 
-    writePath(history, '/', true, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
+    writeSegments(history, '/', true, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/to/schedule?flag=true');
   });
 
   it('should write non root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '/path', true, [''], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/path', true, [''], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path');
 
-    writePath(history, '/path', true, ['to', 'page'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/path', true, ['to', 'page'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/page');
 
-    writePath(history, 'path/to', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, 'path/to', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page');
 
-    writePath(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123);
+    writeSegments(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page');
 
-    writePath(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
+    writeSegments(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page?flag=true');
   });
 });

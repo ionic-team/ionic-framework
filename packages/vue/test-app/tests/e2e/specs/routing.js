@@ -379,6 +379,27 @@ describe('Routing', () => {
     cy.ionPageVisible('routingparameterview');
     cy.ionPageDoesNotExist('routingchild');
   })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24226
+  it('should correctly replace a route after popping', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerGo(-1);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+
+    cy.routerReplace('/inputs');
+    cy.ionPageVisible('inputs');
+    cy.ionPageDoesNotExist('home');
+
+    cy.routerPush('/');
+    cy.ionPageVisible('home');
+    cy.ionPageHidden('inputs');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {

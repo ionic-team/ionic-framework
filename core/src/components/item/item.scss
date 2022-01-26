@@ -433,6 +433,12 @@ button, a {
   display: none;
 }
 
+::slotted([slot="error"]) {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
 :host(.item-interactive.ion-invalid) ::slotted([slot="error"]) {
   display: block;
 }
@@ -527,12 +533,16 @@ ion-ripple-effect {
   z-index: 1;
 }
 
-::slotted([slot="error"]) {
-  display: none;
+// Item Max Length Counter
+// --------------------------------------------------
 
-  color: var(--highlight-color-invalid);
+.item-counter {
+  @include margin-horizontal(auto, null);
+
+  padding-inline-start: 16px;
+
+  white-space: nowrap;
 }
-
 
 // Item: Reduced Motion
 // --------------------------------------------------

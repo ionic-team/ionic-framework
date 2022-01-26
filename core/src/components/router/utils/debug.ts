@@ -4,10 +4,10 @@ import { generatePath } from './path';
 export const printRoutes = (routes: RouteChain[]) => {
   console.group(`[ion-core] ROUTES[${routes.length}]`);
   for (const chain of routes) {
-    const path: string[] = [];
-    chain.forEach(r => path.push(...r.path));
+    const segments: string[] = [];
+    chain.forEach(r => segments.push(...r.segments));
     const ids = chain.map(r => r.id);
-    console.debug(`%c ${generatePath(path)}`, 'font-weight: bold; padding-left: 20px', '=>\t', `(${ids.join(', ')})`);
+    console.debug(`%c ${generatePath(segments)}`, 'font-weight: bold; padding-left: 20px', '=>\t', `(${ids.join(', ')})`);
   }
   console.groupEnd();
 };

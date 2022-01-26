@@ -1081,7 +1081,7 @@ export namespace Components {
          */
         "pattern"?: string;
         /**
-          * Instructional text that shows before the input has a value.
+          * Instructional text that shows before the input has a value. This property applies only when the `type` property is set to `"email"`, `"number"`, `"password"`, `"search"`, `"tel"`, `"text"`, or `"url"`, otherwise it is ignored.
          */
         "placeholder"?: string;
         /**
@@ -1823,6 +1823,7 @@ export namespace Components {
           * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
          */
         "numericInput": boolean;
+        "scrollActiveItemIntoView": () => Promise<void>;
         /**
           * The selected option in the picker.
          */
@@ -1918,7 +1919,7 @@ export namespace Components {
         /**
           * Present the popover overlay after it has been created. Developers can pass a mouse, touch, or pointer event to position the popover relative to where that event was dispatched.
          */
-        "present": (event?: MouseEvent | TouchEvent | PointerEvent | undefined) => Promise<void>;
+        "present": (event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent<any> | undefined) => Promise<void>;
         /**
           * When opening a popover from a trigger, we should not be modifying the `event` prop from inside the component. Additionally, when pressing the "Right" arrow key, we need to shift focus to the first descendant in the newly presented popover.
          */
@@ -2722,7 +2723,7 @@ export namespace Components {
          */
         "autoGrow": boolean;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
         /**
@@ -4802,7 +4803,7 @@ declare namespace LocalJSX {
          */
         "pattern"?: string;
         /**
-          * Instructional text that shows before the input has a value.
+          * Instructional text that shows before the input has a value. This property applies only when the `type` property is set to `"email"`, `"number"`, `"password"`, `"search"`, `"tel"`, `"text"`, or `"url"`, otherwise it is ignored.
          */
         "placeholder"?: string;
         /**
@@ -6430,7 +6431,7 @@ declare namespace LocalJSX {
          */
         "autoGrow"?: boolean;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize"?: string;
         /**

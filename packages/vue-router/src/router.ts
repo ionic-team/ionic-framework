@@ -238,7 +238,19 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           const lastRoute = locationHistory.getCurrentRouteInfoForTab(routeInfo.tab);
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
         } else if (routeInfo.routerAction === 'replace') {
-          const currentRouteInfo = locationHistory.last();
+
+          /**
+           * When replacing a route, we want to make sure we select the current route
+           * that we are on, not the last route in the stack. The last route in the stack
+           * is not always the current route.
+           * Example:
+           * Given the following history: /page1 --> /page2
+           * Doing router.go(-1) would bring you to /page1.
+           * If you then did router.replace('/page3'), /page1 should
+           * be replaced with /page3 even though /page2 is the last
+           * item in the stack/
+           */
+          const currentRouteInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
 
           /**
            * If going from /home to /child, then replacing from

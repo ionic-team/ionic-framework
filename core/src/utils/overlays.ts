@@ -47,10 +47,16 @@ export const pickerController = /*@__PURE__*/createController<PickerOptions, HTM
 export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast, [{ tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
 
-export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
+export interface OverlayListenerOptions {
+  trapKeyboardFocus: boolean;
+}
+
+export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T, options: OverlayListenerOptions = {
+  trapKeyboardFocus: true
+}) => {
   /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
-    connectListeners(document);
+    connectListeners(document, options);
   }
   const overlayIndex = lastId++;
   el.overlayIndex = overlayIndex;
@@ -59,27 +65,29 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   }
 };
 
-export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
-  /* tslint:disable-next-line */
-  if (typeof window.customElements !== 'undefined') {
-    if (typeof (window as any) !== 'undefined' && window.customElements) {
-      if (!window.customElements.get(tagName)) {
-        window.customElements.define(tagName, customElement);
-      }
-      /**
-       * If the parent element has nested usage of custom elements,
-       * we need to manually define those custom elements.
-       */
-      if (childrenCustomElements) {
-        for (const customElementDefinition of childrenCustomElements) {
-          if (!window.customElements.get(customElementDefinition.tagName)) {
-            window.customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
-          }
-        }
+const registerOverlayComponents = (tagName: string, customElement: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<any> => {
+  const { customElements } = window;
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, customElement);
+  }
+  /**
+   * If the parent element has nested usage of custom elements,
+   * we need to manually define those custom elements.
+   */
+  if (childrenCustomElements) {
+    for (const customElementDefinition of childrenCustomElements) {
+      if (!customElements.get(customElementDefinition.tagName)) {
+        customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
       }
     }
+  }
+  return customElements.whenDefined(tagName);
+}
 
-    return window.customElements.whenDefined(tagName).then(() => {
+export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
+  /* tslint:disable-next-line */
+  if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
+    return registerOverlayComponents(tagName, customElement, childrenCustomElements).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
@@ -117,6 +125,8 @@ export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElemen
     overlay.focus();
   }
 };
+
+const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
 
 const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
@@ -157,8 +167,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
    * We need to add a listener to the shadow root
    * itself to ensure the focus trap works.
    */
-  if (!lastOverlay || !target
-  ) { return; }
+  if (!lastOverlay || !target) { return; }
 
   const trapScopedFocus = () => {
     /**
@@ -282,14 +291,26 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
   }
 };
 
-export const connectListeners = (doc: Document) => {
+const connectListeners = (doc: Document, options: OverlayListenerOptions) => {
   if (lastId === 0) {
     lastId = 1;
-    doc.addEventListener('focus', ev => trapKeyboardFocus(ev, doc), true);
+    if (options.trapKeyboardFocus) {
+      doc.addEventListener('focus', (ev: FocusEvent) => {
+        /**
+         * ion-menu has its own focus trapping listener
+         * so we do not want the two listeners to conflict
+         * with each other.
+         */
+        if (ev.target && (ev.target as HTMLElement).tagName === 'ION-MENU') {
+          return;
+        }
+        trapKeyboardFocus(ev, doc);
+      }, true);
+    }
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
-      const lastOverlay = getTopOpenOverlay(doc);
+      const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
@@ -300,7 +321,7 @@ export const connectListeners = (doc: Document) => {
     // handle ESC to close overlay
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        const lastOverlay = getTopOpenOverlay(doc);
+        const lastOverlay = getOverlay(doc);
         if (lastOverlay && lastOverlay.backdropDismiss) {
           lastOverlay.dismiss(undefined, BACKDROP);
         }
@@ -326,30 +347,14 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
 };
 
 /**
- * Gets the top-most/last opened
- * overlay that is currently presented.
+ * Returns an overlay element
+ * @param doc The document to find the element within.
+ * @param overlayTag The selector for the overlay, defaults to Ionic overlay components.
+ * @param id The unique identifier for the overlay instance.
+ * @returns The overlay element or `undefined` if no overlay element is found.
  */
-const getTopOpenOverlay = (doc: Document): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc);
-  for (let i = overlays.length - 1; i >= 0; i--) {
-    const overlay = overlays[i];
-
-    /**
-     * Only consider overlays that
-     * are presented. Presented overlays
-     * will not have the .overlay-hidden
-     * class on the host.
-     */
-    if (!overlay.classList.contains('overlay-hidden')) {
-      return overlay;
-    }
-  }
-
-  return;
-}
-
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc, overlayTag);
+  const overlays = getOverlays(doc, overlayTag).filter(o => !isOverlayHidden(o));
   return (id === undefined)
     ? overlays[overlays.length - 1]
     : overlays.find(o => o.id === id);
