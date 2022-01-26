@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.4](https://github.com/ionic-team/ionic/compare/v6.0.3...v6.0.4) (2022-01-26)
+
+
+### Bug Fixes
+
+* **angular:** routerLink with null value works with Angular 13 ([#24622](https://github.com/ionic-team/ionic/issues/24622)) ([90a9a9c](https://github.com/ionic-team/ionic/commit/90a9a9c3e813c8db0a9d6b3b25c152929bea80fe)), closes [#24586](https://github.com/ionic-team/ionic/issues/24586)
+
+
+
+
+
 ## [6.0.3](https://github.com/ionic-team/ionic/compare/v6.0.2...v6.0.3) (2022-01-19)
 
 
