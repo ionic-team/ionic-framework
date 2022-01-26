@@ -117,7 +117,7 @@ export class Input implements ComponentInterface {
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
    */
-  @Prop() max?: string;
+  @Prop() max?: string | number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
@@ -127,7 +127,7 @@ export class Input implements ComponentInterface {
   /**
    * The minimum value, which must not be greater than its maximum (max attribute) value.
    */
-  @Prop() min?: string;
+  @Prop() min?: string | number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
