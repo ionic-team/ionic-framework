@@ -297,7 +297,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
     if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
       const length = inputEl?.value?.toString().length ?? '0';
-      this.counterString = `${length}/${inputEl.maxlength}`;
+      this.counterString = `${length} / ${inputEl.maxlength}`;
     }
   }
 

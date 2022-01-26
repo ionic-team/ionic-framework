@@ -1,7 +1,7 @@
 import { ROUTER_INTENT_FORWARD } from './constants';
 import { ParsedRoute, RouteChain, RouterDirection } from './interface';
 
-// Join the non empty segments with "/".
+/** Join the non empty segments with "/". */
 export const generatePath = (segments: string[]): string => {
   const path = segments
     .filter(s => s.length > 0)
@@ -21,8 +21,8 @@ const generateUrl = (segments: string[], useHash: boolean, queryString?: string)
   return url;
 }
 
-export const writePath = (history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number, queryString?: string) => {
-  const url = generateUrl([...parsePath(root).segments, ...path], useHash, queryString);
+export const writeSegments = (history: History, root: string, useHash: boolean, segments: string[], direction: RouterDirection, state: number, queryString?: string) => {
+  const url = generateUrl([...parsePath(root).segments, ...segments], useHash, queryString);
   if (direction === ROUTER_INTENT_FORWARD) {
     history.pushState(state, '', url);
   } else {
@@ -30,57 +30,68 @@ export const writePath = (history: History, root: string, useHash: boolean, path
   }
 };
 
-export const chainToPath = (chain: RouteChain): string[] | null => {
-  const path = [];
+/**
+ * Transforms a chain to a list of segments.
+ *
+ * Notes:
+ * - parameter segments of the form :param are replaced with their value,
+ * - null is returned when a value is missing for any parameter segment.
+ */
+export const chainToSegments = (chain: RouteChain): string[] | null => {
+  const segments = [];
   for (const route of chain) {
-    for (const segment of route.path) {
+    for (const segment of route.segments) {
       if (segment[0] === ':') {
         const param = route.params && route.params[segment.slice(1)];
         if (!param) {
           return null;
         }
-        path.push(param);
+        segments.push(param);
       } else if (segment !== '') {
-        path.push(segment);
+        segments.push(segment);
       }
     }
   }
-  return path;
+  return segments;
 };
 
-// Remove the prefix segments from the path segments.
-//
-// Return:
-// - null when the path segments do not start with the passed prefix,
-// - the path segments after the prefix otherwise.
-const removePrefix = (prefix: string[], path: string[]): string[] | null => {
-  if (prefix.length > path.length) {
+/**
+ * Removes the prefix segments from the path segments.
+ *
+ * Return:
+ * - null when the path segments do not start with the passed prefix,
+ * - the path segments after the prefix otherwise.
+ */
+const removePrefix = (prefix: string[], segments: string[]): string[] | null => {
+  if (prefix.length > segments.length) {
     return null;
   }
   if (prefix.length <= 1 && prefix[0] === '') {
-    return path;
+    return segments;
   }
   for (let i = 0; i < prefix.length; i++) {
-    if (prefix[i] !== path[i]) {
+    if (prefix[i] !== segments[i]) {
       return null;
     }
   }
-  if (path.length === prefix.length) {
+  if (segments.length === prefix.length) {
     return [''];
   }
-  return path.slice(prefix.length);
+  return segments.slice(prefix.length);
 };
 
-export const readPath = (loc: Location, root: string, useHash: boolean): string[] | null => {
+export const readSegments = (loc: Location, root: string, useHash: boolean): string[] | null => {
   const prefix = parsePath(root).segments;
   const pathname = useHash ? loc.hash.slice(1) : loc.pathname;
-  const path = parsePath(pathname).segments;
-  return removePrefix(prefix, path);
+  const segments = parsePath(pathname).segments;
+  return removePrefix(prefix, segments);
 };
 
-// Parses the path to:
-// - segments an array of '/' separated parts,
-// - queryString (undefined when no query string).
+/**
+ * Parses the path to:
+ * - segments an array of '/' separated parts,
+ * - queryString (undefined when no query string).
+ */
 export const parsePath = (path: string | undefined | null): ParsedRoute => {
   let segments = [''];
   let queryString;
@@ -88,8 +99,8 @@ export const parsePath = (path: string | undefined | null): ParsedRoute => {
   if (path != null) {
     const qsStart = path.indexOf('?');
     if (qsStart > -1) {
-      queryString = path.substr(qsStart + 1);
-      path = path.substr(0, qsStart);
+      queryString = path.substring(qsStart + 1);
+      path = path.substring(0, qsStart);
     }
 
     segments = path.split('/')

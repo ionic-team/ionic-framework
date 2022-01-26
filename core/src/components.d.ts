@@ -1823,6 +1823,7 @@ export namespace Components {
           * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
          */
         "numericInput": boolean;
+        "scrollActiveItemIntoView": () => Promise<void>;
         /**
           * The selected option in the picker.
          */
@@ -1918,7 +1919,7 @@ export namespace Components {
         /**
           * Present the popover overlay after it has been created. Developers can pass a mouse, touch, or pointer event to position the popover relative to where that event was dispatched.
          */
-        "present": (event?: MouseEvent | TouchEvent | PointerEvent | undefined) => Promise<void>;
+        "present": (event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent<any> | undefined) => Promise<void>;
         /**
           * When opening a popover from a trigger, we should not be modifying the `event` prop from inside the component. Additionally, when pressing the "Right" arrow key, we need to shift focus to the first descendant in the newly presented popover.
          */
