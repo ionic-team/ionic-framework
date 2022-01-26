@@ -66,8 +66,8 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * For example, a /settings route is not applicable
        * to a /tabs/... route.
        *
-       * Note: When going back to a tab outlet from a non-tabs outlet,
-       * the tab outlet should NOT attempt a page transition from the
+       * Note: When going back to a tabs outlet from a non-tabs outlet,
+       * the tabs outlet should NOT attempt a page transition from the
        * previous tab to the active tab. To do this we compare the current
        * route with the previous route. Unfortunately, we cannot rely on the
        * previous value provided by Vue in the watch callback. This is because
@@ -76,9 +76,9 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * but the current matched route will be defined and so a transition
        * will always occur.
        *
-       * 2. The matched is defined and is different than
+       * 2. The matched route is defined and is different than
        * the previously matched route. This is the most
-       * common case such as when you go from /page1 to /page3
+       * common case such as when you go from /page1 to /page2.
        *
        * 3. The matched route is the same but the parameters are different.
        * This is a special case for parameterized routes (i.e. /page/:id).
