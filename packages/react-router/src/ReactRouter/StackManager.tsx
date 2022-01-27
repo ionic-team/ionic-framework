@@ -60,7 +60,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-    // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
       /**
        * The route outlet has not mounted yet. We need to wait for it to render
@@ -70,10 +69,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
        * the component has updated.
        */
       this.pendingPageTransition = true;
-
-      this.setState({
-        routeInfo
-      });
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
