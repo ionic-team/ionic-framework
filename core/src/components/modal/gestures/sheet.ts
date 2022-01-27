@@ -1,6 +1,6 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
-import { clamp } from '../../../utils/helpers';
+import { clamp, raf } from '../../../utils/helpers';
 import { Modal } from '../modal';
 import { SheetAnimationDefaults, moveSheetToBreakpoint } from '../utils';
 
@@ -76,6 +76,14 @@ export const createSheetGesture = (
     if (contentEl) {
       contentEl.scrollY = false;
     }
+
+    raf(() => {
+      /**
+       * Dismisses the open keyboard when the sheet drag gesture is started.
+       * Sets the focus onto the modal element.
+       */
+      baseEl.focus();
+    });
 
     animation.progressStart(true, 1 - currentBreakpoint);
   };

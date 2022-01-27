@@ -1345,9 +1345,13 @@ export class Datetime implements ComponentInterface {
           const { popoverRef } = this;
 
           if (popoverRef) {
-
             this.isTimePopoverOpen = true;
-            popoverRef.present(ev);
+
+            popoverRef.present(new CustomEvent('ionShadowTarget', {
+              detail: {
+                ionShadowTarget: ev.target
+              }
+            }));
 
             await popoverRef.onWillDismiss();
 
@@ -1362,6 +1366,19 @@ export class Datetime implements ComponentInterface {
         translucent
         overlayIndex={1}
         arrow={false}
+        onWillPresent={ev => {
+          /**
+           * Intersection Observers do not consistently fire between Blink and Webkit
+           * when toggling the visibility of the popover and trying to scroll the picker
+           * column to the correct time value.
+           *
+           * This will correctly scroll the element position to the correct time value,
+           * before the popover is fully presented.
+           */
+          const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column-internal');
+          // TODO (FW-615): Potentially remove this when intersection observers are fixed in picker column
+          cols.forEach(col => col.scrollActiveItemIntoView());
+        }}
         style={{
           '--offset-y': '-10px'
         }}
