@@ -214,6 +214,7 @@ export const createLocationHistory = () => {
     update,
     getFirstRouteInfoForTab,
     getCurrentRouteInfoForTab,
-    findLastLocation
+    findLastLocation,
+    clearHistory
   }
 }

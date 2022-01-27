@@ -159,6 +159,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         leavingLocationInfo = locationHistory.previous();
       } else if (incomingRouteParams.routerAction === 'pop') {
         leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition + 1);
+        if (action === 'replace') {
+          locationHistory.clearHistory();
+        }
       } else {
         leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - 1);
       }
