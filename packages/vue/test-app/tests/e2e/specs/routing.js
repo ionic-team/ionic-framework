@@ -401,7 +401,6 @@ describe('Routing', () => {
     cy.ionPageHidden('inputs');
   })
 
-
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23873
   it('should correctly show pages after going back to defaultHref page', () => {
     cy.visit('http://localhost:8080/default-href');
