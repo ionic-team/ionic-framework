@@ -400,6 +400,40 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageHidden('inputs');
   })
+
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23873
+  it('should correctly show pages after going back to defaultHref page', () => {
+    cy.visit('http://localhost:8080/default-href');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('defaulthref');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('defaulthref');
+
+    cy.ionBackClick('defaulthref');
+    cy.ionPageDoesNotExist('defaulthref');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/default-href');
+    cy.ionPageVisible('defaulthref');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('defaulthref');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('defaulthref');
+
+    cy.ionBackClick('defaulthref');
+    cy.ionPageDoesNotExist('defaulthref');
+    cy.ionPageVisible('home');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {
