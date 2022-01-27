@@ -1,3 +1,4 @@
+import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
@@ -83,11 +84,11 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
     if (getIonMode(this) === 'ios') {
       // default ios back button icon
-      return config.get('backButtonIcon', 'chevron-back');
+      return config.get('backButtonIcon', chevronBack);
     }
 
     // default md back button icon
-    return config.get('backButtonIcon', 'arrow-back-sharp');
+    return config.get('backButtonIcon', arrowBackSharp);
   }
 
   get backButtonText() {

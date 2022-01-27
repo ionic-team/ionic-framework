@@ -1,3 +1,4 @@
+import { chevronForward } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -61,7 +62,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = 'chevron-forward';
+  @Prop() detailIcon = chevronForward;
 
   /**
    * If `true`, the user cannot interact with the item.
