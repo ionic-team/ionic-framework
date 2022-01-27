@@ -29,6 +29,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     isInOutlet: () => true,
   };
 
+  private pendingPageTransition = false;
+
   constructor(props: StackManagerProps) {
     super(props);
     this.registerIonPage = this.registerIonPage.bind(this);
@@ -46,8 +48,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentDidUpdate(prevProps: StackManagerProps) {
-    if (this.props.routeInfo.pathname !== prevProps.routeInfo.pathname) {
+    if (this.props.routeInfo.pathname !== prevProps.routeInfo.pathname || this.pendingPageTransition) {
       this.handlePageTransition(this.props.routeInfo);
+      this.pendingPageTransition = false;
     }
   }
 
@@ -57,9 +60,15 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-    // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
-      setTimeout(() => this.handlePageTransition(routeInfo), 10);
+      /**
+       * The route outlet has not mounted yet. We need to wait for it to render
+       * before we can transition the page.
+       *
+       * Set a flag to indicate that we should transition the page after
+       * the component has updated.
+       */
+      this.pendingPageTransition = true;
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
