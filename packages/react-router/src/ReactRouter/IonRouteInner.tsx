@@ -14,6 +14,8 @@ export class IonRouteInner extends React.PureComponent<IonRouteProps> {
          * has been removed in v6.
          *
          * This needs to be removed when we support v6.
+         *
+         * TODO: FW-647
          */
         computedMatch={(this.props as any).computedMatch}
       />
