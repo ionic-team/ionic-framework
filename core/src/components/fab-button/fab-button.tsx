@@ -1,5 +1,5 @@
-import { close } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import { close } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, RouterDirection } from '../../interface';

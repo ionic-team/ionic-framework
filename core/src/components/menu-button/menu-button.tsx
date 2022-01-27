@@ -1,5 +1,5 @@
-import { menuOutline, menuSharp } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import { menuOutline, menuSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';

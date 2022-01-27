@@ -1,5 +1,5 @@
-import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';

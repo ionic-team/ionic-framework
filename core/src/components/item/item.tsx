@@ -1,5 +1,5 @@
-import { chevronForward } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';

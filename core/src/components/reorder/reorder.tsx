@@ -1,5 +1,5 @@
-import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 import { Component, ComponentInterface, Element, Host, Listen, h } from '@stencil/core';
+import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 
