@@ -1102,6 +1102,13 @@ export class Datetime implements ComponentInterface {
                 items={months}
                 value={workingParts.month}
                 onIonChange={(ev: CustomEvent) => {
+                  // Due to a Safari 14 issue we need to destroy
+                  // the intersection observer before we update state
+                  // and trigger a re-render.
+                  if (this.destroyCalendarIO) {
+                    this.destroyCalendarIO();
+                  }
+
                   this.setWorkingParts({
                     ...this.workingParts,
                     month: ev.detail.value
@@ -1114,6 +1121,10 @@ export class Datetime implements ComponentInterface {
                     });
                   }
 
+                  // We can re-attach the intersection observer after
+                  // the working parts have been updated.
+                  this.initializeCalendarIOListeners();
+
                   ev.stopPropagation();
                 }}
               ></ion-picker-column-internal>
@@ -1125,6 +1136,13 @@ export class Datetime implements ComponentInterface {
                 items={years}
                 value={workingParts.year}
                 onIonChange={(ev: CustomEvent) => {
+                  // Due to a Safari 14 issue we need to destroy
+                  // the intersection observer before we update state
+                  // and trigger a re-render.
+                  if (this.destroyCalendarIO) {
+                    this.destroyCalendarIO();
+                  }
+
                   this.setWorkingParts({
                     ...this.workingParts,
                     year: ev.detail.value
@@ -1136,6 +1154,10 @@ export class Datetime implements ComponentInterface {
                       year: ev.detail.value
                     });
                   }
+
+                  // We can re-attach the intersection observer after
+                  // the working parts have been updated.
+                  this.initializeCalendarIOListeners();
 
                   ev.stopPropagation();
                 }}
