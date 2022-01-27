@@ -159,6 +159,42 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         leavingLocationInfo = locationHistory.previous();
       } else if (incomingRouteParams.routerAction === 'pop') {
         leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition + 1);
+
+        /**
+         * If the Ionic Router action was "pop"
+         * and the browser history action was "replace", then
+         * it is the case that the user clicked an IonBackButton
+         * that is trying to go back to the route specified
+         * by the defaultHref property.
+         *
+         * The problem is that this route currently does
+         * not exist in the browser history, and we cannot
+         * prepend an item in the browser's history stack.
+         * To work around this, we replace the state of
+         * the current item instead.
+         * Given this scenario:
+         * /page2 --> /page3 --> (back) /page2 --> (defaultHref) /page1
+         * We would replace the state of /page2 with the state of /page1.
+         *
+         * When doing this, we are essentially re-writing past
+         * history which makes the future history no longer relevant.
+         * As a result, we clear out the location history so that users
+         * can begin pushing new routes to the stack.
+         *
+         * This pattern is aligned with how the browser handles
+         * pushing new routes after going back as well as how
+         * other stack based operations such as undo/redo work.
+         * For example, if you do tasks A, B, C, undo B and C, and
+         * then do task D, you cannot "redo" B and C because you
+         * rewrote the stack's past history.
+         *
+         * With browser history, it is a similar concept.
+         * Going /page1 --> /page2 --> /page3 and then doing
+         * router.go(-2) will bring you back to /page1.
+         * If you then push /page4, you have rewritten
+         * the past history and you can no longer go
+         * forward to /page2 or /page3.
+         */
         if (action === 'replace') {
           locationHistory.clearHistory();
         }
