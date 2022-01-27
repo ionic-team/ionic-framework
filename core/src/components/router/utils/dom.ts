@@ -3,6 +3,14 @@ import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
 
+/**
+ * Activates the passed route chain.
+ *
+ * There must be exactly one outlet per route entry in the chain.
+ *
+ * The methods calls setRouteId on each of the outlet with the corresponding route entry in the chain.
+ * setRouteId will create or select the view in the outlet.
+ */
 export const writeNavState = async (
   root: HTMLElement | undefined,
   chain: RouteChain,
@@ -46,22 +54,22 @@ export const writeNavState = async (
   }
 };
 
+/**
+ * Recursively walks the outlet in the DOM.
+ *
+ * The function returns a list of RouteID corresponding to each of the outlet and the last outlet without a RouteID.
+ */
 export const readNavState = async (root: HTMLElement | undefined) => {
   const ids: RouteID[] = [];
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
-  // tslint:disable-next-line:no-constant-condition
-  while (true) {
-    outlet = searchNavNode(node);
-    if (outlet) {
-      const id = await outlet.getRouteId();
-      if (id) {
-        node = id.element;
-        id.element = undefined;
-        ids.push(id);
-      } else {
-        break;
-      }
+
+  while (outlet = searchNavNode(node)) {
+    const id = await outlet.getRouteId();
+    if (id) {
+      node = id.element;
+      id.element = undefined;
+      ids.push(id);
     } else {
       break;
     }
@@ -69,24 +77,25 @@ export const readNavState = async (root: HTMLElement | undefined) => {
   return { ids, outlet };
 };
 
-export const waitUntilNavNode = () => {
+export const waitUntilNavNode = (): Promise<void> => {
   if (searchNavNode(document.body)) {
     return Promise.resolve();
   }
   return new Promise(resolve => {
-    window.addEventListener('ionNavWillLoad', resolve, { once: true });
+    window.addEventListener('ionNavWillLoad', () => resolve(), { once: true });
   });
 };
 
-const QUERY = ':not([no-router]) ion-nav, :not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
+/** Selector for all the outlets supported by the router. */
+const OUTLET_SELECTOR = ':not([no-router]) ion-nav, :not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
 
 const searchNavNode = (root: HTMLElement | undefined): NavOutletElement | undefined => {
   if (!root) {
     return undefined;
   }
-  if (root.matches(QUERY)) {
+  if (root.matches(OUTLET_SELECTOR)) {
     return root as NavOutletElement;
   }
-  const outlet = root.querySelector<NavOutletElement>(QUERY);
+  const outlet = root.querySelector<NavOutletElement>(OUTLET_SELECTOR);
   return outlet ?? undefined;
 };

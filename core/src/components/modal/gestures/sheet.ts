@@ -93,6 +93,14 @@ export const createSheetGesture = (
       contentEl.scrollY = false;
     }
 
+    raf(() => {
+      /**
+       * Dismisses the open keyboard when the sheet drag gesture is started.
+       * Sets the focus onto the modal element.
+       */
+      baseEl.focus();
+    });
+
     animation.progressStart(true, 1 - currentBreakpoint);
   };
 
@@ -188,11 +196,11 @@ export const createSheetGesture = (
           }
         }
 
-      /**
-       * This must be a one time callback
-       * otherwise a new callback will
-       * be added every time onEnd runs.
-       */
+        /**
+         * This must be a one time callback
+         * otherwise a new callback will
+         * be added every time onEnd runs.
+         */
       }, { oneTimeCallback: true })
       .progressEnd(1, 0, 500);
 

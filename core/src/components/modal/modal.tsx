@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
+import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -44,6 +45,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private keyboardOpenCallback?: () => void;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -380,6 +382,30 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined') {
+      this.keyboardOpenCallback = () => {
+        if (this.gesture) {
+          /**
+           * When the native keyboard is opened and the webview
+           * is resized, the gesture implementation will become unresponsive
+           * and enter a free-scroll mode.
+           *
+           * When the keyboard is opened, we disable the gesture for
+           * a single frame and re-enable once the contents have repositioned
+           * from the keyboard placement.
+           */
+          this.gesture.enable(false);
+          raf(() => {
+            if (this.gesture) {
+              this.gesture.enable(true)
+            }
+          });
+        }
+      }
+      window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+    }
+
     this.currentTransition = undefined;
   }
 
@@ -472,6 +498,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.gestureAnimationDismissing && role !== 'gesture') {
       return false;
+    }
+
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
+      window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
     /**
