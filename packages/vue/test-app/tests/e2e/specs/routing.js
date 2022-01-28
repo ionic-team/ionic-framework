@@ -433,6 +433,46 @@ describe('Routing', () => {
     cy.ionPageDoesNotExist('defaulthref');
     cy.ionPageVisible('home');
   })
+
+  it('should correctly update location history after rewriting past state', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/inputs');
+    cy.ionPageVisible('inputs');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('inputs');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('inputs');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+
+    cy.routerPush('default-href');
+    cy.ionPageVisible('defaulthref');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('defaulthref');
+
+    cy.routerPush('/inputs');
+    cy.ionPageVisible('inputs');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('inputs');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('inputs');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('defaulthref');
+    cy.ionPageDoesNotExist('routing');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {
