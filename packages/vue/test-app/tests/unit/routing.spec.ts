@@ -312,6 +312,124 @@ describe('Routing', () => {
     expect(cmpAgain[0].props()).toEqual({ title: 'xyz' });
   });
 
+  /**
+   * TODO(FW-653) Either Ionic Vue or Vue Test Utils
+   * is leaking routing information between tests. Moving these tests
+   * to the end cause them to fail. Need to figure out what the root cause is.
+   */
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it('canGoBack() should return the correct value', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page }
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.back();
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it('canGoBack() should return the correct value when using router.go', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page }
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.go(-2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.go(2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+  });
+
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
   it('should call the props function again when params change', async () => {
     const Page1 = {
@@ -548,118 +666,5 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Page).exists()).toBe(true);
     expect(wrapper.findComponent(Page2).exists()).toBe(false);
     expect(wrapper.findComponent(Page3).exists()).toBe(false);
-  });
-
-  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
-  it('canGoBack() should return the correct value', async () => {
-    const Page = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page2 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const AppWithInject = {
-      components: { IonApp, IonRouterOutlet },
-      template: '<ion-app><ion-router-outlet /></ion-app>',
-      setup() {
-        const ionRouter = useIonRouter();
-        return { ionRouter }
-      }
-    }
-
-    const router = createRouter({
-      history: createWebHistory(process.env.BASE_URL),
-      routes: [
-        { path: '/', component: Page }
-        { path: '/page2', component: Page2 }
-      ]
-    });
-
-    router.push('/');
-    await router.isReady();
-    const wrapper = mount(AppWithInject, {
-      global: {
-        plugins: [router, IonicVue]
-      }
-    });
-
-    const ionRouter = wrapper.vm.ionRouter;
-    expect(ionRouter.canGoBack()).toEqual(false);
-
-    router.push('/page2');
-    await waitForRouter();
-
-    expect(ionRouter.canGoBack()).toEqual(true);
-
-    router.back();
-    await waitForRouter();
-
-    expect(ionRouter.canGoBack()).toEqual(false);
-  });
-
-  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
-  it('canGoBack() should return the correct value when using router.go', async () => {
-    const Page = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page2 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page3 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const AppWithInject = {
-      components: { IonApp, IonRouterOutlet },
-      template: '<ion-app><ion-router-outlet /></ion-app>',
-      setup() {
-        const ionRouter = useIonRouter();
-        return { ionRouter }
-      }
-    }
-
-    const router = createRouter({
-      history: createWebHistory(process.env.BASE_URL),
-      routes: [
-        { path: '/', component: Page }
-        { path: '/page2', component: Page2 },
-        { path: '/page3', component: Page3 },
-      ]
-    });
-
-    router.push('/');
-    await router.isReady();
-    const wrapper = mount(AppWithInject, {
-      global: {
-        plugins: [router, IonicVue]
-      }
-    });
-
-    const ionRouter = wrapper.vm.ionRouter;
-    expect(ionRouter.canGoBack()).toEqual(false);
-
-    router.push('/page2');
-    await waitForRouter();
-
-    expect(ionRouter.canGoBack()).toEqual(true);
-
-    router.push('/page3');
-    await waitForRouter();
-
-    expect(ionRouter.canGoBack()).toEqual(true);
-
-    router.go(-2);
-    await waitForRouter();
-
-    expect(ionRouter.canGoBack()).toEqual(false);
-
-    router.go(2);
-    await waitForRouter();
-
-    expect(ionRouter.canGoBack()).toEqual(true);
   });
 });
