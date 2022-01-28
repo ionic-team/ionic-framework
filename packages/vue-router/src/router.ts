@@ -339,10 +339,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * listing to say that /c was pushed by /a.
          */
 
-          if (routeInfo.routerAction === 'push' && delta === undefined
-          ) {
-           locationHistory.clearHistory(routeInfo);
-           locationHistory.add(routeInfo);
+          if (routeInfo.routerAction === 'push' && delta === undefined) {
+            locationHistory.clearHistory(routeInfo);
+            locationHistory.add(routeInfo);
           }
       } else {
         locationHistory.add(routeInfo);
