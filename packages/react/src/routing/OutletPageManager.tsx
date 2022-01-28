@@ -1,3 +1,4 @@
+import { componentOnReady } from '@ionic/core';
 import React from 'react';
 
 import { IonRouterOutletInner } from '../components/inner-proxies';
@@ -24,9 +25,9 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
 
   componentDidMount() {
     if (this.ionRouterOutlet) {
-      setTimeout(() => {
+      componentOnReady(this.ionRouterOutlet, () => {
         this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
-      }, 25);
+      });
 
       this.ionRouterOutlet.addEventListener(
         'ionViewWillEnter',

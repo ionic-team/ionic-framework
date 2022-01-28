@@ -18,6 +18,8 @@ interface StackManagerProps {
 
 interface StackManagerState {}
 
+const isViewVisible = (el: HTMLElement) => !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
+
 export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
   id: string;
   context!: React.ContextType<typeof RouteManagerContext>;
@@ -107,29 +109,80 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
       if (enteringViewItem && enteringViewItem.ionPageElement) {
         /**
-         * The entering view should only be transitioned when either:
-         *
-         * 1. Performing a replace or pop action, such as a swipe
-         * to go back gesture to animate the leaving view.
-         *
-         * 2. The entering view matches the route (through id comparison).
-         *
-         * This can be either when navigating from a top-level router outlet
-         * from /page-1 to /page-2 or navigating within a nested router outlet
-         * and navigating from /tabs/tab-1 to /tabs/tab-2.
-         *
-         * 3. The entering view is an ion-router-outlet containing the page
-         * matching the current route and hasn't already transitioned in.
-         *
-         * This only happens within a nested router outlet on the initial page load.
-         * The page element matching /tabs must transition into the view before
-         * the inner outlet's page element matching /tabs/tab-1 can transition in.
+         * If the entering view item is the same as the leaving view item,
+         * then we don't need to transition.
          */
-        if (routeInfo.routeAction !== 'push' ||
-            enteringViewItem.id === routeInfo.id ||
-            enteringViewItem.ionPageElement.classList.contains('ion-page-invisible') ||
-            enteringViewItem.ionPageElement.classList.contains('ion-page-hidden')) {
+        if (enteringViewItem === leavingViewItem) {
+          /**
+           * If the routeAction is 'replace' or the routeAction is `undefined`,
+           * then we need to transition the entering view.
+           *
+           * The routeAction is `replace` for example when you have dynamic routes,
+           * such as /tab-1 is a static route and /tab-2 is a dynamically registered
+           * route. If you navigate directly to /tab-2, but the view does not exist,
+           * we fallback to the router outlets default view.
+           *
+           * The routeAction is `undefined` for example when you are navigating
+           * to an uncaught route in an outlet, such as a 404 page.
+           */
+          if (routeInfo.routeAction && routeInfo.routeAction !== 'replace') {
+            // We force update the view item to ensure the react element is rendered
+            // correctly in events where you are routing to the same view, but are
+            // pushing or popping.
+            this.forceUpdate();
+            return;
+          }
+        }
+
+        /**
+         * If there isn't a leaving view item, but the route info indicates
+         * that the user has routed from a previous path, then we need
+         * to find the leaving view item to transition between.
+         */
+        if (!leavingViewItem && this.props.routeInfo.prevRouteLastPathname) {
+          leavingViewItem = this.context.findViewItemByPathname(this.props.routeInfo.prevRouteLastPathname, this.id);
+        }
+
+        /**
+         * If the entering view is already visible and the leaving view is not, the transition does not need to occur.
+         */
+        if (isViewVisible(enteringViewItem.ionPageElement) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement!)) {
+          return;
+        }
+
+        /**
+         * If there is a leaving view item and it is not the same view as the entering view,
+         * transition the views.
+         */
+        if (leavingViewItem && enteringViewItem !== leavingViewItem) {
+          /**
+           * The view should only be transitioned in the following cases:
+           * 1. Performing a replace or pop action, such as a swipe to go back gesture
+           * to animation the leaving view off the screen.
+           *
+           * 2. Navigating between top-level router outlets, such as /page-1 to /page-2;
+           * or navigating within a nested outlet, such as /tabs/tab-1 to /tabs/tab-2.
+           *
+           * 3. The entering view is an ion-router-outlet containing a page
+           * matching the current route and that hasn't already transitioned in.
+           *
+           * This should only happen when navigating directly to a nested router outlet
+           * route or on an initial page load (i.e. refreshing). In cases when loading
+           * /tabs/tab-1, we need to transition the /tabs page element into the view.
+           */
           this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+        } else {
+          /**
+           * If there is no leaving element, just display
+           * the entering element without a transition.
+           *
+           * This is wrapped in a request animation frame
+           * to avoid a flicker when ion-content's fullscreen
+           * callback is running.
+           */
+          requestAnimationFrame(() => {
+            enteringViewItem?.ionPageElement!.classList.remove('ion-page-invisible', 'ion-page-hidden');
+          });
         }
       } else if (leavingViewItem && !enteringRoute && !enteringViewItem) {
         // If we have a leavingView but no entering view/route, we are probably leaving to
