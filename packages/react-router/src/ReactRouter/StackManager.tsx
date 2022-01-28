@@ -125,7 +125,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * The page element matching /tabs must transition into the view before
          * the inner outlet's page element matching /tabs/tab-1 can transition in.
          */
-        if (routeInfo.routeAction !== 'push' || enteringViewItem.id === routeInfo.id || enteringViewItem.ionPageElement.classList.contains('ion-page-invisible')) {
+        if (routeInfo.routeAction !== 'push' ||
+            enteringViewItem.id === routeInfo.id ||
+            enteringViewItem.ionPageElement.classList.contains('ion-page-invisible') ||
+            enteringViewItem.ionPageElement.classList.contains('ion-page-hidden')) {
           this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
         }
       } else if (leavingViewItem && !enteringRoute && !enteringViewItem) {
