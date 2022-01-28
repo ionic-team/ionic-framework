@@ -322,10 +322,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * is navigating within the history without pushing
        * new items within the stack.
        */
-      if (
-        historySize > historyDiff &&
-        routeInfo.tab === undefined
-      ) {
+      if (historySize > historyDiff && routeInfo.tab === undefined) {
         /**
          * When going from /a --> /a/1 --> /b, then going
          * back to /a, then going /a --> /a/2 --> /b, clicking
@@ -342,9 +339,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * listing to say that /c was pushed by /a.
          */
 
-          if (
-            routeInfo.routerAction === 'push' &&
-            delta === undefined
+          if (routeInfo.routerAction === 'push' && delta === undefined
           ) {
            locationHistory.clearHistory(routeInfo);
            locationHistory.add(routeInfo);
