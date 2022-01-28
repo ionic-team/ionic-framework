@@ -97,17 +97,37 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.ionRouterOutlet?.props.children,
         routeInfo
       ) as React.ReactElement;
+
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute;
+      } else if (enteringRoute) {
+        enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
+        this.context.addViewItem(enteringViewItem);
       }
-      if (!enteringViewItem) {
-        if (enteringRoute) {
-          enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
-          this.context.addViewItem(enteringViewItem);
-        }
-      }
+
       if (enteringViewItem && enteringViewItem.ionPageElement) {
-        this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+        /**
+         * The entering view should only be transitioned when either:
+         *
+         * 1. Performing a replace or pop action, such as a swipe
+         * to go back gesture to animate the leaving view.
+         *
+         * 2. The entering view matches the route (through id comparison).
+         *
+         * This can be either when navigating from a top-level router outlet
+         * from /page-1 to /page-2 or navigating within a nested router outlet
+         * and navigating from /tabs/tab-1 to /tabs/tab-2.
+         *
+         * 3. The entering view is an ion-router-outlet containing the page
+         * matching the current route and hasn't already transitioned in.
+         *
+         * This only happens within a nested router outlet on the initial page load.
+         * The page element matching /tabs must transition into the view before
+         * the inner outlet's page element matching /tabs/tab-1 can transition in.
+         */
+        if (routeInfo.routeAction !== 'push' || enteringViewItem.id === routeInfo.id || enteringViewItem.ionPageElement.classList.contains('ion-page-invisible')) {
+          this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+        }
       } else if (leavingViewItem && !enteringRoute && !enteringViewItem) {
         // If we have a leavingView but no entering view/route, we are probably leaving to
         // another outlet, so hide this leavingView. We do it in a timeout to give time for a

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { IonApp, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonHeader, IonPage, IonRouterOutlet, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 /* Core CSS required for Ionic components to work properly */
@@ -28,13 +28,29 @@ import Tabs from './pages/Tabs';
 
 setupIonicReact();
 
+const Home: React.FC = () => (
+  <IonPage>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>Home</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    <IonContent>
+      <IonButton routerLink='/tabs'>Navigate to tabs</IonButton>
+    </IonContent>
+  </IonPage>
+)
+
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <Route path="/" component={Main} />
-      <Route path="/overlay-hooks" component={OverlayHooks} />
-      <Route path="/overlay-components" component={OverlayComponents} />
-      <Route path="/tabs" component={Tabs} />
+      <IonRouterOutlet>
+        <Route path="/" component={Main} />
+        <Route path="/overlay-hooks" component={OverlayHooks} />
+        <Route path="/overlay-components" component={OverlayComponents} />
+        <Route path='/home' component={Home} />
+        <Route path="/tabs" component={Tabs} />
+      </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );

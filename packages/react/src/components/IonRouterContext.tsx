@@ -35,7 +35,7 @@ export const IonRouterContext = React.createContext<IonRouterContextState>({
 });
 
 /**
- * A hook for more direct control over routing in an Ionic React applicaiton. Allows you to pass additional meta-data to the router before the call to the native router.
+ * A hook for more direct control over routing in an Ionic React application. Allows you to pass additional meta-data to the router before the call to the native router.
  */
 export function useIonRouter(): UseIonRouterResult {
   const context = useContext(IonRouterContext);
