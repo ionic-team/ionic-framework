@@ -324,19 +324,21 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        */
       if (historySize > historyDiff && routeInfo.tab === undefined) {
         /**
-         * When going from /a --> /a/1 --> /b, then going
-         * back to /a, then going /a --> /a/2 --> /b, clicking
-         * the ion-back-button should return us to /a/2, not /a/1.
-         * However, since the route entry for /b already exists,
-         * we need to update other information such as the "pushedByRoute"
-         * so we know which route pushed this new route.
+         * When navigating back through the history,
+         * if users then push a new route the future
+         * history stack is no longer relevant. As
+         * a result, we need to clear out all entries
+         * that appear after the current routeInfo
+         * so that we can then append the new history.
          *
-         * However, when using router.go with a stride of >1 or <-1,
-         * we should not update this additional information because
-         * we are traversing through the history, not pushing new states.
-         * Going from /a --> /b --> /c, then doing router.go(-2), then doing
-         * router.go(2) to go from /a --> /c should not update the route
-         * listing to say that /c was pushed by /a.
+         * This does not apply when using router.go
+         * as that is traversing through the history,
+         * not altering it.
+         *
+         * Previously we had only updated the existing route
+         * and then left the future history alone. That
+         * worked for some use cases but was not sufficient
+         * in other scenarios.
          */
 
           if (routeInfo.routerAction === 'push' && delta === undefined) {
