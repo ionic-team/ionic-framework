@@ -85,11 +85,19 @@ export const createLocationHistory = () => {
     locationHistory.push(routeInfo);
   }
 
-  const clearHistory = () => {
-    locationHistory.length = 0;
+  const clearHistory = (routeInfo?: RouteInfo) => {
     Object.keys(tabsHistory).forEach(key => {
       tabsHistory[key] = [];
     });
+
+    if (routeInfo) {
+      const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
+      if (existingRouteIndex === -1) return;
+
+      locationHistory.splice(existingRouteIndex);
+    } else {
+      locationHistory.length = 0;
+    }
   }
   const getTabsHistory = (tab: string): RouteInfo[] => {
     let history;
@@ -104,17 +112,6 @@ export const createLocationHistory = () => {
   }
 
   const size = () => locationHistory.length;
-
-  const updateByHistoryPosition = (routeInfo: RouteInfo, updateEntries: boolean) => {
-    const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
-    if (existingRouteIndex === -1) return;
-
-    locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
-
-    if (updateEntries) {
-      locationHistory[existingRouteIndex].pushedByRoute = routeInfo.pushedByRoute;
-    }
-  }
 
   /**
    * Finds and returns the location history item
@@ -205,7 +202,6 @@ export const createLocationHistory = () => {
 
   return {
     current,
-    updateByHistoryPosition,
     size,
     last,
     previous,

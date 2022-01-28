@@ -349,9 +349,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
            locationHistory.clearHistory(routeInfo);
            locationHistory.add(routeInfo);
           }
+      } else {
+        locationHistory.add(routeInfo);
       }
 
-      locationHistory.add(routeInfo);
       currentRouteInfo = routeInfo;
     }
     incomingRouteParams = undefined;
