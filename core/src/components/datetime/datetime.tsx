@@ -57,7 +57,7 @@ import {
 import {
   getCalendarDayState,
   isDayDisabled,
-  isMonthSwipeDisabled,
+  isMonthDisabled,
   isNextMonthDisabled,
   isPrevMonthDisabled
 } from './utils/state';
@@ -719,7 +719,10 @@ export class Datetime implements ComponentInterface {
 
         const { month, year, day } = refMonthFn(this.workingParts);
 
-        if (isMonthSwipeDisabled(month, year, this.workingParts, this.minParts, this.maxParts)) {
+        if (isMonthDisabled({ month, year, day: null }, {
+          minParts: this.minParts,
+          maxParts: this.maxParts
+        })) {
           return;
         }
 
@@ -1220,14 +1223,25 @@ export class Datetime implements ComponentInterface {
   private renderMonth(month: number, year: number) {
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
-    const isMonthDisabled = !yearAllowed || !monthAllowed;
-    const swipeDisabled = isMonthSwipeDisabled(month, year, this.workingParts, this.minParts, this.maxParts);
+    const isCalMonthDisabled = !yearAllowed || !monthAllowed;
+    const swipeDisabled = isMonthDisabled({
+      month,
+      year,
+      day: null
+    }, {
+      minParts: this.minParts,
+      maxParts: this.maxParts
+    });
+    // The working month should never have swipe disabled.
+    // Otherwise the CSS scroll snap will not work and the user
+    // can free-scroll the calendar.
+    const isWorkingMonth = this.workingParts.month === month && this.workingParts.year === year;
 
     return (
       <div class={{
         'calendar-month': true,
         // Prevents scroll snap swipe gestures for months outside of the min/max bounds
-        'calendar-month-disabled': swipeDisabled
+        'calendar-month-disabled': !isWorkingMonth && swipeDisabled
       }}>
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
@@ -1243,7 +1257,7 @@ export class Datetime implements ComponentInterface {
                 data-year={year}
                 data-index={index}
                 data-day-of-week={dayOfWeek}
-                disabled={isMonthDisabled || disabled}
+                disabled={isCalMonthDisabled || disabled}
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,

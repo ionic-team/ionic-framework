@@ -16,45 +16,6 @@ export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxPar
   return false;
 }
 
-export const isMonthSwipeDisabled = (
-  refMonth: number,
-  refYear: number,
-  workingParts?: DatetimeParts,
-  minParts?: { month?: number, year: number },
-  maxParts?: { month?: number, year: number }) => {
-  if (workingParts && refMonth === workingParts.month && refYear === workingParts.year) {
-    /**
-     * Do not disable the working month, if it's the current month being rendered.
-     *
-     * If the working month is disabled, scroll snap will not clip to the month
-     * and will scroll the user to the first "enabled" calendar month.
-     */
-    return false;
-  }
-
-  if (minParts) {
-    if (typeof minParts.month !== 'undefined') {
-      // If the minimum parts contains a month, compare both the month and year
-      if (refMonth < minParts.month && refYear <= minParts.year) {
-        return true;
-      }
-      // Otherwise only compare the year range
-    } else if (refYear < minParts.year) {
-      return true;
-    }
-  }
-
-  if (maxParts) {
-    if (typeof maxParts.month !== 'undefined' && refMonth > maxParts.month && refYear >= maxParts.year) {
-      return true;
-    } else if (refYear > maxParts.year) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 /**
  * Returns true if a given day should
  * not be interactive according to its value,
@@ -147,31 +108,19 @@ export const getCalendarDayState = (
  * Returns `true` if the month is disabled given the
  * current date value and min/max date constraints.
  */
-export const isMonthDisabled = (refParts: { month: number, year: number }, { minParts, maxParts }: {
-  minParts?: { month?: number, year: number },
-  maxParts?: {
-    month?: number, year: number
-  }
+export const isMonthDisabled = (refParts: DatetimeParts, { minParts, maxParts }: {
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
 }) => {
-  // If the min date is set and the year is less than the min year.
-  if (minParts && minParts.year > refParts.year) {
+  // If the year is disabled then the month is disabled.
+  if (isYearDisabled(refParts.year, minParts, maxParts)) {
     return true;
   }
-  // If the max date is set and the year is greater than the max year.
-  if (maxParts && maxParts.year < refParts.year) {
+  // If the date value is before the min date, then the month is disabled.
+  // If the date value is after the max date, then the month is disabled.
+  if (minParts && isBefore(refParts, minParts) || maxParts && isAfter(refParts, maxParts)) {
     return true;
   }
-  // If the min date is set and the year is the same as the min year,
-  // but the month is less than the min month.
-  if (minParts && minParts.year === refParts.year && minParts.month !== undefined && minParts.month > refParts.month) {
-    return true;
-  }
-  // If the max date is set and the year is the same as the max year,
-  // but the month is greater than the max month.
-  if (maxParts && maxParts.year === refParts.year && maxParts.month !== undefined && maxParts.month < refParts.month) {
-    return true;
-  }
-
   return false;
 }
 
@@ -181,19 +130,9 @@ export const isMonthDisabled = (refParts: { month: number, year: number }, { min
  * previous navigation button is disabled.
  */
 export const isPrevMonthDisabled = (
-  refParts: {
-    month: number,
-    year: number,
-    day: number | null
-  },
-  minParts?: {
-    month?: number,
-    year: number
-  },
-  maxParts?: {
-    month?: number,
-    year: number
-  }) => {
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts) => {
   const prevMonth = getPreviousMonth(refParts);
   return isMonthDisabled(prevMonth, {
     minParts,
@@ -206,15 +145,8 @@ export const isPrevMonthDisabled = (
  * determine if the next navigation button is disabled.
  */
 export const isNextMonthDisabled = (
-  refParts: {
-    month: number,
-    year: number,
-    day: number | null
-  },
-  maxParts?: {
-    month?: number,
-    year: number
-  }) => {
+  refParts: DatetimeParts,
+  maxParts?: DatetimeParts) => {
   const nextMonth = getNextMonth(refParts);
   return isMonthDisabled(nextMonth, {
     maxParts
