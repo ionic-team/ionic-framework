@@ -792,6 +792,12 @@ export class Datetime implements ComponentInterface {
         });
       }
 
+      const threshold = mode === 'ios' &&
+        // tslint:disable-next-line
+        typeof navigator !== 'undefined' &&
+        navigator.maxTouchPoints > 1 ?
+        [0.7, 1] : 1;
+
       /**
        * Listen on the first month to
        * prepend a new month and on the last
@@ -811,13 +817,13 @@ export class Datetime implements ComponentInterface {
        * something WebKit does.
        */
       endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
-        threshold: mode === 'ios' ? [0.7, 1] : 1,
+        threshold,
         root: calendarBodyRef
       });
       endIO.observe(endMonth);
 
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
-        threshold: mode === 'ios' ? [0.7, 1] : 1,
+        threshold,
         root: calendarBodyRef
       });
       startIO.observe(startMonth);
