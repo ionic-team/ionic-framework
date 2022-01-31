@@ -473,6 +473,46 @@ describe('Routing', () => {
     cy.ionPageVisible('defaulthref');
     cy.ionPageDoesNotExist('routing');
   })
+
+  it('should correctly update location history after setting root state', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/1');
+    cy.ionPageVisible('routingparameter-1');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameter-1');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('routingparameter-1');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+
+    cy.ionRouterNavigate('/inputs', 'root')
+    cy.ionPageVisible('inputs');
+    cy.ionPageDoesNotExist('home');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('inputs');
+
+    cy.routerPush('/routing/1');
+    cy.ionPageVisible('routingparameter-1');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameter-1');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('routingparameter-1');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('inputs');
+    cy.ionPageDoesNotExist('routing');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {
