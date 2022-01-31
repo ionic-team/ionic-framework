@@ -345,20 +345,21 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * in other scenarios.
          */
 
-          if (routeInfo.routerAction === 'push' && delta === undefined) {
-            locationHistory.clearHistory(routeInfo);
-            locationHistory.add(routeInfo);
-
-            if (locationHistory.size() === 1) {
-              initialHistoryPosition = routeInfo.position;
-            }
-          }
+        if (routeInfo.routerAction === 'push' && delta === undefined) {
+          locationHistory.clearHistory(routeInfo);
+          locationHistory.add(routeInfo);
+        }
       } else {
         locationHistory.add(routeInfo);
+      }
 
-        if (locationHistory.size() === 1) {
-          initialHistoryPosition = routeInfo.position;
-        }
+      /**
+       * If we recently reset the location history
+       * then we also need to update the initial
+       * history position.
+       */
+      if (locationHistory.size() === 1) {
+        initialHistoryPosition = routeInfo.position;
       }
 
       currentRouteInfo = routeInfo;
