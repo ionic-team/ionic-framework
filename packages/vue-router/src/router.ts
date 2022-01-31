@@ -60,7 +60,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * new pages or updating history via the forward
    * and back browser buttons.
    */
-  const initialHistoryPosition = opts.history.state.position as number;
+  let initialHistoryPosition = opts.history.state.position as number;
   let currentHistoryPosition = opts.history.state.position as number;
 
   let currentRouteInfo: RouteInfo;
@@ -199,7 +199,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           locationHistory.clearHistory();
         }
       } else {
-        leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - 1);
+        if (incomingRouteParams.routerDirection === 'root') {
+          leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
+        } else {
+          leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - 1);
+        }
       }
     } else {
       leavingLocationInfo = currentRouteInfo;
@@ -344,9 +348,17 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           if (routeInfo.routerAction === 'push' && delta === undefined) {
             locationHistory.clearHistory(routeInfo);
             locationHistory.add(routeInfo);
+
+            if (locationHistory.size() === 1) {
+              initialHistoryPosition = routeInfo.position;
+            }
           }
       } else {
         locationHistory.add(routeInfo);
+
+        if (locationHistory.size() === 1) {
+          initialHistoryPosition = routeInfo.position;
+        }
       }
 
       currentRouteInfo = routeInfo;
