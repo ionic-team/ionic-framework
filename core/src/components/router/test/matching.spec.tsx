@@ -1,30 +1,59 @@
-import { RouteChain } from '../utils/interface';
+import { ResolvedRouteChain, RouteChain } from '../utils/interface';
 import { RouterSegments, matchesIDs, matchesSegments, matchesRedirect, mergeParams, findChainForSegments } from '../utils/matching';
 import { parsePath } from '../utils/path';
 
+expect.extend({
+  /**
+   * Compares the resolved chain vs the expected chain.
+   * 
+   * The nodes must match at every levels.
+   * The expected chain should have the following properties:
+   * - id,
+   * - segments,
+   * - params (only required if there are actual parameters).
+   */
+  toMatchChain(actual: ResolvedRouteChain, expected: RouteChain) {
+    if (actual.length !== expected.length) {
+      return {
+        pass: false,
+        message: () => `Chain length is ${actual.length} vs ${expected.length} expected`,
+      }
+    }
+    for (let i = 0; i < actual.length; i++) {
+      expect(actual[i].node.id).toEqual(expected[i].id);
+      expect(actual[i].params ?? {}).toEqual(expected[i].params ?? {});
+      expect(actual[i].node.segments).toEqual(expected[i].segments);
+    }
+    return {
+      pass: true,
+      message: `The resolved chain matches the chain`,
+    }
+  },  
+});
+
 const CHAIN_1: RouteChain = [
-  { id: '2', segments: ['to'], params: undefined },
-  { id: '1', segments: ['path'], params: undefined },
-  { id: '3', segments: ['segment'], params: undefined },
-  { id: '4', segments: [''], params: undefined },
+  { id: '2', segments: ['to'], params: undefined, children: [] },
+  { id: '1', segments: ['path'], params: undefined, children: [] },
+  { id: '3', segments: ['segment'], params: undefined, children: [] },
+  { id: '4', segments: [''], params: undefined, children: [] },
 ];
 
 const CHAIN_2: RouteChain = [
-  { id: '2', segments: [''], params: undefined },
-  { id: '1', segments: [''], params: undefined },
-  { id: '3', segments: ['segment', 'to'], params: undefined },
-  { id: '4', segments: [''], params: undefined },
-  { id: '5', segments: ['hola'], params: undefined },
-  { id: '6', segments: [''], params: undefined },
-  { id: '7', segments: [''], params: undefined },
-  { id: '8', segments: ['adios', 'que', 'tal'], params: undefined },
+  { id: '2', segments: [''], params: undefined, children: [] },
+  { id: '1', segments: [''], params: undefined, children: [] },
+  { id: '3', segments: ['segment', 'to'], params: undefined, children: [] },
+  { id: '4', segments: [''], params: undefined, children: [] },
+  { id: '5', segments: ['hola'], params: undefined, children: [] },
+  { id: '6', segments: [''], params: undefined, children: [] },
+  { id: '7', segments: [''], params: undefined, children: [] },
+  { id: '8', segments: ['adios', 'que', 'tal'], params: undefined, children: [] },
 ];
 
 const CHAIN_3: RouteChain = [
-  { id: '2', segments: ['this', 'to'], params: undefined },
-  { id: '1', segments: ['path'], params: undefined },
-  { id: '3', segments: ['segment', 'to', 'element'], params: undefined },
-  { id: '4', segments: [''], params: undefined },
+  { id: '2', segments: ['this', 'to'], params: undefined, children: [] },
+  { id: '1', segments: ['path'], params: undefined, children: [] },
+  { id: '3', segments: ['segment', 'to', 'element'], params: undefined, children: [] },
+  { id: '4', segments: [''], params: undefined, children: [] },
 ];
 
 describe('matchesIDs', () => {
@@ -43,10 +72,10 @@ describe('matchesIDs', () => {
   it('should match path with params', () => {
     const ids = [{ id: 'my-page', params: { s1: 'a', s2: 'b' } }];
 
-    expect(matchesIDs(ids, [{ id: 'my-page', segments: [''], params: {} }])).toBe(1);
-    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1'], params: {} }])).toBe(1);
-    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2'], params: {} }])).toBe(3);
-    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2', ':s3'], params: {} }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [''], params: {}, children: [] }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1'], params: {}, children: [] }])).toBe(1);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2'], params: {}, children: [] }])).toBe(3);
+    expect(matchesIDs(ids, [{ id: 'my-page', segments: [':s1', ':s2', ':s3'], params: {}, children: [] }])).toBe(1);
   })
 });
 
@@ -58,7 +87,7 @@ describe('matchesSegments', () => {
     expect(matchesSegments(['this', 'to', 'path'], chain)).toEqual(null);
     expect(matchesSegments(['this', 'to', 'path', 'segment'], chain)).toEqual(null);
     expect(matchesSegments(['this', 'to', 'path', 'segment', 'to'], chain)).toEqual(null);
-    expect(matchesSegments(['this', 'to', 'path', 'segment', 'to', 'element'], chain)).toEqual(chain);
+    expect(matchesSegments(['this', 'to', 'path', 'segment', 'to', 'element'], chain)).toMatchChain(chain);
     expect(matchesSegments(['this', 'to', 'path', 'segment', 'to', 'element', 'more'], chain)).toEqual(null);
 
     expect(matchesSegments([], chain)).toEqual(null);
@@ -74,50 +103,50 @@ describe('matchesSegments', () => {
     expect(matchesSegments(['segment', 'to', 'hola'], chain)).toEqual(null);
     expect(matchesSegments(['segment', 'to', 'hola', 'adios'], chain)).toEqual(null);
     expect(matchesSegments(['segment', 'to', 'hola', 'adios', 'que'], chain)).toEqual(null);
-    expect(matchesSegments(['segment', 'to', 'hola', 'adios', 'que', 'tal'], chain)).toEqual(chain);
-    expect(matchesSegments(['segment', 'to', 'hola', 'adios', 'que', 'tal', 'more'], chain)).toEqual(chain);
+    expect(matchesSegments(['segment', 'to', 'hola', 'adios', 'que', 'tal'], chain)).toMatchChain(chain);
+    expect(matchesSegments(['segment', 'to', 'hola', 'adios', 'que', 'tal', 'more'], chain)).toMatchChain(chain);
 
     expect(matchesSegments(['to'], chain)).toEqual(null);
     expect(matchesSegments(['path', 'to'], chain)).toEqual(null);
   });
 
   it('should match simple route 2', () => {
-    const chain: RouteChain = [{ id: '5', segments: ['hola'], params: undefined }];
+    const chain: RouteChain = [{ id: '5', segments: ['hola'], params: undefined, children: [] }];
     expect(matchesSegments([''], chain)).toEqual(null);
-    expect(matchesSegments(['hola'], chain)).toEqual(chain);
-    expect(matchesSegments(['hola', 'hola'], chain)).toEqual(chain);
-    expect(matchesSegments(['hola', 'adios'], chain)).toEqual(chain);
+    expect(matchesSegments(['hola'], chain)).toMatchChain(chain);
+    expect(matchesSegments(['hola', 'hola'], chain)).toMatchChain(chain);
+    expect(matchesSegments(['hola', 'adios'], chain)).toMatchChain(chain);
   });
 
   it('should match simple route 3', () => {
-    const chain: RouteChain = [{ id: '5', segments: ['hola', 'adios'], params: undefined }];
+    const chain: RouteChain = [{ id: '5', segments: ['hola', 'adios'], params: undefined, children: [] }];
     expect(matchesSegments([''], chain)).toEqual(null);
     expect(matchesSegments(['hola'], chain)).toEqual(null);
     expect(matchesSegments(['hola', 'hola'], chain)).toEqual(null);
-    expect(matchesSegments(['hola', 'adios'], chain)).toEqual(chain);
-    expect(matchesSegments(['hola', 'adios', 'bye'], chain)).toEqual(chain);
+    expect(matchesSegments(['hola', 'adios'], chain)).toMatchChain(chain);
+    expect(matchesSegments(['hola', 'adios', 'bye'], chain)).toMatchChain(chain);
   });
 
   it('should match simple route 4', () => {
     const chain: RouteChain = [
-      { id: '5', segments: ['hola'], params: undefined },
-      { id: '5', segments: ['adios'], params: undefined }];
+      { id: '5', segments: ['hola'], params: undefined, children: [] },
+      { id: '5', segments: ['adios'], params: undefined, children: [] }];
 
     expect(matchesSegments([''], chain)).toEqual(null);
     expect(matchesSegments(['hola'], chain)).toEqual(null);
     expect(matchesSegments(['hola', 'hola'], chain)).toEqual(null);
-    expect(matchesSegments(['hola', 'adios'], chain)).toEqual(chain);
+    expect(matchesSegments(['hola', 'adios'], chain)).toMatchChain(chain);
   });
 
   it('should match with parameters', () => {
     const chain: RouteChain = [
-      { id: '5', segments: ['profile', ':name'], params: undefined },
-      { id: '5', segments: [''], params: undefined },
-      { id: '5', segments: ['image'], params: { size: 'lg' } },
-      { id: '5', segments: ['image', ':size', ':type'], params: { size: 'mg' } },
+      { id: '5', segments: ['profile', ':name'], params: undefined, children: [] },
+      { id: '5', segments: [''], params: undefined, children: [] },
+      { id: '5', segments: ['image'], params: { size: 'lg' }, children: [] },
+      { id: '5', segments: ['image', ':size', ':type'], params: { size: 'mg' }, children: [] },
     ];
     const matched = matchesSegments(parsePath('/profile/manu/image/image/large/retina').segments, chain);
-    expect(matched).toEqual([
+    expect(matched).toMatchChain([
       { id: '5', segments: ['profile', ':name'], params: { name: 'manu' } },
       { id: '5', segments: [''], params: undefined },
       { id: '5', segments: ['image'], params: { size: 'lg' } },
@@ -128,10 +157,10 @@ describe('matchesSegments', () => {
 
 describe('findChainForSegments', () => {
   it('should match the route with higher priority', () => {
-    const chain3: RouteChain = [{ id: '5', segments: ['hola'], params: undefined }];
+    const chain3: RouteChain = [{ id: '5', segments: ['hola'], params: undefined, children: [] }];
     const chain4: RouteChain = [
-      { id: '5', segments: ['hola'], params: undefined },
-      { id: '5', segments: ['adios'], params: undefined }];
+      { id: '5', segments: ['hola'], params: undefined, children: [] },
+      { id: '5', segments: ['adios'], params: undefined, children: [] }];
 
     const routes: RouteChain[] = [
       CHAIN_1,
@@ -142,20 +171,20 @@ describe('findChainForSegments', () => {
     expect(findChainForSegments(['to'], routes)).toEqual(null);
     expect(findChainForSegments([''], routes)).toEqual(null);
     expect(findChainForSegments(['segment', 'to'], routes)).toEqual(null);
-    expect(findChainForSegments(['hola'], routes)).toEqual(chain3);
-    expect(findChainForSegments(['hola', 'hola'], routes)).toEqual(chain3);
-    expect(findChainForSegments(['hola', 'adios'], routes)).toEqual(chain4);
+    expect(findChainForSegments(['hola'], routes)).toMatchChain(chain3);
+    expect(findChainForSegments(['hola', 'hola'], routes)).toMatchChain(chain3);
+    expect(findChainForSegments(['hola', 'adios'], routes)).toMatchChain(chain4);
   });
 
   it('should match the route with higher priority 2', () => {
 
-    const chain1: RouteChain = [{ id: '1', segments: ['categories', ':category_slug'], params: undefined }];
-    const chain2: RouteChain = [{ id: '2', segments: ['workouts', ':workout_slug'], params: undefined }];
-    const chain3: RouteChain = [{ id: '3', segments: ['workouts', ':workout_slug', 'time-select'], params: undefined }];
-    const chain4: RouteChain = [{ id: '4', segments: ['workouts', ':workout_slug', 'end-workout'], params: undefined }];
-    const chain5: RouteChain = [{ id: '5', segments: ['plans'], params: undefined }];
-    const chain6: RouteChain = [{ id: '6', segments: ['custom'], params: undefined }];
-    const chain7: RouteChain = [{ id: '7', segments: ['workouts', 'list'], params: undefined }];
+    const chain1: RouteChain = [{ id: '1', segments: ['categories', ':category_slug'], params: undefined, children: [] }];
+    const chain2: RouteChain = [{ id: '2', segments: ['workouts', ':workout_slug'], params: undefined, children: [] }];
+    const chain3: RouteChain = [{ id: '3', segments: ['workouts', ':workout_slug', 'time-select'], params: undefined, children: [] }];
+    const chain4: RouteChain = [{ id: '4', segments: ['workouts', ':workout_slug', 'end-workout'], params: undefined, children: [] }];
+    const chain5: RouteChain = [{ id: '5', segments: ['plans'], params: undefined, children: [] }];
+    const chain6: RouteChain = [{ id: '6', segments: ['custom'], params: undefined, children: [] }];
+    const chain7: RouteChain = [{ id: '7', segments: ['workouts', 'list'], params: undefined, children: [] }];
 
     const routes: RouteChain[] = [
       chain1,
@@ -170,38 +199,40 @@ describe('findChainForSegments', () => {
     expect(findChainForSegments(['categories'], routes)).toEqual(null);
     expect(findChainForSegments(['workouts'], routes)).toEqual(null);
 
-    expect(findChainForSegments(['plans'], routes)).toEqual(chain5);
-    expect(findChainForSegments(['custom'], routes)).toEqual(chain6);
-    expect(findChainForSegments(['workouts', 'list'], routes)).toEqual(chain7);
+    expect(findChainForSegments(['plans'], routes)).toMatchChain(chain5);
+    expect(findChainForSegments(['custom'], routes)).toMatchChain(chain6);
+    expect(findChainForSegments(['workouts', 'list'], routes)).toMatchChain(chain7);
 
-    expect(findChainForSegments(['workouts', 'hola'], routes)).toEqual(
-      [{ id: '2', segments: ['workouts', ':workout_slug'], params: { 'workout_slug': 'hola' } }]
-    );
-    expect(findChainForSegments(['workouts', 'hello', 'time-select'], routes)).toEqual(
-      [{ id: '3', segments: ['workouts', ':workout_slug', 'time-select'], params: { 'workout_slug': 'hello' } }]
-    );
-    expect(findChainForSegments(['workouts', 'hello2', 'end-workout'], routes)).toEqual(
-      [{ id: '4', segments: ['workouts', ':workout_slug', 'end-workout'], params: { 'workout_slug': 'hello2' } }]
-    );
+    expect(findChainForSegments(['workouts', 'hola'], routes)).toMatchChain([
+      { id: '2', segments: ['workouts', ':workout_slug'], params: { 'workout_slug': 'hola' } }
+    ]);
+
+    expect(findChainForSegments(['workouts', 'hello', 'time-select'], routes)).toMatchChain([
+      { id: '3', segments: ['workouts', ':workout_slug', 'time-select'], params: { 'workout_slug': 'hello' } }
+    ]);
+    
+    expect(findChainForSegments(['workouts', 'hello2', 'end-workout'], routes)).toMatchChain([
+      { id: '4', segments: ['workouts', ':workout_slug', 'end-workout'], params: { 'workout_slug': 'hello2' } }
+    ]);
   });
 
   it('should match the default route', () => {
     const chain1: RouteChain = [
-      { id: 'tabs', segments: [''], params: undefined },
-      { id: 'tab1', segments: [''], params: undefined },
-      { id: 'schedule', segments: [''], params: undefined }
+      { id: 'tabs', segments: [''], params: undefined, children: [] },
+      { id: 'tab1', segments: [''], params: undefined, children: [] },
+      { id: 'schedule', segments: [''], params: undefined, children: [] }
     ];
     const chain2: RouteChain = [
-      { id: 'tabs', segments: [''], params: undefined },
-      { id: 'tab2', segments: ['tab2'], params: undefined },
-      { id: 'page2', segments: [''], params: undefined }
+      { id: 'tabs', segments: [''], params: undefined, children: [] },
+      { id: 'tab2', segments: ['tab2'], params: undefined, children: [] },
+      { id: 'page2', segments: [''], params: undefined, children: [] }
     ];
 
-    expect(findChainForSegments([''], [chain1])).toEqual(chain1);
+    expect(findChainForSegments([''], [chain1])).toMatchChain(chain1);
     expect(findChainForSegments(['tab2'], [chain1])).toEqual(null);
 
     expect(findChainForSegments([''], [chain2])).toEqual(null);
-    expect(findChainForSegments(['tab2'], [chain2])).toEqual(chain2);
+    expect(findChainForSegments(['tab2'], [chain2])).toMatchChain(chain2);
   });
 });
 

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { AnimationBuilder, BackButtonEvent, ResolvedRouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
 import { NavigationHookResult } from '../route/route-interface';
 
@@ -253,7 +253,7 @@ export class Router implements ComponentInterface {
   }
 
   private async safeWriteNavState(
-    node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
+    node: HTMLElement | undefined, chain: ResolvedRouteChain, direction: RouterDirection,
     segments: string[], redirectFrom: string[] | null,
     index = 0,
     animation?: AnimationBuilder
@@ -296,19 +296,19 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
 
     const fromChain = findChainForSegments(from, routes);
-    const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
+    const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].node.beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
     if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
 
     const toChain = findChainForSegments(to, routes);
-    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].node.beforeEnter;
 
     return beforeEnterHook ? beforeEnterHook() : true;
   }
 
   private async writeNavState(
-    node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
+    node: HTMLElement | undefined, chain: ResolvedRouteChain, direction: RouterDirection,
     segments: string[], redirectFrom: string[] | null,
     index = 0, animation?: AnimationBuilder
   ): Promise<boolean> {

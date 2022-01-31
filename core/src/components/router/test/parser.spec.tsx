@@ -70,22 +70,28 @@ describe('parser', () => {
 
   describe('flattenRouterTree', () => {
     it('should process routes', () => {
-      const entries: RouteTree = [
-        { segments: [''], id: 'hola', children: [], params: undefined },
-        { segments: ['one-page'], id: 'one-page', children: [], params: undefined },
-        { segments: ['secondpage'], id: 'second-page', params: undefined, children: [
-          { segments: ['5', 'hola'], id: '4', params: undefined, children: [
-            { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
-            { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
-          ] }
-        ] }
-      ];
+ 
+      const nodeHola = { segments: [''], id: 'hola', children: [], params: undefined };
+      const nodeOnePage = { segments: ['one-page'], id: 'one-page', children: [], params: undefined };
+      const node5 = { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined };
+      const node6 = { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined };
+      const node4 = {
+        segments: ['5', 'hola'], id: '4', params: undefined, children: [node5, node6
+        ]
+      };
+      const nodeSecondPage = {
+        segments: ['secondpage'], id: 'second-page', params: undefined, children: [node4]
+      };
+
+      const entries: RouteTree = [nodeHola, nodeOnePage, nodeSecondPage];
+
+
       const routes = flattenRouterTree(entries);
       expect(routes).toEqual([
-        [{ segments: [''], id: 'hola' }],
-        [{ segments: ['one-page'], id: 'one-page' }],
-        [{ segments: ['secondpage'], id: 'second-page' }, { segments: ['5', 'hola'], id: '4' }, { segments: ['path', 'to', 'five'], id: '5' }],
-        [{ segments: ['secondpage'], id: 'second-page' }, { segments: ['5', 'hola'], id: '4' }, { segments: ['path', 'to', 'five2'], id: '6' }],
+        [nodeHola],
+        [nodeOnePage],
+        [nodeSecondPage, node4, node5],
+        [nodeSecondPage, node4, node6],
       ]);
     });
   });

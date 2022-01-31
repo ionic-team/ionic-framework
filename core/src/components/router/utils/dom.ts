@@ -1,4 +1,4 @@
-import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import { AnimationBuilder, NavOutletElement, ResolvedRouteChain, RouteID, RouterDirection } from '../../../interface';
 import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
@@ -13,7 +13,7 @@ import { ROUTER_INTENT_NONE } from './constants';
  */
 export const writeNavState = async (
   root: HTMLElement | undefined,
-  chain: RouteChain,
+  chain: ResolvedRouteChain,
   direction: RouterDirection,
   index: number,
   changed = false,
@@ -29,8 +29,8 @@ export const writeNavState = async (
     }
     await new Promise(resolve => componentOnReady(outlet, resolve));
 
-    const route = chain[index];
-    const result = await outlet.setRouteId(route.id, route.params, direction, animation);
+    const node = chain[index];
+    const result = await outlet.setRouteId(node.node.id, node.params, direction, animation);
 
     // if the outlet changed the page, reset navigation to neutral (no direction)
     // this means nested outlets will not animate

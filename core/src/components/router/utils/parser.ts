@@ -73,13 +73,7 @@ export const flattenRouterTree = (nodes: RouteTree): RouteChain[] => {
 
 /** Flattens a route node recursively and push each branch to the chains list. */
 const flattenNode = (chain: RouteChain, chains: RouteChain[], node: RouteNode) => {
-  chain = [...chain, {
-    id: node.id,
-    segments: node.segments,
-    params: node.params,
-    beforeLeave: node.beforeLeave,
-    beforeEnter: node.beforeEnter
-  }];
+  chain = [...chain, node];
 
   if (node.children.length === 0) {
     chains.push(chain);

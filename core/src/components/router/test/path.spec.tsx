@@ -1,5 +1,5 @@
 import { ROUTER_INTENT_FORWARD } from '../utils/constants';
-import { RouteChain } from '../utils/interface';
+import { ResolvedRouteChain, RouteChain } from '../utils/interface';
 import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from '../utils/path';
 
 describe('parsePath', () => {
@@ -76,15 +76,39 @@ describe('generatePath', () => {
 
 describe('chainToSegments', () => {
   it('should generate a simple URL', () => {
-    const chain: RouteChain = [
-      { id: '2', segments: [''], params: undefined },
-      { id: '1', segments: [''], params: undefined },
-      { id: '3', segments: ['segment', 'to'], params: undefined },
-      { id: '4', segments: [''], params: undefined },
-      { id: '5', segments: ['hola', '', 'hey'], params: undefined },
-      { id: '6', segments: [''], params: undefined },
-      { id: '7', segments: [':param'], params: { param: 'name' } },
-      { id: '8', segments: ['adios', ':name', ':id'], params: { name: 'manu', id: '123' } },
+    const chain: ResolvedRouteChain = [
+      {
+        node: { id: '2', segments: [''], params: undefined, children: [] },
+        params: undefined
+      },
+      {
+        node: { id: '1', segments: [''], params: undefined, children: [] },
+        params: undefined
+      },
+      {
+        node: { id: '3', segments: ['segment', 'to'], params: undefined, children: [] },
+        params: undefined
+      },
+      {
+        node: { id: '4', segments: [''], params: undefined, children: [] },
+        params: undefined
+      },
+      {
+        node: { id: '5', segments: ['hola', '', 'hey'], params: undefined, children: [] },
+        params: undefined
+      },
+      {
+        node: { id: '6', segments: [''], params: undefined, children: [] },
+        params: undefined
+      },
+      {
+        node: { id: '7', segments: [':param'], params: undefined, children: [] },
+        params: { param: 'name' }
+      },
+      {
+        node: { id: '8', segments: ['adios', ':name', ':id'], params: undefined, children: [] },
+        params: { name: 'manu', id: '123' }
+      },
     ];
     expect(chainToSegments(chain)).toEqual(
       ['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']
@@ -92,17 +116,17 @@ describe('chainToSegments', () => {
   });
 
   it('should return null on missing parameters', () => {
-    const chain: RouteChain = [
-      { id: '3', segments: ['segment'], params: undefined },
-      { id: '8', segments: [':name'], params: undefined },
+    const chain: ResolvedRouteChain = [
+      {node: { id: '3', segments: ['segment'], params: undefined, children: [] }, params: undefined},
+      {node: { id: '8', segments: [':name'], params: undefined, children: [] }, params: undefined},
     ];
     expect(chainToSegments(chain)).toBeNull();
   });
 
   it('should return null on missing parameters 2', () => {
-    const chain: RouteChain = [
-      { id: '3', segments: ['segment'], params: undefined },
-      { id: '8', segments: [':name', ':id'], params: { name: 'hey' } },
+    const chain: ResolvedRouteChain = [
+      {node: { id: '3', segments: ['segment'], params: undefined, children: [] }, params: undefined},
+      {node: { id: '8', segments: [':name', ':id'], params: undefined, children: [] }, params: { name: 'hey' }},
     ];
     expect(chainToSegments(chain)).toBeNull();
   });

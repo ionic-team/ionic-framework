@@ -1,4 +1,4 @@
-import { RouteChain, RouteID, RouteRedirect } from './interface';
+import { ResolvedRouteChain, RouteChain, RouteID, RouteRedirect } from './interface';
 
 /**
  * Returns whether the given redirect matches the given path segments.
@@ -93,7 +93,7 @@ export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteCh
  * - null when there is no match,
  * - a chain with the params properties updated with the parameter segments on match.
  */
-export const matchesSegments = (segments: string[], chain: RouteChain): RouteChain | null => {
+export const matchesSegments = (segments: string[], chain: RouteChain): ResolvedRouteChain | null => {
   const inputSegments = new RouterSegments(segments);
   let matchesDefault = false;
   let allparams: any[] | undefined;
@@ -126,16 +126,11 @@ export const matchesSegments = (segments: string[], chain: RouteChain): RouteCha
   if (!matches) {
     return null;
   }
-  if (allparams) {
-    return chain.map((route, i) => ({
-      id: route.id,
-      segments: route.segments,
-      params: mergeParams(route.params, allparams![i]),
-      beforeEnter: route.beforeEnter,
-      beforeLeave: route.beforeLeave
-    }));
-  }
-  return chain;
+
+  return chain.map((node, i) => ({
+    node,
+    params: allparams ? mergeParams(node.params, allparams[i]) : node.params,
+  }));
 };
 
 /**
@@ -153,7 +148,7 @@ export const mergeParams = (a: { [key: string]: any } | undefined, b: { [key: st
  * When a chain is returned the parameters are updated from the RouteIDs.
  * That is they contain both the componentProps of the <ion-route> and the parameter segment.
  */
-export const findChainForIDs = (ids: RouteID[], chains: RouteChain[]): RouteChain | null => {
+export const findChainForIDs = (ids: RouteID[], chains: RouteChain[]): ResolvedRouteChain | null => {
   let match: RouteChain | null = null;
   let maxMatches = 0;
 
@@ -165,10 +160,9 @@ export const findChainForIDs = (ids: RouteID[], chains: RouteChain[]): RouteChai
     }
   }
   if (match) {
-    return match.map((route, i) => ({
-      id: route.id,
-      segments: route.segments,
-      params: mergeParams(route.params, ids[i]?.params)
+    return match.map((node, i) => ({
+      node,
+      params: mergeParams(node.params, ids[i]?.params),
     }));
   }
   return null;
@@ -181,8 +175,8 @@ export const findChainForIDs = (ids: RouteID[], chains: RouteChain[]): RouteChai
  * When a chain is returned the parameters are updated from the segments.
  * That is they contain both the componentProps of the <ion-route> and the parameter segments.
  */
-export const findChainForSegments = (segments: string[], chains: RouteChain[]): RouteChain | null => {
-  let match: RouteChain | null = null;
+export const findChainForSegments = (segments: string[], chains: RouteChain[]): ResolvedRouteChain | null => {
+  let match: ResolvedRouteChain | null = null;
   let bestScore = 0;
   for (const chain of chains) {
     const matchedChain = matchesSegments(segments, chain);
@@ -208,11 +202,11 @@ export const findChainForSegments = (segments: string[], chains: RouteChain[]): 
  *
  * The second one will be given a higher priority because "page" is a fixed segment (vs ":where", a parameter segment).
  */
-export const computePriority = (chain: RouteChain): number => {
+export const computePriority = (chain: ResolvedRouteChain): number => {
   let score = 1;
   let level = 1;
-  for (const route of chain) {
-    for (const segment of route.segments) {
+  for (const node of chain) {
+    for (const segment of node.node.segments) {
       if (segment[0] === ':') {
         score += Math.pow(1, level);
       } else if (segment !== '') {

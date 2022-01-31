@@ -77,7 +77,7 @@ describe('ionic-conference-app', () => {
 });
 
 function getRouteIDs(path: string, routes: RouteChain[]): string[] {
-  return findChainForSegments(parsePath(path).segments, routes)!.map(r => r.id);
+  return findChainForSegments(parsePath(path).segments, routes)!.map(r => r.node.id);
 }
 function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
   return generatePath(chainToSegments(findChainForIDs(ids, routes)!)!);

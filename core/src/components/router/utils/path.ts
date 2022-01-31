@@ -1,5 +1,5 @@
 import { ROUTER_INTENT_FORWARD } from './constants';
-import { ParsedRoute, RouteChain, RouterDirection } from './interface';
+import { ParsedRoute, ResolvedRouteChain, RouterDirection } from './interface';
 
 /** Join the non empty segments with "/". */
 export const generatePath = (segments: string[]): string => {
@@ -37,12 +37,12 @@ export const writeSegments = (history: History, root: string, useHash: boolean, 
  * - parameter segments of the form :param are replaced with their value,
  * - null is returned when a value is missing for any parameter segment.
  */
-export const chainToSegments = (chain: RouteChain): string[] | null => {
+export const chainToSegments = (chain: ResolvedRouteChain): string[] | null => {
   const segments = [];
-  for (const route of chain) {
-    for (const segment of route.segments) {
+  for (const node of chain) {
+    for (const segment of node.node.segments) {
       if (segment[0] === ':') {
-        const param = route.params && route.params[segment.slice(1)];
+        const param = node.params && node.params[segment.slice(1)];
         if (!param) {
           return null;
         }

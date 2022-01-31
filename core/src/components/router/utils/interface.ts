@@ -38,17 +38,26 @@ export interface RouteID {
   params?: {[key: string]: any};
 }
 
-export interface RouteEntry {
+export interface RouteNode {
   /** Component tag name or tab name. */
   id: string;
   segments: string[];
+  /**
+   * The route parameters.
+   *
+   * They are the initialized from the `componentProps` property of the `<ion-route>`.
+   * They do not include any URL parameters (i.e. `/:param` segments).
+   */
   params: {[key: string]: any} | undefined;
   beforeLeave?: NavigationHookCallback;
   beforeEnter?: NavigationHookCallback;
+  children: RouteTree;
 }
 
-export interface RouteNode extends RouteEntry {
-  children: RouteTree;
+export interface ResolvedRouteNode {
+  node: RouteNode,
+  /** Merged route and URL parameters */
+  params: {[key: string]: any} | undefined,
 }
 
 export interface ParsedRoute {
@@ -60,5 +69,11 @@ export interface ParsedRoute {
 
 export type RouterDirection = 'forward' | 'back' | 'root';
 export type NavOutletElement = NavOutlet & HTMLStencilElement;
-export type RouteChain = RouteEntry[];
+
+/** A RouteChain is a branch in the tree (from a root node to a terminal node) */
+export type RouteChain = RouteNode[];
+
+/** A chain with the parameters resolved from an URL */
+export type ResolvedRouteChain = ResolvedRouteNode[];
+
 export type RouteTree = RouteNode[];
