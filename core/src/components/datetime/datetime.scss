@@ -241,6 +241,13 @@
   width: 100%;
 }
 
+:host .calendar-body .calendar-month-disabled {
+  /**
+   * Disables swipe gesture snapping for scroll-snap containers
+   */
+  scroll-snap-align: none;
+}
+
 /**
  * Hide scrollbars on Chrome and Safari
  */
