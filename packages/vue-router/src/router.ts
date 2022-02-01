@@ -199,21 +199,20 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           locationHistory.clearHistory();
         }
       } else {
-          /**
-           * If the routerDirection was specified as "root", then
-           * we are replacing the initial state of location history
-           * with this incoming route. As a result, the leaving
-           * history info is stored at the same location as
-           * where the incoming history location will be stored.
-           *
-           * Otherwise, we can assume this is just another route
-           * that will be pushed onto the end of location history,
-           * so we can grab the previous item in history relative
-           * to where the history state currently is.
-           */
-          const position = (incomingRouteParams.routerDirection === 'root') ? currentHistoryPosition : currentHistoryPosition - 1;
-          leavingLocationInfo = locationHistory.current(initialHistoryPosition, position);
-        }
+        /**
+         * If the routerDirection was specified as "root", then
+         * we are replacing the initial state of location history
+         * with this incoming route. As a result, the leaving
+         * history info is stored at the same location as
+         * where the incoming history location will be stored.
+         *
+         * Otherwise, we can assume this is just another route
+         * that will be pushed onto the end of location history,
+         * so we can grab the previous item in history relative
+         * to where the history state currently is.
+         */
+        const position = (incomingRouteParams.routerDirection === 'root') ? currentHistoryPosition : currentHistoryPosition - 1;
+        leavingLocationInfo = locationHistory.current(initialHistoryPosition, position);
       }
     } else {
       leavingLocationInfo = currentRouteInfo;
