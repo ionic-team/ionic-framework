@@ -85,6 +85,12 @@ export const createLocationHistory = () => {
     locationHistory.push(routeInfo);
   }
 
+  /**
+   * Wipes the location history arrays.
+   * You can optionally provide a routeInfo
+   * object which will wipe that entry
+   * and every entry that appears after it.
+   */
   const clearHistory = (routeInfo?: RouteInfo) => {
     Object.keys(tabsHistory).forEach(key => {
       tabsHistory[key] = [];
