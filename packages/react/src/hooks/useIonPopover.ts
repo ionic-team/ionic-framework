@@ -1,6 +1,5 @@
 import { PopoverOptions, popoverController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-popover.js';
-
 import { useCallback } from 'react';
 
 import { ReactComponentOrElement } from '../models/ReactComponentOrElement';

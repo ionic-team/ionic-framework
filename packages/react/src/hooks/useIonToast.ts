@@ -1,6 +1,5 @@
 import { ToastOptions, toastController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-toast.js';
-
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';

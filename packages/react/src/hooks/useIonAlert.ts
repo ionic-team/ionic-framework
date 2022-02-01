@@ -1,6 +1,5 @@
 import { AlertButton, AlertOptions, alertController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-alert.js';
-
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
