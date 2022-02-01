@@ -12,7 +12,8 @@ interface OverlayBase extends HTMLElement {
 
 export function useController<OptionsType, OverlayType extends OverlayBase>(
   displayName: string,
-  controller: { create: (options: OptionsType) => Promise<OverlayType> }
+  controller: { create: (options: OptionsType) => Promise<OverlayType> },
+  defineCustomElement: () => void
 ) {
   const overlayRef = useRef<OverlayType>();
   const didDismissEventName = useMemo(() => `on${displayName}DidDismiss`, [displayName]);
@@ -25,6 +26,9 @@ export function useController<OptionsType, OverlayType extends OverlayBase>(
       if (overlayRef.current) {
         return;
       }
+
+      defineCustomElement();
+
       const { onDidDismiss, onWillDismiss, onDidPresent, onWillPresent, ...rest } = options;
 
       const handleDismiss = (event: CustomEvent<OverlayEventDetail<any>>) => {

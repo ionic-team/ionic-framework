@@ -7,17 +7,16 @@ import {
   pickerController as pickerCtrl,
   toastController as toastCtrl,
 } from '@ionic/core/components';
-import { defineCustomElement } from './utils';
 
 import { VueDelegate } from './framework-delegate';
 
-import { IonModal } from '@ionic/core/components/ion-modal.js';
-import { IonPopover } from '@ionic/core/components/ion-popover.js'
-import { IonAlert } from '@ionic/core/components/ion-alert.js'
-import { IonActionSheet } from '@ionic/core/components/ion-action-sheet.js'
-import { IonLoading } from '@ionic/core/components/ion-loading.js'
-import { IonPicker } from '@ionic/core/components/ion-picker.js'
-import { IonToast } from '@ionic/core/components/ion-toast.js'
+import { defineCustomElement as defineIonActionSheetCustomElement } from '@ionic/core/components/ion-action-sheet.js'
+import { defineCustomElement as defineIonAlertCustomElement } from '@ionic/core/components/ion-alert.js'
+import { defineCustomElement as defineIonLoadingCustomElement } from '@ionic/core/components/ion-loading.js'
+import { defineCustomElement as defineIonPickerCustomElement } from '@ionic/core/components/ion-picker.js'
+import { defineCustomElement as defineIonToastCustomElement } from '@ionic/core/components/ion-toast.js'
+import { defineCustomElement as defineIonModalCustomElement } from '@ionic/core/components/ion-modal.js'
+import { defineCustomElement as defineIonPopoverCustomElement } from '@ionic/core/components/ion-popover.js'
 
 /**
  * Wrap the controllers export from @ionic/core
@@ -25,12 +24,12 @@ import { IonToast } from '@ionic/core/components/ion-toast.js'
  * (optionally) provide a framework delegate.
  */
 const createController: {
-  <T>(tagName: string, customElement: any, oldController: T, useDelegate?: boolean): T
-} = (tagName: string, customElement: any, oldController: any, useDelegate = false) => {
+  <T>(defineCustomElement: () => void, oldController: T, useDelegate?: boolean): T
+} = (defineCustomElement: () => void, oldController: any, useDelegate = false) => {
   const delegate = useDelegate ? VueDelegate() : undefined;
   const oldCreate = oldController.create.bind(oldController);
   oldController.create = (options: any) => {
-    defineCustomElement(tagName, customElement);
+    defineCustomElement();
 
     return oldCreate({
       ...options,
@@ -41,13 +40,13 @@ const createController: {
   return oldController;
 }
 
-const modalController = /*@__PURE__*/ createController('ion-modal', IonModal, modalCtrl, true);
-const popoverController = /*@__PURE__*/ createController('ion-popover', IonPopover, popoverCtrl, true);
-const alertController = /*@__PURE__*/ createController('ion-alert', IonAlert, alertCtrl);
-const actionSheetController = /*@__PURE__*/ createController('ion-action-sheet', IonActionSheet, actionSheetCtrl);
-const loadingController = /*@__PURE__*/ createController('ion-loading', IonLoading, loadingCtrl);
-const pickerController = /*@__PURE__*/ createController('ion-picker', IonPicker, pickerCtrl);
-const toastController = /*@__PURE__*/ createController('ion-toast', IonToast, toastCtrl);
+const modalController = /*@__PURE__*/ createController(defineIonModalCustomElement, modalCtrl, true);
+const popoverController = /*@__PURE__*/ createController(defineIonPopoverCustomElement, popoverCtrl, true);
+const alertController = /*@__PURE__*/ createController(defineIonAlertCustomElement, alertCtrl);
+const actionSheetController = /*@__PURE__*/ createController(defineIonActionSheetCustomElement, actionSheetCtrl);
+const loadingController = /*@__PURE__*/ createController(defineIonLoadingCustomElement, loadingCtrl);
+const pickerController = /*@__PURE__*/ createController(defineIonPickerCustomElement, pickerCtrl);
+const toastController = /*@__PURE__*/ createController(defineIonToastCustomElement, toastCtrl);
 
 export {
   modalController,

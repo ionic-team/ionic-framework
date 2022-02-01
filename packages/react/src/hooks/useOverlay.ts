@@ -16,6 +16,7 @@ interface OverlayBase extends HTMLElement {
 export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   displayName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> },
+  defineCustomElement: () => void,
   component: ReactComponentOrElement,
   componentProps?: any
 ) {
@@ -44,6 +45,8 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
     if (overlayRef.current) {
       return;
     }
+
+    defineCustomElement();
 
     const { onDidDismiss, onWillDismiss, onDidPresent, onWillPresent, ...rest } = options;
 
