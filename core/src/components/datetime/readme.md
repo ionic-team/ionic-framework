@@ -147,11 +147,27 @@ const zonedTime = dateFnsTz.utcToZonedTime(date, userTimeZone);
 format(zonedTime, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: userTimeZone });
 ```
 
-## Parsing Dates
+## Timezones
 
-When `ionChange` is emitted, we provide an ISO-8601 string in the event payload. From there, it is the developer's responsibility to format it as they see fit. We recommend using a library like [date-fns](https://date-fns.org) to format their dates properly.
+### Assigning Date Values
 
-Below is an example of formatting an ISO-8601 string to display the month, date, and year:
+Date values need to be a valid ISO-8601 string when assigning to `ion-datetime`. We recommend using [date-fns](https://date-fns.org) to format the date to ISO-8601.
+
+```typescript
+import { formatISO } from 'date-fns';
+
+const dateString = '2021-01-14T15:00:00.000Z';
+const formattedDateValue = formatISO(new Date(dateString));
+
+// Assign `formattedDateValue` to your `ion-datetime` value.
+
+```
+
+### Parsing Date Values
+
+The `ionChange` event will emit the date value as an ISO-8601 string in the event payload. It is the developer's responsibility to format it based on their application needs. We recommend using [date-fns](https://date-fns.org) to format the date value.
+
+Below is an example of formatting an ISO-8601 string to display the month, date and year:
 
 ```typescript
 import { format, parseISO } from 'date-fns';
@@ -159,6 +175,8 @@ import { format, parseISO } from 'date-fns';
 /**
  * This is provided in the event
  * payload from the `ionChange` event.
+ * 
+ * The value is an ISO-8601 date string.
  */
 const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
 const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
