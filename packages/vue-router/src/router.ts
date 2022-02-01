@@ -212,7 +212,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
            * to where the history state currently is.
            */
           const position = (incomingRouteParams.routerDirection === 'root') ? currentHistoryPosition : currentHistoryPosition - 1;
-          leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
+          leavingLocationInfo = locationHistory.current(initialHistoryPosition, position);
         }
       }
     } else {
