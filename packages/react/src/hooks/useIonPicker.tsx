@@ -5,7 +5,6 @@ import {
   pickerController,
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-picker.js';
-
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
