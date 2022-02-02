@@ -1,5 +1,5 @@
 import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core/components';
-import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
+import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
