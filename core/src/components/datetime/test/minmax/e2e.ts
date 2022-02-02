@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('minmax', async () => {
+test('datetime: minmax', async () => {
   const page = await newE2EPage({
     url: '/src/components/datetime/test/minmax?ionic:_testing=true'
   });
@@ -19,4 +19,31 @@ test('minmax', async () => {
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
+});
+
+test('datetime: minmax months disabled', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/datetime/test/minmax?ionic:_testing=true'
+  });
+
+  const calendarMonths = await page.findAll('ion-datetime#inside >>> .calendar-month');
+
+  await page.waitForChanges();
+
+  expect(calendarMonths[0]).not.toHaveClass('calendar-month-disabled');
+  expect(calendarMonths[1]).not.toHaveClass('calendar-month-disabled');
+  expect(calendarMonths[2]).toHaveClass('calendar-month-disabled');
+
+});
+
+test('datetime: minmax navigation disabled', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/datetime/test/minmax?ionic:_testing=true'
+  });
+
+  const navButtons = await page.findAll('ion-datetime#outside >>> .calendar-next-prev ion-button');
+
+  expect(navButtons[0]).toHaveAttribute('disabled');
+  expect(navButtons[1]).toHaveAttribute('disabled');
+
 });

@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import { menuOutline, menuSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -78,7 +79,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   render() {
     const { color, disabled, inheritedAttributes } = this;
     const mode = getIonMode(this);
-    const menuIcon = config.get('menuIcon', mode === 'ios' ? 'menu-outline' : 'menu-sharp');
+    const menuIcon = config.get('menuIcon', mode === 'ios' ? menuOutline : menuSharp);
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {

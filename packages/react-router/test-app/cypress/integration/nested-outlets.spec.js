@@ -54,7 +54,7 @@ describe('Nested Outlets 2', () => {
   Utilizes `ionPage` prop on `IonRouterOutlet` to make the router outlet
   a target of the transition.
   This one uses a few more nested outlets.
-  Note: There is a limitation when going back to the Home page from Welcome in 
+  Note: There is a limitation when going back to the Home page from Welcome in
   that the transition doesn't do a backwards animation. This is because the top level
   outlet is transition from and to itself, therefore it can't animate.
   I think the same issue exists when going from a item page back to the list page.
@@ -83,12 +83,12 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('list');
   });
 
-  it(`/nested-outlet2 > 
+  it(`/nested-outlet2 >
     Go to Welcome IonItem click >
-    Go to list from Welcome IonItem click > 
+    Go to list from Welcome IonItem click >
     Item#1 IonItem Click >
-    Item page should be visible    
-    `, () => {
+    Item page should be visible
+`, () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to Welcome');
@@ -99,13 +99,32 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('item');
   });
 
-  it(`/nested-outlet2 > 
+  it(`/nested-outlet2 >
     Go to list from Home IonItem click >
     Item#1 IonItem Click >
-    Item page should be visible > 
+    Item page should be visible >
+    Back >
+    List page should be visible
+`, () => {
+    cy.visit(`http://localhost:${port}/nested-outlet2`);
+    cy.ionPageVisible('home');
+    cy.ionNav('ion-item', 'Go to list from Home');
+    cy.ionPageVisible('list');
+    cy.ionNav('ion-item', 'Item #1');
+    cy.ionPageVisible('item');
+    cy.ionBackClick('item');
+    cy.ionPageVisible('list');
+});
+
+  it(`/nested-outlet2 >
+    Go to list from Home IonItem click >
+    Item#1 IonItem Click >
+    Item page should be visible >
+    Back >
+    List page should be visible
     Back >
     Home page should be visible
-    `, () => {
+`, () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to list from Home');

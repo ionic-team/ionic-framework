@@ -1051,7 +1051,7 @@ export namespace Components {
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
-        "max"?: string;
+        "max"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -1059,7 +1059,7 @@ export namespace Components {
         /**
           * The minimum value, which must not be greater than its maximum (max attribute) value.
          */
-        "min"?: string;
+        "min"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
          */
@@ -2272,7 +2272,7 @@ export namespace Components {
          */
         "autocorrect": 'on' | 'off';
         /**
-          * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
+          * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
          */
         "cancelButtonIcon": string;
         /**
@@ -2280,7 +2280,7 @@ export namespace Components {
          */
         "cancelButtonText": string;
         /**
-          * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
+          * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
          */
         "clearIcon"?: string;
         /**
@@ -2316,7 +2316,7 @@ export namespace Components {
          */
         "placeholder": string;
         /**
-          * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
+          * The icon to use as the search icon. Defaults to `search-outline` in `ios` mode and `search-sharp` in `md` mode.
          */
         "searchIcon"?: string;
         /**
@@ -4753,7 +4753,7 @@ declare namespace LocalJSX {
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
-        "max"?: string;
+        "max"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -4761,7 +4761,7 @@ declare namespace LocalJSX {
         /**
           * The minimum value, which must not be greater than its maximum (max attribute) value.
          */
-        "min"?: string;
+        "min"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
          */
@@ -5943,7 +5943,7 @@ declare namespace LocalJSX {
          */
         "autocorrect"?: 'on' | 'off';
         /**
-          * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
+          * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
          */
         "cancelButtonIcon"?: string;
         /**
@@ -5951,7 +5951,7 @@ declare namespace LocalJSX {
          */
         "cancelButtonText"?: string;
         /**
-          * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
+          * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
          */
         "clearIcon"?: string;
         /**
@@ -6011,7 +6011,7 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
-          * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
+          * The icon to use as the search icon. Defaults to `search-outline` in `ios` mode and `search-sharp` in `md` mode.
          */
         "searchIcon"?: string;
         /**
