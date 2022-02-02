@@ -151,7 +151,7 @@ format(zonedTime, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: userTimeZone });
 
 ### Assigning Date Values
 
-Date values need to be a valid ISO-8601 string when assigning to `ion-datetime`. We recommend using [date-fns](https://date-fns.org) to format the date to ISO-8601.
+`ion-datetime` does not manipulate or read timezones. Developers will need to pass in a valid ISO-8601 string that is already configured for the user's timezone when assigning a value. If no value is provided, `ion-datetime` will default to the time specified on the user's machine (which will already be in the user's timezone). We recommend using [date-fns](https://date-fns.org) to format the date to ISO-8601.
 
 ```typescript
 import { formatISO } from 'date-fns';
