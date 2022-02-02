@@ -50,7 +50,10 @@ Below is an example of importing `ion-badge`, and initializing Ionic so it is ab
 import { defineCustomElement } from "@ionic/core/components/ion-badge.js";
 import { initialize } from "@ionic/core/components";
 
+// Initializes the Ionic config and `mode` behavior
 initialize();
+
+//  Defines the `ion-badge` web component
 defineCustomElement();
 ```
 
@@ -64,7 +67,10 @@ For example, if you wanted to use `ion-modal`, you would do the following:
 import { defineCustomElement } from "@ionic/core/components/ion-modal.js";
 import { initialize } from "@ionic/core/components";
 
+// Initializes the Ionic config and `mode` behavior
 initialize();
+
+//  Defines the `ion-modal` and child `ion-backdrop` web components.
 defineCustomElement();
 ```
 
