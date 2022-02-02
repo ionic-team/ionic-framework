@@ -59,7 +59,7 @@ defineCustomElement();
 
 Notice how we import from `@ionic/core/components` as opposed to `@ionic/core`. This helps bundlers pull in only the code that is needed.
 
-In the example above, you could also import `IonBadge` and call `customElements.define('ion-badge', IonBadge)`, but we recommend importing the `defineCustomElement` function and calling that instead. This `defineCustomElement` function will automatically define the component as well as any child components that may be required.
+The `defineCustomElement` function will automatically define the component as well as any child components that may be required.
 
 For example, if you wanted to use `ion-modal`, you would do the following:
 
