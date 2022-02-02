@@ -21,13 +21,13 @@ export function useController<OptionsType, OverlayType extends OverlayBase>(
   const willDismissEventName = useMemo(() => `on${displayName}WillDismiss`, [displayName]);
   const willPresentEventName = useMemo(() => `on${displayName}WillPresent`, [displayName]);
 
+  defineCustomElement();
+
   const present = useCallback(
     async (options: OptionsType & HookOverlayOptions) => {
       if (overlayRef.current) {
         return;
       }
-
-      defineCustomElement();
 
       const { onDidDismiss, onWillDismiss, onDidPresent, onWillPresent, ...rest } = options;
 

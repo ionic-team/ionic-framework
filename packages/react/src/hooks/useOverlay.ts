@@ -30,6 +30,8 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   const ionContext = useContext(IonContext);
   const [overlayId] = useState(generateId('overlay'));
 
+  defineCustomElement();
+
   useEffect(() => {
     if (isOpen && component && containerElRef.current) {
       if (React.isValidElement(component)) {
@@ -45,8 +47,6 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
     if (overlayRef.current) {
       return;
     }
-
-    defineCustomElement();
 
     const { onDidDismiss, onWillDismiss, onDidPresent, onWillPresent, ...rest } = options;
 
