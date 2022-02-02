@@ -60,7 +60,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * new pages or updating history via the forward
    * and back browser buttons.
    */
-  const initialHistoryPosition = opts.history.state.position as number;
+  let initialHistoryPosition = opts.history.state.position as number;
   let currentHistoryPosition = opts.history.state.position as number;
 
   let currentRouteInfo: RouteInfo;
@@ -159,8 +159,60 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         leavingLocationInfo = locationHistory.previous();
       } else if (incomingRouteParams.routerAction === 'pop') {
         leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition + 1);
+
+        /**
+         * If the Ionic Router action was "pop"
+         * and the browser history action was "replace", then
+         * it is the case that the user clicked an IonBackButton
+         * that is trying to go back to the route specified
+         * by the defaultHref property.
+         *
+         * The problem is that this route currently does
+         * not exist in the browser history, and we cannot
+         * prepend an item in the browser's history stack.
+         * To work around this, we replace the state of
+         * the current item instead.
+         * Given this scenario:
+         * /page2 --> /page3 --> (back) /page2 --> (defaultHref) /page1
+         * We would replace the state of /page2 with the state of /page1.
+         *
+         * When doing this, we are essentially re-writing past
+         * history which makes the future history no longer relevant.
+         * As a result, we clear out the location history so that users
+         * can begin pushing new routes to the stack.
+         *
+         * This pattern is aligned with how the browser handles
+         * pushing new routes after going back as well as how
+         * other stack based operations such as undo/redo work.
+         * For example, if you do tasks A, B, C, undo B and C, and
+         * then do task D, you cannot "redo" B and C because you
+         * rewrote the stack's past history.
+         *
+         * With browser history, it is a similar concept.
+         * Going /page1 --> /page2 --> /page3 and then doing
+         * router.go(-2) will bring you back to /page1.
+         * If you then push /page4, you have rewritten
+         * the past history and you can no longer go
+         * forward to /page2 or /page3.
+         */
+        if (action === 'replace') {
+          locationHistory.clearHistory();
+        }
       } else {
-        leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - 1);
+        /**
+         * If the routerDirection was specified as "root", then
+         * we are replacing the initial state of location history
+         * with this incoming route. As a result, the leaving
+         * history info is stored at the same location as
+         * where the incoming history location will be stored.
+         *
+         * Otherwise, we can assume this is just another route
+         * that will be pushed onto the end of location history,
+         * so we can grab the previous item in history relative
+         * to where the history state currently is.
+         */
+        const position = (incomingRouteParams.routerDirection === 'root') ? currentHistoryPosition : currentHistoryPosition - 1;
+        leavingLocationInfo = locationHistory.current(initialHistoryPosition, position);
       }
     } else {
       leavingLocationInfo = currentRouteInfo;
@@ -285,24 +337,38 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        */
       if (historySize > historyDiff && routeInfo.tab === undefined) {
         /**
-         * When going from /a --> /a/1 --> /b, then going
-         * back to /a, then going /a --> /a/2 --> /b, clicking
-         * the ion-back-button should return us to /a/2, not /a/1.
-         * However, since the route entry for /b already exists,
-         * we need to update other information such as the "pushedByRoute"
-         * so we know which route pushed this new route.
+         * When navigating back through the history,
+         * if users then push a new route the future
+         * history stack is no longer relevant. As
+         * a result, we need to clear out all entries
+         * that appear after the current routeInfo
+         * so that we can then append the new history.
          *
-         * However, when using router.go with a stride of >1 or <-1,
-         * we should not update this additional information because
-         * we are traversing through the history, not pushing new states.
-         * Going from /a --> /b --> /c, then doing router.go(-2), then doing
-         * router.go(2) to go from /a --> /c should not update the route
-         * listing to say that /c was pushed by /a.
+         * This does not apply when using router.go
+         * as that is traversing through the history,
+         * not altering it.
+         *
+         * Previously we had only updated the existing route
+         * and then left the future history alone. That
+         * worked for some use cases but was not sufficient
+         * in other scenarios.
          */
-        const hasDeltaStride = delta !== undefined && Math.abs(delta) !== 1;
-        locationHistory.updateByHistoryPosition(routeInfo, !hasDeltaStride);
+
+        if (routeInfo.routerAction === 'push' && delta === undefined) {
+          locationHistory.clearHistory(routeInfo);
+          locationHistory.add(routeInfo);
+        }
       } else {
         locationHistory.add(routeInfo);
+      }
+
+      /**
+       * If we recently reset the location history
+       * then we also need to update the initial
+       * history position.
+       */
+      if (locationHistory.size() === 1) {
+        initialHistoryPosition = routeInfo.position;
       }
 
       currentRouteInfo = routeInfo;

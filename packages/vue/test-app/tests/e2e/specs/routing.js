@@ -400,6 +400,119 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageHidden('inputs');
   })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23873
+  it('should correctly show pages after going back to defaultHref page', () => {
+    cy.visit('http://localhost:8080/default-href');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('defaulthref');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('defaulthref');
+
+    cy.ionBackClick('defaulthref');
+    cy.ionPageDoesNotExist('defaulthref');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/default-href');
+    cy.ionPageVisible('defaulthref');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('defaulthref');
+
+    cy.ionBackClick('routing');
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageVisible('defaulthref');
+
+    cy.ionBackClick('defaulthref');
+    cy.ionPageDoesNotExist('defaulthref');
+    cy.ionPageVisible('home');
+  })
+
+  it('should correctly update location history after rewriting past state', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/inputs');
+    cy.ionPageVisible('inputs');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('inputs');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('inputs');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+
+    cy.routerPush('default-href');
+    cy.ionPageVisible('defaulthref');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('defaulthref');
+
+    cy.routerPush('/inputs');
+    cy.ionPageVisible('inputs');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('inputs');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('inputs');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('defaulthref');
+    cy.ionPageDoesNotExist('routing');
+  })
+
+  it('should correctly update location history after setting root state', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/1');
+    cy.ionPageVisible('routingparameter-1');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameter-1');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('routingparameter-1');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+
+    cy.ionRouterNavigate('/inputs', 'root')
+    cy.ionPageVisible('inputs');
+    cy.ionPageDoesNotExist('home');
+
+    cy.routerPush('/routing');
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('inputs');
+
+    cy.routerPush('/routing/1');
+    cy.ionPageVisible('routingparameter-1');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameter-1');
+    cy.ionPageVisible('routing');
+    cy.ionPageDoesNotExist('routingparameter-1');
+
+    cy.ionBackClick('routing');
+    cy.ionPageVisible('inputs');
+    cy.ionPageDoesNotExist('routing');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {
