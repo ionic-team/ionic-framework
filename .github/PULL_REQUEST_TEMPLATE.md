@@ -26,9 +26,11 @@ Please check the type of change your PR introduces:
 
 
 ## What is the current behavior?
-<!-- Please describe the current behavior that you are modifying, or link to a relevant issue. -->
+<!-- Please describe the current behavior that you are modifying. -->
 
-Issue Number: N/A
+
+<!-- Issues are required for both bug fixes and features. -->
+Issue Number: # 
 
 
 ## What is the new behavior?
