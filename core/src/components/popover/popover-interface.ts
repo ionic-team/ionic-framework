@@ -29,7 +29,7 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   dismissOnSelect?: boolean;
   reference?: PositionReference;
   side?: PositionSide;
-  align?: PositionAlign;
+  alignment?: PositionAlign;
   arrow?: boolean;
 
   trigger?: string;
