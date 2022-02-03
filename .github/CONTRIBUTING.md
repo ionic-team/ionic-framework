@@ -88,7 +88,7 @@ Before creating a pull request, please read our requirements that explains the m
 
 ### Requirements
 1. PRs must reference an existing issue that describes the issue or feature being submitted.
-2. PRs must have a reproduction app or example to verify changes against.
+2. PRs must have a reproduction app or the issue must include a reproduction app to verify changes against.
 3. PRs must include tests covering the changed behavior or a description of why tests cannot be written.
 
 > Note: We appreciate you taking the time to contribute! Before submitting a pull request, please take the time to comment on the issue you are wanting to resolve. This helps us prevent duplicate effort or advise if the team is already addressing the issue.
