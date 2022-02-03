@@ -49,7 +49,7 @@ body:
       label: Ionic Info
       description: Please run `ionic info` from within your Ionic Framework project directory and paste the output below.
     validations:
-      requred: true
+      required: true
   - type: textarea
     attributes:
       label: Additional Information
