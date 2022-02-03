@@ -19,6 +19,9 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
+  "publishConfig": {
+    "directory": "dist"
+  },
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "prepublishOnly": "npm run build.prod",
