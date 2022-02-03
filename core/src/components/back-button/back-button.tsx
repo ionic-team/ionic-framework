@@ -121,7 +121,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText, inheritedAttributes } = this;
+    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText, icon, inheritedAttributes } = this;
     const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
