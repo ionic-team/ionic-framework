@@ -62,7 +62,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = chevronForward;
+  @Prop() detailIcon?: string | null;
 
   /**
    * If `true`, the user cannot interact with the item.
@@ -217,6 +217,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
   }
 
+  get itemDetailIcon() {
+    return this.detailIcon ?? chevronForward;
+  }
+
   // If the item contains multiple clickable elements and/or inputs, then the item
   // should not have a clickable input cover over the entire item to prevent
   // interfering with their individual click events
@@ -310,7 +314,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { counterString, detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
+    const { counterString, detail, detailIcon, download, fill, itemDetailIcon, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
@@ -369,7 +373,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <slot></slot>
             </div>
             <slot name="end"></slot>
-            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true" flip-rtl></ion-icon>}
+            {showDetail && <ion-icon icon={itemDetailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true" flip-rtl={!detailIcon}></ion-icon>}
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
