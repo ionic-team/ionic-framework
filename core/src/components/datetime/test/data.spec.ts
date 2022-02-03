@@ -95,7 +95,7 @@ describe('generateTime()', () => {
       day: 19,
       month: 5,
       year: 2021,
-      hour: 5,
+      hour: 7,
       minute: 43
     }
     const max = {
@@ -287,5 +287,50 @@ describe('generateTime()', () => {
 
       expect(hours).toStrictEqual([19, 20]);
     });
+
+    it('should return the filtered minutes when the max bound is set', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 13,
+        minute: 0
+      };
+
+      const maxParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 13,
+        minute: 2
+      };
+
+      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+
+      expect(minutes).toStrictEqual([0, 1, 2]);
+    });
+
+    it('should not filter minutes when the current hour is less than the max hour bound', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 12,
+        minute: 0
+      };
+
+      const maxParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 13,
+        minute: 2
+      };
+
+      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+
+      expect(minutes.length).toEqual(60);
+    });
+
   })
 })

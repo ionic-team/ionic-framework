@@ -223,7 +223,11 @@ export const generateTime = (
         });
         isPMAllowed = maxParts.hour >= 13;
       }
-      if (maxParts.minute !== undefined) {
+      if (maxParts.minute !== undefined && refParts.hour === maxParts.hour) {
+        // The available minutes should only be filtered when the hour is the same as the max hour.
+        // For example if the max hour is 10:30 and the current hour is 10:00,
+        // users should be able to select 00-30 minutes.
+        // If the current hour is 09:00, users should be able to select 00-60 minutes.
         processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
       }
 
