@@ -36,7 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start.ci": "BROWSER=none react-scripts start",
+    "start.ci": "npm run sync && BROWSER=none react-scripts start",
     "build": "node scripts/build.js",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
