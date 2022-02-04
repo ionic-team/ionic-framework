@@ -33,6 +33,10 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./angular/test/test-app
+    - name: Sync Built Changes
+      run: npm run sync
+      shell: bash
+      working-directory: ./angular/test/test-app
     - name: Run Tests
       run: npm run test
       shell: bash

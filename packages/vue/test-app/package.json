@@ -9,7 +9,7 @@
     "test:e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
     "lint": "vue-cli-service lint",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "start": "npm run sync && vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {
