@@ -723,7 +723,6 @@ export class Datetime implements ComponentInterface {
           minParts: this.minParts,
           maxParts: this.maxParts
         })) {
-          console.log('this being called');
           return;
         }
 
