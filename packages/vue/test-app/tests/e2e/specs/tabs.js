@@ -420,7 +420,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1');
   });*/
 
-  it('should swipe and go back to home', () => {
+  it.skip('should swipe and go back to home', () => {
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('home');
 
@@ -439,7 +439,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1childone');
   });
 
-  it('should swipe and go back within a tab', () => {
+  it.skip('should swipe and go back within a tab', () => {
     cy.get('#child-one').click();
     cy.ionPageVisible('tab1childone');
     cy.ionPageHidden('tab1');
@@ -450,7 +450,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageDoesNotExist('tab1childone');
   });
 
-  it('should swipe and go back to correct tab after switching tabs', () => {
+  it.skip('should swipe and go back to correct tab after switching tabs', () => {
     cy.get('#child-one').click();
     cy.ionPageVisible('tab1childone');
     cy.ionPageHidden('tab1');
