@@ -771,17 +771,26 @@ export class Datetime implements ComponentInterface {
          */
         writeTask(() => {
 
-          this.setWorkingParts({
-            ...this.workingParts,
-            month,
-            day: day!,
-            year
-          });
+          // Disconnect all active intersection observers
+          // to avoid a re-render causing a duplicate event.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
 
           raf(() => {
+            this.setWorkingParts({
+              ...this.workingParts,
+              month,
+              day: day!,
+              year
+            });
+
             calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
             calendarBodyRef.style.removeProperty('overflow');
             calendarBodyRef.style.removeProperty('pointer-events');
+
+            endIO?.observe(endMonth);
+            startIO?.observe(startMonth);
           });
 
           /**
