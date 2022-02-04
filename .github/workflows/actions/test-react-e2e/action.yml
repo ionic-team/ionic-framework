@@ -33,5 +33,5 @@ runs:
       with:
         browser: chrome
         headless: true
-        start: npm run sync && npm run start.ci
+        start: npm run start.ci
         working-directory: ./packages/react/test-app
