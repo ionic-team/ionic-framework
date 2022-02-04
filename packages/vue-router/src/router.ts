@@ -371,7 +371,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * in other scenarios.
          */
 
-        if (routeInfo.routerAction === 'push' && delta === undefined) {
+        if (
+          (routeInfo.routerAction === 'push' || routeInfo.routerAction === 'replace') &&
+          delta === undefined
+        ) {
           locationHistory.clearHistory(routeInfo);
           locationHistory.add(routeInfo);
         }
