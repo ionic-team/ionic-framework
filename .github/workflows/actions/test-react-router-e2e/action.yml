@@ -29,6 +29,10 @@ runs:
         name: ionic-react-router
         path: ./packages/react-router
         filename: ReactRouterBuild.zip
+    - name: Sync Built Changes
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/react-router/test-app
     - uses: cypress-io/github-action@v2
       with:
         browser: chrome
