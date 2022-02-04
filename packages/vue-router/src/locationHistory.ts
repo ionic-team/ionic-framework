@@ -134,7 +134,6 @@ export const createLocationHistory = () => {
     const index = currentHistory - initialHistory;
     return locationHistory[index] || last();
   }
-  const previous = () => locationHistory[locationHistory.length - 2] || last();
   const last = () => locationHistory[locationHistory.length - 1];
 
   /**
@@ -210,7 +209,6 @@ export const createLocationHistory = () => {
     current,
     size,
     last,
-    previous,
     add,
     canGoBack,
     update,
