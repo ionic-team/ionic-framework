@@ -88,6 +88,12 @@ Cypress.Commands.add('ionRouterNavigate', (...args) => {
   });
 });
 
+Cypress.Commands.add('ionRouterBack', () => {
+  cy.window().then(win => {
+    win.debugIonRouter.back();
+  });
+});
+
 Cypress.Commands.add('ionBackButtonHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('be.visible', true)

@@ -365,6 +365,27 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1childtwo');
     cy.ionPageVisible('tabs');
   })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24432
+  it('should properly reset location history when switching tabs after going back', () => {
+    cy.visit('http://localhost:8080/tabs');
+
+    cy.routerPush('/tabs/tab1/childone');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.ionRouterBack();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1childone');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionRouterBack();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab2');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {
@@ -386,7 +407,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1');
   });*/
 
-  it.skip('should swipe and go back to home', () => {
+  it('should swipe and go back to home', () => {
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('home');
 
@@ -405,7 +426,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('tab1childone');
   });
 
-  it.skip('should swipe and go back within a tab', () => {
+  it('should swipe and go back within a tab', () => {
     cy.get('#child-one').click();
     cy.ionPageVisible('tab1childone');
     cy.ionPageHidden('tab1');
@@ -416,7 +437,7 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageDoesNotExist('tab1childone');
   });
 
-  it.skip('should swipe and go back to correct tab after switching tabs', () => {
+  it('should swipe and go back to correct tab after switching tabs', () => {
     cy.get('#child-one').click();
     cy.ionPageVisible('tab1childone');
     cy.ionPageHidden('tab1');
