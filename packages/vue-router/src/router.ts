@@ -334,8 +334,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * item for this route. In other words, a user
        * is navigating within the history without pushing
        * new items within the stack.
+       *
+       * If the historySize === historyDiff,
+       * then we are still re-writing history
+       * by replacing the current route state
+       * with a new route state.
        */
-      if (historySize > historyDiff && routeInfo.tab === undefined) {
+      if (historySize >= historyDiff) {
         /**
          * When navigating back through the history,
          * if users then push a new route the future
