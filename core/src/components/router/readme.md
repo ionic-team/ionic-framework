@@ -100,9 +100,9 @@ Type: `Promise<void>`
 
 
 
-### `push(url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>`
+### `push(path: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>`
 
-Navigate to the specified URL.
+Navigate to the specified path.
 
 #### Returns
 
