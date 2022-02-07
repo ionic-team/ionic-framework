@@ -3,10 +3,8 @@ describe('Routing', () => {
     cy.visit('http://localhost:8080');
     cy.get('ion-item#routing').click();
 
-    cy.wait(500)
-
-    cy.ionPageVisible('routing')
-    cy.ionPageHidden('home')
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
   });
 
   it('should set query params and keep view in stack', () => {

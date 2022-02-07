@@ -365,6 +365,40 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1childtwo');
     cy.ionPageVisible('tabs');
   })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24432
+  it('should properly reset location history when switching tabs after going back', () => {
+    cy.visit('http://localhost:8080/tabs');
+
+    cy.routerPush('/tabs/tab1/childone');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.ionRouterBack();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1childone');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionRouterBack();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab2');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24432
+  it('should correct replace a route in a child tab route', () => {
+    cy.visit('http://localhost:8080/tabs');
+
+    cy.routerPush('/tabs/tab1/childone');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.ionRouterReplace('/tabs/tab1');
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1childone');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {

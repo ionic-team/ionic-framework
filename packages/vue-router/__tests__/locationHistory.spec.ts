@@ -69,15 +69,12 @@ describe('Location History', () => {
     expect(first.pathname).toEqual('/tabs/tab1/child/1');
   });
 
-  it('should correctly get current and previous routes', () => {
+  it('should correctly get last route', () => {
     locationHistory.add({ pathname: '/home' });
     locationHistory.add({ pathname: '/login' });
 
     const current = locationHistory.last();
     expect(current.pathname).toEqual('/login');
-
-    const previous = locationHistory.previous();
-    expect(previous.pathname).toEqual('/home');
   });
 
   it('should correctly determine if we can go back', () => {

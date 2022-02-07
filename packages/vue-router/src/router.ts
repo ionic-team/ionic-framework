@@ -155,8 +155,15 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   ) => {
     let leavingLocationInfo: RouteInfo;
     if (incomingRouteParams) {
+
+      /**
+       * If we are replacing the state of a route
+       * with another route, the "leaving" route
+       * is at the same position in location history
+       * as where the replaced route will exist.
+       */
       if (incomingRouteParams.routerAction === 'replace') {
-        leavingLocationInfo = locationHistory.previous();
+        leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
       } else if (incomingRouteParams.routerAction === 'pop') {
         leavingLocationInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition + 1);
 
@@ -334,8 +341,18 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * item for this route. In other words, a user
        * is navigating within the history without pushing
        * new items within the stack.
+       *
+       * If the historySize === historyDiff,
+       * then we are still re-writing history
+       * by replacing the current route state
+       * with a new route state. The initial
+       * action when loading an app is
+       * going to be replace operation, so
+       * we want to make sure we exclude that
+       * action by ensuring historySize > 0.
        */
-      if (historySize > historyDiff && routeInfo.tab === undefined) {
+      const isReplacing = historySize === historyDiff && historySize > 0 && action === 'replace';
+      if (historySize > historyDiff || isReplacing) {
         /**
          * When navigating back through the history,
          * if users then push a new route the future
@@ -354,7 +371,10 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
          * in other scenarios.
          */
 
-        if (routeInfo.routerAction === 'push' && delta === undefined) {
+        if (
+          (routeInfo.routerAction === 'push' || routeInfo.routerAction === 'replace') &&
+          delta === undefined
+        ) {
           locationHistory.clearHistory(routeInfo);
           locationHistory.add(routeInfo);
         }
