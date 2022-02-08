@@ -96,7 +96,6 @@ export const CoreDelegate = () => {
       cssClasses.forEach(c => el.classList.add(c));
       // Move each child from the original template to the new parent element.
       el.append(...BaseComponent.children);
-      
       // Append the new parent element to the original parent element.
       BaseComponent.appendChild(el);
     }
