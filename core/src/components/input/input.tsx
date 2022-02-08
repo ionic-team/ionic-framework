@@ -22,6 +22,7 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
   private inheritedAttributes: { [k: string]: any } = {};
+  private isComposing = false;
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -231,7 +232,7 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    if (this.nativeInput) {
+    if (this.nativeInput && !this.isComposing) {
       /**
        * Assigning the native input's value on attribute
        * value change, allows `ionInput` implementations
@@ -260,11 +261,24 @@ export class Input implements ComponentInterface {
     }
   }
 
+  componentDidLoad() {
+    if (this.nativeInput) {
+      // TODO: Update to JSX bindings when Stencil resolves bug with:
+      // https://github.com/ionic-team/stencil/issues/3235
+      this.nativeInput.addEventListener('compositionstart', this.onCompositionStart);
+      this.nativeInput.addEventListener('compositionend', this.onCompositionEnd);
+    }
+  }
+
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
         detail: this.el
       }));
+    }
+    if (this.nativeInput) {
+      this.nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
+      this.nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
     }
   }
 
@@ -362,6 +376,14 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
+  }
+
+  private onCompositionStart = () => {
+    this.isComposing = true;
+  }
+
+  private onCompositionEnd = () => {
+    this.isComposing = false;
   }
 
   private clearTextOnEnter = (ev: KeyboardEvent) => {
