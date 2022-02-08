@@ -240,7 +240,10 @@ export class Input implements ComponentInterface {
        * Used for patterns such as input trimming (removing whitespace),
        * or input masking.
        */
-      this.nativeInput.value = this.getValue();
+       const { selectionStart, selectionEnd } = this.nativeInput;
+       this.nativeInput.value = this.getValue();
+       // Set the cursor position back to where it was before the value change
+       this.nativeInput.setSelectionRange(selectionStart, selectionEnd);
     }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
