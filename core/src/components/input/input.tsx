@@ -242,6 +242,7 @@ export class Input implements ComponentInterface {
        */
        const { selectionStart, selectionEnd } = this.nativeInput;
        this.nativeInput.value = this.getValue();
+       // TODO: FW-727 Remove this when we drop support for iOS 15.3
        // Set the cursor position back to where it was before the value change
        this.nativeInput.setSelectionRange(selectionStart, selectionEnd);
     }
