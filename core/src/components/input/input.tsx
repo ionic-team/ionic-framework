@@ -262,11 +262,12 @@ export class Input implements ComponentInterface {
   }
 
   componentDidLoad() {
-    if (this.nativeInput) {
-      // TODO: Update to JSX bindings when Stencil resolves bug with:
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      // TODO: FW-729 Update to JSX bindings when Stencil resolves bug with:
       // https://github.com/ionic-team/stencil/issues/3235
-      this.nativeInput.addEventListener('compositionstart', this.onCompositionStart);
-      this.nativeInput.addEventListener('compositionend', this.onCompositionEnd);
+      nativeInput.addEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.addEventListener('compositionend', this.onCompositionEnd);
     }
   }
 
@@ -276,9 +277,10 @@ export class Input implements ComponentInterface {
         detail: this.el
       }));
     }
-    if (this.nativeInput) {
-      this.nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
-      this.nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
     }
   }
 
