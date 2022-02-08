@@ -92,14 +92,13 @@ export const CoreDelegate = () => {
     } else {
       // If there is no component, then we need to create a new parent
       // element to apply the css classes to.
-      const el: HTMLElement = BaseComponent.ownerDocument && BaseComponent.ownerDocument.createElement('div');
+      const el = BaseComponent.ownerDocument && BaseComponent.ownerDocument.createElement('div');
       cssClasses.forEach(c => el.classList.add(c));
       // Move each child from the original template to the new parent element.
-      while (BaseComponent.hasChildNodes()) {
-        el.appendChild(BaseComponent.firstChild);
-      }
+      el.append(...BaseComponent.children);
+      
       // Append the new parent element to the original parent element.
-      (BaseComponent as HTMLElement).appendChild(el);
+      BaseComponent.appendChild(el);
     }
 
     /**
