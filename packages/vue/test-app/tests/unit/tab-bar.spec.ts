@@ -107,8 +107,12 @@ describe('ion-tab-bar', () => {
       }
     });
 
-    const innerHTML = wrapper.find('ion-tabs').html();
-    expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet></ion-router-outlet></div><ion-tab-bar></ion-tab-bar></ion-tabs>`)
+    const tabs = wrapper.findComponent(IonTabs);
+    const children = tabs.vm.$el.children;
+    const tabsInner = children[0];
+    expect(tabsInner.tagName).toEqual('DIV');
+    expect(tabsInner.className).toEqual('tabs-inner');
+    expect(tabsInner.children[0].tagName).toEqual('ION-ROUTER-OUTLET');
   });
 
   // Verifies the fix for https://github.com/ionic-team/ionic-framework/issues/22642
@@ -143,6 +147,11 @@ describe('ion-tab-bar', () => {
     });
 
     const innerHTML = wrapper.find('ion-tabs').html();
-    expect(innerHTML).toContain(`><ion-tab-bar><!-- my comment --></ion-tab-bar>`)
+
+    const tabs = wrapper.findComponent(IonTabBar);
+    const children = tabs.vm.$el.childNodes;
+
+    // 8 is a comment node: https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+    expect(children[0].nodeType).toEqual(8);
   })
 });
