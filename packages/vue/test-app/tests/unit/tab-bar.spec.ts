@@ -36,8 +36,11 @@ describe('ion-tab-bar', () => {
       }
     });
 
-    const innerHTML = wrapper.find('ion-tabs').html();
-    expect(innerHTML).toContain(`<ion-tab-bar slot="top"></ion-tab-bar><div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;">`);
+    const tabs = wrapper.findComponent(IonTabs);
+    const children = tabs.vm.$el.children;
+    expect(children[0].tagName).toEqual('ION-TAB-BAR');
+    expect(children[1].tagName).toEqual('DIV');
+    expect(children[1].className).toEqual('tabs-inner');
 
   });
 
@@ -69,9 +72,11 @@ describe('ion-tab-bar', () => {
       }
     });
 
-    const innerHTML = wrapper.find('ion-tabs').html();
-    expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet></ion-router-outlet></div><ion-tab-bar slot="bottom"></ion-tab-bar>`);
-
+    const tabs = wrapper.findComponent(IonTabs);
+    const children = tabs.vm.$el.children;
+    expect(children[0].tagName).toEqual('DIV');
+    expect(children[0].className).toEqual('tabs-inner');
+    expect(children[1].tagName).toEqual('ION-TAB-BAR');
   });
 
   it('should render in the default slot', async () => {
