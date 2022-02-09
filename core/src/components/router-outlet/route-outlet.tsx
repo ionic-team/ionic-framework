@@ -16,6 +16,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;
+  private activeParams: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
@@ -36,10 +37,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
    */
   @Prop() animated = true;
 
-  /**
-   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
-   * However, this property allows to create custom transition using `AnimateBuilder` functions.
-   */
+  /** This property allows to create custom transition using AnimateBuilder functions. */
   @Prop() animation?: AnimationBuilder;
 
   /** @internal */
@@ -156,6 +154,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return active ? {
       id: active.tagName,
       element: active,
+      params: this.activeParams,
     } : undefined;
   }
 
@@ -170,6 +169,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
     this.activeComponent = component;
     this.activeEl = enteringEl;
+    this.activeParams = params;
 
     // commit animation
     await this.commit(enteringEl, leavingEl, opts);

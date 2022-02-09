@@ -20,7 +20,7 @@
           </ion-header>
           <ion-content class="ion-padding">
             <h1>Page One</h1>
-            <ion-button href="#/two">Go to Page Two</ion-button>
+            <ion-button href="#/two/segment">Go to Page Two</ion-button>
           </ion-content>
         `;
       }
@@ -30,9 +30,6 @@
         this.innerHTML = `
           <ion-header>
             <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-back-button text="Page One"></ion-back-button>
-              </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
           </ion-header>
@@ -40,7 +37,7 @@
             <h1>Page Two</h1>
             <div>
               <ion-nav-link router-direction="forward" component="page-three">
-                <ion-button href="#/page-3">Go to Page Two</ion-button>
+                <ion-button href="#/page-3">Go to Page Three</ion-button>
               </ion-nav-link>
             </div>
           </ion-content>
@@ -52,9 +49,6 @@
         this.innerHTML = `
           <ion-header>
             <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-back-button text="Page Two"></ion-back-button>
-              </ion-buttons>
               <ion-title>Page Three</ion-title>
             </ion-toolbar>
           </ion-header>
@@ -74,7 +68,7 @@
   <ion-app>
     <ion-router>
       <ion-route url="/" component="page-one"> </ion-route>
-      <ion-route url="/two" component="page-two"> </ion-route>
+      <ion-route url="/two/:param" component="page-two"> </ion-route>
       <ion-route url="/page-3" component="page-three"> </ion-route>
     </ion-router>
 
@@ -89,7 +83,7 @@
           <ion-item href="#/">
             <ion-label>Page 1</ion-label>
           </ion-item>
-          <ion-item href="#/two">
+          <ion-item href="#/two/segment">
             <ion-label>Page 2</ion-label>
           </ion-item>
           <ion-item href="#/page-3">
@@ -101,5 +95,9 @@
     </ion-split-pane>
   </ion-app>
 </body>
+
+<script>
+  document.querySelector('ion-route[component=page-three]').componentProps = {param: "route"};
+</script>
 
 </html>
