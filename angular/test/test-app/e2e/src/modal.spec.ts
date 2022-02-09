@@ -61,7 +61,7 @@ describe('Modals: Inline', () => {
     cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
   });
 
-  it.ly('should have a div with .ion-page', () => {
+  it('should have a div with .ion-page', () => {
     cy.get('ion-modal').children()[0].should('have.class', 'ion-page');
   });
 });
