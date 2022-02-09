@@ -15,8 +15,4 @@ describe('Popovers: Inline', () => {
     cy.get('ion-list ion-item:nth-child(3)').should('have.text', 'C');
     cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
   });
-
-  it('should have a div with .ion-page', () => {
-    cy.get('ion-popover').children()[0].should('have.class', 'ion-page');
-  });
 });
