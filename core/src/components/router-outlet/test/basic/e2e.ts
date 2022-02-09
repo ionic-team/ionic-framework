@@ -28,7 +28,7 @@ test('getRouteId() should return the route parameters', async () => {
   expect(routeId.params).toEqual({ param: 'route' });
 });
 
-test('is should be possible to activate the same component provided parameters are different', async () => {
+test('it should be possible to activate the same component provided parameters are different', async () => {
   const page = await newE2EPage({
     url: '/src/components/router-outlet/test/basic?ionic:_testing=true'
   });  
