@@ -232,7 +232,9 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    if (this.nativeInput && !this.isComposing) {
+    const nativeInput = this.nativeInput;
+    const value = this.getValue();
+    if (nativeInput && nativeInput.value !== value && !this.isComposing) {
       /**
        * Assigning the native input's value on attribute
        * value change, allows `ionInput` implementations
@@ -241,7 +243,7 @@ export class Input implements ComponentInterface {
        * Used for patterns such as input trimming (removing whitespace),
        * or input masking.
        */
-      this.setNativeInputValue();
+      nativeInput.value = value;
     }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
@@ -313,24 +315,6 @@ export class Input implements ComponentInterface {
   @Method()
   getInputElement(): Promise<HTMLInputElement> {
     return Promise.resolve(this.nativeInput!);
-  }
-
-  private setNativeInputValue() {
-    const { nativeInput, type } = this;
-
-    if (nativeInput) {
-      // Only use `setSelectionRange` if the type supports it:
-      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
-      if (type === 'text' || type === 'search' || type === 'url' || type === 'tel' || type === 'password') {
-        const { selectionStart, selectionEnd } = nativeInput;
-        nativeInput.value = this.getValue();
-        // TODO: FW-727 Remove this when we drop support for iOS 15.3
-        // Set the cursor position back to where it was before the value change
-        nativeInput.setSelectionRange(selectionStart, selectionEnd);
-      } else {
-        nativeInput.value = this.getValue();
-      }
-    }
   }
 
   private shouldClearOnEdit() {
