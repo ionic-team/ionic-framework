@@ -720,8 +720,8 @@ export class Datetime implements ComponentInterface {
         const { month, year, day } = refMonthFn(this.workingParts);
 
         if (isMonthDisabled({ month, year, day: null }, {
-          minParts: this.minParts,
-          maxParts: this.maxParts
+          minParts: { ...this.minParts, day: null },
+          maxParts: { ...this.maxParts, day: null }
         })) {
           return;
         }
@@ -1238,8 +1238,8 @@ export class Datetime implements ComponentInterface {
       year,
       day: null
     }, {
-      minParts: this.minParts,
-      maxParts: this.maxParts
+      minParts: { ...this.minParts, day: null },
+      maxParts: { ...this.maxParts, day: null }
     });
     // The working month should never have swipe disabled.
     // Otherwise the CSS scroll snap will not work and the user
