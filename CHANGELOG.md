@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.6](https://github.com/ionic-team/ionic-framework/compare/v6.0.5...v6.0.6) (2022-02-09)
+
+
+### Bug Fixes
+
+* **action-sheet:** background includes safe area margin ([#24700](https://github.com/ionic-team/ionic-framework/issues/24700)) ([8c22646](https://github.com/ionic-team/ionic-framework/commit/8c22646d66e2077fc88aaacf350330097733bb9b)), closes [#24699](https://github.com/ionic-team/ionic-framework/issues/24699)
+* **angular-server:** publish only the dist directory to avoid import errors ([#24701](https://github.com/ionic-team/ionic-framework/issues/24701)) ([2a27bef](https://github.com/ionic-team/ionic-framework/commit/2a27befe463832b9ca7709ba22421abbdaa4cfa4)), closes [#24605](https://github.com/ionic-team/ionic-framework/issues/24605)
+* **angular, react,  vue:** overlays no longer throw errors when used inside tests ([#24681](https://github.com/ionic-team/ionic-framework/issues/24681)) ([897ae4a](https://github.com/ionic-team/ionic-framework/commit/897ae4a4546ac0dd811125d5513ef23d133a1589)), closes [#24549](https://github.com/ionic-team/ionic-framework/issues/24549) [#24590](https://github.com/ionic-team/ionic-framework/issues/24590)
+* **datetime:** disable intersection observer during month update ([#24713](https://github.com/ionic-team/ionic-framework/issues/24713)) ([aab4d30](https://github.com/ionic-team/ionic-framework/commit/aab4d306f80851bfd8a02a6361e26d60faeaadb4)), closes [#24712](https://github.com/ionic-team/ionic-framework/issues/24712)
+* **datetime:** minutes only filtered when max hour matches current hour ([#24710](https://github.com/ionic-team/ionic-framework/issues/24710)) ([231d6df](https://github.com/ionic-team/ionic-framework/commit/231d6df622c1f5dd9ecdff6fed8f61a4bff332df)), closes [#24702](https://github.com/ionic-team/ionic-framework/issues/24702)
+* **input:** cursor position does not jump to end ([#24736](https://github.com/ionic-team/ionic-framework/issues/24736)) ([4ff9524](https://github.com/ionic-team/ionic-framework/commit/4ff9524e1057aa487069b5982c5f1ecdf51d982b)), closes [#24727](https://github.com/ionic-team/ionic-framework/issues/24727)
+* **input:** IME composition mode ([#24735](https://github.com/ionic-team/ionic-framework/issues/24735)) ([c6381ce](https://github.com/ionic-team/ionic-framework/commit/c6381ce4f90707774d1c8662bba874f7b306bd1c)), closes [#24669](https://github.com/ionic-team/ionic-framework/issues/24669)
+* **modal, popover:** quickly opening modal/popover no longer presents duplicates ([#24697](https://github.com/ionic-team/ionic-framework/issues/24697)) ([928c5fb](https://github.com/ionic-team/ionic-framework/commit/928c5fbfcbf3ef1b2c3074464fc20dcf1fe143ae))
+* **modal:** inline modals inherit ion-page styling ([#24723](https://github.com/ionic-team/ionic-framework/issues/24723)) ([596aad4](https://github.com/ionic-team/ionic-framework/commit/596aad435b5102307da89dd626ca4682b78db452)), closes [#24706](https://github.com/ionic-team/ionic-framework/issues/24706)
+* **popover:** use alignment with popover options ([#24711](https://github.com/ionic-team/ionic-framework/issues/24711)) ([f5c5c3c](https://github.com/ionic-team/ionic-framework/commit/f5c5c3cffa4f34046b0e9471a9f193db3772180e)), closes [#24709](https://github.com/ionic-team/ionic-framework/issues/24709)
+* **router:** router push with relative path ([#24719](https://github.com/ionic-team/ionic-framework/issues/24719)) ([d40c0c3](https://github.com/ionic-team/ionic-framework/commit/d40c0c3a0993eaefbe5107e98958c6b0699a62c2)), closes [#24718](https://github.com/ionic-team/ionic-framework/issues/24718)
+* **select:** value is selected when given array ([#24687](https://github.com/ionic-team/ionic-framework/issues/24687)) ([6ee7d15](https://github.com/ionic-team/ionic-framework/commit/6ee7d159ecfff3382fadb524c5c430172d40c267)), closes [#24742](https://github.com/ionic-team/ionic-framework/issues/24742)
+* **vue:** replacing routes now updates location state correctly ([#24721](https://github.com/ionic-team/ionic-framework/issues/24721)) ([721a461](https://github.com/ionic-team/ionic-framework/commit/721a461073bbd8e7218cd5ce02965d673f5a03e8)), closes [#24432](https://github.com/ionic-team/ionic-framework/issues/24432)
+* **vue:** routing history is correctly replaced when overwriting browser history ([#24670](https://github.com/ionic-team/ionic-framework/issues/24670)) ([0b18260](https://github.com/ionic-team/ionic-framework/commit/0b18260da64334d8211c5a0cd806f7416274fc5e)), closes [#23873](https://github.com/ionic-team/ionic-framework/issues/23873)
+
+
+
+
+
 ## [6.0.5](https://github.com/ionic-team/ionic-framework/compare/v6.0.4...v6.0.5) (2022-02-02)
 
 
