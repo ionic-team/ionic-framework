@@ -22,6 +22,7 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
   private inheritedAttributes: { [k: string]: any } = {};
+  private isComposing = false;
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -231,7 +232,7 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    if (this.nativeInput) {
+    if (this.nativeInput && !this.isComposing) {
       /**
        * Assigning the native input's value on attribute
        * value change, allows `ionInput` implementations
@@ -240,7 +241,11 @@ export class Input implements ComponentInterface {
        * Used for patterns such as input trimming (removing whitespace),
        * or input masking.
        */
-      this.nativeInput.value = this.getValue();
+       const { selectionStart, selectionEnd } = this.nativeInput;
+       this.nativeInput.value = this.getValue();
+       // TODO: FW-727 Remove this when we drop support for iOS 15.3
+       // Set the cursor position back to where it was before the value change
+       this.nativeInput.setSelectionRange(selectionStart, selectionEnd);
     }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
@@ -260,11 +265,26 @@ export class Input implements ComponentInterface {
     }
   }
 
+  componentDidLoad() {
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      // TODO: FW-729 Update to JSX bindings when Stencil resolves bug with:
+      // https://github.com/ionic-team/stencil/issues/3235
+      nativeInput.addEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.addEventListener('compositionend', this.onCompositionEnd);
+    }
+  }
+
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
         detail: this.el
       }));
+    }
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
     }
   }
 
@@ -362,6 +382,14 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
+  }
+
+  private onCompositionStart = () => {
+    this.isComposing = true;
+  }
+
+  private onCompositionEnd = () => {
+    this.isComposing = false;
   }
 
   private clearTextOnEnter = (ev: KeyboardEvent) => {

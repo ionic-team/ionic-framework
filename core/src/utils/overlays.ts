@@ -1,14 +1,3 @@
-import { ActionSheet } from '../components/action-sheet/action-sheet';
-import { Alert } from '../components/alert/alert';
-import { Backdrop } from '../components/backdrop/backdrop';
-import { Loading } from '../components/loading/loading';
-import { Modal } from '../components/modal/modal';
-import { PickerColumnCmp } from '../components/picker-column/picker-column';
-import { Picker } from '../components/picker/picker';
-import { Popover } from '../components/popover/popover';
-import { RippleEffect } from '../components/ripple-effect/ripple-effect';
-import { Spinner } from '../components/spinner/spinner';
-import { Toast } from '../components/toast/toast';
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
@@ -20,15 +9,10 @@ let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
-type ChildCustomElementDefinition = {
-  tagName: string;
-  customElement: any;
-}
-
-const createController = <Opts extends object, HTMLElm extends any>(tagName: string, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]) => {
+const createController = <Opts extends object, HTMLElm extends any>(tagName: string) => {
   return {
     create(options: Opts): Promise<HTMLElm> {
-      return createOverlay(tagName, options, customElement, childrenCustomElements) as any;
+      return createOverlay(tagName, options) as any;
     },
     dismiss(data?: any, role?: string, id?: string) {
       return dismissOverlay(document, data, role, tagName, id);
@@ -39,13 +23,13 @@ const createController = <Opts extends object, HTMLElm extends any>(tagName: str
   };
 };
 
-export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert', Alert, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
-export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet', ActionSheet, [{ tagName: 'ion-backdrop', customElement: Backdrop }, { tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
-export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading', Loading, [{ tagName: 'ion-backdrop', customElement: Backdrop }, { tagName: 'ion-spinner', customElement: Spinner }]);
-export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal', Modal, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
-export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker', Picker, [{ tagName: 'ion-picker-column', customElement: PickerColumnCmp }, { tagName: 'ion-backdrop', customElement: Backdrop }]);
-export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover', Popover, [{ tagName: 'ion-backdrop', customElement: Backdrop }]);
-export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast', Toast, [{ tagName: 'ion-ripple-effect', customElement: RippleEffect }]);
+export const alertController = /*@__PURE__*/createController<AlertOptions, HTMLIonAlertElement>('ion-alert');
+export const actionSheetController = /*@__PURE__*/createController<ActionSheetOptions, HTMLIonActionSheetElement>('ion-action-sheet');
+export const loadingController = /*@__PURE__*/createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading');
+export const modalController = /*@__PURE__*/createController<ModalOptions, HTMLIonModalElement>('ion-modal');
+export const pickerController = /*@__PURE__*/createController<PickerOptions, HTMLIonPickerElement>('ion-picker');
+export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
+export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
 export interface OverlayListenerOptions {
   trapKeyboardFocus: boolean;
@@ -65,29 +49,10 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T, options: 
   }
 };
 
-const registerOverlayComponents = (tagName: string, customElement: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<any> => {
-  const { customElements } = window;
-  if (!customElements.get(tagName)) {
-    customElements.define(tagName, customElement);
-  }
-  /**
-   * If the parent element has nested usage of custom elements,
-   * we need to manually define those custom elements.
-   */
-  if (childrenCustomElements) {
-    for (const customElementDefinition of childrenCustomElements) {
-      if (!customElements.get(customElementDefinition.tagName)) {
-        customElements.define(customElementDefinition.tagName, customElementDefinition.customElement);
-      }
-    }
-  }
-  return customElements.whenDefined(tagName);
-}
-
-export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined, customElement?: any, childrenCustomElements?: ChildCustomElementDefinition[]): Promise<T> => {
+export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
   /* tslint:disable-next-line */
   if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
-    return registerOverlayComponents(tagName, customElement, childrenCustomElements).then(() => {
+    return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
@@ -502,8 +467,13 @@ export const dismiss = async (
 
     activeAnimations.delete(overlay);
 
-    // Make overlay hidden again in case it is being reused
+    /**
+     * Make overlay hidden again in case it is being reused.
+     * We can safely remove pointer-events: none as
+     * overlay-hidden will set display: none.
+     */
     overlay.el.classList.add('overlay-hidden');
+    overlay.el.style.removeProperty('pointer-events');
 
   } catch (err) {
     console.error(err);

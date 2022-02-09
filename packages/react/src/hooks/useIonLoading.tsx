@@ -1,4 +1,5 @@
 import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
@@ -11,7 +12,8 @@ import { useController } from './useController';
 export function useIonLoading(): UseIonLoadingResult {
   const controller = useController<LoadingOptions, HTMLIonLoadingElement>(
     'IonLoading',
-    loadingController
+    loadingController,
+    defineCustomElement
   );
 
   const present = useCallback(

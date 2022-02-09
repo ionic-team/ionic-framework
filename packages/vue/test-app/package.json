@@ -9,7 +9,7 @@
     "test:e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
     "lint": "vue-cli-service lint",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "start": "npm run sync && vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {
@@ -31,7 +31,7 @@
     "@vue/cli-service": "~4.5.15",
     "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-typescript": "^5.0.2",
-    "@vue/test-utils": "^2.0.0-0",
+    "@vue/test-utils": "^2.0.0-rc.18",
     "concurrently": "^6.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",

@@ -35,7 +35,7 @@
     "wait-on": "^5.3.0"
   },
   "scripts": {
-    "start": "npm run sync && react-scripts start",
+    "start": "react-scripts start",
     "start.ci": "npm run sync && BROWSER=none react-scripts start",
     "build": "node scripts/build.js",
     "test": "cypress open",

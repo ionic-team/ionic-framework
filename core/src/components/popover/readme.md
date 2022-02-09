@@ -107,7 +107,7 @@ interface PopoverOptions {
   dismissOnSelect?: boolean;
   reference?: PositionReference;
   side?: PositionSide;
-  align?: PositionAlign;
+  alignment?: PositionAlign;
   arrow?: boolean;
 }
 ```

@@ -13,7 +13,7 @@ $action-sheet-md-background-color:                      $overlay-md-background-c
 $action-sheet-md-padding-top:                           0 !default;
 
 /// @prop - Padding bottom of the action sheet
-$action-sheet-md-padding-bottom:                        0 !default;
+$action-sheet-md-padding-bottom:                        var(--ion-safe-area-bottom) !default;
 
 
 // Action Sheet Title
