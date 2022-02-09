@@ -1238,6 +1238,9 @@ export class Datetime implements ComponentInterface {
       year,
       day: null
     }, {
+      // The day is not used when checking if a month is disabled.
+      // Users should be able to access the min or max month, even if the
+      // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
       minParts: { ...this.minParts, day: null },
       maxParts: { ...this.maxParts, day: null }
     });
