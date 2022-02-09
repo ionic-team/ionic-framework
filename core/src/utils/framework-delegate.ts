@@ -89,7 +89,7 @@ export const CoreDelegate = () => {
       BaseComponent.appendChild(el);
 
       await new Promise(resolve => componentOnReady(el, resolve));
-    } else {
+    } else if (BaseComponent.children.length > 0) {
       // If there is no component, then we need to create a new parent
       // element to apply the css classes to.
       const el = BaseComponent.ownerDocument && BaseComponent.ownerDocument.createElement('div');
