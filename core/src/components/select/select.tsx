@@ -248,7 +248,7 @@ export class Select implements ComponentInterface {
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
       return {
-        role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
+        role: (isOptionSelected(selectValue, value, this.compareWith) ? 'selected' : ''),
         text: option.textContent,
         cssClass: optClass,
         handler: () => {
@@ -282,7 +282,7 @@ export class Select implements ComponentInterface {
         cssClass: optClass,
         label: option.textContent || '',
         value,
-        checked: isOptionSelected(value, selectValue, this.compareWith),
+        checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled
       };
     });
@@ -302,7 +302,7 @@ export class Select implements ComponentInterface {
         text: option.textContent || '',
         cssClass: optClass,
         value,
-        checked: isOptionSelected(value, selectValue, this.compareWith),
+        checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
         handler: (selected: any) => {
           this.value = selected;
