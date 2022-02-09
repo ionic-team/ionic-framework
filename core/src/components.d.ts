@@ -1616,6 +1616,9 @@ export namespace Components {
           * @param view The view to get.
          */
         "getPrevious": (view?: ViewController | undefined) => Promise<ViewController | undefined>;
+        /**
+          * Called by <ion-router> to retrieve the current component.
+         */
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
           * Inserts a component into the navigation stack at the specified index. This is useful to add a component at any point in the navigation stack.
@@ -1692,6 +1695,14 @@ export namespace Components {
           * @param done The transition complete function.
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+        /**
+          * Called by the router to update the view.
+          * @param id The component tag.
+          * @param params The component params.
+          * @param direction A direction hint.
+          * @param animation an AnimationBuilder.
+          * @return the status.
+         */
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         /**
           * If the nav component should allow for swipe-to-go-back.
