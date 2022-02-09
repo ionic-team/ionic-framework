@@ -241,11 +241,7 @@ export class Input implements ComponentInterface {
        * Used for patterns such as input trimming (removing whitespace),
        * or input masking.
        */
-       const { selectionStart, selectionEnd } = this.nativeInput;
-       this.nativeInput.value = this.getValue();
-       // TODO: FW-727 Remove this when we drop support for iOS 15.3
-       // Set the cursor position back to where it was before the value change
-       this.nativeInput.setSelectionRange(selectionStart, selectionEnd);
+      this.setNativeInputValue();
     }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
@@ -317,6 +313,24 @@ export class Input implements ComponentInterface {
   @Method()
   getInputElement(): Promise<HTMLInputElement> {
     return Promise.resolve(this.nativeInput!);
+  }
+
+  private setNativeInputValue() {
+    const { nativeInput, type } = this;
+
+    if (nativeInput) {
+      // Only use `setSelectionRange` if the type supports it:
+      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
+      if (type === 'text' || type === 'search' || type === 'url' || type === 'tel' || type === 'password') {
+        const { selectionStart, selectionEnd } = nativeInput;
+        nativeInput.value = this.getValue();
+        // TODO: FW-727 Remove this when we drop support for iOS 15.3
+        // Set the cursor position back to where it was before the value change
+        nativeInput.setSelectionRange(selectionStart, selectionEnd);
+      } else {
+        nativeInput.value = this.getValue();
+      }
+    }
   }
 
   private shouldClearOnEdit() {
