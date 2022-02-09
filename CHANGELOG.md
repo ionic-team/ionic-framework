@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.7](https://github.com/ionic-team/ionic-framework/compare/v6.0.6...v6.0.7) (2022-02-09)
+
+
+### Bug Fixes
+
+* **angular:** inline modals now add .ion-page class correctly ([#24751](https://github.com/ionic-team/ionic-framework/issues/24751)) ([ef46eaf](https://github.com/ionic-team/ionic-framework/commit/ef46eafc9476a85ea3369e542f528d01d3cca0a8)), closes [#24750](https://github.com/ionic-team/ionic-framework/issues/24750)
+
+
+
+
+
 ## [6.0.6](https://github.com/ionic-team/ionic-framework/compare/v6.0.5...v6.0.6) (2022-02-09)
 
 
