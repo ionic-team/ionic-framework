@@ -24,6 +24,8 @@ core/test-components/
 core/css/
 angular/css/
 $RECYCLE.BIN/
+test-results/
+playwright-report/
 
 .DS_Store
 Thumbs.db
