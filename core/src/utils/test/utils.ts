@@ -1,5 +1,30 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
+import { test as base } from '@playwright/test';
+
+export const test = base.extend({
+  page: async ({ page }, use, testInfo) => {
+    const oldGoTo = page.goto.bind(page);
+
+    page.goto = (url: string) => {
+      const { mode, rtl } = testInfo.project.metadata;
+      const formattedUrl = `${url}?ionic:_testing=true&ionic:mode=${mode}&rtl=${rtl}`;
+
+      return Promise.all([
+        oldGoTo(formattedUrl),
+        page.waitForFunction(() => window.stencilAppLoaded === true)
+      ])
+    }
+
+    page.getSnapshotName = () => {
+      const { mode, rtl } = testInfo.project.metadata;
+      const rtlString = rtl ? 'rtl' : 'ltr';
+      return `${testInfo.title}-${mode}-${rtlString}.png`;
+    }
+
+    await use(page);
+  },
+});
 
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
