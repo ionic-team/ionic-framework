@@ -62,7 +62,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon?: string | null;
+  @Prop() detailIcon?: string;
 
   /**
    * If `true`, the user cannot interact with the item.
