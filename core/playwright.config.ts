@@ -100,7 +100,11 @@ const config: PlaywrightTestConfig = {
   },
 
   /* Configure projects for major browsers */
-  projects: generateProjects()
+  projects: generateProjects(),
+  webServer: {
+    command: 'python3 -m http.server 3333',
+    port: '3333'
+  }
 };
 
 export default config;
