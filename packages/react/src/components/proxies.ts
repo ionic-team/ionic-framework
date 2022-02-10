@@ -72,6 +72,14 @@ import { defineCustomElement as defineIonToggle } from '@ionic/core/components/i
 import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/ion-toolbar.js';
 import { defineCustomElement as defineIonVirtualScroll } from '@ionic/core/components/ion-virtual-scroll.js';
 
+const excludeValueProp = (_: any, props: any) => {
+  const newProps = {
+    ...props
+  };
+  delete newProps['value'];
+  return newProps;
+}
+
 export const IonAccordion = /*@__PURE__*/createReactComponent<JSX.IonAccordion, HTMLIonAccordionElement>('ion-accordion', undefined, undefined, defineIonAccordion);
 export const IonAccordionGroup = /*@__PURE__*/createReactComponent<JSX.IonAccordionGroup, HTMLIonAccordionGroupElement>('ion-accordion-group', undefined, undefined, defineIonAccordionGroup);
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar, HTMLIonAvatarElement>('ion-avatar', undefined, undefined, defineIonAvatar);
@@ -123,7 +131,7 @@ export const IonRow = /*@__PURE__*/createReactComponent<JSX.IonRow, HTMLIonRowEl
 export const IonSearchbar = /*@__PURE__*/createReactComponent<JSX.IonSearchbar, HTMLIonSearchbarElement>('ion-searchbar', undefined, undefined, defineIonSearchbar);
 export const IonSegment = /*@__PURE__*/createReactComponent<JSX.IonSegment, HTMLIonSegmentElement>('ion-segment', undefined, undefined, defineIonSegment);
 export const IonSegmentButton = /*@__PURE__*/createReactComponent<JSX.IonSegmentButton, HTMLIonSegmentButtonElement>('ion-segment-button', undefined, undefined, defineIonSegmentButton);
-export const IonSelect = /*@__PURE__*/createReactComponent<JSX.IonSelect, HTMLIonSelectElement>('ion-select', undefined, undefined, defineIonSelect);
+export const IonSelect = /*@__PURE__*/createReactComponent<JSX.IonSelect, HTMLIonSelectElement>('ion-select', undefined, excludeValueProp, defineIonSelect);
 export const IonSelectOption = /*@__PURE__*/createReactComponent<JSX.IonSelectOption, HTMLIonSelectOptionElement>('ion-select-option', undefined, undefined, defineIonSelectOption);
 export const IonSkeletonText = /*@__PURE__*/createReactComponent<JSX.IonSkeletonText, HTMLIonSkeletonTextElement>('ion-skeleton-text', undefined, undefined, defineIonSkeletonText);
 export const IonSlide = /*@__PURE__*/createReactComponent<JSX.IonSlide, HTMLIonSlideElement>('ion-slide', undefined, undefined, defineIonSlide);
