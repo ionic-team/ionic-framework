@@ -58,9 +58,24 @@
         `;
       }
     }
+    class PageFour extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Page Four</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>text = ${this.text}</h1>
+          </ion-content>
+        `;
+      }
+    }    
     customElements.define('page-one', PageOne);
     customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
+    customElements.define('page-four', PageFour);
   </script>
 </head>
 
@@ -70,6 +85,8 @@
       <ion-route url="/" component="page-one"> </ion-route>
       <ion-route url="/two/:param" component="page-two"> </ion-route>
       <ion-route url="/page-3" component="page-three"> </ion-route>
+      <ion-route url="/page-4.1/:text" component="page-four"> </ion-route>
+      <ion-route url="/page-4.2/:text" component="page-four"> </ion-route>
     </ion-router>
 
     <ion-split-pane content-id="main">
@@ -89,6 +106,12 @@
           <ion-item href="#/page-3">
             <ion-label>Page 3</ion-label>
           </ion-item>
+          <ion-item href="#/page-4.1/foo">
+            <ion-label>Page 4 (foo)</ion-label>
+          </ion-item>
+          <ion-item href="#/page-4.2/bar">
+            <ion-label>Page 4 (bar)</ion-label>
+          </ion-item>                    
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main"></ion-router-outlet>
