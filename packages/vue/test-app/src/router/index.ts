@@ -14,6 +14,18 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
+    path: '/ion-page-class-object',
+    component: () => import('@/views/IonPageClass/Object.vue')
+  },
+  {
+    path: '/ion-page-class-string',
+    component: () => import('@/views/IonPageClass/String.vue')
+  },
+  {
+    path: '/ion-page-class-undefined',
+    component: () => import('@/views/IonPageClass/Undefined.vue')
+  },
+  {
     path: '/lifecycle',
     component: () => import('@/views/Lifecycle.vue')
   },

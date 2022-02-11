@@ -11,12 +11,13 @@ export const IonPage = /*@__PURE__*/ defineComponent({
   },
   setup(props, { attrs, slots }) {
     const hidePageClass = (props.isInOutlet) ? 'ion-page-invisible' : '';
+    const pageClass = attrs.class ? ` ${attrs.class}` : '';
     return () => {
       return h(
         'div',
         {
-          ['class']: `ion-page ${hidePageClass}`,
           ...attrs,
+          ['class']: `ion-page ${hidePageClass}${pageClass}`,
           ref: 'ionPage'
         },
         slots.default && slots.default()
