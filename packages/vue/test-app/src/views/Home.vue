@@ -17,9 +17,6 @@
       </ion-header>
 
       <ion-list>
-        <ion-item button router-link="/ion-page-class">
-          <ion-label>IonPageClass</ion-label>
-        </ion-item>
         <ion-item button router-link="/overlays">
           <ion-label>Overlays</ion-label>
         </ion-item>
