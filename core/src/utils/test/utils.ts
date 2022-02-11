@@ -16,10 +16,10 @@ export const test = base.extend({
       ])
     }
 
-    page.getSnapshotName = () => {
+    page.getSnapshotSettings = () => {
       const { mode, rtl } = testInfo.project.metadata;
       const rtlString = rtl ? 'rtl' : 'ltr';
-      return `${testInfo.title}-${mode}-${rtlString}.png`;
+      return `${mode}-${rtlString}`;
     }
 
     await use(page);

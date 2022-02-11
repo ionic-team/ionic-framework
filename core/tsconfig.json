@@ -23,7 +23,11 @@
     "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
-    "target": "es2017"
+    "target": "es2017",
+    "baseUrl": ".",
+    "paths": {
+      "@utils/*": ["src/utils/*"]
+    }
   },
   "include": [
     "src",
