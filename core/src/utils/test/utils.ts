@@ -11,8 +11,8 @@ export const test = base.extend({
       const formattedUrl = `${url}?ionic:_testing=true&ionic:mode=${mode}&rtl=${rtl}`;
 
       return Promise.all([
-        oldGoTo(formattedUrl),
-        page.waitForFunction(() => window.stencilAppLoaded === true)
+        page.waitForFunction(() => window.stencilAppLoaded === true),
+        oldGoTo(formattedUrl)
       ])
     }
 
