@@ -232,7 +232,9 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    if (this.nativeInput && !this.isComposing) {
+    const nativeInput = this.nativeInput;
+    const value = this.getValue();
+    if (nativeInput && nativeInput.value !== value && !this.isComposing) {
       /**
        * Assigning the native input's value on attribute
        * value change, allows `ionInput` implementations
@@ -241,11 +243,7 @@ export class Input implements ComponentInterface {
        * Used for patterns such as input trimming (removing whitespace),
        * or input masking.
        */
-       const { selectionStart, selectionEnd } = this.nativeInput;
-       this.nativeInput.value = this.getValue();
-       // TODO: FW-727 Remove this when we drop support for iOS 15.3
-       // Set the cursor position back to where it was before the value change
-       this.nativeInput.setSelectionRange(selectionStart, selectionEnd);
+      nativeInput.value = value;
     }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
