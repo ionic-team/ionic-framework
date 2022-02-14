@@ -414,8 +414,8 @@ export class Refresher implements ComponentInterface {
   }
 
   async connectedCallback() {
-    if (this.el.getAttribute('slot') !== 'fixed') {
-      console.error('Make sure you use: <ion-refresher slot="fixed">');
+    if (this.el.closest('[slot="fixed"]') === null) {
+      console.error('<ion-refresher> must be used inside of slot="fixed" with <ion-content>.');
       return;
     }
 
