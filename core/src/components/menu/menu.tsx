@@ -171,7 +171,7 @@ export class Menu implements ComponentInterface, MenuI {
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
-    if (typeof (window as any) !== 'undefined') {
+    if (typeof (window as any) !== 'undefined' && (typeof window.customElements as any) !== 'undefined') {
       await window.customElements.whenDefined('ion-menu');
     }
 
