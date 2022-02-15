@@ -128,6 +128,9 @@ export class Img implements ComponentInterface {
 /**
  * Enumerated strings must be set as booleans
  * as Stencil will not render 'false' in the DOM.
+ * The need to explicitly render draggable="true"
+ * as only certain elements are draggable by default.
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/draggable.
  */
 const isDraggable = (draggable?: string): boolean | undefined => {
   switch(draggable) {
