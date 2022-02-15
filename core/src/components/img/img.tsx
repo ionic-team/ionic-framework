@@ -117,11 +117,25 @@ export class Img implements ComponentInterface {
           onLoad={onLoad}
           onError={loadError}
           part="image"
-          // Stencil evaluates 'false' (as a string) as undefined and will not reflect it to the DOM.
-          // We must convert the string boolean values to actual boolean values.
-          draggable={(draggable === 'true' || draggable === 'false') ? JSON.parse(draggable) : undefined}
+          draggable={isDraggable(draggable)}
         />
       </Host>
     );
+  }
+}
+
+
+/**
+ * Enumerated strings must be set as booleans
+ * as Stencil will not render 'false' in the DOM.
+ */
+const isDraggable = (draggable?: string): boolean | undefined => {
+  switch(draggable) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      return undefined;
   }
 }
