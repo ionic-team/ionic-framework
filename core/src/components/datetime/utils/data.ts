@@ -294,7 +294,7 @@ export const getPickerMonths = (
     for (let i = minMonth; i <= maxMonth; i++) {
 
       /**
-       * TODO(FW-801) - Revert to `${i}/1/${year} when iOS 14 is dropped.
+       * TODO(FW-801) - Revert to `${i}/1/${year}` when iOS 14 is dropped.
        *
        * There is a bug on iOS 14 where
        * Intl.DateTimeFormat can return
