@@ -292,7 +292,23 @@ export const getPickerMonths = (
     const minMonth = minParts && minParts.year === year ? minParts.month : 1;
 
     for (let i = minMonth; i <= maxMonth; i++) {
-      const date = new Date(`${i}/1/${year}`);
+
+      /**
+       * There is a bug on iOS 14 where
+       * Intl.DateTimeFormat can return
+       * the name of the previous month
+       * when the date is 00:00 on the first
+       * of a particular month.
+       *
+       * Setting the date below to the
+       * 2nd day of the month avoids
+       * this issue.
+       *
+       * Example:
+       * new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "March"
+       * new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date('Sat Apr 02 2006 00:00:00 GMT-0400 (EDT)')) // "April"
+       */
+      const date = new Date(`${i}/2/${year}`);
 
       const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
       months.push({ text: monthString, value: i });
