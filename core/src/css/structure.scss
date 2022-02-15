@@ -46,22 +46,6 @@ body {
   height: 100%;
   max-height: 100%;
 
-  text-rendering: optimizeLegibility;
-
-  overflow: hidden;
-
-  touch-action: manipulation;
-
-  -webkit-user-drag: none;
-
-  -ms-content-zooming: none;
-
-  word-wrap: break-word;
-
-  overscroll-behavior-y: none;
-
-  text-size-adjust: none;
-
   /**
    * Because body has position: fixed,
    * it should be promoted to its own
@@ -83,4 +67,20 @@ body {
    * happen, so the additional re-paint does not occur.
    */
   transform: translateZ(0);
+
+  text-rendering: optimizeLegibility;
+
+  overflow: hidden;
+
+  touch-action: manipulation;
+
+  -webkit-user-drag: none;
+
+  -ms-content-zooming: none;
+
+  word-wrap: break-word;
+
+  overscroll-behavior-y: none;
+
+  text-size-adjust: none;
 }
