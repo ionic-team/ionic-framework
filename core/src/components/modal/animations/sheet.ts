@@ -16,6 +16,14 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const backdropAnimation = createAnimation('backdropAnimation')
     .fromTo('opacity', 0, initialBackdrop);
 
+  if (shouldShowBackdrop) {
+    backdropAnimation
+      .beforeStyles({
+        'pointer-events': 'none'
+      })
+      .afterClearStyles(['pointer-events']);
+  }
+
   const wrapperAnimation = createAnimation('wrapperAnimation')
     .keyframes([
       { offset: 0, opacity: 1, transform: 'translateY(100%)' },
