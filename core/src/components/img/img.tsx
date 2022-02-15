@@ -124,7 +124,6 @@ export class Img implements ComponentInterface {
   }
 }
 
-
 /**
  * Enumerated strings must be set as booleans
  * as Stencil will not render 'false' in the DOM.
@@ -133,7 +132,7 @@ export class Img implements ComponentInterface {
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/draggable.
  */
 const isDraggable = (draggable?: string): boolean | undefined => {
-  switch(draggable) {
+  switch (draggable) {
     case 'true':
       return true;
     case 'false':
