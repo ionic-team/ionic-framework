@@ -63,6 +63,10 @@ body {
   text-size-adjust: none;
 
   /**
+   * Because body has position: fixed,
+   * it should be promoted to its own
+   * layer.
+   *
    * WebKit does not always promote
    * the body to its own layer on page
    * load in Ionic apps. Once scrolling on
