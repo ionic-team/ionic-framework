@@ -36,4 +36,29 @@ test('input: basic', async () => {
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
   }
+
+
 });
+
+test('input: basic should not error on input', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/input/test/basic?ionic:_testing=true'
+  });
+
+  const errors = [];
+
+  page.on('console', msg => {
+    if (msg.type() === 'error') {
+      errors.push(msg.text);
+    }
+  });
+
+  const inputs = await page.findAll('ion-input');
+
+  for (const input of inputs) {
+    await input.click();
+    await input.type('letters and 12345');
+  }
+
+  expect(errors.length).toEqual(0);
+})

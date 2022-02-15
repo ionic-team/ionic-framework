@@ -348,3 +348,36 @@ export const debounce = (func: (...args: any[]) => void, wait = 0) => {
     timer = setTimeout(func, wait, ...args);
   };
 };
+
+/**
+ * Check whether the two string maps are shallow equal.
+ *
+ * undefined is treated as an empty map.
+ *
+ * @returns whether the keys are the same and the values are shallow equal.
+ */
+export const shallowEqualStringMap = (map1: {[k: string]: any} | undefined, map2: {[k: string]: any} | undefined): boolean => {
+  map1 ??= {};
+  map2 ??= {};
+
+  if (map1 === map2) {
+    return true;
+  }
+
+  const keys1 = Object.keys(map1);
+
+  if (keys1.length !== Object.keys(map2).length) {
+    return false;
+  }
+
+  for (const k1 of keys1) {
+    if (!(k1 in map2)) {
+      return false;
+    }
+    if (map1[k1] !== map2[k1]) {
+      return false;
+    }
+  }
+
+  return true;
+}

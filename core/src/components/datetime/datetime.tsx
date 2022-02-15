@@ -720,8 +720,8 @@ export class Datetime implements ComponentInterface {
         const { month, year, day } = refMonthFn(this.workingParts);
 
         if (isMonthDisabled({ month, year, day: null }, {
-          minParts: this.minParts,
-          maxParts: this.maxParts
+          minParts: { ...this.minParts, day: null },
+          maxParts: { ...this.maxParts, day: null }
         })) {
           return;
         }
@@ -1238,8 +1238,11 @@ export class Datetime implements ComponentInterface {
       year,
       day: null
     }, {
-      minParts: this.minParts,
-      maxParts: this.maxParts
+      // The day is not used when checking if a month is disabled.
+      // Users should be able to access the min or max month, even if the
+      // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
+      minParts: { ...this.minParts, day: null },
+      maxParts: { ...this.maxParts, day: null }
     });
     // The working month should never have swipe disabled.
     // Otherwise the CSS scroll snap will not work and the user
