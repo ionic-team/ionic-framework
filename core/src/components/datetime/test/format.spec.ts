@@ -47,10 +47,6 @@ describe('getMonthAndDay()', () => {
     expect(getMonthAndDay('en-US', { month: 4, day: 1, year: 2006 })).toEqual('Sat, Apr 1');
   });
 
-  it('should return mar, 11 may', () => {
-    expect(getMonthAndDay('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mar, 11 may');
-  });
-
   it('should return sáb, 1 abr', () => {
     expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
