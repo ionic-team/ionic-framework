@@ -1,7 +1,8 @@
 import {
   isLeapYear,
   getNumDaysInMonth,
-  is24Hour
+  is24Hour,
+  shouldShowMonthFirst
 } from '../utils/helpers';
 
 describe('daysInMonth()', () => {
@@ -50,4 +51,19 @@ describe('is24Hour()', () => {
     expect(is24Hour('en-GB', 'h12')).toBe(false);
     expect(is24Hour('en-GB-u-hc-h12')).toBe(false);
   })
+})
+
+describe('shouldShowMonthFirst()', () => {
+  it('should return true if the locale shows months first', () => {
+    expect(shouldShowMonthFirst('en-US')).toBe(true);
+    expect(shouldShowMonthFirst('en-GB')).toBe(true);
+    expect(shouldShowMonthFirst('es-ES')).toBe(true);
+    expect(shouldShowMonthFirst('ro-RO')).toBe(true);
+  });
+
+  it('should return false if the locale shows years first', () => {
+    expect(shouldShowMonthFirst('zh-CN')).toBe(false);
+    expect(shouldShowMonthFirst('ja-JP')).toBe(false);
+    expect(shouldShowMonthFirst('ko-KR')).toBe(false);
+  });
 })
