@@ -214,7 +214,7 @@ describe('Routing Tests', () => {
     cy.get('div[data-testid=count-label]').contains('3');
   });
 
-  it('/asdf, when accessing a route not defined from root outlet, should show not found page', () => {
+  it('/routing/asdf, when accessing a route not defined from root outlet, should show not found page', () => {
     cy.visit(`http://localhost:${port}/routing/asdf`, { failOnStatusCode: false });
     cy.ionPageVisible('not-found');
     cy.get('div').contains('Not found');

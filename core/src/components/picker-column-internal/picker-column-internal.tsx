@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -24,6 +24,7 @@ import { PickerColumnItem } from './picker-column-internal-interfaces';
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
   private hapticsStarted = false;
+  private isColumnVisible = false;
 
   @State() isActive = false;
 
@@ -64,12 +65,18 @@ export class PickerColumnInternal implements ComponentInterface {
 
   @Watch('value')
   valueChange() {
-    const { items, value } = this;
-    this.scrollActiveItemIntoView();
+    if (this.isColumnVisible) {
+      /**
+       * Only scroll the active item into view and emit the value
+       * change, when the picker column is actively visible to the user.
+       */
+      const { items, value } = this;
+      this.scrollActiveItemIntoView();
 
-    const findItem = items.find(item => item.value === value);
-    if (findItem) {
-      this.ionChange.emit(findItem);
+      const findItem = items.find(item => item.value === value);
+      if (findItem) {
+        this.ionChange.emit(findItem);
+      }
     }
   }
 
@@ -84,13 +91,23 @@ export class PickerColumnInternal implements ComponentInterface {
       const ev = entries[0];
 
       if (ev.isIntersecting) {
+        /**
+         * Because this initial call to scrollActiveItemIntoView has to fire before
+         * the scroll listener is set up, we need to manage the active class manually.
+         */
+        const oldActive = getElementRoot(this.el).querySelector(`.${PICKER_COL_ACTIVE}`);
+        oldActive?.classList.remove(PICKER_COL_ACTIVE);
         this.scrollActiveItemIntoView();
+        this.activeItem?.classList.add(PICKER_COL_ACTIVE);
+
         this.initializeScrollListener();
+        this.isColumnVisible = true;
       } else {
         if (this.destroyScrollListener) {
           this.destroyScrollListener();
           this.destroyScrollListener = undefined;
         }
+        this.isColumnVisible = false;
       }
     }
     new IntersectionObserver(visibleCallback, { threshold: 0.01 }).observe(this.el);
@@ -101,18 +118,13 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  scrollActiveItemIntoView() {
+  /** @internal  */
+  @Method()
+  async scrollActiveItemIntoView() {
     const activeEl = this.activeItem;
 
     if (activeEl) {
       this.centerPickerItemInView(activeEl, false);
-
-      /**
-       * This is needed because the initial
-       * scrollActiveItemIntoView call fires before
-       * the scroll event listener is setup.
-       */
-      activeEl.classList.add(PICKER_COL_ACTIVE);
     }
   }
 

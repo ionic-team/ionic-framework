@@ -29,13 +29,14 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   dismissOnSelect?: boolean;
   reference?: PositionReference;
   side?: PositionSide;
-  align?: PositionAlign;
+  alignment?: PositionAlign;
+  arrow?: boolean;
 
   trigger?: string;
   triggerAction?: string;
 }
 
-export interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+export interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> { }
 
 export type PopoverSize = 'cover' | 'auto';
 

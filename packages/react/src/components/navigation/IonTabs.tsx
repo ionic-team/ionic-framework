@@ -16,9 +16,9 @@ class IonTabsElement extends HTMLElementSSR {
 }
 
 if (typeof (window as any) !== 'undefined' && window.customElements) {
-  const element = customElements.get('ion-tabs');
+  const element = window.customElements.get('ion-tabs');
   if (!element) {
-    customElements.define('ion-tabs', IonTabsElement);
+    window.customElements.define('ion-tabs', IonTabsElement);
   }
 }
 
@@ -99,7 +99,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
           return;
         }
         if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
-          outlet = React.cloneElement(child, { tabs: true });
+          outlet = React.cloneElement(child);
         } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
           outlet = child.props.children[0];
         }

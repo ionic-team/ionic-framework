@@ -463,11 +463,20 @@
 :host(.item-fill-outline.item-label-floating.item-has-focus) .item-native ::slotted(ion-textarea:not(:first-child)),
 :host(.item-fill-outline.item-label-floating.item-has-value) .item-native ::slotted(ion-input:not(:first-child)),
 :host(.item-fill-outline.item-label-floating.item-has-value) .item-native ::slotted(ion-textarea:not(:first-child)) {
-  transform: translateY(-25%);
+  transform: translateY(-14px);
 }
 
 @media (any-hover: hover) {
   :host(.item-fill-outline:hover) .item-native {
     --border-color: #{$item-md-input-fill-border-color-hover};
   }
+}
+
+// Material Design Text Field Character Counter
+// --------------------------------------------------
+
+.item-counter {
+  color: #{$item-md-input-counter-color};
+
+  letter-spacing: #{$item-md-input-counter-letter-spacing};
 }

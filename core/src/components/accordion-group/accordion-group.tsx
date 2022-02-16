@@ -199,7 +199,7 @@ export class AccordionGroup implements ComponentInterface {
    */
   @Method()
   async getAccordions() {
-    return Array.from(this.el.querySelectorAll('ion-accordion'));
+    return Array.from(this.el.querySelectorAll(':scope > ion-accordion')) as HTMLIonAccordionElement[];
   }
 
   render() {

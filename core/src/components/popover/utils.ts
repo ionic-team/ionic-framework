@@ -372,6 +372,7 @@ export const configureKeyboardInteraction = (
        * ArrowDown should move focus to the next focusable ion-item.
        */
       case 'ArrowDown':
+        // Disable movement/scroll with keyboard
         ev.preventDefault();
         const nextItem = getNextItem(items, activeElement);
         // tslint:disable-next-line:strict-type-predicates
@@ -383,6 +384,7 @@ export const configureKeyboardInteraction = (
        * ArrowUp should move focus to the previous focusable ion-item.
        */
       case 'ArrowUp':
+        // Disable movement/scroll with keyboard
         ev.preventDefault();
         const prevItem = getPrevItem(items, activeElement);
         // tslint:disable-next-line:strict-type-predicates

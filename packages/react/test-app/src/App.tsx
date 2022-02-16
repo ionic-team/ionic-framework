@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { IonApp } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonHeader, IonPage, IonRouterOutlet, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 /* Core CSS required for Ionic components to work properly */
@@ -25,12 +25,16 @@ import Main from './pages/Main';
 import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
 import OverlayComponents from './pages/overlay-components/OverlayComponents';
 
+setupIonicReact();
+
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <Route path="/" component={Main} />
-      <Route path="/overlay-hooks" component={OverlayHooks} />
-      <Route path="/overlay-components" component={OverlayComponents} />
+      <IonRouterOutlet>
+        <Route path="/" component={Main} />
+        <Route path="/overlay-hooks" component={OverlayHooks} />
+        <Route path="/overlay-components" component={OverlayComponents} />
+      </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );

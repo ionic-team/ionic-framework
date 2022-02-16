@@ -1,11 +1,10 @@
 import { OverlayEventDetail } from '@ionic/core/components'
-import React from 'react';
+import React, { createElement } from 'react';
 
 import {
   attachProps,
   camelToDashCase,
   dashToPascalCase,
-  defineCustomElement,
   isCoveredByReact,
   mergeRefs,
 } from './react-component-lib/utils';
@@ -26,10 +25,11 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
-  customElement?: any
+  defineCustomElement?: () => void
 ) => {
-  defineCustomElement(tagName, customElement);
-
+  if (defineCustomElement) {
+    defineCustomElement();
+  }
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
     ref: React.RefObject<HTMLElement>;
@@ -78,10 +78,19 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * cleanup properly.
        */
       this.ref.current?.addEventListener('didDismiss', (evt: any) => {
-        const wrapper = this.wrapperRef.current!;
-        this.ref.current!.append(wrapper);
+        const wrapper = this.wrapperRef.current;
+        const el = this.ref.current;
 
-        this.setState({ isOpen: false });
+        /**
+         * This component might be unmounted already, if the containing
+         * element was removed while the popover was still open. (For
+         * example, if an item contains an inline popover with a button
+         * that removes the item.)
+         */
+        if (wrapper && el) {
+          el.append(wrapper);
+          this.setState({ isOpen: false });
+        }
 
         this.props.onDidDismiss && this.props.onDidDismiss(evt);
       });
@@ -119,11 +128,15 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return React.createElement(tagName, newProps, (this.state.isOpen) ?
-        React.createElement('div', {
+      return createElement(tagName, newProps, (this.state.isOpen) ?
+        createElement('div', {
           id: 'ion-react-wrapper',
           ref: this.wrapperRef,
-          style: { height: '100%' }
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%'
+          }
         }, children) :
         null
       );

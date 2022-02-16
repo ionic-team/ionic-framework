@@ -77,6 +77,7 @@ export const config: Config = {
         'ion-router-link',
         'ion-router-outlet',
         'ion-back-button',
+        'ion-breadcrumb',
         'ion-tab-button',
         'ion-tabs',
         'ion-tab-bar',
@@ -148,7 +149,7 @@ export const config: Config = {
     {
       type: 'docs-vscode',
       file: 'dist/html.html-data.json',
-      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/master/core/',
+      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/main/core/',
     },
     {
       type: 'dist',
@@ -157,7 +158,6 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       dir: 'components',
-      autoDefineCustomElements: true,
       copy: [{
         src: '../scripts/custom-elements',
         dest: 'components',

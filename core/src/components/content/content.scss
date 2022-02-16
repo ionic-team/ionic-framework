@@ -136,10 +136,37 @@
 }
 
 :host(.content-sizing) {
+  display: flex;
+
+  flex-direction: column;
+
+  /**
+   * This resolves a sizing issue in popovers where extra long content
+   * would overflow the popover's height, preventing scrolling. It's a
+   * quirk of flexbox that forces the content to shrink to fit.
+   *
+   * overflow: hidden can't be used here because it prevents the visual
+   * effect from showing on translucent headers.
+   */
+  min-height: 0;
+
   contain: none;
 }
 :host(.content-sizing) .inner-scroll {
   position: relative;
+
+  /**
+   * Because the outer content has display: flex here (to help enable
+   * scrolling in a popover), offsetting via `top` (such as when using
+   * a translucent header) creates white space under the content. Use
+   * a negative margin instead to keep the bottom in place. (A similar
+   * thing happens with `bottom` and footers.)
+   */
+  top: 0;
+  bottom: 0;
+  
+  margin-top: calc(var(--offset-top) * -1);
+  margin-bottom: calc(var(--offset-bottom) * -1);
 }
 
 .transition-effect {
@@ -195,4 +222,15 @@
 
 ::slotted([slot="fixed"]) {
   position: absolute;
+
+  /**
+   * When presenting ion-content inside of an ion-modal, the .inner-scroll
+   * element is composited. In WebKit, the fixed content is not composited
+   * causing it to appear under the main scrollable content as a result.
+   * The fixed content is correctly composited in other browsers. Adding
+   * the translateZ forces the fixed content to be composited so it correctly
+   * shows on top of the scrollable content. Setting a negative z-index will
+   * still allow the fixed content to appear under the scroll content if specified.
+   */
+  transform: translateZ(0);
 }

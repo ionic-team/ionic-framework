@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { shallowEqualStringMap } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
 
 @Component({
@@ -16,6 +17,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;
+  private activeParams: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
@@ -36,10 +38,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
    */
   @Prop() animated = true;
 
-  /**
-   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
-   * However, this property allows to create custom transition using `AnimateBuilder` functions.
-   */
+  /** This property allows to create custom transition using AnimateBuilder functions. */
   @Prop() animation?: AnimationBuilder;
 
   /** @internal */
@@ -156,11 +155,12 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return active ? {
       id: active.tagName,
       element: active,
+      params: this.activeParams,
     } : undefined;
   }
 
   private async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.activeComponent === component) {
+    if (this.activeComponent === component && shallowEqualStringMap(params, this.activeParams)) {
       return false;
     }
 
@@ -170,6 +170,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
     this.activeComponent = component;
     this.activeEl = enteringEl;
+    this.activeParams = params;
 
     // commit animation
     await this.commit(enteringEl, leavingEl, opts);

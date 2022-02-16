@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
@@ -61,7 +62,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = 'chevron-forward';
+  @Prop() detailIcon = chevronForward;
 
   /**
    * If `true`, the user cannot interact with the item.
@@ -107,7 +108,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
    */
-  @Prop() counter = true;
+  @Prop() counter = false;
 
   /**
    * When using a router, it specifies the transition animation when navigating to
@@ -297,7 +298,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
     if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
       const length = inputEl?.value?.toString().length ?? '0';
-      this.counterString = `${length}/${inputEl.maxlength}`;
+      this.counterString = `${length} / ${inputEl.maxlength}`;
     }
   }
 
@@ -326,7 +327,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
     const clickFn = clickable ? {
-      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
+      onClick: (ev: Event) => { openURL(href, ev, routerDirection, routerAnimation); }
     } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
@@ -368,7 +369,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <slot></slot>
             </div>
             <slot name="end"></slot>
-            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true"></ion-icon>}
+            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true" flip-rtl={detailIcon === chevronForward}></ion-icon>}
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

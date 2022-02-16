@@ -208,6 +208,19 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Prop() isOpen = false;
 
+  /**
+   * @internal
+   *
+   * If `true` the popover will not register its own keyboard event handlers.
+   * This allows the contents of the popover to handle their own keyboard interactions.
+   *
+   * If `false`, the popover will register its own keyboard event handlers for
+   * navigating `ion-list` items within a popover (up/down/home/end/etc.).
+   * This will also cancel browser keyboard event bindings to prevent scroll
+   * behavior in a popover using a list of items.
+   */
+  @Prop() keyboardEvents = false;
+
   @Watch('trigger')
   @Watch('triggerAction')
   onTriggerChange() {
@@ -359,7 +372,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * was dispatched.
    */
   @Method()
-  async present(event?: MouseEvent | TouchEvent | PointerEvent): Promise<void> {
+  async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
     if (this.presented) {
       return;
     }
@@ -385,7 +398,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
-    this.configureKeyboardInteraction();
+    if (!this.keyboardEvents) {
+      this.configureKeyboardInteraction();
+    }
     this.configureDismissInteraction();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
@@ -550,7 +565,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover && !desktop;
 
@@ -569,7 +584,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
           [mode]: true,
           'popover-translucent': this.translucent,
           'overlay-hidden': true,
-          'popover-interactive': presented,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
           'popover-nested': !!parentPopover

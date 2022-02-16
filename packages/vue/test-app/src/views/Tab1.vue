@@ -31,6 +31,10 @@
       <ion-item button router-link="/tabs" id="tabs-primary">
         <ion-label>Go to Primary Tabs</ion-label>
       </ion-item>
+
+      <ion-item router-link="/tabs/tab1/child-one?key=value" id="child-one-query-string">
+        <ion-label>Go to Tab 1 Child 1 with Query Params</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>

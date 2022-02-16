@@ -1,21 +1,4 @@
-import { initialize } from '@ionic/core/components';
-import { addIcons } from 'ionicons';
-import {
-  arrowBackSharp,
-  caretBackSharp,
-  chevronBack,
-  chevronDown,
-  chevronForward,
-  close,
-  closeCircle,
-  closeSharp,
-  menuOutline,
-  menuSharp,
-  reorderThreeOutline,
-  reorderTwoSharp,
-  searchOutline,
-  searchSharp,
-} from 'ionicons/icons';
+import { IonicConfig, initialize } from '@ionic/core/components';
 
 export {
   // UTILS
@@ -23,7 +6,6 @@ export {
   createGesture,
   iosTransitionAnimation,
   mdTransitionAnimation,
-  setupConfig,
   IonicSwiper,
   IonicSlides,
   getTimeGivenProgression,
@@ -172,31 +154,19 @@ export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
 export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
 export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
-// Icons that are used by internal components
-addIcons({
-  'arrow-back-sharp': arrowBackSharp,
-  'caret-back-sharp': caretBackSharp,
-  'chevron-back': chevronBack,
-  'chevron-down': chevronDown,
-  'chevron-forward': chevronForward,
-  close,
-  'close-circle': closeCircle,
-  'close-sharp': closeSharp,
-  'menu-outline': menuOutline,
-  'menu-sharp': menuSharp,
-  'reorder-two-sharp': reorderTwoSharp,
-  'reorder-three-outline': reorderThreeOutline,
-  'search-outline': searchOutline,
-  'search-sharp': searchSharp,
-});
+export const setupIonicReact = (config: IonicConfig = {}) => {
+  /**
+   * By default Ionic Framework hides elements that
+   * are not hydrated, but in the CE build there is no
+   * hydration.
+   * TODO: Remove when all integrations have been
+   * migrated to CE build.
+   */
+  if (typeof (document as any) !== 'undefined') {
+    document.documentElement.classList.add('ion-ce');
+  }
 
-/**
- * By default Ionic Framework hides elements that
- * are not hydrated, but in the CE build there is no
- * hydration.
- * TODO: Remove when all integrations have been
- * migrated to CE build.
- */
-document.documentElement.classList.add('ion-ce');
-
-initialize();
+  initialize({
+    ...config
+  });
+}

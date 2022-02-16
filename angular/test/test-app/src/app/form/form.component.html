@@ -12,7 +12,8 @@
 
       <ion-item>
         <ion-label>DateTime</ion-label>
-        <ion-datetime formControlName="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+        <ion-datetime formControlName="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY">
+        </ion-datetime>
       </ion-item>
 
       <ion-item>
@@ -65,6 +66,7 @@
     <p>
       Form Submit: <span id="submit">{{submitted}}</span>
     </p>
+    <ion-button id="mark-all-touched-button" (click)="markAllAsTouched()">Mark all as touched</ion-button>
     <ion-button id="submit-button" type="submit" [disabled]="!profileForm.valid">Submit</ion-button>
 
   </form>

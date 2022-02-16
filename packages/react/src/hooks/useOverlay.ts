@@ -1,5 +1,5 @@
 import { OverlayEventDetail } from '@ionic/core/components';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { createElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
 import { IonContext } from '../contexts/IonContext';
@@ -16,6 +16,7 @@ interface OverlayBase extends HTMLElement {
 export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   displayName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> },
+  defineCustomElement: () => void,
   component: ReactComponentOrElement,
   componentProps?: any
 ) {
@@ -29,12 +30,14 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   const ionContext = useContext(IonContext);
   const [overlayId] = useState(generateId('overlay'));
 
+  defineCustomElement();
+
   useEffect(() => {
     if (isOpen && component && containerElRef.current) {
       if (React.isValidElement(component)) {
         ionContext.addOverlay(overlayId, component, containerElRef.current!);
       } else {
-        const element = React.createElement(component as React.ComponentClass, componentProps);
+        const element = createElement(component as React.ComponentClass, componentProps);
         ionContext.addOverlay(overlayId, element, containerElRef.current!);
       }
     }

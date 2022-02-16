@@ -58,7 +58,9 @@
 }
 
 :host(.accordion-disabled) #header,
-:host(.accordion-readonly) #header {
+:host(.accordion-readonly) #header,
+:host(.accordion-disabled) #content,
+:host(.accordion-readonly) #content {
   pointer-events: none;
 }
 

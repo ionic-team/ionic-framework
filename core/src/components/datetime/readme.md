@@ -1,6 +1,6 @@
 # ion-datetime
 
-Datetimes present a calendar interface and time wheel, making it easy for users to select dates and times. Datetimes are similar to the native `input` elements of `datetime-local`, however, Ionic Framework's Datetime component makes it easy to display the date and time in the a preferred format, and manage the datetime values.
+Datetimes present a calendar interface and time wheel, making it easy for users to select dates and times. Datetimes are similar to the native `input` elements of `datetime-local`, however, Ionic Framework's Datetime component makes it easy to display the date and time in the preferred format, and manage the datetime values.
 
 ### Datetime Data
 
@@ -21,7 +21,7 @@ for its value. The value is simply a string, rather than using JavaScript's
 and parse within JSON objects and databases.
 
 An ISO format can be used as a simple year, or just the hour and minute, or get
-more detailed down to the millisecond and timezone. Any of the ISO formats below
+more detailed down to the millisecond and time zone. Any of the ISO formats below
 can be used, and after a user selects a new value, Ionic Framework will continue to use
 the same ISO format which datetime value was originally given as.
 
@@ -123,11 +123,51 @@ For example, if you wanted to have the first day of the week be Monday, you coul
 <ion-datetime first-day-of-week="1"></ion-datetime>
 ```
 
-## Parsing Dates
+## Time Zones
 
-When `ionChange` is emitted, we provide an ISO-8601 string in the event payload. From there, it is the developer's responsibility to format it as they see fit. We recommend using a library like [date-fns](https://date-fns.org) to format their dates properly.
+Ionic's `ion-datetime` follows the [datetime-local](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local) behavior of not manipulating or setting the time zone inside of a datetime control. In other words, a time value of "07:00" will not be adjusted according to different time zones.
 
-Below is an example of formatting an ISO-8601 string to display the month, date, and year:
+We recommend using a library such as [date-fns-tz](https://github.com/marnusw/date-fns-tz) to convert a datetime value to the desired time zone.
+
+Below is an example of formatting an ISO-8601 string to display in the time zone set on a user's device:
+
+```typescript
+import { format, utcToZonedTime } from 'date-fns-tz';
+
+// Get the time zone set on the user's device
+const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+// Create a date object from a UTC date string
+const date = new Date('2014-10-25T10:46:20Z');
+
+// Use date-fns-tz to convert from UTC to a zoned time
+const zonedTime = dateFnsTz.utcToZonedTime(date, userTimeZone);
+
+// Create a formatted string from the zoned time
+format(zonedTime, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: userTimeZone });
+```
+
+## Timezones
+
+### Assigning Date Values
+
+`ion-datetime` does not manipulate or read timezones. Developers will need to pass in a valid ISO-8601 string that is already configured for the user's timezone when assigning a value. If no value is provided, `ion-datetime` will default to the time specified on the user's machine (which will already be in the user's timezone). We recommend using [date-fns](https://date-fns.org) to format the date to ISO-8601.
+
+```typescript
+import { formatISO } from 'date-fns';
+
+const dateString = '2021-01-14T15:00:00.000Z';
+const formattedDateValue = formatISO(new Date(dateString));
+
+// Assign `formattedDateValue` to your `ion-datetime` value.
+
+```
+
+### Parsing Date Values
+
+The `ionChange` event will emit the date value as an ISO-8601 string in the event payload. It is the developer's responsibility to format it based on their application needs. We recommend using [date-fns](https://date-fns.org) to format the date value.
+
+Below is an example of formatting an ISO-8601 string to display the month, date and year:
 
 ```typescript
 import { format, parseISO } from 'date-fns';
@@ -135,6 +175,8 @@ import { format, parseISO } from 'date-fns';
 /**
  * This is provided in the event
  * payload from the `ionChange` event.
+ * 
+ * The value is an ISO-8601 date string.
  */
 const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
 const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');

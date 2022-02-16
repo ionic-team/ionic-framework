@@ -1,3 +1,63 @@
+### Inline Modal
+
+```tsx
+import { Component, Element, h } from '@stencil/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @Element() el: any;
+  
+  componentDidLoad() {
+    this.routerOutlet = this.el.closest('ion-router-outlet');
+  }
+  
+  render() {
+    return (
+      <div>
+        {/* Default */}
+        <ion-modal isOpen={true}>
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Use a trigger */}
+        <ion-button id="trigger-button">Click to open modal</ion-button>
+        <ion-modal trigger="trigger-button">
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Sheet Modal */}
+        <ion-modal
+          isOpen={true}
+          breakpoints={[0.1, 0.5, 1]}
+          initialBreakpoint={0.5}
+        >
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Card Modal */}
+        <ion-modal
+          isOpen={true}
+          swipeToClose={true}
+          presentingElement={this.routerOutlet}
+        >
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+        
+        {/* Passing Props */}
+        <ion-modal isOpen={true}>
+          <app-stencil-component title="Ionic"></app-stencil-component>
+        </ion-modal>
+      </div>
+    )
+  }
+}
+```
+
+### Modal Controller 
+
 ```tsx
 import { Component, h } from '@stencil/core';
 

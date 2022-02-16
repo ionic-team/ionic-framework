@@ -73,7 +73,7 @@ export declare interface IonModal extends Components.IonModal {
 @Component({
   selector: 'ion-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`,
+  template: `<div class="ion-page"><ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container></div>`,
   inputs: [
     'animated',
     'backdropBreakpoint',
@@ -103,7 +103,6 @@ export class IonModal {
   protected el: HTMLElement;
 
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
     this.el = r.nativeElement;
 
     this.el.addEventListener('willPresent', () => {

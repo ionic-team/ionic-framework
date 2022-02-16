@@ -66,6 +66,7 @@ export declare interface IonPopover extends Components.IonPopover {
     'triggerAction',
     'reference',
     'size',
+    'side',
   ],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
 })
@@ -92,6 +93,7 @@ export declare interface IonPopover extends Components.IonPopover {
     'triggerAction',
     'reference',
     'size',
+    'side',
   ],
 })
 export class IonPopover {
@@ -102,7 +104,6 @@ export class IonPopover {
   protected el: HTMLElement;
 
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
     this.el = r.nativeElement;
 
     this.el.addEventListener('willPresent', () => {

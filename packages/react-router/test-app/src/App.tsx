@@ -1,4 +1,4 @@
-import { IonApp } from '@ionic/react';
+import { IonApp, setupIonicReact } from '@ionic/react';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -36,6 +36,9 @@ import Refs from './pages/refs/Refs';
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
+
+setupIonicReact();
+
 const App: React.FC = () => {
   return (
     <IonApp>

@@ -1,6 +1,6 @@
 import { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
-import { assert } from '../../utils/helpers';
+import { assert, shallowEqualStringMap } from '../../utils/helpers';
 
 export const VIEW_STATE_NEW = 1;
 export const VIEW_STATE_ATTACHED = 2;
@@ -54,29 +54,8 @@ export const matches = (view: ViewController | undefined, id: string, params: Co
   if (view.component !== id) {
     return false;
   }
-  const currentParams = view.params;
-  if (currentParams === params) {
-    return true;
-  }
-  if (!currentParams && !params) {
-    return true;
-  }
-  if (!currentParams || !params) {
-    return false;
-  }
-  const keysA = Object.keys(currentParams);
-  const keysB = Object.keys(params);
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
 
-  // Test for A's keys different from B.
-  for (const key of keysA) {
-    if (currentParams[key] !== params[key]) {
-      return false;
-    }
-  }
-  return true;
+  return shallowEqualStringMap(view.params, params);
 };
 
 export const convertToView = (page: any, params: ComponentProps | undefined): ViewController | null => {
