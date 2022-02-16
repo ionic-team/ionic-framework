@@ -284,7 +284,7 @@ export const getPickerMonths = (
     processedMonths.forEach(processedMonth => {
       const date = new Date(`${processedMonth}/1/${year}`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: processedMonth });
     });
   } else {
@@ -294,25 +294,23 @@ export const getPickerMonths = (
     for (let i = minMonth; i <= maxMonth; i++) {
 
       /**
-       * TODO(FW-801) - Revert to `${i}/1/${year}` when iOS 14 is dropped.
        *
        * There is a bug on iOS 14 where
-       * Intl.DateTimeFormat can return
-       * the name of the previous month
-       * when the date is 00:00 on the first
-       * of a particular month.
+       * Intl.DateTimeFormat takes into account
+       * the local timezone offset when formatting dates.
        *
-       * Setting the date below to the
-       * 2nd day of the month avoids
-       * this issue.
+       * Forcing the timezone to 'UTC' fixes the issue. However,
+       * we should keep this workaround as it safer. In the event
+       * this breaks in another browser, we will not be impacted
+       * because all dates will be interpreted in UTC.
        *
        * Example:
        * new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "March"
-       * new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date('Sat Apr 02 2006 00:00:00 GMT-0400 (EDT)')) // "April"
+       * new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "April"
        */
-      const date = new Date(`${i}/2/${year}`);
+      const date = new Date(`${i}/1/${year}`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: i });
     }
   }
