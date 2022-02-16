@@ -69,7 +69,7 @@ export const getNumDaysInMonth = (month: number, year: number) => {
  * We can use Intl.DateTimeFormat to determine
  * the ordering for each locale.
  */
-export const shouldShowMonthFirst = (locale: string) => {
+export const isMonthFirstLocale = (locale: string) => {
 
   /**
    * By setting month and year we guarantee that only

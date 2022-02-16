@@ -33,7 +33,7 @@ import {
 } from './utils/format';
 import {
   is24Hour,
-  shouldShowMonthFirst
+  isMonthFirstLocale
 } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -1110,7 +1110,7 @@ export class Datetime implements ComponentInterface {
         value: year
       }
     })
-    const showMonthFirst = shouldShowMonthFirst(locale);
+    const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
       <div class="datetime-year">
