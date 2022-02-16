@@ -10,7 +10,7 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  
 <body>
   <ion-app>
 
@@ -87,6 +87,7 @@
 
       <p>
         <ion-button expand="block" id="disabledButton" disabled onclick="clickedButton(event)">Button Disabled</ion-button>
+        <ion-button expand="block" id="disabledButton2" onclick="clickedButton(event)">12345</ion-button>
         <ion-button expand="block" color="secondary" disabled>Secondary Disabled</ion-button>
         <ion-button expand="block" color="tertiary" style="--opacity: 1" disabled>Disabled opacity: 1</ion-button>
       </p>
@@ -121,9 +122,11 @@
     }
 
     function toggleDisabled() {
-      var buttonEl = document.getElementById('disabledButton');
-      console.log(buttonEl);
-      buttonEl.disabled = !buttonEl.disabled;
+      ['disabledButton', 'disabledButton2'].forEach(id => {
+        var buttonEl = document.getElementById(id);
+        console.log(buttonEl);
+        buttonEl.disabled = !buttonEl.disabled;
+      });
     }
 
     function clickedButton(ev) {
