@@ -70,9 +70,18 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
 /**
  * Gets the day of the week, month, and day
  * Used for the header in MD mode.
+ *
+ * TODO(FW-801) - Revert to `${refParts.month}/${refParts.day}/${refParts.year}` when iOS 14 is dropped.
+ *
+ * See getPickerMonths() in data.ts for more info.
+ * The getPickerMonths workaround of setting the day is not
+ * acceptable here because this function needs to return the
+ * accurate day. Instead, we set the time to 12:00 so that
+ * the combination of this bug + timezone can never shift
+ * the day.
  */
 export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} 12:00`);
   return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric' }).format(date);
 }
 
@@ -81,8 +90,12 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  * return a formatted string that includes
  * the month name and full year.
  * Example: May 2021
+ *
+ * TODO(FW-801) - Revert to `${refParts.month}/${refParts.day}/${refParts.year}` when iOS 14 is dropped.
+ *
+ * See getPickerMonths() in data.ts for more info.
  */
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
+  const date = new Date(`${refParts.month}/2/${refParts.year}`);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(date);
 }
