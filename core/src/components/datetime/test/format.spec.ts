@@ -75,7 +75,15 @@ describe('getMonthAndYear()', () => {
     expect(getMonthAndYear('en-US', { month: 5, day: 11, year: 2021 })).toEqual('May 2021');
   });
 
-  it('should return mar, 11 may', () => {
+  it('should return mayo de 2021', () => {
     expect(getMonthAndYear('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mayo de 2021');
+  });
+
+  it('should return April 2006', () => {
+    expect(getMonthAndYear('en-US', { month: 4, day: 1, year: 2006 })).toEqual('April 2006');
+  });
+
+  it('should return abril de 2006', () => {
+    expect(getMonthAndYear('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('abril de 2006');
   });
 })
