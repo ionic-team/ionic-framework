@@ -48,6 +48,35 @@
 
   opacity: 1;
 }
+/**
+ * Changing the physical order of the
+ * picker columns in the DOM is added
+ * work, so we just use `order` instead.
+ *
+ * The picker automatically configures
+ * the text alignment, so when switching
+ * the order we need to manually switch
+ * the text alignment too.
+ */
+:host .datetime-year .order-month-first .month-column {
+  order: 1;
+}
+
+:host .datetime-year .order-month-first .year-column {
+  order: 2;
+}
+
+:host .datetime-year .order-year-first .month-column {
+  order: 2;
+
+  text-align: end;
+}
+
+:host .datetime-year .order-year-first .year-column {
+  order: 1;
+
+  text-align: start;
+}
 
 // Calendar
 // -----------------------------------
