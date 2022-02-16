@@ -300,7 +300,7 @@ export const getPickerMonths = (
        * the local timezone offset when formatting dates.
        *
        * Forcing the timezone to 'UTC' fixes the issue. However,
-       * we should keep this workaround as it safer. In the event
+       * we should keep this workaround as it is safer. In the event
        * this breaks in another browser, we will not be impacted
        * because all dates will be interpreted in UTC.
        *
