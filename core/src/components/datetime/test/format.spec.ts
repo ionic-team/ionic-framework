@@ -27,6 +27,11 @@ describe('generateDayAriaLabel()', () => {
 
     expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Monday, May 31');
   });
+  it('should return Saturday, April 1', () => {
+    const reference = { month: 4, day: 1, year: 2006 };
+
+    expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, April 1');
+  });
 });
 
 describe('getMonthAndDay()', () => {
