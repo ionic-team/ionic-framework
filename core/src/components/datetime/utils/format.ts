@@ -83,6 +83,6 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  * Example: May 2021
  */
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/1/${refParts.year}`);
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 }
