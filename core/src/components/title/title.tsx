@@ -67,7 +67,7 @@ export class ToolbarTitle implements ComponentInterface {
           'title-rtl': document.dir === 'rtl'
         })}
       >
-        <div class="toolbar-title">
+        <div class="toolbar-title" part="text">
           <slot></slot>
         </div>
       </Host>
