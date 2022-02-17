@@ -29,7 +29,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     originY: 'top'
   }
 
-  const results = getPopoverPosition(isRTL, contentWidth, contentHeight, 0, 0, reference, side, align, defaultPosition, trigger, ev);
+  const results = getPopoverPosition(isRTL, contentWidth, contentHeight, 0, 0, reference, side, align, defaultPosition, size, trigger, ev);
 
   const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
 

@@ -451,6 +451,7 @@ export const getPopoverPosition = (
   side: PositionSide,
   align: PositionAlign,
   defaultPosition: PopoverPosition,
+  size: PopoverSize,
   triggerEl?: HTMLElement,
   event?: MouseEvent | CustomEvent,
 ): PopoverPosition => {
@@ -460,6 +461,19 @@ export const getPopoverPosition = (
     width: 0,
     height: 0
   };
+
+  const customEv = event as CustomEvent;
+
+  /**
+   * ionShadowTarget is used when we need to align the
+   * popover with an element inside of the shadow root
+   * of an Ionic component. Ex: Presenting a popover
+   * by clicking on the collapsed indicator inside
+   * of `ion-breadcrumb` and centering it relative
+   * to the indicator rather than `ion-breadcrumb`
+   * as a whole.
+   */
+  const actualTriggerEl = (triggerEl || customEv?.detail?.ionShadowTarget || customEv?.target) as HTMLElement | null;
 
   /**
    * Calculate position relative to the
@@ -492,18 +506,6 @@ export const getPopoverPosition = (
      */
     case 'trigger':
     default:
-      const customEv = event as CustomEvent;
-
-      /**
-       * ionShadowTarget is used when we need to align the
-       * popover with an element inside of the shadow root
-       * of an Ionic component. Ex: Presenting a popover
-       * by clicking on the collapsed indicator inside
-       * of `ion-breadcrumb` and centering it relative
-       * to the indicator rather than `ion-breadcrumb`
-       * as a whole.
-       */
-      const actualTriggerEl = (triggerEl || customEv?.detail?.ionShadowTarget || customEv?.target) as HTMLElement | null;
       if (!actualTriggerEl) {
         return defaultPosition;
       }
@@ -535,7 +537,8 @@ export const getPopoverPosition = (
   const top = coordinates.top + alignedCoordinates.top;
   const left = coordinates.left + alignedCoordinates.left;
 
-  const { arrowTop, arrowLeft } = calculateArrowPosition(side, arrowWidth, arrowHeight, top, left, contentWidth, contentHeight, isRTL);
+  const triggerElWidth = actualTriggerEl ? actualTriggerEl.offsetWidth : 0;
+  const { arrowTop, arrowLeft } = calculateArrowPosition(side, arrowWidth, arrowHeight, top, left, contentWidth, contentHeight, isRTL, triggerElWidth, align, size);
 
   const { originX, originY } = calculatePopoverOrigin(side, align, isRTL);
 
@@ -604,27 +607,50 @@ const calculateArrowPosition = (
   left: number,
   contentWidth: number,
   contentHeight: number,
-  isRTL: boolean
+  isRTL: boolean,
+  triggerElWidth: number,
+  align: PositionAlign,
+  size: PopoverSize
 ) => {
   /**
    * Note: When side is left, right, start, or end, the arrow is
    * been rotated using a `transform`, so to move the arrow up or down
    * by its dimension, you need to use `arrowWidth`.
    */
-  const leftPosition = { arrowTop: top + (contentHeight / 2) - (arrowWidth / 2), arrowLeft: left + contentWidth - (arrowWidth / 2) };
+  const leftPosition = {
+    arrowTop: top + (contentHeight / 2) - (arrowWidth / 2),
+    arrowLeft: left + contentWidth - (arrowWidth / 2)
+  };
 
   /**
    * Move the arrow to the left by arrowWidth and then
    * again by half of its width because we have rotated
    * the arrow using a transform.
    */
-  const rightPosition = { arrowTop: top + (contentHeight / 2) - (arrowWidth / 2), arrowLeft: left - (arrowWidth * 1.5) }
+  const rightPosition = {
+    arrowTop: top + (contentHeight / 2) - (arrowWidth / 2),
+    arrowLeft: left - (arrowWidth * 1.5)
+  };
+
+  /**
+   * For alignment="center", position the arrow relative to the popover.
+   * For other alignments, position it relative to the trigger el.
+   */
+  const targetWidth = align === 'center' ? contentWidth : triggerElWidth;
+
+  const offset = align === 'end' && size === 'auto' ? (contentWidth / 2) - arrowWidth : 0;
 
   switch (side) {
     case 'top':
-      return { arrowTop: top + contentHeight, arrowLeft: left + (contentWidth / 2) - (arrowWidth / 2) }
+      return {
+        arrowTop: top + contentHeight,
+        arrowLeft: left + (targetWidth / 2) - (arrowWidth / 2) + offset
+      }
     case 'bottom':
-      return { arrowTop: top - arrowHeight, arrowLeft: left + (contentWidth / 2) - (arrowWidth / 2) }
+      return {
+        arrowTop: top - arrowHeight,
+        arrowLeft: left + (targetWidth / 2) - (arrowWidth / 2) + offset
+      }
     case 'left':
       return leftPosition;
     case 'right':

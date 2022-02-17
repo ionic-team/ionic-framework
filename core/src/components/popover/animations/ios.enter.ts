@@ -30,7 +30,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     originY: 'top'
   }
 
-  const results = getPopoverPosition(isRTL, contentWidth, contentHeight, arrowWidth, arrowHeight, reference, side, align, defaultPosition, trigger, ev);
+  const results = getPopoverPosition(isRTL, contentWidth, contentHeight, arrowWidth, arrowHeight, reference, side, align, defaultPosition, size, trigger, ev);
 
   const padding = size === 'cover' ? 0 : POPOVER_IOS_BODY_PADDING;
   const margin = size === 'cover' ? 0 : 25;
