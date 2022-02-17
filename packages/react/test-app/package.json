@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start.ci": "npm run sync && BROWSER=none react-scripts start",
+    "start.ci": "npm run sync && SKIP_PREFLIGHT_CHECK=true npm run build && serve -s build -l 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
