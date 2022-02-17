@@ -41,7 +41,7 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/react/test-app
-      - name: Run E2E Tests
+    - name: Run E2E Tests
       run: npm run e2e
       shell: bash
       working-directory: ./packages/react/test-app
