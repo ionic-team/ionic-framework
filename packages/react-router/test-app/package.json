@@ -37,7 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start.ci": "npm run sync && SKIP_PREFLIGHT_CHECK=true npm run build && serve -s build -l 3000",
-    "build": "node scripts/build.js",
+    "build": "react-scripts build",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "e2e": "npm run sync && concurrently \"SKIP_PREFLIGHT_CHECK=true react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
