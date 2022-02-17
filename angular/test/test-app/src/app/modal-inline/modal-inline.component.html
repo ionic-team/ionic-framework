@@ -1,4 +1,6 @@
-<ion-modal [isOpen]="true" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5">
+<ion-button id="open-modal">Open Modal</ion-button>
+
+<ion-modal [animated]="false" trigger="open-modal" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5">
   <ng-template>
     <ion-content>
       <ion-list>
