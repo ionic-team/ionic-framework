@@ -537,8 +537,8 @@ export const getPopoverPosition = (
   const top = coordinates.top + alignedCoordinates.top;
   const left = coordinates.left + alignedCoordinates.left;
 
-  const triggerElWidth = actualTriggerEl ? actualTriggerEl.offsetWidth : 0;
-  const { arrowTop, arrowLeft } = calculateArrowPosition(side, arrowWidth, arrowHeight, top, left, contentWidth, contentHeight, isRTL, triggerElWidth, align, size);
+  const triggerElWidth = actualTriggerEl ? actualTriggerEl.offsetWidth : undefined;
+  const { arrowTop, arrowLeft } = calculateArrowPosition(side, arrowWidth, arrowHeight, top, left, contentWidth, contentHeight, isRTL, align, size, triggerElWidth);
 
   const { originX, originY } = calculatePopoverOrigin(side, align, isRTL);
 
@@ -608,9 +608,9 @@ const calculateArrowPosition = (
   contentWidth: number,
   contentHeight: number,
   isRTL: boolean,
-  triggerElWidth: number,
   align: PositionAlign,
-  size: PopoverSize
+  size: PopoverSize,
+  triggerElWidth?: number
 ) => {
   /**
    * Note: When side is left, right, start, or end, the arrow is
@@ -636,7 +636,7 @@ const calculateArrowPosition = (
    * For alignment="center", position the arrow relative to the popover.
    * For other alignments, position it relative to the trigger el.
    */
-  const targetWidth = align === 'center' ? contentWidth : triggerElWidth;
+  const targetWidth = align === 'center' || triggerElWidth === undefined ? contentWidth : triggerElWidth;
 
   const offset = align === 'end' && size === 'auto' ? (contentWidth / 2) - arrowWidth : 0;
 
