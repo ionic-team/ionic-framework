@@ -125,5 +125,39 @@ test('overlays: Nested: should dismiss the top overlay', async () => {
 
   const modals = await page.$$('ion-modal');
   expect(modals.length).toEqual(0);
-
 });
+
+const getActiveElementTagName = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return await page.evaluate(el => el && el.tagName, activeElement);
+}
+
+test('toast should not cause focus trapping', async () => {
+  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
+  const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+  await page.click('#create-and-present-toast');
+  await ionToastDidPresent.next();
+
+  await page.click('#root-input');
+  const tagName = await getActiveElementTagName(page);
+
+  expect(tagName).toEqual('INPUT');
+});
+
+test('toast should not cause focus trapping even when opened from a focus trapping overlay', async () => {
+  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
+  const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+  await page.click('#create-and-present');
+  await ionModalDidPresent.next();
+
+  await page.click('#modal-toast');
+  await ionToastDidPresent.next();
+
+  await page.click('#modal-input');
+  const tagName = await getActiveElementTagName(page);
+
+  expect(tagName).toEqual('INPUT');
+})
