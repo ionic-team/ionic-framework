@@ -1,9 +1,23 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
 
-export const getActiveElementTagName = async (page) => {
+/**
+ * page.evaluate can only return a serializable value,
+ * so it is not possible to return the full element.
+ * Instead, we return an object with some common
+ * properties that you may want to access in a test.
+ */
+export const getActiveElementParent = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.tagName, activeElement);
+  return await page.evaluate(el => {
+    const { parentElement } = el;
+    const { className, tagName, id } = parentElement;
+    return {
+      className,
+      tagName,
+      id
+    }
+  }, activeElement);
 }
 
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {

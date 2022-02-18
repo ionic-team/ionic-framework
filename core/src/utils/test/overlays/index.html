@@ -47,8 +47,11 @@
   </ion-app>
 
   <script>
+    let modals = 0;
     const createModal = async () => {
       const div = document.createElement('div');
+      const id = modals++;
+      div.classList.add(`modal-${id}`);
       div.innerHTML = `
           <ion-header>
             <ion-toolbar>
@@ -60,10 +63,11 @@
 
             <ion-item>
               <ion-label>Text Input</ion-label>
-              <ion-input id="modal-input"></ion-input>
+              <ion-input class="modal-input modal-input-${id}"></ion-input>
             </ion-item>
 
             <ion-button id="modal-create">Create a Modal</ion-button>
+            <ion-button id="modal-create-and-present">Create and Present a Modal</ion-button>
             <ion-button id="modal-simulate">Simulate Hardware Back Button</ion-button>
             <ion-button id="modal-toast">Present a Toast</ion-button>
 
@@ -73,6 +77,11 @@
       const createButton = div.querySelector('ion-button#modal-create');
       createButton.onclick = () => {
         createModal();
+      }
+
+      const createAndPresentButton = div.querySelector('ion-button#modal-create-and-present');
+      createAndPresentButton.onclick = () => {
+        createAndPresentModal();
       }
 
       const simulateButton = div.querySelector('ion-button#modal-simulate');
