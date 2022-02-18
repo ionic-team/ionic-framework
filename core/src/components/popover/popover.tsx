@@ -189,8 +189,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes how to align the popover content with the `reference` point.
+   * Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
    */
-  @Prop() alignment: PositionAlign = 'start';
+  @Prop({ mutable: true }) alignment?: PositionAlign;
 
   /**
    * If `true`, the popover will display an arrow
@@ -292,6 +293,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.popoverId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
 
     this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
+
+    if (this.alignment === undefined) {
+      this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
+    }
   }
 
   componentDidLoad() {
