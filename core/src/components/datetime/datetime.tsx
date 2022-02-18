@@ -32,7 +32,8 @@ import {
   getMonthAndYear
 } from './utils/format';
 import {
-  is24Hour
+  is24Hour,
+  isMonthFirstLocale
 } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -1097,25 +1098,31 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderYearView() {
-    const { presentation, workingParts } = this;
+    const { presentation, workingParts, locale } = this;
     const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
     const showMonth = presentation !== 'year';
     const showYear = presentation !== 'month';
 
-    const months = getPickerMonths(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+    const months = getPickerMonths(locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
     const years = calendarYears.map(year => {
       return {
         text: `${year}`,
         value: year
       }
     })
+    const showMonthFirst = isMonthFirstLocale(locale);
+    const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
       <div class="datetime-year">
-        <div class="datetime-year-body">
+        <div class={{
+          'datetime-year-body': true,
+          [`order-${columnOrder}`]: true
+        }}>
           <ion-picker-internal>
             {
               showMonth &&
               <ion-picker-column-internal
+                class="month-column"
                 color={this.color}
                 items={months}
                 value={workingParts.month}
@@ -1150,6 +1157,7 @@ export class Datetime implements ComponentInterface {
             {
               showYear &&
               <ion-picker-column-internal
+                class="year-column"
                 color={this.color}
                 items={years}
                 value={workingParts.year}
