@@ -99,7 +99,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
           return;
         }
         if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
-          outlet = React.cloneElement(child, { tabs: true });
+          outlet = React.cloneElement(child);
         } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
           outlet = child.props.children[0];
         }

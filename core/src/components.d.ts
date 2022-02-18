@@ -1051,7 +1051,7 @@ export namespace Components {
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
-        "max"?: string;
+        "max"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -1059,7 +1059,7 @@ export namespace Components {
         /**
           * The minimum value, which must not be greater than its maximum (max attribute) value.
          */
-        "min"?: string;
+        "min"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
          */
@@ -1616,6 +1616,9 @@ export namespace Components {
           * @param view The view to get.
          */
         "getPrevious": (view?: ViewController | undefined) => Promise<ViewController | undefined>;
+        /**
+          * Called by <ion-router> to retrieve the current component.
+         */
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
           * Inserts a component into the navigation stack at the specified index. This is useful to add a component at any point in the navigation stack.
@@ -1692,6 +1695,14 @@ export namespace Components {
           * @param done The transition complete function.
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+        /**
+          * Called by the router to update the view.
+          * @param id The component tag.
+          * @param params The component params.
+          * @param direction A direction hint.
+          * @param animation an AnimationBuilder.
+          * @return the status.
+         */
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         /**
           * If the nav component should allow for swipe-to-go-back.
@@ -2197,11 +2208,11 @@ export namespace Components {
         "navChanged": (direction: RouterDirection) => Promise<boolean>;
         "printDebug": () => Promise<void>;
         /**
-          * Navigate to the specified URL.
-          * @param url The url to navigate to.
+          * Navigate to the specified path.
+          * @param path The path to navigate to.
           * @param direction The direction of the animation. Defaults to `"forward"`.
          */
-        "push": (url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>;
+        "push": (path: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>;
         /**
           * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
@@ -2243,7 +2254,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
+          * This property allows to create custom transition using AnimateBuilder functions.
          */
         "animation"?: AnimationBuilder;
         "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
@@ -2272,7 +2283,7 @@ export namespace Components {
          */
         "autocorrect": 'on' | 'off';
         /**
-          * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
+          * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
          */
         "cancelButtonIcon": string;
         /**
@@ -2280,7 +2291,7 @@ export namespace Components {
          */
         "cancelButtonText": string;
         /**
-          * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
+          * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
          */
         "clearIcon"?: string;
         /**
@@ -2316,7 +2327,7 @@ export namespace Components {
          */
         "placeholder": string;
         /**
-          * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
+          * The icon to use as the search icon. Defaults to `search-outline` in `ios` mode and `search-sharp` in `md` mode.
          */
         "searchIcon"?: string;
         /**
@@ -4753,7 +4764,7 @@ declare namespace LocalJSX {
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
-        "max"?: string;
+        "max"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -4761,7 +4772,7 @@ declare namespace LocalJSX {
         /**
           * The minimum value, which must not be greater than its maximum (max attribute) value.
          */
-        "min"?: string;
+        "min"?: string | number;
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
          */
@@ -5914,7 +5925,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
+          * This property allows to create custom transition using AnimateBuilder functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
@@ -5943,7 +5954,7 @@ declare namespace LocalJSX {
          */
         "autocorrect"?: 'on' | 'off';
         /**
-          * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
+          * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
          */
         "cancelButtonIcon"?: string;
         /**
@@ -5951,7 +5962,7 @@ declare namespace LocalJSX {
          */
         "cancelButtonText"?: string;
         /**
-          * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
+          * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
          */
         "clearIcon"?: string;
         /**
@@ -6011,7 +6022,7 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
-          * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
+          * The icon to use as the search icon. Defaults to `search-outline` in `ios` mode and `search-sharp` in `md` mode.
          */
         "searchIcon"?: string;
         /**

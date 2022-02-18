@@ -12,6 +12,10 @@ test('modal: inline', async () => {
   expect(modal).not.toBe(null);
   await modal.waitForVisible();
 
+  const container = await modal.find('.ion-page');
+
+  expect(container).not.toBe(null);
+
   screenshotCompares.push(await page.compareScreenshot());
 
   await modal.callMethod('dismiss');

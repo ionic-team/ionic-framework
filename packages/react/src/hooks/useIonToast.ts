@@ -1,4 +1,5 @@
 import { ToastOptions, toastController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-toast.js';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
@@ -11,7 +12,8 @@ import { useController } from './useController';
 export function useIonToast(): UseIonToastResult {
   const controller = useController<ToastOptions, HTMLIonToastElement>(
     'IonToast',
-    toastController
+    toastController,
+    defineCustomElement
   );
 
   const present = useCallback((messageOrOptions: string | ToastOptions & HookOverlayOptions, duration?: number) => {

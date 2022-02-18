@@ -7,7 +7,11 @@ import { createSheetEnterAnimation } from './sheet';
 
 const createEnterAnimation = () => {
   const backdropAnimation = createAnimation()
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    })
+    .afterClearStyles(['pointer-events']);
 
   const wrapperAnimation = createAnimation()
     .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
@@ -27,11 +31,7 @@ export const iosEnterAnimation = (
   const { wrapperAnimation, backdropAnimation } = currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
 
   backdropAnimation
-    .addElement(root.querySelector('ion-backdrop')!)
-    .beforeStyles({
-      'pointer-events': 'none'
-    })
-    .afterClearStyles(['pointer-events']);
+    .addElement(root.querySelector('ion-backdrop')!);
 
   wrapperAnimation
     .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)

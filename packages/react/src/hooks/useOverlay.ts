@@ -16,6 +16,7 @@ interface OverlayBase extends HTMLElement {
 export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   displayName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> },
+  defineCustomElement: () => void,
   component: ReactComponentOrElement,
   componentProps?: any
 ) {
@@ -28,6 +29,8 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
   const [isOpen, setIsOpen] = useState(false);
   const ionContext = useContext(IonContext);
   const [overlayId] = useState(generateId('overlay'));
+
+  defineCustomElement();
 
   useEffect(() => {
     if (isOpen && component && containerElRef.current) {

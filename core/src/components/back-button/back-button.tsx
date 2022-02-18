@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -83,11 +84,11 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
     if (getIonMode(this) === 'ios') {
       // default ios back button icon
-      return config.get('backButtonIcon', 'chevron-back');
+      return config.get('backButtonIcon', chevronBack);
     }
 
     // default md back button icon
-    return config.get('backButtonIcon', 'arrow-back-sharp');
+    return config.get('backButtonIcon', arrowBackSharp);
   }
 
   get backButtonText() {
@@ -120,7 +121,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText, inheritedAttributes } = this;
+    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText, icon, inheritedAttributes } = this;
     const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
@@ -148,7 +149,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           aria-label={ariaLabel}
         >
           <span class="button-inner">
-            {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+            {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false} flip-rtl={icon === undefined}></ion-icon>}
             {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}

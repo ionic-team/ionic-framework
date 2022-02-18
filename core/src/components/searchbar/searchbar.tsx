@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -53,9 +54,9 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * Set the cancel button icon. Only applies to `md` mode.
-   * Defaults to `"arrow-back-sharp"`.
+   * Defaults to `arrow-back-sharp`.
    */
-  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'arrow-back-sharp') as string;
+  @Prop() cancelButtonIcon = config.get('backButtonIcon', arrowBackSharp) as string;
 
   /**
    * Set the the cancel button text. Only applies to `ios` mode.
@@ -63,7 +64,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() cancelButtonText = 'Cancel';
 
   /**
-   * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
+   * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
    */
   @Prop() clearIcon?: string;
 
@@ -108,8 +109,8 @@ export class Searchbar implements ComponentInterface {
   @Prop() placeholder = 'Search';
 
   /**
-   * The icon to use as the search icon. Defaults to `"search-outline"` in
-   * `ios` mode and `"search-sharp"` in `md` mode.
+   * The icon to use as the search icon. Defaults to `search-outline` in
+   * `ios` mode and `search-sharp` in `md` mode.
    */
   @Prop() searchIcon?: string;
 
@@ -458,8 +459,8 @@ export class Searchbar implements ComponentInterface {
     const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
-    const clearIcon = this.clearIcon || (mode === 'ios' ? 'close-circle' : 'close-sharp');
-    const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
+    const clearIcon = this.clearIcon || (mode === 'ios' ? closeCircle : closeSharp);
+    const searchIcon = this.searchIcon || (mode === 'ios' ? searchOutline : searchSharp);
     const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = (this.showCancelButton !== 'never') && (

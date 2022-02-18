@@ -1,4 +1,5 @@
 import { ModalOptions, modalController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 import { useCallback } from 'react';
 
 import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
@@ -19,6 +20,7 @@ export function useIonModal(
   const controller = useOverlay<ModalOptions, HTMLIonModalElement>(
     'IonModal',
     modalController,
+    defineCustomElement,
     component,
     componentProps
   );
