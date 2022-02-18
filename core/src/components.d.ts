@@ -5266,6 +5266,14 @@ declare namespace LocalJSX {
          */
         "onDidPresent"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted when the breakpoint has changed.
+         */
+        "onIonModalBreakpointDidChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
+        /**
+          * Emitted when the breakpoint is about to change.
+         */
+        "onIonModalBreakpointWillChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
+        /**
           * Emitted after the modal has dismissed.
          */
         "onIonModalDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;

@@ -10,7 +10,6 @@ export const createSheetGesture = (
   wrapperEl: HTMLElement,
   backdropBreakpoint: number,
   animation: Animation,
-  breakpoints: number[] = [],
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
@@ -23,6 +22,8 @@ export const createSheetGesture = (
   let offset = 0;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
+
+  let breakpoints = (modalEl.breakpoints?.sort((a, b) => a - b)) || [];
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
   /**
@@ -58,6 +59,7 @@ export const createSheetGesture = (
      * allow for scrolling on the content.
      */
     const content = (detail.event.target! as HTMLElement).closest('ion-content');
+    breakpoints = (modalEl.breakpoints?.sort((a, b) => a - b)) || [];
     currentBreakpoint = modalEl.currentBreakpoint!;
 
     if (currentBreakpoint === 1 && content) {
@@ -111,6 +113,10 @@ export const createSheetGesture = (
     const closest = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
+
+    if (closest !== currentBreakpoint) {
+      modalEl.breakpointWillChange.emit({ breakpoint: closest });
+    }
 
     currentBreakpoint = 0;
 

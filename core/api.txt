@@ -787,6 +787,8 @@ ion-modal,method,present,present() => Promise<void>
 ion-modal,method,setBreakpoint,setBreakpoint(breakpoint: number) => Promise<void>
 ion-modal,event,didDismiss,OverlayEventDetail<any>,true
 ion-modal,event,didPresent,void,true
+ion-modal,event,ionModalBreakpointDidChange,{ breakpoint: number; },false
+ion-modal,event,ionModalBreakpointWillChange,{ breakpoint: number; },false
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true

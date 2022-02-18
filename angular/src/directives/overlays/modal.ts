@@ -115,6 +115,8 @@ export class IonModal {
     });
 
     proxyOutputs(this, this.el, [
+      'ionModalBreakpointWillChange',
+      'ionModalBreakpointDidChange',
       'ionModalDidPresent',
       'ionModalWillPresent',
       'ionModalWillDismiss',

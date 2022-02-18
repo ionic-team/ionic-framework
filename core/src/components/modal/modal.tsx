@@ -200,6 +200,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Emitted when the breakpoint is about to change.
+   */
+  @Event({ eventName: 'ionModalBreakpointWillChange', bubbles: false }) breakpointWillChange!: EventEmitter<{breakpoint: number}>;
+
+  /**
+   * Emitted when the breakpoint has changed.
+   */
+  @Event({ eventName: 'ionModalBreakpointDidChange', bubbles: false }) breakpointDidChange!: EventEmitter<{breakpoint: number}>;
+
+  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -459,23 +469,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
-
     this.gesture = createSheetGesture(
       this,
       this.backdropEl!,
       wrapperEl,
       backdropBreakpoint,
       ani,
-      sortedBreakpoints,
       () => {
         this.sheetOnDismiss();
       },
       (breakpoint: number) => {
-        this.currentBreakpoint = breakpoint;
+        this.setNewBreakpoint(breakpoint);
       }
     );
     this.gesture.enable(true);
+  }
+
+  private setNewBreakpoint(breakpoint: number) {
+    if (this.currentBreakpoint !== breakpoint) {
+      this.currentBreakpoint = breakpoint;
+      this.breakpointDidChange.emit({ breakpoint });
+    }
   }
 
   private sheetOnDismiss() {
@@ -571,9 +585,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async setBreakpoint(breakpoint: number): Promise<void> {
-    if (!this.isSheetModal || !this.breakpoints!.includes(breakpoint)) {
+    if (!this.isSheetModal || !this.breakpoints!.includes(breakpoint) || this.currentBreakpoint === breakpoint) {
       return
     }
+    this.breakpointWillChange.emit({ breakpoint });
+
     const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     moveSheetToBreakpoint(
@@ -589,7 +605,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.sheetOnDismiss();
       },
       (newBreakpoint: number) => {
-      this.currentBreakpoint = newBreakpoint;
+      this.setNewBreakpoint(newBreakpoint);
     });
   }
 
