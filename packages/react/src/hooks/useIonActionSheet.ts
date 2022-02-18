@@ -1,4 +1,5 @@
 import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
@@ -11,7 +12,8 @@ import { useController } from './useController';
 export function useIonActionSheet(): UseIonActionSheetResult {
   const controller = useController<ActionSheetOptions, HTMLIonActionSheetElement>(
     'IonActionSheet',
-    actionSheetController
+    actionSheetController,
+    defineCustomElement
   );
 
   const present = useCallback(

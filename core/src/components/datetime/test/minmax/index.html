@@ -44,7 +44,7 @@
       <div class="grid">
         <div class="grid-item">
           <h2>Value inside Bounds</h2>
-          <ion-datetime id="inside" min="2021-09" max="2021-10"></ion-datetime>
+          <ion-datetime id="inside" min="2021-09" max="2021-10" value="2021-10-01"></ion-datetime>
         </div>
         <div class="grid-item">
           <h2>Value Outside Bounds</h2>
@@ -61,6 +61,10 @@
         <div class="grid-item">
           <h2>locale: en-GB</h2>
           <ion-datetime locale="en-GB" presentation="time" min="19:30" value="20:30" max="20:40"></ion-datetime>
+        </div>
+        <div class="grid-item">
+          <h2>Min with year/month/day</h2>
+          <ion-datetime id="min-with-day" min="2022-02-09" value="2022-02-09"></ion-datetime>
         </div>
       </div>
     </ion-content>

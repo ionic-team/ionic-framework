@@ -8,7 +8,8 @@ import {
   watch,
   shallowRef,
   InjectionKey,
-  onUnmounted
+  onUnmounted,
+  Ref
 } from 'vue';
 import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core/components';
 import { IonRouterOutlet as IonRouterOutletCmp } from '@ionic/core/components/ion-router-outlet.js';
@@ -29,6 +30,8 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
     const matchedRouteRef: any = computed(() => route.matched[depth]);
+    let previousMatchedRouteRef: Ref | undefined;
+    let previousMatchedPath: string | undefined;
 
     provide(viewDepthKey, depth + 1)
     provide(matchedRouteKey, matchedRouteRef);
@@ -48,31 +51,55 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     let parentOutletPath: string;
 
     /**
-     * We need to watch the route object
-     * to listen for navigation changes.
-     * Previously we had watched matchedRouteRef,
-     * but if you had a /page/:id route, going from
-     * page/1 to page/2 would not cause this callback
-     * to fire since the matchedRouteRef was the same.
+     * Note: Do not listen for matchedRouteRef by itself here
+     * as the callback will not fire for parameterized routes (i.e. /page/:id).
+     * So going from /page/1 to /page/2 would not fire this callback if we
+     * only listened for changes to matchedRouteRef.
      */
-    watch(() => [route, matchedRouteRef.value], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
+    watch(() => [route, matchedRouteRef.value], ([currentRoute, currentMatchedRouteRef]) => {
       /**
-       * If the matched route ref has changed,
-       * then we need to set up a new view item.
-       * If the matched route ref has not changed,
-       * it is possible that this is a parameterized URL
-       * change such as /page/1 to /page/2. In that case,
-       * we can assume that the `route` object has changed,
-       * but we should only set up a new view item in this outlet
-       * if that last matched view item matches our current matched
-       * view item otherwise if we had this in a nested outlet the
-       * parent outlet would re-render as well as the child page.
+       * This callback checks whether or not a router outlet
+       * needs to respond to a change in the matched route.
+       * It handles a few cases:
+       * 1. The matched route is undefined. This means that
+       * the matched route is not applicable to this outlet.
+       * For example, a /settings route is not applicable
+       * to a /tabs/... route.
+       *
+       * Note: When going back to a tabs outlet from a non-tabs outlet,
+       * the tabs outlet should NOT attempt a page transition from the
+       * previous tab to the active tab. To do this we compare the current
+       * route with the previous route. Unfortunately, we cannot rely on the
+       * previous value provided by Vue in the watch callback. This is because
+       * when coming back to the tabs context, the previous matched route will
+       * be undefined (because nothing in the tabs context matches /settings)
+       * but the current matched route will be defined and so a transition
+       * will always occur.
+       *
+       * 2. The matched route is defined and is different than
+       * the previously matched route. This is the most
+       * common case such as when you go from /page1 to /page2.
+       *
+       * 3. The matched route is the same but the parameters are different.
+       * This is a special case for parameterized routes (i.e. /page/:id).
+       * When going from /page/1 to /page/2, the matched route object will
+       * be the same, but we still need to perform a page transition. To do this
+       * we check if the parameters are different (i.e. 1 vs 2). To avoid enumerating
+       * all of the keys in the params object, we check the url path to
+       * see if they are different after ensuring we are in a parameterized route.
        */
-      if (
-        currentMatchedRouteRef !== previousMatchedRouteRef ||
-        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef
-      ) {
+      if (currentMatchedRouteRef === undefined) { return; }
+
+      const matchedDifferentRoutes = currentMatchedRouteRef !== previousMatchedRouteRef;
+      const matchedDifferentParameterRoutes = (
+        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef &&
+        currentRoute.path !== previousMatchedPath
+      );
+
+      if (matchedDifferentRoutes || matchedDifferentParameterRoutes) {
         setupViewItem(matchedRouteRef);
+        previousMatchedRouteRef = currentMatchedRouteRef;
+        previousMatchedPath = currentRoute.path;
       }
     });
 

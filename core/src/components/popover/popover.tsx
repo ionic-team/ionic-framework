@@ -565,7 +565,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover && !desktop;
 
@@ -584,7 +584,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
           [mode]: true,
           'popover-translucent': this.translucent,
           'overlay-hidden': true,
-          'popover-interactive': presented,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
           'popover-nested': !!parentPopover

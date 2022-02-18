@@ -40,10 +40,14 @@ export const createSheetGesture = (
     animation.progressStart(true, 1 - currentBreakpoint);
 
     /**
-     * Backdrop should become enabled
-     * after the backdropBreakpoint value
+     * If backdrop is not enabled, then content
+     * behind modal should be clickable. To do this, we need
+     * to remove pointer-events from ion-modal as a whole.
+     * ion-backdrop and .modal-wrapper always have pointer-events: auto
+     * applied, so the modal content can still be interacted with.
      */
     const backdropEnabled = currentBreakpoint > backdropBreakpoint
+    baseEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
     backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
   }
 

@@ -67,7 +67,6 @@
 
 .action-sheet-wrapper {
   @include position(null, 0, 0, 0);
-  @include margin(var(--ion-safe-area-top, 0), auto, var(--ion-safe-area-bottom, 0), auto);
   @include transform(translate3d(0, 100%, 0));
 
   display: block;

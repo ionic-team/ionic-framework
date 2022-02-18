@@ -646,7 +646,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
-    const { presented, modalId } = this;
+    const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
 
     return (
@@ -664,7 +664,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
-          'modal-interactive': presented,
           ...getClassMap(this.cssClass)
         }}
         id={modalId}

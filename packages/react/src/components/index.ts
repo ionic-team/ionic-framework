@@ -1,21 +1,4 @@
 import { IonicConfig, initialize } from '@ionic/core/components';
-import { addIcons } from 'ionicons';
-import {
-  arrowBackSharp,
-  caretBackSharp,
-  chevronBack,
-  chevronDown,
-  chevronForward,
-  close,
-  closeCircle,
-  closeSharp,
-  menuOutline,
-  menuSharp,
-  reorderThreeOutline,
-  reorderTwoSharp,
-  searchOutline,
-  searchSharp,
-} from 'ionicons/icons';
 
 export {
   // UTILS
@@ -170,24 +153,6 @@ export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
 export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
 export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
 export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
-
-// Icons that are used by internal components
-addIcons({
-  'arrow-back-sharp': arrowBackSharp,
-  'caret-back-sharp': caretBackSharp,
-  'chevron-back': chevronBack,
-  'chevron-down': chevronDown,
-  'chevron-forward': chevronForward,
-  close,
-  'close-circle': closeCircle,
-  'close-sharp': closeSharp,
-  'menu-outline': menuOutline,
-  'menu-sharp': menuSharp,
-  'reorder-two-sharp': reorderTwoSharp,
-  'reorder-three-outline': reorderThreeOutline,
-  'search-outline': searchOutline,
-  'search-sharp': searchSharp,
-});
 
 export const setupIonicReact = (config: IonicConfig = {}) => {
   /**

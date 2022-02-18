@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
+import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -71,7 +72,7 @@ export class Accordion implements ComponentInterface {
    * rotated when the accordion is expanded
    * or collapsed.
    */
-  @Prop() toggleIcon = 'chevron-down';
+  @Prop() toggleIcon = chevronDown;
 
   /**
    * The slot inside of `ion-item` to

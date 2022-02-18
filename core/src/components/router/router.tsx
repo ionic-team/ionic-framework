@@ -117,18 +117,21 @@ export class Router implements ComponentInterface {
   }
 
   /**
-   * Navigate to the specified URL.
+   * Navigate to the specified path.
    *
-   * @param url The url to navigate to.
+   * @param path The path to navigate to.
    * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
-  async push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
-    if (url.startsWith('.')) {
-      url = (new URL(url, window.location.href)).pathname;
+  async push(path: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
+    if (path.startsWith('.')) {
+      const currentPath = this.previousPath ?? '/';
+      // Convert currentPath to an URL by pre-pending a protocol and a host to resolve the relative path.
+      const url = new URL(path, `https://host/${currentPath}`);
+      path = url.pathname + url.search;
     }
 
-    let parsedPath = parsePath(url);
+    let parsedPath = parsePath(path);
 
     const canProceed = await this.runGuards(parsedPath.segments);
     if (canProceed !== true) {

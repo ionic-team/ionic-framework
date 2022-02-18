@@ -1,3 +1,5 @@
+import { arrowBackSharp, chevronBack } from 'ionicons/icons';
+
 import { newSpecPage } from '@stencil/core/testing';
 import { BackButton } from "../back-button";
 import { config } from "../../../global/config";
@@ -46,12 +48,12 @@ describe('back button', () => {
 
     it('default icon for ios mode', async () => {
       const bb = await newBackButton('ios');
-      expect(bb.backButtonIcon).toBe('chevron-back');
+      expect(bb.backButtonIcon).toBe(chevronBack);
     });
 
     it('default icon', async () => {
       const bb = await newBackButton();
-      expect(bb.backButtonIcon).toBe('arrow-back-sharp');
+      expect(bb.backButtonIcon).toBe(arrowBackSharp);
     });
 
   });

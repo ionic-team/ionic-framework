@@ -43,3 +43,47 @@ test('modal - open', async () => {
     expect(screenshotCompare).toMatchScreenshot();
   }
 });
+
+test('should click to dismiss sheet modal', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/sheet?ionic:_testing=true' });
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+  await page.click('#sheet-modal');
+
+  const modal = await page.find('ion-modal');
+  await modal.waitForVisible();
+
+  await page.mouse.click(50, 50);
+
+  await ionModalDidDismiss.next();
+});
+
+test('should click to dismiss sheet modal when backdrop is active', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/sheet?ionic:_testing=true' });
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+  await page.click('#backdrop-active');
+
+  const modal = await page.find('ion-modal');
+  await modal.waitForVisible();
+
+  await page.mouse.click(50, 50);
+
+  await ionModalDidDismiss.next();
+});
+
+test('should click to present another modal when backdrop is inactive', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/sheet?ionic:_testing=true' });
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+  await page.click('#backdrop-inactive');
+
+  await ionModalDidPresent.next();
+
+  await page.click('#custom-height-modal');
+
+  await ionModalDidPresent.next();
+
+  const customModal = await page.find('.custom-height');
+  expect(customModal).not.toBe(null);
+});
