@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+import { getActiveElementTagName } from '../utils';
 
 test('overlays: hardware back button: should dismiss a presented overlay', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
@@ -126,11 +127,6 @@ test('overlays: Nested: should dismiss the top overlay', async () => {
   const modals = await page.$$('ion-modal');
   expect(modals.length).toEqual(0);
 });
-
-const getActiveElementTagName = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.tagName, activeElement);
-}
 
 test('toast should not cause focus trapping', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });

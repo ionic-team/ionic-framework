@@ -1,6 +1,11 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
 
+export const getActiveElementTagName = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return await page.evaluate(el => el && el.tagName, activeElement);
+}
+
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
   if (rtl) {
