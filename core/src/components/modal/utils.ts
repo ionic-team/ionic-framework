@@ -155,6 +155,7 @@ export const moveSheetToBreakpoint = (
              * after the backdropBreakpoint value
              */
             const backdropEnabled = currentBreakpoint > backdropBreakpoint;
+            baseEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
             backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
 
             gesture.enable(true);
