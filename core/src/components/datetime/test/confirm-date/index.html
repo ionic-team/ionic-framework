@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Datetime - Confirm Date</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <style>
+    h2 {
+      font-size: 12px;
+      font-weight: normal;
+
+      color: #6f7378;
+
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+
+    ion-modal.ios,
+    ion-popover.datetime-popover.ios {
+      --width: 350px;
+      --height: 420px;
+    }
+
+    ion-modal.md,
+    ion-popover.datetime-popover.md {
+      --width: 350px;
+    }
+
+    ion-datetime {
+      width: 350px;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header translucent="true">
+      <ion-toolbar>
+        <ion-title>Datetime - Confirm Date</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div>
+        <ion-label id="selectedValue"></ion-label>
+      </div>
+
+      <ion-button id="open-modal">Present Modal</ion-button>
+      <ion-modal trigger="open-modal" id="modal">
+        <ion-datetime value="2021-11-22" locale="en-US">
+          <ion-buttons slot="buttons">
+            <ion-button color="danger">Destroy</ion-button>
+            <ion-button color="primary" id="confirmBtn">Confirm</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      </ion-modal>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    const selectedValue = document.querySelector('#selectedValue');
+    const confirmBtn = document.querySelector('#confirmBtn');
+    const datetime = document.querySelector('ion-datetime');
+    const modal = document.querySelector('#modal');
+
+    confirmBtn.addEventListener('click', async function () {
+      await datetime.confirm();
+      modal.dismiss();
+      selectedValue.innerText = datetime.value;
+    });
+  </script>
+</body>
+
+</html>
