@@ -197,6 +197,8 @@ export class Datetime implements ComponentInterface {
    */
   @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year' = 'date-time';
 
+  private prevPresentation: string | null = null;
+
   /**
    * The text to display on the picker's cancel button.
    */
@@ -657,7 +659,11 @@ export class Datetime implements ComponentInterface {
   }
 
   private initializeCalendarIOListeners = () => {
-    const { calendarBodyRef } = this;
+    /**
+     * Stencil sometimes sets calendarBodyRef to null on rerender, even though
+     * the element is present. Query for it manually as a fallback.
+     */
+    const calendarBodyRef = this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
     if (!calendarBodyRef) { return; }
 
     const mode = getIonMode(this);
@@ -876,7 +882,17 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  componentDidLoad() {
+  componentDidRender() {
+    /**
+     * Only init all the logic if the presentation has changed.
+     * Note that this will include the initial render.
+     */
+    if (this.presentation === this.prevPresentation) {
+      return;
+    } else {
+      this.prevPresentation = this.presentation;
+    }
+
     /**
      * If a scrollable element is hidden using `display: none`,
      * it will not have a scroll height meaning we cannot scroll elements
