@@ -83,6 +83,7 @@ export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
+  private minutesPickerColumnRef?: HTMLIonPickerColumnInternalElement;
   private clearFocusVisible?: () => void;
   private overlayIsPresenting = false;
 
@@ -1345,7 +1346,7 @@ export class Datetime implements ComponentInterface {
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
   ) {
-    const { color, activePartsClone, workingParts } = this;
+    const { color, activePartsClone, workingParts, minutesPickerColumnRef } = this;
 
     return (
       <ion-picker-internal>
@@ -1364,10 +1365,20 @@ export class Datetime implements ComponentInterface {
               hour: ev.detail.value
             });
 
+            if (minutesPickerColumnRef) {
+              raf(() => {
+                // When the time picker is re-rendered, the minutes columns does not
+                // scroll to the correct position. This is a workaround to ensure
+                // that the minutes column displays the correct value.
+                minutesPickerColumnRef!.scrollActiveItemIntoView();
+              });
+            }
+
             ev.stopPropagation();
           }}
         ></ion-picker-column-internal>
         <ion-picker-column-internal
+          ref={ref => this.minutesPickerColumnRef = ref}
           color={color}
           value={activePartsClone.minute}
           items={minutesItems}
