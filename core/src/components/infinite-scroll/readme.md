@@ -69,7 +69,7 @@ export class InfiniteScrollExample {
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (data.length == 1000) {
+      if (data.length === 1000) {
         event.target.disabled = true;
       }
     }, 500);
@@ -111,7 +111,7 @@ infiniteScroll.addEventListener('ionInfinite', function(event) {
 
     // App logic to determine if all data is loaded
     // and disable the infinite scroll
-    if (data.length == 1000) {
+    if (data.length === 1000) {
       event.target.disabled = true;
     }
   }, 500);
@@ -164,7 +164,7 @@ const InfiniteScrollExample: React.FC = () => {
       pushData();
       console.log('Loaded data');
       ev.target.complete();
-      if (data.length == 1000) {
+      if (data.length === 1000) {
         setInfiniteDisabled(true);
       }
     }, 500);
@@ -263,7 +263,7 @@ export class InfiniteScrollExample {
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (this.data.length == 1000) {
+      if (this.data.length === 1000) {
         ev.target.disabled = true;
       }
     }, 500);
@@ -380,7 +380,7 @@ export default defineComponent({
   
         // App logic to determine if all data is loaded
         // and disable the infinite scroll
-        if (items.value.length == 1000) {
+        if (items.value.length === 1000) {
           ev.target.disabled = true;
         }
       }, 500);
