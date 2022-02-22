@@ -140,9 +140,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   connectedCallback() {
-    prepareOverlay(this.el, {
-      trapKeyboardFocus: false
-    });
+    prepareOverlay(this.el);
   }
 
   /**
