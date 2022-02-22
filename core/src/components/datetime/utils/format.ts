@@ -84,6 +84,5 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  */
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
-  console.log('hello', refParts, locale)
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 }
