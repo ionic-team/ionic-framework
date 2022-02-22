@@ -10,8 +10,9 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { modalController, createAnimation } from '../../../../../dist/ionic/index.esm.js';
+    import { modalController, toastController, createAnimation } from '../../../../../dist/ionic/index.esm.js';
     window.modalController = modalController;
+    window.toastController = toastController;
   </script>
 </head>
 
@@ -30,18 +31,27 @@
       </ion-header>
 
       <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label>Text Input</ion-label>
+          <ion-input id="root-input"></ion-input>
+        </ion-item>
+
         <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
         <ion-button id="create-nested" onclick="createNestedOverlayModal()">Create Nested Overlay Modal</ion-button>
         <ion-button id="present" onclick="presentHiddenModal()">Present a Hidden Modal</ion-button>
         <ion-button id="create-and-present" onclick="createAndPresentModal()">Create and Present a Modal</ion-button>
         <ion-button id="simulate" onclick="backButton()">Simulate Hardware Back Button</ion-button>
+        <ion-button id="create-and-present-toast" onclick="createAndPresentToast()">Create and Present Toast</ion-button>
       </ion-content>
     </div>
   </ion-app>
 
   <script>
+    let modals = 0;
     const createModal = async () => {
       const div = document.createElement('div');
+      const id = modals++;
+      div.classList.add(`modal-${id}`);
       div.innerHTML = `
           <ion-header>
             <ion-toolbar>
@@ -51,8 +61,15 @@
           <ion-content class="ion-padding">
             Modal Content
 
+            <ion-item>
+              <ion-label>Text Input</ion-label>
+              <ion-input class="modal-input modal-input-${id}"></ion-input>
+            </ion-item>
+
             <ion-button id="modal-create">Create a Modal</ion-button>
+            <ion-button id="modal-create-and-present">Create and Present a Modal</ion-button>
             <ion-button id="modal-simulate">Simulate Hardware Back Button</ion-button>
+            <ion-button id="modal-toast">Present a Toast</ion-button>
 
           </ion-content>
         `;
@@ -62,9 +79,19 @@
         createModal();
       }
 
+      const createAndPresentButton = div.querySelector('ion-button#modal-create-and-present');
+      createAndPresentButton.onclick = () => {
+        createAndPresentModal();
+      }
+
       const simulateButton = div.querySelector('ion-button#modal-simulate');
       simulateButton.onclick = () => {
         backButton();
+      }
+
+      const presentToast = div.querySelector('ion-button#modal-toast');
+      presentToast.onclick = () => {
+        createAndPresentToast();
       }
 
       const modal = await modalController.create({
@@ -89,6 +116,14 @@
       if (modal) {
         modal.present();
       }
+    }
+
+    const createAndPresentToast = async () => {
+      const toast = await toastController.create({
+        message: 'This is a toast!'
+      });
+
+      await toast.present();
     }
 
     const createNestedOverlayModal = async () => {
