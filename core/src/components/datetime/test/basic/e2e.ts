@@ -110,3 +110,29 @@ test('datetime:rtl: basic', async () => {
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });
+
+
+describe('datetime: confirm date', () => {
+
+  test('should set the date value based on the selected date', async () => {
+
+    const page = await newE2EPage({
+      html: `<ion-datetime value="2021-12-25T12:40:00.000Z"></ion-datetime>`
+    });
+
+    const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button');
+
+    await buttons[1].click();
+
+    await page.waitForTimeout(350);
+
+    await page.$eval('ion-datetime', async (el: any) => {
+      await el.confirm();
+    });
+
+    const value = await (await page.find('ion-datetime')).getProperty('value');
+
+    expect(value).toMatch('2021-12-25T12:40:00');
+  });
+
+});
