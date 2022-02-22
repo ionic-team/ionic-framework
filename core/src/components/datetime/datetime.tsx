@@ -881,17 +881,13 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  componentDidRender() {
-    /**
-     * Only init all the logic if the presentation has changed.
-     * Note that this will include the initial render.
-     */
-    if (this.presentation === this.prevPresentation) {
-      return;
-    } else {
-      this.prevPresentation = this.presentation;
-    }
+  private initializeListeners() {
+    this.initializeCalendarIOListeners();
+    this.initializeKeyboardListeners();
+    this.initializeOverlayListener();
+  }
 
+  componentDidLoad() {
     /**
      * If a scrollable element is hidden using `display: none`,
      * it will not have a scroll height meaning we cannot scroll elements
@@ -904,9 +900,7 @@ export class Datetime implements ComponentInterface {
       const ev = entries[0];
       if (!ev.isIntersecting) { return; }
 
-      this.initializeCalendarIOListeners();
-      this.initializeKeyboardListeners();
-      this.initializeOverlayListener();
+      this.initializeListeners();
 
       /**
        * TODO: Datetime needs a frame to ensure that it
@@ -963,6 +957,17 @@ export class Datetime implements ComponentInterface {
     const root = getElementRoot(this.el);
     root.addEventListener('ionFocus', (ev: Event) => ev.stopPropagation());
     root.addEventListener('ionBlur', (ev: Event) => ev.stopPropagation());
+  }
+
+  componentDidRender() {
+    /**
+     * When the presentation is changed, all calendar content is recreated,
+     * so we need to re-init behavior with the new elements.
+     */
+    if (this.presentation === this.prevPresentation) { return; }
+    this.prevPresentation = this.presentation;
+    this.destroyListeners();
+    this.initializeListeners();
   }
 
   /**
