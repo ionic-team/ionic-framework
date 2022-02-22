@@ -97,6 +97,9 @@ export class Datetime implements ComponentInterface {
 
   private minParts?: any;
   private maxParts?: any;
+  private todayParts = parseDate(getToday());
+
+  private prevPresentation: string | null = null;
 
   /**
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
@@ -123,8 +126,6 @@ export class Datetime implements ComponentInterface {
     minute: 52,
     ampm: 'pm'
   }
-
-  private todayParts = parseDate(getToday())
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -196,8 +197,6 @@ export class Datetime implements ComponentInterface {
    * `'time-date'` will show the time picker first and date picker second.
    */
   @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year' = 'date-time';
-
-  private prevPresentation: string | null = null;
 
   /**
    * The text to display on the picker's cancel button.
