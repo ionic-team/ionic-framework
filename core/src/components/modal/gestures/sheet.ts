@@ -88,8 +88,8 @@ export const createSheetGesture = (
      * ion-backdrop and .modal-wrapper always have pointer-events: auto
      * applied, so the modal content can still be interacted with.
      */
-    const backdropEnabled = currentBreakpoint > backdropBreakpoint;
-    if (backdropEnabled) {
+    const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+    if (shouldEnableBackdrop) {
       enableBackdrop();
     } else {
       disableBackdrop();
@@ -219,8 +219,8 @@ export const createSheetGesture = (
                * Backdrop should become enabled
                * after the backdropBreakpoint value
                */
-              const backdropEnabled = currentBreakpoint > backdropBreakpoint;
-              if (backdropEnabled) {
+              const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+              if (shouldEnableBackdrop) {
                 enableBackdrop();
               } else {
                 disableBackdrop();
