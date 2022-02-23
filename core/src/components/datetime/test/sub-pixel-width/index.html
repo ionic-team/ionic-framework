@@ -43,21 +43,11 @@
     </ion-content>
   </ion-app>
 
-  <script>
-    const openModal = document.getElementById('open-modal');
+  <script type="module">
+    import { InitMonthDidChangeEvent } from '../test/utils/month-did-change-event.js';
 
-    const observer = new MutationObserver(mutationRecords => {
-      if (mutationRecords[0].type === 'characterData') {
-        document.dispatchEvent(new CustomEvent('datetimeCalendarMonthSpecTestEvent'));
-      }
-    });
-
-    openModal.addEventListener('click', () => {
-      observer.observe(document.querySelector('ion-datetime').shadowRoot.querySelector('.calendar-month-year'), {
-        childList: true,
-        characterData: true,
-        subtree: true
-      });
+    document.getElementById('open-modal').addEventListener('click', () => {
+      InitMonthDidChangeEvent();
     });
   </script>
 
