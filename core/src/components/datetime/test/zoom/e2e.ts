@@ -27,12 +27,13 @@ describe('datetime: zoom interactivity', () => {
       });
 
       const openModalBtn = await page.find('#open-modal');
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = await page.find('ion-modal');
 
       await openModalBtn.click();
 
-      const modal = await page.find('ion-modal');
       await modal.waitForVisible();
-      await page.waitForTimeout(250);
+      await ionModalDidPresent.next();
 
       const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button')
 
@@ -51,12 +52,13 @@ describe('datetime: zoom interactivity', () => {
       });
 
       const openModalBtn = await page.find('#open-modal');
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const modal = await page.find('ion-modal');
 
       await openModalBtn.click();
 
-      const modal = await page.find('ion-modal');
       await modal.waitForVisible();
-      await page.waitForTimeout(250);
+      await ionModalDidPresent.next();
 
       const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button')
 
