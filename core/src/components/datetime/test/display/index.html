@@ -50,7 +50,9 @@
         datetime.size = ev.target.value;
       }
 
-      InitMonthDidChangeEvent();
+      if(datetime.componentOnReady) {
+        datetime.componentOnReady().then(() => InitMonthDidChangeEvent());
+      }
     </script>
   </body>
 </html>
