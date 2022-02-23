@@ -425,10 +425,10 @@ export class Datetime implements ComponentInterface {
      * the date that is currently selected, otherwise
      * there can be 1 hr difference when dealing w/ DST
      */
-    const date = new Date(convertDataToISO(this.workingParts));
-    this.workingParts.tzOffset = date.getTimezoneOffset() * -1;
+    const date = new Date(convertDataToISO(this.activeParts));
+    this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
 
-    this.value = convertDataToISO(this.workingParts);
+    this.value = convertDataToISO(this.activeParts);
 
     if (closeOverlay) {
       this.closeParentOverlay();
