@@ -166,8 +166,7 @@ Sheet modals that have had their backdrop disabled by the `backdropBreakpoint` p
 
 Sheet modals allow users to interact with content behind the modal when the `backdropBreakpoint` property is used. The backdrop will be disabled up to and including the specified `backdropBreakpoint` and will be enabled after it.
 
-When the backdrop is disabled, users will be able to focus elements outside the sheet modal. We recommend avoiding features such as autofocus here as it can cause assistive technologies to jump between two interactive contexts without warning the user.
-
+When the backdrop is disabled, users will be able to interact with elements outside the sheet modal using a pointer or keyboard. Assistive technologies may not focus outside the sheet modal by default due to the usage of `aria-modal`. We recommend avoiding features such as autofocus here as it can cause assistive technologies to jump between two interactive contexts without warning the user.  
 
 <!-- Auto Generated Below -->
 
