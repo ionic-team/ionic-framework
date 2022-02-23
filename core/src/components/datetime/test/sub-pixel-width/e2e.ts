@@ -19,7 +19,7 @@ describe('datetime: sub-pixel width', () => {
 
     await buttons[1].click();
 
-    await page.waitForTimeout(350);
+    await page.waitForEvent('datetimeCalendarMonthSpecTestEvent');
 
     const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
@@ -43,7 +43,7 @@ describe('datetime: sub-pixel width', () => {
 
     await buttons[0].click();
 
-    await page.waitForTimeout(350);
+    await page.waitForEvent('datetimeCalendarMonthSpecTestEvent');
 
     const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 

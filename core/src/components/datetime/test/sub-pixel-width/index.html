@@ -42,6 +42,25 @@
       </ion-modal>
     </ion-content>
   </ion-app>
+
+  <script>
+    const openModal = document.getElementById('open-modal');
+
+    const observer = new MutationObserver(mutationRecords => {
+      if (mutationRecords[0].type === 'characterData') {
+        document.dispatchEvent(new CustomEvent('datetimeCalendarMonthSpecTestEvent'));
+      }
+    });
+
+    openModal.addEventListener('click', () => {
+      observer.observe(document.querySelector('ion-datetime').shadowRoot.querySelector('.calendar-month-year'), {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    });
+  </script>
+
 </body>
 
 </html>

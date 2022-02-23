@@ -17,7 +17,7 @@ describe('datetime: zoom interactivity', () => {
 
     test('should update the month when next button is clicked', async () => {
       const page = await newE2EPage({
-        url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true'
+        url: '/src/components/datetime/test/zoom?ionic:_testing=true'
       });
 
       page.setViewport({
@@ -38,7 +38,7 @@ describe('datetime: zoom interactivity', () => {
 
       await buttons[1].click();
 
-      await page.waitForTimeout(350);
+      await page.waitForEvent('datetimeCalendarMonthSpecTestEvent');
 
       const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
@@ -47,7 +47,7 @@ describe('datetime: zoom interactivity', () => {
 
     test('should update the month when prev button is clicked', async () => {
       const page = await newE2EPage({
-        url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true'
+        url: '/src/components/datetime/test/zoom?ionic:_testing=true'
       });
 
       const openModalBtn = await page.find('#open-modal');
@@ -62,7 +62,7 @@ describe('datetime: zoom interactivity', () => {
 
       await buttons[0].click();
 
-      await page.waitForTimeout(350);
+      await page.waitForEvent('datetimeCalendarMonthSpecTestEvent');
 
       const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
@@ -79,7 +79,7 @@ describe('datetime: zoom interactivity', () => {
 
     test('should update the month when next button is clicked', async () => {
       const page = await newE2EPage({
-        url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true'
+        url: '/src/components/datetime/test/zoom?ionic:_testing=true'
       });
 
       page.setViewport({
@@ -100,7 +100,7 @@ describe('datetime: zoom interactivity', () => {
 
       await buttons[1].click();
 
-      await page.waitForTimeout(350);
+      await page.waitForEvent('datetimeCalendarMonthSpecTestEvent');
 
       const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
@@ -109,7 +109,7 @@ describe('datetime: zoom interactivity', () => {
 
     test('should update the month when prev button is clicked', async () => {
       const page = await newE2EPage({
-        url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true'
+        url: '/src/components/datetime/test/zoom?ionic:_testing=true'
       });
 
       const openModalBtn = await page.find('#open-modal');
@@ -124,7 +124,7 @@ describe('datetime: zoom interactivity', () => {
 
       await buttons[0].click();
 
-      await page.waitForTimeout(350);
+      await page.waitForEvent('datetimeCalendarMonthSpecTestEvent');
 
       const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
