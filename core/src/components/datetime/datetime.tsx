@@ -74,7 +74,7 @@ import {
   tag: 'ion-datetime',
   styleUrls: {
     ios: 'datetime.ios.scss',
-    md: 'datetime.md.scss' 
+    md: 'datetime.md.scss'
   },
   shadow: true
 })

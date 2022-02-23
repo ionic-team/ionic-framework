@@ -38,7 +38,9 @@
 
     <ion-datetime value="2022-02-22"></ion-datetime>
 
-    <script>
+    <script type="module">
+      import { InitMonthDidChangeEvent } from '../test/utils/month-did-change-event.js';
+      
       const datetime = document.querySelector('ion-datetime');
 
       const changePresentation = (ev) => {
@@ -47,6 +49,8 @@
       const changeSize = (ev) => {
         datetime.size = ev.target.value;
       }
+
+      InitMonthDidChangeEvent();
     </script>
   </body>
 </html>

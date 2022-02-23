@@ -66,7 +66,7 @@ test('month selection should work after changing presentation', async () => {
 
   const nextMonthButton = await page.find('ion-datetime >>> .calendar-next-prev ion-button + ion-button');
   await nextMonthButton.click();
-  await page.waitForTimeout(500);
+  await page.waitForEvent('datetimeMonthDidChange');
 
   const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
   expect(monthYear.innerText.trim()).toEqual('March 2022');
