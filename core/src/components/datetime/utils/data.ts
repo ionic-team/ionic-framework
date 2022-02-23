@@ -282,9 +282,9 @@ export const getPickerMonths = (
     }
 
     processedMonths.forEach(processedMonth => {
-      const date = new Date(`${processedMonth}/1/${year}`);
+      const date = new Date(`${processedMonth}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: processedMonth });
     });
   } else {
@@ -292,9 +292,34 @@ export const getPickerMonths = (
     const minMonth = minParts && minParts.year === year ? minParts.month : 1;
 
     for (let i = minMonth; i <= maxMonth; i++) {
-      const date = new Date(`${i}/1/${year}`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      /**
+       *
+       * There is a bug on iOS 14 where
+       * Intl.DateTimeFormat takes into account
+       * the local timezone offset when formatting dates.
+       *
+       * Forcing the timezone to 'UTC' fixes the issue. However,
+       * we should keep this workaround as it is safer. In the event
+       * this breaks in another browser, we will not be impacted
+       * because all dates will be interpreted in UTC.
+       *
+       * Example:
+       * new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "March"
+       * new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "April"
+       *
+       * In certain timezones, iOS 14 shows the wrong
+       * date for .toUTCString(). To combat this, we
+       * force all of the timezones to GMT+0000 (UTC).
+       *
+       * Example:
+       * Time Zone: Central European Standard Time
+       * new Date('1/1/1992').toUTCString() // "Tue, 31 Dec 1991 23:00:00 GMT"
+       * new Date('1/1/1992 GMT+0000').toUTCString() // "Wed, 01 Jan 1992 00:00:00 GMT"
+       */
+      const date = new Date(`${i}/1/${year} GMT+0000`);
+
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: i });
     }
   }

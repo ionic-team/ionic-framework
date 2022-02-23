@@ -32,7 +32,8 @@ import {
   getMonthAndYear
 } from './utils/format';
 import {
-  is24Hour
+  is24Hour,
+  isMonthFirstLocale
 } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -810,6 +811,12 @@ export class Datetime implements ComponentInterface {
         navigator.maxTouchPoints > 1 ?
         [0.7, 1] : 1;
 
+      // Intersection observers cannot accurately detect the
+      // intersection with a threshold of 1, when the observed
+      // element width is a sub-pixel value (i.e. 334.05px).
+      // Setting a root margin to 1px solves the issue.
+      const rootMargin = '1px';
+
       /**
        * Listen on the first month to
        * prepend a new month and on the last
@@ -828,15 +835,18 @@ export class Datetime implements ComponentInterface {
        * it applies to active gestures which is not
        * something WebKit does.
        */
+
       endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
         threshold,
-        root: calendarBodyRef
+        root: calendarBodyRef,
+        rootMargin
       });
       endIO.observe(endMonth);
 
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold,
-        root: calendarBodyRef
+        root: calendarBodyRef,
+        rootMargin
       });
       startIO.observe(startMonth);
 
@@ -1097,25 +1107,31 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderYearView() {
-    const { presentation, workingParts } = this;
+    const { presentation, workingParts, locale } = this;
     const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
     const showMonth = presentation !== 'year';
     const showYear = presentation !== 'month';
 
-    const months = getPickerMonths(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+    const months = getPickerMonths(locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
     const years = calendarYears.map(year => {
       return {
         text: `${year}`,
         value: year
       }
     })
+    const showMonthFirst = isMonthFirstLocale(locale);
+    const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
       <div class="datetime-year">
-        <div class="datetime-year-body">
+        <div class={{
+          'datetime-year-body': true,
+          [`order-${columnOrder}`]: true
+        }}>
           <ion-picker-internal>
             {
               showMonth &&
               <ion-picker-column-internal
+                class="month-column"
                 color={this.color}
                 items={months}
                 value={workingParts.month}
@@ -1150,6 +1166,7 @@ export class Datetime implements ComponentInterface {
             {
               showYear &&
               <ion-picker-column-internal
+                class="year-column"
                 color={this.color}
                 items={years}
                 value={workingParts.year}
