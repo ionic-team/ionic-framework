@@ -74,7 +74,7 @@ import {
   tag: 'ion-datetime',
   styleUrls: {
     ios: 'datetime.ios.scss',
-    md: 'datetime.md.scss'
+    md: 'datetime.md.scss' 
   },
   shadow: true
 })
@@ -968,11 +968,15 @@ export class Datetime implements ComponentInterface {
     root.addEventListener('ionBlur', (ev: Event) => ev.stopPropagation());
   }
 
+  /**
+   * When the presentation is changed, all calendar content is recreated,
+   * so we need to re-init behavior with the new elements.
+   */
   componentDidRender() {
-    /**
-     * When the presentation is changed, all calendar content is recreated,
-     * so we need to re-init behavior with the new elements.
-     */
+    if (this.prevPresentation === null) {
+      this.prevPresentation = this.presentation;
+    }
+
     if (this.presentation === this.prevPresentation) { return; }
     this.prevPresentation = this.presentation;
     this.destroyListeners();
