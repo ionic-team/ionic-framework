@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.9](https://github.com/ionic-team/ionic-framework/compare/v6.0.8...v6.0.9) (2022-02-23)
+
+
+### Bug Fixes
+
+* **datetime:** improve datetime sizing in modals ([#24762](https://github.com/ionic-team/ionic-framework/issues/24762)) ([b0ac7de](https://github.com/ionic-team/ionic-framework/commit/b0ac7de168c353ba4899cb74a2b38e25fd0cc0f1)), closes [#23992](https://github.com/ionic-team/ionic-framework/issues/23992)
+* **datetime:** month and year column order is now locale aware ([#24802](https://github.com/ionic-team/ionic-framework/issues/24802)) ([16647b2](https://github.com/ionic-team/ionic-framework/commit/16647b2c7290389755a4093145788f281c84b7e2)), closes [#24548](https://github.com/ionic-team/ionic-framework/issues/24548)
+* **datetime:** month picker no longer gives duplicate months on ios 14 and older ([#24792](https://github.com/ionic-team/ionic-framework/issues/24792)) ([b6d7e1c](https://github.com/ionic-team/ionic-framework/commit/b6d7e1c75740a61dcd02c21692e4d4632fb8df5c)), closes [#24663](https://github.com/ionic-team/ionic-framework/issues/24663)
+* **img:** draggable attribute is now inherited to inner img element ([#24781](https://github.com/ionic-team/ionic-framework/issues/24781)) ([19ac238](https://github.com/ionic-team/ionic-framework/commit/19ac2389eb0843173f51a12de41ac808cd8f0569)), closes [#21325](https://github.com/ionic-team/ionic-framework/issues/21325)
+* **modal:** backdropBreakpoint allows interactivity behind sheet ([#24798](https://github.com/ionic-team/ionic-framework/issues/24798)) ([fca3f56](https://github.com/ionic-team/ionic-framework/commit/fca3f56ca4568e63fd493debda088263caa86c64)), closes [#24797](https://github.com/ionic-team/ionic-framework/issues/24797)
+* **popover:** default alignment to 'center' for ios mode ([#24815](https://github.com/ionic-team/ionic-framework/issues/24815)) ([243f673](https://github.com/ionic-team/ionic-framework/commit/243f67362f25699bdb373be6b72cb9c14dc95a32))
+* **react, vue:** scroll is no longer interrupted on ios ([#24791](https://github.com/ionic-team/ionic-framework/issues/24791)) ([99c91ef](https://github.com/ionic-team/ionic-framework/commit/99c91eff8764c9a1630adedab6a9765dd9754f7d)), closes [#24435](https://github.com/ionic-team/ionic-framework/issues/24435)
+* **select:** interface components now show correctly ([#24810](https://github.com/ionic-team/ionic-framework/issues/24810)) ([2fc2de5](https://github.com/ionic-team/ionic-framework/commit/2fc2de51771f4a5c3f20c6071284096e5bf31ec8)), closes [#24807](https://github.com/ionic-team/ionic-framework/issues/24807)
+* **toast:** toast is now correctly excluded from focus trapping ([#24816](https://github.com/ionic-team/ionic-framework/issues/24816)) ([8246112](https://github.com/ionic-team/ionic-framework/commit/8246112ca12f90edb98629ab82e27a792a1fafad)), closes [#24733](https://github.com/ionic-team/ionic-framework/issues/24733)
+
+
+
+
+
 ## [6.0.8](https://github.com/ionic-team/ionic-framework/compare/v6.0.7...v6.0.8) (2022-02-15)
 
 
