@@ -8,18 +8,19 @@ describe('datetime: sub-pixel width', () => {
     });
 
     const openModalBtn = await page.find('#open-modal');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = await page.find('ion-modal');
 
     await openModalBtn.click();
 
-    const modal = await page.find('ion-modal');
     await modal.waitForVisible();
-    await page.waitForTimeout(250);
+    await ionModalDidPresent.next();
 
     const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button')
 
     await buttons[1].click();
 
-    await page.waitForTimeout(350);
+    await page.waitForEvent('datetimeMonthDidChange');
 
     const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
@@ -32,18 +33,19 @@ describe('datetime: sub-pixel width', () => {
     });
 
     const openModalBtn = await page.find('#open-modal');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = await page.find('ion-modal');
 
     await openModalBtn.click();
 
-    const modal = await page.find('ion-modal');
     await modal.waitForVisible();
-    await page.waitForTimeout(250);
+    await ionModalDidPresent.next();
 
     const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button')
 
     await buttons[0].click();
 
-    await page.waitForTimeout(350);
+    await page.waitForEvent('datetimeMonthDidChange');
 
     const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
 
