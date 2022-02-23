@@ -37,6 +37,14 @@
       </ion-modal>
     </ion-content>
   </ion-app>
+
+  <script type="module">
+    import { InitMonthDidChangeEvent } from '../test/utils/month-did-change-event.js';
+
+    document.getElementById('open-modal').addEventListener('click', () => {
+      InitMonthDidChangeEvent();
+    });
+  </script>
 </body>
 
 </html>
