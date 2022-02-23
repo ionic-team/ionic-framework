@@ -112,7 +112,8 @@ test('input should not be focusable when backdrop is active', async () => {
   await ionModalDidPresent.next();
 
   await page.click('#root-input');
+  await page.waitForChanges();
 
   const parentEl = await getActiveElement(page);
-  expect(parentEl.tagName).toEqual('ION-MODAL');
+  expect(parentEl.tagName).toEqual('ION-BUTTON');
 });
