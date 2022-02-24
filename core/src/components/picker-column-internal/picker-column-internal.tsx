@@ -118,6 +118,26 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
+  componentDidRender() {
+    const { activeItem, el, items, isColumnVisible, value } = this;
+
+    if (isColumnVisible) {
+      if (activeItem) {
+        if (el.scrollTop !== this.getScrollTopPositionForElement(activeItem)) {
+          // Scroll the active item into the view if after rendering
+          // it is still not visible
+          this.scrollActiveItemIntoView();
+        }
+      } else if (items[0].value !== value) {
+        // If the picker column does not have an active item and the current value
+        // does not match the first item in the picker column, that means
+        // the value is out of bounds. In this case, we assign the value to the
+        // first item to match the scroll position of the column.
+        this.value = items[0].value;
+      }
+    }
+  }
+
   /** @internal  */
   @Method()
   async scrollActiveItemIntoView() {
@@ -128,10 +148,14 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
+  private getScrollTopPositionForElement(target: HTMLElement) {
+    // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
+    return target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2);
+  }
+
   private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
     this.el.scroll({
-      // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
-      top: target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2),
+      top: this.getScrollTopPositionForElement(target),
       left: 0,
       behavior: smooth ? 'smooth' : undefined
     });
@@ -160,6 +184,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
     this.isActive = true;
   }
+
 
   /**
    * When the column scrolls, the component
