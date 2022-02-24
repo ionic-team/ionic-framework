@@ -185,7 +185,6 @@ export class PickerColumnInternal implements ComponentInterface {
     this.isActive = true;
   }
 
-
   /**
    * When the column scrolls, the component
    * needs to determine which item is centered
