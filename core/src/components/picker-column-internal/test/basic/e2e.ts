@@ -44,6 +44,8 @@ describe('picker-column-internal', () => {
         el.scrollTop = 801;
       });
 
+      await page.waitForChanges();
+
       const activeColumn = await page.find('ion-picker-column-internal >>> .picker-item-active');
 
       expect(activeColumn.innerText).toEqual('23');
