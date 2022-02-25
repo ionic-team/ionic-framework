@@ -21,6 +21,9 @@ jobs:
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # A 1 is required before the timestamp
+      # as lerna will fail when there is a leading 0
+      # See https://github.com/lerna/lerna/issues/2840
       - name: Create Dev Hash
         run: |
           echo "HASH=$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
@@ -28,9 +31,6 @@ jobs:
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Create Dev Build
-        # A 1 is required before the timestamp
-        # as lerna will fail when there is a leading 0
-        # See https://github.com/lerna/lerna/issues/2840
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --no-git-tag-version --no-push --exact
         shell: bash
