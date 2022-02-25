@@ -21,10 +21,13 @@ jobs:
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # A 1 is required before the timestamp
+      # as lerna will fail when there is a leading 0
+      # See https://github.com/lerna/lerna/issues/2840
       - name: Create Dev Hash
         run: |
           echo "HASH=$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
-          echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+          echo "TIMESTAMP=1$(date +%s)" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Create Dev Build
