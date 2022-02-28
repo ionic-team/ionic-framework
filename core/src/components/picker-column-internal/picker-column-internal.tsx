@@ -124,15 +124,21 @@ export class PickerColumnInternal implements ComponentInterface {
     if (isColumnVisible) {
       if (activeItem) {
         if (el.scrollTop !== this.getScrollTopPositionForElement(activeItem)) {
-          // Scroll the active item into the view if after rendering
-          // it is still not visible
+          /**
+           * Scroll the active item into the view if after rendering
+           * it is still not visible
+           *
+           */
           this.scrollActiveItemIntoView();
         }
       } else if (items[0].value !== value) {
-        // If the picker column does not have an active item and the current value
-        // does not match the first item in the picker column, that means
-        // the value is out of bounds. In this case, we assign the value to the
-        // first item to match the scroll position of the column.
+        /**
+         * If the picker column does not have an active item and the current value
+         * does not match the first item in the picker column, that means
+         * the value is out of bounds. In this case, we assign the value to the
+         * first item to match the scroll position of the column.
+         *
+         */
         this.value = items[0].value;
       }
     }
