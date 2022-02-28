@@ -131,7 +131,7 @@ export class PickerColumnInternal implements ComponentInterface {
            */
           this.scrollActiveItemIntoView();
         }
-      } else if (items[0].value !== value) {
+      } else if (items[0]?.value !== value) {
         /**
          * If the picker column does not have an active item and the current value
          * does not match the first item in the picker column, that means
