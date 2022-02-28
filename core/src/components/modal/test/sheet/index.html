@@ -85,6 +85,11 @@
       </ion-header>
 
       <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label>Input outside modal</ion-label>
+          <ion-input id="root-input"></ion-input>
+        </ion-item>
+
         <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
         <ion-button id="custom-breakpoint-modal" onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })">Present Sheet Modal (Custom Breakpoints)</ion-button>
         <ion-button id="custom-breakpoint-modal" onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })">Present Sheet Modal (Max breakpoint is not 1)</ion-button>

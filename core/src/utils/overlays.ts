@@ -128,6 +128,17 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
    */
   if (!lastOverlay || !target) { return; }
 
+  /**
+   * If the ion-disable-focus-trap class
+   * is present on an overlay, then this component
+   * instance has opted out of focus trapping.
+   * An example of this is when the sheet modal
+   * has a backdrop that is disabled. The content
+   * behind the sheet should be focusable until
+   * the backdrop is enabled.
+   */
+  if (lastOverlay.classList.contains('ion-disable-focus-trap')) { return; }
+
   const trapScopedFocus = () => {
     /**
      * If we are focusing the overlay, clear
