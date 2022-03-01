@@ -29,7 +29,6 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
-import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
 import { defineCustomElement as defineIonItemOptions } from '@ionic/core/components/ion-item-options.js';
@@ -53,7 +52,6 @@ import { defineCustomElement as defineIonReorder } from '@ionic/core/components/
 import { defineCustomElement as defineIonReorderGroup } from '@ionic/core/components/ion-reorder-group.js';
 import { defineCustomElement as defineIonRippleEffect } from '@ionic/core/components/ion-ripple-effect.js';
 import { defineCustomElement as defineIonRow } from '@ionic/core/components/ion-row.js';
-import { defineCustomElement as defineIonSearchbar } from '@ionic/core/components/ion-searchbar.js';
 import { defineCustomElement as defineIonSegment } from '@ionic/core/components/ion-segment.js';
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
@@ -65,7 +63,6 @@ import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
 import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-tab.js';
 import { defineCustomElement as defineIonText } from '@ionic/core/components/ion-text.js';
-import { defineCustomElement as defineIonTextarea } from '@ionic/core/components/ion-textarea.js';
 import { defineCustomElement as defineIonThumbnail } from '@ionic/core/components/ion-thumbnail.js';
 import { defineCustomElement as defineIonTitle } from '@ionic/core/components/ion-title.js';
 import { defineCustomElement as defineIonToggle } from '@ionic/core/components/ion-toggle.js';
@@ -96,7 +93,6 @@ export const IonHeader = /*@__PURE__*/createReactComponent<JSX.IonHeader, HTMLIo
 export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg, HTMLIonImgElement>('ion-img', undefined, undefined, defineIonImg);
 export const IonInfiniteScroll = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScroll, HTMLIonInfiniteScrollElement>('ion-infinite-scroll', undefined, undefined, defineIonInfiniteScroll);
 export const IonInfiniteScrollContent = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScrollContent, HTMLIonInfiniteScrollContentElement>('ion-infinite-scroll-content', undefined, undefined, defineIonInfiniteScrollContent);
-export const IonInput = /*@__PURE__*/createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input', undefined, undefined, defineIonInput);
 export const IonItemDivider = /*@__PURE__*/createReactComponent<JSX.IonItemDivider, HTMLIonItemDividerElement>('ion-item-divider', undefined, undefined, defineIonItemDivider);
 export const IonItemGroup = /*@__PURE__*/createReactComponent<JSX.IonItemGroup, HTMLIonItemGroupElement>('ion-item-group', undefined, undefined, defineIonItemGroup);
 export const IonItemOptions = /*@__PURE__*/createReactComponent<JSX.IonItemOptions, HTMLIonItemOptionsElement>('ion-item-options', undefined, undefined, defineIonItemOptions);
@@ -120,7 +116,6 @@ export const IonReorder = /*@__PURE__*/createReactComponent<JSX.IonReorder, HTML
 export const IonReorderGroup = /*@__PURE__*/createReactComponent<JSX.IonReorderGroup, HTMLIonReorderGroupElement>('ion-reorder-group', undefined, undefined, defineIonReorderGroup);
 export const IonRippleEffect = /*@__PURE__*/createReactComponent<JSX.IonRippleEffect, HTMLIonRippleEffectElement>('ion-ripple-effect', undefined, undefined, defineIonRippleEffect);
 export const IonRow = /*@__PURE__*/createReactComponent<JSX.IonRow, HTMLIonRowElement>('ion-row', undefined, undefined, defineIonRow);
-export const IonSearchbar = /*@__PURE__*/createReactComponent<JSX.IonSearchbar, HTMLIonSearchbarElement>('ion-searchbar', undefined, undefined, defineIonSearchbar);
 export const IonSegment = /*@__PURE__*/createReactComponent<JSX.IonSegment, HTMLIonSegmentElement>('ion-segment', undefined, undefined, defineIonSegment);
 export const IonSegmentButton = /*@__PURE__*/createReactComponent<JSX.IonSegmentButton, HTMLIonSegmentButtonElement>('ion-segment-button', undefined, undefined, defineIonSegmentButton);
 export const IonSelect = /*@__PURE__*/createReactComponent<JSX.IonSelect, HTMLIonSelectElement>('ion-select', undefined, undefined, defineIonSelect);
@@ -132,7 +127,6 @@ export const IonSpinner = /*@__PURE__*/createReactComponent<JSX.IonSpinner, HTML
 export const IonSplitPane = /*@__PURE__*/createReactComponent<JSX.IonSplitPane, HTMLIonSplitPaneElement>('ion-split-pane', undefined, undefined, defineIonSplitPane);
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab, HTMLIonTabElement>('ion-tab', undefined, undefined, defineIonTab);
 export const IonText = /*@__PURE__*/createReactComponent<JSX.IonText, HTMLIonTextElement>('ion-text', undefined, undefined, defineIonText);
-export const IonTextarea = /*@__PURE__*/createReactComponent<JSX.IonTextarea, HTMLIonTextareaElement>('ion-textarea', undefined, undefined, defineIonTextarea);
 export const IonThumbnail = /*@__PURE__*/createReactComponent<JSX.IonThumbnail, HTMLIonThumbnailElement>('ion-thumbnail', undefined, undefined, defineIonThumbnail);
 export const IonTitle = /*@__PURE__*/createReactComponent<JSX.IonTitle, HTMLIonTitleElement>('ion-title', undefined, undefined, defineIonTitle);
 export const IonToggle = /*@__PURE__*/createReactComponent<JSX.IonToggle, HTMLIonToggleElement>('ion-toggle', undefined, undefined, defineIonToggle);

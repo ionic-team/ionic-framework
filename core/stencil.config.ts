@@ -97,7 +97,12 @@ export const config: Config = {
         'ion-toast',
 
         'ion-app',
-        'ion-icon'
+        'ion-icon',
+
+        // Form controls with visual text fields
+        'ion-input',
+        'ion-textarea',
+        'ion-searchbar'
       ]
     }),
     vueOutputTarget({

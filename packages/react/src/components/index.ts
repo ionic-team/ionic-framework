@@ -134,6 +134,10 @@ export { IonTabButton } from './navigation/IonTabButton';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 export { IonIcon } from './IonIcon';
+export { IonInput } from './IonInput';
+export { IonTextarea } from './IonTextarea';
+export { IonSearchbar } from './IonSearchbar';
+
 export * from './IonRoute';
 export * from './IonRedirect';
 export * from './IonRouterContext';
