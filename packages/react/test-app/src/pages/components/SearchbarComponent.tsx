@@ -16,6 +16,9 @@ const SearchbarComponent = () => {
         <IonSearchbar value={value} onIonInput={(ev: any) => setValue(formatOnlyDigits(ev.target.value))} />
         <IonText slot="helper">Try typing "123abc"</IonText>
       </IonItem>
+      <IonItem>
+        <IonLabel>React component value - {value}</IonLabel>
+      </IonItem>
     </IonList>
   );
 };
