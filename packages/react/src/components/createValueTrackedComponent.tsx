@@ -64,8 +64,12 @@ export const createValueTrackedComponent = <
     componentDidMount() {
       this.componentDidUpdate(this.props);
 
-      if (this.componentEl instanceof Element) {
+      if (this.componentEl instanceof Element && (this.props as any).onIonInput) {
         this.componentEl.addEventListener('ionInput', this.updateValueIfChanged);
+      }
+
+      if (this.componentEl instanceof Element && (this.props as any).onIonChange) {
+        this.componentEl.addEventListener('ionChange', this.updateValueIfChanged);
       }
     }
 
@@ -76,6 +80,7 @@ export const createValueTrackedComponent = <
     componentWillUnmount() {
       if (this.componentEl) {
         this.componentEl.removeEventListener('ionInput', this.updateValueIfChanged);
+        this.componentEl.removeEventListener('ionChange', this.updateValueIfChanged);
       }
     }
 
