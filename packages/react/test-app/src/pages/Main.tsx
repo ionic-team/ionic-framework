@@ -23,11 +23,12 @@ const Main: React.FC<MainProps> = () => {
       </IonHeader>
       <IonContent>
         <IonList>
+          <IonItem routerLink="/components">
+            <IonLabel>Components</IonLabel>
+          </IonItem>
           <IonItem routerLink="/overlay-hooks">
             <IonLabel>Overlay Hooks</IonLabel>
           </IonItem>
-        </IonList>
-        <IonList>
           <IonItem routerLink="/overlay-components">
             <IonLabel>Overlay Components</IonLabel>
           </IonItem>
