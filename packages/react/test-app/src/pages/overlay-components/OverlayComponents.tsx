@@ -18,9 +18,9 @@ import PickerComponent from './PickerComponent';
 import PopoverComponent from './PopoverComponent';
 import ToastComponent from './ToastComponent';
 
-interface OverlayHooksProps {}
+interface OverlayComponentsProps {}
 
-const OverlayHooks: React.FC<OverlayHooksProps> = () => {
+const OverlayComponents: React.FC<OverlayComponentsProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -67,4 +67,4 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
   );
 };
 
-export default OverlayHooks;
+export default OverlayComponents;
