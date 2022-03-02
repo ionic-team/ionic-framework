@@ -974,7 +974,7 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation, destroyOverlayListener, destroyInteractionListeners, initializeListeners } = this;
+    const { presentation, prevPresentation } = this;
 
     if (prevPresentation === null) {
       this.prevPresentation = presentation;
@@ -984,12 +984,12 @@ export class Datetime implements ComponentInterface {
     if (presentation === prevPresentation) { return; }
     this.prevPresentation = presentation;
 
-    destroyInteractionListeners();
-    if (destroyOverlayListener !== undefined) {
-      destroyOverlayListener();
+    this.destroyInteractionListeners();
+    if (this.destroyOverlayListener !== undefined) {
+      this.destroyOverlayListener();
     }
 
-    initializeListeners();
+    this.initializeListeners();
   }
 
   /**
