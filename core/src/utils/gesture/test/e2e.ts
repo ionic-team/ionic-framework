@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 import { dragElementBy } from '@utils/test';
 
 test('swipe to go back should complete', async () => {
-  const page = await newE2EPage({ url: '/src/utils/gesture/test&ionic:mode=ios' });
+  const page = await newE2EPage({ url: '/src/utils/gesture/test?ionic:mode=ios' });
 
   const nav = await page.find('ion-nav');
   const ionNavDidChange = await nav.spyOnEvent('ionNavDidChange');
