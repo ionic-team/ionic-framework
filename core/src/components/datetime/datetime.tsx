@@ -985,7 +985,7 @@ export class Datetime implements ComponentInterface {
     this.prevPresentation = presentation;
 
     destroyInteractionListeners();
-    if(destroyOverlayListener !== undefined) {
+    if (destroyOverlayListener !== undefined) {
       destroyOverlayListener();
     }
 
@@ -1008,7 +1008,7 @@ export class Datetime implements ComponentInterface {
     };
 
     overlay.addEventListener('willPresent', overlayListener);
-    
+
     this.destroyOverlayListener = () => {
       overlay.removeEventListener('willPresent', overlayListener);
     };
