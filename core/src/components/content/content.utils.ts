@@ -1,6 +1,7 @@
-import { componentOnReady } from "../../utils/helpers";
+import { componentOnReady } from '../../utils/helpers';
 
-const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
+const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
+const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
 
 const hasOverflowScroll = (node: Element) => {
   const isElement = node instanceof HTMLElement;
@@ -20,8 +21,7 @@ const getScrollContainer = (node: Element): HTMLElement | null => {
   if (hasOverflowScroll(node)) {
     return node as HTMLElement;
   }
-  for (let i = 0; i < node.children.length; i++) {
-    const item = node.children.item(i);
+  for (const item of Array.from(node.children)) {
     if (item && hasOverflowScroll(item)) {
       return item as HTMLElement;
     }
@@ -42,7 +42,7 @@ const getScrollContainer = (node: Element): HTMLElement | null => {
 export const getScrollElement = async (el: Element) => {
   await new Promise(resolve => componentOnReady(el, resolve));
 
-  if (el?.tagName === ION_CONTENT_TAG_NAME) {
+  if (el?.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
     return await (el as HTMLIonContentElement).getScrollElement();
   }
 
@@ -56,40 +56,65 @@ export const getScrollElement = async (el: Element) => {
 }
 
 /**
- * Overrides the element selector for Ionic components reliant on `<ion-content>` for
- * scroll event changes.
+ * Selector used for implementations reliant on `<ion-content>` for scroll event changes.
+ *
+ * Developers should use the `.ion-content-scroll-host` selector to target the element emitting
+ * scroll events. With virtual scroll implementations this will be the host element for
+ * the scroll viewport.
  */
-export const ION_CONTENT_SELECTOR = 'ion-content, .ion-content';
+export const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
+/**
+ * Queries the element matching the selector for IonContent.
+ *
+ * @see ION_CONTENT_SELECTOR for the selector used.
+ */
 export const findIonContent = (el: Element) => {
   return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 
+/**
+ * Queries the closest element matching the selector for IonContent.
+ *
+ * @see ION_CONTENT_SELECTOR for the selector used.
+ */
 export const findClosestIonContent = (el: Element) => {
   return el.closest<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 
-export const scrollToTop = (el: HTMLElement, durationMs: number) => {
-  if (el.tagName === ION_CONTENT_TAG_NAME) {
+/**
+ * Scrolls to the top of the element. If an `ion-content` is found, it will scroll
+ * using the public API `scrollToTop` with a duration.
+ */
+export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> => {
+  if (el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
     const content = el as HTMLIonContentElement;
     return content.scrollToTop(durationMs);
   }
-  return Promise.resolve(() => el.scrollTo(0, 0));
+  return Promise.resolve(el.scrollTo(0, 0));
 }
 
+/**
+ * Scrolls to a specific x/y location. If an `ion-content` is found, it will scroll
+ * using the public API `scrollToPoint` with a duration.
+ */
 export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs: number) => {
-  if (el.tagName === ION_CONTENT_TAG_NAME) {
+  if (el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
     const content = el as HTMLIonContentElement;
     return content.scrollByPoint(x, y, durationMs);
   }
-  return el.scrollTo({
+  return Promise.resolve(el.scrollTo({
     top: y,
     left: x
-  });
+  }));
 }
 
+/**
+ * Prints an error informing developers that an implementation requires an element to be used
+ * within either the `ion-content` selector or the `.ion-content-scroll-host` class.
+ */
 export const printIonContentErrorMsg = (el: HTMLElement) => {
   return console.error(
-    `<${el.tagName.toLowerCase()}> must be used inside an <ion-content> or .ion-content`
+    `<${el.tagName.toLowerCase()}> must be used inside an <${ION_CONTENT_ELEMENT_SELECTOR}> or ${ION_CONTENT_CLASS_SELECTOR}`
   );
 }
