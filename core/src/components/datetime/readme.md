@@ -147,22 +147,6 @@ const zonedTime = dateFnsTz.utcToZonedTime(date, userTimeZone);
 format(zonedTime, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: userTimeZone });
 ```
 
-## Timezones
-
-### Assigning Date Values
-
-`ion-datetime` does not manipulate or read timezones. Developers will need to pass in a valid ISO-8601 string that is already configured for the user's timezone when assigning a value. If no value is provided, `ion-datetime` will default to the time specified on the user's machine (which will already be in the user's timezone). We recommend using [date-fns](https://date-fns.org) to format the date to ISO-8601.
-
-```typescript
-import { formatISO } from 'date-fns';
-
-const dateString = '2021-01-14T15:00:00.000Z';
-const formattedDateValue = formatISO(new Date(dateString));
-
-// Assign `formattedDateValue` to your `ion-datetime` value.
-
-```
-
 ### Parsing Date Values
 
 The `ionChange` event will emit the date value as an ISO-8601 string in the event payload. It is the developer's responsibility to format it based on their application needs. We recommend using [date-fns](https://date-fns.org) to format the date value.

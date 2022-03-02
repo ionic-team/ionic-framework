@@ -203,7 +203,7 @@ export const ItemExamples: React.FC = () => {
         <IonItem>
           <IonButton slot="start">
             Start Icon
-            <IonIcon icon={home} slot="end" />>
+            <IonIcon icon={home} slot="end" />
           </IonButton>
           <IonLabel>Buttons with Icons</IonLabel>
           <IonButton slot="end">

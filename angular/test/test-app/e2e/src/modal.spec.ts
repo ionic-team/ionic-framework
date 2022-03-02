@@ -52,8 +52,8 @@ describe('Modals: Inline', () => {
     cy.get('ion-list ion-item').should('not.exist');
   });
 
-  it('should have items after 1500ms', () => {
-    cy.wait(1500);
+  it('should have items after opening', () => {
+    cy.get('#open-modal').click();
 
     cy.get('ion-list ion-item:nth-child(1)').should('have.text', 'A');
     cy.get('ion-list ion-item:nth-child(2)').should('have.text', 'B');
@@ -61,7 +61,18 @@ describe('Modals: Inline', () => {
     cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
   });
 
-  it('should have a div with .ion-page', () => {
+  it('should have a div with .ion-page after opening', () => {
+    cy.get('#open-modal').click();
+
     cy.get('ion-modal').children('.ion-page').should('exist');
   });
+
+  it('should remove .ion-page when closing the modal', () => {
+    cy.get('#open-modal').click();
+
+    cy.get('ion-modal').children('.ion-page').should('exist');
+    cy.get('ion-modal').trigger('click', 20, 20);
+
+    cy.get('ion-modal').children('.ion-page').should('not.exist');
+  })
 });

@@ -408,7 +408,7 @@ export class ItemSliding implements ComponentInterface {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
         if (this.gesture) {
-          this.gesture.enable(true);
+          this.gesture.enable(!this.disabled);
         }
       }, 600) as any;
 
