@@ -313,7 +313,7 @@ export class Content implements ComponentInterface {
 
   render() {
     const { isMainContent, scrollX, scrollY, el } = this;
-    const rtl = isRTL(el);
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
@@ -327,7 +327,7 @@ export class Content implements ComponentInterface {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
           'overscroll': forceOverscroll,
-          'content-rtl': rtl
+          [`content-${rtl}`]: true
         })}
         style={{
           '--offset-top': `${this.cTop}px`,

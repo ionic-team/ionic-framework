@@ -173,16 +173,18 @@
   display: none;
   position: absolute;
 
-  /* stylelint-disable property-disallowed-list */
-  left: -100%;
-  /* stylelint-enable property-disallowed-list */
-
   width: 100%;
   height: 100vh;
 
   opacity: 0;
 
   pointer-events: none;
+}
+
+:host(.content-ltr) .transition-effect {
+  /* stylelint-disable property-disallowed-list */
+  left: -100%;
+  /* stylelint-enable property-disallowed-list */
 }
 
 :host(.content-rtl) .transition-effect {
@@ -210,10 +212,6 @@
   display: block;
   position: absolute;
 
-  /* stylelint-disable property-disallowed-list */
-  right: 0;
-  /* stylelint-enable property-disallowed-list */
-
   width: 10px;
   height: 100%;
 
@@ -222,10 +220,15 @@
   background-size: 10px 16px;
 }
 
+:host(.content-ltr) .transition-shadow {
+  /* stylelint-disable property-disallowed-list */
+  right: 0;
+  /* stylelint-enable property-disallowed-list */
+}
+
 :host(.content-rtl) .transition-shadow {
   /* stylelint-disable property-disallowed-list */
   left: 0;
-  right: unset;
   /* stylelint-enable property-disallowed-list */
 
   transform: scaleX(-1);
