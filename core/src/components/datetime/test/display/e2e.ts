@@ -57,6 +57,7 @@ test('month selection should work after changing presentation', async () => {
   const page = await newE2EPage({
     url: '/src/components/datetime/test/display?ionic:_testing=true'
   });
+  const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange');
 
   await page.select('#presentation', 'date-time');
   await page.waitForChanges();
@@ -66,8 +67,8 @@ test('month selection should work after changing presentation', async () => {
 
   const nextMonthButton = await page.find('ion-datetime >>> .calendar-next-prev ion-button + ion-button');
   await nextMonthButton.click();
-  await page.waitForEvent('datetimeMonthDidChange');
 
-  const monthYear = await page.find('ion-datetime >>> .calendar-month-year');
-  expect(monthYear.innerText.trim()).toEqual('March 2022');
+  const result = await ionWorkingPartsDidChange.next();
+  const newWorkingParts = result.value.detail;
+  expect(newWorkingParts.month).toEqual(3);
 });
