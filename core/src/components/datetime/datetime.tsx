@@ -127,7 +127,7 @@ export class Datetime implements ComponentInterface {
     minute: 52,
     ampm: 'pm'
   }
-  
+
   @Watch('workingParts')
   protected workingPartsChanged() {
     this.ionWorkingPartsDidChange.emit(this.workingParts);
@@ -500,7 +500,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Stencil sometimes sets calendarBodyRef to null on rerender, even though
    * the element is present. Query for it manually as a fallback.
-   * 
+   *
    * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
    */
   private getCalendarBodyEl = () => {
