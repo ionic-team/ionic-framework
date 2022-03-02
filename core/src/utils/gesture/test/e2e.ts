@@ -16,7 +16,6 @@ test('swipe to go back should complete', async () => {
   await dragElementBy(content, page, width, 0, { x: 25, y: 100 });
 
   await ionNavDidChange.next();
-
 });
 
 test('swipe to go back should complete in rtl', async () => {
@@ -31,7 +30,7 @@ test('swipe to go back should complete in rtl', async () => {
   const width = await page.evaluate(() => window.innerWidth);
 
   const content = await page.$('.page-two-content');
-  await dragElementBy(content, page, -width + 25, 0, { x: width - 25, y: 100 });
+  await dragElementBy(content, page, -width, 0, { x: width - 25, y: 100 });
 
   await ionNavDidChange.next();
 });
