@@ -497,8 +497,18 @@ export class Datetime implements ComponentInterface {
     this.confirm();
   }
 
+  /**
+   * Stencil sometimes sets calendarBodyRef to null on rerender, even though
+   * the element is present. Query for it manually as a fallback.
+   * 
+   * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
+   */
+  private getCalendarBodyEl = () => {
+    return this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
+  };
+
   private initializeKeyboardListeners = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const root = this.el!.shadowRoot!;
@@ -544,7 +554,7 @@ export class Datetime implements ComponentInterface {
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */
-    this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
+    calendarBodyRef.addEventListener('keydown', (ev: KeyboardEvent) => {
       const activeElement = root.activeElement;
       if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
@@ -671,11 +681,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private initializeCalendarIOListeners = () => {
-    /**
-     * Stencil sometimes sets calendarBodyRef to null on rerender, even though
-     * the element is present. Query for it manually as a fallback.
-     */
-    const calendarBodyRef = this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const mode = getIonMode(this);
@@ -1085,7 +1091,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private nextMonth = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
@@ -1101,7 +1107,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private prevMonth = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const prevMonth = calendarBodyRef.querySelector('.calendar-month:first-of-type');
