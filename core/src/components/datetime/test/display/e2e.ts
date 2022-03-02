@@ -79,7 +79,8 @@ test('month selection should work after changing presentation', async () => {
   const prevMonthButton = await page.find('ion-datetime >>> .calendar-next-prev ion-button:first-child');
   await prevMonthButton.click();
 
-  const result2 = await ionWorkingPartsDidChange.next();
+  const ionWorkingPartsDidChange2 = await page.spyOnEvent('ionWorkingPartsDidChange');
+  const result2 = await ionWorkingPartsDidChange2.next();
   const newWorkingParts2 = result2.value.detail;
   expect(newWorkingParts2.month).toEqual(2);
 });
