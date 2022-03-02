@@ -290,8 +290,6 @@ export class LoadingExample {
 </template>
 
 <script>
-
-<script>
 import { IonButton, loadingController } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
