@@ -127,6 +127,7 @@ export class Datetime implements ComponentInterface {
     minute: 52,
     ampm: 'pm'
   }
+  
   @Watch('workingParts')
   protected workingPartsChanged() {
     this.ionWorkingPartsDidChange.emit(this.workingParts);
