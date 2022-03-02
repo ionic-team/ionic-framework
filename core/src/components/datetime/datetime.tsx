@@ -974,19 +974,22 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    if (this.prevPresentation === null) {
-      this.prevPresentation = this.presentation;
+    const { presentation, prevPresentation, destroyOverlayListener, destroyInteractionListeners, initializeListeners } = this;
+
+    if (prevPresentation === null) {
+      this.prevPresentation = presentation;
+      return;
     }
 
-    if (this.presentation === this.prevPresentation) { return; }
-    this.prevPresentation = this.presentation;
+    if (presentation === prevPresentation) { return; }
+    this.prevPresentation = presentation;
 
-    this.destroyInteractionListeners();
-    if(this.destroyOverlayListener !== undefined) {
-      this.destroyOverlayListener();
+    destroyInteractionListeners();
+    if(destroyOverlayListener !== undefined) {
+      destroyOverlayListener();
     }
 
-    this.initializeListeners();
+    initializeListeners();
   }
 
   /**
