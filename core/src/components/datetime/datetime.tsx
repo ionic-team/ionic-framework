@@ -127,6 +127,10 @@ export class Datetime implements ComponentInterface {
     minute: 52,
     ampm: 'pm'
   }
+  @Watch('workingParts')
+  protected workingPartsChanged() {
+    this.ionWorkingPartsDidChange.emit(this.workingParts);
+  }
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -409,6 +413,13 @@ export class Datetime implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  /**
+   * Emitted when the working parts change. Used for testing
+   * purposes, e.g. to ensure month selection works.
+   * @internal
+   */
+  @Event() ionWorkingPartsDidChange!: EventEmitter<DatetimeParts>;
 
   /**
    * Confirms the selected datetime value, updates the

@@ -295,7 +295,8 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'ionChange',
   'ionFocus',
   'ionBlur',
-  'ionStyle'
+  'ionStyle',
+  'ionWorkingPartsDidChange'
 ],
 'value', 'v-ion-change', 'ionChange');
 
