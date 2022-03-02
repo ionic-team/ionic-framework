@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.10](https://github.com/ionic-team/ionic-framework/compare/v6.0.9...v6.0.10) (2022-03-02)
+
+
+### Bug Fixes
+
+* **datetime:** confirm method now uses selected date ([#24827](https://github.com/ionic-team/ionic-framework/issues/24827)) ([c35b898](https://github.com/ionic-team/ionic-framework/commit/c35b898f1dc0fb706446b6971982df48fd72fe6d)), closes [#24823](https://github.com/ionic-team/ionic-framework/issues/24823)
+* **datetime:** persist minutes column on hour change ([#24829](https://github.com/ionic-team/ionic-framework/issues/24829)) ([aacb58a](https://github.com/ionic-team/ionic-framework/commit/aacb58a3224e3cc51c731d0c9aa52f52c9276692)), closes [#24821](https://github.com/ionic-team/ionic-framework/issues/24821)
+* **item-sliding:** close() will maintain disabled state ([#24847](https://github.com/ionic-team/ionic-framework/issues/24847)) ([ea4a9bb](https://github.com/ionic-team/ionic-framework/commit/ea4a9bb69465f8e97746b36638f0b3a26e45da18)), closes [#24747](https://github.com/ionic-team/ionic-framework/issues/24747)
+* **modal:** .ion-page element is now correctly added ([#24811](https://github.com/ionic-team/ionic-framework/issues/24811)) ([3d0f999](https://github.com/ionic-team/ionic-framework/commit/3d0f99904fe192fcb5f529780858a0f25f076af7)), closes [#24809](https://github.com/ionic-team/ionic-framework/issues/24809)
+* **modal:** re-enable swipe gestures when modal is dismissed ([#24846](https://github.com/ionic-team/ionic-framework/issues/24846)) ([836c01c](https://github.com/ionic-team/ionic-framework/commit/836c01c73e42caab0101ac4988f0a9b27cf96a5b)), closes [#24817](https://github.com/ionic-team/ionic-framework/issues/24817)
+* **modal:** sheet modal now allows input focusing when backdrop disabled ([#24840](https://github.com/ionic-team/ionic-framework/issues/24840)) ([e4ec572](https://github.com/ionic-team/ionic-framework/commit/e4ec572043e22bd2626dbcfd204fc22a7335282c)), closes [#24581](https://github.com/ionic-team/ionic-framework/issues/24581)
+
+
+
+
+
 ## [6.0.9](https://github.com/ionic-team/ionic-framework/compare/v6.0.8...v6.0.9) (2022-02-23)
 
 
