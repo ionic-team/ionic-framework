@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, FunctionalComponent, Host, List
 
 import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
+import { getScrollElement } from '../content/content.utils';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -195,7 +196,7 @@ export class VirtualScroll implements ComponentInterface {
    * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
    * dirty any time the content or their style changes.
    *
-   * The subset of items to be updated can are specifing by an offset and a length.
+   * The subset of items to be updated can are specifying by an offset and a length.
    */
   @Method()
   async checkRange(offset: number, len = -1) {
@@ -443,7 +444,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{ dom: VirtualNode[] }> = ({ dom }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};
