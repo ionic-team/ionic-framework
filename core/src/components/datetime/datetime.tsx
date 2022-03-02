@@ -94,6 +94,7 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarIO?: () => void;
   private destroyKeyboardMO?: () => void;
+  private destroyOverlayListener?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
@@ -878,7 +879,7 @@ export class Datetime implements ComponentInterface {
    * listener. This is so that we can re-create the listeners
    * if the datetime has been hidden/presented by a modal or popover.
    */
-  private destroyListeners = () => {
+  private destroyInteractionListeners = () => {
     const { destroyCalendarIO, destroyKeyboardMO } = this;
 
     if (destroyCalendarIO !== undefined) {
@@ -945,7 +946,7 @@ export class Datetime implements ComponentInterface {
       const ev = entries[0];
       if (ev.isIntersecting) { return; }
 
-      this.destroyListeners();
+      this.destroyInteractionListeners();
 
       writeTask(() => {
         this.el.classList.remove('datetime-ready');
@@ -979,7 +980,12 @@ export class Datetime implements ComponentInterface {
 
     if (this.presentation === this.prevPresentation) { return; }
     this.prevPresentation = this.presentation;
-    this.destroyListeners();
+
+    this.destroyInteractionListeners();
+    if(this.destroyOverlayListener !== undefined) {
+      this.destroyOverlayListener();
+    }
+
     this.initializeListeners();
   }
 
@@ -994,9 +1000,15 @@ export class Datetime implements ComponentInterface {
     const overlay = this.el.closest('ion-popover, ion-modal');
     if (overlay === null) { return; }
 
-    overlay.addEventListener('willPresent', () => {
+    const overlayListener = () => {
       this.overlayIsPresenting = true;
-    });
+    };
+
+    overlay.addEventListener('willPresent', overlayListener);
+    
+    this.destroyOverlayListener = () => {
+      overlay.removeEventListener('willPresent', overlayListener);
+    };
   }
 
   private processValue = (value?: string | null) => {
