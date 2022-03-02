@@ -219,13 +219,8 @@ export const createSheetGesture = (
                * Backdrop should become enabled
                * after the backdropBreakpoint value
                */
-<<<<<<< HEAD
-              const backdropEnabled = currentBreakpoint > backdropBreakpoint;
-              if (backdropEnabled) {
-=======
               const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
               if (shouldEnableBackdrop) {
->>>>>>> origin/main
                 enableBackdrop();
               } else {
                 disableBackdrop();
