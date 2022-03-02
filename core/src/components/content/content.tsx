@@ -4,8 +4,8 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
-import { createColorClasses, hostContext } from '../../utils/theme';
 import { isRTL } from '../../utils/rtl';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -342,7 +342,7 @@ export class Content implements ComponentInterface {
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
-          ref={(el: HTMLElement) => this.scrollEl = el!}
+          ref={(scrollEl: HTMLElement) => this.scrollEl = scrollEl!}
           onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >

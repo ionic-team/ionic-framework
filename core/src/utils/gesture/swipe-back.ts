@@ -1,7 +1,7 @@
 import { clamp } from '../helpers';
+import { isRTL } from '../rtl';
 
 import { Gesture, GestureDetail, createGesture } from './index';
-import { isRTL } from '../rtl';
 
 export const createSwipeBackGesture = (
   el: HTMLElement,
