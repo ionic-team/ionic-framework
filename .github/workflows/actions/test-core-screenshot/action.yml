@@ -37,3 +37,16 @@ runs:
       run: npx playwright test --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
+    - name: Archive Test Results
+      # The always() ensures that this step
+      # runs even if the previous step fails.
+      # We want the test results to be archived
+      # even if the test fails in the previous
+      # step, otherwise there would be no way
+      # to debug these tests.
+      if: always()
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
+        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        paths: core/test-results core/playwright-report
