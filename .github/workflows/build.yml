@@ -40,11 +40,28 @@ jobs:
       - uses: ./.github/workflows/actions/test-core-e2e
 
   test-core-screenshot:
+    strategy:
+      # This ensures that all screenshot shard
+      # failures are reported so the dev can
+      # review everything at once.
+      fail-fast: false
+      matrix:
+        # Divide the tests into n buckets
+        # and run those buckets in parallel.
+        # To increase the number of shards,
+        # add new items to the shard array
+        # and change the value of totalShards
+        # to be the length of the shard array.
+        shard: [1, 2, 3, 4, 5]
+        totalShards: [5]
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/test-core-screenshot
+        with:
+          shard: ${{ matrix.shard }}
+          totalShards: ${{ matrix.totalShards }}
 
   build-vue:
     needs: [build-core]

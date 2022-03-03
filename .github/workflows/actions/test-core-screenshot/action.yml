@@ -1,5 +1,10 @@
 name: 'Test Core Screenshot'
 description: 'Test Core Screenshot'
+inputs:
+  shard:
+    description: 'Playwright Test Shard (ex: 2)'
+  totalShards:
+    description: 'Playwright total number of test shards (ex: 4)'
 runs:
   using: 'composite'
   steps:
@@ -29,6 +34,6 @@ runs:
       shell: bash
       working-directory: ./core
     - name: Test
-      run: npx playwright test
+      run: npx playwright test --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
