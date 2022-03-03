@@ -42,24 +42,9 @@ jobs:
   test-core-screenshot:
     needs: [build-core]
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main' && !github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/test-core-screenshot
-        with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  test-core-screenshot-main:
-    needs: [build-core]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/workflows/actions/test-core-screenshot-main
-        with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build-vue:
     needs: [build-core]

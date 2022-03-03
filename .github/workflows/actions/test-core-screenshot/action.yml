@@ -1,10 +1,5 @@
 name: 'Test Core Screenshot'
 description: 'Test Core Screenshot'
-inputs:
-  access-key-id:
-    description: 'AWS_ACCESS_KEY_ID'
-  secret-access-key:
-    description: 'AWS_SECRET_ACCESS_KEY'
 runs:
   using: 'composite'
   steps:
@@ -24,10 +19,16 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Test
-      run: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --no-build || true
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core-src
+        path: ./core
+        filename: CoreSrc.zip
+    - name: Install Playwright Dependencies
+      run: npx playwright install
       shell: bash
-      env:
-        AWS_ACCESS_KEY_ID: ${{ inputs.access-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.secret-access-key }}
+      working-directory: ./core
+    - name: Test
+      run: npx playwright test
+      shell: bash
       working-directory: ./core
