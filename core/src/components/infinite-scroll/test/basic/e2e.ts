@@ -16,7 +16,7 @@ async function scrollIonContentPage(page: E2EPage) {
 
 describe('infinite-scroll: basic', () => {
 
-  it('should match existing visual screen shots', async () => {
+  it('should match existing visual screenshots', async () => {
     const page = await newE2EPage({
       url: '/src/components/infinite-scroll/test/basic?ionic:_testing=true'
     });

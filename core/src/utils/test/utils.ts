@@ -1,4 +1,5 @@
-import { E2EElement, E2EPage } from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
+import { E2EElement } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
 
 /**
@@ -112,7 +113,7 @@ export const dragElementBy = async (element: any, page: any, x = 0, y = 0): Prom
  * @param interval: number - Interval to run setInterval on
  */
 export const waitForFunctionTestContext = async (fn: any, params: any, interval = 16): Promise<any> => {
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     const intervalId = setInterval(() => {
       if (fn(params)) {
         clearInterval(intervalId);
@@ -193,4 +194,26 @@ export const waitForEvent = async (page, event, timeout = 5000) => {
     ),
     page.waitForTimeout(timeout)
   ]);
+}
+
+export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
+  await page.evaluate(selector => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      el.scroll(x, y);
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
+}
+
+export const scrollToBottom = async (page: E2EPage, selector: string) => {
+  await page.evaluate(selector => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
 }
