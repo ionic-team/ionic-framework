@@ -127,7 +127,10 @@ export class Header implements ComponentInterface {
   }
 
   private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null) {
-    if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
+    if (!contentEl || !pageEl) {
+      printIonContentErrorMsg(this.el);
+      return;
+    }
     if (typeof (IntersectionObserver as any) === 'undefined') { return; }
 
     this.scrollEl = await getScrollElement(contentEl);
