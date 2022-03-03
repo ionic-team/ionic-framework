@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.10](https://github.com/ionic-team/ionic-framework/compare/v6.0.9...v6.0.10) (2022-03-02)
+
+
+### Bug Fixes
+
+* **datetime:** confirm method now uses selected date ([#24827](https://github.com/ionic-team/ionic-framework/issues/24827)) ([c35b898](https://github.com/ionic-team/ionic-framework/commit/c35b898f1dc0fb706446b6971982df48fd72fe6d)), closes [#24823](https://github.com/ionic-team/ionic-framework/issues/24823)
+* **datetime:** persist minutes column on hour change ([#24829](https://github.com/ionic-team/ionic-framework/issues/24829)) ([aacb58a](https://github.com/ionic-team/ionic-framework/commit/aacb58a3224e3cc51c731d0c9aa52f52c9276692)), closes [#24821](https://github.com/ionic-team/ionic-framework/issues/24821)
+* **item-sliding:** close() will maintain disabled state ([#24847](https://github.com/ionic-team/ionic-framework/issues/24847)) ([ea4a9bb](https://github.com/ionic-team/ionic-framework/commit/ea4a9bb69465f8e97746b36638f0b3a26e45da18)), closes [#24747](https://github.com/ionic-team/ionic-framework/issues/24747)
+* **modal:** .ion-page element is now correctly added ([#24811](https://github.com/ionic-team/ionic-framework/issues/24811)) ([3d0f999](https://github.com/ionic-team/ionic-framework/commit/3d0f99904fe192fcb5f529780858a0f25f076af7)), closes [#24809](https://github.com/ionic-team/ionic-framework/issues/24809)
+* **modal:** re-enable swipe gestures when modal is dismissed ([#24846](https://github.com/ionic-team/ionic-framework/issues/24846)) ([836c01c](https://github.com/ionic-team/ionic-framework/commit/836c01c73e42caab0101ac4988f0a9b27cf96a5b)), closes [#24817](https://github.com/ionic-team/ionic-framework/issues/24817)
+* **modal:** sheet modal now allows input focusing when backdrop disabled ([#24840](https://github.com/ionic-team/ionic-framework/issues/24840)) ([e4ec572](https://github.com/ionic-team/ionic-framework/commit/e4ec572043e22bd2626dbcfd204fc22a7335282c)), closes [#24581](https://github.com/ionic-team/ionic-framework/issues/24581)
+
+
+
+
+
+## [6.0.9](https://github.com/ionic-team/ionic-framework/compare/v6.0.8...v6.0.9) (2022-02-23)
+
+
+### Bug Fixes
+
+* **datetime:** improve datetime sizing in modals ([#24762](https://github.com/ionic-team/ionic-framework/issues/24762)) ([b0ac7de](https://github.com/ionic-team/ionic-framework/commit/b0ac7de168c353ba4899cb74a2b38e25fd0cc0f1)), closes [#23992](https://github.com/ionic-team/ionic-framework/issues/23992)
+* **datetime:** month and year column order is now locale aware ([#24802](https://github.com/ionic-team/ionic-framework/issues/24802)) ([16647b2](https://github.com/ionic-team/ionic-framework/commit/16647b2c7290389755a4093145788f281c84b7e2)), closes [#24548](https://github.com/ionic-team/ionic-framework/issues/24548)
+* **datetime:** month picker no longer gives duplicate months on ios 14 and older ([#24792](https://github.com/ionic-team/ionic-framework/issues/24792)) ([b6d7e1c](https://github.com/ionic-team/ionic-framework/commit/b6d7e1c75740a61dcd02c21692e4d4632fb8df5c)), closes [#24663](https://github.com/ionic-team/ionic-framework/issues/24663)
+* **img:** draggable attribute is now inherited to inner img element ([#24781](https://github.com/ionic-team/ionic-framework/issues/24781)) ([19ac238](https://github.com/ionic-team/ionic-framework/commit/19ac2389eb0843173f51a12de41ac808cd8f0569)), closes [#21325](https://github.com/ionic-team/ionic-framework/issues/21325)
+* **modal:** backdropBreakpoint allows interactivity behind sheet ([#24798](https://github.com/ionic-team/ionic-framework/issues/24798)) ([fca3f56](https://github.com/ionic-team/ionic-framework/commit/fca3f56ca4568e63fd493debda088263caa86c64)), closes [#24797](https://github.com/ionic-team/ionic-framework/issues/24797)
+* **popover:** default alignment to 'center' for ios mode ([#24815](https://github.com/ionic-team/ionic-framework/issues/24815)) ([243f673](https://github.com/ionic-team/ionic-framework/commit/243f67362f25699bdb373be6b72cb9c14dc95a32))
+* **react, vue:** scroll is no longer interrupted on ios ([#24791](https://github.com/ionic-team/ionic-framework/issues/24791)) ([99c91ef](https://github.com/ionic-team/ionic-framework/commit/99c91eff8764c9a1630adedab6a9765dd9754f7d)), closes [#24435](https://github.com/ionic-team/ionic-framework/issues/24435)
+* **select:** interface components now show correctly ([#24810](https://github.com/ionic-team/ionic-framework/issues/24810)) ([2fc2de5](https://github.com/ionic-team/ionic-framework/commit/2fc2de51771f4a5c3f20c6071284096e5bf31ec8)), closes [#24807](https://github.com/ionic-team/ionic-framework/issues/24807)
+* **toast:** toast is now correctly excluded from focus trapping ([#24816](https://github.com/ionic-team/ionic-framework/issues/24816)) ([8246112](https://github.com/ionic-team/ionic-framework/commit/8246112ca12f90edb98629ab82e27a792a1fafad)), closes [#24733](https://github.com/ionic-team/ionic-framework/issues/24733)
+
+
+
+
+
+## [6.0.8](https://github.com/ionic-team/ionic-framework/compare/v6.0.7...v6.0.8) (2022-02-15)
+
+
+### Bug Fixes
+
+* **back-button, breadcrumb, item:** flip chevron icons on RTL ([#24705](https://github.com/ionic-team/ionic-framework/issues/24705)) ([a093544](https://github.com/ionic-team/ionic-framework/commit/a093544fdfc438ed03024285b2a35c5f645ea011))
+* **datetime:** navigate to month within min range ([#24759](https://github.com/ionic-team/ionic-framework/issues/24759)) ([7b3838c](https://github.com/ionic-team/ionic-framework/commit/7b3838cc670de7845bb5937d204e86cdba93b6e6)), closes [#24757](https://github.com/ionic-team/ionic-framework/issues/24757)
+* **input:** only set native input value if different ([#24758](https://github.com/ionic-team/ionic-framework/issues/24758)) ([fd031aa](https://github.com/ionic-team/ionic-framework/commit/fd031aa1c3f05b7bfa3e0a0ee2a4793e29e22df5)), closes [#24753](https://github.com/ionic-team/ionic-framework/issues/24753)
+* **router-outlet:** getRouteId() returns the params set in setRouteId(). ([#24656](https://github.com/ionic-team/ionic-framework/issues/24656)) ([be2205e](https://github.com/ionic-team/ionic-framework/commit/be2205e5a2b2f8778bd1f7b4ea5cae0bf96f9ef3)), closes [#24652](https://github.com/ionic-team/ionic-framework/issues/24652)
+* **router-outlet:** navigating to same route with different params now activates component ([#24760](https://github.com/ionic-team/ionic-framework/issues/24760)) ([abc36ae](https://github.com/ionic-team/ionic-framework/commit/abc36ae80b060a659f7557ad90efe98b78f5ead9)), closes [#24653](https://github.com/ionic-team/ionic-framework/issues/24653)
+* **vue:** preserve custom classes on IonPage ([#24776](https://github.com/ionic-team/ionic-framework/issues/24776)) ([b401de1](https://github.com/ionic-team/ionic-framework/commit/b401de1ab3385c67cc476ff90971ce131cefcc3f)), closes [#24772](https://github.com/ionic-team/ionic-framework/issues/24772)
+
+
+
+
+
 ## [6.0.7](https://github.com/ionic-team/ionic-framework/compare/v6.0.6...v6.0.7) (2022-02-09)
 
 

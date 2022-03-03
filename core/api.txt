@@ -877,7 +877,7 @@ ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
 ion-popover,shadow
-ion-popover,prop,alignment,"center" | "end" | "start",'start',false,false
+ion-popover,prop,alignment,"center" | "end" | "start" | undefined,undefined,false,false
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
@@ -1045,7 +1045,7 @@ ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
 ion-router,method,back,back() => Promise<void>
-ion-router,method,push,push(url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>
+ion-router,method,push,push(path: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
 

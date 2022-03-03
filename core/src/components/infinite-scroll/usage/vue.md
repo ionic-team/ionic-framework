@@ -73,7 +73,7 @@ export default defineComponent({
   
         // App logic to determine if all data is loaded
         // and disable the infinite scroll
-        if (items.value.length == 1000) {
+        if (items.value.length === 1000) {
           ev.target.disabled = true;
         }
       }, 500);

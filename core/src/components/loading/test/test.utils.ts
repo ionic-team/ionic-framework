@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '@utils/test';
 
 export const testLoading = async (
   type: string,

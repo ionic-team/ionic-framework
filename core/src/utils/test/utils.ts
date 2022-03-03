@@ -26,6 +26,34 @@ export const test = base.extend({
   },
 });
 
+/**
+ * page.evaluate can only return a serializable value,
+ * so it is not possible to return the full element.
+ * Instead, we return an object with some common
+ * properties that you may want to access in a test.
+ */
+const getSerialElement = async (page, element) => {
+  return await page.evaluate(el => {
+    const { className, tagName, id } = el;
+    return {
+      className,
+      tagName,
+      id
+    }
+  }, element);
+}
+
+export const getActiveElementParent = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement.parentElement);
+  return getSerialElement(page, activeElement);
+}
+
+export const getActiveElement = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return getSerialElement(page, activeElement);
+}
+
+
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
   if (rtl) {

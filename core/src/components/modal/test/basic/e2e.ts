@@ -84,3 +84,15 @@ test('modal: htmlAttributes', async () => {
 
   expect(attribute).toEqual('basic-modal');
 });
+
+test('it should dismiss the modal when clicking the backdrop', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/basic?ionic:_testing=true' });
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+  await page.click('#basic-modal');
+  await ionModalDidPresent.next();
+
+  await page.mouse.click(20, 20);
+  await ionModalDidDismiss.next();
+})

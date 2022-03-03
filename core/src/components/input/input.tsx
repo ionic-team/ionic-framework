@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
-import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { Attributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -21,7 +21,7 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
   private isComposing = false;
 
   /**
@@ -232,7 +232,9 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    if (this.nativeInput && !this.isComposing) {
+    const nativeInput = this.nativeInput;
+    const value = this.getValue();
+    if (nativeInput && nativeInput.value !== value && !this.isComposing) {
       /**
        * Assigning the native input's value on attribute
        * value change, allows `ionInput` implementations
@@ -241,11 +243,7 @@ export class Input implements ComponentInterface {
        * Used for patterns such as input trimming (removing whitespace),
        * or input masking.
        */
-       const { selectionStart, selectionEnd } = this.nativeInput;
-       this.nativeInput.value = this.getValue();
-       // TODO: FW-727 Remove this when we drop support for iOS 15.3
-       // Set the cursor position back to where it was before the value change
-       this.nativeInput.setSelectionRange(selectionStart, selectionEnd);
+      nativeInput.value = value;
     }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });

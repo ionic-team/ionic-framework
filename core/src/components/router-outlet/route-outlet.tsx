@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { shallowEqualStringMap } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
 
 @Component({
@@ -159,7 +160,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   }
 
   private async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.activeComponent === component) {
+    if (this.activeComponent === component && shallowEqualStringMap(params, this.activeParams)) {
       return false;
     }
 

@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { hasShadowDom, inheritAttributes } from '../../utils/helpers';
+import { Attributes, hasShadowDom, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -28,7 +28,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
 

@@ -30,7 +30,7 @@ Please check the type of change your PR introduces:
 
 
 <!-- Issues are required for both bug fixes and features. -->
-Issue Number: # 
+Issue URL: 
 
 
 ## What is the new behavior?

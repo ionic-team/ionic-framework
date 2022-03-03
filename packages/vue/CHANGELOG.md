@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.10](https://github.com/ionic-team/ionic/compare/v6.0.9...v6.0.10) (2022-03-02)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.0.9](https://github.com/ionic-team/ionic/compare/v6.0.8...v6.0.9) (2022-02-23)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.0.8](https://github.com/ionic-team/ionic/compare/v6.0.7...v6.0.8) (2022-02-15)
+
+
+### Bug Fixes
+
+* **vue:** preserve custom classes on IonPage ([#24776](https://github.com/ionic-team/ionic/issues/24776)) ([b401de1](https://github.com/ionic-team/ionic/commit/b401de1ab3385c67cc476ff90971ce131cefcc3f)), closes [#24772](https://github.com/ionic-team/ionic/issues/24772)
+
+
+
+
+
 ## [6.0.7](https://github.com/ionic-team/ionic/compare/v6.0.6...v6.0.7) (2022-02-09)
 
 **Note:** Version bump only for package @ionic/vue

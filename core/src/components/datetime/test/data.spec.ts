@@ -1,7 +1,8 @@
 import {
   generateMonths,
   getDaysOfWeek,
-  generateTime
+  generateTime,
+  getToday
 } from '../utils/data';
 
 describe('generateMonths()', () => {
@@ -334,3 +335,22 @@ describe('generateTime()', () => {
 
   })
 })
+
+describe('getToday', () => {
+
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    // System time is zero based, 1 = February
+    jest.setSystemTime(new Date(2022, 1, 21));
+  });
+
+  it('should return today', () => {
+    const res = getToday();
+
+    const expected = new Date();
+    expected.setHours(expected.getHours() - (expected.getTimezoneOffset() / 60));
+
+    expect(res).toEqual('2022-02-21T00:00:00.000Z');
+  });
+
+});

@@ -50,6 +50,10 @@
   contain: strict;
 }
 
+.modal-wrapper, ion-backdrop {
+  pointer-events: auto;
+}
+
 :host(.overlay-hidden) {
   display: none;
 }
