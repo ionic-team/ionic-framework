@@ -14,6 +14,9 @@ describe('refresher: custom scroll target', () => {
   });
 
   it('should load more items when performing a pull-to-refresh', async () => {
+    const initialItems = await page.findAll('ion-item');
+    expect(initialItems.length).toBe(30);
+
     await pullToRefresh(page);
 
     const items = await page.findAll('ion-item');
