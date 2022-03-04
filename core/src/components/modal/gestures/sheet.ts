@@ -2,7 +2,7 @@ import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
 import { Modal } from '../modal';
-import { SheetAnimationDefaults, moveSheetToBreakpoint } from '../utils';
+import { SheetAnimationDefaults, disableSheetBackdrop, enableSheetBackdrop, moveSheetToBreakpoint } from '../utils';
 
 export const createSheetGesture = (
   modalEl: Modal,
@@ -26,32 +26,6 @@ export const createSheetGesture = (
   let breakpoints = (modalEl.breakpoints?.sort((a, b) => a - b)) || [];
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
-  const enableBackdrop = () => {
-    baseEl.style.setProperty('pointer-events', 'auto');
-    backdropEl.style.setProperty('pointer-events', 'auto');
-
-    /**
-     * When the backdrop is enabled, elements such
-     * as inputs should not be focusable outside
-     * the sheet.
-     */
-    baseEl.classList.remove('ion-disable-focus-trap');
-  }
-
-  const disableBackdrop = () => {
-    baseEl.style.setProperty('pointer-events', 'none');
-    backdropEl.style.setProperty('pointer-events', 'none');
-
-    /**
-     * When the backdrop is enabled, elements such
-     * as inputs should not be focusable outside
-     * the sheet.
-     * Adding this class disables focus trapping
-     * for the sheet temporarily.
-     */
-    baseEl.classList.add('ion-disable-focus-trap');
-  }
-
   /**
    * After the entering animation completes,
    * we need to set the animation to go from
@@ -74,9 +48,9 @@ export const createSheetGesture = (
      */
     const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
     if (shouldEnableBackdrop) {
-      enableBackdrop();
+      enableSheetBackdrop(baseEl, backdropEl);
     } else {
-      disableBackdrop();
+      disableSheetBackdrop(baseEl, backdropEl);
     }
   }
 

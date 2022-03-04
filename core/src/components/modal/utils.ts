@@ -78,6 +78,32 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
   return (x * slope) + b;
 }
 
+export const enableSheetBackdrop = (baseEl: HTMLIonModalElement, backdropEl: HTMLIonBackdropElement) => {
+  baseEl.style.setProperty('pointer-events', 'auto');
+  backdropEl.style.setProperty('pointer-events', 'auto');
+
+  /**
+   * When the backdrop is enabled, elements such
+   * as inputs should not be focusable outside
+   * the sheet.
+   */
+  baseEl.classList.remove('ion-disable-focus-trap');
+}
+
+export const disableSheetBackdrop = (baseEl: HTMLIonModalElement, backdropEl: HTMLIonBackdropElement) => {
+  baseEl.style.setProperty('pointer-events', 'none');
+  backdropEl.style.setProperty('pointer-events', 'none');
+
+  /**
+   * When the backdrop is enabled, elements such
+   * as inputs should not be focusable outside
+   * the sheet.
+   * Adding this class disables focus trapping
+   * for the sheet temporarily.
+   */
+  baseEl.classList.add('ion-disable-focus-trap');
+}
+
 export const moveSheetToBreakpoint = (
   baseEl: HTMLIonModalElement,
   backdropEl: HTMLIonBackdropElement,
@@ -154,9 +180,12 @@ export const moveSheetToBreakpoint = (
              * Backdrop should become enabled
              * after the backdropBreakpoint value
              */
-            const backdropEnabled = currentBreakpoint > backdropBreakpoint;
-            baseEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
-            backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
+            const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+            if (shouldEnableBackdrop) {
+              enableSheetBackdrop(baseEl, backdropEl);
+            } else {
+              disableSheetBackdrop(baseEl, backdropEl);
+            }
 
             gesture.enable(true);
           });
