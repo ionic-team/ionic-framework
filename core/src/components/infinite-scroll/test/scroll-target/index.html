@@ -29,19 +29,22 @@
       </ion-toolbar>
     </ion-header>
 
-    <div id="scroll-target" class="ion-padding ion-content-scroll-host">
+    <ion-content scroll-y="false">
+      <div id="scroll-target" class="ion-padding ion-content-scroll-host">
 
-      <ion-list></ion-list>
+        <ion-list></ion-list>
 
-      <ion-infinite-scroll threshold="100px">
-        <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
-        </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </div>
+        <ion-infinite-scroll threshold="100px">
+          <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
+    </ion-content>
 
   </ion-app>
 
   <script>
+    let count = 0;
     const list = document.querySelector('ion-list');
     const infiniteScroll = document.querySelector('ion-infinite-scroll');
 
@@ -56,7 +59,7 @@
     function appendItems() {
       for (var i = 0; i < 30; i++) {
         const el = document.createElement('ion-item');
-        el.textContent = `${1 + i}`;
+        el.textContent = `${++count}`;
         list.appendChild(el);
       }
     }
