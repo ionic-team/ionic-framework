@@ -44,19 +44,20 @@
       </ion-toolbar>
     </ion-header>
 
-    <div id="content" class="ion-content-scroll-host">
-      <div id="background-content"></div>
-      <div style="position: absolute; left: 0; top: 0; width: 100%;">
-        <ion-refresher id="refresher" slot="fixed">
-          <ion-refresher-content></ion-refresher-content>
-        </ion-refresher>
-      </div>
+    <ion-content>
+      <div id="content" class="ion-content-scroll-host">
+        <div id="background-content"></div>
+        <div style="position: absolute; left: 0; top: 0; width: 100%;">
+          <ion-refresher id="refresher" slot="fixed">
+            <ion-refresher-content></ion-refresher-content>
+          </ion-refresher>
+        </div>
 
-      <div id="inner-scroll">
-        <ion-list id="list"></ion-list>
+        <div id="inner-scroll">
+          <ion-list id="list"></ion-list>
+        </div>
       </div>
-
-    </div>
+    </ion-content>
   </ion-app>
 
   <script>
