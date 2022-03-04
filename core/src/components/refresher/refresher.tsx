@@ -426,7 +426,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    this.scrollEl = await getScrollElement(contentEl);;
+    this.scrollEl = await getScrollElement(contentEl); ;
 
     /**
      * Query the host `ion-content` directly (if it is available), to use its

@@ -1,4 +1,5 @@
 import { readTask, writeTask } from '@stencil/core';
+
 import { findClosestIonContent, scrollToTop } from '../components/content/content.utils';
 
 import { componentOnReady } from './helpers';

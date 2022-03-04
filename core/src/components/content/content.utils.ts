@@ -11,12 +11,12 @@ const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
  */
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
-const hasOverflowScroll = (node: Element) => {
+const hasOverflowScroll = (node: Element | null) => {
   const isElement = node instanceof HTMLElement;
   const overflowY = isElement && window.getComputedStyle(node).overflowY;
   // Element is scrollable if there is overflow or if the overlay is explicit
   const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
-  if (!node) {
+  if (node === null) {
     return false;
     // The element is the node if it's scrollable or the scroll height is larger than the client height
   } else if (isScrollable && node.scrollHeight >= node.clientHeight) {
@@ -51,7 +51,7 @@ export const getScrollElement = async (el: Element) => {
   await new Promise(resolve => componentOnReady(el, resolve));
 
   if (el?.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
-    return await (el as HTMLIonContentElement).getScrollElement();
+    return (el as HTMLIonContentElement).getScrollElement();
   }
 
   const scrollContainer = getScrollContainer(el);
@@ -65,8 +65,7 @@ export const getScrollElement = async (el: Element) => {
 
 /**
  * Queries the element matching the selector for IonContent.
- *
- * @see ION_CONTENT_SELECTOR for the selector used.
+ * See ION_CONTENT_SELECTOR for the selector used.
  */
 export const findIonContent = (el: Element) => {
   /**
@@ -83,10 +82,9 @@ export const findIonContent = (el: Element) => {
 
 /**
  * Queries the closest element matching the selector for IonContent.
- *
- * @see ION_CONTENT_SELECTOR for the selector used.
+ * See ION_CONTENT_SELECTOR for the selector used.
  */
-export const findClosestIonContent = (el: Element,) => {
+export const findClosestIonContent = (el: Element) => {
   /**
    * First we try to query the custom scroll host selector in cases where
    * the implementation is using an outer `ion-content` with an inner custom
