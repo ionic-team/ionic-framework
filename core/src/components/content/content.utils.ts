@@ -86,7 +86,16 @@ export const findIonContent = (el: Element) => {
  *
  * @see ION_CONTENT_SELECTOR for the selector used.
  */
-export const findClosestIonContent = (el: Element) => {
+export const findClosestIonContent = (el: Element,) => {
+  /**
+   * First we try to query the custom scroll host selector in cases where
+   * the implementation is using an outer `ion-content` with an inner custom
+   * scroll container.
+   */
+  const customContentHost = el.closest<HTMLElement>(ION_CONTENT_CLASS_SELECTOR);
+  if (customContentHost) {
+    return customContentHost;
+  }
   return el.closest<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 

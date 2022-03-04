@@ -426,9 +426,19 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    this.scrollEl = await getScrollElement(contentEl);
+    this.scrollEl = await getScrollElement(contentEl);;
 
-    this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
+    /**
+     * Query the host `ion-content` directly (if it is available), to use its
+     * inner #background-content has the target. Otherwise fallback to the
+     * custom scroll target host.
+     *
+     * This makes it so that implementers do not need to re-create the background content
+     * element and styles.
+     */
+    const backgroundContentHost = this.el.closest('ion-content') ?? contentEl;
+
+    this.backgroundContentEl = getElementRoot(backgroundContentHost).querySelector('#background-content') as HTMLElement;
 
     if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);
