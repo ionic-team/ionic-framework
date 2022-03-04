@@ -1,8 +1,7 @@
-name: 'Ionic Framework Build'
+name: 'Update Reference Screenshots'
 
 on:
-  pull_request:
-    branches: [ '**' ]
+  workflow_dispatch:
 
 jobs:
   build-core:
