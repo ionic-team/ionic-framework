@@ -40,4 +40,13 @@ jobs:
     needs: [test-core-screenshot]
     steps:
       - uses: actions/checkout@v2
+        # Normally, we could just push with the
+        # default GITHUB_TOKEN, but that will
+        # not cause the build workflow
+        # to re-run. We use Ionitron's
+        # Personal Access Token instead
+        # to allow for this build workflow
+        # to run when the screenshots are pushed.
+        with:
+          token: ${{ secrets.IONITRON_TOKEN }}
       - uses: ./.github/workflows/actions/update-reference-screenshots

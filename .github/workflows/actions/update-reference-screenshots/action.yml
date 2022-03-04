@@ -12,11 +12,25 @@ runs:
         node-version: 15.x
     - uses: actions/download-artifact@v2
       with:
-        path: ./core/artifacts
+        path: ./artifacts
     - name: Extract Archives
+      # This finds all .zip files in the ./artifacts
+      # directory, including nested directories.
+      # It then unzips every .zip to the root directory
       run: |
-        for file in *; do
-          echo "$file"
-        done
+        find . -type f -name '*.zip' -exec unzip -q -o -d ../ -- '{}'  -x '*.zip' \;
       shell: bash
-      working-directory: ./core/artifacts
+      working-directory: ./artifacts
+    - name: Push Screenshots
+      # Configure user as Ionitron
+      # and push only the changed .png snapshots
+      # to the remote branch.
+      run: |
+        git config user.name ionitron
+        git config user.email github-actions@github.com
+        git config user.email hi@ionicframework.com
+        git add src/\*.png
+        git commit -m "chore(): add updated snapshots"
+        git push
+      shell: bash
+      working-directory: ./core
