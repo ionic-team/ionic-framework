@@ -71,7 +71,7 @@ const generateProjects = () => {
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testMatch: '*.p.e2e.ts',
+  testMatch: '*.e2e.p.ts',
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
