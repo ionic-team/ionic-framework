@@ -58,16 +58,16 @@ export class Footer implements ComponentInterface {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
+      if (!contentEl) {
+        printIonContentErrorMsg(this.el);
+        return;
+      }
+
       this.setupFadeFooter(contentEl);
     }
   }
 
-  private setupFadeFooter = async (contentEl: HTMLElement | null) => {
-    if (!contentEl) {
-      printIonContentErrorMsg(this.el);
-      return;
-    }
-
+  private setupFadeFooter = async (contentEl: HTMLElement) => {
     const scrollEl = this.scrollEl = await getScrollElement(contentEl);
 
     /**
