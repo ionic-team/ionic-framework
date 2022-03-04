@@ -197,10 +197,14 @@ export const waitForEvent = async (page, event, timeout = 5000) => {
 }
 
 export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
-  await page.evaluate(selector => {
+  await page.evaluate(async selector => {
     const el = document.querySelector<HTMLElement>(selector);
     if (el) {
-      el.scroll(x, y);
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToPoint(x, y);
+      } else {
+        el.scroll(x, y);
+      }
     } else {
       console.error(`Unable to find element with selector: ${selector}`);
     }
@@ -208,10 +212,14 @@ export const scrollTo = async (page: E2EPage, selector: string, x: number, y: nu
 }
 
 export const scrollToBottom = async (page: E2EPage, selector: string) => {
-  await page.evaluate(selector => {
+  await page.evaluate(async selector => {
     const el = document.querySelector<HTMLElement>(selector);
     if (el) {
-      el.scrollTop = el.scrollHeight;
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToBottom();
+      } else {
+        el.scrollTop = el.scrollHeight;
+      }
     } else {
       console.error(`Unable to find element with selector: ${selector}`);
     }
