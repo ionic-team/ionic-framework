@@ -196,6 +196,15 @@ export const waitForEvent = async (page, event, timeout = 5000) => {
   ]);
 }
 
+/**
+ * Scrolls to a specific x/y coordinate within a scroll container. Supports custom
+ * method for `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ * @param x The x coordinate to scroll to.
+ * @param y The y coordinate to scroll to.
+ */
 export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
   await page.evaluate(async selector => {
     const el = document.querySelector<HTMLElement>(selector);
@@ -211,6 +220,13 @@ export const scrollTo = async (page: E2EPage, selector: string, x: number, y: nu
   }, selector);
 }
 
+/**
+ * Scrolls to the bottom of a scroll container. Supports custom method for
+ * `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ */
 export const scrollToBottom = async (page: E2EPage, selector: string) => {
   await page.evaluate(async selector => {
     const el = document.querySelector<HTMLElement>(selector);
