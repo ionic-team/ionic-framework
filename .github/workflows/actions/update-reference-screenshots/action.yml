@@ -1,5 +1,9 @@
 name: 'Update Reference Screenshots'
 description: 'Update Reference Screenshots - Stubbed'
+
+on:
+  workflow_dispatch:
+
 runs:
   using: 'composite'
   steps:

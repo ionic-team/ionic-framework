@@ -1,7 +1,8 @@
-name: 'Update Screenshot References'
+name: 'Ionic Framework Build'
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
   build-core:
@@ -12,6 +13,9 @@ jobs:
 
   test-core-screenshot:
     strategy:
+      # This ensures that all screenshot shard
+      # failures are reported so the dev can
+      # review everything at once.
       fail-fast: false
       matrix:
         # Divide the tests into n buckets
@@ -33,7 +37,6 @@ jobs:
           update: true
 
   update-reference-screenshots:
-    needs: [test-core-screenshot]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
