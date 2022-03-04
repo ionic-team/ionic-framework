@@ -1,30 +1,5 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
-import { test as base } from '@playwright/test';
-
-export const test = base.extend({
-  page: async ({ page }, use, testInfo) => {
-    const oldGoTo = page.goto.bind(page);
-
-    page.goto = (url: string) => {
-      const { mode, rtl } = testInfo.project.metadata;
-      const formattedUrl = `${url}?ionic:_testing=true&ionic:mode=${mode}&rtl=${rtl}`;
-
-      return Promise.all([
-        page.waitForFunction(() => window.stencilAppLoaded === true),
-        oldGoTo(formattedUrl)
-      ])
-    }
-
-    page.getSnapshotSettings = () => {
-      const { mode, rtl } = testInfo.project.metadata;
-      const rtlString = rtl ? 'rtl' : 'ltr';
-      return `${mode}-${rtlString}`;
-    }
-
-    await use(page);
-  },
-});
 
 /**
  * page.evaluate can only return a serializable value,
