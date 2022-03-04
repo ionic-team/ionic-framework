@@ -42,14 +42,12 @@
     const list = document.getElementById('list');
     const refresher = document.getElementById('refresher');
     refresher.addEventListener('ionRefresh', async function () {
-      console.log('Loading data...');
       const data = await getAsyncData();
       items = items.concat(data);
       refresher.complete();
       render();
       // Custom event consumed by e2e tests
       document.dispatchEvent(new CustomEvent('ionRefreshComplete'));
-      console.log('Done');
     });
     function render() {
       let html = '';
