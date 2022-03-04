@@ -11,6 +11,34 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/workflows/actions/build-core
 
+  test-core-clean-build:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-clean-build
+
+  test-core-lint:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-lint
+
+  test-core-spec:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-spec
+
+  test-core-e2e:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-e2e
+
   test-core-screenshot:
     strategy:
       # This ensures that all screenshot shard
@@ -34,3 +62,73 @@ jobs:
         with:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
+
+  build-vue:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-vue
+
+  build-vue-router:
+    needs: [build-vue]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-vue-router
+
+  test-vue-e2e:
+    needs: [build-vue, build-vue-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-vue-e2e
+
+  build-angular:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-angular
+
+  build-angular-server:
+    needs: [build-angular]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-angular-server
+
+  test-angular-e2e:
+    needs: [build-angular, build-angular-server]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-angular-e2e
+
+  build-react:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-react
+
+  build-react-router:
+    needs: [build-react]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-react-router
+
+  test-react-router-e2e:
+    needs: [build-react, build-react-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-react-router-e2e
+
+  test-react-e2e:
+    needs: [build-react, build-react-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-react-e2e
