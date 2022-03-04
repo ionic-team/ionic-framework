@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { componentOnReady, inheritAttributes } from '../../utils/helpers';
+import { Attributes, componentOnReady, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
@@ -21,7 +21,7 @@ export class Header implements ComponentInterface {
   private contentScrollCallback?: any;
   private intersectionObserver?: any;
   private collapsibleMainHeader?: HTMLElement;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
 

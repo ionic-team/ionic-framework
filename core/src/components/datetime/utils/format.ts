@@ -56,9 +56,9 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
   /**
    * MM/DD/YYYY will return midnight in the user's timezone.
    */
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
 
-  const labelString = new Intl.DateTimeFormat(locale, { weekday: 'long', month: 'long', day: 'numeric' }).format(date);
+  const labelString = new Intl.DateTimeFormat(locale, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(date);
 
   /**
    * If date is today, prepend "Today" so screen readers indicate
@@ -72,8 +72,8 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
  * Used for the header in MD mode.
  */
 export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
-  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric' }).format(date);
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
+  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date);
 }
 
 /**
@@ -83,6 +83,6 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  * Example: May 2021
  */
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
-  return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(date);
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
+  return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 }

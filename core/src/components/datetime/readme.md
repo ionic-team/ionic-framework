@@ -31,8 +31,8 @@ the same ISO format which datetime value was originally given as.
 | Year and Month       | YYYY-MM                | 1994-12                       |
 | Complete Date        | YYYY-MM-DD             | 1994-12-15                    |
 | Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47              |
-| UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z      |
-| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+05:00 |
+| UTC Timezone         | YYYY-MM-DDTHH:mm:ssZ   | 1994-12-15T13:47:20Z          |
+| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20+05:00     |
 | Hour and Minute      | HH:mm                  | 13:47                         |
 | Hour, Minute, Second | HH:mm:ss               | 13:47:20                      |
 
@@ -145,22 +145,6 @@ const zonedTime = dateFnsTz.utcToZonedTime(date, userTimeZone);
 
 // Create a formatted string from the zoned time
 format(zonedTime, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: userTimeZone });
-```
-
-## Timezones
-
-### Assigning Date Values
-
-`ion-datetime` does not manipulate or read timezones. Developers will need to pass in a valid ISO-8601 string that is already configured for the user's timezone when assigning a value. If no value is provided, `ion-datetime` will default to the time specified on the user's machine (which will already be in the user's timezone). We recommend using [date-fns](https://date-fns.org) to format the date to ISO-8601.
-
-```typescript
-import { formatISO } from 'date-fns';
-
-const dateString = '2021-01-14T15:00:00.000Z';
-const formattedDateValue = formatISO(new Date(dateString));
-
-// Assign `formattedDateValue` to your `ion-datetime` value.
-
 ```
 
 ### Parsing Date Values

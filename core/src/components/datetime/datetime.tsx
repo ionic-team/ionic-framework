@@ -424,10 +424,10 @@ export class Datetime implements ComponentInterface {
      * the date that is currently selected, otherwise
      * there can be 1 hr difference when dealing w/ DST
      */
-    const date = new Date(convertDataToISO(this.workingParts));
-    this.workingParts.tzOffset = date.getTimezoneOffset() * -1;
+    const date = new Date(convertDataToISO(this.activeParts));
+    this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
 
-    this.value = convertDataToISO(this.workingParts);
+    this.value = convertDataToISO(this.activeParts);
 
     if (closeOverlay) {
       this.closeParentOverlay();
@@ -811,6 +811,12 @@ export class Datetime implements ComponentInterface {
         navigator.maxTouchPoints > 1 ?
         [0.7, 1] : 1;
 
+      // Intersection observers cannot accurately detect the
+      // intersection with a threshold of 1, when the observed
+      // element width is a sub-pixel value (i.e. 334.05px).
+      // Setting a root margin to 1px solves the issue.
+      const rootMargin = '1px';
+
       /**
        * Listen on the first month to
        * prepend a new month and on the last
@@ -829,15 +835,18 @@ export class Datetime implements ComponentInterface {
        * it applies to active gestures which is not
        * something WebKit does.
        */
+
       endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
         threshold,
-        root: calendarBodyRef
+        root: calendarBodyRef,
+        rootMargin
       });
       endIO.observe(endMonth);
 
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold,
-        root: calendarBodyRef
+        root: calendarBodyRef,
+        rootMargin
       });
       startIO.observe(startMonth);
 

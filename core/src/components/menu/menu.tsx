@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
+import { Attributes, assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
 
@@ -43,7 +43,7 @@ export class Menu implements ComponentInterface, MenuI {
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
 
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   private handleFocus = (ev: FocusEvent) => {
     /**

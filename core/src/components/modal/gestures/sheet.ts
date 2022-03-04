@@ -42,6 +42,32 @@ export const createSheetGesture = (
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
+  const enableBackdrop = () => {
+    baseEl.style.setProperty('pointer-events', 'auto');
+    backdropEl.style.setProperty('pointer-events', 'auto');
+
+    /**
+     * When the backdrop is enabled, elements such
+     * as inputs should not be focusable outside
+     * the sheet.
+     */
+    baseEl.classList.remove('ion-disable-focus-trap');
+  }
+
+  const disableBackdrop = () => {
+    baseEl.style.setProperty('pointer-events', 'none');
+    backdropEl.style.setProperty('pointer-events', 'none');
+
+    /**
+     * When the backdrop is enabled, elements such
+     * as inputs should not be focusable outside
+     * the sheet.
+     * Adding this class disables focus trapping
+     * for the sheet temporarily.
+     */
+    baseEl.classList.add('ion-disable-focus-trap');
+  }
+
   /**
    * After the entering animation completes,
    * we need to set the animation to go from
@@ -62,9 +88,12 @@ export const createSheetGesture = (
      * ion-backdrop and .modal-wrapper always have pointer-events: auto
      * applied, so the modal content can still be interacted with.
      */
-    const backdropEnabled = currentBreakpoint > backdropBreakpoint
-    baseEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
-    backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
+    const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+    if (shouldEnableBackdrop) {
+      enableBackdrop();
+    } else {
+      disableBackdrop();
+    }
   }
 
   if (contentEl && currentBreakpoint !== maxBreakpoint) {
@@ -190,9 +219,12 @@ export const createSheetGesture = (
                * Backdrop should become enabled
                * after the backdropBreakpoint value
                */
-              const backdropEnabled = currentBreakpoint > backdropBreakpoint;
-              baseEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
-              backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
+              const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+              if (shouldEnableBackdrop) {
+                enableBackdrop();
+              } else {
+                disableBackdrop();
+              }
 
               gesture.enable(true);
             });

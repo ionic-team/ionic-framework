@@ -1,6 +1,6 @@
 import * as pd from '@stencil/core/testing';
 
-import { dragElementBy, queryDeep } from '../../../utils/test/utils';
+import { dragElementBy, queryDeep } from '@utils/test';
 
 /**
  * Moves a reorder item by simulating a drag event
