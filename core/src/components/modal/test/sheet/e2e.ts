@@ -1,5 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { testModal } from '../test.utils';
+import { getActiveElement, getActiveElementParent } from '@utils/test';
 
 const DIRECTORY = 'sheet';
 
@@ -86,4 +87,33 @@ test('should click to present another modal when backdrop is inactive', async ()
 
   const customModal = await page.find('.custom-height');
   expect(customModal).not.toBe(null);
+});
+
+test('input should be focusable when backdrop is inactive', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/sheet?ionic:_testing=true' });
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+  await page.click('#backdrop-inactive');
+
+  await ionModalDidPresent.next();
+
+  await page.click('#root-input');
+
+  const parentEl = await getActiveElementParent(page);
+  expect(parentEl.id).toEqual('root-input');
+});
+
+test('input should not be focusable when backdrop is active', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/sheet?ionic:_testing=true' });
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+  await page.click('#backdrop-active');
+
+  await ionModalDidPresent.next();
+
+  await page.click('#root-input');
+  await page.waitForChanges();
+
+  const parentEl = await getActiveElement(page);
+  expect(parentEl.tagName).toEqual('ION-BUTTON');
 });

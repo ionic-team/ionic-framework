@@ -75,6 +75,8 @@ export const componentOnReady = (el: any, callback: any) => {
   }
 }
 
+export type Attributes = { [key: string]: any };
+
 /**
  * Elements inside of web components sometimes need to inherit global attributes
  * set on the host. For example, the inner input in `ion-input` should inherit
@@ -86,7 +88,7 @@ export const componentOnReady = (el: any, callback: any) => {
  * does not trigger a re-render.
  */
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
-  const attributeObject: { [k: string]: any } = {};
+  const attributeObject: Attributes = {};
 
   attributes.forEach(attr => {
     if (el.hasAttribute(attr)) {
@@ -233,8 +235,8 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
     labelText = label.textContent;
     label.setAttribute('aria-hidden', 'true');
 
-  // if there is no label, check to see if the user has provided
-  // one by setting an id on the component and using the label element
+    // if there is no label, check to see if the user has provided
+    // one by setting an id on the component and using the label element
   } else if (componentId.trim() !== '') {
     label = document.querySelector(`label[for="${componentId}"]`);
 
@@ -356,7 +358,7 @@ export const debounce = (func: (...args: any[]) => void, wait = 0) => {
  *
  * @returns whether the keys are the same and the values are shallow equal.
  */
-export const shallowEqualStringMap = (map1: {[k: string]: any} | undefined, map2: {[k: string]: any} | undefined): boolean => {
+export const shallowEqualStringMap = (map1: { [k: string]: any } | undefined, map2: { [k: string]: any } | undefined): boolean => {
   map1 ??= {};
   map2 ??= {};
 

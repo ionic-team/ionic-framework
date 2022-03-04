@@ -31,16 +31,10 @@ export const pickerController = /*@__PURE__*/createController<PickerOptions, HTM
 export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
-export interface OverlayListenerOptions {
-  trapKeyboardFocus: boolean;
-}
-
-export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T, options: OverlayListenerOptions = {
-  trapKeyboardFocus: true
-}) => {
+export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
-    connectListeners(document, options);
+    connectListeners(document);
   }
   const overlayIndex = lastId++;
   el.overlayIndex = overlayIndex;
@@ -119,7 +113,7 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getOverlay(doc);
+  const lastOverlay = getOverlay(doc, 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker,ion-popover');
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -133,6 +127,17 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
    * itself to ensure the focus trap works.
    */
   if (!lastOverlay || !target) { return; }
+
+  /**
+   * If the ion-disable-focus-trap class
+   * is present on an overlay, then this component
+   * instance has opted out of focus trapping.
+   * An example of this is when the sheet modal
+   * has a backdrop that is disabled. The content
+   * behind the sheet should be focusable until
+   * the backdrop is enabled.
+   */
+  if (lastOverlay.classList.contains('ion-disable-focus-trap')) { return; }
 
   const trapScopedFocus = () => {
     /**
@@ -256,22 +261,12 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
   }
 };
 
-const connectListeners = (doc: Document, options: OverlayListenerOptions) => {
+const connectListeners = (doc: Document) => {
   if (lastId === 0) {
     lastId = 1;
-    if (options.trapKeyboardFocus) {
-      doc.addEventListener('focus', (ev: FocusEvent) => {
-        /**
-         * ion-menu has its own focus trapping listener
-         * so we do not want the two listeners to conflict
-         * with each other.
-         */
-        if (ev.target && (ev.target as HTMLElement).tagName === 'ION-MENU') {
-          return;
-        }
-        trapKeyboardFocus(ev, doc);
-      }, true);
-    }
+    doc.addEventListener('focus', (ev: FocusEvent) => {
+      trapKeyboardFocus(ev, doc);
+    }, true);
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {

@@ -140,6 +140,33 @@ interface ModalOptions<T extends ComponentRef = ComponentRef> {
 interface ModalAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
+## Accessibility
+
+### Keyboard Navigation
+
+| Key   | Function            |
+| ----- | ------------------- |
+| `Esc` | Dismisses the modal |
+
+### Screen Readers
+
+Modals have the `aria-modal` attribute applied. This attribute can cause assistive technologies to limit navigation to the modal element's contents. As a result, using gestures that move to the next or previous items may not focus elements outside of the modal. This applies even when the backdrop is disabled in sheet modals using the `backdropBreakpoint` property.
+
+Assistive technologies will not limit navigation to the modal element's contents if developers manually move focus. However, manually moving focus outside of a modal is not supported in Ionic for modals that have focus trapping enabled.
+
+See https://w3c.github.io/aria/#aria-modal for more information.
+
+### Focus Trapping
+
+When a modal is presented, focus will be trapped inside of the presented modal. Users can focus other interactive elements inside the modal but will never be able to focus interactive elements outside the modal while the modal is presented. For applications that present multiple stacked modals, focus will be trapped on the modal that was presented last.
+
+Sheet modals that have had their backdrop disabled by the `backdropBreakpoint` property are not subject to focus trapping.
+
+### Sheet Modals
+
+Sheet modals allow users to interact with content behind the modal when the `backdropBreakpoint` property is used. The backdrop will be disabled up to and including the specified `backdropBreakpoint` and will be enabled after it.
+
+When the backdrop is disabled, users will be able to interact with elements outside the sheet modal using a pointer or keyboard. Assistive technologies may not focus outside the sheet modal by default due to the usage of `aria-modal`. We recommend avoiding features such as autofocus here as it can cause assistive technologies to jump between two interactive contexts without warning the user.  
 
 <!-- Auto Generated Below -->
 

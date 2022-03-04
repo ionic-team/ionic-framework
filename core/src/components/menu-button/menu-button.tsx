@@ -5,7 +5,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { inheritAttributes } from '../../utils/helpers';
+import { Attributes, inheritAttributes } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
@@ -25,7 +25,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLIonSegmentElement;
 

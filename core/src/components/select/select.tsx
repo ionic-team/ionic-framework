@@ -362,12 +362,15 @@ export class Select implements ComponentInterface {
     };
 
     /**
-     * Workaround for Stencil to autodefine ion-select-popover.
+     * Workaround for Stencil to autodefine
+     * ion-select-popover and ion-popover when
+     * using Custom Elements build.
      */
     // tslint:disable-next-line
     if (false) {
       // @ts-ignore
       document.createElement('ion-select-popover');
+      document.createElement('ion-popover');
     }
 
     return popoverController.create(popoverOpts);
@@ -383,6 +386,18 @@ export class Select implements ComponentInterface {
       buttons: this.createActionSheetButtons(this.childOpts, this.value),
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
+
+    /**
+     * Workaround for Stencil to autodefine
+     * ion-action-sheet when
+     * using Custom Elements build.
+     */
+    // tslint:disable-next-line
+    if (false) {
+      // @ts-ignore
+      document.createElement('ion-action-sheet');
+    }
+
     return actionSheetController.create(actionSheetOpts);
   }
 
@@ -418,6 +433,18 @@ export class Select implements ComponentInterface {
       cssClass: ['select-alert', interfaceOptions.cssClass,
                  (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
+
+    /**
+     * Workaround for Stencil to autodefine
+     * ion-alert when
+     * using Custom Elements build.
+     */
+    // tslint:disable-next-line
+    if (false) {
+      // @ts-ignore
+      document.createElement('ion-alert');
+    }
+
     return alertController.create(alertOpts);
   }
 

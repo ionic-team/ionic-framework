@@ -37,7 +37,7 @@ const InfiniteScrollExample: React.FC = () => {
       pushData();
       console.log('Loaded data');
       ev.target.complete();
-      if (data.length == 1000) {
+      if (data.length === 1000) {
         setInfiniteDisabled(true);
       }
     }, 500);

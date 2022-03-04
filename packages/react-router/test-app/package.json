@@ -36,11 +36,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start.ci": "npm run sync && BROWSER=none react-scripts start",
-    "build": "node scripts/build.js",
+    "build": "react-scripts build",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "e2e": "npm run sync && concurrently \"SKIP_PREFLIGHT_CHECK=true react-scripts start\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
     "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {
@@ -66,6 +65,7 @@
     "concurrently": "^6.3.0",
     "cpy-cli": "^3.1.1",
     "cypress": "^8.5.0",
+    "serve": "^13.0.2",
     "wait-on": "^6.0.0",
     "webpack-cli": "^4.9.1"
   },
