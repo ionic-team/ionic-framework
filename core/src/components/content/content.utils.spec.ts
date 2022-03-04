@@ -1,10 +1,6 @@
-import { scrollToTop, scrollByPoint, printIonContentErrorMsg, findClosestIonContent, findIonContent, ION_CONTENT_SELECTOR, getScrollElement } from './content.utils';
+import { scrollToTop, scrollByPoint, printIonContentErrorMsg, findClosestIonContent, findIonContent, getScrollElement } from './content.utils';
 
 describe('Content Utils', () => {
-
-  it('ION_CONTENT_SELECTOR', () => {
-    expect(ION_CONTENT_SELECTOR).toBe('ion-content, .ion-content-scroll-host');
-  });
 
   describe('getScrollElement', () => {
 

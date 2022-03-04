@@ -2,6 +2,14 @@ import { componentOnReady } from '../../utils/helpers';
 
 const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
 const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
+/**
+ * Selector used for implementations reliant on `<ion-content>` for scroll event changes.
+ *
+ * Developers should use the `.ion-content-scroll-host` selector to target the element emitting
+ * scroll events. With virtual scroll implementations this will be the host element for
+ * the scroll viewport.
+ */
+const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
 const hasOverflowScroll = (node: Element) => {
   const isElement = node instanceof HTMLElement;
@@ -56,20 +64,20 @@ export const getScrollElement = async (el: Element) => {
 }
 
 /**
- * Selector used for implementations reliant on `<ion-content>` for scroll event changes.
- *
- * Developers should use the `.ion-content-scroll-host` selector to target the element emitting
- * scroll events. With virtual scroll implementations this will be the host element for
- * the scroll viewport.
- */
-export const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
-
-/**
  * Queries the element matching the selector for IonContent.
  *
  * @see ION_CONTENT_SELECTOR for the selector used.
  */
 export const findIonContent = (el: Element) => {
+  /**
+   * First we try to query the custom scroll host selector in cases where
+   * the implementation is using an outer `ion-content` with an inner custom
+   * scroll container.
+   */
+  const customContentHost = el.querySelector<HTMLElement>(ION_CONTENT_CLASS_SELECTOR);
+  if (customContentHost) {
+    return customContentHost;
+  }
   return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 
