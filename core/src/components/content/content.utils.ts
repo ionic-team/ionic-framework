@@ -16,7 +16,7 @@ const hasOverflowScroll = (node: Element | null) => {
     return false;
   }
   const isElement = node instanceof HTMLElement;
-  const overflowY = isElement && window.getComputedStyle(node).overflowY;
+  const overflowY = isElement && getComputedStyle(node).overflowY;
   // Element is scrollable if there is overflow or if the overlay is explicit
   const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
   // The element is the node if it's scrollable or the scroll height is larger than the client height
