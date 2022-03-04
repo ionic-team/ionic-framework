@@ -54,29 +54,16 @@
       height: 200px;
     }
 
-    .content {
-      position: relative;
-      height: 100%;
-      width: 100%;
-      flex: 1;
-      contain: size style;
-    }
-
     #scroll-target {
       position: absolute;
-      top: -44px;
-      bottom: -44px;
+      top: 0;
       left: 0;
-      right: 0;
 
+      height: 100%;
       width: 100%;
-
-      padding-top: 44px;
-      padding-bottom: 44px;
-
       overflow-y: auto;
-      will-change: scroll-position;
-      z-index: 0;
+
+      padding: 50px 0;
     }
   </style>
 </head>
@@ -89,7 +76,7 @@
           <ion-title>Mailboxes</ion-title>
         </ion-toolbar>
       </ion-header>
-      <div class="content">
+      <ion-content fullscreen="true" scroll-y="false">
         <div id="scroll-target" class="ion-content-scroll-host">
           <ion-header collapse="condense">
             <ion-toolbar>
@@ -107,7 +94,7 @@
             <div class="grid-item orange"></div>
           </div>
         </div>
-      </div>
+      </ion-content>
       <ion-footer translucent="true">
         <ion-toolbar>
           <ion-title>Updated Just Now</ion-title>

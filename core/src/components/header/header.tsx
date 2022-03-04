@@ -86,23 +86,24 @@ export class Header implements ComponentInterface {
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? findIonContent(pageEl) : null;
-      const condenseHeader = (contentEl) ? contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null : null;
+
+      if (!contentEl) {
+        printIonContentErrorMsg(this.el);
+        return;
+      }
+
+      const condenseHeader = contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null;
+
       await this.setupFadeHeader(contentEl, condenseHeader);
     }
   }
 
-  private setupFadeHeader = async (contentEl: HTMLElement | null, condenseHeader: HTMLElement | null) => {
-    if (!contentEl) {
-      printIonContentErrorMsg(this.el);
-      return;
-    }
-
+  private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
     const scrollEl = this.scrollEl = await getScrollElement(contentEl);
 
     /**
      * Handle fading of toolbars on scroll
      */
-
     this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el, condenseHeader); };
     scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
