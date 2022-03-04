@@ -3,19 +3,14 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { pullToRefresh } from '../test.utils';
 
-describe('refresher: basic', () => {
+describe('refresher: custom scroll target', () => {
 
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/refresher/test/basic?ionic:_testing=true'
+      url: '/src/components/refresher/test/scroll-target?ionic:_testing=true'
     });
-  });
-
-  it('should match existing visual screenshots', async () => {
-    const compare = await page.compareScreenshot();
-    expect(compare).toMatchScreenshot();
   });
 
   it('should load more items when performing a pull-to-refresh', async () => {

@@ -60,22 +60,20 @@
   </ion-app>
 
   <script>
+    let items = createItems();
 
-    let items = [];
-    for (var i = 0; i < 30; i++) {
-      items.push(i + 1);
-    }
     const list = document.getElementById('list');
     const refresher = document.getElementById('refresher');
 
     refresher.addEventListener('ionRefresh', async function () {
-      console.log('Loading data...');
       const data = await getAsyncData();
       items = items.concat(data);
       refresher.complete();
       render();
-      console.log('Done');
+      // Custom event consumed by e2e tests
+      document.dispatchEvent(new CustomEvent('ionRefreshComplete'));
     });
+
     function render() {
       let html = '';
       for (let item of items) {
@@ -83,19 +81,20 @@
       }
       list.innerHTML = html;
     }
+
     function getAsyncData() {
       // async return mock data
       return new Promise(resolve => {
-        setTimeout(() => {
-          let data = [];
-          for (var i = 0; i < 30; i++) {
-            data.push(i);
-          }
-          resolve(data);
-        }, 500);
+        setTimeout(() => resolve(createItems(items.length)), 500);
       });
     }
+
+    function createItems(start = 0) {
+      return new Array(30).fill().map((_, i) => start + i + 1);
+    }
+
     render();
+
   </script>
 </body>
 
