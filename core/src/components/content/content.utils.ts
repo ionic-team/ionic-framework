@@ -12,14 +12,15 @@ const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
 const hasOverflowScroll = (node: Element | null) => {
+  if (node === null) {
+    return false;
+  }
   const isElement = node instanceof HTMLElement;
   const overflowY = isElement && window.getComputedStyle(node).overflowY;
   // Element is scrollable if there is overflow or if the overlay is explicit
   const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
-  if (node === null) {
-    return false;
-    // The element is the node if it's scrollable or the scroll height is larger than the client height
-  } else if (isScrollable && node.scrollHeight >= node.clientHeight) {
+  // The element is the node if it's scrollable or the scroll height is larger than the client height
+  if (isScrollable && node.scrollHeight >= node.clientHeight) {
     return true;
   }
   return false;
