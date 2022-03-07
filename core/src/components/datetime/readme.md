@@ -170,6 +170,60 @@ console.log(formattedString); // Jun 4, 2021
 
 See https://date-fns.org/docs/format for a list of all the valid format tokens.
 
+## Disabling Dates
+
+With the `isAllowedDate` property, developers can customize the `ion-datetime` to disable a specific day, range of dates, weekends or any custom rule using an ISO 8601 date string. 
+
+The `isAllowedDate` property accepts a function returning a boolean, indicating if a date is enabled. The function accepts an ISO 8601 date string and is called for each rendered calendar day.
+
+```html
+<ion-datetime></ion-datetime>
+
+<script>
+  const datetime = document.querySelector('ion-datetime');
+  datetime.isAllowedDate = function(dateIsoString) {
+    // Write your custom logic here
+    return true;
+  }
+</script>
+```
+
+### Disabling a specific date
+
+```js
+isAllowedDate(dateIsoString) {
+  const date = new Date(dateIsoString);
+  // Disables January 1, 2022
+  return date.getUTCFullYear() === 2022 
+    && date.getUTCMonth() === 0 
+    && date.getUTCDate() === 1;
+}
+```
+
+### Disabling weekends
+
+```js
+isAllowedDate(dateIsoString) {
+  const date = new Date(dateIsoString);
+  // Disables Saturday and Sunday
+  return date.getUTCDay() === 0
+    && date.getUTCDay() === 6;
+}
+```
+
+### Usage with date-fns
+
+Developers can also use the available functions from `date-fns` to disable dates.
+
+```ts
+import { isMonday } from 'date-fns';
+
+isAllowedDate(dateIsoString) {
+  // Disables Monday
+  return isMonday(new Date(dateIsoString));
+}
+```
+
 ## Advanced Datetime Validation and Manipulation
 
 The datetime picker provides the simplicity of selecting an exact format, and
