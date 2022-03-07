@@ -250,9 +250,10 @@ import { ModalPage } from '../modal/modal.page';
   styleUrls: ['./modal-example.css']
 })
 export class ModalExample {
-  constructor(public modalController: ModalController) {
+  // The `ion-modal` element reference.
+  modal: HTMLElement;
 
-  }
+  constructor(public modalController: ModalController) {}
 
   async presentModal() {
     const modal = await this.modalController.create({
