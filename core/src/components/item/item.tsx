@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
