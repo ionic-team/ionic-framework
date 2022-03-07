@@ -1,0 +1,1 @@
+node_modules/.bin/concurrently "npm run start -- --mode production" "node_modules/.bin/wait-on http-get://localhost:8080 && npm run cypress -- --spec $(./scripts/shard.sh ${1} ${2})"  --kill-others --success first

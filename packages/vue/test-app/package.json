@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "concurrently \"npm run start -- --mode production\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
+    "test:e2e": "concurrently \"npm run start -- --mode production\" \"wait-on http-get://localhost:8080 && npm run cypress -- --spec $(./scripts/shard.sh $1 $2)\" --kill-others --success first",
     "lint": "vue-cli-service lint",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "start": "vue-cli-service serve",
