@@ -4,6 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -311,7 +312,8 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY } = this;
+    const { isMainContent, scrollX, scrollY, el } = this;
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
@@ -325,6 +327,7 @@ export class Content implements ComponentInterface {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
           'overscroll': forceOverscroll,
+          [`content-${rtl}`]: true
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
@@ -339,7 +342,7 @@ export class Content implements ComponentInterface {
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
-          ref={(el: HTMLElement) => this.scrollEl = el!}
+          ref={(scrollEl: HTMLElement) => this.scrollEl = scrollEl!}
           onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
