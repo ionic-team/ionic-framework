@@ -757,6 +757,10 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Returns if an individual date (day) is enabled or disabled.  Returns the enabled state of a day given an ISO 8601 date string. By default, all days are enabled. Developers can use this method to write custom disabled date logic. When working with the JS date object, it is recommended to use the UTC functions (i.e. `getUTCDay()`).
+         */
+        "isAllowedDate": (dateIsoString: string) => boolean;
+        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale": string;
@@ -4441,6 +4445,10 @@ declare namespace LocalJSX {
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
+        /**
+          * Returns if an individual date (day) is enabled or disabled.  Returns the enabled state of a day given an ISO 8601 date string. By default, all days are enabled. Developers can use this method to write custom disabled date logic. When working with the JS date object, it is recommended to use the UTC functions (i.e. `getUTCDay()`).
+         */
+        "isAllowedDate"?: (dateIsoString: string) => boolean;
         /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */

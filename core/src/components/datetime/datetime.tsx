@@ -153,6 +153,16 @@ export class Datetime implements ComponentInterface {
    */
   @Prop() readonly = false;
 
+  /**
+   * Returns if an individual date (day) is enabled or disabled.
+   *
+   * Returns the enabled state of a day given an ISO 8601 date string.
+   * By default, all days are enabled. Developers can use this method
+   * to write custom disabled date logic. When working with the JS date
+   * object, it is recommended to use the UTC functions (i.e. `getUTCDay()`).
+   */
+  @Prop() isAllowedDate: (dateIsoString: string) => boolean = () => true;
+
   @Watch('disabled')
   protected disabledChanged() {
     this.emitStyle();
@@ -1277,6 +1287,7 @@ export class Datetime implements ComponentInterface {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activePartsClone, this.todayParts, this.minParts, this.maxParts, this.parsedDayValues);
+            const isCalDayDisabled = isCalMonthDisabled || disabled || this.isAllowedDate(convertDataToISO(referenceParts)) === false;
 
             return (
               <button
@@ -1286,7 +1297,7 @@ export class Datetime implements ComponentInterface {
                 data-year={year}
                 data-index={index}
                 data-day-of-week={dayOfWeek}
-                disabled={isCalMonthDisabled || disabled}
+                disabled={isCalDayDisabled}
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
