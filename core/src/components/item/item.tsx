@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h, Watch } from '@stencil/core';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -143,6 +143,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() counterFormatter: CounterFormatter = (itemLength: number, maxLength: number) => `${itemLength} / ${maxLength}`;
 
   @State() counterString: string | null | undefined;
+
+  @Watch('counterFormatter')
+  counterFormatterChanged() {
+    if (this.counter) {
+      this.updateCounterOutput(this.getFirstInput());
+    }
+  }
 
   @Listen('ionChange')
   handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
