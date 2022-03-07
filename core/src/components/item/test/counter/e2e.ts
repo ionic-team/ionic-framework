@@ -1,19 +1,58 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
-test('item: counter', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/item/test/counter?ionic:_testing=true'
+describe('item: counter', () => {
+
+  it('should match existing visual screenshots', async () => {
+    const page = await newE2EPage({
+      url: '/src/components/item/test/counter?ionic:_testing=true'
+    });
+
+    const compare = await page.compareScreenshot();
+    expect(compare).toMatchScreenshot();
   });
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
-});
+  describe('rtl', () => {
 
-test('item: counter-rtl', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true'
+    it('should match existing visual screenshots', async () => {
+      const page = await newE2EPage({
+        url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true'
+      });
+
+      const compare = await page.compareScreenshot();
+      expect(compare).toMatchScreenshot();
+    });
+
   });
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
-});
+  describe('custom formatter', () => {
+
+    let page: E2EPage;
+
+    beforeEach(async () => {
+      page = await newE2EPage({
+        url: '/src/components/item/test/counter?ionic:_testing=true'
+      });
+    });
+
+    it('should format on load', async () => {
+      const itemCounter = await page.find('#customFormatter >>> .item-counter');
+
+      expect(itemCounter.textContent).toBe('20 characters left');
+    });
+
+    it('should format on input', async () => {
+      const input = await page.find('#customFormatter ion-input');
+
+      await input.click();
+      await input.type('abcde');
+
+      await page.waitForChanges();
+
+      const itemCounter = await page.find('#customFormatter >>> .item-counter');
+
+      expect(itemCounter.textContent).toBe('15 characters left');
+    });
+
+  });
+
+})
