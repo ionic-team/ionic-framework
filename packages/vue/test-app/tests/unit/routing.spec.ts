@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { enableAutoUnmount, mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {
   IonicVue,
@@ -13,6 +13,8 @@ import {
 } from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router';
 import { waitForRouter } from './utils';
+
+enableAutoUnmount(afterEach);
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -450,106 +452,6 @@ describe('Routing', () => {
     expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(2);
   });
 
-  it('should not mount intermediary components when delta is 1', async () => {
-    const Page = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page2 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page3 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-
-    const router = createRouter({
-      history: createWebHistory(process.env.BASE_URL),
-      routes: [
-        { path: '/page', component: Page },
-        { path: '/page2', component: Page2 },
-        { path: '/page3', component: Page3 },
-        { path: '/', redirect: '/page' }
-      ]
-    });
-
-    router.push('/');
-    await router.isReady();
-    const wrapper = mount(App, {
-      global: {
-        plugins: [router, IonicVue]
-      }
-    });
-
-    expect(wrapper.findComponent(Page).exists()).toBe(true);
-
-    router.push('/page2');
-    await waitForRouter();
-
-    expect(wrapper.findComponent(Page2).exists()).toBe(true);
-
-    router.back();
-    await waitForRouter();
-
-    expect(wrapper.findComponent(Page2).exists()).toBe(false);
-
-    router.push('/page3');
-    await waitForRouter();
-
-    expect(wrapper.findComponent(Page2).exists()).toBe(false);
-    expect(wrapper.findComponent(Page3).exists()).toBe(true);
-  });
-
-  it('should unmount intermediary components when using router.go', async () => {
-    const Page = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page2 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-    const Page3 = {
-      components: { IonPage },
-      template: `<ion-page></ion-page>`
-    }
-
-    const router = createRouter({
-      history: createWebHistory(process.env.BASE_URL),
-      routes: [
-        { path: '/page', component: Page },
-        { path: '/page2', component: Page2 },
-        { path: '/page3', component: Page3 },
-        { path: '/', redirect: '/page' }
-      ]
-    });
-
-    router.push('/');
-    await router.isReady();
-    const wrapper = mount(App, {
-      global: {
-        plugins: [router, IonicVue]
-      }
-    });
-
-    router.push('/page2');
-    await waitForRouter();
-
-    router.push('/page3');
-    await waitForRouter();
-
-    expect(wrapper.findComponent(Page2).exists()).toBe(true);
-    expect(wrapper.findComponent(Page3).exists()).toBe(true);
-
-    router.go(-2);
-    await waitForRouter();
-
-    expect(wrapper.findComponent(Page).exists()).toBe(true);
-    expect(wrapper.findComponent(Page2).exists()).toBe(false);
-    expect(wrapper.findComponent(Page3).exists()).toBe(false);
-  });
-
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
   it('canGoBack() should return the correct value', async () => {
     const Page = {
@@ -661,5 +563,105 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(ionRouter.canGoBack()).toEqual(true);
+  });
+
+  it('should not mount intermediary components when delta is 1', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+        { path: '/', redirect: '/page' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    expect(wrapper.findComponent(Page).exists()).toBe(true);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(true);
+
+    router.back();
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    expect(wrapper.findComponent(Page3).exists()).toBe(true);
+  });
+
+  it('should unmount intermediary components when using router.go', async () => {
+    const Page = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      template: `<ion-page></ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+        { path: '/', redirect: '/page' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/page2');
+    await waitForRouter();
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(true);
+    expect(wrapper.findComponent(Page3).exists()).toBe(true);
+
+    router.go(-2);
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page).exists()).toBe(true);
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    expect(wrapper.findComponent(Page3).exists()).toBe(false);
   });
 });

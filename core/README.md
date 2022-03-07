@@ -44,19 +44,55 @@ The `@ionic/core` package can be used in simple HTML, or by vanilla JavaScript w
 
 In addition to the default, self lazy-loading components built by Stencil, this package also comes with each component exported as a stand-alone custom element within `@ionic/core/components`. Each component extends `HTMLElement`, and does not lazy-load itself. Instead, this package is useful for projects already using a bundler such as Webpack or Rollup. While all components are available to be imported, the custom elements build also ensures bundlers only import what's used, and tree-shakes any unused components.
 
-Below is an example of importing `ion-toggle`, and initializing Ionic so it's able to correctly load the "mode", such as Material Design or iOS. Additionally, the `initialize({...})` function can receive the Ionic config.
+Below is an example of importing `ion-badge`, and initializing Ionic so it is able to correctly load the "mode", such as Material Design or iOS. Additionally, the `initialize({...})` function can receive the Ionic config.
 
 ```typescript
-import { IonBadge } from "@ionic/core/components/ion-badge";
+import { defineCustomElement } from "@ionic/core/components/ion-badge.js";
 import { initialize } from "@ionic/core/components";
 
+// Initializes the Ionic config and `mode` behavior
 initialize();
 
-customElements.define("ion-badge", IonBadge);
+//  Defines the `ion-badge` web component
+defineCustomElement();
 ```
 
-Notice how `IonBadge` is imported from `@ionic/core/components/ion-badge` rather than just `@ionic/core/components`. Additionally, the `initialize` function is imported from `@ionic/core/components` rather than `@ionic/core`. All of this helps to ensure bundlers do not pull in more code than is needed.
+Notice how we import from `@ionic/core/components` as opposed to `@ionic/core`. This helps bundlers pull in only the code that is needed.
 
+The `defineCustomElement` function will automatically define the component as well as any child components that may be required.
+
+For example, if you wanted to use `ion-modal`, you would do the following:
+
+```typescript
+import { defineCustomElement } from "@ionic/core/components/ion-modal.js";
+import { initialize } from "@ionic/core/components";
+
+// Initializes the Ionic config and `mode` behavior
+initialize();
+
+//  Defines the `ion-modal` and child `ion-backdrop` web components.
+defineCustomElement();
+```
+
+The `defineCustomElement` function will define `ion-modal`, but it will also define `ion-backdrop`, which is a component that `ion-modal` uses internally.
+
+### Using Overlay Controllers
+
+When using an overlay controller, developers will need to define the overlay component before it can be used. Below is an example of using `modalController`:
+
+```typescript
+import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
+import { initialize, modalController } from '@ionic/core/components';
+
+initialize();
+defineCustomElement();
+
+const showModal = async () => {
+  const modal = await modalController.create({ ... });
+  
+  ...
+}
+```
 
 ## How to contribute
 

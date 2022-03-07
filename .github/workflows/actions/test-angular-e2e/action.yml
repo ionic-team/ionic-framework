@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-node@v1
       with:
-        node-version: 15.x
+        node-version: 16
 
     - name: Cache Core Node Modules
       uses: actions/cache@v2
@@ -31,6 +31,10 @@ runs:
         filename: AngularServerBuild.zip
     - name: Install Dependencies
       run: npm install
+      shell: bash
+      working-directory: ./angular/test/test-app
+    - name: Sync Built Changes
+      run: npm run sync
       shell: bash
       working-directory: ./angular/test/test-app
     - name: Run Tests

@@ -1,5 +1,5 @@
 import { AnimationBuilder } from '@ionic/core/components';
-import React from 'react';
+import React, { createElement } from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 import { RouterOptions } from '../models';
@@ -104,7 +104,7 @@ export const createRoutingComponent = <PropType, ElementType>(
         newProps.onClick = this.handleClick;
       }
 
-      return React.createElement(tagName, newProps, children);
+      return createElement(tagName, newProps, children);
     }
 
     static get displayName() {

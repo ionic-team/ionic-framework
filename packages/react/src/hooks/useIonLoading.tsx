@@ -1,4 +1,5 @@
 import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
@@ -11,7 +12,8 @@ import { useController } from './useController';
 export function useIonLoading(): UseIonLoadingResult {
   const controller = useController<LoadingOptions, HTMLIonLoadingElement>(
     'IonLoading',
-    loadingController
+    loadingController,
+    defineCustomElement
   );
 
   const present = useCallback(
@@ -21,13 +23,13 @@ export function useIonLoading(): UseIonLoadingResult {
       spinner?: SpinnerTypes
     ) => {
       if (typeof messageOrOptions === 'string') {
-        controller.present({
+        return controller.present({
           message: messageOrOptions,
           duration,
           spinner: spinner ?? 'lines',
         });
       } else {
-        controller.present(messageOrOptions);
+        return controller.present(messageOrOptions);
       }
     },
     [controller.present]
@@ -44,15 +46,15 @@ export type UseIonLoadingResult = [
      * @param duration Optional - Number of milliseconds to wait before dismissing the loading indicator
      * @param spinner Optional - The name of the spinner to display, defaults to "lines"
      */
-    (message?: string, duration?: number, spinner?: SpinnerTypes): void;
+    (message?: string, duration?: number, spinner?: SpinnerTypes): Promise<void>;
     /**
      * Presents the loading indicator
      * @param options The options to pass to the IonLoading
      */
-    (options: LoadingOptions & HookOverlayOptions): void;
+    (options: LoadingOptions & HookOverlayOptions): Promise<void>;
   },
   /**
    * Dismisses the loading indicator
    */
-  () => void
+  () => Promise<void>
 ];

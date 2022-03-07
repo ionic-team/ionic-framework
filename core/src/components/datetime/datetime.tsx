@@ -10,7 +10,8 @@ import {
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, renderHiddenInput } from '../../utils/helpers';
+import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
@@ -31,7 +32,8 @@ import {
   getMonthAndYear
 } from './utils/format';
 import {
-  is24Hour
+  is24Hour,
+  isMonthFirstLocale
 } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -55,7 +57,10 @@ import {
 } from './utils/parse';
 import {
   getCalendarDayState,
-  isDayDisabled
+  isDayDisabled,
+  isMonthDisabled,
+  isNextMonthDisabled,
+  isPrevMonthDisabled
 } from './utils/state';
 
 /**
@@ -273,6 +278,11 @@ export class Datetime implements ComponentInterface {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
   }
 
+  @Watch('activeParts')
+  protected activePartsChanged() {
+    this.activePartsClone = this.activeParts;
+  }
+
   /**
    * The locale to use for `ion-datetime`. This
    * impacts month and day name formatting.
@@ -414,10 +424,10 @@ export class Datetime implements ComponentInterface {
      * the date that is currently selected, otherwise
      * there can be 1 hr difference when dealing w/ DST
      */
-    const date = new Date(convertDataToISO(this.workingParts));
-    this.workingParts.tzOffset = date.getTimezoneOffset() * -1;
+    const date = new Date(convertDataToISO(this.activeParts));
+    this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
 
-    this.value = convertDataToISO(this.workingParts);
+    this.value = convertDataToISO(this.activeParts);
 
     if (closeOverlay) {
       this.closeParentOverlay();
@@ -681,7 +691,7 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      calendarBodyRef.scrollLeft = startMonth.clientWidth;
+      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
@@ -708,6 +718,15 @@ export class Datetime implements ComponentInterface {
           return;
         }
 
+        const { month, year, day } = refMonthFn(this.workingParts);
+
+        if (isMonthDisabled({ month, year, day: null }, {
+          minParts: { ...this.minParts, day: null },
+          maxParts: { ...this.maxParts, day: null }
+        })) {
+          return;
+        }
+
         /**
          * On iOS, we need to set pointer-events: none
          * when the user is almost done with the gesture
@@ -718,7 +737,8 @@ export class Datetime implements ComponentInterface {
          */
         if (mode === 'ios') {
           const ratio = ev.intersectionRatio;
-          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1;
+          // `maxTouchPoints` will be 1 in device preview, but > 1 on device
+          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1 && navigator.maxTouchPoints > 1;
 
           if (shouldDisable) {
             calendarBodyRef.style.setProperty('pointer-events', 'none');
@@ -751,18 +771,28 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          const { month, year, day } = refMonthFn(this.workingParts);
 
-          this.setWorkingParts({
-            ...this.workingParts,
-            month,
-            day: day!,
-            year
+          // Disconnect all active intersection observers
+          // to avoid a re-render causing a duplicate event.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          raf(() => {
+            this.setWorkingParts({
+              ...this.workingParts,
+              month,
+              day: day!,
+              year
+            });
+
+            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+            calendarBodyRef.style.removeProperty('overflow');
+            calendarBodyRef.style.removeProperty('pointer-events');
+
+            endIO?.observe(endMonth);
+            startIO?.observe(startMonth);
           });
-
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth;
-          calendarBodyRef.style.removeProperty('overflow');
-          calendarBodyRef.style.removeProperty('pointer-events');
 
           /**
            * Now that state has been updated
@@ -774,6 +804,18 @@ export class Datetime implements ComponentInterface {
           refIO.observe(refMonth);
         });
       }
+
+      const threshold = mode === 'ios' &&
+        // tslint:disable-next-line
+        typeof navigator !== 'undefined' &&
+        navigator.maxTouchPoints > 1 ?
+        [0.7, 1] : 1;
+
+      // Intersection observers cannot accurately detect the
+      // intersection with a threshold of 1, when the observed
+      // element width is a sub-pixel value (i.e. 334.05px).
+      // Setting a root margin to 1px solves the issue.
+      const rootMargin = '1px';
 
       /**
        * Listen on the first month to
@@ -793,23 +835,26 @@ export class Datetime implements ComponentInterface {
        * it applies to active gestures which is not
        * something WebKit does.
        */
+
       endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
-        threshold: mode === 'ios' ? [0.7, 1] : 1,
-        root: calendarBodyRef
+        threshold,
+        root: calendarBodyRef,
+        rootMargin
       });
       endIO.observe(endMonth);
 
       startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
-        threshold: mode === 'ios' ? [0.7, 1] : 1,
-        root: calendarBodyRef
-       });
+        threshold,
+        root: calendarBodyRef,
+        rootMargin
+      });
       startIO.observe(startMonth);
 
       this.destroyCalendarIO = () => {
         endIO?.disconnect();
         startIO?.disconnect();
       }
-   });
+    });
   }
 
   connectedCallback() {
@@ -870,7 +915,14 @@ export class Datetime implements ComponentInterface {
       });
     }
     visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
-    visibleIO.observe(this.el);
+
+    /**
+     * Use raf to avoid a race condition between the component loading and
+     * its display animation starting (such as when shown in a modal). This
+     * could cause the datetime to start at a visibility of 0, erroneously
+     * triggering the `hiddenIO` observer below.
+     */
+    raf(() => visibleIO?.observe(this.el));
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -891,7 +943,7 @@ export class Datetime implements ComponentInterface {
       });
     }
     hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
-    hiddenIO.observe(this.el);
+    raf(() => hiddenIO?.observe(this.el));
 
     /**
      * Datetime uses Ionic components that emit
@@ -937,7 +989,7 @@ export class Datetime implements ComponentInterface {
       ampm: hour >= 12 ? 'pm' : 'am'
     }
 
-    this.activePartsClone = this.activeParts = {
+    this.activeParts = {
       month,
       day,
       year,
@@ -950,9 +1002,9 @@ export class Datetime implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.processValue(this.value);
     this.processMinParts();
     this.processMaxParts();
+    this.processValue(this.value);
     this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
     this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
@@ -988,9 +1040,11 @@ export class Datetime implements ComponentInterface {
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
     if (!nextMonth) { return; }
 
+    const left = (nextMonth as HTMLElement).offsetWidth * 2;
+
     calendarBodyRef.scrollTo({
       top: 0,
-      left: (nextMonth as HTMLElement).offsetWidth * 2,
+      left: left * (isRTL(this.el) ? -1 : 1),
       behavior: 'smooth'
     });
   }
@@ -1053,29 +1107,42 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderYearView() {
-    const { presentation, workingParts } = this;
+    const { presentation, workingParts, locale } = this;
     const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
     const showMonth = presentation !== 'year';
     const showYear = presentation !== 'month';
 
-    const months = getPickerMonths(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+    const months = getPickerMonths(locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
     const years = calendarYears.map(year => {
       return {
         text: `${year}`,
         value: year
       }
     })
+    const showMonthFirst = isMonthFirstLocale(locale);
+    const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
       <div class="datetime-year">
-        <div class="datetime-year-body">
+        <div class={{
+          'datetime-year-body': true,
+          [`order-${columnOrder}`]: true
+        }}>
           <ion-picker-internal>
             {
               showMonth &&
               <ion-picker-column-internal
+                class="month-column"
                 color={this.color}
                 items={months}
                 value={workingParts.month}
                 onIonChange={(ev: CustomEvent) => {
+                  // Due to a Safari 14 issue we need to destroy
+                  // the intersection observer before we update state
+                  // and trigger a re-render.
+                  if (this.destroyCalendarIO) {
+                    this.destroyCalendarIO();
+                  }
+
                   this.setWorkingParts({
                     ...this.workingParts,
                     month: ev.detail.value
@@ -1088,6 +1155,10 @@ export class Datetime implements ComponentInterface {
                     });
                   }
 
+                  // We can re-attach the intersection observer after
+                  // the working parts have been updated.
+                  this.initializeCalendarIOListeners();
+
                   ev.stopPropagation();
                 }}
               ></ion-picker-column-internal>
@@ -1095,10 +1166,18 @@ export class Datetime implements ComponentInterface {
             {
               showYear &&
               <ion-picker-column-internal
+                class="year-column"
                 color={this.color}
                 items={years}
                 value={workingParts.year}
                 onIonChange={(ev: CustomEvent) => {
+                  // Due to a Safari 14 issue we need to destroy
+                  // the intersection observer before we update state
+                  // and trigger a re-render.
+                  if (this.destroyCalendarIO) {
+                    this.destroyCalendarIO();
+                  }
+
                   this.setWorkingParts({
                     ...this.workingParts,
                     year: ev.detail.value
@@ -1110,6 +1189,10 @@ export class Datetime implements ComponentInterface {
                       year: ev.detail.value
                     });
                   }
+
+                  // We can re-attach the intersection observer after
+                  // the working parts have been updated.
+                  this.initializeCalendarIOListeners();
 
                   ev.stopPropagation();
                 }}
@@ -1124,6 +1207,10 @@ export class Datetime implements ComponentInterface {
   private renderCalendarHeader(mode: Mode) {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
+
+    const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
+    const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
+
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
@@ -1137,11 +1224,15 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false}></ion-icon>
+              <ion-button
+                disabled={prevMonthDisabled}
+                onClick={() => this.prevMonth()}>
+                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
-              <ion-button onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false}></ion-icon>
+              <ion-button
+                disabled={nextMonthDisabled}
+                onClick={() => this.nextMonth()}>
+                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
@@ -1158,9 +1249,29 @@ export class Datetime implements ComponentInterface {
   private renderMonth(month: number, year: number) {
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
-    const isMonthDisabled = !yearAllowed || !monthAllowed;
+    const isCalMonthDisabled = !yearAllowed || !monthAllowed;
+    const swipeDisabled = isMonthDisabled({
+      month,
+      year,
+      day: null
+    }, {
+      // The day is not used when checking if a month is disabled.
+      // Users should be able to access the min or max month, even if the
+      // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
+      minParts: { ...this.minParts, day: null },
+      maxParts: { ...this.maxParts, day: null }
+    });
+    // The working month should never have swipe disabled.
+    // Otherwise the CSS scroll snap will not work and the user
+    // can free-scroll the calendar.
+    const isWorkingMonth = this.workingParts.month === month && this.workingParts.year === year;
+
     return (
-      <div class="calendar-month">
+      <div class={{
+        'calendar-month': true,
+        // Prevents scroll snap swipe gestures for months outside of the min/max bounds
+        'calendar-month-disabled': !isWorkingMonth && swipeDisabled
+      }}>
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
@@ -1175,7 +1286,7 @@ export class Datetime implements ComponentInterface {
                 data-year={year}
                 data-index={index}
                 data-day-of-week={dayOfWeek}
-                disabled={isMonthDisabled || disabled}
+                disabled={isCalMonthDisabled || disabled}
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
@@ -1199,7 +1310,7 @@ export class Datetime implements ComponentInterface {
                     month,
                     day,
                     year
-                  })
+                  });
                 }}
               >{day}</button>
             )
@@ -1242,7 +1353,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-   ) {
+  ) {
     const { color, activePartsClone, workingParts } = this;
 
     return (
@@ -1283,7 +1394,7 @@ export class Datetime implements ComponentInterface {
             ev.stopPropagation();
           }}
         ></ion-picker-column-internal>
-        { !use24Hour && <ion-picker-column-internal
+        {!use24Hour && <ion-picker-column-internal
           color={color}
           value={activePartsClone.ampm}
           items={ampmItems}
@@ -1304,7 +1415,7 @@ export class Datetime implements ComponentInterface {
 
             ev.stopPropagation();
           }}
-        ></ion-picker-column-internal> }
+        ></ion-picker-column-internal>}
       </ion-picker-internal>
     )
   }
@@ -1314,7 +1425,7 @@ export class Datetime implements ComponentInterface {
     minutesItems: PickerColumnItem[],
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
-   ) {
+  ) {
     return [
       <div class="time-header">
         {this.renderTimeLabel()}
@@ -1330,9 +1441,13 @@ export class Datetime implements ComponentInterface {
           const { popoverRef } = this;
 
           if (popoverRef) {
-
             this.isTimePopoverOpen = true;
-            popoverRef.present(ev);
+
+            popoverRef.present(new CustomEvent('ionShadowTarget', {
+              detail: {
+                ionShadowTarget: ev.target
+              }
+            }));
 
             await popoverRef.onWillDismiss();
 
@@ -1347,6 +1462,19 @@ export class Datetime implements ComponentInterface {
         translucent
         overlayIndex={1}
         arrow={false}
+        onWillPresent={ev => {
+          /**
+           * Intersection Observers do not consistently fire between Blink and Webkit
+           * when toggling the visibility of the popover and trying to scroll the picker
+           * column to the correct time value.
+           *
+           * This will correctly scroll the element position to the correct time value,
+           * before the popover is fully presented.
+           */
+          const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column-internal');
+          // TODO (FW-615): Potentially remove this when intersection observers are fixed in picker column
+          cols.forEach(col => col.scrollActiveItemIntoView());
+        }}
         style={{
           '--offset-y': '-10px'
         }}
@@ -1404,7 +1532,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="datetime-time">
-          {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
+        {timeOnlyPresentation ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour) : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
       </div>
     )
   }

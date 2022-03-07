@@ -42,6 +42,32 @@ export const createSheetGesture = (
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
+  const enableBackdrop = () => {
+    baseEl.style.setProperty('pointer-events', 'auto');
+    backdropEl.style.setProperty('pointer-events', 'auto');
+
+    /**
+     * When the backdrop is enabled, elements such
+     * as inputs should not be focusable outside
+     * the sheet.
+     */
+    baseEl.classList.remove('ion-disable-focus-trap');
+  }
+
+  const disableBackdrop = () => {
+    baseEl.style.setProperty('pointer-events', 'none');
+    backdropEl.style.setProperty('pointer-events', 'none');
+
+    /**
+     * When the backdrop is enabled, elements such
+     * as inputs should not be focusable outside
+     * the sheet.
+     * Adding this class disables focus trapping
+     * for the sheet temporarily.
+     */
+    baseEl.classList.add('ion-disable-focus-trap');
+  }
+
   /**
    * After the entering animation completes,
    * we need to set the animation to go from
@@ -56,11 +82,18 @@ export const createSheetGesture = (
     animation.progressStart(true, 1 - currentBreakpoint);
 
     /**
-     * Backdrop should become enabled
-     * after the backdropBreakpoint value
+     * If backdrop is not enabled, then content
+     * behind modal should be clickable. To do this, we need
+     * to remove pointer-events from ion-modal as a whole.
+     * ion-backdrop and .modal-wrapper always have pointer-events: auto
+     * applied, so the modal content can still be interacted with.
      */
-    const backdropEnabled = currentBreakpoint > backdropBreakpoint
-    backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
+    const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+    if (shouldEnableBackdrop) {
+      enableBackdrop();
+    } else {
+      disableBackdrop();
+    }
   }
 
   if (contentEl && currentBreakpoint !== maxBreakpoint) {
@@ -92,6 +125,14 @@ export const createSheetGesture = (
     if (contentEl) {
       contentEl.scrollY = false;
     }
+
+    raf(() => {
+      /**
+       * Dismisses the open keyboard when the sheet drag gesture is started.
+       * Sets the focus onto the modal element.
+       */
+      baseEl.focus();
+    });
 
     animation.progressStart(true, 1 - currentBreakpoint);
   };
@@ -178,8 +219,12 @@ export const createSheetGesture = (
                * Backdrop should become enabled
                * after the backdropBreakpoint value
                */
-              const backdropEnabled = currentBreakpoint > backdropBreakpoint;
-              backdropEl.style.setProperty('pointer-events', backdropEnabled ? 'auto' : 'none');
+              const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+              if (shouldEnableBackdrop) {
+                enableBackdrop();
+              } else {
+                disableBackdrop();
+              }
 
               gesture.enable(true);
             });
@@ -188,11 +233,11 @@ export const createSheetGesture = (
           }
         }
 
-      /**
-       * This must be a one time callback
-       * otherwise a new callback will
-       * be added every time onEnd runs.
-       */
+        /**
+         * This must be a one time callback
+         * otherwise a new callback will
+         * be added every time onEnd runs.
+         */
       }, { oneTimeCallback: true })
       .progressEnd(1, 0, 500);
 

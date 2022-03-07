@@ -1,6 +1,34 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
 
+/**
+ * page.evaluate can only return a serializable value,
+ * so it is not possible to return the full element.
+ * Instead, we return an object with some common
+ * properties that you may want to access in a test.
+ */
+const getSerialElement = async (page, element) => {
+  return await page.evaluate(el => {
+    const { className, tagName, id } = el;
+    return {
+      className,
+      tagName,
+      id
+    }
+  }, element);
+}
+
+export const getActiveElementParent = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement.parentElement);
+  return getSerialElement(page, activeElement);
+}
+
+export const getActiveElement = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return getSerialElement(page, activeElement);
+}
+
+
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
   if (rtl) {
@@ -49,26 +77,34 @@ export const listenForEvent = async (page: any, eventType: string, element: any,
  * @param page - The Puppeteer 'page' object
  * @param x: number - Amount to drag `element` by on the x-axis
  * @param y: number - Amount to drag `element` by on the y-axis
+ * @param startCoordinates (optional) - Coordinates of where to start the drag
+ * gesture. If not provided, the drag gesture will start in the middle of the
+ * element.
  */
-export const dragElementBy = async (element: any, page: any, x = 0, y = 0): Promise<void> => {
+export const dragElementBy = async (
+  element: any,
+  page: any,
+  x = 0,
+  y = 0,
+  startCoordinates?: { x: number, y: number }
+): Promise<void> => {
   try {
     const boundingBox = await element.boundingBox();
 
-    const startX = boundingBox.x + boundingBox.width / 2;
-    const startY = boundingBox.y + boundingBox.height / 2;
+    const startX = (startCoordinates?.x === undefined) ? boundingBox.x + boundingBox.width / 2 : startCoordinates.x;
+    const startY = (startCoordinates?.y === undefined) ? boundingBox.y + boundingBox.height / 2 : startCoordinates.y;
+
+    const midX = startX + (x / 2);
+    const midY = startY + (y / 2);
 
     const endX = startX + x;
     const endY = startY + y;
-
-    const midX = endX / 2;
-    const midY = endY / 2;
 
     await page.mouse.move(startX, startY);
     await page.mouse.down();
     await page.mouse.move(midX, midY);
     await page.mouse.move(endX, endY);
     await page.mouse.up();
-
   } catch (err) {
     throw err;
   }

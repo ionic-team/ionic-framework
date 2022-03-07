@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
+import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -19,7 +20,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot = Content is placed inside of the `.modal-content` element.
+ * @slot - Content is placed inside of the `.modal-content` element.
  *
  * @part backdrop - The `ion-backdrop` element.
  * @part content - The wrapper element for the default slot.
@@ -44,6 +45,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private keyboardOpenCallback?: () => void;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -216,28 +218,28 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-    /**
-     * Emitted after the modal has presented.
-     * Shorthand for ionModalWillDismiss.
-     */
+  /**
+   * Emitted after the modal has presented.
+   * Shorthand for ionModalWillDismiss.
+   */
   @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
 
-    /**
-     * Emitted before the modal has presented.
-     * Shorthand for ionModalWillPresent.
-     */
+  /**
+   * Emitted before the modal has presented.
+   * Shorthand for ionModalWillPresent.
+   */
   @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
 
-    /**
-     * Emitted before the modal has dismissed.
-     * Shorthand for ionModalWillDismiss.
-     */
+  /**
+   * Emitted before the modal has dismissed.
+   * Shorthand for ionModalWillDismiss.
+   */
   @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
-    /**
-     * Emitted after the modal has dismissed.
-     * Shorthand for ionModalDidDismiss.
-     */
+  /**
+   * Emitted after the modal has dismissed.
+   * Shorthand for ionModalDidDismiss.
+   */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Watch('swipeToClose')
@@ -290,14 +292,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const triggerEl = (trigger !== undefined) ? document.getElementById(trigger) : null;
     if (!triggerEl) { return; }
 
-    const configureTriggerInteraction = (triggerEl: HTMLElement, modalEl: HTMLIonModalElement) => {
+    const configureTriggerInteraction = (trigEl: HTMLElement, modalEl: HTMLIonModalElement) => {
       const openModal = () => {
         modalEl.present();
       }
-      triggerEl.addEventListener('click', openModal);
+      trigEl.addEventListener('click', openModal);
 
       return () => {
-        triggerEl.removeEventListener('click', openModal);
+        trigEl.removeEventListener('click', openModal);
       }
     }
 
@@ -378,6 +380,30 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSheetGesture();
     } else if (this.swipeToClose) {
       this.initSwipeToClose();
+    }
+
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined') {
+      this.keyboardOpenCallback = () => {
+        if (this.gesture) {
+          /**
+           * When the native keyboard is opened and the webview
+           * is resized, the gesture implementation will become unresponsive
+           * and enter a free-scroll mode.
+           *
+           * When the keyboard is opened, we disable the gesture for
+           * a single frame and re-enable once the contents have repositioned
+           * from the keyboard placement.
+           */
+          this.gesture.enable(false);
+          raf(() => {
+            if (this.gesture) {
+              this.gesture.enable(true)
+            }
+          });
+        }
+      }
+      window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
     this.currentTransition = undefined;
@@ -474,6 +500,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
+      window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+    }
+
     /**
      * When using an inline modal
      * and presenting a modal it is possible to
@@ -495,6 +526,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (dismissed) {
       const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
+
+      writeTask(() => this.el.classList.remove('show-modal'));
+
       if (this.animation) {
         this.animation.destroy();
       }
@@ -507,7 +541,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = undefined;
     this.animation = undefined;
-
     return dismissed;
   }
 
@@ -556,7 +589,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
-    const { presented, modalId } = this;
+    const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
 
     return (
@@ -574,7 +607,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
-          'modal-interactive': presented,
           ...getClassMap(this.cssClass)
         }}
         id={modalId}

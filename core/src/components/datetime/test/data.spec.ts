@@ -1,7 +1,8 @@
 import {
   generateMonths,
   getDaysOfWeek,
-  generateTime
+  generateTime,
+  getToday
 } from '../utils/data';
 
 describe('generateMonths()', () => {
@@ -65,10 +66,10 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40
     }
-    const { hours, minutes } = generateTime(today, false, min);
+    const { hours, minutes } = generateTime(today, 'h12', min);
 
     expect(hours.length).toEqual(11);
-    expect(minutes.length).toEqual(20);
+    expect(minutes.length).toEqual(60);
   })
   it('should not filter according to min if not on reference day', () => {
     const today = {
@@ -95,7 +96,7 @@ describe('generateTime()', () => {
       day: 19,
       month: 5,
       year: 2021,
-      hour: 5,
+      hour: 7,
       minute: 43
     }
     const max = {
@@ -203,9 +204,153 @@ describe('generateTime()', () => {
       minute: 43
     }
 
-    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1,2,3], [10,15,20]);
+    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
 
-    expect(hours).toStrictEqual([1,2,3]);
-    expect(minutes).toStrictEqual([10,15,20]);
+    expect(hours).toStrictEqual([1, 2, 3]);
+    expect(minutes).toStrictEqual([10, 15, 20]);
+  })
+
+  describe('hourCycle is 23', () => {
+
+    it('should return hours in 24 hour format', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 19,
+        minute: 50
+      }
+
+      const minParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 19,
+        minute: 50
+      };
+
+      const { hours } = generateTime(refValue, 'h23', minParts);
+
+      expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
+    });
+
+    describe('current hour is above min hour range', () => {
+      it('should return minutes above the min minute range', () => {
+        const refValue = {
+          day: undefined,
+          month: undefined,
+          year: undefined,
+          hour: 20,
+          minute: 22
+        }
+
+        const minParts = {
+          day: undefined,
+          month: undefined,
+          year: undefined,
+          hour: 19,
+          minute: 30
+        };
+
+        const { hours, minutes } = generateTime(refValue, 'h23', minParts);
+
+        expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
+        expect(minutes.length).toEqual(60);
+      });
+    });
+
+    it('should respect the min & max bounds', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 20,
+        minute: 30
+      }
+
+      const minParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 19,
+        minute: 30
+      }
+
+      const maxParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 20,
+        minute: 40
+      };
+
+      const { hours } = generateTime(refValue, 'h23', minParts, maxParts);
+
+      expect(hours).toStrictEqual([19, 20]);
+    });
+
+    it('should return the filtered minutes when the max bound is set', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 13,
+        minute: 0
+      };
+
+      const maxParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 13,
+        minute: 2
+      };
+
+      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+
+      expect(minutes).toStrictEqual([0, 1, 2]);
+    });
+
+    it('should not filter minutes when the current hour is less than the max hour bound', () => {
+      const refValue = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 12,
+        minute: 0
+      };
+
+      const maxParts = {
+        day: undefined,
+        month: undefined,
+        year: undefined,
+        hour: 13,
+        minute: 2
+      };
+
+      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+
+      expect(minutes.length).toEqual(60);
+    });
+
   })
 })
+
+describe('getToday', () => {
+
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    // System time is zero based, 1 = February
+    jest.setSystemTime(new Date(2022, 1, 21));
+  });
+
+  it('should return today', () => {
+    const res = getToday();
+
+    const expected = new Date();
+    expected.setHours(expected.getHours() - (expected.getTimezoneOffset() / 60));
+
+    expect(res).toEqual('2022-02-21T00:00:00.000Z');
+  });
+
+});

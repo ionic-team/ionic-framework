@@ -4,6 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -117,14 +118,6 @@ export class Content implements ComponentInterface {
   @Listen('appload', { target: 'window' })
   onAppLoad() {
     this.resize();
-  }
-
-  @Listen('click', { capture: true })
-  onClick(ev: Event) {
-    if (this.isScrolling) {
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
   }
 
   private shouldForceOverscroll() {
@@ -319,7 +312,8 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY } = this;
+    const { isMainContent, scrollX, scrollY, el } = this;
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
@@ -333,6 +327,7 @@ export class Content implements ComponentInterface {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
           'overscroll': forceOverscroll,
+          [`content-${rtl}`]: true
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
@@ -347,7 +342,7 @@ export class Content implements ComponentInterface {
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
-          ref={(el: HTMLElement) => this.scrollEl = el!}
+          ref={(scrollEl: HTMLElement) => this.scrollEl = scrollEl!}
           onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
@@ -384,10 +379,17 @@ const getPageElement = (el: HTMLElement) => {
   if (tabs) {
     return tabs;
   }
-  const page = el.closest('ion-app,ion-page,.ion-page,page-inner');
+
+  /**
+   * If we're in a popover, we need to use its wrapper so we can account for space
+   * between the popover and the edges of the screen. But if the popover contains
+   * its own page element, we should use that instead.
+   */
+  const page = el.closest('ion-app, ion-page, .ion-page, page-inner, .popover-content');
   if (page) {
     return page;
   }
+
   return getParentElement(el);
 };
 

@@ -281,6 +281,26 @@ button, a {
   box-sizing: border-box;
 }
 
+
+// Item Bottom
+// --------------------------------------------------
+
+.item-bottom {
+  @include margin(0);
+  @include padding(
+    0,
+    var(--inner-padding-end),
+    0,
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
+
+  display: flex;
+
+  justify-content: space-between;
+
+}
+
+
 // Item Detail Icon
 // --------------------------------------------------
 
@@ -413,6 +433,12 @@ button, a {
   display: none;
 }
 
+::slotted([slot="error"]) {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
 :host(.item-interactive.ion-invalid) ::slotted([slot="error"]) {
   display: block;
 }
@@ -490,22 +516,6 @@ ion-ripple-effect {
   color: var(--ripple-color);
 }
 
-// Item Button Ripple effect
-// --------------------------------------------------
-
-.item-bottom {
-  @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--inner-padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px) + var(--bottom-padding-start, 0px))
-  );
-  display: flex;
-
-  justify-content: space-between;
-}
-
 :host(.item-fill-solid) ::slotted([slot="start"]),
 :host(.item-fill-solid) ::slotted([slot="end"]),
 :host(.item-fill-outline) ::slotted([slot="start"]),
@@ -523,12 +533,16 @@ ion-ripple-effect {
   z-index: 1;
 }
 
-::slotted([slot="error"]) {
-  display: none;
+// Item Max Length Counter
+// --------------------------------------------------
 
-  color: var(--highlight-color-invalid);
+.item-counter {
+  @include margin-horizontal(auto, null);
+
+  padding-inline-start: 16px;
+
+  white-space: nowrap;
 }
-
 
 // Item: Reduced Motion
 // --------------------------------------------------

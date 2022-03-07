@@ -18,6 +18,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Lifecycle.vue')
   },
   {
+    path: '/lifecycle-setup',
+    component: () => import('@/views/LifecycleSetup.vue')
+  },
+  {
     path: '/overlays',
     name: 'Overlays',
     component: () => import('@/views/Overlays.vue')

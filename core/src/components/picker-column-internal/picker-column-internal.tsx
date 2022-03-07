@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -91,6 +91,7 @@ export class PickerColumnInternal implements ComponentInterface {
       const ev = entries[0];
 
       if (ev.isIntersecting) {
+        this.isColumnVisible = true;
         /**
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
@@ -101,13 +102,13 @@ export class PickerColumnInternal implements ComponentInterface {
         this.activeItem?.classList.add(PICKER_COL_ACTIVE);
 
         this.initializeScrollListener();
-        this.isColumnVisible = true;
       } else {
+        this.isColumnVisible = false;
+
         if (this.destroyScrollListener) {
           this.destroyScrollListener();
           this.destroyScrollListener = undefined;
         }
-        this.isColumnVisible = false;
       }
     }
     new IntersectionObserver(visibleCallback, { threshold: 0.01 }).observe(this.el);
@@ -118,7 +119,28 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  scrollActiveItemIntoView() {
+  componentDidRender() {
+    const { activeItem, items, isColumnVisible, value } = this;
+
+    if (isColumnVisible) {
+      if (activeItem) {
+        this.scrollActiveItemIntoView();
+      } else if (items[0]?.value !== value) {
+        /**
+         * If the picker column does not have an active item and the current value
+         * does not match the first item in the picker column, that means
+         * the value is out of bounds. In this case, we assign the value to the
+         * first item to match the scroll position of the column.
+         *
+         */
+        this.value = items[0].value;
+      }
+    }
+  }
+
+  /** @internal  */
+  @Method()
+  async scrollActiveItemIntoView() {
     const activeEl = this.activeItem;
 
     if (activeEl) {
@@ -127,12 +149,19 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
-    this.el.scroll({
+    const { el, isColumnVisible } = this;
+    if (isColumnVisible) {
       // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
-      top: target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2),
-      left: 0,
-      behavior: smooth ? 'smooth' : undefined
-    });
+      const top = target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2);
+
+      if (el.scrollTop !== top) {
+        el.scroll({
+          top,
+          left: 0,
+          behavior: smooth ? 'smooth' : undefined
+        });
+      }
+    }
   }
 
   /**

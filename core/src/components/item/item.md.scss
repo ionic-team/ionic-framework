@@ -471,3 +471,12 @@
     --border-color: #{$item-md-input-fill-border-color-hover};
   }
 }
+
+// Material Design Text Field Character Counter
+// --------------------------------------------------
+
+.item-counter {
+  color: #{$item-md-input-counter-color};
+
+  letter-spacing: #{$item-md-input-counter-letter-spacing};
+}

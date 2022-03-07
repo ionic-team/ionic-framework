@@ -77,6 +77,7 @@ export const config: Config = {
         'ion-router-link',
         'ion-router-outlet',
         'ion-back-button',
+        'ion-breadcrumb',
         'ion-tab-button',
         'ion-tabs',
         'ion-tab-bar',
@@ -260,6 +261,9 @@ export const config: Config = {
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
     waitBeforeScreenshot: 20,
+    moduleNameMapper: {
+      "@utils/test": ["<rootDir>/src/utils/test/utils"]
+    },
     emulate: [
       {
         userAgent: 'iPhone',

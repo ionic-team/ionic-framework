@@ -6,6 +6,7 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 - [Creating an Issue](#creating-an-issue)
   * [Creating a Good Code Reproduction](#creating-a-good-code-reproduction)
 - [Creating a Pull Request](#creating-a-pull-request)
+  * [Requirements](#requirements)
   * [Setup](#setup)
   * [Core](#core)
     + [Modifying Components](#modifying-components)
@@ -41,7 +42,7 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 ## Creating an Issue
 
-* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
+* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Discord](https://ionic.link/discord).
 
 * It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
 
@@ -83,10 +84,16 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 ## Creating a Pull Request
 
-* We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
+Before creating a pull request, please read our requirements that explains the minimal details to have your PR considered and merged into the codebase. 
 
-* Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+### Requirements
+1. PRs must reference an existing issue that describes the issue or feature being submitted.
+2. PRs must have a reproduction app or the issue must include a reproduction app to verify changes against.
+3. PRs must include tests covering the changed behavior or a description of why tests cannot be written.
 
+> Note: We appreciate you taking the time to contribute! Before submitting a pull request, please take the time to comment on the issue you are wanting to resolve. This helps us prevent duplicate effort or advise if the team is already addressing the issue.
+
+* Looking for an issue to fix? Look through our issues with the [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 

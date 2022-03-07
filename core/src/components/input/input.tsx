@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
-import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { Attributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -21,7 +21,8 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
+  private isComposing = false;
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -117,7 +118,7 @@ export class Input implements ComponentInterface {
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
    */
-  @Prop() max?: string;
+  @Prop() max?: string | number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
@@ -127,7 +128,7 @@ export class Input implements ComponentInterface {
   /**
    * The minimum value, which must not be greater than its maximum (max attribute) value.
    */
-  @Prop() min?: string;
+  @Prop() min?: string | number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
@@ -151,6 +152,8 @@ export class Input implements ComponentInterface {
 
   /**
    * Instructional text that shows before the input has a value.
+   * This property applies only when the `type` property is set to `"email"`,
+   * `"number"`, `"password"`, `"search"`, `"tel"`, `"text"`, or `"url"`, otherwise it is ignored.
    */
   @Prop() placeholder?: string;
 
@@ -229,6 +232,19 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
+    const nativeInput = this.nativeInput;
+    const value = this.getValue();
+    if (nativeInput && nativeInput.value !== value && !this.isComposing) {
+      /**
+       * Assigning the native input's value on attribute
+       * value change, allows `ionInput` implementations
+       * to override the control's value.
+       *
+       * Used for patterns such as input trimming (removing whitespace),
+       * or input masking.
+       */
+      nativeInput.value = value;
+    }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
@@ -247,11 +263,26 @@ export class Input implements ComponentInterface {
     }
   }
 
+  componentDidLoad() {
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      // TODO: FW-729 Update to JSX bindings when Stencil resolves bug with:
+      // https://github.com/ionic-team/stencil/issues/3235
+      nativeInput.addEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.addEventListener('compositionend', this.onCompositionEnd);
+    }
+  }
+
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
         detail: this.el
       }));
+    }
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
     }
   }
 
@@ -349,6 +380,14 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
+  }
+
+  private onCompositionStart = () => {
+    this.isComposing = true;
+  }
+
+  private onCompositionEnd = () => {
+    this.isComposing = false;
   }
 
   private clearTextOnEnter = (ev: KeyboardEvent) => {

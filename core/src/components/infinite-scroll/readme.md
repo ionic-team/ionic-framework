@@ -69,7 +69,7 @@ export class InfiniteScrollExample {
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (data.length == 1000) {
+      if (data.length === 1000) {
         event.target.disabled = true;
       }
     }, 500);
@@ -111,7 +111,7 @@ infiniteScroll.addEventListener('ionInfinite', function(event) {
 
     // App logic to determine if all data is loaded
     // and disable the infinite scroll
-    if (data.length == 1000) {
+    if (data.length === 1000) {
       event.target.disabled = true;
     }
   }, 500);
@@ -164,7 +164,7 @@ const InfiniteScrollExample: React.FC = () => {
       pushData();
       console.log('Loaded data');
       ev.target.complete();
-      if (data.length == 1000) {
+      if (data.length === 1000) {
         setInfiniteDisabled(true);
       }
     }, 500);
@@ -263,7 +263,7 @@ export class InfiniteScrollExample {
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (this.data.length == 1000) {
+      if (this.data.length === 1000) {
         ev.target.disabled = true;
       }
     }, 500);
@@ -335,7 +335,8 @@ export class InfiniteScrollExample {
 </template>
 
 <script lang="ts">
-import { 
+import {
+  InfiniteScrollCustomEvent,
   IonButton,
   IonContent, 
   IonInfiniteScroll, 
@@ -363,7 +364,7 @@ export default defineComponent({
     const toggleInfiniteScroll = () => {
       isDisabled.value = !isDisabled.value;
     }
-    const items = ref([]);
+    const items = ref<number[]>([]);
     const pushData = () => {
       const max = items.value.length + 20;
       const min = max - 20;
@@ -372,7 +373,7 @@ export default defineComponent({
       }
     }
     
-    const loadData = (ev: CustomEvent) => {
+    const loadData = (ev: InfiniteScrollCustomEvent) => {
       setTimeout(() => {
         pushData();
         console.log('Loaded data');
@@ -380,7 +381,7 @@ export default defineComponent({
   
         // App logic to determine if all data is loaded
         // and disable the infinite scroll
-        if (items.value.length == 1000) {
+        if (items.value.length === 1000) {
           ev.target.disabled = true;
         }
       }, 500);

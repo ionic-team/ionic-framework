@@ -18,4 +18,12 @@ describe('IonPopover', () => {
     cy.get('ion-popover ion-list-header').contains('Ionic');
   });
 
+  it('display popover and remove containing element', () => {
+    //show popover, remove containing item
+    cy.get('#openPopover').click();
+    cy.get('#removeItem').click();
+
+    //verify popover is gone
+    cy.get('#popoverInItem').should('not.exist');
+  });
 });

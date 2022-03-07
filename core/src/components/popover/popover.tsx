@@ -189,8 +189,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes how to align the popover content with the `reference` point.
+   * Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
    */
-  @Prop() alignment: PositionAlign = 'start';
+  @Prop({ mutable: true }) alignment?: PositionAlign;
 
   /**
    * If `true`, the popover will display an arrow
@@ -292,6 +293,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.popoverId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
 
     this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
+
+    if (this.alignment === undefined) {
+      this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
+    }
   }
 
   componentDidLoad() {
@@ -372,7 +377,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * was dispatched.
    */
   @Method()
-  async present(event?: MouseEvent | TouchEvent | PointerEvent): Promise<void> {
+  async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
     if (this.presented) {
       return;
     }
@@ -565,7 +570,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, presented, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover && !desktop;
 
@@ -584,7 +589,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
           [mode]: true,
           'popover-translucent': this.translucent,
           'overlay-hidden': true,
-          'popover-interactive': presented,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
           'popover-nested': !!parentPopover

@@ -65,10 +65,6 @@ import { AlertComponent } from './alert/alert.component';
     ReactiveFormsModule,
     IonicModule.forRoot({ keyboardHeight: 12345 }),
   ],
-  entryComponents: [
-    ModalExampleComponent,
-    NavComponent
-  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],

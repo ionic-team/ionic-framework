@@ -107,7 +107,8 @@ interface PopoverOptions {
   dismissOnSelect?: boolean;
   reference?: PositionReference;
   side?: PositionSide;
-  align?: PositionAlign;
+  alignment?: PositionAlign;
+  arrow?: boolean;
 }
 ```
 
@@ -952,7 +953,7 @@ export default {
 
 | Property          | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Type                                                         | Default     |
 | ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ----------- |
-| `alignment`       | `alignment`         | Describes how to align the popover content with the `reference` point.                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `"center" \| "end" \| "start"`                               | `'start'`   |
+| `alignment`       | `alignment`         | Describes how to align the popover content with the `reference` point. Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.                                                                                                                                                                                                                                                                                                                                                                                   | `"center" \| "end" \| "start" \| undefined`                  | `undefined` |
 | `animated`        | `animated`          | If `true`, the popover will animate.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `boolean`                                                    | `true`      |
 | `arrow`           | `arrow`             | If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.                                                                                                                                                                                                                                                                                                                                                                 | `boolean`                                                    | `true`      |
 | `backdropDismiss` | `backdrop-dismiss`  | If `true`, the popover will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `boolean`                                                    | `true`      |
@@ -1021,7 +1022,7 @@ Type: `Promise<OverlayEventDetail<T>>`
 
 
 
-### `present(event?: MouseEvent | TouchEvent | PointerEvent | undefined) => Promise<void>`
+### `present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent<any> | undefined) => Promise<void>`
 
 Present the popover overlay after it has been created.
 Developers can pass a mouse, touch, or pointer event
@@ -1073,6 +1074,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [ion-datetime](../datetime)
+ - [ion-select](../select)
 
 ### Depends on
 
@@ -1083,6 +1085,7 @@ Type: `Promise<void>`
 graph TD;
   ion-popover --> ion-backdrop
   ion-datetime --> ion-popover
+  ion-select --> ion-popover
   style ion-popover fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

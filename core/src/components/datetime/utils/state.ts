@@ -2,6 +2,7 @@ import { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import { generateDayAriaLabel } from './format';
+import { getNextMonth, getPreviousMonth } from './manipulation';
 
 export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   if (minParts && minParts.year > refYear) {
@@ -101,4 +102,53 @@ export const getCalendarDayState = (
     ariaSelected: isActive ? 'true' : null,
     ariaLabel: generateDayAriaLabel(locale, isToday, refParts)
   }
+}
+
+/**
+ * Returns `true` if the month is disabled given the
+ * current date value and min/max date constraints.
+ */
+export const isMonthDisabled = (refParts: DatetimeParts, { minParts, maxParts }: {
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+}) => {
+  // If the year is disabled then the month is disabled.
+  if (isYearDisabled(refParts.year, minParts, maxParts)) {
+    return true;
+  }
+  // If the date value is before the min date, then the month is disabled.
+  // If the date value is after the max date, then the month is disabled.
+  if (minParts && isBefore(refParts, minParts) || maxParts && isAfter(refParts, maxParts)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Given a working date, an optional minimum date range,
+ * and an optional maximum date range; determine if the
+ * previous navigation button is disabled.
+ */
+export const isPrevMonthDisabled = (
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts) => {
+  const prevMonth = getPreviousMonth(refParts);
+  return isMonthDisabled(prevMonth, {
+    minParts,
+    maxParts
+  });
+}
+
+/**
+ * Given a working date and a maximum date range,
+ * determine if the next navigation button is disabled.
+ */
+export const isNextMonthDisabled = (
+  refParts: DatetimeParts,
+  maxParts?: DatetimeParts) => {
+  const nextMonth = getNextMonth(refParts);
+  return isMonthDisabled(nextMonth, {
+    maxParts
+  });
 }

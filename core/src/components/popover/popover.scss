@@ -42,13 +42,6 @@
   color: $popover-text-color;
 
   z-index: $z-index-overlay;
-
-  pointer-events: none;
-}
-
-:host(.popover-interactive) .popover-content,
-:host(.popover-interactive) ion-backdrop {
-  pointer-events: auto;
 }
 
 :host(.overlay-hidden) {
@@ -87,6 +80,11 @@
   --ion-safe-area-right: 0px;
   --ion-safe-area-bottom: 0px;
   --ion-safe-area-left: 0px;
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
 }
 
 // Nested Popovers
@@ -114,4 +112,3 @@
     --offset-x: 5px;
   }
 }
-

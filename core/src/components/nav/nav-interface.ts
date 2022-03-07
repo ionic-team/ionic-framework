@@ -55,10 +55,13 @@ export type TransitionDoneFn = (hasCompleted: boolean, requiresTransition: boole
 
 export interface TransitionInstruction {
   opts: NavOptions | undefined | null;
+  /** The index where to insert views. A negative number means at the end */
   insertStart?: number;
   insertViews?: any[];
   removeView?: ViewController;
+  /** The index of the first view to remove. A negative number means the last view */
   removeStart?: number;
+  /** The number of view to remove. A negative number means all views from removeStart */
   removeCount?: number;
   resolve?: (hasCompleted: boolean) => void;
   reject?: (rejectReason: string) => void;

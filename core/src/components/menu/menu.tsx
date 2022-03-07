@@ -5,8 +5,9 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
+import { Attributes, assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
+import { getOverlay } from '../../utils/overlays';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -42,9 +43,23 @@ export class Menu implements ComponentInterface, MenuI {
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
 
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
-  private handleFocus = (ev: Event) => this.trapKeyboardFocus(ev, document);
+  private handleFocus = (ev: FocusEvent) => {
+    /**
+     * Overlays have their own focus trapping listener
+     * so we do not want the two listeners to conflict
+     * with each other. If the top-most overlay that is
+     * open does not contain this ion-menu, then ion-menu's
+     * focus trapping should not run.
+     */
+    const lastOverlay = getOverlay(document);
+    if (lastOverlay && !lastOverlay.contains(this.el)) {
+      return;
+    }
+
+    this.trapKeyboardFocus(ev, document);
+  }
 
   @Element() el!: HTMLIonMenuElement;
 
@@ -169,26 +184,11 @@ export class Menu implements ComponentInterface, MenuI {
       return;
     }
 
-    const el = this.el;
-    const parent = el.parentNode as any;
-
-    if (this.contentId === undefined) {
-      console.warn(`[DEPRECATED][ion-menu] Using the [main] attribute is deprecated, please use the "contentId" property instead:
-BEFORE:
-  <ion-menu>...</ion-menu>
-  <div main>...</div>
-
-AFTER:
-  <ion-menu contentId="main-content"></ion-menu>
-  <div id="main-content">...</div>
-`);
-    }
     const content = this.contentId !== undefined
       ? document.getElementById(this.contentId)
-      : parent && parent.querySelector && parent.querySelector('[main]');
+      : null;
 
-    if (!content || !content.tagName) {
-      // requires content element
+    if (content === null) {
       console.error('Menu: must have a "content" element to listen for drag events on.');
       return;
     }

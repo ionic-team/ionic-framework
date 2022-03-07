@@ -46,4 +46,8 @@ export class FormComponent {
     });
   }
 
+  markAllAsTouched() {
+    this.profileForm.markAllAsTouched();
+  }
+
 }

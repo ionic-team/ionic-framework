@@ -78,12 +78,17 @@ $item-md-input-fill-border-color:           $background-color-step-500 !default;
 /// @prop - Color of the item border when `fill` is set and hovered
 $item-md-input-fill-border-color-hover:     $background-color-step-750 !default;
 
+/// @prop - Color of the item input counter
+$item-md-input-counter-color:               rgba(0, 0, 0, .6) !default;
+
+/// @prop - Letter spacing of the item input counter
+$item-md-input-counter-letter-spacing:      .0333333333em !default;
 
 // Item Label
 // --------------------------------------------------
 
 /// @prop - Margin top of the label
-$item-md-label-margin-top:                  11px !default;
+$item-md-label-margin-top:                  10px !default;
 
 /// @prop - Margin end of the label
 $item-md-label-margin-end:                  0 !default;
