@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
-import { findClosestIonContent, getScrollElement } from '../content/content.utils';
+import { findClosestIonContent, getScrollElement } from '@utils/content';
 
 const enum ReorderGroupState {
   Idle = 0,

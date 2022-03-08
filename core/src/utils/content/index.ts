@@ -1,4 +1,5 @@
-import { componentOnReady } from '../../utils/helpers';
+import { componentOnReady } from '../helpers';
+import { printRequiredElementError } from '../logging';
 
 const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
 const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
@@ -83,18 +84,8 @@ export const findIonContent = (el: Element) => {
 
 /**
  * Queries the closest element matching the selector for IonContent.
- * See ION_CONTENT_SELECTOR for the selector used.
  */
 export const findClosestIonContent = (el: Element) => {
-  /**
-   * First we try to query the custom scroll host selector in cases where
-   * the implementation is using an outer `ion-content` with an inner custom
-   * scroll container.
-   */
-  const customContentHost = el.closest<HTMLElement>(ION_CONTENT_CLASS_SELECTOR);
-  if (customContentHost) {
-    return customContentHost;
-  }
   return el.closest<HTMLElement>(ION_CONTENT_SELECTOR);
 }
 
@@ -107,7 +98,11 @@ export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> =
     const content = el as HTMLIonContentElement;
     return content.scrollToTop(durationMs);
   }
-  return Promise.resolve(el.scrollTo(0, 0));
+  return Promise.resolve(el.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: durationMs > 0 ? 'smooth' : 'auto'
+  }));
 }
 
 /**
@@ -121,7 +116,8 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
   }
   return Promise.resolve(el.scrollTo({
     top: y,
-    left: x
+    left: x,
+    behavior: durationMs > 0 ? 'smooth' : 'auto'
   }));
 }
 
@@ -130,7 +126,5 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
  * within either the `ion-content` selector or the `.ion-content-scroll-host` class.
  */
 export const printIonContentErrorMsg = (el: HTMLElement) => {
-  return console.error(
-    `<${el.tagName.toLowerCase()}> must be used inside an <${ION_CONTENT_ELEMENT_SELECTOR}> or ${ION_CONTENT_CLASS_SELECTOR}`
-  );
+  return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR, ION_CONTENT_CLASS_SELECTOR);
 }

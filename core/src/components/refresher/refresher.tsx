@@ -5,7 +5,7 @@ import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../i
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
-import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../content/content.utils';
+import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import {
   createPullingAnimation,
@@ -426,7 +426,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    this.scrollEl = await getScrollElement(contentEl); ;
+    this.scrollEl = await getScrollElement(contentEl);
 
     /**
      * Query the host `ion-content` directly (if it is available), to use its

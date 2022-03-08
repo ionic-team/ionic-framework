@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from
 import { getIonMode } from '../../global/ionic-global';
 import { Attributes, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
-import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../content/content.utils';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 
@@ -73,6 +73,7 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+
       const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition

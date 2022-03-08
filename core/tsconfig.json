@@ -26,7 +26,8 @@
     "target": "es2017",
     "baseUrl": ".",
     "paths": {
-      "@utils/test": ["src/utils/test/utils"]
+      "@utils/test": ["src/utils/test/utils"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": [
