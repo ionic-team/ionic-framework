@@ -1,4 +1,5 @@
 import { getScrollElement, scrollByPoint } from '@utils/content';
+
 import { pointerCoord, raf } from '../../helpers';
 
 import { isFocused, relocateInput } from './common';

@@ -1,9 +1,9 @@
 import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Attributes, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
-import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
 

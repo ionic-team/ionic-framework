@@ -1,4 +1,5 @@
 import { findClosestIonContent } from '@utils/content';
+
 import { Config } from '../../interface';
 import { componentOnReady } from '../helpers';
 
