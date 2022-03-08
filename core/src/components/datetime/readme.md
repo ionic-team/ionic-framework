@@ -172,16 +172,16 @@ See https://date-fns.org/docs/format for a list of all the valid format tokens.
 
 ## Disabling Dates
 
-With the `isAllowedDate` property, developers can customize the `ion-datetime` to disable a specific day, range of dates, weekends or any custom rule using an ISO 8601 date string. 
+With the `isDateEnabled` property, developers can customize the `ion-datetime` to disable a specific day, range of dates, weekends or any custom rule using an ISO 8601 date string. 
 
-The `isAllowedDate` property accepts a function returning a boolean, indicating if a date is enabled. The function accepts an ISO 8601 date string and is called for each rendered calendar day.
+The `isDateEnabled` property accepts a function returning a boolean, indicating if a date is enabled. The function accepts an ISO 8601 date string and is called for each rendered calendar day, for the previous, current and next month.
 
 ```html
 <ion-datetime></ion-datetime>
 
 <script>
   const datetime = document.querySelector('ion-datetime');
-  datetime.isAllowedDate = function(dateIsoString) {
+  datetime.isDateEnabled = function(dateIsoString) {
     // Write your custom logic here
     return true;
   }
@@ -191,7 +191,7 @@ The `isAllowedDate` property accepts a function returning a boolean, indicating 
 ### Disabling a specific date
 
 ```js
-isAllowedDate(dateIsoString) {
+isDateEnabled(dateIsoString) {
   const date = new Date(dateIsoString);
   // Disables January 1, 2022
   return date.getUTCFullYear() === 2022 
@@ -203,7 +203,7 @@ isAllowedDate(dateIsoString) {
 ### Disabling weekends
 
 ```js
-isAllowedDate(dateIsoString) {
+isDateEnabled(dateIsoString) {
   const date = new Date(dateIsoString);
   // Disables Saturday and Sunday
   return date.getUTCDay() === 0
@@ -218,7 +218,7 @@ Developers can also use the available functions from `date-fns` to disable dates
 ```ts
 import { isMonday } from 'date-fns';
 
-isAllowedDate(dateIsoString) {
+isDateEnabled(dateIsoString) {
   // Disables Monday
   return isMonday(new Date(dateIsoString));
 }

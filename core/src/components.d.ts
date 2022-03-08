@@ -757,9 +757,9 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
-          * Returns if an individual date (day) is enabled or disabled.  Returns the enabled state of a day given an ISO 8601 date string. By default, all days are enabled. Developers can use this method to write custom disabled date logic. When working with the JS date object, it is recommended to use the UTC functions (i.e. `getUTCDay()`).
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  Custom implementations should be optimized for performance. This function is called often, so any extra logic should be avoided to reduce and prevent jank.
          */
-        "isAllowedDate": (dateIsoString: string) => boolean;
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
@@ -4446,9 +4446,9 @@ declare namespace LocalJSX {
          */
         "hourValues"?: number[] | number | string;
         /**
-          * Returns if an individual date (day) is enabled or disabled.  Returns the enabled state of a day given an ISO 8601 date string. By default, all days are enabled. Developers can use this method to write custom disabled date logic. When working with the JS date object, it is recommended to use the UTC functions (i.e. `getUTCDay()`).
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  Custom implementations should be optimized for performance. This function is called often, so any extra logic should be avoided to reduce and prevent jank.
          */
-        "isAllowedDate"?: (dateIsoString: string) => boolean;
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */

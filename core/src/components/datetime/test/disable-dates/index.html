@@ -67,7 +67,7 @@
 
     <script>
       const specificDateDisabled = document.querySelector('#specificDate');
-      specificDateDisabled.isAllowedDate = (dateIsoString) => {
+      specificDateDisabled.isDateEnabled = (dateIsoString) => {
         const date = new Date(dateIsoString);
         // Disables October 10, 2021.
         if (date.getUTCDate() === 10 && date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
@@ -77,7 +77,7 @@
       }
 
       const weekendsDisabled = document.querySelector('#weekends');
-      weekendsDisabled.isAllowedDate = (dateIsoString) => {
+      weekendsDisabled.isDateEnabled = (dateIsoString) => {
         const date = new Date(dateIsoString);
         // Disables Sunday and Saturday
         if (date.getUTCDay() === 0 || date.getUTCDay() === 6) {
@@ -87,7 +87,7 @@
       }
 
       const dateRangeDisabled = document.querySelector('#dateRange');
-      dateRangeDisabled.isAllowedDate = (dateIsoString) => {
+      dateRangeDisabled.isDateEnabled = (dateIsoString) => {
         const date = new Date(dateIsoString);
         // Disables dates between October 10, 2021 and October 20, 2021.
         if (date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
@@ -99,7 +99,7 @@
       }
 
       const monthDisabled = document.querySelector('#month');
-      monthDisabled.isAllowedDate = (dateIsoString) => {
+      monthDisabled.isDateEnabled = (dateIsoString) => {
         const date = new Date(dateIsoString);
         // Disables October (every year)
         if (date.getUTCMonth() === 9) {

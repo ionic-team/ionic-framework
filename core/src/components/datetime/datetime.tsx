@@ -154,14 +154,20 @@ export class Datetime implements ComponentInterface {
   @Prop() readonly = false;
 
   /**
-   * Returns if an individual date (day) is enabled or disabled.
+   * Returns if an individual date (calendar day) is enabled or disabled.
    *
-   * Returns the enabled state of a day given an ISO 8601 date string.
-   * By default, all days are enabled. Developers can use this method
-   * to write custom disabled date logic. When working with the JS date
-   * object, it is recommended to use the UTC functions (i.e. `getUTCDay()`).
+   * If `true`, the day will be enabled/interactive.
+   * If `false`, the day will be disabled/non-interactive.
+   *
+   * The function accepts an ISO 8601 date string of a given day.
+   * By default, all days are enabled. Developers can use this function
+   * to write custom logic to disable certain days.
+   *
+   * Custom implementations should be optimized for performance. This
+   * function is called often, so any extra logic should be avoided
+   * to reduce and prevent jank.
    */
-  @Prop() isAllowedDate: (dateIsoString: string) => boolean = () => true;
+  @Prop() isDateEnabled?: (dateIsoString: string) => boolean;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -1287,7 +1293,21 @@ export class Datetime implements ComponentInterface {
             const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activePartsClone, this.todayParts, this.minParts, this.maxParts, this.parsedDayValues);
-            const isCalDayDisabled = isCalMonthDisabled || disabled || this.isAllowedDate(convertDataToISO(referenceParts)) === false;
+
+            let isCalDayDisabled = isCalMonthDisabled || disabled;
+
+            if (!isCalDayDisabled && this.isDateEnabled !== undefined) {
+              try {
+                /**
+                 * The `isDateEnabled` implementation is try-catch wrapped
+                 * to prevent exceptions in the user's function from
+                 * interrupting the calendar rendering.
+                 */
+                isCalDayDisabled = !this.isDateEnabled(convertDataToISO(referenceParts));
+              } catch (e) {
+                console.error('Exception thrown in isDateEnabled function, ignoring', e);
+              }
+            }
 
             return (
               <button
