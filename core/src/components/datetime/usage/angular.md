@@ -43,6 +43,9 @@
 <!-- Clear button -->
 <ion-datetime [showClearButton]="true"></ion-datetime>
 
+<!-- Disable custom days -->
+<ion-datetime [isDateEnabled]="isDateEnabled"></ion-datetime>
+
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">
@@ -118,6 +121,15 @@ export class MyComponent {
 
   formatDate(value: string) {
     return format(parseISO(value), 'MMM dd yyyy');
+  }
+
+  isDateEnabled(dateIsoString: string) {
+    const date = new Date(dateIsoString);
+    if (date.getUTCDay() === 1 && date.getUTCMonth() === 0 && date.getUTCYear() === 2022) {
+      // Disables January 1, 2022.
+      return false;
+    }
+    return true;
   }
 }
 ```

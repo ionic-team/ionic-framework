@@ -81,7 +81,17 @@ export class DatetimeExample {
           <ion-button onClick={() => this.confirm()}>Good to go!</ion-button>
           <ion-button onClick={() => this.reset()}>Reset</ion-button>
         </ion-buttons>
-      </ion-datetime>,
+      </ion-datetime>
+
+      {/* Disable custom days */}
+      <ion-datetime isDateEnabled={(dateIsoString: string) => {
+        const date = new Date(dateIsoString);
+        if (date.getUTCDay() === 1 && date.getUTCMonth() === 0 && date.getUTCYear() === 2022) {
+          // Disables January 1, 2022.
+          return false;
+        }
+        return true;
+      }}></ion-datetime>
       
       {/* Datetime in overlay */}
       <ion-button id="open-modal">Open Datetime Modal</ion-button>

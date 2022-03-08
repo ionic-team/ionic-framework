@@ -89,6 +89,16 @@ export const DateTimeExamples: React.FC = () => {
           <IonButton onClick={() => reset()}>Reset</IonButton>
         </IonButtons>
       </IonDatetime>
+
+      {/* Disable custom days */}
+      <IonDatetime isDateEnabled={(dateIsoString: string) => {
+        const date = new Date(dateIsoString);
+        if (date.getUTCDay() === 1 && date.getUTCMonth() === 0 && date.getUTCYear() === 2022) {
+          // Disables January 1, 2022.
+          return false;
+        }
+        return true;
+      }}></IonDatetime>
       
       {/* Datetime in overlay */}
       <IonButton id="open-modal">Open Datetime Modal</IonButton>
