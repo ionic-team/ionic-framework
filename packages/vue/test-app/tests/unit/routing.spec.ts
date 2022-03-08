@@ -229,11 +229,13 @@ describe('Routing', () => {
       routes: [
         { path: '/', redirect: '/tabs/tab1' },
         { path: '/parent', component: Parent },
-        { path: '/tabs/', component: Tabs, children: [
-          { path: '/', redirect: 'tab1' },
-          { path: 'tab1', component: Tab1 },
-          { path: 'tab2', component: Tab2 }
-        ]}
+        {
+          path: '/tabs/', component: Tabs, children: [
+            { path: '/', redirect: 'tab1' },
+            { path: 'tab1', component: Tab1 },
+            { path: 'tab2', component: Tab2 }
+          ]
+        }
       ]
     });
 
@@ -474,7 +476,7 @@ describe('Routing', () => {
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
       routes: [
-        { path: '/', component: Page }
+        { path: '/', component: Page },
         { path: '/page2', component: Page2 }
       ]
     });
@@ -527,7 +529,7 @@ describe('Routing', () => {
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
       routes: [
-        { path: '/', component: Page }
+        { path: '/', component: Page },
         { path: '/page2', component: Page2 },
         { path: '/page3', component: Page3 },
       ]
