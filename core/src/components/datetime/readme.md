@@ -193,10 +193,13 @@ The `isDateEnabled` property accepts a function returning a boolean, indicating 
 ```js
 isDateEnabled(dateIsoString) {
   const date = new Date(dateIsoString);
-  // Disables January 1, 2022
-  return date.getUTCFullYear() === 2022 
+  if (date.getUTCFullYear() === 2022 
     && date.getUTCMonth() === 0 
-    && date.getUTCDate() === 1;
+    && date.getUTCDate() === 1) {
+    // Disables January 1, 2022
+    return false;
+  }
+  return true;
 }
 ```
 
@@ -205,9 +208,11 @@ isDateEnabled(dateIsoString) {
 ```js
 isDateEnabled(dateIsoString) {
   const date = new Date(dateIsoString);
-  // Disables Saturday and Sunday
-  return date.getUTCDay() === 0
-    && date.getUTCDay() === 6;
+  if (date.getUTCDay() === 0 && date.getUTCDay() === 6) {
+    // Disables Saturday and Sunday
+    return true;
+  }
+  return false;
 }
 ```
 
@@ -219,8 +224,11 @@ Developers can also use the available functions from `date-fns` to disable dates
 import { isMonday } from 'date-fns';
 
 isDateEnabled(dateIsoString) {
-  // Disables Monday
-  return isMonday(new Date(dateIsoString));
+  if (isMonday(new Date(dateIsoString))) {
+    // Disables Monday
+    return true;
+  }
+  return false;
 }
 ```
 
