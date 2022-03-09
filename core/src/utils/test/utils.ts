@@ -61,11 +61,11 @@ export const getElementProperty = async (element: any, property: string): Promis
  */
 export const listenForEvent = async (page: any, eventType: string, element: any, callbackName: string): Promise<any> => {
   try {
-      return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
-        scopeElement.addEventListener(scopeEventType, (e: any) => {
-          (window as any)[scopeCallbackName]({ detail: e.detail });
-        });
-      }, eventType, element, callbackName);
+    return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
+      scopeElement.addEventListener(scopeEventType, (e: any) => {
+        (window as any)[scopeCallbackName]({ detail: e.detail });
+      });
+    }, eventType, element, callbackName);
   } catch (err) {
     throw err;
   }
