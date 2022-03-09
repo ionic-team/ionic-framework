@@ -1,12 +1,18 @@
 import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
+const DISABLED_CALENDAR_DAY_SELECTOR = '.calendar-day[disabled]:not(.calendar-day-padding)';
+
 function queryDisabledDay(page: E2EPage, datetimeSelector = 'ion-datetime') {
-  return page.find(`${datetimeSelector} >>> .calendar-day[disabled]:not(.calendar-day-padding)`);
+  return page.find(`${datetimeSelector} >>> ${DISABLED_CALENDAR_DAY_SELECTOR}`);
 }
 
 function queryAllDisabledDays(page: E2EPage, datetimeSelector = 'ion-datetime') {
-  return page.findAll(`${datetimeSelector} >>> .calendar-day[disabled]:not(.calendar-day-padding)`);
+  return page.findAll(`${datetimeSelector} >>> ${DISABLED_CALENDAR_DAY_SELECTOR}`);
+}
+
+function queryAllWorkingMonthDisabledDays(page: E2EPage, datetimeSelector = 'ion-datetime') {
+  return page.findAll(`${datetimeSelector} >>> .calendar-month:nth-child(2) ${DISABLED_CALENDAR_DAY_SELECTOR}`);
 }
 
 describe('datetime: disable dates', () => {
@@ -149,7 +155,7 @@ describe('datetime: disable dates', () => {
     });
 
     it('should disable specific days of the week', async () => {
-      const disabledDays = await page.findAll('#weekends >>> .calendar-month:nth-child(2) .calendar-day[disabled]:not(.calendar-day-padding)');
+      const disabledDays = await queryAllWorkingMonthDisabledDays(page, '#weekends');
       const disabledValues = disabledDays.map(d => d.textContent);
 
       expect(disabledValues).toEqual(['2', '3', '9', '10', '16', '17', '23', '24', '30', '31']);
@@ -167,6 +173,46 @@ describe('datetime: disable dates', () => {
       const disabledValues = disabledDays.map(d => d.textContent);
 
       expect(disabledValues.length).toBe(31);
+    });
+
+  });
+
+  describe('with a min date range', () => {
+
+    it('should not enable already disabled dates', async () => {
+      const page = await newE2EPage({
+        html: `
+          <ion-datetime min="2021-10-15" value="2021-10-16"></ion-datetime>
+          <script>
+            const datetime = document.querySelector('ion-datetime');
+            datetime.isDateEnabled = () => true;
+          </script>
+        `
+      });
+
+      const disabledDays = await queryAllWorkingMonthDisabledDays(page);
+
+      expect(disabledDays.length).toBe(14);
+    });
+
+  });
+
+  describe('with a max date range', () => {
+
+    it('should not enable already disabled dates', async () => {
+      const page = await newE2EPage({
+        html: `
+          <ion-datetime max="2021-10-15" value="2021-10-16"></ion-datetime>
+          <script>
+            const datetime = document.querySelector('ion-datetime');
+            datetime.isDateEnabled = () => true;
+          </script>
+        `
+      });
+
+      const disabledDays = await queryAllWorkingMonthDisabledDays(page);
+
+      expect(disabledDays.length).toBe(16);
     });
 
   });
