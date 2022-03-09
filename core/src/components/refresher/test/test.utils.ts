@@ -1,7 +1,5 @@
 import type { E2EPage } from '@stencil/core/testing';
 
-import { waitForEvent } from '@utils/testing';
-
 /**
  * Emulates a pull-to-refresh drag gesture (pulls down and releases).
  *
@@ -29,7 +27,9 @@ const pullToRefresh = async (page: E2EPage, selector = 'body') => {
   }
 
   await page.mouse.up();
-  await waitForEvent(page, 'ionRefreshComplete');
+
+  const ev = await page.spyOnEvent('ionRefreshComplete', 'document');
+  await ev.next();
 }
 
 export { pullToRefresh };
