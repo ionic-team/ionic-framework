@@ -735,7 +735,7 @@ Type: `Promise<number>`
 
 Get the Swiper instance.
 Use this to access the full Swiper API.
-See https://idangero.us/swiper/api/ for all API options.
+See https://swiperjs.com/swiper-api for all API options.
 
 #### Returns
 
