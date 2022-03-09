@@ -586,10 +586,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Move a sheet style modal to a specific breakpoint.
    */
   @Method()
-  async setBreakpoint(breakpoint: number): Promise<void> {
-    if (!this.isSheetModal || !this.breakpoints!.includes(breakpoint) || this.currentBreakpoint === breakpoint) {
-      return
+  async setCurrentBreakpoint(breakpoint: number): Promise<void> {
+    if (!this.isSheetModal) {
+      console.warn('setCurrentBreakpoint is only supported on sheet modals.');
+      return;
     }
+    if (!this.breakpoints!.includes(breakpoint)) {
+      console.warn(`Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`);
+      return;
+    }
+    if (this.currentBreakpoint === breakpoint) {
+      return;
+    }
+
     this.breakpointWillChange.emit({ breakpoint });
 
     const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];

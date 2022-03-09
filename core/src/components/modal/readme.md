@@ -1446,7 +1446,7 @@ Type: `Promise<void>`
 
 
 
-### `setBreakpoint(breakpoint: number) => Promise<void>`
+### `setCurrentBreakpoint(breakpoint: number) => Promise<void>`
 
 Move a sheet style modal to a specific breakpoint.
 
@@ -1471,24 +1471,6 @@ Type: `Promise<void>`
 | `"backdrop"` | The `ion-backdrop` element.                                                      |
 | `"content"`  | The wrapper element for the default slot.                                        |
 | `"handle"`   | The handle that is displayed at the top of the sheet modal when `handle="true"`. |
-
-
-## CSS Custom Properties
-
-| Name                 | Description                        |
-| -------------------- | ---------------------------------- |
-| `--backdrop-opacity` | Opacity of the backdrop            |
-| `--background`       | Background of the modal content    |
-| `--border-color`     | Border color of the modal content  |
-| `--border-radius`    | Border radius of the modal content |
-| `--border-style`     | Border style of the modal content  |
-| `--border-width`     | Border width of the modal content  |
-| `--height`           | Height of the modal                |
-| `--max-height`       | Maximum height of the modal        |
-| `--max-width`        | Maximum width of the modal         |
-| `--min-height`       | Minimum height of the modal        |
-| `--min-width`        | Minimum width of the modal         |
-| `--width`            | Width of the modal                 |
 
 
 ## Dependencies
