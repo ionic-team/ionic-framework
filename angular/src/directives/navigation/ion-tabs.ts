@@ -57,10 +57,10 @@ export class IonTabs {
   onPageSelected(detail: StackEvent): void {
     const stackId = detail.enteringView.stackId;
     if (detail.tabSwitch && stackId !== undefined) {
+      this.ionTabsWillChange.emit({ tab: stackId });
       if (this.tabBar) {
         this.tabBar.selectedTab = stackId;
       }
-      this.ionTabsWillChange.emit({ tab: stackId });
       this.ionTabsDidChange.emit({ tab: stackId });
     }
   }
