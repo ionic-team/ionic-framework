@@ -185,20 +185,3 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
 };
-
-/**
- * Wait for the browser to fire an event (includes custom events).
- * @param page The Puppeteer page object
- * @param event The name of the event.
- * @param timeout The amount of time to wait for the event to fire (defaults 5000ms)
- * @returns Resolves when the event fires or the timeout is reached.
- */
-export const waitForEvent = async (page: E2EPage, event: string, timeout = 5000) => {
-  return Promise.race([
-    page.evaluate(
-      event => new Promise(resolve => document.addEventListener(event, resolve, { once: true })),
-      event
-    ),
-    page.waitForTimeout(timeout)
-  ]);
-}
