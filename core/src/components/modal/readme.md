@@ -338,6 +338,22 @@ const { data } = await modal.onWillDismiss();
 console.log(data);
 ```
 
+#### Accessing the Modal Element
+
+When opening a modal with the modal controller, Ionic will assign the modal HTML element reference to the `modal` property on your component's class instance.
+
+You can use this property to directly access the `ion-modal` element to add or remove classes or handle additional checks.
+
+```ts
+export class ModalPage implements OnInit {
+  // The `ion-modal` element reference.
+  modal: HTMLElement;
+
+  ngOnInit() {
+    console.log('The HTML ion-modal element', this.modal); // <ion-modal></ion-modal>
+  }
+}
+```
 
 #### Lazy Loading
 
