@@ -185,3 +185,25 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
 };
+
+/**
+ * Scrolls to the bottom of a scroll container. Supports custom method for
+ * `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ */
+export const scrollToBottom = async (page: E2EPage, selector: string) => {
+  await page.evaluate(async selector => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToBottom();
+      } else {
+        el.scrollTop = el.scrollHeight;
+      }
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
+}
