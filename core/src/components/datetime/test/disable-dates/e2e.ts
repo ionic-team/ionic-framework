@@ -1,6 +1,14 @@
 import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
+function queryDisabledDay(page: E2EPage, datetimeSelector = 'ion-datetime') {
+  return page.find(`${datetimeSelector} >>> .calendar-day[disabled]:not(.calendar-day-padding)`);
+}
+
+function queryAllDisabledDays(page: E2EPage, datetimeSelector = 'ion-datetime') {
+  return page.findAll(`${datetimeSelector} >>> .calendar-day[disabled]:not(.calendar-day-padding)`);
+}
+
 describe('datetime: disable dates', () => {
 
   describe('return values', () => {
@@ -23,7 +31,7 @@ describe('datetime: disable dates', () => {
 
         await page.waitForChanges();
 
-        const disabledDays = await page.findAll('ion-datetime >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+        const disabledDays = await queryAllDisabledDays(page);
 
         expect(disabledDays.length).toBe(0);
       });
@@ -40,7 +48,7 @@ describe('datetime: disable dates', () => {
 
         await page.waitForChanges();
 
-        const disabledDays = await page.findAll('ion-datetime >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+        const disabledDays = await queryAllDisabledDays(page);
 
         expect(disabledDays.length).toBe(91);
       });
@@ -99,7 +107,7 @@ describe('datetime: disable dates', () => {
 
         await page.waitForChanges();
 
-        const disabledDays = await page.findAll('ion-datetime >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+        const disabledDays = await queryAllDisabledDays(page);
 
         expect(disabledDays.length).toBe(91);
       });
@@ -115,7 +123,7 @@ describe('datetime: disable dates', () => {
 
         await page.waitForChanges();
 
-        const disabledDays = await page.findAll('ion-datetime >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+        const disabledDays = await queryAllDisabledDays(page);
 
         expect(disabledDays.length).toBe(91);
       });
@@ -135,7 +143,7 @@ describe('datetime: disable dates', () => {
     });
 
     it('should disable a specific date', async () => {
-      const disabledDay = await page.find('#specificDate >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+      const disabledDay = await queryDisabledDay(page, '#specificDate');
 
       expect(disabledDay.textContent).toBe('10');
     });
@@ -148,14 +156,14 @@ describe('datetime: disable dates', () => {
     });
 
     it('should disable a range of dates', async () => {
-      const disabledDays = await page.findAll('#dateRange >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+      const disabledDays = await queryAllDisabledDays(page, '#dateRange');
       const disabledValues = disabledDays.map(d => d.textContent);
 
       expect(disabledValues).toEqual(['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
     });
 
     it('should disable a month', async () => {
-      const disabledDays = await page.findAll('#month >>> .calendar-day[disabled]:not(.calendar-day-padding)');
+      const disabledDays = await queryAllDisabledDays(page, '#month');
       const disabledValues = disabledDays.map(d => d.textContent);
 
       expect(disabledValues.length).toBe(31);
