@@ -86,7 +86,7 @@ export class DatetimeExample {
       {/* Disable custom days */}
       <ion-datetime isDateEnabled={(dateIsoString: string) => {
         const date = new Date(dateIsoString);
-        if (date.getUTCDay() === 1 && date.getUTCMonth() === 0 && date.getUTCYear() === 2022) {
+        if (date.getUTCDay() === 1 && date.getUTCMonth() === 0 && date.getUTCFullYear() === 2022) {
           // Disables January 1, 2022.
           return false;
         }
