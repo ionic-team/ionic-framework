@@ -19,6 +19,30 @@ describe('Tabs', () => {
       tab.find('.segment-changed').should('have.text', 'false');
     });
 
+    describe('when navigating between tabs', () => {
+
+      it('should emit ionTabsWillChange before setting the selected tab', () => {
+        cy.get('#ionTabsWillChangeCounter').should('have.text', '1');
+        cy.get('#ionTabsWillChangeEvent').should('have.text', 'account');
+        cy.get('#ionTabsWillChangeSelectedTab').should('have.text', '');
+
+        cy.get('#ionTabsDidChangeCounter').should('have.text', '1');
+        cy.get('#ionTabsDidChangeEvent').should('have.text', 'account');
+        cy.get('#ionTabsDidChangeSelectedTab').should('have.text', 'account');
+
+        cy.get('#tab-button-contact').click();
+
+        cy.get('#ionTabsWillChangeCounter').should('have.text', '2');
+        cy.get('#ionTabsWillChangeEvent').should('have.text', 'contact');
+        cy.get('#ionTabsWillChangeSelectedTab').should('have.text', 'account');
+
+        cy.get('#ionTabsDidChangeCounter').should('have.text', '2');
+        cy.get('#ionTabsDidChangeEvent').should('have.text', 'contact');
+        cy.get('#ionTabsDidChangeSelectedTab').should('have.text', 'contact');
+      })
+
+    });
+
     it('should simulate stack + double tab click', () => {
       let tab = getSelectedTab();
       tab.find('#goto-tab1-page2').click();
