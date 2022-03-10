@@ -201,16 +201,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Emitted when the breakpoint is about to change.
-   */
-  @Event({ eventName: 'ionModalBreakpointWillChange', bubbles: false }) breakpointWillChange!: EventEmitter<{breakpoint: number}>;
-
-  /**
-   * Emitted when the breakpoint has changed.
-   */
-  @Event({ eventName: 'ionModalBreakpointDidChange', bubbles: false }) breakpointDidChange!: EventEmitter<{breakpoint: number}>;
-
-  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -229,6 +219,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Emitted after the modal has dismissed.
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted before the modal breakpoint is changed.
+   */
+  @Event({ eventName: 'ionModalBreakpointWillChange' }) breakpointWillChange!: EventEmitter<{breakpoint: number}>;
+
+  /**
+   * Emitted after the modal breakpoint has changed.
+   */
+  @Event({ eventName: 'ionModalBreakpointDidChange' }) breakpointDidChange!: EventEmitter<{breakpoint: number}>;
 
   /**
    * Emitted after the modal has presented.
@@ -253,6 +253,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Shorthand for ionModalDidDismiss.
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted before the modal breakpoint is changed.
+   * Shorthand for ionModalBreakpointWillChange.
+   */
+  @Event({ eventName: 'breakpointWillChange' }) breakpointWillChangeShorthand!: EventEmitter<{breakpoint: number}>;
+
+  /**
+   * Emitted after the modal breakpoint has changed.
+   * Shorthand for ionModalBreakpointDidChange.
+   */
+  @Event({ eventName: 'breakpointDidChange' }) breakpointDidChangeShorthand!: EventEmitter<{breakpoint: number}>;
 
   @Watch('swipeToClose')
   swipeToCloseChanged(enable: boolean) {
@@ -490,6 +502,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.currentBreakpoint !== breakpoint) {
       this.currentBreakpoint = breakpoint;
       this.breakpointDidChange.emit({ breakpoint });
+      this.breakpointDidChangeShorthand.emit({ breakpoint });
     }
   }
 
@@ -601,6 +614,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     this.breakpointWillChange.emit({ breakpoint });
+    this.breakpointWillChangeShorthand.emit({ breakpoint });
 
     const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
