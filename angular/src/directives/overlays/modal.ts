@@ -31,6 +31,14 @@ export declare interface IonModal extends Components.IonModal {
    */
   ionModalDidDismiss: EventEmitter<CustomEvent>;
   /**
+   * Emitted before the modal breakpoint is changed.
+   */
+  ionModalBreakpointWillChange: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal breakpoint has changed.
+   */
+  ionModalBreakpointDidChange: EventEmitter<CustomEvent>;
+  /**
    * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
    */
   didPresent: EventEmitter<CustomEvent>;
@@ -46,6 +54,16 @@ export declare interface IonModal extends Components.IonModal {
    * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
    */
   didDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted before the modal breakpoint is changed.
+   * Shorthand for ionModalBreakpointWillChange.
+   */
+  breakpointWillChange: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal breakpoint has changed.
+   * Shorthand for ionModalBreakpointDidChange.
+   */
+  breakpointDidChange: EventEmitter<CustomEvent>;
 }
 @ProxyCmp({
   inputs: [
@@ -115,16 +133,18 @@ export class IonModal {
     });
 
     proxyOutputs(this, this.el, [
-      'ionModalBreakpointWillChange',
-      'ionModalBreakpointDidChange',
       'ionModalDidPresent',
       'ionModalWillPresent',
       'ionModalWillDismiss',
       'ionModalDidDismiss',
+      'ionModalBreakpointWillChange',
+      'ionModalBreakpointDidChange',
       'didPresent',
       'willPresent',
       'willDismiss',
       'didDismiss',
+      'breakpointWillChange',
+      'breakpointDidChange',
     ]);
   }
 }
