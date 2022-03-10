@@ -1,7 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
 import type { E2EPage } from '@stencil/core/testing';
 
-import { scrollToBottom, waitForEvent } from '@utils/test';
+import { scrollToBottom } from '@utils/test';
 
 /**
  * Scrolls an `ion-content` element to the bottom, triggering the `ionInfinite` event.
@@ -10,7 +10,9 @@ import { scrollToBottom, waitForEvent } from '@utils/test';
 async function scrollPage(page: E2EPage) {
   await scrollToBottom(page, '#scroll-target');
   await page.waitForChanges();
-  await waitForEvent(page, 'ionInfiniteComplete');
+
+  const ev = await page.spyOnEvent('ionInfiniteComplete', 'document');
+  await ev.next();
 }
 
 describe('infinite-scroll: custom scroll target', () => {
@@ -19,6 +21,9 @@ describe('infinite-scroll: custom scroll target', () => {
     const page = await newE2EPage({
       url: '/src/components/infinite-scroll/test/scroll-target?ionic:_testing=true'
     });
+
+    const initialItems = await page.findAll('ion-item');
+    expect(initialItems.length).toBe(30);
 
     await scrollPage(page);
 
