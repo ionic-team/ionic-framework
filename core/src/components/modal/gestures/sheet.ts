@@ -3,7 +3,7 @@ import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
 import { getBackdropValueForSheet } from '../utils';
 
-import { handleCanDismiss, calculateSpringStep } from './utils';
+import { calculateSpringStep, handleCanDismiss } from './utils';
 
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,

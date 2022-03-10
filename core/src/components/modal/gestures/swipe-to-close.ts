@@ -3,7 +3,7 @@ import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
-import { handleCanDismiss, calculateSpringStep } from './utils';
+import { calculateSpringStep, handleCanDismiss } from './utils';
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
