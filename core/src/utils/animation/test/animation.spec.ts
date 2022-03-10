@@ -5,7 +5,7 @@ import { Animation } from '../animation-interface';
 
 describe('Animation Class', () => {
 
-  describe.only('isRunning()', () => {
+  describe('isRunning()', () => {
     let animation: Animation;
     beforeEach(() => {
       animation = createAnimation();
