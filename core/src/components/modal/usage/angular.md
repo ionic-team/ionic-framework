@@ -46,7 +46,7 @@
 </ion-modal>
 
 <!-- Require Action Sheet confirmation before dismissing -->
-<ion-modal [isOpen]="true" [canDismiss]="canDismiss()">
+<ion-modal [isOpen]="true" [canDismiss]="canDismiss">
   <ng-template>
     <ion-content>Modal Content</ion-content>
   </ng-template>

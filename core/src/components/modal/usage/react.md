@@ -93,7 +93,7 @@ export const ModalExample: React.FC<Props> = ({ router }) => {
       </IonModal>
       
       {/* Require Action Sheet confirmation before dismissing */}
-      <IonModal isOpen={true} canDismiss={() => canDismiss()}>
+      <IonModal isOpen={true} canDismiss={canDismiss}>
         <IonContent>Modal Content</IonContent>
       </IonModal>
     </>

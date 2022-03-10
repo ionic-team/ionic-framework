@@ -245,7 +245,7 @@ When the backdrop is disabled, users will be able to interact with elements outs
 </ion-modal>
 
 <!-- Require Action Sheet confirmation before dismissing -->
-<ion-modal [isOpen]="true" [canDismiss]="canDismiss()">
+<ion-modal [isOpen]="true" [canDismiss]="canDismiss">
   <ng-template>
     <ion-content>Modal Content</ion-content>
   </ng-template>
@@ -782,7 +782,7 @@ export const ModalExample: React.FC<Props> = ({ router }) => {
       </IonModal>
       
       {/* Require Action Sheet confirmation before dismissing */}
-      <IonModal isOpen={true} canDismiss={() => canDismiss()}>
+      <IonModal isOpen={true} canDismiss={canDismiss}>
         <IonContent>Modal Content</IonContent>
       </IonModal>
     </>
