@@ -44,11 +44,18 @@
     <app-angular-component title="Ionic"></app-angular-component>
   </ng-template>
 </ion-modal>
+
+<!-- Require Action Sheet confirmation before dismissing -->
+<ion-modal [isOpen]="true" [canDismiss]="canDismiss()">
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
 ```
 
 ```typescript
 import { Component } from '@angular/core';
-import { IonRouterOutlet } from '@ionic/angular';
+import { IonRouterOutlet, ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'modal-example',
@@ -56,7 +63,36 @@ import { IonRouterOutlet } from '@ionic/angular';
   styleUrls: ['./modal-example.css']
 })
 export class ModalExample {
-  constructor(public routerOutlet: IonRouterOutlet) {}
+  constructor(
+    public routerOutlet: IonRouterOutlet,
+    private actionSheetCtrl: ActionSheetController
+  ) {}
+
+  async canDismiss() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Are you sure you want to discard your changes?',
+      buttons: [
+        {
+          text: 'Discard Changes',
+          role: 'destructive'
+        },
+        {
+          text: 'Keep Editing',
+          role: 'cancel'
+        }
+      ]
+    });
+    
+    await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    
+    if (role === 'destructive') {
+      return true;
+    }
+
+    return false;
+  }
 }
 ```
 

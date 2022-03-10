@@ -24,8 +24,38 @@ interface Props {
 
 import React from 'react';
 import AppReactComponent from './AppReactComponent';
-import { IonModal, IonContent, IonButton } from '@ionic/react';
+import { IonModal, IonContent, IonButton, useIonActionSheet } from '@ionic/react';
 export const ModalExample: React.FC<Props> = ({ router }) => {
+  const [present, dismiss] = useIonActionSheet();
+
+  const canDismiss = () => {
+    return new Promise(async (resolve) => {
+      await present({
+        header: 'Are you sure you want to discard your changes?',
+        buttons: [
+          {
+            text: 'Discard Changes',
+            role: 'destructive'
+          },
+          {
+            text: 'Keep Editing',
+            role: 'cancel'
+          }
+        ],
+        onDidDismiss: (ev: CustomEvent) => {
+            const role = ev.detail.role;
+            
+            if (role === 'destructive') {
+              resolve(true);
+            }
+            
+            resolve(false);
+          }
+        });
+      });
+    });
+  }
+
   return (
     <>
       {/* Default */}
@@ -60,6 +90,11 @@ export const ModalExample: React.FC<Props> = ({ router }) => {
       {/* Passing Props */}
       <IonModal isOpen={true}>
         <AppReactComponent title="Ionic"></AppReactComponent>
+      </IonModal>
+      
+      {/* Require Action Sheet confirmation before dismissing */}
+      <IonModal isOpen={true} canDismiss={() => canDismiss()}>
+        <IonContent>Modal Content</IonContent>
       </IonModal>
     </>
   );
