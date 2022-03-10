@@ -61,11 +61,11 @@ export const getElementProperty = async (element: any, property: string): Promis
  */
 export const listenForEvent = async (page: any, eventType: string, element: any, callbackName: string): Promise<any> => {
   try {
-      return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
-        scopeElement.addEventListener(scopeEventType, (e: any) => {
-          (window as any)[scopeCallbackName]({ detail: e.detail });
-        });
-      }, eventType, element, callbackName);
+    return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
+      scopeElement.addEventListener(scopeEventType, (e: any) => {
+        (window as any)[scopeCallbackName]({ detail: e.detail });
+      });
+    }, eventType, element, callbackName);
   } catch (err) {
     throw err;
   }
@@ -77,26 +77,34 @@ export const listenForEvent = async (page: any, eventType: string, element: any,
  * @param page - The Puppeteer 'page' object
  * @param x: number - Amount to drag `element` by on the x-axis
  * @param y: number - Amount to drag `element` by on the y-axis
+ * @param startCoordinates (optional) - Coordinates of where to start the drag
+ * gesture. If not provided, the drag gesture will start in the middle of the
+ * element.
  */
-export const dragElementBy = async (element: any, page: any, x = 0, y = 0): Promise<void> => {
+export const dragElementBy = async (
+  element: any,
+  page: any,
+  x = 0,
+  y = 0,
+  startCoordinates?: { x: number, y: number }
+): Promise<void> => {
   try {
     const boundingBox = await element.boundingBox();
 
-    const startX = boundingBox.x + boundingBox.width / 2;
-    const startY = boundingBox.y + boundingBox.height / 2;
+    const startX = (startCoordinates?.x === undefined) ? boundingBox.x + boundingBox.width / 2 : startCoordinates.x;
+    const startY = (startCoordinates?.y === undefined) ? boundingBox.y + boundingBox.height / 2 : startCoordinates.y;
+
+    const midX = startX + (x / 2);
+    const midY = startY + (y / 2);
 
     const endX = startX + x;
     const endY = startY + y;
-
-    const midX = endX / 2;
-    const midY = endY / 2;
 
     await page.mouse.move(startX, startY);
     await page.mouse.down();
     await page.mouse.move(midX, midY);
     await page.mouse.move(endX, endY);
     await page.mouse.up();
-
   } catch (err) {
     throw err;
   }
@@ -177,3 +185,25 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
 };
+
+/**
+ * Scrolls to the bottom of a scroll container. Supports custom method for
+ * `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ */
+export const scrollToBottom = async (page: E2EPage, selector: string) => {
+  await page.evaluate(async selector => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToBottom();
+      } else {
+        el.scrollTop = el.scrollHeight;
+      }
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
+}

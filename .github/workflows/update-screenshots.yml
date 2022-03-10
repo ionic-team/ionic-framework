@@ -1,0 +1,11 @@
+name: 'Update Screenshot References'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  stub:
+    steps:
+      - name: Stub
+        run: echo 'This is a stub'
+        shell: bash
