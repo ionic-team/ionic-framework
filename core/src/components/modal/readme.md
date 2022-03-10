@@ -1380,18 +1380,20 @@ export default {
 
 ## Events
 
-| Event                          | Description                                                                | Type                                   |
-| ------------------------------ | -------------------------------------------------------------------------- | -------------------------------------- |
-| `didDismiss`                   | Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.   | `CustomEvent<OverlayEventDetail<any>>` |
-| `didPresent`                   | Emitted after the modal has presented. Shorthand for ionModalWillDismiss.  | `CustomEvent<void>`                    |
-| `ionModalBreakpointDidChange`  | Emitted when the breakpoint has changed.                                   | `CustomEvent<{ breakpoint: number; }>` |
-| `ionModalBreakpointWillChange` | Emitted when the breakpoint is about to change.                            | `CustomEvent<{ breakpoint: number; }>` |
-| `ionModalDidDismiss`           | Emitted after the modal has dismissed.                                     | `CustomEvent<OverlayEventDetail<any>>` |
-| `ionModalDidPresent`           | Emitted after the modal has presented.                                     | `CustomEvent<void>`                    |
-| `ionModalWillDismiss`          | Emitted before the modal has dismissed.                                    | `CustomEvent<OverlayEventDetail<any>>` |
-| `ionModalWillPresent`          | Emitted before the modal has presented.                                    | `CustomEvent<void>`                    |
-| `willDismiss`                  | Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss. | `CustomEvent<OverlayEventDetail<any>>` |
-| `willPresent`                  | Emitted before the modal has presented. Shorthand for ionModalWillPresent. | `CustomEvent<void>`                    |
+| Event                          | Description                                                                                 | Type                                   |
+| ------------------------------ | ------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `breakpointDidChange`          | Emitted after the modal breakpoint has changed. Shorthand for ionModalBreakpointDidChange.  | `CustomEvent<{ breakpoint: number; }>` |
+| `breakpointWillChange`         | Emitted before the modal breakpoint is changed. Shorthand for ionModalBreakpointWillChange. | `CustomEvent<{ breakpoint: number; }>` |
+| `didDismiss`                   | Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.                    | `CustomEvent<OverlayEventDetail<any>>` |
+| `didPresent`                   | Emitted after the modal has presented. Shorthand for ionModalWillDismiss.                   | `CustomEvent<void>`                    |
+| `ionModalBreakpointDidChange`  | Emitted after the modal breakpoint has changed.                                             | `CustomEvent<{ breakpoint: number; }>` |
+| `ionModalBreakpointWillChange` | Emitted before the modal breakpoint is changed.                                             | `CustomEvent<{ breakpoint: number; }>` |
+| `ionModalDidDismiss`           | Emitted after the modal has dismissed.                                                      | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalDidPresent`           | Emitted after the modal has presented.                                                      | `CustomEvent<void>`                    |
+| `ionModalWillDismiss`          | Emitted before the modal has dismissed.                                                     | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalWillPresent`          | Emitted before the modal has presented.                                                     | `CustomEvent<void>`                    |
+| `willDismiss`                  | Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.                  | `CustomEvent<OverlayEventDetail<any>>` |
+| `willPresent`                  | Emitted before the modal has presented. Shorthand for ionModalWillPresent.                  | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -1471,6 +1473,24 @@ Type: `Promise<void>`
 | `"backdrop"` | The `ion-backdrop` element.                                                      |
 | `"content"`  | The wrapper element for the default slot.                                        |
 | `"handle"`   | The handle that is displayed at the top of the sheet modal when `handle="true"`. |
+
+
+## CSS Custom Properties
+
+| Name                 | Description                        |
+| -------------------- | ---------------------------------- |
+| `--backdrop-opacity` | Opacity of the backdrop            |
+| `--background`       | Background of the modal content    |
+| `--border-color`     | Border color of the modal content  |
+| `--border-radius`    | Border radius of the modal content |
+| `--border-style`     | Border style of the modal content  |
+| `--border-width`     | Border width of the modal content  |
+| `--height`           | Height of the modal                |
+| `--max-height`       | Maximum height of the modal        |
+| `--max-width`        | Maximum width of the modal         |
+| `--min-height`       | Minimum height of the modal        |
+| `--min-width`        | Minimum width of the modal         |
+| `--width`            | Width of the modal                 |
 
 
 ## Dependencies

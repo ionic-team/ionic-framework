@@ -1581,7 +1581,7 @@ export namespace Components {
         /**
           * Move a sheet style modal to a specific breakpoint.
          */
-        "setBreakpoint": (breakpoint: number) => Promise<void>;
+        "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
         /**
           * If `true`, a backdrop will be displayed behind the modal.
          */
@@ -5269,6 +5269,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the modal breakpoint has changed. Shorthand for ionModalBreakpointDidChange.
+         */
+        "onBreakpointDidChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
+        /**
+          * Emitted before the modal breakpoint is changed. Shorthand for ionModalBreakpointWillChange.
+         */
+        "onBreakpointWillChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
+        /**
           * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
          */
         "onDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
@@ -5277,11 +5285,11 @@ declare namespace LocalJSX {
          */
         "onDidPresent"?: (event: CustomEvent<void>) => void;
         /**
-          * Emitted when the breakpoint has changed.
+          * Emitted after the modal breakpoint has changed.
          */
         "onIonModalBreakpointDidChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
         /**
-          * Emitted when the breakpoint is about to change.
+          * Emitted before the modal breakpoint is changed.
          */
         "onIonModalBreakpointWillChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
         /**
