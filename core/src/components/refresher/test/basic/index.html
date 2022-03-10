@@ -39,8 +39,10 @@
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);
     }
+
     const list = document.getElementById('list');
     const refresher = document.getElementById('refresher');
+
     refresher.addEventListener('ionRefresh', async function () {
       const data = await getAsyncData();
       items = items.concat(data);
@@ -49,6 +51,7 @@
       // Custom event consumed by e2e tests
       document.dispatchEvent(new CustomEvent('ionRefreshComplete'));
     });
+
     function render() {
       let html = '';
       for (let item of items) {
@@ -56,6 +59,7 @@
       }
       list.innerHTML = html;
     }
+
     function getAsyncData() {
       // async return mock data
       return new Promise(resolve => {
@@ -68,7 +72,9 @@
         }, 500);
       });
     }
+
     render();
+
   </script>
 </body>
 

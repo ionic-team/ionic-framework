@@ -1385,12 +1385,13 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                              | Type                                        |
-| ----------- | ---------------------------------------- | ------------------------------------------- |
-| `ionBlur`   | Emitted when the select loses focus.     | `CustomEvent<void>`                         |
-| `ionCancel` | Emitted when the selection is cancelled. | `CustomEvent<void>`                         |
-| `ionChange` | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail<any>>` |
-| `ionFocus`  | Emitted when the select has focus.       | `CustomEvent<void>`                         |
+| Event        | Description                              | Type                                        |
+| ------------ | ---------------------------------------- | ------------------------------------------- |
+| `ionBlur`    | Emitted when the select loses focus.     | `CustomEvent<void>`                         |
+| `ionCancel`  | Emitted when the selection is cancelled. | `CustomEvent<void>`                         |
+| `ionChange`  | Emitted when the value has changed.      | `CustomEvent<SelectChangeEventDetail<any>>` |
+| `ionDismiss` | Emitted when the overlay is dismissed.   | `CustomEvent<void>`                         |
+| `ionFocus`   | Emitted when the select has focus.       | `CustomEvent<void>`                         |
 
 
 ## Methods
@@ -1433,11 +1434,17 @@ Type: `Promise<any>`
 ### Depends on
 
 - ion-select-popover
+- [ion-popover](../popover)
+- [ion-action-sheet](../action-sheet)
+- [ion-alert](../alert)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-select --> ion-select-popover
+  ion-select --> ion-popover
+  ion-select --> ion-action-sheet
+  ion-select --> ion-alert
   ion-select-popover --> ion-item
   ion-select-popover --> ion-checkbox
   ion-select-popover --> ion-label
@@ -1448,6 +1455,12 @@ graph TD;
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
   ion-item --> ion-note
+  ion-popover --> ion-backdrop
+  ion-action-sheet --> ion-backdrop
+  ion-action-sheet --> ion-icon
+  ion-action-sheet --> ion-ripple-effect
+  ion-alert --> ion-ripple-effect
+  ion-alert --> ion-backdrop
   style ion-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

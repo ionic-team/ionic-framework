@@ -1074,6 +1074,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [ion-datetime](../datetime)
+ - [ion-select](../select)
 
 ### Depends on
 
@@ -1084,6 +1085,7 @@ Type: `Promise<void>`
 graph TD;
   ion-popover --> ion-backdrop
   ion-datetime --> ion-popover
+  ion-select --> ion-popover
   style ion-popover fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

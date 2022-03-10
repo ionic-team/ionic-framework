@@ -47,14 +47,11 @@
     }
 
     infiniteScroll.addEventListener('ionInfinite', async function () {
-      console.log('Loading data...');
       await wait(500);
       infiniteScroll.complete();
       appendItems();
       // Custom event consumed in the e2e tests
       document.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
-
-      console.log('Done');
     });
 
     function appendItems() {

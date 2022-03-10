@@ -1,6 +1,6 @@
 import type { E2EPage } from '@stencil/core/testing';
 
-import { waitForEvent } from '@utils/testing';
+import { dragElementBy } from '@utils/test';
 
 /**
  * Emulates a pull-to-refresh drag gesture (pulls down and releases).
@@ -15,21 +15,9 @@ import { waitForEvent } from '@utils/testing';
 const pullToRefresh = async (page: E2EPage, selector = 'body') => {
   const target = await page.$(selector);
 
-  const boundingBox = await target.boundingBox();
-
-  const centerX = boundingBox.x + boundingBox.width / 2;
-  const centerY = boundingBox.y + boundingBox.height / 2;
-
-  await page.mouse.move(centerX, centerY);
-  await page.mouse.down();
-
-  // The refresher gesture requires a pull threshold of 0.4
-  for (let i = 0; i < 20; i++) {
-    await page.mouse.move(centerX, centerY + i * 10);
-  }
-
-  await page.mouse.up();
-  await waitForEvent(page, 'ionRefreshComplete');
+  await dragElementBy(target, page, 0, 200);
+  const ev = await page.spyOnEvent('ionRefreshComplete', 'document');
+  await ev.next();
 }
 
 export { pullToRefresh };
