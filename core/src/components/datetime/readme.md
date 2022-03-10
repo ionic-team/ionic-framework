@@ -210,9 +210,9 @@ isDateEnabled(dateIsoString) {
   const date = new Date(dateIsoString);
   if (date.getUTCDay() === 0 && date.getUTCDay() === 6) {
     // Disables Saturday and Sunday
-    return true;
+    return false;
   }
-  return false;
+  return true;
 }
 ```
 
@@ -226,9 +226,9 @@ import { isMonday } from 'date-fns';
 isDateEnabled(dateIsoString) {
   if (isMonday(new Date(dateIsoString))) {
     // Disables Monday
-    return true;
+    return false;
   }
-  return false;
+  return true;
 }
 ```
 
