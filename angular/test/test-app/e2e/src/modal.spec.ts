@@ -74,5 +74,30 @@ describe('Modals: Inline', () => {
     cy.get('ion-modal').trigger('click', 20, 20);
 
     cy.get('ion-modal').children('.ion-page').should('not.exist');
-  })
+  });
+
+  describe('setting the current breakpoint', () => {
+
+    it('should emit breakpointWillChange', () => {
+      cy.get('#open-modal').click();
+
+      cy.get('ion-modal').then(modal => {
+        (modal.get(0) as any).setCurrentBreakpoint(1);
+      });
+
+      cy.get('#breakpointWillChange').should('have.text', '1');
+    });
+
+    it('should emit breakpointDidChange', () => {
+      cy.get('#open-modal').click();
+
+      cy.get('ion-modal').then(modal => {
+        (modal.get(0) as any).setCurrentBreakpoint(1);
+      });
+
+      cy.get('#breakpointDidChange').should('have.text', '1');
+    });
+
+  });
+
 });
