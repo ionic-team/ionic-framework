@@ -43,7 +43,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
-  currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
   private keyboardOpenCallback?: () => void;
@@ -56,6 +55,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
+
+  currentBreakpoint?: number;
   lastFocus?: HTMLElement;
   animation?: Animation;
 
@@ -281,7 +282,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
-      console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.')
+      console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.');
     }
   }
 
