@@ -1,4 +1,4 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { E2EPage, newE2EPage } from '@stencil/core/testing';
 import { dragElementBy } from '@utils/test';
 
 describe('modal - canDismiss handler', () => {
