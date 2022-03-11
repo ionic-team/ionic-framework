@@ -162,9 +162,9 @@ export const createSheetGesture = (
      * compute where the offset of the animation should be
      * relative to where the user dragged.
      */
-    const initialBreakpoint = 1 - currentBreakpoint;
-    const secondToLastBreakpoint = breakpoints[1] !== undefined ? 1 - breakpoints[1] : undefined;
-    const step = initialBreakpoint + (detail.deltaY / height);
+    const initialStep = 1 - currentBreakpoint;
+    const secondToLastBreakpoint = breakpoints.length > 1 ? 1 - breakpoints[1] : undefined;
+    const step = initialStep + (detail.deltaY / height);
     const isAttempingDismissWithCanDismiss = secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
 
     /**
