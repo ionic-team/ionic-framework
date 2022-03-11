@@ -4,6 +4,119 @@ import { getTimeGivenProgression } from '../cubic-bezier';
 import { Animation } from '../animation-interface';
 
 describe('Animation Class', () => {
+  describe('isRunning()', () => {
+    let animation: Animation;
+    beforeEach(() => {
+      animation = createAnimation();
+    });
+
+    it('should not be running initially', () => {
+      expect(animation.isRunning()).toEqual(false);
+    });
+
+    it('should not be running due to not having keyframes', () => {
+      animation.play();
+      expect(animation.isRunning()).toEqual(false);
+    });
+
+    it('should be running', () => {
+      const el = document.createElement('div');
+      animation.addElement(el);
+      animation.keyframes([
+        { transform: 'scale(1)', opacity: 1, offset: 0 },
+        { transform: 'scale(0)', opacity: 0, offset: 1 }
+      ]);
+      animation.duration(250);
+
+      animation.play();
+      expect(animation.isRunning()).toEqual(true);
+    });
+
+    it('should not be running after finishing the animation', async () => {
+      const el = document.createElement('div');
+      animation.addElement(el);
+      animation.keyframes([
+        { transform: 'scale(1)', opacity: 1, offset: 0 },
+        { transform: 'scale(0)', opacity: 0, offset: 1 }
+      ]);
+      animation.duration(250);
+
+      await animation.play();
+
+      expect(animation.isRunning()).toEqual(false);
+    });
+
+    it('should not be running after calling pause', () => {
+      const el = document.createElement('div');
+      animation.addElement(el);
+      animation.keyframes([
+        { transform: 'scale(1)', opacity: 1, offset: 0 },
+        { transform: 'scale(0)', opacity: 0, offset: 1 }
+      ]);
+      animation.duration(250);
+
+      animation.play();
+      expect(animation.isRunning()).toEqual(true);
+
+      animation.pause();
+      expect(animation.isRunning()).toEqual(false);
+    });
+
+    it('should not be running when doing progress steps', () => {
+      const el = document.createElement('div');
+      animation.addElement(el);
+      animation.keyframes([
+        { transform: 'scale(1)', opacity: 1, offset: 0 },
+        { transform: 'scale(0)', opacity: 0, offset: 1 }
+      ]);
+      animation.duration(250);
+
+      animation.play();
+
+      animation.progressStart();
+
+      expect(animation.isRunning()).toEqual(false);
+    });
+
+    it('should be running after calling progressEnd', () => {
+      const el = document.createElement('div');
+      animation.addElement(el);
+      animation.keyframes([
+        { transform: 'scale(1)', opacity: 1, offset: 0 },
+        { transform: 'scale(0)', opacity: 0, offset: 1 }
+      ]);
+      animation.duration(250);
+
+      animation.play();
+
+      animation.progressStart();
+      animation.progressEnd(1);
+
+      expect(animation.isRunning()).toEqual(true);
+    });
+
+    it('should not be running after playing to beginning', async () => {
+      const el = document.createElement('div');
+      animation.addElement(el);
+      animation.keyframes([
+        { transform: 'scale(1)', opacity: 1, offset: 0 },
+        { transform: 'scale(0)', opacity: 0, offset: 1 }
+      ]);
+      animation.duration(250);
+
+      await animation.play();
+
+      animation.progressStart();
+      animation.progressEnd(0);
+
+      await new Promise((resolve) => {
+        animation.onFinish(() => {
+          expect(animation.isRunning()).toEqual(false);
+          resolve();
+        });
+      });
+    });
+  })
 
   describe('addElement()', () => {
     let animation: Animation;
@@ -83,7 +196,7 @@ describe('Animation Class', () => {
 
       expect(animation.getKeyframes().length).toEqual(3);
     });
-    
+
     it('should convert properties for CSS Animations', () => {
       const processedKeyframes = processKeyframes([
         { borderRadius: '0px', easing: 'ease-in' , offset: 0 },
@@ -375,7 +488,7 @@ describe('cubic-bezier conversion', () => {
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), [0.03]);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), [0.35]);
     })
-    
+
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
       const equation = [
         [0, 0],
@@ -383,11 +496,11 @@ describe('cubic-bezier conversion', () => {
         [.14, 1.72],
         [1, 1]
       ];
-        
+
       expect(getTimeGivenProgression(...equation, 1.32)[0]).toBeUndefined();
       expect(getTimeGivenProgression(...equation, -0.32)[0]).toBeUndefined();
     })
-    
+
     it('cubic-bezier(0.21, 1.71, 0.88, 0.9) (multiple solutions)', () => {
       const equation = [
         [0, 0],
@@ -395,10 +508,10 @@ describe('cubic-bezier conversion', () => {
         [0.88, 0.9],
         [1, 1]
       ];
-        
+
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 1.02), [0.35, 0.87]);
     })
-    
+
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
       const equation = [
         [0, 0],
@@ -406,11 +519,11 @@ describe('cubic-bezier conversion', () => {
         [.14, 1.72],
         [1, 1]
       ];
-        
+
       expect(getTimeGivenProgression(...equation, 1.32)).toEqual([]);
       expect(getTimeGivenProgression(...equation, -0.32)).toEqual([]);
     })
-    
+
   })
 });
 
