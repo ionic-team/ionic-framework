@@ -174,7 +174,7 @@ See https://date-fns.org/docs/format for a list of all the valid format tokens.
 
 With the `isDateEnabled` property, developers can customize the `ion-datetime` to disable a specific day, range of dates, weekends or any custom rule using an ISO 8601 date string. 
 
-The `isDateEnabled` property accepts a function returning a boolean, indicating if a date is enabled. The function is called for each rendered calendar day, for the previous, current and next month. Custom implementations should be optimized for performance. This function is called often, so any extra logic should be avoided to reduce and prevent jank.
+The `isDateEnabled` property accepts a function returning a boolean, indicating if a date is enabled. The function is called for each rendered calendar day, for the previous, current and next month. Custom implementations should be optimized for performance to avoid jank.
 
 ```html
 <ion-datetime></ion-datetime>
