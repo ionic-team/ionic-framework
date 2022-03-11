@@ -99,7 +99,7 @@ describe('datetime: disable dates', () => {
         await page.waitForChanges();
 
         expect(errors.length).toBe(1);
-        expect(errors[0]).toContain('Exception thrown in isDateEnabled function, ignoring');
+        expect(errors[0]).toContain('[Ionic Error]: Exception thrown from provided `isDateEnabled` function. Please check your function and try again.');
       });
 
     });

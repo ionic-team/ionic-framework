@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { printIonError } from '@utils/logging';
 import {
   caretDownSharp,
   caretUpSharp,
@@ -1305,7 +1306,7 @@ export class Datetime implements ComponentInterface {
                  */
                 isCalDayDisabled = !this.isDateEnabled(convertDataToISO(referenceParts));
               } catch (e) {
-                console.error('Exception thrown in isDateEnabled function, ignoring', e);
+                printIonError('Exception thrown from provided `isDateEnabled` function. Please check your function and try again.', e);
               }
             }
 
