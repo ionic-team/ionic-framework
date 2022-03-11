@@ -757,6 +757,10 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  The function is called for each rendered calendar day, for the previous, current and next month. Custom implementations should be optimized for performance to avoid jank.
+         */
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
+        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale": string;
@@ -1506,6 +1510,10 @@ export namespace Components {
          */
         "breakpoints"?: number[];
         /**
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+         */
+        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        /**
           * The component to display inside of the modal.
          */
         "component"?: ComponentRef;
@@ -1580,6 +1588,7 @@ export namespace Components {
         "showBackdrop": boolean;
         /**
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
          */
         "swipeToClose": boolean;
         /**
@@ -4442,6 +4451,10 @@ declare namespace LocalJSX {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  The function is called for each rendered calendar day, for the previous, current and next month. Custom implementations should be optimized for performance to avoid jank.
+         */
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
+        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale"?: string;
@@ -5215,6 +5228,10 @@ declare namespace LocalJSX {
          */
         "breakpoints"?: number[];
         /**
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+         */
+        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        /**
           * The component to display inside of the modal.
          */
         "component"?: ComponentRef;
@@ -5303,6 +5320,7 @@ declare namespace LocalJSX {
         "showBackdrop"?: boolean;
         /**
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
          */
         "swipeToClose"?: boolean;
         /**

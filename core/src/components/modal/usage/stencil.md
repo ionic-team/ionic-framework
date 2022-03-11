@@ -2,6 +2,7 @@
 
 ```tsx
 import { Component, Element, h } from '@stencil/core';
+import { actionSheetController } from '@ionic/core';
 
 @Component({
   tag: 'modal-example',
@@ -12,6 +13,32 @@ export class ModalExample {
   
   componentDidLoad() {
     this.routerOutlet = this.el.closest('ion-router-outlet');
+  }
+  
+  async canDismiss() {
+    const actionSheet = await actionSheetController.create({
+      header: 'Are you sure you want to discard your changes?',
+      buttons: [
+        {
+          text: 'Discard Changes',
+          role: 'destructive'
+        },
+        {
+          text: 'Keep Editing',
+          role: 'cancel'
+        }
+      ]
+    });
+    
+    await actionSheet.present();
+    
+    const { role } = await actionSheet.onDidDismiss();
+    
+    if (role === 'destructive') {
+      return true;
+    }
+    
+    return false;
   }
   
   render() {
@@ -49,6 +76,11 @@ export class ModalExample {
         {/* Passing Props */}
         <ion-modal isOpen={true}>
           <app-stencil-component title="Ionic"></app-stencil-component>
+        </ion-modal>
+        
+        {/* Require Action Sheet confirmation before dismissing */}
+        <ion-modal isOpen={true} canDismiss={() => this.canDismiss()}>
+          <ion-content>Modal Content</ion-content>
         </ion-modal>
       </div>
     )
