@@ -1,36 +1,73 @@
 ### Inline Modal
 
 ```html
-<!-- Default -->
-<ion-modal is-open="true">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
-
-<!-- Use a trigger -->
-<ion-button id="trigger-button">Click to open modal</ion-button>
-<ion-modal trigger="trigger-button">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
-
-<!-- Sheet Modal -->
-<ion-modal is-open="true" id="sheet-modal">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
-
-<!-- Card Modal -->
-<ion-modal is-open="true" id="card-modal">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
+<ion-app>
+  <!-- Default -->
+  <ion-modal is-open="true">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Use a trigger -->
+  <ion-button id="trigger-button">Click to open modal</ion-button>
+  <ion-modal trigger="trigger-button">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Sheet Modal -->
+  <ion-modal is-open="true" id="sheet-modal">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Card Modal -->
+  <ion-modal is-open="true" id="card-modal">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Require Action Sheet confirmation before dismissing -->
+  <ion-modal is-open="true" id="can-dismiss-modal">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+</ion-app>
 
 <script>
   const sheetModal = document.querySelector('#sheet-modal');
   const cardModal = document.querySelector('#sheet-modal');
+  const canDismissModal = document.querySelector('#can-dismiss-modal');
+  const app = document.querySelector('ion-app');
 
   sheetModal.breakpoints = [0.1, 0.5, 1];
   sheetModal.initialBreakpoint = 0.5;
   
   cardModal.swipeToClose = true;
   cardModal.presentingElement = document.querySelector('ion-app');
+  
+  canDismissModal.canDismiss = async () => {
+    const actionSheet = document.createElement('ion-action-sheet');
+    
+    actionSheet.header = 'Are you sure you want to discard your changes?';
+    actionSheet.buttons = [
+      {
+        text: 'Discard Changes',
+        role: 'destructive'
+      },
+      {
+        text: 'Keep Editing',
+        role: 'cancel'
+      }
+    ];
+    
+    app.appendChild(actionSheet);
+    
+    await actionSheet.present();
+            
+    const { role } = await actionSheet.onDidDismiss();
+    
+    if (role === 'destructive') {
+      return true;
+    }
+    
+    return false;    
+  }
 </script>
 ```
 
