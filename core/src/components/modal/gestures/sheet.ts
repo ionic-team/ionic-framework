@@ -165,21 +165,21 @@ export const createSheetGesture = (
     const initialStep = 1 - currentBreakpoint;
     const secondToLastBreakpoint = breakpoints.length > 1 ? 1 - breakpoints[1] : undefined;
     const step = initialStep + (detail.deltaY / height);
-    const isAttempingDismissWithCanDismiss = secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
+    const isAttemptingDismissWithCanDismiss = secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
 
     /**
      * If we are blocking the gesture from dismissing,
      * set the max step value so that the sheet cannot be
      * completely hidden.
      */
-    const maxStep = isAttempingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
 
     /**
      * If we are blocking the gesture from
      * dismissing, calculate the spring modifier value
      * this will be added to the starting breakpoint
      * value to give the gesture a spring-like feeling.
-     * Note that when isAttempingDismissWithCanDismiss is true,
+     * Note that when isAttemptingDismissWithCanDismiss is true,
      * the modifier is always added to the breakpoint that
      * appears right after the 0 breakpoint.
      *
@@ -188,7 +188,7 @@ export const createSheetGesture = (
      * why we subtract secondToLastBreakpoint. This lets us get
      * the result as a value from 0 to 1.
      */
-    const processedStep = isAttempingDismissWithCanDismiss ? secondToLastBreakpoint + calculateSpringStep((step - secondToLastBreakpoint) / (maxStep - secondToLastBreakpoint)) : step;
+    const processedStep = isAttemptingDismissWithCanDismiss && secondToLastBreakpoint !== undefined ? secondToLastBreakpoint + calculateSpringStep((step - secondToLastBreakpoint) / (maxStep - secondToLastBreakpoint)) : step;
 
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
