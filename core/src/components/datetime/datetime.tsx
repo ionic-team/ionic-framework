@@ -1292,19 +1292,20 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
+            const { isDateEnabled } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activePartsClone, this.todayParts, this.minParts, this.maxParts, this.parsedDayValues);
 
             let isCalDayDisabled = isCalMonthDisabled || disabled;
 
-            if (!isCalDayDisabled && this.isDateEnabled !== undefined) {
+            if (!isCalDayDisabled && isDateEnabled !== undefined) {
               try {
                 /**
                  * The `isDateEnabled` implementation is try-catch wrapped
                  * to prevent exceptions in the user's function from
                  * interrupting the calendar rendering.
                  */
-                isCalDayDisabled = !this.isDateEnabled(convertDataToISO(referenceParts));
+                isCalDayDisabled = !isDateEnabled(convertDataToISO(referenceParts));
               } catch (e) {
                 printIonError('Exception thrown from provided `isDateEnabled` function. Please check your function and try again.', e);
               }
