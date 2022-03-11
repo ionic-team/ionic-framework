@@ -30,7 +30,7 @@ Refresher requires a scroll container to function. When using a virtual scrollin
 
 ```html
 <ion-content scroll-y="false">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <virtual-scroll-element class="ion-content-scroll-host">
