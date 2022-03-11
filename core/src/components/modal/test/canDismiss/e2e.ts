@@ -78,7 +78,6 @@ describe('modal - canDismiss handler', () => {
       await ionModalDidDismiss.next();
     });
   });
-<<<<<<< HEAD
 
   describe('card modal', () => {
     beforeEach(async () => {
