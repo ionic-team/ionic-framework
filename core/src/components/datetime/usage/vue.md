@@ -53,7 +53,7 @@
   </ion-datetime>
 
   <!-- Disable custom days -->
-  <ion-datetime :isDateEnabled="isDateEnabled"></ion-datetime>
+  <ion-datetime :is-date-enabled="isDateEnabled"></ion-datetime>
   
   <!-- Datetime in overlay -->
   <ion-button id="open-modal">Open Datetime Modal</ion-button>
