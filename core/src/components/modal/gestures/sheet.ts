@@ -163,9 +163,9 @@ export const createSheetGesture = (
      * relative to where the user dragged.
      */
     const initialBreakpoint = 1 - currentBreakpoint;
-    const secondToLastBreakpoint = 1 - breakpoints[1];
+    const secondToLastBreakpoint = breakpoints[1] !== undefined ? 1 - breakpoints[1] : undefined;
     const step = initialBreakpoint + (detail.deltaY / height);
-    const isAttempingDismissWithCanDismiss = step >= secondToLastBreakpoint && canDismissBlocksGesture;
+    const isAttempingDismissWithCanDismiss = secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
 
     /**
      * If we are blocking the gesture from dismissing,
