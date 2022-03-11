@@ -51,6 +51,9 @@
   </ion-buttons>
 </ion-datetime>
 
+<!-- Disable custom dates -->
+<ion-datetime id="disabled-date-datetime"></ion-datetime>
+
 <!-- Datetime in overlay -->
 <ion-button id="open-modal">Open Datetime Modal</ion-button>
 <ion-modal trigger="open-modal">
@@ -81,7 +84,7 @@
 ```
 
 ```javascript
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, getDate, getMonth, getYear } from 'date-fns';
 
 const datetime = document.querySelector('#custom-datetime');
 
@@ -96,6 +99,18 @@ const reset = () => {
 const formatDate = (value: string) => {
   return format(parseISO(value), 'MMM dd yyyy');
 };
+
+const isDateEnabled = (dateIsoString: string) => {
+  const date = new Date(dateIsoString);
+  if (getDate(date) === 1 && getMonth(date) === 0 && getYear(date) === 2022) {
+    // Disables January 1, 2022.
+    return false;
+  }
+  return true;
+};
+
+const disabledDateDatetime = document.querySelector('#disabled-date-datetime');
+disabledDateDatetime.isDateEnabled = isDateEnabled;
 
 const popoverDatetime = document.querySelector('#popover-datetime');
 const dateInput = document.querySelector('#date-input');

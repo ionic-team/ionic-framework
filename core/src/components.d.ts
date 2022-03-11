@@ -757,6 +757,10 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  Custom implementations should be optimized for performance. This function is called often, so any extra logic should be avoided to reduce and prevent jank.
+         */
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
+        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale": string;
@@ -4441,6 +4445,10 @@ declare namespace LocalJSX {
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
         "hourValues"?: number[] | number | string;
+        /**
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  Custom implementations should be optimized for performance. This function is called often, so any extra logic should be avoided to reduce and prevent jank.
+         */
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
