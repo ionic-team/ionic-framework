@@ -47,24 +47,20 @@
       document.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
     });
 
-    const initCalendarMonthChangeObserver = () => {
-      customElements.whenDefined('ion-datetime')
-        .then(() => {
-          if (datetime.componentOnReady) {
-            datetime.componentOnReady().then(() => {
-              // We have to requestAnimationFrame to allow the datetime to render completely.
-              requestAnimationFrame(() => {
-                const calendarBody = datetime.shadowRoot.querySelector('.calendar-body');
-                if (calendarBody) {
-                  mutationObserver.observe(datetime.shadowRoot.querySelector('.calendar-body'), {
-                    childList: true,
-                    subtree: true
-                  });
-                }
-              });
-            });
-          }
-        });
+    const initCalendarMonthChangeObserver = async () => {
+      if (!datetime.componentOnReady) return;
+      await datetime.componentOnReady();
+      
+      // We have to requestAnimationFrame to allow the datetime to render completely.
+      requestAnimationFrame(() => {
+        const calendarBody = datetime.shadowRoot.querySelector('.calendar-body');
+        if (calendarBody) {
+          mutationObserver.observe(calendarBody, {
+            childList: true,
+            subtree: true
+          });
+        }
+      });
     }
 
     const changePresentation = (ev) => {
