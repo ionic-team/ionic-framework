@@ -164,9 +164,8 @@ export class Datetime implements ComponentInterface {
    * By default, all days are enabled. Developers can use this function
    * to write custom logic to disable certain days.
    *
-   * Custom implementations should be optimized for performance. This
-   * function is called often, so any extra logic should be avoided
-   * to reduce and prevent jank.
+   * The function is called for each rendered calendar day, for the previous, current and next month.
+   * Custom implementations should be optimized for performance to avoid jank.
    */
   @Prop() isDateEnabled?: (dateIsoString: string) => boolean;
 
