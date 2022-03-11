@@ -1,7 +1,7 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
-import { Modal } from '../modal';
+import type { Modal } from '../modal';
 import { SheetAnimationDefaults, disableSheetBackdrop, enableSheetBackdrop, moveSheetToBreakpoint } from '../utils';
 
 export const createSheetGesture = (
