@@ -84,7 +84,7 @@
 ```
 
 ```javascript
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, getDate, getMonth, getYear } from 'date-fns';
 
 const datetime = document.querySelector('#custom-datetime');
 
@@ -102,7 +102,7 @@ const formatDate = (value: string) => {
 
 const isDateEnabled = (dateIsoString: string) => {
   const date = new Date(dateIsoString);
-  if (date.getUTCDay() === 1 && date.getUTCMonth() === 0 && date.getUTCFullYear() === 2022) {
+  if (getDate(date) === 1 && getMonth(date) === 0 && getYear(date) === 2022) {
     // Disables January 1, 2022.
     return false;
   }
