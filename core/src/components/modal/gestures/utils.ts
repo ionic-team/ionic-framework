@@ -42,7 +42,6 @@ export const handleCanDismiss = async (
   }
 }
 
-
 /**
  * This function lets us simulate a realistic spring-like animation
  * when swiping down on the modal.

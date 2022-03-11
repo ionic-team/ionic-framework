@@ -3,7 +3,7 @@ import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
 import { getBackdropValueForSheet } from '../utils';
 
-import { handleCanDismiss, calculateSpringStep } from './utils';
+import { calculateSpringStep, handleCanDismiss } from './utils';
 
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
@@ -162,10 +162,10 @@ export const createSheetGesture = (
      * compute where the offset of the animation should be
      * relative to where the user dragged.
      */
-    const initialBreakpoint = 1 - currentBreakpoint;
-    const secondToLastBreakpoint = 1 - breakpoints[1];
-    const step = initialBreakpoint + (detail.deltaY / height);
-    const isAttempingDismissWithCanDismiss = step >= secondToLastBreakpoint && canDismissBlocksGesture;
+    const initialStep = 1 - currentBreakpoint;
+    const secondToLastBreakpoint = breakpoints.length > 1 ? 1 - breakpoints[1] : undefined;
+    const step = initialStep + (detail.deltaY / height);
+    const isAttempingDismissWithCanDismiss = secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
 
     /**
      * If we are blocking the gesture from dismissing,
