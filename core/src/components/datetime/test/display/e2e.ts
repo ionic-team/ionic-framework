@@ -57,7 +57,8 @@ test('month selection should work after changing presentation', async () => {
   const page = await newE2EPage({
     url: '/src/components/datetime/test/display?ionic:_testing=true'
   });
-  const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange');
+  const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange', 'document');
+  let calendarMonthYear;
 
   await page.select('#presentation', 'date-time');
   await page.waitForChanges();
@@ -67,20 +68,25 @@ test('month selection should work after changing presentation', async () => {
 
   const nextMonthButton = await page.find('ion-datetime >>> .calendar-next-prev ion-button + ion-button');
   await nextMonthButton.click();
+  await page.waitForChanges();
 
-  const result = await ionWorkingPartsDidChange.next();
-  const newWorkingParts = result.value.detail;
-  expect(newWorkingParts.month).toEqual(3);
-  
+  await ionWorkingPartsDidChange.next();
+
+  calendarMonthYear = await page.find('ion-datetime >>> .calendar-month-year');
+
+  expect(calendarMonthYear.textContent).toContain('March 2022');
+
   // ensure it still works if presentation is changed more than once
   await page.select('#presentation', 'date-time');
   await page.waitForChanges();
 
   const prevMonthButton = await page.find('ion-datetime >>> .calendar-next-prev ion-button:first-child');
   await prevMonthButton.click();
+  await page.waitForChanges();
 
-  const ionWorkingPartsDidChange2 = await page.spyOnEvent('ionWorkingPartsDidChange');
-  const result2 = await ionWorkingPartsDidChange2.next();
-  const newWorkingParts2 = result2.value.detail;
-  expect(newWorkingParts2.month).toEqual(2);
+  await ionWorkingPartsDidChange.next();
+
+  calendarMonthYear = await page.find('ion-datetime >>> .calendar-month-year');
+
+  expect(calendarMonthYear.textContent).toContain('February 2022');
 });
