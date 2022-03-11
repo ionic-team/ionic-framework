@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Refresher - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body>
   <ion-app>
@@ -21,11 +23,8 @@
 
     <ion-content>
       <ion-refresher id="refresher" slot="fixed">
-        <ion-refresher-content
-          pulling-icon="arrow-down-outline"
-          pulling-text="Pull to refresh..."
-          refreshing-text="Refreshing..."
-          refreshing-spinner="circles">
+        <ion-refresher-content pulling-icon="arrow-down-outline" pulling-text="Pull to refresh..."
+          refreshing-text="Refreshing..." refreshing-spinner="circles">
         </ion-refresher-content>
       </ion-refresher>
 
@@ -40,16 +39,19 @@
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);
     }
+
     const list = document.getElementById('list');
     const refresher = document.getElementById('refresher');
+
     refresher.addEventListener('ionRefresh', async function () {
-      console.log('Loading data...');
       const data = await getAsyncData();
       items = items.concat(data);
       refresher.complete();
       render();
-      console.log('Done');
+      // Custom event consumed by e2e tests
+      document.dispatchEvent(new CustomEvent('ionRefreshComplete'));
     });
+
     function render() {
       let html = '';
       for (let item of items) {
@@ -57,6 +59,7 @@
       }
       list.innerHTML = html;
     }
+
     function getAsyncData() {
       // async return mock data
       return new Promise(resolve => {
@@ -69,7 +72,9 @@
         }, 500);
       });
     }
+
     render();
+
   </script>
 </body>
 

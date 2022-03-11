@@ -51,6 +51,9 @@
       <ion-button @click="reset()">Reset</ion-button>
     </ion-buttons>
   </ion-datetime>
+
+  <!-- Disable custom days -->
+  <ion-datetime :is-date-enabled="isDateEnabled"></ion-datetime>
   
   <!-- Datetime in overlay -->
   <ion-button id="open-modal">Open Datetime Modal</ion-button>
@@ -99,7 +102,7 @@
     IonModal,
     IonPopover
   } from '@ionic/vue';
-  import { format, parseISO } from 'date-fns';
+  import { format, parseISO, getDate, getMonth, getYear } from 'date-fns';
 
   export default defineComponent({
     components: {
@@ -133,10 +136,20 @@
         return format(parseISO(value), 'MMM dd yyyy');
       };
 
+      const isDateEnabled = (dateIsoString: string) => {
+        const date = new Date(dateIsoString);
+        if (getDate(date) === 1 && getMonth(date) === 0 && getYear(date) === 2022) {
+          // Disables January 1, 2022.
+          return false;
+        }
+        return true;
+      }
+
       return {
         customDatetime,
         confirm,
-        reset
+        reset,
+        isDateEnabled
       }
     }
   })

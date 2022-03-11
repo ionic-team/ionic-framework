@@ -61,11 +61,11 @@ export const getElementProperty = async (element: any, property: string): Promis
  */
 export const listenForEvent = async (page: any, eventType: string, element: any, callbackName: string): Promise<any> => {
   try {
-      return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
-        scopeElement.addEventListener(scopeEventType, (e: any) => {
-          (window as any)[scopeCallbackName]({ detail: e.detail });
-        });
-      }, eventType, element, callbackName);
+    return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
+      scopeElement.addEventListener(scopeEventType, (e: any) => {
+        (window as any)[scopeCallbackName]({ detail: e.detail });
+      });
+    }, eventType, element, callbackName);
   } catch (err) {
     throw err;
   }
@@ -185,3 +185,25 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
 };
+
+/**
+ * Scrolls to the bottom of a scroll container. Supports custom method for
+ * `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ */
+export const scrollToBottom = async (page: E2EPage, selector: string) => {
+  await page.evaluate(async selector => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToBottom();
+      } else {
+        el.scrollTop = el.scrollHeight;
+      }
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
+}
