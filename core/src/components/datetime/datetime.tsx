@@ -94,9 +94,13 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarIO?: () => void;
   private destroyKeyboardMO?: () => void;
+  private destroyOverlayListener?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
+  private todayParts = parseDate(getToday());
+
+  private prevPresentation: string | null = null;
 
   /**
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
@@ -123,8 +127,6 @@ export class Datetime implements ComponentInterface {
     minute: 52,
     ampm: 'pm'
   }
-
-  private todayParts = parseDate(getToday())
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -483,8 +485,18 @@ export class Datetime implements ComponentInterface {
     this.confirm();
   }
 
+  /**
+   * Stencil sometimes sets calendarBodyRef to null on rerender, even though
+   * the element is present. Query for it manually as a fallback.
+   *
+   * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
+   */
+  private getCalendarBodyEl = () => {
+    return this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
+  };
+
   private initializeKeyboardListeners = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const root = this.el!.shadowRoot!;
@@ -530,7 +542,7 @@ export class Datetime implements ComponentInterface {
      * We must use keydown not keyup as we want
      * to prevent scrolling when using the arrow keys.
      */
-    this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
+    calendarBodyRef.addEventListener('keydown', (ev: KeyboardEvent) => {
       const activeElement = root.activeElement;
       if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
@@ -657,7 +669,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private initializeCalendarIOListeners = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const mode = getIonMode(this);
@@ -873,7 +885,7 @@ export class Datetime implements ComponentInterface {
    * listener. This is so that we can re-create the listeners
    * if the datetime has been hidden/presented by a modal or popover.
    */
-  private destroyListeners = () => {
+  private destroyInteractionListeners = () => {
     const { destroyCalendarIO, destroyKeyboardMO } = this;
 
     if (destroyCalendarIO !== undefined) {
@@ -883,6 +895,12 @@ export class Datetime implements ComponentInterface {
     if (destroyKeyboardMO !== undefined) {
       destroyKeyboardMO();
     }
+  }
+
+  private initializeListeners() {
+    this.initializeCalendarIOListeners();
+    this.initializeKeyboardListeners();
+    this.initializeOverlayListener();
   }
 
   componentDidLoad() {
@@ -898,9 +916,7 @@ export class Datetime implements ComponentInterface {
       const ev = entries[0];
       if (!ev.isIntersecting) { return; }
 
-      this.initializeCalendarIOListeners();
-      this.initializeKeyboardListeners();
-      this.initializeOverlayListener();
+      this.initializeListeners();
 
       /**
        * TODO: Datetime needs a frame to ensure that it
@@ -936,7 +952,7 @@ export class Datetime implements ComponentInterface {
       const ev = entries[0];
       if (ev.isIntersecting) { return; }
 
-      this.destroyListeners();
+      this.destroyInteractionListeners();
 
       writeTask(() => {
         this.el.classList.remove('datetime-ready');
@@ -960,6 +976,29 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * When the presentation is changed, all calendar content is recreated,
+   * so we need to re-init behavior with the new elements.
+   */
+  componentDidRender() {
+    const { presentation, prevPresentation } = this;
+
+    if (prevPresentation === null) {
+      this.prevPresentation = presentation;
+      return;
+    }
+
+    if (presentation === prevPresentation) { return; }
+    this.prevPresentation = presentation;
+
+    this.destroyInteractionListeners();
+    if (this.destroyOverlayListener !== undefined) {
+      this.destroyOverlayListener();
+    }
+
+    this.initializeListeners();
+  }
+
+  /**
    * When doing subsequent presentations of an inline
    * overlay, the IO callback will fire again causing
    * the calendar to go back one month. We need to listen
@@ -970,9 +1009,15 @@ export class Datetime implements ComponentInterface {
     const overlay = this.el.closest('ion-popover, ion-modal');
     if (overlay === null) { return; }
 
-    overlay.addEventListener('willPresent', () => {
+    const overlayListener = () => {
       this.overlayIsPresenting = true;
-    });
+    };
+
+    overlay.addEventListener('willPresent', overlayListener);
+
+    this.destroyOverlayListener = () => {
+      overlay.removeEventListener('willPresent', overlayListener);
+    };
   }
 
   private processValue = (value?: string | null) => {
@@ -1034,7 +1079,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private nextMonth = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
@@ -1050,7 +1095,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private prevMonth = () => {
-    const { calendarBodyRef } = this;
+    const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) { return; }
 
     const prevMonth = calendarBodyRef.querySelector('.calendar-month:first-of-type');
