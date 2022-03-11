@@ -50,6 +50,7 @@ export const createAnimation = (animationId?: string): Animation => {
   let shouldCalculateNumAnimations = true;
   let keyframeName: string | undefined;
   let ani: AnimationInternal;
+  let paused = false;
 
   const id: string | undefined = animationId;
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
@@ -113,7 +114,12 @@ export const createAnimation = (animationId?: string): Animation => {
     numAnimationsRunning = 0;
     finished = false;
     willComplete = true;
+    paused = false;
   };
+
+  const isRunning = () => {
+    return numAnimationsRunning !== 0 && !paused;
+  }
 
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
     const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
@@ -770,6 +776,8 @@ export const createAnimation = (animationId?: string): Animation => {
           setStyleProperty(element, 'animation-play-state', 'paused');
         });
       }
+
+      paused = true;
     }
   };
 
@@ -906,6 +914,8 @@ export const createAnimation = (animationId?: string): Animation => {
       } else {
         playCSSAnimations();
       }
+
+      paused = false;
     });
   };
 
@@ -1000,6 +1010,7 @@ export const createAnimation = (animationId?: string): Animation => {
     beforeRemoveClass,
     beforeAddClass,
     onFinish,
+    isRunning,
 
     progressStart,
     progressStep,
