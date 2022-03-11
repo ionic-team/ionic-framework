@@ -1506,6 +1506,10 @@ export namespace Components {
          */
         "breakpoints"?: number[];
         /**
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+         */
+        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        /**
           * The component to display inside of the modal.
          */
         "component"?: ComponentRef;
@@ -1580,6 +1584,7 @@ export namespace Components {
         "showBackdrop": boolean;
         /**
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
          */
         "swipeToClose": boolean;
         /**
@@ -5215,6 +5220,10 @@ declare namespace LocalJSX {
          */
         "breakpoints"?: number[];
         /**
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+         */
+        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        /**
           * The component to display inside of the modal.
          */
         "component"?: ComponentRef;
@@ -5303,6 +5312,7 @@ declare namespace LocalJSX {
         "showBackdrop"?: boolean;
         /**
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
          */
         "swipeToClose"?: boolean;
         /**
