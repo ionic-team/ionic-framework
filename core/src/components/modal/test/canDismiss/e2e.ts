@@ -1,8 +1,8 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { newE2EPage, newE2EPage } from '@stencil/core/testing';
 import { dragElementBy } from '@utils/test';
 
 describe('modal - canDismiss handler', () => {
-  let page;
+  let page: E2EPage;
 
   describe('regular modal', () => {
     beforeEach(async () => {
