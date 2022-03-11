@@ -4,7 +4,6 @@ import { getTimeGivenProgression } from '../cubic-bezier';
 import { Animation } from '../animation-interface';
 
 describe('Animation Class', () => {
-
   describe('isRunning()', () => {
     let animation: Animation;
     beforeEach(() => {
