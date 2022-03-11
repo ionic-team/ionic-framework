@@ -21,7 +21,7 @@ Infinite scroll requires a scroll container to function. When using a virtual sc
   <virtual-scroll-element class="ion-content-scroll-host">
     <!-- Your virtual scroll content -->
   </virtual-scroll-element>
-  <ion-infinite-scroll (ionInfinite)="loadData($event)">
+  <ion-infinite-scroll>
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
