@@ -636,7 +636,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Returns the current Breakpoint of a sheet style modal
+   * Returns the current breakpoint of a sheet style modal
    */
   @Method()
   async getBreakpoint(): Promise<number | undefined> {

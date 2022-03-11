@@ -1529,7 +1529,7 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
-          * Returns the current Breakpoint of a sheet style modal
+          * Returns the current breakpoint of a sheet style modal
          */
         "getBreakpoint": () => Promise<number | undefined>;
         /**

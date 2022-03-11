@@ -1410,7 +1410,7 @@ Type: `Promise<boolean>`
 
 ### `getBreakpoint() => Promise<number | undefined>`
 
-Returns the current Breakpoint of a sheet style modal
+Returns the current breakpoint of a sheet style modal
 
 #### Returns
 
