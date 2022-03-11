@@ -13,7 +13,7 @@ The reorder group requires a scroll container to function. When using a virtual 
 ```html
 <ion-content scroll-y="false">
   <virtual-scroll-element class="ion-content-scroll-host">
-    <ion-reorder-group disabled="false" (ionItemReorder)="doReorder($event)">
+    <ion-reorder-group disabled="false">
       <ion-item>
         <ion-label>
           Item 1
