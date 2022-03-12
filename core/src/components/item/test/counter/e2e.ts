@@ -40,6 +40,23 @@ describe('item: counter', () => {
       expect(itemCounter.textContent).toBe('15 characters left');
     });
 
+    it('should format after changing the counterFormatter', async () => {
+      let itemCounter = await page.find('#customFormatter >>> .item-counter');
+
+      expect(itemCounter.textContent).toBe('20 characters left');
+
+      await page.$eval('#customFormatter', (el: any) => {
+        el.counterFormatter = () => {
+          return 'test label';
+        };
+      });
+      await page.waitForChanges();
+
+      itemCounter = await page.find('#customFormatter >>> .item-counter');
+
+      expect(itemCounter.textContent).toBe('test label');
+    });
+
   });
 
 })
