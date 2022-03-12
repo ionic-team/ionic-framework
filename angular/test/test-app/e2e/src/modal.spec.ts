@@ -43,7 +43,6 @@ describe('Modals', () => {
 
 });
 
-
 describe('Modals: Inline', () => {
   beforeEach(() => {
     cy.visit('/modal-inline');
@@ -76,4 +75,13 @@ describe('Modals: Inline', () => {
 
     cy.get('ion-modal').children('.ion-page').should('not.exist');
   })
+});
+
+it('should render ion-item classes correctly with controls in modals', () => {
+  cy.visit('/modals');
+  cy.get('#action-button').click();
+  cy.get('#close-modal').click();
+  cy.get('#action-button').click();
+
+  cy.get('#inputWithFloatingLabel').should('have.class', 'item-has-value');
 });
