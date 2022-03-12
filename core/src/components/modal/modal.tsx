@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -157,6 +158,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+   * @deprecated - To prevent modals from dismissing, use canDismiss instead.
    */
   @Prop() swipeToClose = false;
 
@@ -197,6 +199,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
   onTriggerChange() {
     this.configureTriggerInteraction();
   }
+
+  /**
+   * TODO (FW-937)
+   * This needs to default to true in the next
+   * major release. We default it to undefined
+   * so we can force the card modal to be swipeable
+   * when using canDismiss.
+   */
+
+  /**
+   * Determines whether or not a modal can dismiss
+   * when calling the `dismiss` method.
+   *
+   * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
+   * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   */
+  @Prop() canDismiss?: undefined | boolean | (() => Promise<boolean>);
 
   /**
    * Emitted after the modal has presented.
@@ -256,7 +275,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint } = this;
+    const { breakpoints, initialBreakpoint, swipeToClose } = this;
 
     /**
      * If user has custom ID set then we should
@@ -266,7 +285,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
-      console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.')
+      printIonWarning('Your breakpoints array must include the initialBreakpoint value.')
+    }
+
+    if (swipeToClose) {
+      printIonWarning('swipeToClose has been deprecated in favor of canDismiss.\n\nIf you want a card modal to be swipeable, set canDismiss to `true`. In the next major release of Ionic, swipeToClose will be removed, and all card modals will be swipeable by default.');
     }
   }
 
@@ -340,6 +363,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Determines whether or not the
+   * modal is allowed to dismiss based
+   * on the state of the canDismiss prop.
+   */
+  private async checkCanDismiss() {
+    const { canDismiss } = this;
+
+    /**
+     * TODO (FW-937) - Remove the following check in
+     * the next major release of Ionic.
+     */
+    if (canDismiss === undefined) { return true; }
+
+    if (typeof canDismiss === 'function') {
+      return canDismiss();
+    }
+
+    return canDismiss;
+  }
+
+  /**
    * Present the modal overlay after it has been created.
    */
   @Method()
@@ -378,7 +422,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (this.isSheetModal) {
       this.initSheetGesture();
-    } else if (this.swipeToClose) {
+
+    /**
+     * TODO (FW-937) - In the next major release of Ionic, all card modals
+     * will be swipeable by default. canDismiss will be used to determine if the
+     * modal can be dismissed. This check should change to check the presence of
+     * presentingElement instead.
+     *
+     * If we did not do this check, then not using swipeToClose would mean you could
+     * not run canDismiss on swipe as there would be no swipe gesture created.
+     */
+    } else if (this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined)) {
       this.initSwipeToClose();
     }
 
@@ -497,6 +551,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.gestureAnimationDismissing && role !== 'gesture') {
+      return false;
+    }
+
+    /**
+     * If a canDismiss handler is responsible
+     * for calling the dismiss method, we should
+     * not run the canDismiss check again.
+     */
+    if (role !== 'handler' && !await this.checkCanDismiss()) {
       return false;
     }
 

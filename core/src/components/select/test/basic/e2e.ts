@@ -10,6 +10,10 @@ test('select: basic', async () => {
 
   // Gender Alert Select
   let select = await page.find('#gender');
+
+  // add an event spy to the select
+  const ionDismiss = await select.spyOnEvent('ionDismiss');
+
   await select.click();
 
   let alert = await page.find('ion-alert');
@@ -19,6 +23,8 @@ test('select: basic', async () => {
   compares.push(await page.compareScreenshot('should open gender single select'));
 
   await alert.callMethod('dismiss');
+
+  expect(ionDismiss).toHaveReceivedEvent();
 
   // Skittles Action Sheet Select
   select = await page.find('#skittles');
@@ -32,6 +38,8 @@ test('select: basic', async () => {
 
   await actionSheet.callMethod('dismiss');
 
+  expect(ionDismiss).toHaveReceivedEvent();
+
   // Custom Alert Select
   select = await page.find('#customAlertSelect');
   await select.click();
@@ -43,6 +51,8 @@ test('select: basic', async () => {
   compares.push(await page.compareScreenshot('should open custom alert select'));
 
   await alert.callMethod('dismiss');
+
+  expect(ionDismiss).toHaveReceivedEvent();
 
   // Custom Popover Select
   select = await page.find('#customPopoverSelect');
@@ -72,6 +82,8 @@ test('select: basic', async () => {
   
   await popover.callMethod('dismiss');
 
+  expect(ionDismiss).toHaveReceivedEvent();
+
   // Custom Action Sheet Select
   select = await page.find('#customActionSheetSelect');
   await select.click();
@@ -83,6 +95,8 @@ test('select: basic', async () => {
   compares.push(await page.compareScreenshot('should open custom action sheet select'));
 
   await actionSheet.callMethod('dismiss');
+
+  expect(ionDismiss).toHaveReceivedEvent();
 
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
