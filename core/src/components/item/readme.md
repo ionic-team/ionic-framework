@@ -1594,7 +1594,7 @@ import { Component, h } from '@stencil/core';
 export class ItemExample {
   render() {
     return [
-      <ion-item counter="true">
+      <ion-item counter={true}>
         <ion-label>Counter</ion-label>
         <ion-input maxlength="20"></ion-input>
       </ion-item>

@@ -11,19 +11,6 @@ describe('item: counter', () => {
     expect(compare).toMatchScreenshot();
   });
 
-  describe('rtl', () => {
-
-    it('should match existing visual screenshots', async () => {
-      const page = await newE2EPage({
-        url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true'
-      });
-
-      const compare = await page.compareScreenshot();
-      expect(compare).toMatchScreenshot();
-    });
-
-  });
-
   describe('custom formatter', () => {
 
     let page: E2EPage;

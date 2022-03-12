@@ -146,9 +146,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   @Watch('counterFormatter')
   counterFormatterChanged() {
-    if (this.counter) {
-      this.updateCounterOutput(this.getFirstInput());
-    }
+    this.updateCounterOutput(this.getFirstInput());
   }
 
   @Listen('ionChange')
