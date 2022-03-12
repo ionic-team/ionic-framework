@@ -15,7 +15,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   protected lastValue: any;
   private statusChanges?: Subscription;
 
-  constructor(protected injector: Injector, protected el: ElementRef) { }
+  constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any): void {
     /**
