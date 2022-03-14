@@ -415,7 +415,7 @@ export default defineComponent({
 
 ```html
 <template>
-  <ion-item :counter="true" :counter-formatter="counterFormatter">
+  <ion-item :counter="true">
     <ion-label>Counter</ion-label>
     <ion-input maxlength="20"></ion-input>
   </ion-item>
@@ -426,7 +426,7 @@ export default defineComponent({
 
 ```html
 <template>
-  <ion-item :counter="true">
+  <ion-item :counter="true" :counter-formatter="counterFormatter">
     <ion-label>Counter</ion-label>
     <ion-input maxlength="20"></ion-input>
   </ion-item>
