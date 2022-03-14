@@ -117,7 +117,7 @@ export const createLocationHistory = () => {
         const existingTabRouteIndex = tabHistory.findIndex(r => r.position === routeInfo.position);
         if (existingTabRouteIndex === -1) return;
 
-        tabsHistory[tab].splice(existingTabRouteIndex)
+        tabsHistory[tab].splice(existingTabRouteIndex);
       }
 
     } else {
