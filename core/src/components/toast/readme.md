@@ -69,9 +69,9 @@ Toasts are intended to be subtle notifications and are not intended to interrupt
 
 `ion-toast` has `aria-live="polite"` and `aria-atomic="true"` set by default.
 
-`aria-live` causes screen readers to announce the content of the toast when it is presented. However, since the attribute is set to `'polite'`, screen readers generally do not interrupt the current task. Developers can customize this behavior by using the `htmlAttributes` property to set `aria-live` to `'assertive'`. This causes screen readers to immediately notify the user, potentially interrupting any previous updates.
+`aria-live` causes screen readers to announce the content of the toast when it is presented. However, since the attribute is set to `'polite'`, screen readers generally do not interrupt the current task. Developers can customize this behavior by using the `htmlAttributes` property to set `aria-live` to `'assertive'`. This will cause screen readers to immediately notify the user when a toast is presented, potentially interrupting any previous updates.
 
-`aria-atomic="true"` is set to ensure that the entire toast is announced as a single unit. This is useful when dynamically updating the content of the toast as it causes screen readers to announce the entire toast, not just the content that has changed. 
+`aria-atomic="true"` is set to ensure that the entire toast is announced as a single unit. This is useful when dynamically updating the content of the toast as it prevents screen readers from announcing only the content that has changed. 
 
 ### Tips
 
