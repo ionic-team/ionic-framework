@@ -12,32 +12,7 @@ const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
  */
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
-const hasOverflowScroll = (node: Element | null) => {
-  if (node === null) {
-    return false;
-  }
-  const isElement = node instanceof HTMLElement;
-  const overflowY = isElement && getComputedStyle(node).overflowY;
-  // Element is scrollable if there is overflow or if the overlay is explicit
-  const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
-  // The element is the node if it's scrollable or the scroll height is larger than the client height
-  if (isScrollable && node.scrollHeight >= node.clientHeight) {
-    return true;
-  }
-  return false;
-}
-
-const getScrollContainer = (node: Element) => {
-  if (hasOverflowScroll(node)) {
-    return node;
-  }
-  for (const item of Array.from(node.children)) {
-    if (item && hasOverflowScroll(item)) {
-      return item;
-    }
-  }
-  return null;
-}
+const isIonContent = (el: Element) => el && el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR;
 
 /**
  * Waits for the element host fully initialize before
@@ -50,16 +25,9 @@ const getScrollContainer = (node: Element) => {
  * or a selector within the host, if supplied through `scrollTarget`.
  */
 export const getScrollElement = async (el: Element) => {
-  await new Promise(resolve => componentOnReady(el, resolve));
-
-  if (el?.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
+  if (isIonContent(el)) {
+    await new Promise(resolve => componentOnReady(el, resolve));
     return (el as HTMLIonContentElement).getScrollElement();
-  }
-
-  const scrollContainer = getScrollContainer(el) as HTMLElement;
-
-  if (scrollContainer) {
-    return scrollContainer;
   }
 
   return el as HTMLElement;
@@ -94,7 +62,7 @@ export const findClosestIonContent = (el: Element) => {
  * using the public API `scrollToTop` with a duration.
  */
 export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> => {
-  if (el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
+  if (isIonContent(el)) {
     const content = el as HTMLIonContentElement;
     return content.scrollToTop(durationMs);
   }
@@ -110,7 +78,7 @@ export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> =
  * using the public API `scrollByPoint` with a duration.
  */
 export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs: number) => {
-  if (el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
+  if (isIonContent(el)) {
     const content = el as HTMLIonContentElement;
     return content.scrollByPoint(x, y, durationMs);
   }
