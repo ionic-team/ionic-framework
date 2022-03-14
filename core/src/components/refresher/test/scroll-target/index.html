@@ -40,11 +40,10 @@
     </ion-header>
 
     <ion-content scroll-y="false">
+      <ion-refresher id="refresher" slot="fixed">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <div id="content" class="ion-content-scroll-host">
-        <ion-refresher id="refresher" slot="fixed">
-          <ion-refresher-content></ion-refresher-content>
-        </ion-refresher>
-
         <div id="inner-scroll">
           <ion-list id="list"></ion-list>
         </div>
