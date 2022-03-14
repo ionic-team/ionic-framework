@@ -27,13 +27,13 @@ const hasOverflowScroll = (node: Element | null) => {
   return false;
 }
 
-const getScrollContainer = (node: Element): HTMLElement | null => {
+const getScrollContainer = (node: Element) => {
   if (hasOverflowScroll(node)) {
-    return node as HTMLElement;
+    return node;
   }
   for (const item of Array.from(node.children)) {
     if (item && hasOverflowScroll(item)) {
-      return item as HTMLElement;
+      return item;
     }
   }
   return null;
@@ -56,7 +56,7 @@ export const getScrollElement = async (el: Element) => {
     return (el as HTMLIonContentElement).getScrollElement();
   }
 
-  const scrollContainer = getScrollContainer(el);
+  const scrollContainer = getScrollContainer(el as HTMLElement);
 
   if (scrollContainer) {
     return scrollContainer;
