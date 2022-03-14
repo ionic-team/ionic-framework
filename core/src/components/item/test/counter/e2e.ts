@@ -57,6 +57,55 @@ describe('item: counter', () => {
       expect(itemCounter.textContent).toBe('test label');
     });
 
+    describe('when an exception occurs', () => {
+
+      const logs = [];
+
+      beforeEach(async () => {
+        page = await newE2EPage({
+          html: `
+          <ion-item counter="true"">
+            <ion-input maxlength="20" value=""></ion-input>
+          </ion-item>`
+        });
+
+        page.on('console', ev => {
+          if (ev.type() === 'error') {
+            logs.push(ev.text());
+          }
+        });
+
+        let itemCounter = await page.find('ion-item >>> .item-counter');
+
+        expect(itemCounter.textContent).toBe('0 / 20');
+
+        await page.$eval('ion-item', (el: any) => {
+          el.counterFormatter = () => {
+            throw new Error('This is an expected error');
+          };
+        });
+        await page.waitForChanges();
+
+      });
+
+      it('should default the formatting to length / maxlength', async () => {
+        const input = await page.find('ion-input');
+
+        await input.click();
+        await input.type('abcde');
+
+        const itemCounter = await page.find('ion-item >>> .item-counter');
+
+        expect(itemCounter.textContent).toBe('5 / 20');
+      });
+
+      it('should log an error', () => {
+        expect(logs.length).toBeGreaterThan(0);
+        expect(logs[0]).toMatch('[Ionic Error]: Exception in provided `counterFormatter`.');
+      });
+
+    });
+
   });
 
 })
