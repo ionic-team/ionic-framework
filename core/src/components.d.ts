@@ -1142,7 +1142,7 @@ export namespace Components {
         /**
           * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
          */
-        "counterFormatter": CounterFormatter;
+        "counterFormatter"?: CounterFormatter;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */

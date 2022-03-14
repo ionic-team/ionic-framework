@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { printIonError } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -140,7 +141,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
    */
-  @Prop() counterFormatter: CounterFormatter = (itemLength: number, maxLength: number) => `${itemLength} / ${maxLength}`;
+  @Prop() counterFormatter?: CounterFormatter;
 
   @State() counterString: string | null | undefined;
 
@@ -309,10 +310,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
-    if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
+    const { counter, counterFormatter, defaultCounterFormatter } = this;
+    if (counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
       const length = inputEl?.value?.toString().length ?? 0;
-      this.counterString = this.counterFormatter(length, inputEl.maxlength);
+      if (counterFormatter === undefined) {
+        this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
+      } else {
+        try {
+          this.counterString = counterFormatter(length, inputEl.maxlength);
+        } catch (e) {
+          printIonError('Exception in provided `counterFormatter`.', e);
+          // Fallback to the default counter formatter when an exception happens
+          this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
+        }
+      }
     }
+  }
+
+  private defaultCounterFormatter(length: number, maxlength: number) {
+    return `${length} / ${maxlength}`;
   }
 
   private hasStartEl() {
