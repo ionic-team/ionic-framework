@@ -70,6 +70,7 @@ describe('Tabs', () => {
     cy.ionPageDoesNotExist('tab1childtwo');
   })
 
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24934
   it('should return to tab root when clicking tab button', () => {
     cy.visit('http://localhost:8080/tabs')
 
@@ -87,6 +88,26 @@ describe('Tabs', () => {
 
     cy.get('ion-tab-button#tab-button-tab1').click();
 
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1chilone');
+  })
+
+  it.only('should return to tab root after replacing history', () => {
+    cy.visit('http://localhost:8080/tabs')
+
+    cy.get('#child-one').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1chilone');
+
+    cy.get('#child-one').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
     cy.ionPageVisible('tab1');
     cy.ionPageDoesNotExist('tab1chilone');
   })
