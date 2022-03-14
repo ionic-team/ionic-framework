@@ -114,9 +114,9 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
     const content = el as HTMLIonContentElement;
     return content.scrollByPoint(x, y, durationMs);
   }
-  return Promise.resolve(el.scrollTo({
-    top: y + el.scrollTop,
-    left: x + el.scrollLeft,
+  return Promise.resolve(el.scrollBy({
+    top: y,
+    left: x,
     behavior: durationMs > 0 ? 'smooth' : 'auto'
   }));
 }
