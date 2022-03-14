@@ -106,8 +106,8 @@ export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> =
 }
 
 /**
- * Scrolls to a specific x/y location. If an `ion-content` is found, it will scroll
- * using the public API `scrollToPoint` with a duration.
+ * Scrolls by a specified X/Y distance in the component. If an `ion-content` is found, it will scroll
+ * using the public API `scrollByPoint` with a duration.
  */
 export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs: number) => {
   if (el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR) {
@@ -115,8 +115,8 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
     return content.scrollByPoint(x, y, durationMs);
   }
   return Promise.resolve(el.scrollTo({
-    top: y,
-    left: x,
+    top: y + el.scrollTop,
+    left: x + el.scrollLeft,
     behavior: durationMs > 0 ? 'smooth' : 'auto'
   }));
 }
