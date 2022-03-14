@@ -51,7 +51,7 @@ describe('Tabs', () => {
     cy.ionPageHidden('tab1');
   });
 
-  it.only('should return to tab root when clicking tab button after going back', () => {
+  it('should return to tab root when clicking tab button after going back', () => {
     cy.visit('http://localhost:8080/tabs')
 
     cy.get('#child-one').click();
@@ -66,12 +66,11 @@ describe('Tabs', () => {
 
     cy.ionPageVisible('tab1');
 
-    // TODO this page is not removed
-    //cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageDoesNotExist('tab1childone');
     cy.ionPageDoesNotExist('tab1childtwo');
   })
 
-  it.only('should return to tab root when clicking tab button', () => {
+  it('should return to tab root when clicking tab button', () => {
     cy.visit('http://localhost:8080/tabs')
 
     cy.get('#child-one').click();
@@ -89,6 +88,7 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab1').click();
 
     cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1chilone');
   })
 
   it('should be able to create and destroy tabs', () => {
