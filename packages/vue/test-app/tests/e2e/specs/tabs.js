@@ -51,19 +51,66 @@ describe('Tabs', () => {
     cy.ionPageHidden('tab1');
   });
 
-  it('should return to tab root when clicking tab button', () => {
+  it('should return to tab root when clicking tab button after going back', () => {
     cy.visit('http://localhost:8080/tabs')
 
     cy.get('#child-one').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
     cy.get('#child-two').click();
+    cy.ionPageHidden('tab1childone');
+    cy.ionPageVisible('tab1childtwo');
 
     cy.get('ion-tab-button#tab-button-tab1').click();
 
     cy.ionPageVisible('tab1');
 
-    // TODO this page is not removed
-    //cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageDoesNotExist('tab1childone');
     cy.ionPageDoesNotExist('tab1childtwo');
+  })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24934
+  it('should return to tab root when clicking tab button', () => {
+    cy.visit('http://localhost:8080/tabs')
+
+    cy.get('#child-one').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('#child-two').click();
+    cy.ionPageHidden('tab1childone');
+    cy.ionPageVisible('tab1childtwo');
+
+    cy.ionBackClick('tab1childtwo');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageDoesNotExist('tab1childtwo');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1chilone');
+  })
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24934
+  it('should return to tab root after replacing history', () => {
+    cy.visit('http://localhost:8080/tabs')
+
+    cy.get('#child-one').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1chilone');
+
+    cy.get('#child-one').click();
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab1chilone');
   })
 
   it('should be able to create and destroy tabs', () => {
