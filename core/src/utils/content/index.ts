@@ -56,7 +56,7 @@ export const getScrollElement = async (el: Element) => {
     return (el as HTMLIonContentElement).getScrollElement();
   }
 
-  const scrollContainer = getScrollContainer(el as HTMLElement);
+  const scrollContainer = getScrollContainer(el) as HTMLElement;
 
   if (scrollContainer) {
     return scrollContainer;
