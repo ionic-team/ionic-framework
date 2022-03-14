@@ -262,7 +262,8 @@ export const config: Config = {
     pixelmatchThreshold: 0.05,
     waitBeforeScreenshot: 20,
     moduleNameMapper: {
-      "@utils/test": ["<rootDir>/src/utils/test/utils"]
+      "@utils/test": ["<rootDir>/src/utils/test/utils"],
+      "@utils/logging": ["<rootDir>/src/utils/logging"]
     },
     emulate: [
       {
