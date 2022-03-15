@@ -657,11 +657,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
     if (!this.isSheetModal) {
-      console.warn('[Ionic Warning]: setCurrentBreakpoint is only supported on sheet modals.');
+      printIonWarning('setCurrentBreakpoint is only supported on sheet modals.');
       return;
     }
     if (!this.breakpoints!.includes(breakpoint)) {
-      console.warn(`[Ionic Warning]: Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`);
+      printIonWarning(`Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`);
       return;
     }
 
