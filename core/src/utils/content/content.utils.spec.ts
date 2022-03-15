@@ -174,14 +174,14 @@ describe('Content Utils', () => {
 
   });
 
-  it('printIonContentErrorMsg should display "<my-el> must be used inside ion-content or .ion-content-scroll-host."', () => {
+  it('printIonContentErrorMsg should display "<my-el> must be used inside ion-content."', () => {
     const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
     printIonContentErrorMsg(<any>{
       tagName: 'MY-EL'
     });
 
-    expect(consoleErrorMock).toHaveBeenCalledWith('<my-el> must be used inside ion-content or .ion-content-scroll-host.');
+    expect(consoleErrorMock).toHaveBeenCalledWith('<my-el> must be used inside ion-content.');
 
     consoleErrorMock.mockRestore();
   });

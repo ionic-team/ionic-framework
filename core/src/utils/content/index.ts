@@ -95,5 +95,5 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
  * within either the `ion-content` selector or the `.ion-content-scroll-host` class.
  */
 export const printIonContentErrorMsg = (el: HTMLElement) => {
-  return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR, ION_CONTENT_CLASS_SELECTOR);
+  return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR);
 }
