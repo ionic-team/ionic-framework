@@ -15,7 +15,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { createSheetGesture, MoveSheetToBreakpointOptions } from './gestures/sheet';
+import { MoveSheetToBreakpointOptions, createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
@@ -278,9 +278,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   @Watch('breakpoints')
-  breakpointsChanged(breakpoints: number[]) {
-    if (breakpoints) {
-      this.breakpoints = this.breakpoints?.sort((a, b) => a - b);
+  breakpointsChanged(breakpoints: number[] | undefined) {
+    if (typeof breakpoints !== 'undefined') {
+      this.breakpoints = breakpoints.sort((a, b) => a - b);
     }
   }
 
@@ -672,8 +672,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.moveSheetToBreakpoint) {
       this.moveSheetToBreakpoint({
         breakpoint,
+        breakpointOffset: 1 - this.currentBreakpoint!,
         canDismiss: this.canDismiss !== undefined && this.canDismiss !== true && this.breakpoints![0] === 0,
-        offset: 1 - this.currentBreakpoint!
       });
     }
   }

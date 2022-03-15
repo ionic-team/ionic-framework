@@ -24,7 +24,7 @@ export interface MoveSheetToBreakpointOptions {
    * - Setting the breakpoint to 0.25.
    * - The offset value should be 0.75 (1 - 0.25).
    */
-  offset: number;
+  breakpointOffset: number;
   /**
    * `true` if the sheet can be transitioned and dismissed off the view.
    */
@@ -236,13 +236,13 @@ export const createSheetGesture = (
 
     moveSheetToBreakpoint({
       breakpoint: closest,
+      breakpointOffset: offset,
       canDismiss: canDismissBlocksGesture,
-      offset,
     });
   };
 
   const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
-    const { breakpoint, canDismiss, offset } = options;
+    const { breakpoint, canDismiss, breakpointOffset } = options;
     /**
      * canDismiss should only prevent snapping
      * when users are trying to dismiss. If canDismiss
@@ -261,12 +261,12 @@ export const createSheetGesture = (
      */
     if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([
-        { offset: 0, transform: `translateY(${offset * 100}%)` },
+        { offset: 0, transform: `translateY(${breakpointOffset * 100}%)` },
         { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` }
       ]);
 
       backdropAnimation.keyframes([
-        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - offset, backdropBreakpoint)})` },
+        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - breakpointOffset, backdropBreakpoint)})` },
         { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})` }
       ]);
 
