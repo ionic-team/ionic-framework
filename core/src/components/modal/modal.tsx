@@ -43,6 +43,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
+  private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
   private keyboardOpenCallback?: () => void;
@@ -56,7 +57,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
 
-  currentBreakpoint?: number;
   lastFocus?: HTMLElement;
   animation?: Animation;
 
@@ -488,6 +488,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       wrapperEl,
       backdropBreakpoint,
       ani,
+      () => {
+        return this.currentBreakpoint;
+      },
       () => {
         this.sheetOnDismiss();
       },

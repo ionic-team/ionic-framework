@@ -10,6 +10,7 @@ export const createSheetGesture = (
   wrapperEl: HTMLElement,
   backdropBreakpoint: number,
   animation: Animation,
+  getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
@@ -66,8 +67,7 @@ export const createSheetGesture = (
      * allow for scrolling on the content.
      */
     const content = (detail.event.target! as HTMLElement).closest('ion-content');
-    breakpoints = (modalEl.breakpoints?.sort((a, b) => a - b)) || [];
-    currentBreakpoint = modalEl.currentBreakpoint!;
+    currentBreakpoint = getCurrentBreakpoint();
 
     if (currentBreakpoint === 1 && content) {
       return false;
