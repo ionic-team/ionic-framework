@@ -1531,7 +1531,7 @@ export namespace Components {
         /**
           * Returns the current breakpoint of a sheet style modal
          */
-        "getBreakpoint": () => Promise<number | undefined>;
+        "getCurrentBreakpoint": () => Promise<number | undefined>;
         /**
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
