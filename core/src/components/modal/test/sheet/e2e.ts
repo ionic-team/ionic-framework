@@ -148,13 +148,13 @@ describe('modal: sheet: setting the breakpoint', () => {
     });
 
     it('should not change the breakpoint', async () => {
-      const breakpoint = await modal.callMethod('getBreakpoint');
+      const breakpoint = await modal.callMethod('getCurrentBreakpoint');
       expect(breakpoint).toBe(0.25);
     });
 
     it('should console a warning to developers', async () => {
       expect(warnings.length).toBe(1);
-      expect(warnings[0]).toBe('Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.');
+      expect(warnings[0]).toBe('[Ionic Warning]: Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.');
     });
 
   });
@@ -167,7 +167,7 @@ describe('modal: sheet: setting the breakpoint', () => {
       await modal.callMethod('setCurrentBreakpoint', 0.25);
       await page.waitForChanges();
 
-      const breakpoint = await modal.callMethod('getBreakpoint');
+      const breakpoint = await modal.callMethod('getCurrentBreakpoint');
       expect(breakpoint).toBe(0.25);
     });
 
@@ -175,49 +175,17 @@ describe('modal: sheet: setting the breakpoint', () => {
 
   describe('setting the breakpoint to a valid value', () => {
 
-    it('should emit ionModalBreakpointWillChange', async () => {
+    it('should emit ionBreakpointDidChange', async () => {
       const modal = await openModal(page, '#sheet-modal');
 
-      const ionModalBreakpointWillChangeSpy = await modal.spyOnEvent('ionModalBreakpointWillChange');
+      const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
 
       await modal.callMethod('setCurrentBreakpoint', 0.5);
+      await modal.waitForEvent('ionBreakpointDidChange');
 
-      expect(ionModalBreakpointWillChangeSpy).toHaveReceivedEventTimes(1);
-    });
-
-    it('should emit ionModalBreakpointDidChange', async () => {
-      const modal = await openModal(page, '#sheet-modal');
-
-      const ionModalBreakpointDidChangeSpy = await modal.spyOnEvent('ionModalBreakpointDidChange');
-
-      await modal.callMethod('setCurrentBreakpoint', 0.5);
-      await modal.waitForEvent('ionModalBreakpointDidChange');
-
-      expect(ionModalBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
-    });
-
-    it('should emit breakpointWillChange', async () => {
-      const modal = await openModal(page, '#sheet-modal');
-
-      const breakpointWillChangeSpy = await modal.spyOnEvent('breakpointWillChange');
-
-      await modal.callMethod('setCurrentBreakpoint', 0.5);
-
-      expect(breakpointWillChangeSpy).toHaveReceivedEventTimes(1);
-    });
-
-    it('should emit breakpointDidChange', async () => {
-      const modal = await openModal(page, '#sheet-modal');
-
-      const breakpointDidChangeSpy = await modal.spyOnEvent('breakpointDidChange');
-
-      await modal.callMethod('setCurrentBreakpoint', 0.5);
-      await modal.waitForEvent('breakpointDidChange');
-
-      expect(breakpointDidChangeSpy).toHaveReceivedEventTimes(1);
+      expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
     });
 
   });
-
 
 });
