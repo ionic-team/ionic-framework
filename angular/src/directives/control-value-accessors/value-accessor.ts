@@ -111,7 +111,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
 export const setIonicClasses = (element: ElementRef): void => {
   raf(() => {
     const input = element.nativeElement as HTMLInputElement;
-    const hasValue = typeof input.value !== 'undefined' && input.value.toString().length > 0;
+    const hasValue = input.value != null && input.value.toString().length > 0;
     const classes = getClasses(input);
     setClasses(input, classes);
     const item = input.closest('ion-item');
