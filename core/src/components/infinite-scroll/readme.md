@@ -12,6 +12,21 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## Usage with Virtual Scroll
+
+Infinite scroll requires a scroll container to function. When using a virtual scrolling solution, you will need to disable scrolling on the `ion-content` and indicate which element container is responsible for the scroll container with the `.ion-content-scroll-host` class target.
+
+```html
+<ion-content scroll-y="false">
+  <virtual-scroll-element class="ion-content-scroll-host">
+    <!-- Your virtual scroll content -->
+  </virtual-scroll-element>
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+```
+
 ## Interfaces
 
 ### InfiniteScrollCustomEvent
@@ -335,7 +350,8 @@ export class InfiniteScrollExample {
 </template>
 
 <script lang="ts">
-import { 
+import {
+  InfiniteScrollCustomEvent,
   IonButton,
   IonContent, 
   IonInfiniteScroll, 
@@ -363,7 +379,7 @@ export default defineComponent({
     const toggleInfiniteScroll = () => {
       isDisabled.value = !isDisabled.value;
     }
-    const items = ref([]);
+    const items = ref<number[]>([]);
     const pushData = () => {
       const max = items.value.length + 20;
       const min = max - 20;
@@ -372,7 +388,7 @@ export default defineComponent({
       }
     }
     
-    const loadData = (ev: CustomEvent) => {
+    const loadData = (ev: InfiniteScrollCustomEvent) => {
       setTimeout(() => {
         pushData();
         console.log('Loaded data');

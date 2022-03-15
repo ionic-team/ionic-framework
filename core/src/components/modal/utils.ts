@@ -104,7 +104,7 @@ export const disableSheetBackdrop = (baseEl: HTMLIonModalElement, backdropEl: HT
   baseEl.classList.add('ion-disable-focus-trap');
 }
 
-export const moveSheetToBreakpoint = (
+export const moveSheetToBreakpoint = (options: {
   baseEl: HTMLIonModalElement,
   backdropEl: HTMLIonBackdropElement,
   animation: Animation,
@@ -113,17 +113,32 @@ export const moveSheetToBreakpoint = (
   offset: number,
   newBreakpoint: number,
   backdropBreakpoint: number,
+  closest: number,
+  canDismissBlocksGesture: boolean,
+  currentBreakpoint: number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
-) => {
+}) => {
+  const { baseEl, backdropEl, animation, gesture, breakpoints, offset, newBreakpoint, backdropBreakpoint, onDismiss, onBreakpointChange, canDismissBlocksGesture, closest } = options;
+  let { currentBreakpoint } = options;
+
   const SheetDefaults = SheetAnimationDefaults(backdropBreakpoint);
   const contentEl = baseEl.querySelector('ion-content');
 
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
+  /**
+   * canDismiss should only prevent snapping
+   * when users are trying to dismiss. If canDismiss
+   * is present but the user is trying to swipe upwards,
+   * we should allow that to happen,
+   */
+  const shouldPreventDismiss = canDismissBlocksGesture && closest === 0;
+  const snapToBreakpoint = shouldPreventDismiss ? currentBreakpoint : closest;
+
   const shouldRemainOpen = newBreakpoint !== 0;
-  let currentBreakpoint = 0;
+  currentBreakpoint = 0;
 
   /**
    * Update the animation so that it plays from
@@ -132,12 +147,12 @@ export const moveSheetToBreakpoint = (
   if (wrapperAnimation && backdropAnimation) {
     wrapperAnimation.keyframes([
       { offset: 0, transform: `translateY(${offset * 100}%)` },
-      { offset: 1, transform: `translateY(${(1 - newBreakpoint) * 100}%)` }
+      { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` }
     ]);
 
     backdropAnimation.keyframes([
       { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - offset, backdropBreakpoint)})` },
-      { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(newBreakpoint, backdropBreakpoint)})` }
+      { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})` }
     ]);
 
     animation.progressStep(0);
@@ -164,8 +179,8 @@ export const moveSheetToBreakpoint = (
           raf(() => {
             wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
             backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
-            animation.progressStart(true, 1 - newBreakpoint);
-            currentBreakpoint = newBreakpoint;
+            animation.progressStart(true, 1 - snapToBreakpoint);
+            currentBreakpoint = snapToBreakpoint;
             onBreakpointChange(currentBreakpoint);
 
             /**

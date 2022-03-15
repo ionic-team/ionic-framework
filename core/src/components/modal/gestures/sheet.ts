@@ -3,6 +3,8 @@ import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
 import { SheetAnimationDefaults, disableSheetBackdrop, enableSheetBackdrop, moveSheetToBreakpoint } from '../utils';
 
+import { calculateSpringStep } from './utils';
+
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
   backdropEl: HTMLIonBackdropElement,
@@ -21,10 +23,12 @@ export const createSheetGesture = (
   const height = wrapperEl.clientHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
+  let canDismissBlocksGesture = false;
+  const canDismissMaxStep = 0.95;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
-
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
+  const minBreakpoint = breakpoints[0];
 
   /**
    * After the entering animation completes,
@@ -77,6 +81,20 @@ export const createSheetGesture = (
 
   const onStart = () => {
     /**
+     * If canDismiss is anything other than `true`
+     * then users should be able to swipe down
+     * until a threshold is hit. At that point,
+     * the card modal should not proceed any further.
+     *
+     * canDismiss is never fired via gesture if there is
+     * no 0 breakpoint. However, it can be fired if the user
+     * presses Esc or the hardware back button.
+     * TODO (FW-937)
+     * Remove undefined check
+     */
+    canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
+
+    /**
      * If swiping on the content
      * we should disable scrolling otherwise
      * the sheet will expand and the content will scroll.
@@ -103,7 +121,34 @@ export const createSheetGesture = (
      * relative to where the user dragged.
      */
     const initialStep = 1 - currentBreakpoint;
-    offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
+    const secondToLastBreakpoint = breakpoints.length > 1 ? 1 - breakpoints[1] : undefined;
+    const step = initialStep + (detail.deltaY / height);
+    const isAttemptingDismissWithCanDismiss = secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
+
+    /**
+     * If we are blocking the gesture from dismissing,
+     * set the max step value so that the sheet cannot be
+     * completely hidden.
+     */
+    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+
+    /**
+     * If we are blocking the gesture from
+     * dismissing, calculate the spring modifier value
+     * this will be added to the starting breakpoint
+     * value to give the gesture a spring-like feeling.
+     * Note that when isAttemptingDismissWithCanDismiss is true,
+     * the modifier is always added to the breakpoint that
+     * appears right after the 0 breakpoint.
+     *
+     * Note that this modifier is essentially the progression
+     * between secondToLastBreakpoint and maxStep which is
+     * why we subtract secondToLastBreakpoint. This lets us get
+     * the result as a value from 0 to 1.
+     */
+    const processedStep = isAttemptingDismissWithCanDismiss && secondToLastBreakpoint !== undefined ? secondToLastBreakpoint + calculateSpringStep((step - secondToLastBreakpoint) / (maxStep - secondToLastBreakpoint)) : step;
+
+    offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
   };
 
@@ -115,14 +160,25 @@ export const createSheetGesture = (
     const velocity = detail.velocityY;
     const threshold = (detail.deltaY + velocity * 100) / height;
     const diff = currentBreakpoint - threshold;
-
     const closest = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
-    currentBreakpoint = 0;
-
-    moveSheetToBreakpoint(baseEl, backdropEl, animation, gesture, breakpoints, offset, closest, backdropBreakpoint, onDismiss, onBreakpointChange);
+    moveSheetToBreakpoint({
+      baseEl,
+      backdropEl,
+      animation,
+      gesture,
+      breakpoints,
+      offset,
+      newBreakpoint: closest,
+      backdropBreakpoint,
+      currentBreakpoint,
+      closest,
+      canDismissBlocksGesture,
+      onDismiss,
+      onBreakpointChange
+    });
   };
 
   const gesture = createGesture({

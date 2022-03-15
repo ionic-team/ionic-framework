@@ -1,3 +1,5 @@
+import { findClosestIonContent } from '@utils/content';
+
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
 export const enableScrollPadding = (keyboardHeight: number) => {
@@ -34,7 +36,7 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
     return;
   }
 
-  const el = input.closest('ion-content');
+  const el = findClosestIonContent(input);
   if (el === null) {
     return;
   }

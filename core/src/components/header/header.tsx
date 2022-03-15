@@ -1,7 +1,8 @@
 import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Attributes, componentOnReady, inheritAttributes } from '../../utils/helpers';
+import { Attributes, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
@@ -72,7 +73,8 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
+
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
@@ -84,22 +86,25 @@ export class Header implements ComponentInterface {
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
-      const condenseHeader = (contentEl) ? contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null : null;
+      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
+
+      if (!contentEl) {
+        printIonContentErrorMsg(this.el);
+        return;
+      }
+
+      const condenseHeader = contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null;
+
       await this.setupFadeHeader(contentEl, condenseHeader);
     }
   }
 
-  private setupFadeHeader = async (contentEl: HTMLIonContentElement | null, condenseHeader: HTMLElement | null) => {
-    if (!contentEl) { console.error('ion-header requires a content to collapse. Make sure there is an ion-content.'); return; }
-
-    await new Promise(resolve => componentOnReady(contentEl, resolve));
-    const scrollEl = this.scrollEl = await contentEl.getScrollElement();
+  private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
+    const scrollEl = this.scrollEl = await getScrollElement(contentEl);
 
     /**
      * Handle fading of toolbars on scroll
      */
-
     this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el, condenseHeader); };
     scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
@@ -123,12 +128,14 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private async setupCondenseHeader(contentEl: HTMLIonContentElement | null, pageEl: Element | null) {
-    if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
+  private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null) {
+    if (!contentEl || !pageEl) {
+      printIonContentErrorMsg(this.el);
+      return;
+    }
     if (typeof (IntersectionObserver as any) === 'undefined') { return; }
 
-    await new Promise(resolve => componentOnReady(contentEl, resolve));
-    this.scrollEl = await contentEl.getScrollElement();
+    this.scrollEl = await getScrollElement(contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
     this.collapsibleMainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as HTMLElement | undefined;
@@ -192,7 +199,7 @@ export class Header implements ComponentInterface {
         }}
         {...inheritedAttributes}
       >
-        { mode === 'ios' && translucent &&
+        {mode === 'ios' && translucent &&
           <div class="header-background"></div>
         }
         <slot></slot>

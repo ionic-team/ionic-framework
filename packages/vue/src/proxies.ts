@@ -271,6 +271,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'name',
   'disabled',
   'readonly',
+  'isDateEnabled',
   'min',
   'max',
   'presentation',
@@ -428,7 +429,8 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'routerAnimation',
   'routerDirection',
   'target',
-  'type'
+  'type',
+  'counterFormatter'
 ]);
 
 
@@ -699,6 +701,7 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
   'value',
   'ionChange',
   'ionCancel',
+  'ionDismiss',
   'ionFocus',
   'ionBlur',
   'ionStyle'

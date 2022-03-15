@@ -8,7 +8,7 @@ import { isPlatform } from '../../utils/platform';
 // -----------------------------
 type RefresherAnimationType = 'scale' | 'translate';
 
-export const getRefresherAnimationType = (contentEl: HTMLIonContentElement): RefresherAnimationType => {
+export const getRefresherAnimationType = (contentEl: HTMLElement): RefresherAnimationType => {
   const previousSibling = contentEl.previousElementSibling;
   const hasHeader = previousSibling !== null && previousSibling.tagName === 'ION-HEADER';
 

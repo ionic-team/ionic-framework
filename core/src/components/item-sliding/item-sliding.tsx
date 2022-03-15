@@ -188,12 +188,12 @@ export class ItemSliding implements ComponentInterface {
     return false;
   }
 
-   /**
-    * Given an optional side, return the ion-item-options element.
-    *
-    * @param side This side of the options to get. If a side is not provided it will
-    * return the first one available.
-    */
+  /**
+   * Given an optional side, return the ion-item-options element.
+   *
+   * @param side This side of the options to get. If a side is not provided it will
+   * return the first one available.
+   */
   private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
     if (side === undefined) {
       return this.leftOptions || this.rightOptions;

@@ -53,6 +53,10 @@ Items containing an input will highlight the bottom border of the input with a d
 
 The highlight color changes based on the item state, but all of the states use Ionic colors by default. When focused, the input highlight will use the `primary` color. If the input is valid it will use the `success` color, and invalid inputs will use the `danger` color. See the [CSS Custom Properties](#css-custom-properties) section below for the highlight color variables.
 
+### Counter Formatter
+
+When using `counter`, the default behavior is to format the value that gets displayed as `itemLength / maxLength`. This behavior can be customized by passing in a formatter function to the `counterFormatter` property. See the [Usage](#usage) section for an example.
+
 
 <!-- Auto Generated Below -->
 
@@ -397,6 +401,39 @@ The highlight color changes based on the item state, but all of the states use I
 </ion-item>
 ```
 
+### Item Counter
+
+```html
+<ion-item [counter]="true">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+```
+
+### Item Counter Formatter
+
+```html
+<ion-item [counter]="true" [counterFormatter]="counterFormatter">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+
+```
+
+```typescript
+
+import { Component } from '@angular/core';
+
+@Component({…})
+export class MyComponent {
+  
+  counterFormatter(inputLength: number, maxLength: number) {
+    return `${maxLength - inputLength} characters remaining`;
+  }
+}
+
+```
+
 
 ### Javascript
 
@@ -736,6 +773,30 @@ The highlight color changes based on the item state, but all of the states use I
 </ion-item>
 ```
 
+### Item Counter
+
+```html
+<ion-item counter="true">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+```
+
+### Item Counter Formatter
+
+```html
+<ion-item counter="true" id="custom-item">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+
+<script>
+  const customItem = document.querySelector('#custom-item');
+  customItem.counterFormatter = (inputLength, maxLength) => `${maxLength - inputLength} characters remaining`; 
+</script>
+
+```
+
 
 ### React
 
@@ -1057,6 +1118,18 @@ export const ItemExamples: React.FC = () => {
         <IonItem>
           <IonLabel>Range</IonLabel>
           <IonRange></IonRange>
+        </IonItem>
+
+        {/*-- Item Counter --*/}
+        <IonItem counter={true}>
+          <IonLabel>Counter</IonLabel>
+          <IonInput maxlength="20"></IonInput>
+        </IonItem>
+
+        {/*-- Item Counter Formatter --*/}
+        <IonItem counter={true} counterFormatter={(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`}>
+          <IonLabel>Counter</IonLabel>
+          <IonInput maxlength="20"></IonInput>
         </IonItem>
       </IonContent>
     </IonPage>
@@ -1509,6 +1582,48 @@ export class ItemExample {
 }
 ```
 
+### Item Counter
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item counter={true}>
+        <ion-label>Counter</ion-label>
+        <ion-input maxlength="20"></ion-input>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### Item Counter Formatter
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item counter="true" counterFormatter={(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`}>
+        <ion-label>Counter</ion-label>
+        <ion-input maxlength="20"></ion-input>
+      </ion-item>
+    ];
+  }
+}
+```
+
 
 ### Vue
 
@@ -1925,29 +2040,65 @@ export default defineComponent({
 </script>
 ```
 
+### Item Counter
+
+```html
+<template>
+  <ion-item :counter="true">
+    <ion-label>Counter</ion-label>
+    <ion-input maxlength="20"></ion-input>
+  </ion-item>
+</template>
+```
+
+### Item Counter Formatter
+
+```html
+<template>
+  <ion-item :counter="true" :counter-formatter="counterFormatter">
+    <ion-label>Counter</ion-label>
+    <ion-input maxlength="20"></ion-input>
+  </ion-item>
+</template>
+<script lang="ts">
+import { IonInput, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {  IonItem, IonLabel, IonInput },
+  setup() {
+    const counterFormatter = (inputLength: number, maxLength: number) => `${maxLength - inputLength} characters remaining`;
+    
+    return { counterFormatter };
+  }
+});
+</script>
+```
+
 
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                                                                                                                                                                                               | Type                                                    | Default          |
-| ----------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ---------------- |
-| `button`          | `button`           | If `true`, a button tag will be rendered and the item will be tappable.                                                                                                                                                                                                                   | `boolean`                                               | `false`          |
-| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                    | `string \| undefined`                                   | `undefined`      |
-| `counter`         | `counter`          | If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.                                                                                     | `boolean`                                               | `false`          |
-| `detail`          | `detail`           | If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.                                                                                                                                          | `boolean \| undefined`                                  | `undefined`      |
-| `detailIcon`      | `detail-icon`      | The icon to use when `detail` is set to `true`.                                                                                                                                                                                                                                           | `string`                                                | `chevronForward` |
-| `disabled`        | `disabled`         | If `true`, the user cannot interact with the item.                                                                                                                                                                                                                                        | `boolean`                                               | `false`          |
-| `download`        | `download`         | This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want). | `string \| undefined`                                   | `undefined`      |
-| `fill`            | `fill`             | The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.                                                                                                                              | `"outline" \| "solid" \| undefined`                     | `undefined`      |
-| `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                                   | `string \| undefined`                                   | `undefined`      |
-| `lines`           | `lines`            | How the bottom border should be displayed on the item.                                                                                                                                                                                                                                    | `"full" \| "inset" \| "none" \| undefined`              | `undefined`      |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                         | `"ios" \| "md"`                                         | `undefined`      |
-| `rel`             | `rel`              | Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).                                                                                                    | `string \| undefined`                                   | `undefined`      |
-| `routerAnimation` | --                 | When using a router, it specifies the transition animation when navigating to another page using `href`.                                                                                                                                                                                  | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined`      |
-| `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                                                  | `"back" \| "forward" \| "root"`                         | `'forward'`      |
-| `shape`           | `shape`            | The shape of the item. If "round" it will have increased border radius.                                                                                                                                                                                                                   | `"round" \| undefined`                                  | `undefined`      |
-| `target`          | `target`           | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`                                   | `undefined`      |
-| `type`            | `type`             | The type of the button. Only used when an `onclick` or `button` property is present.                                                                                                                                                                                                      | `"button" \| "reset" \| "submit"`                       | `'button'`       |
+| Property           | Attribute          | Description                                                                                                                                                                                                                                                                               | Type                                                                | Default          |
+| ------------------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------- |
+| `button`           | `button`           | If `true`, a button tag will be rendered and the item will be tappable.                                                                                                                                                                                                                   | `boolean`                                                           | `false`          |
+| `color`            | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                    | `string \| undefined`                                               | `undefined`      |
+| `counter`          | `counter`          | If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.                                                                                     | `boolean`                                                           | `false`          |
+| `counterFormatter` | --                 | A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".                                                                                                                                                                               | `((inputLength: number, maxLength: number) => string) \| undefined` | `undefined`      |
+| `detail`           | `detail`           | If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.                                                                                                                                          | `boolean \| undefined`                                              | `undefined`      |
+| `detailIcon`       | `detail-icon`      | The icon to use when `detail` is set to `true`.                                                                                                                                                                                                                                           | `string`                                                            | `chevronForward` |
+| `disabled`         | `disabled`         | If `true`, the user cannot interact with the item.                                                                                                                                                                                                                                        | `boolean`                                                           | `false`          |
+| `download`         | `download`         | This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want). | `string \| undefined`                                               | `undefined`      |
+| `fill`             | `fill`             | The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.                                                                                                                              | `"outline" \| "solid" \| undefined`                                 | `undefined`      |
+| `href`             | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                                   | `string \| undefined`                                               | `undefined`      |
+| `lines`            | `lines`            | How the bottom border should be displayed on the item.                                                                                                                                                                                                                                    | `"full" \| "inset" \| "none" \| undefined`                          | `undefined`      |
+| `mode`             | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                         | `"ios" \| "md"`                                                     | `undefined`      |
+| `rel`              | `rel`              | Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).                                                                                                    | `string \| undefined`                                               | `undefined`      |
+| `routerAnimation`  | --                 | When using a router, it specifies the transition animation when navigating to another page using `href`.                                                                                                                                                                                  | `((baseEl: any, opts?: any) => Animation) \| undefined`             | `undefined`      |
+| `routerDirection`  | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                                                  | `"back" \| "forward" \| "root"`                                     | `'forward'`      |
+| `shape`            | `shape`            | The shape of the item. If "round" it will have increased border radius.                                                                                                                                                                                                                   | `"round" \| undefined`                                              | `undefined`      |
+| `target`           | `target`           | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`                                               | `undefined`      |
+| `type`             | `type`             | The type of the button. Only used when an `onclick` or `button` property is present.                                                                                                                                                                                                      | `"button" \| "reset" \| "submit"`                                   | `'button'`       |
 
 
 ## Slots

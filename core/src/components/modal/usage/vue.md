@@ -35,13 +35,50 @@
   <app-vue-component title="Ionic"></app-vue-component>
 </ion-modal>
 
+<!-- Require Action Sheet confirmation before dismissing -->
+<ion-modal
+  :is-open="true"
+  :can-dismiss="canDismiss"
+>
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
 <script>
   import { IonModal, IonButton, IonContent } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import AppVueComponent from './AppVueComponent.vue'
   
   export default defineComponent({
-    components: { IonModal, IonButton, IonContent, AppVueComponent }
+    components: { IonModal, IonButton, IonContent, AppVueComponent },
+    setup() {
+      const canDismiss = async () => {
+        const actionSheet = await actionSheetController.create({
+          header: 'Are you sure you want to discard your changes?',
+          buttons: [
+            {
+              text: 'Discard Changes',
+              role: 'destructive'
+            },
+            {
+              text: 'Keep Editing',
+              role: 'cancel'
+            }
+          ]
+        });
+        
+        await actionSheet.present();
+        
+        const { role } = await actionSheet.onDidDismiss();
+        
+        if (role === 'destructive') {
+          return true;
+        }
+        
+        return false;
+      };
+      
+      return { canDismiss }
+    }
   });
 </script>
 ```
