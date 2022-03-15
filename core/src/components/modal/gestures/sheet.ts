@@ -1,11 +1,10 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
-import type { Modal } from '../modal';
 import { SheetAnimationDefaults, disableSheetBackdrop, enableSheetBackdrop, moveSheetToBreakpoint } from '../utils';
 
 export const createSheetGesture = (
-  modalEl: Modal,
+  baseEl: HTMLIonModalElement,
   backdropEl: HTMLIonBackdropElement,
   wrapperEl: HTMLElement,
   backdropBreakpoint: number,
@@ -16,15 +15,14 @@ export const createSheetGesture = (
 ) => {
   const SheetDefaults = SheetAnimationDefaults(backdropBreakpoint);
 
-  const baseEl = modalEl.el;
   const contentEl = baseEl.querySelector('ion-content');
   const height = wrapperEl.clientHeight;
-  let currentBreakpoint = modalEl.initialBreakpoint!;
+  let currentBreakpoint = baseEl.initialBreakpoint!;
   let offset = 0;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
-  let breakpoints = modalEl.breakpoints ?? [];
+  let breakpoints = baseEl.breakpoints ?? [];
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
   /**

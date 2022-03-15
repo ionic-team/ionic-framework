@@ -473,7 +473,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     ani.progressStart(true, 1);
 
     this.gesture = createSheetGesture(
-      this,
+      this.el,
       this.backdropEl!,
       wrapperEl,
       backdropBreakpoint,
