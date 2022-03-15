@@ -14,8 +14,6 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
     select: new FormControl([])
   });
 
-  defaultValue = 0;
-
   valueFromParams: string;
   onInit = 0;
   willEnter = 0;

@@ -26,7 +26,7 @@
   <form [formGroup]="form">
     <ion-item id="inputWithFloatingLabel">
       <ion-label color="primary" position="floating">Floating Label</ion-label>
-      <ion-select multiple="false" formControlName="select" [(ngModel)]="defaultValue">
+      <ion-select multiple="false" formControlName="select">
         <ion-select-option [value]="0">Option 0</ion-select-option>
         <ion-select-option [value]="1">Option 1</ion-select-option>
       </ion-select>
