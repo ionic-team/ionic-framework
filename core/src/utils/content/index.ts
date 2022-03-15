@@ -1,6 +1,7 @@
 import { componentOnReady } from '../helpers';
 import { printRequiredElementError } from '../logging';
 
+const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
 const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
 const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
 /**
@@ -12,7 +13,7 @@ const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
  */
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
-const isIonContent = (el: Element) => el && el.tagName.toLowerCase() === ION_CONTENT_ELEMENT_SELECTOR;
+const isIonContent = (el: Element) => el && el.tagName === ION_CONTENT_TAG_NAME;
 
 /**
  * Waits for the element host fully initialize before
