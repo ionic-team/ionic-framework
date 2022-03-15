@@ -186,6 +186,17 @@ describe('modal: sheet: setting the breakpoint', () => {
       expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
     });
 
+    it('should emit ionBreakpointDidChange when breakpoint is set to 0', async () => {
+      const modal = await openModal(page, '#sheet-modal');
+
+      const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
+
+      await modal.callMethod('setCurrentBreakpoint', 0);
+      await modal.waitForEvent('ionBreakpointDidChange');
+
+      expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
+    });
+
   });
 
 });

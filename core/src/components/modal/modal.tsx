@@ -563,6 +563,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     this.gestureAnimationDismissing = true;
     this.animation!.onFinish(async () => {
+      this.currentBreakpoint = 0;
+      this.ionBreakpointDidChange.emit({ breakpoint: this.currentBreakpoint });
       await this.dismiss(undefined, 'gesture');
       this.gestureAnimationDismissing = false;
     });
