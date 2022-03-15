@@ -5269,14 +5269,6 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted after the modal breakpoint has changed. Shorthand for ionModalBreakpointDidChange.
-         */
-        "onBreakpointDidChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
-        /**
-          * Emitted before the modal breakpoint is changed. Shorthand for ionModalBreakpointWillChange.
-         */
-        "onBreakpointWillChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
-        /**
           * Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
          */
         "onDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
@@ -5287,11 +5279,7 @@ declare namespace LocalJSX {
         /**
           * Emitted after the modal breakpoint has changed.
          */
-        "onIonModalBreakpointDidChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
-        /**
-          * Emitted before the modal breakpoint is changed.
-         */
-        "onIonModalBreakpointWillChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
+        "onIonBreakpointDidChange"?: (event: CustomEvent<{breakpoint: number}>) => void;
         /**
           * Emitted after the modal has dismissed.
          */
