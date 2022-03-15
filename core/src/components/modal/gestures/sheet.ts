@@ -243,12 +243,6 @@ export const createSheetGesture = (
 
   const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
     const { breakpoint, canDismiss, offset } = options;
-
-    const contentEl = baseEl.querySelector('ion-content');
-
-    const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
-    const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
-
     /**
      * canDismiss should only prevent snapping
      * when users are trying to dismiss. If canDismiss
