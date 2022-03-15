@@ -223,7 +223,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Emitted after the modal breakpoint has changed.
    */
-  @Event({ eventName: 'ionModalBreakpointDidChange' }) breakpointDidChange!: EventEmitter<{breakpoint: number}>;
+  @Event() ionBreakpointDidChange!: EventEmitter<{breakpoint: number}>;
 
   /**
    * Emitted after the modal has presented.
@@ -492,7 +492,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private setNewBreakpoint(breakpoint: number) {
     if (this.currentBreakpoint !== breakpoint) {
       this.currentBreakpoint = breakpoint;
-      this.breakpointDidChange.emit({ breakpoint });
+      this.ionBreakpointDidChange.emit({ breakpoint });
     }
   }
 
