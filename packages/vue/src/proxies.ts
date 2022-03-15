@@ -429,7 +429,8 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'routerAnimation',
   'routerDirection',
   'target',
-  'type'
+  'type',
+  'counterFormatter'
 ]);
 
 

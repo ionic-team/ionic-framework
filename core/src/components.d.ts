@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
+import { CounterFormatter } from "./components/item/item-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PinFormatter } from "./components/range/range-interface";
@@ -1138,6 +1139,10 @@ export namespace Components {
           * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
          */
         "counter": boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: CounterFormatter;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
@@ -4872,6 +4877,10 @@ declare namespace LocalJSX {
           * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
          */
         "counter"?: boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: CounterFormatter;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */

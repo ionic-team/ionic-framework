@@ -263,7 +263,7 @@ export const config: Config = {
     waitBeforeScreenshot: 20,
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
-      "@utils/*": ["<rootDir>/src/utils/*"],
+      "@utils/logging": ["<rootDir>/src/utils/logging"],
 
     },
     emulate: [
