@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Infinite Scroll - Basic</title>
+  <title>Infinite Scroll - Custom Scroll Target</title>
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
@@ -11,6 +11,13 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+  <style>
+    #scroll-target {
+      height: 100%;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,33 +25,28 @@
 
     <ion-header>
       <ion-toolbar>
-        <ion-title>Infinite Scroll - Basic</ion-title>
+        <ion-title>Infinite Scroll - Custom Scroll Target</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding" id="content">
+    <ion-content scroll-y="false">
+      <div id="scroll-target" class="ion-padding ion-content-scroll-host">
 
-      <ion-button onclick="toggleInfiniteScroll()" expand="block">
-        Toggle InfiniteScroll
-      </ion-button>
+        <ion-list></ion-list>
 
-      <ion-list id="list"></ion-list>
-
-      <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-        <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
-        </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
+        <ion-infinite-scroll threshold="100px">
+          <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
     </ion-content>
 
   </ion-app>
 
   <script>
-    const list = document.getElementById('list');
-    const infiniteScroll = document.getElementById('infinite-scroll');
-
-    function toggleInfiniteScroll() {
-      infiniteScroll.disabled = !infiniteScroll.disabled;
-    }
+    let count = 0;
+    const list = document.querySelector('ion-list');
+    const infiniteScroll = document.querySelector('ion-infinite-scroll');
 
     infiniteScroll.addEventListener('ionInfinite', async function () {
       await wait(500);
@@ -57,7 +59,7 @@
     function appendItems() {
       for (var i = 0; i < 30; i++) {
         const el = document.createElement('ion-item');
-        el.textContent = `${1 + i}`;
+        el.textContent = `${++count}`;
         list.appendChild(el);
       }
     }

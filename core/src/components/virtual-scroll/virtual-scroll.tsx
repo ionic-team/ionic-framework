@@ -195,7 +195,7 @@ export class VirtualScroll implements ComponentInterface {
    * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
    * dirty any time the content or their style changes.
    *
-   * The subset of items to be updated can are specifing by an offset and a length.
+   * The subset of items to be updated can are specifying by an offset and a length.
    */
   @Method()
   async checkRange(offset: number, len = -1) {
@@ -443,7 +443,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{ dom: VirtualNode[] }> = ({ dom }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};

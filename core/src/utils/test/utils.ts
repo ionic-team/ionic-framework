@@ -1,4 +1,5 @@
-import { E2EElement, E2EPage } from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
+import { E2EElement } from '@stencil/core/testing';
 import { ElementHandle } from 'puppeteer';
 
 /**
@@ -120,7 +121,7 @@ export const dragElementBy = async (
  * @param interval: number - Interval to run setInterval on
  */
 export const waitForFunctionTestContext = async (fn: any, params: any, interval = 16): Promise<any> => {
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     const intervalId = setInterval(() => {
       if (fn(params)) {
         clearInterval(intervalId);
@@ -185,6 +186,30 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
 };
+
+/**
+ * Scrolls to a specific x/y coordinate within a scroll container. Supports custom
+ * method for `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ * @param x The x coordinate to scroll to.
+ * @param y The y coordinate to scroll to.
+ */
+export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
+  await page.evaluate(async selector => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToPoint(x, y);
+      } else {
+        el.scroll(x, y);
+      }
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
+}
 
 /**
  * Scrolls to the bottom of a scroll container. Supports custom method for

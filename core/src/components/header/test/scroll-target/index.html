@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Header - Fade</title>
+  <title>Header - Custom Scroll Target</title>
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
@@ -53,6 +53,18 @@
     .grid-item {
       height: 200px;
     }
+
+    #scroll-target {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+
+      padding: 50px 0;
+    }
   </style>
 </head>
 
@@ -64,21 +76,23 @@
           <ion-title>Mailboxes</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content fullscreen="true">
-        <ion-header collapse="condense">
-          <ion-toolbar>
-            <ion-title size="large">Mailboxes</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <div class="grid ion-padding">
-          <div class="grid-item red"></div>
-          <div class="grid-item green"></div>
-          <div class="grid-item blue"></div>
-          <div class="grid-item yellow"></div>
-          <div class="grid-item pink"></div>
-          <div class="grid-item purple"></div>
-          <div class="grid-item black"></div>
-          <div class="grid-item orange"></div>
+      <ion-content fullscreen="true" scroll-y="false">
+        <div id="scroll-target" class="ion-content-scroll-host">
+          <ion-header collapse="condense">
+            <ion-toolbar>
+              <ion-title size="large">Mailboxes</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <div class="grid ion-padding">
+            <div class="grid-item red"></div>
+            <div class="grid-item green"></div>
+            <div class="grid-item blue"></div>
+            <div class="grid-item yellow"></div>
+            <div class="grid-item pink"></div>
+            <div class="grid-item purple"></div>
+            <div class="grid-item black"></div>
+            <div class="grid-item orange"></div>
+          </div>
         </div>
       </ion-content>
       <ion-footer translucent="true">

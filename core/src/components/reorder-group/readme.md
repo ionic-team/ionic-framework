@@ -6,6 +6,31 @@ Once the user drags an item and drops it in a new position, the `ionItemReorder`
 
 The `detail` property of the `ionItemReorder` event includes all of the relevant information about the reorder operation, including the `from` and `to` indexes. In the context of reordering, an item moves `from` an index `to` a new index.
 
+## Usage with Virtual Scroll
+
+The reorder group requires a scroll container to function. When using a virtual scrolling solution, you will need to disable scrolling on the `ion-content` and indicate which element container is responsible for the scroll container with the `.ion-content-scroll-host` class target.
+
+```html
+<ion-content scroll-y="false">
+  <virtual-scroll-element class="ion-content-scroll-host">
+    <ion-reorder-group disabled="false">
+      <ion-item>
+        <ion-label>
+          Item 1
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          Item 2
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+  </virtual-scroll-element>
+</ion-content>
+```
+
 ## Interfaces
 
 ### ItemReorderEventDetail

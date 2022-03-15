@@ -1,12 +1,12 @@
 import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
-import { getElementProperty, queryDeep } from '@utils/test';
+import { getElementProperty, queryDeep } from '../../../../utils/test/utils';
 import { moveReorderItem } from '../test.utils';
 
-test('reorder: interactive', async () => {
+it('reorder: custom scroll target', async () => {
   const page = await newE2EPage({
-    url: '/src/components/reorder-group/test/interactive?ionic:_testing=true'
+    url: '/src/components/reorder-group/test/scroll-target?ionic:_testing=true'
   });
 
   const compares = [];
@@ -26,25 +26,7 @@ test('reorder: interactive', async () => {
   const itemsAfterSecondMove = await page.$$('ion-reorder');
   expect(await getElementProperty(itemsAfterSecondMove[0], 'id')).toEqual('item-0');
 
-  compares.push(await page.compareScreenshot('reorder: interactive after move; before shadow move'));
-
-  const shadowDomList = await queryDeep(page, 'test-reorder-list-shadow-dom', 'ion-list');
-
-  const itemsInShadowRoot = await shadowDomList.$$('ion-reorder');
-  const getShadowItemId = await getElementProperty(itemsInShadowRoot[0], 'id');
-  expect(getShadowItemId).toEqual('item-0');
-
-  await moveItem(getShadowItemId, page, 'down', 1, 'test-reorder-list-shadow-dom', 'ion-list');
-
-  const itemsInShadowRootAfterFirstMove = await shadowDomList.$$('ion-reorder');
-  expect(await getElementProperty(itemsInShadowRootAfterFirstMove[0], 'id')).toEqual('item-1');
-
-  await moveItem(getShadowItemId, page, 'up', 1, 'test-reorder-list-shadow-dom', 'ion-list');
-
-  const itemsInShadowRootAfterSecondMove = await shadowDomList.$$('ion-reorder');
-  expect(await getElementProperty(itemsInShadowRootAfterSecondMove[0], 'id')).toEqual('item-0');
-
-  compares.push(await page.compareScreenshot('reorder: interactive after shadow move'));
+  compares.push(await page.compareScreenshot('reorder: interactive after move'));
 
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
