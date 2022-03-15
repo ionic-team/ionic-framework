@@ -287,9 +287,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * not assign the default incrementing ID.
      */
     this.modalId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
-    this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
+    const isSheetModal = this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
 
-    if (this.isSheetModal) {
+    if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
     }
 
