@@ -7,8 +7,10 @@ export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
   backdropEl: HTMLIonBackdropElement,
   wrapperEl: HTMLElement,
+  initialBreakpoint: number,
   backdropBreakpoint: number,
   animation: Animation,
+  breakpoints: number[] = [],
   getCurrentBreakpoint: () => number | undefined,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
@@ -17,12 +19,11 @@ export const createSheetGesture = (
 
   const contentEl = baseEl.querySelector('ion-content');
   const height = wrapperEl.clientHeight;
-  let currentBreakpoint = baseEl.initialBreakpoint!;
+  let currentBreakpoint = initialBreakpoint;
   let offset = 0;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
-  let breakpoints = baseEl.breakpoints ?? [];
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
   /**

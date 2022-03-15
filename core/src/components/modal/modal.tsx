@@ -476,8 +476,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.el,
       this.backdropEl!,
       wrapperEl,
+      this.el.initialBreakpoint!,
       backdropBreakpoint,
       ani,
+      this.breakpoints,
       () => this.currentBreakpoint,
       () => {
         this.sheetOnDismiss();
