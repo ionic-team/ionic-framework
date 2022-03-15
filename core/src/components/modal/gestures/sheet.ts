@@ -121,10 +121,6 @@ export const createSheetGesture = (
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
-    if (closest !== currentBreakpoint) {
-      modalEl.breakpointWillChange.emit({ breakpoint: closest });
-    }
-
     currentBreakpoint = 0;
 
     moveSheetToBreakpoint(baseEl, backdropEl, animation, gesture, breakpoints, offset, closest, backdropBreakpoint, onDismiss, onBreakpointChange);

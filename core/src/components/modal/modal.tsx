@@ -221,11 +221,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
-   * Emitted before the modal breakpoint is changed.
-   */
-  @Event({ eventName: 'ionModalBreakpointWillChange' }) breakpointWillChange!: EventEmitter<{breakpoint: number}>;
-
-  /**
    * Emitted after the modal breakpoint has changed.
    */
   @Event({ eventName: 'ionModalBreakpointDidChange' }) breakpointDidChange!: EventEmitter<{breakpoint: number}>;
@@ -608,7 +603,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    this.breakpointWillChange.emit({ breakpoint });
     moveSheetToBreakpoint(
       this.el,
       this.backdropEl!,
