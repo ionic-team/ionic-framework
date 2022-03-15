@@ -618,7 +618,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.sheetOnDismiss();
       },
       (newBreakpoint: number) => {
-      this.setNewBreakpoint(newBreakpoint);
+        this.setNewBreakpoint(newBreakpoint);
     });
   }
 
