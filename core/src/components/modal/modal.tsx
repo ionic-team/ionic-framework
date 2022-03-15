@@ -254,18 +254,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
-  /**
-   * Emitted before the modal breakpoint is changed.
-   * Shorthand for ionModalBreakpointWillChange.
-   */
-  @Event({ eventName: 'breakpointWillChange' }) breakpointWillChangeShorthand!: EventEmitter<{breakpoint: number}>;
-
-  /**
-   * Emitted after the modal breakpoint has changed.
-   * Shorthand for ionModalBreakpointDidChange.
-   */
-  @Event({ eventName: 'breakpointDidChange' }) breakpointDidChangeShorthand!: EventEmitter<{breakpoint: number}>;
-
   @Watch('swipeToClose')
   swipeToCloseChanged(enable: boolean) {
     if (this.gesture) {
@@ -510,7 +498,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.currentBreakpoint !== breakpoint) {
       this.currentBreakpoint = breakpoint;
       this.breakpointDidChange.emit({ breakpoint });
-      this.breakpointDidChangeShorthand.emit({ breakpoint });
     }
   }
 
@@ -622,7 +609,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     this.breakpointWillChange.emit({ breakpoint });
-    this.breakpointWillChangeShorthand.emit({ breakpoint });
     moveSheetToBreakpoint(
       this.el,
       this.backdropEl!,

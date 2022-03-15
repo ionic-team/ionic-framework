@@ -123,7 +123,6 @@ export const createSheetGesture = (
 
     if (closest !== currentBreakpoint) {
       modalEl.breakpointWillChange.emit({ breakpoint: closest });
-      modalEl.breakpointWillChangeShorthand.emit({ breakpoint: closest });
     }
 
     currentBreakpoint = 0;
