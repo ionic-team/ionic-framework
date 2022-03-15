@@ -78,17 +78,7 @@ describe('Modals: Inline', () => {
 
   describe('setting the current breakpoint', () => {
 
-    it('should emit breakpointWillChange', () => {
-      cy.get('#open-modal').click();
-
-      cy.get('ion-modal').then(modal => {
-        (modal.get(0) as any).setCurrentBreakpoint(1);
-      });
-
-      cy.get('#breakpointWillChange').should('have.text', '1');
-    });
-
-    it('should emit breakpointDidChange', () => {
+    it('should emit ionBreakpointDidChange', () => {
       cy.get('#open-modal').click();
 
       cy.get('ion-modal').then(modal => {

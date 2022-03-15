@@ -13,17 +13,12 @@ export class ModalInlineComponent implements AfterViewInit {
 
   items: string[] = [];
 
-  breakpointWillChangeCounter = 0;
   breakpointDidChangeCounter = 0;
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.items = ['A', 'B', 'C', 'D'];
     }, 1000);
-  }
-
-  onBreakpointWillChange() {
-    this.breakpointWillChangeCounter++;
   }
 
   onBreakpointDidChange() {
