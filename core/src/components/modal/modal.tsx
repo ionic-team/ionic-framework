@@ -15,9 +15,8 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { createSheetGesture } from './gestures/sheet';
+import { createSheetGesture, MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
-import { moveSheetToBreakpoint } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -48,6 +47,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
   private keyboardOpenCallback?: () => void;
+  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -526,7 +526,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    this.gesture = createSheetGesture(
+    const { gesture, moveSheetToBreakpoint } = createSheetGesture(
       this.el,
       this.backdropEl!,
       wrapperEl,
@@ -535,13 +535,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
       ani,
       this.breakpoints,
       () => this.currentBreakpoint,
-      () => {
-        this.sheetOnDismiss();
-      },
-      (breakpoint: number) => {
-        this.setNewBreakpoint(breakpoint);
-      }
+      () => this.sheetOnDismiss(),
+      (breakpoint: number) => this.setNewBreakpoint(breakpoint)
     );
+
+    this.gesture = gesture;
+    this.moveSheetToBreakpoint = moveSheetToBreakpoint;
+
     this.gesture.enable(true);
   }
 
@@ -664,25 +664,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
       console.warn(`[Ionic Warning]: Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`);
       return;
     }
-    if (this.currentBreakpoint === breakpoint) {
+
+    const { currentBreakpoint } = this;
+
+    if (currentBreakpoint === breakpoint) {
       return;
     }
 
-    moveSheetToBreakpoint({
-      baseEl: this.el,
-      backdropEl: this.backdropEl!,
-      animation: this.animation!,
-      gesture: this.gesture!,
-      breakpoints: this.breakpoints ?? [],
-      offset: 1 - this.currentBreakpoint!,
-      newBreakpoint: breakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-      closest: breakpoint,
-      canDismissBlocksGesture: this.canDismiss !== undefined && this.canDismiss !== true && this.breakpoints![0] === 0,
-      currentBreakpoint: this.currentBreakpoint!,
-      onDismiss: () => this.sheetOnDismiss(),
-      onBreakpointChange: (newBreakpoint: number) => this.setNewBreakpoint(newBreakpoint)
-    });
+    if (this.moveSheetToBreakpoint) {
+      this.moveSheetToBreakpoint({
+        breakpoint,
+        canDismiss: this.canDismiss !== undefined && this.canDismiss !== true && this.breakpoints![0] === 0,
+        offset: 1 - this.currentBreakpoint!
+      });
+    }
   }
 
   /**

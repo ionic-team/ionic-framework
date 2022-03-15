@@ -1,9 +1,35 @@
 import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
-import { SheetAnimationDefaults, disableSheetBackdrop, enableSheetBackdrop, moveSheetToBreakpoint } from '../utils';
+import { getBackdropValueForSheet } from '../utils';
 
-import { calculateSpringStep } from './utils';
+import { calculateSpringStep, handleCanDismiss } from './utils';
+
+export interface MoveSheetToBreakpointOptions {
+  /**
+   * The breakpoint value to move the sheet to.
+   */
+  breakpoint: number;
+  /**
+   * The offset value between the current breakpoint and the new breakpoint.
+   *
+   * For breakpoint changes as a result of a touch gesture, this value
+   * will be calculated internally.
+   *
+   * For breakpoint changes as a result of dynamically setting the value,
+   * this value should be the difference between the new and old breakpoint.
+   * For example:
+   * - breakpoints: [0, 0.25, 0.5, 0.75, 1]
+   * - Current breakpoint value is 1.
+   * - Setting the breakpoint to 0.25.
+   * - The offset value should be 0.75 (1 - 0.25).
+   */
+  offset: number;
+  /**
+   * `true` if the sheet can be transitioned and dismissed off the view.
+   */
+  canDismiss?: boolean;
+}
 
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
@@ -17,7 +43,25 @@ export const createSheetGesture = (
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
-  const SheetDefaults = SheetAnimationDefaults(backdropBreakpoint);
+  // Defaults for the sheet swipe animation
+  const defaultBackdrop = [
+    { offset: 0, opacity: 'var(--backdrop-opacity)' },
+    { offset: 1, opacity: 0.01 }
+  ]
+
+  const customBackdrop = [
+    { offset: 0, opacity: 'var(--backdrop-opacity)' },
+    { offset: 1 - backdropBreakpoint, opacity: 0 },
+    { offset: 1, opacity: 0 }
+  ]
+
+  const SheetDefaults = {
+    WRAPPER_KEYFRAMES: [
+      { offset: 0, transform: 'translateY(0%)' },
+      { offset: 1, transform: 'translateY(100%)' }
+    ],
+    BACKDROP_KEYFRAMES: (backdropBreakpoint !== 0) ? customBackdrop : defaultBackdrop
+  };
 
   const contentEl = baseEl.querySelector('ion-content');
   const height = wrapperEl.clientHeight;
@@ -29,6 +73,32 @@ export const createSheetGesture = (
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
   const minBreakpoint = breakpoints[0];
+
+  const enableBackdrop = () => {
+    baseEl.style.setProperty('pointer-events', 'auto');
+    backdropEl.style.setProperty('pointer-events', 'auto');
+
+    /**
+     * When the backdrop is enabled, elements such
+     * as inputs should not be focusable outside
+     * the sheet.
+     */
+    baseEl.classList.remove('ion-disable-focus-trap');
+  }
+
+  const disableBackdrop = () => {
+    baseEl.style.setProperty('pointer-events', 'none');
+    backdropEl.style.setProperty('pointer-events', 'none');
+
+    /**
+     * When the backdrop is enabled, elements such
+     * as inputs should not be focusable outside
+     * the sheet.
+     * Adding this class disables focus trapping
+     * for the sheet temporarily.
+     */
+    baseEl.classList.add('ion-disable-focus-trap');
+  }
 
   /**
    * After the entering animation completes,
@@ -52,9 +122,9 @@ export const createSheetGesture = (
      */
     const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
     if (shouldEnableBackdrop) {
-      enableSheetBackdrop(baseEl, backdropEl);
+      enableBackdrop();
     } else {
-      disableSheetBackdrop(baseEl, backdropEl);
+      disableBackdrop();
     }
   }
 
@@ -165,20 +235,114 @@ export const createSheetGesture = (
     });
 
     moveSheetToBreakpoint({
-      baseEl,
-      backdropEl,
-      animation,
-      gesture,
-      breakpoints,
+      breakpoint: closest,
+      canDismiss: canDismissBlocksGesture,
       offset,
-      newBreakpoint: closest,
-      backdropBreakpoint,
-      currentBreakpoint,
-      closest,
-      canDismissBlocksGesture,
-      onDismiss,
-      onBreakpointChange
     });
+  };
+
+  const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
+    const { breakpoint, canDismiss, offset } = options;
+
+    const contentEl = baseEl.querySelector('ion-content');
+
+    const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
+    const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
+
+    /**
+     * canDismiss should only prevent snapping
+     * when users are trying to dismiss. If canDismiss
+     * is present but the user is trying to swipe upwards,
+     * we should allow that to happen,
+     */
+    const shouldPreventDismiss = canDismiss && breakpoint === 0;
+    const snapToBreakpoint = shouldPreventDismiss ? currentBreakpoint : breakpoint;
+
+    const shouldRemainOpen = snapToBreakpoint !== 0;
+
+    currentBreakpoint = 0;
+    /**
+     * Update the animation so that it plays from
+     * the current offset to the new breakpoint.
+     */
+    if (wrapperAnimation && backdropAnimation) {
+      wrapperAnimation.keyframes([
+        { offset: 0, transform: `translateY(${offset * 100}%)` },
+        { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` }
+      ]);
+
+      backdropAnimation.keyframes([
+        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - offset, backdropBreakpoint)})` },
+        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})` }
+      ]);
+
+      animation.progressStep(0);
+    }
+
+    /**
+     * Gesture should remain disabled until the
+     * snapping animation completes.
+     */
+    gesture.enable(false);
+
+    animation
+      .onFinish(() => {
+        if (shouldRemainOpen) {
+
+          /**
+           * Once the snapping animation completes,
+           * we need to reset the animation to go
+           * from 0 to 1 so users can swipe in any direction.
+           * We then set the animation offset to the current
+           * breakpoint so that it starts at the snapped position.
+           */
+          if (wrapperAnimation && backdropAnimation) {
+            raf(() => {
+              wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
+              backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+              animation.progressStart(true, 1 - snapToBreakpoint);
+              currentBreakpoint = snapToBreakpoint;
+              onBreakpointChange(currentBreakpoint);
+
+              /**
+               * If the sheet is fully expanded, we can safely
+               * enable scrolling again.
+               */
+              if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
+                contentEl.scrollY = true;
+              }
+
+              /**
+               * Backdrop should become enabled
+               * after the backdropBreakpoint value
+               */
+              const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+              if (shouldEnableBackdrop) {
+                enableBackdrop();
+              } else {
+                disableBackdrop();
+              }
+
+              gesture.enable(true);
+            });
+          } else {
+            gesture.enable(true);
+          }
+        }
+
+        /**
+         * This must be a one time callback
+         * otherwise a new callback will
+         * be added every time onEnd runs.
+         */
+      }, { oneTimeCallback: true })
+      .progressEnd(1, 0, 500);
+
+    if (shouldPreventDismiss) {
+      handleCanDismiss(baseEl, animation);
+    } else if (!shouldRemainOpen) {
+      onDismiss();
+    }
   };
 
   const gesture = createGesture({
@@ -192,5 +356,9 @@ export const createSheetGesture = (
     onMove,
     onEnd
   });
-  return gesture;
+
+  return {
+    gesture,
+    moveSheetToBreakpoint
+  };
 };
