@@ -257,7 +257,7 @@ export const createSheetGesture = (
     currentBreakpoint = 0;
     /**
      * Update the animation so that it plays from
-     * the current offset to the new breakpoint.
+     * the last offset to the closest snap point.
      */
     if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([

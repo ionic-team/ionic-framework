@@ -530,26 +530,24 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.el,
       this.backdropEl!,
       wrapperEl,
-      this.el.initialBreakpoint!,
+      initialBreakpoint,
       backdropBreakpoint,
       ani,
       this.breakpoints,
       () => this.currentBreakpoint,
       () => this.sheetOnDismiss(),
-      (breakpoint: number) => this.setNewBreakpoint(breakpoint)
+      (breakpoint: number) => {
+        if (this.currentBreakpoint !== breakpoint) {
+          this.currentBreakpoint = breakpoint;
+          this.ionBreakpointDidChange.emit({ breakpoint });
+        }
+      }
     );
 
     this.gesture = gesture;
     this.moveSheetToBreakpoint = moveSheetToBreakpoint;
 
     this.gesture.enable(true);
-  }
-
-  private setNewBreakpoint(breakpoint: number) {
-    if (this.currentBreakpoint !== breakpoint) {
-      this.currentBreakpoint = breakpoint;
-      this.ionBreakpointDidChange.emit({ breakpoint });
-    }
   }
 
   private sheetOnDismiss() {
