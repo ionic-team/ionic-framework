@@ -275,6 +275,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
+  @Watch('breakpoints')
+  breakpointsChanged(breakpoints: number[]) {
+    if (breakpoints) {
+      this.breakpoints = this.breakpoints?.sort((a, b) => a - b);
+    }
+  }
+
   connectedCallback() {
     prepareOverlay(this.el);
   }
@@ -488,9 +495,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       wrapperEl,
       backdropBreakpoint,
       ani,
-      () => {
-        return this.currentBreakpoint;
-      },
+      () => this.currentBreakpoint,
       () => {
         this.sheetOnDismiss();
       },
@@ -618,15 +623,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.breakpointWillChange.emit({ breakpoint });
     this.breakpointWillChangeShorthand.emit({ breakpoint });
-
-    const sortedBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
-
     moveSheetToBreakpoint(
       this.el,
       this.backdropEl!,
       this.animation!,
       this.gesture!,
-      sortedBreakpoints,
+      this.breakpoints ?? [],
       1 - this.currentBreakpoint!,
       breakpoint,
       this.backdropBreakpoint,
