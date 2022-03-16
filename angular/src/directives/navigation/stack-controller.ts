@@ -294,7 +294,13 @@ export class StackController {
   }
 }
 
-const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location, zone: NgZone) => {
+const cleanupAsync = (
+  activeRoute: RouteView,
+  views: RouteView[],
+  viewsSnapshot: RouteView[],
+  location: Location,
+  zone: NgZone
+) => {
   if (typeof (requestAnimationFrame as any) === 'function') {
     return new Promise<void>((resolve) => {
       requestAnimationFrame(() => {
@@ -306,7 +312,13 @@ const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot:
   return Promise.resolve();
 };
 
-const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location, zone: NgZone) => {
+const cleanup = (
+  activeRoute: RouteView,
+  views: RouteView[],
+  viewsSnapshot: RouteView[],
+  location: Location,
+  zone: NgZone
+) => {
   /**
    * Re-enter the Angular zone when destroying page components. This will allow
    * lifecycle events (`ngOnDestroy`) to be run inside the Angular zone.
