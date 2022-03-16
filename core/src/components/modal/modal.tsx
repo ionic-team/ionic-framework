@@ -277,7 +277,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
-  @Watch('breakpoints')
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (typeof breakpoints !== 'undefined') {
       this.breakpoints = breakpoints.sort((a, b) => a - b);
@@ -319,7 +318,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
-
+    this.breakpointsChanged(this.breakpoints);
     this.configureTriggerInteraction();
   }
 
@@ -534,7 +533,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint,
       ani,
       this.breakpoints,
-      () => this.currentBreakpoint,
+      () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {
         if (this.currentBreakpoint !== breakpoint) {
