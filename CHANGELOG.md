@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.12](https://github.com/ionic-team/ionic-framework/compare/v6.0.11...v6.0.12) (2022-03-16)
+
+
+### Bug Fixes
+
+* **datetime:** reinit behavior on presentation change ([#24828](https://github.com/ionic-team/ionic-framework/issues/24828)) ([d46e1e8](https://github.com/ionic-team/ionic-framework/commit/d46e1e8506ca5095817b421e9edb37d41451e885))
+* **tabs:** angular, fire willChange event before selected tab changes ([#24910](https://github.com/ionic-team/ionic-framework/issues/24910)) ([d5efa11](https://github.com/ionic-team/ionic-framework/commit/d5efa113317eaf874712134dc9b8e4502aa4760f))
+* **toast:** screen readers now announce toasts when presented ([#24937](https://github.com/ionic-team/ionic-framework/issues/24937)) ([8a97f6b](https://github.com/ionic-team/ionic-framework/commit/8a97f6b5c9ca1e77c1790abd1e924955b6b6ea27)), closes [#22333](https://github.com/ionic-team/ionic-framework/issues/22333)
+* **vue:** tapping the active tab button now correctly resets the tab stack ([#24935](https://github.com/ionic-team/ionic-framework/issues/24935)) ([4534c8b](https://github.com/ionic-team/ionic-framework/commit/4534c8bc0b2bca7ab6eecd9886243116e9a039b7)), closes [#24934](https://github.com/ionic-team/ionic-framework/issues/24934)
+
+
+
+
+
 ## [6.0.11](https://github.com/ionic-team/ionic-framework/compare/v6.0.10...v6.0.11) (2022-03-09)
 
 
