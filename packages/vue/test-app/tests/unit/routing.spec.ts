@@ -33,6 +33,7 @@ describe('Routing', () => {
   it('should pass no props', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -60,6 +61,7 @@ describe('Routing', () => {
   it('should pass route props as an object', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -87,6 +89,7 @@ describe('Routing', () => {
   it('should pass route props as a function', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -131,6 +134,7 @@ describe('Routing', () => {
   it('should pass route params as props', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -159,13 +163,15 @@ describe('Routing', () => {
     const leaveHook = jest.fn();
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       setup() {
         onBeforeRouteLeave(leaveHook);
       }
     };
 
     const Page2 = {
-      ...BasePage
+      ...BasePage,
+      name: 'Page2',
     };
 
     const router = createRouter({
@@ -195,6 +201,7 @@ describe('Routing', () => {
   it('should show correct view when replacing', async () => {
     const Tabs = {
       components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel, IonRouterOutlet },
+      name: 'Tabs',
       template: `
         <ion-page>
           <ion-tabs>
@@ -213,14 +220,17 @@ describe('Routing', () => {
     }
     const Tab1 = {
       components: { IonPage },
+      name: 'Tab1',
       template: `<ion-page>Tab 1</ion-page>`
     }
     const Tab2 = {
       components: { IonPage },
+      name: 'Tab2',
       template: `<ion-page>Tab 2</ion-page>`
     }
     const Parent = {
       ...BasePage,
+      name: 'Parent',
       template: `<ion-page>Parent Page</ion-page>`
     }
 
@@ -273,13 +283,15 @@ describe('Routing', () => {
   it('should show the latest props passed to a route', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
     };
 
     const Home = {
-      ...BasePage
+      ...BasePage,
+      name: 'Home',
     }
 
     const router = createRouter({
@@ -320,13 +332,15 @@ describe('Routing', () => {
   it('should call the props function again when params change', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
     };
 
     const Home = {
-      ...BasePage
+      ...BasePage,
+      name: 'Home',
     }
 
     const propsFn = jest.fn((route) => {
@@ -372,6 +386,7 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
   it('should update props on a parameterized url', async () => {
     const Page = {
+      name: 'Page',
       props: {
         id: { type: String, default: 'Default ID' }
       },
@@ -416,11 +431,13 @@ describe('Routing', () => {
       beforeRouteLeave() {
         beforeRouteLeaveSpy();
       },
+      name: 'Page',
       components: { IonPage },
       template: `<ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
+      name: 'Page2',
       template: `<ion-page></ion-page>`
     }
 
@@ -458,14 +475,17 @@ describe('Routing', () => {
   it('canGoBack() should return the correct value', async () => {
     const Page = {
       components: { IonPage },
+      name: 'Page',
       template: `<ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
+      name: 'Page2',
       template: `<ion-page></ion-page>`
     }
     const AppWithInject = {
       components: { IonApp, IonRouterOutlet },
+      name: 'AppWithInject',
       template: '<ion-app><ion-router-outlet /></ion-app>',
       setup() {
         const ionRouter = useIonRouter();
@@ -507,18 +527,22 @@ describe('Routing', () => {
   it('canGoBack() should return the correct value when using router.go', async () => {
     const Page = {
       components: { IonPage },
+      name: 'Page',
       template: `<ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
+      name: 'Page2',
       template: `<ion-page></ion-page>`
     }
     const Page3 = {
       components: { IonPage },
+      name: 'Page3',
       template: `<ion-page></ion-page>`
     }
     const AppWithInject = {
       components: { IonApp, IonRouterOutlet },
+      name: 'AppWithInject',
       template: '<ion-app><ion-router-outlet /></ion-app>',
       setup() {
         const ionRouter = useIonRouter();
@@ -570,14 +594,17 @@ describe('Routing', () => {
   it('should not mount intermediary components when delta is 1', async () => {
     const Page = {
       components: { IonPage },
+      name: 'Page',
       template: `<ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
+      name: 'Page2',
       template: `<ion-page></ion-page>`
     }
     const Page3 = {
       components: { IonPage },
+      name: 'Page3',
       template: `<ion-page></ion-page>`
     }
 
@@ -621,14 +648,17 @@ describe('Routing', () => {
   it('should unmount intermediary components when using router.go', async () => {
     const Page = {
       components: { IonPage },
+      name: 'Page',
       template: `<ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
+      name: 'Page2',
       template: `<ion-page></ion-page>`
     }
     const Page3 = {
       components: { IonPage },
+      name: 'Page3',
       template: `<ion-page></ion-page>`
     }
 
