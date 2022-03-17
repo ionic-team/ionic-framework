@@ -43,6 +43,6 @@ runs:
       shell: bash
       working-directory: ./angular/test/test-app
     - name: Run Tests
-      run: npm run test {{ inputs.shard }} ${{ inputs.totalShards }}
+      run: npm run test ${{ inputs.shard }} ${{ inputs.totalShards }}
       shell: bash
       working-directory: ./angular/test/test-app
