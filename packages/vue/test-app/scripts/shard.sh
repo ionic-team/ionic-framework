@@ -7,12 +7,12 @@
 # If shards are not provided it will
 # assume 1 total shard.
 
-CURRENT_SHARD="${1:-1}"
-TOTAL_SHARDS="${2:-1}"
+CURRENT_SHARD="${2:-1}"
+TOTAL_SHARDS="${3:-1}"
 SHARD_TO_INDEX=$((CURRENT_SHARD - 1))
 
 # Find all spec files and order alphabetically
-paths=($(find ./tests/e2e/specs -name '*.js' | sort))
+paths=($(find ${1} -name '*.js' | sort))
 finalPaths=()
 
 # Loop through each file
