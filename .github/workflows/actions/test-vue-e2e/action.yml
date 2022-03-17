@@ -1,10 +1,10 @@
 name: 'Test Vue E2E'
 description: 'Test Vue E2E'
 inputs:
-shard:
-  description: 'Current test Shard (ex: 2)'
-totalShards:
-  description: 'Total number of test shards (ex: 4)'
+  shard:
+    description: 'Current test Shard (ex: 2)'
+  totalShards:
+    description: 'Total number of test shards (ex: 4)'
 runs:
   using: 'composite'
   steps:
