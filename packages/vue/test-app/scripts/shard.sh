@@ -9,6 +9,7 @@
 
 CURRENT_SHARD="${1:-1}"
 TOTAL_SHARDS="${2:-1}"
+SHARD_TO_INDEX=$((CURRENT_SHARD - 1))
 
 # Find all spec files and order alphabetically
 paths=($(find ./tests/e2e/specs -name '*.js' | sort))
@@ -21,7 +22,7 @@ finalPaths=()
 # paths array
 for index in "${!paths[@]}"; do
   chunk=$((index % TOTAL_SHARDS))
-  if [ $chunk == $CURRENT_SHARD ]; then
+  if [ $chunk == $SHARD_TO_INDEX ]; then
     finalPaths+=(${paths[$index]})
   fi
 done
