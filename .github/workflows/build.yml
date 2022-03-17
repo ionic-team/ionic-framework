@@ -133,11 +133,19 @@ jobs:
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5]
+        totalShards: [5]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/actions/test-react-router-e2e
+      with:
+        shard: ${{ matrix.shard }}
+        totalShards: ${{ matrix.totalShards }}
 
   test-react-e2e:
     strategy:
