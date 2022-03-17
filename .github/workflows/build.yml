@@ -112,11 +112,19 @@ jobs:
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5]
+        totalShards: [5]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/actions/test-angular-e2e
+      with:
+        shard: ${{ matrix.shard }}
+        totalShards: ${{ matrix.totalShards }}
 
   build-react:
     needs: [build-core]
