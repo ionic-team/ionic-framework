@@ -22,7 +22,7 @@
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
-    "@vue/cli-plugin-babel": "~4.5.15",
+    "@vue/cli-plugin-babel": "~5.0.3",
     "@vue/cli-plugin-e2e-cypress": "^5.0.0-alpha.7",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-router": "~4.5.15",
