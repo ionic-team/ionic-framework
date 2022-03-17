@@ -142,6 +142,32 @@
                     <ion-item button detail="false">
                       <ion-label>AirDrop</ion-label>
                     </ion-item>
+
+                    <ion-item button detail="true" id="share-other-popover">
+                      <ion-label>Other</ion-label>
+                    </ion-item>
+
+                    <ion-popover
+                      animated="true"
+                      trigger-action="click"
+                      trigger="share-other-popover"
+                      side="end"
+                      class="child-popover-three"
+                    >
+                      <ion-list lines="none">
+                        <ion-item button detail="false">
+                          <ion-label>Facebook</ion-label>
+                        </ion-item>
+
+                        <ion-item button detail="false">
+                          <ion-label>Twitter</ion-label>
+                        </ion-item>
+
+                        <ion-item button detail="false">
+                          <ion-label>LinkedIn</ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-popover>
                   </ion-list>
                 </ion-popover>
               </ion-list>
