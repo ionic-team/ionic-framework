@@ -95,7 +95,7 @@ jobs:
     - uses: ./.github/workflows/actions/test-vue-e2e
       with:
         shard: ${{ matrix.shard }}
-      t otalShards: ${{ matrix.totalShards }}
+        totalShards: ${{ matrix.totalShards }}
 
   build-angular:
     needs: [build-core]
