@@ -83,11 +83,19 @@ jobs:
     - uses: ./.github/workflows/actions/test-vue-spec
 
   test-vue-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5]
+        totalShards: [5]
     needs: [build-vue, build-vue-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/actions/test-vue-e2e
+      with:
+        shard: ${{ matrix.shard }}
+      t otalShards: ${{ matrix.totalShards }}
 
   build-angular:
     needs: [build-core]
