@@ -23,17 +23,14 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/overlays',
-    name: 'Overlays',
     component: () => import('@/views/Overlays.vue')
   },
   {
     path: '/inputs',
-    name: 'Inputs',
     component: () => import('@/views/Inputs.vue')
   },
   {
     path: '/slides',
-    name: 'Slides',
     component: () => import('@/views/Slides.vue')
   },
   {
@@ -63,7 +60,6 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/nested',
-    name: 'RouterOutlet',
     component: () => import('@/views/RouterOutlet.vue'),
     children: [
       {
