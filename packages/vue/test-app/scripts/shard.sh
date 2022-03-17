@@ -9,7 +9,7 @@ CURRENT_SHARD="${1:-1}"
 TOTAL_SHARDS="${2:-1}"
 
 # Find all spec files and order alphabetically
-paths=($(find ./tests/e2e/specs -name '*.js' | sort))
+paths=$(find ./tests/e2e/specs -name '*.js' | sort)
 finalPaths=()
 
 # Loop through each file
