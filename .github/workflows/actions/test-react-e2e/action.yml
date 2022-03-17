@@ -1,5 +1,10 @@
 name: 'Test React E2E'
 description: 'Test React E2E'
+inputs:
+  shard:
+    description: 'Current test Shard (ex: 2)'
+  totalShards:
+    description: 'Total number of test shards (ex: 4)'
 runs:
   using: 'composite'
   steps:
@@ -42,6 +47,6 @@ runs:
       shell: bash
       working-directory: ./packages/react/test-app
     - name: Run E2E Tests
-      run: npm run e2e
+      run: npm run e2e ${{ inputs.shard }} ${{ inputs.totalShards }}
       shell: bash
       working-directory: ./packages/react/test-app
