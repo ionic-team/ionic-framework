@@ -7,12 +7,12 @@
 # If shards are not provided it will
 # assume 1 total shard.
 
-CURRENT_SHARD="${2:-1}"
-TOTAL_SHARDS="${3:-1}"
+CURRENT_SHARD="${3:-1}"
+TOTAL_SHARDS="${4:-1}"
 SHARD_TO_INDEX=$((CURRENT_SHARD - 1))
 
 # Find all spec files and order alphabetically
-paths=($(find ${1} -name '*.js' | sort))
+paths=($(find ${1} -name '*.'${2} | sort))
 finalPaths=()
 
 # Loop through each file

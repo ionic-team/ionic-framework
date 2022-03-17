@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "./scripts/e2e.sh ./tests/e2e/specs",
+    "test:e2e": "./scripts/e2e.sh ./tests/e2e/specs js",
     "lint": "vue-cli-service lint",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "start": "vue-cli-service serve",
