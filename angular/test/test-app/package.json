@@ -17,7 +17,8 @@
     "cy.open": "cypress open",
     "cy.run": "cypress run",
     "test": "./scripts/e2e.sh ./e2e/src ts",
-    "test.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first"
+    "test.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first",
+    "cypress": "node_modules/.bin/cypress run --headless --browser chrome"
   },
   "dependencies": {
     "@angular/animations": "^13.1.3",
