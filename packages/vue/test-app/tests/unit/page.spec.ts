@@ -14,6 +14,7 @@ describe('IonPage', () => {
   it('should add ion-page class', async () => {
     const Page1 = {
       template: '<ion-page></ion-page>',
+      name: 'Page1',
       components: { IonPage }
     };
 
@@ -38,6 +39,7 @@ describe('IonPage', () => {
   it('should preserve custom classes', async () => {
     const Page1 = {
       template: '<ion-page class="custom-class"></ion-page>',
+      name: 'Page1',
       components: { IonPage }
     };
 
