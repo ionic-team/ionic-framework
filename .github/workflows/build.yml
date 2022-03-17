@@ -75,6 +75,13 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/actions/build-vue-router
 
+  test-vue-spec:
+    needs: [build-vue, build-vue-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-vue-spec
+
   test-vue-e2e:
     needs: [build-vue, build-vue-router]
     runs-on: ubuntu-latest
