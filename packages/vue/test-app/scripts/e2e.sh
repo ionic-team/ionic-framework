@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CURRENT_SHARD=$1
 TOTAL_SHARDS=$2
 
