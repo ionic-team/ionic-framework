@@ -29,7 +29,6 @@
     "@vue/cli-plugin-typescript": "~5.0.3",
     "@vue/cli-plugin-unit-jest": "~4.5.15",
     "@vue/cli-service": "~5.0.3",
-    "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-typescript": "^9.1.0",
     "@vue/test-utils": "^2.0.0-rc.18",
     "concurrently": "^6.0.0",
