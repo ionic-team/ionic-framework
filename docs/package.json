@@ -1,6 +1,6 @@
 {
   "name": "@ionic/docs",
-  "version": "6.0.10",
+  "version": "6.0.12",
   "description": "Pre-packaged API documentation for the Ionic docs.",
   "main": "core.json",
   "types": "core.d.ts",
@@ -16,6 +16,9 @@
   },
   "bugs": {
     "url": "https://github.com/ionic-team/ionic-docs/issues"
+  },
+  "scripts": {
+    "prepublishOnly": "echo noop"
   },
   "homepage": "https://ionicframework.com/docs"
 }

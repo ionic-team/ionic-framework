@@ -280,6 +280,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     return (
       <Host
+        aria-live="polite"
+        aria-atomic="true"
         role={role}
         tabindex="-1"
         {...this.htmlAttributes as any}

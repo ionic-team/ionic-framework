@@ -13,7 +13,7 @@ This attribute lets you specify how wide the button should be. By default, butto
 
 ## Fill
 
-This attributes determines the background and border color of the button. By default, buttons have a solid background unless the button is inside of a toolbar, in which case it has a transparent background.
+This attribute determines the background and border color of the button. By default, buttons have a solid background unless the button is inside of a toolbar, in which case it has a transparent background.
 
 | Value          | Details                                                                      |
 |----------------|------------------------------------------------------------------------------|
