@@ -1647,7 +1647,8 @@ Type: `Promise<void>`
 
 ### `setCurrentBreakpoint(breakpoint: number) => Promise<void>`
 
-Move a sheet style modal to a specific breakpoint.
+Move a sheet style modal to a specific breakpoint. The breakpoint value must
+be a value defined in your `breakpoints` array.
 
 #### Returns
 

@@ -651,7 +651,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Move a sheet style modal to a specific breakpoint.
+   * Move a sheet style modal to a specific breakpoint. The breakpoint value must
+   * be a value defined in your `breakpoints` array.
    */
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
