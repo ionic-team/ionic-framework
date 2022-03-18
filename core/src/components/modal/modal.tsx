@@ -97,7 +97,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * array must be the value of the `initialBreakpoint` property.
    * For example: [0, .25, .5, 1]
    */
-  @Prop() breakpoints?: number[];
+  @Prop({ mutable: true }) breakpoints?: number[];
 
   /**
    * A decimal value between 0 and 1 that indicates the
