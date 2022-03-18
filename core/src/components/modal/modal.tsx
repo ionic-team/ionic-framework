@@ -665,17 +665,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const { currentBreakpoint } = this;
+    const { currentBreakpoint, moveSheetToBreakpoint, canDismiss, breakpoints } = this;
 
     if (currentBreakpoint === breakpoint) {
       return;
     }
 
-    if (this.moveSheetToBreakpoint) {
-      this.moveSheetToBreakpoint({
+    if (moveSheetToBreakpoint) {
+      moveSheetToBreakpoint({
         breakpoint,
-        breakpointOffset: 1 - this.currentBreakpoint!,
-        canDismiss: this.canDismiss !== undefined && this.canDismiss !== true && this.breakpoints![0] === 0,
+        breakpointOffset: 1 - currentBreakpoint!,
+        canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
       });
     }
   }
