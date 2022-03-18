@@ -3,7 +3,7 @@ import { printIonWarning } from '@utils/logging';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, ModalBreakpointChangeEventDetail, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
@@ -242,7 +242,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Emitted after the modal breakpoint has changed.
    */
-  @Event() ionBreakpointDidChange!: EventEmitter<{breakpoint: number}>;
+  @Event() ionBreakpointDidChange!: EventEmitter<ModalBreakpointChangeEventDetail>;
 
   /**
    * Emitted after the modal has presented.
