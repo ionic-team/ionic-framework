@@ -1,6 +1,6 @@
 import { E2EElement, E2EPage, newE2EPage } from '@stencil/core/testing';
 import { openModal, testModal } from '../test.utils';
-import { getActiveElement, getActiveElementParent } from '@utils/test';
+import { getActiveElement, getActiveElementParent, dragElementBy } from '@utils/test';
 
 const DIRECTORY = 'sheet';
 
@@ -197,6 +197,20 @@ describe('modal: sheet: setting the breakpoint', () => {
       expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
     });
 
+  });
+
+  it('should emit ionBreakpointDidChang when the sheet is swiped to breakpoint 0', async () => {
+    const modal = await openModal(page, '#sheet-modal');
+
+    const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
+
+    const headerEl = await page.$('ion-modal ion-header');
+
+    await dragElementBy(headerEl, page, 0, 500);
+
+    await modal.waitForEvent('ionBreakpointDidChange');
+
+    expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
   });
 
 });

@@ -83,7 +83,7 @@ export const listenForEvent = async (page: any, eventType: string, element: any,
  * element.
  */
 export const dragElementBy = async (
-  element: any,
+  element: ElementHandle<Element>,
   page: any,
   x = 0,
   y = 0,
