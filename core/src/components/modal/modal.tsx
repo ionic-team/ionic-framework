@@ -278,7 +278,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   breakpointsChanged(breakpoints: number[] | undefined) {
-    if (typeof breakpoints !== 'undefined') {
+    if (breakpoints !== undefined) {
       this.breakpoints = breakpoints.sort((a, b) => a - b);
     }
   }
