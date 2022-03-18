@@ -144,7 +144,6 @@ describe('modal: sheet: setting the breakpoint', () => {
       modal = await openModal(page, '#sheet-modal');
 
       await modal.callMethod('setCurrentBreakpoint', 0.01);
-      await page.waitForChanges();
     });
 
     it('should not change the breakpoint', async () => {
@@ -159,21 +158,17 @@ describe('modal: sheet: setting the breakpoint', () => {
 
   });
 
-  describe('setting the breakpoint to the same value', () => {
+  describe('setting the breakpoint to a valid value', () => {
 
-    it('should do nothing', async () => {
+    it('should update the current breakpoint', async () => {
       const modal = await openModal(page, '#sheet-modal');
 
-      await modal.callMethod('setCurrentBreakpoint', 0.25);
-      await page.waitForChanges();
+      await modal.callMethod('setCurrentBreakpoint', 0.5);
+      await modal.waitForEvent('ionBreakpointDidChange');
 
       const breakpoint = await modal.callMethod('getCurrentBreakpoint');
-      expect(breakpoint).toBe(0.25);
+      expect(breakpoint).toBe(0.5);
     });
-
-  });
-
-  describe('setting the breakpoint to a valid value', () => {
 
     it('should emit ionBreakpointDidChange', async () => {
       const modal = await openModal(page, '#sheet-modal');
@@ -199,7 +194,7 @@ describe('modal: sheet: setting the breakpoint', () => {
 
   });
 
-  it('should emit ionBreakpointDidChang when the sheet is swiped to breakpoint 0', async () => {
+  it('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async () => {
     const modal = await openModal(page, '#sheet-modal');
 
     const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
