@@ -38,3 +38,7 @@ export interface ModalAttributes extends JSXBase.HTMLAttributes<HTMLElement> { }
 export interface ModalBreakpointChangeEventDetail {
   breakpoint: number;
 }
+
+export interface ModalCustomEvent extends CustomEvent {
+  target: HTMLIonModalElement;
+}
