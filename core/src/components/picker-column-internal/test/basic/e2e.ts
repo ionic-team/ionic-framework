@@ -51,6 +51,17 @@ describe('picker-column-internal', () => {
       expect(activeColumn.innerText).toEqual('23');
     });
 
+    it('should not emit ionChange when the value is modified externally', async () => {
+      const pickerColumn = await page.find('#default');
+      const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
+
+      await page.$eval('ion-picker-column-internal#default', (el: any) => {
+        el.value = '12';
+      });
+
+      expect(ionChangeSpy).not.toHaveReceivedEvent();
+    });
+
   });
 
 });
