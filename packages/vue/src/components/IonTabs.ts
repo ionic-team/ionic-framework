@@ -2,6 +2,7 @@ import { h, defineComponent, VNode } from 'vue';
 
 const WILL_CHANGE = 'ionTabsWillChange';
 const DID_CHANGE = 'ionTabsDidChange';
+const ALLOWED_ROUTER_OUTLET = ['IonRouterOutlet', 'RouterView'];
 
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: 'IonTabs',
@@ -16,13 +17,16 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
      * inside of ion-tabs.
      */
     if (slottedContent && slottedContent.length > 0) {
-      routerOutlet = slottedContent.find((child: VNode) => child.type && ((child.type as any).name === 'IonRouterOutlet' || (child.type as any).name === 'RouterView'));
+      routerOutlet = slottedContent.find((child: VNode) => child.type && ALLOWED_ROUTER_OUTLET.includes((child.type as any).name));
     }
+
 
     if (!routerOutlet) {
-      throw new Error('IonTabs must contain an IonRouterOutlet or RouterView. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
+      throw new Error('IonTabs must contain an IonRouterOutlet at best or RouterView. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
     }
-
+    if (!inject('navManager')) { 
+      throw new Error('Your app must use `import { createRouter, createWebHistory } from \'vue-router\'` as router. \n For best transition experience IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.')
+    }
     let childrenToRender = [
       h('div', {
         class: 'tabs-inner',
@@ -46,7 +50,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
        */
       const filteredContent = slottedContent.filter((child: VNode) => (
         !child.type ||
-        (child.type && (child.type as any).name !== 'IonRouterOutlet')
+        (child.type && ALLOWED_ROUTER_OUTLET.includes((child.type as any).name))
       ));
 
       const slottedTabBar = filteredContent.find((child: VNode) => child.type && (child.type as any).name === 'IonTabBar');
