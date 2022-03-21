@@ -55,8 +55,19 @@ describe('picker-column-internal', () => {
       const pickerColumn = await page.find('#default');
       const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
 
-      await page.$eval('ion-picker-column-internal#default', (el: any) => {
+      await page.$eval('#default', (el: any) => {
         el.value = '12';
+      });
+
+      expect(ionChangeSpy).not.toHaveReceivedEvent();
+    });
+
+    it('should emit ionChange when the picker is scrolled', async () => {
+      const pickerColumn = await page.find('#default');
+      const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
+
+      await page.$eval('#default', (el: any) => {
+        el.scrollTo(0, 300);
       });
 
       expect(ionChangeSpy).not.toHaveReceivedEvent();
