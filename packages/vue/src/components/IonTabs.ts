@@ -24,6 +24,10 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
     if (!routerOutlet) {
       throw new Error('IonTabs must contain an IonRouterOutlet at best or RouterView. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
     }
+    if (routerOutlet.type.name === 'RouterView') {
+      console.warn('IonTabs must contain an IonRouterOutlet, with RouterView transitions will not work as expected')
+    }
+
     if (!inject('navManager')) { 
       throw new Error('Your app must use `import { createRouter, createWebHistory } from \'@ionic/vue-router\'` as router. \n For best transition experience IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.')
     }
