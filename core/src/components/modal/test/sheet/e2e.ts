@@ -1,6 +1,6 @@
-import { newE2EPage } from '@stencil/core/testing';
-import { testModal } from '../test.utils';
-import { getActiveElement, getActiveElementParent } from '@utils/test';
+import { E2EElement, E2EPage, newE2EPage } from '@stencil/core/testing';
+import { openModal, testModal } from '../test.utils';
+import { getActiveElement, getActiveElementParent, dragElementBy } from '@utils/test';
 
 const DIRECTORY = 'sheet';
 
@@ -116,4 +116,96 @@ test('input should not be focusable when backdrop is active', async () => {
 
   const parentEl = await getActiveElement(page);
   expect(parentEl.tagName).toEqual('ION-BUTTON');
+});
+
+describe('modal: sheet: setting the breakpoint', () => {
+
+  let page: E2EPage;
+
+  beforeEach(async () => {
+    page = await newE2EPage({
+      url: '/src/components/modal/test/sheet?ionic:_testing=true'
+    });
+  });
+
+  describe('setting an invalid value', () => {
+
+    let warnings: string[];
+    let modal: E2EElement;
+
+    beforeEach(async () => {
+      warnings = [];
+      page.on('console', (ev) => {
+        if (ev.type() === 'warning') {
+          warnings.push(ev.text());
+        }
+      });
+
+      modal = await openModal(page, '#sheet-modal');
+
+      await modal.callMethod('setCurrentBreakpoint', 0.01);
+    });
+
+    it('should not change the breakpoint', async () => {
+      const breakpoint = await modal.callMethod('getCurrentBreakpoint');
+      expect(breakpoint).toBe(0.25);
+    });
+
+    it('should console a warning to developers', async () => {
+      expect(warnings.length).toBe(1);
+      expect(warnings[0]).toBe('[Ionic Warning]: Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.');
+    });
+
+  });
+
+  describe('setting the breakpoint to a valid value', () => {
+
+    it('should update the current breakpoint', async () => {
+      const modal = await openModal(page, '#sheet-modal');
+
+      await modal.callMethod('setCurrentBreakpoint', 0.5);
+      await modal.waitForEvent('ionBreakpointDidChange');
+
+      const breakpoint = await modal.callMethod('getCurrentBreakpoint');
+      expect(breakpoint).toBe(0.5);
+    });
+
+    it('should emit ionBreakpointDidChange', async () => {
+      const modal = await openModal(page, '#sheet-modal');
+
+      const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
+
+      await modal.callMethod('setCurrentBreakpoint', 0.5);
+      await modal.waitForEvent('ionBreakpointDidChange');
+
+      expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
+    });
+
+    it('should emit ionBreakpointDidChange when breakpoint is set to 0', async () => {
+      const modal = await openModal(page, '#sheet-modal');
+
+      const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
+
+      await modal.callMethod('setCurrentBreakpoint', 0);
+      await modal.waitForEvent('ionBreakpointDidChange');
+
+      expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
+    });
+
+  });
+
+  it('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async () => {
+    const modal = await openModal(page, '#sheet-modal');
+
+    const ionBreakpointDidChangeSpy = await modal.spyOnEvent('ionBreakpointDidChange');
+
+    const headerEl = await page.$('ion-modal ion-header');
+
+    await dragElementBy(headerEl, page, 0, 500);
+
+    await modal.waitForEvent('ionBreakpointDidChange');
+
+    expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
+  });
+
 });

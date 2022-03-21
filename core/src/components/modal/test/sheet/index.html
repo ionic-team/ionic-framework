@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Modal - Sheet</title>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
@@ -15,62 +16,61 @@
   <meta name="apple-mobile-web-app-title" content="Ionic App" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
-  .custom-height {
-    --height: 50%;
-  }
+    .custom-height {
+      --height: 50%;
+    }
 
-  .custom-handle::part(handle) {
-    top: -16px;
-    background: rgba(255, 255, 255, 0.53);
-  }
+    .custom-handle::part(handle) {
+      top: -16px;
+      background: rgba(255, 255, 255, 0.53);
+    }
 
-  .custom-handle::part(content) {
-    overflow: visible;
-  }
+    .custom-handle::part(content) {
+      overflow: visible;
+    }
 
-  .red {
-    background-color: #ea445a;
-  }
+    .red {
+      background-color: #ea445a;
+    }
 
-  .green {
-    background-color: #76d672;
-  }
+    .green {
+      background-color: #76d672;
+    }
 
-  .blue {
-    background-color: #3478f6;
-  }
+    .blue {
+      background-color: #3478f6;
+    }
 
-  .yellow {
-    background-color: #ffff80;
-  }
+    .yellow {
+      background-color: #ffff80;
+    }
 
-  .pink {
-    background-color: #ff6b86;
-  }
+    .pink {
+      background-color: #ff6b86;
+    }
 
-  .purple {
-    background-color: #7e34f6;
-  }
+    .purple {
+      background-color: #7e34f6;
+    }
 
-  .black {
-    background-color: #000;
-  }
+    .black {
+      background-color: #000;
+    }
 
-  .orange {
-    background-color: #f69234;
-  }
+    .orange {
+      background-color: #f69234;
+    }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-    padding: 10px;
-  }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+      padding: 10px;
+    }
 
-  .grid-item {
-    height: 200px;
-  }
-
+    .grid-item {
+      height: 200px;
+    }
   </style>
 </head>
 
@@ -91,15 +91,30 @@
         </ion-item>
 
         <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
-        <ion-button id="custom-breakpoint-modal" onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })">Present Sheet Modal (Custom Breakpoints)</ion-button>
-        <ion-button id="custom-breakpoint-modal" onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })">Present Sheet Modal (Max breakpoint is not 1)</ion-button>
-        <ion-button id="custom-backdrop-modal" onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })">Present Sheet Modal (Custom Backdrop Breakpoint)</ion-button>
-        <ion-button id="custom-backdrop-off-center-modal" onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">Present Sheet Modal (Backdrop breakpoint is off-center)</ion-button>
-        <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">Present Sheet Modal (Custom Height)</ion-button>
-        <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })">Present Sheet Modal (Custom Handle)</ion-button>
-        <ion-button id="no-handle-modal" onclick="presentModal({ handle: false })">Present Sheet Modal (No Handle)</ion-button>
-        <ion-button id="backdrop-active" onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })">Backdrop is active</ion-button>
-        <ion-button id="backdrop-inactive" onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">Backdrop is inactive</ion-button>
+        <ion-button id="custom-breakpoint-modal"
+          onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })">Present Sheet Modal (Custom
+          Breakpoints)</ion-button>
+        <ion-button id="custom-breakpoint-modal"
+          onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })">Present Sheet Modal (Max
+          breakpoint is not 1)</ion-button>
+        <ion-button id="custom-backdrop-modal"
+          onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })">Present Sheet Modal (Custom
+          Backdrop Breakpoint)</ion-button>
+        <ion-button id="custom-backdrop-off-center-modal"
+          onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
+          Present Sheet Modal (Backdrop breakpoint is off-center)</ion-button>
+        <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">Present Sheet Modal
+          (Custom Height)</ion-button>
+        <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })">Present Sheet Modal
+          (Custom Handle)</ion-button>
+        <ion-button id="no-handle-modal" onclick="presentModal({ handle: false })">Present Sheet Modal (No Handle)
+        </ion-button>
+        <ion-button id="backdrop-active"
+          onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })">
+          Backdrop is active</ion-button>
+        <ion-button id="backdrop-inactive"
+          onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
+          Backdrop is inactive</ion-button>
 
         <div class="grid">
           <div class="grid-item red"></div>
@@ -117,13 +132,10 @@
 
   </ion-app>
   <script>
-    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
-    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
-
     function createModal(options) {
       let items = '';
 
-      for (var i = 0; i < 25; i++ ) {
+      for (var i = 0; i < 25; i++) {
         items += `<ion-item>Item ${i}</ion-item>`;
       }
 

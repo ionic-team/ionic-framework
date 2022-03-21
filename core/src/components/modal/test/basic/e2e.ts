@@ -1,4 +1,4 @@
-import { testModal } from '../test.utils';
+import { openModal, testModal } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
 
 const DIRECTORY = 'basic';
@@ -95,4 +95,32 @@ test('it should dismiss the modal when clicking the backdrop', async () => {
 
   await page.mouse.click(20, 20);
   await ionModalDidDismiss.next();
+})
+
+test('modal: setting the breakpoint should warn the developer', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/basic?ionic:_testing=true' });
+
+  const warnings = [];
+
+  page.on('console', (ev) => {
+    if (ev.type() === 'warning') {
+      warnings.push(ev.text());
+    }
+  });
+
+  const modal = await openModal(page, '#basic-modal');
+
+  await modal.callMethod('setCurrentBreakpoint', 0.5);
+
+  expect(warnings.length).toBe(1);
+  expect(warnings[0]).toBe('[Ionic Warning]: setCurrentBreakpoint is only supported on sheet modals.');
+});
+
+test('modal: getting the breakpoint should return undefined', async () => {
+  const page = await newE2EPage({ url: '/src/components/modal/test/basic?ionic:_testing=true' });
+
+  const modal = await openModal(page, '#basic-modal');
+
+  const breakpoint = await modal.callMethod('getCurrentBreakpoint');
+  expect(breakpoint).toBeUndefined();
 })

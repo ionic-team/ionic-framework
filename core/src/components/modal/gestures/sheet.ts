@@ -5,6 +5,32 @@ import { getBackdropValueForSheet } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
+export interface MoveSheetToBreakpointOptions {
+  /**
+   * The breakpoint value to move the sheet to.
+   */
+  breakpoint: number;
+  /**
+   * The offset value between the current breakpoint and the new breakpoint.
+   *
+   * For breakpoint changes as a result of a touch gesture, this value
+   * will be calculated internally.
+   *
+   * For breakpoint changes as a result of dynamically setting the value,
+   * this value should be the difference between the new and old breakpoint.
+   * For example:
+   * - breakpoints: [0, 0.25, 0.5, 0.75, 1]
+   * - Current breakpoint value is 1.
+   * - Setting the breakpoint to 0.25.
+   * - The offset value should be 0.75 (1 - 0.25).
+   */
+  breakpointOffset: number;
+  /**
+   * `true` if the sheet can be transitioned and dismissed off the view.
+   */
+  canDismiss?: boolean;
+}
+
 export const createSheetGesture = (
   baseEl: HTMLIonModalElement,
   backdropEl: HTMLIonBackdropElement,
@@ -13,6 +39,7 @@ export const createSheetGesture = (
   backdropBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
+  getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
@@ -113,6 +140,7 @@ export const createSheetGesture = (
      * allow for scrolling on the content.
      */
     const content = (detail.event.target! as HTMLElement).closest('ion-content');
+    currentBreakpoint = getCurrentBreakpoint();
 
     if (currentBreakpoint === 1 && content) {
       return false;
@@ -206,30 +234,39 @@ export const createSheetGesture = (
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
+    moveSheetToBreakpoint({
+      breakpoint: closest,
+      breakpointOffset: offset,
+      canDismiss: canDismissBlocksGesture,
+    });
+  };
+
+  const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
+    const { breakpoint, canDismiss, breakpointOffset } = options;
     /**
      * canDismiss should only prevent snapping
      * when users are trying to dismiss. If canDismiss
      * is present but the user is trying to swipe upwards,
      * we should allow that to happen,
      */
-    const shouldPreventDismiss = canDismissBlocksGesture && closest === 0;
-    const snapToBreakpoint = shouldPreventDismiss ? currentBreakpoint : closest;
+    const shouldPreventDismiss = canDismiss && breakpoint === 0;
+    const snapToBreakpoint = shouldPreventDismiss ? currentBreakpoint : breakpoint;
 
     const shouldRemainOpen = snapToBreakpoint !== 0;
-    currentBreakpoint = 0;
 
+    currentBreakpoint = 0;
     /**
      * Update the animation so that it plays from
      * the last offset to the closest snap point.
      */
     if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([
-        { offset: 0, transform: `translateY(${offset * 100}%)` },
+        { offset: 0, transform: `translateY(${breakpointOffset * 100}%)` },
         { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` }
       ]);
 
       backdropAnimation.keyframes([
-        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - offset, backdropBreakpoint)})` },
+        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - breakpointOffset, backdropBreakpoint)})` },
         { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})` }
       ]);
 
@@ -313,5 +350,9 @@ export const createSheetGesture = (
     onMove,
     onEnd
   });
-  return gesture;
+
+  return {
+    gesture,
+    moveSheetToBreakpoint
+  };
 };
