@@ -50,7 +50,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
        */
       const filteredContent = slottedContent.filter((child: VNode) => (
         !child.type ||
-        (child.type && ALLOWED_ROUTER_OUTLET.includes((child.type as any).name))
+        (child.type && !ALLOWED_ROUTER_OUTLET.includes((child.type as any).name))
       ));
 
       const slottedTabBar = filteredContent.find((child: VNode) => child.type && (child.type as any).name === 'IonTabBar');
