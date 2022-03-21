@@ -86,6 +86,8 @@ Note that setting a callback function will cause the swipe gesture to be interru
 
 ## Interfaces
 
+### ModalOptions
+
 Below you will find all of the options available to you when using the `modalController`. These options should be supplied when calling `modalController.create()`.
 
 ```typescript
@@ -105,6 +107,15 @@ interface ModalOptions {
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
+}
+```
+### ModalCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface ModalCustomEvent extends CustomEvent {
+  target: HTMLIonModalElement;
 }
 ```
 
