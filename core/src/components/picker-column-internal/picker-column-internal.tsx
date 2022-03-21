@@ -127,8 +127,7 @@ export class PickerColumnInternal implements ComponentInterface {
          * first item to match the scroll position of the column.
          *
          */
-        this.value = items[0].value;
-        this.emitIonChange();
+        this.setValue(items[0].value);
       }
     }
   }
@@ -143,8 +142,9 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private emitIonChange() {
-    const { items, value } = this;
+  private setValue(value?: string | number) {
+    const { items } = this;
+    this.value = value;
     const findItem = items.find(item => item.value === value);
     if (findItem) {
       this.ionChange.emit(findItem);
@@ -253,8 +253,7 @@ export class PickerColumnInternal implements ComponentInterface {
           const selectedItem = this.items[index];
 
           if (selectedItem.value !== this.value) {
-            this.value = selectedItem.value;
-            this.emitIonChange();
+            this.setValue(selectedItem.value);
             hapticSelectionEnd();
             this.hapticsStarted = false;
           }
