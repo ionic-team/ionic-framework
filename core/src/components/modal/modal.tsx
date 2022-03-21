@@ -46,6 +46,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
 
@@ -97,7 +98,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * array must be the value of the `initialBreakpoint` property.
    * For example: [0, .25, .5, 1]
    */
-  @Prop({ mutable: true }) breakpoints?: number[];
+  @Prop() breakpoints?: number[];
 
   /**
    * A decimal value between 0 and 1 that indicates the
@@ -279,7 +280,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
-      this.breakpoints = breakpoints.sort((a, b) => a - b);
+      this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
     }
   }
 
@@ -532,7 +533,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       initialBreakpoint,
       backdropBreakpoint,
       ani,
-      this.breakpoints,
+      this.sortedBreakpoints,
       () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {
