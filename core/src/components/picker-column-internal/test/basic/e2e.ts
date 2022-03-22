@@ -70,7 +70,9 @@ describe('picker-column-internal', () => {
         el.scrollTo(0, 300);
       });
 
-      expect(ionChangeSpy).not.toHaveReceivedEvent();
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy).toHaveReceivedEvent();
     });
 
   });
