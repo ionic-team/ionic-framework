@@ -1,4 +1,4 @@
-mport { expect, describe } from '@playwright/test';
+import { expect, describe } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('button: basic', () => {
