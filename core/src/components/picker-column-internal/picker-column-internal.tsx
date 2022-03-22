@@ -67,16 +67,10 @@ export class PickerColumnInternal implements ComponentInterface {
   valueChange() {
     if (this.isColumnVisible) {
       /**
-       * Only scroll the active item into view and emit the value
-       * change, when the picker column is actively visible to the user.
+       * Only scroll the active item into view when the picker column
+       * is actively visible to the user.
        */
-      const { items, value } = this;
       this.scrollActiveItemIntoView();
-
-      const findItem = items.find(item => item.value === value);
-      if (findItem) {
-        this.ionChange.emit(findItem);
-      }
     }
   }
 
@@ -133,7 +127,7 @@ export class PickerColumnInternal implements ComponentInterface {
          * first item to match the scroll position of the column.
          *
          */
-        this.value = items[0].value;
+        this.setValue(items[0].value);
       }
     }
   }
@@ -145,6 +139,15 @@ export class PickerColumnInternal implements ComponentInterface {
 
     if (activeEl) {
       this.centerPickerItemInView(activeEl, false);
+    }
+  }
+
+  private setValue(value?: string | number) {
+    const { items } = this;
+    this.value = value;
+    const findItem = items.find(item => item.value === value);
+    if (findItem) {
+      this.ionChange.emit(findItem);
     }
   }
 
@@ -250,7 +253,7 @@ export class PickerColumnInternal implements ComponentInterface {
           const selectedItem = this.items[index];
 
           if (selectedItem.value !== this.value) {
-            this.value = selectedItem.value;
+            this.setValue(selectedItem.value);
             hapticSelectionEnd();
             this.hapticsStarted = false;
           }
