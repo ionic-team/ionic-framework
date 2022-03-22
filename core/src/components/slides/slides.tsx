@@ -29,7 +29,7 @@ export class Slides implements ComponentInterface {
 
   /**
    * Options to pass to the swiper instance.
-   * See http://idangero.us/swiper/api/ for valid options
+   * See https://swiperjs.com/swiper-api for valid options
    */
   @Prop() options: any = {}; // SwiperOptions;  // TODO
 
@@ -330,7 +330,7 @@ export class Slides implements ComponentInterface {
   /**
    * Get the Swiper instance.
    * Use this to access the full Swiper API.
-   * See https://idangero.us/swiper/api/ for all API options.
+   * See https://swiperjs.com/swiper-api for all API options.
    */
   @Method()
   async getSwiper(): Promise<any> {

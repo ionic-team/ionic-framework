@@ -2512,7 +2512,7 @@ export namespace Components {
          */
         "getPreviousIndex": () => Promise<number>;
         /**
-          * Get the Swiper instance. Use this to access the full Swiper API. See https://idangero.us/swiper/api/ for all API options.
+          * Get the Swiper instance. Use this to access the full Swiper API. See https://swiperjs.com/swiper-api for all API options.
          */
         "getSwiper": () => Promise<any>;
         /**
@@ -2547,7 +2547,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
          */
         "options": any;
         /**
@@ -6290,7 +6290,7 @@ declare namespace LocalJSX {
          */
         "onIonSlidesDidLoad"?: (event: CustomEvent<void>) => void;
         /**
-          * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
          */
         "options"?: any;
         /**
