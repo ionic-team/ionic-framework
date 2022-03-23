@@ -168,7 +168,7 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Close the sliding item. Items can also be closed from the [List](../list).
+   * Close the sliding item. Items can also be closed from the [List](./list).
    */
   @Method()
   async close() {
@@ -176,7 +176,7 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Close all of the sliding items in the list. Items can also be closed from the [List](../list).
+   * Close all of the sliding items in the list. Items can also be closed from the [List](./list).
    */
   @Method()
   async closeOpened(): Promise<boolean> {
