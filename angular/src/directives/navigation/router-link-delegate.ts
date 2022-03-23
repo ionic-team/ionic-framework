@@ -1,17 +1,14 @@
 import { LocationStrategy } from '@angular/common';
-import { ElementRef, OnChanges, OnDestroy, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
+import { ElementRef, OnChanges, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AnimationBuilder, RouterDirection } from '@ionic/core';
-import { Subscription } from 'rxjs';
 
 import { NavController } from '../../providers/nav-controller';
 
 @Directive({
   selector: '[routerLink]',
 })
-export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy {
-  private subscription?: Subscription;
-
+export class RouterLinkDelegateDirective implements OnInit, OnChanges {
   @Input()
   routerDirection: RouterDirection = 'forward';
 
@@ -32,12 +29,6 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy
 
   ngOnChanges(): void {
     this.updateTargetUrlAndHref();
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   private updateTargetUrlAndHref() {
