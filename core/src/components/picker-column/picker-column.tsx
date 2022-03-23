@@ -82,7 +82,7 @@ export class PickerColumnCmp implements ComponentInterface {
     const colEl = this.optsEl;
     if (colEl) {
       // DOM READ
-      // We perfom a DOM read over a rendered item, this needs to happen after the first render
+      // We perform a DOM read over a rendered item, this needs to happen after the first render
       this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
     }
 
@@ -170,8 +170,9 @@ export class PickerColumnCmp implements ComponentInterface {
       // Update transform
       if (transform !== opt.transform) {
         opt.transform = transform;
-        button.style.transform = transform;
       }
+      button.style.transform = transform;
+
       // Update selected item
       if (selected !== opt.selected) {
         opt.selected = selected;
