@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.13](https://github.com/ionic-team/ionic/compare/v6.0.12...v6.0.13) (2022-03-23)
+
+
+### Bug Fixes
+
+* **angular:** ngOnDestroy runs inside angular zone ([#24949](https://github.com/ionic-team/ionic/issues/24949)) ([a8fd2d9](https://github.com/ionic-team/ionic/commit/a8fd2d9199ca92d62bce6abf8caccc7709fa5ca1)), closes [#22571](https://github.com/ionic-team/ionic/issues/22571)
+
+
+
+
+
 ## [6.0.12](https://github.com/ionic-team/ionic/compare/v6.0.11...v6.0.12) (2022-03-16)
 
 
