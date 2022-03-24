@@ -20,6 +20,9 @@
   /**
    * Waits for all child Stencil components
    * to be ready before resolving.
+   * This logic is pulled from the Stencil
+   * core codebase for testing with Puppeteer:
+   * https://github.com/ionic-team/stencil/blob/16b8ea4dabb22024872a38bc58ba1dcf1c7cc25b/src/testing/puppeteer/puppeteer-events.ts#L158-L183
    */
   const allReady = () => {
     const promises = [];
@@ -55,6 +58,10 @@
       });
   };
 
+  /**
+   * Testing solutions can wait for `window.stencilAppLoaded === true`
+   * to know when to proceed with the test.
+   */
   if (window.document.readyState === 'complete') {
     stencilReady();
   } else {
