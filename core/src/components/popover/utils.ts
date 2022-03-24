@@ -339,6 +339,12 @@ export const configureKeyboardInteraction = (
     let items: HTMLIonItemElement[] = [];
 
     /**
+     * Only handle custom keyboard interactions for ion-item elements.
+     */
+    if ((ev.target as HTMLElement)?.tagName !== 'ION-ITEM') {
+      return;
+    }
+    /**
      * Complex selectors with :not() are :not supported
      * in older versions of Chromium so we need to do a
      * try/catch here so errors are not thrown.
