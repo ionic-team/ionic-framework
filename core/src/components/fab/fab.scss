@@ -44,7 +44,7 @@
 
 
 :host(.fab-vertical-bottom) {
-  bottom: $fab-content-margin;
+  bottom: var(--tab-translucent-safe-area, $fab-content-margin);
 }
 
 :host(.fab-vertical-bottom.fab-edge) {

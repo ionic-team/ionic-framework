@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, TabBarChangedEventDetail } from '../../interface';
+import { Color, StyleEventDetail, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -30,6 +30,8 @@ export class TabBar implements ComponentInterface {
    */
   @Prop({ reflect: true }) color?: Color;
 
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
   /**
    * The selected tab component
    */
@@ -50,11 +52,28 @@ export class TabBar implements ComponentInterface {
    */
   @Prop() translucent = false;
 
+  @Watch('translucent')
+  translucentChanged() {
+    // Find all tabs
+    const tabs = Array.from(this.el.closest('ion-tabs')?.querySelectorAll('ion-tab') ?? []);
+    for (const tab of tabs) {
+      if (this.translucent) {
+        tab.classList.add('tab-bar-translucent');
+      } else {
+        tab.classList.remove('tab-bar-translucent');
+      }
+    }
+    this.ionStyle.emit({
+      'tab-bar-translucent': this.translucent
+    })
+  }
+
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
   componentWillLoad() {
     this.selectedTabChanged();
+    this.translucentChanged();
   }
 
   connectedCallback() {

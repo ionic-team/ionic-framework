@@ -6359,6 +6359,7 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         "onIonTabBarChanged"?: (event: CustomEvent<TabBarChangedEventDetail>) => void;
         /**
           * The selected tab component

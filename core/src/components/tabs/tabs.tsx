@@ -9,7 +9,10 @@ import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../..
  */
 @Component({
   tag: 'ion-tabs',
-  styleUrl: 'tabs.scss',
+  styleUrls: {
+    ios: 'tabs.ios.scss',
+    md: 'tabs.md.scss'
+  },
   shadow: true
 })
 export class Tabs implements NavOutlet {
@@ -20,6 +23,8 @@ export class Tabs implements NavOutlet {
   @Element() el!: HTMLIonTabsElement;
 
   @State() selectedTab?: HTMLIonTabElement;
+
+  @State() private tabCustomClasses: { [key: string]: boolean } = {};
 
   /** @internal */
   @Prop({ mutable: true }) useRouter = false;
@@ -182,10 +187,21 @@ export class Tabs implements NavOutlet {
     }
   }
 
+  private onIonStyle = (ev: any) => {
+    if (ev.target.tagName === 'ION-TAB-BAR') {
+      for (const key of Object.keys(ev.detail)) {
+        this.tabCustomClasses[key] = ev.detail[key];
+      }
+      this.tabCustomClasses = {...this.tabCustomClasses};
+    }
+  }
+
   render() {
     return (
       <Host
         onIonTabButtonClick={this.onTabClicked}
+        onIonStyle={this.onIonStyle}
+        class={this.tabCustomClasses}
       >
         <slot name="top"></slot>
         <div class="tabs-inner">

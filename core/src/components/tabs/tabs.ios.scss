@@ -1,0 +1,11 @@
+@import './tabs';
+
+:host(.tab-bar-translucent) {
+  --tab-translucent-safe-area: 60px;
+}
+
+slot[name='bottom']::slotted([translucent]) {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

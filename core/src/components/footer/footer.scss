@@ -15,5 +15,5 @@ ion-footer {
 }
 
 ion-footer ion-toolbar:last-of-type {
-  padding-bottom: var(--ion-safe-area-bottom, 0);
+  padding-bottom: calc(var(--ion-safe-area-bottom, 0) + var(--tab-translucent-safe-area, 0));
 }

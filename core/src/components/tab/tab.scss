@@ -2,3 +2,9 @@
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }
+
+
+:host(.tab-bar-translucent) ::slotted(ion-content) {
+  /* stylelint-disable-next-line declaration-no-important */
+  --padding-bottom: 50px !important;
+}
