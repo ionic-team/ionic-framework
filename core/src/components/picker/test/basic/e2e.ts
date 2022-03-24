@@ -11,11 +11,15 @@ describe('picker: basic', () => {
 
     await page.click('#basic');
 
+    await page.waitForEvent('ionPickerDidPresent');
+
     compares.push(await page.compareScreenshot('picker initial state'));
 
     await page.click('ion-picker .save-btn');
 
     await page.click('#basic');
+
+    await page.waitForEvent('ionPickerDidPresent');
 
     compares.push(await page.compareScreenshot('picker opened with selected value'));
 
