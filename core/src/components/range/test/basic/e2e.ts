@@ -36,6 +36,14 @@ test('range: start/end events', async () => {
    */
   expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
   expect(rangeEnd).toHaveReceivedEventDetail({ value: 91 });
+
+  /**
+   * Verify both events fire if range is clicked without dragging.
+   */
+  await dragElementBy(rangeEl, page, 0, 0);
+
+  expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+  expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 })
 });
 
 test('range: start/end events, keyboard', async () => {
