@@ -45,7 +45,10 @@ test('range: start/end events, keyboard', async () => {
 
   const rangeStart = await page.spyOnEvent('ionChangeStart');
   const rangeEnd = await page.spyOnEvent('ionChangeEnd');
-  const rangeEl = await page.find('#basic');
+  
+  await page.keyboard.press('Tab'); // focus first range
+  await page.keyboard.press('ArrowRight');
 
-  // TODO: start should be whatever the value is set to in the HTML, end should be 1 more/less
+  expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
+  expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
 });
