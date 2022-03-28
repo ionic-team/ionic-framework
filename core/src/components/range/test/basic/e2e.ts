@@ -26,14 +26,16 @@ test('range: start/end events', async () => {
 
   const rangeStart = await page.spyOnEvent('ionChangeStart');
   const rangeEnd = await page.spyOnEvent('ionChangeEnd');
-  const rangeEl = await page.find('#basic');
+  const rangeEl = await page.$('#basic');
 
-  await dragElementBy(rangeEl, page, 300, 0, { x: 0, y: 0 });
+  await dragElementBy(rangeEl, page, 300, 0);
 
-  // TODO: these values might not be right, rangeEnd definitely isn't
-  // run the test locally and see what you actually get
-  expect(rangeStart).toHaveReceivedEventDetail({ data: { value: '0' } });
-  expect(rangeEnd).toHaveReceivedEventDetail({ data: { value: '50' } });
+  /**
+   * dragElementBy defaults to starting the drag from the middle of the el,
+   * so the start value should jump to 50 despite the range defaulting to 20.
+   */
+  expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+  expect(rangeEnd).toHaveReceivedEventDetail({ value: 91 });
 });
 
 test('range: start/end events, keyboard', async () => {
