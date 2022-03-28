@@ -34,13 +34,13 @@
 Ionic provides a way to create the collapsible titles that exist on stock iOS apps. Getting this setup requires configuring your `ion-title`, `ion-header`, and (optionally) `ion-buttons` elements.
 
 ```html
-<ion-header translucent="true">
+<ion-header translucent={true}>
   <ion-toolbar>
     <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true">
+<ion-content fullscreen={true}>
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Settings</ion-title>
@@ -155,13 +155,13 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader translucent="true">
+    <IonHeader translucent={true}>
       <IonToolbar>
         <IonTitle>Settings</IonTitle>
       </IonToolbar>
     </IonHeader>
 
-    <IonContent fullscreen="true">
+    <IonContent fullscreen={true}>
       <IonHeader collapse="condense">
         <IonToolbar>
           <IonTitle size="large">Settings</IonTitle>
@@ -194,19 +194,19 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader translucent="true">
+    <IonHeader translucent={true}>
       <IonToolbar>
-        <IonButtons collapse="true" slot="end">
+        <IonButtons collapse={true} slot="end">
           <IonButton>Click Me</IonButton>
         </IonButtons>
         <IonTitle>Settings</IonTitle>
       </IonToolbar>
     </IonHeader>
 
-    <IonContent fullscreen="true">
+    <IonContent fullscreen={true}>
       <IonHeader collapse="condense">
         <IonToolbar>
-          <IonButtons collapse="true" slot="end">
+          <IonButtons collapse={true} slot="end">
             <IonButton>Click Me</IonButton>
           </IonButtons>
           <IonTitle size="large">Settings</IonTitle>
@@ -227,7 +227,7 @@ In this example, notice that we have added two sets of `IonButtons` both with `c
 
 `IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
-> When using collapsible large titles, it is required that `fullscreen` is set to `true` on `IonContent` and `translucent="true"` be set on the main `IonHeader`.
+> When using collapsible large titles, it is required that `fullscreen` is set to `true` on `IonContent` and `translucent={true}` be set on the main `IonHeader`.
 
 ### Styling Collapsible Large Titles
 
