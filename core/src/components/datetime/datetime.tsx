@@ -318,14 +318,27 @@ export class Datetime implements ComponentInterface {
        * refocusing or shifting the user's display (leaves the user in place).
        */
       const { month, day, year, hour, minute } = parseDate(this.value);
+      const ampm = hour >= 12 ? 'pm' : 'am';
+
       this.activePartsClone = {
         ...this.activeParts,
         month,
         day,
         year,
         hour,
-        minute
+        minute,
+        ampm
       }
+
+      /**
+       * The working parts am/pm value must be updated when the value changes, to
+       * ensure the time picker hour column values are generated correctly.
+       */
+      this.setWorkingParts({
+        ...this.workingParts,
+        ampm
+      });
+
     }
 
     this.emitStyle();
@@ -1544,7 +1557,7 @@ export class Datetime implements ComponentInterface {
     const { workingParts, presentation } = this;
     const timeOnlyPresentation = presentation === 'time';
     const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const { hours, minutes, am, pm } = generateTime(this.workingParts, use24Hour ? 'h23' : 'h12', this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
+    const { hours, minutes, am, pm } = generateTime(workingParts, use24Hour ? 'h23' : 'h12', this.minParts, this.maxParts, this.parsedHourValues, this.parsedMinuteValues);
 
     const hoursItems = hours.map(hour => {
       return {

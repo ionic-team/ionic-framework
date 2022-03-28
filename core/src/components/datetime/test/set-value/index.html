@@ -10,6 +10,12 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(350px, 1fr));
+      grid-gap: 60px 20px;
+    }
+
     h2 {
       font-size: 12px;
       font-weight: normal;
@@ -23,6 +29,13 @@
     ion-datetime {
       width: 350px;
     }
+
+    @media screen and (max-width: 800px) {
+      .grid {
+        grid-template-columns: 1fr;
+        padding: 0;
+      }
+    }
   </style>
 </head>
 
@@ -34,9 +47,22 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-datetime value="2021-11-22T14:23:00.000Z" locale="en-US"></ion-datetime>
+      <div class="grid">
+        <ion-datetime value="2021-11-22T14:23:00.000Z" locale="en-US"></ion-datetime>
+        <div>
+          <ion-datetime id="timePicker" value="18:25:40" display-format="h:mm A" presentation="time"></ion-datetime>
+          <ion-button id="timePickerSetValueBtn">Manually set time</ion-button>
+        </div>
+      </div>
     </ion-content>
   </ion-app>
+  <script>
+    const btn = document.querySelector('#timePickerSetValueBtn');
+    const timePicker = document.querySelector('#timePicker');
+    btn.addEventListener('click', () => {
+      timePicker.value = '11:02:40';
+    });
+  </script>
 </body>
 
 </html>
