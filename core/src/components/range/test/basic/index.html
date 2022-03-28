@@ -194,10 +194,6 @@
   </ion-app>
 
   <script>
-    const firstRange = document.querySelector('ion-range');
-    firstRange.addEventListener('ionChangeStart', e => { console.log('start:', e.detail); });
-    firstRange.addEventListener('ionChangeEnd', e => { console.log('end:', e.detail); });
-
     const progressValue = document.getElementById('progressValue');
     const brightnessValue = document.getElementById('brightnessValue');
     const contrastValue = document.getElementById('contrastValue');
@@ -245,9 +241,6 @@
       lower: 33,
       upper: 60
     };
-    
-    knob.addEventListener('ionChangeStart', e => { console.log('start:', e.detail); });
-    knob.addEventListener('ionChangeEnd', e => { console.log('end:', e.detail); });
 
     function elTest() {
       var range = document.getElementById('range');
