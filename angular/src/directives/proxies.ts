@@ -1288,11 +1288,13 @@ export declare interface IonRange extends Components.IonRange {
    */
   ionBlur: EventEmitter<CustomEvent<void>>;
   /**
-   * Emitted when the user starts moving the range knob. 
+   * Emitted when the user starts moving the range knob, whether through
+mouse drag, touch gesture, or keyboard interaction. 
    */
   ionChangeStart: EventEmitter<CustomEvent<IRangeRangeChangeStartEventDetail>>;
   /**
-   * Emitted when the user finishes moving the range knob. 
+   * Emitted when the user finishes moving the range knob, whether through
+mouse drag, touch gesture, or keyboard interaction. 
    */
   ionChangeEnd: EventEmitter<CustomEvent<IRangeRangeChangeEndEventDetaill>>;
 

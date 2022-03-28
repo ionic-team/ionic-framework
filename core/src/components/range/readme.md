@@ -368,13 +368,13 @@ export default defineComponent({
 
 ## Events
 
-| Event            | Description                                           | Type                                       |
-| ---------------- | ----------------------------------------------------- | ------------------------------------------ |
-| `ionBlur`        | Emitted when the range loses focus.                   | `CustomEvent<void>`                        |
-| `ionChange`      | Emitted when the value property has changed.          | `CustomEvent<RangeChangeEventDetail>`      |
-| `ionChangeEnd`   | Emitted when the user finishes moving the range knob. | `CustomEvent<RangeChangeEndEventDetaill>`  |
-| `ionChangeStart` | Emitted when the user starts moving the range knob.   | `CustomEvent<RangeChangeStartEventDetail>` |
-| `ionFocus`       | Emitted when the range has focus.                     | `CustomEvent<void>`                        |
+| Event            | Description                                                                                                               | Type                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `ionBlur`        | Emitted when the range loses focus.                                                                                       | `CustomEvent<void>`                        |
+| `ionChange`      | Emitted when the value property has changed.                                                                              | `CustomEvent<RangeChangeEventDetail>`      |
+| `ionChangeEnd`   | Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction. | `CustomEvent<RangeChangeEndEventDetaill>`  |
+| `ionChangeStart` | Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.   | `CustomEvent<RangeChangeStartEventDetail>` |
+| `ionFocus`       | Emitted when the range has focus.                                                                                         | `CustomEvent<void>`                        |
 
 
 ## Slots
