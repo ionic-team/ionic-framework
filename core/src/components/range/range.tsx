@@ -192,12 +192,14 @@ export class Range implements ComponentInterface {
   @Event() ionBlur!: EventEmitter<void>;
 
   /**
-   * Emitted when the user starts moving the range knob.
+   * Emitted when the user starts moving the range knob, whether through
+   * mouse drag, touch gesture, or keyboard interaction.
    */
   @Event() ionChangeStart!: EventEmitter<RangeChangeStartEventDetail>;
 
   /**
-   * Emitted when the user finishes moving the range knob.
+   * Emitted when the user finishes moving the range knob, whether through
+   * mouse drag, touch gesture, or keyboard interaction.
    */
   @Event() ionChangeEnd!: EventEmitter<RangeChangeEndEventDetaill>;
 
