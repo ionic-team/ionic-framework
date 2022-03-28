@@ -983,6 +983,8 @@ ion-range,prop,ticks,boolean,true,false,false
 ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
+ion-range,event,ionChangeEnd,RangeChangeEndEventDetaill,true
+ion-range,event,ionChangeStart,RangeChangeStartEventDetail,true
 ion-range,event,ionFocus,void,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
