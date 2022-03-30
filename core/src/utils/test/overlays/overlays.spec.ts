@@ -68,7 +68,7 @@ describe('setRootAriaHidden()', () => {
   });
 
   it('should not error if router outlet was not found', async () => {
-    const page = await newSpecPage({
+    await newSpecPage({
       components: [],
       html: `
         <div></div>

@@ -1,4 +1,4 @@
-import { newSpecPage, mockWindow } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 
 import { Config } from '../../../global/config';
 import type { ComponentProps } from '../../../interface';

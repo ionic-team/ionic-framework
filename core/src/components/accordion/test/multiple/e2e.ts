@@ -11,7 +11,6 @@ test('accordion: multiple - open', async () => {
 
   const accordionGroup = await page.find('ion-accordion-group');
   const diningAccordion = await page.find('ion-accordion[value="dining"] ion-item[slot="header"]');
-  const attractionsAccordion = await page.find('ion-accordion[value="attractions"] ion-item[slot="header"]');
 
   const groupValue = await accordionGroup.getProperty('value');
   expect(groupValue).toEqual('attractions');

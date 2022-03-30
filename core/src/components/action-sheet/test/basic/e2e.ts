@@ -158,7 +158,7 @@ test('action-sheet: htmlAttributes', async () => {
   expect(toast).not.toBe(null);
   await toast.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-action-sheet');
 });

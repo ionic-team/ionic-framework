@@ -108,7 +108,7 @@ test('loading: htmlAttributes', async () => {
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-loading').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-loading').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-loading');
 });

@@ -141,8 +141,8 @@ describe('Platform Tests', () => {
 
       initialize({
         'platform': {
-          'desktop': (win) => false,
-          'cordova': (win) => true
+          'desktop': () => false,
+          'cordova': () => true
         }
       });
 

@@ -55,7 +55,7 @@ describe('getAriaLabel()', () => {
 
     const toggle = page.body.querySelector('ion-toggle');
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
     expect(labelText).toEqual('Hello World');
     expect(labelId).toEqual('id.1');
@@ -72,7 +72,7 @@ describe('getAriaLabel()', () => {
 
     const toggle = page.body.querySelector('ion-toggle');
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
     expect(labelText).toEqual('Hello World');
     expect(labelId).toEqual('my-id');
@@ -89,7 +89,7 @@ describe('getAriaLabel()', () => {
 
     const toggle = page.body.querySelector('ion-toggle');
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
     expect(labelText).toEqual('Hello World');
     expect(labelId).toEqual('id.1-lbl');
