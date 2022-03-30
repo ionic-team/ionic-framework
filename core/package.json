@@ -84,6 +84,7 @@
     "cdnloader": "node scripts/copy-cdn-loader.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources src/css:./css",
+    "eslint": "eslint src",
     "lint": "npm run lint.ts && npm run lint.sass",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
     "lint.sass": "stylelint \"src/**/*.scss\"",
