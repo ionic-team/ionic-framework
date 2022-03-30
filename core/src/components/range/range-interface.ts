@@ -12,11 +12,11 @@ export interface RangeChangeStartEventDetail {
   value: RangeValue;
 }
 
-export interface RangeChangeEndEventDetaill {
+export interface RangeChangeEndEventDetail {
   value: RangeValue;
 }
 
 export interface RangeCustomEvent extends CustomEvent {
-  detail: RangeChangeEventDetail | RangeChangeStartEventDetail | RangeChangeEndEventDetaill;
+  detail: RangeChangeEventDetail | RangeChangeStartEventDetail | RangeChangeEndEventDetail;
   target: HTMLIonRangeElement;
 }

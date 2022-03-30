@@ -372,7 +372,7 @@ export default defineComponent({
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
 | `ionBlur`        | Emitted when the range loses focus.                                                                                       | `CustomEvent<void>`                        |
 | `ionChange`      | Emitted when the value property has changed.                                                                              | `CustomEvent<RangeChangeEventDetail>`      |
-| `ionChangeEnd`   | Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction. | `CustomEvent<RangeChangeEndEventDetaill>`  |
+| `ionChangeEnd`   | Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction. | `CustomEvent<RangeChangeEndEventDetail>`   |
 | `ionChangeStart` | Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.   | `CustomEvent<RangeChangeStartEventDetail>` |
 | `ionFocus`       | Emitted when the range has focus.                                                                                         | `CustomEvent<void>`                        |
 
