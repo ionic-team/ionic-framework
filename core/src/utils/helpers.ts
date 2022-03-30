@@ -289,7 +289,7 @@ export const assert = (actual: any, reason: string) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
     console.error(message);
-    debugger; // tslint:disable-line
+    debugger; // eslint-disable-line
     throw new Error(message);
   }
 };

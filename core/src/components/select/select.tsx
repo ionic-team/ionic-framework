@@ -366,7 +366,7 @@ export class Select implements ComponentInterface {
      * ion-select-popover and ion-popover when
      * using Custom Elements build.
      */
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     if (false) {
       // @ts-ignore
       document.createElement('ion-select-popover');
@@ -392,7 +392,7 @@ export class Select implements ComponentInterface {
      * ion-action-sheet when
      * using Custom Elements build.
      */
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     if (false) {
       // @ts-ignore
       document.createElement('ion-action-sheet');
@@ -439,7 +439,7 @@ export class Select implements ComponentInterface {
      * ion-alert when
      * using Custom Elements build.
      */
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     if (false) {
       // @ts-ignore
       document.createElement('ion-alert');

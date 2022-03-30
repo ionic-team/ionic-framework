@@ -811,14 +811,12 @@ export class Datetime implements ComponentInterface {
            * and the correct month is in view,
            * we can resume the IO.
            */
-          // tslint:disable-next-line
           if (refIO === undefined) { return; }
           refIO.observe(refMonth);
         });
       }
 
       const threshold = mode === 'ios' &&
-        // tslint:disable-next-line
         typeof navigator !== 'undefined' &&
         navigator.maxTouchPoints > 1 ?
         [0.7, 1] : 1;

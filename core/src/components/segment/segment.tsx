@@ -388,7 +388,6 @@ export class Segment implements ComponentInterface {
       current = nextEl;
     }
 
-    /* tslint:disable-next-line */
     if (current != null) {
 
       /**

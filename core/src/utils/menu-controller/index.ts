@@ -208,7 +208,6 @@ const createMenuController = () => {
   registerAnimation('push', menuPushAnimation);
   registerAnimation('overlay', menuOverlayAnimation);
 
-  /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
     document.addEventListener('ionBackButton', (ev: any) => {
       const openMenu = _getOpenSync();

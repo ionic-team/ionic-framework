@@ -40,7 +40,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
          */
         const childElements = getElementChildren(element);
 
-        /* tslint:disable-next-line */
+        /* eslint-disable-next-line */
         for (let childIndex = 0; childIndex < childElements.length; childIndex++) {
           sanitizeElement(childElements[childIndex]);
         }
@@ -55,7 +55,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
     // IE does not support .children on document fragments, only .childNodes
     const dfChildren = getElementChildren(documentFragment);
 
-    /* tslint:disable-next-line */
+    /* eslint-disable-next-line */
     for (let childIndex = 0; childIndex < dfChildren.length; childIndex++) {
       sanitizeElement(dfChildren[childIndex]);
     }
@@ -98,7 +98,7 @@ const sanitizeElement = (element: any) => {
     // that attempt to do any JS funny-business
     const attributeValue = attribute.value;
 
-    /* tslint:disable-next-line */
+    /* eslint-disable-next-line */
     if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
       element.removeAttribute(attributeName);
     }
@@ -109,7 +109,7 @@ const sanitizeElement = (element: any) => {
    */
   const childElements = getElementChildren(element);
 
-  /* tslint:disable-next-line */
+  /* eslint-disable-next-line */
   for (let i = 0; i < childElements.length; i++) {
     sanitizeElement(childElements[i]);
   }

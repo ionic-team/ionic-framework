@@ -350,7 +350,7 @@ export const configureKeyboardInteraction = (
        * i.e. only select ion-item elements that are part of this popover
        */
       items = Array.from(popoverEl.querySelectorAll('ion-item:not(ion-popover ion-popover *):not([disabled])') as NodeListOf<HTMLIonItemElement>);
-    /* tslint:disable-next-line */
+    /* eslint-disable-next-line */
     } catch {}
 
     switch (ev.key) {
@@ -375,7 +375,6 @@ export const configureKeyboardInteraction = (
         // Disable movement/scroll with keyboard
         ev.preventDefault();
         const nextItem = getNextItem(items, activeElement);
-        // tslint:disable-next-line:strict-type-predicates
         if (nextItem !== undefined) {
           focusItem(nextItem);
         }
@@ -387,7 +386,6 @@ export const configureKeyboardInteraction = (
         // Disable movement/scroll with keyboard
         ev.preventDefault();
         const prevItem = getPrevItem(items, activeElement);
-        // tslint:disable-next-line:strict-type-predicates
         if (prevItem !== undefined) {
           focusItem(prevItem);
         }
@@ -398,7 +396,6 @@ export const configureKeyboardInteraction = (
       case 'Home':
         ev.preventDefault();
         const firstItem = items[0];
-        // tslint:disable-next-line:strict-type-predicates
         if (firstItem !== undefined) {
           focusItem(firstItem);
         }
@@ -409,7 +406,6 @@ export const configureKeyboardInteraction = (
       case 'End':
         ev.preventDefault();
         const lastItem = items[items.length - 1];
-        // tslint:disable-next-line:strict-type-predicates
         if (lastItem !== undefined) {
           focusItem(lastItem);
         }

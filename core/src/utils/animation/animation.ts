@@ -715,7 +715,6 @@ export const createAnimation = (animationId?: string): Animation => {
 
     finished = false;
 
-    // tslint:disable-next-line: strict-boolean-conditions
     willComplete = true;
 
     if (playTo === 0) {
