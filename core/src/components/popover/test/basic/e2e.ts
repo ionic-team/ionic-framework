@@ -1,5 +1,6 @@
-import { testPopover } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testPopover } from '../test.utils';
 
 const DIRECTORY = 'basic';
 
@@ -17,7 +18,7 @@ test('popover: focus trap', async () => {
   await page.click('#basic-popover');
   await page.waitForSelector('#basic-popover');
 
-  let popover = await page.find('ion-popover');
+  const popover = await page.find('ion-popover');
 
   expect(popover).not.toBe(null);
   await popover.waitForVisible();
@@ -119,7 +120,7 @@ test('popover: htmlAttributes', async () => {
   await page.click('#basic-popover');
   await page.waitForSelector('#basic-popover');
 
-  let alert = await page.find('ion-popover');
+  const alert = await page.find('ion-popover');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();

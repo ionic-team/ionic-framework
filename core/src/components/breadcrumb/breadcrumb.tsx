@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
-import { Attributes, inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
+import type { Attributes} from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**

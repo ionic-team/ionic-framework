@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 

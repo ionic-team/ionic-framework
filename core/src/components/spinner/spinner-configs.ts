@@ -1,4 +1,4 @@
-import { SpinnerConfigs } from './spinner-interface';
+import type { SpinnerConfigs } from './spinner-interface';
 
 const spinners = {
 

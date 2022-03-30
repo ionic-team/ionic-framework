@@ -1,5 +1,5 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { AxePuppeteer } from '@axe-core/puppeteer';
+import { newE2EPage } from '@stencil/core/testing';
 
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);

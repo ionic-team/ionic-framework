@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { menuController } from '../../utils/menu-controller';

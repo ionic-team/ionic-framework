@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { testToast } from '../test.utils';
 
 const DIRECTORY = 'basic';
@@ -111,7 +112,7 @@ test('toast: htmlAttributes', async () => {
   await page.click('#show-bottom-toast');
   await page.waitForSelector('#show-bottom-toast');
 
-  let toast = await page.find('ion-toast');
+  const toast = await page.find('ion-toast');
 
   expect(toast).not.toBe(null);
   await toast.waitForVisible();

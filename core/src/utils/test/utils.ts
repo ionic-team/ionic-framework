@@ -1,5 +1,5 @@
-import { E2EElement, E2EPage } from '@stencil/core/testing';
-import { ElementHandle } from 'puppeteer';
+import type { E2EElement, E2EPage } from '@stencil/core/testing';
+import type { ElementHandle } from 'puppeteer';
 
 /**
  * page.evaluate can only return a serializable value,

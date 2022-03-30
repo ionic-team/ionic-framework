@@ -1,9 +1,10 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { componentOnReady } from '../../utils/helpers'
 
-import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
+import type { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

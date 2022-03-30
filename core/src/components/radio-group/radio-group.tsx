@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { RadioGroupChangeEventDetail } from '../../interface';
+import type { RadioGroupChangeEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-radio-group'

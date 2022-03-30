@@ -1,6 +1,6 @@
 import initialize from '../../global/ionic-global';
-
 import { testUserAgent, getPlatforms, isPlatform } from '../platform';
+
 import { PlatformConfiguration, configureBrowser } from './platform.utils';
 
 describe('Platform Tests', () => {

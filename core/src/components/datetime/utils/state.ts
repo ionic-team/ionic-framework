@@ -1,4 +1,4 @@
-import { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import { generateDayAriaLabel } from './format';

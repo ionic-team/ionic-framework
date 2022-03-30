@@ -1,7 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
+
 import { AccordionGroup } from '../../accordion-group/accordion-group.tsx';
-import { Accordion } from '../accordion.tsx';
 import { Item } from '../../item/item.tsx';
+import { Accordion } from '../accordion.tsx';
 
 it('should open correct accordions', async () => {
   const page = await newSpecPage({

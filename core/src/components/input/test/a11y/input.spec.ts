@@ -1,7 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Input } from '../../input';
+
 import { Item } from '../../../item/item';
 import { Label } from '../../../label/label';
+import { Input } from '../../input';
 
 describe('Input a11y', () => {
   it('does not set a default aria-labelledby when there is not a neighboring ion-label', async () => {

@@ -1,5 +1,6 @@
-import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
@@ -45,7 +46,7 @@ test('action-sheet: focus trap', async () => {
   await page.click('#basic');
   await page.waitForSelector('#basic');
 
-  let actionSheet = await page.find('ion-action-sheet');
+  const actionSheet = await page.find('ion-action-sheet');
 
   expect(actionSheet).not.toBe(null);
   await actionSheet.waitForVisible();
@@ -152,7 +153,7 @@ test('action-sheet: htmlAttributes', async () => {
   await page.click('#basic');
   await page.waitForSelector('#basic');
 
-  let toast = await page.find('ion-action-sheet');
+  const toast = await page.find('ion-action-sheet');
 
   expect(toast).not.toBe(null);
   await toast.waitForVisible();

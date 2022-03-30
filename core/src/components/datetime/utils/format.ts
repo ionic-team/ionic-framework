@@ -1,4 +1,4 @@
-import { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts } from '../datetime-interface';
 
 const get12HourTime = (hour: number) => {
   return hour % 12 || 12;

@@ -1,5 +1,6 @@
-import { testLoading } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testLoading } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
@@ -13,7 +14,7 @@ test('loading: focus trap', async () => {
   await page.click('#html-content-loading');
   await page.waitForSelector('#html-content-loading');
 
-  let loading = await page.find('ion-loading');
+  const loading = await page.find('ion-loading');
 
   expect(loading).not.toBe(null);
   await loading.waitForVisible();
@@ -102,7 +103,7 @@ test('loading: htmlAttributes', async () => {
   await page.click('#basic-loading');
   await page.waitForSelector('#basic-loading');
 
-  let alert = await page.find('ion-loading');
+  const alert = await page.find('ion-loading');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();

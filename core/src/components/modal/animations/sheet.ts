@@ -1,4 +1,4 @@
-import { ModalAnimationOptions } from '../../../interface';
+import type { ModalAnimationOptions } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getBackdropValueForSheet } from '../utils';
 

@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, RouterDirection } from '../../interface';
-import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { Attributes, hasShadowDom, inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { Attributes} from '../../utils/helpers';
+import { hasShadowDom, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**

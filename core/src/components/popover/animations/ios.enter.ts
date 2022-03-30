@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 import { calculateWindowAdjustment, getArrowDimensions, getPopoverDimensions, getPopoverPosition, shouldShowArrow } from '../utils';

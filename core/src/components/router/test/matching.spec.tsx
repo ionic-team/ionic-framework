@@ -1,4 +1,4 @@
-import { RouteChain } from '../utils/interface';
+import type { RouteChain } from '../utils/interface';
 import { RouterSegments, matchesIDs, matchesSegments, matchesRedirect, mergeParams, findChainForSegments } from '../utils/matching';
 import { parsePath } from '../utils/path';
 

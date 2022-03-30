@@ -1,4 +1,5 @@
-import { newE2EPage, E2EPage } from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 test('presentation', async () => {
   const page = await newE2EPage({

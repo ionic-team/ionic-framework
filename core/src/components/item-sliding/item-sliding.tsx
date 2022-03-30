@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, Side } from '../../interface';
+import type { Gesture, GestureDetail, Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;

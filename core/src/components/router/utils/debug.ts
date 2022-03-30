@@ -1,4 +1,4 @@
-import { RouteChain, RouteRedirect } from './interface';
+import type { RouteChain, RouteRedirect } from './interface';
 import { generatePath } from './path';
 
 export const printRoutes = (routes: RouteChain[]) => {

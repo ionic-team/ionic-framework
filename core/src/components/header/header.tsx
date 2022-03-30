@@ -1,7 +1,9 @@
-import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Attributes, componentOnReady, inheritAttributes } from '../../utils/helpers';
+import type { Attributes} from '../../utils/helpers';
+import { componentOnReady, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';

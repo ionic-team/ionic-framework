@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { getActiveElementParent } from '../utils';
 
 test('overlays: hardware back button: should dismiss a presented overlay', async () => {

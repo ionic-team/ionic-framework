@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, h } from '@stencil/core';
 
 import { getElementRoot } from '../../utils/helpers';
 
-import { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
+import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

@@ -1,5 +1,6 @@
-import { testModal } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testModal } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
@@ -14,7 +15,7 @@ test('modal: focus trap', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
   await ionModalDidPresent.next();
@@ -45,7 +46,7 @@ test('modal: return focus', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
   await ionModalDidPresent.next()
@@ -75,7 +76,7 @@ test('modal: htmlAttributes', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let alert = await page.find('ion-modal');
+  const alert = await page.find('ion-modal');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();

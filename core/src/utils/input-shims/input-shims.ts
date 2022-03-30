@@ -1,4 +1,4 @@
-import { Config } from '../../interface';
+import type { Config } from '../../interface';
 import { componentOnReady } from '../helpers';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';

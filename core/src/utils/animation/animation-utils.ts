@@ -1,4 +1,4 @@
-import { AnimationKeyFrames } from './animation-interface';
+import type { AnimationKeyFrames } from './animation-interface';
 
 let animationPrefix: string | undefined;
 

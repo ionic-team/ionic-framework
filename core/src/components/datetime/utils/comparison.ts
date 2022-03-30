@@ -1,4 +1,4 @@
-import { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts } from '../datetime-interface';
 
 /**
  * Returns true if the selected day is equal to the reference day

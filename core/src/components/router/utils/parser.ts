@@ -1,4 +1,4 @@
-import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
+import type { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
 const readProp = (el: HTMLElement, prop: string): string | null | undefined => {

@@ -1,4 +1,4 @@
-import { BackButtonEvent } from '../interface';
+import type { BackButtonEvent } from '../interface';
 
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 

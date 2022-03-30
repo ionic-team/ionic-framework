@@ -1,10 +1,10 @@
 import { newSpecPage, mockWindow } from '@stencil/core/testing';
 
-import { ComponentProps } from '../../../interface';
-import { Nav } from '../nav';
-import { NavOptions } from '../nav-interface';
-import { ViewController } from '../view-controller';
 import { Config } from '../../../global/config';
+import type { ComponentProps } from '../../../interface';
+import { Nav } from '../nav';
+import type { NavOptions } from '../nav-interface';
+import { ViewController } from '../view-controller';
 
 describe('NavController', () => {
 

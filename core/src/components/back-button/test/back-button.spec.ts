@@ -1,9 +1,10 @@
+import { setMode } from '@stencil/core';
+import { newSpecPage } from '@stencil/core/testing';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
-import { newSpecPage } from '@stencil/core/testing';
-import { BackButton } from "../back-button";
 import { config } from "../../../global/config";
-import { setMode } from '@stencil/core';
+import { BackButton } from "../back-button";
+
 
 
 describe('back button', () => {
@@ -11,7 +12,7 @@ describe('back button', () => {
     config.reset({});
   });
 
-  const newBackButton = async (mode: string = 'md'): Promise<BackButton> => {
+  const newBackButton = async (mode = 'md'): Promise<BackButton> => {
     setMode(() => mode);
     const { rootInstance } = await newSpecPage({
       components: [BackButton],

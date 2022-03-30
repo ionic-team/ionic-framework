@@ -1,5 +1,5 @@
 import { ROUTER_INTENT_FORWARD } from '../utils/constants';
-import { RouteChain } from '../utils/interface';
+import type { RouteChain } from '../utils/interface';
 import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from '../utils/path';
 
 describe('parsePath', () => {

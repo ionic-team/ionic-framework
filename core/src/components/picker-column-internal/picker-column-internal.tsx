@@ -1,13 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
-import { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
+import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
-import { PickerColumnItem } from './picker-column-internal-interfaces';
+import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

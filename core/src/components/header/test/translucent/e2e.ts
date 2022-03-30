@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { checkComponentModeClasses } from '@utils/test';
 
 test('header: translucent', async () => {

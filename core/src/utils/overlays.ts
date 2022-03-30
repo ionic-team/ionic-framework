@@ -1,6 +1,6 @@
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
-import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import type { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
@@ -9,7 +9,7 @@ let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
-const createController = <Opts extends object, HTMLElm extends any>(tagName: string) => {
+const createController = <Opts extends object, HTMLElm>(tagName: string) => {
   return {
     create(options: Opts): Promise<HTMLElm> {
       return createOverlay(tagName, options) as any;

@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Event, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-route-redirect'

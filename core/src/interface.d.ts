@@ -1,5 +1,6 @@
 // Components interfaces
-import { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
+import type { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
+
 export * from './components';
 export * from './index';
 export * from './components/accordion-group/accordion-group-interface';
@@ -84,12 +85,12 @@ export { NavComponentWithProps } from "./components/nav/nav-interface";
 
 declare module "./components" {
   export namespace Components {
-    export interface IonIcon extends IoniconsComponents.IonIcon{}
+    export type IonIcon = IoniconsComponents.IonIcon
   }
 }
 
 declare module "./components" {
   export namespace JSX {
-    export interface IonIcon extends IoniconsJSX.IonIcon {}
+    export type IonIcon = IoniconsJSX.IonIcon
   }
 }

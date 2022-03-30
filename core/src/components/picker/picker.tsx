@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerAttributes, PickerButton, PickerColumn } from '../../interface';
+import type { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerAttributes, PickerButton, PickerColumn } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 

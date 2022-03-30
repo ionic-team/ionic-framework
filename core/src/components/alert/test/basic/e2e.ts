@@ -1,5 +1,6 @@
-import { testAlert } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testAlert } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
@@ -13,7 +14,7 @@ test('alert: focus trap', async () => {
   await page.click('#multipleButtons');
   await page.waitForSelector('#multipleButtons');
 
-  let alert = await page.find('ion-alert');
+  const alert = await page.find('ion-alert');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
@@ -111,7 +112,7 @@ test('alert: htmlAttributes', async () => {
   await page.click('#basic');
   await page.waitForSelector('#basic');
 
-  let alert = await page.find('ion-alert');
+  const alert = await page.find('ion-alert');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();

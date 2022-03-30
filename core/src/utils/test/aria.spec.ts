@@ -1,8 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { getAriaLabel } from '../helpers';
+
 import { Item } from '../../components/item/item.tsx';
 import { Label } from '../../components/label/label.tsx';
 import { Toggle } from '../../components/toggle/toggle.tsx';
+import { getAriaLabel } from '../helpers';
 
 describe('getAriaLabel()', () => {
   it('should correctly link component to label', async () => {

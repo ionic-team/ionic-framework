@@ -1,5 +1,6 @@
-import { testMenu } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testMenu } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementID = async (page) => {

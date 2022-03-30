@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';

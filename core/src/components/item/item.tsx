@@ -1,12 +1,13 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
-import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-import { InputChangeEventDetail } from '../input/input-interface';
+import type { InputChangeEventDetail } from '../input/input-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
