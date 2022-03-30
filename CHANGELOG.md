@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.14](https://github.com/ionic-team/ionic-framework/compare/v6.0.13...v6.0.14) (2022-03-30)
+
+
+### Bug Fixes
+
+* **react:** treeshake ionic/core bundle ([#24989](https://github.com/ionic-team/ionic-framework/issues/24989)) ([a296ca8](https://github.com/ionic-team/ionic-framework/commit/a296ca875c18ec01bfc57972571e95a6d79f5678)), closes [#24497](https://github.com/ionic-team/ionic-framework/issues/24497)
+
+
+
+
+
 ## [6.0.13](https://github.com/ionic-team/ionic-framework/compare/v6.0.12...v6.0.13) (2022-03-23)
 
 
