@@ -5,7 +5,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, ModalBreakpointChangeEventDetail, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { raf } from '../../utils/helpers';
+import { clamp, raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -98,7 +98,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * array must be the value of the `initialBreakpoint` property.
    * For example: [0, .25, .5, 1]
    */
-  @Prop() breakpoints?: number[];
+  @Prop({ mutable: true }) breakpoints?: number[];
 
   /**
    * A decimal value between 0 and 1 that indicates the
@@ -278,9 +278,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
-  breakpointsChanged(breakpoints: number[] | undefined) {
+  @Watch('breakpoints')
+  breakpointsChanged(breakpoints: number[] | undefined, previousBreakpoints?: number[]) {
     if (breakpoints !== undefined) {
       this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
+
+      if (previousBreakpoints) {
+        /**
+         * If the new breakpoints are different from the previous ones, we need to
+         * re-initialize the gesture.
+         */
+        if (breakpoints.length !== previousBreakpoints.length || !breakpoints.every((v, i) => v === previousBreakpoints[i])) {
+          const { currentBreakpoint, sortedBreakpoints } = this;
+          // Calculate the initial breakpoint by comparing the current breakpoint vs. the min/max breakpoints.
+          const newBreakpoint = clamp(sortedBreakpoints[0], currentBreakpoint!, sortedBreakpoints[sortedBreakpoints.length - 1]);
+          this.initSheetGesture(newBreakpoint);
+          if (currentBreakpoint && !breakpoints.includes(currentBreakpoint)) {
+            // Current breakpoint is not within the new breakpoints, so we need to update the current breakpoint.
+            this.setCurrentBreakpoint(newBreakpoint);
+          }
+        }
+      }
     }
   }
 
@@ -514,8 +532,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.gesture.enable(true);
   }
 
-  private initSheetGesture() {
-    const { wrapperEl, initialBreakpoint, backdropBreakpoint } = this;
+  private initSheetGesture(initialBreakpoint = this.initialBreakpoint) {
+    const { wrapperEl, backdropBreakpoint } = this;
 
     if (!wrapperEl || initialBreakpoint === undefined) {
       return;
