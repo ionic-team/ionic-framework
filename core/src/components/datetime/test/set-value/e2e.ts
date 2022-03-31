@@ -34,4 +34,3 @@ describe('datetime: setting the value', () => {
     expect(activeTime).toEqualText('12:40 PM');
   })
 })
-

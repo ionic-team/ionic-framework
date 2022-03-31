@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { getActiveElementParent } from '../utils';
 
 test('overlays: hardware back button: should dismiss a presented overlay', async () => {
@@ -77,7 +78,6 @@ test('overlays: Esc: should dismiss a presented overlay', async () => {
 
   await page.waitForSelector('ion-modal', { hidden: true })
 });
-
 
 test('overlays: Esc: should dismiss the presented overlay, even though another hidden modal was added last', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });

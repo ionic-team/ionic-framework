@@ -1,9 +1,22 @@
-import { test as base } from '@playwright/test';
+import { Page, PlaywrightTestArgs, PlaywrightTestOptions, PlaywrightWorkerArgs, PlaywrightWorkerOptions, Response, TestInfo, test as base } from '@playwright/test';
 
-export const test = base.extend({
-  page: async ({ page }, use, testInfo) => {
+type IonicPage = Page & {
+  goto: (url: string) => Promise<null | Response>;
+  setIonViewport: () => Promise<void>;
+  getSnapshotSettings: () => string;
+}
+
+type CustomTestArgs = PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions & {
+  page: IonicPage
+}
+
+type CustomFixtures = {
+  page: IonicPage
+};
+
+export const test = base.extend<CustomFixtures>({
+  page: async ({ page }: CustomTestArgs, use: (r: IonicPage) => Promise<void>, testInfo: TestInfo) => {
     const oldGoTo = page.goto.bind(page);
-
 
     /**
      * This is an extended version of Playwright's
@@ -12,7 +25,7 @@ export const test = base.extend({
      * automatically waits for the Stencil components
      * to be hydrated before proceeding with the test.
      */
-    page.goto = (url: string) => {
+    page.goto = async (url: string) => {
       const { mode, rtl } = testInfo.project.metadata;
 
       const splitUrl = url.split('?');
@@ -28,10 +41,12 @@ export const test = base.extend({
 
       const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
-      return Promise.all([
-        page.waitForFunction(() => window.stencilAppLoaded === true),
+      const [_, response] = await Promise.all([
+        page.waitForFunction(() => (window as any).stencilAppLoaded === true),
         oldGoTo(formattedUrl)
-      ])
+      ]);
+
+      return response;
     }
 
     /**
@@ -77,18 +92,23 @@ export const test = base.extend({
      * can be captured in a screenshot.
      */
     page.setIonViewport = async () => {
-      const currentViewport = await page.viewportSize();
+      const currentViewport = page.viewportSize();
 
       const pixelAmountRenderedOffscreen = await page.evaluate(() => {
         const content = document.querySelector('ion-content');
-        const innerScroll = content.shadowRoot.querySelector('.inner-scroll');
-
-        return innerScroll.scrollHeight - content.clientHeight;
+        if (content) {
+          const innerScroll = content.shadowRoot!.querySelector('.inner-scroll')!;
+          return innerScroll.scrollHeight - content.clientHeight;
+        }
+        return 0;
       });
 
+      const width = currentViewport?.width ?? 640;
+      const height = (currentViewport?.height ?? 480) + pixelAmountRenderedOffscreen;
+
       await page.setViewportSize({
-        width: currentViewport.width,
-        height: currentViewport.height + pixelAmountRenderedOffscreen
+        width,
+        height
       })
     }
 

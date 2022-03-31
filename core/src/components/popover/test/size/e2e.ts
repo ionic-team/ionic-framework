@@ -75,7 +75,6 @@ test('should calculate popover width based on event width', async () => {
   }
 });
 
-
 test('should not calculate popover width with no trigger or event', async () => {
   const page = await newE2EPage({ url: '/src/components/popover/test/size?ionic:_testing=true' });
 

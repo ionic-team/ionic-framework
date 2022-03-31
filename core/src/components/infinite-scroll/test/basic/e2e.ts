@@ -1,12 +1,10 @@
-import { newE2EPage } from '@stencil/core/testing';
-import type { E2EPage } from '@stencil/core/testing';
-
+import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
 /**
  * Scrolls an `ion-content` element to the bottom, triggering the `ionInfinite` event.
  * Waits for the custom event to complete.
  */
-async function scrollIonContentPage(page: E2EPage) {
+const scrollIonContentPage = async (page: E2EPage) => {
   const content = await page.find('ion-content');
   await content.callMethod('scrollToBottom');
   await page.waitForChanges();

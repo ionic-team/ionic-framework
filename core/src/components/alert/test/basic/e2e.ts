@@ -1,10 +1,11 @@
-import { testAlert } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
 
+import { testAlert } from '../test.utils';
+
 const DIRECTORY = 'basic';
-const getActiveElementText = async (page) => {
+const getActiveElementText = async page => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
+  return page.evaluate(el => el && el.textContent, activeElement);
 }
 
 test('alert: focus trap', async () => {
@@ -13,7 +14,7 @@ test('alert: focus trap', async () => {
   await page.click('#multipleButtons');
   await page.waitForSelector('#multipleButtons');
 
-  let alert = await page.find('ion-alert');
+  const alert = await page.find('ion-alert');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
@@ -111,12 +112,12 @@ test('alert: htmlAttributes', async () => {
   await page.click('#basic');
   await page.waitForSelector('#basic');
 
-  let alert = await page.find('ion-alert');
+  const alert = await page.find('ion-alert');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-alert').getAttribute('data-testid'));
+  const attribute = await page.evaluate(el => document.querySelector('ion-alert').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-alert');
 });

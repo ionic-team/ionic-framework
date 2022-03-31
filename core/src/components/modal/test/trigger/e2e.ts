@@ -8,7 +8,7 @@ test('should open modal by left clicking on trigger', async () => {
   await page.click('#left-click-trigger');
   await page.waitForSelector('.left-click-modal');
 
-  let modal = await page.find('.left-click-modal');
+  const modal = await page.find('.left-click-modal');
   await modal.waitForVisible();
 
   screenshotCompares.push(await page.compareScreenshot());

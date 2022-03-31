@@ -1,6 +1,5 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
-
 describe('picker-column-internal', () => {
 
   let page: E2EPage;
