@@ -25,6 +25,22 @@ interface RangeChangeEventDetail {
 }
 ```
 
+### RangeKnobMoveStartEventDetail
+
+```typescript
+interface RangeKnobMoveStartEventDetail {
+  value: RangeValue;
+}
+```
+
+### RangeKnobMoveEndEventDetail
+
+```typescript
+interface RangeKnobMoveEndEventDetail {
+  value: RangeValue;
+}
+```
+
 ### RangeCustomEvent
 
 While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
