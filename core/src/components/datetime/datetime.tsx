@@ -705,9 +705,6 @@ export class Datetime implements ComponentInterface {
      */
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-
-      let endIO: IntersectionObserver | undefined;
-      let startIO: IntersectionObserver | undefined;
       const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
         const refIO = (callbackType === 'start') ? startIO : endIO;
         const refMonth = (callbackType === 'start') ? startMonth : endMonth;
@@ -847,14 +844,14 @@ export class Datetime implements ComponentInterface {
        * something WebKit does.
        */
 
-      endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
+      const endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
         threshold,
         root: calendarBodyRef,
         rootMargin
       });
       endIO.observe(endMonth);
 
-      startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
+      const startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold,
         root: calendarBodyRef,
         rootMargin
@@ -910,7 +907,7 @@ export class Datetime implements ComponentInterface {
      * visible if used inside of a modal or a popover otherwise the scrollable
      * areas will not have the correct values snapped into place.
      */
-    let visibleIO: IntersectionObserver | undefined;
+
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (!ev.isIntersecting) { return; }
@@ -929,7 +926,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.add('datetime-ready');
       });
     }
-    visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
+    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
 
     /**
      * Use raf to avoid a race condition between the component loading and
@@ -946,7 +943,6 @@ export class Datetime implements ComponentInterface {
      * the scroll areas have scroll widths/heights of 0px, so any snapping
      * we did originally has been lost.
      */
-    let hiddenIO: IntersectionObserver | undefined;
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (ev.isIntersecting) { return; }
@@ -957,7 +953,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.remove('datetime-ready');
       });
     }
-    hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
+    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
     raf(() => hiddenIO?.observe(this.el));
 
     /**

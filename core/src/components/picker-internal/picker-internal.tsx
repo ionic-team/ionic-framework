@@ -356,9 +356,8 @@ export class PickerInternal implements ComponentInterface {
    * or trailing zeros when looking at the item text.
    */
   private searchColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string, zeroBehavior: 'start' | 'end' = 'start') => {
-    let item;
     const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
-    item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
+    const item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
 
     if (item) {
       colEl.value = item.value;
