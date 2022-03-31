@@ -59,6 +59,7 @@ export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' 
 export type Color = PredefinedColors | string;
 export type Mode = "ios" | "md";
 export type ComponentTags = string;
+// eslint-disable-next-line
 export type ComponentRef = Function | HTMLElement | string | null;
 // eslint-disable-next-line
 export type ComponentProps<T = null> = {[key: string]: any};
