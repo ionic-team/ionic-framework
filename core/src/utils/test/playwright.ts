@@ -15,8 +15,7 @@ type CustomFixtures = {
 };
 
 export const test = base.extend<CustomFixtures>({
-  page: async (testArgs: CustomTestArgs, use: (r: IonicPage) => Promise<void>, testInfo: TestInfo) => {
-    const page = testArgs.page as IonicPage;
+  page: async ({ page }: CustomTestArgs, use: (r: IonicPage) => Promise<void>, testInfo: TestInfo) => {
     const oldGoTo = page.goto.bind(page);
 
     /**
