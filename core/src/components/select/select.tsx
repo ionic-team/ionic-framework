@@ -369,6 +369,7 @@ export class Select implements ComponentInterface {
      */
     // eslint-disable-next-line
     if (false) {
+      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-select-popover');
       document.createElement('ion-popover');
@@ -395,6 +396,7 @@ export class Select implements ComponentInterface {
      */
     // eslint-disable-next-line
     if (false) {
+      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-action-sheet');
     }
@@ -442,6 +444,7 @@ export class Select implements ComponentInterface {
      */
     // eslint-disable-next-line
     if (false) {
+      // eslint-disable-next-line
       // @ts-ignore
       document.createElement('ion-alert');
     }
