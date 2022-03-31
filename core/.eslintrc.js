@@ -26,6 +26,7 @@ module.exports = {
         "varsIgnorePattern": "^h$"
       }
     ],
-    "no-useless-catch": "off"
+    "no-useless-catch": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 };
