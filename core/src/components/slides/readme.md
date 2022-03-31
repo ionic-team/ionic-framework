@@ -498,7 +498,7 @@ import { Component } from '@angular/core';
 })
 export class SlideExample {
   // Optional parameters to pass to the swiper instance.
-  // See http://idangero.us/swiper/api/ for valid options.
+  // See https://swiperjs.com/swiper-api for valid options.
   slideOpts = {
     initialSlide: 1,
     speed: 400
@@ -539,7 +539,7 @@ ion-slides {
 var slides = document.querySelector('ion-slides');
 
 // Optional parameters to pass to the swiper instance.
-// See http://idangero.us/swiper/api/ for valid options.
+// See https://swiperjs.com/swiper-api for valid options.
 slides.options = {
   initialSlide: 1,
   speed: 400
@@ -561,7 +561,7 @@ import React from 'react';
 import { IonSlides, IonSlide, IonContent } from '@ionic/react';
 
 // Optional parameters to pass to the swiper instance.
-// See http://idangero.us/swiper/api/ for valid options.
+// See https://swiperjs.com/swiper-api for valid options.
 const slideOpts = {
   initialSlide: 1,
   speed: 400
@@ -603,7 +603,7 @@ import { Component, h } from '@stencil/core';
 })
 export class SlidesExample {
   // Optional parameters to pass to the swiper instance.
-  // See http://idangero.us/swiper/api/ for valid options.
+  // See https://swiperjs.com/swiper-api for valid options.
   private slideOpts = {
     initialSlide: 1,
     speed: 400
@@ -664,7 +664,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   components: { IonSlides, IonSlide },
   setup() {
-    // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+    // Optional parameters to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options.
     const slideOpts = {
       initialSlide: 1,
       speed: 400
@@ -679,12 +679,12 @@ export default defineComponent({
 
 ## Properties
 
-| Property    | Attribute   | Description                                                                                  | Type            | Default     |
-| ----------- | ----------- | -------------------------------------------------------------------------------------------- | --------------- | ----------- |
-| `mode`      | `mode`      | The mode determines which platform styles to use.                                            | `"ios" \| "md"` | `undefined` |
-| `options`   | `options`   | Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options | `any`           | `{}`        |
-| `pager`     | `pager`     | If `true`, show the pagination.                                                              | `boolean`       | `false`     |
-| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                               | `boolean`       | `false`     |
+| Property    | Attribute   | Description                                                                                   | Type            | Default     |
+| ----------- | ----------- | --------------------------------------------------------------------------------------------- | --------------- | ----------- |
+| `mode`      | `mode`      | The mode determines which platform styles to use.                                             | `"ios" \| "md"` | `undefined` |
+| `options`   | `options`   | Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options | `any`           | `{}`        |
+| `pager`     | `pager`     | If `true`, show the pagination.                                                               | `boolean`       | `false`     |
+| `scrollbar` | `scrollbar` | If `true`, show the scrollbar.                                                                | `boolean`       | `false`     |
 
 
 ## Events
@@ -735,7 +735,7 @@ Type: `Promise<number>`
 
 Get the Swiper instance.
 Use this to access the full Swiper API.
-See https://idangero.us/swiper/api/ for all API options.
+See https://swiperjs.com/swiper-api for all API options.
 
 #### Returns
 

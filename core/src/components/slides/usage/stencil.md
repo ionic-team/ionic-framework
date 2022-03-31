@@ -7,7 +7,7 @@ import { Component, h } from '@stencil/core';
 })
 export class SlidesExample {
   // Optional parameters to pass to the swiper instance.
-  // See http://idangero.us/swiper/api/ for valid options.
+  // See https://swiperjs.com/swiper-api for valid options.
   private slideOpts = {
     initialSlide: 1,
     speed: 400
