@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, KnobName, RangeKnobMoveEndEventDetail, RangeChangeEventDetail, RangeKnobMoveStartEventDetail, RangeValue, StyleEventDetail } from '../../interface';
+import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { Attributes, clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
