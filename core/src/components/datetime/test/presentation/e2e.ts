@@ -45,7 +45,7 @@ describe('presentation: time', () => {
 
       await page.waitForChanges();
 
-      expect(didChange).toHaveReceivedEventTimes(1);
+      expect(didChange).toHaveReceivedEvent();
       expect(didChange).toHaveReceivedEventDetail({ value: '06:02:40' });
     });
 
