@@ -137,16 +137,14 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
 export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<ElementHandle> => {
   const shadowSelectorFn = (el: Element, selector: string): Element | null => (el && el.shadowRoot) && el.shadowRoot.querySelector(selector);
 
-  return new Promise(async resolve => {
-    const [firstSelector, ...restSelectors] = selectors;
-    let parentElement = await page.$(firstSelector);
+  const [firstSelector, ...restSelectors] = selectors;
+  let parentElement = await page.$(firstSelector);
 
-    for (const selector of restSelectors) {
-      parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
-    }
+  for (const selector of restSelectors) {
+    parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
+  }
 
-    if (parentElement) { resolve(parentElement); }
-  });
+  if (parentElement) { return parentElement; }
 };
 
 /**
