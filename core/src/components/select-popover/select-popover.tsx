@@ -63,7 +63,7 @@ export class SelectPopover implements ComponentInterface {
     const option = this.findOptionFromEvent(ev);
     const values = this.getValues(ev);
 
-    if (option && option.handler) {
+    if (option?.handler) {
       safeCall(option.handler, values);
     }
   }

@@ -53,6 +53,7 @@ const createMenuController = () => {
   const isOpen = async (menu?: string | null): Promise<boolean> => {
     if (menu != null) {
       const menuEl = await get(menu);
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       return (menuEl !== undefined && menuEl.isOpen());
     } else {
       const menuEl = await getOpen();

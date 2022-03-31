@@ -117,7 +117,7 @@ export class Tabs implements NavOutlet {
   /** @internal */
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
-    const tabId = this.selectedTab && this.selectedTab.tab;
+    const tabId = this.selectedTab?.tab;
     return tabId !== undefined ? { id: tabId, element: this.selectedTab } : undefined;
   }
 

@@ -215,7 +215,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   private async callButtonHandler(button: ToastButton | undefined) {
-    if (button && button.handler) {
+    if (button?.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       try {

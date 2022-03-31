@@ -316,7 +316,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
     if (this.velocity === 0 && detail.deltaY === 0) {
       const opt = (detail.event.target as Element).closest('.picker-opt');
-      if (opt && opt.hasAttribute('opt-index')) {
+      if (opt?.hasAttribute('opt-index')) {
         this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
       }
 

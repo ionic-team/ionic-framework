@@ -135,7 +135,7 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
  * https://github.com/GoogleChrome/puppeteer/issues/858#issuecomment-359763824
  */
 export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<ElementHandle> => {
-  const shadowSelectorFn = (el: Element, selector: string): Element | null => (el && el.shadowRoot) && el.shadowRoot.querySelector(selector);
+  const shadowSelectorFn = (el: Element, selector: string): Element | null => el?.shadowRoot?.querySelector(selector);
 
   const [firstSelector, ...restSelectors] = selectors;
   let parentElement = await page.$(firstSelector);

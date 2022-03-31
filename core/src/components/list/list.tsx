@@ -36,7 +36,7 @@ export class List implements ComponentInterface {
   @Method()
   async closeSlidingItems(): Promise<boolean> {
     const item = this.el.querySelector('ion-item-sliding');
-    if (item && item.closeOpened) {
+    if (item?.closeOpened) {
       return item.closeOpened();
     }
     return false;

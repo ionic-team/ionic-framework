@@ -45,7 +45,7 @@ export const startHardwareBackButton = () => {
 
     const executeAction = async (handlerRegister: HandlerRegister | undefined) => {
       try {
-        if (handlerRegister && handlerRegister.handler) {
+        if (handlerRegister?.handler) {
           const result = handlerRegister.handler(processHandlers);
           if (result != null) {
             await result;

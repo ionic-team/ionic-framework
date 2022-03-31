@@ -72,7 +72,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       this.el,
       () => !this.gestureOrAnimationInProgress && !!this.swipeHandler && this.swipeHandler.canStart(),
       () => onStart(),
-      step => this.ani && this.ani.progressStep(step),
+      step => this.ani?.progressStep(step),
       (shouldComplete, step, dur) => {
         if (this.ani) {
           this.ani.onFinish(() => {

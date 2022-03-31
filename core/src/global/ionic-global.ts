@@ -65,7 +65,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
 
   const isIonicElement = (elm: any) =>
-        elm.tagName && elm.tagName.startsWith('ION-');
+        elm.tagName?.startsWith('ION-');
 
   const isAllowedIonicModeValue = (elmMode: string) =>
       ['ios', 'md'].includes(elmMode);

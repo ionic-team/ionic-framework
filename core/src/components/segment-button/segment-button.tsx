@@ -94,7 +94,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, tabIndex } = this;
     const mode = getIonMode(this);
-    const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
+    const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host
         role="tab"

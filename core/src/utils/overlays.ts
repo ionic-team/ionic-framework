@@ -69,7 +69,7 @@ const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, s
 export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
 
-  const shadowRoot = firstInput && firstInput.shadowRoot;
+  const shadowRoot = firstInput?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
     firstInput = shadowRoot.querySelector(innerFocusableQueryString) || firstInput;
@@ -89,7 +89,7 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
   let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
 
-  const shadowRoot = lastInput && lastInput.shadowRoot;
+  const shadowRoot = lastInput?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
     lastInput = shadowRoot.querySelector(innerFocusableQueryString) || lastInput;
@@ -269,7 +269,7 @@ const connectListeners = (doc: Document) => {
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
       const lastOverlay = getOverlay(doc);
-      if (lastOverlay && lastOverlay.backdropDismiss) {
+      if (lastOverlay?.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
         });
@@ -280,7 +280,7 @@ const connectListeners = (doc: Document) => {
     doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
         const lastOverlay = getOverlay(doc);
-        if (lastOverlay && lastOverlay.backdropDismiss) {
+        if (lastOverlay?.backdropDismiss) {
           lastOverlay.dismiss(undefined, BACKDROP);
         }
       }
@@ -413,7 +413,7 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
   let previousElement = document.activeElement as HTMLElement | null;
   if (!previousElement) { return; }
 
-  const shadowRoot = previousElement && previousElement.shadowRoot;
+  const shadowRoot = previousElement?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
     previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
@@ -499,7 +499,7 @@ const overlayAnimation = async (
   if (overlay.keyboardClose) {
     animation.beforeAddWrite(() => {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
-      if (activeElement && activeElement.matches('input,ion-input, ion-textarea')) {
+      if (activeElement?.matches('input,ion-input, ion-textarea')) {
         activeElement.blur();
       }
     });

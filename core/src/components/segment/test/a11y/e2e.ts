@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.innerText, activeElement);
+  return await page.evaluate(el => el?.innerText, activeElement);
 }
 
 test('segment: axe', async () => {

@@ -338,7 +338,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   private callButtonHandler(button: AlertButton | undefined, data?: any) {
-    if (button && button.handler) {
+    if (button?.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       const returnData = safeCall(button.handler, data);

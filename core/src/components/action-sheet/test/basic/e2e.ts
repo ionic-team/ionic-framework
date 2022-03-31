@@ -5,7 +5,7 @@ import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
+  return await page.evaluate(el => el?.textContent, activeElement);
 }
 
 test('action-sheet: data', async () => {

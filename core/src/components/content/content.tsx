@@ -368,7 +368,7 @@ const getParentElement = (el: any) => {
     // normal element with a parent element
     return el.parentElement;
   }
-  if (el.parentNode && el.parentNode.host) {
+  if (el.parentNode?.host) {
     // shadow dom's document fragment
     return el.parentNode.host;
   }

@@ -82,7 +82,7 @@ export class Accordion implements ComponentInterface {
   @Prop() toggleIconSlot: 'start' | 'end' = 'end';
 
   connectedCallback() {
-    const accordionGroupEl = this.accordionGroupEl = this.el && this.el.closest('ion-accordion-group');
+    const accordionGroupEl = this.accordionGroupEl = this.el?.closest('ion-accordion-group');
     if (accordionGroupEl) {
       this.updateState(true);
       addEventListener(accordionGroupEl, 'ionChange', this.updateListener);
@@ -310,14 +310,14 @@ export class Accordion implements ComponentInterface {
        * next or previous accordion is selected.
        */
       const nextAccordion = this.getNextSibling();
-      const nextAccordionValue = nextAccordion && nextAccordion.value;
+      const nextAccordionValue = nextAccordion?.value;
 
       if (nextAccordionValue !== undefined) {
       this.isPrevious = (Array.isArray(value)) ? value.includes(nextAccordionValue) : value === nextAccordionValue;
       }
 
       const previousAccordion = this.getPreviousSibling();
-      const previousAccordionValue = previousAccordion && previousAccordion.value;
+      const previousAccordionValue = previousAccordion?.value;
 
       if (previousAccordionValue !== undefined) {
         this.isNext = (Array.isArray(value)) ? value.includes(previousAccordionValue) : value === previousAccordionValue;

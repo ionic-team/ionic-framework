@@ -18,7 +18,7 @@ export const attachComponent = async (
   }
 
   const el: any = (typeof component === 'string')
-    ? container.ownerDocument && container.ownerDocument.createElement(component)
+    ? container.ownerDocument?.createElement(component)
     : component;
 
   if (cssClasses) {
@@ -67,7 +67,7 @@ export const CoreDelegate = () => {
        * to the component.
        */
       const el: any = (typeof userComponent === 'string')
-        ? BaseComponent.ownerDocument && BaseComponent.ownerDocument.createElement(userComponent)
+        ? BaseComponent.ownerDocument?.createElement(userComponent)
         : userComponent;
 
       /**
@@ -92,7 +92,7 @@ export const CoreDelegate = () => {
     } else if (BaseComponent.children.length > 0) {
       // If there is no component, then we need to create a new parent
       // element to apply the css classes to.
-      const el = BaseComponent.ownerDocument && BaseComponent.ownerDocument.createElement('div');
+      const el = BaseComponent.ownerDocument?.createElement('div');
       cssClasses.forEach(c => el.classList.add(c));
       // Move each child from the original template to the new parent element.
       el.append(...BaseComponent.children);
