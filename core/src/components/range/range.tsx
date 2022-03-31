@@ -258,6 +258,8 @@ export class Range implements ComponentInterface {
   }
 
   private handleKeyboard = (knob: KnobName, isIncrease: boolean) => {
+    const { ensureValueInBounds } = this;
+
     let step = this.step;
     step = step > 0 ? step : 1;
     step = step / (this.max - this.min);
@@ -270,9 +272,9 @@ export class Range implements ComponentInterface {
       this.ratioB = clamp(0, this.ratioB + step, 1);
     }
 
-    this.ionKnobMoveStart.emit({ value: this.value });
+    this.ionKnobMoveStart.emit({ value: ensureValueInBounds(this.value) });
     this.updateValue();
-    this.ionKnobMoveEnd.emit({ value: this.value });
+    this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
   }
 
   private getValue(): RangeValue {
@@ -321,7 +323,7 @@ export class Range implements ComponentInterface {
     // update the active knob's position
     this.update(currentX);
 
-    this.ionKnobMoveStart.emit({ value: this.value });
+    this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
   private onMove(detail: GestureDetail) {
@@ -332,7 +334,7 @@ export class Range implements ComponentInterface {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
 
-    this.ionKnobMoveEnd.emit({ value: this.value });
+    this.ionKnobMoveEnd.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
   private update(currentX: number) {
