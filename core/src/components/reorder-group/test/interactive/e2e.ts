@@ -1,7 +1,7 @@
 import * as pd from '@stencil/core/dist/testing/puppeteer/puppeteer-declarations';
 import { newE2EPage } from '@stencil/core/testing';
-
 import { getElementProperty, queryDeep } from '@utils/test';
+
 import { moveReorderItem } from '../test.utils';
 
 test('reorder: interactive', async () => {

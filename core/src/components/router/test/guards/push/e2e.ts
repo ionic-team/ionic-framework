@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('router: guards - router-link - allow/allow', async () => {
+test('router: guards - router.push - allow/allow', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -8,12 +8,12 @@ test('router: guards - router-link - allow/allow', async () => {
   // Test 1: beforeEnter: allow, beforeLeave: allow
   await setBeforeEnterHook(page, 'allow');
 
-  const routerLink = await page.$('#router-link');
-  await routerLink.click();
+  const routerPush = await page.$('#router-push');
+  await routerPush.click();
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child/1');
+  await checkUrl(page, '#/child');
 
   const backButton = await page.$('ion-back-button');
   await backButton.click();
@@ -23,7 +23,7 @@ test('router: guards - router-link - allow/allow', async () => {
   await checkUrl(page, '#/home');
 });
 
-test('router: guards - router-link - block/allow', async () => {
+test('router: guards - router.push - block/allow', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -31,15 +31,15 @@ test('router: guards - router-link - block/allow', async () => {
   // Test 2: beforeEnter: block, beforeLeave: allow
   await setBeforeEnterHook(page, 'block');
 
-  const routerLink = await page.$('#router-link');
-  await routerLink.click();
+  const routerPush = await page.$('#router-push');
+  await routerPush.click();
 
   await page.waitForChanges();
 
   await checkUrl(page, '#/home');
 });
 
-test('router: guards - router-link - redirect/allow', async () => {
+test('router: guards - router.push - redirect/allow', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -47,8 +47,8 @@ test('router: guards - router-link - redirect/allow', async () => {
   // Test 3: beforeEnter: redirect, beforeLeave: allow
   await setBeforeEnterHook(page, 'redirect');
 
-  const routerLink = await page.$('#router-link');
-  await routerLink.click();
+  const routerPush = await page.$('#router-push');
+  await routerPush.click();
 
   await page.waitForChanges();
 
@@ -62,10 +62,7 @@ test('router: guards - router-link - redirect/allow', async () => {
   await checkUrl(page, '#/home');
 });
 
-
-
-
-test('router: guards - router-link - allow/block', async () => {
+test('router: guards - router.push - allow/block', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -73,22 +70,22 @@ test('router: guards - router-link - allow/block', async () => {
   // Test 4: beforeEnter: allow, beforeLeave: block
   await setBeforeLeaveHook(page, 'block');
 
-  const routerLink = await page.$('#router-link');
-  await routerLink.click();
+  const routerPush = await page.$('#router-push');
+  await routerPush.click();
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child/1');
+  await checkUrl(page, '#/child');
 
   const backButton = await page.$('ion-back-button');
   await backButton.click();
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child/1');
+  await checkUrl(page, '#/child');
 });
 
-test('router: guards - router-link - allow/redirect', async () => {
+test('router: guards - router.push - allow/redirect', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -96,12 +93,12 @@ test('router: guards - router-link - allow/redirect', async () => {
   // Test 5: beforeEnter: allow, beforeLeave: redirect
   await setBeforeLeaveHook(page, 'redirect');
 
-  const routerLink = await page.$('#router-link');
-  await routerLink.click();
+  const routerPush = await page.$('#router-push');
+  await routerPush.click();
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child/1');
+  await checkUrl(page, '#/child');
 
   const backButton = await page.$('ion-back-button');
   await backButton.click();

@@ -1,10 +1,11 @@
-import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
 
+import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '../test.utils';
+
 const DIRECTORY = 'basic';
-const getActiveElementText = async (page) => {
+const getActiveElementText = async page => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
+  return page.evaluate(el => el && el.textContent, activeElement);
 }
 
 test('action-sheet: data', async () => {
@@ -45,7 +46,7 @@ test('action-sheet: focus trap', async () => {
   await page.click('#basic');
   await page.waitForSelector('#basic');
 
-  let actionSheet = await page.find('ion-action-sheet');
+  const actionSheet = await page.find('ion-action-sheet');
 
   expect(actionSheet).not.toBe(null);
   await actionSheet.waitForVisible();
@@ -152,12 +153,12 @@ test('action-sheet: htmlAttributes', async () => {
   await page.click('#basic');
   await page.waitForSelector('#basic');
 
-  let toast = await page.find('ion-action-sheet');
+  const toast = await page.find('ion-action-sheet');
 
   expect(toast).not.toBe(null);
   await toast.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
+  const attribute = await page.evaluate(el => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-action-sheet');
 });

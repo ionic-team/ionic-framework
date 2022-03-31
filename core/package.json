@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.0.13",
+  "version": "6.0.14",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@axe-core/puppeteer": "^4.3.2",
     "@jest/core": "^26.6.3",
+    "@playwright/test": "^1.20.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.4.0",

@@ -69,7 +69,7 @@ test('select: basic', async () => {
 
   popoverOption2 = await popover.find('.select-interface-option:nth-child(2)');
   expect(popoverOption2).toHaveClass('ion-focused');
-  
+
   await popover.callMethod('dismiss');
 
   // Custom Action Sheet Select

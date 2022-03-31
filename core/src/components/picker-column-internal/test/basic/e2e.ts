@@ -1,6 +1,5 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
-
 describe('picker-column-internal', () => {
 
   let page: E2EPage;
@@ -67,7 +66,7 @@ describe('picker-column-internal', () => {
       const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
 
       await page.$eval('#default', (el: any) => {
-        el.scrollTo(0, 300);
+        el.scrollTo(0, el.scrollHeight);
       });
 
       await ionChangeSpy.next();

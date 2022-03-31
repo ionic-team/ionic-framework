@@ -28,3 +28,8 @@ runs:
         name: ionic-core
         output: core/CoreBuild.zip
         paths: core/dist core/components core/css core/hydrate core/loader
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core-src
+        output: core/CoreSrc.zip
+        paths: core/src

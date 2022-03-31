@@ -1,5 +1,4 @@
 import * as pd from '@stencil/core/testing';
-
 import { dragElementBy, queryDeep } from '@utils/test';
 
 /**

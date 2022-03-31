@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('router: guards - router.push - allow/allow', async () => {
+test('router: guards - href - allow/allow', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -8,8 +8,8 @@ test('router: guards - router.push - allow/allow', async () => {
   // Test 1: beforeEnter: allow, beforeLeave: allow
   await setBeforeEnterHook(page, 'allow');
 
-  const routerPush = await page.$('#router-push');
-  await routerPush.click();
+  const href = await page.$('#href');
+  await href.click();
 
   await page.waitForChanges();
 
@@ -23,7 +23,7 @@ test('router: guards - router.push - allow/allow', async () => {
   await checkUrl(page, '#/home');
 });
 
-test('router: guards - router.push - block/allow', async () => {
+test('router: guards - href - block/allow', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -31,15 +31,15 @@ test('router: guards - router.push - block/allow', async () => {
   // Test 2: beforeEnter: block, beforeLeave: allow
   await setBeforeEnterHook(page, 'block');
 
-  const routerPush = await page.$('#router-push');
-  await routerPush.click();
+  const href = await page.$('#href');
+  await href.click();
 
   await page.waitForChanges();
 
   await checkUrl(page, '#/home');
 });
 
-test('router: guards - router.push - redirect/allow', async () => {
+test('router: guards - href - redirect/allow', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -47,8 +47,8 @@ test('router: guards - router.push - redirect/allow', async () => {
   // Test 3: beforeEnter: redirect, beforeLeave: allow
   await setBeforeEnterHook(page, 'redirect');
 
-  const routerPush = await page.$('#router-push');
-  await routerPush.click();
+  const href = await page.$('#href');
+  await href.click();
 
   await page.waitForChanges();
 
@@ -62,10 +62,7 @@ test('router: guards - router.push - redirect/allow', async () => {
   await checkUrl(page, '#/home');
 });
 
-
-
-
-test('router: guards - router.push - allow/block', async () => {
+test('router: guards - href - allow/block', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -73,8 +70,8 @@ test('router: guards - router.push - allow/block', async () => {
   // Test 4: beforeEnter: allow, beforeLeave: block
   await setBeforeLeaveHook(page, 'block');
 
-  const routerPush = await page.$('#router-push');
-  await routerPush.click();
+  const href = await page.$('#href');
+  await href.click();
 
   await page.waitForChanges();
 
@@ -88,7 +85,8 @@ test('router: guards - router.push - allow/block', async () => {
   await checkUrl(page, '#/child');
 });
 
-test('router: guards - router.push - allow/redirect', async () => {
+// TODO this is an actual bug in the code.
+test('router: guards - href - allow/redirect', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'
   });
@@ -96,8 +94,8 @@ test('router: guards - router.push - allow/redirect', async () => {
   // Test 5: beforeEnter: allow, beforeLeave: redirect
   await setBeforeLeaveHook(page, 'redirect');
 
-  const routerPush = await page.$('#router-push');
-  await routerPush.click();
+  const href = await page.$('#href');
+  await href.click();
 
   await page.waitForChanges();
 

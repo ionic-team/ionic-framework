@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { checkComponentModeClasses } from '@utils/test';
 
 test('footer: translucent', async () => {
