@@ -90,8 +90,8 @@ export const generateKeyframeRules = (keyframes: any[] = []) => {
     const offset = keyframe.offset;
 
     const frameString = [];
-    // eslint-disable-next-line no-prototype-builtins
     for (const property in keyframe) {
+      // eslint-disable-next-line no-prototype-builtins
       if (keyframe.hasOwnProperty(property) && property !== 'offset') {
         frameString.push(`${property}: ${keyframe[property]};`);
       }
