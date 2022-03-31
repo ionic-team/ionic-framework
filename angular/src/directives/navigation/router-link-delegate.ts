@@ -5,6 +5,12 @@ import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
 import { NavController } from '../../providers/nav-controller';
 
+/**
+ * Adds support for Ionic routing directions and animations to the base Angular router link directive.
+ *
+ * When the router link is clicked, the directive will assign the direction and
+ * animation so that the routing integration will transition correctly.
+ */
 @Directive({
   selector: '[routerLink]',
 })
@@ -31,19 +37,15 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
     this.updateTargetUrlAndHref();
   }
 
+  @HostListener('click')
+  onClick(): void {
+    this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
+  }
+
   private updateTargetUrlAndHref() {
     if (this.routerLink?.urlTree) {
       const href = this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(this.routerLink.urlTree));
       this.elementRef.nativeElement.href = href;
     }
-  }
-
-  /**
-   * @internal
-   */
-  @HostListener('click', ['$event'])
-  onClick(ev: UIEvent): void {
-    this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
-    ev.preventDefault();
   }
 }
