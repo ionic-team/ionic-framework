@@ -41,10 +41,8 @@ export const test = base.extend<CustomFixtures>({
 
       const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
-      const win = window as any;
-
       const [_, response] = await Promise.all([
-        page.waitForFunction(() => win.stencilAppLoaded === true),
+        page.waitForFunction(() => (window as any).stencilAppLoaded === true),
         oldGoTo(formattedUrl)
       ]);
 
