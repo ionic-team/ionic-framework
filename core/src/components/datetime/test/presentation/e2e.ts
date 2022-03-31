@@ -1,4 +1,4 @@
-import { newE2EPage, E2EPage } from '@stencil/core/testing';
+import { newE2EPage, E2EPage, E2EElement } from '@stencil/core/testing';
 
 test('presentation', async () => {
   const page = await newE2EPage({
@@ -26,13 +26,18 @@ describe('presentation: time', () => {
 
   describe('when the time picker is visible in the view', () => {
 
-    it('manually setting the value should emit ionChange once', async () => {
-      const datetime = await page.find('ion-datetime[presentation="time"]');
-      const didChange = await datetime.spyOnEvent('ionChange');
+    let datetime: E2EElement;
+
+    beforeEach(async () => {
+      datetime = await page.find('ion-datetime[presentation="time"]');
 
       await page.$eval('ion-datetime[presentation="time"]', (el: any) => {
         el.scrollIntoView();
       });
+    });
+
+    it('manually setting the value should emit ionChange once', async () => {
+      const didChange = await datetime.spyOnEvent('ionChange');
 
       await page.$eval('ion-datetime[presentation="time"]', (el: any) => {
         el.value = '06:02:40';
