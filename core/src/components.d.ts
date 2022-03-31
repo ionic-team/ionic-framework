@@ -5768,17 +5768,17 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: CustomEvent<RangeChangeEventDetail>) => void;
         /**
-          * Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
-         */
-        "onIonChangeEnd"?: (event: CustomEvent<RangeChangeEndEventDetail>) => void;
-        /**
-          * Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
-         */
-        "onIonChangeStart"?: (event: CustomEvent<RangeChangeStartEventDetail>) => void;
-        /**
           * Emitted when the range has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
+         */
+        "onIonKnobMoveEnd"?: (event: CustomEvent<RangeChangeEndEventDetail>) => void;
+        /**
+          * Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
+         */
+        "onIonKnobMoveStart"?: (event: CustomEvent<RangeChangeStartEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */

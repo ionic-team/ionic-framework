@@ -24,8 +24,8 @@ test('range: start/end events', async () => {
     url: '/src/components/range/test/basic?ionic:_testing=true'
   });
 
-  const rangeStart = await page.spyOnEvent('ionChangeStart');
-  const rangeEnd = await page.spyOnEvent('ionChangeEnd');
+  const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+  const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
   const rangeEl = await page.$('#basic');
 
   await dragElementBy(rangeEl, page, 300, 0);
@@ -51,8 +51,8 @@ test('range: start/end events, keyboard', async () => {
     url: '/src/components/range/test/basic?ionic:_testing=true'
   });
 
-  const rangeStart = await page.spyOnEvent('ionChangeStart');
-  const rangeEnd = await page.spyOnEvent('ionChangeEnd');
+  const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
+  const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
   
   await page.keyboard.press('Tab'); // focus first range
   await page.keyboard.press('ArrowRight');

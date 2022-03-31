@@ -1291,12 +1291,12 @@ export declare interface IonRange extends Components.IonRange {
    * Emitted when the user starts moving the range knob, whether through
 mouse drag, touch gesture, or keyboard interaction. 
    */
-  ionChangeStart: EventEmitter<CustomEvent<IRangeRangeChangeStartEventDetail>>;
+  ionKnobMoveStart: EventEmitter<CustomEvent<IRangeRangeChangeStartEventDetail>>;
   /**
    * Emitted when the user finishes moving the range knob, whether through
 mouse drag, touch gesture, or keyboard interaction. 
    */
-  ionChangeEnd: EventEmitter<CustomEvent<IRangeRangeChangeEndEventDetail>>;
+  ionKnobMoveEnd: EventEmitter<CustomEvent<IRangeRangeChangeEndEventDetail>>;
 
 }
 
@@ -1315,7 +1315,7 @@ export class IonRange {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur', 'ionChangeStart', 'ionChangeEnd']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 }
 

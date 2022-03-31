@@ -195,13 +195,13 @@ export class Range implements ComponentInterface {
    * Emitted when the user starts moving the range knob, whether through
    * mouse drag, touch gesture, or keyboard interaction.
    */
-  @Event() ionChangeStart!: EventEmitter<RangeChangeStartEventDetail>;
+  @Event() ionKnobMoveStart!: EventEmitter<RangeChangeStartEventDetail>;
 
   /**
    * Emitted when the user finishes moving the range knob, whether through
    * mouse drag, touch gesture, or keyboard interaction.
    */
-  @Event() ionChangeEnd!: EventEmitter<RangeChangeEndEventDetail>;
+  @Event() ionKnobMoveEnd!: EventEmitter<RangeChangeEndEventDetail>;
 
   private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
@@ -270,9 +270,9 @@ export class Range implements ComponentInterface {
       this.ratioB = clamp(0, this.ratioB + step, 1);
     }
 
-    this.ionChangeStart.emit({ value: this.value });
+    this.ionKnobMoveStart.emit({ value: this.value });
     this.updateValue();
-    this.ionChangeEnd.emit({ value: this.value });
+    this.ionKnobMoveEnd.emit({ value: this.value });
   }
 
   private getValue(): RangeValue {
@@ -321,7 +321,7 @@ export class Range implements ComponentInterface {
     // update the active knob's position
     this.update(currentX);
 
-    this.ionChangeStart.emit({ value: this.value });
+    this.ionKnobMoveStart.emit({ value: this.value });
   }
 
   private onMove(detail: GestureDetail) {
@@ -332,7 +332,7 @@ export class Range implements ComponentInterface {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
 
-    this.ionChangeEnd.emit({ value: this.value });
+    this.ionKnobMoveEnd.emit({ value: this.value });
   }
 
   private update(currentX: number) {
