@@ -27,6 +27,7 @@ module.exports = {
       }
     ],
     "no-useless-catch": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-case-declarations": "off"
   }
 };
