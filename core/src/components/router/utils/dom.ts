@@ -64,6 +64,7 @@ export const readNavState = async (root: HTMLElement | undefined) => {
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
 
+  // eslint-disable-next-line no-cond-assign
   while (outlet = searchNavNode(node)) {
     const id = await outlet.getRouteId();
     if (id) {
