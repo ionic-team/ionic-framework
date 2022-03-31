@@ -456,6 +456,7 @@ export const createAnimation = (animationId?: string): Animation => {
       removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
+        // eslint-disable-next-line no-prototype-builtins
         if (styles.hasOwnProperty(property)) {
           setStyleProperty(el, property, styles[property]);
         }
@@ -487,6 +488,7 @@ export const createAnimation = (animationId?: string): Animation => {
       addClasses.forEach(c => elementClassList.add(c));
       removeClasses.forEach(c => elementClassList.remove(c));
 
+      // eslint-disable-next-line no-prototype-builtins
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
           setStyleProperty(el, property, styles[property]);

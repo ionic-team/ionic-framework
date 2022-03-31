@@ -9,6 +9,7 @@ let animationPrefix: string | undefined;
 export const processKeyframes = (keyframes: AnimationKeyFrames) => {
   keyframes.forEach(keyframe => {
     for (const key in keyframe) {
+      // eslint-disable-next-line no-prototype-builtins
       if (keyframe.hasOwnProperty(key)) {
         const value = keyframe[key];
 
@@ -89,6 +90,7 @@ export const generateKeyframeRules = (keyframes: any[] = []) => {
     const offset = keyframe.offset;
 
     const frameString = [];
+    // eslint-disable-next-line no-prototype-builtins
     for (const property in keyframe) {
       if (keyframe.hasOwnProperty(property) && property !== 'offset') {
         frameString.push(`${property}: ${keyframe[property]};`);
