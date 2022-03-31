@@ -25,6 +25,7 @@ module.exports = {
       {
         "varsIgnorePattern": "^h$"
       }
-    ]
+    ],
+    "no-useless-catch": "off"
   }
 };
