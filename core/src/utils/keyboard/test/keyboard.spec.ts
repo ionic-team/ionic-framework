@@ -15,7 +15,7 @@ const mockVisualViewport = (win: Window, visualViewport: any = { width: 320, hei
 
   win.visualViewport = Object.assign(win.visualViewport, visualViewport);
   win = Object.assign(win, layoutViewport);
-  win.dispatchEvent = jest.fn(() => {});
+  win.dispatchEvent = jest.fn();
 
   trackViewportChanges(win);
 
@@ -66,7 +66,7 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardOpen()', () => {
     it('should dispatch the keyboard open event on the window', () => {
-      window.dispatchEvent = jest.fn(() => {});
+      window.dispatchEvent = jest.fn();
 
       setKeyboardOpen(window);
 
@@ -77,7 +77,7 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardClose()', () => {
     it('should dispatch the keyboard close event on the window', () => {
-      window.dispatchEvent = jest.fn(() => {});
+      window.dispatchEvent = jest.fn();
 
       setKeyboardClose(window);
 

@@ -926,13 +926,13 @@ describe('NavController', () => {
   const MockView5 = 'mock-view5';
 
   const mockWebAnimation = (el: HTMLElement) => {
-    Element.prototype.animate = () => {};
+    Element.prototype.animate = jest.fn()
 
     el.animate = () => {
       const animation = {
-        stop: () => {},
-        pause: () => {},
-        cancel: () => {},
+        stop: jest.fn(),
+        pause: jest.fn(),
+        cancel: jest.fn(),
         onfinish: undefined
       }
 
