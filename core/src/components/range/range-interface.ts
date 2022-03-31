@@ -8,15 +8,15 @@ export interface RangeChangeEventDetail {
   value: RangeValue;
 }
 
-export interface RangeChangeStartEventDetail {
+export interface RangeKnobMoveStartEventDetail {
   value: RangeValue;
 }
 
-export interface RangeChangeEndEventDetail {
+export interface RangeKnobMoveEndEventDetail {
   value: RangeValue;
 }
 
 export interface RangeCustomEvent extends CustomEvent {
-  detail: RangeChangeEventDetail | RangeChangeStartEventDetail | RangeChangeEndEventDetail;
+  detail: RangeChangeEventDetail | RangeKnobMoveStartEventDetail | RangeKnobMoveEndEventDetail;
   target: HTMLIonRangeElement;
 }

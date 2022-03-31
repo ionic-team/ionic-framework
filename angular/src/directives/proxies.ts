@@ -1272,8 +1272,8 @@ export class IonRadioGroup {
 }
 
 import type { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core';
-import type { RangeChangeStartEventDetail as IRangeRangeChangeStartEventDetail } from '@ionic/core';
-import type { RangeChangeEndEventDetail as IRangeRangeChangeEndEventDetail } from '@ionic/core';
+import type { RangeKnobMoveStartEventDetail as IRangeRangeKnobMoveStartEventDetail } from '@ionic/core';
+import type { RangeKnobMoveEndEventDetail as IRangeRangeKnobMoveEndEventDetail } from '@ionic/core';
 export declare interface IonRange extends Components.IonRange {
   /**
    * Emitted when the value property has changed. 
@@ -1291,12 +1291,12 @@ export declare interface IonRange extends Components.IonRange {
    * Emitted when the user starts moving the range knob, whether through
 mouse drag, touch gesture, or keyboard interaction. 
    */
-  ionKnobMoveStart: EventEmitter<CustomEvent<IRangeRangeChangeStartEventDetail>>;
+  ionKnobMoveStart: EventEmitter<CustomEvent<IRangeRangeKnobMoveStartEventDetail>>;
   /**
    * Emitted when the user finishes moving the range knob, whether through
 mouse drag, touch gesture, or keyboard interaction. 
    */
-  ionKnobMoveEnd: EventEmitter<CustomEvent<IRangeRangeChangeEndEventDetail>>;
+  ionKnobMoveEnd: EventEmitter<CustomEvent<IRangeRangeKnobMoveEndEventDetail>>;
 
 }
 

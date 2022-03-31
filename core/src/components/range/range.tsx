@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, KnobName, RangeChangeEndEventDetail, RangeChangeEventDetail, RangeChangeStartEventDetail, RangeValue, StyleEventDetail } from '../../interface';
+import { Color, Gesture, GestureDetail, KnobName, RangeKnobMoveEndEventDetail, RangeChangeEventDetail, RangeKnobMoveStartEventDetail, RangeValue, StyleEventDetail } from '../../interface';
 import { Attributes, clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
@@ -195,13 +195,13 @@ export class Range implements ComponentInterface {
    * Emitted when the user starts moving the range knob, whether through
    * mouse drag, touch gesture, or keyboard interaction.
    */
-  @Event() ionKnobMoveStart!: EventEmitter<RangeChangeStartEventDetail>;
+  @Event() ionKnobMoveStart!: EventEmitter<RangeKnobMoveStartEventDetail>;
 
   /**
    * Emitted when the user finishes moving the range knob, whether through
    * mouse drag, touch gesture, or keyboard interaction.
    */
-  @Event() ionKnobMoveEnd!: EventEmitter<RangeChangeEndEventDetail>;
+  @Event() ionKnobMoveEnd!: EventEmitter<RangeKnobMoveEndEventDetail>;
 
   private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
