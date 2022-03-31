@@ -67,4 +67,8 @@ core/www/
 .stencil/
 angular/build/
 
+# playwright
+core/test-results/
+core/playwright-report/
+
 .npmrc
