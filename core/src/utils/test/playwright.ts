@@ -14,7 +14,19 @@ export const test = base.extend({
      */
     page.goto = (url: string) => {
       const { mode, rtl } = testInfo.project.metadata;
-      const formattedUrl = `${url}?ionic:_testing=true&ionic:mode=${mode}&rtl=${rtl}`;
+
+      const splitUrl = url.split('?');
+      const paramsString = splitUrl[1];
+
+      /**
+       * This allows developers to force a
+       * certain mode or LTR/RTL config per test.
+       */
+      const urlToParams = new URLSearchParams(paramsString);
+      const formattedMode = urlToParams.get('ionic:mode') ?? mode;
+      const formattedRtl = urlToParams.get('rtl') ?? rtl;
+
+      const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
       return Promise.all([
         page.waitForFunction(() => window.stencilAppLoaded === true),
@@ -29,9 +41,29 @@ export const test = base.extend({
      * between iOS in LTR mode and iOS in RTL mode.
      */
     page.getSnapshotSettings = () => {
+      const url = page.url();
+      const splitUrl = url.split('?');
+      const paramsString = splitUrl[1];
+
       const { mode, rtl } = testInfo.project.metadata;
-      const rtlString = rtl ? 'rtl' : 'ltr';
-      return `${mode}-${rtlString}`;
+
+      /**
+       * Account for custom settings when overriding
+       * the mode/rtl setting. Fall back to the
+       * project metadata if nothing was found. This
+       * will happen if you call page.getSnapshotSettings
+       * before page.goto.
+       */
+      const urlToParams = new URLSearchParams(paramsString);
+      const formattedMode = urlToParams.get('ionic:mode') ?? mode;
+      const formattedRtl = urlToParams.get('rtl') ?? rtl;
+
+      /**
+       * If encoded in the search params, the rtl value
+       * can be `'true'` instead of `true`.
+       */
+      const rtlString = formattedRtl === true || formattedRtl === 'true' ? 'rtl' : 'ltr';
+      return `${formattedMode}-${rtlString}`;
     }
 
     /**
