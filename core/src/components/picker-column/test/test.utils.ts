@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { dragElementBy, generateE2EUrl, listenForEvent, waitForFunctionTestContext } from '@utils/test';
 
 export const testPickerColumn = async (

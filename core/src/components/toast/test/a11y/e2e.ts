@@ -1,5 +1,5 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { AxePuppeteer } from '@axe-core/puppeteer';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('toast accessibility tests', () => {
   test('it should not have any axe violations with polite toasts', async () => {

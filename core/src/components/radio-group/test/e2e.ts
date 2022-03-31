@@ -13,7 +13,7 @@ const selectRadio = async (page, radioButtonId: string, selectionMethod: 'keyboa
   } else if (selectionMethod === 'mouse') {
     await page.click(selector);
   }
-  
+
   await page.waitForChanges();
 
   const radioGroup = await page.find(`ion-radio#${radioButtonId} >>> input`);
@@ -34,7 +34,7 @@ describe('radio-group', () => {
     `);
 
     const checked = await selectRadio(page, 'one', 'keyboard');
-    
+
     expect(checked).toBe(true);
   });
 
@@ -66,7 +66,7 @@ describe('radio-group', () => {
     `);
 
     const checked = await selectRadio(page, 'one', 'mouse');
-    
+
     expect(checked).toBe(true);
   });
 

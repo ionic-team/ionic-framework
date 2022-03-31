@@ -1,9 +1,9 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { AxePuppeteer } from '@axe-core/puppeteer';
+import { newE2EPage } from '@stencil/core/testing';
 
-const getActiveElementText = async (page) => {
+const getActiveElementText = async page => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.innerText, activeElement);
+  return page.evaluate(el => el && el.innerText, activeElement);
 }
 
 test('segment: axe', async () => {
@@ -17,7 +17,6 @@ test('segment: axe', async () => {
     .analyze();
   expect(results.violations.length).toEqual(0);
 });
-
 
 test('segment: keyboard navigation', async () => {
   const page = await newE2EPage({

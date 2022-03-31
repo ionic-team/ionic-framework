@@ -62,9 +62,6 @@ test('router: guards - router.push - redirect/allow', async () => {
   await checkUrl(page, '#/home');
 });
 
-
-
-
 test('router: guards - router.push - allow/block', async () => {
   const page = await newE2EPage({
     url: '/src/components/router/test/guards?ionic:_testing=true'

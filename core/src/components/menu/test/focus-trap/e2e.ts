@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-const getActiveElementID = async (page) => {
+const getActiveElementID = async page => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.id, activeElement);
+  return page.evaluate(el => el && el.id, activeElement);
 }
 
 test('menu: focus trap with overlays', async () => {

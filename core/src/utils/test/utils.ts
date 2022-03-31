@@ -8,7 +8,7 @@ import { ElementHandle, SerializableOrJSHandle } from 'puppeteer';
  * properties that you may want to access in a test.
  */
 const getSerialElement = async (page: E2EPage, element: SerializableOrJSHandle) => {
-  return await page.evaluate(el => {
+  return page.evaluate(el => {
     const { className, tagName, id } = el;
     return {
       className,
@@ -27,7 +27,6 @@ export const getActiveElement = async (page: E2EPage) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return getSerialElement(page, activeElement);
 }
-
 
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
@@ -194,8 +193,8 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
  * @param selector The element to scroll within.
  */
 export const scrollToBottom = async (page: E2EPage, selector: string) => {
-  await page.evaluate(async selector => {
-    const el = document.querySelector<HTMLElement>(selector);
+  await page.evaluate(async elSelector => {
+    const el = document.querySelector<HTMLElement>(elSelector);
     if (el) {
       if (el.tagName === 'ION-CONTENT') {
         await (el as any).scrollToBottom();
@@ -203,7 +202,7 @@ export const scrollToBottom = async (page: E2EPage, selector: string) => {
         el.scrollTop = el.scrollHeight;
       }
     } else {
-      console.error(`Unable to find element with selector: ${selector}`);
+      console.error(`Unable to find element with selector: ${elSelector}`);
     }
   }, selector);
 }

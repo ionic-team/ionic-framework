@@ -1,10 +1,11 @@
-import { testModal } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
 
+import { testModal } from '../test.utils';
+
 const DIRECTORY = 'basic';
-const getActiveElementText = async (page) => {
+const getActiveElementText = async page => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
+  return page.evaluate(el => el && el.textContent, activeElement);
 }
 
 test('modal: focus trap', async () => {
@@ -14,7 +15,7 @@ test('modal: focus trap', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
   await ionModalDidPresent.next();
@@ -45,7 +46,7 @@ test('modal: return focus', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
   await ionModalDidPresent.next()
@@ -57,7 +58,7 @@ test('modal: return focus', async () => {
   ]);
 
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  const id = await activeElement.evaluate((node) => node.id);
+  const id = await activeElement.evaluate(node => node.id);
   expect(id).toEqual('basic-modal');
 });
 
@@ -75,12 +76,12 @@ test('modal: htmlAttributes', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let alert = await page.find('ion-modal');
+  const alert = await page.find('ion-modal');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-modal').getAttribute('data-testid'));
+  const attribute = await page.evaluate(el => document.querySelector('ion-modal').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-modal');
 });

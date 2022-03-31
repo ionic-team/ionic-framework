@@ -8,7 +8,7 @@ test('should open popover by left clicking on trigger', async () => {
   await page.click('#left-click-trigger');
   await page.waitForSelector('.left-click-popover');
 
-  let popover = await page.find('.left-click-popover');
+  const popover = await page.find('.left-click-popover');
   await popover.waitForVisible();
 
   screenshotCompares.push(await page.compareScreenshot());
@@ -26,7 +26,7 @@ test('should open popover by right clicking on trigger', async () => {
   await page.click('#right-click-trigger', { button: 'right' });
   await page.waitForSelector('.right-click-popover');
 
-  let popover = await page.find('.right-click-popover');
+  const popover = await page.find('.right-click-popover');
   await popover.waitForVisible();
 
   screenshotCompares.push(await page.compareScreenshot());
@@ -46,7 +46,7 @@ test('should open popover by hovering over trigger', async () => {
   await page.mouse.move(bbox.x + 5, bbox.y + 5);
   await page.waitForSelector('.hover-popover');
 
-  let popover = await page.find('.hover-popover');
+  const popover = await page.find('.hover-popover');
   await popover.waitForVisible();
 
   screenshotCompares.push(await page.compareScreenshot());
@@ -64,12 +64,12 @@ test('should not close main popover with dismiss-on-select when clicking a trigg
   await page.click('#nested-click-trigger');
   await page.waitForSelector('.nested-click-popover');
 
-  let firstPopover = await page.find('.nested-click-popover');
+  const firstPopover = await page.find('.nested-click-popover');
   await firstPopover.waitForVisible();
 
   await page.click('#nested-click-trigger-two');
 
-  let secondPopover = await page.find('.nested-click-popover-two');
+  const secondPopover = await page.find('.nested-click-popover-two');
   await secondPopover.waitForVisible();
 
   screenshotCompares.push(await page.compareScreenshot());

@@ -111,7 +111,6 @@ test('datetime:rtl: basic', async () => {
   expect(compare).toMatchScreenshot();
 });
 
-
 describe('datetime: confirm date', () => {
 
   test('should set the date value based on the selected date', async () => {

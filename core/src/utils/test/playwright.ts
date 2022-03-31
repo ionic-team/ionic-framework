@@ -1,4 +1,4 @@
-import { Page, test as base, Response, TestInfo, PlaywrightTestArgs, PlaywrightTestOptions, PlaywrightWorkerArgs, PlaywrightWorkerOptions } from '@playwright/test';
+import { Page, PlaywrightTestArgs, PlaywrightTestOptions, PlaywrightWorkerArgs, PlaywrightWorkerOptions, Response, TestInfo, test as base } from '@playwright/test';
 
 type IonicPage = Page & {
   goto: (url: string) => Promise<null | Response>;
@@ -95,7 +95,7 @@ export const test = base.extend<CustomFixtures>({
      * can be captured in a screenshot.
      */
     page.setIonViewport = async () => {
-      const currentViewport = await page.viewportSize();
+      const currentViewport = page.viewportSize();
 
       const pixelAmountRenderedOffscreen = await page.evaluate(() => {
         const content = document.querySelector('ion-content');
