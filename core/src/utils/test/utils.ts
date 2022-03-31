@@ -1,5 +1,5 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
-import { ElementHandle } from 'puppeteer';
+import { ElementHandle, SerializableOrJSHandle } from 'puppeteer';
 
 /**
  * page.evaluate can only return a serializable value,
@@ -7,7 +7,7 @@ import { ElementHandle } from 'puppeteer';
  * Instead, we return an object with some common
  * properties that you may want to access in a test.
  */
-const getSerialElement = async (page, element) => {
+const getSerialElement = async (page: E2EPage, element: SerializableOrJSHandle) => {
   return await page.evaluate(el => {
     const { className, tagName, id } = el;
     return {
@@ -18,12 +18,12 @@ const getSerialElement = async (page, element) => {
   }, element);
 }
 
-export const getActiveElementParent = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement.parentElement);
+export const getActiveElementParent = async (page: E2EPage) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement!.parentElement);
   return getSerialElement(page, activeElement);
 }
 
-export const getActiveElement = async (page) => {
+export const getActiveElement = async (page: E2EPage) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return getSerialElement(page, activeElement);
 }
@@ -120,7 +120,7 @@ export const dragElementBy = async (
  * @param interval: number - Interval to run setInterval on
  */
 export const waitForFunctionTestContext = async (fn: any, params: any, interval = 16): Promise<any> => {
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     const intervalId = setInterval(() => {
       if (fn(params)) {
         clearInterval(intervalId);

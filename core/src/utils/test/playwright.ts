@@ -1,4 +1,4 @@
-import { Page, test as base, Response, TestInfo, PlaywrightTestArgs, PlaywrightTestOptions, PlaywrightWorkerArgs, PlaywrightWorkerOptions, TestType } from '@playwright/test';
+import { Page, test as base, Response, TestInfo, PlaywrightTestArgs, PlaywrightTestOptions, PlaywrightWorkerArgs, PlaywrightWorkerOptions } from '@playwright/test';
 
 type IonicPage = Page & {
   goto: (url: string) => Promise<null | Response>;
