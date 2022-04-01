@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -12,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-badge',
   styleUrls: {
     ios: 'badge.ios.scss',
-    md: 'badge.md.scss'
+    md: 'badge.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Badge implements ComponentInterface {
   /**

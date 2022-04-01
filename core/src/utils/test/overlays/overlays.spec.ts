@@ -10,7 +10,7 @@ describe('setRootAriaHidden()', () => {
       components: [RouterOutlet],
       html: `
         <ion-router-outlet></ion-router-outlet>
-      `
+      `,
     });
 
     const routerOutlet = page.body.querySelector('ion-router-outlet');
@@ -29,7 +29,7 @@ describe('setRootAriaHidden()', () => {
       components: [Nav],
       html: `
         <ion-nav></ion-nav>
-      `
+      `,
     });
 
     const nav = page.body.querySelector('ion-nav');
@@ -49,7 +49,7 @@ describe('setRootAriaHidden()', () => {
       html: `
         <div id="ion-view-container-root"></div>
         <div id="not-container-root"></div>
-      `
+      `,
     });
 
     const containerRoot = page.body.querySelector('#ion-view-container-root');
@@ -72,7 +72,7 @@ describe('setRootAriaHidden()', () => {
       components: [],
       html: `
         <div></div>
-      `
+      `,
     });
 
     setRootAriaHidden(true);

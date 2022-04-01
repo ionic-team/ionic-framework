@@ -1,4 +1,4 @@
-import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -13,11 +13,10 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
   tag: 'ion-picker-column',
   styleUrls: {
     ios: 'picker-column.ios.scss',
-    md: 'picker-column.md.scss'
-  }
+    md: 'picker-column.md.scss',
+  },
 })
 export class PickerColumnCmp implements ComponentInterface {
-
   private bounceFrom!: number;
   private lastIndex?: number;
   private minY!: number;
@@ -68,9 +67,9 @@ export class PickerColumnCmp implements ComponentInterface {
       gesturePriority: 100,
       threshold: 0,
       passive: false,
-      onStart: ev => this.onStart(ev),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
+      onStart: (ev) => this.onStart(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: (ev) => this.onEnd(ev),
     });
     this.gesture.enable();
     this.tmrId = setTimeout(() => {
@@ -84,7 +83,7 @@ export class PickerColumnCmp implements ComponentInterface {
     if (colEl) {
       // DOM READ
       // We perfom a DOM read over a rendered item, this needs to happen after the first render
-      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+      this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
     }
 
     this.refresh();
@@ -106,7 +105,7 @@ export class PickerColumnCmp implements ComponentInterface {
   private setSelected(selectedIndex: number, duration: number) {
     // if there is a selected index, then figure out it's y position
     // if there isn't a selected index, then just use the top y position
-    const y = (selectedIndex > -1) ? -(selectedIndex * this.optHeight) : 0;
+    const y = selectedIndex > -1 ? -(selectedIndex * this.optHeight) : 0;
 
     this.velocity = 0;
 
@@ -126,15 +125,15 @@ export class PickerColumnCmp implements ComponentInterface {
     let translateY = 0;
     let translateZ = 0;
     const { col, rotateFactor } = this;
-    const selectedIndex = col.selectedIndex = this.indexForY(-y);
-    const durationStr = (duration === 0) ? '' : duration + 'ms';
+    const selectedIndex = (col.selectedIndex = this.indexForY(-y));
+    const durationStr = duration === 0 ? '' : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
     const children = this.optsEl.children;
     for (let i = 0; i < children.length; i++) {
       const button = children[i] as HTMLElement;
       const opt = col.options[i];
-      const optOffset = (i * this.optHeight) + y;
+      const optOffset = i * this.optHeight + y;
       let transform = '';
 
       if (rotateFactor !== 0) {
@@ -146,7 +145,6 @@ export class PickerColumnCmp implements ComponentInterface {
         } else {
           translateY = -9999;
         }
-
       } else {
         translateZ = 0;
         translateY = optOffset;
@@ -162,7 +160,6 @@ export class PickerColumnCmp implements ComponentInterface {
       if (this.noAnimate) {
         opt.duration = 0;
         button.style.transitionDuration = '';
-
       } else if (duration !== opt.duration) {
         opt.duration = duration;
         button.style.transitionDuration = durationStr;
@@ -202,9 +199,7 @@ export class PickerColumnCmp implements ComponentInterface {
       this.velocity *= DECELERATION_FRICTION;
 
       // do not let it go slower than a velocity of 1
-      this.velocity = (this.velocity > 0)
-        ? Math.max(this.velocity, 1)
-        : Math.min(this.velocity, -1);
+      this.velocity = this.velocity > 0 ? Math.max(this.velocity, 1) : Math.min(this.velocity, -1);
 
       let y = this.y + this.velocity;
 
@@ -212,7 +207,6 @@ export class PickerColumnCmp implements ComponentInterface {
         // whoops, it's trying to scroll up farther than the options we have!
         y = this.minY;
         this.velocity = 0;
-
       } else if (y < this.maxY) {
         // gahh, it's trying to scroll down farther than we can!
         y = this.maxY;
@@ -220,7 +214,7 @@ export class PickerColumnCmp implements ComponentInterface {
       }
 
       this.update(y, 0, true);
-      const notLockedIn = (Math.round(y) % this.optHeight !== 0) || (Math.abs(this.velocity) > 1);
+      const notLockedIn = Math.round(y) % this.optHeight !== 0 || Math.abs(this.velocity) > 1;
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
         this.rafId = requestAnimationFrame(() => this.decelerate());
@@ -229,13 +223,12 @@ export class PickerColumnCmp implements ComponentInterface {
         this.emitColChange();
         hapticSelectionEnd();
       }
-
     } else if (this.y % this.optHeight !== 0) {
       // needs to still get locked into a position so options line up
       const currentPos = Math.abs(this.y % this.optHeight);
 
       // create a velocity in the direction it needs to scroll
-      this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
+      this.velocity = currentPos > this.optHeight / 2 ? 1 : -1;
 
       this.decelerate();
     }
@@ -261,7 +254,7 @@ export class PickerColumnCmp implements ComponentInterface {
     // reset everything
     cancelAnimationFrame(this.rafId);
     const options = this.col.options;
-    let minY = (options.length - 1);
+    let minY = options.length - 1;
     let maxY = 0;
     for (let i = 0; i < options.length; i++) {
       if (!options[i].disabled) {
@@ -287,12 +280,10 @@ export class PickerColumnCmp implements ComponentInterface {
       // scrolling up higher than scroll area
       y = Math.pow(y, 0.8);
       this.bounceFrom = y;
-
     } else if (y < this.maxY) {
       // scrolling down below scroll area
       y += Math.pow(this.maxY - y, 0.9);
       this.bounceFrom = y;
-
     } else {
       this.bounceFrom = 0;
     }
@@ -319,7 +310,6 @@ export class PickerColumnCmp implements ComponentInterface {
       if (opt?.hasAttribute('opt-index')) {
         this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
       }
-
     } else {
       this.y += detail.deltaY;
 
@@ -356,11 +346,13 @@ export class PickerColumnCmp implements ComponentInterface {
      * a value different than the value at
      * selectedIndex
      */
-    if (this.velocity !== 0) { return; }
+    if (this.velocity !== 0) {
+      return;
+    }
 
     const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
-      const y = (selectedIndex * this.optHeight) * -1;
+      const y = selectedIndex * this.optHeight * -1;
       this.velocity = 0;
       this.update(y, TRANSITION_DURATION, true);
     }
@@ -376,10 +368,10 @@ export class PickerColumnCmp implements ComponentInterface {
           [mode]: true,
           'picker-col': true,
           'picker-opts-left': this.col.align === 'left',
-          'picker-opts-right': this.col.align === 'right'
+          'picker-opts-right': this.col.align === 'right',
         }}
         style={{
-          'max-width': this.col.columnWidth
+          'max-width': this.col.columnWidth,
         }}
       >
         {col.prefix && (
@@ -387,20 +379,12 @@ export class PickerColumnCmp implements ComponentInterface {
             {col.prefix}
           </div>
         )}
-        <div
-          class="picker-opts"
-          style={{ maxWidth: col.optionsWidth! }}
-          ref={el => this.optsEl = el}
-        >
-          { col.options.map((o, index) =>
-            <Button
-              type="button"
-              class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
-              opt-index={index}
-            >
+        <div class="picker-opts" style={{ maxWidth: col.optionsWidth! }} ref={(el) => (this.optsEl = el)}>
+          {col.options.map((o, index) => (
+            <Button type="button" class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }} opt-index={index}>
               {o.text}
             </Button>
-          )}
+          ))}
         </div>
         {col.suffix && (
           <div class="picker-suffix" style={{ width: col.suffixWidth! }}>

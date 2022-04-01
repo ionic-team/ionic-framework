@@ -1,4 +1,4 @@
-import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -8,13 +8,12 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-title',
   styleUrls: {
-    'ios': 'title.ios.scss',
-    'md': 'title.md.scss'
+    ios: 'title.ios.scss',
+    md: 'title.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ToolbarTitle implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -48,12 +47,12 @@ export class ToolbarTitle implements ComponentInterface {
     const size = this.getSize();
 
     this.ionStyle.emit({
-      [`title-${size}`]: true
+      [`title-${size}`]: true,
     });
   }
 
   private getSize() {
-    return (this.size !== undefined) ? this.size : 'default';
+    return this.size !== undefined ? this.size : 'default';
   }
 
   render() {
@@ -65,7 +64,7 @@ export class ToolbarTitle implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,
-          'title-rtl': document.dir === 'rtl'
+          'title-rtl': document.dir === 'rtl',
         })}
       >
         <div class="toolbar-title">

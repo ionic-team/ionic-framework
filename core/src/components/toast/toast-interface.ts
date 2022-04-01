@@ -24,7 +24,7 @@ export interface ToastOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type ToastAttributes = JSXBase.HTMLAttributes<HTMLElement>
+export type ToastAttributes = JSXBase.HTMLAttributes<HTMLElement>;
 
 export interface ToastButton {
   text?: string;

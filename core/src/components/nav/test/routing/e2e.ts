@@ -1,11 +1,10 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-const navChanged = () => new Promise(resolve => window.addEventListener('ionRouteDidChange', resolve));
+const navChanged = () => new Promise((resolve) => window.addEventListener('ionRouteDidChange', resolve));
 
 test.skip('nav: routing', async () => {
-
   const page = await newE2EPage({
-    url: '/src/components/nav/test/routing?ionic:_testing=true'
+    url: '/src/components/nav/test/routing?ionic:_testing=true',
   });
 
   expect(await page.compareScreenshot()).toMatchScreenshot();

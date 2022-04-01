@@ -21,4 +21,4 @@ export interface LoadingOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type LoadingAttributes = JSXBase.HTMLAttributes<HTMLElement>
+export type LoadingAttributes = JSXBase.HTMLAttributes<HTMLElement>;

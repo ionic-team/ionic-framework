@@ -1,4 +1,4 @@
-import type { E2EPage} from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
 test('animation:backwards-compatibility animation', async () => {
@@ -12,7 +12,9 @@ test('animation:ios-transition web', async () => {
 });
 
 test('animation:ios-transition css', async () => {
-  const page = await newE2EPage({ url: '/src/utils/animation/test/animationbuilder?ionic:mode=ios&ionic:_forceCSSAnimations=true' });
+  const page = await newE2EPage({
+    url: '/src/utils/animation/test/animationbuilder?ionic:mode=ios&ionic:_forceCSSAnimations=true',
+  });
   await testNavigation(page);
 });
 

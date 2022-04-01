@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -22,12 +22,11 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-item-option',
   styleUrls: {
     ios: 'item-option.ios.scss',
-    md: 'item-option.md.scss'
+    md: 'item-option.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -84,19 +83,20 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     if (el) {
       ev.preventDefault();
     }
-  }
+  };
 
   render() {
     const { disabled, expandable, href } = this;
-    const TagType = href === undefined ? 'button' : 'a' as any;
+    const TagType = href === undefined ? 'button' : ('a' as any);
     const mode = getIonMode(this);
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : {
-        download: this.download,
-        href: this.href,
-        target: this.target
-      };
+    const attrs =
+      TagType === 'button'
+        ? { type: this.type }
+        : {
+            download: this.download,
+            href: this.href,
+            target: this.target,
+          };
 
     return (
       <Host
@@ -105,15 +105,10 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
           [mode]: true,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
-          'ion-activatable': true
+          'ion-activatable': true,
         })}
       >
-        <TagType
-          {...attrs}
-          class="button-native"
-          part="native"
-          disabled={disabled}
-        >
+        <TagType {...attrs} class="button-native" part="native" disabled={disabled}>
           <span class="button-inner">
             <slot name="top"></slot>
             <div class="horizontal-wrapper">

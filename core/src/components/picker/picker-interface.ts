@@ -19,7 +19,7 @@ export interface PickerOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type PickerAttributes = JSXBase.HTMLAttributes<HTMLElement>
+export type PickerAttributes = JSXBase.HTMLAttributes<HTMLElement>;
 
 export interface PickerButton {
   text?: string;

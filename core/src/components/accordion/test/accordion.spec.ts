@@ -22,13 +22,13 @@ it('should open correct accordions', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group');
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
-  accordions.forEach(accordion => {
+  accordions.forEach((accordion) => {
     expect(accordion.classList.contains('accordion-collapsed')).toEqual(true);
   });
 
@@ -39,7 +39,6 @@ it('should open correct accordions', async () => {
   expect(accordions[1].classList.contains('accordion-collapsed')).toEqual(false);
   expect(accordions[2].classList.contains('accordion-collapsed')).toEqual(true);
 });
-
 
 it('should not open more than one accordion when multiple="false"', async () => {
   const page = await newSpecPage({
@@ -59,13 +58,13 @@ it('should not open more than one accordion when multiple="false"', async () => 
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group');
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
-  accordions.forEach(accordion => {
+  accordions.forEach((accordion) => {
     expect(accordion.classList.contains('accordion-collapsed')).toEqual(true);
   });
 
@@ -95,13 +94,13 @@ it('should open more than one accordion when multiple="true"', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group');
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
-  accordions.forEach(accordion => {
+  accordions.forEach((accordion) => {
     expect(accordion.classList.contains('accordion-collapsed')).toEqual(true);
   });
 
@@ -131,7 +130,7 @@ it('should render with accordion open', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group');
@@ -160,7 +159,7 @@ it('should accept a string when multiple="true"', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group');
@@ -181,7 +180,7 @@ it('should set default values if not provided', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group');

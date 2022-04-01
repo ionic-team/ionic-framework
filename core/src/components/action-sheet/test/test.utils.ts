@@ -5,13 +5,15 @@ export const testActionSheet = async (
   type: string,
   selector: string,
   rtl = false,
-  afterScreenshotHook = async (): Promise<void> => {/**/ }
+  afterScreenshotHook = async (): Promise<void> => {
+    /**/
+  }
 ) => {
   try {
     const pageUrl = generateE2EUrl('action-sheet', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];
@@ -37,17 +39,12 @@ export const testActionSheet = async (
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
     }
-
   } catch (err) {
     throw err;
   }
 };
 
-export const testActionSheetBackdrop = async (
-  page: any,
-  screenshotCompares: any,
-  actionSheet: any
-) => {
+export const testActionSheetBackdrop = async (page: any, screenshotCompares: any, actionSheet: any) => {
   try {
     const backdrop = await page.find('ion-backdrop');
     await backdrop.click();
@@ -61,10 +58,7 @@ export const testActionSheetBackdrop = async (
   }
 };
 
-export const testActionSheetAlert = async (
-  page: any,
-  screenshotCompares: any
-) => {
+export const testActionSheetAlert = async (page: any, screenshotCompares: any) => {
   const openAlertBtn = await page.find({ text: 'Open Alert' });
   await openAlertBtn.click();
 

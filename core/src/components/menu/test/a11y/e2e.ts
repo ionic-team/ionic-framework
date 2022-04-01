@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('menu: axe', async () => {
   const page = await newE2EPage({
-    url: '/src/components/menu/test/a11y?ionic:_testing=true'
+    url: '/src/components/menu/test/a11y?ionic:_testing=true',
   });
 
   const menu = await page.find('ion-menu');

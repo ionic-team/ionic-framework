@@ -1,4 +1,4 @@
-import type { EventEmitter} from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
 
 import type { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
@@ -11,10 +11,9 @@ import type { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '
 @Component({
   tag: 'ion-tabs',
   styleUrl: 'tabs.scss',
-  shadow: true
+  shadow: true,
 })
 export class Tabs implements NavOutlet {
-
   private transitioning = false;
   private leavingTab?: HTMLIonTabElement;
 
@@ -34,12 +33,12 @@ export class Tabs implements NavOutlet {
   /**
    * Emitted when the navigation is about to transition to a new component.
    */
-  @Event({ bubbles: false }) ionTabsWillChange!: EventEmitter<{tab: string}>;
+  @Event({ bubbles: false }) ionTabsWillChange!: EventEmitter<{ tab: string }>;
 
   /**
    * Emitted when the navigation has finished transitioning to a new component.
    */
-  @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{tab: string}>;
+  @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{ tab: string }>;
 
   async componentWillLoad() {
     if (!this.useRouter) {
@@ -181,13 +180,11 @@ export class Tabs implements NavOutlet {
     } else {
       this.select(tab);
     }
-  }
+  };
 
   render() {
     return (
-      <Host
-        onIonTabButtonClick={this.onTabClicked}
-      >
+      <Host onIonTabButtonClick={this.onTabClicked}>
         <slot name="top"></slot>
         <div class="tabs-inner">
           <slot></slot>
@@ -199,9 +196,7 @@ export class Tabs implements NavOutlet {
 }
 
 const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTMLIonTabElement | undefined => {
-  const tabEl = (typeof tab === 'string')
-    ? tabs.find(t => t.tab === tab)
-    : tab;
+  const tabEl = typeof tab === 'string' ? tabs.find((t) => t.tab === tab) : tab;
 
   if (!tabEl) {
     console.error(`tab with id: "${tabEl}" does not exist`);

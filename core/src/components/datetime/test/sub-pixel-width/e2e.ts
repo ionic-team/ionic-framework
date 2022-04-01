@@ -1,10 +1,9 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('datetime: sub-pixel width', () => {
-
   test('should update the month when next button is clicked', async () => {
     const page = await newE2EPage({
-      url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true'
+      url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true',
     });
 
     const openModalBtn = await page.find('#open-modal');
@@ -16,7 +15,7 @@ describe('datetime: sub-pixel width', () => {
     await modal.waitForVisible();
     await ionModalDidPresent.next();
 
-    const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button')
+    const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button');
 
     await buttons[1].click();
 
@@ -29,7 +28,7 @@ describe('datetime: sub-pixel width', () => {
 
   test('should update the month when prev button is clicked', async () => {
     const page = await newE2EPage({
-      url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true'
+      url: '/src/components/datetime/test/sub-pixel-width?ionic:_testing=true',
     });
 
     const openModalBtn = await page.find('#open-modal');
@@ -41,7 +40,7 @@ describe('datetime: sub-pixel width', () => {
     await modal.waitForVisible();
     await ionModalDidPresent.next();
 
-    const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button')
+    const buttons = await page.findAll('ion-datetime >>> .calendar-next-prev ion-button');
 
     await buttons[0].click();
 
@@ -51,5 +50,4 @@ describe('datetime: sub-pixel width', () => {
 
     expect(monthYear.textContent.trim()).toBe('January 2022');
   });
-
 });

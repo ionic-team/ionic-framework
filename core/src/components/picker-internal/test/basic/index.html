@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Picker - Basic</title>
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
@@ -116,93 +115,125 @@
 
         picker.items = items;
         picker.value = value;
-      }
+      };
 
       const modal = document.querySelector('ion-modal');
       modal.breakpoints = [0, 1];
       modal.initialBreakpoint = 1;
 
-      setPickerColumn('#first', [
-        { text: 'Minified', value: 'minified' },
-        { text: 'Responsive', value: 'responsive' },
-        { text: 'Full Stack', value: 'full-stack' },
-        { text: 'Mobile First', value: 'mobile-first' },
-        { text: 'Serverless', value: 'serverless' }
-      ], 'full-stack');
+      setPickerColumn(
+        '#first',
+        [
+          { text: 'Minified', value: 'minified' },
+          { text: 'Responsive', value: 'responsive' },
+          { text: 'Full Stack', value: 'full-stack' },
+          { text: 'Mobile First', value: 'mobile-first' },
+          { text: 'Serverless', value: 'serverless' },
+        ],
+        'full-stack'
+      );
 
-      setPickerColumn('#second', [
-        { text: 'Tomato', value: 'tomato' },
-        { text: 'Avocado', value: 'avocado' },
-        { text: 'Onion', value: 'onion' },
-        { text: 'Potato', value: 'potato' },
-        { text: 'Artichoke', value: 'artichoke' },
-      ], 'onion');
+      setPickerColumn(
+        '#second',
+        [
+          { text: 'Tomato', value: 'tomato' },
+          { text: 'Avocado', value: 'avocado' },
+          { text: 'Onion', value: 'onion' },
+          { text: 'Potato', value: 'potato' },
+          { text: 'Artichoke', value: 'artichoke' },
+        ],
+        'onion'
+      );
 
       let minutes = [];
       for (let i = 1; i <= 60; i++) {
         const text = i < 10 ? `0${i}` : `${i}`;
         minutes.push({
           text,
-          value: i
-        })
+          value: i,
+        });
       }
       setPickerColumn('#numeric-first', minutes, 3);
 
-      setPickerColumn('#numeric-second', [
-        { text: 'Tomatoes', value: 'tomato' },
-        { text: 'Avocados', value: 'avocado' },
-        { text: 'Onions', value: 'onion' },
-        { text: 'Potatoes', value: 'potato' },
-        { text: 'Artichokes', value: 'artichoke' },
-      ], 'onion');
+      setPickerColumn(
+        '#numeric-second',
+        [
+          { text: 'Tomatoes', value: 'tomato' },
+          { text: 'Avocados', value: 'avocado' },
+          { text: 'Onions', value: 'onion' },
+          { text: 'Potatoes', value: 'potato' },
+          { text: 'Artichokes', value: 'artichoke' },
+        ],
+        'onion'
+      );
 
-      setPickerColumn('#dual-numeric-first', [
-        { text: '12', value: 12 },
-        { text: '01', value: 1 },
-        { text: '02', value: 2 },
-        { text: '03', value: 3 },
-        { text: '04', value: 4 },
-        { text: '05', value: 5 },
-        { text: '06', value: 6 },
-        { text: '07', value: 7 },
-        { text: '08', value: 8 },
-        { text: '09', value: 9 },
-        { text: '10', value: 10 },
-        { text: '11', value: 11 },
-      ], 3);
+      setPickerColumn(
+        '#dual-numeric-first',
+        [
+          { text: '12', value: 12 },
+          { text: '01', value: 1 },
+          { text: '02', value: 2 },
+          { text: '03', value: 3 },
+          { text: '04', value: 4 },
+          { text: '05', value: 5 },
+          { text: '06', value: 6 },
+          { text: '07', value: 7 },
+          { text: '08', value: 8 },
+          { text: '09', value: 9 },
+          { text: '10', value: 10 },
+          { text: '11', value: 11 },
+        ],
+        3
+      );
       setPickerColumn('#dual-numeric-second', minutes, 3);
 
-      setPickerColumn('#popover-first', [
-        { text: 'Minified', value: 'minified' },
-        { text: 'Responsive', value: 'responsive' },
-        { text: 'Full Stack', value: 'full-stack' },
-        { text: 'Mobile First', value: 'mobile-first' },
-        { text: 'Serverless', value: 'serverless' },
-      ], 'full-stack');
+      setPickerColumn(
+        '#popover-first',
+        [
+          { text: 'Minified', value: 'minified' },
+          { text: 'Responsive', value: 'responsive' },
+          { text: 'Full Stack', value: 'full-stack' },
+          { text: 'Mobile First', value: 'mobile-first' },
+          { text: 'Serverless', value: 'serverless' },
+        ],
+        'full-stack'
+      );
 
-      setPickerColumn('#popover-second', [
-        { text: 'Tomato', value: 'tomato' },
-        { text: 'Avocado', value: 'avocado' },
-        { text: 'Onion', value: 'onion' },
-        { text: 'Potato', value: 'potato' },
-        { text: 'Artichoke', value: 'artichoke' },
-      ], 'onion');
+      setPickerColumn(
+        '#popover-second',
+        [
+          { text: 'Tomato', value: 'tomato' },
+          { text: 'Avocado', value: 'avocado' },
+          { text: 'Onion', value: 'onion' },
+          { text: 'Potato', value: 'potato' },
+          { text: 'Artichoke', value: 'artichoke' },
+        ],
+        'onion'
+      );
 
-      setPickerColumn('#modal-first', [
-        { text: 'Minified', value: 'minified' },
-        { text: 'Responsive', value: 'responsive' },
-        { text: 'Full Stack', value: 'full-stack' },
-        { text: 'Mobile First', value: 'mobile-first' },
-        { text: 'Serverless', value: 'serverless' },
-      ], 'full-stack');
+      setPickerColumn(
+        '#modal-first',
+        [
+          { text: 'Minified', value: 'minified' },
+          { text: 'Responsive', value: 'responsive' },
+          { text: 'Full Stack', value: 'full-stack' },
+          { text: 'Mobile First', value: 'mobile-first' },
+          { text: 'Serverless', value: 'serverless' },
+        ],
+        'full-stack'
+      );
 
-      setPickerColumn('#modal-second', [
-        { text: 'Tomato', value: 'tomato' },
-        { text: 'Avocado', value: 'avocado' },
-        { text: 'Onion', value: 'onion' },
-        { text: 'Potato', value: 'potato' },
-        { text: 'Artichoke', value: 'artichoke' },
-      ], 'onion');
+      setPickerColumn(
+        '#modal-second',
+        [
+          { text: 'Tomato', value: 'tomato' },
+          { text: 'Avocado', value: 'avocado' },
+          { text: 'Onion', value: 'onion' },
+          { text: 'Potato', value: 'potato' },
+          { text: 'Artichoke', value: 'artichoke' },
+        ],
+        'onion'
+      );
     </script>
   </body>
 </html>

@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('input: masking', async () => {
   const page = await newE2EPage({
-    url: '/src/components/input/test/masking?ionic:_testing=true'
+    url: '/src/components/input/test/masking?ionic:_testing=true',
   });
 
   const inputTrimmed = await page.find('#inputTrimmed');
@@ -16,5 +16,4 @@ test('input: masking', async () => {
   });
 
   expect(currentValue).toEqual('Spaces');
-
 });

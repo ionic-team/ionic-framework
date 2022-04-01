@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('time-label', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/time-label?ionic:_testing=true'
+    url: '/src/components/datetime/test/time-label?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

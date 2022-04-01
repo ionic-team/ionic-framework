@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -12,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-card-header',
   styleUrls: {
     ios: 'card-header.ios.scss',
-    md: 'card-header.md.scss'
+    md: 'card-header.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class CardHeader implements ComponentInterface {
   /**
@@ -38,12 +38,11 @@ export class CardHeader implements ComponentInterface {
         class={createColorClasses(this.color, {
           'card-header-translucent': this.translucent,
           'ion-inherit-color': true,
-          [mode]: true
+          [mode]: true,
         })}
       >
         <slot></slot>
       </Host>
     );
   }
-
 }
