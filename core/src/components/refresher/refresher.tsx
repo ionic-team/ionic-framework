@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
+import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';

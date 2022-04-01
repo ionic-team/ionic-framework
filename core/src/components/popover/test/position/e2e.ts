@@ -169,7 +169,6 @@ const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, 
       break;
   }
 
-  const alignmentAxis = (['top', 'bottom'].includes(side)) ? 'x' : 'y';
   switch(alignment) {
     case 'center':
       const centerAlign = getCenterAlign(side, triggerBbox, popoverBbox);

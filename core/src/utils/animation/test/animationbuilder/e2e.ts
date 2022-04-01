@@ -1,4 +1,5 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+import type { E2EPage} from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 test('animation:backwards-compatibility animation', async () => {
   const page = await newE2EPage({ url: '/src/utils/animation/test/animationbuilder' });

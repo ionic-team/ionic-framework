@@ -1,7 +1,7 @@
-import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import type { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM, NODE_CHANGE_CELL, NODE_CHANGE_NONE, NODE_CHANGE_POSITION } from './constants';
-import { CellType, FooterHeightFn, HeaderHeightFn } from './virtual-scroll-interface';
+import type { CellType, FooterHeightFn, HeaderHeightFn } from './virtual-scroll-interface';
 
 export interface Viewport {
   top: number;

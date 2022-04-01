@@ -1,5 +1,5 @@
 import { ROUTER_INTENT_FORWARD } from './constants';
-import { ParsedRoute, RouteChain, RouterDirection } from './interface';
+import type { ParsedRoute, RouteChain, RouterDirection } from './interface';
 
 /** Join the non empty segments with "/". */
 export const generatePath = (segments: string[]): string => {

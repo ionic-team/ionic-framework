@@ -1,5 +1,5 @@
-import { AnimationBuilder, ComponentProps } from '../../../interface';
-import { NavigationHookCallback } from '../../route/route-interface';
+import type { AnimationBuilder, ComponentProps } from '../../../interface';
+import type { NavigationHookCallback } from '../../route/route-interface';
 
 export interface HTMLStencilElement extends HTMLElement {
   componentOnReady(): Promise<this>;

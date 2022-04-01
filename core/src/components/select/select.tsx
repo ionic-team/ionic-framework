@@ -1,13 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
+import type { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 
-import { SelectCompareFn } from './select-interface';
+import type { SelectCompareFn } from './select-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

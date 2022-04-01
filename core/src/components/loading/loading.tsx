@@ -1,10 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, LoadingAttributes, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import type { AnimationBuilder, LoadingAttributes, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
-import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
+import type { IonicSafeString} from '../../utils/sanitization';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';

@@ -1,5 +1,6 @@
 // Components interfaces
-import { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
+import type { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
+
 export * from './components';
 export * from './index';
 export * from './components/accordion-group/accordion-group-interface';
@@ -58,7 +59,9 @@ export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' 
 export type Color = PredefinedColors | string;
 export type Mode = "ios" | "md";
 export type ComponentTags = string;
+// eslint-disable-next-line
 export type ComponentRef = Function | HTMLElement | string | null;
+// eslint-disable-next-line
 export type ComponentProps<T = null> = {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
 export type BackButtonEvent = CustomEvent<BackButtonEventDetail>;
@@ -84,12 +87,12 @@ export { NavComponentWithProps } from "./components/nav/nav-interface";
 
 declare module "./components" {
   export namespace Components {
-    export interface IonIcon extends IoniconsComponents.IonIcon{}
+    export type IonIcon = IoniconsComponents.IonIcon
   }
 }
 
 declare module "./components" {
   export namespace JSX {
-    export interface IonIcon extends IoniconsJSX.IonIcon {}
+    export type IonIcon = IoniconsJSX.IonIcon
   }
 }

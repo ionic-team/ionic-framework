@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import type { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { shallowEqualStringMap } from '../../utils/helpers';
@@ -71,7 +72,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       this.el,
       () => !this.gestureOrAnimationInProgress && !!this.swipeHandler && this.swipeHandler.canStart(),
       () => onStart(),
-      step => this.ani && this.ani.progressStep(step),
+      step => this.ani?.progressStep(step),
       (shouldComplete, step, dur) => {
         if (this.ani) {
           this.ani.onFinish(() => {

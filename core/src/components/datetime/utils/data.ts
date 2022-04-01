@@ -1,5 +1,5 @@
-import { Mode } from '../../../interface';
-import { DatetimeParts } from '../datetime-interface';
+import type { Mode } from '../../../interface';
+import type { DatetimeParts } from '../datetime-interface';
 
 import {
   isAfter,

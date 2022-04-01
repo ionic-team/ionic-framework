@@ -19,6 +19,16 @@ module.exports = {
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "varsIgnorePattern": "^h$"
+      }
+    ],
+    "no-useless-catch": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-case-declarations": "off"
   }
 };

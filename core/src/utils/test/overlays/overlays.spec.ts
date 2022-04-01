@@ -1,7 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { setRootAriaHidden } from '../../overlays';
-import { RouterOutlet } from '../../../components/router-outlet/route-outlet';
+
 import { Nav } from '../../../components/nav/nav';
+import { RouterOutlet } from '../../../components/router-outlet/route-outlet';
+import { setRootAriaHidden } from '../../overlays';
 
 describe('setRootAriaHidden()', () => {
   it('should correctly remove and re-add router outlet from accessibility tree', async () => {
@@ -67,7 +68,7 @@ describe('setRootAriaHidden()', () => {
   });
 
   it('should not error if router outlet was not found', async () => {
-    const page = await newSpecPage({
+    await newSpecPage({
       components: [],
       html: `
         <div></div>

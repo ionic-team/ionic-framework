@@ -1,9 +1,10 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
-import { AnchorInterface } from '../../utils/element-interface';
+import type { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import type { AnchorInterface } from '../../utils/element-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -82,7 +83,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     const dispatchedFrom = ev.target as HTMLElement;
     const parent = this.el.parentElement as EventTarget;
 
-    if ((ev.composedPath && ev.composedPath().includes(parent)) || (dispatchedFrom && dispatchedFrom.contains(this.el))) {
+    if (ev.composedPath().includes(parent) || dispatchedFrom?.contains(this.el)) {
       this.selected = this.tab === ev.detail.tab;
     }
   }

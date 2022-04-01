@@ -1,10 +1,10 @@
-import { newSpecPage, mockWindow } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 
-import { ComponentProps } from '../../../interface';
-import { Nav } from '../nav';
-import { NavOptions } from '../nav-interface';
-import { ViewController } from '../view-controller';
 import { Config } from '../../../global/config';
+import type { ComponentProps } from '../../../interface';
+import { Nav } from '../nav';
+import type { NavOptions } from '../nav-interface';
+import { ViewController } from '../view-controller';
 
 describe('NavController', () => {
 
@@ -926,13 +926,13 @@ describe('NavController', () => {
   const MockView5 = 'mock-view5';
 
   const mockWebAnimation = (el: HTMLElement) => {
-    Element.prototype.animate = () => {};
+    Element.prototype.animate = jest.fn()
 
     el.animate = () => {
       const animation = {
-        stop: () => {},
-        pause: () => {},
-        cancel: () => {},
+        stop: jest.fn(),
+        pause: jest.fn(),
+        cancel: jest.fn(),
         onfinish: undefined
       }
 

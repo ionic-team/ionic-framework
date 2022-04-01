@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';

@@ -53,7 +53,7 @@ describe('sanitizeDOMString', () => {
   });
 });
 
-const enableSanitizer = (enable: boolean = true) => {
+const enableSanitizer = (enable = true) => {
   window.Ionic = {};
   window.Ionic.config = {};
   window.Ionic.config.sanitizerEnabled = enable;

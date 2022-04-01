@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Event, Prop, Watch } from '@stencil/core';
 
-import { NavigationHookCallback } from './route-interface';
+import type { NavigationHookCallback } from './route-interface';
 
 @Component({
   tag: 'ion-route'

@@ -1,6 +1,6 @@
 import { raf } from '../helpers';
 
-import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
+import type { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, processKeyframes, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 interface AnimationOnFinishCallback {
@@ -116,7 +116,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
-    const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
+    const callbacks = (opts?.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ c: callback, o: opts });
 
     return ani;
@@ -170,7 +170,7 @@ export const createAnimation = (animationId?: string): Animation => {
        * for another animation to have already
        * cleaned up a particular stylesheet
        */
-      if (stylesheet && stylesheet.parentNode) {
+      if (stylesheet?.parentNode) {
         stylesheet.parentNode.removeChild(stylesheet);
       }
     });
@@ -456,6 +456,7 @@ export const createAnimation = (animationId?: string): Animation => {
       removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
+        // eslint-disable-next-line no-prototype-builtins
         if (styles.hasOwnProperty(property)) {
           setStyleProperty(el, property, styles[property]);
         }
@@ -488,6 +489,7 @@ export const createAnimation = (animationId?: string): Animation => {
       removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
+        // eslint-disable-next-line no-prototype-builtins
         if (styles.hasOwnProperty(property)) {
           setStyleProperty(el, property, styles[property]);
         }
@@ -875,7 +877,7 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const play = (opts?: AnimationPlayOptions) => {
     return new Promise<void>(resolve => {
-      if (opts && opts.sync) {
+      if (opts?.sync) {
         shouldForceSyncPlayback = true;
 
         onFinish(() => shouldForceSyncPlayback = false, { oneTimeCallback: true });

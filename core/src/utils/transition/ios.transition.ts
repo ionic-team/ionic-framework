@@ -1,6 +1,7 @@
-import { Animation } from '../../interface';
+import type { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
-import { TransitionOptions, getIonPageElement } from '../transition';
+import type { TransitionOptions} from '../transition';
+import { getIonPageElement } from '../transition';
 
 const DURATION = 540;
 
@@ -307,7 +308,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const parentHeader = enteringToolBarEl.closest('ion-header');
-      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-condense-inactive');
+      const inactiveHeader = parentHeader?.classList.contains('header-collapse-condense-inactive');
 
       let buttonsToAnimate;
       if (backDirection) {
@@ -462,7 +463,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
 
         const parentHeader = leavingToolBarEl.closest('ion-header');
-        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-condense-inactive');
+        const inactiveHeader = parentHeader?.classList.contains('header-collapse-condense-inactive');
 
         const buttonsToAnimate = Array.from(buttons).filter(button => {
           const isCollapseButton = button.classList.contains('buttons-collapse');

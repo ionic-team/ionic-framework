@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, h } from '@stencil/core';
 
 import { getElementRoot } from '../../utils/helpers';
 
-import { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
+import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -355,9 +356,8 @@ export class PickerInternal implements ComponentInterface {
    * or trailing zeros when looking at the item text.
    */
   private searchColumn = (colEl: HTMLIonPickerColumnInternalElement, value: string, zeroBehavior: 'start' | 'end' = 'start') => {
-    let item;
     const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
-    item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
+    const item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
 
     if (item) {
       colEl.value = item.value;

@@ -13,6 +13,5 @@ test('spinner: transform', async () => {
   // wait for a bit less than the spinner's duration (to avoid looping before screenshot is taken)
   await new Promise(resolve => setTimeout(resolve, 1500));
 
-  const compare2 = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

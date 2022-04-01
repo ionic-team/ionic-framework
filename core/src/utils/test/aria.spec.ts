@@ -1,8 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { getAriaLabel } from '../helpers';
+
 import { Item } from '../../components/item/item.tsx';
 import { Label } from '../../components/label/label.tsx';
 import { Toggle } from '../../components/toggle/toggle.tsx';
+import { getAriaLabel } from '../helpers';
 
 describe('getAriaLabel()', () => {
   it('should correctly link component to label', async () => {
@@ -54,7 +55,7 @@ describe('getAriaLabel()', () => {
 
     const toggle = page.body.querySelector('ion-toggle');
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
     expect(labelText).toEqual('Hello World');
     expect(labelId).toEqual('id.1');
@@ -71,7 +72,7 @@ describe('getAriaLabel()', () => {
 
     const toggle = page.body.querySelector('ion-toggle');
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
     expect(labelText).toEqual('Hello World');
     expect(labelId).toEqual('my-id');
@@ -88,7 +89,7 @@ describe('getAriaLabel()', () => {
 
     const toggle = page.body.querySelector('ion-toggle');
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
     expect(labelText).toEqual('Hello World');
     expect(labelId).toEqual('id.1-lbl');

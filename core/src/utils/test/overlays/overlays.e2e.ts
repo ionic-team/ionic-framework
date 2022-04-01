@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { getActiveElementParent } from '../utils';
 
 test('overlays: hardware back button: should dismiss a presented overlay', async () => {
@@ -31,7 +32,6 @@ test('overlays: hardware back button: should dismiss the presented overlay, even
   const createAndPresentButton = await page.find('#create-and-present');
 
   const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
   await createAndPresentButton.click();
   const modal = await page.find('ion-modal');
@@ -85,7 +85,6 @@ test('overlays: Esc: should dismiss the presented overlay, even though another h
   const createAndPresentButton = await page.find('#create-and-present');
 
   const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
   await createAndPresentButton.click();
   const modal = await page.find('ion-modal');

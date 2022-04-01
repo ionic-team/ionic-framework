@@ -1,4 +1,4 @@
-import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
+import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 
 interface InteractionCallback {

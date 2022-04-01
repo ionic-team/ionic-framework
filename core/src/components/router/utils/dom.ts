@@ -1,4 +1,4 @@
-import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import type { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
 import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
@@ -64,6 +64,7 @@ export const readNavState = async (root: HTMLElement | undefined) => {
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
 
+  // eslint-disable-next-line no-cond-assign
   while (outlet = searchNavNode(node)) {
     const id = await outlet.getRouteId();
     if (id) {

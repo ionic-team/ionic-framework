@@ -29,7 +29,7 @@ test('modal: inline', async () => {
   await page.click('ion-button');
   await page.waitForSelector('ion-modal');
 
-  let modalAgain = await page.find('ion-modal');
+  const modalAgain = await page.find('ion-modal');
 
   expect(modalAgain).not.toBe(null);
   await modalAgain.waitForVisible();

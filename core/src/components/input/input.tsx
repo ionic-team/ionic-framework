@@ -1,8 +1,10 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
-import { Attributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import type { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type { Attributes} from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**

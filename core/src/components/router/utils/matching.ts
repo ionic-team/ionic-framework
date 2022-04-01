@@ -1,4 +1,4 @@
-import { RouteChain, RouteID, RouteRedirect } from './interface';
+import type { RouteChain, RouteID, RouteRedirect } from './interface';
 
 /**
  * Returns whether the given redirect matches the given path segments.

@@ -1,12 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { generateE2EUrl } from '@utils/test';
 
 export const testActionSheet = async (
   type: string,
   selector: string,
   rtl = false,
-  afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/ }
+  afterScreenshotHook = async (): Promise<void> => {/**/ }
 ) => {
   try {
     const pageUrl = generateE2EUrl('action-sheet', type, rtl);

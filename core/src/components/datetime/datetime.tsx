@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import {
   caretDownSharp,
   caretUpSharp,
@@ -8,12 +9,12 @@ import {
 } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
+import type { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
-import { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
+import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import {
   generateMonths,
@@ -702,11 +703,10 @@ export class Datetime implements ComponentInterface {
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
      */
+    let endIO: IntersectionObserver | undefined;
+    let startIO: IntersectionObserver | undefined;
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-
-      let endIO: IntersectionObserver | undefined;
-      let startIO: IntersectionObserver | undefined;
       const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
         const refIO = (callbackType === 'start') ? startIO : endIO;
         const refMonth = (callbackType === 'start') ? startMonth : endMonth;
@@ -909,7 +909,6 @@ export class Datetime implements ComponentInterface {
      * visible if used inside of a modal or a popover otherwise the scrollable
      * areas will not have the correct values snapped into place.
      */
-    let visibleIO: IntersectionObserver | undefined;
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (!ev.isIntersecting) { return; }
@@ -928,7 +927,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.add('datetime-ready');
       });
     }
-    visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
+    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
 
     /**
      * Use raf to avoid a race condition between the component loading and
@@ -945,7 +944,6 @@ export class Datetime implements ComponentInterface {
      * the scroll areas have scroll widths/heights of 0px, so any snapping
      * we did originally has been lost.
      */
-    let hiddenIO: IntersectionObserver | undefined;
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (ev.isIntersecting) { return; }
@@ -956,7 +954,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.remove('datetime-ready');
       });
     }
-    hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
+    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
     raf(() => hiddenIO?.observe(this.el));
 
     /**

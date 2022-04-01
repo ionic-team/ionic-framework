@@ -1,5 +1,6 @@
 export const configureBrowser = (config: any, win: any = Object.create(window)) => {
   for (const attributeKey in config) {
+    // eslint-disable-next-line no-prototype-builtins
     if (config.hasOwnProperty(attributeKey)) {
       win[attributeKey] = config[attributeKey];
     }

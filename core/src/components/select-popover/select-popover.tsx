@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Host, Listen, Prop, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { SelectPopoverOption } from '../../interface';
+import type { SelectPopoverOption } from '../../interface';
 import { safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -62,7 +63,7 @@ export class SelectPopover implements ComponentInterface {
     const option = this.findOptionFromEvent(ev);
     const values = this.getValues(ev);
 
-    if (option && option.handler) {
+    if (option?.handler) {
       safeCall(option.handler, values);
     }
   }

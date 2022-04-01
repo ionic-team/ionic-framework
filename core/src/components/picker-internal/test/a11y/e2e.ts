@@ -1,5 +1,5 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { AxePuppeteer } from '@axe-core/puppeteer';
+import { newE2EPage } from '@stencil/core/testing';
 
 test('picker-internal: a11y', async () => {
   const page = await newE2EPage({

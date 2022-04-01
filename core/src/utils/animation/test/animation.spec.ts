@@ -1,7 +1,7 @@
 import { createAnimation } from '../animation';
+import type { Animation } from '../animation-interface';
 import { processKeyframes } from '../animation-utils';
 import { getTimeGivenProgression } from '../cubic-bezier';
-import { Animation } from '../animation-interface';
 
 describe('Animation Class', () => {
 

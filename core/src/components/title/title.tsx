@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, StyleEventDetail } from '../../interface';
+import type { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({

@@ -2,7 +2,8 @@ import { writeTask } from '@stencil/core';
 
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../native/haptic';
 
-import { Gesture, createGesture } from './index';
+import type { Gesture} from './index';
+import { createGesture } from './index';
 
 export const createButtonActiveGesture = (
   el: HTMLElement,

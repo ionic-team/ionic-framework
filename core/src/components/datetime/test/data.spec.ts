@@ -204,7 +204,7 @@ describe('generateTime()', () => {
       minute: 43
     }
 
-    const { hours, minutes, use24Hour } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
 
     expect(hours).toStrictEqual([1, 2, 3]);
     expect(minutes).toStrictEqual([10, 15, 20]);

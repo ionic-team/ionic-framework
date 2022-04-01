@@ -1,11 +1,13 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color } from '../../interface';
-import { ButtonInterface } from '../../utils/element-interface';
-import { Attributes, inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, Color } from '../../interface';
+import type { ButtonInterface } from '../../utils/element-interface';
+import type { Attributes} from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**

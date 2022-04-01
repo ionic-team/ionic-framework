@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, readTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { ActionSheetAttributes, ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { Gesture } from '../../utils/gesture';
+import type { ActionSheetAttributes, ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';

@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, PickerColumn } from '../../interface';
+import type { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
@@ -315,7 +316,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
     if (this.velocity === 0 && detail.deltaY === 0) {
       const opt = (detail.event.target as Element).closest('.picker-opt');
-      if (opt && opt.hasAttribute('opt-index')) {
+      if (opt?.hasAttribute('opt-index')) {
         this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
       }
 

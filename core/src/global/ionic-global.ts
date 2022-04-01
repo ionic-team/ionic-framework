@@ -1,6 +1,6 @@
 import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 
-import { IonicConfig, Mode } from '../interface';
+import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { config, configFromSession, configFromURL, saveConfig } from './config';
@@ -65,7 +65,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
 
   const isIonicElement = (elm: any) =>
-        elm.tagName && elm.tagName.startsWith('ION-');
+        elm.tagName?.startsWith('ION-');
 
   const isAllowedIonicModeValue = (elmMode: string) =>
       ['ios', 'md'].includes(elmMode);

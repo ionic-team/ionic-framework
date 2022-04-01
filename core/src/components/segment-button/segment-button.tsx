@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Host, Prop, State, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { SegmentButtonLayout } from '../../interface';
-import { ButtonInterface } from '../../utils/element-interface';
+import type { SegmentButtonLayout } from '../../interface';
+import type { ButtonInterface } from '../../utils/element-interface';
 import { addEventListener, removeEventListener } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
@@ -93,7 +94,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, tabIndex } = this;
     const mode = getIonMode(this);
-    const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
+    const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host
         role="tab"

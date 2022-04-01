@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Listen, Method, Prop } from '@stencil/core';
 
-import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import type { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
-import { NavigationHookResult } from '../route/route-interface';
+import type { NavigationHookResult } from '../route/route-interface';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';

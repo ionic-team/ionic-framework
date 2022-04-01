@@ -1,5 +1,4 @@
 import type { E2EPage } from '@stencil/core/testing';
-
 import { dragElementBy } from '@utils/test';
 
 /**

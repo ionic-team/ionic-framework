@@ -1,4 +1,4 @@
-import { AnimationKeyFrames } from './animation-interface';
+import type { AnimationKeyFrames } from './animation-interface';
 
 let animationPrefix: string | undefined;
 
@@ -9,6 +9,7 @@ let animationPrefix: string | undefined;
 export const processKeyframes = (keyframes: AnimationKeyFrames) => {
   keyframes.forEach(keyframe => {
     for (const key in keyframe) {
+      // eslint-disable-next-line no-prototype-builtins
       if (keyframe.hasOwnProperty(key)) {
         const value = keyframe[key];
 
@@ -90,6 +91,7 @@ export const generateKeyframeRules = (keyframes: any[] = []) => {
 
     const frameString = [];
     for (const property in keyframe) {
+      // eslint-disable-next-line no-prototype-builtins
       if (keyframe.hasOwnProperty(property) && property !== 'offset') {
         frameString.push(`${property}: ${keyframe[property]};`);
       }

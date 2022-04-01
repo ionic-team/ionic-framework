@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
+import type { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';

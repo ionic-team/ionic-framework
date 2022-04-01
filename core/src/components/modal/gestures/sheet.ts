@@ -1,5 +1,6 @@
-import { Animation } from '../../../interface';
-import { GestureDetail, createGesture } from '../../../utils/gesture';
+import type { Animation } from '../../../interface';
+import type { GestureDetail} from '../../../utils/gesture';
+import { createGesture } from '../../../utils/gesture';
 import { clamp, raf } from '../../../utils/helpers';
 import { getBackdropValueForSheet } from '../utils';
 

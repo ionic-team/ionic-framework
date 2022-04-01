@@ -1,6 +1,7 @@
-import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
-import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
+import type { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
 import { CELL_TYPE_ITEM, CELL_TYPE_HEADER, CELL_TYPE_FOOTER } from '../constants';
+import type { Range} from '../virtual-scroll-utils';
+import { calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
 
 describe('getViewport', () => {
   it('should return viewport without margin', () => {

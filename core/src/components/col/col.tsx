@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = (typeof (window as any) !== 'undefined') ? window as any : undefined;
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
 const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 

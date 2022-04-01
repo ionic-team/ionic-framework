@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 

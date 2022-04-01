@@ -1,10 +1,12 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
+import type { ComponentInterface, FunctionalComponent} from '@stencil/core';
+import { Component, Element, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
 
-import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import type { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
-import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+import type { Range} from './virtual-scroll-utils';
+import { calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 @Component({
   tag: 'ion-virtual-scroll',

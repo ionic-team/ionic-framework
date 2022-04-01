@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface} from '@stencil/core';
+import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -65,7 +66,7 @@ export class Fab implements ComponentInterface {
   private onClick = () => {
     const hasList = !!this.el.querySelector('ion-fab-list');
     const getButton = this.getFab();
-    const isButtonDisabled = getButton && getButton.disabled;
+    const isButtonDisabled = getButton?.disabled;
 
     if (hasList && !isButtonDisabled) {
       this.activated = !this.activated;

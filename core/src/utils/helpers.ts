@@ -1,6 +1,6 @@
-import { EventEmitter } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { Side } from '../interface';
+import type { Side } from '../interface';
 
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
@@ -106,7 +106,7 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   if (typeof (window as any) !== 'undefined') {
     const win = window as any;
-    const config = win && win.Ionic && win.Ionic.config;
+    const config = win?.Ionic?.config;
     if (config) {
       const ael = config.get('_ael');
       if (ael) {
@@ -123,7 +123,7 @@ export const addEventListener = (el: any, eventName: string, callback: any, opts
 export const removeEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   if (typeof (window as any) !== 'undefined') {
     const win = window as any;
-    const config = win && win.Ionic && win.Ionic.config;
+    const config = win?.Ionic?.config;
     if (config) {
       const rel = config.get('_rel');
       if (rel) {
