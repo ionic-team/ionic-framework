@@ -6,7 +6,7 @@ declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
 export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     transitionEnd(el, expectedDuration, resolve);
   });
 };
@@ -90,7 +90,7 @@ export type Attributes = { [key: string]: any };
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
   const attributeObject: Attributes = {};
 
-  attributes.forEach((attr) => {
+  attributes.forEach(attr => {
     if (el.hasAttribute(attr)) {
       const value = el.getAttribute(attr);
       if (value !== null) {
