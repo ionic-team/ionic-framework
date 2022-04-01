@@ -1272,6 +1272,8 @@ export class IonRadioGroup {
 }
 
 import type { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core';
+import type { RangeKnobMoveStartEventDetail as IRangeRangeKnobMoveStartEventDetail } from '@ionic/core';
+import type { RangeKnobMoveEndEventDetail as IRangeRangeKnobMoveEndEventDetail } from '@ionic/core';
 export declare interface IonRange extends Components.IonRange {
   /**
    * Emitted when the value property has changed. 
@@ -1285,6 +1287,16 @@ export declare interface IonRange extends Components.IonRange {
    * Emitted when the range loses focus. 
    */
   ionBlur: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the user starts moving the range knob, whether through
+mouse drag, touch gesture, or keyboard interaction. 
+   */
+  ionKnobMoveStart: EventEmitter<CustomEvent<IRangeRangeKnobMoveStartEventDetail>>;
+  /**
+   * Emitted when the user finishes moving the range knob, whether through
+mouse drag, touch gesture, or keyboard interaction. 
+   */
+  ionKnobMoveEnd: EventEmitter<CustomEvent<IRangeRangeKnobMoveEndEventDetail>>;
 
 }
 
@@ -1303,7 +1315,7 @@ export class IonRange {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 }
 

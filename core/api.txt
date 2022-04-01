@@ -984,6 +984,8 @@ ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
+ion-range,event,ionKnobMoveEnd,RangeKnobMoveEndEventDetail,true
+ion-range,event,ionKnobMoveStart,RangeKnobMoveStartEventDetail,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
 ion-range,css-prop,--bar-border-radius
