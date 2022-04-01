@@ -49,7 +49,7 @@ test('menu: preserve scroll position', async () => {
 
   await page.click('#open-first');
   await menu.waitForVisible();
-  
+
   const scrollTop = await page.$eval('#start-menu ion-content', async (menuContentEl: any) => {
     const contentScrollEl = await menuContentEl.getScrollElement();
     return contentScrollEl.scrollTop;
