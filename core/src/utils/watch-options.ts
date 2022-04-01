@@ -1,5 +1,4 @@
 export const watchForOptions = <T extends HTMLElement>(containerEl: HTMLElement, tagName: string, onChange: (el: T | undefined) => void) => {
-  /* tslint:disable-next-line */
   if (typeof MutationObserver === 'undefined') { return; }
 
   const mutation = new MutationObserver(mutationList => {
@@ -15,7 +14,7 @@ export const watchForOptions = <T extends HTMLElement>(containerEl: HTMLElement,
 const getSelectedOption = <T extends HTMLElement>(mutationList: MutationRecord[], tagName: string): T | undefined => {
   let newOption: HTMLElement | undefined;
   mutationList.forEach(mut => {
-    // tslint:disable-next-line: prefer-for-of
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < mut.addedNodes.length; i++) {
       newOption = findCheckedOption(mut.addedNodes[i], tagName) || newOption;
     }

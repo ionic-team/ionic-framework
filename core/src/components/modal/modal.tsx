@@ -382,7 +382,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
-    /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
       this.keyboardOpenCallback = () => {
         if (this.gesture) {
@@ -500,7 +499,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
-    /* tslint:disable-next-line */
     if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
       window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }

@@ -341,6 +341,7 @@ export class Slides implements ComponentInterface {
     const finalOptions = this.normalizeOptions();
 
     // init swiper core
+    // eslint-disable-next-line
     // @ts-ignore
     const { Swiper } = await import('./swiper/swiper.bundle.js');
     await waitForSlides(this.el);

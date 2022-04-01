@@ -71,7 +71,6 @@ const jsSetFocus = async (
    */
   raf(() => componentEl.click());
 
-  /* tslint:disable-next-line */
   if (typeof window !== 'undefined') {
     let scrollContentTimeout: any;
     const scrollContent = async () => {

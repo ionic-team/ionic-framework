@@ -32,7 +32,6 @@ export const popoverController = /*@__PURE__*/createController<PopoverOptions, H
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
 export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
-  /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
     connectListeners(document);
   }
@@ -44,7 +43,6 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
 };
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
-  /* tslint:disable-next-line */
   if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
     return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
