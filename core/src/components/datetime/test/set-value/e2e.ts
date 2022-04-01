@@ -35,30 +35,4 @@ describe('datetime: setting the value', () => {
     expect(activeTime).toEqualText('12:40 PM');
   });
 
-  describe('presentation: time', () => {
-
-    it('should update the active time', async () => {
-      const screenshotCompares = [];
-
-      screenshotCompares.push(await page.compareScreenshot('time picker initial value'));
-
-      const initialValue = await (await page.find('#timePicker')).getProperty('value');
-      expect(initialValue).toEqual('18:25:40');
-
-      await page.click('#timePickerSetValueBtn');
-      await page.waitForChanges();
-
-      screenshotCompares.push(await page.compareScreenshot('time picker value set'));
-
-      const updatedValue = await (await page.find('#timePicker')).getProperty('value');
-      expect(updatedValue).toEqual('11:02:40');
-
-      for (const screenshotCompare of screenshotCompares) {
-        expect(screenshotCompare).toMatchScreenshot();
-      }
-
-    });
-
-  });
-
 });
