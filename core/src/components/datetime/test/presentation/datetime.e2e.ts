@@ -8,6 +8,9 @@ test.describe('datetime: presentation', () => {
 
     await page.setIonViewport();
 
+    // Intersection observer delay for the .calendar-body element
+    await page.waitForTimeout(100);
+
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`datetime-presentation-diff-${page.getSnapshotSettings()}.png`);
   });
 
