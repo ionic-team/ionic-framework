@@ -5,9 +5,7 @@ export const testActionSheet = async (
   type: string,
   selector: string,
   rtl = false,
-  afterScreenshotHook = async (): Promise<void> => {
-    /**/
-  }
+  afterScreenshotHook?: (...args: any[]) => void
 ) => {
   try {
     const pageUrl = generateE2EUrl('action-sheet', type, rtl);
@@ -26,7 +24,9 @@ export const testActionSheet = async (
 
     screenshotCompares.push(await page.compareScreenshot());
 
-    await afterScreenshotHook(page, screenshotCompares, actionSheet);
+    if (afterScreenshotHook) {
+      await afterScreenshotHook(page, screenshotCompares, actionSheet);
+    }
 
     await actionSheet.callMethod('dismiss');
     await actionSheet.waitForNotVisible();
