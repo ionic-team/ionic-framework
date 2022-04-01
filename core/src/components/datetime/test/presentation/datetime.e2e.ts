@@ -88,9 +88,9 @@ class TimePickerFixture {
   }
 
   async expectTime(hour: string, minute: string, ampm: string) {
-    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(1) .picker-item-active').innerText()).toBe(hour);
-    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(2) .picker-item-active').innerText()).toBe(minute);
-    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(3) .picker-item-active').innerText()).toBe(ampm);
+    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(1) .picker-item-active').textContent()).toBe(hour);
+    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(2) .picker-item-active').textContent()).toBe(minute);
+    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(3) .picker-item-active').textContent()).toBe(ampm);
   }
 
 }
