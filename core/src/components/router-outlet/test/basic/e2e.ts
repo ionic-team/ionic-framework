@@ -33,9 +33,9 @@ test('it should be possible to activate the same component provided parameters a
 
   await page.$eval('ion-item[href="#/page-4.1/foo"] ion-label', (el: any) => el.click());
   await page.waitForChanges();
-  expect(await page.$eval('ion-router-outlet', el => el.textContent)).toMatch(/text = foo/);
+  expect(await page.$eval('ion-router-outlet', (el) => el.textContent)).toMatch(/text = foo/);
 
   await page.$eval('ion-item[href="#/page-4.2/bar"] ion-label', (el: any) => el.click());
   await page.waitForChanges();
-  expect(await page.$eval('ion-router-outlet', el => el.textContent)).toMatch(/text = bar/);
+  expect(await page.$eval('ion-router-outlet', (el) => el.textContent)).toMatch(/text = bar/);
 });

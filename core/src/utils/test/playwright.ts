@@ -1,17 +1,29 @@
-import { Page, PlaywrightTestArgs, PlaywrightTestOptions, PlaywrightWorkerArgs, PlaywrightWorkerOptions, Response, TestInfo, test as base } from '@playwright/test';
+import type {
+  Page,
+  PlaywrightTestArgs,
+  PlaywrightTestOptions,
+  PlaywrightWorkerArgs,
+  PlaywrightWorkerOptions,
+  Response,
+  TestInfo,
+} from '@playwright/test';
+import { test as base } from '@playwright/test';
 
 type IonicPage = Page & {
   goto: (url: string) => Promise<null | Response>;
   setIonViewport: () => Promise<void>;
   getSnapshotSettings: () => string;
-}
+};
 
-type CustomTestArgs = PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions & {
-  page: IonicPage
-}
+type CustomTestArgs = PlaywrightTestArgs &
+  PlaywrightTestOptions &
+  PlaywrightWorkerArgs &
+  PlaywrightWorkerOptions & {
+    page: IonicPage;
+  };
 
 type CustomFixtures = {
-  page: IonicPage
+  page: IonicPage;
 };
 
 export const test = base.extend<CustomFixtures>({
@@ -41,13 +53,13 @@ export const test = base.extend<CustomFixtures>({
 
       const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
-      const [_, response] = await Promise.all([
+      const results = await Promise.all([
         page.waitForFunction(() => (window as any).stencilAppLoaded === true),
-        oldGoTo(formattedUrl)
+        oldGoTo(formattedUrl),
       ]);
 
-      return response;
-    }
+      return results[1];
+    };
 
     /**
      * This provides metadata that can be used to
@@ -79,7 +91,7 @@ export const test = base.extend<CustomFixtures>({
        */
       const rtlString = formattedRtl === true || formattedRtl === 'true' ? 'rtl' : 'ltr';
       return `${formattedMode}-${rtlString}`;
-    }
+    };
 
     /**
      * Taking fullpage screenshots in Playwright
@@ -108,9 +120,9 @@ export const test = base.extend<CustomFixtures>({
 
       await page.setViewportSize({
         width,
-        height
-      })
-    }
+        height,
+      });
+    };
 
     await use(page);
   },

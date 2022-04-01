@@ -12,7 +12,7 @@ const scrollIonContentPage = async (page: E2EPage) => {
 
   const ev = await page.spyOnEvent('ionInfiniteComplete', 'document');
   await ev.next();
-}
+};
 
 describe('infinite-scroll: basic', () => {
   it('should match existing visual screenshots', async () => {

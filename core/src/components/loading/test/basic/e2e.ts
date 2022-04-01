@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 import { testLoading } from '../test.utils';
 
 const DIRECTORY = 'basic';
-const getActiveElementText = async page => {
+const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return page.evaluate((el) => el?.textContent, activeElement);
 };

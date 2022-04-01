@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-const getActiveElementID = async page => {
+const getActiveElementID = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return page.evaluate((el) => el?.id, activeElement);
 };

@@ -106,7 +106,7 @@ const testPopover = async (side: string, alignment: string, isRTL = false) => {
 
   const trigger = await page.find(`#${TRIGGER_ID}`);
 
-  await page.evaluate(POPOVER_TRIGGER_ID => {
+  await page.evaluate((POPOVER_TRIGGER_ID) => {
     const popoverTrigger = document.querySelector(`#${POPOVER_TRIGGER_ID}`);
     popoverTrigger?.scrollIntoView({ block: 'center' });
   }, TRIGGER_ID);
