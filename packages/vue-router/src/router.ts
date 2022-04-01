@@ -65,7 +65,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
-  let currentTab: string | undefined;
 
   // TODO types
   let historyChangeListeners: any[] = [];
@@ -238,8 +237,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         if (action === 'replace') {
           incomingRouteParams = {
             routerAction: 'replace',
-            routerDirection: 'none',
-            tab: currentTab
+            routerDirection: 'none'
           }
         } else if (action === 'pop') {
           const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - delta);
@@ -254,8 +252,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           } else {
             incomingRouteParams = {
               routerAction: 'pop',
-              routerDirection: 'none',
-              tab: currentTab
+              routerDirection: 'none'
             }
           }
         }
@@ -475,8 +472,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * then IonTabs will not invoke this.
    */
   const handleSetCurrentTab = (tab: string) => {
-    currentTab = tab;
-
     const ri = { ...locationHistory.last() };
     if (ri.tab !== tab) {
       ri.tab = tab;
