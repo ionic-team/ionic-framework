@@ -32,7 +32,6 @@ test('popover - arrow side: end, rtl', async () => {
   await testPopover('end', false, true);
 });
 
-
 const testPopover = async (side, isRTL = false) => {
   const rtl = isRTL ? '&rtl=true' : '';
   const page = await newE2EPage({ url: `/src/components/popover/test/arrow?ionic:_testing=true${rtl}` });
@@ -59,4 +58,4 @@ const testPopover = async (side, isRTL = false) => {
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
-}
+};

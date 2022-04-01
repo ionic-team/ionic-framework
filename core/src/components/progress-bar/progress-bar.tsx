@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
@@ -19,12 +19,11 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-progress-bar',
   styleUrls: {
     ios: 'progress-bar.ios.scss',
-    md: 'progress-bar.md.scss'
+    md: 'progress-bar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
-
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
    * Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
@@ -70,13 +69,10 @@ export class ProgressBar implements ComponentInterface {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
+          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
         })}
       >
-        {type === 'indeterminate'
-          ? renderIndeterminate()
-          : renderProgress(value, buffer)
-        }
+        {type === 'indeterminate' ? renderIndeterminate() : renderProgress(value, buffer)}
       </Host>
     );
   }
@@ -85,8 +81,12 @@ export class ProgressBar implements ComponentInterface {
 const renderIndeterminate = () => {
   return (
     <div part="track" class="progress-buffer-bar">
-      <div class="indeterminate-bar-primary"><span part="progress" class="progress-indeterminate"></span></div>
-      <div class="indeterminate-bar-secondary"><span part="progress" class="progress-indeterminate"></span></div>
+      <div class="indeterminate-bar-primary">
+        <span part="progress" class="progress-indeterminate"></span>
+      </div>
+      <div class="indeterminate-bar-secondary">
+        <span part="progress" class="progress-indeterminate"></span>
+      </div>
     </div>
   );
 };
@@ -104,7 +104,10 @@ const renderProgress = (value: number, buffer: number) => {
      * When finalBuffer === 1, we use display: none
      * instead of removing the element to avoid flickering.
      */
-    <div class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }} style={{ transform: `translateX(${finalBuffer * 100}%)` }}>
+    <div
+      class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }}
+      style={{ transform: `translateX(${finalBuffer * 100}%)` }}
+    >
       <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>
         <div part="stream" class="buffer-circles"></div>
       </div>

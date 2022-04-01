@@ -96,7 +96,6 @@ test('popover: position - side: end, alignment: end - rtl', async () => {
   await testPopover('end', 'end', true);
 });
 
-
 const testPopover = async (side, alignment, isRTL = false) => {
   const rtl = isRTL ? '&rtl=true' : '';
   const page = await newE2EPage({ url: `/src/components/popover/test/position?ionic:_testing=true${rtl}` });
@@ -125,10 +124,12 @@ const testPopover = async (side, alignment, isRTL = false) => {
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
-}
+};
 
 const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, isRTL = false) => {
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.${popoverClass}').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.${popoverClass}').shadowRoot.querySelector('.popover-content')`
+  );
   const popoverBbox = await popoverContentHandle.boundingBox();
 
   const triggerHandler = await page.$(`#${triggerID}`);
@@ -137,10 +138,9 @@ const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, 
   const actualX = popoverBbox.x;
   const actualY = popoverBbox.y;
 
-
   let expectedX, expectedY;
 
-  switch(side) {
+  switch (side) {
     case 'top':
       expectedX = triggerBbox.x;
       expectedY = triggerBbox.y - popoverBbox.height;
@@ -158,18 +158,18 @@ const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, 
       expectedY = triggerBbox.y;
       break;
     case 'start':
-      expectedX = (isRTL) ? triggerBbox.x + triggerBbox.width : triggerBbox.x - popoverBbox.width;
+      expectedX = isRTL ? triggerBbox.x + triggerBbox.width : triggerBbox.x - popoverBbox.width;
       expectedY = triggerBbox.y;
       break;
     case 'end':
-      expectedX = (isRTL) ? triggerBbox.x - popoverBbox.width : triggerBbox.x + triggerBbox.width;
+      expectedX = isRTL ? triggerBbox.x - popoverBbox.width : triggerBbox.x + triggerBbox.width;
       expectedY = triggerBbox.y;
       break;
     default:
       break;
   }
 
-  switch(alignment) {
+  switch (alignment) {
     case 'center':
       const centerAlign = getCenterAlign(side, triggerBbox, popoverBbox);
       expectedX += centerAlign.left;
@@ -187,7 +187,7 @@ const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, 
 
   expect(Math.abs(actualX - expectedX)).toBeLessThanOrEqual(2);
   expect(Math.abs(actualY - expectedY)).toBeLessThanOrEqual(2);
-}
+};
 
 const getEndAlign = (side, triggerBbox, popoverBbox) => {
   switch (side) {
@@ -197,17 +197,17 @@ const getEndAlign = (side, triggerBbox, popoverBbox) => {
     case 'right':
       return {
         top: -(popoverBbox.height - triggerBbox.height),
-        left: 0
-      }
+        left: 0,
+      };
     case 'top':
     case 'bottom':
     default:
       return {
         top: 0,
-        left: -(popoverBbox.width - triggerBbox.width)
-      }
+        left: -(popoverBbox.width - triggerBbox.width),
+      };
   }
-}
+};
 
 const getCenterAlign = (side, triggerBbox, popoverBbox) => {
   switch (side) {
@@ -216,15 +216,15 @@ const getCenterAlign = (side, triggerBbox, popoverBbox) => {
     case 'left':
     case 'right':
       return {
-        top: -((popoverBbox.height / 2) - (triggerBbox.height / 2)),
-        left: 0
-      }
+        top: -(popoverBbox.height / 2 - triggerBbox.height / 2),
+        left: 0,
+      };
     case 'top':
     case 'bottom':
     default:
       return {
         top: 0,
-        left: -((popoverBbox.width / 2) - (triggerBbox.width / 2))
-      }
+        left: -(popoverBbox.width / 2 - triggerBbox.width / 2),
+      };
   }
-}
+};

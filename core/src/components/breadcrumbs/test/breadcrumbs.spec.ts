@@ -14,7 +14,7 @@ it('should correctly provide the collapsed breadcrumbs in the event payload', as
         <ion-breadcrumb>Fourth</ion-breadcrumb>
         <ion-breadcrumb>Fifth</ion-breadcrumb>
       </ion-breadcrumbs>
-    `
+    `,
   });
 
   const onCollapsedClick = jest.fn((ev) => ev);

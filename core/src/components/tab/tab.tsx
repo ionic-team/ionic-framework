@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import type { ComponentRef, FrameworkDelegate } from '../../interface';
@@ -7,10 +7,9 @@ import { attachComponent } from '../../utils/framework-delegate';
 @Component({
   tag: 'ion-tab',
   styleUrl: 'tab.scss',
-  shadow: true
+  shadow: true,
 })
 export class Tab implements ComponentInterface {
-
   private loaded = false;
   @Element() el!: HTMLIonTabElement;
 
@@ -34,10 +33,12 @@ export class Tab implements ComponentInterface {
   async componentWillLoad() {
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
-        console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
-      `- Remove the component attribute in: <ion-tab component="${this.component}">` +
-      ` or` +
-      `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`);
+        console.error(
+          'You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
+            `- Remove the component attribute in: <ion-tab component="${this.component}">` +
+            ` or` +
+            `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`
+        );
       }
     }
     if (this.active) {
@@ -80,7 +81,7 @@ export class Tab implements ComponentInterface {
         aria-labelledby={`tab-button-${tab}`}
         class={{
           'ion-page': component === undefined,
-          'tab-hidden': !active
+          'tab-hidden': !active,
         }}
       >
         <slot></slot>

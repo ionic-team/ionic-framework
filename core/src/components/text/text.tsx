@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -11,10 +11,9 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-text',
   styleUrl: 'text.scss',
-  shadow: true
+  shadow: true,
 })
 export class Text implements ComponentInterface {
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.

@@ -6,7 +6,12 @@ export interface HTMLStencilElement extends HTMLElement {
 }
 
 export interface NavOutlet {
-  setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder): Promise<RouteWrite>;
+  setRouteId(
+    id: string,
+    params: ComponentProps | undefined,
+    direction: RouterDirection,
+    animation?: AnimationBuilder
+  ): Promise<RouteWrite>;
   getRouteId(): Promise<RouteID | undefined>;
 }
 
@@ -35,14 +40,14 @@ export interface RouteWrite {
 export interface RouteID {
   id: string;
   element: HTMLElement | undefined;
-  params?: {[key: string]: any};
+  params?: { [key: string]: any };
 }
 
 export interface RouteEntry {
   /** Component tag name or tab name. */
   id: string;
   segments: string[];
-  params: {[key: string]: any} | undefined;
+  params: { [key: string]: any } | undefined;
   beforeLeave?: NavigationHookCallback;
   beforeEnter?: NavigationHookCallback;
 }

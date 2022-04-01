@@ -33,4 +33,4 @@ export interface ModalAnimationOptions {
   backdropBreakpoint?: number;
 }
 
-export type ModalAttributes = JSXBase.HTMLAttributes<HTMLElement>
+export type ModalAttributes = JSXBase.HTMLAttributes<HTMLElement>;

@@ -121,7 +121,7 @@ export const startTapClick = (config: Config) => {
 
   const removeRipple = () => {
     if (activeRipple !== undefined) {
-      activeRipple.then(remove => remove());
+      activeRipple.then((remove) => remove());
       activeRipple = undefined;
     }
   };
@@ -145,7 +145,7 @@ export const startTapClick = (config: Config) => {
   };
 
   const doc = document;
-  doc.addEventListener('ionScrollStart', ev => {
+  doc.addEventListener('ionScrollStart', (ev) => {
     scrollingEl = ev.target as HTMLElement;
     cancelActive();
   });

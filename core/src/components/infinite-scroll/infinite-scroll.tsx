@@ -1,4 +1,4 @@
-import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -6,10 +6,9 @@ import { componentOnReady } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-infinite-scroll',
-  styleUrl: 'infinite-scroll.scss'
+  styleUrl: 'infinite-scroll.scss',
 })
 export class InfiniteScroll implements ComponentInterface {
-
   private thrPx = 0;
   private thrPc = 0;
   private scrollEl?: HTMLElement;
@@ -35,8 +34,7 @@ export class InfiniteScroll implements ComponentInterface {
     const val = this.threshold;
     if (val.lastIndexOf('%') > -1) {
       this.thrPx = 0;
-      this.thrPc = (parseFloat(val) / 100);
-
+      this.thrPc = parseFloat(val) / 100;
     } else {
       this.thrPx = parseFloat(val);
       this.thrPc = 0;
@@ -84,7 +82,7 @@ export class InfiniteScroll implements ComponentInterface {
       console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
       return;
     }
-    await new Promise(resolve => componentOnReady(contentEl, resolve));
+    await new Promise((resolve) => componentOnReady(contentEl, resolve));
     this.scrollEl = await contentEl.getScrollElement();
     this.thresholdChanged();
     this.disabledChanged();
@@ -116,11 +114,12 @@ export class InfiniteScroll implements ComponentInterface {
     const scrollTop = scrollEl.scrollTop;
     const scrollHeight = scrollEl.scrollHeight;
     const height = scrollEl.offsetHeight;
-    const threshold = this.thrPc !== 0 ? (height * this.thrPc) : this.thrPx;
+    const threshold = this.thrPc !== 0 ? height * this.thrPc : this.thrPx;
 
-    const distanceFromInfinite = (this.position === 'bottom')
-      ? scrollHeight - infiniteHeight - scrollTop - threshold - height
-      : scrollTop - infiniteHeight - threshold;
+    const distanceFromInfinite =
+      this.position === 'bottom'
+        ? scrollHeight - infiniteHeight - scrollTop - threshold - height
+        : scrollTop - infiniteHeight - threshold;
 
     if (distanceFromInfinite < 0) {
       if (!this.didFire) {
@@ -134,7 +133,7 @@ export class InfiniteScroll implements ComponentInterface {
     }
 
     return 4;
-  }
+  };
 
   /**
    * Call `complete()` within the `ionInfinite` output event handler when
@@ -200,12 +199,7 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   private canStart(): boolean {
-    return (
-      !this.disabled &&
-      !this.isBusy &&
-      !!this.scrollEl &&
-      !this.isLoading
-    );
+    return !this.disabled && !this.isBusy && !!this.scrollEl && !this.isLoading;
   }
 
   private enableScrollEvents(shouldListen: boolean) {
@@ -226,7 +220,7 @@ export class InfiniteScroll implements ComponentInterface {
         class={{
           [mode]: true,
           'infinite-scroll-loading': this.isLoading,
-          'infinite-scroll-enabled': !disabled
+          'infinite-scroll-enabled': !disabled,
         }}
       />
     );

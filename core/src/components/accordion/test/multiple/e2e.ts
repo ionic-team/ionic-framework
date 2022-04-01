@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('accordion: multiple - open', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion/test/multiple?ionic:_testing=true'
+    url: '/src/components/accordion/test/multiple?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -30,7 +30,7 @@ test('accordion: multiple - open', async () => {
 
 test('accordion: multiple - close', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion/test/multiple?ionic:_testing=true'
+    url: '/src/components/accordion/test/multiple?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

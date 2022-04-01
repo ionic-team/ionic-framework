@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -15,12 +15,11 @@ import { createColorClasses, openURL } from '../../utils/theme';
   tag: 'ion-card',
   styleUrls: {
     ios: 'card.ios.scss',
-    md: 'card.md.scss'
+    md: 'card.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -83,27 +82,26 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   private isClickable(): boolean {
-    return (this.href !== undefined || this.button);
+    return this.href !== undefined || this.button;
   }
 
   private renderCard(mode: Mode) {
     const clickable = this.isClickable();
 
     if (!clickable) {
-      return [
-        <slot></slot>
-      ];
+      return [<slot></slot>];
     }
     const { href, routerAnimation, routerDirection } = this;
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : {
-        download: this.download,
-        href: this.href,
-        rel: this.rel,
-        target: this.target
-      };
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const attrs =
+      TagType === 'button'
+        ? { type: this.type }
+        : {
+            download: this.download,
+            href: this.href,
+            rel: this.rel,
+            target: this.target,
+          };
 
     return (
       <TagType
@@ -126,7 +124,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         class={createColorClasses(this.color, {
           [mode]: true,
           'card-disabled': this.disabled,
-          'ion-activatable': this.isClickable()
+          'ion-activatable': this.isClickable(),
         })}
       >
         {this.renderCard(mode)}

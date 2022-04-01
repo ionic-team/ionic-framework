@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('presentation', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/presentation?ionic:_testing=true'
+    url: '/src/components/datetime/test/presentation?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -16,17 +16,15 @@ test('presentation', async () => {
 });
 
 describe('presentation: time', () => {
-
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/datetime/test/presentation?ionic:_testing=true'
+      url: '/src/components/datetime/test/presentation?ionic:_testing=true',
     });
   });
 
   describe('when the time picker is visible in the view', () => {
-
     it('manually setting the value should emit ionChange once', async () => {
       const datetime = await page.find('ion-datetime[presentation="time"]');
       const didChange = await datetime.spyOnEvent('ionChange');
@@ -44,7 +42,5 @@ describe('presentation: time', () => {
       expect(didChange).toHaveReceivedEventTimes(1);
       expect(didChange).toHaveReceivedEventDetail({ value: '06:02:40' });
     });
-
   });
-
 });

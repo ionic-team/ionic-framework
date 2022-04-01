@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -12,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-card-subtitle',
   styleUrls: {
     ios: 'card-subtitle.ios.scss',
-    md: 'card-subtitle.md.scss'
+    md: 'card-subtitle.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class CardSubtitle implements ComponentInterface {
   /**
@@ -32,7 +32,7 @@ export class CardSubtitle implements ComponentInterface {
         aria-level="3"
         class={createColorClasses(this.color, {
           'ion-inherit-color': true,
-          [mode]: true
+          [mode]: true,
         })}
       >
         <slot></slot>

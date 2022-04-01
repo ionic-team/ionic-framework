@@ -1,4 +1,4 @@
-import type { ComponentInterface, EventEmitter} from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
@@ -15,12 +15,11 @@ import type { AnchorInterface } from '../../utils/element-interface';
   tag: 'ion-tab-button',
   styleUrls: {
     ios: 'tab-button.ios.scss',
-    md: 'tab-button.md.scss'
+    md: 'tab-button.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -100,7 +99,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
         this.ionTabButtonClick.emit({
           tab: this.tab,
           href: this.href,
-          selected: this.selected
+          selected: this.selected,
         });
       }
       ev.preventDefault();
@@ -116,7 +115,9 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   private get tabIndex() {
-    if (this.disabled) { return -1; }
+    if (this.disabled) {
+      return -1;
+    }
 
     const hasTabIndex = this.el.hasAttribute('tabindex');
 
@@ -131,11 +132,11 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     if (ev.key === 'Enter' || ev.key === ' ') {
       this.selectTab(ev);
     }
-  }
+  };
 
   private onClick = (ev: Event) => {
     this.selectTab(ev);
-  }
+  };
 
   render() {
     const { disabled, hasIcon, hasLabel, tabIndex, href, rel, target, layout, selected, tab } = this;
@@ -144,7 +145,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       download: this.download,
       href,
       rel,
-      target
+      target,
     };
 
     return (
@@ -166,7 +167,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           [`tab-layout-${layout}`]: true,
           'ion-activatable': true,
           'ion-selectable': true,
-          'ion-focusable': true
+          'ion-focusable': true,
         }}
       >
         <a {...attrs} tabIndex={-1} class="button-native" part="native">

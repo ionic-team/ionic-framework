@@ -2,10 +2,8 @@ import { setMode } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
-import { config } from "../../../global/config";
-import { BackButton } from "../back-button";
-
-
+import { config } from '../../../global/config';
+import { BackButton } from '../back-button';
 
 describe('back button', () => {
   beforeEach(() => {
@@ -16,19 +14,17 @@ describe('back button', () => {
     setMode(() => mode);
     const { rootInstance } = await newSpecPage({
       components: [BackButton],
-      html: `<ion-back-button></ion-back-button>`
-    })
+      html: `<ion-back-button></ion-back-button>`,
+    });
     return rootInstance;
   };
 
-
   describe('backButtonIcon', () => {
-
     it('set custom icon on the instance, override config', async () => {
       const bb = await newBackButton();
       bb.icon = 'custom-icon-instance';
       config.reset({
-        backButtonIcon: 'custom-icon-config'
+        backButtonIcon: 'custom-icon-config',
       });
       expect(bb.backButtonIcon).toBe('custom-icon-instance');
     });
@@ -36,7 +32,7 @@ describe('back button', () => {
     it('set custom icon in the config', async () => {
       const bb = await newBackButton();
       config.reset({
-        backButtonIcon: 'custom-icon-config'
+        backButtonIcon: 'custom-icon-config',
       });
       expect(bb.backButtonIcon).toBe('custom-icon-config');
     });
@@ -56,11 +52,9 @@ describe('back button', () => {
       const bb = await newBackButton();
       expect(bb.backButtonIcon).toBe(arrowBackSharp);
     });
-
   });
 
   describe('backButtonText', () => {
-
     it('default text for ios mode', async () => {
       const bb = await newBackButton('ios');
       expect(bb.backButtonText).toBe('Back');
@@ -70,14 +64,12 @@ describe('back button', () => {
       const bb = await newBackButton();
       expect(bb.backButtonText).toBe(null);
     });
-
   });
 
   describe('backButtonDefaultHref', () => {
-
     it('set custom defaultHref in the config', async () => {
       config.reset({
-        backButtonDefaultHref: 'custom-default-href-config'
+        backButtonDefaultHref: 'custom-default-href-config',
       });
       const bb = await newBackButton();
       expect(bb.defaultHref).toBe('custom-default-href-config');
@@ -94,7 +86,7 @@ describe('back button', () => {
       bb.defaultHref = 'custom-default-href';
 
       config.reset({
-        backButtonDefaultHref: 'custom-default-href-config'
+        backButtonDefaultHref: 'custom-default-href-config',
       });
 
       expect(bb.defaultHref).toBe('custom-default-href');
@@ -103,7 +95,5 @@ describe('back button', () => {
       bb2.defaultHref = 'custom-default-href-second';
       expect(bb2.defaultHref).toBe('custom-default-href-second');
     });
-
   });
-
 });

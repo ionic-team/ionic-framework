@@ -119,17 +119,23 @@ const waitForEventToBeCalled = async (eventName: string, page: any, el: HTMLElem
     await fn();
   }
 
-  await waitForFunctionTestContext((payload: any) => {
-    return payload.eventFiredCount.count === payload.num;
-  }, { eventFiredCount, num });
+  await waitForFunctionTestContext(
+    (payload: any) => {
+      return payload.eventFiredCount.count === payload.num;
+    },
+    { eventFiredCount, num }
+  );
 };
 
 const getStyles = async (page: any, selector: string) => {
-  return page.evaluate((payload: any) => {
-    const el = document.querySelector(payload.selector);
+  return page.evaluate(
+    (payload: any) => {
+      const el = document.querySelector(payload.selector);
 
-    return JSON.parse(JSON.stringify(getComputedStyle(el)));
-  }, { selector });
+      return JSON.parse(JSON.stringify(getComputedStyle(el)));
+    },
+    { selector }
+  );
 };
 
 const getClassList = async (el: HTMLElement) => {

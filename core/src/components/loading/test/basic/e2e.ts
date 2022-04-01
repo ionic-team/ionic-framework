@@ -5,8 +5,8 @@ import { testLoading } from '../test.utils';
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el?.textContent, activeElement);
-}
+  return await page.evaluate((el) => el?.textContent, activeElement);
+};
 
 test('loading: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/loading/test/basic?ionic:_testing=true' });

@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Nav - Routing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
-    class PageRoot extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nav - Routing</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script>
+      class PageRoot extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-title>Root</ion-title>
@@ -27,11 +30,11 @@
             </div>
           </ion-content>
         `;
+        }
       }
-    }
-    class PageOne extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+      class PageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
@@ -47,11 +50,11 @@
             </ion-nav-link>
           </ion-content>
         `;
+        }
       }
-    }
-    class PageTwo extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
@@ -69,11 +72,11 @@
             </div>
           </ion-content>
         `;
+        }
       }
-    }
-    class PageThree extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+      class PageThree extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
@@ -86,25 +89,24 @@
             <h1>Page Three</h1>
           </ion-content>
         `;
+        }
       }
-    }
-    customElements.define('page-root', PageRoot);
-    customElements.define('page-one', PageOne);
-    customElements.define('page-two', PageTwo);
-    customElements.define('page-three', PageThree);
-  </script>
-</head>
+      customElements.define('page-root', PageRoot);
+      customElements.define('page-one', PageOne);
+      customElements.define('page-two', PageTwo);
+      customElements.define('page-three', PageThree);
+    </script>
+  </head>
 
-<body>
-  <ion-app>
-    <ion-router>
-      <ion-route url="/" component="page-root"></ion-route>
-      <ion-route url="/page-one" component="page-one"></ion-route>
-      <ion-route url="/page-two" component="page-two"></ion-route>
-      <ion-route url="/page-three" component="page-three"></ion-route>
-    </ion-router>
-    <ion-nav></ion-nav>
-  </ion-app>
-</body>
-
+  <body>
+    <ion-app>
+      <ion-router>
+        <ion-route url="/" component="page-root"></ion-route>
+        <ion-route url="/page-one" component="page-one"></ion-route>
+        <ion-route url="/page-two" component="page-two"></ion-route>
+        <ion-route url="/page-three" component="page-three"></ion-route>
+      </ion-router>
+      <ion-nav></ion-nav>
+    </ion-app>
+  </body>
 </html>

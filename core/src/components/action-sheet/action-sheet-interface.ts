@@ -19,7 +19,7 @@ export interface ActionSheetOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type ActionSheetAttributes = JSXBase.HTMLAttributes<HTMLElement>
+export type ActionSheetAttributes = JSXBase.HTMLAttributes<HTMLElement>;
 
 export interface ActionSheetButton<T = any> {
   text?: string;

@@ -5,8 +5,8 @@ import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el?.textContent, activeElement);
-}
+  return await page.evaluate((el) => el?.textContent, activeElement);
+};
 
 test('action-sheet: data', async () => {
   const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
@@ -38,7 +38,7 @@ test('action-sheet: data cancel', async () => {
   await button.click();
 
   expect(didDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
-})
+});
 
 test('action-sheet: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });

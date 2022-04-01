@@ -2,9 +2,8 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('getRouteId() should return the segment parameters', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router-outlet/test/basic?ionic:_testing=true'
-  });  
-
+    url: '/src/components/router-outlet/test/basic?ionic:_testing=true',
+  });
 
   await page.$eval('ion-item[href="#/two/segment"] ion-label', (el: any) => el.click());
   await page.waitForChanges();
@@ -16,9 +15,8 @@ test('getRouteId() should return the segment parameters', async () => {
 
 test('getRouteId() should return the route parameters', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router-outlet/test/basic?ionic:_testing=true'
-  });  
-
+    url: '/src/components/router-outlet/test/basic?ionic:_testing=true',
+  });
 
   await page.$eval('ion-item[href="#/page-3"] ion-label', (el: any) => el.click());
   await page.waitForChanges();
@@ -30,8 +28,8 @@ test('getRouteId() should return the route parameters', async () => {
 
 test('it should be possible to activate the same component provided parameters are different', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router-outlet/test/basic?ionic:_testing=true'
-  });  
+    url: '/src/components/router-outlet/test/basic?ionic:_testing=true',
+  });
 
   await page.$eval('ion-item[href="#/page-4.1/foo"] ion-label', (el: any) => el.click());
   await page.waitForChanges();

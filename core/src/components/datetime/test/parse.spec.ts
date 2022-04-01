@@ -1,6 +1,4 @@
-import {
-  getPartsFromCalendarDay
-} from '../utils/parse';
+import { getPartsFromCalendarDay } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -14,10 +12,9 @@ describe('getPartsFromCalendarDay()', () => {
       day: 15,
       month: 4,
       year: 2010,
-      dayOfWeek: 5
-    })
-  })
-})
-
+      dayOfWeek: 5,
+    });
+  });
+});
 
 // TODO: parseDate()

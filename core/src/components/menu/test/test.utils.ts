@@ -3,17 +3,12 @@ import { generateE2EUrl } from '@utils/test';
 
 import { menuController } from '../../../utils/menu-controller';
 
-export const testMenu = async (
-  type: string,
-  selector: string,
-  menuId = '',
-  rtl = false
-) => {
+export const testMenu = async (type: string, selector: string, menuId = '', rtl = false) => {
   try {
     const pageUrl = generateE2EUrl('menu', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];

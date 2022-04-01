@@ -13,7 +13,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement): Animation => {
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
-      'pointer-events': 'none'
+      'pointer-events': 'none',
     })
     .afterClearStyles(['pointer-events']);
 

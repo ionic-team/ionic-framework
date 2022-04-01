@@ -1,4 +1,4 @@
-import type { ComponentInterface} from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
@@ -8,10 +8,9 @@ import { hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-skeleton-text',
   styleUrl: 'skeleton-text.scss',
-  shadow: true
+  shadow: true,
 })
 export class SkeletonText implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -29,7 +28,7 @@ export class SkeletonText implements ComponentInterface {
         class={{
           [mode]: true,
           'skeleton-text-animated': animated,
-          'in-media': inMedia
+          'in-media': inMedia,
         }}
       >
         <span>&nbsp;</span>
