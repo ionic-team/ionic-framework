@@ -256,11 +256,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
             }
           }
         }
-        /**
-         * If there are no incomingRouteParams,
-         * then we should assume that we are pushing
-         * a page in a forward direction.
-         */
+
         if (!incomingRouteParams) {
           incomingRouteParams = {
             routerAction: 'push',
