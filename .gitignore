@@ -70,5 +70,6 @@ angular/build/
 # playwright
 core/test-results/
 core/playwright-report/
+core/**/*-snapshots
 
 .npmrc
