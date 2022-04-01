@@ -1,4 +1,4 @@
-import { expect, Locator } from '@playwright/test';
+import { Locator, expect } from '@playwright/test';
 import { E2EPage, test } from '@utils/test/playwright';
 
 test.describe('datetime: presentation', () => {
@@ -67,12 +67,12 @@ class TimePickerFixture {
 
   async goto() {
     await this.page.goto(`/src/components/datetime/test/presentation`);
-    this.timePicker = await this.page.locator('ion-datetime[presentation="time"]');
+    this.timePicker = this.page.locator('ion-datetime[presentation="time"]');
     await this.timePicker.scrollIntoViewIfNeeded();
   }
 
   async setValue(value: string) {
-    await this.timePicker.evaluate((el: HTMLIonDatetimeElement, value: string) => el.value = value, value);
+    await this.timePicker.evaluate((el: HTMLIonDatetimeElement, newValue: string) => el.value = newValue, value);
     await this.page.waitForChanges();
   }
 

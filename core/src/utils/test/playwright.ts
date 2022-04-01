@@ -25,7 +25,6 @@ export type E2EPage = Page & {
    * Shortcut for main frame's [frame.goto(url[, options])](https://playwright.dev/docs/api/class-frame#frame-goto)
    * @param url URL to navigate page to. The url should include scheme, e.g. `https://`. When a `baseURL` via the context options was provided and the passed URL is a path, it gets merged via the
    * [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor.
-   * @param options
    */
   goto: (url: string) => Promise<null | Response>;
   /**
@@ -168,35 +167,31 @@ export const test = base.extend<CustomFixtures>({
         }
         await page.evaluate(() => {
           // BROWSER CONTEXT
-          return new Promise<void>((resolve) => {
-            const promises: Promise<any>[] = [];
+          return new Promise<void>(resolve => {
+            const promiseChain: Promise<any>[] = [];
 
             const waitComponentOnReady = (elm: Element | ShadowRoot, promises: Promise<any>[]) => {
-              if (elm != null) {
-                if ('shadowRoot' in elm && elm.shadowRoot instanceof ShadowRoot) {
-                  waitComponentOnReady(elm.shadowRoot, promises);
+              if ('shadowRoot' in elm && elm.shadowRoot instanceof ShadowRoot) {
+                waitComponentOnReady(elm.shadowRoot, promises);
+              }
+              const children = elm.children;
+              const len = children.length;
+              for (let i = 0; i < len; i++) {
+                const childElm = children[i];
+                const childStencilElm = childElm as HostElement;
+                if (
+                  childElm.tagName.includes('-') &&
+                  typeof childStencilElm.componentOnReady === 'function'
+                ) {
+                  promises.push(childStencilElm.componentOnReady());
                 }
-                const children = elm.children;
-                const len = children.length;
-                for (let i = 0; i < len; i++) {
-                  const childElm = children[i];
-                  if (childElm != null) {
-                    const childStencilElm = childElm as HostElement;
-                    if (
-                      childElm.tagName.includes('-') &&
-                      typeof childStencilElm.componentOnReady === 'function'
-                    ) {
-                      promises.push(childStencilElm.componentOnReady());
-                    }
-                    waitComponentOnReady(childElm, promises);
-                  }
-                }
+                waitComponentOnReady(childElm, promises);
               }
             };
 
-            waitComponentOnReady(document.documentElement, promises);
+            waitComponentOnReady(document.documentElement, promiseChain);
 
-            Promise.all(promises)
+            Promise.all(promiseChain)
               .then(() => resolve())
               .catch(() => resolve())
           });
@@ -205,29 +200,31 @@ export const test = base.extend<CustomFixtures>({
           return;
         }
         await page.waitForTimeout(100);
-      } catch { }
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     page.waitForCustomEvent = async (eventName: string) => {
       const timeoutMs = 5000;
-      const ev = await page.evaluate(({ eventName, timeoutMs }) => {
+      const ev = await page.evaluate(({ type, timeout }) => {
         return new Promise<any>((resolve, reject) => {
           const tmr = setTimeout(() => {
             reject(new Error(`waitForCustomEvent() timeout, eventName: ${eventName}`));
-          }, timeoutMs);
+          }, timeout);
 
           window.addEventListener(
-            eventName,
-            (ev: any) => {
+            type,
+            (event: any) => {
               clearTimeout(tmr);
-              resolve((window as any).stencilSerializeEvent(ev))
+              resolve((window as any).stencilSerializeEvent(event))
             },
             { once: true }
           )
         });
       }, {
-        eventName,
-        timeoutMs
+        type: eventName,
+        timeout: timeoutMs
       });
 
       await page.waitForChanges();
