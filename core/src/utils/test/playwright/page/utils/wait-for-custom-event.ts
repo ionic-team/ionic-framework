@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 
-export async function waitForCustomEvent(page: Page, eventName: string, timeoutMs = 5000) {
+export const waitForCustomEvent = async (page: Page, eventName: string, timeoutMs = 5000) => {
   const ev = await page.evaluate(({ type, timeout }) => {
     return new Promise<any>((resolve, reject) => {
       const tmr = setTimeout(() => {

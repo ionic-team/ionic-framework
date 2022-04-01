@@ -7,7 +7,7 @@ import { Page, TestInfo } from '@playwright/test';
  * automatically waits for the Stencil components
  * to be hydrated before proceeding with the test.
  */
-export async function goto(page: Page, url: string, testInfo: TestInfo, originalFn: typeof page.goto) {
+export const goto = async (page: Page, url: string, testInfo: TestInfo, originalFn: typeof page.goto) => {
   const { mode, rtl } = testInfo.project.metadata;
 
   const splitUrl = url.split('?');

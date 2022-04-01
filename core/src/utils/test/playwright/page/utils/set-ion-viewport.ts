@@ -11,7 +11,7 @@ import { Page } from '@playwright/test';
  * can be captured in a screenshot.
  *
  */
-export async function setIonViewport(page: Page) {
+export const setIonViewport = async (page: Page) => {
   const currentViewport = page.viewportSize();
 
   const pixelAmountRenderedOffscreen = await page.evaluate(() => {

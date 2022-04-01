@@ -7,7 +7,7 @@ import type { HostElement } from '@stencil/core/internal';
  *
  * Original source: https://github.com/ionic-team/stencil/blob/main/src/testing/puppeteer/puppeteer-page.ts#L298-L363
  */
-export async function waitForChanges(page: Page) {
+export const waitForChanges = async (page: Page) => {
   try {
     if (page.isClosed()) {
       /**
