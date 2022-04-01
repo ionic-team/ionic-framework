@@ -88,7 +88,7 @@
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "prerender.e2e": "node scripts/testing/prerender.js",
-    "prettier": "prettier \"./src/**/*.{ts,tsx,js,jsx}\"",
+    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e --max-workers=2",
     "test.spec": "stencil test --spec --max-workers=2",
