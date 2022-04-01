@@ -15,11 +15,7 @@ test.describe('datetime: presentation', () => {
     await Promise.all([
       page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready'),
       page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="time"].datetime-ready'),
       page.waitForSelector('ion-datetime[presentation="date"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="month-year"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="month"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="year"].datetime-ready')
     ]);
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`datetime-presentation-diff-${page.getSnapshotSettings()}.png`);
