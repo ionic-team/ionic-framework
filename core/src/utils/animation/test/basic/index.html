@@ -16,13 +16,13 @@
     if (forceCSSAnimations) {
       Element.prototype.animate = null;
     }
-    
+
     import { createAnimation } from '../../../../dist/ionic/index.esm.js';
 
     const squareA = document.querySelector('.square-a');
-    
+
     const rootAnimation = createAnimation('root-animation-id');
-    
+
     rootAnimation
       .addElement(squareA)
       .duration(500)
@@ -36,27 +36,27 @@
       ])
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished');
-        squareA.dispatchEvent(ev); 
+        squareA.dispatchEvent(ev);
       });
-      
+
     document.querySelector('.play').addEventListener('click', () => {
       rootAnimation.play();
     });
-    
+
     document.querySelector('.pause').addEventListener('click', () => {
       rootAnimation.pause();
     });
-    
+
     document.querySelector('.stop').addEventListener('click', () => {
       rootAnimation.stop();
     });
-    
+
     document.querySelector('.destroy').addEventListener('click', () => {
       rootAnimation.destroy();
     });
-    
+
   </script>
-  
+
   <style>
     .square {
       width: 100px;
@@ -71,26 +71,27 @@
   </style>
   </head>
 
-<body
+<body>
   <ion-app>
     <ion-header>
       <ion-toolbar>
         <ion-title>Animations</ion-title>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content>
       <div class="ion-padding">
         <ion-button class="play">Play</ion-button>
         <ion-button class="pause">Pause</ion-button>
         <ion-button class="stop">Stop</ion-button>
         <ion-button class="destroy">Destroy</ion-button>
-        
+
         <div class="square square-a">
           Hello
         </div>
       </div>
     </ion-content>
+    </
   </ion-app>
 </body>
 
