@@ -1,5 +1,5 @@
 import type { E2EElement, E2EPage } from '@stencil/core/testing';
-import type { ElementHandle } from 'puppeteer';
+import type { ElementHandle, SerializableOrJSHandle } from 'puppeteer';
 
 /**
  * page.evaluate can only return a serializable value,
@@ -7,8 +7,9 @@ import type { ElementHandle } from 'puppeteer';
  * Instead, we return an object with some common
  * properties that you may want to access in a test.
  */
-const getSerialElement = async (page, element) => {
-  return await page.evaluate((el) => {
+
+const getSerialElement = async (page: E2EPage, element: SerializableOrJSHandle) => {
+  return page.evaluate(el => {
     const { className, tagName, id } = el;
     return {
       className,
@@ -18,15 +19,19 @@ const getSerialElement = async (page, element) => {
   }, element);
 };
 
-export const getActiveElementParent = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement.parentElement);
+export const getActiveElementParent = async (page: E2EPage) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement!.parentElement);
   return getSerialElement(page, activeElement);
 };
 
-export const getActiveElement = async (page) => {
+export const getActiveElement = async (page: E2EPage) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return getSerialElement(page, activeElement);
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> origin/main
 
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
@@ -131,7 +136,11 @@ export const dragElementBy = async (
  * @param interval: number - Interval to run setInterval on
  */
 export const waitForFunctionTestContext = async (fn: any, params: any, interval = 16): Promise<any> => {
+<<<<<<< HEAD
   return new Promise((resolve) => {
+=======
+  return new Promise<void>(resolve => {
+>>>>>>> origin/main
     const intervalId = setInterval(() => {
       if (fn(params)) {
         clearInterval(intervalId);
@@ -205,8 +214,13 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
  * @param selector The element to scroll within.
  */
 export const scrollToBottom = async (page: E2EPage, selector: string) => {
+<<<<<<< HEAD
   await page.evaluate(async (selector) => {
     const el = document.querySelector<HTMLElement>(selector);
+=======
+  await page.evaluate(async elSelector => {
+    const el = document.querySelector<HTMLElement>(elSelector);
+>>>>>>> origin/main
     if (el) {
       if (el.tagName === 'ION-CONTENT') {
         await (el as any).scrollToBottom();
@@ -214,7 +228,7 @@ export const scrollToBottom = async (page: E2EPage, selector: string) => {
         el.scrollTop = el.scrollHeight;
       }
     } else {
-      console.error(`Unable to find element with selector: ${selector}`);
+      console.error(`Unable to find element with selector: ${elSelector}`);
     }
   }, selector);
 };

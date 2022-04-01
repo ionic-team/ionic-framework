@@ -7,6 +7,6 @@ test('redirect should support query string', async () => {
 
   await page.waitForChanges();
 
-  const url = await page.url();
+  const url = page.url();
   expect(url).toContain('#/three?has_query_string=true');
 });

@@ -3,9 +3,9 @@ import { newE2EPage } from '@stencil/core/testing';
 import { testModal } from '../test.utils';
 
 const DIRECTORY = 'basic';
-const getActiveElementText = async (page) => {
+const getActiveElementText = async page => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate((el) => el?.textContent, activeElement);
+  return page.evaluate((el) => el?.textContent, activeElement);
 };
 
 test('modal: focus trap', async () => {
@@ -58,7 +58,7 @@ test('modal: return focus', async () => {
   ]);
 
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  const id = await activeElement.evaluate((node) => node.id);
+  const id = await activeElement.evaluate(node => node.id);
   expect(id).toEqual('basic-modal');
 });
 

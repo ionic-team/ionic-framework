@@ -7,10 +7,10 @@ test('push should support relative path', async () => {
   await page.waitForChanges();
 
   const backButton = await page.$('#btn-rel');
-  await backButton.click();
+  await backButton?.click();
   await page.waitForChanges();
 
-  const url = await page.url();
+  const url = page.url();
   expect(url).toContain('#/two/three/relative?param=1');
 });
 
@@ -21,9 +21,9 @@ test('push should support absolute path', async () => {
   await page.waitForChanges();
 
   const backButton = await page.$('#btn-abs');
-  await backButton.click();
+  await backButton?.click();
   await page.waitForChanges();
 
-  const url = await page.url();
+  const url = page.url();
   expect(url).toContain('#/two/three/absolute');
 });

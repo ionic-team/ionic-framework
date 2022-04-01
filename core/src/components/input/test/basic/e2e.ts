@@ -47,7 +47,7 @@ test('input: basic should not error on input', async () => {
 
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
-      errors.push(msg.text);
+      errors.push(msg.text());
     }
   });
 

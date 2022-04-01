@@ -1,5 +1,4 @@
-import type { E2EPage } from '@stencil/core/testing';
-import { newE2EPage } from '@stencil/core/testing';
+import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
 describe('nested popovers', () => {
   let page: E2EPage;

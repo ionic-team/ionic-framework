@@ -96,7 +96,7 @@ test('popover: position - side: end, alignment: end - rtl', async () => {
   await testPopover('end', 'end', true);
 });
 
-const testPopover = async (side, alignment, isRTL = false) => {
+const testPopover = async (side: string, alignment: string, isRTL = false) => {
   const rtl = isRTL ? '&rtl=true' : '';
   const page = await newE2EPage({ url: `/src/components/popover/test/position?ionic:_testing=true${rtl}` });
 
@@ -106,9 +106,9 @@ const testPopover = async (side, alignment, isRTL = false) => {
 
   const trigger = await page.find(`#${TRIGGER_ID}`);
 
-  await page.evaluate((TRIGGER_ID) => {
-    const trigger = document.querySelector(`#${TRIGGER_ID}`);
-    trigger.scrollIntoView({ block: 'center' });
+  await page.evaluate(POPOVER_TRIGGER_ID => {
+    const popoverTrigger = document.querySelector(`#${POPOVER_TRIGGER_ID}`);
+    popoverTrigger?.scrollIntoView({ block: 'center' });
   }, TRIGGER_ID);
 
   trigger.click();
@@ -138,7 +138,8 @@ const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, 
   const actualX = popoverBbox.x;
   const actualY = popoverBbox.y;
 
-  let expectedX, expectedY;
+  let expectedX;
+  let expectedY;
 
   switch (side) {
     case 'top':
