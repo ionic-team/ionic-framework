@@ -703,6 +703,8 @@ export class Datetime implements ComponentInterface {
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
      */
+    let endIO: IntersectionObserver | undefined;
+    let startIO: IntersectionObserver | undefined;
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
       const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
@@ -844,14 +846,14 @@ export class Datetime implements ComponentInterface {
        * something WebKit does.
        */
 
-      const endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
+      endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
         threshold,
         root: calendarBodyRef,
         rootMargin
       });
       endIO.observe(endMonth);
 
-      const startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
+      startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold,
         root: calendarBodyRef,
         rootMargin
@@ -907,7 +909,6 @@ export class Datetime implements ComponentInterface {
      * visible if used inside of a modal or a popover otherwise the scrollable
      * areas will not have the correct values snapped into place.
      */
-
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (!ev.isIntersecting) { return; }
