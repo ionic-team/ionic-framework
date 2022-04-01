@@ -397,7 +397,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.beforeAnimation(shouldOpen);
 
-    if(shouldOpen) {
+    if (shouldOpen) {
       // focus menu content for screen readers, preserving scroll position
       if (this.menuInnerEl) {
         const innerContent = this.el.querySelector('ion-content');
