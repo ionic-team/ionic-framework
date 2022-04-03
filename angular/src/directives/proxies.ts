@@ -1324,6 +1324,13 @@ called when the async operation has completed.
    * Emitted when the user begins to start pulling down. 
    */
   ionStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted after the pull gesture has ended and the refresher has returned to
+the INACTIVE state. It doesn't matter where the pull gesture ended; whether
+the user pulled far enough for a refresh, let go in the middle of a pull,
+or reversed the pull and released with the content at the top. 
+   */
+  ionEnd: EventEmitter<CustomEvent<void>>;
 
 }
 
@@ -1343,7 +1350,7 @@ export class IonRefresher {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
+    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart', 'ionEnd']);
   }
 }
 

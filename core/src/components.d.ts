@@ -5771,6 +5771,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Emitted after the pull gesture has ended and the refresher has returned to the INACTIVE state. It doesn't matter where the pull gesture ended; whether the user pulled far enough for a refresh, let go in the middle of a pull, or reversed the pull and released with the content at the top.
+         */
+        "onIonEnd"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted while the user is pulling down the content and exposing the refresher.
          */
         "onIonPull"?: (event: CustomEvent<void>) => void;
