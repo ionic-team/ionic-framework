@@ -1,6 +1,6 @@
 export type KnobName = 'A' | 'B' | undefined;
 
-export type RangeValue = number | {lower: number, upper: number};
+export type RangeValue = number | { lower: number; upper: number };
 
 export type PinFormatter = (value: number) => number | string;
 

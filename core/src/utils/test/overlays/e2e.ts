@@ -1,31 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { getActiveElementParent } from '../utils';
 
 test('overlays: hardware back button: should dismiss a presented overlay', async () => {
-  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
-
-  const createAndPresentButton = await page.find('#create-and-present');
-
-  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-
-  await createAndPresentButton.click()
-  const modal = await page.find('ion-modal');
-  expect(modal).not.toBe(null);
-
-  await ionModalDidPresent.next();
-
-  const simulateButton = await modal.find('#modal-simulate');
-  expect(simulateButton).not.toBe(null);
-
-  await simulateButton.click();
-
-  await ionModalDidDismiss.next();
-
-  await page.waitForSelector('ion-modal', { hidden: true })
-});
-
-test('overlays: hardware back button: should dismiss the presented overlay, even though another hidden modal was added last', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
 
   const createAndPresentButton = await page.find('#create-and-present');
@@ -39,22 +16,45 @@ test('overlays: hardware back button: should dismiss the presented overlay, even
 
   await ionModalDidPresent.next();
 
+  const simulateButton = await modal.find('#modal-simulate');
+  expect(simulateButton).not.toBe(null);
+
+  await simulateButton.click();
+
+  await ionModalDidDismiss.next();
+
+  await page.waitForSelector('ion-modal', { hidden: true });
+});
+
+test('overlays: hardware back button: should dismiss the presented overlay, even though another hidden modal was added last', async () => {
+  const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
+
+  const createAndPresentButton = await page.find('#create-and-present');
+
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+  await createAndPresentButton.click();
+  const modal = await page.find('ion-modal');
+  expect(modal).not.toBe(null);
+
+  await ionModalDidPresent.next();
+
   const createButton = await page.find('#modal-create');
   await createButton.click();
 
   const modals = await page.$$('ion-modal');
   expect(modals.length).toEqual(2);
 
-  expect(await modals[0].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(false);
-  expect(await modals[1].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(true);
+  expect(await modals[0].evaluate((node) => node.classList.contains('overlay-hidden'))).toEqual(false);
+  expect(await modals[1].evaluate((node) => node.classList.contains('overlay-hidden'))).toEqual(true);
 
   const simulateButton = await modal.find('#modal-simulate');
   expect(simulateButton).not.toBe(null);
 
   await simulateButton.click();
 
-  expect(await modals[0].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(true);
-  expect(await modals[1].evaluate(node => node.classList.contains('overlay-hidden'))).toEqual(true);
+  expect(await modals[0].evaluate((node) => node.classList.contains('overlay-hidden'))).toEqual(true);
+  expect(await modals[1].evaluate((node) => node.classList.contains('overlay-hidden'))).toEqual(true);
 });
 
 test('overlays: Esc: should dismiss a presented overlay', async () => {
@@ -65,7 +65,7 @@ test('overlays: Esc: should dismiss a presented overlay', async () => {
   const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
   const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
-  await createAndPresentButton.click()
+  await createAndPresentButton.click();
   const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
@@ -75,9 +75,8 @@ test('overlays: Esc: should dismiss a presented overlay', async () => {
 
   await ionModalDidDismiss.next();
 
-  await page.waitForSelector('ion-modal', { hidden: true })
+  await page.waitForSelector('ion-modal', { hidden: true });
 });
-
 
 test('overlays: Esc: should dismiss the presented overlay, even though another hidden modal was added last', async () => {
   const page = await newE2EPage({ url: '/src/utils/test/overlays?ionic:_testing=true' });
@@ -85,7 +84,6 @@ test('overlays: Esc: should dismiss the presented overlay, even though another h
   const createAndPresentButton = await page.find('#create-and-present');
 
   const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
   await createAndPresentButton.click();
   const modal = await page.find('ion-modal');
@@ -177,4 +175,4 @@ test('focus trapping should only run on the top-most overlay', async () => {
 
   const parentElAgain = await getActiveElementParent(page);
   expect(parentElAgain.className).toContain('modal-input-1');
-})
+});

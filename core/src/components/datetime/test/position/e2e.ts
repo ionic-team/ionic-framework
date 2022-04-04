@@ -1,10 +1,9 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('datetime: position', () => {
-
   it('should position the time picker relative to the click target', async () => {
     const page = await newE2EPage({
-      url: '/src/components/datetime/test/position?ionic:_testing=true'
+      url: '/src/components/datetime/test/position?ionic:_testing=true',
     });
     const screenshotCompares = [];
 
@@ -21,7 +20,5 @@ describe('datetime: position', () => {
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
     }
-
   });
-
 });

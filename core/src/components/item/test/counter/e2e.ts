@@ -106,6 +106,12 @@ describe('item: counter', () => {
 
     });
 
+<<<<<<< HEAD
+=======
+test('item: counter-rtl', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true',
+>>>>>>> origin/main
   });
 
 })

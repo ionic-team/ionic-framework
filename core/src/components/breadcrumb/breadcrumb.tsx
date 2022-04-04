@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
-import { Attributes, inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -16,10 +18,10 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-breadcrumb',
   styleUrls: {
-    'ios': 'breadcrumb.ios.scss',
-    'md': 'breadcrumb.md.scss'
+    ios: 'breadcrumb.ios.scss',
+    md: 'breadcrumb.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Breadcrumb implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
@@ -131,41 +133,52 @@ export class Breadcrumb implements ComponentInterface {
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   private collapsedIndicatorClick = () => {
     this.collapsedClick.emit({ ionShadowTarget: this.collapsedRef });
-  }
+  };
 
   render() {
-    const { color, active, collapsed, disabled, download, el, inheritedAttributes, last, routerAnimation, routerDirection, separator, showCollapsedIndicator, target } = this;
+    const {
+      color,
+      active,
+      collapsed,
+      disabled,
+      download,
+      el,
+      inheritedAttributes,
+      last,
+      routerAnimation,
+      routerDirection,
+      separator,
+      showCollapsedIndicator,
+      target,
+    } = this;
     const clickable = this.isClickable();
-    const TagType = this.href === undefined ? 'span' : 'a' as any;
+    const TagType = this.href === undefined ? 'span' : ('a' as any);
 
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
     const href = disabled ? undefined : this.href;
     const mode = getIonMode(this);
-    const attrs = (TagType === 'span')
-      ? { }
-      : {
-        download,
-        href,
-        target
-      };
+    const attrs =
+      TagType === 'span'
+        ? {}
+        : {
+            download,
+            href,
+            target,
+          };
 
     // If the breadcrumb is collapsed, check if it contains the collapsed indicator
     // to show the separator as long as it isn't also the last breadcrumb
     // otherwise if not collapsed use the value in separator
-    const showSeparator = last
-      ? false
-      : collapsed
-        ? showCollapsedIndicator && !last ? true : false
-        : separator;
+    const showSeparator = last ? false : collapsed ? (showCollapsedIndicator && !last ? true : false) : separator;
 
     return (
       <Host
@@ -196,28 +209,29 @@ export class Breadcrumb implements ComponentInterface {
           <slot></slot>
           <slot name="end"></slot>
         </TagType>
-        { showCollapsedIndicator &&
-            <button
-              part="collapsed-indicator"
-              onClick={() => this.collapsedIndicatorClick()}
-              ref={collapsedEl => this.collapsedRef = collapsedEl}
-              class={{
-                'breadcrumbs-collapsed-indicator': true,
-              }}
-            >
-              <ion-icon icon={ellipsisHorizontal} lazy={false}></ion-icon>
-            </button>
-        }
-        { showSeparator &&
+        {showCollapsedIndicator && (
+          <button
+            part="collapsed-indicator"
+            onClick={() => this.collapsedIndicatorClick()}
+            ref={(collapsedEl) => (this.collapsedRef = collapsedEl)}
+            class={{
+              'breadcrumbs-collapsed-indicator': true,
+            }}
+          >
+            <ion-icon icon={ellipsisHorizontal} lazy={false}></ion-icon>
+          </button>
+        )}
+        {showSeparator && (
           <span class="breadcrumb-separator" part="separator">
             <slot name="separator">
-              { mode === 'ios'
-                ? <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>
-                : <span>/</span>
-              }
+              {mode === 'ios' ? (
+                <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>
+              ) : (
+                <span>/</span>
+              )}
             </slot>
           </span>
-        }
+        )}
       </Host>
     );
   }

@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('hour-cycle', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/hour-cycle?ionic:_testing=true'
+    url: '/src/components/datetime/test/hour-cycle?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

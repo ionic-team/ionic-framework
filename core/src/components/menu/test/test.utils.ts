@@ -1,19 +1,14 @@
 import { newE2EPage } from '@stencil/core/testing';
-
-import { menuController } from '../../../utils/menu-controller';
 import { generateE2EUrl } from '@utils/test';
 
-export const testMenu = async (
-  type: string,
-  selector: string,
-  menuId = '',
-  rtl = false
-) => {
+import { menuController } from '../../../utils/menu-controller';
+
+export const testMenu = async (type: string, selector: string, menuId = '', rtl = false) => {
   try {
     const pageUrl = generateE2EUrl('menu', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];

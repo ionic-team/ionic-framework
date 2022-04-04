@@ -2,6 +2,8 @@ import { E2EElement, E2EPage, newE2EPage } from '@stencil/core/testing';
 import { openModal, testModal } from '../test.utils';
 import { getActiveElement, getActiveElementParent, dragElementBy } from '@utils/test';
 
+import { testModal } from '../test.utils';
+
 const DIRECTORY = 'sheet';
 
 test('modal: sheet', async () => {

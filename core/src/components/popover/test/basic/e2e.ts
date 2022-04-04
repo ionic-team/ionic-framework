@@ -1,5 +1,6 @@
-import { testPopover } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testPopover } from '../test.utils';
 
 const DIRECTORY = 'basic';
 
@@ -8,8 +9,8 @@ const DIRECTORY = 'basic';
  * to wait for the requestAnimationFrame to fire.
  */
 const expectActiveElementTextToEqual = async (page, textValue) => {
-  await page.waitFor((text) => document.activeElement.textContent === text, {}, textValue)
-}
+  await page.waitFor((text) => document.activeElement.textContent === text, {}, textValue);
+};
 
 test('popover: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/popover/test/basic?ionic:_testing=true' });
@@ -17,7 +18,7 @@ test('popover: focus trap', async () => {
   await page.click('#basic-popover');
   await page.waitForSelector('#basic-popover');
 
-  let popover = await page.find('ion-popover');
+  const popover = await page.find('ion-popover');
 
   expect(popover).not.toBe(null);
   await popover.waitForVisible();
@@ -119,12 +120,12 @@ test('popover: htmlAttributes', async () => {
   await page.click('#basic-popover');
   await page.waitForSelector('#basic-popover');
 
-  let alert = await page.find('ion-popover');
+  const alert = await page.find('ion-popover');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-popover').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-popover').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-popover');
 });

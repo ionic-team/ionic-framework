@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, Side } from '../../interface';
+import type { Gesture, GestureDetail, Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
@@ -11,7 +12,7 @@ const enum ItemSide {
   None = 0,
   Start = 1 << 0,
   End = 1 << 1,
-  Both = Start | End
+  Both = Start | End,
 }
 
 const enum SlidingState {
@@ -28,10 +29,9 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
 @Component({
   tag: 'ion-item-sliding',
-  styleUrl: 'item-sliding.scss'
+  styleUrl: 'item-sliding.scss',
 })
 export class ItemSliding implements ComponentInterface {
-
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;
   private initialOpenAmount = 0;
@@ -77,10 +77,10 @@ export class ItemSliding implements ComponentInterface {
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
-      canStart: ev => this.canStart(ev),
+      canStart: (ev) => this.canStart(ev),
       onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: (ev) => this.onEnd(ev),
     });
     this.disabledChanged();
   }
@@ -126,17 +126,21 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side: Side | undefined) {
-    if (this.item === null) { return; }
+    if (this.item === null) {
+      return;
+    }
 
     const optionsToOpen = this.getOptions(side);
-    if (!optionsToOpen) { return; }
+    if (!optionsToOpen) {
+      return;
+    }
 
     /**
      * If side is not set, we need to infer the side
      * so we know which direction to move the options
      */
     if (side === undefined) {
-      side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
+      side = optionsToOpen === this.leftOptions ? 'start' : 'end';
     }
 
     // In RTL we want to switch the sides
@@ -149,8 +153,12 @@ export class ItemSliding implements ComponentInterface {
      * If a side is open and a user tries to
      * re-open the same side, we should not do anything
      */
-    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
-    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+    if (isStartOpen && optionsToOpen === this.leftOptions) {
+      return;
+    }
+    if (isEndOpen && optionsToOpen === this.rightOptions) {
+      return;
+    }
 
     this.closeOpened();
 
@@ -159,16 +167,16 @@ export class ItemSliding implements ComponentInterface {
     requestAnimationFrame(() => {
       this.calculateOptsWidth();
 
-      const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+      const width = side === 'end' ? this.optsWidthRightSide : -this.optsWidthLeftSide;
       openSlidingItem = this.el;
 
       this.setOpenAmount(width, false);
-      this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+      this.state = side === 'end' ? SlidingState.End : SlidingState.Start;
     });
   }
 
   /**
-   * Close the sliding item. Items can also be closed from the [List](../list).
+   * Close the sliding item. Items can also be closed from the [List](./list).
    */
   @Method()
   async close() {
@@ -176,7 +184,7 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Close all of the sliding items in the list. Items can also be closed from the [List](../list).
+   * Close all of the sliding items in the list. Items can also be closed from the [List](./list).
    */
   @Method()
   async closeOpened(): Promise<boolean> {
@@ -220,7 +228,7 @@ export class ItemSliding implements ComponentInterface {
        * util here since we need to wait for all of these items
        * to be ready before we set `this.sides` and `this.optsDirty`.
        */
-      const option = ((item as any).componentOnReady !== undefined) ? await item.componentOnReady() : item;
+      const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
 
       const side = isEndSide(option.side) ? 'end' : 'start';
 
@@ -243,7 +251,7 @@ export class ItemSliding implements ComponentInterface {
      * back will still work.
      */
     const rtl = document.dir === 'rtl';
-    const atEdge = (rtl) ? (window.innerWidth - gesture.startX) < 15 : gesture.startX < 15;
+    const atEdge = rtl ? window.innerWidth - gesture.startX < 15 : gesture.startX < 15;
     if (atEdge) {
       return false;
     }
@@ -257,14 +265,18 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private disableContentScrollY() {
-    if (this.closestContent === null) { return }
+    if (this.closestContent === null) {
+      return;
+    }
 
     this.initialContentScrollY = this.closestContent.scrollY;
     this.closestContent.scrollY = false;
   }
 
   private restoreContentScrollY() {
-    if (this.closestContent === null) { return }
+    if (this.closestContent === null) {
+      return;
+    }
 
     this.closestContent.scrollY = this.initialContentScrollY;
   }
@@ -303,18 +315,25 @@ export class ItemSliding implements ComponentInterface {
     let openAmount = this.initialOpenAmount - gesture.deltaX;
 
     switch (this.sides) {
-      case ItemSide.End: openAmount = Math.max(0, openAmount); break;
-      case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
-      case ItemSide.Both: break;
-      case ItemSide.None: return;
-      default: console.warn('invalid ItemSideFlags value', this.sides); break;
+      case ItemSide.End:
+        openAmount = Math.max(0, openAmount);
+        break;
+      case ItemSide.Start:
+        openAmount = Math.min(0, openAmount);
+        break;
+      case ItemSide.Both:
+        break;
+      case ItemSide.None:
+        return;
+      default:
+        console.warn('invalid ItemSideFlags value', this.sides);
+        break;
     }
 
     let optsWidth;
     if (openAmount > this.optsWidthRightSide) {
       optsWidth = this.optsWidthRightSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
-
     } else if (openAmount < -this.optsWidthLeftSide) {
       optsWidth = -this.optsWidthLeftSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
@@ -329,13 +348,11 @@ export class ItemSliding implements ComponentInterface {
 
     const velocity = gesture.velocityX;
 
-    let restingPoint = (this.openAmount > 0)
-      ? this.optsWidthRightSide
-      : -this.optsWidthLeftSide;
+    let restingPoint = this.openAmount > 0 ? this.optsWidthRightSide : -this.optsWidthLeftSide;
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
-    const isResetDirection = (this.openAmount > 0) === !(velocity < 0);
+    const isResetDirection = this.openAmount > 0 === !(velocity < 0);
     const isMovingFast = Math.abs(velocity) > 0.3;
     const isOnCloseZone = Math.abs(this.openAmount) < Math.abs(restingPoint / 2);
     if (swipeShouldReset(isResetDirection, isMovingFast, isOnCloseZone)) {
@@ -386,13 +403,15 @@ export class ItemSliding implements ComponentInterface {
     }
 
     if (openAmount > 0) {
-      this.state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
-        ? SlidingState.End | SlidingState.SwipeEnd
-        : SlidingState.End;
+      this.state =
+        openAmount >= this.optsWidthRightSide + SWIPE_MARGIN
+          ? SlidingState.End | SlidingState.SwipeEnd
+          : SlidingState.End;
     } else if (openAmount < 0) {
-      this.state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
-        ? SlidingState.Start | SlidingState.SwipeStart
-        : SlidingState.Start;
+      this.state =
+        openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN
+          ? SlidingState.Start | SlidingState.SwipeStart
+          : SlidingState.Start;
     } else {
       /**
        * Item sliding cannot be interrupted
@@ -419,7 +438,7 @@ export class ItemSliding implements ComponentInterface {
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
       amount: openAmount,
-      ratio: this.getSlidingRatioSync()
+      ratio: this.getSlidingRatioSync(),
     });
   }
 
@@ -439,14 +458,13 @@ export class ItemSliding implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
+          'item-sliding-active-slide': this.state !== SlidingState.Disabled,
           'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
           'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
           'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
-          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
+          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0,
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

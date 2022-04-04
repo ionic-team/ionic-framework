@@ -14,7 +14,9 @@ test('should position popover relative to mouse click', async () => {
   const popover = await page.find('.event-popover');
   await popover.waitForVisible();
 
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.event-popover').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.event-popover').shadowRoot.querySelector('.popover-content')`
+  );
   const popoverBbox = await popoverContentHandle.boundingBox();
 
   // Give us some margin for subpixel rounding
@@ -42,7 +44,9 @@ test('should position popover relative to trigger', async () => {
   const popover = await page.find('.trigger-popover');
   await popover.waitForVisible();
 
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.trigger-popover').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.trigger-popover').shadowRoot.querySelector('.popover-content')`
+  );
   const popoverBbox = await popoverContentHandle.boundingBox();
 
   // Give us some margin for subpixel rounding

@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import type { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 import { isRTL } from '../../utils/rtl';
@@ -17,10 +18,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-content',
   styleUrl: 'content.scss',
-  shadow: true
+  shadow: true,
 })
 export class Content implements ComponentInterface {
-
   private watchDog: any;
   private isScrolling = false;
   private lastScroll = 0;
@@ -123,9 +123,7 @@ export class Content implements ComponentInterface {
   private shouldForceOverscroll() {
     const { forceOverscroll } = this;
     const mode = getIonMode(this);
-    return forceOverscroll === undefined
-      ? mode === 'ios' && isPlatform('ios')
-      : forceOverscroll;
+    return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
   private resize() {
@@ -155,11 +153,10 @@ export class Content implements ComponentInterface {
     this.lastScroll = timeStamp;
     if (shouldStart) {
       this.onScrollStart();
-
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
-      readTask(ts => {
+      readTask((ts) => {
         this.queued = false;
         this.detail.event = ev;
         updateScrollDetail(this.detail, this.scrollEl!, ts, shouldStart);
@@ -183,7 +180,7 @@ export class Content implements ComponentInterface {
      * scrollEl won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.scrollEl) {
-      await new Promise(resolve => componentOnReady(this.el, resolve));
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
     }
 
     return Promise.resolve(this.scrollEl!);
@@ -246,7 +243,7 @@ export class Content implements ComponentInterface {
 
     let resolve!: () => void;
     let startTime = 0;
-    const promise = new Promise<void>(r => resolve = r);
+    const promise = new Promise<void>((r) => (resolve = r));
     const fromY = el.scrollTop;
     const fromX = el.scrollLeft;
 
@@ -255,14 +252,14 @@ export class Content implements ComponentInterface {
 
     // scroll loop
     const step = (timeStamp: number) => {
-      const linearTime = Math.min(1, ((timeStamp - startTime) / duration)) - 1;
+      const linearTime = Math.min(1, (timeStamp - startTime) / duration) - 1;
       const easedT = Math.pow(linearTime, 3) + 1;
 
       if (deltaY !== 0) {
-        el.scrollTop = Math.floor((easedT * deltaY) + fromY);
+        el.scrollTop = Math.floor(easedT * deltaY + fromY);
       }
       if (deltaX !== 0) {
-        el.scrollLeft = Math.floor((easedT * deltaX) + fromX);
+        el.scrollLeft = Math.floor(easedT * deltaX + fromX);
       }
 
       if (easedT < 1) {
@@ -270,13 +267,12 @@ export class Content implements ComponentInterface {
         // must use nativeRaf in order to fire in the next frame
         // TODO: remove as any
         requestAnimationFrame(step);
-
       } else {
         resolve();
       }
     };
     // chill out for a frame first
-    requestAnimationFrame(ts => {
+    requestAnimationFrame((ts) => {
       startTime = ts;
       step(ts);
     });
@@ -286,7 +282,7 @@ export class Content implements ComponentInterface {
   private onScrollStart() {
     this.isScrolling = true;
     this.ionScrollStart.emit({
-      isScrolling: true
+      isScrolling: true,
     });
 
     if (this.watchDog) {
@@ -306,7 +302,7 @@ export class Content implements ComponentInterface {
     if (this.isScrolling) {
       this.isScrolling = false;
       this.ionScrollEnd.emit({
-        isScrolling: false
+        isScrolling: false,
       });
     }
   }
@@ -317,7 +313,7 @@ export class Content implements ComponentInterface {
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
-    const TagType = isMainContent ? 'main' : 'div' as any;
+    const TagType = isMainContent ? 'main' : ('div' as any);
 
     this.resize();
 
@@ -326,8 +322,8 @@ export class Content implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
-          'overscroll': forceOverscroll,
-          [`content-${rtl}`]: true
+          overscroll: forceOverscroll,
+          [`content-${rtl}`]: true,
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
@@ -340,10 +336,10 @@ export class Content implements ComponentInterface {
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && forceOverscroll
+            overscroll: (scrollX || scrollY) && forceOverscroll,
           }}
-          ref={(scrollEl: HTMLElement) => this.scrollEl = scrollEl!}
-          onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
+          ref={(scrollEl: HTMLElement) => (this.scrollEl = scrollEl!)}
+          onScroll={this.scrollEvents ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
           <slot></slot>
@@ -367,7 +363,7 @@ const getParentElement = (el: any) => {
     // normal element with a parent element
     return el.parentElement;
   }
-  if (el.parentNode && el.parentNode.host) {
+  if (el.parentNode?.host) {
     // shadow dom's document fragment
     return el.parentNode.host;
   }
@@ -394,12 +390,7 @@ const getPageElement = (el: HTMLElement) => {
 };
 
 // ******** DOM READ ****************
-const updateScrollDetail = (
-  detail: ScrollDetail,
-  el: Element,
-  timestamp: number,
-  shouldStart: boolean
-) => {
+const updateScrollDetail = (detail: ScrollDetail, el: Element, timestamp: number, shouldStart: boolean) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
   const prevT = detail.currentTime;

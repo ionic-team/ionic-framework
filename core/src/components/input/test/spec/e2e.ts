@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('input: spec', async () => {
   const page = await newE2EPage({
-    url: '/src/components/input/test/spec?ionic:_testing=true'
+    url: '/src/components/input/test/spec?ionic:_testing=true',
   });
 
   const compares = [];
@@ -16,7 +16,7 @@ test('input: spec', async () => {
 
 test('input:rtl: spec', async () => {
   const page = await newE2EPage({
-    url: '/src/components/input/test/spec?ionic:_testing=true&rtl=true'
+    url: '/src/components/input/test/spec?ionic:_testing=true&rtl=true',
   });
 
   const compares = [];

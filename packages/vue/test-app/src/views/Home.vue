@@ -64,7 +64,6 @@ import { IonButtons, IonBackButton, IonContent, IonHeader, IonItem, IonLabel, Io
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Home',
   components: {
     IonButtons,
     IonBackButton,

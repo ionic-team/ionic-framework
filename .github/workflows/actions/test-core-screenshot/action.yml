@@ -1,10 +1,12 @@
 name: 'Test Core Screenshot'
 description: 'Test Core Screenshot'
 inputs:
-  access-key-id:
-    description: 'AWS_ACCESS_KEY_ID'
-  secret-access-key:
-    description: 'AWS_SECRET_ACCESS_KEY'
+  shard:
+    description: 'Playwright Test Shard (ex: 2)'
+  totalShards:
+    description: 'Playwright total number of test shards (ex: 4)'
+  update:
+    description: 'Whether or not to update the reference snapshots'
 runs:
   using: 'composite'
   steps:
@@ -24,10 +26,35 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Test
-      run: npx stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci --no-build || true
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core-src
+        path: ./core
+        filename: CoreSrc.zip
+    - name: Install Playwright Dependencies
+      run: npx playwright install && npx playwright install-deps
       shell: bash
-      env:
-        AWS_ACCESS_KEY_ID: ${{ inputs.access-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.secret-access-key }}
       working-directory: ./core
+    - name: Test
+      if: inputs.update != 'true'
+      run: npx playwright test --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      shell: bash
+      working-directory: ./core
+    - name: Test and Update
+      if: inputs.update == 'true'
+      run: npx playwright test --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+      shell: bash
+      working-directory: ./core
+    - name: Archive Test Results
+      # The always() ensures that this step
+      # runs even if the previous step fails.
+      # We want the test results to be archived
+      # even if the test fails in the previous
+      # step, otherwise there would be no way
+      # to debug these tests.
+      if: always()
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
+        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        paths: core/playwright-report core/src

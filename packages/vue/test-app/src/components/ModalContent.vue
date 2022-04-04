@@ -28,7 +28,6 @@ import {
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'ModalContent',
   props: {
     title: { type: String, default: 'Default Title' }
   },

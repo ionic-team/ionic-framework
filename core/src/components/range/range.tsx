@@ -1,12 +1,24 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, StyleEventDetail } from '../../interface';
-import { Attributes, clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
+import type {
+  Color,
+  Gesture,
+  GestureDetail,
+  KnobName,
+  RangeChangeEventDetail,
+  RangeKnobMoveEndEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeValue,
+  StyleEventDetail,
+} from '../../interface';
+import type { Attributes } from '../../utils/helpers';
+import { clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
-import { PinFormatter } from './range-interface';
+import type { PinFormatter } from './range-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -25,12 +37,11 @@ import { PinFormatter } from './range-interface';
   tag: 'ion-range',
   styleUrls: {
     ios: 'range.ios.scss',
-    md: 'range.md.scss'
+    md: 'range.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Range implements ComponentInterface {
-
   private rangeId?: string;
   private didLoad = false;
   private noUpdate = false;
@@ -157,18 +168,18 @@ export class Range implements ComponentInterface {
 
   private clampBounds = (value: any): number => {
     return clamp(this.min, value, this.max);
-  }
+  };
 
   private ensureValueInBounds = (value: any) => {
     if (this.dualKnobs) {
       return {
         lower: this.clampBounds(value.lower),
-        upper: this.clampBounds(value.upper)
+        upper: this.clampBounds(value.upper),
       };
     } else {
       return this.clampBounds(value);
     }
-  }
+  };
 
   /**
    * Emitted when the value property has changed.
@@ -211,20 +222,20 @@ export class Range implements ComponentInterface {
         gestureName: 'range',
         gesturePriority: 100,
         threshold: 0,
-        onStart: ev => this.onStart(ev),
-        onMove: ev => this.onMove(ev),
-        onEnd: ev => this.onEnd(ev),
+        onStart: (ev) => this.onStart(ev),
+        onMove: (ev) => this.onMove(ev),
+        onEnd: (ev) => this.onEnd(ev),
       });
       this.gesture.enable(!this.disabled);
     }
-  }
+  };
 
   componentWillLoad() {
     /**
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
-    this.rangeId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
+    this.rangeId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
 
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
@@ -276,7 +287,6 @@ export class Range implements ComponentInterface {
     this.updateValue();
     this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
   }
-
   private getValue(): RangeValue {
     const value = this.value || 0;
     if (this.dualKnobs) {
@@ -285,7 +295,7 @@ export class Range implements ComponentInterface {
       }
       return {
         lower: 0,
-        upper: value
+        upper: value,
       };
     } else {
       if (typeof value === 'object') {
@@ -297,13 +307,13 @@ export class Range implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'interactive': true,
-      'interactive-disabled': this.disabled
+      interactive: true,
+      'interactive-disabled': this.disabled,
     });
   }
 
   private onStart(detail: GestureDetail) {
-    const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
+    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
@@ -312,11 +322,7 @@ export class Range implements ComponentInterface {
       ratio = 1 - ratio;
     }
 
-    this.pressedKnob =
-      !this.dualKnobs ||
-        Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
-        ? 'A'
-        : 'B';
+    this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
 
     this.setFocus(this.pressedKnob);
 
@@ -348,11 +354,7 @@ export class Range implements ComponentInterface {
 
     if (this.snaps) {
       // snaps the ratio to the current value
-      ratio = valueToRatio(
-        ratioToValue(ratio, this.min, this.max, this.step),
-        this.min,
-        this.max
-      );
+      ratio = valueToRatio(ratioToValue(ratio, this.min, this.max, this.step), this.min, this.max);
     }
 
     // update which knob is pressed
@@ -406,16 +408,18 @@ export class Range implements ComponentInterface {
     this.value = !this.dualKnobs
       ? valA
       : {
-        lower: Math.min(valA, valB),
-        upper: Math.max(valA, valB)
-      };
+          lower: Math.min(valA, valB),
+          upper: Math.max(valA, valB),
+        };
 
     this.noUpdate = false;
   }
 
   private setFocus(knob: KnobName) {
     if (this.el.shadowRoot) {
-      const knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b') as HTMLElement | undefined;
+      const knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b') as
+        | HTMLElement
+        | undefined;
       if (knobEl) {
         knobEl.focus();
       }
@@ -428,7 +432,7 @@ export class Range implements ComponentInterface {
       this.ionBlur.emit();
       this.emitStyle();
     }
-  }
+  };
 
   private onFocus = () => {
     if (!this.hasFocus) {
@@ -436,10 +440,24 @@ export class Range implements ComponentInterface {
       this.ionFocus.emit();
       this.emitStyle();
     }
-  }
+  };
 
   render() {
-    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId, pinFormatter } = this;
+    const {
+      min,
+      max,
+      step,
+      el,
+      handleKeyboard,
+      pressedKnob,
+      disabled,
+      pin,
+      ratioLower,
+      ratioUpper,
+      inheritedAttributes,
+      rangeId,
+      pinFormatter,
+    } = this;
 
     /**
      * Look for external label, ion-label, or aria-labelledby.
@@ -461,13 +479,13 @@ export class Range implements ComponentInterface {
 
     const tickStyle = (tick: any) => {
       return {
-        [start]: tick[start]
+        [start]: tick[start],
       };
     };
 
     const barStyle = {
       [start]: barStart,
-      [end]: barEnd
+      [end]: barEnd,
     };
 
     const ticks = [];
@@ -498,31 +516,25 @@ export class Range implements ComponentInterface {
           'in-item': hostContext('ion-item', el),
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
-          'range-has-pin': pin
+          'range-has-pin': pin,
         })}
       >
-
         <slot name="start"></slot>
-        <div class="range-slider" ref={rangeEl => this.rangeSlider = rangeEl}>
-          {ticks.map(tick => (
+        <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
+          {ticks.map((tick) => (
             <div
               style={tickStyle(tick)}
               role="presentation"
               class={{
                 'range-tick': true,
-                'range-tick-active': tick.active
+                'range-tick-active': tick.active,
               }}
               part={tick.active ? 'tick-active' : 'tick'}
             />
           ))}
 
           <div class="range-bar" role="presentation" part="bar" />
-          <div
-            class="range-bar range-bar-active"
-            role="presentation"
-            style={barStyle}
-            part="bar-active"
-          />
+          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
 
           {renderKnob(rtl, {
             knob: 'A',
@@ -535,22 +547,23 @@ export class Range implements ComponentInterface {
             handleKeyboard,
             min,
             max,
-            labelText
+            labelText,
           })}
 
-          {this.dualKnobs && renderKnob(rtl, {
-            knob: 'B',
-            pressed: pressedKnob === 'B',
-            value: this.valB,
-            ratio: this.ratioB,
-            pin,
-            pinFormatter,
-            disabled,
-            handleKeyboard,
-            min,
-            max,
-            labelText
-          })}
+          {this.dualKnobs &&
+            renderKnob(rtl, {
+              knob: 'B',
+              pressed: pressedKnob === 'B',
+              value: this.valB,
+              ratio: this.ratioB,
+              pin,
+              pinFormatter,
+              disabled,
+              handleKeyboard,
+              min,
+              max,
+              labelText,
+            })}
         </div>
         <slot name="end"></slot>
       </Host>
@@ -573,7 +586,10 @@ interface RangeKnob {
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-const renderKnob = (rtl: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob) => {
+const renderKnob = (
+  rtl: boolean,
+  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob
+) => {
   const start = rtl ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -592,7 +608,6 @@ const renderKnob = (rtl: boolean, { knob, value, ratio, min, max, disabled, pres
           handleKeyboard(knob, false);
           ev.preventDefault();
           ev.stopPropagation();
-
         } else if (key === 'ArrowRight' || key === 'ArrowUp') {
           handleKeyboard(knob, true);
           ev.preventDefault();
@@ -605,7 +620,7 @@ const renderKnob = (rtl: boolean, { knob, value, ratio, min, max, disabled, pres
         'range-knob-b': knob === 'B',
         'range-knob-pressed': pressed,
         'range-knob-min': value === min,
-        'range-knob-max': value === max
+        'range-knob-max': value === max,
       }}
       style={knobStyle()}
       role="slider"
@@ -616,18 +631,17 @@ const renderKnob = (rtl: boolean, { knob, value, ratio, min, max, disabled, pres
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && <div class="range-pin" role="presentation" part="pin">{pinFormatter(value)}</div>}
+      {pin && (
+        <div class="range-pin" role="presentation" part="pin">
+          {pinFormatter(value)}
+        </div>
+      )}
       <div class="range-knob" role="presentation" part="knob" />
     </div>
   );
 };
 
-const ratioToValue = (
-  ratio: number,
-  min: number,
-  max: number,
-  step: number
-): number => {
+const ratioToValue = (ratio: number, min: number, max: number, step: number): number => {
   let value = (max - min) * ratio;
   if (step > 0) {
     value = Math.round(value / step) * step + min;
