@@ -2,7 +2,6 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
-
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
@@ -284,7 +283,7 @@ export class Refresher implements ComponentInterface {
           MAX_PULL = this.scrollEl!.clientHeight * 0.16;
         }
       },
-      onMove: ev => {
+      onMove: (ev) => {
         this.lastVelocityY = ev.velocityY;
       },
       onEnd: () => {
@@ -303,7 +302,11 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  private async setupMDNativeRefresher(contentEl: HTMLElement, pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
+  private async setupMDNativeRefresher(
+    contentEl: HTMLElement,
+    pullingSpinner: HTMLIonSpinnerElement,
+    refreshingSpinner: HTMLIonSpinnerElement
+  ) {
     const circle = getElementRoot(pullingSpinner).querySelector('circle');
     const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
     const refreshingCircle = getElementRoot(refreshingSpinner).querySelector('circle');
@@ -451,7 +454,9 @@ export class Refresher implements ComponentInterface {
      */
     const backgroundContentHost = this.el.closest('ion-content') ?? contentEl;
 
-    this.backgroundContentEl = getElementRoot(backgroundContentHost).querySelector('#background-content') as HTMLElement;
+    this.backgroundContentEl = getElementRoot(backgroundContentHost).querySelector(
+      '#background-content'
+    ) as HTMLElement;
 
     if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);

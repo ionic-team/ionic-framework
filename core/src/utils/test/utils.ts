@@ -211,7 +211,7 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
  * @param y The y coordinate to scroll to.
  */
 export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
-  await page.evaluate(async selector => {
+  await page.evaluate(async (selector) => {
     const el = document.querySelector<HTMLElement>(selector);
     if (el) {
       if (el.tagName === 'ION-CONTENT') {
@@ -223,7 +223,7 @@ export const scrollTo = async (page: E2EPage, selector: string, x: number, y: nu
       console.error(`Unable to find element with selector: ${selector}`);
     }
   }, selector);
-}
+};
 
 /**
  * Scrolls to the bottom of a scroll container. Supports custom method for

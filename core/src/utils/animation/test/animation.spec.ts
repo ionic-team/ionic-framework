@@ -24,7 +24,7 @@ describe('Animation Class', () => {
       animation.addElement(el);
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
       animation.duration(250);
 
@@ -37,7 +37,7 @@ describe('Animation Class', () => {
       animation.addElement(el);
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
       animation.duration(250);
 
@@ -51,7 +51,7 @@ describe('Animation Class', () => {
       animation.addElement(el);
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
       animation.duration(250);
 
@@ -67,7 +67,7 @@ describe('Animation Class', () => {
       animation.addElement(el);
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
       animation.duration(250);
 
@@ -83,7 +83,7 @@ describe('Animation Class', () => {
       animation.addElement(el);
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
       animation.duration(250);
 
@@ -100,7 +100,7 @@ describe('Animation Class', () => {
       animation.addElement(el);
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
       animation.duration(250);
 
@@ -116,7 +116,7 @@ describe('Animation Class', () => {
         });
       });
     });
-  })
+  });
 
   describe('addElement()', () => {
     let animation: Animation;

@@ -27,12 +27,12 @@ const isIonContent = (el: Element) => el && el.tagName === ION_CONTENT_TAG_NAME;
  */
 export const getScrollElement = async (el: Element) => {
   if (isIonContent(el)) {
-    await new Promise(resolve => componentOnReady(el, resolve));
+    await new Promise((resolve) => componentOnReady(el, resolve));
     return (el as HTMLIonContentElement).getScrollElement();
   }
 
   return el as HTMLElement;
-}
+};
 
 /**
  * Queries the element matching the selector for IonContent.
@@ -49,14 +49,14 @@ export const findIonContent = (el: Element) => {
     return customContentHost;
   }
   return el.querySelector<HTMLElement>(ION_CONTENT_SELECTOR);
-}
+};
 
 /**
  * Queries the closest element matching the selector for IonContent.
  */
 export const findClosestIonContent = (el: Element) => {
   return el.closest<HTMLElement>(ION_CONTENT_SELECTOR);
-}
+};
 
 /**
  * Scrolls to the top of the element. If an `ion-content` is found, it will scroll
@@ -67,12 +67,14 @@ export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> =
     const content = el as HTMLIonContentElement;
     return content.scrollToTop(durationMs);
   }
-  return Promise.resolve(el.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: durationMs > 0 ? 'smooth' : 'auto'
-  }));
-}
+  return Promise.resolve(
+    el.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: durationMs > 0 ? 'smooth' : 'auto',
+    })
+  );
+};
 
 /**
  * Scrolls by a specified X/Y distance in the component. If an `ion-content` is found, it will scroll
@@ -83,12 +85,14 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
     const content = el as HTMLIonContentElement;
     return content.scrollByPoint(x, y, durationMs);
   }
-  return Promise.resolve(el.scrollBy({
-    top: y,
-    left: x,
-    behavior: durationMs > 0 ? 'smooth' : 'auto'
-  }));
-}
+  return Promise.resolve(
+    el.scrollBy({
+      top: y,
+      left: x,
+      behavior: durationMs > 0 ? 'smooth' : 'auto',
+    })
+  );
+};
 
 /**
  * Prints an error informing developers that an implementation requires an element to be used
@@ -96,4 +100,4 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
  */
 export const printIonContentErrorMsg = (el: HTMLElement) => {
   return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR);
-}
+};

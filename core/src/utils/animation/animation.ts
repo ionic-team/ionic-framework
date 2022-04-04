@@ -142,7 +142,7 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const isRunning = () => {
     return numAnimationsRunning !== 0 && !paused;
-  }
+  };
 
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
     const callbacks = opts?.oneTimeCallback ? onFinishOneTimeCallbacks : onFinishCallbacks;

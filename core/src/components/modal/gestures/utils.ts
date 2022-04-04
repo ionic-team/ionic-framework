@@ -1,9 +1,6 @@
 import type { Animation } from '../../../interface';
 
-export const handleCanDismiss = async (
-  el: HTMLIonModalElement,
-  animation: Animation,
-) => {
+export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Animation) => {
   /**
    * If canDismiss is not a function
    * then we can return early. If canDismiss is `true`,
@@ -12,7 +9,9 @@ export const handleCanDismiss = async (
    * this code block is never reached. If canDismiss is `false`,
    * then we never dismiss.
    */
-  if (typeof el.canDismiss !== 'function') { return; }
+  if (typeof el.canDismiss !== 'function') {
+    return;
+  }
 
   /**
    * Run the canDismiss callback.
@@ -20,7 +19,9 @@ export const handleCanDismiss = async (
    * then we can proceed with dismiss.
    */
   const shouldDismiss = await el.canDismiss();
-  if (!shouldDismiss) { return; }
+  if (!shouldDismiss) {
+    return;
+  }
 
   /**
    * If canDismiss resolved after the snap
@@ -34,13 +35,16 @@ export const handleCanDismiss = async (
    */
 
   if (animation.isRunning()) {
-    animation.onFinish(() => {
-      el.dismiss(undefined, 'handler')
-    }, { oneTimeCallback: true })
+    animation.onFinish(
+      () => {
+        el.dismiss(undefined, 'handler');
+      },
+      { oneTimeCallback: true }
+    );
   } else {
     el.dismiss(undefined, 'handler');
   }
-}
+};
 
 /**
  * This function lets us simulate a realistic spring-like animation
@@ -115,5 +119,5 @@ export const handleCanDismiss = async (
  * give you a complex differential equation too.
  */
 export const calculateSpringStep = (t: number) => {
-  return 0.00255275 * 2.71828 ** (-14.9619 * t) - 1.00255 * 2.71828 ** (-0.0380968 * t) + 1
-}
+  return 0.00255275 * 2.71828 ** (-14.9619 * t) - 1.00255 * 2.71828 ** (-0.0380968 * t) + 1;
+};

@@ -3,12 +3,11 @@ import type { E2EPage } from '@stencil/core/testing';
 import { scrollToBottom } from '@utils/test';
 
 describe('ion-header: custom scroll target', () => {
-
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/header/test/scroll-target?ionic:_testing=true&ionic:mode=ios'
+      url: '/src/components/header/test/scroll-target?ionic:_testing=true&ionic:mode=ios',
     });
   });
 
@@ -18,7 +17,6 @@ describe('ion-header: custom scroll target', () => {
   });
 
   describe('large title', () => {
-
     it('should display the large title initially', async () => {
       const largeHeader = await page.find('ion-header[collapse="condense"]');
       const collapseHeader = await page.find('ion-header[collapse="fade"]');
@@ -28,7 +26,6 @@ describe('ion-header: custom scroll target', () => {
     });
 
     describe('when the scroll container has overflow', () => {
-
       it('should display the collapsed title on scroll', async () => {
         const screenshotCompares = [];
 
@@ -48,11 +45,7 @@ describe('ion-header: custom scroll target', () => {
         for (const screenshotCompare of screenshotCompares) {
           expect(screenshotCompare).toMatchScreenshot();
         }
-
       });
-
     });
-
   });
-
 });

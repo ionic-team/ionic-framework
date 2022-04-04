@@ -1,147 +1,163 @@
 <!DOCTYPE html>
 <html dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Sheet</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Modal - Sheet</title>
-  <meta name="viewport"
-    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Ionic App" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <style>
-    .custom-height {
-      --height: 50%;
-    }
-
-    .custom-handle::part(handle) {
-      top: -16px;
-      background: rgba(255, 255, 255, 0.53);
-    }
-
-    .custom-handle::part(content) {
-      overflow: visible;
-    }
-
-    .red {
-      background-color: #ea445a;
-    }
-
-    .green {
-      background-color: #76d672;
-    }
-
-    .blue {
-      background-color: #3478f6;
-    }
-
-    .yellow {
-      background-color: #ffff80;
-    }
-
-    .pink {
-      background-color: #ff6b86;
-    }
-
-    .purple {
-      background-color: #7e34f6;
-    }
-
-    .black {
-      background-color: #000;
-    }
-
-    .orange {
-      background-color: #f69234;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 10px;
-      padding: 10px;
-    }
-
-    .grid-item {
-      height: 200px;
-    }
-  </style>
-</head>
-
-<body>
-  <ion-app>
-
-    <div class="ion-page">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Modal - Sheet</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label>Input outside modal</ion-label>
-          <ion-input id="root-input"></ion-input>
-        </ion-item>
-
-        <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
-        <ion-button id="custom-breakpoint-modal"
-          onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })">Present Sheet Modal (Custom
-          Breakpoints)</ion-button>
-        <ion-button id="custom-breakpoint-modal"
-          onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })">Present Sheet Modal (Max
-          breakpoint is not 1)</ion-button>
-        <ion-button id="custom-backdrop-modal"
-          onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })">Present Sheet Modal (Custom
-          Backdrop Breakpoint)</ion-button>
-        <ion-button id="custom-backdrop-off-center-modal"
-          onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
-          Present Sheet Modal (Backdrop breakpoint is off-center)</ion-button>
-        <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">Present Sheet Modal
-          (Custom Height)</ion-button>
-        <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })">Present Sheet Modal
-          (Custom Handle)</ion-button>
-        <ion-button id="no-handle-modal" onclick="presentModal({ handle: false })">Present Sheet Modal (No Handle)
-        </ion-button>
-        <ion-button id="backdrop-active"
-          onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })">
-          Backdrop is active</ion-button>
-        <ion-button id="backdrop-inactive"
-          onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
-          Backdrop is inactive</ion-button>
-
-        <div class="grid">
-          <div class="grid-item red"></div>
-          <div class="grid-item green"></div>
-          <div class="grid-item blue"></div>
-          <div class="grid-item yellow"></div>
-          <div class="grid-item pink"></div>
-          <div class="grid-item purple"></div>
-          <div class="grid-item black"></div>
-          <div class="grid-item orange"></div>
-        </div>
-
-      </ion-content>
-    </div>
-
-  </ion-app>
-  <script>
-    function createModal(options) {
-      let items = '';
-
-      for (var i = 0; i < 25; i++) {
-        items += `<ion-item>Item ${i}</ion-item>`;
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ionic App" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style>
+      .custom-height {
+        --height: 50%;
       }
 
-      // create component to open
-      const element = document.createElement('div');
-      element.innerHTML = `
+      .custom-handle::part(handle) {
+        top: -16px;
+        background: rgba(255, 255, 255, 0.53);
+      }
+
+      .custom-handle::part(content) {
+        overflow: visible;
+      }
+
+      .red {
+        background-color: #ea445a;
+      }
+
+      .green {
+        background-color: #76d672;
+      }
+
+      .blue {
+        background-color: #3478f6;
+      }
+
+      .yellow {
+        background-color: #ffff80;
+      }
+
+      .pink {
+        background-color: #ff6b86;
+      }
+
+      .purple {
+        background-color: #7e34f6;
+      }
+
+      .black {
+        background-color: #000;
+      }
+
+      .orange {
+        background-color: #f69234;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+        padding: 10px;
+      }
+
+      .grid-item {
+        height: 200px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Sheet</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label>Input outside modal</ion-label>
+            <ion-input id="root-input"></ion-input>
+          </ion-item>
+
+          <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
+          <ion-button
+            id="custom-breakpoint-modal"
+            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })"
+            >Present Sheet Modal (Custom Breakpoints)</ion-button
+          >
+          <ion-button
+            id="custom-breakpoint-modal"
+            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })"
+            >Present Sheet Modal (Max breakpoint is not 1)</ion-button
+          >
+          <ion-button
+            id="custom-backdrop-modal"
+            onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })"
+            >Present Sheet Modal (Custom Backdrop Breakpoint)</ion-button
+          >
+          <ion-button
+            id="custom-backdrop-off-center-modal"
+            onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
+          >
+            Present Sheet Modal (Backdrop breakpoint is off-center)</ion-button
+          >
+          <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })"
+            >Present Sheet Modal (Custom Height)</ion-button
+          >
+          <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })"
+            >Present Sheet Modal (Custom Handle)</ion-button
+          >
+          <ion-button id="no-handle-modal" onclick="presentModal({ handle: false })"
+            >Present Sheet Modal (No Handle)
+          </ion-button>
+          <ion-button
+            id="backdrop-active"
+            onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })"
+          >
+            Backdrop is active</ion-button
+          >
+          <ion-button
+            id="backdrop-inactive"
+            onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
+          >
+            Backdrop is inactive</ion-button
+          >
+
+          <div class="grid">
+            <div class="grid-item red"></div>
+            <div class="grid-item green"></div>
+            <div class="grid-item blue"></div>
+            <div class="grid-item yellow"></div>
+            <div class="grid-item pink"></div>
+            <div class="grid-item purple"></div>
+            <div class="grid-item black"></div>
+            <div class="grid-item orange"></div>
+          </div>
+        </ion-content>
+      </div>
+    </ion-app>
+    <script>
+      function createModal(options) {
+        let items = '';
+
+        for (var i = 0; i < 25; i++) {
+          items += `<ion-item>Item ${i}</ion-item>`;
+        }
+
+        // create component to open
+        const element = document.createElement('div');
+        element.innerHTML = `
       <ion-header>
         <ion-toolbar>
           <ion-title>Super Modal</ion-title>
@@ -157,49 +173,48 @@
       </ion-content>
       `;
 
-      let extraOptions = {
-        initialBreakpoint: 0.25,
-        breakpoints: [0, 0.25, .5, .75, 1]
-      };
+        let extraOptions = {
+          initialBreakpoint: 0.25,
+          breakpoints: [0, 0.25, 0.5, 0.75, 1],
+        };
 
-      if (options) {
-        extraOptions = {
-          ...extraOptions,
-          ...options
+        if (options) {
+          extraOptions = {
+            ...extraOptions,
+            ...options,
+          };
         }
+
+        // present the modal
+        const modalElement = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          ...extraOptions,
+        });
+
+        // listen for close event
+        const button = element.querySelector('ion-button');
+        button.addEventListener('click', () => {
+          modalElement.dismiss();
+        });
+        document.body.appendChild(modalElement);
+        return modalElement;
       }
 
-      // present the modal
-      const modalElement = Object.assign(document.createElement('ion-modal'), {
-        component: element,
-        ...extraOptions
-      });
+      async function presentModal(options) {
+        const modal = createModal(options);
+        await modal.present();
 
-      // listen for close event
-      const button = element.querySelector('ion-button');
-      button.addEventListener('click', () => {
-        modalElement.dismiss();
-      });
-      document.body.appendChild(modalElement);
-      return modalElement;
-    }
+        await modal.onDidDismiss();
+        modal.remove();
+      }
 
-    async function presentModal(options) {
-      const modal = createModal(options);
-      await modal.present();
-
-      await modal.onDidDismiss();
-      modal.remove();
-    }
-
-    async function presentCardModal() {
-      const presentingEl = document.querySelectorAll('.ion-page')[1];
-      const modal = createModal('card', {
-        presentingElement: presentingEl
-      });
-      await modal.present();
-    }
-  </script>
-</body>
-
+      async function presentCardModal() {
+        const presentingEl = document.querySelectorAll('.ion-page')[1];
+        const modal = createModal('card', {
+          presentingElement: presentingEl,
+        });
+        await modal.present();
+      }
+    </script>
+  </body>
 </html>

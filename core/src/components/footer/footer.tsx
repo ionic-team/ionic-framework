@@ -59,7 +59,7 @@ export class Footer implements ComponentInterface {
 
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
@@ -71,7 +71,7 @@ export class Footer implements ComponentInterface {
   };
 
   private setupFadeFooter = async (contentEl: HTMLElement) => {
-    const scrollEl = this.scrollEl = await getScrollElement(contentEl);
+    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
 
     /**
      * Handle fading of toolbars on scroll

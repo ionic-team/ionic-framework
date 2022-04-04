@@ -8,12 +8,11 @@ import { scrollToBottom } from '@utils/test';
  * selector.
  */
 describe('footer: fade with custom scroll target: iOS', () => {
-
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/footer/test/scroll-target?ionic:_testing=true&ionic:mode=ios'
+      url: '/src/components/footer/test/scroll-target?ionic:_testing=true&ionic:mode=ios',
     });
   });
 
@@ -30,5 +29,4 @@ describe('footer: fade with custom scroll target: iOS', () => {
       expect(compare).toMatchScreenshot();
     }
   });
-
 });

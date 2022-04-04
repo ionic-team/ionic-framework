@@ -6,7 +6,7 @@ import { moveReorderItem } from '../test.utils';
 
 it('reorder: custom scroll target', async () => {
   const page = await newE2EPage({
-    url: '/src/components/reorder-group/test/scroll-target?ionic:_testing=true'
+    url: '/src/components/reorder-group/test/scroll-target?ionic:_testing=true',
   });
 
   const compares = [];
@@ -33,7 +33,13 @@ it('reorder: custom scroll target', async () => {
   }
 });
 
-const moveItem = async (id: string, page: E2EPage, direction: 'up' | 'down' = 'up', numberOfSpaces = 1, ...parentSelectors: string[]) => {
+const moveItem = async (
+  id: string,
+  page: E2EPage,
+  direction: 'up' | 'down' = 'up',
+  numberOfSpaces = 1,
+  ...parentSelectors: string[]
+) => {
   try {
     await moveReorderItem(`#${id}`, page, direction, numberOfSpaces, ...parentSelectors);
     await page.waitForTimeout(50);

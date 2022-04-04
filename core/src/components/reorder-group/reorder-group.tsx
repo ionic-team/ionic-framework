@@ -1,5 +1,3 @@
-
-
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, getScrollElement } from '@utils/content';

@@ -21,7 +21,7 @@ test('range:rtl: basic', async () => {
 
 test('range: start/end events', async () => {
   const page = await newE2EPage({
-    url: '/src/components/range/test/basic?ionic:_testing=true'
+    url: '/src/components/range/test/basic?ionic:_testing=true',
   });
 
   const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -43,17 +43,17 @@ test('range: start/end events', async () => {
   await dragElementBy(rangeEl, page, 0, 0);
 
   expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
-  expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 })
+  expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
 });
 
 test('range: start/end events, keyboard', async () => {
   const page = await newE2EPage({
-    url: '/src/components/range/test/basic?ionic:_testing=true'
+    url: '/src/components/range/test/basic?ionic:_testing=true',
   });
 
   const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
   const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
-  
+
   await page.keyboard.press('Tab'); // focus first range
   await page.keyboard.press('ArrowRight');
 

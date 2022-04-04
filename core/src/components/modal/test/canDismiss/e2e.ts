@@ -178,7 +178,7 @@ describe('modal - canDismiss handler', () => {
       await ionModalDidDismiss.next();
     });
     it('should not dismiss on swipe when canDismiss is Promise<false>', async () => {
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent')
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionHandlerDone = await page.spyOnEvent('ionHandlerDone');
 
       await page.click('#radio-promise-false');

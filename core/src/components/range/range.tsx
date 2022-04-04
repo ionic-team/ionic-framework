@@ -286,7 +286,7 @@ export class Range implements ComponentInterface {
     this.ionKnobMoveStart.emit({ value: ensureValueInBounds(this.value) });
     this.updateValue();
     this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
-  }
+  };
   private getValue(): RangeValue {
     const value = this.value || 0;
     if (this.dualKnobs) {

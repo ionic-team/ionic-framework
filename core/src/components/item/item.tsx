@@ -1,4 +1,3 @@
-
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { printIonError } from '@utils/logging';

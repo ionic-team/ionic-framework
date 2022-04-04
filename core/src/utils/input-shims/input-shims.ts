@@ -31,7 +31,7 @@ export const startInputShims = (config: Config) => {
     const inputRoot = componentEl.shadowRoot || componentEl;
     const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
     const scrollEl = findClosestIonContent(componentEl);
-    const footerEl = (!scrollEl) ? componentEl.closest('ion-footer') as HTMLIonFooterElement | null : null;
+    const footerEl = !scrollEl ? (componentEl.closest('ion-footer') as HTMLIonFooterElement | null) : null;
 
     if (!inputEl) {
       return;

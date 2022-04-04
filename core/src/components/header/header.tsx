@@ -1,5 +1,3 @@
-
-
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
@@ -87,7 +85,7 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
@@ -99,7 +97,7 @@ export class Header implements ComponentInterface {
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
@@ -113,12 +111,14 @@ export class Header implements ComponentInterface {
   }
 
   private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
-    const scrollEl = this.scrollEl = await getScrollElement(contentEl);
+    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
 
     /**
      * Handle fading of toolbars on scroll
      */
-    this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el, condenseHeader); };
+    this.contentScrollCallback = () => {
+      handleHeaderFade(this.scrollEl!, this.el, condenseHeader);
+    };
     scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
     handleHeaderFade(this.scrollEl!, this.el, condenseHeader);
@@ -146,7 +146,9 @@ export class Header implements ComponentInterface {
       printIonContentErrorMsg(this.el);
       return;
     }
-    if (typeof (IntersectionObserver as any) === 'undefined') { return; }
+    if (typeof (IntersectionObserver as any) === 'undefined') {
+      return;
+    }
 
     this.scrollEl = await getScrollElement(contentEl);
 

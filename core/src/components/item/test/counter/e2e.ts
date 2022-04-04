@@ -1,11 +1,10 @@
-import type { E2EPage} from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('item: counter', () => {
-
   it('should match existing visual screenshots', async () => {
     const page = await newE2EPage({
-      url: '/src/components/item/test/counter?ionic:_testing=true'
+      url: '/src/components/item/test/counter?ionic:_testing=true',
     });
 
     const compare = await page.compareScreenshot();
@@ -13,12 +12,11 @@ describe('item: counter', () => {
   });
 
   describe('custom formatter', () => {
-
     let page: E2EPage;
 
     beforeEach(async () => {
       page = await newE2EPage({
-        url: '/src/components/item/test/counter?ionic:_testing=true'
+        url: '/src/components/item/test/counter?ionic:_testing=true',
       });
     });
 
@@ -59,7 +57,6 @@ describe('item: counter', () => {
     });
 
     describe('when an exception occurs', () => {
-
       const logs = [];
 
       beforeEach(async () => {
@@ -67,10 +64,10 @@ describe('item: counter', () => {
           html: `
           <ion-item counter="true"">
             <ion-input maxlength="20" value=""></ion-input>
-          </ion-item>`
+          </ion-item>`,
         });
 
-        page.on('console', ev => {
+        page.on('console', (ev) => {
           if (ev.type() === 'error') {
             logs.push(ev.text());
           }
@@ -86,7 +83,6 @@ describe('item: counter', () => {
           };
         });
         await page.waitForChanges();
-
       });
 
       it('should default the formatting to length / maxlength', async () => {
@@ -104,7 +100,6 @@ describe('item: counter', () => {
         expect(logs.length).toBeGreaterThan(0);
         expect(logs[0]).toMatch('[Ionic Error]: Exception in provided `counterFormatter`.');
       });
-
     });
   });
-})
+});

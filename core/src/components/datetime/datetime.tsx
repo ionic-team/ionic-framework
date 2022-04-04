@@ -1388,7 +1388,10 @@ export class Datetime implements ComponentInterface {
                  */
                 isCalDayDisabled = !isDateEnabled(convertDataToISO(referenceParts));
               } catch (e) {
-                printIonError('Exception thrown from provided `isDateEnabled` function. Please check your function and try again.', e);
+                printIonError(
+                  'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                  e
+                );
               }
             }
 
