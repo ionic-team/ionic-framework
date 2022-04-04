@@ -34,6 +34,9 @@
     "src",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/test/**/*.spec.ts",
+    "**/test/**/*.spec.tsx",
+    "**/test/**/e2e.ts"
   ]
 }
