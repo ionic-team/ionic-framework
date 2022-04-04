@@ -1,15 +1,13 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
-
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('picker-column-internal', () => {
-
   let page: E2EPage;
 
   describe('default', () => {
-
     beforeEach(async () => {
       page = await newE2EPage({
-        url: '/src/components/picker-column-internal/test/basic?ionic:_testing=true'
+        url: '/src/components/picker-column-internal/test/basic?ionic:_testing=true',
       });
     });
 
@@ -67,14 +65,12 @@ describe('picker-column-internal', () => {
       const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
 
       await page.$eval('#default', (el: any) => {
-        el.scrollTo(0, 300);
+        el.scrollTo(0, el.scrollHeight);
       });
 
       await ionChangeSpy.next();
 
       expect(ionChangeSpy).toHaveReceivedEvent();
     });
-
   });
-
 });

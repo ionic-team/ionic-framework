@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
@@ -9,7 +10,7 @@ const enum AccordionState {
   Collapsed = 1 << 0,
   Collapsing = 1 << 1,
   Expanded = 1 << 2,
-  Expanding = 1 << 3
+  Expanding = 1 << 3,
 }
 
 /**
@@ -29,11 +30,11 @@ const enum AccordionState {
   tag: 'ion-accordion',
   styleUrls: {
     ios: 'accordion.ios.scss',
-    md: 'accordion.md.scss'
+    md: 'accordion.md.scss',
   },
   shadow: {
-    delegatesFocus: true
-  }
+    delegatesFocus: true,
+  },
 })
 export class Accordion implements ComponentInterface {
   private accordionGroupEl?: HTMLIonAccordionGroupElement | null;
@@ -81,7 +82,7 @@ export class Accordion implements ComponentInterface {
   @Prop() toggleIconSlot: 'start' | 'end' = 'end';
 
   connectedCallback() {
-    const accordionGroupEl = this.accordionGroupEl = this.el && this.el.closest('ion-accordion-group');
+    const accordionGroupEl = (this.accordionGroupEl = this.el?.closest('ion-accordion-group'));
     if (accordionGroupEl) {
       this.updateState(true);
       addEventListener(accordionGroupEl, 'ionChange', this.updateListener);
@@ -116,7 +117,9 @@ export class Accordion implements ComponentInterface {
 
   private setItemDefaults = () => {
     const ionItem = this.getSlottedHeaderIonItem();
-    if (!ionItem) { return; }
+    if (!ionItem) {
+      return;
+    }
 
     /**
      * For a11y purposes, we make
@@ -136,28 +139,36 @@ export class Accordion implements ComponentInterface {
     if (ionItem.lines === undefined) {
       ionItem.lines = 'full';
     }
-  }
+  };
 
   private getSlottedHeaderIonItem = () => {
     const { headerEl } = this;
-    if (!headerEl) { return; }
+    if (!headerEl) {
+      return;
+    }
 
     /**
      * Get the first ion-item
      * slotted in the header slot
      */
     const slot = headerEl.querySelector('slot');
-    if (!slot) { return; }
+    if (!slot) {
+      return;
+    }
 
     // This is not defined in unit tests
-    const ionItem = slot.assignedElements && (slot.assignedElements().find(el => el.tagName === 'ION-ITEM') as HTMLIonItemElement | undefined);
+    const ionItem =
+      slot.assignedElements &&
+      (slot.assignedElements().find((el) => el.tagName === 'ION-ITEM') as HTMLIonItemElement | undefined);
 
     return ionItem;
-  }
+  };
 
   private setAria = (expanded = false) => {
     const ionItem = this.getSlottedHeaderIonItem();
-    if (!ionItem) { return; }
+    if (!ionItem) {
+      return;
+    }
 
     /**
      * Get the native <button> element inside of
@@ -165,14 +176,18 @@ export class Accordion implements ComponentInterface {
      */
     const root = getElementRoot(ionItem);
     const button = root.querySelector('button');
-    if (!button) { return; }
+    if (!button) {
+      return;
+    }
 
     button.setAttribute('aria-expanded', `${expanded}`);
-  }
+  };
 
   private slotToggleIcon = () => {
     const ionItem = this.getSlottedHeaderIonItem();
-    if (!ionItem) { return; }
+    if (!ionItem) {
+      return;
+    }
 
     const { toggleIconSlot, toggleIcon } = this;
 
@@ -181,7 +196,9 @@ export class Accordion implements ComponentInterface {
      * If so, do not add another one.
      */
     const existingToggleIcon = ionItem.querySelector('.ion-accordion-toggle-icon');
-    if (existingToggleIcon) { return; }
+    if (existingToggleIcon) {
+      return;
+    }
 
     const iconEl = document.createElement('ion-icon');
     iconEl.slot = toggleIconSlot;
@@ -191,7 +208,7 @@ export class Accordion implements ComponentInterface {
     iconEl.setAttribute('aria-hidden', 'true');
 
     ionItem.appendChild(iconEl);
-  }
+  };
 
   private expandAccordion = (initialUpdate = false) => {
     if (initialUpdate) {
@@ -199,10 +216,14 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    if (this.state === AccordionState.Expanded) { return; }
+    if (this.state === AccordionState.Expanded) {
+      return;
+    }
 
     const { contentEl, contentElWrapper } = this;
-    if (contentEl === undefined || contentElWrapper === undefined) { return; }
+    if (contentEl === undefined || contentElWrapper === undefined) {
+      return;
+    }
 
     if (this.currentRaf !== undefined) {
       cancelAnimationFrame(this.currentRaf);
@@ -226,7 +247,7 @@ export class Accordion implements ComponentInterface {
     } else {
       this.state = AccordionState.Expanded;
     }
-  }
+  };
 
   private collapseAccordion = (initialUpdate = false) => {
     if (initialUpdate) {
@@ -234,10 +255,14 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    if (this.state === AccordionState.Collapsed) { return; }
+    if (this.state === AccordionState.Collapsed) {
+      return;
+    }
 
     const { contentEl } = this;
-    if (contentEl === undefined) { return; }
+    if (contentEl === undefined) {
+      return;
+    }
 
     if (this.currentRaf !== undefined) {
       cancelAnimationFrame(this.currentRaf);
@@ -262,7 +287,7 @@ export class Accordion implements ComponentInterface {
     } else {
       this.state = AccordionState.Collapsed;
     }
-  }
+  };
 
   /**
    * Helper function to determine if
@@ -272,28 +297,38 @@ export class Accordion implements ComponentInterface {
    * of what is set in the config.
    */
   private shouldAnimate = () => {
-    if (typeof (window as any) === 'undefined') { return false; }
+    if (typeof (window as any) === 'undefined') {
+      return false;
+    }
 
     const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) { return false; }
+    if (prefersReducedMotion) {
+      return false;
+    }
 
     const animated = config.get('animated', true);
-    if (!animated) { return false; }
+    if (!animated) {
+      return false;
+    }
 
-    if (this.accordionGroupEl && !this.accordionGroupEl.animated) { return false; }
+    if (this.accordionGroupEl && !this.accordionGroupEl.animated) {
+      return false;
+    }
 
     return true;
-  }
+  };
 
   private updateState = async (initialUpdate = false) => {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
 
-    if (!accordionGroup) { return; }
+    if (!accordionGroup) {
+      return;
+    }
 
     const value = accordionGroup.value;
 
-    const shouldExpand = (Array.isArray(value)) ? value.includes(accordionValue) : value === accordionValue;
+    const shouldExpand = Array.isArray(value) ? value.includes(accordionValue) : value === accordionValue;
 
     if (shouldExpand) {
       this.expandAccordion(initialUpdate);
@@ -309,40 +344,48 @@ export class Accordion implements ComponentInterface {
        * next or previous accordion is selected.
        */
       const nextAccordion = this.getNextSibling();
-      const nextAccordionValue = nextAccordion && nextAccordion.value;
+      const nextAccordionValue = nextAccordion?.value;
 
       if (nextAccordionValue !== undefined) {
-      this.isPrevious = (Array.isArray(value)) ? value.includes(nextAccordionValue) : value === nextAccordionValue;
+        this.isPrevious = Array.isArray(value) ? value.includes(nextAccordionValue) : value === nextAccordionValue;
       }
 
       const previousAccordion = this.getPreviousSibling();
-      const previousAccordionValue = previousAccordion && previousAccordion.value;
+      const previousAccordionValue = previousAccordion?.value;
 
       if (previousAccordionValue !== undefined) {
-        this.isNext = (Array.isArray(value)) ? value.includes(previousAccordionValue) : value === previousAccordionValue;
+        this.isNext = Array.isArray(value) ? value.includes(previousAccordionValue) : value === previousAccordionValue;
       }
     }
-  }
+  };
 
   private getNextSibling = () => {
-    if (!this.el) { return; }
+    if (!this.el) {
+      return;
+    }
 
     const nextSibling = this.el.nextElementSibling;
 
-    if (nextSibling?.tagName !== 'ION-ACCORDION') { return; }
+    if (nextSibling?.tagName !== 'ION-ACCORDION') {
+      return;
+    }
 
     return nextSibling as HTMLIonAccordionElement;
-  }
+  };
 
   private getPreviousSibling = () => {
-    if (!this.el) { return; }
+    if (!this.el) {
+      return;
+    }
 
     const previousSibling = this.el.previousElementSibling;
 
-    if (previousSibling?.tagName !== 'ION-ACCORDION') { return; }
+    if (previousSibling?.tagName !== 'ION-ACCORDION') {
+      return;
+    }
 
     return previousSibling as HTMLIonAccordionElement;
-  }
+  };
 
   private toggleExpanded() {
     const { accordionGroupEl, value, state } = this;
@@ -384,16 +427,15 @@ export class Accordion implements ComponentInterface {
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,
 
-          'accordion-animated': config.getBoolean('animated', true)
+          'accordion-animated': config.getBoolean('animated', true),
         }}
-
       >
         <div
           onClick={() => this.toggleExpanded()}
           id="header"
           part={headerPart}
           aria-controls="content"
-          ref={headerEl => this.headerEl = headerEl}
+          ref={(headerEl) => (this.headerEl = headerEl)}
         >
           <slot name="header"></slot>
         </div>
@@ -403,9 +445,9 @@ export class Accordion implements ComponentInterface {
           part={contentPart}
           role="region"
           aria-labelledby="header"
-          ref={contentEl => this.contentEl = contentEl}
+          ref={(contentEl) => (this.contentEl = contentEl)}
         >
-          <div id="content-wrapper" ref={contentElWrapper => this.contentElWrapper = contentElWrapper}>
+          <div id="content-wrapper" ref={(contentElWrapper) => (this.contentElWrapper = contentElWrapper)}>
             <slot name="content"></slot>
           </div>
         </div>

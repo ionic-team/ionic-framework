@@ -1,6 +1,13 @@
-import { JSXBase } from '@stencil/core/internal';
+import type { JSXBase } from '@stencil/core/internal';
 
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode, OverlayInterface } from '../../interface';
+import type {
+  AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
+  FrameworkDelegate,
+  Mode,
+  OverlayInterface,
+} from '../../interface';
 
 export interface PopoverInterface extends OverlayInterface {
   present: (event?: MouseEvent | TouchEvent | PointerEvent) => Promise<void>;
@@ -36,7 +43,7 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   triggerAction?: string;
 }
 
-export interface PopoverAttributes extends JSXBase.HTMLAttributes<HTMLElement> { }
+export type PopoverAttributes = JSXBase.HTMLAttributes<HTMLElement>;
 
 export type PopoverSize = 'cover' | 'auto';
 

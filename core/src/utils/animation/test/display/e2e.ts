@@ -29,9 +29,14 @@ const runTest = async (page: any) => {
   await page.click('.play');
   await page.waitForSelector('.play');
 
-  await waitForFunctionTestContext((payload: any) => {
-    return payload.animationStatus.join(', ') === ['AnimationBFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
-
-  }, { animationStatus });
+  await waitForFunctionTestContext(
+    (payload: any) => {
+      return (
+        payload.animationStatus.join(', ') ===
+        ['AnimationBFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ')
+      );
+    },
+    { animationStatus }
+  );
   screenshotCompares.push(await page.compareScreenshot('end animation'));
 };

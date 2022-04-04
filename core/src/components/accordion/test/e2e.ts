@@ -9,7 +9,7 @@ test('should properly set readonly on child accordions', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordion = await page.find('ion-accordion');
@@ -36,7 +36,7 @@ test('should properly set disabled on child accordions', async () => {
           <div slot="content">Content</div>
         </ion-accordion>
       </ion-accordion-group>
-    `
+    `,
   });
 
   const accordion = await page.find('ion-accordion');

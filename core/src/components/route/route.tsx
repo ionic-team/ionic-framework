@@ -1,12 +1,12 @@
-import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Event, Prop, Watch } from '@stencil/core';
 
-import { NavigationHookCallback } from './route-interface';
+import type { NavigationHookCallback } from './route-interface';
 
 @Component({
-  tag: 'ion-route'
+  tag: 'ion-route',
 })
 export class Route implements ComponentInterface {
-
   /**
    * Relative path that needs to match in order for this route to apply.
    *
@@ -28,7 +28,7 @@ export class Route implements ComponentInterface {
    * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed
    * to the defined component when rendered.
    */
-  @Prop() componentProps?: {[key: string]: any};
+  @Prop() componentProps?: { [key: string]: any };
 
   /**
    * A navigation hook that is fired when the route tries to leave.

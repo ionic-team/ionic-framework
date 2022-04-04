@@ -1,50 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Zoom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      #background {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Datetime - Zoom</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  <style>
-    #background {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Zoom</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <h2>Modal</h2>
+        <ion-button id="open-modal">Present Modal</ion-button>
+        <ion-modal trigger="open-modal" id="modal">
+          <div id="background">
+            <ion-datetime id="picker" value="2022-02-01"></ion-datetime>
+          </div>
+        </ion-modal>
+      </ion-content>
+    </ion-app>
 
-<body>
-  <ion-app>
-    <ion-header translucent="true">
-      <ion-toolbar>
-        <ion-title>Datetime - Zoom</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <h2>Modal</h2>
-      <ion-button id="open-modal">Present Modal</ion-button>
-      <ion-modal trigger="open-modal" id="modal">
-        <div id="background">
-          <ion-datetime id="picker" value="2022-02-01"></ion-datetime>
-        </div>
-      </ion-modal>
-    </ion-content>
-  </ion-app>
+    <script type="module">
+      import { InitMonthDidChangeEvent } from '../test/utils/month-did-change-event.js';
 
-  <script type="module">
-    import { InitMonthDidChangeEvent } from '../test/utils/month-did-change-event.js';
-
-    document.getElementById('open-modal').addEventListener('click', () => {
-      InitMonthDidChangeEvent();
-    });
-  </script>
-</body>
-
+      document.getElementById('open-modal').addEventListener('click', () => {
+        InitMonthDidChangeEvent();
+      });
+    </script>
+  </body>
 </html>

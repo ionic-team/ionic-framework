@@ -1,5 +1,7 @@
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
+
 import { testPopover } from '../test.utils';
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
 const DIRECTORY = 'basic';
 
@@ -7,21 +9,23 @@ const DIRECTORY = 'basic';
  * Focusing happens async inside of popover so we need
  * to wait for the requestAnimationFrame to fire.
  */
-const expectActiveElementTextToEqual = async (page, textValue) => {
-  await page.waitFor((text) => document.activeElement.textContent === text, {}, textValue)
-}
+const expectActiveElementTextToEqual = async (page: E2EPage, textValue: string) => {
+  await page.waitFor((text: string) => document.activeElement!.textContent === text, {}, textValue);
+};
 
 const getActiveElementSelectionStart = (page: E2EPage) => {
-  return page.evaluate(() => document.activeElement instanceof HTMLTextAreaElement ? document.activeElement.selectionStart : null);
-}
+  return page.evaluate(() =>
+    document.activeElement instanceof HTMLTextAreaElement ? document.activeElement.selectionStart : null
+  );
+};
 
 const getActiveElementScrollTop = (page: E2EPage) => {
   return page.evaluate(() => {
     // Returns the closest ion-textarea or active element
-    let target = document.activeElement.closest('ion-textarea') ?? document.activeElement;
-    return target.scrollTop;
+    const target = document.activeElement!.closest('ion-textarea') ?? document.activeElement;
+    return target!.scrollTop;
   });
-}
+};
 
 test('popover: basic', async () => {
   await testPopover(DIRECTORY, '#basic-popover');
@@ -89,25 +93,24 @@ test('popover: htmlAttributes', async () => {
   await page.click('#basic-popover');
   await page.waitForSelector('#basic-popover');
 
-  let alert = await page.find('ion-popover');
+  const alert = await page.find('ion-popover');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-popover').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-popover')!.getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-popover');
 });
 
 describe('popover: focus trap', () => {
-
   it('should work with ion-item children', async () => {
     const page = await newE2EPage({ url: '/src/components/popover/test/basic?ionic:_testing=true' });
 
     await page.click('#basic-popover');
     await page.waitForSelector('#basic-popover');
 
-    let popover = await page.find('ion-popover');
+    const popover = await page.find('ion-popover');
 
     expect(popover).not.toBe(null);
     await popover.waitForVisible();
@@ -214,5 +217,4 @@ describe('popover: focus trap', () => {
     scrollTop = await getActiveElementScrollTop(page);
     expect(scrollTop).toBeGreaterThanOrEqual(previousScrollTop);
   });
-
 });

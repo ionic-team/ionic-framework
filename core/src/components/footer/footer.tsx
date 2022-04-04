@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { componentOnReady } from '../../utils/helpers';
@@ -12,8 +13,8 @@ import { handleFooterFade } from './footer.utils';
   tag: 'ion-footer',
   styleUrls: {
     ios: 'footer.ios.scss',
-    md: 'footer.md.scss'
-  }
+    md: 'footer.md.scss',
+  },
 })
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
@@ -47,7 +48,9 @@ export class Footer implements ComponentInterface {
 
   private checkCollapsibleFooter = () => {
     const mode = getIonMode(this);
-    if (mode !== 'ios') { return; }
+    if (mode !== 'ios') {
+      return;
+    }
 
     const { collapse } = this;
     const hasFade = collapse === 'fade';
@@ -56,26 +59,31 @@ export class Footer implements ComponentInterface {
 
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
+      const contentEl = pageEl ? pageEl.querySelector('ion-content') : null;
 
       this.setupFadeFooter(contentEl);
     }
-  }
+  };
 
   private setupFadeFooter = async (contentEl: HTMLIonContentElement | null) => {
-    if (!contentEl) { console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.'); return; }
+    if (!contentEl) {
+      console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.');
+      return;
+    }
 
-    await new Promise(resolve => componentOnReady(contentEl, resolve));
-    const scrollEl = this.scrollEl = await contentEl.getScrollElement();
+    await new Promise((resolve) => componentOnReady(contentEl, resolve));
+    const scrollEl = (this.scrollEl = await contentEl.getScrollElement());
 
     /**
      * Handle fading of toolbars on scroll
      */
-    this.contentScrollCallback = () => { handleFooterFade(scrollEl, this.el); };
+    this.contentScrollCallback = () => {
+      handleFooterFade(scrollEl, this.el);
+    };
     scrollEl.addEventListener('scroll', this.contentScrollCallback);
 
     handleFooterFade(scrollEl, this.el);
-  }
+  };
 
   private destroyCollapsibleFooter() {
     if (this.scrollEl && this.contentScrollCallback) {
@@ -102,9 +110,7 @@ export class Footer implements ComponentInterface {
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
-        { mode === 'ios' && translucent &&
-          <div class="footer-background"></div>
-        }
+        {mode === 'ios' && translucent && <div class="footer-background"></div>}
         <slot></slot>
       </Host>
     );

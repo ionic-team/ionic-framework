@@ -1,11 +1,12 @@
-import { Animation } from '../../interface';
+import type { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
-import { TransitionOptions, getIonPageElement } from '../transition';
+import type { TransitionOptions } from '../transition';
+import { getIonPageElement } from '../transition';
 
 const DURATION = 540;
 
 const getClonedElement = (tagName: string): any => {
-  return document.querySelector(`${tagName}.ion-cloned-element`) as any ;
+  return document.querySelector(`${tagName}.ion-cloned-element`) as any;
 };
 
 export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
@@ -13,19 +14,19 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 };
 
 const getLargeTitle = (refEl: any) => {
-  const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
+  const tabs = refEl.tagName === 'ION-TABS' ? refEl : refEl.querySelector('ion-tabs');
   const query = 'ion-content ion-header:not(.header-collapse-condense-inactive) ion-title.title-large';
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    return (activeTab != null) ? activeTab.querySelector(query) : null;
+    return activeTab != null ? activeTab.querySelector(query) : null;
   }
 
   return refEl.querySelector(query);
 };
 
 const getBackButton = (refEl: any, backDirection: boolean) => {
-  const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
+  const tabs = refEl.tagName === 'ION-TABS' ? refEl : refEl.querySelector('ion-tabs');
   let buttonsList = [];
 
   if (tabs != null) {
@@ -52,7 +53,13 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
   return null;
 };
 
-const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
+const createLargeTitleTransition = (
+  rootAnimation: Animation,
+  rtl: boolean,
+  backDirection: boolean,
+  enteringEl: any,
+  leavingEl: any
+) => {
   const enteringBackButton = getBackButton(enteringEl, backDirection);
   const leavingLargeTitle = getLargeTitle(leavingEl);
 
@@ -66,53 +73,96 @@ const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, back
     const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
     const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
 
-    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle, leavingLargeTitleBox, enteringBackButtonBox);
-    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton, leavingLargeTitleBox, enteringBackButtonBox);
+    animateLargeTitle(
+      rootAnimation,
+      rtl,
+      backDirection,
+      leavingLargeTitle,
+      leavingLargeTitleBox,
+      enteringBackButtonBox
+    );
+    animateBackButton(
+      rootAnimation,
+      rtl,
+      backDirection,
+      enteringBackButton,
+      leavingLargeTitleBox,
+      enteringBackButtonBox
+    );
   } else if (shouldAnimationBackward) {
     const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
     const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
 
-    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle, enteringLargeTitleBox, leavingBackButtonBox);
-    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton, enteringLargeTitleBox, leavingBackButtonBox);
+    animateLargeTitle(
+      rootAnimation,
+      rtl,
+      backDirection,
+      enteringLargeTitle,
+      enteringLargeTitleBox,
+      leavingBackButtonBox
+    );
+    animateBackButton(
+      rootAnimation,
+      rtl,
+      backDirection,
+      leavingBackButton,
+      enteringLargeTitleBox,
+      leavingBackButtonBox
+    );
   }
 
   return {
     forward: shouldAnimationForward,
-    backward: shouldAnimationBackward
+    backward: shouldAnimationBackward,
   };
 };
 
-const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, backButtonEl: any, largeTitleBox: DOMRect, backButtonBox: DOMRect) => {
-  const BACK_BUTTON_START_OFFSET = (rtl) ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
-  const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
-  const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
+const animateBackButton = (
+  rootAnimation: Animation,
+  rtl: boolean,
+  backDirection: boolean,
+  backButtonEl: any,
+  largeTitleBox: DOMRect,
+  backButtonBox: DOMRect
+) => {
+  const BACK_BUTTON_START_OFFSET = rtl ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
+  const START_TEXT_TRANSLATE = rtl ? '7px' : '-7px';
+  const END_TEXT_TRANSLATE = rtl ? '-4px' : '4px';
 
-  const ICON_TRANSLATE = (rtl) ? '-4px' : '4px';
+  const ICON_TRANSLATE = rtl ? '-4px' : '4px';
 
-  const TEXT_ORIGIN_X = (rtl) ? 'right' : 'left';
-  const ICON_ORIGIN_X = (rtl) ? 'left' : 'right';
+  const TEXT_ORIGIN_X = rtl ? 'right' : 'left';
+  const ICON_ORIGIN_X = rtl ? 'left' : 'right';
 
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(${START_TEXT_TRANSLATE}, ${largeTitleBox.top - 40}px, 0) scale(2.1)` },
-    { offset: 1, opacity: 1, transform: `translate3d(${END_TEXT_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` }
+    {
+      offset: 0,
+      opacity: 0,
+      transform: `translate3d(${START_TEXT_TRANSLATE}, ${largeTitleBox.top - 40}px, 0) scale(2.1)`,
+    },
+    { offset: 1, opacity: 1, transform: `translate3d(${END_TEXT_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: `translate3d(${END_TEXT_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate3d(${START_TEXT_TRANSLATE}, ${largeTitleBox.top - 40}px, 0) scale(2.1)` }
+    {
+      offset: 1,
+      opacity: 0,
+      transform: `translate3d(${START_TEXT_TRANSLATE}, ${largeTitleBox.top - 40}px, 0) scale(2.1)`,
+    },
   ];
-  const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
+  const TEXT_KEYFRAMES = backDirection ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
   const FORWARD_ICON_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` }
+    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
   ];
   const BACKWARD_ICON_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
     { offset: 0.2, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` }
+    { offset: 1, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
   ];
-  const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
+  const ICON_KEYFRAMES = backDirection ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
   const enteringBackButtonTextAnimation = createAnimation();
   const enteringBackButtonIconAnimation = createAnimation();
@@ -136,7 +186,7 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 
   enteringBackButtonTextAnimation
     .beforeStyles({
-      'transform-origin': `${TEXT_ORIGIN_X} center`
+      'transform-origin': `${TEXT_ORIGIN_X} center`,
     })
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
@@ -151,30 +201,37 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 
   enteringBackButtonIconAnimation
     .beforeStyles({
-      'transform-origin': `${ICON_ORIGIN_X} center`
+      'transform-origin': `${ICON_ORIGIN_X} center`,
     })
     .keyframes(ICON_KEYFRAMES);
 
   rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
 };
 
-const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any, largeTitleBox: DOMRect, backButtonBox: DOMRect) => {
-  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
-  const START_TRANSLATE = (rtl) ? '-18px' : '18px';
-  const ORIGIN_X = (rtl) ? 'right' : 'left';
+const animateLargeTitle = (
+  rootAnimation: Animation,
+  rtl: boolean,
+  backDirection: boolean,
+  largeTitleEl: any,
+  largeTitleBox: DOMRect,
+  backButtonBox: DOMRect
+) => {
+  const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
+  const START_TRANSLATE = rtl ? '-18px' : '18px';
+  const ORIGIN_X = rtl ? 'right' : 'left';
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
-    { offset: 1, opacity: 1, transform: `translate3d(0, ${largeTitleBox.top - 2}px, 0) scale(1)` }
+    { offset: 1, opacity: 1, transform: `translate3d(0, ${largeTitleBox.top - 2}px, 0) scale(1)` },
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate3d(0, ${largeTitleBox.top - 2}px, 0) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.5)` }
+    { offset: 1, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.5)` },
   ];
 
-  const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
+  const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
   const clonedTitleEl = getClonedElement('ion-title');
   const clonedLargeTitleAnimation = createAnimation();
@@ -188,10 +245,10 @@ const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection
   clonedLargeTitleAnimation
     .beforeStyles({
       'transform-origin': `${ORIGIN_X} center`,
-      'height': '46px',
-      'display': '',
-      'position': 'relative',
-      [ORIGIN_X]: TITLE_START_OFFSET
+      height: '46px',
+      display: '',
+      position: 'relative',
+      [ORIGIN_X]: TITLE_START_OFFSET,
     })
     .beforeAddWrite(() => {
       largeTitleEl.style.setProperty('display', 'none');
@@ -220,7 +277,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const enteringEl = opts.enteringEl;
     const leavingEl = opts.leavingEl;
 
-    const backDirection = (opts.direction === 'back');
+    const backDirection = opts.direction === 'back';
     const contentEl = enteringEl.querySelector(':scope > ion-content');
     const headerEls = enteringEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
     const enteringToolBarEls = enteringEl.querySelectorAll(':scope > ion-header > ion-toolbar');
@@ -242,9 +299,11 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     }
 
     if (!contentEl && enteringToolBarEls.length === 0 && headerEls.length === 0) {
-      enteringContentAnimation.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!);  // REVIEW
+      enteringContentAnimation.addElement(
+        enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!
+      ); // REVIEW
     } else {
-      enteringContentAnimation.addElement(contentEl!);  // REVIEW
+      enteringContentAnimation.addElement(contentEl!); // REVIEW
       enteringContentAnimation.addElement(headerEls);
     }
 
@@ -285,7 +344,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         enteringTransitionShadow
           .addElement(enteringTransitionShadowEl!) // REVIEW
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 0.03, 0.70);
+          .fromTo(OPACITY, 0.03, 0.7);
 
         enteringTransitionEffect.addAnimation([enteringTransitionCover, enteringTransitionShadow]);
         enteringContentAnimation.addAnimation([enteringTransitionEffect]);
@@ -294,35 +353,43 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
-    const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
-    enteringToolBarEls.forEach(enteringToolBarEl => {
+    const { forward, backward } = createLargeTitleTransition(
+      rootAnimation,
+      isRTL,
+      backDirection,
+      enteringEl,
+      leavingEl
+    );
+    enteringToolBarEls.forEach((enteringToolBarEl) => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);
       rootAnimation.addAnimation(enteringToolBar);
 
       const enteringTitle = createAnimation();
-      enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title')!);  // REVIEW
+      enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title')!); // REVIEW
 
       const enteringToolBarButtons = createAnimation();
       const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const parentHeader = enteringToolBarEl.closest('ion-header');
-      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-condense-inactive');
+      const inactiveHeader = parentHeader?.classList.contains('header-collapse-condense-inactive');
 
       let buttonsToAnimate;
       if (backDirection) {
-        buttonsToAnimate = buttons.filter(button => {
+        buttonsToAnimate = buttons.filter((button) => {
           const isCollapseButton = button.classList.contains('buttons-collapse');
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
       } else {
-        buttonsToAnimate = buttons.filter(button => !button.classList.contains('buttons-collapse'));
+        buttonsToAnimate = buttons.filter((button) => !button.classList.contains('buttons-collapse'));
       }
 
       enteringToolBarButtons.addElement(buttonsToAnimate);
 
       const enteringToolBarItems = createAnimation();
-      enteringToolBarItems.addElement(enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
+      enteringToolBarItems.addElement(
+        enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])')
+      );
 
       const enteringToolBarBg = createAnimation();
       enteringToolBarBg.addElement(shadow(enteringToolBarEl).querySelector('.toolbar-background')!); // REVIEW
@@ -334,12 +401,17 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         enteringBackButton.addElement(backButtonEl);
       }
 
-      enteringToolBar.addAnimation([enteringTitle, enteringToolBarButtons, enteringToolBarItems, enteringToolBarBg, enteringBackButton]);
+      enteringToolBar.addAnimation([
+        enteringTitle,
+        enteringToolBarButtons,
+        enteringToolBarItems,
+        enteringToolBarBg,
+        enteringBackButton,
+      ]);
       enteringToolBarButtons.fromTo(OPACITY, 0.01, 1);
       enteringToolBarItems.fromTo(OPACITY, 0.01, 1);
 
       if (backDirection) {
-
         if (!inactiveHeader) {
           enteringTitle
             .fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`)
@@ -365,7 +437,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         if (!translucentHeader) {
           enteringToolBarBg.fromTo(OPACITY, 0.01, 'var(--opacity)');
         } else {
-          enteringToolBarBg.fromTo('transform', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'), 'translateX(0px)');
+          enteringToolBarBg.fromTo('transform', isRTL ? 'translateX(-100%)' : 'translateX(100%)', 'translateX(0px)');
         }
 
         // forward direction, entering page has a back button
@@ -377,7 +449,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           const enteringBackBtnText = createAnimation();
           enteringBackBtnText
             .addElement(shadow(backButtonEl).querySelector('.button-text')!) // REVIEW
-            .fromTo(`transform`, (isRTL ? 'translateX(-100px)' : 'translateX(100px)'), 'translateX(0px)');
+            .fromTo(`transform`, isRTL ? 'translateX(-100px)' : 'translateX(100px)', 'translateX(0px)');
 
           enteringToolBar.addAnimation(enteringBackBtnText);
         }
@@ -389,12 +461,14 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       const leavingContent = createAnimation();
       const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
       const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
-      const leavingHeaderEls = leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
+      const leavingHeaderEls = leavingEl.querySelectorAll(
+        ':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *'
+      );
 
       if (!leavingContentEl && leavingToolBarEls.length === 0 && leavingHeaderEls.length === 0) {
-        leavingContent.addElement(leavingEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!);  // REVIEW
+        leavingContent.addElement(leavingEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!); // REVIEW
       } else {
-        leavingContent.addElement(leavingContentEl!);  // REVIEW
+        leavingContent.addElement(leavingContentEl!); // REVIEW
         leavingContent.addElement(leavingHeaderEls);
       }
 
@@ -404,7 +478,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         // leaving content, back direction
         leavingContent
           .beforeClearStyles([OPACITY])
-          .fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+          .fromTo('transform', `translateX(${CENTER})`, isRTL ? 'translateX(-100%)' : 'translateX(100%)');
 
         const leavingPage = getIonPageElement(leavingEl) as HTMLElement;
         rootAnimation.afterAddWrite(() => {
@@ -412,7 +486,6 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
             leavingPage.style.setProperty('display', 'none');
           }
         });
-
       } else {
         // leaving content, forward direction
         leavingContent
@@ -444,14 +517,14 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           leavingTransitionShadow
             .addElement(leavingTransitionShadowEl!) // REVIEW
             .beforeClearStyles([OPACITY])
-            .fromTo(OPACITY, 0.70, 0.03);
+            .fromTo(OPACITY, 0.7, 0.03);
 
           leavingTransitionEffect.addAnimation([leavingTransitionCover, leavingTransitionShadow]);
           leavingContent.addAnimation([leavingTransitionEffect]);
         }
       }
 
-      leavingToolBarEls.forEach(leavingToolBarEl => {
+      leavingToolBarEls.forEach((leavingToolBarEl) => {
         const leavingToolBar = createAnimation();
         leavingToolBar.addElement(leavingToolBarEl);
 
@@ -462,9 +535,9 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
 
         const parentHeader = leavingToolBarEl.closest('ion-header');
-        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-condense-inactive');
+        const inactiveHeader = parentHeader?.classList.contains('header-collapse-condense-inactive');
 
-        const buttonsToAnimate = Array.from(buttons).filter(button => {
+        const buttonsToAnimate = Array.from(buttons).filter((button) => {
           const isCollapseButton = button.classList.contains('buttons-collapse');
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
@@ -472,7 +545,9 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         leavingToolBarButtons.addElement(buttonsToAnimate);
 
         const leavingToolBarItems = createAnimation();
-        const leavingToolBarItemEls = leavingToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
+        const leavingToolBarItemEls = leavingToolBarEl.querySelectorAll(
+          ':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'
+        );
         if (leavingToolBarItemEls.length > 0) {
           leavingToolBarItems.addElement(leavingToolBarItemEls);
         }
@@ -486,7 +561,13 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           leavingBackButton.addElement(backButtonEl);
         }
 
-        leavingToolBar.addAnimation([leavingTitle, leavingToolBarButtons, leavingToolBarItems, leavingBackButton, leavingToolBarBg]);
+        leavingToolBar.addAnimation([
+          leavingTitle,
+          leavingToolBarButtons,
+          leavingToolBarItems,
+          leavingBackButton,
+          leavingToolBarBg,
+        ]);
         rootAnimation.addAnimation(leavingToolBar);
 
         // fade out leaving toolbar items
@@ -496,15 +577,18 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
         if (backDirection) {
-
           if (!inactiveHeader) {
             // leaving toolbar, back direction
             leavingTitle
-              .fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'))
+              .fromTo('transform', `translateX(${CENTER})`, isRTL ? 'translateX(-100%)' : 'translateX(100%)')
               .fromTo(OPACITY, 0.99, 0);
           }
 
-          leavingToolBarItems.fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+          leavingToolBarItems.fromTo(
+            'transform',
+            `translateX(${CENTER})`,
+            isRTL ? 'translateX(-100%)' : 'translateX(100%)'
+          );
           leavingToolBarBg.beforeClearStyles([OPACITY, 'transform']);
           // leaving toolbar, back direction, and there's no entering toolbar
           // should just slide out, no fading out
@@ -512,7 +596,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           if (!translucentHeader) {
             leavingToolBarBg.fromTo(OPACITY, 'var(--opacity)', 0);
           } else {
-            leavingToolBarBg.fromTo('transform', 'translateX(0px)', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+            leavingToolBarBg.fromTo('transform', 'translateX(0px)', isRTL ? 'translateX(-100%)' : 'translateX(100%)');
           }
 
           if (backButtonEl && !backward) {
@@ -522,7 +606,6 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
               .fromTo('transform', `translateX(${CENTER})`, `translateX(${(isRTL ? -124 : 124) + 'px'})`);
             leavingToolBar.addAnimation(leavingBackBtnText);
           }
-
         } else {
           // leaving toolbar, forward direction
           if (!inactiveHeader) {

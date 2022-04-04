@@ -1,5 +1,5 @@
 import { ROUTER_INTENT_FORWARD } from '../utils/constants';
-import { RouteChain } from '../utils/interface';
+import type { RouteChain } from '../utils/interface';
 import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from '../utils/path';
 
 describe('parsePath', () => {
@@ -47,7 +47,7 @@ describe('parsePath', () => {
     expect(parsePath('path/to/file.js').queryString).toBe(undefined);
     expect(parsePath('path/to/file.js?').queryString).toEqual('');
     expect(parsePath('path/to/file.js?a=b').queryString).toEqual('a=b');
-  });  
+  });
 });
 
 describe('generatePath', () => {
@@ -60,17 +60,8 @@ describe('generatePath', () => {
   });
 
   it('should genenerate a basic url', () => {
-    const stack = [
-      '',
-      '',
-      '',
-      'path/to',
-      'page',
-      'number-TWO',
-      ''
-    ];
+    const stack = ['', '', '', 'path/to', 'page', 'number-TWO', ''];
     expect(generatePath(stack)).toEqual('/path/to/page/number-TWO');
-
   });
 });
 
@@ -86,9 +77,7 @@ describe('chainToSegments', () => {
       { id: '7', segments: [':param'], params: { param: 'name' } },
       { id: '8', segments: ['adios', ':name', ':id'], params: { name: 'manu', id: '123' } },
     ];
-    expect(chainToSegments(chain)).toEqual(
-      ['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']
-    );
+    expect(chainToSegments(chain)).toEqual(['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']);
   });
 
   it('should return null on missing parameters', () => {
@@ -267,6 +256,6 @@ function mockHistory(): History {
 function mockLocation(pathname: string, hash: string): Location {
   return {
     pathname,
-    hash
+    hash,
   } as Location;
 }

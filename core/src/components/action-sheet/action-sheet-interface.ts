@@ -1,6 +1,6 @@
-import { JSXBase } from '@stencil/core/internal';
+import type { JSXBase } from '@stencil/core/internal';
 
-import { AnimationBuilder, Mode } from '../../interface';
+import type { AnimationBuilder, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -19,7 +19,7 @@ export interface ActionSheetOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export interface ActionSheetAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+export type ActionSheetAttributes = JSXBase.HTMLAttributes<HTMLElement>;
 
 export interface ActionSheetButton<T = any> {
   text?: string;
