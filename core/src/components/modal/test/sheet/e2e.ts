@@ -209,3 +209,43 @@ describe('modal: sheet: setting the breakpoint', () => {
   });
 
 });
+
+describe('clicking the handle', () => {
+
+  let page: E2EPage;
+
+  beforeEach(async () => {
+    page = await newE2EPage({
+      url: '/src/components/modal/test/sheet?ionic:_testing=true'
+    });
+  });
+
+  it('should advance to the next breakpoint', async () => {
+    const modal = await openModal(page, '#sheet-modal');
+    const handle = await page.find('ion-modal >>> .modal-handle');
+
+    await handle.click();
+    await modal.waitForEvent('ionBreakpointDidChange');
+
+    expect(await modal.callMethod('getCurrentBreakpoint')).toBe(0.5);
+
+    await handle.click();
+    await modal.waitForEvent('ionBreakpointDidChange');
+
+    expect(await modal.callMethod('getCurrentBreakpoint')).toBe(0.75);
+
+    await handle.click();
+    await modal.waitForEvent('ionBreakpointDidChange');
+
+    expect(await modal.callMethod('getCurrentBreakpoint')).toBe(1);
+
+    await handle.click();
+    await modal.waitForEvent('ionBreakpointDidChange');
+
+    // Advancing from the last breakpoint should change the breakpoint to the first non-zero breakpoint
+    expect(await modal.callMethod('getCurrentBreakpoint')).toBe(0.25);
+
+  });
+
+});
+
