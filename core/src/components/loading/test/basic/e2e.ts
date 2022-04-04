@@ -3,10 +3,10 @@ import { newE2EPage } from '@stencil/core/testing';
 import { testLoading } from '../test.utils';
 
 const DIRECTORY = 'basic';
-const getActiveElementText = async page => {
+const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return page.evaluate(el => el && el.textContent, activeElement);
-}
+  return page.evaluate((el) => el?.textContent, activeElement);
+};
 
 test('loading: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/loading/test/basic?ionic:_testing=true' });
@@ -108,7 +108,7 @@ test('loading: htmlAttributes', async () => {
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate(el => document.querySelector('ion-loading').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-loading').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-loading');
 });

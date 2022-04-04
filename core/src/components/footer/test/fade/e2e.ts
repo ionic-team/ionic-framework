@@ -1,13 +1,13 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 import { scrollToBottom } from '@utils/test';
 
 describe('footer: fade: iOS', () => {
-
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/footer/test/fade?ionic:_testing=true&ionic:mode=ios'
+      url: '/src/components/footer/test/fade?ionic:_testing=true&ionic:mode=ios',
     });
   });
 
@@ -24,5 +24,4 @@ describe('footer: fade: iOS', () => {
       expect(compare).toMatchScreenshot();
     }
   });
-
 });

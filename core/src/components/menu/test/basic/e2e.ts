@@ -3,10 +3,10 @@ import { newE2EPage } from '@stencil/core/testing';
 import { testMenu } from '../test.utils';
 
 const DIRECTORY = 'basic';
-const getActiveElementID = async page => {
+const getActiveElementID = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return page.evaluate(el => el && el.id, activeElement);
-}
+  return page.evaluate((el) => el?.id, activeElement);
+};
 
 test('menu: start menu', async () => {
   await testMenu(DIRECTORY, '#start-menu', 'first');

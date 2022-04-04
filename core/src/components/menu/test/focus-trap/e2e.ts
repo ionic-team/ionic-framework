@@ -1,13 +1,13 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-const getActiveElementID = async page => {
+const getActiveElementID = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return page.evaluate(el => el && el.id, activeElement);
-}
+  return page.evaluate((el) => el?.id, activeElement);
+};
 
 test('menu: focus trap with overlays', async () => {
   const page = await newE2EPage({
-    url: '/src/components/menu/test/focus-trap?ionic:_testing=true'
+    url: '/src/components/menu/test/focus-trap?ionic:_testing=true',
   });
 
   const ionDidOpen = await page.spyOnEvent('ionDidOpen');
@@ -35,7 +35,7 @@ test('menu: focus trap with overlays', async () => {
 
 test('menu: focus trap with content inside overlays', async () => {
   const page = await newE2EPage({
-    url: '/src/components/menu/test/focus-trap?ionic:_testing=true'
+    url: '/src/components/menu/test/focus-trap?ionic:_testing=true',
   });
 
   const ionDidOpen = await page.spyOnEvent('ionDidOpen');
@@ -59,7 +59,7 @@ test('menu: focus trap with content inside overlays', async () => {
 
 test('menu: should work with swipe gestures after modal is dismissed', async () => {
   const page = await newE2EPage({
-    url: '/src/components/menu/test/focus-trap?ionic:_testing=true'
+    url: '/src/components/menu/test/focus-trap?ionic:_testing=true',
   });
 
   const ionDidOpen = await page.spyOnEvent('ionDidOpen');
@@ -87,5 +87,4 @@ test('menu: should work with swipe gestures after modal is dismissed', async () 
   await page.waitForChanges();
 
   expect(menu.classList.contains('show-menu')).toBeTruthy();
-
 });

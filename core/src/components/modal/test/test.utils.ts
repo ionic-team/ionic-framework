@@ -1,16 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { generateE2EUrl } from '@utils/test';
 
-export const testModal = async (
-  type: string,
-  selector: string,
-  expectUnmount = true,
-  rtl = false
-) => {
+export const testModal = async (type: string, selector: string, expectUnmount = true, rtl = false) => {
   const pageUrl = generateE2EUrl('modal', type, rtl);
 
   const page = await newE2EPage({
-    url: pageUrl
+    url: pageUrl,
   });
 
   const screenshotCompares = [];

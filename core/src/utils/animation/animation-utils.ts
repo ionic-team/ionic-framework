@@ -1,4 +1,4 @@
-import { AnimationKeyFrames } from './animation-interface';
+import type { AnimationKeyFrames } from './animation-interface';
 
 let animationPrefix: string | undefined;
 
@@ -7,8 +7,9 @@ let animationPrefix: string | undefined;
  * to be written in camelCase when animating
  */
 export const processKeyframes = (keyframes: AnimationKeyFrames) => {
-  keyframes.forEach(keyframe => {
+  keyframes.forEach((keyframe) => {
     for (const key in keyframe) {
+      // eslint-disable-next-line no-prototype-builtins
       if (keyframe.hasOwnProperty(key)) {
         const value = keyframe[key];
 
@@ -39,7 +40,7 @@ export const getAnimationPrefix = (el: HTMLElement): string => {
   if (animationPrefix === undefined) {
     const supportsUnprefixed = (el.style as any).animationName !== undefined;
     const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
-    animationPrefix = (!supportsUnprefixed && supportsWebkitPrefix) ? '-webkit-' : '';
+    animationPrefix = !supportsUnprefixed && supportsWebkitPrefix ? '-webkit-' : '';
   }
   return animationPrefix;
 };
@@ -85,18 +86,21 @@ export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionE
 };
 
 export const generateKeyframeRules = (keyframes: any[] = []) => {
-  return keyframes.map(keyframe => {
-    const offset = keyframe.offset;
+  return keyframes
+    .map((keyframe) => {
+      const offset = keyframe.offset;
 
-    const frameString = [];
-    for (const property in keyframe) {
-      if (keyframe.hasOwnProperty(property) && property !== 'offset') {
-        frameString.push(`${property}: ${keyframe[property]};`);
+      const frameString = [];
+      for (const property in keyframe) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (keyframe.hasOwnProperty(property) && property !== 'offset') {
+          frameString.push(`${property}: ${keyframe[property]};`);
+        }
       }
-    }
 
-    return `${offset * 100}% { ${frameString.join(' ')} }`;
-  }).join(' ');
+      return `${offset * 100}% { ${frameString.join(' ')} }`;
+    })
+    .join(' ');
 };
 
 const keyframeIds: string[] = [];
@@ -104,17 +108,21 @@ const keyframeIds: string[] = [];
 export const generateKeyframeName = (keyframeRules: string) => {
   let index = keyframeIds.indexOf(keyframeRules);
   if (index < 0) {
-    index = (keyframeIds.push(keyframeRules) - 1);
+    index = keyframeIds.push(keyframeRules) - 1;
   }
   return `ion-animation-${index}`;
 };
 
 export const getStyleContainer = (element: HTMLElement) => {
-  const rootNode = (element.getRootNode() as any);
-  return (rootNode.head || rootNode);
+  const rootNode = element.getRootNode() as any;
+  return rootNode.head || rootNode;
 };
 
-export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: string, element: HTMLElement): HTMLElement => {
+export const createKeyframeStylesheet = (
+  keyframeName: string,
+  keyframeRules: string,
+  element: HTMLElement
+): HTMLElement => {
   const styleContainer = getStyleContainer(element);
   const keyframePrefix = getAnimationPrefix(element);
 
@@ -134,7 +142,7 @@ export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: st
 
 export const addClassToArray = (classes: string[] = [], className: string | string[] | undefined): string[] => {
   if (className !== undefined) {
-    const classNameToAppend = (Array.isArray(className)) ? className : [className];
+    const classNameToAppend = Array.isArray(className) ? className : [className];
 
     return [...classes, ...classNameToAppend];
   }

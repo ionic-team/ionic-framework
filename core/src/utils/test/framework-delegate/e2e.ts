@@ -9,7 +9,6 @@ test('framework-delegate: should present modal already at ion-app root', async (
   const modal = await page.find('#inline-root');
   expect(modal).not.toBe(null);
   await modal.waitForVisible();
-
 });
 
 test('framework-delegate: should present modal in content', async () => {

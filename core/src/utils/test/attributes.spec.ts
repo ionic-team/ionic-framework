@@ -10,7 +10,7 @@ describe('inheritAttributes()', () => {
 
     expect(attributeObject).toEqual({
       tabindex: '20',
-      title: 'myTitle'
+      title: 'myTitle',
     });
   });
 
@@ -21,7 +21,7 @@ describe('inheritAttributes()', () => {
     const attributeObject = inheritAttributes(el, ['tabindex', 'title']);
 
     expect(attributeObject).toEqual({
-      tabindex: '20'
+      tabindex: '20',
     });
   });
 
@@ -33,7 +33,7 @@ describe('inheritAttributes()', () => {
     const attributeObject = inheritAttributes(el, ['title']);
 
     expect(attributeObject).toEqual({
-      title: 'myTitle'
+      title: 'myTitle',
     });
   });
 });
