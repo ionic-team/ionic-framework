@@ -147,20 +147,23 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
  * https://github.com/GoogleChrome/puppeteer/issues/858#issuecomment-359763824
  */
 export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<ElementHandle> => {
-   const shadowSelectorFn = (el: Element, selector: string): Element | null => (el?.shadowRoot) && el.shadowRoot.querySelector(selector);
+  const shadowSelectorFn = (el: Element, selector: string): Element | null =>
+    el?.shadowRoot && el.shadowRoot.querySelector(selector);
 
-   // eslint-disable-next-line no-async-promise-executor
-   return new Promise(async resolve => {
-     const [firstSelector, ...restSelectors] = selectors;
-     let parentElement = await page.$(firstSelector);
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve) => {
+    const [firstSelector, ...restSelectors] = selectors;
+    let parentElement = await page.$(firstSelector);
 
-     for (const selector of restSelectors) {
-       parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
-     }
+    for (const selector of restSelectors) {
+      parentElement = (await page.evaluateHandle(shadowSelectorFn, parentElement, selector)) as any;
+    }
 
-     if (parentElement) { resolve(parentElement); }
-   });
- };
+    if (parentElement) {
+      resolve(parentElement);
+    }
+  });
+};
 /**
  * Given an element and optional selector, use the selector if
  * it exists or get the node name of that element if not. Combine
