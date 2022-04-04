@@ -101,7 +101,7 @@ export const dragElementBy = async (
   startCoordinates?: { x: number; y: number }
 ): Promise<void> => {
   try {
-    const boundingBox = await element.boundingBox();
+    const boundingBox = (await element.boundingBox())!;
 
     const startX = startCoordinates?.x === undefined ? boundingBox.x + boundingBox.width / 2 : startCoordinates.x;
     const startY = startCoordinates?.y === undefined ? boundingBox.y + boundingBox.height / 2 : startCoordinates.y;

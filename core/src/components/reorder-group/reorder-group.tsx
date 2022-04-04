@@ -6,7 +6,6 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
-import { componentOnReady } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 const enum ReorderGroupState {

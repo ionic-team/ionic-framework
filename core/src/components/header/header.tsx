@@ -6,7 +6,7 @@ import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Attributes } from '../../utils/helpers';
-import { componentOnReady, inheritAttributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import {
