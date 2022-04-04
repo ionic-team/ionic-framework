@@ -5,12 +5,12 @@ describe('Content Utils', () => {
   describe('getScrollElement', () => {
 
     it('should return the scroll element for ion-content', async () => {
-      const res = await getScrollElement(<any>{
+      const res = await getScrollElement({
         tagName: 'ION-CONTENT',
         getScrollElement: () => Promise.resolve({
           tagName: 'my-scroll-element'
         })
-      });
+      } as any);
 
       expect(res).toStrictEqual({
         tagName: 'my-scroll-element'
@@ -24,9 +24,9 @@ describe('Content Utils', () => {
     it('should query the ion-content element', () => {
       const querySelectorMock = jest.fn();
 
-      findIonContent(<any>{
+      findIonContent({
         querySelector: querySelectorMock
-      });
+      } as any);
 
       expect(querySelectorMock).toHaveBeenCalledWith('ion-content, .ion-content-scroll-host');
     });
@@ -38,9 +38,9 @@ describe('Content Utils', () => {
     it('should query the closest ion-content', () => {
       const closestMock = jest.fn();
 
-      findClosestIonContent(<any>{
+      findClosestIonContent({
         closest: closestMock
-      });
+      } as any);
 
       expect(closestMock).toHaveBeenCalledWith('ion-content, .ion-content-scroll-host');
     });
@@ -53,10 +53,10 @@ describe('Content Utils', () => {
       it('should call scrollToTop when the tag name is ion-content', () => {
         const scrollToTopMock = jest.fn();
 
-        scrollToTop(<any>{
+        scrollToTop({
           tagName: 'ION-CONTENT',
           scrollToTop: scrollToTopMock
-        }, 0);
+        } as any, 0);
 
         expect(scrollToTopMock).toHaveBeenCalledWith(0);
       });
@@ -64,10 +64,10 @@ describe('Content Utils', () => {
       it('should call the element scrollTo when the tag name is not ion-content', async () => {
         const scrollToMock = jest.fn();
 
-        await scrollToTop(<any>{
+        await scrollToTop({
           tagName: 'DIV',
           scrollTo: scrollToMock
-        }, 0);
+        } as any, 0);
 
         expect(scrollToMock).toHaveBeenCalledWith({
           top: 0,
@@ -83,10 +83,10 @@ describe('Content Utils', () => {
       it('should smooth scroll ion-content', () => {
         const scrollToTopMock = jest.fn();
 
-        scrollToTop(<any>{
+        scrollToTop({
           tagName: 'ION-CONTENT',
           scrollToTop: scrollToTopMock
-        }, 300);
+        } as any, 300);
 
         expect(scrollToTopMock).toHaveBeenCalledWith(300);
       });
@@ -94,10 +94,10 @@ describe('Content Utils', () => {
       it('should smooth scroll the element', async () => {
         const scrollToMock = jest.fn();
 
-        await scrollToTop(<any>{
+        await scrollToTop({
           tagName: 'DIV',
           scrollTo: scrollToMock
-        }, 300);
+        } as any, 300);
 
         expect(scrollToMock).toHaveBeenCalledWith({
           top: 0,
@@ -117,10 +117,10 @@ describe('Content Utils', () => {
       it('should call scrollByPoint when the tag name is ion-content', async () => {
         const scrollByPointMock = jest.fn();
 
-        await scrollByPoint(<any>{
+        await scrollByPoint({
           tagName: 'ION-CONTENT',
           scrollByPoint: scrollByPointMock
-        }, 10, 15, 0);
+        } as any, 10, 15, 0);
 
         expect(scrollByPointMock).toHaveBeenCalledWith(10, 15, 0);
       });
@@ -128,10 +128,10 @@ describe('Content Utils', () => {
       it('should call the element scrollBy when the tag name is not ion-content', async () => {
         const scrollByMock = jest.fn();
 
-        await scrollByPoint(<any>{
+        await scrollByPoint({
           tagName: 'DIV',
           scrollBy: scrollByMock
-        }, 10, 15, 0);
+        } as any, 10, 15, 0);
 
         expect(scrollByMock).toHaveBeenCalledWith({
           top: 15,
@@ -147,10 +147,10 @@ describe('Content Utils', () => {
       it('should smooth scroll ion-content', async () => {
         const scrollByPointMock = jest.fn();
 
-        await scrollByPoint(<any>{
+        await scrollByPoint({
           tagName: 'ION-CONTENT',
           scrollByPoint: scrollByPointMock
-        }, 10, 15, 300);
+        } as any, 10, 15, 300);
 
         expect(scrollByPointMock).toHaveBeenCalledWith(10, 15, 300);
       });
@@ -158,10 +158,10 @@ describe('Content Utils', () => {
       it('should smooth scroll the element', async () => {
         const scrollByMock = jest.fn();
 
-        await scrollByPoint(<any>{
+        await scrollByPoint({
           tagName: 'DIV',
           scrollBy: scrollByMock
-        }, 10, 15, 300);
+        } as any, 10, 15, 300);
 
         expect(scrollByMock).toHaveBeenCalledWith({
           top: 15,
@@ -177,9 +177,9 @@ describe('Content Utils', () => {
   it('printIonContentErrorMsg should display "<my-el> must be used inside ion-content."', () => {
     const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
-    printIonContentErrorMsg(<any>{
+    printIonContentErrorMsg({
       tagName: 'MY-EL'
-    });
+    } as any);
 
     expect(consoleErrorMock).toHaveBeenCalledWith('<my-el> must be used inside ion-content.');
 

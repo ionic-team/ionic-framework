@@ -2,7 +2,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { printIonError } from '@utils/logging';
-
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -12,7 +11,7 @@ import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputChangeEventDetail } from '../input/input-interface';
 
-import { CounterFormatter } from './item-interface';
+import type { CounterFormatter } from './item-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

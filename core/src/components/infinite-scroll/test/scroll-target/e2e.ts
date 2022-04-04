@@ -1,6 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
 import type { E2EPage } from '@stencil/core/testing';
-
 import { scrollToBottom } from '@utils/test';
 
 /**

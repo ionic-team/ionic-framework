@@ -1,8 +1,9 @@
-import { E2EElement, E2EPage, newE2EPage } from '@stencil/core/testing';
-import { openModal, testModal } from '../test.utils';
+import type { E2EElement, E2EPage} from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 import { getActiveElement, getActiveElementParent, dragElementBy } from '@utils/test';
 
-import { testModal } from '../test.utils';
+import { openModal, testModal , testModal } from '../test.utils';
+
 
 const DIRECTORY = 'sheet';
 

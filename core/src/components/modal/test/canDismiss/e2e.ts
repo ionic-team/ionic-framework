@@ -332,7 +332,6 @@ describe('modal - canDismiss handler', () => {
 
     it('should not dismiss on swipe when not attempting to close', async () => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const ionHandlerDone = await page.spyOnEvent('ionHandlerDone');
       const screenshotCompares = [];
 
       await page.click('#radio-promise-true');

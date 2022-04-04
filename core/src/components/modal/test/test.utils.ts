@@ -1,5 +1,5 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
-
+import type { E2EPage} from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 import { generateE2EUrl } from '@utils/test';
 
 export const openModal = async (

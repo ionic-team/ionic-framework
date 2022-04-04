@@ -1,4 +1,5 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+import type { E2EPage} from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('item: counter', () => {
 
@@ -75,7 +76,7 @@ describe('item: counter', () => {
           }
         });
 
-        let itemCounter = await page.find('ion-item >>> .item-counter');
+        const itemCounter = await page.find('ion-item >>> .item-counter');
 
         expect(itemCounter.textContent).toBe('0 / 20');
 
@@ -105,13 +106,5 @@ describe('item: counter', () => {
       });
 
     });
-
-<<<<<<< HEAD
-=======
-test('item: counter-rtl', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true',
->>>>>>> origin/main
   });
-
 })

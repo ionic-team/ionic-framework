@@ -1,6 +1,7 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
-import { GestureDetail, createGesture } from '../../../utils/gesture';
+import type { GestureDetail} from '../../../utils/gesture';
+import { createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';

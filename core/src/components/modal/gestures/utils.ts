@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 
 export const handleCanDismiss = async (
   el: HTMLIonModalElement,

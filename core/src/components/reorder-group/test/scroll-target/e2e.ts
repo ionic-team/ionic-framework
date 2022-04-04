@@ -1,7 +1,7 @@
 import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
-import { getElementProperty, queryDeep } from '../../../../utils/test/utils';
+import { getElementProperty } from '../../../../utils/test/utils';
 import { moveReorderItem } from '../test.utils';
 
 it('reorder: custom scroll target', async () => {
