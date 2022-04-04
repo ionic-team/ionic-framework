@@ -691,7 +691,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private onHandleClick = () => {
     const { breakpoints, currentBreakpoint } = this;
-    if (breakpoints && breakpoints.length > 1 && currentBreakpoint) {
+    if (breakpoints && breakpoints.length > 1 && currentBreakpoint !== undefined) {
       const currentBreakpointIndex = breakpoints.indexOf(currentBreakpoint);
       /**
        * Defaults to the first breakpoint. If the first breakpoint is 0, we select
