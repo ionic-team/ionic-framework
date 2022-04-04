@@ -691,21 +691,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private onHandleClick = () => {
     const { breakpoints, currentBreakpoint } = this;
-    if (breakpoints && breakpoints.length > 1 && currentBreakpoint !== undefined) {
-      const currentBreakpointIndex = breakpoints.indexOf(currentBreakpoint);
+    if (breakpoints && currentBreakpoint !== undefined) {
+      const allowedBreakpoints = breakpoints.filter(b => b !== 0);
+      const currentBreakpointIndex = allowedBreakpoints.indexOf(currentBreakpoint);
+      const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length + 1;
       /**
-       * Defaults to the first breakpoint. If the first breakpoint is 0, we select
-       * the second breakpoint to avoid tapping the handle to dismiss the sheet.
+       * Sets the current breakpoint to the next available breakpoint.
+       * If the current breakpoint is the last breakpoint, we set the current
+       * breakpoint to the first non-zero breakpoint to avoid dismissing the sheet.
        */
-      let nextBreakpoint = breakpoints[0] || breakpoints[1];
-      if (currentBreakpointIndex !== breakpoints.length - 1) {
-        /**
-         * Since the current breakpoint is not the last breakpoint,
-         * we advance to the next breakpoint.
-         */
-        nextBreakpoint = breakpoints[currentBreakpointIndex + 1];
-      }
-      this.setCurrentBreakpoint(nextBreakpoint);
+      this.setCurrentBreakpoint(breakpoints[nextBreakpointIndex]);
     }
   }
 
