@@ -20,50 +20,25 @@
 <body>
   <ion-app>
 
-      <ion-content class="ion-padding" id="content">
-        <ion-button
-          id="basic-popover"
-          expand="block"
-          onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })"
-          >Show Popover</ion-button
-        >
-        <ion-button
-          id="translucent-popover"
-          expand="block"
-          onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })"
-          >Show Translucent Popover</ion-button
-        >
-        <ion-button
-          id="long-list-popover"
-          expand="block"
-          color="secondary"
-          onclick="presentPopover({ component: 'list-page', event: event })"
-          >Show Long List Popover</ion-button
-        >
-        <ion-button
-          id="no-event-popover"
-          expand="block"
-          color="danger"
-          onclick="presentPopover({ component: 'profile-page' })"
-          >No Event Popover</ion-button
-        >
-        <ion-button
-          id="custom-class-popover"
-          expand="block"
-          color="tertiary"
-          onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })"
-          >Custom Class Popover</ion-button
-        >
-        <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })"
-          >Popover With Header</ion-button
-        >
-        <ion-button
-          id="translucent-header-popover"
-          expand="block"
-          onclick="presentPopover({ component: 'translucent-header-page' })"
-          >Popover With Translucent Header</ion-button
-        >
-      </ion-content>
+    <ion-content class="ion-padding" id="content">
+      <ion-button id="basic-popover" expand="block"
+        onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })">
+        Show Popover</ion-button>
+      <ion-button id="translucent-popover" expand="block"
+        onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent
+        Popover</ion-button>
+      <ion-button id="long-list-popover" expand="block" color="secondary"
+        onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
+      <ion-button id="no-event-popover" expand="block" color="danger"
+        onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
+      <ion-button id="custom-class-popover" expand="block" color="tertiary"
+        onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom
+        Class Popover</ion-button>
+      <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">Popover With
+        Header</ion-button>
+      <ion-button id="translucent-header-popover" expand="block"
+        onclick="presentPopover({ component: 'translucent-header-page' })">Popover With Translucent Header</ion-button>
+    </ion-content>
 
     <ion-content class="ion-padding" id="content">
       <ion-button id="basic-popover" expand="block"
@@ -217,25 +192,27 @@
         }
       }
 
-    customElements.define('translucent-header-page', TranslucentHeaderPage);
+      customElements.define('translucent-header-page', TranslucentHeaderPage);
 
-    class TextAreaPage extends HTMLElement {
-      constructor() {
-        super();
-      }
+      class TextAreaPage extends HTMLElement {
+        constructor() {
+          super();
+        }
 
-      connectedCallback() {
-        this.innerHTML = `
+        connectedCallback() {
+          this.innerHTML = `
           <ion-content>
             <ion-textarea rows="4" style="max-height: 44px; overflow-y: auto;" value="the cursor in this <ion-textarea>\nmust be able to be moved\nwith the arrow keys and\nhome and end keys"></ion-textarea>
             <textarea rows="4" style="display:block;width: 100%;border: 0;padding: 8px; max-height: 44px; overflow-y: auto">the cursor in this <textarea>\nmust be able to be moved\nwith the arrow keys and\nhome and end keys</textarea>
           </ion-content>
         `;
+        }
       }
-    }
 
-    customElements.define('textarea-page', TextAreaPage);
-  </script>
+      customElements.define('textarea-page', TextAreaPage);
+    </script>
+
+  </ion-app>
 </body>
 
 </html>
