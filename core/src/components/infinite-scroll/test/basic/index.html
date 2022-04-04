@@ -56,32 +56,17 @@
           el.textContent = `${1 + i}`;
           list.appendChild(el);
         }
+      }
 
-        infiniteScroll.addEventListener('ionInfinite', async function () {
-          await wait(500);
-          infiniteScroll.complete();
-          appendItems();
-          // Custom event consumed in the e2e tests
-          document.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
+      function wait(time) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, time);
         });
+      }
 
-        function appendItems() {
-          for (var i = 0; i < 30; i++) {
-            const el = document.createElement('ion-item');
-            el.textContent = `${1 + i}`;
-            list.appendChild(el);
-          }
-        }
-
-        function wait(time) {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-            }, time);
-          });
-        }
-
-        appendItems();
+      appendItems();
     </script>
   </body>
 </html>

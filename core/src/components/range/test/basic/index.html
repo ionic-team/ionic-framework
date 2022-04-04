@@ -203,114 +203,78 @@
     </ion-app>
 
     <script>
-          const progressValue = document.getElementById('progressValue');
-          const brightnessValue = document.getElementById('brightnessValue');
-          const contrastValue = document.getElementById('contrastValue');
+      const progressValue = document.getElementById('progressValue');
+      const brightnessValue = document.getElementById('brightnessValue');
+      const contrastValue = document.getElementById('contrastValue');
 
-          const ranges = [progressValue, brightnessValue, contrastValue];
+      const ranges = [progressValue, brightnessValue, contrastValue];
 
-          for (var i = 0; i < ranges.length; i++) {
-            var el = ranges[i];
-            el.value = (i + 1) * 10;
-            updateRangeResult(el);
+      for (var i = 0; i < ranges.length; i++) {
+        var el = ranges[i];
+        el.value = (i + 1) * 10;
+        updateRangeResult(el);
 
-            el.addEventListener('ionChange', function (ev) {
-              updateRangeResult(ev.target);
-            });
+        el.addEventListener('ionChange', function (ev) {
+          updateRangeResult(ev.target);
+        });
+      }
+
+      progressValue.addEventListener('ionChange', function (ev) {
+        console.log(ev.detail.value);
+        brightnessValue.value = ev.detail.value;
+        contrastValue.value = ev.target.value;
+      });
+
+      function updateRangeResult(el) {
+        var resultEl = document.getElementById(`${el.id}Result`);
+        resultEl.innerHTML = Math.round(el.value);
+      }
+
+      function increaseRangeValues() {
+        for (var i = 0; i < ranges.length; i++) {
+          var el = ranges[i];
+          var newValue = el.value + 10;
+
+          if (newValue > 100) {
+            newValue = 10;
           }
 
-            for (var i = 0; i < ranges.length; i++) {
-              var el = ranges[i];
-              el.value = (i + 1) * 10;
-              updateRangeResult(el);
+          el.value = newValue;
+        }
+      }
 
-              el.addEventListener('ionChange', function (ev) {
-                updateRangeResult(ev.target);
-              });
-            }
+      var knob = document.getElementById('multiKnob');
+      var debounceRange = document.getElementById('debounce');
+      knob.value = {
+        lower: 33,
+        upper: 60,
+      };
 
-            progressValue.addEventListener('ionChange', function (ev) {
-              console.log(ev.detail.value);
-              brightnessValue.value = ev.detail.value;
-              contrastValue.value = ev.target.value;
-            });
+      function elTest() {
+        var range = document.getElementById('range');
+        range.disabled = !range.disabled;
+      }
 
-            function updateRangeResult(el) {
-              var resultEl = document.getElementById(`${el.id}Result`);
-              resultEl.innerHTML = Math.round(el.value);
-            }
+      const minRange = document.getElementById('minRange');
+      const maxRange = document.getElementById('maxRange');
+      const targetRange = document.getElementById('targetRange');
 
-            function increaseRangeValues() {
-              for (var i = 0; i < ranges.length; i++) {
-                var el = ranges[i];
-                var newValue = el.value + 10;
+      minRange.addEventListener('ionChange', function (ev) {
+        targetRange.min = ev.detail.value;
+      });
 
-                if (newValue > 100) {
-                  newValue = 10;
-                }
+      maxRange.addEventListener('ionChange', function (ev) {
+        targetRange.max = ev.detail.value;
+      });
 
-                el.value = newValue;
-              }
-            }
+      const rangePart = document.querySelector('.range-part');
+      rangePart.value = {
+        lower: '-100',
+        upper: '100',
+      };
 
-      <<<<<<< HEAD
-          var knob = document.getElementById('multiKnob')
-          var debounceRange = document.getElementById('debounce')
-          knob.value = {
-            lower: 33,
-            upper: 60
-          };
-
-          function elTest() {
-            var range = document.getElementById('range');
-            range.disabled = !range.disabled;
-          }
-      =======
-            var knob = document.getElementById('multiKnob');
-            var debounceRange = document.getElementById('debounce');
-            knob.value = {
-              lower: 33,
-              upper: 60,
-            };
-            knob.addEventListener('ionFocus', function (ev) {
-              console.log('focus', ev);
-            });
-            knob.addEventListener('ionBlur', function (ev) {
-              console.log('blur', ev);
-            });
-            knob.addEventListener('ionChange', function (ev) {
-              console.log('change', ev);
-            });
-            debounceRange.addEventListener('ionChange', function (ev) {
-              console.log('change', ev);
-            });
-      >>>>>>> origin/main
-
-            function elTest() {
-              var range = document.getElementById('range');
-              range.disabled = !range.disabled;
-            }
-
-            const minRange = document.getElementById('minRange');
-            const maxRange = document.getElementById('maxRange');
-            const targetRange = document.getElementById('targetRange');
-
-            minRange.addEventListener('ionChange', function (ev) {
-              targetRange.min = ev.detail.value;
-            });
-
-            maxRange.addEventListener('ionChange', function (ev) {
-              targetRange.max = ev.detail.value;
-            });
-
-            const rangePart = document.querySelector('.range-part');
-            rangePart.value = {
-              lower: '-100',
-              upper: '100',
-            };
-
-            const customLabel = document.getElementById('customLabel');
-            customLabel.pinFormatter = (value) => value.toFixed(1);
+      const customLabel = document.getElementById('customLabel');
+      customLabel.pinFormatter = (value) => value.toFixed(1);
     </script>
   </body>
 </html>
