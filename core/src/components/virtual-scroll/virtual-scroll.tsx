@@ -1,17 +1,52 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
+import type { ComponentInterface, FunctionalComponent } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+  readTask,
+  writeTask,
+} from '@stencil/core';
 
-import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import type {
+  Cell,
+  DomRenderFn,
+  FooterHeightFn,
+  HeaderFn,
+  HeaderHeightFn,
+  ItemHeightFn,
+  ItemRenderFn,
+  VirtualNode,
+} from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
-import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+import type { Range } from './virtual-scroll-utils';
+import {
+  calcCells,
+  calcHeightIndex,
+  doRender,
+  findCellIndex,
+  getRange,
+  getShouldUpdate,
+  getViewport,
+  inplaceUpdate,
+  positionForIndex,
+  resizeBuffer,
+  updateVDom,
+} from './virtual-scroll-utils';
 
 @Component({
   tag: 'ion-virtual-scroll',
-  styleUrl: 'virtual-scroll.scss'
+  styleUrl: 'virtual-scroll.scss',
 })
 export class VirtualScroll implements ComponentInterface {
-
   private contentEl?: HTMLElement;
   private scrollEl?: HTMLElement;
   private range: Range = { offset: 0, length: 0 };
@@ -154,7 +189,9 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   componentWillLoad() {
-    console.warn(`[Deprecation Warning]: ion-virtual-scroll has been deprecated and will be removed in Ionic Framework v7.0. See https://ionicframework.com/docs/angular/virtual-scroll for migration steps.`);
+    console.warn(
+      `[Deprecation Warning]: ion-virtual-scroll has been deprecated and will be removed in Ionic Framework v7.0. See https://ionicframework.com/docs/angular/virtual-scroll for migration steps.`
+    );
   }
 
   async connectedCallback() {
@@ -204,9 +241,7 @@ export class VirtualScroll implements ComponentInterface {
     if (!this.items) {
       return;
     }
-    const length = (len === -1)
-      ? this.items.length - offset
-      : len;
+    const length = len === -1 ? this.items.length - offset : len;
 
     const cellIndex = findCellIndex(this.cells, offset);
     const cells = calcCells(
@@ -219,7 +254,9 @@ export class VirtualScroll implements ComponentInterface {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      cellIndex, offset, length
+      cellIndex,
+      offset,
+      length
     );
     this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
@@ -246,7 +283,7 @@ export class VirtualScroll implements ComponentInterface {
 
   private onScroll = () => {
     this.updateVirtualScroll();
-  }
+  };
 
   private updateVirtualScroll() {
     // do nothing if virtual-scroll is disabled
@@ -301,12 +338,7 @@ export class VirtualScroll implements ComponentInterface {
     this.range = range;
 
     // in place mutation of the virtual DOM
-    updateVDom(
-      this.virtualDom,
-      heightIndex,
-      this.cells,
-      range
-    );
+    updateVDom(this.virtualDom, heightIndex, this.cells, range);
 
     // Write DOM
     // Different code paths taken depending of the render API used
@@ -354,10 +386,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   private updateState() {
-    const shouldEnable = !!(
-      this.scrollEl &&
-      this.cells
-    );
+    const shouldEnable = !!(this.scrollEl && this.cells);
     if (shouldEnable !== this.isEnabled) {
       this.enableScrollEvents(shouldEnable);
       if (shouldEnable) {
@@ -381,7 +410,9 @@ export class VirtualScroll implements ComponentInterface {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      0, 0, this.lastItemLen
+      0,
+      0,
+      this.lastItemLen
     );
     this.indexDirty = 0;
   }
@@ -420,9 +451,12 @@ export class VirtualScroll implements ComponentInterface {
   private renderVirtualNode(node: VirtualNode) {
     const { type, value, index } = node.cell;
     switch (type) {
-      case CELL_TYPE_ITEM: return this.renderItem!(value, index);
-      case CELL_TYPE_HEADER: return this.renderHeader!(value, index);
-      case CELL_TYPE_FOOTER: return this.renderFooter!(value, index);
+      case CELL_TYPE_ITEM:
+        return this.renderItem!(value, index);
+      case CELL_TYPE_HEADER:
+        return this.renderHeader!(value, index);
+      case CELL_TYPE_FOOTER:
+        return this.renderFooter!(value, index);
     }
   }
 
@@ -430,12 +464,12 @@ export class VirtualScroll implements ComponentInterface {
     return (
       <Host
         style={{
-          height: `${this.totalHeight}px`
+          height: `${this.totalHeight}px`,
         }}
       >
         {this.renderItem && (
           <VirtualProxy dom={this.virtualDom}>
-            {this.virtualDom.map(node => this.renderVirtualNode(node))}
+            {this.virtualDom.map((node) => this.renderVirtualNode(node))}
           </VirtualProxy>
         )}
       </Host>
@@ -443,7 +477,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{ dom: VirtualNode[] }> = ({ dom }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};
@@ -459,9 +493,9 @@ const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, childr
         class: classes,
         style: {
           ...vattrs.style,
-          transform: `translate3d(0,${node.top}px,0)`
-        }
-      }
+          transform: `translate3d(0,${node.top}px,0)`,
+        },
+      },
     };
   });
 };

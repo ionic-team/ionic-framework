@@ -1,6 +1,7 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
-import { GestureDetail, createGesture } from '../../../utils/gesture';
+import type { GestureDetail } from '../../../utils/gesture';
+import { createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
 // Defaults for the card swipe animation
@@ -8,19 +9,14 @@ export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
-export const createSwipeToCloseGesture = (
-  el: HTMLIonModalElement,
-  animation: Animation,
-  onDismiss: () => void
-) => {
+export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
   const height = el.offsetHeight;
   let isOpen = false;
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
 
-    if (target === null ||
-       !(target as any).closest) {
+    if (target === null || !(target as any).closest) {
       return true;
     }
 
@@ -35,7 +31,7 @@ export const createSwipeToCloseGesture = (
   };
 
   const onStart = () => {
-    animation.progressStart(true, (isOpen) ? 1 : 0);
+    animation.progressStart(true, isOpen ? 1 : 0);
   };
 
   const onMove = (detail: GestureDetail) => {
@@ -52,7 +48,7 @@ export const createSwipeToCloseGesture = (
     const threshold = (detail.deltaY + velocity * 1000) / height;
 
     const shouldComplete = threshold >= 0.5;
-    let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+    let newStepValue = shouldComplete ? -0.001 : 0.001;
 
     if (!shouldComplete) {
       animation.easing('cubic-bezier(1, 0, 0.68, 0.28)');
@@ -62,7 +58,9 @@ export const createSwipeToCloseGesture = (
       newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
     }
 
-    const duration = (shouldComplete) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
+    const duration = shouldComplete
+      ? computeDuration(step * height, velocity)
+      : computeDuration((1 - step) * height, velocity);
     isOpen = shouldComplete;
 
     gesture.enable(false);
@@ -73,7 +71,7 @@ export const createSwipeToCloseGesture = (
           gesture.enable(true);
         }
       })
-      .progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
+      .progressEnd(shouldComplete ? 1 : 0, newStepValue, duration);
 
     if (shouldComplete) {
       onDismiss();
@@ -89,7 +87,7 @@ export const createSwipeToCloseGesture = (
     canStart,
     onStart,
     onMove,
-    onEnd
+    onEnd,
   });
   return gesture;
 };

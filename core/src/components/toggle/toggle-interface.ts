@@ -1,4 +1,3 @@
-
 export interface ToggleChangeEventDetail<T = any> {
   value: T;
   checked: boolean;

@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -11,12 +12,11 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-list-header',
   styleUrls: {
     ios: 'list-header.ios.scss',
-    md: 'list-header.md.scss'
+    md: 'list-header.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ListHeader implements ComponentInterface {
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -38,8 +38,7 @@ export class ListHeader implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           [`list-header-lines-${lines}`]: lines !== undefined,
-        }
-        )}
+        })}
       >
         <div class="list-header-inner">
           <slot></slot>

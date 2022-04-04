@@ -4,7 +4,7 @@ import { closeItemSliding, openItemSliding } from '../test.utils';
 
 test('item-sliding: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item-sliding/test/standalone?ionic:_testing=true'
+    url: '/src/components/item-sliding/test/standalone?ionic:_testing=true',
   });
 
   const compares = [];
@@ -32,7 +32,7 @@ test('item-sliding: standalone', async () => {
 
 test('item-sliding:rtl: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item-sliding/test/standalone?ionic:_testing=true&rtl=true'
+    url: '/src/components/item-sliding/test/standalone?ionic:_testing=true&rtl=true',
   });
 
   const compares = [];

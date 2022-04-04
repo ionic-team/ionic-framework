@@ -1,79 +1,115 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Popover - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popover - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
   <script type="module">
     import { popoverController } from '../../../../dist/ionic/index.esm.js';
     window.popoverController = popoverController;
   </script>
-<body>
-  <ion-app>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="secondary">
+            <ion-button onclick="presentPopover({component: 'profile-page', event: event })">
+              <ion-icon slot="icon-only" name="person"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Popover - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="secondary">
-          <ion-button onclick="presentPopover({component: 'profile-page', event: event })">
-            <ion-icon slot="icon-only" name="person"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Popover - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
+      <ion-content class="ion-padding" id="content">
+        <ion-button
+          id="basic-popover"
+          expand="block"
+          onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })"
+          >Show Popover</ion-button
+        >
+        <ion-button
+          id="translucent-popover"
+          expand="block"
+          onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })"
+          >Show Translucent Popover</ion-button
+        >
+        <ion-button
+          id="long-list-popover"
+          expand="block"
+          color="secondary"
+          onclick="presentPopover({ component: 'list-page', event: event })"
+          >Show Long List Popover</ion-button
+        >
+        <ion-button
+          id="no-event-popover"
+          expand="block"
+          color="danger"
+          onclick="presentPopover({ component: 'profile-page' })"
+          >No Event Popover</ion-button
+        >
+        <ion-button
+          id="custom-class-popover"
+          expand="block"
+          color="tertiary"
+          onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })"
+          >Custom Class Popover</ion-button
+        >
+        <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })"
+          >Popover With Header</ion-button
+        >
+        <ion-button
+          id="translucent-header-popover"
+          expand="block"
+          onclick="presentPopover({ component: 'translucent-header-page' })"
+          >Popover With Translucent Header</ion-button
+        >
+      </ion-content>
 
-    <ion-content class="ion-padding" id="content">
-      <ion-button id="basic-popover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })">Show Popover</ion-button>
-      <ion-button id="translucent-popover" expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
-      <ion-button id="long-list-popover" expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
-      <ion-button id="no-event-popover" expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
-      <ion-button id="custom-class-popover" expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
-      <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">Popover With Header</ion-button>
-      <ion-button id="translucent-header-popover" expand="block" onclick="presentPopover({ component: 'translucent-header-page' })">Popover With Translucent Header</ion-button>
-    </ion-content>
+      <ion-footer>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="primary">
+            <ion-button onclick="presentPopover({component: 'profile-page', event: event })">
+              <ion-icon slot="icon-only" name="person"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Popover</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-app>
 
-    <ion-footer>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="primary">
-          <ion-button onclick="presentPopover({component: 'profile-page', event: event })">
-            <ion-icon slot="icon-only" name="person"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Popover</ion-title>
-      </ion-toolbar>
-    </ion-footer>
+    <style>
+      .my-custom-class {
+        --background: rgba(40, 173, 218, 0.6);
+        --width: 300px;
+        --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.6);
 
-  </ion-app>
+        color: white;
+      }
+    </style>
 
-  <style>
-    .my-custom-class {
-      --background: rgba(40, 173, 218, .6);
-      --width: 300px;
-      --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .6);
-
-      color: white;
-    }
-  </style>
-
-  <script>
-    async function presentPopover(opts) {
-      const popover = await popoverController.create(opts);
-      await popover.present();
-    }
-
-    class ProfilePage extends HTMLElement {
-      constructor() {
-        super();
+    <script>
+      async function presentPopover(opts) {
+        const popover = await popoverController.create(opts);
+        await popover.present();
       }
 
-      connectedCallback() {
-        this.innerHTML = `
+      class ProfilePage extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.innerHTML = `
           <ion-content>
             <ion-list>
               <ion-list-header><ion-label>Ionic</ion-label></ion-list-header>
@@ -84,58 +120,61 @@
             </ion-list>
           </ion-content>
         `;
-      }
-    }
-
-    customElements.define('profile-page', ProfilePage);
-
-    class ListPage extends HTMLElement {
-      constructor() {
-        super();
+        }
       }
 
-      connectedCallback() {
-        let items = '';
-        for (var i = 0; i < 30; i++) {
-          items += '<ion-item><ion-label>Item ' + i + '</ion-label></ion-item>';
+      customElements.define('profile-page', ProfilePage);
+
+      class ListPage extends HTMLElement {
+        constructor() {
+          super();
         }
 
-        this.innerHTML = `
+        connectedCallback() {
+          let items = '';
+          for (var i = 0; i < 30; i++) {
+            items += '<ion-item><ion-label>Item ' + i + '</ion-label></ion-item>';
+          }
+
+          this.innerHTML =
+            `
           <ion-content>
             <ion-list>
               <ion-list-header><ion-label>Ionic</ion-label></ion-list-header>
-              ` + items + `
+              ` +
+            items +
+            `
             </ion-list>
           </ion-content>
         `;
-      }
-    }
-
-    customElements.define('list-page', ListPage);
-
-    class TranslucentPage extends HTMLElement {
-      constructor() {
-        super();
+        }
       }
 
-      connectedCallback() {
-        this.innerHTML = `
+      customElements.define('list-page', ListPage);
+
+      class TranslucentPage extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.innerHTML = `
           <div class="ion-padding">
             <h1>Translucent Popover</h1>
           </div>
         `;
-      }
-    }
-
-    customElements.define('translucent-page', TranslucentPage);
-
-    class HeaderPage extends HTMLElement {
-      constructor() {
-        super();
+        }
       }
 
-      connectedCallback() {
-        this.innerHTML = `
+      customElements.define('translucent-page', TranslucentPage);
+
+      class HeaderPage extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-title>Header</ion-title>
@@ -146,18 +185,18 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.In rutrum tortor lacus, ac interdum ipsum bibendum vel.Aenean non nibh gravida, ullamcorper mi at, tempor nulla.Proin malesuada tellus ut ullamcorper accumsan.Donec semper justo vulputate neque tempus ultricies.Proin non aliquet ipsum.Praesent mauris sem, facilisis eu justo nec, euismod imperdiet tellus.Duis eget justo congue, lacinia orci sed, fermentum urna.Quisque sed massa faucibus, interdum dolor rhoncus, molestie erat.Proin suscipit ante non mauris volutpat egestas.Donec a ultrices ligula.Mauris in felis vel dui consectetur viverra.Nam vitae quam in arcu aliquam aliquam.Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.Cras non velit nisl.Donec viverra, magna quis vestibulum volutpat, metus ante tincidunt augue, non porta nisi mi sit amet neque.Proin dapibus eros vitae nibh tincidunt, blandit rhoncus est porttitor.
           </ion-content>
         `;
-      }
-    }
-
-    customElements.define('header-page', HeaderPage);
-
-    class TranslucentHeaderPage extends HTMLElement {
-      constructor() {
-        super();
+        }
       }
 
-      connectedCallback() {
-        this.innerHTML = `
+      customElements.define('header-page', HeaderPage);
+
+      class TranslucentHeaderPage extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header translucent>
             <ion-toolbar>
               <ion-title>Header</ion-title>
@@ -174,11 +213,10 @@
             </ion-toolbar>
           </ion-footer>
         `;
+        }
       }
-    }
 
-    customElements.define('translucent-header-page', TranslucentHeaderPage);
-  </script>
-</body>
-
+      customElements.define('translucent-header-page', TranslucentHeaderPage);
+    </script>
+  </body>
 </html>

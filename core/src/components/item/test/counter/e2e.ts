@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('item: counter', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item/test/counter?ionic:_testing=true'
+    url: '/src/components/item/test/counter?ionic:_testing=true',
   });
 
   const compare = await page.compareScreenshot();
@@ -11,7 +11,7 @@ test('item: counter', async () => {
 
 test('item: counter-rtl', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true'
+    url: '/src/components/item/test/counter?ionic:_testing=true&rtl=true',
   });
 
   const compare = await page.compareScreenshot();

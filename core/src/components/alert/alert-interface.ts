@@ -1,7 +1,7 @@
-import { JSXBase } from '@stencil/core/internal';
+import type { JSXBase } from '@stencil/core/internal';
 
-import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
-import { IonicSafeString } from '../../utils/sanitization';
+import type { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
+import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface AlertOptions {
   header?: string;
@@ -23,7 +23,7 @@ export interface AlertOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export interface AlertAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+export type AlertAttributes = JSXBase.HTMLAttributes<HTMLElement>;
 
 export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
@@ -42,13 +42,13 @@ export interface AlertInput {
   tabindex?: number;
 }
 
-export interface AlertTextareaAttributes extends JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement> {}
-export interface AlertInputAttributes extends JSXBase.InputHTMLAttributes<HTMLInputElement> {}
+export type AlertTextareaAttributes = JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement>;
+export type AlertInputAttributes = JSXBase.InputHTMLAttributes<HTMLInputElement>;
 
 export interface AlertButton {
   text: string;
   role?: 'cancel' | 'destructive' | string;
   cssClass?: string | string[];
   id?: string;
-  handler?: (value: any) => boolean | void | {[key: string]: any};
+  handler?: (value: any) => boolean | void | { [key: string]: any };
 }

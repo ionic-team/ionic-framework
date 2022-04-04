@@ -6,4 +6,4 @@
  */
 export const printIonWarning = (message: string) => {
   return console.warn(`[Ionic Warning]: ${message}`);
-}
+};
