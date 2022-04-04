@@ -106,6 +106,8 @@ export const test = base.extend<CustomFixtures>({
     page.setIonViewport = async () => {
       const currentViewport = page.viewportSize();
 
+      await page.waitForSelector('ion-content');
+
       const pixelAmountRenderedOffscreen = await page.evaluate(() => {
         const content = document.querySelector('ion-content');
         if (content) {
