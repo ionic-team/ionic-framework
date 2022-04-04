@@ -18,6 +18,6 @@
   window.Ionic.config = window.Ionic.config || {};
 
   window.addEventListener('appload', () => {
-    window.stencilAppLoaded = true;
+    window.testAppLoaded = true;
   })
 })();
