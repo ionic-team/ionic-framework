@@ -155,10 +155,12 @@ describe('popover: focus trap', () => {
     const popover = await page.find('ion-popover');
     await popover.waitForVisible();
 
+    await page.waitForFunction('document.activeElement.tagName === "ION-POPOVER"');
+
     await page.keyboard.press('Tab');
     // Checking within ion-textarea
 
-    let activeElementTagName = await page.evaluate(() => document.activeElement.tagName);
+    let activeElementTagName = await page.evaluate(() => document.activeElement!.tagName);
     let scrollTop = null;
     let selectionStart = null;
     let previousSelectionStart = null;
@@ -178,7 +180,7 @@ describe('popover: focus trap', () => {
     await page.keyboard.press('ArrowDown');
 
     selectionStart = await getActiveElementSelectionStart(page);
-    expect(selectionStart).toBeGreaterThan(previousSelectionStart);
+    expect(selectionStart).toBeGreaterThan(previousSelectionStart!);
 
     await page.keyboard.press('Tab');
     // Checking within HTML textarea
@@ -188,7 +190,7 @@ describe('popover: focus trap', () => {
     selectionStart = null;
     previousSelectionStart = null;
 
-    activeElementTagName = await page.evaluate(() => document.activeElement.tagName);
+    activeElementTagName = await page.evaluate(() => document.activeElement!.tagName);
     expect(activeElementTagName).toBe('TEXTAREA');
 
     selectionStart = await getActiveElementSelectionStart(page);
@@ -203,7 +205,7 @@ describe('popover: focus trap', () => {
     await page.keyboard.press('ArrowDown');
 
     selectionStart = await getActiveElementSelectionStart(page);
-    expect(selectionStart).toBeGreaterThan(previousSelectionStart);
+    expect(selectionStart).toBeGreaterThan(previousSelectionStart!);
 
     await page.keyboard.press('Home');
 
