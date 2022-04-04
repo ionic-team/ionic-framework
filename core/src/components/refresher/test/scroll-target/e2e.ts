@@ -3,7 +3,8 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { pullToRefresh } from '../test.utils';
 
-describe('refresher: custom scroll target', () => {
+// TODO(FW-1134) Re-write these tests so that they test correct functionality.
+describe.skip('refresher: custom scroll target', () => {
   let page: E2EPage;
 
   beforeEach(async () => {
