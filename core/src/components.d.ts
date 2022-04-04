@@ -1856,7 +1856,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow": boolean;
         /**
@@ -5493,7 +5493,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow"?: boolean;
         /**
