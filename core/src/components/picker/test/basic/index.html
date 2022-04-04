@@ -20,23 +20,28 @@
 <body>
   <ion-app>
 
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Picker - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
+        <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')"
+          >Show Custom Picker</ion-button
+        >
+      </ion-content>
+    </ion-app>
 
-    <ion-content class="ion-padding">
-      <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
-      <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')">Show Custom Picker</ion-button>
-    </ion-content>
+    <style>
+      .my-custom-class {
+        --width: 200px;
+        --height: 50%;
 
-  </ion-app>
+        --background: #272727;
+        --background-rgb: 39, 39, 39;
+        --border-width: 2px;
+        --border-color: #000000;
+        --border-radius: 16px 16px 0 0;
 
-  <style>
-    .my-custom-class {
-      --width: 200px;
-      --height: 50%;
+        color: #d6d6d6;
+      }
+    </style>
 
       --background: #272727;
       --background-rgb: 39, 39, 39;

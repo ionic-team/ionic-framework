@@ -1,13 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
-import { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
+import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
-import { PickerColumnItem } from './picker-column-internal-interfaces';
+import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -17,9 +18,9 @@ import { PickerColumnItem } from './picker-column-internal-interfaces';
   tag: 'ion-picker-column-internal',
   styleUrls: {
     ios: 'picker-column-internal.ios.scss',
-    md: 'picker-column-internal.md.scss'
+    md: 'picker-column-internal.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
@@ -104,7 +105,7 @@ export class PickerColumnInternal implements ComponentInterface {
           this.destroyScrollListener = undefined;
         }
       }
-    }
+    };
     new IntersectionObserver(visibleCallback, { threshold: 0.01 }).observe(this.el);
 
     const parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null;
@@ -145,7 +146,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private setValue(value?: string | number) {
     const { items } = this;
     this.value = value;
-    const findItem = items.find(item => item.value === value);
+    const findItem = items.find((item) => item.value === value);
     if (findItem) {
       this.ionChange.emit(findItem);
     }
@@ -155,17 +156,17 @@ export class PickerColumnInternal implements ComponentInterface {
     const { el, isColumnVisible } = this;
     if (isColumnVisible) {
       // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
-      const top = target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2);
+      const top = target.offsetTop - 3 * target.clientHeight + target.clientHeight / 2;
 
       if (el.scrollTop !== top) {
         el.scroll({
           top,
           left: 0,
-          behavior: smooth ? 'smooth' : undefined
+          behavior: smooth ? 'smooth' : undefined,
         });
       }
     }
-  }
+  };
 
   /**
    * When ionInputModeChange is emitted, each column
@@ -173,7 +174,9 @@ export class PickerColumnInternal implements ComponentInterface {
    * for text entry.
    */
   private inputModeChange = (ev: PickerInternalCustomEvent) => {
-    if (!this.numericInput) { return; }
+    if (!this.numericInput) {
+      return;
+    }
 
     const { useInputMode, inputModeColumn } = ev.detail;
 
@@ -189,7 +192,7 @@ export class PickerColumnInternal implements ComponentInterface {
     }
 
     this.isActive = true;
-  }
+  };
 
   /**
    * When the column scrolls, the component
@@ -220,8 +223,8 @@ export class PickerColumnInternal implements ComponentInterface {
          * which is the month/year that we want to select
          */
         const bbox = el.getBoundingClientRect();
-        const centerX = bbox.x + (bbox.width / 2);
-        const centerY = bbox.y + (bbox.height / 2);
+        const centerX = bbox.x + bbox.width / 2;
+        const centerY = bbox.y + bbox.height / 2;
 
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
         if (activeEl !== null) {
@@ -247,7 +250,9 @@ export class PickerColumnInternal implements ComponentInterface {
            * possible we hit one of the
            * empty padding columns.
            */
-          if (dataIndex === null) { return; }
+          if (dataIndex === null) {
+            return;
+          }
 
           const index = parseInt(dataIndex, 10);
           const selectedItem = this.items[index];
@@ -258,7 +263,7 @@ export class PickerColumnInternal implements ComponentInterface {
             this.hapticsStarted = false;
           }
         }, 250);
-      })
+      });
     };
 
     /**
@@ -270,9 +275,9 @@ export class PickerColumnInternal implements ComponentInterface {
 
       this.destroyScrollListener = () => {
         el.removeEventListener('scroll', scrollCallback);
-      }
+      };
     });
-  }
+  };
 
   get activeItem() {
     return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]`) as HTMLElement | null;
@@ -288,7 +293,7 @@ export class PickerColumnInternal implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
-          ['picker-column-numeric-input']: numericInput
+          ['picker-column-numeric-input']: numericInput,
         })}
       >
         <div class="picker-item picker-item-empty">&nbsp;</div>
@@ -303,8 +308,10 @@ export class PickerColumnInternal implements ComponentInterface {
               onClick={(ev: Event) => {
                 this.centerPickerItemInView(ev.target as HTMLElement);
               }}
-            >{item.text}</div>
-          )
+            >
+              {item.text}
+            </div>
+          );
         })}
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>

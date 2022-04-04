@@ -258,6 +258,7 @@ export const config: Config = {
     scriptDataOpts: true
   },
   testing: {
+    testRegex: '(/__tests__/.*|(\\.|/)(test|spec)|[//](e2e))\\.[jt]sx?$',
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
     waitBeforeScreenshot: 20,

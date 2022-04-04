@@ -1,16 +1,16 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-router-link',
   styleUrl: 'router-link.scss',
-  shadow: true
+  shadow: true,
 })
 export class RouterLink implements ComponentInterface {
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -51,21 +51,21 @@ export class RouterLink implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     openURL(this.href, ev, this.routerDirection, this.routerAnimation);
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
     const attrs = {
       href: this.href,
       rel: this.rel,
-      target: this.target
+      target: this.target,
     };
     return (
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
           [mode]: true,
-          'ion-activatable': true
+          'ion-activatable': true,
         })}
       >
         <a {...attrs}>

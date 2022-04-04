@@ -1,17 +1,12 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { generateE2EUrl } from '@utils/test';
 
-export const testFab = async (
-  type: string,
-  selector: string,
-  rtl = false
-) => {
+export const testFab = async (type: string, selector: string, rtl = false) => {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];
@@ -43,16 +38,12 @@ export const testFab = async (
   }
 };
 
-export const testDisabledFab = async (
-  type: string,
-  selector: string,
-  rtl = false
-) => {
+export const testDisabledFab = async (type: string, selector: string, rtl = false) => {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];
@@ -86,7 +77,7 @@ const getFabList = async (fabComponent: any) => {
 };
 
 const ensureFabState = async (fab: any, state: string) => {
-  const active = (state === 'active') ? true : false;
+  const active = state === 'active' ? true : false;
 
   const fabList = await getFabList(fab);
   expect(fabList.classList.contains('fab-list-active')).toBe(active);

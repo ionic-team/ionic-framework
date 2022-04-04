@@ -1,6 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { testModal } from '../test.utils';
 import { getActiveElement, getActiveElementParent } from '@utils/test';
+
+import { testModal } from '../test.utils';
 
 const DIRECTORY = 'sheet';
 

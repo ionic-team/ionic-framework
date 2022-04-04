@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('display', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/display?ionic:_testing=true'
+    url: '/src/components/datetime/test/display?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -55,7 +55,7 @@ test('display', async () => {
 
 test('month selection should work after changing presentation', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/display?ionic:_testing=true'
+    url: '/src/components/datetime/test/display?ionic:_testing=true',
   });
   const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange', 'document');
   let calendarMonthYear;

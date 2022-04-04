@@ -19,7 +19,9 @@ export const resetKeyboardAssist = () => {
 export const startKeyboardAssist = (win: Window) => {
   startNativeListeners(win);
 
-  if (!(win as any).visualViewport) { return; }
+  if (!(win as any).visualViewport) {
+    return;
+  }
 
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
 
@@ -40,7 +42,7 @@ export const startKeyboardAssist = (win: Window) => {
  * in one place.
  */
 const startNativeListeners = (win: Window) => {
-  win.addEventListener('keyboardDidShow', ev => setKeyboardOpen(win, ev));
+  win.addEventListener('keyboardDidShow', (ev) => setKeyboardOpen(win, ev));
   win.addEventListener('keyboardDidHide', () => setKeyboardClose(win));
 };
 
@@ -67,7 +69,8 @@ export const setKeyboardClose = (win: Window) => {
  * scale value.
  */
 export const keyboardDidOpen = (): boolean => {
-  const scaledHeightDifference = (previousVisualViewport.height - currentVisualViewport.height) * currentVisualViewport.scale;
+  const scaledHeightDifference =
+    (previousVisualViewport.height - currentVisualViewport.height) * currentVisualViewport.scale;
   return (
     !keyboardOpen &&
     previousVisualViewport.width === currentVisualViewport.width &&
@@ -99,7 +102,7 @@ export const keyboardDidClose = (win: Window): boolean => {
 const fireKeyboardOpenEvent = (win: Window, nativeEv?: any): void => {
   const keyboardHeight = nativeEv ? nativeEv.keyboardHeight : win.innerHeight - currentVisualViewport.height;
   const ev = new CustomEvent(KEYBOARD_DID_OPEN, {
-    detail: { keyboardHeight }
+    detail: { keyboardHeight },
   });
 
   win.dispatchEvent(ev);
@@ -136,6 +139,6 @@ export const copyVisualViewport = (visualViewport: any): any => {
     offsetLeft: visualViewport.offsetLeft,
     pageTop: visualViewport.pageTop,
     pageLeft: visualViewport.pageLeft,
-    scale: visualViewport.scale
+    scale: visualViewport.scale,
   };
 };

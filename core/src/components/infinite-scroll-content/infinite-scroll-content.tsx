@@ -1,19 +1,20 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { SpinnerTypes } from '../../interface';
-import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
+import type { SpinnerTypes } from '../../interface';
+import type { IonicSafeString } from '../../utils/sanitization';
+import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
     ios: 'infinite-scroll-content.ios.scss',
-    md: 'infinite-scroll-content.md.scss'
-  }
+    md: 'infinite-scroll-content.md.scss',
+  },
 })
 export class InfiniteScrollContent implements ComponentInterface {
-
   /**
    * An animated SVG spinner that shows while loading.
    */
@@ -48,7 +49,7 @@ export class InfiniteScrollContent implements ComponentInterface {
           [mode]: true,
 
           // Used internally for styling
-          [`infinite-scroll-content-${mode}`]: true
+          [`infinite-scroll-content-${mode}`]: true,
         }}
       >
         <div class="infinite-loading">
@@ -57,9 +58,7 @@ export class InfiniteScrollContent implements ComponentInterface {
               <ion-spinner name={this.loadingSpinner} />
             </div>
           )}
-          {this.loadingText && (
-            <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
-          )}
+          {this.loadingText && <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />}
         </div>
       </Host>
     );

@@ -3,7 +3,7 @@ import {
   getMonthAndDay,
   getFormattedHour,
   addTimePadding,
-  getMonthAndYear
+  getMonthAndYear,
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -50,7 +50,7 @@ describe('getMonthAndDay()', () => {
   it('should return sáb, 1 abr', () => {
     expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
-})
+});
 
 describe('getFormattedHour()', () => {
   it('should only add padding if using 24 hour time', () => {
@@ -59,7 +59,7 @@ describe('getFormattedHour()', () => {
 
     expect(getFormattedHour(10, true)).toEqual('10');
     expect(getFormattedHour(10, false)).toEqual('10');
-  })
+  });
 });
 
 describe('addTimePadding()', () => {
@@ -68,7 +68,7 @@ describe('addTimePadding()', () => {
     expect(addTimePadding(9)).toEqual('09');
     expect(addTimePadding(10)).toEqual('10');
     expect(addTimePadding(100)).toEqual('100');
-  })
+  });
 });
 
 describe('getMonthAndYear()', () => {
@@ -87,4 +87,4 @@ describe('getMonthAndYear()', () => {
   it('should return abril de 2006', () => {
     expect(getMonthAndYear('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('abril de 2006');
   });
-})
+});

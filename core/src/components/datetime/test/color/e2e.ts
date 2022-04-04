@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('color', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/color?ionic:_testing=true'
+    url: '/src/components/datetime/test/color?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

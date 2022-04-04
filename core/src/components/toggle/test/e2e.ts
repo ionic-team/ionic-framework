@@ -1,7 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('toggle', () => {
-
   it('should create standalone, unchecked by default', async () => {
     // create a new e2e test page
     const page = await newE2EPage();
@@ -40,7 +39,7 @@ describe('toggle', () => {
     // make sure we received the correct event detail
     expect(ionChange).toHaveReceivedEventDetail({
       checked: true,
-      value: 'on'
+      value: 'on',
     });
 
     // set unchecked
@@ -62,14 +61,16 @@ describe('toggle', () => {
     // make sure we received the correct event detail
     expect(ionChange).toHaveReceivedEventDetail({
       checked: false,
-      value: 'on'
+      value: 'on',
     });
   });
 
   it('should create standalone, checked by default', async () => {
-    const page = await newE2EPage({ html: `
+    const page = await newE2EPage({
+      html: `
       <ion-toggle checked></ion-toggle>
-    `});
+    `,
+    });
 
     // find the elemnt in the page
     const toggle = await page.find('ion-toggle');
@@ -115,14 +116,16 @@ describe('toggle', () => {
 
     expect(ionChange).toHaveReceivedEventDetail({
       checked: false,
-      value: 'on'
+      value: 'on',
     });
   });
 
   it('should pass properties down to hidden input', async () => {
-    const page = await newE2EPage({ html: `
+    const page = await newE2EPage({
+      html: `
       <ion-toggle disabled checked value="coding" name="primary"></ion-toggle>
-    `});
+    `,
+    });
 
     const toggle = await page.find('ion-toggle');
 
@@ -148,5 +151,4 @@ describe('toggle', () => {
     expect(await hiddenInput.getProperty('value')).toBe('');
     expect(await hiddenInput.getProperty('name')).toBe('secondary');
   });
-
 });

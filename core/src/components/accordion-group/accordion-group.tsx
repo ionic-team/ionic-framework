@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AccordionGroupChangeEventDetail } from '../../interface';
+import type { AccordionGroupChangeEventDetail } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -10,9 +11,9 @@ import { AccordionGroupChangeEventDetail } from '../../interface';
   tag: 'ion-accordion-group',
   styleUrls: {
     ios: 'accordion-group.ios.scss',
-    md: 'accordion-group.md.scss'
+    md: 'accordion-group.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class AccordionGroup implements ComponentInterface {
   @Element() el!: HTMLIonAccordionGroupElement;
@@ -96,18 +97,27 @@ export class AccordionGroup implements ComponentInterface {
   @Listen('keydown')
   async onKeydown(ev: KeyboardEvent) {
     const activeElement = document.activeElement;
-    if (!activeElement) { return; }
+    if (!activeElement) {
+      return;
+    }
 
-    const accordionEl = (activeElement.tagName === 'ION-ACCORDION') ? activeElement : activeElement.closest('ion-accordion');
-    if (!accordionEl) { return; }
+    const accordionEl =
+      activeElement.tagName === 'ION-ACCORDION' ? activeElement : activeElement.closest('ion-accordion');
+    if (!accordionEl) {
+      return;
+    }
 
     const closestGroup = accordionEl.closest('ion-accordion-group');
-    if (closestGroup !== this.el) { return; }
+    if (closestGroup !== this.el) {
+      return;
+    }
 
     // If the active accordion is not in the current array of accordions, do not do anything
     const accordions = await this.getAccordions();
-    const startingIndex = accordions.findIndex(a => a === accordionEl);
-    if (startingIndex === -1) { return; }
+    const startingIndex = accordions.findIndex((a) => a === accordionEl);
+    if (startingIndex === -1) {
+      return;
+    }
 
     let accordion: HTMLIonAccordionElement | undefined;
     if (ev.key === 'ArrowDown') {
@@ -140,7 +150,9 @@ export class AccordionGroup implements ComponentInterface {
   @Method()
   async requestAccordionToggle(accordionValue: string | undefined, accordionExpand: boolean) {
     const { multiple, value, readonly, disabled } = this;
-    if (readonly || disabled) { return; }
+    if (readonly || disabled) {
+      return;
+    }
 
     if (accordionExpand) {
       /**
@@ -152,7 +164,7 @@ export class AccordionGroup implements ComponentInterface {
       if (multiple) {
         const groupValue = value || [];
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
-        const valueExists = processedValue.find(v => v === accordionValue);
+        const valueExists = processedValue.find((v) => v === accordionValue);
         if (valueExists === undefined && accordionValue !== undefined) {
           this.value = [...processedValue, accordionValue];
         }
@@ -167,7 +179,7 @@ export class AccordionGroup implements ComponentInterface {
       if (multiple) {
         const groupValue = value || [];
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
-        this.value = processedValue.filter(v => v !== accordionValue);
+        this.value = processedValue.filter((v) => v !== accordionValue);
       } else {
         this.value = undefined;
       }
@@ -176,7 +188,6 @@ export class AccordionGroup implements ComponentInterface {
 
   private findNextAccordion(accordions: HTMLIonAccordionElement[], startingIndex: number) {
     const nextAccordion = accordions[startingIndex + 1];
-    // tslint:disable-next-line:strict-type-predicates
     if (nextAccordion === undefined) {
       return accordions[0];
     }
@@ -186,7 +197,6 @@ export class AccordionGroup implements ComponentInterface {
 
   private findPreviousAccordion(accordions: HTMLIonAccordionElement[], startingIndex: number) {
     const prevAccordion = accordions[startingIndex - 1];
-    // tslint:disable-next-line:strict-type-predicates
     if (prevAccordion === undefined) {
       return accordions[accordions.length - 1];
     }
@@ -212,7 +222,7 @@ export class AccordionGroup implements ComponentInterface {
           [mode]: true,
           'accordion-group-disabled': disabled,
           'accordion-group-readonly': readonly,
-          [`accordion-group-expand-${expand}`]: true
+          [`accordion-group-expand-${expand}`]: true,
         }}
         role="presentation"
       >

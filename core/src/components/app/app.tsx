@@ -1,4 +1,5 @@
-import { Build, Component, ComponentInterface, Element, Host, Method, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Build, Component, Element, Host, Method, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -18,13 +19,13 @@ export class App implements ComponentInterface {
       rIC(async () => {
         const isHybrid = isPlatform(window, 'hybrid');
         if (!config.getBoolean('_testing')) {
-          import('../../utils/tap-click').then(module => module.startTapClick(config));
+          import('../../utils/tap-click').then((module) => module.startTapClick(config));
         }
         if (config.getBoolean('statusTap', isHybrid)) {
-          import('../../utils/status-tap').then(module => module.startStatusTap());
+          import('../../utils/status-tap').then((module) => module.startStatusTap());
         }
         if (config.getBoolean('inputShims', needInputShims())) {
-          import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
+          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config));
         }
         const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
         if (config.getBoolean('hardwareBackButton', isHybrid)) {
@@ -33,9 +34,9 @@ export class App implements ComponentInterface {
           hardwareBackButtonModule.blockHardwareBackButton();
         }
         if (typeof (window as any) !== 'undefined') {
-          import('../../utils/keyboard/keyboard').then(module => module.startKeyboardAssist(window));
+          import('../../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
         }
-        import('../../utils/focus-visible').then(module => this.focusVisible = module.startFocusVisible());
+        import('../../utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
       });
     }
   }
@@ -66,8 +67,7 @@ export class App implements ComponentInterface {
           'ion-page': true,
           'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding'),
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

@@ -1,10 +1,9 @@
-import { newE2EPage } from "@stencil/core/testing";
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('picker: basic', () => {
-
   it('should match existing screenshots', async () => {
     const page = await newE2EPage({
-      url: '/src/components/picker/test/basic?ionic:_testing=true'
+      url: '/src/components/picker/test/basic?ionic:_testing=true',
     });
 
     const compares = [];
@@ -26,7 +25,5 @@ describe('picker: basic', () => {
     for (const compare of compares) {
       expect(compare).toMatchScreenshot();
     }
-
   });
-
 });
