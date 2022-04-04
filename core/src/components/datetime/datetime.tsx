@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import {
   caretDownSharp,
   caretUpSharp,
@@ -328,6 +329,8 @@ export class Datetime implements ComponentInterface {
           hour,
           minute
         }
+      } else {
+        printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
       }
     }
 
