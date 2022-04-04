@@ -16,20 +16,16 @@ function queryAllWorkingMonthDisabledDays(page: E2EPage, datetimeSelector = 'ion
 }
 
 describe('datetime: disable dates', () => {
-
   describe('return values', () => {
-
     let page: E2EPage;
 
     beforeEach(async () => {
       page = await newE2EPage({
-        html: '<ion-datetime value="2021-10-01"></ion-datetime>'
+        html: '<ion-datetime value="2021-10-01"></ion-datetime>',
       });
     });
 
-
     describe('when isDateEnabled returns true', () => {
-
       it('calendar days should be enabled', async () => {
         await page.$eval('ion-datetime', (el: any) => {
           el.isDateEnabled = () => true;
@@ -41,13 +37,10 @@ describe('datetime: disable dates', () => {
 
         expect(disabledDays.length).toBe(0);
       });
-
     });
 
     describe('when isDateEnabled returns false', () => {
-
       it('calendar days should be disabled', async () => {
-
         await page.$eval('ion-datetime', (el: any) => {
           el.isDateEnabled = () => false;
         });
@@ -58,11 +51,9 @@ describe('datetime: disable dates', () => {
 
         expect(disabledDays.length).toBe(91);
       });
-
     });
 
     describe('when isDateEnabled throws an exception', () => {
-
       beforeEach(async () => {
         await page.$eval('ion-datetime', (el: any) => {
           el.isDateEnabled = (dateIsoString: string) => {
@@ -79,10 +70,11 @@ describe('datetime: disable dates', () => {
       });
 
       it('calendar days should be enabled', async () => {
-
         await page.waitForChanges();
 
-        const enabledDays = await page.findAll('ion-datetime >>> .calendar-month:nth-child(2) .calendar-day:not([disabled]):not(.calendar-day-padding)');
+        const enabledDays = await page.findAll(
+          'ion-datetime >>> .calendar-month:nth-child(2) .calendar-day:not([disabled]):not(.calendar-day-padding)'
+        );
 
         expect(enabledDays.length).toBe(1);
       });
@@ -99,13 +91,13 @@ describe('datetime: disable dates', () => {
         await page.waitForChanges();
 
         expect(errors.length).toBe(1);
-        expect(errors[0]).toContain('[Ionic Error]: Exception thrown from provided `isDateEnabled` function. Please check your function and try again.');
+        expect(errors[0]).toContain(
+          '[Ionic Error]: Exception thrown from provided `isDateEnabled` function. Please check your function and try again.'
+        );
       });
-
     });
 
     describe('when isDateEnabled returns undefined', () => {
-
       it('calendar days should be disabled', async () => {
         await page.$eval('ion-datetime', (el: any) => {
           el.isDateEnabled = () => undefined;
@@ -117,11 +109,9 @@ describe('datetime: disable dates', () => {
 
         expect(disabledDays.length).toBe(91);
       });
-
     });
 
     describe('when isDateEnabled returns null', () => {
-
       it('calendar days should be disabled', async () => {
         await page.$eval('ion-datetime', (el: any) => {
           el.isDateEnabled = () => null;
@@ -133,18 +123,15 @@ describe('datetime: disable dates', () => {
 
         expect(disabledDays.length).toBe(91);
       });
-
     });
-
   });
 
   describe('examples', () => {
-
     let page: E2EPage;
 
     beforeEach(async () => {
       page = await newE2EPage({
-        url: '/src/components/datetime/test/disable-dates?ionic:_testing=true'
+        url: '/src/components/datetime/test/disable-dates?ionic:_testing=true',
       });
     });
 
@@ -156,29 +143,27 @@ describe('datetime: disable dates', () => {
 
     it('should disable specific days of the week', async () => {
       const disabledDays = await queryAllWorkingMonthDisabledDays(page, '#weekends');
-      const disabledValues = disabledDays.map(d => d.textContent);
+      const disabledValues = disabledDays.map((d) => d.textContent);
 
       expect(disabledValues).toEqual(['2', '3', '9', '10', '16', '17', '23', '24', '30', '31']);
     });
 
     it('should disable a range of dates', async () => {
       const disabledDays = await queryAllDisabledDays(page, '#dateRange');
-      const disabledValues = disabledDays.map(d => d.textContent);
+      const disabledValues = disabledDays.map((d) => d.textContent);
 
       expect(disabledValues).toEqual(['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
     });
 
     it('should disable a month', async () => {
       const disabledDays = await queryAllDisabledDays(page, '#month');
-      const disabledValues = disabledDays.map(d => d.textContent);
+      const disabledValues = disabledDays.map((d) => d.textContent);
 
       expect(disabledValues.length).toBe(31);
     });
-
   });
 
   describe('with a min date range', () => {
-
     it('should not enable already disabled dates', async () => {
       const page = await newE2EPage({
         html: `
@@ -187,18 +172,16 @@ describe('datetime: disable dates', () => {
             const datetime = document.querySelector('ion-datetime');
             datetime.isDateEnabled = () => true;
           </script>
-        `
+        `,
       });
 
       const disabledDays = await queryAllWorkingMonthDisabledDays(page);
 
       expect(disabledDays.length).toBe(14);
     });
-
   });
 
   describe('with a max date range', () => {
-
     it('should not enable already disabled dates', async () => {
       const page = await newE2EPage({
         html: `
@@ -207,14 +190,12 @@ describe('datetime: disable dates', () => {
             const datetime = document.querySelector('ion-datetime');
             datetime.isDateEnabled = () => true;
           </script>
-        `
+        `,
       });
 
       const disabledDays = await queryAllWorkingMonthDisabledDays(page);
 
       expect(disabledDays.length).toBe(16);
     });
-
   });
-
 });

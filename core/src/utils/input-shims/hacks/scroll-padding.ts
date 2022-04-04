@@ -28,11 +28,7 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
   if (input.parentElement && input.parentElement.tagName === 'ION-INPUT') {
     return;
   }
-  if (
-    input.parentElement &&
-    input.parentElement.parentElement &&
-    input.parentElement.parentElement.tagName === 'ION-SEARCHBAR'
-  ) {
+  if (input.parentElement?.parentElement?.tagName === 'ION-SEARCHBAR') {
     return;
   }
 

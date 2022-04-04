@@ -9,15 +9,14 @@ export const startStatusTap = () => {
     readTask(() => {
       const width = win.innerWidth;
       const height = win.innerHeight;
-      const el = document.elementFromPoint(width / 2, height / 2) as (Element | null);
+      const el = document.elementFromPoint(width / 2, height / 2) as Element | null;
       if (!el) {
         return;
       }
       const contentEl = findClosestIonContent(el);
       if (contentEl) {
-        new Promise(resolve => componentOnReady(contentEl, resolve)).then(() => {
+        new Promise((resolve) => componentOnReady(contentEl, resolve)).then(() => {
           writeTask(async () => {
-
             /**
              * If scrolling and user taps status bar,
              * only calling scrollToTop is not enough

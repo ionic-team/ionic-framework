@@ -1,11 +1,8 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
-
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 import { generateE2EUrl } from '@utils/test';
 
-export const openModal = async (
-  page: E2EPage,
-  selector: string
-) => {
+export const openModal = async (page: E2EPage, selector: string) => {
   const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
   const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -21,18 +18,13 @@ export const openModal = async (
   await page.waitForTimeout(100);
 
   return modal;
-}
+};
 
-export const testModal = async (
-  type: string,
-  selector: string,
-  expectUnmount = true,
-  rtl = false
-) => {
+export const testModal = async (type: string, selector: string, expectUnmount = true, rtl = false) => {
   const pageUrl = generateE2EUrl('modal', type, rtl);
 
   const page = await newE2EPage({
-    url: pageUrl
+    url: pageUrl,
   });
 
   const screenshotCompares = [];

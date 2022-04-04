@@ -26,8 +26,8 @@
     "target": "es2017",
     "baseUrl": ".",
     "paths": {
-      "@utils/test": ["src/utils/test/utils"],
       "@utils/*": ["src/utils/*"],
+      "@utils/test": ["src/utils/test/utils"]
     }
   },
   "include": [
@@ -35,6 +35,8 @@
   ],
   "exclude": [
     "node_modules",
-    "**/test"
+    "**/test/**/*.spec.ts",
+    "**/test/**/*.spec.tsx",
+    "**/test/**/e2e.ts"
   ]
 }

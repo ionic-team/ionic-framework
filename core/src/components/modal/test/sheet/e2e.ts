@@ -1,6 +1,8 @@
-import { E2EElement, E2EPage, newE2EPage } from '@stencil/core/testing';
-import { openModal, testModal } from '../test.utils';
+import type { E2EElement, E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 import { getActiveElement, getActiveElementParent, dragElementBy } from '@utils/test';
+
+import { openModal, testModal, testModal } from '../test.utils';
 
 const DIRECTORY = 'sheet';
 
@@ -119,17 +121,15 @@ test('input should not be focusable when backdrop is active', async () => {
 });
 
 describe('modal: sheet: setting the breakpoint', () => {
-
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/modal/test/sheet?ionic:_testing=true'
+      url: '/src/components/modal/test/sheet?ionic:_testing=true',
     });
   });
 
   describe('setting an invalid value', () => {
-
     let warnings: string[];
     let modal: E2EElement;
 
@@ -153,13 +153,13 @@ describe('modal: sheet: setting the breakpoint', () => {
 
     it('should console a warning to developers', async () => {
       expect(warnings.length).toBe(1);
-      expect(warnings[0]).toBe('[Ionic Warning]: Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.');
+      expect(warnings[0]).toBe(
+        '[Ionic Warning]: Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.'
+      );
     });
-
   });
 
   describe('setting the breakpoint to a valid value', () => {
-
     it('should update the current breakpoint', async () => {
       const modal = await openModal(page, '#sheet-modal');
 
@@ -191,7 +191,6 @@ describe('modal: sheet: setting the breakpoint', () => {
 
       expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
     });
-
   });
 
   it('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async () => {
@@ -207,5 +206,4 @@ describe('modal: sheet: setting the breakpoint', () => {
 
     expect(ionBreakpointDidChangeSpy).toHaveReceivedEventTimes(1);
   });
-
 });

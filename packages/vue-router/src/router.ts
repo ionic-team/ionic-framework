@@ -409,13 +409,22 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     router.push(routerLink);
   }
 
-  const resetTab = (tab: string, originalHref: string) => {
+  const resetTab = (tab: string) => {
+    /**
+     * Resetting the tab should go back
+     * to the initial view in the tab stack.
+     * It should not push a new instance of the
+     * root tab page onto the stack.
+     *
+     * To do this, we get the initial view in the
+     * tab stack and subtract the position of that
+     * entry from our current position. From there
+     * we call router.go() to move us back the
+     * appropriate number of positions.
+     */
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
-      const newRouteInfo = { ...routeInfo };
-      newRouteInfo.pathname = originalHref;
-      incomingRouteParams = { ...newRouteInfo, routerAction: 'pop', routerDirection: 'back' };
-      router.push({ path: newRouteInfo.pathname, query: parseQuery(newRouteInfo.search) });
+      router.go(routeInfo.position - currentHistoryPosition);
     }
   }
 

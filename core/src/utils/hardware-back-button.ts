@@ -1,4 +1,4 @@
-import { BackButtonEvent } from '../interface';
+import type { BackButtonEvent } from '../interface';
 
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 
@@ -19,8 +19,8 @@ interface HandlerRegister {
  * will still happen.
  */
 export const blockHardwareBackButton = () => {
-  document.addEventListener('backbutton', () => {}); // tslint:disable-line
-}
+  document.addEventListener('backbutton', () => {}); // eslint-disable-line
+};
 
 export const startHardwareBackButton = () => {
   const doc = document;
@@ -38,14 +38,14 @@ export const startHardwareBackButton = () => {
       detail: {
         register(priority: number, handler: Handler) {
           handlers.push({ priority, handler, id: index++ });
-        }
-      }
+        },
+      },
     });
     doc.dispatchEvent(ev);
 
     const executeAction = async (handlerRegister: HandlerRegister | undefined) => {
       try {
-        if (handlerRegister && handlerRegister.handler) {
+        if (handlerRegister?.handler) {
           const result = handlerRegister.handler(processHandlers);
           if (result != null) {
             await result;
@@ -61,17 +61,17 @@ export const startHardwareBackButton = () => {
         let selectedHandler: HandlerRegister = {
           priority: Number.MIN_SAFE_INTEGER,
           handler: () => undefined,
-          id: -1
+          id: -1,
         };
-        handlers.forEach(handler => {
+        handlers.forEach((handler) => {
           if (handler.priority >= selectedHandler.priority) {
             selectedHandler = handler;
           }
         });
 
         busy = true;
-        handlers = handlers.filter(handler => handler.id !== selectedHandler.id);
-        executeAction(selectedHandler).then(() => busy = false);
+        handlers = handlers.filter((handler) => handler.id !== selectedHandler.id);
+        executeAction(selectedHandler).then(() => (busy = false));
       }
     };
 

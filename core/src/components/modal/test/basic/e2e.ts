@@ -1,11 +1,12 @@
-import { openModal, testModal } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { openModal, testModal } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.textContent, activeElement);
-}
+  return await page.evaluate((el) => el?.textContent, activeElement);
+};
 
 test('modal: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/modal/test/basic?ionic:_testing=true' });
@@ -14,7 +15,7 @@ test('modal: focus trap', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
   await ionModalDidPresent.next();
@@ -45,10 +46,10 @@ test('modal: return focus', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   expect(modal).not.toBe(null);
 
-  await ionModalDidPresent.next()
+  await ionModalDidPresent.next();
 
   await Promise.all([
     await modal.callMethod('dismiss'),
@@ -75,12 +76,12 @@ test('modal: htmlAttributes', async () => {
   await page.click('#basic-modal');
   await page.waitForSelector('#basic-modal');
 
-  let alert = await page.find('ion-modal');
+  const alert = await page.find('ion-modal');
 
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate((el) => document.querySelector('ion-modal').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-modal').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-modal');
 });
@@ -95,7 +96,7 @@ test('it should dismiss the modal when clicking the backdrop', async () => {
 
   await page.mouse.click(20, 20);
   await ionModalDidDismiss.next();
-})
+});
 
 test('modal: setting the breakpoint should warn the developer', async () => {
   const page = await newE2EPage({ url: '/src/components/modal/test/basic?ionic:_testing=true' });
@@ -123,4 +124,4 @@ test('modal: getting the breakpoint should return undefined', async () => {
 
   const breakpoint = await modal.callMethod('getCurrentBreakpoint');
   expect(breakpoint).toBeUndefined();
-})
+});

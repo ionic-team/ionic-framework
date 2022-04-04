@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Modal - canDismiss</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <script type="module">
@@ -22,9 +25,8 @@
     </style>
   </head>
 
-<body>
+  <body>
     <ion-app>
-
       <div class="root-page ion-page">
         <ion-header>
           <ion-toolbar>
@@ -91,12 +93,9 @@
 
           <br />
 
-          <ion-button id="show-modal" onclick="createModal()">
-            Show Modal
-          </ion-button>
+          <ion-button id="show-modal" onclick="createModal()"> Show Modal </ion-button>
         </ion-content>
       </div>
-
     </ion-app>
 
     <script>
@@ -110,13 +109,13 @@
 
       handlerForm.addEventListener('change', (ev) => {
         switch (ev.target.value) {
-          case "true":
+          case 'true':
             handler = true;
             break;
-          case "false":
+          case 'false':
             handler = false;
             break;
-          case "promise-true":
+          case 'promise-true':
             handler = () => {
               return new Promise((resolve) => {
                 setTimeout(() => {
@@ -128,9 +127,9 @@
                   }, 1000);
                 }, 250);
               });
-            }
+            };
             break;
-          case "promise-false":
+          case 'promise-false':
             handler = () => {
               return new Promise((resolve) => {
                 setTimeout(() => {
@@ -142,9 +141,9 @@
                   }, 1000);
                 }, 250);
               });
-            }
+            };
             break;
-          case "action-sheet":
+          case 'action-sheet':
             handler = async () => {
               const actionSheet = await actionSheetController.create({
                 header: 'Are you sure you want to discard your changes?',
@@ -152,14 +151,14 @@
                   {
                     cssClass: 'button-confirm',
                     text: 'Discard Changes',
-                    role: 'destructive'
+                    role: 'destructive',
                   },
                   {
                     cssClass: 'button-cancel',
                     text: 'Keep Editing',
-                    role: 'cancel'
-                  }
-                ]
+                    role: 'cancel',
+                  },
+                ],
               });
 
               await actionSheet.present();
@@ -171,21 +170,21 @@
               }
 
               return false;
-            }
+            };
           default:
             break;
         }
       });
       modalTypeForm.addEventListener('change', (ev) => {
         switch (ev.target.value) {
-          case "regular":
-            type = "regular";
+          case 'regular':
+            type = 'regular';
             break;
-          case "card":
-            type = "card";
+          case 'card':
+            type = 'card';
             break;
-          case "sheet":
-            type = "sheet";
+          case 'sheet':
+            type = 'sheet';
             break;
           default:
             break;
@@ -206,7 +205,7 @@
         `;
         const opts = {
           component: el,
-          canDismiss: handler
+          canDismiss: handler,
         };
 
         if (type === 'card') {
@@ -219,7 +218,7 @@
         const modal = await modalController.create(opts);
 
         await modal.present();
-      }
+      };
     </script>
   </body>
 </html>

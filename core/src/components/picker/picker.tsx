@@ -1,7 +1,16 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerAttributes, PickerButton, PickerColumn } from '../../interface';
+import type {
+  AnimationBuilder,
+  CssClassMap,
+  OverlayEventDetail,
+  OverlayInterface,
+  PickerAttributes,
+  PickerButton,
+  PickerColumn,
+} from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -15,9 +24,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   tag: 'ion-picker',
   styleUrls: {
     ios: 'picker.ios.scss',
-    md: 'picker.md.scss'
+    md: 'picker.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
@@ -162,7 +171,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   getColumn(name: string): Promise<PickerColumn | undefined> {
-    return Promise.resolve(this.columns.find(column => column.name === name));
+    return Promise.resolve(this.columns.find((column) => column.name === name));
   }
 
   private async buttonClick(button: PickerButton) {
@@ -193,13 +202,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private getSelected() {
     const selected: { [k: string]: any } = {};
     this.columns.forEach((col, index) => {
-      const selectedColumn = col.selectedIndex !== undefined
-        ? col.options[col.selectedIndex]
-        : undefined;
+      const selectedColumn = col.selectedIndex !== undefined ? col.options[col.selectedIndex] : undefined;
       selected[col.name] = {
         text: selectedColumn ? selectedColumn.text : undefined,
         value: selectedColumn ? selectedColumn.value : undefined,
-        columnIndex: index
+        columnIndex: index,
       };
     });
     return selected;
@@ -207,15 +214,15 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      const cancelButton = this.buttons.find((b) => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
-  }
+  };
 
   render() {
     const { htmlAttributes } = this;
@@ -224,9 +231,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
       <Host
         aria-modal="true"
         tabindex="-1"
-        {...htmlAttributes as any}
+        {...(htmlAttributes as any)}
         style={{
-          zIndex: `${20000 + this.overlayIndex}`
+          zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
           [mode]: true,
@@ -234,28 +241,20 @@ export class Picker implements ComponentInterface, OverlayInterface {
           // Used internally for styling
           [`picker-${mode}`]: true,
           'overlay-hidden': true,
-          ...getClassMap(this.cssClass)
+          ...getClassMap(this.cssClass),
         }}
         onIonBackdropTap={this.onBackdropTap}
         onIonPickerWillDismiss={this.dispatchCancelHandler}
       >
-        <ion-backdrop
-          visible={this.showBackdrop}
-          tappable={this.backdropDismiss}
-        >
-        </ion-backdrop>
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}></ion-backdrop>
 
         <div tabindex="0"></div>
 
         <div class="picker-wrapper ion-overlay-wrapper" role="dialog">
           <div class="picker-toolbar">
-            {this.buttons.map(b => (
+            {this.buttons.map((b) => (
               <div class={buttonWrapperClass(b)}>
-                <button
-                  type="button"
-                  onClick={() => this.buttonClick(b)}
-                  class={buttonClass(b)}
-                >
+                <button type="button" onClick={() => this.buttonClick(b)} class={buttonClass(b)}>
                   {b.text}
                 </button>
               </div>
@@ -264,9 +263,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
           <div class="picker-columns">
             <div class="picker-above-highlight"></div>
-              {this.presented && this.columns.map(c =>
-                <ion-picker-column col={c}></ion-picker-column>
-              )}
+            {this.presented && this.columns.map((c) => <ion-picker-column col={c}></ion-picker-column>)}
             <div class="picker-below-highlight"></div>
           </div>
         </div>
@@ -280,7 +277,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 const buttonWrapperClass = (button: PickerButton): CssClassMap => {
   return {
     [`picker-toolbar-${button.role}`]: button.role !== undefined,
-    'picker-toolbar-button': true
+    'picker-toolbar-button': true,
   };
 };
 
@@ -288,6 +285,6 @@ const buttonClass = (button: PickerButton): CssClassMap => {
   return {
     'picker-button': true,
     'ion-activatable': true,
-    ...getClassMap(button.cssClass)
+    ...getClassMap(button.cssClass),
   };
 };

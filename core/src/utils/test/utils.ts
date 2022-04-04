@@ -1,6 +1,5 @@
-import type { E2EPage } from '@stencil/core/testing';
-import { E2EElement } from '@stencil/core/testing';
-import { ElementHandle } from 'puppeteer';
+import type { E2EElement, E2EPage } from '@stencil/core/testing';
+import type { ElementHandle, SerializableOrJSHandle } from 'puppeteer';
 
 /**
  * page.evaluate can only return a serializable value,
@@ -8,27 +7,27 @@ import { ElementHandle } from 'puppeteer';
  * Instead, we return an object with some common
  * properties that you may want to access in a test.
  */
-const getSerialElement = async (page, element) => {
-  return await page.evaluate(el => {
+
+const getSerialElement = async (page: E2EPage, element: SerializableOrJSHandle) => {
+  return page.evaluate((el) => {
     const { className, tagName, id } = el;
     return {
       className,
       tagName,
-      id
-    }
+      id,
+    };
   }, element);
-}
+};
 
-export const getActiveElementParent = async (page) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement.parentElement);
+export const getActiveElementParent = async (page: E2EPage) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement!.parentElement);
   return getSerialElement(page, activeElement);
-}
+};
 
-export const getActiveElement = async (page) => {
+export const getActiveElement = async (page: E2EPage) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return getSerialElement(page, activeElement);
-}
-
+};
 
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
@@ -44,7 +43,9 @@ export const generateE2EUrl = (component: string, type: string, rtl = false): st
  */
 export const getElementProperty = async (element: any, property: string): Promise<string> => {
   const getProperty = await element.getProperty(property);
-  if (!getProperty) { return ''; }
+  if (!getProperty) {
+    return '';
+  }
 
   return getProperty.jsonValue();
 };
@@ -60,13 +61,23 @@ export const getElementProperty = async (element: any, property: string): Promis
  * Note: The callback function must be added using
  * page.exposeFunction prior to calling this function.
  */
-export const listenForEvent = async (page: any, eventType: string, element: any, callbackName: string): Promise<any> => {
+export const listenForEvent = async (
+  page: any,
+  eventType: string,
+  element: any,
+  callbackName: string
+): Promise<any> => {
   try {
-    return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
-      scopeElement.addEventListener(scopeEventType, (e: any) => {
-        (window as any)[scopeCallbackName]({ detail: e.detail });
-      });
-    }, eventType, element, callbackName);
+    return await page.evaluate(
+      (scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
+        scopeElement.addEventListener(scopeEventType, (e: any) => {
+          (window as any)[scopeCallbackName]({ detail: e.detail });
+        });
+      },
+      eventType,
+      element,
+      callbackName
+    );
   } catch (err) {
     throw err;
   }
@@ -87,16 +98,16 @@ export const dragElementBy = async (
   page: any,
   x = 0,
   y = 0,
-  startCoordinates?: { x: number, y: number }
+  startCoordinates?: { x: number; y: number }
 ): Promise<void> => {
   try {
-    const boundingBox = await element.boundingBox();
+    const boundingBox = (await element.boundingBox())!;
 
-    const startX = (startCoordinates?.x === undefined) ? boundingBox.x + boundingBox.width / 2 : startCoordinates.x;
-    const startY = (startCoordinates?.y === undefined) ? boundingBox.y + boundingBox.height / 2 : startCoordinates.y;
+    const startX = startCoordinates?.x === undefined ? boundingBox.x + boundingBox.width / 2 : startCoordinates.x;
+    const startY = startCoordinates?.y === undefined ? boundingBox.y + boundingBox.height / 2 : startCoordinates.y;
 
-    const midX = startX + (x / 2);
-    const midY = startY + (y / 2);
+    const midX = startX + x / 2;
+    const midY = startY + y / 2;
 
     const endX = startX + x;
     const endY = startY + y;
@@ -121,7 +132,7 @@ export const dragElementBy = async (
  * @param interval: number - Interval to run setInterval on
  */
 export const waitForFunctionTestContext = async (fn: any, params: any, interval = 16): Promise<any> => {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve) => {
     const intervalId = setInterval(() => {
       if (fn(params)) {
         clearInterval(intervalId);
@@ -136,20 +147,23 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
  * https://github.com/GoogleChrome/puppeteer/issues/858#issuecomment-359763824
  */
 export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<ElementHandle> => {
-  const shadowSelectorFn = (el: Element, selector: string): Element | null => (el && el.shadowRoot) && el.shadowRoot.querySelector(selector);
+  const shadowSelectorFn = (el: Element, selector: string): Element | null =>
+    el?.shadowRoot && el.shadowRoot.querySelector(selector);
 
-  return new Promise(async resolve => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve) => {
     const [firstSelector, ...restSelectors] = selectors;
     let parentElement = await page.$(firstSelector);
 
     for (const selector of restSelectors) {
-      parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
+      parentElement = (await page.evaluateHandle(shadowSelectorFn, parentElement, selector)) as any;
     }
 
-    if (parentElement) { resolve(parentElement); }
+    if (parentElement) {
+      resolve(parentElement);
+    }
   });
 };
-
 /**
  * Given an element and optional selector, use the selector if
  * it exists or get the node name of that element if not. Combine
@@ -197,7 +211,7 @@ export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
  * @param y The y coordinate to scroll to.
  */
 export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
-  await page.evaluate(async selector => {
+  await page.evaluate(async (selector) => {
     const el = document.querySelector<HTMLElement>(selector);
     if (el) {
       if (el.tagName === 'ION-CONTENT') {
@@ -209,7 +223,7 @@ export const scrollTo = async (page: E2EPage, selector: string, x: number, y: nu
       console.error(`Unable to find element with selector: ${selector}`);
     }
   }, selector);
-}
+};
 
 /**
  * Scrolls to the bottom of a scroll container. Supports custom method for
@@ -219,8 +233,8 @@ export const scrollTo = async (page: E2EPage, selector: string, x: number, y: nu
  * @param selector The element to scroll within.
  */
 export const scrollToBottom = async (page: E2EPage, selector: string) => {
-  await page.evaluate(async selector => {
-    const el = document.querySelector<HTMLElement>(selector);
+  await page.evaluate(async (elSelector) => {
+    const el = document.querySelector<HTMLElement>(elSelector);
     if (el) {
       if (el.tagName === 'ION-CONTENT') {
         await (el as any).scrollToBottom();
@@ -228,7 +242,7 @@ export const scrollToBottom = async (page: E2EPage, selector: string) => {
         el.scrollTop = el.scrollHeight;
       }
     } else {
-      console.error(`Unable to find element with selector: ${selector}`);
+      console.error(`Unable to find element with selector: ${elSelector}`);
     }
   }, selector);
-}
+};

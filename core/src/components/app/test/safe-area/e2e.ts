@@ -1,9 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 test('app: safe-area', async () => {
-
   const page = await newE2EPage({
-    url: '/src/components/app/test/safe-area?ionic:_testing=true'
+    url: '/src/components/app/test/safe-area?ionic:_testing=true',
   });
 
   expect(await page.compareScreenshot()).toMatchScreenshot();
@@ -35,5 +34,4 @@ test('app: safe-area', async () => {
   const toast = await page.find('ion-toast');
   expect(await page.compareScreenshot('toast')).toMatchScreenshot();
   await toast.callMethod('dismiss');
-
 });

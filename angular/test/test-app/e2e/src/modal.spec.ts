@@ -10,6 +10,7 @@ describe('Modals', () => {
 
     cy.get('app-modal-example h2').should('have.text', '123');
     cy.get('app-modal-example h3').should('have.text', '321');
+    cy.get('#modalInstance').should('have.text', 'true');
 
     cy.get('#onWillDismiss').should('have.text', 'false');
     cy.get('#onDidDismiss').should('have.text', 'false');

@@ -17,7 +17,7 @@ describe('Config', () => {
       bool3: 'true',
       bool4: 'hola',
       bool5: 0,
-      bool6: 1
+      bool6: 1,
     });
     expect(config.getBoolean('bool0')).toEqual(false);
     expect(config.getBoolean('bool1')).toEqual(false);
@@ -35,7 +35,7 @@ describe('Config', () => {
       nu1: -1,
       nu2: '200',
       nu3: '2.3',
-      nu4: -100.2
+      nu4: -100.2,
     });
     expect(config.getNumber('nu0')).toEqual(0);
     expect(config.getNumber('nu1')).toEqual(-1);

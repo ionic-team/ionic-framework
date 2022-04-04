@@ -1,6 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
 import type { E2EPage } from '@stencil/core/testing';
-
 import { scrollToBottom } from '@utils/test';
 
 /**
@@ -16,10 +15,9 @@ async function scrollPage(page: E2EPage) {
 }
 
 describe('infinite-scroll: custom scroll target', () => {
-
   it('should load more items when scrolled to the bottom', async () => {
     const page = await newE2EPage({
-      url: '/src/components/infinite-scroll/test/scroll-target?ionic:_testing=true'
+      url: '/src/components/infinite-scroll/test/scroll-target?ionic:_testing=true',
     });
 
     const initialItems = await page.findAll('ion-item');
@@ -31,5 +29,4 @@ describe('infinite-scroll: custom scroll target', () => {
 
     expect(items.length).toBe(60);
   });
-
 });
