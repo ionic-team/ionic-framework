@@ -771,7 +771,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           part="content"
           ref={el => this.wrapperEl = el}
         >
-          {showHandle && <div class="modal-handle" part="handle" onClick={this.onHandleClick}></div>}
+          {showHandle && <button class="modal-handle" part="handle" type="button" onClick={this.onHandleClick}></button>}
           <slot></slot>
         </div>
 
