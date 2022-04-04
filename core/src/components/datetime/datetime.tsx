@@ -317,14 +317,17 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      const { month, day, year, hour, minute } = parseDate(this.value);
-      this.activePartsClone = {
-        ...this.activeParts,
-        month,
-        day,
-        year,
-        hour,
-        minute
+      const valueDateParts = parseDate(this.value);
+      if (valueDateParts) {
+        const { month, day, year, hour, minute } = valueDateParts;
+        this.activePartsClone = {
+          ...this.activeParts,
+          month,
+          day,
+          year,
+          hour,
+          minute
+        }
       }
     }
 
