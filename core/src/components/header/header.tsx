@@ -1,11 +1,21 @@
-import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Attributes, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
-import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
+import {
+  cloneElement,
+  createHeaderIndex,
+  handleContentScroll,
+  handleHeaderFade,
+  handleToolbarIntersection,
+  setHeaderActive,
+  setToolbarBackgroundOpacity,
+} from './header.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -14,8 +24,8 @@ import { cloneElement, createHeaderIndex, handleContentScroll, handleHeaderFade,
   tag: 'ion-header',
   styleUrls: {
     ios: 'header.ios.scss',
-    md: 'header.md.scss'
-  }
+    md: 'header.md.scss',
+  },
 })
 export class Header implements ComponentInterface {
   private scrollEl?: HTMLElement;
@@ -63,7 +73,9 @@ export class Header implements ComponentInterface {
   private async checkCollapsibleHeader() {
     const mode = getIonMode(this);
 
-    if (mode !== 'ios') { return; }
+    if (mode !== 'ios') {
+      return;
+    }
 
     const { collapse } = this;
     const hasCondense = collapse === 'condense';
@@ -73,8 +85,7 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-
-      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
@@ -86,7 +97,7 @@ export class Header implements ComponentInterface {
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = (pageEl) ? findIonContent(pageEl) : null;
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
@@ -100,16 +111,18 @@ export class Header implements ComponentInterface {
   }
 
   private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
-    const scrollEl = this.scrollEl = await getScrollElement(contentEl);
+    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
 
     /**
      * Handle fading of toolbars on scroll
      */
-    this.contentScrollCallback = () => { handleHeaderFade(this.scrollEl!, this.el, condenseHeader); };
+    this.contentScrollCallback = () => {
+      handleHeaderFade(this.scrollEl!, this.el, condenseHeader);
+    };
     scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
     handleHeaderFade(this.scrollEl!, this.el, condenseHeader);
-  }
+  };
 
   private destroyCollapsibleHeader() {
     if (this.intersectionObserver) {
@@ -133,19 +146,27 @@ export class Header implements ComponentInterface {
       printIonContentErrorMsg(this.el);
       return;
     }
-    if (typeof (IntersectionObserver as any) === 'undefined') { return; }
+    if (typeof (IntersectionObserver as any) === 'undefined') {
+      return;
+    }
 
     this.scrollEl = await getScrollElement(contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
-    this.collapsibleMainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as HTMLElement | undefined;
+    this.collapsibleMainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as
+      | HTMLElement
+      | undefined;
 
-    if (!this.collapsibleMainHeader) { return; }
+    if (!this.collapsibleMainHeader) {
+      return;
+    }
 
     const mainHeaderIndex = createHeaderIndex(this.collapsibleMainHeader);
     const scrollHeaderIndex = createHeaderIndex(this.el);
 
-    if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
+    if (!mainHeaderIndex || !scrollHeaderIndex) {
+      return;
+    }
 
     setHeaderActive(mainHeaderIndex, false);
     setToolbarBackgroundOpacity(mainHeaderIndex.el, 0);
@@ -156,9 +177,14 @@ export class Header implements ComponentInterface {
      * as well as progressively showing/hiding the main header
      * border as the top-most toolbar collapses or expands.
      */
-    const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex, this.scrollEl!); };
+    const toolbarIntersection = (ev: any) => {
+      handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex, this.scrollEl!);
+    };
 
-    this.intersectionObserver = new IntersectionObserver(toolbarIntersection, { root: contentEl, threshold: [0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] });
+    this.intersectionObserver = new IntersectionObserver(toolbarIntersection, {
+      root: contentEl,
+      threshold: [0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+    });
     this.intersectionObserver.observe(scrollHeaderIndex.toolbars[scrollHeaderIndex.toolbars.length - 1].el);
 
     /**
@@ -166,7 +192,9 @@ export class Header implements ComponentInterface {
      * showing/hiding border on last toolbar
      * in primary header
      */
-    this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, scrollHeaderIndex, contentEl); };
+    this.contentScrollCallback = () => {
+      handleContentScroll(this.scrollEl!, scrollHeaderIndex, contentEl);
+    };
     this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
     writeTask(() => {
@@ -199,9 +227,7 @@ export class Header implements ComponentInterface {
         }}
         {...inheritedAttributes}
       >
-        {mode === 'ios' && translucent &&
-          <div class="header-background"></div>
-        }
+        {mode === 'ios' && translucent && <div class="header-background"></div>}
         <slot></slot>
       </Host>
     );

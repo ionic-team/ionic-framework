@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('input: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/input/test/basic?ionic:_testing=true'
+    url: '/src/components/input/test/basic?ionic:_testing=true',
   });
 
   const compares = [];
@@ -36,18 +36,16 @@ test('input: basic', async () => {
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
   }
-
-
 });
 
 test('input: basic should not error on input', async () => {
   const page = await newE2EPage({
-    url: '/src/components/input/test/basic?ionic:_testing=true'
+    url: '/src/components/input/test/basic?ionic:_testing=true',
   });
 
   const errors = [];
 
-  page.on('console', msg => {
+  page.on('console', (msg) => {
     if (msg.type() === 'error') {
       errors.push(msg.text());
     }
@@ -61,4 +59,4 @@ test('input: basic should not error on input', async () => {
   }
 
   expect(errors.length).toEqual(0);
-})
+});

@@ -92,16 +92,39 @@ export const createLocationHistory = () => {
    * and every entry that appears after it.
    */
   const clearHistory = (routeInfo?: RouteInfo) => {
-    Object.keys(tabsHistory).forEach(key => {
-      tabsHistory[key] = [];
-    });
-
     if (routeInfo) {
+
+      /**
+       * If there is no route index in locationHistory
+       * then there will not be any route index in
+       * tabs either.
+       */
       const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
       if (existingRouteIndex === -1) return;
 
       locationHistory.splice(existingRouteIndex);
+
+      /**
+       * We also need to search the current tab
+       * to correctly reset the individual tab
+       * stack. We should not clear the entire
+       * tab stack as that means we will lose
+       * a reference to the root tab route.
+       */
+      const { tab } = routeInfo;
+      const tabHistory = tabsHistory[tab];
+      if (tab && tabHistory) {
+        const existingTabRouteIndex = tabHistory.findIndex(r => r.position === routeInfo.position);
+        if (existingTabRouteIndex === -1) return;
+
+        tabsHistory[tab].splice(existingTabRouteIndex);
+      }
+
     } else {
+      Object.keys(tabsHistory).forEach(key => {
+        tabsHistory[key] = [];
+      });
+
       locationHistory.length = 0;
     }
   }

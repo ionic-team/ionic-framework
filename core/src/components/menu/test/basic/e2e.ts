@@ -1,11 +1,12 @@
-import { testMenu } from '../test.utils';
 import { newE2EPage } from '@stencil/core/testing';
+
+import { testMenu } from '../test.utils';
 
 const DIRECTORY = 'basic';
 const getActiveElementID = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return await page.evaluate(el => el && el.id, activeElement);
-}
+  return page.evaluate((el) => el?.id, activeElement);
+};
 
 test('menu: start menu', async () => {
   await testMenu(DIRECTORY, '#start-menu', 'first');
@@ -25,7 +26,7 @@ test('menu: focus trap', async () => {
   await page.click('#open-first');
   const menu = await page.find('#start-menu');
   await menu.waitForVisible();
-  
+
   let activeElID = await getActiveElementID(page);
   expect(activeElID).toEqual('start-menu-button');
 

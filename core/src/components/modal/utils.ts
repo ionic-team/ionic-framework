@@ -7,7 +7,6 @@
  * the 0 breakpoint.
  */
 export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) => {
-
   /**
    * We will use these points:
    * (backdropBreakpoint, 0)
@@ -48,5 +47,5 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
    * gesture offset.
    */
 
-  return (x * slope) + b;
-}
+  return x * slope + b;
+};

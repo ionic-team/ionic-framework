@@ -1,5 +1,4 @@
 import type { E2EPage } from '@stencil/core/testing';
-
 import { dragElementBy } from '@utils/test';
 
 /**
@@ -13,11 +12,11 @@ import { dragElementBy } from '@utils/test';
  * @param selector The element selector to center the drag gesture on. Defaults to `body`.
  */
 const pullToRefresh = async (page: E2EPage, selector = 'body') => {
-  const target = await page.$(selector);
+  const target = (await page.$(selector))!;
 
   await dragElementBy(target, page, 0, 200);
   const ev = await page.spyOnEvent('ionRefreshComplete', 'document');
   await ev.next();
-}
+};
 
 export { pullToRefresh };

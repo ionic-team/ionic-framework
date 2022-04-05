@@ -1,15 +1,16 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { printIonError } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
-import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-import { InputChangeEventDetail } from '../input/input-interface';
+import type { InputChangeEventDetail } from '../input/input-interface';
 
-import { CounterFormatter } from './item-interface';
+import type { CounterFormatter } from './item-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -27,14 +28,13 @@ import { CounterFormatter } from './item-interface';
   tag: 'ion-item',
   styleUrls: {
     ios: 'item.ios.scss',
-    md: 'item.md.scss'
+    md: 'item.md.scss',
   },
   shadow: {
-    delegatesFocus: true
-  }
+    delegatesFocus: true,
+  },
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
-
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private clickListener?: (ev: Event) => void;
@@ -179,7 +179,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const childStyles = this.itemStyles.get(tagName) || {};
 
     let hasStyleChange = false;
-    Object.keys(updatedStyles).forEach(key => {
+    Object.keys(updatedStyles).forEach((key) => {
       if (updatedStyles[key]) {
         const itemKey = `item-${key}`;
         if (!childStyles[itemKey]) {
@@ -241,16 +241,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // The following elements can accept focus alongside the previous elements
     // therefore if these elements are also a child of item, we don't want the
     // input cover on top of those interfering with their clicks
-    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
+    const inputs = this.el.querySelectorAll(
+      'ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle'
+    );
 
     // The following elements should also stay clickable when an input with cover is present
     const clickables = this.el.querySelectorAll('ion-anchor, ion-button, a, button');
 
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above
-    this.multipleInputs = covers.length + inputs.length > 1
-      || covers.length + clickables.length > 1
-      || covers.length > 0 && this.isClickable();
+    this.multipleInputs =
+      covers.length + inputs.length > 1 ||
+      covers.length + clickables.length > 1 ||
+      (covers.length > 0 && this.isClickable());
   }
 
   // If the item contains an input including a checkbox, datetime, select, or radio
@@ -265,20 +268,22 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   // If the item has an href or button property it will render a native
   // anchor or button that is clickable
   private isClickable(): boolean {
-    return (this.href !== undefined || this.button);
+    return this.href !== undefined || this.button;
   }
 
   private canActivate(): boolean {
-    return (this.isClickable() || this.hasCover());
+    return this.isClickable() || this.hasCover();
   }
 
   private isFocusable(): boolean {
     const focusableChild = this.el.querySelector('.ion-focusable');
-    return (this.canActivate() || focusableChild !== null);
+    return this.canActivate() || focusableChild !== null;
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
-    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<HTMLIonInputElement | HTMLIonTextareaElement>;
+    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
+      HTMLIonInputElement | HTMLIonTextareaElement
+    >;
     return inputs[0];
   }
 
@@ -339,30 +344,50 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { counterString, detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
+    const {
+      counterString,
+      detail,
+      detailIcon,
+      download,
+      fill,
+      labelColorStyles,
+      lines,
+      disabled,
+      href,
+      rel,
+      shape,
+      target,
+      routerAnimation,
+      routerDirection,
+    } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : {
-        download,
-        href,
-        rel,
-        target
-      };
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const attrs =
+      TagType === 'button'
+        ? { type: this.type }
+        : {
+            download,
+            href,
+            rel,
+            target,
+          };
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
-    const clickFn = clickable ? {
-      onClick: (ev: Event) => { openURL(href, ev, routerDirection, routerAnimation); }
-    } : {};
+    const clickFn = clickable
+      ? {
+          onClick: (ev: Event) => {
+            openURL(href, ev, routerDirection, routerAnimation);
+          },
+        }
+      : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
-    this.itemStyles.forEach(value => {
+    this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
     });
-    const ariaDisabled = (disabled || childStyles['item-interactive-disabled']) ? 'true' : null;
+    const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     return (
       <Host
@@ -371,7 +396,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...childStyles,
           ...labelColorStyles,
           ...createColorClasses(this.color, {
-            'item': true,
+            item: true,
             [mode]: true,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
@@ -381,24 +406,27 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': document.dir === 'rtl'
-          })
+            'item-rtl': document.dir === 'rtl',
+          }),
         }}
       >
-        <TagType
-          {...attrs}
-          class="item-native"
-          part="native"
-          disabled={disabled}
-          {...clickFn}
-        >
+        <TagType {...attrs} class="item-native" part="native" disabled={disabled} {...clickFn}>
           <slot name="start"></slot>
           <div class="item-inner">
             <div class="input-wrapper">
               <slot></slot>
             </div>
             <slot name="end"></slot>
-            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true" flip-rtl={detailIcon === chevronForward}></ion-icon>}
+            {showDetail && (
+              <ion-icon
+                icon={detailIcon}
+                lazy={false}
+                class="item-detail-icon"
+                part="detail-icon"
+                aria-hidden="true"
+                flip-rtl={detailIcon === chevronForward}
+              ></ion-icon>
+            )}
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

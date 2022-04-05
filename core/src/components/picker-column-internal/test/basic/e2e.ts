@@ -1,15 +1,13 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
-
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('picker-column-internal', () => {
-
   let page: E2EPage;
 
   describe('default', () => {
-
     beforeEach(async () => {
       page = await newE2EPage({
-        url: '/src/components/picker-column-internal/test/basic?ionic:_testing=true'
+        url: '/src/components/picker-column-internal/test/basic?ionic:_testing=true',
       });
     });
 
@@ -51,6 +49,28 @@ describe('picker-column-internal', () => {
       expect(activeColumn.innerText).toEqual('23');
     });
 
-  });
+    it('should not emit ionChange when the value is modified externally', async () => {
+      const pickerColumn = await page.find('#default');
+      const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
 
+      await page.$eval('#default', (el: any) => {
+        el.value = '12';
+      });
+
+      expect(ionChangeSpy).not.toHaveReceivedEvent();
+    });
+
+    it('should emit ionChange when the picker is scrolled', async () => {
+      const pickerColumn = await page.find('#default');
+      const ionChangeSpy = await pickerColumn.spyOnEvent('ionChange');
+
+      await page.$eval('#default', (el: any) => {
+        el.scrollTo(0, el.scrollHeight);
+      });
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy).toHaveReceivedEvent();
+    });
+  });
 });

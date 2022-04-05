@@ -16,6 +16,8 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
   willLeave = 0;
   didLeave = 0;
 
+  modal: HTMLElement;
+
   constructor(
     private modalCtrl: ModalController,
     @Optional() public nav: IonNav,

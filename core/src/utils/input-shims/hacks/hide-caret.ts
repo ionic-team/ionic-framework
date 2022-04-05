@@ -2,9 +2,15 @@ import { addEventListener, removeEventListener } from '../../helpers';
 
 import { isFocused, relocateInput } from './common';
 
-export const enableHideCaretOnScroll = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement | undefined, scrollEl: HTMLElement | undefined) => {
+export const enableHideCaretOnScroll = (
+  componentEl: HTMLElement,
+  inputEl: HTMLInputElement | HTMLTextAreaElement | undefined,
+  scrollEl: HTMLElement | undefined
+) => {
   if (!scrollEl || !inputEl) {
-    return () => { return; };
+    return () => {
+      return;
+    };
   }
 
   const scrollHideCaret = (shouldHideCaret: boolean) => {

@@ -24,7 +24,7 @@ test('popover: inline, isOpen and event props', async () => {
   await page.click('ion-button#props');
   await page.waitForSelector('ion-popover');
 
-  let popoverAgain = await page.find('ion-popover');
+  const popoverAgain = await page.find('ion-popover');
 
   expect(popoverAgain).not.toBe(null);
   await popoverAgain.waitForVisible();
@@ -60,7 +60,7 @@ test('popover: inline, present method', async () => {
   await page.click('ion-button#method');
   await page.waitForSelector('ion-popover');
 
-  let popoverAgain = await page.find('ion-popover');
+  const popoverAgain = await page.find('ion-popover');
 
   expect(popoverAgain).not.toBe(null);
   await popoverAgain.waitForVisible();

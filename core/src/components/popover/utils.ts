@@ -1,4 +1,4 @@
-import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
+import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 
 interface InteractionCallback {
@@ -41,25 +41,21 @@ export interface PopoverStyles {
  * arrow on `ios` mode. If arrow is disabled
  * returns (0, 0).
  */
-export const getArrowDimensions = (
-  arrowEl: HTMLElement | null
-) => {
-  if (!arrowEl) { return { arrowWidth: 0, arrowHeight: 0 }; }
+export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
+  if (!arrowEl) {
+    return { arrowWidth: 0, arrowHeight: 0 };
+  }
   const { width, height } = arrowEl.getBoundingClientRect();
 
   return { arrowWidth: width, arrowHeight: height };
-}
+};
 
 /**
  * Returns the recommended dimensions of the popover
  * that takes into account whether or not the width
  * should match the trigger width.
  */
-export const getPopoverDimensions = (
-  size: PopoverSize,
-  contentEl: HTMLElement,
-  triggerEl?: HTMLElement
-) => {
+export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, triggerEl?: HTMLElement) => {
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentHeight = contentDimentions.height;
   let contentWidth = contentDimentions.width;
@@ -71,9 +67,9 @@ export const getPopoverDimensions = (
 
   return {
     contentWidth,
-    contentHeight
-  }
-}
+    contentHeight,
+  };
+};
 
 export const configureDismissInteraction = (
   triggerEl: HTMLElement,
@@ -107,12 +103,14 @@ export const configureDismissInteraction = (
              * causing performance issues.
              */
             const element = document.elementFromPoint(ev.clientX, ev.clientY) as HTMLElement | null;
-            if (element === triggerEl) { return; }
+            if (element === triggerEl) {
+              return;
+            }
 
             popoverEl.dismiss(undefined, undefined, false);
-          }
-        }
-     ];
+          },
+        },
+      ];
       break;
     case 'context-menu':
     case 'click':
@@ -139,8 +137,8 @@ export const configureDismissInteraction = (
             }
 
             popoverEl.dismiss(undefined, undefined, false);
-          }
-        }
+          },
+        },
       ];
       break;
   }
@@ -149,8 +147,8 @@ export const configureDismissInteraction = (
 
   return () => {
     dismissCallbacks.forEach(({ eventName, callback }) => parentContentEl.removeEventListener(eventName, callback));
-  }
-}
+  };
+};
 
 /**
  * Configures the triggerEl to respond
@@ -191,9 +189,9 @@ export const configureTriggerInteraction = (
               raf(() => {
                 popoverEl.presentFromTrigger(ev);
                 hoverTimeout = undefined;
-              })
+              });
             }, 100);
-          }
+          },
         },
         {
           eventName: 'mouseleave',
@@ -208,12 +206,14 @@ export const configureTriggerInteraction = (
              * close this popover.
              */
             const target = ev.relatedTarget as HTMLElement | null;
-            if (!target) { return; }
+            if (!target) {
+              return;
+            }
 
             if (target.closest('ion-popover') !== popoverEl) {
               popoverEl.dismiss(undefined, undefined, false);
             }
-          }
+          },
         },
         {
           /**
@@ -221,13 +221,13 @@ export const configureTriggerInteraction = (
            * from dismissing when dismiss-on-select="true".
            */
           eventName: 'click',
-          callback: (ev: Event) => ev.stopPropagation()
+          callback: (ev: Event) => ev.stopPropagation(),
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
-        }
-      ]
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true),
+        },
+      ];
 
       break;
     case 'context-menu':
@@ -241,17 +241,17 @@ export const configureTriggerInteraction = (
              */
             ev.preventDefault();
             popoverEl.presentFromTrigger(ev);
-          }
+          },
         },
         {
           eventName: 'click',
-          callback: (ev: Event) => ev.stopPropagation()
+          callback: (ev: Event) => ev.stopPropagation(),
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
-        }
-      ]
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true),
+        },
+      ];
 
       break;
     case 'click':
@@ -266,12 +266,12 @@ export const configureTriggerInteraction = (
            * the first popover to dismiss.
            */
           eventName: 'click',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev),
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
-        }
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true),
+        },
       ];
       break;
   }
@@ -282,16 +282,18 @@ export const configureTriggerInteraction = (
   return () => {
     triggerCallbacks.forEach(({ eventName, callback }) => triggerEl.removeEventListener(eventName, callback));
     triggerEl.removeAttribute('data-ion-popover-trigger');
-  }
-}
+  };
+};
 
 /**
  * Returns the index of an ion-item in an array of ion-items.
  */
 export const getIndexOfItem = (items: HTMLIonItemElement[], item: HTMLElement | null) => {
-  if (!item || item.tagName !== 'ION-ITEM') { return -1; }
+  if (!item || item.tagName !== 'ION-ITEM') {
+    return -1;
+  }
 
-  return items.findIndex(el => el === item)
+  return items.findIndex((el) => el === item);
 };
 
 /**
@@ -302,7 +304,7 @@ export const getIndexOfItem = (items: HTMLIonItemElement[], item: HTMLElement | 
 export const getNextItem = (items: HTMLIonItemElement[], currentItem: HTMLElement | null) => {
   const currentItemIndex = getIndexOfItem(items, currentItem);
   return items[currentItemIndex + 1];
-}
+};
 
 /**
  * Given an array of elements and a currently focused ion-item
@@ -312,7 +314,7 @@ export const getNextItem = (items: HTMLIonItemElement[], currentItem: HTMLElemen
 export const getPrevItem = (items: HTMLIonItemElement[], currentItem: HTMLElement | null) => {
   const currentItemIndex = getIndexOfItem(items, currentItem);
   return items[currentItemIndex - 1];
-}
+};
 
 /** Focus the internal button of the ion-item */
 const focusItem = (item: HTMLIonItemElement) => {
@@ -322,7 +324,7 @@ const focusItem = (item: HTMLIonItemElement) => {
   if (button) {
     raf(() => button.focus());
   }
-}
+};
 
 /**
  * Returns `true` if `el` has been designated
@@ -330,10 +332,7 @@ const focusItem = (item: HTMLIonItemElement) => {
  */
 export const isTriggerElement = (el: HTMLElement) => el.hasAttribute('data-ion-popover-trigger');
 
-export const configureKeyboardInteraction = (
-  popoverEl: HTMLIonPopoverElement
-) => {
-
+export const configureKeyboardInteraction = (popoverEl: HTMLIonPopoverElement) => {
   const callback = async (ev: KeyboardEvent) => {
     const activeElement = document.activeElement as HTMLElement | null;
     let items: HTMLIonItemElement[] = [];
@@ -344,17 +343,19 @@ export const configureKeyboardInteraction = (
      * try/catch here so errors are not thrown.
      */
     try {
-
       /**
        * Select all ion-items that are not children of child popovers.
        * i.e. only select ion-item elements that are part of this popover
        */
-      items = Array.from(popoverEl.querySelectorAll('ion-item:not(ion-popover ion-popover *):not([disabled])') as NodeListOf<HTMLIonItemElement>);
-    /* tslint:disable-next-line */
+      items = Array.from(
+        popoverEl.querySelectorAll(
+          'ion-item:not(ion-popover ion-popover *):not([disabled])'
+        ) as NodeListOf<HTMLIonItemElement>
+      );
+      /* eslint-disable-next-line */
     } catch {}
 
     switch (ev.key) {
-
       /**
        * If we are in a child popover
        * then pressing the left arrow key
@@ -375,7 +376,6 @@ export const configureKeyboardInteraction = (
         // Disable movement/scroll with keyboard
         ev.preventDefault();
         const nextItem = getNextItem(items, activeElement);
-        // tslint:disable-next-line:strict-type-predicates
         if (nextItem !== undefined) {
           focusItem(nextItem);
         }
@@ -387,7 +387,6 @@ export const configureKeyboardInteraction = (
         // Disable movement/scroll with keyboard
         ev.preventDefault();
         const prevItem = getPrevItem(items, activeElement);
-        // tslint:disable-next-line:strict-type-predicates
         if (prevItem !== undefined) {
           focusItem(prevItem);
         }
@@ -398,7 +397,6 @@ export const configureKeyboardInteraction = (
       case 'Home':
         ev.preventDefault();
         const firstItem = items[0];
-        // tslint:disable-next-line:strict-type-predicates
         if (firstItem !== undefined) {
           focusItem(firstItem);
         }
@@ -409,7 +407,6 @@ export const configureKeyboardInteraction = (
       case 'End':
         ev.preventDefault();
         const lastItem = items[items.length - 1];
-        // tslint:disable-next-line:strict-type-predicates
         if (lastItem !== undefined) {
           focusItem(lastItem);
         }
@@ -434,7 +431,7 @@ export const configureKeyboardInteraction = (
 
   popoverEl.addEventListener('keydown', callback);
   return () => popoverEl.removeEventListener('keydown', callback);
-}
+};
 
 /**
  * Positions a popover by taking into account
@@ -452,13 +449,13 @@ export const getPopoverPosition = (
   align: PositionAlign,
   defaultPosition: PopoverPosition,
   triggerEl?: HTMLElement,
-  event?: MouseEvent | CustomEvent,
+  event?: MouseEvent | CustomEvent
 ): PopoverPosition => {
   let referenceCoordinates = {
     top: 0,
     left: 0,
     width: 0,
-    height: 0
+    height: 0,
   };
 
   /**
@@ -478,8 +475,8 @@ export const getPopoverPosition = (
         top: mouseEv.clientY,
         left: mouseEv.clientX,
         width: 1,
-        height: 1
-      }
+        height: 1,
+      };
 
       break;
 
@@ -503,7 +500,9 @@ export const getPopoverPosition = (
        * to the indicator rather than `ion-breadcrumb`
        * as a whole.
        */
-      const actualTriggerEl = (triggerEl || customEv?.detail?.ionShadowTarget || customEv?.target) as HTMLElement | null;
+      const actualTriggerEl = (triggerEl ||
+        customEv?.detail?.ionShadowTarget ||
+        customEv?.target) as HTMLElement | null;
       if (!actualTriggerEl) {
         return defaultPosition;
       }
@@ -512,8 +511,8 @@ export const getPopoverPosition = (
         top: triggerBoundingBox.top,
         left: triggerBoundingBox.left,
         width: triggerBoundingBox.width,
-        height: triggerBoundingBox.height
-      }
+        height: triggerBoundingBox.height,
+      };
 
       break;
   }
@@ -523,7 +522,15 @@ export const getPopoverPosition = (
    * popover to be positioned on the
    * preferred side of the reference.
    */
-  const coordinates = calculatePopoverSide(side, referenceCoordinates, contentWidth, contentHeight, arrowWidth, arrowHeight, isRTL);
+  const coordinates = calculatePopoverSide(
+    side,
+    referenceCoordinates,
+    contentWidth,
+    contentHeight,
+    arrowWidth,
+    arrowHeight,
+    isRTL
+  );
 
   /**
    * Get the top/left adjustments that
@@ -535,12 +542,21 @@ export const getPopoverPosition = (
   const top = coordinates.top + alignedCoordinates.top;
   const left = coordinates.left + alignedCoordinates.left;
 
-  const { arrowTop, arrowLeft } = calculateArrowPosition(side, arrowWidth, arrowHeight, top, left, contentWidth, contentHeight, isRTL);
+  const { arrowTop, arrowLeft } = calculateArrowPosition(
+    side,
+    arrowWidth,
+    arrowHeight,
+    top,
+    left,
+    contentWidth,
+    contentHeight,
+    isRTL
+  );
 
   const { originX, originY } = calculatePopoverOrigin(side, align, isRTL);
 
   return { top, left, referenceCoordinates, arrowTop, arrowLeft, originX, originY };
-}
+};
 
 /**
  * Determines the transform-origin
@@ -549,26 +565,22 @@ export const getPopoverPosition = (
  * prop values are. Currently only used
  * with the MD animation.
  */
-const calculatePopoverOrigin = (
-  side: PositionSide,
-  align: PositionAlign,
-  isRTL: boolean
-) => {
+const calculatePopoverOrigin = (side: PositionSide, align: PositionAlign, isRTL: boolean) => {
   switch (side) {
     case 'top':
-      return { originX: getOriginXAlignment(align), originY: 'bottom' }
+      return { originX: getOriginXAlignment(align), originY: 'bottom' };
     case 'bottom':
-      return { originX: getOriginXAlignment(align), originY: 'top' }
+      return { originX: getOriginXAlignment(align), originY: 'top' };
     case 'left':
-      return { originX: 'right', originY: getOriginYAlignment(align) }
+      return { originX: 'right', originY: getOriginYAlignment(align) };
     case 'right':
-      return { originX: 'left', originY: getOriginYAlignment(align) }
+      return { originX: 'left', originY: getOriginYAlignment(align) };
     case 'start':
-      return { originX: (isRTL) ? 'left' : 'right', originY: getOriginYAlignment(align) }
+      return { originX: isRTL ? 'left' : 'right', originY: getOriginYAlignment(align) };
     case 'end':
-      return { originX: (isRTL) ? 'right' : 'left', originY: getOriginYAlignment(align) }
+      return { originX: isRTL ? 'right' : 'left', originY: getOriginYAlignment(align) };
   }
-}
+};
 
 const getOriginXAlignment = (align: PositionAlign) => {
   switch (align) {
@@ -579,7 +591,7 @@ const getOriginXAlignment = (align: PositionAlign) => {
     case 'end':
       return 'right';
   }
-}
+};
 
 const getOriginYAlignment = (align: PositionAlign) => {
   switch (align) {
@@ -590,7 +602,7 @@ const getOriginYAlignment = (align: PositionAlign) => {
     case 'end':
       return 'bottom';
   }
-}
+};
 
 /**
  * Calculates where the arrow positioning
@@ -611,32 +623,35 @@ const calculateArrowPosition = (
    * been rotated using a `transform`, so to move the arrow up or down
    * by its dimension, you need to use `arrowWidth`.
    */
-  const leftPosition = { arrowTop: top + (contentHeight / 2) - (arrowWidth / 2), arrowLeft: left + contentWidth - (arrowWidth / 2) };
+  const leftPosition = {
+    arrowTop: top + contentHeight / 2 - arrowWidth / 2,
+    arrowLeft: left + contentWidth - arrowWidth / 2,
+  };
 
   /**
    * Move the arrow to the left by arrowWidth and then
    * again by half of its width because we have rotated
    * the arrow using a transform.
    */
-  const rightPosition = { arrowTop: top + (contentHeight / 2) - (arrowWidth / 2), arrowLeft: left - (arrowWidth * 1.5) }
+  const rightPosition = { arrowTop: top + contentHeight / 2 - arrowWidth / 2, arrowLeft: left - arrowWidth * 1.5 };
 
   switch (side) {
     case 'top':
-      return { arrowTop: top + contentHeight, arrowLeft: left + (contentWidth / 2) - (arrowWidth / 2) }
+      return { arrowTop: top + contentHeight, arrowLeft: left + contentWidth / 2 - arrowWidth / 2 };
     case 'bottom':
-      return { arrowTop: top - arrowHeight, arrowLeft: left + (contentWidth / 2) - (arrowWidth / 2) }
+      return { arrowTop: top - arrowHeight, arrowLeft: left + contentWidth / 2 - arrowWidth / 2 };
     case 'left':
       return leftPosition;
     case 'right':
       return rightPosition;
     case 'start':
-      return (isRTL) ? rightPosition : leftPosition;
+      return isRTL ? rightPosition : leftPosition;
     case 'end':
-      return (isRTL) ? leftPosition : rightPosition;
+      return isRTL ? leftPosition : rightPosition;
     default:
-      return { arrowTop: 0, arrowLeft: 0 }
+      return { arrowTop: 0, arrowLeft: 0 };
   }
-}
+};
 
 /**
  * Calculates the required top/left
@@ -655,34 +670,34 @@ const calculatePopoverSide = (
 ) => {
   const sideLeft = {
     top: triggerBoundingBox.top,
-    left: triggerBoundingBox.left - contentWidth - arrowWidth
-  }
+    left: triggerBoundingBox.left - contentWidth - arrowWidth,
+  };
   const sideRight = {
     top: triggerBoundingBox.top,
-    left: triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth
-  }
+    left: triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth,
+  };
 
   switch (side) {
     case 'top':
       return {
         top: triggerBoundingBox.top - contentHeight - arrowHeight,
-        left: triggerBoundingBox.left
-      }
+        left: triggerBoundingBox.left,
+      };
     case 'right':
       return sideRight;
     case 'bottom':
       return {
         top: triggerBoundingBox.top + triggerBoundingBox.height + arrowHeight,
-        left: triggerBoundingBox.left
-      }
+        left: triggerBoundingBox.left,
+      };
     case 'left':
       return sideLeft;
     case 'start':
-      return (isRTL) ? sideRight : sideLeft;
+      return isRTL ? sideRight : sideLeft;
     case 'end':
-      return (isRTL) ? sideLeft : sideRight;
+      return isRTL ? sideLeft : sideRight;
   }
-}
+};
 
 /**
  * Calculates the required top/left
@@ -699,14 +714,14 @@ const calculatePopoverAlign = (
 ) => {
   switch (align) {
     case 'center':
-      return calculatePopoverCenterAlign(side, triggerBoundingBox, contentWidth, contentHeight)
+      return calculatePopoverCenterAlign(side, triggerBoundingBox, contentWidth, contentHeight);
     case 'end':
-      return calculatePopoverEndAlign(side, triggerBoundingBox, contentWidth, contentHeight)
+      return calculatePopoverEndAlign(side, triggerBoundingBox, contentWidth, contentHeight);
     case 'start':
     default:
       return { top: 0, left: 0 };
   }
-}
+};
 
 /**
  * Calculate the end alignment for
@@ -730,17 +745,17 @@ const calculatePopoverEndAlign = (
     case 'right':
       return {
         top: -(contentHeight - triggerBoundingBox.height),
-        left: 0
-      }
+        left: 0,
+      };
     case 'top':
     case 'bottom':
     default:
       return {
         top: 0,
-        left: -(contentWidth - triggerBoundingBox.width)
-      }
+        left: -(contentWidth - triggerBoundingBox.width),
+      };
   }
-}
+};
 
 /**
  * Calculate the center alignment for
@@ -763,18 +778,18 @@ const calculatePopoverCenterAlign = (
     case 'left':
     case 'right':
       return {
-        top: -((contentHeight / 2) - (triggerBoundingBox.height / 2)),
-        left: 0
-      }
+        top: -(contentHeight / 2 - triggerBoundingBox.height / 2),
+        left: 0,
+      };
     case 'top':
     case 'bottom':
     default:
       return {
         top: 0,
-        left: -((contentWidth / 2) - (triggerBoundingBox.width / 2))
-      }
+        left: -(contentWidth / 2 - triggerBoundingBox.width / 2),
+      };
   }
-}
+};
 
 /**
  * Adjusts popover positioning coordinates
@@ -807,7 +822,9 @@ export const calculateWindowAdjustment = (
   let originY = contentOriginY;
   let checkSafeAreaLeft = false;
   let checkSafeAreaRight = false;
-  const triggerTop = triggerCoordinates ? triggerCoordinates.top + triggerCoordinates.height : bodyHeight / 2 - contentHeight / 2;
+  const triggerTop = triggerCoordinates
+    ? triggerCoordinates.top + triggerCoordinates.height
+    : bodyHeight / 2 - contentHeight / 2;
   const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
   let addPopoverBottomClass = false;
 
@@ -819,13 +836,11 @@ export const calculateWindowAdjustment = (
     left = bodyPadding;
     checkSafeAreaLeft = true;
     originX = 'left';
-  /**
-   * Adjust popover so it does not
-   * go off the right of the screen.
-   */
-  } else if (
-    contentWidth + bodyPadding + left + safeAreaMargin > bodyWidth
-  ) {
+    /**
+     * Adjust popover so it does not
+     * go off the right of the screen.
+     */
+  } else if (contentWidth + bodyPadding + left + safeAreaMargin > bodyWidth) {
     checkSafeAreaRight = true;
     left = bodyWidth - contentWidth - bodyPadding;
     originX = 'right';
@@ -838,34 +853,37 @@ export const calculateWindowAdjustment = (
    * the trigger, then we should not adjust top
    * margins.
    */
-  if (
-    triggerTop + triggerHeight + contentHeight > bodyHeight &&
-    (side === 'top' || side === 'bottom')
-  ) {
+  if (triggerTop + triggerHeight + contentHeight > bodyHeight && (side === 'top' || side === 'bottom')) {
     if (triggerTop - contentHeight > 0) {
       top = triggerTop - contentHeight - triggerHeight - (arrowHeight - 1);
       arrowTop = top + contentHeight;
       originY = 'bottom';
       addPopoverBottomClass = true;
 
-    /**
-     * If not enough room for popover to appear
-     * above trigger, then cut it off.
-     */
+      /**
+       * If not enough room for popover to appear
+       * above trigger, then cut it off.
+       */
     } else {
       bottom = bodyPadding;
     }
   }
 
-  return { top, left, bottom, originX, originY, checkSafeAreaLeft, checkSafeAreaRight, arrowTop, arrowLeft, addPopoverBottomClass };
-}
+  return {
+    top,
+    left,
+    bottom,
+    originX,
+    originY,
+    checkSafeAreaLeft,
+    checkSafeAreaRight,
+    arrowTop,
+    arrowLeft,
+    addPopoverBottomClass,
+  };
+};
 
-export const shouldShowArrow = (
-  side: PositionSide,
-  didAdjustBounds = false,
-  ev?: Event,
-  trigger?: HTMLElement
-) => {
+export const shouldShowArrow = (side: PositionSide, didAdjustBounds = false, ev?: Event, trigger?: HTMLElement) => {
   /**
    * If no event provided and
    * we do not have a trigger,
@@ -891,4 +909,4 @@ export const shouldShowArrow = (
   }
 
   return true;
-}
+};

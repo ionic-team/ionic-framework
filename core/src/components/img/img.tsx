@@ -1,7 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Attributes, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 
 /**
  * @part image - The inner `img` element.
@@ -9,10 +11,9 @@ import { Attributes, inheritAttributes } from '../../utils/helpers';
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
-  shadow: true
+  shadow: true,
 })
 export class Img implements ComponentInterface {
-
   private io?: IntersectionObserver;
   private inheritedAttributes: Attributes = {};
 
@@ -63,9 +64,10 @@ export class Img implements ComponentInterface {
       typeof (window as any) !== 'undefined' &&
       'IntersectionObserver' in window &&
       'IntersectionObserverEntry' in window &&
-      'isIntersecting' in window.IntersectionObserverEntry.prototype) {
+      'isIntersecting' in window.IntersectionObserverEntry.prototype
+    ) {
       this.removeIO();
-      this.io = new IntersectionObserver(data => {
+      this.io = new IntersectionObserver((data) => {
         /**
          * On slower devices, it is possible for an intersection observer entry to contain multiple
          * objects in the array. This happens when quickly scrolling an image into view and then out of
@@ -92,11 +94,11 @@ export class Img implements ComponentInterface {
 
   private onLoad = () => {
     this.ionImgDidLoad.emit();
-  }
+  };
 
   private onError = () => {
     this.ionError.emit();
-  }
+  };
 
   private removeIO() {
     if (this.io) {
@@ -140,4 +142,4 @@ const isDraggable = (draggable?: string): boolean | undefined => {
     default:
       return undefined;
   }
-}
+};

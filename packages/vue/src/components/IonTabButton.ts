@@ -47,7 +47,7 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        */
       if (prevActiveTab === tab) {
         if (originalHref !== currentHref) {
-          ionRouter.resetTab(tab, originalHref);
+          ionRouter.resetTab(tab);
         }
       } else {
         ionRouter.changeTab(tab, currentHref)

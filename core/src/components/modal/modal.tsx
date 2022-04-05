@@ -1,9 +1,21 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, ModalAttributes, ModalBreakpointChangeEventDetail, OverlayEventDetail, OverlayInterface } from '../../interface';
+import type {
+  Animation,
+  AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
+  FrameworkDelegate,
+  Gesture,
+  ModalAttributes,
+  ModalBreakpointChangeEventDetail,
+  OverlayEventDetail,
+  OverlayInterface,
+} from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
@@ -15,7 +27,8 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { MoveSheetToBreakpointOptions, createSheetGesture } from './gestures/sheet';
+import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
+import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
@@ -31,9 +44,9 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
   tag: 'ion-modal',
   styleUrls: {
     ios: 'modal.ios.scss',
-    md: 'modal.md.scss'
+    md: 'modal.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Modal implements ComponentInterface, OverlayInterface {
   private gesture?: Gesture;
@@ -295,19 +308,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
-    this.modalId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
-    const isSheetModal = this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
+    this.modalId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
+    const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
     }
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
-      printIonWarning('Your breakpoints array must include the initialBreakpoint value.')
+      printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
     }
 
     if (swipeToClose) {
-      printIonWarning('swipeToClose has been deprecated in favor of canDismiss.\n\nIf you want a card modal to be swipeable, set canDismiss to `true`. In the next major release of Ionic, swipeToClose will be removed, and all card modals will be swipeable by default.');
+      printIonWarning(
+        'swipeToClose has been deprecated in favor of canDismiss.\n\nIf you want a card modal to be swipeable, set canDismiss to `true`. In the next major release of Ionic, swipeToClose will be removed, and all card modals will be swipeable by default.'
+      );
     }
   }
 
@@ -330,22 +345,24 @@ export class Modal implements ComponentInterface, OverlayInterface {
       destroyTriggerInteraction();
     }
 
-    const triggerEl = (trigger !== undefined) ? document.getElementById(trigger) : null;
-    if (!triggerEl) { return; }
+    const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
+    if (!triggerEl) {
+      return;
+    }
 
     const configureTriggerInteraction = (trigEl: HTMLElement, modalEl: HTMLIonModalElement) => {
       const openModal = () => {
         modalEl.present();
-      }
+      };
       trigEl.addEventListener('click', openModal);
 
       return () => {
         trigEl.removeEventListener('click', openModal);
-      }
-    }
+      };
+    };
 
     this.destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
-  }
+  };
 
   /**
    * Determines whether or not an overlay
@@ -360,8 +377,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.workingDelegate && !force) {
       return {
         delegate: this.workingDelegate,
-        inline: this.inline
-      }
+        inline: this.inline,
+      };
     }
 
     /**
@@ -374,10 +391,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * correct place.
      */
     const parentEl = this.el.parentNode as HTMLElement | null;
-    const inline = this.inline = parentEl !== null && !this.hasController;
-    const delegate = this.workingDelegate = (inline) ? this.delegate || this.coreDelegate : this.delegate
+    const inline = (this.inline = parentEl !== null && !this.hasController);
+    const delegate = (this.workingDelegate = inline ? this.delegate || this.coreDelegate : this.delegate);
 
-    return { inline, delegate }
+    return { inline, delegate };
   }
 
   /**
@@ -392,7 +409,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * TODO (FW-937) - Remove the following check in
      * the next major release of Ionic.
      */
-    if (canDismiss === undefined) { return true; }
+    if (canDismiss === undefined) {
+      return true;
+    }
 
     if (typeof canDismiss === 'function') {
       return canDismiss();
@@ -424,7 +443,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const data = {
       ...this.componentProps,
-      modal: this.el
+      modal: this.el,
     };
 
     const { inline, delegate } = this.getDelegate(true);
@@ -434,22 +453,26 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.initialBreakpoint, backdropBreakpoint: this.backdropBreakpoint });
+    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+      presentingEl: this.presentingElement,
+      currentBreakpoint: this.initialBreakpoint,
+      backdropBreakpoint: this.backdropBreakpoint,
+    });
 
     await this.currentTransition;
 
     if (this.isSheetModal) {
       this.initSheetGesture();
 
-    /**
-     * TODO (FW-937) - In the next major release of Ionic, all card modals
-     * will be swipeable by default. canDismiss will be used to determine if the
-     * modal can be dismissed. This check should change to check the presence of
-     * presentingElement instead.
-     *
-     * If we did not do this check, then not using swipeToClose would mean you could
-     * not run canDismiss on swipe as there would be no swipe gesture created.
-     */
+      /**
+       * TODO (FW-937) - In the next major release of Ionic, all card modals
+       * will be swipeable by default. canDismiss will be used to determine if the
+       * modal can be dismissed. This check should change to check the presence of
+       * presentingElement instead.
+       *
+       * If we did not do this check, then not using swipeToClose would mean you could
+       * not run canDismiss on swipe as there would be no swipe gesture created.
+       */
     } else if (this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined)) {
       this.initSwipeToClose();
     }
@@ -470,11 +493,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.gesture.enable(false);
           raf(() => {
             if (this.gesture) {
-              this.gesture.enable(true)
+              this.gesture.enable(true);
             }
           });
         }
-      }
+      };
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
@@ -482,35 +505,32 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSwipeToClose() {
-    if (getIonMode(this) !== 'ios') { return; }
+    if (getIonMode(this) !== 'ios') {
+      return;
+    }
 
     // All of the elements needed for the swipe gesture
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement });
-    this.gesture = createSwipeToCloseGesture(
-      this.el,
-      ani,
-      () => {
-        /**
-         * While the gesture animation is finishing
-         * it is possible for a user to tap the backdrop.
-         * This would result in the dismiss animation
-         * being played again. Typically this is avoided
-         * by setting `presented = false` on the overlay
-         * component; however, we cannot do that here as
-         * that would prevent the element from being
-         * removed from the DOM.
-         */
-        this.gestureAnimationDismissing = true;
-        this.animation!.onFinish(async () => {
-          await this.dismiss(undefined, 'gesture');
-          this.gestureAnimationDismissing = false;
-        });
-      },
-
-    );
+    const ani = (this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement }));
+    this.gesture = createSwipeToCloseGesture(this.el, ani, () => {
+      /**
+       * While the gesture animation is finishing
+       * it is possible for a user to tap the backdrop.
+       * This would result in the dismiss animation
+       * being played again. Typically this is avoided
+       * by setting `presented = false` on the overlay
+       * component; however, we cannot do that here as
+       * that would prevent the element from being
+       * removed from the DOM.
+       */
+      this.gestureAnimationDismissing = true;
+      this.animation!.onFinish(async () => {
+        await this.dismiss(undefined, 'gesture');
+        this.gestureAnimationDismissing = false;
+      });
+    });
     this.gesture.enable(true);
   }
 
@@ -522,7 +542,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     const animationBuilder = this.enterAnimation || config.get('modalEnter', iosEnterAnimation);
-    const ani: Animation = this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement, currentBreakpoint: initialBreakpoint, backdropBreakpoint });
+    const ani: Animation = (this.animation = animationBuilder(this.el, {
+      presentingEl: this.presentingElement,
+      currentBreakpoint: initialBreakpoint,
+      backdropBreakpoint,
+    }));
 
     ani.progressStart(true, 1);
 
@@ -587,7 +611,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * for calling the dismiss method, we should
      * not run the canDismiss check again.
      */
-    if (role !== 'handler' && !await this.checkCanDismiss()) {
+    if (role !== 'handler' && !(await this.checkCanDismiss())) {
       return false;
     }
 
@@ -610,7 +634,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, { presentingEl: this.presentingElement, currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint, backdropBreakpoint: this.backdropBreakpoint });
+    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
+      presentingEl: this.presentingElement,
+      currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint,
+      backdropBreakpoint: this.backdropBreakpoint,
+    });
 
     const dismissed = await this.currentTransition;
 
@@ -627,7 +655,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.gesture.destroy();
       }
 
-      enteringAnimation.forEach(ani => ani.destroy());
+      enteringAnimation.forEach((ani) => ani.destroy());
     }
 
     this.currentTransition = undefined;
@@ -662,7 +690,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
     if (!this.breakpoints!.includes(breakpoint)) {
-      printIonWarning(`Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`);
+      printIonWarning(
+        `Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`
+      );
       return;
     }
 
@@ -722,14 +752,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   private onDismiss = (ev: UIEvent) => {
     ev.stopPropagation();
     ev.preventDefault();
 
     this.dismiss();
-  }
+  };
 
   private onLifecycle = (modalEvent: CustomEvent) => {
     const el = this.usersElement;
@@ -738,11 +768,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       const ev = new CustomEvent(name, {
         bubbles: false,
         cancelable: false,
-        detail: modalEvent.detail
+        detail: modalEvent.detail,
       });
       el.dispatchEvent(ev);
     }
-  }
+  };
 
   render() {
     const { handle, isSheetModal, presentingElement, htmlAttributes } = this;
@@ -757,7 +787,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         no-router
         aria-modal="true"
         tabindex="-1"
-        {...htmlAttributes as any}
+        {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -767,7 +797,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
-          ...getClassMap(this.cssClass)
+          ...getClassMap(this.cssClass),
         }}
         id={modalId}
         onIonBackdropTap={this.onBackdropTap}
@@ -777,7 +807,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
       >
-        <ion-backdrop ref={el => this.backdropEl = el} visible={this.showBackdrop} tappable={this.backdropDismiss} part="backdrop" />
+        <ion-backdrop
+          ref={(el) => (this.backdropEl = el)}
+          visible={this.showBackdrop}
+          tappable={this.backdropDismiss}
+          part="backdrop"
+        />
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
@@ -798,17 +833,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
             )}
           <slot></slot>
         </div>
-
       </Host>
     );
   }
 }
 
 const LIFECYCLE_MAP: any = {
-  'ionModalDidPresent': 'ionViewDidEnter',
-  'ionModalWillPresent': 'ionViewWillEnter',
-  'ionModalWillDismiss': 'ionViewWillLeave',
-  'ionModalDidDismiss': 'ionViewDidLeave',
+  ionModalDidPresent: 'ionViewDidEnter',
+  ionModalWillPresent: 'ionViewWillEnter',
+  ionModalWillDismiss: 'ionViewWillLeave',
+  ionModalDidDismiss: 'ionViewDidLeave',
 };
 
 let modalIds = 0;
