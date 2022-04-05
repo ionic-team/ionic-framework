@@ -207,9 +207,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
   @Prop({ mutable: true }) alignment?: PositionAlign;
 
   /**
-   * If `true`, the popover will display an arrow
-   * that points at the `reference` when running in `ios` mode
-   * on mobile. Does not apply in `md` mode or on desktop.
+   * If `true`, the popover will display an arrow that points at the
+   * `reference` when running in `ios` mode. Does not apply in `md` mode.
    */
   @Prop() arrow = true;
 
@@ -589,7 +588,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const mode = getIonMode(this);
     const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
-    const enableArrow = arrow && !parentPopover && !desktop;
+    const enableArrow = arrow && !parentPopover;
 
     return (
       <Host

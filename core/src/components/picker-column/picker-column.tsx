@@ -168,8 +168,9 @@ export class PickerColumnCmp implements ComponentInterface {
       // Update transform
       if (transform !== opt.transform) {
         opt.transform = transform;
-        button.style.transform = transform;
       }
+      button.style.transform = transform;
+
       // Update selected item
       if (selected !== opt.selected) {
         opt.selected = selected;
