@@ -1,17 +1,12 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { dragElementBy, generateE2EUrl, listenForEvent, waitForFunctionTestContext } from '@utils/test';
 
-export const testPickerColumn = async (
-  type: string,
-  selector: string,
-  rtl = false
-) => {
+export const testPickerColumn = async (type: string, selector: string, rtl = false) => {
   try {
     const pageUrl = generateE2EUrl('picker-column', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];
@@ -42,9 +37,12 @@ export const testPickerColumn = async (
       await dragElementBy(column, page, 0, 100);
 
       // Wait for ionPickerColChange event to be emitted once
-      await waitForFunctionTestContext((payload: any) => {
-        return payload.colChangeCounter.count === 1;
-      }, { colChangeCounter });
+      await waitForFunctionTestContext(
+        (payload: any) => {
+          return payload.colChangeCounter.count === 1;
+        },
+        { colChangeCounter }
+      );
     }
 
     for (const screenshotCompare of screenshotCompares) {

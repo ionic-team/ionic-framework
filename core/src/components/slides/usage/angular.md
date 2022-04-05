@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
 })
 export class SlideExample {
   // Optional parameters to pass to the swiper instance.
-  // See http://idangero.us/swiper/api/ for valid options.
+  // See https://swiperjs.com/swiper-api for valid options.
   slideOpts = {
     initialSlide: 1,
     speed: 400

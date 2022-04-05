@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { testModal } from '../test.utils';
 
 const DIRECTORY = 'card';

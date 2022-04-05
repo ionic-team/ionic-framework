@@ -1,14 +1,14 @@
-import { Component, ComponentInterface, Element, Host, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-fab-list',
   styleUrl: 'fab-list.scss',
-  shadow: true
+  shadow: true,
 })
 export class FabList implements ComponentInterface {
-
   @Element() el!: HTMLIonFabElement;
 
   /**
@@ -23,7 +23,7 @@ export class FabList implements ComponentInterface {
     // if showing the fabs add a timeout, else show immediately
     const timeout = activated ? 30 : 0;
     fabs.forEach((fab, i) => {
-      setTimeout(() => fab.show = activated, i * timeout);
+      setTimeout(() => (fab.show = activated), i * timeout);
     });
   }
 
@@ -39,12 +39,11 @@ export class FabList implements ComponentInterface {
         class={{
           [mode]: true,
           'fab-list-active': this.activated,
-          [`fab-list-side-${this.side}`]: true
+          [`fab-list-side-${this.side}`]: true,
         }}
       >
         <slot></slot>
       </Host>
     );
   }
-
 }

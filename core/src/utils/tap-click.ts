@@ -1,4 +1,4 @@
-import { Config } from '../interface';
+import type { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
@@ -15,7 +15,7 @@ export const startTapClick = (config: Config) => {
   const clearDefers = new WeakMap<HTMLElement, any>();
 
   const isScrolling = () => {
-    return scrollingEl !== undefined && scrollingEl.parentElement !== null;
+    return scrollingEl?.parentElement !== null;
   };
 
   // Touch Events
@@ -112,6 +112,7 @@ export const startTapClick = (config: Config) => {
     el.classList.add(ACTIVATED);
 
     const rippleEffect = useRippleEffect && getRippleEffect(el);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (rippleEffect && rippleEffect.addRipple) {
       removeRipple();
       activeRipple = rippleEffect.addRipple(x, y);
@@ -120,7 +121,7 @@ export const startTapClick = (config: Config) => {
 
   const removeRipple = () => {
     if (activeRipple !== undefined) {
-      activeRipple.then(remove => remove());
+      activeRipple.then((remove) => remove());
       activeRipple = undefined;
     }
   };
@@ -144,7 +145,7 @@ export const startTapClick = (config: Config) => {
   };
 
   const doc = document;
-  doc.addEventListener('ionScrollStart', ev => {
+  doc.addEventListener('ionScrollStart', (ev) => {
     scrollingEl = ev.target as HTMLElement;
     cancelActive();
   });
@@ -168,7 +169,7 @@ const getActivatableTarget = (ev: any): any => {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.classList && el.classList.contains('ion-activatable')) {
+      if (el?.classList.contains('ion-activatable')) {
         return el;
       }
     }

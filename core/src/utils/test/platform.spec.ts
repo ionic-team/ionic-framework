@@ -1,6 +1,6 @@
 import initialize from '../../global/ionic-global';
-
 import { testUserAgent, getPlatforms, isPlatform } from '../platform';
+
 import { PlatformConfiguration, configureBrowser } from './platform.utils';
 
 describe('Platform Tests', () => {
@@ -8,22 +8,22 @@ describe('Platform Tests', () => {
     it('should return true when testing if user agent is an iPhone', () => {
       const win = configureBrowser(PlatformConfiguration.iPhone);
       expect(testUserAgent(win, /iPhone/)).toEqual(true);
-    })
+    });
 
     it('should return false when testing if user agent is an iPad', () => {
       const win = configureBrowser(PlatformConfiguration.iPhone);
       expect(testUserAgent(win, /iPad/)).toEqual(false);
-    })
+    });
 
     it('should return false when testing if user agent is an Android', () => {
       const win = configureBrowser(PlatformConfiguration.iPhone);
       expect(testUserAgent(win, /android|sink/i)).toEqual(false);
-    })
+    });
 
     it('should return true when testing if user agent is an Android', () => {
       const win = configureBrowser(PlatformConfiguration.AndroidTablet);
       expect(testUserAgent(win, /android|sink/i)).toEqual(true);
-    })
+    });
   });
 
   describe('getPlatforms()', () => {
@@ -38,12 +38,12 @@ describe('Platform Tests', () => {
       const platforms = getPlatforms(win);
       expect(platforms).toContain('android');
       expect(platforms).toContain('tablet');
-    })
+    });
 
     it('should contain "capacitor" platform', () => {
       const win = configureBrowser(PlatformConfiguration.Capacitor);
       expect(getPlatforms(win)).toContain('capacitor');
-    })
+    });
   });
 
   describe('isPlatform()', () => {
@@ -133,22 +133,22 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'iphone')).toEqual(false);
       expect(isPlatform(win, 'android')).toEqual(false);
     });
-  })
+  });
 
   describe('Custom Platform Config', () => {
     it('should use custom platform detection methods', () => {
       const win = configureBrowser(PlatformConfiguration.DesktopSafari);
 
       initialize({
-        'platform': {
-          'desktop': (win) => false,
-          'cordova': (win) => true
-        }
+        platform: {
+          desktop: () => false,
+          cordova: () => true,
+        },
       });
 
       expect(isPlatform(win, 'desktop')).toEqual(false);
       expect(isPlatform(win, 'cordova')).toEqual(true);
       expect(getPlatforms(win).includes('cordova')).toEqual(true);
     });
-  })
+  });
 });
