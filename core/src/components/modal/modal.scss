@@ -129,6 +129,8 @@ ion-backdrop {
 
   background: var(--ion-color-step-350, #c0c0be);
 
+  cursor: pointer;
+
   z-index: 11;
 
   &::before {
@@ -136,13 +138,16 @@ ion-backdrop {
      * Adds a 4px tap area to the perimeter
      * of the handle.
      */
-    padding: 4px;
-    content: "";
-    width: 36px;
+    @include padding(4px, 4px, 4px, 4px);
+
     position: absolute;
-    left: -4px;
-    top: -4px;
+
+    width: 36px;
     height: 5px;
+
+    transform: translate(-50%, -50%);
+
+    content: "";
   }
 }
 
