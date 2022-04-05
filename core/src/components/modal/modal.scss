@@ -50,7 +50,8 @@
   contain: strict;
 }
 
-.modal-wrapper, ion-backdrop {
+.modal-wrapper,
+ion-backdrop {
   pointer-events: auto;
 }
 
@@ -129,6 +130,20 @@
   background: var(--ion-color-step-350, #c0c0be);
 
   z-index: 11;
+
+  &::before {
+    /**
+     * Adds a 4px tap area to the perimeter
+     * of the handle.
+     */
+    padding: 4px;
+    content: "";
+    width: 36px;
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    height: 5px;
+  }
 }
 
 /**
