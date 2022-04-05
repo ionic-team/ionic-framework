@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import type { HostElement } from '@stencil/core/internal';
 
 /**
@@ -18,7 +18,7 @@ export const waitForChanges = async (page: Page) => {
     }
     await page.evaluate(() => {
       // BROWSER CONTEXT
-      return new Promise<void>(resolve => {
+      return new Promise<void>((resolve) => {
         // Wait for the next repaint to happen
         requestAnimationFrame(() => {
           const promiseChain: Promise<any>[] = [];
@@ -32,10 +32,7 @@ export const waitForChanges = async (page: Page) => {
             for (let i = 0; i < len; i++) {
               const childElm = children[i];
               const childStencilElm = childElm as HostElement;
-              if (
-                childElm.tagName.includes('-') &&
-                typeof childStencilElm.componentOnReady === 'function'
-              ) {
+              if (childElm.tagName.includes('-') && typeof childStencilElm.componentOnReady === 'function') {
                 promises.push(childStencilElm.componentOnReady());
               }
               waitComponentOnReady(childElm, promises);
@@ -57,4 +54,4 @@ export const waitForChanges = async (page: Page) => {
   } catch (e) {
     console.error(e);
   }
-}
+};

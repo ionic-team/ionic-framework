@@ -117,7 +117,7 @@ test('toast: htmlAttributes', async () => {
   expect(toast).not.toBe(null);
   await toast.waitForVisible();
 
-  const attribute = await page.evaluate(el => document.querySelector('ion-toast').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-toast').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-toast');
 });

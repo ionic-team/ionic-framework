@@ -1,14 +1,14 @@
-import { Component, ComponentInterface, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
-  shadow: true
+  shadow: true,
 })
 export class Fab implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -40,7 +40,7 @@ export class Fab implements ComponentInterface {
     if (fab) {
       fab.activated = activated;
     }
-    Array.from(this.el.querySelectorAll('ion-fab-list')).forEach(list => {
+    Array.from(this.el.querySelectorAll('ion-fab-list')).forEach((list) => {
       list.activated = activated;
     });
   }
@@ -65,12 +65,12 @@ export class Fab implements ComponentInterface {
   private onClick = () => {
     const hasList = !!this.el.querySelector('ion-fab-list');
     const getButton = this.getFab();
-    const isButtonDisabled = getButton && getButton.disabled;
+    const isButtonDisabled = getButton?.disabled;
 
     if (hasList && !isButtonDisabled) {
       this.activated = !this.activated;
     }
-  }
+  };
 
   render() {
     const { horizontal, vertical, edge } = this;
@@ -82,12 +82,11 @@ export class Fab implements ComponentInterface {
           [mode]: true,
           [`fab-horizontal-${horizontal}`]: horizontal !== undefined,
           [`fab-vertical-${vertical}`]: vertical !== undefined,
-          'fab-edge': edge
+          'fab-edge': edge,
         }}
       >
         <slot></slot>
       </Host>
     );
   }
-
 }

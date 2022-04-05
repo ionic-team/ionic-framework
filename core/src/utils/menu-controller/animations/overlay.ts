@@ -1,5 +1,5 @@
 import { getIonMode } from '../../../global/ionic-global';
-import { Animation, MenuI } from '../../../interface';
+import type { Animation, MenuI } from '../../../interface';
 import { createAnimation } from '../../animation/animation';
 
 import { baseAnimation } from './base';
@@ -20,24 +20,19 @@ export const menuOverlayAnimation = (menu: MenuI): Animation => {
     // right side
     closedX = width + 'px';
     openedX = '0px';
-
   } else {
     // left side
     closedX = -width + 'px';
     openedX = '0px';
   }
 
-  menuAnimation
-    .addElement(menu.menuInnerEl!)
-    .fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
+  menuAnimation.addElement(menu.menuInnerEl!).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
   const mode = getIonMode(menu);
   const isIos = mode === 'ios';
   const opacity = isIos ? 0.2 : 0.25;
 
-  backdropAnimation
-    .addElement(menu.backdropEl!)
-    .fromTo('opacity', 0.01, opacity);
+  backdropAnimation.addElement(menu.backdropEl!).fromTo('opacity', 0.01, opacity);
 
   return baseAnimation(isIos).addAnimation([menuAnimation, backdropAnimation]);
 };

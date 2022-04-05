@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 /**
  * Taking fullpage screenshots in Playwright
@@ -28,6 +28,6 @@ export const setIonViewport = async (page: Page) => {
 
   await page.setViewportSize({
     width,
-    height
-  })
-}
+    height,
+  });
+};

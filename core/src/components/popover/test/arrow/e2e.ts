@@ -42,7 +42,7 @@ const testPopover = async (side: string, isRTL = false) => {
 
   const trigger = await page.find(`#${TRIGGER_ID}`);
 
-  await page.evaluate(POPOVER_TRIGGER_ID => {
+  await page.evaluate((POPOVER_TRIGGER_ID) => {
     const popoverTrigger = document.querySelector(`#${POPOVER_TRIGGER_ID}`);
     popoverTrigger?.scrollIntoView({ block: 'center' });
   }, TRIGGER_ID);
@@ -58,4 +58,4 @@ const testPopover = async (side: string, isRTL = false) => {
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
-}
+};

@@ -1,4 +1,4 @@
-import { Page, TestInfo } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 
 /**
  * This provides metadata that can be used to
@@ -30,4 +30,4 @@ export const getSnapshotSettings = (page: Page, testInfo: TestInfo) => {
    */
   const rtlString = formattedRtl === true || formattedRtl === 'true' ? 'rtl' : 'ltr';
   return `${formattedMode}-${rtlString}`;
-}
+};

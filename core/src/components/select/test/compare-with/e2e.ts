@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('select: compareWith', async () => {
   const page = await newE2EPage({
-    url: '/src/components/select/test/compare-with?ionic:_testing=true'
+    url: '/src/components/select/test/compare-with?ionic:_testing=true',
   });
 
   const compares = [];
@@ -33,5 +33,4 @@ test('select: compareWith', async () => {
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
   }
-
 });

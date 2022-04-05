@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
-import { E2ELocator, E2EPage, test } from '@utils/test/playwright';
+import type { E2ELocator, E2EPage } from '@utils/test/playwright';
+import { test } from '@utils/test/playwright';
 
 test.describe('datetime: presentation', () => {
-
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/datetime/test/presentation`);
 
@@ -18,13 +18,13 @@ test.describe('datetime: presentation', () => {
       page.waitForSelector('ion-datetime[presentation="date"].datetime-ready'),
     ]);
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`datetime-presentation-diff-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
+      `datetime-presentation-diff-${page.getSnapshotSettings()}.png`
+    );
   });
-
 });
 
 test.describe('datetime: presentation: time', () => {
-
   let timePickerFixture: TimePickerFixture;
 
   test.beforeEach(async ({ page }) => {
@@ -63,7 +63,6 @@ test.describe('datetime: presentation: time', () => {
     await timePickerFixture.setValue('19:32:00');
     await timePickerFixture.expectTime('7', '32', 'PM');
   });
-
 });
 
 class TimePickerFixture {
@@ -86,7 +85,7 @@ class TimePickerFixture {
     await this.timePicker.evaluate((el: HTMLIonDatetimeElement, newValue: string) => {
       return new Promise((resolve, reject) => {
         const tmr = setTimeout(() => reject(), 5000);
-        el.addEventListener('ionChange', ev => {
+        el.addEventListener('ionChange', (ev) => {
           clearTimeout(tmr);
           resolve(ev);
         });
@@ -98,9 +97,14 @@ class TimePickerFixture {
   }
 
   async expectTime(hour: string, minute: string, ampm: string) {
-    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(1) .picker-item-active').textContent()).toBe(hour);
-    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(2) .picker-item-active').textContent()).toBe(minute);
-    expect(await this.timePicker.locator('ion-picker-column-internal:nth-child(3) .picker-item-active').textContent()).toBe(ampm);
+    expect(
+      await this.timePicker.locator('ion-picker-column-internal:nth-child(1) .picker-item-active').textContent()
+    ).toBe(hour);
+    expect(
+      await this.timePicker.locator('ion-picker-column-internal:nth-child(2) .picker-item-active').textContent()
+    ).toBe(minute);
+    expect(
+      await this.timePicker.locator('ion-picker-column-internal:nth-child(3) .picker-item-active').textContent()
+    ).toBe(ampm);
   }
-
 }

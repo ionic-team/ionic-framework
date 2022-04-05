@@ -1,4 +1,3 @@
-
 const SCROLL_ASSIST_SPEED = 0.3;
 
 export interface ScrollData {
@@ -9,7 +8,7 @@ export interface ScrollData {
 }
 
 export const getScrollData = (componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData => {
-  const itemEl = componentEl.closest('ion-item,[ion-item]') as HTMLElement || componentEl;
+  const itemEl = (componentEl.closest('ion-item,[ion-item]') as HTMLElement) || componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
@@ -41,11 +40,9 @@ const calcScrollData = (
   const distanceToTop = safeAreaTop - inputTop;
 
   // desiredScrollAmount is the negated distance to the safe area according to our calculations.
-  const desiredScrollAmount = Math.round((distanceToBottom < 0)
-    ? -distanceToBottom
-    : (distanceToTop > 0)
-      ? -distanceToTop
-      : 0);
+  const desiredScrollAmount = Math.round(
+    distanceToBottom < 0 ? -distanceToBottom : distanceToTop > 0 ? -distanceToTop : 0
+  );
 
   // our calculations make some assumptions that aren't always true, like the keyboard being closed when an input
   // gets focus, so make sure we don't scroll the input above the visible area
@@ -59,6 +56,6 @@ const calcScrollData = (
     scrollAmount,
     scrollDuration,
     scrollPadding: keyboardHeight,
-    inputSafeY: -(inputTop - safeAreaTop) + 4
+    inputSafeY: -(inputTop - safeAreaTop) + 4,
   };
 };

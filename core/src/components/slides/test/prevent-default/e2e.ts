@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 test('slides: prevent-default', async () => {
   // For this specific test, _testing=false to import tap-click in app.tsx
   const page = await newE2EPage({
-    url: '/src/components/slides/test/prevent-default?ionic:_testing=false'
+    url: '/src/components/slides/test/prevent-default?ionic:_testing=false',
   });
 
   const screenshotCompares = [];

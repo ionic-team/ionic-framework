@@ -1,4 +1,4 @@
-import { Locator, Page, Response } from '@playwright/test';
+import type { Locator, Page, Response } from '@playwright/test';
 
 export interface E2ELocator extends Locator {
   waitForCustomEvent: (eventName: string, timeoutMs?: number) => Promise<void>;
@@ -51,19 +51,22 @@ export interface E2EPage extends Page {
    */
   waitForCustomEvent: (eventName: string) => Promise<Page>;
 
-  locator(selector: string, options?: {
-    /**
-     * Matches elements containing an element that matches an inner locator. Inner locator is queried against the outer one.
-     * For example, `article` that has `text=Playwright` matches `<article><div>Playwright</div></article>`.
-     *
-     * Note that outer and inner locators must belong to the same frame. Inner locator must not contain [FrameLocator]s.
-     */
-    has?: Locator;
+  locator(
+    selector: string,
+    options?: {
+      /**
+       * Matches elements containing an element that matches an inner locator. Inner locator is queried against the outer one.
+       * For example, `article` that has `text=Playwright` matches `<article><div>Playwright</div></article>`.
+       *
+       * Note that outer and inner locators must belong to the same frame. Inner locator must not contain [FrameLocator]s.
+       */
+      has?: Locator;
 
-    /**
-     * Matches elements containing specified text somewhere inside, possibly in a child or a descendant element. For example,
-     * `"Playwright"` matches `<article><div>Playwright</div></article>`.
-     */
-    hasText?: string | RegExp;
-  }): E2ELocator;
+      /**
+       * Matches elements containing specified text somewhere inside, possibly in a child or a descendant element. For example,
+       * `"Playwright"` matches `<article><div>Playwright</div></article>`.
+       */
+      hasText?: string | RegExp;
+    }
+  ): E2ELocator;
 }

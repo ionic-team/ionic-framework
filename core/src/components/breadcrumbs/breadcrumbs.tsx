@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
+import type { BreadcrumbCollapsedClickEventDetail, Color } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -11,13 +12,12 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-breadcrumbs',
   styleUrls: {
-    'ios': 'breadcrumbs.ios.scss',
-    'md': 'breadcrumbs.md.scss'
+    ios: 'breadcrumbs.ios.scss',
+    md: 'breadcrumbs.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Breadcrumbs implements ComponentInterface {
-
   @State() collapsed!: boolean;
 
   @State() activeChanged!: boolean;
@@ -56,7 +56,7 @@ export class Breadcrumbs implements ComponentInterface {
   @Listen('collapsedClick')
   onCollapsedClick(ev: CustomEvent) {
     const breadcrumbs = this.getBreadcrumbs();
-    const collapsedBreadcrumbs = breadcrumbs.filter(breadcrumb => breadcrumb.collapsed);
+    const collapsedBreadcrumbs = breadcrumbs.filter((breadcrumb) => breadcrumb.collapsed);
 
     this.ionCollapsedClick.emit({ ...ev.detail, collapsedBreadcrumbs });
   }
@@ -76,18 +76,18 @@ export class Breadcrumbs implements ComponentInterface {
   private breadcrumbsInit = () => {
     this.setBreadcrumbSeparator();
     this.setMaxItems();
-  }
+  };
 
   private resetActiveBreadcrumb = () => {
     const breadcrumbs = this.getBreadcrumbs();
 
     // Only reset the active breadcrumb if we were the ones to change it
     // otherwise use the one set on the component
-    const activeBreadcrumb = breadcrumbs.find(breadcrumb => breadcrumb.active);
+    const activeBreadcrumb = breadcrumbs.find((breadcrumb) => breadcrumb.active);
     if (activeBreadcrumb && this.activeChanged) {
       activeBreadcrumb.active = false;
     }
-  }
+  };
 
   private setMaxItems = () => {
     const { itemsAfterCollapse, itemsBeforeCollapse, maxItems } = this;
@@ -102,9 +102,8 @@ export class Breadcrumbs implements ComponentInterface {
     // If the number of breadcrumbs exceeds the maximum number of items
     // that should show and the items before / after collapse do not
     // exceed the maximum items then we need to collapse the breadcrumbs
-    const shouldCollapse = maxItems !== undefined
-      && breadcrumbs.length > maxItems
-      && itemsBeforeCollapse + itemsAfterCollapse <= maxItems;
+    const shouldCollapse =
+      maxItems !== undefined && breadcrumbs.length > maxItems && itemsBeforeCollapse + itemsAfterCollapse <= maxItems;
 
     if (shouldCollapse) {
       // Show the collapsed indicator in the first breadcrumb that collapses
@@ -121,7 +120,7 @@ export class Breadcrumbs implements ComponentInterface {
         }
       });
     }
-  }
+  };
 
   private setBreadcrumbSeparator = () => {
     const { itemsAfterCollapse, itemsBeforeCollapse, maxItems } = this;
@@ -129,24 +128,23 @@ export class Breadcrumbs implements ComponentInterface {
     const breadcrumbs = this.getBreadcrumbs();
 
     // Check if an active breadcrumb exists already
-    const active = breadcrumbs.find(breadcrumb => breadcrumb.active);
+    const active = breadcrumbs.find((breadcrumb) => breadcrumb.active);
 
     // Set the separator on all but the last breadcrumb
     for (const breadcrumb of breadcrumbs) {
       // The only time the last breadcrumb changes is when
       // itemsAfterCollapse is set to 0, in this case the
       // last breadcrumb will be the collapsed indicator
-      const last = maxItems !== undefined && itemsAfterCollapse === 0
-        ? breadcrumb === breadcrumbs[itemsBeforeCollapse]
-        : breadcrumb === breadcrumbs[breadcrumbs.length - 1];
+      const last =
+        maxItems !== undefined && itemsAfterCollapse === 0
+          ? breadcrumb === breadcrumbs[itemsBeforeCollapse]
+          : breadcrumb === breadcrumbs[breadcrumbs.length - 1];
       breadcrumb.last = last;
 
       // If the breadcrumb has defined whether or not to show the
       // separator then use that value, otherwise check if it's the
       // last breadcrumb
-      const separator = breadcrumb.separator !== undefined
-        ? breadcrumb.separator
-        : (last ? undefined : true);
+      const separator = breadcrumb.separator !== undefined ? breadcrumb.separator : last ? undefined : true;
       breadcrumb.separator = separator;
 
       // If there is not an active breadcrumb already
@@ -156,11 +154,11 @@ export class Breadcrumbs implements ComponentInterface {
         this.activeChanged = true;
       }
     }
-  }
+  };
 
   private getBreadcrumbs = (): HTMLIonBreadcrumbElement[] => {
     return Array.from(this.el.querySelectorAll('ion-breadcrumb'));
-  }
+  };
 
   render() {
     const { color, collapsed } = this;

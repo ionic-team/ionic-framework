@@ -1,4 +1,4 @@
-import { Page, TestInfo } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 
 /**
  * This is an extended version of Playwright's
@@ -23,10 +23,10 @@ export const goto = async (page: Page, url: string, testInfo: TestInfo, original
 
   const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
-  const [_, response] = await Promise.all([
-    page.waitForFunction(() => (window as any).stencilAppLoaded === true, { timeout: 4750 }),
-    originalFn(formattedUrl)
+  const result = await Promise.all([
+    page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
+    originalFn(formattedUrl),
   ]);
 
-  return response;
-}
+  return result[1];
+};

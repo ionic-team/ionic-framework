@@ -19,7 +19,7 @@ const selectRadio = async (page, radioButtonId: string, selectionMethod: 'keyboa
   const radioGroup = await page.find(`ion-radio#${radioButtonId} >>> input`);
   const checked = await radioGroup.getProperty('checked');
   return checked;
-}
+};
 
 describe('radio-group', () => {
   it('Spacebar should not deselect without allowEmptySelection', async () => {

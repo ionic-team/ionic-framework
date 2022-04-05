@@ -48,7 +48,9 @@ const jsSetFocus = async (
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number
 ) => {
-  if (!contentEl && !footerEl) { return; }
+  if (!contentEl && !footerEl) {
+    return;
+  }
   const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight);
 
   if (contentEl && Math.abs(scrollData.scrollAmount) < 4) {
@@ -71,7 +73,6 @@ const jsSetFocus = async (
    */
   raf(() => componentEl.click());
 
-  /* tslint:disable-next-line */
   if (typeof window !== 'undefined') {
     let scrollContentTimeout: any;
     const scrollContent = async () => {
@@ -117,15 +118,13 @@ const jsSetFocus = async (
        * bandwidth to become available.
        */
       const totalScrollAmount = scrollEl.scrollHeight - scrollEl.clientHeight;
-      if (scrollData.scrollAmount > (totalScrollAmount - scrollEl.scrollTop)) {
-
+      if (scrollData.scrollAmount > totalScrollAmount - scrollEl.scrollTop) {
         /**
          * On iOS devices, the system will show a "Passwords" bar above the keyboard
          * after the initial keyboard is shown. This prevents the webview from resizing
          * until the "Passwords" bar is shown, so we need to wait for that to happen first.
          */
         if (inputEl.type === 'password') {
-
           // Add 50px to account for the "Passwords" bar
           scrollData.scrollAmount += 50;
           window.addEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
@@ -148,12 +147,16 @@ const jsSetFocus = async (
   }
 };
 
-const hasPointerMoved = (threshold: number, startCoord: PointerCoordinates | undefined, endCoord: PointerCoordinates | undefined) => {
+const hasPointerMoved = (
+  threshold: number,
+  startCoord: PointerCoordinates | undefined,
+  endCoord: PointerCoordinates | undefined
+) => {
   if (startCoord && endCoord) {
-    const deltaX = (startCoord.x - endCoord.x);
-    const deltaY = (startCoord.y - endCoord.y);
+    const deltaX = startCoord.x - endCoord.x;
+    const deltaY = startCoord.y - endCoord.y;
     const distance = deltaX * deltaX + deltaY * deltaY;
-    return distance > (threshold * threshold);
+    return distance > threshold * threshold;
   }
   return false;
 };
