@@ -722,7 +722,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private moveToNextBreakpoint() {
     const { breakpoints, currentBreakpoint } = this;
     if (breakpoints && currentBreakpoint !== undefined) {
-      const allowedBreakpoints = breakpoints.filter(b => b !== 0);
+      const allowedBreakpoints = breakpoints.filter((b) => b !== 0);
       const currentBreakpointIndex = allowedBreakpoints.indexOf(currentBreakpoint);
       const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length;
       /**
@@ -736,19 +736,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private onHandleClick = () => {
     this.moveToNextBreakpoint();
-  }
+  };
 
   private onHandleKeyUp = (ev: KeyboardEvent) => {
     if (ev.key === 'Enter') {
       this.moveToNextBreakpoint();
     }
-  }
+  };
 
   private onHandleKeyDown = (ev: KeyboardEvent) => {
     if (ev.key === 'Enter') {
       ev.preventDefault();
     }
-  }
+  };
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
@@ -816,21 +816,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
-        <div
-          role="dialog"
-          class="modal-wrapper ion-overlay-wrapper"
-          part="content"
-          ref={el => this.wrapperEl = el}
-        >
+        <div role="dialog" class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
           {showHandle && (
-            <button class="modal-handle"
+            <button
+              class="modal-handle"
               part="handle"
               aria-label="Activate to adjust the size of the card overlaying the dialog"
               aria-controls={modalId}
               onClick={this.onHandleClick}
               onKeyUp={this.onHandleKeyUp}
-              onKeyDown={this.onHandleKeyDown}></button>
-            )}
+              onKeyDown={this.onHandleKeyDown}
+            ></button>
+          )}
           <slot></slot>
         </div>
       </Host>

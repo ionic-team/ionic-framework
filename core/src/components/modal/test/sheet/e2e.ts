@@ -209,12 +209,11 @@ describe('modal: sheet: setting the breakpoint', () => {
 });
 
 describe('clicking the handle', () => {
-
   let page: E2EPage;
 
   beforeEach(async () => {
     page = await newE2EPage({
-      url: '/src/components/modal/test/sheet?ionic:_testing=true'
+      url: '/src/components/modal/test/sheet?ionic:_testing=true',
     });
   });
 
@@ -242,8 +241,5 @@ describe('clicking the handle', () => {
 
     // Advancing from the last breakpoint should change the breakpoint to the first non-zero breakpoint
     expect(await modal.callMethod('getCurrentBreakpoint')).toBe(0.25);
-
   });
-
 });
-
