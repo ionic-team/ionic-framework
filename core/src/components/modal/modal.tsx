@@ -689,18 +689,34 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return this.currentBreakpoint;
   }
 
-  private onHandleClick = () => {
+  private moveToNextBreakpoint() {
     const { breakpoints, currentBreakpoint } = this;
     if (breakpoints && currentBreakpoint !== undefined) {
       const allowedBreakpoints = breakpoints.filter(b => b !== 0);
       const currentBreakpointIndex = allowedBreakpoints.indexOf(currentBreakpoint);
-      const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length + 1;
+      const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length;
       /**
        * Sets the current breakpoint to the next available breakpoint.
        * If the current breakpoint is the last breakpoint, we set the current
        * breakpoint to the first non-zero breakpoint to avoid dismissing the sheet.
        */
-      this.setCurrentBreakpoint(breakpoints[nextBreakpointIndex]);
+      this.setCurrentBreakpoint(allowedBreakpoints[nextBreakpointIndex]);
+    }
+  }
+
+  private onHandleClick = () => {
+    this.moveToNextBreakpoint();
+  }
+
+  private onHandleKeyUp = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') {
+      this.moveToNextBreakpoint();
+    }
+  }
+
+  private onHandleKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
     }
   }
 
@@ -771,7 +787,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
           part="content"
           ref={el => this.wrapperEl = el}
         >
-          {showHandle && <button class="modal-handle" part="handle" type="button" onClick={this.onHandleClick}></button>}
+          {showHandle && (
+            <button class="modal-handle"
+              part="handle"
+              aria-label="Activate to adjust the size of the card overlaying the dialog"
+              aria-controls={modalId}
+              onClick={this.onHandleClick}
+              onKeyUp={this.onHandleKeyUp}
+              onKeyDown={this.onHandleKeyDown}></button>
+            )}
           <slot></slot>
         </div>
 
