@@ -301,7 +301,7 @@ export class Datetime implements ComponentInterface {
        */
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
-        const { month, day, year, hour, minute } = valueDateParts;
+        const { month, day, year, hour, minute, ampm } = valueDateParts;
         this.activePartsClone = {
           ...this.activeParts,
           month,
@@ -310,18 +310,18 @@ export class Datetime implements ComponentInterface {
           hour,
           minute,
         };
+
+        /**
+         * The working parts am/pm value must be updated when the value changes, to
+         * ensure the time picker hour column values are generated correctly.
+         */
+        this.setWorkingParts({
+          ...this.workingParts,
+          ampm,
+        });
       } else {
         printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
       }
-
-      /**
-       * The working parts am/pm value must be updated when the value changes, to
-       * ensure the time picker hour column values are generated correctly.
-       */
-      this.setWorkingParts({
-        ...this.workingParts,
-        ampm,
-      });
     }
 
     this.emitStyle();
