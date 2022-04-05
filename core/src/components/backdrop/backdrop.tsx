@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -7,14 +8,13 @@ import { GESTURE_CONTROLLER } from '../../utils/gesture';
   tag: 'ion-backdrop',
   styleUrls: {
     ios: 'backdrop.ios.scss',
-    md: 'backdrop.md.scss'
+    md: 'backdrop.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Backdrop implements ComponentInterface {
-
   private blocker = GESTURE_CONTROLLER.createBlocker({
-    disableScroll: true
+    disableScroll: true,
   });
 
   /**
@@ -73,8 +73,7 @@ export class Backdrop implements ComponentInterface {
           'backdrop-hide': !this.visible,
           'backdrop-no-tappable': !this.tappable,
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

@@ -1,11 +1,30 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
+import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavComponentWithProps, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import type {
+  Animation,
+  AnimationBuilder,
+  ComponentProps,
+  FrameworkDelegate,
+  Gesture,
+  NavComponent,
+  NavComponentWithProps,
+  NavOptions,
+  NavOutlet,
+  NavResult,
+  RouteID,
+  RouteWrite,
+  RouterDirection,
+  TransitionDoneFn,
+  TransitionInstruction,
+  ViewController,
+} from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
-import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
+import type { TransitionOptions } from '../../utils/transition';
+import { lifecycle, setPageHidden, transition } from '../../utils/transition';
 
 import { LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from './constants';
 import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToViews, matches } from './view-controller';
@@ -13,10 +32,9 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 @Component({
   tag: 'ion-nav',
   styleUrl: 'nav.scss',
-  shadow: true
+  shadow: true,
 })
 export class Nav implements NavOutlet {
-
   private transInstr: TransitionInstruction[] = [];
   private sbAni?: Animation;
   private animationEnabled = true;
@@ -70,9 +88,7 @@ export class Nav implements NavOutlet {
       if (!this.useRouter) {
         this.setRoot(this.root, this.rootParams);
       } else if (isDev) {
-        console.warn(
-          '<ion-nav> does not support a root attribute when using ion-router.'
-        );
+        console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
     }
   }
@@ -189,10 +205,11 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
-    return this.queueTrns({
+    return this.queueTrns(
+      {
         insertStart: insertIndex,
         insertViews: insertComponents,
-        opts
+        opts,
       },
       done
     );
@@ -218,15 +235,11 @@ export class Nav implements NavOutlet {
    * @param done The transition complete function.
    */
   @Method()
-  popTo(
-    indexOrViewCtrl: number | ViewController,
-    opts?: NavOptions | null,
-    done?: TransitionDoneFn
-  ): Promise<boolean> {
+  popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null, done?: TransitionDoneFn): Promise<boolean> {
     const ti: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
-      opts
+      opts,
     };
     if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
       ti.removeView = indexOrViewCtrl;
@@ -244,10 +257,7 @@ export class Nav implements NavOutlet {
    * @param done The transition complete function.
    */
   @Method()
-  popToRoot(
-    opts?: NavOptions | null,
-    done?: TransitionDoneFn
-  ): Promise<boolean> {
+  popToRoot(opts?: NavOptions | null, done?: TransitionDoneFn): Promise<boolean> {
     return this.removeIndex(1, -1, opts, done);
   }
 
@@ -266,10 +276,11 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
-    return this.queueTrns({
+    return this.queueTrns(
+      {
         removeStart: startIndex,
         removeCount,
-        opts
+        opts,
       },
       done
     );
@@ -314,12 +325,13 @@ export class Nav implements NavOutlet {
     if (opts.animated !== true) {
       opts.animated = false;
     }
-    return this.queueTrns({
+    return this.queueTrns(
+      {
         insertStart: 0,
         insertViews: views,
         removeStart: 0,
         removeCount: -1,
-        opts
+        opts,
       },
       done
     );
@@ -347,53 +359,53 @@ export class Nav implements NavOutlet {
     if (matches(active, id, params)) {
       return Promise.resolve({
         changed: false,
-        element: active.element
+        element: active.element,
       });
     }
 
     let resolve: (result: RouteWrite) => void;
-    const promise = new Promise<RouteWrite>(r => (resolve = r));
+    const promise = new Promise<RouteWrite>((r) => (resolve = r));
     let finish: Promise<boolean>;
     const commonOpts: NavOptions = {
       updateURL: false,
-      viewIsReady: enteringEl => {
+      viewIsReady: (enteringEl) => {
         let mark: () => void;
-        const p = new Promise<void>(r => (mark = r));
+        const p = new Promise<void>((r) => (mark = r));
         resolve({
           changed: true,
           element: enteringEl,
           markVisible: async () => {
             mark();
             await finish;
-          }
+          },
         });
         return p;
-      }
+      },
     };
 
     if (direction === 'root') {
       finish = this.setRoot(id, params, commonOpts);
     } else {
       // Look for a view matching the target in the view stack.
-      const viewController = this.views.find(v => matches(v, id, params));
+      const viewController = this.views.find((v) => matches(v, id, params));
 
       if (viewController) {
         finish = this.popTo(viewController, {
           ...commonOpts,
           direction: 'back',
-          animationBuilder: animation
+          animationBuilder: animation,
         });
       } else if (direction === 'forward') {
         finish = this.push(id, params, {
           ...commonOpts,
-          animationBuilder: animation
+          animationBuilder: animation,
         });
       } else if (direction === 'back') {
         finish = this.setRoot(id, params, {
           ...commonOpts,
           direction: 'back',
           animated: true,
-          animationBuilder: animation
+          animationBuilder: animation,
         });
       }
     }
@@ -410,11 +422,11 @@ export class Nav implements NavOutlet {
     const active = this.getActiveSync();
     if (active) {
       return {
-          id: active.element!.tagName,
-          params: active.params,
-          element: active.element
-        };
-      }
+        id: active.element!.tagName,
+        params: active.params,
+        element: active.element,
+      };
+    }
     return undefined;
   }
 
@@ -482,10 +494,7 @@ export class Nav implements NavOutlet {
    *
    * @returns Whether the transition succeeds.
    */
-  private async queueTrns(
-    ti: TransitionInstruction,
-    done: TransitionDoneFn | undefined
-  ): Promise<boolean> {
+  private async queueTrns(ti: TransitionInstruction, done: TransitionDoneFn | undefined): Promise<boolean> {
     if (this.isTransitioning && ti.opts?.skipIfBusy) {
       return false;
     }
@@ -538,7 +547,8 @@ export class Nav implements NavOutlet {
     }
 
     if (ti.done) {
-      ti.done(result.hasCompleted,
+      ti.done(
+        result.hasCompleted,
         result.requiresTransition,
         result.enteringView,
         result.leavingView,
@@ -618,7 +628,8 @@ export class Nav implements NavOutlet {
       this.postViewInit(enteringView, leavingView, ti);
 
       // Needs transition?
-      const requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
+      const requiresTransition =
+        (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
       if (requiresTransition && ti.opts && leavingView) {
         const isBackDirection = ti.opts.direction === 'back';
 
@@ -636,14 +647,14 @@ export class Nav implements NavOutlet {
       if (requiresTransition) {
         result = await this.transition(enteringView!, leavingView, ti);
       } else {
-            // transition is not required, so we are already done!
-            // they're inserting/removing the views somewhere in the middle or
-            // beginning, so visually nothing needs to animate/transition
-            // resolve immediately because there's no animation that's happening
-            result = {
-              hasCompleted: true,
-              requiresTransition: false
-            };
+        // transition is not required, so we are already done!
+        // they're inserting/removing the views somewhere in the middle or
+        // beginning, so visually nothing needs to animate/transition
+        // resolve immediately because there's no animation that's happening
+        result = {
+          hasCompleted: true,
+          requiresTransition: false,
+        };
       }
 
       this.success(result, ti);
@@ -678,8 +689,7 @@ export class Nav implements NavOutlet {
       if (ti.removeCount! < 0) {
         ti.removeCount = viewsLength - ti.removeStart;
       }
-      ti.leavingRequiresTransition =
-        ti.removeCount! > 0 && ti.removeStart + ti.removeCount! === viewsLength;
+      ti.leavingRequiresTransition = ti.removeCount! > 0 && ti.removeStart + ti.removeCount! === viewsLength;
     }
 
     if (ti.insertViews) {
@@ -724,7 +734,10 @@ export class Nav implements NavOutlet {
    *
    * @returns The view that will be entered, undefined if none.
    */
-  private getEnteringView(ti: TransitionInstruction, leavingView: ViewController | undefined): ViewController | undefined {
+  private getEnteringView(
+    ti: TransitionInstruction,
+    leavingView: ViewController | undefined
+  ): ViewController | undefined {
     // The last inserted view will be entered when view are inserted.
     const insertViews = ti.insertViews;
     if (insertViews !== undefined) {
@@ -841,9 +854,7 @@ export class Nav implements NavOutlet {
     // or if it is a portal (modal, actionsheet, etc.)
     const opts = ti.opts!;
 
-    const progressCallback = opts.progressAnimation
-      ? (ani: Animation | undefined) => this.sbAni = ani
-      : undefined;
+    const progressCallback = opts.progressAnimation ? (ani: Animation | undefined) => (this.sbAni = ani) : undefined;
     const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
@@ -856,7 +867,7 @@ export class Nav implements NavOutlet {
       enteringEl,
       leavingEl,
       ...opts,
-      animationBuilder: opts.animationBuilder || this.animation || config.get('navAnimation')
+      animationBuilder: opts.animationBuilder || this.animation || config.get('navAnimation'),
     };
     const { hasCompleted } = await transition(animationOpts);
     return this.transitionFinish(hasCompleted, enteringView, leavingView, opts);
@@ -878,7 +889,7 @@ export class Nav implements NavOutlet {
       requiresTransition: true,
       enteringView,
       leavingView,
-      direction: opts.direction
+      direction: opts.direction,
     };
   }
 
@@ -995,12 +1006,15 @@ export class Nav implements NavOutlet {
   private onEnd(shouldComplete: boolean, stepValue: number, dur: number) {
     if (this.sbAni) {
       this.animationEnabled = false;
-      this.sbAni.onFinish(() => {
-        this.animationEnabled = true;
-      }, { oneTimeCallback: true });
+      this.sbAni.onFinish(
+        () => {
+          this.animationEnabled = true;
+        },
+        { oneTimeCallback: true }
+      );
 
       // Account for rounding errors in JS
-      let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+      let newStepValue = shouldComplete ? -0.001 : 0.001;
 
       /**
        * Animation will be reversed here, so need to
@@ -1022,8 +1036,6 @@ export class Nav implements NavOutlet {
   }
 
   render() {
-    return (
-      <slot></slot>
-    );
+    return <slot></slot>;
   }
 }

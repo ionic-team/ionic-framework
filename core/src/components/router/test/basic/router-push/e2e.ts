@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('push should support relative path', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/basic#/two/three/hola?ionic:_testing=true'
+    url: '/src/components/router/test/basic#/two/three/hola?ionic:_testing=true',
   });
   await page.waitForChanges();
 
@@ -16,7 +16,7 @@ test('push should support relative path', async () => {
 
 test('push should support absolute path', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/basic#/two/three/hola?ionic:_testing=true'
+    url: '/src/components/router/test/basic#/two/three/hola?ionic:_testing=true',
   });
   await page.waitForChanges();
 

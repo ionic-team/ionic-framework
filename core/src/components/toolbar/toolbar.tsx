@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, CssClassMap, StyleEventDetail } from '../../interface';
+import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -17,9 +18,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-toolbar',
   styleUrls: {
     ios: 'toolbar.ios.scss',
-    md: 'toolbar.md.scss'
+    md: 'toolbar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
@@ -36,7 +37,7 @@ export class Toolbar implements ComponentInterface {
   componentWillLoad() {
     const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
 
-    const firstButtons = buttons.find(button => {
+    const firstButtons = buttons.find((button) => {
       return button.slot === 'start';
     });
     if (firstButtons) {
@@ -45,9 +46,9 @@ export class Toolbar implements ComponentInterface {
 
     const buttonsReversed = buttons.reverse();
     const lastButtons =
-      buttonsReversed.find(button => button.slot === 'end') ||
-      buttonsReversed.find(button => button.slot === 'primary') ||
-      buttonsReversed.find(button => button.slot === 'secondary');
+      buttonsReversed.find((button) => button.slot === 'end') ||
+      buttonsReversed.find((button) => button.slot === 'primary') ||
+      buttonsReversed.find((button) => button.slot === 'secondary');
     if (lastButtons) {
       lastButtons.classList.add('buttons-last-slot');
     }
@@ -63,7 +64,7 @@ export class Toolbar implements ComponentInterface {
     const childStyles = this.childrenStyles.get(tagName) || {};
 
     let hasStyleChange = false;
-    Object.keys(updatedStyles).forEach(key => {
+    Object.keys(updatedStyles).forEach((key) => {
       const childKey = `toolbar-${key}`;
       const newValue = updatedStyles[key];
       if (newValue !== childStyles[childKey]) {
@@ -83,7 +84,7 @@ export class Toolbar implements ComponentInterface {
   render() {
     const mode = getIonMode(this);
     const childStyles = {};
-    this.childrenStyles.forEach(value => {
+    this.childrenStyles.forEach((value) => {
       Object.assign(childStyles, value);
     });
     return (

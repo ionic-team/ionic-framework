@@ -1,4 +1,5 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('nested popovers', () => {
   let page: E2EPage;
@@ -175,5 +176,5 @@ describe('nested popovers', () => {
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
     }
-  })
+  });
 });

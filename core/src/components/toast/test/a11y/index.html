@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Toast - a11y</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <script type="module">
@@ -15,19 +15,24 @@
   </head>
   <body>
     <ion-app>
-    <main>
-      <h1 style="background-color: white">Toast - a11y</h1>
+      <main>
+        <h1 style="background-color: white">Toast - a11y</h1>
 
-      <button id="polite" onclick="presentToast({ message: 'This is a toast message' })">Present Toast</button>
-      <button id="assertive" onclick="presentToast({ message: 'This is an assertive toast message', htmlAttributes: { 'aria-live': 'assertive' } })">Present Assertive Toast</button>
-    </main>
+        <button id="polite" onclick="presentToast({ message: 'This is a toast message' })">Present Toast</button>
+        <button
+          id="assertive"
+          onclick="presentToast({ message: 'This is an assertive toast message', htmlAttributes: { 'aria-live': 'assertive' } })"
+        >
+          Present Assertive Toast
+        </button>
+      </main>
     </ion-app>
     <script>
       const presentToast = async (opts) => {
         const toast = await toastController.create(opts);
 
         await toast.present();
-      }
+      };
     </script>
   </body>
 </html>

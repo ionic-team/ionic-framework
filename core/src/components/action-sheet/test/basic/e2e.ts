@@ -3,10 +3,10 @@ import { newE2EPage } from '@stencil/core/testing';
 import { testActionSheet, testActionSheetAlert, testActionSheetBackdrop } from '../test.utils';
 
 const DIRECTORY = 'basic';
-const getActiveElementText = async page => {
+const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return page.evaluate(el => el && el.textContent, activeElement);
-}
+  return page.evaluate((el) => el?.textContent, activeElement);
+};
 
 test('action-sheet: data', async () => {
   const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
@@ -38,7 +38,7 @@ test('action-sheet: data cancel', async () => {
   await button.click();
 
   expect(didDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
-})
+});
 
 test('action-sheet: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/action-sheet/test/basic?ionic:_testing=true' });
@@ -158,7 +158,7 @@ test('action-sheet: htmlAttributes', async () => {
   expect(toast).not.toBe(null);
   await toast.waitForVisible();
 
-  const attribute = await page.evaluate(el => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-action-sheet').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-action-sheet');
 });

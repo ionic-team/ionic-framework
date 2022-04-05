@@ -1,4 +1,3 @@
-
 export interface ItemReorderEventDetail {
   from: number;
   to: number;

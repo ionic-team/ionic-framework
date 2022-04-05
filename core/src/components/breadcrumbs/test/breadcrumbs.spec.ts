@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Breadcrumbs } from '../breadcrumbs.tsx';
+
 import { Breadcrumb } from '../../breadcrumb/breadcrumb.tsx';
+import { Breadcrumbs } from '../breadcrumbs.tsx';
 
 it('should correctly provide the collapsed breadcrumbs in the event payload', async () => {
   const page = await newSpecPage({
@@ -13,7 +14,7 @@ it('should correctly provide the collapsed breadcrumbs in the event payload', as
         <ion-breadcrumb>Fourth</ion-breadcrumb>
         <ion-breadcrumb>Fifth</ion-breadcrumb>
       </ion-breadcrumbs>
-    `
+    `,
   });
 
   const onCollapsedClick = jest.fn((ev) => ev);

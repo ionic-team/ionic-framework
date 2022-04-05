@@ -9,8 +9,8 @@ const DIRECTORY = 'basic';
  * to wait for the requestAnimationFrame to fire.
  */
 const expectActiveElementTextToEqual = async (page, textValue) => {
-  await page.waitFor(text => document.activeElement.textContent === text, {}, textValue)
-}
+  await page.waitFor((text) => document.activeElement.textContent === text, {}, textValue);
+};
 
 test('popover: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/popover/test/basic?ionic:_testing=true' });
@@ -125,7 +125,7 @@ test('popover: htmlAttributes', async () => {
   expect(alert).not.toBe(null);
   await alert.waitForVisible();
 
-  const attribute = await page.evaluate(el => document.querySelector('ion-popover').getAttribute('data-testid'));
+  const attribute = await page.evaluate(() => document.querySelector('ion-popover').getAttribute('data-testid'));
 
   expect(attribute).toEqual('basic-popover');
 });

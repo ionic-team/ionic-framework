@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('router: guards - href - allow/allow', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/guards?ionic:_testing=true'
+    url: '/src/components/router/test/guards?ionic:_testing=true',
   });
 
   // Test 1: beforeEnter: allow, beforeLeave: allow
@@ -25,7 +25,7 @@ test('router: guards - href - allow/allow', async () => {
 
 test('router: guards - href - block/allow', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/guards?ionic:_testing=true'
+    url: '/src/components/router/test/guards?ionic:_testing=true',
   });
 
   // Test 2: beforeEnter: block, beforeLeave: allow
@@ -41,7 +41,7 @@ test('router: guards - href - block/allow', async () => {
 
 test('router: guards - href - redirect/allow', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/guards?ionic:_testing=true'
+    url: '/src/components/router/test/guards?ionic:_testing=true',
   });
 
   // Test 3: beforeEnter: redirect, beforeLeave: allow
@@ -64,7 +64,7 @@ test('router: guards - href - redirect/allow', async () => {
 
 test('router: guards - href - allow/block', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/guards?ionic:_testing=true'
+    url: '/src/components/router/test/guards?ionic:_testing=true',
   });
 
   // Test 4: beforeEnter: allow, beforeLeave: block
@@ -88,7 +88,7 @@ test('router: guards - href - allow/block', async () => {
 // TODO this is an actual bug in the code.
 test('router: guards - href - allow/redirect', async () => {
   const page = await newE2EPage({
-    url: '/src/components/router/test/guards?ionic:_testing=true'
+    url: '/src/components/router/test/guards?ionic:_testing=true',
   });
 
   // Test 5: beforeEnter: allow, beforeLeave: redirect
@@ -112,14 +112,14 @@ test('router: guards - href - allow/redirect', async () => {
 const checkUrl = async (page, url: string) => {
   const getUrl = await page.url();
   expect(getUrl).toContain(url);
-}
+};
 
 const setBeforeEnterHook = async (page, type: string) => {
   const button = await page.$(`ion-radio-group#beforeEnter ion-radio[value=${type}]`);
   await button.click();
-}
+};
 
 const setBeforeLeaveHook = async (page, type: string) => {
   const button = await page.$(`ion-radio-group#beforeLeave ion-radio[value=${type}]`);
   await button.click();
-}
+};

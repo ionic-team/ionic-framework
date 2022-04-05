@@ -1,14 +1,14 @@
 import { AxePuppeteer } from '@axe-core/puppeteer';
 import { newE2EPage } from '@stencil/core/testing';
 
-const getActiveElementText = async page => {
+const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
-  return page.evaluate(el => el && el.innerText, activeElement);
-}
+  return await page.evaluate((el) => el?.innerText, activeElement);
+};
 
 test('segment: axe', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/a11y?ionic:_testing=true'
+    url: '/src/components/segment/test/a11y?ionic:_testing=true',
   });
 
   const results = await new AxePuppeteer(page)
@@ -20,7 +20,7 @@ test('segment: axe', async () => {
 
 test('segment: keyboard navigation', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/a11y?ionic:_testing=true'
+    url: '/src/components/segment/test/a11y?ionic:_testing=true',
   });
 
   await page.keyboard.press('Tab');
@@ -49,7 +49,7 @@ test('segment: keyboard navigation', async () => {
 
 test('segment: RTL keyboard navigation', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/a11y?ionic:_testing=true&rtl=true'
+    url: '/src/components/segment/test/a11y?ionic:_testing=true&rtl=true',
   });
 
   await page.keyboard.press('Tab');

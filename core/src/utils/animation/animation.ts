@@ -1,7 +1,26 @@
 import { raf } from '../helpers';
 
-import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
-import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, processKeyframes, removeStyleProperty, setStyleProperty } from './animation-utils';
+import type {
+  Animation,
+  AnimationCallbackOptions,
+  AnimationDirection,
+  AnimationFill,
+  AnimationKeyFrame,
+  AnimationKeyFrameEdge,
+  AnimationKeyFrames,
+  AnimationLifecycle,
+  AnimationPlayOptions,
+} from './animation-interface';
+import {
+  addClassToArray,
+  animationEnd,
+  createKeyframeStylesheet,
+  generateKeyframeName,
+  generateKeyframeRules,
+  processKeyframes,
+  removeStyleProperty,
+  setStyleProperty,
+} from './animation-utils';
 
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
@@ -62,8 +81,12 @@ export const createAnimation = (animationId?: string): Animation => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsAnimationEffect = (typeof (AnimationEffect as any) === 'function' || typeof (window as any).AnimationEffect === 'function');
-  const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function') && supportsAnimationEffect;
+  const supportsAnimationEffect =
+    typeof (AnimationEffect as any) === 'function' || typeof (window as any).AnimationEffect === 'function';
+  const supportsWebAnimations =
+    typeof (Element as any) === 'function' &&
+    typeof (Element as any).prototype!.animate === 'function' &&
+    supportsAnimationEffect;
   const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   const getWebAnimations = () => {
@@ -71,7 +94,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const destroy = (clearStyleSheets?: boolean) => {
-    childAnimations.forEach(childAnimation => {
+    childAnimations.forEach((childAnimation) => {
       childAnimation.destroy(clearStyleSheets);
     });
 
@@ -116,7 +139,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
-    const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
+    const callbacks = opts?.oneTimeCallback ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ c: callback, o: opts });
 
     return ani;
@@ -136,7 +159,7 @@ export const createAnimation = (animationId?: string): Animation => {
    */
   const cleanUpElements = () => {
     if (supportsWebAnimations) {
-      webAnimations.forEach(animation => {
+      webAnimations.forEach((animation) => {
         animation.cancel();
       });
 
@@ -145,7 +168,7 @@ export const createAnimation = (animationId?: string): Animation => {
       const elementsArray = elements.slice();
 
       raf(() => {
-        elementsArray.forEach(element => {
+        elementsArray.forEach((element) => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
@@ -164,13 +187,13 @@ export const createAnimation = (animationId?: string): Animation => {
    * from the DOM.
    */
   const cleanUpStyleSheets = () => {
-    stylesheets.forEach(stylesheet => {
+    stylesheets.forEach((stylesheet) => {
       /**
        * When sharing stylesheets, it's possible
        * for another animation to have already
        * cleaned up a particular stylesheet
        */
-      if (stylesheet && stylesheet.parentNode) {
+      if (stylesheet?.parentNode) {
         stylesheet.parentNode.removeChild(stylesheet);
       }
     });
@@ -262,49 +285,82 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const getFill = () => {
-    if (_fill !== undefined) { return _fill; }
-    if (parentAnimation) { return parentAnimation.getFill(); }
+    if (_fill !== undefined) {
+      return _fill;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getFill();
+    }
 
     return 'both';
   };
 
   const getDirection = () => {
-    if (forceDirectionValue !== undefined) { return forceDirectionValue; }
-    if (_direction !== undefined) { return _direction; }
-    if (parentAnimation) { return parentAnimation.getDirection(); }
+    if (forceDirectionValue !== undefined) {
+      return forceDirectionValue;
+    }
+    if (_direction !== undefined) {
+      return _direction;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getDirection();
+    }
 
     return 'normal';
-
   };
 
   const getEasing = () => {
-    if (shouldForceLinearEasing) { return 'linear'; }
-    if (_easing !== undefined) { return _easing; }
-    if (parentAnimation) { return parentAnimation.getEasing(); }
+    if (shouldForceLinearEasing) {
+      return 'linear';
+    }
+    if (_easing !== undefined) {
+      return _easing;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getEasing();
+    }
 
     return 'linear';
   };
 
   const getDuration = () => {
-    if (shouldForceSyncPlayback) { return 0; }
-    if (forceDurationValue !== undefined) { return forceDurationValue; }
-    if (_duration !== undefined) { return _duration; }
-    if (parentAnimation) { return parentAnimation.getDuration(); }
+    if (shouldForceSyncPlayback) {
+      return 0;
+    }
+    if (forceDurationValue !== undefined) {
+      return forceDurationValue;
+    }
+    if (_duration !== undefined) {
+      return _duration;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getDuration();
+    }
 
     return 0;
   };
 
   const getIterations = () => {
-    if (_iterations !== undefined) { return _iterations; }
-    if (parentAnimation) { return parentAnimation.getIterations(); }
+    if (_iterations !== undefined) {
+      return _iterations;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getIterations();
+    }
 
     return 1;
   };
 
   const getDelay = () => {
-    if (forceDelayValue !== undefined) { return forceDelayValue; }
-    if (_delay !== undefined) { return _delay; }
-    if (parentAnimation) { return parentAnimation.getDelay(); }
+    if (forceDelayValue !== undefined) {
+      return forceDelayValue;
+    }
+    if (_delay !== undefined) {
+      return _delay;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getDelay();
+    }
 
     return 0;
   };
@@ -378,7 +434,6 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const addElement = (el: Element | Element[] | Node | Node[] | NodeList | undefined | null) => {
     if (el != null) {
-
       if ((el as Node).nodeType === 1) {
         elements.push(el as any);
       } else if ((el as NodeList).length >= 0) {
@@ -421,7 +476,7 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const updateKeyframes = (keyframeValues: AnimationKeyFrames) => {
     if (supportsWebAnimations) {
-      getWebAnimations().forEach(animation => {
+      getWebAnimations().forEach((animation) => {
         if (animation.effect.setKeyframes) {
           animation.effect.setKeyframes(keyframeValues);
         } else {
@@ -439,23 +494,24 @@ export const createAnimation = (animationId?: string): Animation => {
    */
   const beforeAnimation = () => {
     // Runs all before read callbacks
-    _beforeAddReadFunctions.forEach(callback => callback());
+    _beforeAddReadFunctions.forEach((callback) => callback());
 
     // Runs all before write callbacks
-    _beforeAddWriteFunctions.forEach(callback => callback());
+    _beforeAddWriteFunctions.forEach((callback) => callback());
 
     // Updates styles and classes before animation runs
     const addClasses = beforeAddClasses;
     const removeClasses = beforeRemoveClasses;
     const styles = beforeStylesValue;
 
-    elements.forEach(el => {
+    elements.forEach((el) => {
       const elementClassList = el.classList;
 
-      addClasses.forEach(c => elementClassList.add(c));
-      removeClasses.forEach(c => elementClassList.remove(c));
+      addClasses.forEach((c) => elementClassList.add(c));
+      removeClasses.forEach((c) => elementClassList.remove(c));
 
       for (const property in styles) {
+        // eslint-disable-next-line no-prototype-builtins
         if (styles.hasOwnProperty(property)) {
           setStyleProperty(el, property, styles[property]);
         }
@@ -470,10 +526,10 @@ export const createAnimation = (animationId?: string): Animation => {
     clearCSSAnimationsTimeout();
 
     // Runs all after read callbacks
-    _afterAddReadFunctions.forEach(callback => callback());
+    _afterAddReadFunctions.forEach((callback) => callback());
 
     // Runs all after write callbacks
-    _afterAddWriteFunctions.forEach(callback => callback());
+    _afterAddWriteFunctions.forEach((callback) => callback());
 
     // Updates styles and classes before animation ends
     const currentStep = willComplete ? 1 : 0;
@@ -481,24 +537,25 @@ export const createAnimation = (animationId?: string): Animation => {
     const removeClasses = afterRemoveClasses;
     const styles = afterStylesValue;
 
-    elements.forEach(el => {
+    elements.forEach((el) => {
       const elementClassList = el.classList;
 
-      addClasses.forEach(c => elementClassList.add(c));
-      removeClasses.forEach(c => elementClassList.remove(c));
+      addClasses.forEach((c) => elementClassList.add(c));
+      removeClasses.forEach((c) => elementClassList.remove(c));
 
       for (const property in styles) {
+        // eslint-disable-next-line no-prototype-builtins
         if (styles.hasOwnProperty(property)) {
           setStyleProperty(el, property, styles[property]);
         }
       }
     });
 
-    onFinishCallbacks.forEach(onFinishCallback => {
+    onFinishCallbacks.forEach((onFinishCallback) => {
       return onFinishCallback.c(currentStep, ani);
     });
 
-    onFinishOneTimeCallbacks.forEach(onFinishCallback => {
+    onFinishOneTimeCallbacks.forEach((onFinishCallback) => {
       return onFinishCallback.c(currentStep, ani);
     });
 
@@ -512,7 +569,9 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const animationFinish = () => {
-    if (numAnimationsRunning === 0) { return; }
+    if (numAnimationsRunning === 0) {
+      return;
+    }
 
     numAnimationsRunning--;
 
@@ -528,10 +587,10 @@ export const createAnimation = (animationId?: string): Animation => {
     cleanUpStyleSheets();
 
     const processedKeyframes = processKeyframes(_keyframes);
-    elements.forEach(element => {
+    elements.forEach((element) => {
       if (processedKeyframes.length > 0) {
         const keyframeRules = generateKeyframeRules(processedKeyframes);
-        keyframeName = (animationId !== undefined) ? animationId : generateKeyframeName(keyframeRules);
+        keyframeName = animationId !== undefined ? animationId : generateKeyframeName(keyframeRules);
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
@@ -541,9 +600,7 @@ export const createAnimation = (animationId?: string): Animation => {
         setStyleProperty(element, 'animation-fill-mode', getFill());
         setStyleProperty(element, 'animation-direction', getDirection());
 
-        const iterationsCount = (getIterations() === Infinity)
-          ? 'infinite'
-          : getIterations().toString();
+        const iterationsCount = getIterations() === Infinity ? 'infinite' : getIterations().toString();
 
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
@@ -560,7 +617,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const initializeWebAnimation = () => {
-    elements.forEach(element => {
+    elements.forEach((element) => {
       const animation = element.animate(_keyframes, {
         id,
         delay: getDelay(),
@@ -568,7 +625,7 @@ export const createAnimation = (animationId?: string): Animation => {
         easing: getEasing(),
         iterations: getIterations(),
         fill: getFill(),
-        direction: getDirection()
+        direction: getDirection(),
       });
 
       animation.pause();
@@ -581,7 +638,6 @@ export const createAnimation = (animationId?: string): Animation => {
         animationFinish();
       };
     }
-
   };
 
   const initializeAnimation = (toggleAnimationName = true) => {
@@ -601,15 +657,14 @@ export const createAnimation = (animationId?: string): Animation => {
   const setAnimationStep = (step: number) => {
     step = Math.min(Math.max(step, 0), 0.9999);
     if (supportsWebAnimations) {
-      webAnimations.forEach(animation => {
-        animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration() * step);
+      webAnimations.forEach((animation) => {
+        animation.currentTime = animation.effect.getComputedTiming().delay + getDuration() * step;
         animation.pause();
       });
-
     } else {
       const animationDuration = `-${getDuration() * step}ms`;
 
-      elements.forEach(element => {
+      elements.forEach((element) => {
         if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-delay', animationDuration);
           setStyleProperty(element, 'animation-play-state', 'paused');
@@ -619,14 +674,14 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const updateWebAnimation = (step?: number) => {
-    webAnimations.forEach(animation => {
+    webAnimations.forEach((animation) => {
       animation.effect.updateTiming({
         delay: getDelay(),
         duration: getDuration(),
         easing: getEasing(),
         iterations: getIterations(),
         fill: getFill(),
-        direction: getDirection()
+        direction: getDirection(),
       });
     });
 
@@ -637,17 +692,19 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const updateCSSAnimation = (toggleAnimationName = true, step?: number) => {
     raf(() => {
-      elements.forEach(element => {
+      elements.forEach((element) => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
         setStyleProperty(element, 'animation-timing-function', getEasing());
-        setStyleProperty(element, 'animation-delay', (step !== undefined) ? `-${step! * getDuration()}ms` : `${getDelay()}ms`);
+        setStyleProperty(
+          element,
+          'animation-delay',
+          step !== undefined ? `-${step! * getDuration()}ms` : `${getDelay()}ms`
+        );
         setStyleProperty(element, 'animation-fill-mode', getFill() || null);
         setStyleProperty(element, 'animation-direction', getDirection() || null);
 
-        const iterationsCount = (getIterations() === Infinity)
-          ? 'infinite'
-          : getIterations().toString();
+        const iterationsCount = getIterations() === Infinity ? 'infinite' : getIterations().toString();
 
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
 
@@ -664,7 +721,7 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const update = (deep = false, toggleAnimationName = true, step?: number) => {
     if (deep) {
-      childAnimations.forEach(animation => {
+      childAnimations.forEach((animation) => {
         animation.update(deep, toggleAnimationName, step);
       });
     }
@@ -679,7 +736,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const progressStart = (forceLinearEasing = false, step?: number) => {
-    childAnimations.forEach(animation => {
+    childAnimations.forEach((animation) => {
       animation.progressStart(forceLinearEasing, step);
     });
 
@@ -695,7 +752,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const progressStep = (step: number) => {
-    childAnimations.forEach(animation => {
+    childAnimations.forEach((animation) => {
       animation.progressStep(step);
     });
     setAnimationStep(step);
@@ -705,7 +762,7 @@ export const createAnimation = (animationId?: string): Animation => {
   const progressEnd = (playTo: 0 | 1 | undefined, step: number, dur?: number) => {
     shouldForceLinearEasing = false;
 
-    childAnimations.forEach(animation => {
+    childAnimations.forEach((animation) => {
       animation.progressEnd(playTo, step, dur);
     });
 
@@ -715,11 +772,10 @@ export const createAnimation = (animationId?: string): Animation => {
 
     finished = false;
 
-    // tslint:disable-next-line: strict-boolean-conditions
     willComplete = true;
 
     if (playTo === 0) {
-      forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
+      forceDirectionValue = getDirection() === 'reverse' ? 'normal' : 'reverse';
 
       if (forceDirectionValue === 'reverse') {
         willComplete = false;
@@ -729,7 +785,7 @@ export const createAnimation = (animationId?: string): Animation => {
         update();
         setAnimationStep(1 - step);
       } else {
-        forceDelayValue = ((1 - step) * getDuration()) * -1;
+        forceDelayValue = (1 - step) * getDuration() * -1;
         update(false, false);
       }
     } else if (playTo === 1) {
@@ -737,19 +793,22 @@ export const createAnimation = (animationId?: string): Animation => {
         update();
         setAnimationStep(step);
       } else {
-        forceDelayValue = (step * getDuration()) * -1;
+        forceDelayValue = step * getDuration() * -1;
         update(false, false);
       }
     }
 
     if (playTo !== undefined) {
-      onFinish(() => {
-        forceDurationValue = undefined;
-        forceDirectionValue = undefined;
-        forceDelayValue = undefined;
-      }, {
-        oneTimeCallback: true
-      });
+      onFinish(
+        () => {
+          forceDurationValue = undefined;
+          forceDirectionValue = undefined;
+          forceDelayValue = undefined;
+        },
+        {
+          oneTimeCallback: true,
+        }
+      );
 
       if (!parentAnimation) {
         play();
@@ -762,11 +821,11 @@ export const createAnimation = (animationId?: string): Animation => {
   const pauseAnimation = () => {
     if (initialized) {
       if (supportsWebAnimations) {
-        webAnimations.forEach(animation => {
+        webAnimations.forEach((animation) => {
           animation.pause();
         });
       } else {
-        elements.forEach(element => {
+        elements.forEach((element) => {
           setStyleProperty(element, 'animation-play-state', 'paused');
         });
       }
@@ -774,7 +833,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const pause = () => {
-    childAnimations.forEach(animation => {
+    childAnimations.forEach((animation) => {
       animation.pause();
     });
 
@@ -798,7 +857,7 @@ export const createAnimation = (animationId?: string): Animation => {
     clearCSSAnimationsTimeout();
 
     raf(() => {
-      elements.forEach(element => {
+      elements.forEach((element) => {
         if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
         }
@@ -806,7 +865,7 @@ export const createAnimation = (animationId?: string): Animation => {
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
-       animationFinish();
+      animationFinish();
     } else {
       /**
        * This is a catchall in the event that a CSS Animation did not finish.
@@ -816,16 +875,19 @@ export const createAnimation = (animationId?: string): Animation => {
        * accounts for this, but using raw CSS Animations requires
        * this workaround.
        */
-       const animationDelay = getDelay() || 0;
-       const animationDuration = getDuration() || 0;
-       const animationIterations = getIterations() || 1;
+      const animationDelay = getDelay() || 0;
+      const animationDuration = getDuration() || 0;
+      const animationIterations = getIterations() || 1;
 
-       // No need to set a timeout when animation has infinite iterations
-       if (isFinite(animationIterations)) {
-        cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
-       }
+      // No need to set a timeout when animation has infinite iterations
+      if (isFinite(animationIterations)) {
+        cssAnimationsTimerFallback = setTimeout(
+          onAnimationEndFallback,
+          animationDelay + animationDuration * animationIterations + ANIMATION_END_FALLBACK_PADDING_MS
+        );
+      }
 
-       animationEnd(elements[0], () => {
+      animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
 
         /**
@@ -848,7 +910,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const clearCSSAnimationPlayState = () => {
-    elements.forEach(element => {
+    elements.forEach((element) => {
       removeStyleProperty(element, 'animation-duration');
       removeStyleProperty(element, 'animation-delay');
       removeStyleProperty(element, 'animation-play-state');
@@ -856,7 +918,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const playWebAnimations = () => {
-    webAnimations.forEach(animation => {
+    webAnimations.forEach((animation) => {
       animation.play();
     });
 
@@ -875,11 +937,11 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const play = (opts?: AnimationPlayOptions) => {
-    return new Promise<void>(resolve => {
-      if (opts && opts.sync) {
+    return new Promise<void>((resolve) => {
+      if (opts?.sync) {
         shouldForceSyncPlayback = true;
 
-        onFinish(() => shouldForceSyncPlayback = false, { oneTimeCallback: true });
+        onFinish(() => (shouldForceSyncPlayback = false), { oneTimeCallback: true });
       }
       if (!initialized) {
         initializeAnimation();
@@ -897,7 +959,7 @@ export const createAnimation = (animationId?: string): Animation => {
 
       onFinish(() => resolve(), { oneTimeCallback: true });
 
-      childAnimations.forEach(animation => {
+      childAnimations.forEach((animation) => {
         animation.play();
       });
 
@@ -910,7 +972,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const stop = () => {
-    childAnimations.forEach(animation => {
+    childAnimations.forEach((animation) => {
       animation.stop();
     });
 
@@ -928,10 +990,7 @@ export const createAnimation = (animationId?: string): Animation => {
     if (firstFrame !== undefined && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
     } else {
-      _keyframes = [
-        { offset: 0, [property]: value },
-        ..._keyframes
-      ] as AnimationKeyFrame[];
+      _keyframes = [{ offset: 0, [property]: value }, ..._keyframes] as AnimationKeyFrame[];
     }
 
     return ani;
@@ -943,10 +1002,7 @@ export const createAnimation = (animationId?: string): Animation => {
     if (lastFrame !== undefined && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
       lastFrame[property] = value;
     } else {
-      _keyframes = [
-        ..._keyframes,
-        { offset: 1, [property]: value }
-      ] as AnimationKeyFrame[];
+      _keyframes = [..._keyframes, { offset: 1, [property]: value }] as AnimationKeyFrame[];
     }
     return ani;
   };
@@ -955,7 +1011,7 @@ export const createAnimation = (animationId?: string): Animation => {
     return from(property, fromValue).to(property, toValue);
   };
 
-  return ani = {
+  return (ani = {
     parentAnimation,
     elements,
     childAnimations,
@@ -1003,6 +1059,6 @@ export const createAnimation = (animationId?: string): Animation => {
 
     progressStart,
     progressStep,
-    progressEnd
-  };
+    progressEnd,
+  });
 };
