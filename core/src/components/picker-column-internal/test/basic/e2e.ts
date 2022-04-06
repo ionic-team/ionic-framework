@@ -1,15 +1,13 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
-
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('picker-column-internal', () => {
-
   let page: E2EPage;
 
   describe('default', () => {
-
     beforeEach(async () => {
       page = await newE2EPage({
-        url: '/src/components/picker-column-internal/test/basic?ionic:_testing=true'
+        url: '/src/components/picker-column-internal/test/basic?ionic:_testing=true',
       });
     });
 
@@ -74,7 +72,5 @@ describe('picker-column-internal', () => {
 
       expect(ionChangeSpy).toHaveReceivedEvent();
     });
-
   });
-
 });

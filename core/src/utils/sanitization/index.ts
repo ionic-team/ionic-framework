@@ -5,8 +5,12 @@
 
 export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
-    if (untrustedString instanceof IonicSafeString) { return untrustedString.value; }
-    if (!isSanitizerEnabled() || typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
+    if (untrustedString instanceof IonicSafeString) {
+      return untrustedString.value;
+    }
+    if (!isSanitizerEnabled() || typeof untrustedString !== 'string' || untrustedString === '') {
+      return untrustedString;
+    }
 
     /**
      * Create a document fragment
@@ -22,8 +26,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
      * Remove any elements
      * that are blocked
      */
-    blockedTags.forEach(blockedTag => {
-
+    blockedTags.forEach((blockedTag) => {
       const getElementsToRemove = documentFragment.querySelectorAll(blockedTag);
       for (let elementIndex = getElementsToRemove.length - 1; elementIndex >= 0; elementIndex--) {
         const element = getElementsToRemove[elementIndex];
@@ -40,7 +43,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
          */
         const childElements = getElementChildren(element);
 
-        /* tslint:disable-next-line */
+        /* eslint-disable-next-line */
         for (let childIndex = 0; childIndex < childElements.length; childIndex++) {
           sanitizeElement(childElements[childIndex]);
         }
@@ -55,7 +58,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
     // IE does not support .children on document fragments, only .childNodes
     const dfChildren = getElementChildren(documentFragment);
 
-    /* tslint:disable-next-line */
+    /* eslint-disable-next-line */
     for (let childIndex = 0; childIndex < dfChildren.length; childIndex++) {
       sanitizeElement(dfChildren[childIndex]);
     }
@@ -66,8 +69,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
 
     // First child is always the div we did our work in
     const getInnerDiv = fragmentDiv.querySelector('div');
-    return (getInnerDiv !== null) ? getInnerDiv.innerHTML : fragmentDiv.innerHTML;
-
+    return getInnerDiv !== null ? getInnerDiv.innerHTML : fragmentDiv.innerHTML;
   } catch (err) {
     console.error(err);
 
@@ -82,7 +84,9 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
  */
 const sanitizeElement = (element: any) => {
   // IE uses childNodes, so ignore nodes that are not elements
-  if (element.nodeType && element.nodeType !== 1) { return; }
+  if (element.nodeType && element.nodeType !== 1) {
+    return;
+  }
 
   for (let i = element.attributes.length - 1; i >= 0; i--) {
     const attribute = element.attributes.item(i);
@@ -98,7 +102,7 @@ const sanitizeElement = (element: any) => {
     // that attempt to do any JS funny-business
     const attributeValue = attribute.value;
 
-    /* tslint:disable-next-line */
+    /* eslint-disable-next-line */
     if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
       element.removeAttribute(attributeName);
     }
@@ -109,7 +113,7 @@ const sanitizeElement = (element: any) => {
    */
   const childElements = getElementChildren(element);
 
-  /* tslint:disable-next-line */
+  /* eslint-disable-next-line */
   for (let i = 0; i < childElements.length; i++) {
     sanitizeElement(childElements[i]);
   }
@@ -120,12 +124,12 @@ const sanitizeElement = (element: any) => {
  * so we revert to .childNodes instead
  */
 const getElementChildren = (el: any) => {
-  return (el.children != null) ? el.children : el.childNodes;
+  return el.children != null ? el.children : el.childNodes;
 };
 
 const isSanitizerEnabled = (): boolean => {
   const win = window as any;
-  const config = win && win.Ionic && win.Ionic.config;
+  const config = win?.Ionic?.config;
   if (config) {
     if (config.get) {
       return config.get('sanitizerEnabled', true);

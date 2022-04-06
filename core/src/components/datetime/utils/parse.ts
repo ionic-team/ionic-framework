@@ -1,6 +1,9 @@
-import { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts } from '../datetime-interface';
 
-const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
+const ISO_8601_REGEXP =
+  // eslint-disable-next-line no-useless-escape
+  /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
+// eslint-disable-next-line no-useless-escape
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
 /**
@@ -8,7 +11,9 @@ const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(
  * an array of numbers, and clean up any user input
  */
 export const convertToArrayOfNumbers = (input?: number[] | number | string): number[] | undefined => {
-  if (input === undefined) { return; }
+  if (input === undefined) {
+    return;
+  }
 
   let processedInput: any = input;
 
@@ -21,9 +26,7 @@ export const convertToArrayOfNumbers = (input?: number[] | number | string): num
   let values: number[];
   if (Array.isArray(processedInput)) {
     // ensure each value is an actual number in the returned array
-    values = processedInput
-      .map((num: any) => parseInt(num, 10))
-      .filter(isFinite);
+    values = processedInput.map((num: any) => parseInt(num, 10)).filter(isFinite);
   } else {
     values = [processedInput as number];
   }
@@ -41,9 +44,9 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
     month: parseInt(el.getAttribute('data-month')!, 10),
     day: parseInt(el.getAttribute('data-day')!, 10),
     year: parseInt(el.getAttribute('data-year')!, 10),
-    dayOfWeek: parseInt(el.getAttribute('data-day-of-week')!, 10)
-  }
-}
+    dayOfWeek: parseInt(el.getAttribute('data-day-of-week')!, 10),
+  };
+};
 
 /**
  * Given an ISO-8601 string, format out the parts
@@ -62,7 +65,6 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
       // adjust the array so it fits nicely with the datetime parse
       parse.unshift(undefined, undefined);
       parse[2] = parse[3] = undefined;
-
     } else {
       // try parsing for full ISO datetime
       parse = ISO_8601_REGEXP.exec(val);

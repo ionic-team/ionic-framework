@@ -26,7 +26,7 @@ export const openItemSliding = async (id: string, page: any, rtl = false) => {
     //                   centerX    halfX      endX
 
     if (rtl) {
-      halfX = centerX + (centerX / 2);
+      halfX = centerX + centerX / 2;
       endX = boundingBox.width;
     }
 

@@ -13,7 +13,9 @@ test('should calculate popover width automatically', async () => {
   await popover.waitForVisible();
 
   const triggerHandler = await page.$('#auto-trigger');
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.auto-popover').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.auto-popover').shadowRoot.querySelector('.popover-content')`
+  );
   const triggerBbox = await triggerHandler.boundingBox();
   const popoverBbox = await popoverContentHandle.boundingBox();
   expect(popoverBbox.width).not.toEqual(triggerBbox.width);
@@ -38,7 +40,9 @@ test('should calculate popover width based on trigger width', async () => {
   await popover.waitForVisible();
 
   const triggerHandler = await page.$('#cover-trigger');
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.cover-popover').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.cover-popover').shadowRoot.querySelector('.popover-content')`
+  );
   const triggerBbox = await triggerHandler.boundingBox();
   const popoverBbox = await popoverContentHandle.boundingBox();
   expect(popoverBbox.width).toEqual(triggerBbox.width);
@@ -63,7 +67,9 @@ test('should calculate popover width based on event width', async () => {
   await popover.waitForVisible();
 
   const triggerHandler = await page.$('#event-trigger');
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.event-popover').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.event-popover').shadowRoot.querySelector('.popover-content')`
+  );
   const triggerBbox = await triggerHandler.boundingBox();
   const popoverBbox = await popoverContentHandle.boundingBox();
   expect(popoverBbox.width).toEqual(triggerBbox.width);
@@ -74,7 +80,6 @@ test('should calculate popover width based on event width', async () => {
     expect(screenshotCompare).toMatchScreenshot();
   }
 });
-
 
 test('should not calculate popover width with no trigger or event', async () => {
   const page = await newE2EPage({ url: '/src/components/popover/test/size?ionic:_testing=true' });
@@ -89,7 +94,9 @@ test('should not calculate popover width with no trigger or event', async () => 
   await popover.waitForVisible();
 
   const triggerHandler = await page.$('#no-event-trigger');
-  const popoverContentHandle = await page.evaluateHandle(`document.querySelector('.no-event-popover').shadowRoot.querySelector('.popover-content')`);
+  const popoverContentHandle = await page.evaluateHandle(
+    `document.querySelector('.no-event-popover').shadowRoot.querySelector('.popover-content')`
+  );
   const triggerBbox = await triggerHandler.boundingBox();
   const popoverBbox = await popoverContentHandle.boundingBox();
   expect(popoverBbox.width).not.toEqual(triggerBbox.width);

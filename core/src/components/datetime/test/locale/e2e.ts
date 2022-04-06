@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('locale', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/locale?ionic:_testing=true'
+    url: '/src/components/datetime/test/locale?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -22,7 +22,7 @@ test('locale', async () => {
 
 test('it should render month and year with an en-US locale', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/locale?ionic:_testing=true'
+    url: '/src/components/datetime/test/locale?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -47,7 +47,7 @@ test('it should render month and year with an en-US locale', async () => {
 
 test('it should render year and month with a ja-JP locale', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/locale?ionic:_testing=true'
+    url: '/src/components/datetime/test/locale?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

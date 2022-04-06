@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 import { calculateWindowAdjustment, getPopoverDimensions, getPopoverPosition } from '../utils';
@@ -10,7 +10,7 @@ const POPOVER_MD_BODY_PADDING = 12;
  */
 export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
-  const doc = (baseEl.ownerDocument as any);
+  const doc = baseEl.ownerDocument as any;
   const isRTL = doc.dir === 'rtl';
 
   const bodyWidth = doc.defaultView.innerWidth;
@@ -26,14 +26,39 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     top: bodyHeight / 2 - contentHeight / 2,
     left: bodyWidth / 2 - contentWidth / 2,
     originX: isRTL ? 'right' : 'left',
-    originY: 'top'
-  }
+    originY: 'top',
+  };
 
-  const results = getPopoverPosition(isRTL, contentWidth, contentHeight, 0, 0, reference, side, align, defaultPosition, trigger, ev);
+  const results = getPopoverPosition(
+    isRTL,
+    contentWidth,
+    contentHeight,
+    0,
+    0,
+    reference,
+    side,
+    align,
+    defaultPosition,
+    trigger,
+    ev
+  );
 
   const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
 
-  const { originX, originY, top, left, bottom } = calculateWindowAdjustment(side, results.top, results.left, padding, bodyWidth, bodyHeight, contentWidth, contentHeight, 0, results.originX, results.originY, results.referenceCoordinates);
+  const { originX, originY, top, left, bottom } = calculateWindowAdjustment(
+    side,
+    results.top,
+    results.left,
+    padding,
+    bodyWidth,
+    bodyHeight,
+    contentWidth,
+    contentHeight,
+    0,
+    results.originX,
+    results.originY,
+    results.referenceCoordinates
+  );
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
@@ -45,21 +70,18 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
-      'pointer-events': 'none'
+      'pointer-events': 'none',
     })
     .afterClearStyles(['pointer-events']);
 
-  wrapperAnimation
-    .addElement(root.querySelector('.popover-wrapper')!)
-    .duration(150)
-    .fromTo('opacity', 0.01, 1);
+  wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).duration(150).fromTo('opacity', 0.01, 1);
 
   contentAnimation
     .addElement(contentEl)
     .beforeStyles({
-      'top': `calc(${top}px + var(--offset-y, 0px))`,
-      'left': `calc(${left}px + var(--offset-x, 0px))`,
-      'transform-origin': `${originY} ${originX}`
+      top: `calc(${top}px + var(--offset-y, 0px))`,
+      left: `calc(${left}px + var(--offset-x, 0px))`,
+      'transform-origin': `${originY} ${originX}`,
     })
     .beforeAddWrite(() => {
       if (bottom !== undefined) {
@@ -68,9 +90,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     })
     .fromTo('transform', 'scale(0.8)', 'scale(1)');
 
-  viewportAnimation
-    .addElement(root.querySelector('.popover-viewport')!)
-    .fromTo('opacity', 0.01, 1);
+  viewportAnimation.addElement(root.querySelector('.popover-viewport')!).fromTo('opacity', 0.01, 1);
 
   return baseAnimation
     .easing('cubic-bezier(0.36,0.66,0.04,1)')

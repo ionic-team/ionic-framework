@@ -1,6 +1,4 @@
-
 class GestureController {
-
   private gestureId = 0;
   private requestedStart = new Map<number, number>();
   private disabledGestures = new Map<string, Set<number>>();
@@ -11,25 +9,14 @@ class GestureController {
    * Creates a gesture delegate based on the GestureConfig passed
    */
   createGesture(config: GestureConfig): GestureDelegate {
-    return new GestureDelegate(
-      this,
-      this.newID(),
-      config.name,
-      config.priority || 0,
-      !!config.disableScroll
-    );
+    return new GestureDelegate(this, this.newID(), config.name, config.priority || 0, !!config.disableScroll);
   }
 
   /**
    * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
    */
   createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
-    return new BlockerDelegate(
-      this,
-      this.newID(),
-      opts.disable,
-      !!opts.disableScroll
-    );
+    return new BlockerDelegate(this, this.newID(), opts.disable, !!opts.disableScroll);
   }
 
   start(gestureName: string, id: number, priority: number): boolean {
@@ -48,7 +35,7 @@ class GestureController {
     const requestedStart = this.requestedStart;
     let maxPriority = -10000;
 
-    requestedStart.forEach(value => {
+    requestedStart.forEach((value) => {
       maxPriority = Math.max(maxPriority, value);
     });
 
@@ -199,7 +186,6 @@ class GestureDelegate {
 }
 
 class BlockerDelegate {
-
   private ctrl?: GestureController;
 
   constructor(

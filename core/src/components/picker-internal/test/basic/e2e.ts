@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('picker', async () => {
   const page = await newE2EPage({
-    url: '/src/components/picker-internal/test/basic?ionic:_testing=true'
+    url: '/src/components/picker-internal/test/basic?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -21,7 +21,7 @@ test('picker', async () => {
 
 test('picker - popover', async () => {
   const page = await newE2EPage({
-    url: '/src/components/picker-internal/test/basic?ionic:_testing=true'
+    url: '/src/components/picker-internal/test/basic?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -42,7 +42,7 @@ test('picker - popover', async () => {
 
 test('picker - modal', async () => {
   const page = await newE2EPage({
-    url: '/src/components/picker-internal/test/basic?ionic:_testing=true'
+    url: '/src/components/picker-internal/test/basic?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
