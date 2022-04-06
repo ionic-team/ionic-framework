@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { Attributes, assert, clamp, inheritAttributes, isEndSide as isEnd, raf } from '../../utils/helpers';
+import { Attributes, assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
 
@@ -397,27 +397,6 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.beforeAnimation(shouldOpen);
 
-    if (shouldOpen) {
-      // focus menu content for screen readers, preserving scroll position
-      if (this.menuInnerEl) {
-        const innerContent = this.el.querySelector('ion-content');
-        const contentScrollEl = await innerContent?.getScrollElement();
-        const scrollPos = contentScrollEl?.scrollTop;
-        this.focusFirstDescendant();
-        if (scrollPos !== undefined) {
-          raf(() => {
-            innerContent?.scrollToPoint(0, scrollPos);
-          });
-        }
-      }
-
-      // setup focus trapping
-      document.addEventListener('focus', this.handleFocus, true);
-    } else {
-      // undo focus trapping so multiple menus don't collide
-      document.removeEventListener('focus', this.handleFocus, true);
-    }
-
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
@@ -642,6 +621,14 @@ export class Menu implements ComponentInterface, MenuI {
 
       // emit open event
       this.ionDidOpen.emit();
+
+      /**
+       * Set up focus trapping. Focus the host element to start with
+       * instead of the first descendant to avoid the scroll position
+       * jumping to that element right away.
+       */
+      this.el.focus();
+      document.addEventListener('focus', this.handleFocus, true);
     } else {
       // remove css classes and unhide content from screen readers
       this.el.classList.remove(SHOW_MENU);
@@ -672,6 +659,9 @@ export class Menu implements ComponentInterface, MenuI {
 
       // emit close event
       this.ionDidClose.emit();
+
+      // undo focus trapping so multiple menus don't collide
+      document.removeEventListener('focus', this.handleFocus, true);
     }
   }
 
