@@ -531,8 +531,8 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1');
 
     cy.routerGo(-1);
-    cy.ionPageVisible('routing');
-    cy.ionPageDoesNotExist('tabs');
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1');
   });
 })
 
