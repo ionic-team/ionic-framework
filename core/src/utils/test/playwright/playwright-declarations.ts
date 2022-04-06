@@ -44,7 +44,7 @@ export interface E2EPage extends Page {
    * After changes have been made to a component, such as an update to a property or attribute,
    * we need to wait until the changes have been applied to the DOM.
    */
-  waitForChanges: () => Promise<void>;
+  waitForChanges: (timeoutMs?: number) => Promise<void>;
   /**
    * Listens on the window for a specific event to be dispatched.
    * Will wait a maximum of 5 seconds for the event to be dispatched.

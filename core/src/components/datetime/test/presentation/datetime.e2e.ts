@@ -87,7 +87,7 @@ class TimePickerFixture {
         const tmr = setTimeout(() => reject(), 5000);
         el.addEventListener('ionChange', (ev) => {
           clearTimeout(tmr);
-          resolve(ev);
+          requestAnimationFrame(() => resolve(ev));
         });
         el.value = newValue;
       });

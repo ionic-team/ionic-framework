@@ -43,7 +43,7 @@ export const test = base.extend<CustomFixtures>({
     // Custom Ionic methods
     page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
     page.setIonViewport = () => setIonViewport(page);
-    page.waitForChanges = () => waitForChanges(page);
+    page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
     page.waitForCustomEvent = (eventName: string, timeoutMs?: number) =>
       pageWaitForCustomEvent(page, eventName, timeoutMs);
 

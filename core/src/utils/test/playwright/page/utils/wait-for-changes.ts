@@ -7,7 +7,7 @@ import type { HostElement } from '@stencil/core/internal';
  *
  * Original source: https://github.com/ionic-team/stencil/blob/main/src/testing/puppeteer/puppeteer-page.ts#L298-L363
  */
-export const waitForChanges = async (page: Page) => {
+export const waitForChanges = async (page: Page, timeoutMs = 100) => {
   try {
     if (page.isClosed()) {
       /**
@@ -37,7 +37,7 @@ export const waitForChanges = async (page: Page) => {
               }
               waitComponentOnReady(childElm, promises);
             }
-          };
+          }
 
           waitComponentOnReady(document.documentElement, promiseChain);
 
@@ -50,7 +50,7 @@ export const waitForChanges = async (page: Page) => {
     if (page.isClosed()) {
       return;
     }
-    await page.waitForTimeout(100);
+    await page.waitForTimeout(timeoutMs);
   } catch (e) {
     console.error(e);
   }
