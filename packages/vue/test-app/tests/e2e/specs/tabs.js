@@ -621,15 +621,6 @@ describe('Multi Tabs', () => {
     cy.ionPageVisible('tabs');
 
     cy.ionBackClick('tab1');
-    cy.ionPageVisible('tabs-secondary');
-    cy.ionPageDoesNotExist('tabs');
-
-    cy.ionBackClick('tab1-secondary');
-    cy.ionPageVisible('tabs');
-    cy.ionPageDoesNotExist('tabs-secondary');
-
-    cy.ionBackClick('tab1');
-
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('tabs');
   });
