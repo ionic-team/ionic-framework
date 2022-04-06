@@ -27,8 +27,13 @@ test('menu: focus trap', async () => {
   await menu.waitForVisible();
   
   let activeElID = await getActiveElementID(page);
+  expect(activeElID).toEqual('start-menu');
+
+  await page.keyboard.press('Tab');
+  activeElID = await getActiveElementID(page);
   expect(activeElID).toEqual('start-menu-button');
 
+  // do it again to make sure focus stays inside menu
   await page.keyboard.press('Tab');
   activeElID = await getActiveElementID(page);
   expect(activeElID).toEqual('start-menu-button');
