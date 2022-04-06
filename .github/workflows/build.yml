@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
         - uses: actions/checkout@v2
           with:
-            # Checkout the latest commit in this branch a
+            # Checkout the latest commit in this branch
             ref: ${{ github.event.pull_request.head.sha }}
       - uses: ./.github/workflows/actions/build-core
 
