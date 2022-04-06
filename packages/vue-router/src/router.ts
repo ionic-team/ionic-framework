@@ -63,7 +63,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   let initialHistoryPosition = opts.history.state.position as number;
   let currentHistoryPosition = opts.history.state.position as number;
-  let previousHistoryPosition;
+  let previousHistoryPosition: number | undefined;
 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
@@ -498,7 +498,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * the tab information would have already been set.
        *
        * If we did not do this then the ion-back-button on Tab 1 would appear
-       * and take users back to /non-tabs-page. This goes against the concept
+       * and take users back to /non-tabs-page which goes against the concept
        * of each tab being in its own stack.
        */
       const lastView = locationHistory.current(initialHistoryPosition, previousHistoryPosition);
