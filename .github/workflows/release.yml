@@ -32,8 +32,8 @@ jobs:
           node-version: 16
       - name: Configure Identity
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name ionitron
+          git config user.email hi@ionicframework.com
         shell: bash
       - name: Install Dependencies
         run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
@@ -47,5 +47,5 @@ jobs:
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag $(echo "${{ github.event.inputs.tag }}") --conventional-commits --create-release github
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.IONITRON_TOKEN }}
         shell: bash
