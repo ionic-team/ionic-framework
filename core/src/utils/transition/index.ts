@@ -1,7 +1,12 @@
 import { Build, writeTask } from '@stencil/core';
 
-import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
-import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+} from '../../components/nav/constants';
+import type { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
 import { componentOnReady, raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
@@ -11,16 +16,19 @@ export const transition = (opts: TransitionOptions): Promise<TransitionResult> =
   return new Promise((resolve, reject) => {
     writeTask(() => {
       beforeTransition(opts);
-      runTransition(opts).then(result => {
-        if (result.animation) {
-          result.animation.destroy();
+      runTransition(opts).then(
+        (result) => {
+          if (result.animation) {
+            result.animation.destroy();
+          }
+          afterTransition(opts);
+          resolve(result);
+        },
+        (error) => {
+          afterTransition(opts);
+          reject(error);
         }
-        afterTransition(opts);
-        resolve(result);
-      }, error => {
-        afterTransition(opts);
-        reject(error);
-      });
+      );
     });
   });
 };
@@ -55,9 +63,7 @@ const beforeTransition = (opts: TransitionOptions) => {
 const runTransition = async (opts: TransitionOptions): Promise<TransitionResult> => {
   const animationBuilder = await getAnimationBuilder(opts);
 
-  const ani = (animationBuilder && Build.isBrowser)
-    ? animation(animationBuilder, opts)
-    : noAnimation(opts); // fast path for no animation
+  const ani = animationBuilder && Build.isBrowser ? animation(animationBuilder, opts) : noAnimation(opts); // fast path for no animation
 
   return ani;
 };
@@ -82,9 +88,10 @@ const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBu
     return opts.animationBuilder;
   }
 
-  const getAnimation = (opts.mode === 'ios')
-    ? (await iosTransitionAnimation()).iosTransitionAnimation
-    : (await mdTransitionAnimation()).mdTransitionAnimation;
+  const getAnimation =
+    opts.mode === 'ios'
+      ? (await iosTransitionAnimation()).iosTransitionAnimation
+      : (await mdTransitionAnimation()).mdTransitionAnimation;
 
   return getAnimation;
 };
@@ -108,7 +115,7 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
 
   return {
     hasCompleted: didComplete,
-    animation: trans
+    animation: trans,
   };
 };
 
@@ -122,25 +129,24 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
   fireDidEvents(enteringEl, leavingEl);
 
   return {
-    hasCompleted: true
+    hasCompleted: true,
   };
 };
 
 const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
   const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
-  const promises = deep ? [
-    deepReady(opts.enteringEl),
-    deepReady(opts.leavingEl),
-  ] : [
-      shallowReady(opts.enteringEl),
-      shallowReady(opts.leavingEl),
-    ];
+  const promises = deep
+    ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)]
+    : [shallowReady(opts.enteringEl), shallowReady(opts.leavingEl)];
 
   await Promise.all(promises);
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 };
 
-const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElement) => Promise<any>), enteringEl: HTMLElement) => {
+const notifyViewReady = async (
+  viewIsReady: undefined | ((enteringEl: HTMLElement) => Promise<any>),
+  enteringEl: HTMLElement
+) => {
   if (viewIsReady) {
     await viewIsReady(enteringEl);
   }
@@ -149,7 +155,7 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
 const playTransition = (trans: Animation, opts: TransitionOptions): Promise<boolean> => {
   const progressCallback = opts.progressCallback;
 
-  const promise = new Promise<boolean>(resolve => {
+  const promise = new Promise<boolean>((resolve) => {
     trans.onFinish((currentStep: any) => resolve(currentStep === 1));
   });
 
@@ -159,7 +165,6 @@ const playTransition = (trans: Animation, opts: TransitionOptions): Promise<bool
     // kick off the swipe animation start
     trans.progressStart(true);
     progressCallback(trans);
-
   } else {
     // only the top level transition should actually start "play"
     // kick it off and let it play through
@@ -192,7 +197,7 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
 
 const shallowReady = (el: Element | undefined): Promise<any> => {
   if (el) {
-    return new Promise(resolve => componentOnReady(el, resolve));
+    return new Promise((resolve) => componentOnReady(el, resolve));
   }
   return Promise.resolve();
 };
@@ -206,15 +211,15 @@ export const deepReady = async (el: any | undefined): Promise<void> => {
         return;
       }
 
-    /**
-     * Custom elements in Stencil will have __registerHost.
-     */
+      /**
+       * Custom elements in Stencil will have __registerHost.
+       */
     } else if (element.__registerHost != null) {
       /**
        * Non-lazy loaded custom elements need to wait
        * one frame for component to be loaded.
        */
-      const waitForCustomElement = new Promise(resolve => raf(resolve));
+      const waitForCustomElement = new Promise((resolve) => raf(resolve));
       await waitForCustomElement;
 
       return;
@@ -237,12 +242,10 @@ export const setPageHidden = (el: HTMLElement, hidden: boolean) => {
 const setZIndex = (
   enteringEl: HTMLElement | undefined,
   leavingEl: HTMLElement | undefined,
-  direction: NavDirection | undefined,
+  direction: NavDirection | undefined
 ) => {
   if (enteringEl !== undefined) {
-    enteringEl.style.zIndex = (direction === 'back')
-      ? '99'
-      : '101';
+    enteringEl.style.zIndex = direction === 'back' ? '99' : '101';
   }
   if (leavingEl !== undefined) {
     leavingEl.style.zIndex = '100';
@@ -263,7 +266,7 @@ export const getIonPageElement = (element: HTMLElement) => {
 };
 
 export interface TransitionOptions extends NavOptions {
-  progressCallback?: ((ani: Animation | undefined) => void);
+  progressCallback?: (ani: Animation | undefined) => void;
   baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;

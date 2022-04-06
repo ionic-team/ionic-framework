@@ -1,7 +1,13 @@
-import { AnimationBuilder, ComponentProps, NavComponent } from '../../interface';
-import { RouterDirection } from '../router/utils/interface';
+import type { AnimationBuilder, ComponentProps, NavComponent } from '../../interface';
+import type { RouterDirection } from '../router/utils/interface';
 
-export const navLink = (el: HTMLElement, routerDirection: RouterDirection, component?: NavComponent, componentProps?: ComponentProps, routerAnimation?: AnimationBuilder) => {
+export const navLink = (
+  el: HTMLElement,
+  routerDirection: RouterDirection,
+  component?: NavComponent,
+  componentProps?: ComponentProps,
+  routerAnimation?: AnimationBuilder
+) => {
   const nav = el.closest('ion-nav');
   if (nav) {
     if (routerDirection === 'forward') {

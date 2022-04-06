@@ -1,12 +1,12 @@
-import * as pd from '@stencil/core/dist/testing/puppeteer/puppeteer-declarations';
+import type * as pd from '@stencil/core/dist/testing/puppeteer/puppeteer-declarations';
 import { newE2EPage } from '@stencil/core/testing';
-
 import { getElementProperty, queryDeep } from '@utils/test';
+
 import { moveReorderItem } from '../test.utils';
 
 test('reorder: interactive', async () => {
   const page = await newE2EPage({
-    url: '/src/components/reorder-group/test/interactive?ionic:_testing=true'
+    url: '/src/components/reorder-group/test/interactive?ionic:_testing=true',
   });
 
   const compares = [];
@@ -51,7 +51,13 @@ test('reorder: interactive', async () => {
   }
 });
 
-const moveItem = async (id: string, page: pd.E2EPage, direction: 'up' | 'down' = 'up', numberOfSpaces = 1, ...parentSelectors: string[]) => {
+const moveItem = async (
+  id: string,
+  page: pd.E2EPage,
+  direction: 'up' | 'down' = 'up',
+  numberOfSpaces = 1,
+  ...parentSelectors: string[]
+) => {
   try {
     await moveReorderItem(`#${id}`, page, direction, numberOfSpaces, ...parentSelectors);
     await page.waitForTimeout(50);

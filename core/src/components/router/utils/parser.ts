@@ -1,4 +1,4 @@
-import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
+import type { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
 const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
@@ -18,8 +18,8 @@ const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
  */
 export const readRedirects = (root: Element): RouteRedirect[] => {
   return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
-    .filter(el => el.tagName === 'ION-ROUTE-REDIRECT')
-    .map(el => {
+    .filter((el) => el.tagName === 'ION-ROUTE-REDIRECT')
+    .map((el) => {
       const to = readProp(el, 'to');
       return {
         from: parsePath(readProp(el, 'from')).segments,
@@ -44,8 +44,8 @@ export const readRoutes = (root: Element): RouteChain[] => {
  */
 export const readRouteNodes = (node: Element): RouteTree => {
   return (Array.from(node.children) as HTMLIonRouteElement[])
-    .filter(el => el.tagName === 'ION-ROUTE' && el.component)
-    .map(el => {
+    .filter((el) => el.tagName === 'ION-ROUTE' && el.component)
+    .map((el) => {
       const component = readProp(el, 'component') as string;
       return {
         segments: parsePath(readProp(el, 'url')).segments,
@@ -53,7 +53,7 @@ export const readRouteNodes = (node: Element): RouteTree => {
         params: el.componentProps,
         beforeLeave: el.beforeLeave,
         beforeEnter: el.beforeEnter,
-        children: readRouteNodes(el)
+        children: readRouteNodes(el),
       };
     });
 };
@@ -73,13 +73,16 @@ export const flattenRouterTree = (nodes: RouteTree): RouteChain[] => {
 
 /** Flattens a route node recursively and push each branch to the chains list. */
 const flattenNode = (chain: RouteChain, chains: RouteChain[], node: RouteNode) => {
-  chain = [...chain, {
-    id: node.id,
-    segments: node.segments,
-    params: node.params,
-    beforeLeave: node.beforeLeave,
-    beforeEnter: node.beforeEnter
-  }];
+  chain = [
+    ...chain,
+    {
+      id: node.id,
+      segments: node.segments,
+      params: node.params,
+      beforeLeave: node.beforeLeave,
+      beforeEnter: node.beforeEnter,
+    },
+  ];
 
   if (node.children.length === 0) {
     chains.push(chain);

@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('radio-group: search', async () => {
   const page = await newE2EPage({
-    url: '/src/components/radio-group/test/search?ionic:_testing=true'
+    url: '/src/components/radio-group/test/search?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

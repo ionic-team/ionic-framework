@@ -4,30 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Picker - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-  <script type="module">
-    import { pickerController } from '../../../../dist/ionic/index.esm.js';
-    window.pickerController = pickerController;
-  </script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+<script type="module">
+  import { pickerController } from '../../../../dist/ionic/index.esm.js';
+  window.pickerController = pickerController;
+</script>
+
 <body>
   <ion-app>
-
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Picker - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
 
     <ion-content class="ion-padding">
       <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
       <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')">Show Custom Picker</ion-button>
     </ion-content>
-
   </ion-app>
 
   <style>
@@ -46,6 +42,57 @@
   </style>
 
   <script>
+    selectedIndex = 0;
+
+    const options = [{
+      text: '1',
+      value: '01'
+    },
+    {
+      text: '2',
+      value: '02'
+    },
+    {
+      text: '3',
+      value: '03'
+    },
+    {
+      text: '4',
+      value: '04'
+    },
+    {
+      text: '5',
+      value: '05'
+    },
+    {
+      text: '6',
+      value: '06'
+    },
+    {
+      text: '7',
+      value: '07'
+    },
+    {
+      text: '8',
+      value: '08'
+    },
+    {
+      text: '9',
+      value: '09'
+    },
+    {
+      text: '10',
+      value: '10'
+    },
+    {
+      text: '11',
+      value: '11'
+    },
+    {
+      text: '12',
+      value: '12'
+    }];
+
     async function presentPicker(customClass) {
       const pickerElement = await pickerController.create({
         buttons: [{
@@ -54,66 +101,23 @@
           handler: () => console.log('Clicked Cancel!')
         }, {
           text: 'Save',
-          handler: () => console.log('Clicked Save!')
+          cssClass: 'save-btn',
+          handler: (ev) => {
+            const v = ev.hours.value;
+            selectedIndex = options.findIndex(opt => opt.value === v);
+          }
         }, {
           text: 'Log',
           handler: (val) => {
-            console.log('Clicked Log. Do not Dismiss.', val);
             return false;
           }
         }],
         columns: [{
           name: 'hours',
+          selectedIndex: selectedIndex,
           prefix: 'total',
           suffix: 'hours',
-          options: [{
-            text: '1',
-            value: '01'
-          },
-          {
-            text: '2',
-            value: '02'
-          },
-          {
-            text: '3',
-            value: '03'
-          },
-          {
-            text: '4',
-            value: '04'
-          },
-          {
-            text: '5',
-            value: '05'
-          },
-          {
-            text: '6',
-            value: '06'
-          },
-          {
-            text: '7',
-            value: '07'
-          },
-          {
-            text: '8',
-            value: '08'
-          },
-          {
-            text: '9',
-            value: '09'
-          },
-          {
-            text: '10',
-            value: '10'
-          },
-          {
-            text: '11',
-            value: '11'
-          },
-          {
-            text: '12',
-            value: '12'
-          }]
+          options: [...options]
         }],
         htmlAttributes: {
           'data-testid': 'basic-picker'
@@ -122,10 +126,6 @@
       });
 
       await pickerElement.present();
-
-      const { data, role } = await pickerElement.onDidDismiss();
-
-      console.log('Picker dismissed!', data, role);
     }
   </script>
 </body>

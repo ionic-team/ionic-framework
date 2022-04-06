@@ -21,7 +21,11 @@ export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolea
   return input === (input as any).getRootNode().activeElement;
 };
 
-const addClone = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelativeY: number) => {
+const addClone = (
+  componentEl: HTMLElement,
+  inputEl: HTMLInputElement | HTMLTextAreaElement,
+  inputRelativeY: number
+) => {
   // this allows for the actual input to receive the focus from
   // the user's touch event, but before it receives focus, it
   // moves the actual input to a location that will not screw

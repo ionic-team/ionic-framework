@@ -1,17 +1,12 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { generateE2EUrl } from '@utils/test';
 
-export const testLoading = async (
-  type: string,
-  selector: string,
-  rtl = false
-) => {
+export const testLoading = async (type: string, selector: string, rtl = false) => {
   try {
     const pageUrl = generateE2EUrl('loading', type, rtl);
 
     const page = await newE2EPage({
-      url: pageUrl
+      url: pageUrl,
     });
 
     const screenshotCompares = [];
@@ -37,7 +32,6 @@ export const testLoading = async (
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
     }
-
   } catch (err) {
     throw err;
   }

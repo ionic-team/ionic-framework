@@ -176,5 +176,5 @@ describe('nested popovers', () => {
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
     }
-  })
+  });
 });
