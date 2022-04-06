@@ -470,7 +470,14 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * then IonTabs will not invoke this.
    */
   const handleSetCurrentTab = (tab: string) => {
-    const ri = { ...locationHistory.last() };
+
+    /**
+     * Note that the current page that we
+     * are on is not necessarily the last item
+     * in the locationHistory stack. As a result,
+     * we cannot use locationHistory.last() here.
+     */
+    const ri = { ...locationHistory.current(initialHistoryPosition, currentHistoryPosition) };
     if (ri.tab !== tab) {
       ri.tab = tab;
       locationHistory.update(ri);
