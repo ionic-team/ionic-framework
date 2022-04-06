@@ -44,6 +44,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * because window.history will be undefined when using SSR.
      */
 
+    previousHistoryPosition = currentHistoryPosition;
     currentHistoryPosition = opts.history.state.position as number;
 
     const replaceAction = opts.history.state.replaced ? 'replace' : undefined;
@@ -62,6 +63,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   let initialHistoryPosition = opts.history.state.position as number;
   let currentHistoryPosition = opts.history.state.position as number;
+  let previousHistoryPosition;
 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
