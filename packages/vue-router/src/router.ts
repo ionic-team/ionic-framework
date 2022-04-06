@@ -480,6 +480,32 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const ri = { ...locationHistory.current(initialHistoryPosition, currentHistoryPosition) };
     if (ri.tab !== tab) {
       ri.tab = tab;
+
+      /**
+       * When going from /non-tabs-page --> /tabs/tab1,
+       * the route entry for /tabs/tab1 will say that that pushedByRoute
+       * value for it was /non-tabs-page. This is incorrect as non-tabs
+       * pages cannot push tabs pages due to tabs being in separate stacks.
+       *
+       * This is done in handleHistoryChange. However, handleHistoryChange
+       * has no way of knowing if the pushedByRoute value it is assigning is
+       * a tab or not. As a result, it is the responsibility of IonTabs to
+       * correct the route information entry for the tabs page.
+       *
+       * To do this we get the last route entry the user was on.
+       * If this route entry was indeed in the same tab (i.e. a child page)
+       * then handleSetCurrentTab would have already fired for that route, so
+       * the tab information would have already been set.
+       *
+       * If we did not do this then the ion-back-button on Tab 1 would appear
+       * and take users back to /non-tabs-page. This goes against the concept
+       * of each tab being in its own stack.
+       */
+      const lastView = locationHistory.current(initialHistoryPosition, previousHistoryPosition);
+      if (lastView?.tab !== tab) {
+        ri.pushedByRoute = undefined;
+      }
+
       locationHistory.update(ri);
     }
   }
