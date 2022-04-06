@@ -118,6 +118,28 @@ export const createLocationHistory = () => {
         if (existingTabRouteIndex === -1) return;
 
         tabsHistory[tab].splice(existingTabRouteIndex);
+
+      /**
+       * If we are not clearing items after
+       * a tabs page, it is still possible
+       * that there are future tabs pages to clear.
+       * As a result, we need to search through
+       * all the tab stacks and remove views that appear
+       * after the given routeInfo.
+       *
+       * Example: /non-tabs-page --> /tabs/tab1 --> /non-tabs-page
+       * (via router.go(-1)) --> /tabs/tab2. The /tabs/tab1 history
+       * has been overwritten with /tabs/tab2. As a result,
+       * the /tabs/tab1 route info in the Tab 1 stack should be removed.
+       */
+      } else {
+        for (const tab in tabsHistory) {
+          const existingRouteIndex = tabsHistory[tab].findIndex(r => r.position >= routeInfo.position);
+
+          if (existingRouteIndex > -1) {
+            tabsHistory[tab].splice(existingRouteIndex);
+          }
+        }
       }
 
     } else {
