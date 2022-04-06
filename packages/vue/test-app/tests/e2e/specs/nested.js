@@ -20,7 +20,7 @@ describe('Nested', () => {
     cy.ionPageVisible('nestedchild');
   });
 
-  it.only('should go navigate across nested outlet contexts', () => {
+  it('should go navigate across nested outlet contexts', () => {
     cy.get('#nested-tabs').click();
 
     cy.ionPageHidden('routeroutlet');
