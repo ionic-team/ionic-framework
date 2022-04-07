@@ -6,7 +6,7 @@ import { AnimationBuilder, RouterDirection } from '@ionic/core';
 import { NavController } from '../../providers/nav-controller';
 
 @Directive({
-  selector: '[routerLink]',
+  selector: ':not(a)[routerLink]',
 })
 export class RouterLinkDelegateDirective implements OnInit, OnChanges {
   @Input()
