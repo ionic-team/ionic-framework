@@ -66,7 +66,7 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
 @Directive({
   selector: 'a[routerLink],area[routerLink]',
 })
-export class RouterLinkDelegateDirectiveWithHref implements OnInit, OnChanges {
+export class RouterLinkWithHrefDelegateDirective implements OnInit, OnChanges {
   @Input()
   routerDirection: RouterDirection = 'forward';
 
