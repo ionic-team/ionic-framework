@@ -12,7 +12,10 @@ import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
 import { NavDelegate } from './directives/navigation/nav-delegate';
-import { RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective } from './directives/navigation/router-link-delegate';
+import {
+  RouterLinkDelegateDirective,
+  RouterLinkWithHrefDelegateDirective,
+} from './directives/navigation/router-link-delegate';
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import {
