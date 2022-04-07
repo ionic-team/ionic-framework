@@ -44,6 +44,15 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
   @HostListener('click', ['$event'])
   onClick(ev: UIEvent): void {
     this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
+
+    /**
+     * This prevents the browser from
+     * performing a page reload when pressing
+     * an Ionic component with routerLink.
+     * The page reload interferes with routing
+     * and causes ion-back-button to disappear
+     * since the local history is wiped on reload.
+     */
     ev.preventDefault();
   }
 }
