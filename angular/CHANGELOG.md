@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.15](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+
+### Bug Fixes
+
+* **angular:** item styling when control has value ([#24932](https://github.com/ionic-team/ionic/issues/24932)) ([eea25d0](https://github.com/ionic-team/ionic/commit/eea25d091d7eb319d6ec1de8b793881d3a10949b)), closes [#23809](https://github.com/ionic-team/ionic/issues/23809)
+* **angular:** routerLink allows opening in a new tab for link elements ([#25014](https://github.com/ionic-team/ionic/issues/25014)) ([b010f07](https://github.com/ionic-team/ionic/commit/b010f077fe51992dd9dd8ced69769a8eb91ac055)), closes [#24413](https://github.com/ionic-team/ionic/issues/24413)
+
+
+
+
+
 ## [6.0.14](https://github.com/ionic-team/ionic/compare/v6.0.13...v6.0.14) (2022-03-30)
 
 **Note:** Version bump only for package @ionic/angular

@@ -155,7 +155,7 @@ interface ModalOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: ModalAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -167,11 +167,6 @@ interface ModalOptions<T extends ComponentRef = ComponentRef> {
 }
 ```
 
-### ModalAttributes
-
-```typescript
-interface ModalAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
-```
 
 ## Accessibility
 
@@ -1594,7 +1589,7 @@ export default {
 | `canDismiss`         | `can-dismiss`         | Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.                                                                                      | `(() => Promise<boolean>) \| boolean \| undefined`      | `undefined` |
 | `enterAnimation`     | --                    | Animation to use when the modal is presented.                                                                                                                                                                                                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `handle`             | `handle`              | The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.                                                                                                                                                                                                                                            | `boolean \| undefined`                                  | `undefined` |
-| `htmlAttributes`     | --                    | Additional attributes to pass to the modal.                                                                                                                                                                                                                                                                                                                                                          | `ModalAttributes \| undefined`                          | `undefined` |
+| `htmlAttributes`     | --                    | Additional attributes to pass to the modal.                                                                                                                                                                                                                                                                                                                                                          | `undefined \| { [key: string]: any; }`                  | `undefined` |
 | `initialBreakpoint`  | `initial-breakpoint`  | A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.                                                                                                                                                                                                                      | `number \| undefined`                                   | `undefined` |
 | `isOpen`             | `is-open`             | If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.                                                                      | `boolean`                                               | `false`     |
 | `keyboardClose`      | `keyboard-close`      | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                                                                                               | `boolean`                                               | `true`      |

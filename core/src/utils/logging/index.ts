@@ -18,9 +18,10 @@ export const printIonWarning = (message: string) => {
 export const printIonError = (message: string, ...params: any) => {
   return console.error(`[Ionic Error]: ${message}`, ...params);
 };
+
 /**
  * Prints an error informing developers that an implementation requires an element to be used
- * within a specific select.ro
+ * within a specific selector.
  *
  * @param el The web component element this is requiring the element.
  * @param targetSelectors The selector or selectors that were not found.

@@ -65,17 +65,11 @@ interface ActionSheetOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: ActionSheetAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-```
-
-### ActionSheetAttributes
-
-```typescript
-interface ActionSheetAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 <!-- Auto Generated Below -->
@@ -569,7 +563,7 @@ export default defineComponent({
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                            | `string \| string[] \| undefined`                       | `undefined` |
 | `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`          | `header`           | Title for the action sheet.                                                                                                                                                                                                 | `string \| undefined`                                   | `undefined` |
-| `htmlAttributes`  | --                 | Additional attributes to pass to the action sheet.                                                                                                                                                                          | `ActionSheetAttributes \| undefined`                    | `undefined` |
+| `htmlAttributes`  | --                 | Additional attributes to pass to the action sheet.                                                                                                                                                                          | `undefined \| { [key: string]: any; }`                  | `undefined` |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                      | `boolean`                                               | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                           | `"ios" \| "md"`                                         | `undefined` |

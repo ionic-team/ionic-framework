@@ -1,5 +1,3 @@
-import type { JSXBase } from '@stencil/core/internal';
-
 import type { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
@@ -23,7 +21,10 @@ export interface AlertOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type AlertAttributes = JSXBase.HTMLAttributes<HTMLElement>;
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type AlertAttributes = { [key: string]: any };
 
 export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
@@ -42,8 +43,15 @@ export interface AlertInput {
   tabindex?: number;
 }
 
-export type AlertTextareaAttributes = JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement>;
-export type AlertInputAttributes = JSXBase.InputHTMLAttributes<HTMLInputElement>;
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type AlertTextareaAttributes = { [key: string]: any };
+
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type AlertInputAttributes = { [key: string]: any };
 
 export interface AlertButton {
   text: string;

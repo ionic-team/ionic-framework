@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { printIonError } from '@utils/logging';
+import { printIonError, printIonWarning } from '@utils/logging';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -314,15 +315,20 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      const { month, day, year, hour, minute } = parseDate(this.value);
-      this.activePartsClone = {
-        ...this.activeParts,
-        month,
-        day,
-        year,
-        hour,
-        minute,
-      };
+      const valueDateParts = parseDate(this.value);
+      if (valueDateParts) {
+        const { month, day, year, hour, minute } = valueDateParts;
+        this.activePartsClone = {
+          ...this.activeParts,
+          month,
+          day,
+          year,
+          hour,
+          minute,
+        };
+      } else {
+        printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
+      }
     }
 
     this.emitStyle();

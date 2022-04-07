@@ -27,7 +27,7 @@ ion-action-sheet,prop,buttons,(string | ActionSheetButton<any>)[],[],false,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
-ion-action-sheet,prop,htmlAttributes,ActionSheetAttributes | undefined,undefined,false,false
+ion-action-sheet,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-action-sheet,prop,keyboardClose,boolean,true,false,false
 ion-action-sheet,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
@@ -72,7 +72,7 @@ ion-alert,prop,buttons,(string | AlertButton)[],[],false,false
 ion-alert,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-alert,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,header,string | undefined,undefined,false,false
-ion-alert,prop,htmlAttributes,AlertAttributes | undefined,undefined,false,false
+ion-alert,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -683,7 +683,7 @@ ion-loading,prop,backdropDismiss,boolean,false,false,false
 ion-loading,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-loading,prop,htmlAttributes,LoadingAttributes | undefined,undefined,false,false
+ion-loading,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
@@ -772,7 +772,7 @@ ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
 ion-modal,prop,canDismiss,(() => Promise<boolean>) | boolean | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
-ion-modal,prop,htmlAttributes,ModalAttributes | undefined,undefined,false,false
+ion-modal,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
 ion-modal,prop,keyboardClose,boolean,true,false,false
@@ -854,7 +854,7 @@ ion-picker,prop,columns,PickerColumn[],[],false,false
 ion-picker,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-picker,prop,duration,number,0,false,false
 ion-picker,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-picker,prop,htmlAttributes,PickerAttributes | undefined,undefined,false,false
+ion-picker,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-picker,prop,keyboardClose,boolean,true,false,false
 ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
@@ -892,7 +892,7 @@ ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,fa
 ion-popover,prop,dismissOnSelect,boolean,false,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
-ion-popover,prop,htmlAttributes,PopoverAttributes | undefined,undefined,false,false
+ion-popover,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -1130,7 +1130,7 @@ ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
 ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
-ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
+ion-segment-button,prop,value,string,'ion-sb-' + ids++,false,false
 ion-segment-button,css-prop,--background
 ion-segment-button,css-prop,--background-checked
 ion-segment-button,css-prop,--background-focused
@@ -1370,7 +1370,7 @@ ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
 ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,header,string | undefined,undefined,false,false
-ion-toast,prop,htmlAttributes,ToastAttributes | undefined,undefined,false,false
+ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-toast,prop,icon,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
