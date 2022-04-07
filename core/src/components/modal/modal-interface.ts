@@ -1,5 +1,3 @@
-import type { JSXBase } from '@stencil/core/internal';
-
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 export interface ModalOptions<T extends ComponentRef = ComponentRef> {
@@ -33,8 +31,6 @@ export interface ModalAnimationOptions {
   backdropBreakpoint?: number;
 }
 
-export type ModalAttributes = JSXBase.HTMLAttributes<HTMLElement>;
-
 export interface ModalBreakpointChangeEventDetail {
   breakpoint: number;
 }
@@ -42,3 +38,8 @@ export interface ModalBreakpointChangeEventDetail {
 export interface ModalCustomEvent extends CustomEvent {
   target: HTMLIonModalElement;
 }
+
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type ModalAttributes = { [key: string]: any };
