@@ -1,5 +1,3 @@
-import type { JSXBase } from '@stencil/core/internal';
-
 import type {
   AnimationBuilder,
   ComponentProps,
@@ -43,7 +41,10 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   triggerAction?: string;
 }
 
-export type PopoverAttributes = JSXBase.HTMLAttributes<HTMLElement>;
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type PopoverAttributes = { [key: string]: any };
 
 export type PopoverSize = 'cover' | 'auto';
 
