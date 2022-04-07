@@ -8,6 +8,7 @@ import type {
   TestInfo,
 } from '@playwright/test';
 import { test as base } from '@playwright/test';
+
 import { EventSpy, initPageEvents, addE2EListener } from './eventSpy';
 
 export type IonicPage = Page & {
