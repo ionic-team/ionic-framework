@@ -54,9 +54,7 @@ export const test = base.extend<CustomFixtures>({
       const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
       const results = await Promise.all([
-        page.waitForFunction(() => () => {
-          return document.documentElement.classList.contains('hydrated')
-        }),
+        page.waitForFunction(() => (window as any).testAppLoaded === true),
         oldGoTo(formattedUrl),
       ]);
 

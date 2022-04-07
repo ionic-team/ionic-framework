@@ -16,4 +16,8 @@
 
   window.Ionic = window.Ionic || {};
   window.Ionic.config = window.Ionic.config || {};
+
+  window.addEventListener('appload', () => {
+    window.testAppLoaded = true;
+  })
 })();
