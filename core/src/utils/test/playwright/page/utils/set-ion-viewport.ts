@@ -4,15 +4,16 @@ import { devices } from '@playwright/test';
 const getDeviceForPage = (
   page: Page
 ): typeof devices[0] & {
-  screen: {
+  screen?: {
     width: number;
     height: number;
   };
-} => {
+} | undefined => {
   const { userAgent } = (page.context() as any)._options;
   const deviceName = Object.keys(devices).find((key) => devices[key].userAgent.includes(userAgent));
   if (!deviceName) {
-    throw new Error(`Could not find device for user agent: ${userAgent}`);
+    console.warn(`Could not find device for user agent: ${userAgent}`);
+    return;
   }
   return devices[deviceName] as any;
 };
@@ -31,8 +32,9 @@ const getScreenshotDeviceOffset = (page: Page) => {
 
   const pageContextOptions = (page.context() as any)._options;
 
-  if (pageContextOptions.isMobile) {
-    const device = getDeviceForPage(page);
+  const device = getDeviceForPage(page);
+  if (device?.screen) {
+    // We only need the offset if the screen configuration is defined
     viewportOffset = device.screen.height - pageContextOptions.viewport.height;
   }
 
