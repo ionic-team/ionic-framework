@@ -5,6 +5,12 @@ import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
 import { NavController } from '../../providers/nav-controller';
 
+/**
+ * Adds support for Ionic routing directions and animations to the base Angular router link directive.
+ *
+ * When the router link is clicked, the directive will assign the direction and
+ * animation so that the routing integration will transition correctly.
+ */
 @Directive({
   selector: ':not(a):not(area)[routerLink]',
 })
