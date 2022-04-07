@@ -93,8 +93,8 @@ export class RouterLinkDelegateDirectiveWithHref implements OnInit, OnChanges {
   /**
    * @internal
    */
-  @HostListener('click', ['$event'])
-  onClick(ev: UIEvent): void {
+  @HostListener('click')
+  onClick(): void {
     this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
   }
 }
