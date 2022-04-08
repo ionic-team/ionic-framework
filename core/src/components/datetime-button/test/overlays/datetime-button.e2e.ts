@@ -2,6 +2,16 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime-button: sizing in overlays with default datetime', () => {
+  test('should have size="cover" when used inside of a datetime', async ({ page }) => {
+    await page.goto('/src/components/datetime-button/test/overlays');
+
+    const popoverDatetime = await page.locator('#popover-default-datetime');
+    await expect(popoverDatetime).toHaveJSProperty('size', 'cover');
+
+    const modalDatetime = await page.locator('#modal-default-datetime');
+    await expect(modalDatetime).toHaveJSProperty('size', 'cover');
+  });
+
   test('should be correctly sized when opening date picker in popover', async ({ page }) => {
     await page.goto('/src/components/datetime-button/test/overlays');
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
