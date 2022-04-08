@@ -323,3 +323,13 @@ ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-ex
 ion-input input::-webkit-date-and-time-value {
   text-align: start;
 }
+
+/**
+ * This is the global class for ion-datetime-button.
+ * It controls the automatic sizing of modals
+ * and popovers that use ion-datetime when the
+ * datetime is associated with an ion-datetime-button.
+ */
+.ion-datetime-button-overlay {
+  --border-radius: 12px;
+}
