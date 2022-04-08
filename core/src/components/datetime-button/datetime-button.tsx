@@ -332,7 +332,7 @@ export class DatetimeButton implements ComponentInterface {
   };
 
   render() {
-    const { color, dateText, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
+    const { color, dateText, disabled, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
     const showDateTarget =
       !datetimePresentation ||
       ['date-time', 'time-date', 'date', 'month', 'year', 'month-year'].includes(datetimePresentation);
@@ -341,9 +341,11 @@ export class DatetimeButton implements ComponentInterface {
 
     return (
       <Host
+        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
           [`${selectedButton}-active`]: datetimeActive,
+          ['datetime-button-disabled']: disabled
         })}
       >
         {showDateTarget && (
@@ -354,7 +356,7 @@ export class DatetimeButton implements ComponentInterface {
                 devs do not create nested interactives if they
                 decide to add in a custom ion-button.
               */}
-              <button id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
+              <button disabled={disabled} id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
                 {dateText}
               </button>
             </slot>
@@ -364,7 +366,7 @@ export class DatetimeButton implements ComponentInterface {
         {showTimeTarget && (
           <div class="time-target-container" onClick={() => this.handleTimeClick()}>
             <slot name="time-target">
-              <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
+              <button disabled={disabled} id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
                 {timeText}
               </button>
             </slot>
