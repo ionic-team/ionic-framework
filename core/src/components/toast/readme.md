@@ -42,7 +42,7 @@ interface ToastOptions {
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
-  htmlAttributes?: ToastAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   color?: Color;
   mode?: Mode;
@@ -54,10 +54,29 @@ interface ToastOptions {
 }
 ```
 
-### ToastAttributes
-```typescript
-interface ToastAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
-```
+## Accessibility
+
+### Focus Management
+
+Toasts are intended to be subtle notifications and are not intended to interrupt the user. User interaction should not be required to dismiss the toast. As a result, focus is not automatically moved to a toast when one is presented.
+
+### Screen Readers
+
+`ion-toast` has `aria-live="polite"` and `aria-atomic="true"` set by default.
+
+`aria-live` causes screen readers to announce the content of the toast when it is presented. However, since the attribute is set to `'polite'`, screen readers generally do not interrupt the current task. Developers can customize this behavior by using the `htmlAttributes` property to set `aria-live` to `'assertive'`. This will cause screen readers to immediately notify the user when a toast is presented, potentially interrupting any previous updates.
+
+`aria-atomic="true"` is set to ensure that the entire toast is announced as a single unit. This is useful when dynamically updating the content of the toast as it prevents screen readers from announcing only the content that has changed. 
+
+### Tips
+
+While this is not a complete list, here are some guidelines to follow when using toasts.
+
+* Do not require user interaction to dismiss toasts. For example, having a "Dismiss" button in the toast is fine, but the toast should also automatically dismiss on its own after a timeout period. If you need user interaction for a notification, consider using [ion-alert](./alert) instead.
+
+* Avoid opening multiple toasts in quick succession. If `aria-live` is set to `'assertive'`, screen readers may interrupt the reading of the current task to announce the new toast, causing the context of the previous toast to be lost.
+
+* For toasts with long messages, consider adjusting the `duration` property to allow users enough time to read the content of the toast.
 
 <!-- Auto Generated Below -->
 
@@ -423,7 +442,7 @@ export default defineComponent({
 | `duration`       | `duration`       | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                | `0`         |
 | `enterAnimation` | --               | Animation to use when the toast is presented.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`         | `header`         | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
-| `htmlAttributes` | --               | Additional attributes to pass to the toast.                                                                                                                                                                                                                            | `ToastAttributes \| undefined`                          | `undefined` |
+| `htmlAttributes` | --               | Additional attributes to pass to the toast.                                                                                                                                                                                                                            | `undefined \| { [key: string]: any; }`                  | `undefined` |
 | `icon`           | `icon`           | The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons                                                                                                                                                            | `string \| undefined`                                   | `undefined` |
 | `keyboardClose`  | `keyboard-close` | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                               | `false`     |
 | `leaveAnimation` | --               | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |

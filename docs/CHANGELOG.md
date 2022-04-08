@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.15](https://github.com/ionic-team/ionic-docs/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [6.0.14](https://github.com/ionic-team/ionic-docs/compare/v6.0.13...v6.0.14) (2022-03-30)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [6.0.13](https://github.com/ionic-team/ionic-docs/compare/v6.0.12...v6.0.13) (2022-03-23)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [6.0.12](https://github.com/ionic-team/ionic-docs/compare/v6.0.11...v6.0.12) (2022-03-16)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [6.0.11](https://github.com/ionic-team/ionic-docs/compare/v6.0.10...v6.0.11) (2022-03-09)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
 ## [6.0.10](https://github.com/ionic-team/ionic-docs/compare/v6.0.9...v6.0.10) (2022-03-02)
 
 **Note:** Version bump only for package @ionic/docs

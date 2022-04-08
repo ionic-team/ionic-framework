@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.15](https://github.com/ionic-team/ionic-framework/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+
+### Bug Fixes
+
+* **angular:** item styling when control has value ([#24932](https://github.com/ionic-team/ionic-framework/issues/24932)) ([eea25d0](https://github.com/ionic-team/ionic-framework/commit/eea25d091d7eb319d6ec1de8b793881d3a10949b)), closes [#23809](https://github.com/ionic-team/ionic-framework/issues/23809)
+* **angular:** routerLink allows opening in a new tab for link elements ([#25014](https://github.com/ionic-team/ionic-framework/issues/25014)) ([b010f07](https://github.com/ionic-team/ionic-framework/commit/b010f077fe51992dd9dd8ced69769a8eb91ac055)), closes [#24413](https://github.com/ionic-team/ionic-framework/issues/24413)
+* **datetime:** warn when parsing an invalid date value ([#25049](https://github.com/ionic-team/ionic-framework/issues/25049)) ([982dc85](https://github.com/ionic-team/ionic-framework/commit/982dc853befe8ccf54163a0b145e563da06f5dc1))
+* **picker-column:** column renders correctly with selected value ([#24988](https://github.com/ionic-team/ionic-framework/issues/24988)) ([8318659](https://github.com/ionic-team/ionic-framework/commit/83186598ed6cf08b0f0421076c4afb3ab53e1e57)), closes [#17664](https://github.com/ionic-team/ionic-framework/issues/17664)
+* **popover:** allow arrow on desktop ([#25056](https://github.com/ionic-team/ionic-framework/issues/25056)) ([bcd00c7](https://github.com/ionic-team/ionic-framework/commit/bcd00c7a6ebb6a00193f04458976ff8b86395215))
+
+
+
+
+
+## [6.0.14](https://github.com/ionic-team/ionic-framework/compare/v6.0.13...v6.0.14) (2022-03-30)
+
+
+### Bug Fixes
+
+* **react:** treeshake ionic/core bundle ([#24989](https://github.com/ionic-team/ionic-framework/issues/24989)) ([a296ca8](https://github.com/ionic-team/ionic-framework/commit/a296ca875c18ec01bfc57972571e95a6d79f5678)), closes [#24497](https://github.com/ionic-team/ionic-framework/issues/24497)
+
+
+
+
+
+## [6.0.13](https://github.com/ionic-team/ionic-framework/compare/v6.0.12...v6.0.13) (2022-03-23)
+
+
+### Bug Fixes
+
+* **angular:** ngOnDestroy runs inside angular zone ([#24949](https://github.com/ionic-team/ionic-framework/issues/24949)) ([a8fd2d9](https://github.com/ionic-team/ionic-framework/commit/a8fd2d9199ca92d62bce6abf8caccc7709fa5ca1)), closes [#22571](https://github.com/ionic-team/ionic-framework/issues/22571)
+* **datetime:** presentation time emits ionChange once  ([#24968](https://github.com/ionic-team/ionic-framework/issues/24968)) ([2909b08](https://github.com/ionic-team/ionic-framework/commit/2909b080b7020299a4554c1459b4b190ff739085)), closes [#24967](https://github.com/ionic-team/ionic-framework/issues/24967)
+* **popover:** dismissing nested popover via backdrop now works ([#24957](https://github.com/ionic-team/ionic-framework/issues/24957)) ([9e84ef7](https://github.com/ionic-team/ionic-framework/commit/9e84ef7f91d76ca5a1ecaffc7592287267d5368b)), closes [#24954](https://github.com/ionic-team/ionic-framework/issues/24954)
+
+
+
+
+
+## [6.0.12](https://github.com/ionic-team/ionic-framework/compare/v6.0.11...v6.0.12) (2022-03-16)
+
+
+### Bug Fixes
+
+* **datetime:** reinit behavior on presentation change ([#24828](https://github.com/ionic-team/ionic-framework/issues/24828)) ([d46e1e8](https://github.com/ionic-team/ionic-framework/commit/d46e1e8506ca5095817b421e9edb37d41451e885))
+* **tabs:** angular, fire willChange event before selected tab changes ([#24910](https://github.com/ionic-team/ionic-framework/issues/24910)) ([d5efa11](https://github.com/ionic-team/ionic-framework/commit/d5efa113317eaf874712134dc9b8e4502aa4760f))
+* **toast:** screen readers now announce toasts when presented ([#24937](https://github.com/ionic-team/ionic-framework/issues/24937)) ([8a97f6b](https://github.com/ionic-team/ionic-framework/commit/8a97f6b5c9ca1e77c1790abd1e924955b6b6ea27)), closes [#22333](https://github.com/ionic-team/ionic-framework/issues/22333)
+* **vue:** tapping the active tab button now correctly resets the tab stack ([#24935](https://github.com/ionic-team/ionic-framework/issues/24935)) ([4534c8b](https://github.com/ionic-team/ionic-framework/commit/4534c8bc0b2bca7ab6eecd9886243116e9a039b7)), closes [#24934](https://github.com/ionic-team/ionic-framework/issues/24934)
+
+
+
+
+
+## [6.0.11](https://github.com/ionic-team/ionic-framework/compare/v6.0.10...v6.0.11) (2022-03-09)
+
+
+### Bug Fixes
+
+* **datetime:** time picker now scrolls to correct value ([#24879](https://github.com/ionic-team/ionic-framework/issues/24879)) ([331ce6d](https://github.com/ionic-team/ionic-framework/commit/331ce6d6769900e2aec9e30d35b52cfd40cbb889)), closes [#24878](https://github.com/ionic-team/ionic-framework/issues/24878)
+* **ios:** swipe to go back now works in rtl mode ([#24866](https://github.com/ionic-team/ionic-framework/issues/24866)) ([2ac9105](https://github.com/ionic-team/ionic-framework/commit/2ac9105796a0765fabc48592b5b44ac58c568579)), closes [#19488](https://github.com/ionic-team/ionic-framework/issues/19488)
+
+
+### Performance Improvements
+
+* improve treeshaking functionality ([#24895](https://github.com/ionic-team/ionic-framework/issues/24895)) ([805907a](https://github.com/ionic-team/ionic-framework/commit/805907af4e78179f1acc9cb02263b1ea10d4e3df)), closes [#24280](https://github.com/ionic-team/ionic-framework/issues/24280)
+
+
+
+
+
 ## [6.0.10](https://github.com/ionic-team/ionic-framework/compare/v6.0.9...v6.0.10) (2022-03-02)
 
 

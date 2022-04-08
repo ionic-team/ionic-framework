@@ -1,11 +1,13 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color } from '../../interface';
-import { ButtonInterface } from '../../utils/element-interface';
-import { Attributes, inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, Color } from '../../interface';
+import type { ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -19,9 +21,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   tag: 'ion-back-button',
   styleUrls: {
     ios: 'back-button.ios.scss',
-    md: 'back-button.md.scss'
+    md: 'back-button.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
   private inheritedAttributes: Attributes = {};
@@ -114,14 +116,24 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     const nav = this.el.closest('ion-nav');
     ev.preventDefault();
 
-    if (nav && await nav.canGoBack()) {
+    if (nav && (await nav.canGoBack())) {
       return nav.pop({ animationBuilder: this.routerAnimation, skipIfBusy: true });
     }
     return openURL(this.defaultHref, ev, 'back', this.routerAnimation);
-  }
+  };
 
   render() {
-    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText, icon, inheritedAttributes } = this;
+    const {
+      color,
+      defaultHref,
+      disabled,
+      type,
+      hasIconOnly,
+      backButtonIcon,
+      backButtonText,
+      icon,
+      inheritedAttributes,
+    } = this;
     const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
@@ -131,26 +143,32 @@ export class BackButton implements ComponentInterface, ButtonInterface {
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
-          'button': true, // ion-buttons target .button
+          button: true, // ion-buttons target .button
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true,
-          'show-back-button': showBackButton
+          'show-back-button': showBackButton,
         })}
       >
-        <button
-          type={type}
-          disabled={disabled}
-          class="button-native"
-          part="native"
-          aria-label={ariaLabel}
-        >
+        <button type={type} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
           <span class="button-inner">
-            {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false} flip-rtl={icon === undefined}></ion-icon>}
-            {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
+            {backButtonIcon && (
+              <ion-icon
+                part="icon"
+                icon={backButtonIcon}
+                aria-hidden="true"
+                lazy={false}
+                flip-rtl={icon === undefined}
+              ></ion-icon>
+            )}
+            {backButtonText && (
+              <span part="text" aria-hidden="true" class="button-text">
+                {backButtonText}
+              </span>
+            )}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

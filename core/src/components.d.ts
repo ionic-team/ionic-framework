@@ -1254,11 +1254,11 @@ export namespace Components {
     }
     interface IonItemSliding {
         /**
-          * Close the sliding item. Items can also be closed from the [List](../list).
+          * Close the sliding item. Items can also be closed from the [List](./list).
          */
         "close": () => Promise<void>;
         /**
-          * Close all of the sliding items in the list. Items can also be closed from the [List](../list).
+          * Close all of the sliding items in the list. Items can also be closed from the [List](./list).
          */
         "closeOpened": () => Promise<boolean>;
         /**
@@ -1856,7 +1856,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow": boolean;
         /**
@@ -2183,7 +2183,7 @@ export namespace Components {
         /**
           * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
          */
-        "componentProps"?: {[key: string]: any};
+        "componentProps"?: { [key: string]: any };
         /**
           * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
          */
@@ -2425,7 +2425,7 @@ export namespace Components {
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
@@ -2512,7 +2512,7 @@ export namespace Components {
          */
         "getPreviousIndex": () => Promise<number>;
         /**
-          * Get the Swiper instance. Use this to access the full Swiper API. See https://idangero.us/swiper/api/ for all API options.
+          * Get the Swiper instance. Use this to access the full Swiper API. See https://swiperjs.com/swiper-api for all API options.
          */
         "getSwiper": () => Promise<any>;
         /**
@@ -2547,7 +2547,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
          */
         "options": any;
         /**
@@ -5493,7 +5493,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow"?: boolean;
         /**
@@ -5851,7 +5851,7 @@ declare namespace LocalJSX {
         /**
           * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
          */
-        "componentProps"?: {[key: string]: any};
+        "componentProps"?: { [key: string]: any };
         /**
           * Used internally by `ion-router` to know when this route did change.
          */
@@ -6128,7 +6128,7 @@ declare namespace LocalJSX {
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -6290,7 +6290,7 @@ declare namespace LocalJSX {
          */
         "onIonSlidesDidLoad"?: (event: CustomEvent<void>) => void;
         /**
-          * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
          */
         "options"?: any;
         /**
@@ -6332,7 +6332,7 @@ declare namespace LocalJSX {
         /**
           * Expression to be called when the split-pane visibility has changed
          */
-        "onIonSplitPaneVisible"?: (event: CustomEvent<{visible: boolean}>) => void;
+        "onIonSplitPaneVisible"?: (event: CustomEvent<{ visible: boolean }>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
@@ -6419,11 +6419,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the navigation has finished transitioning to a new component.
          */
-        "onIonTabsDidChange"?: (event: CustomEvent<{tab: string}>) => void;
+        "onIonTabsDidChange"?: (event: CustomEvent<{ tab: string }>) => void;
         /**
           * Emitted when the navigation is about to transition to a new component.
          */
-        "onIonTabsWillChange"?: (event: CustomEvent<{tab: string}>) => void;
+        "onIonTabsWillChange"?: (event: CustomEvent<{ tab: string }>) => void;
         "useRouter"?: boolean;
     }
     interface IonText {

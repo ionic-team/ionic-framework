@@ -1,18 +1,9 @@
-import { Mode } from '../../../interface';
-import { DatetimeParts } from '../datetime-interface';
+import type { Mode } from '../../../interface';
+import type { DatetimeParts } from '../datetime-interface';
 
-import {
-  isAfter,
-  isBefore,
-  isSameDay
-} from './comparison';
-import {
-  getNumDaysInMonth
-} from './helpers';
-import {
-  getNextMonth,
-  getPreviousMonth
-} from './manipulation';
+import { isAfter, isBefore, isSameDay } from './comparison';
+import { getNumDaysInMonth } from './helpers';
+import { getNextMonth, getPreviousMonth } from './manipulation';
 
 /**
  * Returns the current date as
@@ -36,11 +27,14 @@ export const getToday = () => {
    * there was a net change of zero hours from the
    * local date.
    */
-  date.setHours(date.getHours() - (tzOffset / 60))
+  date.setHours(date.getHours() - tzOffset / 60);
   return date.toISOString();
-}
+};
 
-const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
+const minutes = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+  32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
@@ -59,7 +53,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) =>
    * but is configurable via `firstDayOfWeek`.
    */
   const weekdayFormat = mode === 'ios' ? 'short' : 'narrow';
-  const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat })
+  const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat });
   const startDate = new Date('11/01/2020');
   const daysOfWeek = [];
 
@@ -71,11 +65,11 @@ export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) =>
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate() + i);
 
-    daysOfWeek.push(intl.format(currentDate))
+    daysOfWeek.push(intl.format(currentDate));
   }
 
   return daysOfWeek;
-}
+};
 
 /**
  * Returns an array containing all of the
@@ -107,7 +101,8 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
    * this will generate 5 filler days (0, 1, 2, 3, 4), and then day of week 5 will have
    * the first day of the month.
    */
-  const offset = firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
+  const offset =
+    firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
 
   let days = [];
   for (let i = 1; i <= numDays; i++) {
@@ -115,14 +110,11 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
   }
 
   for (let i = 0; i <= offset; i++) {
-    days = [
-      { day: null, dayOfWeek: null },
-      ...days
-    ]
+    days = [{ day: null, dayOfWeek: null }, ...days];
   }
 
   return days;
-}
+};
 
 /**
  * Given a local, reference datetime parts and option
@@ -144,15 +136,14 @@ export const generateTime = (
   let isPMAllowed = true;
 
   if (hourValues) {
-    processedHours = processedHours.filter(hour => hourValues.includes(hour));
+    processedHours = processedHours.filter((hour) => hourValues.includes(hour));
   }
 
   if (minuteValues) {
-    processedMinutes = processedMinutes.filter(minute => minuteValues.includes(minute))
+    processedMinutes = processedMinutes.filter((minute) => minuteValues.includes(minute));
   }
 
   if (minParts) {
-
     /**
      * If ref day is the same as the
      * minimum allowed day, filter hour/minute
@@ -165,7 +156,7 @@ export const generateTime = (
        * all hours/minutes in that case.
        */
       if (minParts.hour !== undefined) {
-        processedHours = processedHours.filter(hour => {
+        processedHours = processedHours.filter((hour) => {
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
           return (use24Hour ? hour : convertedHour) >= minParts.hour!;
         });
@@ -186,7 +177,7 @@ export const generateTime = (
           }
         }
 
-        processedMinutes = processedMinutes.filter(minute => {
+        processedMinutes = processedMinutes.filter((minute) => {
           if (isPastMinHour) {
             return true;
           }
@@ -217,7 +208,7 @@ export const generateTime = (
        * all hours/minutes in that case.
        */
       if (maxParts.hour !== undefined) {
-        processedHours = processedHours.filter(hour => {
+        processedHours = processedHours.filter((hour) => {
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
           return (use24Hour ? hour : convertedHour) <= maxParts.hour!;
         });
@@ -228,7 +219,7 @@ export const generateTime = (
         // For example if the max hour is 10:30 and the current hour is 10:00,
         // users should be able to select 00-30 minutes.
         // If the current hour is 09:00, users should be able to select 00-60 minutes.
-        processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+        processedMinutes = processedMinutes.filter((minute) => minute <= maxParts.minute!);
       }
 
       /**
@@ -246,9 +237,9 @@ export const generateTime = (
     hours: processedHours,
     minutes: processedMinutes,
     am: isAMAllowed,
-    pm: isPMAllowed
-  }
-}
+    pm: isPMAllowed,
+  };
+};
 
 /**
  * Given DatetimeParts, generate the previous,
@@ -258,9 +249,9 @@ export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   return [
     getPreviousMonth(refParts),
     { month: refParts.month, year: refParts.year, day: refParts.day },
-    getNextMonth(refParts)
-  ]
-}
+    getNextMonth(refParts),
+  ];
+};
 
 export const getPickerMonths = (
   locale: string,
@@ -275,13 +266,13 @@ export const getPickerMonths = (
   if (monthValues !== undefined) {
     let processedMonths = monthValues;
     if (maxParts?.month !== undefined) {
-      processedMonths = processedMonths.filter(month => month <= maxParts.month!);
+      processedMonths = processedMonths.filter((month) => month <= maxParts.month!);
     }
     if (minParts?.month !== undefined) {
-      processedMonths = processedMonths.filter(month => month >= minParts.month!);
+      processedMonths = processedMonths.filter((month) => month >= minParts.month!);
     }
 
-    processedMonths.forEach(processedMonth => {
+    processedMonths.forEach((processedMonth) => {
       const date = new Date(`${processedMonth}/1/${year} GMT+0000`);
 
       const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
@@ -292,7 +283,6 @@ export const getPickerMonths = (
     const minMonth = minParts && minParts.year === year ? minParts.month : 1;
 
     for (let i = minMonth; i <= maxMonth; i++) {
-
       /**
        *
        * There is a bug on iOS 14 where
@@ -325,7 +315,7 @@ export const getPickerMonths = (
   }
 
   return months;
-}
+};
 
 export const getCalendarYears = (
   refParts: DatetimeParts,
@@ -336,16 +326,16 @@ export const getCalendarYears = (
   if (yearValues !== undefined) {
     let processedYears = yearValues;
     if (maxParts?.year !== undefined) {
-      processedYears = processedYears.filter(year => year <= maxParts.year!);
+      processedYears = processedYears.filter((year) => year <= maxParts.year!);
     }
     if (minParts?.year !== undefined) {
-      processedYears = processedYears.filter(year => year >= minParts.year!);
+      processedYears = processedYears.filter((year) => year >= minParts.year!);
     }
     return processedYears;
   } else {
     const { year } = refParts;
-    const maxYear = (maxParts?.year || year);
-    const minYear = (minParts?.year || year - 100);
+    const maxYear = maxParts?.year || year;
+    const minYear = minParts?.year || year - 100;
 
     const years = [];
     for (let i = maxYear; i >= minYear; i--) {
@@ -354,4 +344,4 @@ export const getCalendarYears = (
 
     return years;
   }
-}
+};

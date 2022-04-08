@@ -1,18 +1,19 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { SpinnerTypes } from '../../interface';
+import type { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
-import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
+import type { IonicSafeString } from '../../utils/sanitization';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { SPINNERS } from '../spinner/spinner-configs';
 
 @Component({
-  tag: 'ion-refresher-content'
+  tag: 'ion-refresher-content',
 })
 export class RefresherContent implements ComponentInterface {
-
   @Element() el!: HTMLIonRefresherContentElement;
 
   /**
@@ -69,42 +70,42 @@ export class RefresherContent implements ComponentInterface {
 
   render() {
     const pullingIcon = this.pullingIcon;
-    const hasSpinner = pullingIcon != null && SPINNERS[pullingIcon] as any !== undefined;
+    const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
     const mode = getIonMode(this);
 
     return (
       <Host class={mode}>
         <div class="refresher-pulling">
-          {this.pullingIcon && hasSpinner &&
+          {this.pullingIcon && hasSpinner && (
             <div class="refresher-pulling-icon">
               <div class="spinner-arrow-container">
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
-                {mode === 'md' && this.pullingIcon === 'circular' &&
+                {mode === 'md' && this.pullingIcon === 'circular' && (
                   <div class="arrow-container">
                     <ion-icon icon={caretBackSharp}></ion-icon>
                   </div>
-                }
+                )}
               </div>
             </div>
-          }
-          {this.pullingIcon && !hasSpinner &&
+          )}
+          {this.pullingIcon && !hasSpinner && (
             <div class="refresher-pulling-icon">
               <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
             </div>
-          }
-          {this.pullingText &&
+          )}
+          {this.pullingText && (
             <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
-          }
+          )}
         </div>
         <div class="refresher-refreshing">
-          {this.refreshingSpinner &&
+          {this.refreshingSpinner && (
             <div class="refresher-refreshing-icon">
               <ion-spinner name={this.refreshingSpinner}></ion-spinner>
             </div>
-          }
-          {this.refreshingText &&
+          )}
+          {this.refreshingText && (
             <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
-          }
+          )}
         </div>
       </Host>
     );

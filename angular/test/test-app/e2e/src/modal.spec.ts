@@ -10,6 +10,7 @@ describe('Modals', () => {
 
     cy.get('app-modal-example h2').should('have.text', '123');
     cy.get('app-modal-example h3').should('have.text', '321');
+    cy.get('#modalInstance').should('have.text', 'true');
 
     cy.get('#onWillDismiss').should('have.text', 'false');
     cy.get('#onDidDismiss').should('have.text', 'false');
@@ -41,7 +42,6 @@ describe('Modals', () => {
   });
 
 });
-
 
 describe('Modals: Inline', () => {
   beforeEach(() => {
@@ -75,4 +75,30 @@ describe('Modals: Inline', () => {
 
     cy.get('ion-modal').children('.ion-page').should('not.exist');
   })
+});
+
+describe('when in a modal', () => {
+
+  beforeEach(() => {
+    cy.visit('/modals');
+    cy.get('#action-button').click();
+    cy.get('#close-modal').click();
+    cy.get('#action-button').click();
+  });
+
+  it('should render ion-item item-has-value class when control value is set', () => {
+    cy.get('[formControlName="select"]').invoke('attr', 'value', 0);
+    cy.get('#inputWithFloatingLabel').should('have.class', 'item-has-value');
+  });
+
+  it('should not render ion-item item-has-value class when control value is undefined', () => {
+    cy.get('[formControlName="select"]').invoke('attr', 'value', undefined);
+    cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
+  });
+
+  it('should not render ion-item item-has-value class when control value is null', () => {
+    cy.get('[formControlName="select"]').invoke('attr', 'value', null);
+    cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
+  });
+
 });

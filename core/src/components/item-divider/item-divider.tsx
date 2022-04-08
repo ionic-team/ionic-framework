@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -15,12 +16,11 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-item-divider',
   styleUrls: {
     ios: 'item-divider.ios.scss',
-    md: 'item-divider.md.scss'
+    md: 'item-divider.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ItemDivider implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -46,7 +46,7 @@ export class ItemDivider implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'item-divider-sticky': this.sticky,
-          'item': true,
+          item: true,
         })}
       >
         <slot name="start"></slot>

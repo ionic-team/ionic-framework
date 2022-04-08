@@ -1,19 +1,30 @@
-
 const ION_FOCUSED = 'ion-focused';
 const ION_FOCUSABLE = 'ion-focusable';
-const FOCUS_KEYS = ['Tab', 'ArrowDown', 'Space', 'Escape', ' ', 'Shift', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'Home', 'End'];
+const FOCUS_KEYS = [
+  'Tab',
+  'ArrowDown',
+  'Space',
+  'Escape',
+  ' ',
+  'Shift',
+  'Enter',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'Home',
+  'End',
+];
 
 export const startFocusVisible = (rootEl?: HTMLElement) => {
-
   let currentFocus: Element[] = [];
   let keyboardMode = true;
 
-  const ref = (rootEl) ? rootEl.shadowRoot! : document;
-  const root = (rootEl) ? rootEl : document.body;
+  const ref = rootEl ? rootEl.shadowRoot! : document;
+  const root = rootEl ? rootEl : document.body;
 
   const setFocus = (elements: Element[]) => {
-    currentFocus.forEach(el => el.classList.remove(ION_FOCUSED));
-    elements.forEach(el => el.classList.add(ION_FOCUSED));
+    currentFocus.forEach((el) => el.classList.remove(ION_FOCUSED));
+    elements.forEach((el) => el.classList.add(ION_FOCUSED));
     currentFocus = elements;
   };
   const pointerDown = () => {
@@ -26,7 +37,7 @@ export const startFocusVisible = (rootEl?: HTMLElement) => {
     if (!keyboardMode) {
       setFocus([]);
     }
-  }
+  };
   const onFocusin = (ev: Event) => {
     if (keyboardMode && ev.composedPath) {
       const toFocus = ev.composedPath().filter((el: any) => {
@@ -37,12 +48,12 @@ export const startFocusVisible = (rootEl?: HTMLElement) => {
       }) as Element[];
       setFocus(toFocus);
     }
-  }
+  };
   const onFocusout = () => {
     if (ref.activeElement === root) {
       setFocus([]);
     }
-  }
+  };
 
   ref.addEventListener('keydown', onKeydown);
   ref.addEventListener('focusin', onFocusin);
@@ -56,10 +67,10 @@ export const startFocusVisible = (rootEl?: HTMLElement) => {
     ref.removeEventListener('focusout', onFocusout);
     ref.removeEventListener('touchstart', pointerDown);
     ref.removeEventListener('mousedown', pointerDown);
-  }
+  };
 
   return {
     destroy,
-    setFocus
-  }
+    setFocus,
+  };
 };

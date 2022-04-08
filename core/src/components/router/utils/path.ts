@@ -1,11 +1,9 @@
 import { ROUTER_INTENT_FORWARD } from './constants';
-import { ParsedRoute, RouteChain, RouterDirection } from './interface';
+import type { ParsedRoute, RouteChain, RouterDirection } from './interface';
 
 /** Join the non empty segments with "/". */
 export const generatePath = (segments: string[]): string => {
-  const path = segments
-    .filter(s => s.length > 0)
-    .join('/');
+  const path = segments.filter((s) => s.length > 0).join('/');
 
   return '/' + path;
 };
@@ -19,9 +17,17 @@ const generateUrl = (segments: string[], useHash: boolean, queryString?: string)
     url += '?' + queryString;
   }
   return url;
-}
+};
 
-export const writeSegments = (history: History, root: string, useHash: boolean, segments: string[], direction: RouterDirection, state: number, queryString?: string) => {
+export const writeSegments = (
+  history: History,
+  root: string,
+  useHash: boolean,
+  segments: string[],
+  direction: RouterDirection,
+  state: number,
+  queryString?: string
+) => {
   const url = generateUrl([...parsePath(root).segments, ...segments], useHash, queryString);
   if (direction === ROUTER_INTENT_FORWARD) {
     history.pushState(state, '', url);
@@ -103,9 +109,10 @@ export const parsePath = (path: string | undefined | null): ParsedRoute => {
       path = path.substring(0, qsStart);
     }
 
-    segments = path.split('/')
-      .map(s => s.trim())
-      .filter(s => s.length > 0);
+    segments = path
+      .split('/')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
 
     if (segments.length === 0) {
       segments = [''];

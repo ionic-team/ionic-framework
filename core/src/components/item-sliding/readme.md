@@ -873,7 +873,7 @@ export default defineComponent({
 
 ### `close() => Promise<void>`
 
-Close the sliding item. Items can also be closed from the [List](../list).
+Close the sliding item. Items can also be closed from the [List](./list).
 
 #### Returns
 
@@ -883,7 +883,7 @@ Type: `Promise<void>`
 
 ### `closeOpened() => Promise<boolean>`
 
-Close all of the sliding items in the list. Items can also be closed from the [List](../list).
+Close all of the sliding items in the list. Items can also be closed from the [List](./list).
 
 #### Returns
 

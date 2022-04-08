@@ -1,7 +1,5 @@
-import { JSXBase } from '@stencil/core/internal';
-
-import { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
-import { IonicSafeString } from '../../utils/sanitization';
+import type { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
+import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface LoadingOptions {
   spinner?: SpinnerTypes | null;
@@ -21,4 +19,7 @@ export interface LoadingOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export interface LoadingAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type LoadingAttributes = { [key: string]: any };

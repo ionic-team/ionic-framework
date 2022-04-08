@@ -1,4 +1,4 @@
-import { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import { generateDayAriaLabel } from './format';
@@ -14,7 +14,7 @@ export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxPar
   }
 
   return false;
-}
+};
 
 /**
  * Returns true if a given day should
@@ -31,14 +31,18 @@ export const isDayDisabled = (
    * If this is a filler date (i.e. padding)
    * then the date is disabled.
    */
-  if (refParts.day === null) { return true; }
+  if (refParts.day === null) {
+    return true;
+  }
 
   /**
    * If user passed in a list of acceptable day values
    * check to make sure that the date we are looking
    * at is in this array.
    */
-  if (dayValues !== undefined && !dayValues.includes(refParts.day)) { return true; }
+  if (dayValues !== undefined && !dayValues.includes(refParts.day)) {
+    return true;
+  }
 
   /**
    * Given a min date, perform the following
@@ -76,7 +80,7 @@ export const isDayDisabled = (
    * be interactive.
    */
   return false;
-}
+};
 
 /**
  * Given a locale, a date, the selected date, and today's date,
@@ -100,55 +104,56 @@ export const getCalendarDayState = (
     isActive,
     isToday,
     ariaSelected: isActive ? 'true' : null,
-    ariaLabel: generateDayAriaLabel(locale, isToday, refParts)
-  }
-}
+    ariaLabel: generateDayAriaLabel(locale, isToday, refParts),
+  };
+};
 
 /**
  * Returns `true` if the month is disabled given the
  * current date value and min/max date constraints.
  */
-export const isMonthDisabled = (refParts: DatetimeParts, { minParts, maxParts }: {
-  minParts?: DatetimeParts,
-  maxParts?: DatetimeParts
-}) => {
+export const isMonthDisabled = (
+  refParts: DatetimeParts,
+  {
+    minParts,
+    maxParts,
+  }: {
+    minParts?: DatetimeParts;
+    maxParts?: DatetimeParts;
+  }
+) => {
   // If the year is disabled then the month is disabled.
   if (isYearDisabled(refParts.year, minParts, maxParts)) {
     return true;
   }
   // If the date value is before the min date, then the month is disabled.
   // If the date value is after the max date, then the month is disabled.
-  if (minParts && isBefore(refParts, minParts) || maxParts && isAfter(refParts, maxParts)) {
+  if ((minParts && isBefore(refParts, minParts)) || (maxParts && isAfter(refParts, maxParts))) {
     return true;
   }
   return false;
-}
+};
 
 /**
  * Given a working date, an optional minimum date range,
  * and an optional maximum date range; determine if the
  * previous navigation button is disabled.
  */
-export const isPrevMonthDisabled = (
-  refParts: DatetimeParts,
-  minParts?: DatetimeParts,
-  maxParts?: DatetimeParts) => {
+export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const prevMonth = getPreviousMonth(refParts);
   return isMonthDisabled(prevMonth, {
     minParts,
-    maxParts
+    maxParts,
   });
-}
+};
 
 /**
  * Given a working date and a maximum date range,
  * determine if the next navigation button is disabled.
  */
-export const isNextMonthDisabled = (
-  refParts: DatetimeParts,
-  maxParts?: DatetimeParts) => {
+export const isNextMonthDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts) => {
   const nextMonth = getNextMonth(refParts);
   return isMonthDisabled(nextMonth, {
-    maxParts
+    maxParts,
   });
-}
+};
