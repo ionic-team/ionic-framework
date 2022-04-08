@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "6.0.15",
+  "version": "6.0.16",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -44,7 +44,7 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
-    "@ionic/core": "^6.0.15",
+    "@ionic/core": "^6.0.16",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.0.0"
   },
