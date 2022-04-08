@@ -32,11 +32,20 @@ describe('generateDayAriaLabel()', () => {
 
     expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, April 1');
   });
+  it('should return Saturday, April 1 even with time values present', () => {
+    const reference = { month: 4, day: 1, year: 2006, hour: 0, minute: 0 };
+
+    expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, April 1');
+  });
 });
 
 describe('getMonthAndDay()', () => {
   it('should return Tue, May 11', () => {
     expect(getMonthAndDay('en-US', { month: 5, day: 11, year: 2021 })).toEqual('Tue, May 11');
+  });
+
+  it('should return Tue, May 11 even with time values present', () => {
+    expect(getMonthAndDay('en-US', { month: 5, day: 11, year: 2021, time: 0, hour: 0 })).toEqual('Tue, May 11');
   });
 
   it('should return mar, 11 may', () => {
@@ -74,6 +83,10 @@ describe('addTimePadding()', () => {
 describe('getMonthAndYear()', () => {
   it('should return May 2021', () => {
     expect(getMonthAndYear('en-US', { month: 5, day: 11, year: 2021 })).toEqual('May 2021');
+  });
+
+  it('should return May 2021 even with time values present', () => {
+    expect(getMonthAndYear('en-US', { month: 5, day: 11, year: 2021, time: 0, hour: 0 })).toEqual('May 2021');
   });
 
   it('should return mayo de 2021', () => {
