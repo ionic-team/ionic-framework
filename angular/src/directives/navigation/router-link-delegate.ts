@@ -12,7 +12,7 @@ import { NavController } from '../../providers/nav-controller';
  * animation so that the routing integration will transition correctly.
  */
 @Directive({
-  selector: '[routerLink]',
+  selector: ':not(a):not(area)[routerLink]',
 })
 export class RouterLinkDelegateDirective implements OnInit, OnChanges {
   @Input()
@@ -37,9 +37,56 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
     this.updateTargetUrlAndHref();
   }
 
-  @HostListener('click')
-  onClick(): void {
+  private updateTargetUrlAndHref() {
+    if (this.routerLink?.urlTree) {
+      const href = this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(this.routerLink.urlTree));
+      this.elementRef.nativeElement.href = href;
+    }
+  }
+
+  /**
+   * @internal
+   */
+  @HostListener('click', ['$event'])
+  onClick(ev: UIEvent): void {
     this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
+
+    /**
+     * This prevents the browser from
+     * performing a page reload when pressing
+     * an Ionic component with routerLink.
+     * The page reload interferes with routing
+     * and causes ion-back-button to disappear
+     * since the local history is wiped on reload.
+     */
+    ev.preventDefault();
+  }
+}
+
+@Directive({
+  selector: 'a[routerLink],area[routerLink]',
+})
+export class RouterLinkWithHrefDelegateDirective implements OnInit, OnChanges {
+  @Input()
+  routerDirection: RouterDirection = 'forward';
+
+  @Input()
+  routerAnimation?: AnimationBuilder;
+
+  constructor(
+    private locationStrategy: LocationStrategy,
+    private navCtrl: NavController,
+    private elementRef: ElementRef,
+    private router: Router,
+    @Optional() private routerLink?: RouterLink
+  ) {}
+
+  ngOnInit(): void {
+    this.updateTargetUrlAndHref();
+  }
+
+  ngOnChanges(): void {
+    this.updateTargetUrlAndHref();
   }
 
   private updateTargetUrlAndHref() {
@@ -47,5 +94,13 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
       const href = this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(this.routerLink.urlTree));
       this.elementRef.nativeElement.href = href;
     }
+  }
+
+  /**
+   * @internal
+   */
+  @HostListener('click')
+  onClick(): void {
+    this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
   }
 }
