@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 import { devices } from '@playwright/test';
 
 const getDeviceForPage = (
@@ -27,7 +27,7 @@ const getDeviceForPage = (
  * We access Playwright's internal options to offset by the difference between
  * the viewport size and the screen size.
  */
-const getScreenshotDeviceOffset = (page: Page) => {
+const getScreenshotDeviceOffset = (page: Page, testInfo: TestInfo) => {
   let viewportOffset = 0;
 
   const pageContextOptions = (page.context() as any)._options;
@@ -36,6 +36,14 @@ const getScreenshotDeviceOffset = (page: Page) => {
   if (device?.screen) {
     // We only need the offset if the screen configuration is defined
     viewportOffset = device.screen.height - pageContextOptions.viewport.height;
+    const { mode } = testInfo.project.metadata;
+    if (device.isMobile && mode === 'md' && new RegExp(/Linux|Chrome/).test(device.userAgent)) {
+      /**
+       * Material Design mode on Android crops the screenshot on Mobile Chrome Linux.
+       * We offset by a magic number (80px) to compensate.
+       */
+      viewportOffset += 80;
+    }
   }
 
   return viewportOffset;
@@ -52,7 +60,7 @@ const getScreenshotDeviceOffset = (page: Page) => {
  * can be captured in a screenshot.
  *
  */
-export const setIonViewport = async (page: Page) => {
+export const setIonViewport = async (page: Page, testInfo: TestInfo) => {
   const currentViewport = page.viewportSize();
 
   const pixelAmountRenderedOffscreen = await page.evaluate(() => {
@@ -65,7 +73,7 @@ export const setIonViewport = async (page: Page) => {
   });
 
   const width = currentViewport?.width ?? 640;
-  const height = (currentViewport?.height ?? 480) + pixelAmountRenderedOffscreen + getScreenshotDeviceOffset(page);
+  const height = (currentViewport?.height ?? 480) + pixelAmountRenderedOffscreen + getScreenshotDeviceOffset(page, testInfo);
 
   await page.setViewportSize({
     width,
