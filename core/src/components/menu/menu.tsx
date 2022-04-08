@@ -621,11 +621,16 @@ export class Menu implements ComponentInterface, MenuI {
       this.ionDidOpen.emit();
 
       /**
-       * Set up focus trapping. Focus the host element to start with
-       * instead of the first descendant to avoid the scroll position
-       * jumping to that element right away.
+       * Move focus to the menu to prepare focus trapping, as long as
+       * it isn't already focused. Use the host element instead of the
+       * first descendant to avoid the scroll position jumping around.
        */
-      this.el.focus();
+      const focusedMenu = document.activeElement?.closest('ion-menu');
+      if(!focusedMenu || focusedMenu !== this.el) {
+        this.el.focus();
+      }
+
+      // start focus trapping
       document.addEventListener('focus', this.handleFocus, true);
     } else {
       // remove css classes and unhide content from screen readers
