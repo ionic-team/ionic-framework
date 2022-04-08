@@ -88,7 +88,7 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is being used in so we can
      * correctly size it when it is presented.
      */
-    const overlayEl = this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
+    const overlayEl = (this.overlayEl = datetimeEl.closest('ion-modal, ion-popover'));
 
     componentOnReady(datetimeEl, () => {
       /**
@@ -345,7 +345,7 @@ export class DatetimeButton implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           [`${selectedButton}-active`]: datetimeActive,
-          ['datetime-button-disabled']: disabled
+          ['datetime-button-disabled']: disabled,
         })}
       >
         {showDateTarget && (

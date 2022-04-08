@@ -40,15 +40,16 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button disabled="true" slot="end" id="default-button" datetime="default-datetime"></ion-datetime-button>
+              <ion-datetime-button
+                disabled="true"
+                slot="end"
+                id="default-button"
+                datetime="default-datetime"
+              ></ion-datetime-button>
             </ion-item>
 
             <ion-popover arrow="false" trigger="default-button">
-              <ion-datetime
-                locale="en-US"
-                id="default-datetime"
-                value="2022-03-15T00:43:00"
-              ></ion-datetime>
+              <ion-datetime locale="en-US" id="default-datetime" value="2022-03-15T00:43:00"></ion-datetime>
             </ion-popover>
           </div>
           <div class="grid-item">
@@ -67,11 +68,7 @@
             </ion-item>
 
             <ion-popover arrow="false" trigger="custom-button">
-              <ion-datetime
-                locale="en-US"
-                id="custom-datetime"
-                value="2022-03-15T00:43:00"
-              ></ion-datetime>
+              <ion-datetime locale="en-US" id="custom-datetime" value="2022-03-15T00:43:00"></ion-datetime>
             </ion-popover>
           </div>
         </div>

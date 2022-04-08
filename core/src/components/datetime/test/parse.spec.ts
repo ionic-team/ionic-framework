@@ -28,7 +28,7 @@ describe('parseDate()', () => {
       second: 0,
       millisecond: undefined,
       tzOffset: -0,
-      ampm: 'am'
+      ampm: 'am',
     });
   });
   it('should correctly parse a custom timezone offset', () => {
@@ -41,7 +41,7 @@ describe('parseDate()', () => {
       second: 0,
       millisecond: undefined,
       tzOffset: -240,
-      ampm: 'am'
+      ampm: 'am',
     });
   });
   it('should correctly determine AM/PM', () => {
