@@ -42,7 +42,7 @@ interface ToastOptions {
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
-  htmlAttributes?: ToastAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   color?: Color;
   mode?: Mode;
@@ -52,11 +52,6 @@ interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-```
-
-### ToastAttributes
-```typescript
-interface ToastAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
 ```
 
 ## Accessibility
@@ -447,7 +442,7 @@ export default defineComponent({
 | `duration`       | `duration`       | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                | `0`         |
 | `enterAnimation` | --               | Animation to use when the toast is presented.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `header`         | `header`         | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
-| `htmlAttributes` | --               | Additional attributes to pass to the toast.                                                                                                                                                                                                                            | `ToastAttributes \| undefined`                          | `undefined` |
+| `htmlAttributes` | --               | Additional attributes to pass to the toast.                                                                                                                                                                                                                            | `undefined \| { [key: string]: any; }`                  | `undefined` |
 | `icon`           | `icon`           | The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons                                                                                                                                                            | `string \| undefined`                                   | `undefined` |
 | `keyboardClose`  | `keyboard-close` | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                               | `false`     |
 | `leaveAnimation` | --               | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |

@@ -1,5 +1,3 @@
-import type { JSXBase } from '@stencil/core/internal';
-
 import type { AnimationBuilder, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
@@ -19,7 +17,10 @@ export interface ActionSheetOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type ActionSheetAttributes = JSXBase.HTMLAttributes<HTMLElement>;
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type ActionSheetAttributes = { [key: string]: any };
 
 export interface ActionSheetButton<T = any> {
   text?: string;
