@@ -244,6 +244,14 @@ subtracting 30 minutes, etc.), or even formatting data to a specific locale,
 then we highly recommend using [date-fns](https://date-fns.org) to work with
 dates in JavaScript.
 
+## Compact Datetime Style
+
+Datetime can be used with the [Datetime Button](./datetime-button) component to render a button with the localized selected date and time. The component is rendered in a compact style such that it does not take up much screen space.
+
+It can also be paired with [Modal](./modal) or [Popover](./popover) to show the datetime in an overlay when the date or time buttons are clicked.
+
+See the [Datetime Button](./datetime-button) documentation for usage examples.
+
 ## Accessibility
 
 ### Keyboard Navigation
