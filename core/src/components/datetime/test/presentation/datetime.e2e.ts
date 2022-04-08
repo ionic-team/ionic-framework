@@ -16,6 +16,7 @@ test.describe('datetime: presentation', () => {
       page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready'),
       page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready'),
       page.waitForSelector('ion-datetime[presentation="date"].datetime-ready'),
+      page.waitForSelector('ion-datetime[presentation="year"].datetime-ready'),
     ]);
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
