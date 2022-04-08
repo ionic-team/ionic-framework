@@ -9,10 +9,15 @@ import type {
 } from '@playwright/test';
 import { test as base } from '@playwright/test';
 
-type IonicPage = Page & {
+import { EventSpy, initPageEvents, addE2EListener } from './eventSpy';
+
+export type IonicPage = Page & {
   goto: (url: string) => Promise<null | Response>;
   setIonViewport: () => Promise<void>;
   getSnapshotSettings: () => string;
+  spyOnEvent: (eventName: string) => Promise<EventSpy>;
+  _e2eEventsIds: number;
+  _e2eEvents: Map<number, any>;
 };
 
 type CustomTestArgs = PlaywrightTestArgs &
@@ -123,6 +128,27 @@ export const test = base.extend<CustomFixtures>({
         height,
       });
     };
+
+    /**
+     * Creates a new EventSpy and listens
+     * on the window for an event.
+     * The test will timeout if the event
+     * never fires.
+     *
+     * Usage:
+     * const ionChange = await page.spyOnEvent('ionChange');
+     * ...
+     * await ionChange.next();
+     */
+    page.spyOnEvent = async (eventName: string): Promise<EventSpy> => {
+      const spy = new EventSpy(eventName);
+
+      await addE2EListener(page, eventName, (ev: Event) => spy.push(ev));
+
+      return spy;
+    };
+
+    initPageEvents(page);
 
     await use(page);
   },
