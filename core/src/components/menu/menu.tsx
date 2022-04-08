@@ -626,7 +626,7 @@ export class Menu implements ComponentInterface, MenuI {
        * first descendant to avoid the scroll position jumping around.
        */
       const focusedMenu = document.activeElement?.closest('ion-menu');
-      if(!focusedMenu || focusedMenu !== this.el) {
+      if (focusedMenu !== this.el) {
         this.el.focus();
       }
 
