@@ -108,7 +108,7 @@ export class AccordionGroup implements ComponentInterface {
      * in ion-textarea.
      */
     const activeAccordionHeader = activeElement.closest('ion-accordion [slot="header"]');
-    if(!activeAccordionHeader) {
+    if (!activeAccordionHeader) {
       return;
     }
 
