@@ -64,21 +64,10 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
   }
 
   /**
-   * MM/DD/YYYY will return midnight in the user's timezone.
-   */
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
-
-  const labelString = new Intl.DateTimeFormat(locale, {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
-
-  /**
    * If date is today, prepend "Today" so screen readers indicate
    * that the date is today.
    */
+  const labelString = getLocalizedDateTime(locale, refParts, { weekday: 'long', month: 'long', day: 'numeric' });
   return today ? `Today, ${labelString}` : labelString;
 };
 
@@ -87,10 +76,7 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
  * Used for the header in MD mode.
  */
 export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
-  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
-    date
-  );
+  return getLocalizedDateTime(locale, refParts, { weekday: 'short', month: 'short', day: 'numeric' });
 };
 
 /**
@@ -100,6 +86,32 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  * Example: May 2021
  */
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
-  return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+  return getLocalizedDateTime(locale, refParts, { month: 'long', year: 'numeric' });
+};
+
+/**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the short month, numeric day, and full year.
+ * Example: Apr 22, 2021
+ */
+export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
+  return getLocalizedDateTime(locale, refParts, { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+/**
+ * Wrapper function for Intl.DateTimeFormat.
+ * Allows developers to apply an allowed format to DatetimeParts.
+ * This function also has built in safeguards for older browser bugs
+ * with Intl.DateTimeFormat. It is preferred to use this function than
+ * Intl.DateTimeFormat directly when calling the `format` method.
+ */
+export const getLocalizedDateTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  options: Intl.DateTimeFormatOptions
+): string => {
+  const timeString = !!refParts.hour && !!refParts.minute ? `${refParts.hour}:${refParts.minute}` : '';
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} ${timeString} GMT+0000`);
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(date);
 };
