@@ -88,12 +88,29 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is being used in so we can
      * correctly size it when it is presented.
      */
-    this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
+    const overlayEl = this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
 
     componentOnReady(datetimeEl, () => {
-      datetimeEl.size = 'cover';
+      /**
+       * Datetimes in overlays linked with datetime-button
+       * should display full width so that the overlay
+       * can be sized correctly.
+       */
+      if (overlayEl) {
+        datetimeEl.size = 'cover';
+      }
       const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
 
+      /**
+       * Set the initial display
+       * in the rendered buttons.
+       *
+       * From there, we need to listen
+       * for ionChange to be emitted
+       * from datetime so we know when
+       * to re-render the displayed
+       * text in the buttons.
+       */
       this.setDateTimeText();
       addEventListener(datetimeEl, 'ionChange', this.setDateTimeText);
 
@@ -101,6 +118,10 @@ export class DatetimeButton implements ComponentInterface {
        * Configure the initial selected button
        * in the event that the datetime is displayed
        * without clicking one of the datetime buttons.
+       * For example, a datetime could be expanded
+       * in an accordion. In this case users only
+       * need to click the accordion header to show
+       * the datetime.
        */
       switch (datetimePresentation) {
         case 'date-time':
@@ -243,6 +264,9 @@ export class DatetimeButton implements ComponentInterface {
    * should be appropriately size.
    * These classes provide default sizing values
    * that developers can customize.
+   * The goal is to provide an overlay that
+   * reasonably sized with a datetime that
+   * fills the entire container.
    */
   private setOverlaySize = () => {
     const { overlayEl, datetimeEl } = this;
@@ -274,8 +298,8 @@ export class DatetimeButton implements ComponentInterface {
       overlayEl.style.setProperty('--height', `200px`);
 
       /**
-       * The default sizing for month-year
-       * is too small, so we it to 300px so
+       * The default width for month-year
+       * is too small, so we set it to 300px so
        * the text is not cut off.
        */
       if (needsWiderWheel) {
@@ -308,7 +332,7 @@ export class DatetimeButton implements ComponentInterface {
   };
 
   render() {
-    const { color, dateText, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
+    const { color, dateText, disabled, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
     const showDateTarget =
       !datetimePresentation ||
       ['date-time', 'time-date', 'date', 'month', 'year', 'month-year'].includes(datetimePresentation);
@@ -317,9 +341,11 @@ export class DatetimeButton implements ComponentInterface {
 
     return (
       <Host
+        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
           [`${selectedButton}-active`]: datetimeActive,
+          ['datetime-button-disabled']: disabled
         })}
       >
         {showDateTarget && (
@@ -330,7 +356,7 @@ export class DatetimeButton implements ComponentInterface {
                 devs do not create nested interactives if they
                 decide to add in a custom ion-button.
               */}
-              <button id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
+              <button disabled={disabled} id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
                 {dateText}
               </button>
             </slot>
@@ -340,7 +366,7 @@ export class DatetimeButton implements ComponentInterface {
         {showTimeTarget && (
           <div class="time-target-container" onClick={() => this.handleTimeClick()}>
             <slot name="time-target">
-              <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
+              <button disabled={disabled} id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
                 {timeText}
               </button>
             </slot>

@@ -11,6 +11,12 @@
   justify-content: center;
 }
 
+:host(.datetime-button-disabled) {
+  pointer-events: none;
+
+  opacity: 0.4;
+}
+
 :host button {
   @include border-radius(8px);
   @include padding(6px, 12px, 6px, 12px);
