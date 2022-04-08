@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime Button - Accordion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Datetime Button - Accordion</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-accordion-group>
+          <ion-accordion value="starts">
+            <ion-item slot="header">
+              <ion-label>Starts</ion-label>
+              <ion-datetime-button slot="end" datetime="starts-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-datetime slot="content" id="starts-datetime"></ion-datetime>
+          </ion-accordion>
+
+          <ion-accordion value="ends">
+            <ion-item slot="header">
+              <ion-label>Ends</ion-label>
+              <ion-datetime-button slot="end" datetime="ends-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-datetime slot="content" id="ends-datetime"></ion-datetime>
+          </ion-accordion>
+        </ion-accordion-group>
+      </ion-content>
+
+      <script>
+        const datetimeButtons = document.querySelectorAll('ion-datetime-button');
+        const accordionGroup = document.querySelector('ion-accordion-group');
+        datetimeButtons.forEach((el) => {
+          const accordion = el.closest('ion-accordion');
+
+          el.onclick = (ev) => {
+            accordionGroup.value = accordion.value;
+            ev.stopPropagation();
+          };
+        });
+      </script>
+    </ion-app>
+  </body>
+</html>

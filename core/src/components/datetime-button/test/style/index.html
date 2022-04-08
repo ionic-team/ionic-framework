@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime Button - Custom Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Datetime Button - Custom Style</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-item>
+          <ion-datetime-button
+            color="danger"
+            slot="end"
+            id="default-button"
+            datetime="default-datetime"
+          ></ion-datetime-button>
+        </ion-item>
+
+        <ion-popover arrow="false" trigger="default-button">
+          <ion-datetime
+            locale="en-US"
+            presentation="date-time"
+            id="default-datetime"
+            value="2022-03-15T00:43:00"
+          ></ion-datetime>
+        </ion-popover>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

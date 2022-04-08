@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime Button - Basic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Datetime Button - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Date/Time</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" id="default-button" datetime="default-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="default-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="date-time"
+                id="default-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Date Only</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" id="date-button" datetime="date-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="date-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="date"
+                id="date-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Time Only</h2>
+
+            <ion-item>
+              <ion-label>Start Time</ion-label>
+              <ion-datetime-button slot="end" id="time-button" datetime="time-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="time-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="time"
+                id="time-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Time Only (24 hour)</h2>
+
+            <ion-item>
+              <ion-label>Start Time</ion-label>
+              <ion-datetime-button slot="end" id="time-h23-button" datetime="time-h23-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="time-h23-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="time"
+                id="time-h23-datetime"
+                value="2022-03-15T00:43:00"
+                hour-cycle="h23"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Time/Date</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" id="time-date-button" datetime="time-date-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="time-date-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="time-date"
+                id="time-date-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Month</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" id="month-button" datetime="month-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="month-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="month"
+                id="month-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Month/Year</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button
+                slot="end"
+                id="month-year-button"
+                datetime="month-year-datetime"
+              ></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="month-year-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="month-year"
+                id="month-year-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Year</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" id="year-button" datetime="year-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false" trigger="year-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="year"
+                id="year-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
