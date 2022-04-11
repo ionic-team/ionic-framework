@@ -1,83 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Datetime - Presentation</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-    <script src="../../../../../scripts/testing/scripts.js"></script>
-    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <style>
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
-        grid-gap: 60px 20px;
-      }
 
-      h2 {
-        font-size: 12px;
-        font-weight: normal;
+<head>
+  <meta charset="UTF-8" />
+  <title>Datetime - Presentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <style>
+    ion-datetime {
+      box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+    }
+  </style>
+</head>
 
-        color: #6f7378;
+<body>
+  <ion-app>
+    <ion-header translucent="true">
+      <ion-toolbar>
+        <ion-title>Datetime - Presentation</ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
+        <select class="ion-margin-end" slot="end">
+          <option value="date-time">date-time</option>
+          <option value="time-date">time-date</option>
+          <option value="time">time</option>
+          <option value="date">date</option>
+          <option value="month-year">month-year</option>
+          <option value="month">month</option>
+          <option value="year">year</option>
+        </select>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-datetime presentation="date-time" value="2022-03-10T13:00:00"></ion-datetime>
+    </ion-content>
+  </ion-app>
+  <script>
+    const datetime = document.querySelector('ion-datetime');
+    const select = document.querySelector('select');
 
-        margin-top: 10px;
-        margin-left: 5px;
-      }
+    select.addEventListener('change', ev => {
+      const presentation = ev.target.value;
+      datetime.presentation = presentation;
+    });
+  </script>
+</body>
 
-      @media screen and (max-width: 800px) {
-        .grid {
-          grid-template-columns: 1fr;
-          padding: 0;
-        }
-      }
-
-      ion-datetime {
-        box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
-        border-radius: 8px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <ion-app>
-      <ion-header translucent="true">
-        <ion-toolbar>
-          <ion-title>Datetime - Presentation</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <div class="grid">
-          <div class="grid-item">
-            <h2>date-time</h2>
-            <ion-datetime presentation="date-time" value="2022-03-10T13:00:00"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>time-date</h2>
-            <ion-datetime presentation="time-date" value="2022-03-10T13:00:00"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>time</h2>
-            <ion-datetime presentation="time" value="13:00:00"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>date</h2>
-            <ion-datetime presentation="date" value="2022-03-10"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>month-year</h2>
-            <ion-datetime presentation="month-year" value="2022-03-10"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>month</h2>
-            <ion-datetime presentation="month" value="2022-03-10"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>year</h2>
-            <ion-datetime presentation="year" value="2022-03-10"></ion-datetime>
-          </div>
-        </div>
-      </ion-content>
-    </ion-app>
-  </body>
 </html>

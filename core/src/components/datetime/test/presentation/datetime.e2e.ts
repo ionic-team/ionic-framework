@@ -4,31 +4,25 @@ import { test } from '@utils/test/playwright';
 
 test.describe('datetime: presentation', () => {
   test('should not have visual regressions', async ({ page }) => {
-
     await page.goto(`/src/components/datetime/test/presentation`);
 
-    /**
-     * First we need to resize the viewport so that all datetime examples will
-     * fire their intersection observer behavior to add required classes/styling.
-     */
-    await page.setIonViewport();
-    /**
-     * Datetime will wait a frame to display the calendar body. Wait for all
-     * the test datetime components to be ready before taking a screenshot.
-     */
-    await Promise.all([
-      page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready', { state: 'attached' }),
-      page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready', { state: 'attached' }),
-      page.waitForSelector('ion-datetime[presentation="date"].datetime-ready', { state: 'attached' }),
-      page.waitForSelector('ion-datetime[presentation="month-year"].datetime-ready', { state: 'attached' }),
-      page.waitForSelector('ion-datetime[presentation="month"].datetime-ready', { state: 'attached' }),
-    ]);
-    // Finally we need to resize the viewport again, so that it accounts for the total height of all examples.
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `datetime-presentation-diff-${page.getSnapshotSettings()}.png`
-    );
+    const compares = [];
+    const presentations = ['date-time', 'time-date', 'time', 'date', 'month-year', 'month', 'year'];
+
+    for (const presentation of presentations) {
+      await page.locator('select').selectOption(presentation);
+      await page.waitForChanges();
+      compares.push({
+        presentation,
+        screenshot: await page.screenshot({ fullPage: true }),
+      });
+    }
+
+    for (const compare of compares) {
+      expect(compare.screenshot).toMatchSnapshot(`datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`)
+    }
   });
 });
 
@@ -84,9 +78,8 @@ class TimePickerFixture {
 
   async goto() {
     await this.page.goto(`/src/components/datetime/test/presentation`);
-    this.timePicker = this.page.locator('ion-datetime[presentation="time"]');
-
-    await this.timePicker.scrollIntoViewIfNeeded();
+    await this.page.locator('select').selectOption('time');
+    this.timePicker = this.page.locator('ion-datetime');
   }
 
   async setValue(value: string) {
