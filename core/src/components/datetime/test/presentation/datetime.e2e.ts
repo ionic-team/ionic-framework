@@ -34,33 +34,41 @@ test.describe('datetime: presentation: time', () => {
     await timePickerFixture.goto();
   });
 
-  test('changing value from AM to AM should update the text', async () => {
+  test('changing value from AM to AM should update the text', async ({ page }) => {
     await timePickerFixture.setValue('04:20:00');
     await timePickerFixture.expectTime('4', '20', 'AM');
+
+    await page.waitForTimeout(100);
 
     await timePickerFixture.setValue('11:03:00');
     await timePickerFixture.expectTime('11', '03', 'AM');
   });
 
-  test('changing value from AM to PM should update the text', async () => {
+  test('changing value from AM to PM should update the text', async ({ page }) => {
     await timePickerFixture.setValue('04:20:00');
     await timePickerFixture.expectTime('4', '20', 'AM');
+
+    await page.waitForTimeout(100);
 
     await timePickerFixture.setValue('16:40:00');
     await timePickerFixture.expectTime('4', '40', 'PM');
   });
 
-  test('changing the value from PM to AM should update the text', async () => {
+  test('changing the value from PM to AM should update the text', async ({ page }) => {
     await timePickerFixture.setValue('16:40:00');
     await timePickerFixture.expectTime('4', '40', 'PM');
+
+    await page.waitForTimeout(100);
 
     await timePickerFixture.setValue('04:20:00');
     await timePickerFixture.expectTime('4', '20', 'AM');
   });
 
-  test('changing the value from PM to PM should update the text', async () => {
+  test('changing the value from PM to PM should update the text', async ({ page }) => {
     await timePickerFixture.setValue('16:40:00');
     await timePickerFixture.expectTime('4', '40', 'PM');
+
+    await page.waitForTimeout(100);
 
     await timePickerFixture.setValue('19:32:00');
     await timePickerFixture.expectTime('7', '32', 'PM');
@@ -86,11 +94,12 @@ class TimePickerFixture {
     const ionChange = await this.page.spyOnEvent('ionChange');
     await this.timePicker.evaluate((el: HTMLIonDatetimeElement, newValue: string) => {
       el.value = newValue;
+      return el.value;
     }, value);
 
     await ionChange.next();
 
-    await this.page.waitForChanges(300);
+    await this.page.waitForChanges();
   }
 
   async expectTime(hour: string, minute: string, ampm: string) {
