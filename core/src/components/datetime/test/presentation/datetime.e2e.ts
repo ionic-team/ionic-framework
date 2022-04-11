@@ -6,8 +6,6 @@ test.describe('datetime: presentation', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/datetime/test/presentation`);
 
-    await page.setIonViewport();
-
     /**
      * Datetime will wait a frame to display the calendar body. Wait for all
      * the test datetime components to be ready before taking a screenshot.
@@ -15,9 +13,10 @@ test.describe('datetime: presentation', () => {
     await Promise.all([
       page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready'),
       page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="date"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="year"].datetime-ready'),
+      page.waitForSelector('ion-datetime[presentation="date"].datetime-ready')
     ]);
+
+    await page.setIonViewport();
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
       `datetime-presentation-diff-${page.getSnapshotSettings()}.png`
