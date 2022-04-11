@@ -90,7 +90,7 @@ class TimePickerFixture {
 
     await ionChange.next();
 
-    await this.page.waitForChanges();
+    await this.page.waitForChanges(300);
   }
 
   async expectTime(hour: string, minute: string, ampm: string) {
