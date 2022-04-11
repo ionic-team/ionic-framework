@@ -4,6 +4,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('datetime: presentation', () => {
   test('should not have visual regressions', async ({ page }) => {
+
     await page.goto(`/src/components/datetime/test/presentation`);
 
     /**
@@ -11,9 +12,9 @@ test.describe('datetime: presentation', () => {
      * the test datetime components to be ready before taking a screenshot.
      */
     await Promise.all([
-      page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="date"].datetime-ready')
+      page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready', { state: 'attached' }),
+      page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready', { state: 'attached' }),
+      page.waitForSelector('ion-datetime[presentation="date"].datetime-ready', { state: 'attached' })
     ]);
 
     await page.setIonViewport();
