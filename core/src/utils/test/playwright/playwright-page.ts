@@ -9,10 +9,12 @@ import type {
 import { test as base } from '@playwright/test';
 
 import { waitForCustomEvent } from './locator/utils';
+import { initPageEvents } from './page/event-spy';
 import {
   getSnapshotSettings,
   goto as goToPage,
   setIonViewport,
+  spyOnEvent,
   waitForChanges,
   waitForCustomEvent as pageWaitForCustomEvent,
 } from './page/utils';
@@ -46,6 +48,10 @@ export const test = base.extend<CustomFixtures>({
     page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
     page.waitForCustomEvent = (eventName: string, timeoutMs?: number) =>
       pageWaitForCustomEvent(page, eventName, timeoutMs);
+    page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);
+
+    // Custom event behavior
+    initPageEvents(page);
 
     await use(page);
   },

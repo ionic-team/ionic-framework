@@ -18,7 +18,7 @@ test('menu: focus trap with overlays', async () => {
   await menu.callMethod('open');
   await ionDidOpen.next();
 
-  expect(await getActiveElementID(page)).toEqual('open-modal-button');
+  expect(await getActiveElementID(page)).toEqual('menu');
 
   const openModal = await page.find('#open-modal-button');
   await openModal.click();
@@ -45,7 +45,7 @@ test('menu: focus trap with content inside overlays', async () => {
   await menu.callMethod('open');
   await ionDidOpen.next();
 
-  expect(await getActiveElementID(page)).toEqual('open-modal-button');
+  expect(await getActiveElementID(page)).toEqual('menu');
 
   const openModal = await page.find('#open-modal-button');
   await openModal.click();
