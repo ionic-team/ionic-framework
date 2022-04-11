@@ -62,6 +62,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
+  private sheetAnimation?: Animation;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -550,7 +551,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const { gesture, moveSheetToBreakpoint } = createSheetGesture(
+    const { gesture, moveSheetToBreakpoint, animation } = createSheetGesture(
       this.el,
       this.backdropEl!,
       wrapperEl,
@@ -570,6 +571,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.gesture = gesture;
     this.moveSheetToBreakpoint = moveSheetToBreakpoint;
+    this.sheetAnimation = animation;
 
     this.gesture.enable(true);
   }
@@ -725,29 +727,25 @@ export class Modal implements ComponentInterface, OverlayInterface {
       const allowedBreakpoints = breakpoints.filter((b) => b !== 0);
       const currentBreakpointIndex = allowedBreakpoints.indexOf(currentBreakpoint);
       const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length;
+      const nextBreakpoint = allowedBreakpoints[nextBreakpointIndex];
+
       /**
        * Sets the current breakpoint to the next available breakpoint.
        * If the current breakpoint is the last breakpoint, we set the current
        * breakpoint to the first non-zero breakpoint to avoid dismissing the sheet.
        */
-      this.setCurrentBreakpoint(allowedBreakpoints[nextBreakpointIndex]);
+      if (this.sheetAnimation?.isRunning()) {
+        this.sheetAnimation.onFinish(() => {
+          this.setCurrentBreakpoint(nextBreakpoint);
+        }, { oneTimeCallback: true });
+      } else {
+        this.setCurrentBreakpoint(nextBreakpoint);
+      }
     }
   }
 
   private onHandleClick = () => {
     this.moveToNextBreakpoint();
-  };
-
-  private onHandleKeyUp = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter') {
-      this.moveToNextBreakpoint();
-    }
-  };
-
-  private onHandleKeyDown = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter') {
-      ev.preventDefault();
-    }
   };
 
   private onBackdropTap = () => {
@@ -824,8 +822,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
               aria-label="Activate to adjust the size of the card overlaying the dialog"
               aria-controls={modalId}
               onClick={this.onHandleClick}
-              onKeyUp={this.onHandleKeyUp}
-              onKeyDown={this.onHandleKeyDown}
             ></button>
           )}
           <slot></slot>

@@ -221,7 +221,7 @@ export const createSheetGesture = (
     const processedStep =
       isAttemptingDismissWithCanDismiss && secondToLastBreakpoint !== undefined
         ? secondToLastBreakpoint +
-          calculateSpringStep((step - secondToLastBreakpoint) / (maxStep - secondToLastBreakpoint))
+        calculateSpringStep((step - secondToLastBreakpoint) / (maxStep - secondToLastBreakpoint))
         : step;
 
     offset = clamp(0.0001, processedStep, maxStep);
@@ -371,5 +371,6 @@ export const createSheetGesture = (
   return {
     gesture,
     moveSheetToBreakpoint,
+    animation
   };
 };
