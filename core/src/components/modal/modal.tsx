@@ -819,7 +819,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
             <button
               class="modal-handle"
               part="handle"
-              aria-label="Activate to adjust the size of the card overlaying the dialog"
+              aria-label="Activate to adjust the size of the card overlaying the screen"
               aria-controls={modalId}
               onClick={this.onHandleClick}
             ></button>
