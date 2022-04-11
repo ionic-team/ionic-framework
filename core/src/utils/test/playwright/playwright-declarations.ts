@@ -1,5 +1,7 @@
 import type { Locator, Page, Response } from '@playwright/test';
 
+import type { EventSpy } from './page/event-spy';
+
 export interface E2ELocator extends Locator {
   waitForCustomEvent: (eventName: string, timeoutMs?: number) => Promise<void>;
 }
@@ -69,4 +71,19 @@ export interface E2EPage extends Page {
       hasText?: string | RegExp;
     }
   ): E2ELocator;
+
+  /**
+   * Creates a new EventSpy and listens
+   * on the window for an event.
+   * The test will timeout if the event
+   * never fires.
+   *
+   * Usage:
+   * const ionChange = await page.spyOnEvent('ionChange');
+   * ...
+   * await ionChange.next();
+   */
+  spyOnEvent: (eventName: string) => Promise<EventSpy>;
+  _e2eEventsIds: number;
+  _e2eEvents: Map<number, any>;
 }

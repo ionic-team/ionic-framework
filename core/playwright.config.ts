@@ -101,9 +101,8 @@ const config: PlaywrightTestConfig = {
   /* Configure projects for major browsers */
   projects: generateProjects(),
   webServer: {
-    command: 'python3 -m http.server 3333',
-    port: 3333,
-    // reuseExistingServer: true, // Enable this setting to reuse the existing Stencil server
+    command: 'serve -p 3333',
+    port: 3333
   }
 };
 
