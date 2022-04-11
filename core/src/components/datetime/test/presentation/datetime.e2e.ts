@@ -82,16 +82,12 @@ class TimePickerFixture {
   }
 
   async setValue(value: string) {
+    const ionChange = await this.page.spyOnEvent('ionChange');
     await this.timePicker.evaluate((el: HTMLIonDatetimeElement, newValue: string) => {
-      return new Promise((resolve, reject) => {
-        const tmr = setTimeout(() => reject(), 5000);
-        el.addEventListener('ionChange', (ev) => {
-          clearTimeout(tmr);
-          requestAnimationFrame(() => resolve(ev));
-        });
-        el.value = newValue;
-      });
+      el.value = newValue;
     }, value);
+
+    await ionChange.next();
 
     await this.page.waitForChanges();
   }
