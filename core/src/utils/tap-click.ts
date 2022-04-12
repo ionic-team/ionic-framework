@@ -170,8 +170,7 @@ const getActivatableTarget = (ev: any): any => {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-      if (el.classList && el.classList.contains('ion-activatable')) {
+      if (el.classList.contains('ion-activatable')) {
         return el;
       }
     }
