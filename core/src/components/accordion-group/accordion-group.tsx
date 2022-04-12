@@ -101,6 +101,17 @@ export class AccordionGroup implements ComponentInterface {
       return;
     }
 
+    /**
+     * Make sure focus is in the header, not the body, of the accordion. This ensures
+     * that if there are any interactable elements in the body, their keyboard
+     * interaction doesn't get stolen by the accordion. Example: using up/down keys
+     * in ion-textarea.
+     */
+    const activeAccordionHeader = activeElement.closest('ion-accordion [slot="header"]');
+    if (!activeAccordionHeader) {
+      return;
+    }
+
     const accordionEl =
       activeElement.tagName === 'ION-ACCORDION' ? activeElement : activeElement.closest('ion-accordion');
     if (!accordionEl) {
