@@ -170,7 +170,7 @@ const getActivatableTarget = (ev: any): any => {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.classList.contains('ion-activatable')) {
+      if (!(el instanceof ShadowRoot) && el.classList.contains('ion-activatable')) {
         return el;
       }
     }
