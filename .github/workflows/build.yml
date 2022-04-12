@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          # Checkout the latest commit in this branch
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: ./.github/workflows/actions/build-core
 
   test-core-clean-build:

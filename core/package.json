@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.0.14",
+  "version": "6.0.16",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -67,6 +67,7 @@
     "puppeteer": "^10.4.0",
     "rollup": "^2.26.4",
     "sass": "^1.26.10",
+    "serve": "^13.0.2",
     "stylelint": "^13.6.1",
     "stylelint-order": "^4.1.0",
     "swiper": "5.4.1",

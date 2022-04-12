@@ -6,6 +6,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
@@ -298,15 +299,20 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      const { month, day, year, hour, minute } = parseDate(this.value);
-      this.activePartsClone = {
-        ...this.activeParts,
-        month,
-        day,
-        year,
-        hour,
-        minute,
-      };
+      const valueDateParts = parseDate(this.value);
+      if (valueDateParts) {
+        const { month, day, year, hour, minute } = valueDateParts;
+        this.activePartsClone = {
+          ...this.activeParts,
+          month,
+          day,
+          year,
+          hour,
+          minute,
+        };
+      } else {
+        printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
+      }
     }
 
     this.emitStyle();
