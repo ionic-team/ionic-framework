@@ -8,19 +8,21 @@ test.describe('datetime: presentation', () => {
 
     await page.setIonViewport();
 
-    /**
-     * Datetime will wait a frame to display the calendar body. Wait for all
-     * the test datetime components to be ready before taking a screenshot.
-     */
-    await Promise.all([
-      page.waitForSelector('ion-datetime[presentation="date-time"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="time-date"].datetime-ready'),
-      page.waitForSelector('ion-datetime[presentation="date"].datetime-ready'),
-    ]);
+    const compares = [];
+    const presentations = ['date-time', 'time-date', 'time', 'date', 'month-year', 'month', 'year'];
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `datetime-presentation-diff-${page.getSnapshotSettings()}.png`
-    );
+    for (const presentation of presentations) {
+      await page.locator('select').selectOption(presentation);
+      await page.waitForChanges();
+      compares.push({
+        presentation,
+        screenshot: await page.screenshot({ fullPage: true }),
+      });
+    }
+
+    for (const compare of compares) {
+      expect(compare.screenshot).toMatchSnapshot(`datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`)
+    }
   });
 });
 
@@ -41,8 +43,8 @@ test.describe('datetime: presentation: time', () => {
   });
 
   test('changing value from AM to PM should update the text', async () => {
-    await timePickerFixture.setValue('04:20:00');
-    await timePickerFixture.expectTime('4', '20', 'AM');
+    await timePickerFixture.setValue('05:30:00');
+    await timePickerFixture.expectTime('5', '30', 'AM');
 
     await timePickerFixture.setValue('16:40:00');
     await timePickerFixture.expectTime('4', '40', 'PM');
@@ -76,9 +78,9 @@ class TimePickerFixture {
 
   async goto() {
     await this.page.goto(`/src/components/datetime/test/presentation`);
-    this.timePicker = this.page.locator('ion-datetime[presentation="time"]');
-
-    await this.timePicker.scrollIntoViewIfNeeded();
+    await this.page.locator('select').selectOption('time');
+    await this.page.waitForSelector('.datetime-presentation-time');
+    this.timePicker = this.page.locator('ion-datetime');
   }
 
   async setValue(value: string) {
@@ -89,7 +91,8 @@ class TimePickerFixture {
 
     await ionChange.next();
 
-    await this.page.waitForChanges();
+    // Changing the value can take longer than the default 100ms to repaint
+    await this.page.waitForChanges(300);
   }
 
   async expectTime(hour: string, minute: string, ampm: string) {
