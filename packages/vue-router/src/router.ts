@@ -65,7 +65,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
-  let currentTab: string | undefined;
 
   // TODO types
   let historyChangeListeners: any[] = [];
@@ -238,8 +237,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         if (action === 'replace') {
           incomingRouteParams = {
             routerAction: 'replace',
-            routerDirection: 'none',
-            tab: currentTab
+            routerDirection: 'none'
           }
         } else if (action === 'pop') {
           const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition - delta);
@@ -254,16 +252,15 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           } else {
             incomingRouteParams = {
               routerAction: 'pop',
-              routerDirection: 'none',
-              tab: currentTab
+              routerDirection: 'none'
             }
           }
         }
+
         if (!incomingRouteParams) {
           incomingRouteParams = {
             routerAction: 'push',
-            routerDirection: direction || 'forward',
-            tab: currentTab
+            routerDirection: direction || 'forward'
           }
         }
       }
@@ -288,7 +285,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         }
 
         if (isPushed) {
-          routeInfo.tab = leavingLocationInfo.tab;
           routeInfo.pushedByRoute = (leavingLocationInfo.pathname !== '') ? leavingLocationInfo.pathname : undefined;
         } else if (routeInfo.routerAction === 'pop') {
           const route = locationHistory.findLastLocation(routeInfo);
@@ -460,9 +456,18 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     }
   }
 
+  /**
+   * This method is invoked by the IonTabs component
+   * during a history change callback. It is responsible
+   * for ensuring that tabbed routes have the correct
+   * "tab" field in its routeInfo object.
+   *
+   * IonTabs will determine if the current route
+   * is in tabs and assign it the correct tab.
+   * If the current route is not in tabs,
+   * then IonTabs will not invoke this.
+   */
   const handleSetCurrentTab = (tab: string) => {
-    currentTab = tab;
-
     const ri = { ...locationHistory.last() };
     if (ri.tab !== tab) {
       ri.tab = tab;
