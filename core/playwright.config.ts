@@ -46,14 +46,16 @@ const generateProjects = () => {
         ...project,
         metadata: {
           mode,
-          rtl: false
+          rtl: false,
+          _testing: true
         }
       });
       projectsWithMetadata.push({
         ...project,
         metadata: {
           mode,
-          rtl: true
+          rtl: true,
+          _testing: true
         }
       });
     });
