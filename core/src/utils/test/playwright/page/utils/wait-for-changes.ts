@@ -37,7 +37,7 @@ export const waitForChanges = async (page: Page, timeoutMs = 100) => {
               }
               waitComponentOnReady(childElm, promises);
             }
-          }
+          };
 
           waitComponentOnReady(document.documentElement, promiseChain);
 

@@ -21,7 +21,9 @@ test.describe('datetime: presentation', () => {
     }
 
     for (const compare of compares) {
-      expect(compare.screenshot).toMatchSnapshot(`datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`)
+      expect(compare.screenshot).toMatchSnapshot(
+        `datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`
+      );
     }
   });
 });

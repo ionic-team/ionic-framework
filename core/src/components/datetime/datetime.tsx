@@ -317,7 +317,7 @@ export class Datetime implements ComponentInterface {
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
         const { month, day, year, hour, minute } = valueDateParts;
-        const ampm = hour >= 12 ? 'pm': 'am';
+        const ampm = hour >= 12 ? 'pm' : 'am';
 
         this.activePartsClone = {
           ...this.activeParts,
@@ -326,7 +326,7 @@ export class Datetime implements ComponentInterface {
           year,
           hour,
           minute,
-          ampm
+          ampm,
         };
 
         /**

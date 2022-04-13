@@ -18,7 +18,7 @@ export class EventSpy {
   private queuedHandler: (() => void)[] = [];
   public events: Event[] = [];
 
-  constructor(public eventName: string) { }
+  constructor(public eventName: string) {}
 
   get length() {
     return this.events.length;
