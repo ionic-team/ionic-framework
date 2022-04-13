@@ -30,7 +30,7 @@ export const getToday = () => {
   const adjustedHours = date.getHours() - tzOffset / 60;
 
   /**
-   * Some timezones have include minute adjustments
+   * Some timezones include minute adjustments
    * such as 30 or 45 minutes.
    * Example: India Standard Time
    * Timezone offset: -330 = -5.5 hours.
