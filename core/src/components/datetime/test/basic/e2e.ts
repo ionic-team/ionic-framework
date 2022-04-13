@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 describe('Footer', () => {
   test('should render default buttons', async () => {
     const page = await newE2EPage({
-      html: '<ion-datetime show-default-buttons="true"></ion-datetime>'
+      html: '<ion-datetime show-default-buttons="true"></ion-datetime>',
     });
 
     const cancelButton = await page.find('ion-datetime >>> #cancel-button');
@@ -17,7 +17,7 @@ describe('Footer', () => {
 
   test('should render clear button', async () => {
     const page = await newE2EPage({
-      html: '<ion-datetime show-clear-button="true"></ion-datetime>'
+      html: '<ion-datetime show-clear-button="true"></ion-datetime>',
     });
 
     const clearButton = await page.find('ion-datetime >>> #clear-button');
@@ -28,7 +28,7 @@ describe('Footer', () => {
 
   test('should render clear and default buttons', async () => {
     const page = await newE2EPage({
-      html: '<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>'
+      html: '<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>',
     });
 
     const cancelButton = await page.find('ion-datetime >>> #cancel-button');
@@ -51,7 +51,7 @@ describe('Footer', () => {
             <ion-button id="custom-button">Hello!</ion-button>
           </ion-buttons>
         </ion-datetime>
-      `
+      `,
     });
 
     const customButton = await page.find('ion-datetime #custom-button');
@@ -68,7 +68,7 @@ describe('Footer', () => {
             <ion-button id="custom-button">Hello!</ion-button>
           </ion-buttons>
         </ion-datetime>
-      `
+      `,
     });
 
     const customButton = await page.find('ion-datetime #custom-button');
@@ -79,12 +79,11 @@ describe('Footer', () => {
 });
 
 describe('datetime: selecting a day', () => {
-
   it('should update the active day', async () => {
     const page = await newE2EPage({
       html: `
         <ion-datetime show-default-buttons="true" value="2021-12-25T12:40:00.000Z"></ion-datetime>
-      `
+      `,
     });
 
     const activeDay = await page.find('ion-datetime >>> .calendar-day-active');
@@ -99,23 +98,19 @@ describe('datetime: selecting a day', () => {
 
     expect(newActiveDay.innerText).toEqual('13');
   });
-
 });
 
 test('datetime:rtl: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/datetime/test/basic?ionic:_testing=true&rtl=true'
+    url: '/src/components/datetime/test/basic?ionic:_testing=true&rtl=true',
   });
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });
 
-
 describe('datetime: confirm date', () => {
-
   test('should set the date value based on the selected date', async () => {
-
     const page = await newE2EPage({
       html: `
         <button>Bind datetimeMonthDidChange event</button>
@@ -126,7 +121,7 @@ describe('datetime: confirm date', () => {
             InitMonthDidChangeEvent();
           });
         </script>
-      `
+      `,
     });
 
     const eventButton = await page.find('button');
@@ -146,5 +141,4 @@ describe('datetime: confirm date', () => {
 
     expect(value).toMatch('2021-12-25T12:40:00');
   });
-
 });

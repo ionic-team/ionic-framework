@@ -1,24 +1,10 @@
+import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
-
 import { generateE2EUrl } from '@utils/test';
 
-export const testModal = async (
-  type: string,
-  selector: string,
-  expectUnmount = true,
-  rtl = false
-) => {
-  const pageUrl = generateE2EUrl('modal', type, rtl);
-
-  const page = await newE2EPage({
-    url: pageUrl
-  });
-
-  const screenshotCompares = [];
+export const openModal = async (page: E2EPage, selector: string) => {
   const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
   const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-  const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
-  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
   await page.click(selector);
 
@@ -27,9 +13,25 @@ export const testModal = async (
 
   await page.waitForSelector(selector);
 
-  let modal = await page.find('ion-modal');
+  const modal = await page.find('ion-modal');
   await modal.waitForVisible();
   await page.waitForTimeout(100);
+
+  return modal;
+};
+
+export const testModal = async (type: string, selector: string, expectUnmount = true, rtl = false) => {
+  const pageUrl = generateE2EUrl('modal', type, rtl);
+
+  const page = await newE2EPage({
+    url: pageUrl,
+  });
+
+  const screenshotCompares = [];
+  const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+  let modal = await openModal(page, selector);
 
   screenshotCompares.push(await page.compareScreenshot());
 

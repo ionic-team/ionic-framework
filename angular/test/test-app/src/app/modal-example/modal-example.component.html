@@ -22,4 +22,14 @@
     <ion-button (click)="push()" class="push-page">Push page</ion-button>
     <ion-button (click)="pop()" class="pop-page">Pop page</ion-button>
   </p>
+
+  <form [formGroup]="form">
+    <ion-item id="inputWithFloatingLabel">
+      <ion-label color="primary" position="floating">Floating Label</ion-label>
+      <ion-select multiple="false" formControlName="select">
+        <ion-select-option [value]="0">Option 0</ion-select-option>
+        <ion-select-option [value]="1">Option 1</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </form>
 </ion-content>

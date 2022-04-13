@@ -17,7 +17,7 @@ test('popover - arrow side: left', async () => {
 });
 
 test('popover - arrow side: start', async () => {
-  await testPopover('start'), false;
+  await testPopover('start', false);
 });
 
 test('popover - arrow side: end', async () => {
@@ -25,15 +25,14 @@ test('popover - arrow side: end', async () => {
 });
 
 test('popover - arrow side: start, rtl', async () => {
-  await testPopover('start', false, true);
+  await testPopover('start', true);
 });
 
 test('popover - arrow side: end, rtl', async () => {
-  await testPopover('end', false, true);
+  await testPopover('end', true);
 });
 
-
-const testPopover = async (side, isRTL = false) => {
+const testPopover = async (side: string, isRTL = false) => {
   const rtl = isRTL ? '&rtl=true' : '';
   const page = await newE2EPage({ url: `/src/components/popover/test/arrow?ionic:_testing=true${rtl}` });
 
@@ -43,9 +42,9 @@ const testPopover = async (side, isRTL = false) => {
 
   const trigger = await page.find(`#${TRIGGER_ID}`);
 
-  await page.evaluate((TRIGGER_ID) => {
-    const trigger = document.querySelector(`#${TRIGGER_ID}`);
-    trigger.scrollIntoView({ block: 'center' });
+  await page.evaluate((POPOVER_TRIGGER_ID) => {
+    const popoverTrigger = document.querySelector(`#${POPOVER_TRIGGER_ID}`);
+    popoverTrigger?.scrollIntoView({ block: 'center' });
   }, TRIGGER_ID);
 
   trigger.click();
@@ -59,4 +58,4 @@ const testPopover = async (side, isRTL = false) => {
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
-}
+};

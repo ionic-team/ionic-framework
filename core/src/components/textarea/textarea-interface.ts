@@ -1,4 +1,3 @@
-
 export interface TextareaChangeEventDetail {
   value?: string | null;
 }

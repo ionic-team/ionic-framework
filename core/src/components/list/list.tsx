@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Method, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -9,11 +10,10 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-list',
   styleUrls: {
     ios: 'list.ios.scss',
-    md: 'list.md.scss'
-  }
+    md: 'list.md.scss',
+  },
 })
 export class List implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -35,7 +35,7 @@ export class List implements ComponentInterface {
   @Method()
   async closeSlidingItems(): Promise<boolean> {
     const item = this.el.querySelector('ion-item-sliding');
-    if (item && item.closeOpened) {
+    if (item?.closeOpened) {
       return item.closeOpened();
     }
     return false;
@@ -54,10 +54,9 @@ export class List implements ComponentInterface {
 
           'list-inset': inset,
           [`list-lines-${lines}`]: lines !== undefined,
-          [`list-${mode}-lines-${lines}`]: lines !== undefined
+          [`list-${mode}-lines-${lines}`]: lines !== undefined,
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

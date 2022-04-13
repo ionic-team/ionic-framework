@@ -8,7 +8,11 @@ export { IonTabs } from './directives/navigation/ion-tabs';
 export { IonBackButtonDelegateDirective as IonBackButtonDelegate } from './directives/navigation/ion-back-button';
 export { NavDelegate } from './directives/navigation/nav-delegate';
 export { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
-export { RouterLinkDelegateDirective as RouterLinkDelegate } from './directives/navigation/router-link-delegate';
+export {
+  RouterLinkDelegateDirective as RouterLinkDelegate,
+  RouterLinkWithHrefDelegateDirective as RouterLinkWithHrefDelegate,
+} from './directives/navigation/router-link-delegate';
+
 export { NavParams } from './directives/navigation/nav-params';
 export { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
 export { VirtualItem } from './directives/virtual-scroll/virtual-item';

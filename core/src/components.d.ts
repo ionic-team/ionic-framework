@@ -5,9 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
+import { CounterFormatter } from "./components/item/item-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PinFormatter } from "./components/range/range-interface";
@@ -757,6 +758,10 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  The function is called for each rendered calendar day, for the previous, current and next month. Custom implementations should be optimized for performance to avoid jank.
+         */
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
+        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale": string;
@@ -1135,6 +1140,10 @@ export namespace Components {
          */
         "counter": boolean;
         /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: CounterFormatter;
+        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -1254,11 +1263,11 @@ export namespace Components {
     }
     interface IonItemSliding {
         /**
-          * Close the sliding item. Items can also be closed from the [List](../list).
+          * Close the sliding item. Items can also be closed from the [List](./list).
          */
         "close": () => Promise<void>;
         /**
-          * Close all of the sliding items in the list. Items can also be closed from the [List](../list).
+          * Close all of the sliding items in the list. Items can also be closed from the [List](./list).
          */
         "closeOpened": () => Promise<boolean>;
         /**
@@ -1506,6 +1515,10 @@ export namespace Components {
          */
         "breakpoints"?: number[];
         /**
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+         */
+        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        /**
           * The component to display inside of the modal.
          */
         "component"?: ComponentRef;
@@ -1528,6 +1541,10 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * Returns the current breakpoint of a sheet style modal
+         */
+        "getCurrentBreakpoint": () => Promise<number | undefined>;
         /**
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
@@ -1575,11 +1592,16 @@ export namespace Components {
          */
         "presentingElement"?: HTMLElement;
         /**
+          * Move a sheet style modal to a specific breakpoint. The breakpoint value must be a value defined in your `breakpoints` array.
+         */
+        "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
+        /**
           * If `true`, a backdrop will be displayed behind the modal.
          */
         "showBackdrop": boolean;
         /**
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
          */
         "swipeToClose": boolean;
         /**
@@ -1856,7 +1878,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow": boolean;
         /**
@@ -2183,7 +2205,7 @@ export namespace Components {
         /**
           * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
          */
-        "componentProps"?: {[key: string]: any};
+        "componentProps"?: { [key: string]: any };
         /**
           * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
          */
@@ -2425,7 +2447,7 @@ export namespace Components {
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
@@ -2977,7 +2999,7 @@ export namespace Components {
          */
         "checkEnd": () => Promise<void>;
         /**
-          * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifing by an offset and a length.
+          * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifying by an offset and a length.
          */
         "checkRange": (offset: number, len?: number) => Promise<void>;
         "domRender"?: DomRenderFn;
@@ -4442,6 +4464,10 @@ declare namespace LocalJSX {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Returns if an individual date (calendar day) is enabled or disabled.  If `true`, the day will be enabled/interactive. If `false`, the day will be disabled/non-interactive.  The function accepts an ISO 8601 date string of a given day. By default, all days are enabled. Developers can use this function to write custom logic to disable certain days.  The function is called for each rendered calendar day, for the previous, current and next month. Custom implementations should be optimized for performance to avoid jank.
+         */
+        "isDateEnabled"?: (dateIsoString: string) => boolean;
+        /**
           * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
          */
         "locale"?: string;
@@ -4860,6 +4886,10 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: CounterFormatter;
+        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -5215,6 +5245,10 @@ declare namespace LocalJSX {
          */
         "breakpoints"?: number[];
         /**
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+         */
+        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        /**
           * The component to display inside of the modal.
          */
         "component"?: ComponentRef;
@@ -5269,6 +5303,10 @@ declare namespace LocalJSX {
          */
         "onDidPresent"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted after the modal breakpoint has changed.
+         */
+        "onIonBreakpointDidChange"?: (event: CustomEvent<ModalBreakpointChangeEventDetail>) => void;
+        /**
           * Emitted after the modal has dismissed.
          */
         "onIonModalDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
@@ -5303,6 +5341,7 @@ declare namespace LocalJSX {
         "showBackdrop"?: boolean;
         /**
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
          */
         "swipeToClose"?: boolean;
         /**
@@ -5493,7 +5532,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow"?: boolean;
         /**
@@ -5733,6 +5772,14 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
+         */
+        "onIonKnobMoveEnd"?: (event: CustomEvent<RangeKnobMoveEndEventDetail>) => void;
+        /**
+          * Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
+         */
+        "onIonKnobMoveStart"?: (event: CustomEvent<RangeKnobMoveStartEventDetail>) => void;
+        /**
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
@@ -5851,7 +5898,7 @@ declare namespace LocalJSX {
         /**
           * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
          */
-        "componentProps"?: {[key: string]: any};
+        "componentProps"?: { [key: string]: any };
         /**
           * Used internally by `ion-router` to know when this route did change.
          */
@@ -6128,7 +6175,7 @@ declare namespace LocalJSX {
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -6159,6 +6206,10 @@ declare namespace LocalJSX {
           * Emitted when the value has changed.
          */
         "onIonChange"?: (event: CustomEvent<SelectChangeEventDetail>) => void;
+        /**
+          * Emitted when the overlay is dismissed.
+         */
+        "onIonDismiss"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the select has focus.
          */
@@ -6332,7 +6383,7 @@ declare namespace LocalJSX {
         /**
           * Expression to be called when the split-pane visibility has changed
          */
-        "onIonSplitPaneVisible"?: (event: CustomEvent<{visible: boolean}>) => void;
+        "onIonSplitPaneVisible"?: (event: CustomEvent<{ visible: boolean }>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
@@ -6419,11 +6470,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the navigation has finished transitioning to a new component.
          */
-        "onIonTabsDidChange"?: (event: CustomEvent<{tab: string}>) => void;
+        "onIonTabsDidChange"?: (event: CustomEvent<{ tab: string }>) => void;
         /**
           * Emitted when the navigation is about to transition to a new component.
          */
-        "onIonTabsWillChange"?: (event: CustomEvent<{tab: string}>) => void;
+        "onIonTabsWillChange"?: (event: CustomEvent<{ tab: string }>) => void;
         "useRouter"?: boolean;
     }
     interface IonText {

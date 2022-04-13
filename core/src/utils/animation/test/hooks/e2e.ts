@@ -106,34 +106,36 @@ test(`animation:css: hooks`, async () => {
   screenshotCompares.push(await page.compareScreenshot('end animation'));
 });
 
-const waitForEventToBeCalled = (eventName: string, page: any, el: HTMLElement, fn: any, num = 1) => {
-  return new Promise(async resolve => {
-    const EVENT_FIRED = `on${eventName}`;
-    const eventFiredCount: any = { count: 0 };
-    await page.exposeFunction(EVENT_FIRED, () => {
-      eventFiredCount.count += 1;
-    });
-
-    await listenForEvent(page, eventName, el, EVENT_FIRED);
-
-    if (fn) {
-      await fn();
-    }
-
-    await waitForFunctionTestContext((payload: any) => {
-      return payload.eventFiredCount.count === payload.num;
-    }, { eventFiredCount, num });
-
-    return resolve();
+const waitForEventToBeCalled = async (eventName: string, page: any, el: HTMLElement, fn: any, num = 1) => {
+  const EVENT_FIRED = `on${eventName}`;
+  const eventFiredCount: any = { count: 0 };
+  await page.exposeFunction(EVENT_FIRED, () => {
+    eventFiredCount.count += 1;
   });
+
+  await listenForEvent(page, eventName, el, EVENT_FIRED);
+
+  if (fn) {
+    await fn();
+  }
+
+  await waitForFunctionTestContext(
+    (payload: any) => {
+      return payload.eventFiredCount.count === payload.num;
+    },
+    { eventFiredCount, num }
+  );
 };
 
 const getStyles = async (page: any, selector: string) => {
-  return page.evaluate((payload: any) => {
-    const el = document.querySelector(payload.selector);
+  return page.evaluate(
+    (payload: any) => {
+      const el = document.querySelector(payload.selector);
 
-    return JSON.parse(JSON.stringify(getComputedStyle(el)));
-  }, { selector });
+      return JSON.parse(JSON.stringify(getComputedStyle(el)));
+    },
+    { selector }
+  );
 };
 
 const getClassList = async (el: HTMLElement) => {

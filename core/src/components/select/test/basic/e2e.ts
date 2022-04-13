@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('select: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/select/test/basic?ionic:_testing=true'
+    url: '/src/components/select/test/basic?ionic:_testing=true',
   });
 
   const compares = [];
@@ -10,6 +10,10 @@ test('select: basic', async () => {
 
   // Gender Alert Select
   let select = await page.find('#gender');
+
+  // add an event spy to the select
+  const ionDismiss = await select.spyOnEvent('ionDismiss');
+
   await select.click();
 
   let alert = await page.find('ion-alert');
@@ -19,6 +23,8 @@ test('select: basic', async () => {
   compares.push(await page.compareScreenshot('should open gender single select'));
 
   await alert.callMethod('dismiss');
+
+  expect(ionDismiss).toHaveReceivedEvent();
 
   // Skittles Action Sheet Select
   select = await page.find('#skittles');
@@ -32,6 +38,8 @@ test('select: basic', async () => {
 
   await actionSheet.callMethod('dismiss');
 
+  expect(ionDismiss).toHaveReceivedEvent();
+
   // Custom Alert Select
   select = await page.find('#customAlertSelect');
   await select.click();
@@ -43,6 +51,8 @@ test('select: basic', async () => {
   compares.push(await page.compareScreenshot('should open custom alert select'));
 
   await alert.callMethod('dismiss');
+
+  expect(ionDismiss).toHaveReceivedEvent();
 
   // Custom Popover Select
   select = await page.find('#customPopoverSelect');
@@ -69,8 +79,10 @@ test('select: basic', async () => {
 
   popoverOption2 = await popover.find('.select-interface-option:nth-child(2)');
   expect(popoverOption2).toHaveClass('ion-focused');
-  
+
   await popover.callMethod('dismiss');
+
+  expect(ionDismiss).toHaveReceivedEvent();
 
   // Custom Action Sheet Select
   select = await page.find('#customActionSheetSelect');
@@ -84,6 +96,8 @@ test('select: basic', async () => {
 
   await actionSheet.callMethod('dismiss');
 
+  expect(ionDismiss).toHaveReceivedEvent();
+
   for (const compare of compares) {
     expect(compare).toMatchScreenshot();
   }
@@ -91,7 +105,7 @@ test('select: basic', async () => {
 
 test('select:rtl: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/select/test/basic?ionic:_testing=true&rtl=true'
+    url: '/src/components/select/test/basic?ionic:_testing=true&rtl=true',
   });
 
   const compares = [];
