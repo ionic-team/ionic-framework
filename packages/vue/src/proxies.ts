@@ -271,6 +271,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'name',
   'disabled',
   'readonly',
+  'isDateEnabled',
   'min',
   'max',
   'presentation',
@@ -428,7 +429,8 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'routerAnimation',
   'routerDirection',
   'target',
-  'type'
+  'type',
+  'counterFormatter'
 ]);
 
 
@@ -589,7 +591,9 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
   'ionChange',
   'ionStyle',
   'ionFocus',
-  'ionBlur'
+  'ionBlur',
+  'ionKnobMoveStart',
+  'ionKnobMoveEnd'
 ],
 'value', 'v-ion-change', 'ionChange');
 
@@ -699,6 +703,7 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
   'value',
   'ionChange',
   'ionCancel',
+  'ionDismiss',
   'ionFocus',
   'ionBlur',
   'ionStyle'

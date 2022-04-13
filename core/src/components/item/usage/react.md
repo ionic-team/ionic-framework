@@ -317,6 +317,18 @@ export const ItemExamples: React.FC = () => {
           <IonLabel>Range</IonLabel>
           <IonRange></IonRange>
         </IonItem>
+
+        {/*-- Item Counter --*/}
+        <IonItem counter={true}>
+          <IonLabel>Counter</IonLabel>
+          <IonInput maxlength="20"></IonInput>
+        </IonItem>
+
+        {/*-- Item Counter Formatter --*/}
+        <IonItem counter={true} counterFormatter={(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`}>
+          <IonLabel>Counter</IonLabel>
+          <IonInput maxlength="20"></IonInput>
+        </IonItem>
       </IonContent>
     </IonPage>
   );

@@ -16,6 +16,31 @@ For developers who need to sort an array based on the order of the items in `ion
 
 In some cases, it may be necessary for an app to re-order both the array and the DOM nodes on its own. When this happens, it is recommended to pass `false` to the `complete()` method. This will prevent Ionic from re-ordering any DOM nodes inside of `ion-reorder-group`.
 
+## Usage with Virtual Scroll
+
+The reorder group requires a scroll container to function. When using a virtual scrolling solution, you will need to disable scrolling on the `ion-content` and indicate which element container is responsible for the scroll container with the `.ion-content-scroll-host` class target.
+
+```html
+<ion-content scroll-y="false">
+  <virtual-scroll-element class="ion-content-scroll-host">
+    <ion-reorder-group disabled="false">
+      <ion-item>
+        <ion-label>
+          Item 1
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          Item 2
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+  </virtual-scroll-element>
+</ion-content>
+```
+
 ## Interfaces
 
 ### ItemReorderEventDetail

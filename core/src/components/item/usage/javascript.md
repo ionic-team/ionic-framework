@@ -333,3 +333,27 @@
   <ion-range></ion-range>
 </ion-item>
 ```
+
+### Item Counter
+
+```html
+<ion-item counter="true">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+```
+
+### Item Counter Formatter
+
+```html
+<ion-item counter="true" id="custom-item">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+
+<script>
+  const customItem = document.querySelector('#custom-item');
+  customItem.counterFormatter = (inputLength, maxLength) => `${maxLength - inputLength} characters remaining`; 
+</script>
+
+```

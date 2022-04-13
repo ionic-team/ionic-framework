@@ -54,7 +54,7 @@ Developers can create a sheet modal effect similar to the drawer components avai
 
 The `breakpoints` property accepts an array which states each breakpoint that the sheet can snap to when swiped. A `breakpoints` property of `[0, 0.5, 1]` would indicate that the sheet can be swiped to show 0% of the modal, 50% of the modal, and 100% of the modal. When the modal is swiped to 0%, the modal will be automatically dismissed.
 
-The `initialBreakpoint` property is required so that the sheet modal knows which breakpoint to start at when presenting. The `initalBreakpoint` value must also exist in the `breakpoints` array. Given a `breakpoints` value of `[0, 0.5, 1]`, an `initialBreakpoint` value of `0.5` would be valid as `0.5` is in the `breakpoints` array. An `initialBreakpoint` value of `0.25` would not be valid as `0.25` does not exist in the `breakpoints` array.
+The `initialBreakpoint` property is required so that the sheet modal knows which breakpoint to start at when presenting. The `initialBreakpoint` value must also exist in the `breakpoints` array. Given a `breakpoints` value of `[0, 0.5, 1]`, an `initialBreakpoint` value of `0.5` would be valid as `0.5` is in the `breakpoints` array. An `initialBreakpoint` value of `0.25` would not be valid as `0.25` does not exist in the `breakpoints` array.
 
 The `backdropBreakpoint` property can be used to customize the point at which the `ion-backdrop` will begin to fade in. This is useful when creating interfaces that have content underneath the sheet that should remain interactive. A common use case is a sheet modal that overlays a map where the map is interactive until the sheet is fully expanded.
 
@@ -62,7 +62,31 @@ See [Usage](#usage) for examples on how to use the sheet modal.
 
 > Note: The `swipeToClose` property has no effect when using a sheet modal as sheet modals must be swipeable in order to be usable.
 
+## Preventing a Modal from Dismissing
+
+When entering data into a modal, it is often desirable to have a way of preventing accidental data loss. The `canDismiss` property on `ion-modal` gives developers control over when a modal is allowed to dismiss.
+
+There are two different ways of using the `canDismiss` property.
+
+> Note: When using a sheet modal, `canDismiss` will not be checked on swipe if there is no `0` breakpoint set. However, it will still be checked when pressing `Esc` or the hardware back button.
+
+### Setting a boolean value
+
+Developers can set `canDismiss` to a boolean value. If `canDismiss` is `true`, then the modal will close when users attempt to dismiss the modal. If `canDismiss` is `false`, then the modal will not close when users attempt to dismiss the modal.
+
+Setting a boolean value should be used when you need to require a particular action to be taken prior to a modal being dismissed. For example, if developers want to require that a "Terms of Use" checkbox is checked prior to closing the modal, they could set `canDismiss` to `false` initially and update it to `true` when the checkbox is checked.
+
+### Setting a callback function
+
+Developers can set `canDismiss` to be a function. This function must return a `Promise` that resolves to either `true` or `false`. If the promise resolves to `true`, then the modal will dismiss. If the promise resolves to `false`, then the modal will not dismiss.
+
+Setting a callback function should be used when you have complex dismissing criteria such as showing a confirmation dialog prior to dismissing the modal. The option that users select in this dialog can then be used to determine whether or not the modal should proceed with dismissing.
+
+Note that setting a callback function will cause the swipe gesture to be interrupted when using a card or sheet modal. This is because Ionic does not know what your callback function will resolve to ahead of time.
+
 ## Interfaces
+
+### ModalOptions
 
 Below you will find all of the options available to you when using the `modalController`. These options should be supplied when calling `modalController.create()`.
 
@@ -83,6 +107,15 @@ interface ModalOptions {
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
+}
+```
+### ModalCustomEvent
+
+While not required, this interface can be used in place of the `CustomEvent` interface for stronger typing with Ionic events emitted from this component.
+
+```typescript
+interface ModalCustomEvent extends CustomEvent {
+  target: HTMLIonModalElement;
 }
 ```
 
@@ -216,11 +249,18 @@ When the backdrop is disabled, users will be able to interact with elements outs
     <app-angular-component title="Ionic"></app-angular-component>
   </ng-template>
 </ion-modal>
+
+<!-- Require Action Sheet confirmation before dismissing -->
+<ion-modal [isOpen]="true" [canDismiss]="canDismiss">
+  <ng-template>
+    <ion-content>Modal Content</ion-content>
+  </ng-template>
+</ion-modal>
 ```
 
 ```typescript
 import { Component } from '@angular/core';
-import { IonRouterOutlet } from '@ionic/angular';
+import { IonRouterOutlet, ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'modal-example',
@@ -228,7 +268,36 @@ import { IonRouterOutlet } from '@ionic/angular';
   styleUrls: ['./modal-example.css']
 })
 export class ModalExample {
-  constructor(public routerOutlet: IonRouterOutlet) {}
+  constructor(
+    public routerOutlet: IonRouterOutlet,
+    private actionSheetCtrl: ActionSheetController
+  ) {}
+
+  async canDismiss() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Are you sure you want to discard your changes?',
+      buttons: [
+        {
+          text: 'Discard Changes',
+          role: 'destructive'
+        },
+        {
+          text: 'Keep Editing',
+          role: 'cancel'
+        }
+      ]
+    });
+    
+    await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    
+    if (role === 'destructive') {
+      return true;
+    }
+
+    return false;
+  }
 }
 ```
 
@@ -450,36 +519,73 @@ In Angular, the CSS of a specific page is scoped only to elements of that page. 
 ### Inline Modal
 
 ```html
-<!-- Default -->
-<ion-modal is-open="true">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
-
-<!-- Use a trigger -->
-<ion-button id="trigger-button">Click to open modal</ion-button>
-<ion-modal trigger="trigger-button">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
-
-<!-- Sheet Modal -->
-<ion-modal is-open="true" id="sheet-modal">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
-
-<!-- Card Modal -->
-<ion-modal is-open="true" id="card-modal">
-  <ion-content>Modal Content</ion-content>
-</ion-modal>
+<ion-app>
+  <!-- Default -->
+  <ion-modal is-open="true">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Use a trigger -->
+  <ion-button id="trigger-button">Click to open modal</ion-button>
+  <ion-modal trigger="trigger-button">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Sheet Modal -->
+  <ion-modal is-open="true" id="sheet-modal">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Card Modal -->
+  <ion-modal is-open="true" id="card-modal">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+  
+  <!-- Require Action Sheet confirmation before dismissing -->
+  <ion-modal is-open="true" id="can-dismiss-modal">
+    <ion-content>Modal Content</ion-content>
+  </ion-modal>
+</ion-app>
 
 <script>
   const sheetModal = document.querySelector('#sheet-modal');
   const cardModal = document.querySelector('#sheet-modal');
+  const canDismissModal = document.querySelector('#can-dismiss-modal');
+  const app = document.querySelector('ion-app');
 
   sheetModal.breakpoints = [0.1, 0.5, 1];
   sheetModal.initialBreakpoint = 0.5;
   
   cardModal.swipeToClose = true;
   cardModal.presentingElement = document.querySelector('ion-app');
+  
+  canDismissModal.canDismiss = async () => {
+    const actionSheet = document.createElement('ion-action-sheet');
+    
+    actionSheet.header = 'Are you sure you want to discard your changes?';
+    actionSheet.buttons = [
+      {
+        text: 'Discard Changes',
+        role: 'destructive'
+      },
+      {
+        text: 'Keep Editing',
+        role: 'cancel'
+      }
+    ];
+    
+    app.appendChild(actionSheet);
+    
+    await actionSheet.present();
+            
+    const { role } = await actionSheet.onDidDismiss();
+    
+    if (role === 'destructive') {
+      return true;
+    }
+    
+    return false;    
+  }
 </script>
 ```
 
@@ -630,8 +736,38 @@ interface Props {
 
 import React from 'react';
 import AppReactComponent from './AppReactComponent';
-import { IonModal, IonContent, IonButton } from '@ionic/react';
+import { IonModal, IonContent, IonButton, useIonActionSheet } from '@ionic/react';
 export const ModalExample: React.FC<Props> = ({ router }) => {
+  const [present, dismiss] = useIonActionSheet();
+
+  const canDismiss = () => {
+    return new Promise(async (resolve) => {
+      await present({
+        header: 'Are you sure you want to discard your changes?',
+        buttons: [
+          {
+            text: 'Discard Changes',
+            role: 'destructive'
+          },
+          {
+            text: 'Keep Editing',
+            role: 'cancel'
+          }
+        ],
+        onDidDismiss: (ev: CustomEvent) => {
+            const role = ev.detail.role;
+            
+            if (role === 'destructive') {
+              resolve(true);
+            }
+            
+            resolve(false);
+          }
+        });
+      });
+    });
+  }
+
   return (
     <>
       {/* Default */}
@@ -666,6 +802,11 @@ export const ModalExample: React.FC<Props> = ({ router }) => {
       {/* Passing Props */}
       <IonModal isOpen={true}>
         <AppReactComponent title="Ionic"></AppReactComponent>
+      </IonModal>
+      
+      {/* Require Action Sheet confirmation before dismissing */}
+      <IonModal isOpen={true} canDismiss={canDismiss}>
+        <IonContent>Modal Content</IonContent>
       </IonModal>
     </>
   );
@@ -881,6 +1022,7 @@ const Home: React.FC = () => {
 
 ```tsx
 import { Component, Element, h } from '@stencil/core';
+import { actionSheetController } from '@ionic/core';
 
 @Component({
   tag: 'modal-example',
@@ -891,6 +1033,32 @@ export class ModalExample {
   
   componentDidLoad() {
     this.routerOutlet = this.el.closest('ion-router-outlet');
+  }
+  
+  async canDismiss() {
+    const actionSheet = await actionSheetController.create({
+      header: 'Are you sure you want to discard your changes?',
+      buttons: [
+        {
+          text: 'Discard Changes',
+          role: 'destructive'
+        },
+        {
+          text: 'Keep Editing',
+          role: 'cancel'
+        }
+      ]
+    });
+    
+    await actionSheet.present();
+    
+    const { role } = await actionSheet.onDidDismiss();
+    
+    if (role === 'destructive') {
+      return true;
+    }
+    
+    return false;
   }
   
   render() {
@@ -928,6 +1096,11 @@ export class ModalExample {
         {/* Passing Props */}
         <ion-modal isOpen={true}>
           <app-stencil-component title="Ionic"></app-stencil-component>
+        </ion-modal>
+        
+        {/* Require Action Sheet confirmation before dismissing */}
+        <ion-modal isOpen={true} canDismiss={() => this.canDismiss()}>
+          <ion-content>Modal Content</ion-content>
         </ion-modal>
       </div>
     )
@@ -1184,13 +1357,50 @@ export class ModalExample {
   <app-vue-component title="Ionic"></app-vue-component>
 </ion-modal>
 
+<!-- Require Action Sheet confirmation before dismissing -->
+<ion-modal
+  :is-open="true"
+  :can-dismiss="canDismiss"
+>
+  <ion-content>Modal Content</ion-content>
+</ion-modal>
+
 <script>
   import { IonModal, IonButton, IonContent } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import AppVueComponent from './AppVueComponent.vue'
   
   export default defineComponent({
-    components: { IonModal, IonButton, IonContent, AppVueComponent }
+    components: { IonModal, IonButton, IonContent, AppVueComponent },
+    setup() {
+      const canDismiss = async () => {
+        const actionSheet = await actionSheetController.create({
+          header: 'Are you sure you want to discard your changes?',
+          buttons: [
+            {
+              text: 'Discard Changes',
+              role: 'destructive'
+            },
+            {
+              text: 'Keep Editing',
+              role: 'cancel'
+            }
+          ]
+        });
+        
+        await actionSheet.present();
+        
+        const { role } = await actionSheet.onDidDismiss();
+        
+        if (role === 'destructive') {
+          return true;
+        }
+        
+        return false;
+      };
+      
+      return { canDismiss }
+    }
   });
 </script>
 ```
@@ -1376,6 +1586,7 @@ export default {
 | `backdropBreakpoint` | `backdrop-breakpoint` | A decimal value between 0 and 1 that indicates the point after which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value is exclusive meaning the backdrop will become active after the value specified.                                                           | `number`                                                | `0`         |
 | `backdropDismiss`    | `backdrop-dismiss`    | If `true`, the modal will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                                                                                                 | `boolean`                                               | `true`      |
 | `breakpoints`        | --                    | The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property. For example: [0, .25, .5, 1] | `number[] \| undefined`                                 | `undefined` |
+| `canDismiss`         | `can-dismiss`         | Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.                                                                                      | `(() => Promise<boolean>) \| boolean \| undefined`      | `undefined` |
 | `enterAnimation`     | --                    | Animation to use when the modal is presented.                                                                                                                                                                                                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
 | `handle`             | `handle`              | The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.                                                                                                                                                                                                                                            | `boolean \| undefined`                                  | `undefined` |
 | `htmlAttributes`     | --                    | Additional attributes to pass to the modal.                                                                                                                                                                                                                                                                                                                                                          | `undefined \| { [key: string]: any; }`                  | `undefined` |
@@ -1386,22 +1597,23 @@ export default {
 | `mode`               | `mode`                | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                                                                                    | `"ios" \| "md"`                                         | `undefined` |
 | `presentingElement`  | --                    | The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.                                                                                                                                                                                                                                    | `HTMLElement \| undefined`                              | `undefined` |
 | `showBackdrop`       | `show-backdrop`       | If `true`, a backdrop will be displayed behind the modal.                                                                                                                                                                                                                                                                                                                                            | `boolean`                                               | `true`      |
-| `swipeToClose`       | `swipe-to-close`      | If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.                                                                                                                                                                                                                                                                                                                             | `boolean`                                               | `false`     |
+| `swipeToClose`       | `swipe-to-close`      | <span style="color:red">**[DEPRECATED]**</span> - To prevent modals from dismissing, use canDismiss instead.<br/><br/>If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.                                                                                                                                                                                                       | `boolean`                                               | `false`     |
 | `trigger`            | `trigger`             | An ID corresponding to the trigger element that causes the modal to open when clicked.                                                                                                                                                                                                                                                                                                               | `string \| undefined`                                   | `undefined` |
 
 
 ## Events
 
-| Event                 | Description                                                                | Type                                   |
-| --------------------- | -------------------------------------------------------------------------- | -------------------------------------- |
-| `didDismiss`          | Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.   | `CustomEvent<OverlayEventDetail<any>>` |
-| `didPresent`          | Emitted after the modal has presented. Shorthand for ionModalWillDismiss.  | `CustomEvent<void>`                    |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.                                     | `CustomEvent<OverlayEventDetail<any>>` |
-| `ionModalDidPresent`  | Emitted after the modal has presented.                                     | `CustomEvent<void>`                    |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed.                                    | `CustomEvent<OverlayEventDetail<any>>` |
-| `ionModalWillPresent` | Emitted before the modal has presented.                                    | `CustomEvent<void>`                    |
-| `willDismiss`         | Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss. | `CustomEvent<OverlayEventDetail<any>>` |
-| `willPresent`         | Emitted before the modal has presented. Shorthand for ionModalWillPresent. | `CustomEvent<void>`                    |
+| Event                    | Description                                                                | Type                                            |
+| ------------------------ | -------------------------------------------------------------------------- | ----------------------------------------------- |
+| `didDismiss`             | Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.   | `CustomEvent<OverlayEventDetail<any>>`          |
+| `didPresent`             | Emitted after the modal has presented. Shorthand for ionModalWillDismiss.  | `CustomEvent<void>`                             |
+| `ionBreakpointDidChange` | Emitted after the modal breakpoint has changed.                            | `CustomEvent<ModalBreakpointChangeEventDetail>` |
+| `ionModalDidDismiss`     | Emitted after the modal has dismissed.                                     | `CustomEvent<OverlayEventDetail<any>>`          |
+| `ionModalDidPresent`     | Emitted after the modal has presented.                                     | `CustomEvent<void>`                             |
+| `ionModalWillDismiss`    | Emitted before the modal has dismissed.                                    | `CustomEvent<OverlayEventDetail<any>>`          |
+| `ionModalWillPresent`    | Emitted before the modal has presented.                                    | `CustomEvent<void>`                             |
+| `willDismiss`            | Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss. | `CustomEvent<OverlayEventDetail<any>>`          |
+| `willPresent`            | Emitted before the modal has presented. Shorthand for ionModalWillPresent. | `CustomEvent<void>`                             |
 
 
 ## Methods
@@ -1413,6 +1625,16 @@ Dismiss the modal overlay after it has been presented.
 #### Returns
 
 Type: `Promise<boolean>`
+
+
+
+### `getCurrentBreakpoint() => Promise<number | undefined>`
+
+Returns the current breakpoint of a sheet style modal
+
+#### Returns
+
+Type: `Promise<number | undefined>`
 
 
 
@@ -1439,6 +1661,17 @@ Type: `Promise<OverlayEventDetail<T>>`
 ### `present() => Promise<void>`
 
 Present the modal overlay after it has been created.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `setCurrentBreakpoint(breakpoint: number) => Promise<void>`
+
+Move a sheet style modal to a specific breakpoint. The breakpoint value must
+be a value defined in your `breakpoints` array.
 
 #### Returns
 

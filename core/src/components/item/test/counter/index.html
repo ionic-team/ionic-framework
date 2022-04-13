@@ -25,16 +25,28 @@
       <ion-content class="ion-padding-vertical">
         <ion-list>
           <ion-item counter="true">
-            <ion-label>Counter</ion-label>
+            <ion-label position="stacked">Counter</ion-label>
             <ion-input maxlength="20"></ion-input>
           </ion-item>
 
           <ion-item counter="true">
-            <ion-label>Counter with value</ion-label>
+            <ion-label position="stacked">Counter with value</ion-label>
             <ion-input maxlength="20" value="some value"></ion-input>
+          </ion-item>
+
+          <ion-item counter="true" id="customFormatter">
+            <ion-label position="stacked">Counter with custom formatter</ion-label>
+            <ion-input maxlength="20" value=""></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
     </ion-app>
+
+    <script>
+      const customFormatter = document.getElementById('customFormatter');
+      customFormatter.counterFormatter = (inputLength, maxLength) => {
+        return `${maxLength - inputLength} characters left`;
+      };
+    </script>
   </body>
 </html>

@@ -1,8 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
-import { componentOnReady } from '../../utils/helpers';
 
 import { handleFooterFade } from './footer.utils';
 
@@ -59,20 +59,19 @@ export class Footer implements ComponentInterface {
 
     if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = pageEl ? pageEl.querySelector('ion-content') : null;
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
+
+      if (!contentEl) {
+        printIonContentErrorMsg(this.el);
+        return;
+      }
 
       this.setupFadeFooter(contentEl);
     }
   };
 
-  private setupFadeFooter = async (contentEl: HTMLIonContentElement | null) => {
-    if (!contentEl) {
-      console.error('ion-footer requires a content to collapse. Make sure there is an ion-content.');
-      return;
-    }
-
-    await new Promise((resolve) => componentOnReady(contentEl, resolve));
-    const scrollEl = (this.scrollEl = await contentEl.getScrollElement());
+  private setupFadeFooter = async (contentEl: HTMLElement) => {
+    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
 
     /**
      * Handle fading of toolbars on scroll

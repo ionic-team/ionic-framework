@@ -24,6 +24,21 @@ The iOS native `ion-refresher` relies on rubber band scrolling in order to work 
 
 Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](../spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
+### Virtual Scroll Usage
+
+Refresher requires a scroll container to function. When using a virtual scrolling solution, you will need to disable scrolling on the `ion-content` and indicate which element container is responsible for the scroll container with the `.ion-content-scroll-host` class target.
+
+```html
+<ion-content scroll-y="false">
+  <ion-refresher slot="fixed">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <virtual-scroll-element class="ion-content-scroll-host">
+    <!-- Your virtual scroll content -->
+  </virtual-scroll-element>
+</ion-content>
+```
+
 ## Interfaces
 
 ### RefresherEventDetail
