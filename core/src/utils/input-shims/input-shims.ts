@@ -1,4 +1,4 @@
-import { findClosestIonContent } from '@utils/content';
+import { findClosestIonContent } from '../content';
 
 import type { Config } from '../../interface';
 import { componentOnReady } from '../helpers';
