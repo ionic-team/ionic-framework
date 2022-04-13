@@ -12,7 +12,7 @@ import {
   IonPopover
 } from '@ionic/react';
 import { calendar } from 'ionicons/icons';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, getDate, getMonth, getYear } from 'date-fns';
 
 export const DateTimeExamples: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2012-12-15T13:47:20.789');
@@ -89,6 +89,16 @@ export const DateTimeExamples: React.FC = () => {
           <IonButton onClick={() => reset()}>Reset</IonButton>
         </IonButtons>
       </IonDatetime>
+
+      {/* Disable custom days */}
+      <IonDatetime isDateEnabled={(dateIsoString: string) => {
+        const date = new Date(dateIsoString);
+        if (getDate(date) === 1 && getMonth(date) === 0 && getYear(date) === 2022) {
+          // Disables January 1, 2022.
+          return false;
+        }
+        return true;
+      }}></IonDatetime>
       
       {/* Datetime in overlay */}
       <IonButton id="open-modal">Open Datetime Modal</IonButton>

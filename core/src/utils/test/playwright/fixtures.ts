@@ -9,10 +9,15 @@ import type {
 } from '@playwright/test';
 import { test as base } from '@playwright/test';
 
-type IonicPage = Page & {
+import { EventSpy, initPageEvents, addE2EListener } from './eventSpy';
+
+export type IonicPage = Page & {
   goto: (url: string) => Promise<null | Response>;
   setIonViewport: () => Promise<void>;
   getSnapshotSettings: () => string;
+  spyOnEvent: (eventName: string) => Promise<EventSpy>;
+  _e2eEventsIds: number;
+  _e2eEvents: Map<number, any>;
 };
 
 type CustomTestArgs = PlaywrightTestArgs &
@@ -38,7 +43,7 @@ export const test = base.extend<CustomFixtures>({
      * to be hydrated before proceeding with the test.
      */
     page.goto = async (url: string) => {
-      const { mode, rtl } = testInfo.project.metadata;
+      const { mode, rtl, _testing } = testInfo.project.metadata;
 
       const splitUrl = url.split('?');
       const paramsString = splitUrl[1];
@@ -50,8 +55,9 @@ export const test = base.extend<CustomFixtures>({
       const urlToParams = new URLSearchParams(paramsString);
       const formattedMode = urlToParams.get('ionic:mode') ?? mode;
       const formattedRtl = urlToParams.get('rtl') ?? rtl;
+      const ionicTesting = urlToParams.get('ionic:_testing') ?? _testing;
 
-      const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
+      const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
       const results = await Promise.all([
         page.waitForFunction(() => (window as any).testAppLoaded === true),
@@ -123,6 +129,27 @@ export const test = base.extend<CustomFixtures>({
         height,
       });
     };
+
+    /**
+     * Creates a new EventSpy and listens
+     * on the window for an event.
+     * The test will timeout if the event
+     * never fires.
+     *
+     * Usage:
+     * const ionChange = await page.spyOnEvent('ionChange');
+     * ...
+     * await ionChange.next();
+     */
+    page.spyOnEvent = async (eventName: string): Promise<EventSpy> => {
+      const spy = new EventSpy(eventName);
+
+      await addE2EListener(page, eventName, (ev: Event) => spy.push(ev));
+
+      return spy;
+    };
+
+    initPageEvents(page);
 
     await use(page);
   },

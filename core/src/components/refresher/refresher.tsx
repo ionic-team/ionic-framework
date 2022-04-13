@@ -1,10 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
+import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
 import {
@@ -302,7 +303,7 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupMDNativeRefresher(
-    contentEl: HTMLIonContentElement,
+    contentEl: HTMLElement,
     pullingSpinner: HTMLIonSpinnerElement,
     refreshingSpinner: HTMLIonSpinnerElement
   ) {
@@ -395,7 +396,7 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  private async setupNativeRefresher(contentEl: HTMLIonContentElement | null) {
+  private async setupNativeRefresher(contentEl: HTMLElement | null) {
     if (this.scrollListenerCallback || !contentEl || this.nativeRefresher || !this.scrollEl) {
       return;
     }
@@ -435,16 +436,27 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
-      console.error('<ion-refresher> must be used inside an <ion-content>');
+      printIonContentErrorMsg(this.el);
       return;
     }
 
-    await new Promise((resolve) => componentOnReady(contentEl, resolve));
+    this.scrollEl = await getScrollElement(contentEl);
 
-    this.scrollEl = await contentEl.getScrollElement();
-    this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
+    /**
+     * Query the host `ion-content` directly (if it is available), to use its
+     * inner #background-content has the target. Otherwise fallback to the
+     * custom scroll target host.
+     *
+     * This makes it so that implementers do not need to re-create the background content
+     * element and styles.
+     */
+    const backgroundContentHost = this.el.closest('ion-content') ?? contentEl;
+
+    this.backgroundContentEl = getElementRoot(backgroundContentHost).querySelector(
+      '#background-content'
+    ) as HTMLElement;
 
     if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);

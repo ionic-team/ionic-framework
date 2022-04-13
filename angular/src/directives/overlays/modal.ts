@@ -11,7 +11,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
-import { Components } from '@ionic/core';
+import { Components, ModalBreakpointChangeEventDetail } from '@ionic/core';
 
 export declare interface IonModal extends Components.IonModal {
   /**
@@ -30,6 +30,10 @@ export declare interface IonModal extends Components.IonModal {
    * Emitted after the modal has dismissed.
    */
   ionModalDidDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal breakpoint has changed.
+   */
+  ionBreakpointDidChange: EventEmitter<CustomEvent<ModalBreakpointChangeEventDetail>>;
   /**
    * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
    */
@@ -68,7 +72,7 @@ export declare interface IonModal extends Components.IonModal {
     'translucent',
     'trigger',
   ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'setCurrentBreakpoint', 'getCurrentBreakpoint'],
 })
 @Component({
   selector: 'ion-modal',
@@ -119,6 +123,7 @@ export class IonModal {
       'ionModalWillPresent',
       'ionModalWillDismiss',
       'ionModalDidDismiss',
+      'ionBreakpointDidChange',
       'didPresent',
       'willPresent',
       'willDismiss',

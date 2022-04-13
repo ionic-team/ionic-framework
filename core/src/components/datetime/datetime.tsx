@@ -1,12 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
-import { printIonWarning } from '@utils/logging';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
+import { printIonError, printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
@@ -136,6 +136,21 @@ export class Datetime implements ComponentInterface {
    * If `true`, the datetime appears normal but is not interactive.
    */
   @Prop() readonly = false;
+
+  /**
+   * Returns if an individual date (calendar day) is enabled or disabled.
+   *
+   * If `true`, the day will be enabled/interactive.
+   * If `false`, the day will be disabled/non-interactive.
+   *
+   * The function accepts an ISO 8601 date string of a given day.
+   * By default, all days are enabled. Developers can use this function
+   * to write custom logic to disable certain days.
+   *
+   * The function is called for each rendered calendar day, for the previous, current and next month.
+   * Custom implementations should be optimized for performance to avoid jank.
+   */
+  @Prop() isDateEnabled?: (dateIsoString: string) => boolean;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -1355,6 +1370,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
+            const { isDateEnabled } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
               this.locale,
@@ -1366,6 +1382,24 @@ export class Datetime implements ComponentInterface {
               this.parsedDayValues
             );
 
+            let isCalDayDisabled = isCalMonthDisabled || disabled;
+
+            if (!isCalDayDisabled && isDateEnabled !== undefined) {
+              try {
+                /**
+                 * The `isDateEnabled` implementation is try-catch wrapped
+                 * to prevent exceptions in the user's function from
+                 * interrupting the calendar rendering.
+                 */
+                isCalDayDisabled = !isDateEnabled(convertDataToISO(referenceParts));
+              } catch (e) {
+                printIonError(
+                  'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                  e
+                );
+              }
+            }
+
             return (
               <button
                 tabindex="-1"
@@ -1374,7 +1408,7 @@ export class Datetime implements ComponentInterface {
                 data-year={year}
                 data-index={index}
                 data-day-of-week={dayOfWeek}
-                disabled={isCalMonthDisabled || disabled}
+                disabled={isCalDayDisabled}
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,

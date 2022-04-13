@@ -1,13 +1,16 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { raf } from '../../utils/helpers';
+import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputChangeEventDetail } from '../input/input-interface';
+
+import type { CounterFormatter } from './item-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -134,7 +137,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: CounterFormatter;
+
   @State() counterString: string | null | undefined;
+
+  @Watch('counterFormatter')
+  counterFormatterChanged() {
+    this.updateCounterOutput(this.getFirstInput());
+  }
 
   @Listen('ionChange')
   handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
@@ -301,10 +315,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
-    if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
-      const length = inputEl?.value?.toString().length ?? '0';
-      this.counterString = `${length} / ${inputEl.maxlength}`;
+    const { counter, counterFormatter, defaultCounterFormatter } = this;
+    if (counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
+      const length = inputEl?.value?.toString().length ?? 0;
+      if (counterFormatter === undefined) {
+        this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
+      } else {
+        try {
+          this.counterString = counterFormatter(length, inputEl.maxlength);
+        } catch (e) {
+          printIonError('Exception in provided `counterFormatter`.', e);
+          // Fallback to the default counter formatter when an exception happens
+          this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
+        }
+      }
     }
+  }
+
+  private defaultCounterFormatter(length: number, maxlength: number) {
+    return `${length} / ${maxlength}`;
   }
 
   private hasStartEl() {

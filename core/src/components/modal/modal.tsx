@@ -11,12 +11,14 @@ import type {
   FrameworkDelegate,
   Gesture,
   ModalAttributes,
+  ModalBreakpointChangeEventDetail,
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
+import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -25,6 +27,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
@@ -56,7 +59,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
+  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -66,6 +71,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
+
   lastFocus?: HTMLElement;
   animation?: Animation;
 
@@ -168,6 +174,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+   * @deprecated - To prevent modals from dismissing, use canDismiss instead.
    */
   @Prop() swipeToClose = false;
 
@@ -210,6 +217,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * TODO (FW-937)
+   * This needs to default to true in the next
+   * major release. We default it to undefined
+   * so we can force the card modal to be swipeable
+   * when using canDismiss.
+   */
+
+  /**
+   * Determines whether or not a modal can dismiss
+   * when calling the `dismiss` method.
+   *
+   * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
+   * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   */
+  @Prop() canDismiss?: undefined | boolean | (() => Promise<boolean>);
+
+  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -228,6 +252,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Emitted after the modal has dismissed.
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the modal breakpoint has changed.
+   */
+  @Event() ionBreakpointDidChange!: EventEmitter<ModalBreakpointChangeEventDetail>;
 
   /**
    * Emitted after the modal has presented.
@@ -262,22 +291,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
+  breakpointsChanged(breakpoints: number[] | undefined) {
+    if (breakpoints !== undefined) {
+      this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
+    }
+  }
+
   connectedCallback() {
     prepareOverlay(this.el);
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint } = this;
+    const { breakpoints, initialBreakpoint, swipeToClose } = this;
 
     /**
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
     this.modalId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
-    this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined;
+    const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
+
+    if (isSheetModal) {
+      this.currentBreakpoint = this.initialBreakpoint;
+    }
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
-      console.warn('[Ionic Warning]: Your breakpoints array must include the initialBreakpoint value.');
+      printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
+    }
+
+    if (swipeToClose) {
+      printIonWarning(
+        'swipeToClose has been deprecated in favor of canDismiss.\n\nIf you want a card modal to be swipeable, set canDismiss to `true`. In the next major release of Ionic, swipeToClose will be removed, and all card modals will be swipeable by default.'
+      );
     }
   }
 
@@ -289,7 +334,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
-
+    this.breakpointsChanged(this.breakpoints);
     this.configureTriggerInteraction();
   }
 
@@ -353,6 +398,29 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Determines whether or not the
+   * modal is allowed to dismiss based
+   * on the state of the canDismiss prop.
+   */
+  private async checkCanDismiss() {
+    const { canDismiss } = this;
+
+    /**
+     * TODO (FW-937) - Remove the following check in
+     * the next major release of Ionic.
+     */
+    if (canDismiss === undefined) {
+      return true;
+    }
+
+    if (typeof canDismiss === 'function') {
+      return canDismiss();
+    }
+
+    return canDismiss;
+  }
+
+  /**
    * Present the modal overlay after it has been created.
    */
   @Method()
@@ -395,10 +463,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (this.isSheetModal) {
       this.initSheetGesture();
-    } else if (this.swipeToClose) {
+
+      /**
+       * TODO (FW-937) - In the next major release of Ionic, all card modals
+       * will be swipeable by default. canDismiss will be used to determine if the
+       * modal can be dismissed. This check should change to check the presence of
+       * presentingElement instead.
+       *
+       * If we did not do this check, then not using swipeToClose would mean you could
+       * not run canDismiss on swipe as there would be no swipe gesture created.
+       */
+    } else if (this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined)) {
       this.initSwipeToClose();
     }
 
+    /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
       this.keyboardOpenCallback = () => {
         if (this.gesture) {
@@ -471,38 +550,48 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     ani.progressStart(true, 1);
 
-    const sortedBreakpoints = this.breakpoints?.sort((a, b) => a - b) || [];
-
-    this.gesture = createSheetGesture(
+    const { gesture, moveSheetToBreakpoint } = createSheetGesture(
       this.el,
       this.backdropEl!,
       wrapperEl,
       initialBreakpoint,
       backdropBreakpoint,
       ani,
-      sortedBreakpoints,
-      () => {
-        /**
-         * While the gesture animation is finishing
-         * it is possible for a user to tap the backdrop.
-         * This would result in the dismiss animation
-         * being played again. Typically this is avoided
-         * by setting `presented = false` on the overlay
-         * component; however, we cannot do that here as
-         * that would prevent the element from being
-         * removed from the DOM.
-         */
-        this.gestureAnimationDismissing = true;
-        this.animation!.onFinish(async () => {
-          await this.dismiss(undefined, 'gesture');
-          this.gestureAnimationDismissing = false;
-        });
-      },
+      this.sortedBreakpoints,
+      () => this.currentBreakpoint ?? 0,
+      () => this.sheetOnDismiss(),
       (breakpoint: number) => {
-        this.currentBreakpoint = breakpoint;
+        if (this.currentBreakpoint !== breakpoint) {
+          this.currentBreakpoint = breakpoint;
+          this.ionBreakpointDidChange.emit({ breakpoint });
+        }
       }
     );
+
+    this.gesture = gesture;
+    this.moveSheetToBreakpoint = moveSheetToBreakpoint;
+
     this.gesture.enable(true);
+  }
+
+  private sheetOnDismiss() {
+    /**
+     * While the gesture animation is finishing
+     * it is possible for a user to tap the backdrop.
+     * This would result in the dismiss animation
+     * being played again. Typically this is avoided
+     * by setting `presented = false` on the overlay
+     * component; however, we cannot do that here as
+     * that would prevent the element from being
+     * removed from the DOM.
+     */
+    this.gestureAnimationDismissing = true;
+    this.animation!.onFinish(async () => {
+      this.currentBreakpoint = 0;
+      this.ionBreakpointDidChange.emit({ breakpoint: this.currentBreakpoint });
+      await this.dismiss(undefined, 'gesture');
+      this.gestureAnimationDismissing = false;
+    });
   }
 
   /**
@@ -517,6 +606,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
+    /**
+     * If a canDismiss handler is responsible
+     * for calling the dismiss method, we should
+     * not run the canDismiss check again.
+     */
+    if (role !== 'handler' && !(await this.checkCanDismiss())) {
+      return false;
+    }
+
+    /* tslint:disable-next-line */
     if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
       window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
@@ -578,6 +677,46 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionModalWillDismiss');
+  }
+
+  /**
+   * Move a sheet style modal to a specific breakpoint. The breakpoint value must
+   * be a value defined in your `breakpoints` array.
+   */
+  @Method()
+  async setCurrentBreakpoint(breakpoint: number): Promise<void> {
+    if (!this.isSheetModal) {
+      printIonWarning('setCurrentBreakpoint is only supported on sheet modals.');
+      return;
+    }
+    if (!this.breakpoints!.includes(breakpoint)) {
+      printIonWarning(
+        `Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`
+      );
+      return;
+    }
+
+    const { currentBreakpoint, moveSheetToBreakpoint, canDismiss, breakpoints } = this;
+
+    if (currentBreakpoint === breakpoint) {
+      return;
+    }
+
+    if (moveSheetToBreakpoint) {
+      moveSheetToBreakpoint({
+        breakpoint,
+        breakpointOffset: 1 - currentBreakpoint!,
+        canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
+      });
+    }
+  }
+
+  /**
+   * Returns the current breakpoint of a sheet style modal
+   */
+  @Method()
+  async getCurrentBreakpoint(): Promise<number | undefined> {
+    return this.currentBreakpoint;
   }
 
   private onBackdropTap = () => {
