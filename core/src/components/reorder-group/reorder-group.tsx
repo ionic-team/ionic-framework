@@ -1,9 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { findClosestIonContent, getScrollElement } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
-import { componentOnReady } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 const enum ReorderGroupState {
@@ -54,10 +54,9 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = findClosestIonContent(this.el);
     if (contentEl) {
-      await new Promise((resolve) => componentOnReady(contentEl, resolve));
-      this.scrollEl = await contentEl.getScrollElement();
+      this.scrollEl = await getScrollElement(contentEl);
     }
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,

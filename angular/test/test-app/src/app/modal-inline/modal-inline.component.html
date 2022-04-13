@@ -1,6 +1,13 @@
 <ion-button id="open-modal">Open Modal</ion-button>
 
-<ion-modal [animated]="false" trigger="open-modal" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5">
+<ul>
+  <li>
+    breakpointDidChange event count: <span id="breakpointDidChange">{{ breakpointDidChangeCounter }}</span>
+  </li>
+</ul>
+
+<ion-modal [animated]="false" trigger="open-modal" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5"
+  (ionBreakpointDidChange)="onBreakpointDidChange()">
   <ng-template>
     <ion-content>
       <ion-list>

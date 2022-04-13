@@ -333,3 +333,36 @@
   <ion-range></ion-range>
 </ion-item>
 ```
+
+### Item Counter
+
+```html
+<ion-item [counter]="true">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+```
+
+### Item Counter Formatter
+
+```html
+<ion-item [counter]="true" [counterFormatter]="counterFormatter">
+  <ion-label>Counter</ion-label>
+  <ion-input maxlength="20"></ion-input>
+</ion-item>
+
+```
+
+```typescript
+
+import { Component } from '@angular/core';
+
+@Component({…})
+export class MyComponent {
+  
+  counterFormatter(inputLength: number, maxLength: number) {
+    return `${maxLength - inputLength} characters remaining`;
+  }
+}
+
+```

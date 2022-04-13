@@ -8,7 +8,7 @@ import type { Page, TestInfo } from '@playwright/test';
  * to be hydrated before proceeding with the test.
  */
 export const goto = async (page: Page, url: string, testInfo: TestInfo, originalFn: typeof page.goto) => {
-  const { mode, rtl } = testInfo.project.metadata;
+  const { mode, rtl, _testing } = testInfo.project.metadata;
 
   const splitUrl = url.split('?');
   const paramsString = splitUrl[1];
@@ -20,8 +20,9 @@ export const goto = async (page: Page, url: string, testInfo: TestInfo, original
   const urlToParams = new URLSearchParams(paramsString);
   const formattedMode = urlToParams.get('ionic:mode') ?? mode;
   const formattedRtl = urlToParams.get('rtl') ?? rtl;
+  const ionicTesting = urlToParams.get('ionic:_testing') ?? _testing;
 
-  const formattedUrl = `${splitUrl[0]}?ionic:_testing=true&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
+  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
   const result = await Promise.all([
     page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),

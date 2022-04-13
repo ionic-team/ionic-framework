@@ -439,3 +439,45 @@ export class ItemExample {
   }
 }
 ```
+
+### Item Counter
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item counter={true}>
+        <ion-label>Counter</ion-label>
+        <ion-input maxlength="20"></ion-input>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### Item Counter Formatter
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item counter="true" counterFormatter={(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`}>
+        <ion-label>Counter</ion-label>
+        <ion-input maxlength="20"></ion-input>
+      </ion-item>
+    ];
+  }
+}
+```

@@ -410,3 +410,38 @@ export default defineComponent({
 });
 </script>
 ```
+
+### Item Counter
+
+```html
+<template>
+  <ion-item :counter="true">
+    <ion-label>Counter</ion-label>
+    <ion-input maxlength="20"></ion-input>
+  </ion-item>
+</template>
+```
+
+### Item Counter Formatter
+
+```html
+<template>
+  <ion-item :counter="true" :counter-formatter="counterFormatter">
+    <ion-label>Counter</ion-label>
+    <ion-input maxlength="20"></ion-input>
+  </ion-item>
+</template>
+<script lang="ts">
+import { IonInput, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {  IonItem, IonLabel, IonInput },
+  setup() {
+    const counterFormatter = (inputLength: number, maxLength: number) => `${maxLength - inputLength} characters remaining`;
+    
+    return { counterFormatter };
+  }
+});
+</script>
+```
