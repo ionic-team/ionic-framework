@@ -5,6 +5,8 @@ on:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1,5'
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
   nightly-build:
@@ -35,7 +37,7 @@ jobs:
         # The date should output YYYYMMDD
         # so that it is human readable
         run: |
-          echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+          echo "DATE=abc234" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Checkout Nightly Branch
@@ -55,6 +57,6 @@ jobs:
       - name: Delete Nightly Branch
         run: |
           git checkout main
-          git branch -d nightly-$(echo "${{ env.DATE }}")
+          git branch -D nightly-$(echo "${{ env.DATE }}")
           git push origin --delete nightly-$(echo "${{ env.DATE }}")
         shell: bash
