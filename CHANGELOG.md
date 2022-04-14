@@ -3,20 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [6.1.0](https://github.com/ionic-team/ionic-framework/compare/v6.0.14...v6.1.0) (2022-04-13)
+# [6.1.0 Vanadium](https://github.com/ionic-team/ionic-framework/compare/v6.0.16...v6.1.0) (2022-04-13)
 
 
 ### Bug Fixes
 
 * **accordion-group:** only allow keyboard interaction if header is focused ([#25091](https://github.com/ionic-team/ionic-framework/issues/25091)) ([e1b555f](https://github.com/ionic-team/ionic-framework/commit/e1b555f286956574876924068304fc44a78c027c))
-* **angular:** button components now route correctly without reload ([#25071](https://github.com/ionic-team/ionic-framework/issues/25071)) ([1c26e9b](https://github.com/ionic-team/ionic-framework/commit/1c26e9b9b0fc45a8691e972fe17a168f89a27a79))
-* **angular:** item styling when control has value ([#24932](https://github.com/ionic-team/ionic-framework/issues/24932)) ([eea25d0](https://github.com/ionic-team/ionic-framework/commit/eea25d091d7eb319d6ec1de8b793881d3a10949b)), closes [#23809](https://github.com/ionic-team/ionic-framework/issues/23809)
-* **angular:** routerLink allows opening in a new tab for link elements ([#25014](https://github.com/ionic-team/ionic-framework/issues/25014)) ([b010f07](https://github.com/ionic-team/ionic-framework/commit/b010f077fe51992dd9dd8ced69769a8eb91ac055)), closes [#24413](https://github.com/ionic-team/ionic-framework/issues/24413)
 * **datetime:** resolve warnings when importing into Stencil app ([#25106](https://github.com/ionic-team/ionic-framework/issues/25106)) ([a61c004](https://github.com/ionic-team/ionic-framework/commit/a61c004fb0c10d9fb0eca0987edf798386251ec2))
-* **datetime:** warn when parsing an invalid date value ([#25049](https://github.com/ionic-team/ionic-framework/issues/25049)) ([982dc85](https://github.com/ionic-team/ionic-framework/commit/982dc853befe8ccf54163a0b145e563da06f5dc1))
 * **menu:** preserve scroll position when focusing on open ([#25044](https://github.com/ionic-team/ionic-framework/issues/25044)) ([da89684](https://github.com/ionic-team/ionic-framework/commit/da896848776105ba1f7035c4412495786199bade))
-* **picker-column:** column renders correctly with selected value ([#24988](https://github.com/ionic-team/ionic-framework/issues/24988)) ([8318659](https://github.com/ionic-team/ionic-framework/commit/83186598ed6cf08b0f0421076c4afb3ab53e1e57)), closes [#17664](https://github.com/ionic-team/ionic-framework/issues/17664)
-* **popover:** allow arrow on desktop ([#25056](https://github.com/ionic-team/ionic-framework/issues/25056)) ([bcd00c7](https://github.com/ionic-team/ionic-framework/commit/bcd00c7a6ebb6a00193f04458976ff8b86395215))
 * **popover:** only focus trap ion-item children ([#24990](https://github.com/ionic-team/ionic-framework/issues/24990)) ([0cd06a6](https://github.com/ionic-team/ionic-framework/commit/0cd06a675474e1893b4c0801fab8ab79813537c8)), closes [#24633](https://github.com/ionic-team/ionic-framework/issues/24633)
 * **ripple-effect:** ripple displays on click or touch ([#25102](https://github.com/ionic-team/ionic-framework/issues/25102)) ([2a313e9](https://github.com/ionic-team/ionic-framework/commit/2a313e91179e19660a758470ed2218bbcf03e0bb)), closes [#25094](https://github.com/ionic-team/ionic-framework/issues/25094)
 * **vue:** ensure that only tab pages get added to the tab navigation stack ([#25045](https://github.com/ionic-team/ionic-framework/issues/25045)) ([a0054a7](https://github.com/ionic-team/ionic-framework/commit/a0054a7cbd52def24c18fd2dadfd2e49a42b8980)), closes [#24859](https://github.com/ionic-team/ionic-framework/issues/24859)
@@ -31,7 +25,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **modal:** add canDismiss property to manage modal dismissing ([#24928](https://github.com/ionic-team/ionic-framework/issues/24928)) ([4b21958](https://github.com/ionic-team/ionic-framework/commit/4b21958ec57019afcde786598880e1f8edada2b1)), closes [#22297](https://github.com/ionic-team/ionic-framework/issues/22297)
 * **range:** add knobMoveStart and knobMoveEnd events ([#25011](https://github.com/ionic-team/ionic-framework/issues/25011)) ([f5cb1f8](https://github.com/ionic-team/ionic-framework/commit/f5cb1f8444ba050042e788f9f9ec7b6309bf1b60))
 * **select:** add event for when overlay is dismissed ([#24400](https://github.com/ionic-team/ionic-framework/issues/24400)) ([b835b7c](https://github.com/ionic-team/ionic-framework/commit/b835b7c0c7840f41c54f96743cc0a779ff474ab6))
-* **select:** add event for when overlay is dismissed ([#24400](https://github.com/ionic-team/ionic-framework/issues/24400)) ([d507400](https://github.com/ionic-team/ionic-framework/commit/d50740029e616c202e9fc39e171d22b30b7817c6))
 
 
 
