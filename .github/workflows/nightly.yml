@@ -43,4 +43,6 @@ jobs:
       - name: Create Nightly Build
         run: |
           HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-nightly.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag nightly --conventional-commits --conventional-prerelease --exact --create-release github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
