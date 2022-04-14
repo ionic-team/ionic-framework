@@ -1,12 +1,10 @@
 name: 'Ionic Nightly Build'
 
 on:
-  workflow_dispatch:
-
-  # TODO remove this before merging
-  # This is so we can test in the PR
-  pull_request:
-    branches: [ '**' ]
+  schedule:
+    # Run every Monday-Friday
+    # at 6:00 UTC (6:00 am UTC)
+    - cron: '00 06 * * 1,5'
 
 jobs:
   nightly-build:
@@ -37,18 +35,17 @@ jobs:
         # The date should output YYYYMMDD
         # so that it is human readable
         run: |
-          echo "HASH=1$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Checkout Nightly Branch
         run: |
-          git checkout -b nightly-$(echo "${{ env.DATE }}")-$(echo "${{ env.HASH }}")
-          git push origin nightly-$(echo "${{ env.DATE }}")-$(echo "${{ env.HASH }}")
+          git checkout -b nightly-$(echo "${{ env.DATE }}")
+          git push origin nightly-$(echo "${{ env.DATE }}")
         shell: bash
       - name: Create Nightly Build
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-nightly.$(echo "${{ env.DATE }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag nightly --conventional-commits --conventional-prerelease --exact --create-release github
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-nightly.$(echo "${{ env.DATE }}") --no-verify-access --yes --force-publish='*' --dist-tag nightly --conventional-commits --conventional-prerelease --exact --create-release github
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -57,6 +54,6 @@ jobs:
       # changes around.
       - name: Delete Nightly Branch
         run: |
-          git branch -d nightly-$(echo "${{ env.DATE }}")-$(echo "${{ env.HASH }}")
-          git push origin --delete nightly-$(echo "${{ env.DATE }}")-$(echo "${{ env.HASH }}")
+          git branch -d nightly-$(echo "${{ env.DATE }}")
+          git push origin --delete nightly-$(echo "${{ env.DATE }}")
         shell: bash
