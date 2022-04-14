@@ -52,3 +52,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
+      # We need to push the commit changes in order for the tags
+      # to get updated, but we don't need to keep the changelog
+      # changes around.
+      - name: Delete Nightly Branch
+        run: |
+          git branch -d nightly-$(echo "${{ env.DATE }}")-$(echo "${{ env.HASH }}")
+          git push origin --delete nightly-$(echo "${{ env.DATE }}")-$(echo "${{ env.HASH }}")
+        shell: bash
