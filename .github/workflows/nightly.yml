@@ -9,7 +9,7 @@ on:
     branches: [ '**' ]
 
 jobs:
-  dev-build:
+  nightly-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -38,8 +38,9 @@ jobs:
       - name: Checkout Nightly Branch
         run: |
           git checkout -b nightly-$(echo "${{ env.TIMESTAMP }}")-$(echo "${{ env.HASH }}")
+          git push origin nightly-$(echo "${{ env.TIMESTAMP }}")-$(echo "${{ env.HASH }}")
         shell: bash
       - name: Create Nightly Build
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-nightly.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --canary --no-verify-access --yes --force-publish='*' --dist-tag nightly --conventional-commits --conventional-prerelease --exact --create-release github
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-nightly.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag nightly --conventional-commits --conventional-prerelease --exact --create-release github
         shell: bash
