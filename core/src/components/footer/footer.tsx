@@ -1,8 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
-import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
+
 
 import { handleFooterFade } from './footer.utils';
 

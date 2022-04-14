@@ -27,7 +27,24 @@ export const getToday = () => {
    * there was a net change of zero hours from the
    * local date.
    */
-  date.setHours(date.getHours() - tzOffset / 60);
+  const adjustedHours = date.getHours() - tzOffset / 60;
+
+  /**
+   * Some timezones include minute adjustments
+   * such as 30 or 45 minutes.
+   * Example: India Standard Time
+   * Timezone offset: -330 = -5.5 hours.
+   *
+   * As a result, we need to make sure we also
+   * increment the minutes as well.
+   * List of timezones with 30 and 45 minute timezones:
+   * https://www.timeanddate.com/time/time-zones-interesting.html
+   */
+  const minutesRemainder = adjustedHours % 1;
+  const adjustedMinutes = date.getMinutes() + minutesRemainder * 60;
+  date.setHours(adjustedHours);
+  date.setMinutes(adjustedMinutes);
+
   return date.toISOString();
 };
 

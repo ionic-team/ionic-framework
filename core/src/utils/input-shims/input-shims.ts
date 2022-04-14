@@ -1,6 +1,5 @@
-import { findClosestIonContent } from '@utils/content';
-
 import type { Config } from '../../interface';
+import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';

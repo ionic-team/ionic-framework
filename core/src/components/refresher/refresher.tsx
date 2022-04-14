@@ -1,10 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
-import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
+
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
