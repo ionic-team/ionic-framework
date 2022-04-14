@@ -37,7 +37,7 @@ jobs:
         # The date should output YYYYMMDD
         # so that it is human readable
         run: |
-          echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+          echo "DATE=abc123" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Checkout Nightly Branch
