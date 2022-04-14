@@ -56,6 +56,7 @@ jobs:
       # changes around.
       - name: Delete Nightly Branch
         run: |
+          git checkout main
           git branch -d nightly-$(echo "${{ env.DATE }}")
           git push origin --delete nightly-$(echo "${{ env.DATE }}")
         shell: bash
