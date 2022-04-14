@@ -38,7 +38,7 @@ jobs:
         # so that it is human readable
         run: |
           echo "HASH=1$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
-          echo "DATE=1$(date +%Y%m%d)" >> $GITHUB_ENV
+          echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
         shell: bash
       - name: Checkout Nightly Branch
