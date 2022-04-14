@@ -26,6 +26,10 @@ jobs:
         shell: bash
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Configure Identity
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       # A 1 is required before the timestamp
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
