@@ -1,5 +1,6 @@
+import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { E2ELocator, E2EPage } from '@utils/test/playwright';
+import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: presentation', () => {
@@ -72,7 +73,7 @@ test.describe('datetime: presentation: time', () => {
 class TimePickerFixture {
   readonly page: E2EPage;
 
-  private timePicker!: E2ELocator;
+  private timePicker!: Locator;
 
   constructor(page: E2EPage) {
     this.page = page;
