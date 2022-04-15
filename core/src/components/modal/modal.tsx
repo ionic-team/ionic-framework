@@ -723,13 +723,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.dismiss(undefined, BACKDROP);
   };
 
-  private onDismiss = (ev: UIEvent) => {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  };
-
   private onLifecycle = (modalEvent: CustomEvent) => {
     const el = this.usersElement;
     const name = LIFECYCLE_MAP[modalEvent.type];
@@ -770,7 +763,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         }}
         id={modalId}
         onIonBackdropTap={this.onBackdropTap}
-        onIonDismiss={this.onDismiss}
         onIonModalDidPresent={this.onLifecycle}
         onIonModalWillPresent={this.onLifecycle}
         onIonModalWillDismiss={this.onLifecycle}
