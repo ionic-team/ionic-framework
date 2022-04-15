@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import type { IonicPage } from '@utils/test/playwright';
+import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('ripple-effect: basic', () => {
@@ -40,7 +40,7 @@ test.describe('ripple-effect: basic', () => {
   });
 });
 
-const verifyRippleEffect = async (page: IonicPage, selector: string) => {
+const verifyRippleEffect = async (page: E2EPage, selector: string) => {
   await page.goto(`/src/components/ripple-effect/test/basic?ionic:_testing=false&ionic:mode=md`);
 
   const el = page.locator(selector);
