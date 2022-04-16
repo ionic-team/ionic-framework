@@ -1,4 +1,4 @@
-import { findClosestIonContent } from '@utils/content';
+import { findClosestIonContent } from '../../content';
 
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 

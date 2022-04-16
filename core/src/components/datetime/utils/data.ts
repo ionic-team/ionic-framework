@@ -8,26 +8,49 @@ import { getNextMonth, getPreviousMonth } from './manipulation';
 /**
  * Returns the current date as
  * an ISO string in the user's
- * timezone.
+ * time zone.
  */
 export const getToday = () => {
   /**
-   * Grab the current date object
-   * as well as the timezone offset
+   * ion-datetime intentionally does not
+   * parse time zones/do automatic time zone
+   * conversion when accepting user input.
+   * However when we get today's date string,
+   * we want it formatted relative to the user's
+   * time zone.
+   *
+   * When calling toISOString(), the browser
+   * will convert the date to UTC time by either adding
+   * or subtracting the time zone offset.
+   * To work around this, we need to either add
+   * or subtract the time zone offset to the Date
+   * object prior to calling toISOString().
+   * This allows us to get an ISO string
+   * that is in the user's time zone.
+   *
+   * Example:
+   * Time zone offset is 240
+   * Meaning: The browser needs to add 240 minutes
+   * to the Date object to get UTC time.
+   * What Ionic does: We subtract 240 minutes
+   * from the Date object. The browser then adds
+   * 240 minutes in toISOString(). The result
+   * is a time that is in the user's time zone
+   * and not UTC.
+   *
+   * Note: Some timezones include minute adjustments
+   * such as 30 or 45 minutes. This is why we use setMinutes
+   * instead of setHours.
+   * Example: India Standard Time
+   * Timezone offset: -330 = -5.5 hours.
+   *
+   * List of timezones with 30 and 45 minute timezones:
+   * https://www.timeanddate.com/time/time-zones-interesting.html
    */
   const date = new Date();
   const tzOffset = date.getTimezoneOffset();
+  date.setMinutes(date.getMinutes() - tzOffset);
 
-  /**
-   * When converting to ISO string, everything is
-   * set to UTC. Since we want to show these dates
-   * relative to the user's timezone, we need to
-   * subtract the timezone offset from the date
-   * so that when `toISOString()` adds it back
-   * there was a net change of zero hours from the
-   * local date.
-   */
-  date.setHours(date.getHours() - tzOffset / 60);
   return date.toISOString();
 };
 

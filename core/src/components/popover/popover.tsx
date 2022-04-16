@@ -521,13 +521,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
     return eventMethod(this.el, 'ionPopoverWillDismiss');
   }
 
-  private onDismiss = (ev: UIEvent) => {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  };
-
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
   };
@@ -613,7 +606,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         onIonPopoverWillPresent={onLifecycle}
         onIonPopoverWillDismiss={onLifecycle}
         onIonPopoverDidDismiss={onLifecycle}
-        onIonDismiss={this.onDismiss}
         onIonBackdropTap={this.onBackdropTap}
       >
         {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}

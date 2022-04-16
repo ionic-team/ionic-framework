@@ -317,6 +317,8 @@ export class Datetime implements ComponentInterface {
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
         const { month, day, year, hour, minute } = valueDateParts;
+        const ampm = hour >= 12 ? 'pm' : 'am';
+
         this.activePartsClone = {
           ...this.activeParts,
           month,
@@ -324,7 +326,17 @@ export class Datetime implements ComponentInterface {
           year,
           hour,
           minute,
+          ampm,
         };
+
+        /**
+         * The working parts am/pm value must be updated when the value changes, to
+         * ensure the time picker hour column values are generated correctly.
+         */
+        this.setWorkingParts({
+          ...this.workingParts,
+          ampm,
+        });
       } else {
         printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
       }
@@ -1049,7 +1061,7 @@ export class Datetime implements ComponentInterface {
     const valueToProcess = value || getToday();
     const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
-    this.workingParts = {
+    this.setWorkingParts({
       month,
       day,
       year,
@@ -1057,7 +1069,7 @@ export class Datetime implements ComponentInterface {
       minute,
       tzOffset,
       ampm: hour >= 12 ? 'pm' : 'am',
-    };
+    });
 
     this.activeParts = {
       month,
@@ -1628,7 +1640,7 @@ export class Datetime implements ComponentInterface {
     const timeOnlyPresentation = presentation === 'time';
     const use24Hour = is24Hour(this.locale, this.hourCycle);
     const { hours, minutes, am, pm } = generateTime(
-      this.workingParts,
+      workingParts,
       use24Hour ? 'h23' : 'h12',
       this.minParts,
       this.maxParts,

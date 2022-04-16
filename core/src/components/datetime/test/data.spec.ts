@@ -333,15 +333,12 @@ describe('getToday', () => {
   beforeAll(() => {
     jest.useFakeTimers('modern');
     // System time is zero based, 1 = February
-    jest.setSystemTime(new Date(2022, 1, 21));
+    jest.setSystemTime(new Date(2022, 1, 21, 18, 30));
   });
 
-  it('should return today', () => {
+  it('should return today without converting to UTC time', () => {
     const res = getToday();
 
-    const expected = new Date();
-    expected.setHours(expected.getHours() - expected.getTimezoneOffset() / 60);
-
-    expect(res).toEqual('2022-02-21T00:00:00.000Z');
+    expect(res).toEqual('2022-02-21T18:30:00.000Z');
   });
 });

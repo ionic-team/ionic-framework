@@ -1,4 +1,4 @@
-import type { IonicPage } from './fixtures';
+import type { E2EPage } from '../playwright-declarations';
 
 /**
  * The EventSpy class allows
@@ -65,7 +65,7 @@ export class EventSpy {
  * respond to an event listener created within
  * the page itself.
  */
-export const initPageEvents = async (page: IonicPage) => {
+export const initPageEvents = async (page: E2EPage) => {
   page._e2eEventsIds = 0;
   page._e2eEvents = new Map();
 
@@ -82,7 +82,7 @@ export const initPageEvents = async (page: IonicPage) => {
  * page context to updates the _e2eEvents map
  * when an event is fired.
  */
-export const addE2EListener = async (page: IonicPage, eventName: string, callback: (ev: any) => void) => {
+export const addE2EListener = async (page: E2EPage, eventName: string, callback: (ev: any) => void) => {
   const id = page._e2eEventsIds++;
   page._e2eEvents.set(id, {
     eventName,
