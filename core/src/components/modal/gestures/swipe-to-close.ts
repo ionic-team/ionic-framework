@@ -82,6 +82,16 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     const { deltaY } = detail;
 
     /**
+     * If we are pulling down, then
+     * it is possible we are pulling on the
+     * content. We do not want scrolling to
+     * happen at the same time as the gesture.
+     */
+    if (deltaY > 0) {
+      contentEl.scrollY = false;
+    }
+
+    /**
      * If we are swiping on the content
      * then the swipe gesture should only
      * happen if we are pulling down.
