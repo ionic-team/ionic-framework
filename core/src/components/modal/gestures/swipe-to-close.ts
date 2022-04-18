@@ -171,10 +171,11 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
 
     gesture.enable(false);
 
+    contentEl.scrollY = initialScrollY;
+
     animation
       .onFinish(() => {
         if (!shouldComplete) {
-          contentEl.scrollY = initialScrollY;
           gesture.enable(true);
         }
       })
