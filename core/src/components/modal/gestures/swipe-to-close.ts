@@ -24,13 +24,15 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
       return true;
     }
 
-    const contentOrFooter = target.closest('ion-content, ion-footer');
-    if (contentOrFooter === null) {
+    /**
+     * Card should be swipeable on all
+     * parts of the modal except for the footer.
+     */
+    const footer = target.closest('ion-footer');
+    if (footer === null) {
       return true;
     }
-    // Target is in the content or the footer so do not start the gesture.
-    // We could be more nuanced here and allow it for content that
-    // does not need to scroll.
+
     return false;
   };
 
