@@ -2,7 +2,7 @@ import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
-import { clamp } from '../../../utils/helpers';
+import { clamp, getElementRoot } from '../../../utils/helpers';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -25,6 +25,20 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     }
 
     /**
+     * If we are swiping on the content,
+     * swiping should only be possible if
+     * the content is scrolled all the way
+     * to the top so that we do not interfere
+     * with scrolling.
+     */
+    const content = target.closest('ion-content');
+    if (content) {
+      const root = getElementRoot(content);
+      const scrollEl = root.querySelector('.inner-scroll') as HTMLElement;
+      return scrollEl.scrollTop === 0;
+    }
+
+    /**
      * Card should be swipeable on all
      * parts of the modal except for the footer.
      */
@@ -36,7 +50,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     return false;
   };
 
-  const onStart = () => {
+  const onStart = (detail: GestureDetail) => {
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -45,6 +59,8 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * TODO (FW-937)
      * Remove undefined check
      */
+
+    console.log(detail.deltaY);
     canDismissBlocksGesture = el.canDismiss !== undefined && el.canDismiss !== true;
     animation.progressStart(true, isOpen ? 1 : 0);
   };
