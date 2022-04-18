@@ -59,7 +59,7 @@
       const refresher = document.getElementById('refresher');
 
       refresher.addEventListener('ionRefresh', async function () {
-        console.log('refresh fired')
+        console.log('refresh fired');
         const data = await getAsyncData();
         items = items.concat(data);
         refresher.complete();
