@@ -16,6 +16,8 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
   let isOpen = false;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.2;
+  const contentEl = el.querySelector('ion-content') as HTMLIonContentElement;
+  const initialScrollY = contentEl.scrollY;
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
@@ -51,6 +53,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
   };
 
   const onStart = (detail: GestureDetail) => {
+    const { deltaY } = detail;
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -60,12 +63,35 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * Remove undefined check
      */
 
-    console.log(detail.deltaY);
     canDismissBlocksGesture = el.canDismiss !== undefined && el.canDismiss !== true;
+
+    /**
+     * If we are pulling down, then
+     * it is possible we are pulling on the
+     * content. We do not want scrolling to
+     * happen at the same time as the gesture.
+     */
+    if (deltaY > 0) {
+      contentEl.scrollY = false;
+    }
+
     animation.progressStart(true, isOpen ? 1 : 0);
   };
 
   const onMove = (detail: GestureDetail) => {
+    const { deltaY } = detail;
+
+    /**
+     * If we are swiping on the content
+     * then the swipe gesture should only
+     * happen if we are pulling down.
+     *
+     * However, if we pull up and
+     * then down such that the scroll position
+     * returns to 0, we should be able to swipe
+     * the card.
+     */
+
     const step = detail.deltaY / height;
 
     /**
@@ -138,6 +164,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     animation
       .onFinish(() => {
         if (!shouldComplete) {
+          contentEl.scrollY = initialScrollY;
           gesture.enable(true);
         }
       })
