@@ -31,6 +31,14 @@ export interface ModalAnimationOptions {
   backdropBreakpoint?: number;
 }
 
+export interface ModalBreakpointChangeEventDetail {
+  breakpoint: number;
+}
+
+export interface ModalCustomEvent extends CustomEvent {
+  target: HTMLIonModalElement;
+}
+
 /**
  * @deprecated - Use { [key: string]: any } directly instead.
  */

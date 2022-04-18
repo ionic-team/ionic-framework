@@ -5,6 +5,11 @@ const getActiveElementText = async (page) => {
   return page.evaluate((el) => el?.innerText, activeElement);
 };
 
+const getActiveInputID = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return page.evaluate((el) => el?.closest('ion-input')?.id, activeElement);
+};
+
 test('accordion: a11y', async () => {
   const page = await newE2EPage({
     url: '/src/components/accordion/test/a11y?ionic:_testing=true',
@@ -42,4 +47,17 @@ test('accordion: keyboard navigation', async () => {
 
   await page.keyboard.press('ArrowUp');
   expect(await getActiveElementText(page)).toEqual('Shipping Address');
+
+  // open Shipping Address accordion and move focus to the input inside it
+  await page.keyboard.press('Enter');
+  await page.waitForChanges();
+  await page.keyboard.press('Tab');
+
+  const activeID = await getActiveInputID(page);
+  expect(activeID).toEqual('address1');
+
+  // ensure keyboard interaction doesn't move focus from body
+  await page.keyboard.press('ArrowDown');
+  const activeIDAgain = await getActiveInputID(page);
+  expect(activeIDAgain).toEqual('address1');
 });
