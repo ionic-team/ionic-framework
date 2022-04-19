@@ -321,6 +321,41 @@ test.describe('modal: canDismiss', () => {
       const modal = await page.find('ion-modal');
       expect(modal).not.toBe(null);
     });
+    test.skip('should not dismiss on swipe when not attempting to close', async () => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const screenshotCompares = [];
+
+      await page.click('#radio-promise-true');
+      await page.click('#show-modal');
+
+      await ionModalDidPresent.next();
+
+      const modalHeader = await page.$('#modal-header');
+      await dragElementBy(modalHeader, page, 0, -500);
+
+      screenshotCompares.push(await page.compareScreenshot());
+
+      const modal = await page.find('ion-modal');
+      expect(modal).not.toBe(null);
+
+      for (const screenshotCompare of screenshotCompares) {
+        expect(screenshotCompare).toMatchScreenshot();
+      }
+    });
+    test.skip('should hit the dismiss threshold when swiping', async () => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      await page.click('#radio-promise-true');
+      await page.click('#show-modal');
+
+      await ionModalDidPresent.next();
+
+      const modalHeader = await page.$('#modal-header');
+      await dragElementBy(modalHeader, page, 0, 100);
+
+      await ionModalDidDismiss.next();
+    });
     test.skip('should dismiss when canDismiss is Action Sheet and user clicks confirm', async () => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
