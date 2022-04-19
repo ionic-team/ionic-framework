@@ -106,7 +106,7 @@ export class PickerColumnInternal implements ComponentInterface {
         }
       }
     };
-    new IntersectionObserver(visibleCallback, { threshold: 0.01 }).observe(this.el);
+    new IntersectionObserver(visibleCallback, { threshold: 0.001 }).observe(this.el);
 
     const parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null;
     if (parentEl !== null) {
