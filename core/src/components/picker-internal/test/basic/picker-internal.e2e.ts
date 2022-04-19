@@ -19,7 +19,7 @@ test.describe('picker-internal', () => {
 
     await page.click('#popover');
 
-    await page.locator('ion-popover').waitFor({ state: 'visible' });
+    await page.spyOnEvent('ionPopoverDidPresent');
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
       `picker-internal-popover-diff-${page.getSnapshotSettings()}.png`
@@ -33,7 +33,7 @@ test.describe('picker-internal', () => {
 
     await page.click('#modal');
 
-    await page.locator('ion-modal').waitFor({ state: 'visible' });
+    await page.spyOnEvent('ionModalDidPresent');
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
       `picker-internal-modal-diff-${page.getSnapshotSettings()}.png`
