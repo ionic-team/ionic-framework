@@ -3,10 +3,6 @@ import { test } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
-
-    // TODO(FW-1346) Enable this test once Safari 15.4 fixes focusing.
-    test.skip(browserName === 'webkit', 'Safari 15.4 broke element focusing');
-
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -14,6 +10,15 @@ test.describe('modal: focus trapping', () => {
 
     await ionModalDidPresent.next();
 
+    /**
+     * The default WebKit behavior is to
+     * highlight items on webpages with Option-Tab.
+     * See "Press Tab to highlight each item on a webpage"
+     * in Safari Preferences > Advanced.
+     */
+    if (browserName === 'webkit') {
+      await page.keyboard.down('Alt');
+    }
     await page.keyboard.press('Tab');
 
     const dismissButton = await page.locator('ion-button.dismiss');
@@ -24,35 +29,31 @@ test.describe('modal: focus trapping', () => {
     await page.keyboard.up('Shift');
 
     expect(dismissButton).toBeFocused();
-
     await page.keyboard.press('Tab');
 
     expect(dismissButton).toBeFocused();
   });
 
   test('focus should be returned to previously focused element when dismissing modal', async ({ page, browserName }) => {
-
-    // TODO(FW-1346) Enable this test once Safari 15.4 fixes focusing.
-    test.skip(browserName === 'webkit', 'Safari 15.4 broke element focusing');
-
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+    const modalButton = await page.locator('#basic-modal');
 
-    await page.click('#basic-modal');
+    if (browserName === 'webkit') {
+      await page.keyboard.down('Alt');
+    }
 
+    // Focus #basic-modal button
+    await page.keyboard.press('Tab');
+    expect(modalButton).toBeFocused();
+
+    await page.keyboard.press('Space');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    await page.keyboard.press('Escape');
+    await ionModalDidDismiss.next();
 
-    await Promise.all([
-      modal.evaluate((el: HTMLIonModalElement) => {
-        el.dismiss();
-      }),
-      ionModalDidDismiss.next()
-    ]);
-
-    const modalButton = await page.locator('#basic-modal');
     expect(modalButton).toBeFocused();
   });
 });
