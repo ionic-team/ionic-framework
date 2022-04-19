@@ -29,6 +29,7 @@ test('range: start/end events', async () => {
   const rangeEl = await page.$('#basic');
 
   await dragElementBy(rangeEl, page, 300, 0);
+  await page.waitForChanges();
 
   /**
    * dragElementBy defaults to starting the drag from the middle of the el,
@@ -41,6 +42,7 @@ test('range: start/end events', async () => {
    * Verify both events fire if range is clicked without dragging.
    */
   await dragElementBy(rangeEl, page, 0, 0);
+  await page.waitForChanges();
 
   expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
   expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
