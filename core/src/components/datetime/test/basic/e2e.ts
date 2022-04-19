@@ -101,7 +101,9 @@ describe('datetime: selecting a day', () => {
 
   const testHighlight = async (page) => {
     const today = new Date();
-    const todayBtn = await page.find(`ion-datetime >>> .calendar-day[data-day="${today.getDate()}"][data-month="${today.getMonth() + 1}"]`);
+    const todayBtn = await page.find(
+      `ion-datetime >>> .calendar-day[data-day="${today.getDate()}"][data-month="${today.getMonth() + 1}"]`
+    );
 
     expect(todayBtn).toHaveClass('calendar-day-today');
     expect(todayBtn).not.toHaveClass('calendar-day-active');
