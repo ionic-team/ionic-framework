@@ -2,8 +2,8 @@ import { newE2EPage } from '@stencil/core/testing';
 import { dragElementBy } from '@utils/test';
 
 test('range: start/end events', async () => {
-  for(let i = 0; i < 50; i++) {
-    console.log(i);
+  // for(let i = 0; i < 50; i++) {
+  //   console.log(i);
     const page = await newE2EPage({
       url: '/src/components/range/test/basic?ionic:_testing=true',
     });
@@ -29,5 +29,5 @@ test('range: start/end events', async () => {
 
     expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
     expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
-  }
+  // }
 });
