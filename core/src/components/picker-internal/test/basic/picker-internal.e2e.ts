@@ -20,6 +20,8 @@ test.describe('picker-internal', () => {
     await page.click('#popover');
 
     await page.spyOnEvent('ionPopoverDidPresent');
+    // Accounts for slight delay in showing the popover
+    await page.waitForTimeout(100);
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
       `picker-internal-popover-diff-${page.getSnapshotSettings()}.png`
