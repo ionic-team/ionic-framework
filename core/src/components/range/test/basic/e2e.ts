@@ -13,6 +13,7 @@ test('range: start/end events', async () => {
     const rangeEl = await page.$('#basic');
 
     await dragElementBy(rangeEl, page, 300, 0);
+    await page.waitForChanges();
 
     /**
      * dragElementBy defaults to starting the drag from the middle of the el,
