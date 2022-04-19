@@ -36,7 +36,7 @@ test.describe('picker-internal', () => {
     await page.locator('ion-modal').waitFor({ state: 'visible' });
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `picker-internal-popover-diff-${page.getSnapshotSettings()}.png`
+      `picker-internal-modal-diff-${page.getSnapshotSettings()}.png`
     );
   });
 });
