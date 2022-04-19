@@ -1,0 +1,169 @@
+import { expect } from '@playwright/test';
+import { test } from '@utils/test/playwright';
+
+test.describe('modal: focus trapping', () => {
+  test('focus should be trapped inside of modal', async ({ page, browserName }) => {
+
+    // TODO(FW-1346) Enable this test once Safari 15.4 fixes focusing.
+    test.skip(browserName === 'webkit', 'Safari 15.4 broke element focusing');
+
+    await page.goto('/src/components/modal/test/basic');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    await page.click('#basic-modal');
+
+    await ionModalDidPresent.next();
+
+    await page.keyboard.press('Tab');
+
+    const dismissButton = await page.locator('ion-button.dismiss');
+    expect(dismissButton).toBeFocused();
+
+    await page.keyboard.down('Shift');
+    await page.keyboard.press('Tab');
+    await page.keyboard.up('Shift');
+
+    expect(dismissButton).toBeFocused();
+
+    await page.keyboard.press('Tab');
+
+    expect(dismissButton).toBeFocused();
+  });
+
+  test('focus should be returned to previously focused element when dismissing modal', async ({ page, browserName }) => {
+
+    // TODO(FW-1346) Enable this test once Safari 15.4 fixes focusing.
+    test.skip(browserName === 'webkit', 'Safari 15.4 broke element focusing');
+
+    await page.goto('/src/components/modal/test/basic');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+    await page.click('#basic-modal');
+
+    await ionModalDidPresent.next();
+
+    const modal = await page.locator('ion-modal');
+
+    await Promise.all([
+      modal.evaluate((el: HTMLIonModalElement) => {
+        el.dismiss();
+      }),
+      ionModalDidDismiss.next()
+    ]);
+
+    const modalButton = await page.locator('#basic-modal');
+    expect(modalButton).toBeFocused();
+  });
+});
+
+test.describe('modal: rendering', () => {
+  test('should not have visual regressions', async ({ page }) => {
+    await page.goto('/src/components/modal/test/basic');
+
+    const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
+    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+    const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    await page.click('#basic-modal');
+
+    await ionModalWillPresent.next();
+    await ionModalDidPresent.next();
+
+    const modal = await page.locator('ion-modal');
+
+    await page.setIonViewport();
+
+    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-${page.getSnapshotSettings()}.png`);
+
+    await modal.evaluate((el: HTMLIonModalElement) => {
+      el.dismiss();
+    });
+
+    await ionModalWillDismiss.next();
+    await ionModalDidDismiss.next();
+
+    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${page.getSnapshotSettings()}.png`);
+  })
+})
+
+test.describe('modal: htmlAttributes inheritance', () => {
+  test('should correctly inherit attributes on host', async ({ page }) => {
+    await page.goto('/src/components/modal/test/basic');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    await page.click('#basic-modal');
+
+    await ionModalDidPresent.next();
+
+    const modal = await page.locator('ion-modal');
+
+    const attribute = await modal.getAttribute('data-testid');
+    expect(attribute).toBe('basic-modal');
+  })
+});
+
+test.describe('modal: backdrop', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/src/components/modal/test/basic');
+  });
+
+  // TODO: Liam fix me before review
+  test.skip('it should dismiss the modal when clicking the backdrop', async ({ page }) => {
+
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+    await page.click('#basic-modal');
+    await ionModalDidPresent.next();
+
+    // @ts-ignore
+    await page.waitForFunction(() => false === true)
+    await page.mouse.click(20, 20);
+    await ionModalDidDismiss.next();
+  })
+})
+
+test.describe('modal: incorrect usage', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/src/components/modal/test/basic');
+  });
+
+  test('it should warn when setting a breakpoint on a non-sheet modal', async ({ page }) => {
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    const warnings: string[] = [];
+
+    page.on('console', (ev) => {
+      if (ev.type() === 'warning') {
+        warnings.push(ev.text());
+      }
+    });
+
+    await page.click('#basic-modal');
+    await ionModalDidPresent.next();
+
+    const modal = await page.locator('ion-modal');
+    await modal.evaluate((el: HTMLIonModalElement) => {
+      el.setCurrentBreakpoint(0.5);
+    });
+
+    expect(warnings.length).toBe(1);
+    expect(warnings[0]).toBe('[Ionic Warning]: setCurrentBreakpoint is only supported on sheet modals.');
+  })
+
+  test('it should return undefined when getting the breakpoint on a non-sheet modal', async ({ page }) => {
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    await page.click('#basic-modal');
+    await ionModalDidPresent.next();
+
+    const modal = await page.locator('ion-modal');
+    const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => {
+      return el.getCurrentBreakpoint();
+    });
+
+    expect(breakpoint).toBe(undefined);
+  })
+})
