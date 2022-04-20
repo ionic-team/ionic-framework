@@ -74,7 +74,7 @@ jobs:
   # us to have a required status check for screenshot
   # results without having to manually add each
   # matrix run in the branch protection rules
-  # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354/6
+  # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354
   verify-screenshots:
     if: ${{ always() }}
     needs: [test-core-screenshot]
