@@ -1,5 +1,5 @@
-import { test } from '@utils/test/playwright';
 import { expect } from '@playwright/test';
+import { test } from '@utils/test/playwright';
 
 test.describe('modal: inline', () => {
   test('it should present and then remain in the dom on dismiss', async ({ page }) => {

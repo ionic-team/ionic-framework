@@ -24,5 +24,5 @@ test.describe('modal: isOpen', () => {
     await ionModalDidDismiss.next();
 
     await page.waitForSelector('ion-modal', { state: 'hidden' });
-  })
-})
+  });
+});

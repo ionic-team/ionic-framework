@@ -216,7 +216,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidDismiss.next();
     });
-  })
+  });
 
   test.describe.only('sheet modal', () => {
     test.beforeEach(async ({ page }) => {

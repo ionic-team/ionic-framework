@@ -34,7 +34,10 @@ test.describe('modal: focus trapping', () => {
     expect(dismissButton).toBeFocused();
   });
 
-  test('focus should be returned to previously focused element when dismissing modal', async ({ page, browserName }) => {
+  test('focus should be returned to previously focused element when dismissing modal', async ({
+    page,
+    browserName,
+  }) => {
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -86,8 +89,8 @@ test.describe('modal: rendering', () => {
     await ionModalDidDismiss.next();
 
     expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${page.getSnapshotSettings()}.png`);
-  })
-})
+  });
+});
 
 test.describe('modal: htmlAttributes inheritance', () => {
   test('should correctly inherit attributes on host', async ({ page }) => {
@@ -102,7 +105,7 @@ test.describe('modal: htmlAttributes inheritance', () => {
 
     const attribute = await modal.getAttribute('data-testid');
     expect(attribute).toBe('basic-modal');
-  })
+  });
 });
 
 test.describe('modal: backdrop', () => {
@@ -111,7 +114,10 @@ test.describe('modal: backdrop', () => {
   });
 
   test('it should dismiss the modal when clicking the backdrop', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari', 'The modal covers the entire screen on mobile, so the backdrop is not clickable.');
+    test.skip(
+      testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
+      'The modal covers the entire screen on mobile, so the backdrop is not clickable.'
+    );
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -121,8 +127,8 @@ test.describe('modal: backdrop', () => {
 
     await page.mouse.click(20, 20);
     await ionModalDidDismiss.next();
-  })
-})
+  });
+});
 
 test.describe('modal: incorrect usage', () => {
   test.beforeEach(async ({ page }) => {
@@ -150,7 +156,7 @@ test.describe('modal: incorrect usage', () => {
 
     expect(warnings.length).toBe(1);
     expect(warnings[0]).toBe('[Ionic Warning]: setCurrentBreakpoint is only supported on sheet modals.');
-  })
+  });
 
   test('it should return undefined when getting the breakpoint on a non-sheet modal', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -164,5 +170,5 @@ test.describe('modal: incorrect usage', () => {
     });
 
     expect(breakpoint).toBe(undefined);
-  })
-})
+  });
+});

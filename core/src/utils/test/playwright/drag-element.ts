@@ -1,16 +1,14 @@
-import { Locator } from '@playwright/test';
-import { E2EPage } from './';
+import type { Locator } from '@playwright/test';
 
-export const dragElementBy = async (
-  el: Locator,
-  page: E2EPage,
-  dragByX: number = 0,
-  dragByY: number = 0
-) => {
+import type { E2EPage } from './';
+
+export const dragElementBy = async (el: Locator, page: E2EPage, dragByX = 0, dragByY = 0) => {
   const boundingBox = await el.boundingBox();
 
   if (!boundingBox) {
-    throw new Error('Cannot get a bounding box for an element that is not visible. See https://playwright.dev/docs/api/class-locator#locator-bounding-box for more information');
+    throw new Error(
+      'Cannot get a bounding box for an element that is not visible. See https://playwright.dev/docs/api/class-locator#locator-bounding-box for more information'
+    );
   }
 
   const startX = boundingBox.x + boundingBox.width / 2;
@@ -27,4 +25,4 @@ export const dragElementBy = async (
   await page.mouse.move(midX, midY);
   await page.mouse.move(endX, endY);
   await page.mouse.up();
-}
+};

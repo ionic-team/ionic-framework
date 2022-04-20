@@ -11,8 +11,8 @@ test.describe('sheet modal: rendering', () => {
     await ionModalDidPresent.next();
 
     expect(await page.screenshot()).toMatchSnapshot(`modal-sheet-present-${page.getSnapshotSettings()}.png`);
-  })
-})
+  });
+});
 
 test.describe('sheet modal: backdrop', () => {
   test.beforeEach(async ({ page }) => {
@@ -29,7 +29,7 @@ test.describe('sheet modal: backdrop', () => {
     await page.mouse.click(50, 50);
 
     await ionModalDidDismiss.next();
-  })
+  });
   test('should present another the sheet modal when clicking an inactive backdrop', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -51,7 +51,7 @@ test.describe('sheet modal: backdrop', () => {
     const input = await page.locator('#root-input input');
     await input.click();
     expect(input).toBeFocused();
-  })
+  });
 });
 
 test.describe('sheet modal: setting the breakpoint', () => {
@@ -75,8 +75,8 @@ test.describe('sheet modal: setting the breakpoint', () => {
       await ionModalDidPresent.next();
 
       const modal = await page.locator('ion-modal');
-      await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.01))
-    })
+      await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.01));
+    });
     test('it should not change the breakpoint when setting to an invalid value', async ({ page }) => {
       const modal = await page.locator('ion-modal');
       const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint());
@@ -95,7 +95,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
 
       await page.click('#sheet-modal');
       await ionModalDidPresent.next();
-    })
+    });
     test('should update the current breakpoint', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
       const modal = await page.locator('.modal-sheet');
@@ -113,7 +113,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.5));
       await ionBreakpointDidChange.next();
       expect(ionBreakpointDidChange.events.length).toBe(1);
-    })
+    });
     test('should emit ionBreakpointDidChange when breakpoint is set to 0', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
       const modal = await page.locator('.modal-sheet');
@@ -121,7 +121,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0));
       await ionBreakpointDidChange.next();
       expect(ionBreakpointDidChange.events.length).toBe(1);
-    })
+    });
     test('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
       const header = await page.locator('.modal-sheet ion-header');
@@ -131,6 +131,6 @@ test.describe('sheet modal: setting the breakpoint', () => {
       await ionBreakpointDidChange.next();
 
       expect(ionBreakpointDidChange.events.length).toBe(1);
-    })
+    });
   });
 });
