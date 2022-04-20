@@ -14,7 +14,7 @@ import type {
   StyleEventDetail,
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
-import { clamp, debounceEvent, getAriaLabel, inheritAttributes, renderHiddenInput } from '../../utils/helpers';
+import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -237,7 +237,7 @@ export class Range implements ComponentInterface {
      */
     this.rangeId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
 
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   componentDidLoad() {
