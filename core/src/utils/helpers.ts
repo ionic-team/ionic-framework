@@ -103,6 +103,11 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
   return attributeObject;
 };
 
+/**
+ * List of available ARIA attributes + `role`.
+ * Removed deprecated attributes.
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+ */
 const ariaAttributes = [
   'role',
   'aria-activedescendant',
@@ -122,13 +127,9 @@ const ariaAttributes = [
   'aria-description',
   'aria-details',
   'aria-disabled',
-  // @deprecated
-  'aria-dropeffect',
   'aria-errormessage',
   'aria-expanded',
   'aria-flowto',
-  // @deprecated
-  'aria-grabbed',
   'aria-haspopup',
   'aria-hidden',
   'aria-invalid',
