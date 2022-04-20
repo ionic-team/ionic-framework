@@ -110,8 +110,8 @@ test.describe('modal: backdrop', () => {
     await page.goto('/src/components/modal/test/basic');
   });
 
-  // TODO: Liam fix me before review
-  test.skip('it should dismiss the modal when clicking the backdrop', async ({ page }) => {
+  test('it should dismiss the modal when clicking the backdrop', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari', 'The modal covers the entire screen on mobile, so the backdrop is not clickable.');
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -119,8 +119,6 @@ test.describe('modal: backdrop', () => {
     await page.click('#basic-modal');
     await ionModalDidPresent.next();
 
-    // @ts-ignore
-    await page.waitForFunction(() => false === true)
     await page.mouse.click(20, 20);
     await ionModalDidDismiss.next();
   })
