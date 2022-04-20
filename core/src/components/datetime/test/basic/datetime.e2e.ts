@@ -8,12 +8,18 @@ test.describe('datetime: selecting a day', () => {
     await page.goto('/src/components/datetime/test/basic');
 
     const todayBtn = page.locator(
-      `#${datetimeID} >>> .calendar-day[data-day="${today.getDate()}"][data-month="${today.getMonth() + 1}"]`
+      `#${datetimeID} .calendar-day[data-day='${today.getDate()}'][data-month='${today.getMonth() + 1}']`
     );
 
     const classes = await todayBtn.evaluate((el: any) => el.classList.value);
     expect(classes).toMatch('calendar-day-today');
     expect(classes).not.toMatch('calendar-day-active');
+
+    await todayBtn.click();
+    await page.waitForChanges();
+
+    const classes2 = await todayBtn.evaluate((el: any) => el.classList.value);
+    expect(classes2).toMatch('calendar-day-active');
   };
 
   test('should not highlight a day until one is selected', async ({ page }) => {
