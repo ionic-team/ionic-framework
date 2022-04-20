@@ -218,7 +218,7 @@ test.describe('modal: canDismiss', () => {
     });
   });
 
-  test.describe.only('sheet modal', () => {
+  test.describe('sheet modal', () => {
     test.beforeEach(async ({ page }) => {
       await page.click('#radio-sheet');
     });
@@ -331,7 +331,7 @@ test.describe('modal: canDismiss', () => {
       const modal = await page.locator('ion-modal');
       expect(modal).not.toBe(null);
     });
-    test.skip('should not dismiss on swipe when not attempting to close', async ({ page }) => {
+    test('should not dismiss on swipe when not attempting to close', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#radio-promise-true');
