@@ -10,7 +10,7 @@ const DIRECTORY = 'basic';
  * to wait for the requestAnimationFrame to fire.
  */
 const expectActiveElementTextToEqual = async (page: E2EPage, textValue: string) => {
-  await page.evaluate((text) => document.activeElement!.textContent === text, textValue)
+  await page.evaluate((text) => document.activeElement!.textContent === text, textValue);
 };
 
 const getActiveElementSelectionStart = (page: E2EPage) => {
@@ -104,7 +104,6 @@ test('popover: htmlAttributes', async () => {
 });
 
 describe('popover: focus trap', () => {
-
   it('should focus the first ion-item on ArrowDown', async () => {
     const page = await newE2EPage({ url: '/src/components/popover/test/basic?ionic:_testing=true' });
 
