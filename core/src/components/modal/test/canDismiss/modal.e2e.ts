@@ -133,7 +133,7 @@ test.describe('modal: canDismiss', () => {
     });
   });
 
-  test.describe.only('card modal - iOS swiping', () => {
+  test.describe('card modal - iOS swiping', () => {
     test.beforeEach(async ({ page }, testInfo) => {
       test.skip(testInfo.project.metadata.mode !== 'ios', 'Swipe to close on a modal is only available in iOS mode.');
 
