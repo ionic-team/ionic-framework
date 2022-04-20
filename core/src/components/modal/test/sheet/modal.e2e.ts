@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, dragElementBy } from '@utils/test/playwright';
 
 test.describe('sheet modal: rendering', () => {
   test('should not have visual regressions', async ({ page }) => {
@@ -122,12 +122,11 @@ test.describe('sheet modal: setting the breakpoint', () => {
       await ionBreakpointDidChange.next();
       expect(ionBreakpointDidChange.events.length).toBe(1);
     })
-    test.skip('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page }) => {
+    test('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
-      //const modal = await page.locator('.modal-sheet');
-      //const header = await page.locator('.modal-sheet ion-header');
+      const header = await page.locator('.modal-sheet ion-header');
 
-      // TODO: drag header
+      await dragElementBy(header, page, 0, 500);
 
       await ionBreakpointDidChange.next();
 
