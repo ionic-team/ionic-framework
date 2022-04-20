@@ -66,6 +66,24 @@ jobs:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
 
+  # Screenshots are required to pass
+  # in order for the branch to be merge
+  # eligible. However, the screenshot tests
+  # are run on n runners where n can change
+  # over time. The verify-screenshots step allows
+  # us to have a required status check for screenshot
+  # results without having to manually add each
+  # matrix run in the branch protection rules
+  # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354/6
+  verify-screenshots:
+    if: ${{ always() }}
+    needs: [test-core-screenshot]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.build.result != 'success' }}
+        run: exit 1
+
   build-vue:
     needs: [build-core]
     runs-on: ubuntu-latest
