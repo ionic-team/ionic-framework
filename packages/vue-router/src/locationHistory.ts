@@ -6,9 +6,6 @@ export const createLocationHistory = () => {
 
   const add = (routeInfo: RouteInfo) => {
     switch (routeInfo.routerAction) {
-      case "replace":
-        replaceRoute(routeInfo);
-        break;
       case "pop":
         pop(routeInfo);
         break;
@@ -39,13 +36,6 @@ export const createLocationHistory = () => {
     } else if (routeInfo.tab) {
       tabsHistory[routeInfo.tab] = [routeInfo];
     }
-  }
-
-  const replaceRoute = (routeInfo: RouteInfo) => {
-    const routeInfos = getTabsHistory(routeInfo.tab);
-    routeInfos && routeInfos.pop();
-    locationHistory.pop();
-    addRoute(routeInfo);
   }
 
   const pop = (routeInfo: RouteInfo) => {
