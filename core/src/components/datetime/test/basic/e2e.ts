@@ -98,41 +98,6 @@ describe('datetime: selecting a day', () => {
 
     expect(newActiveDay.innerText).toEqual('13');
   });
-
-  const testHighlight = async (page) => {
-    const today = new Date();
-    const todayBtn = await page.find(
-      `ion-datetime >>> .calendar-day[data-day="${today.getDate()}"][data-month="${today.getMonth() + 1}"]`
-    );
-
-    expect(todayBtn).toHaveClass('calendar-day-today');
-    expect(todayBtn).not.toHaveClass('calendar-day-active');
-
-    await todayBtn.click();
-    await page.waitForChanges();
-
-    expect(todayBtn).toHaveClass('calendar-day-active');
-  };
-
-  it('should not highlight a day until one is selected', async () => {
-    const page = await newE2EPage({
-      html: `
-        <ion-datetime></ion-datetime>
-      `,
-    });
-
-    await testHighlight(page);
-  });
-
-  it('should not highlight a day until one is selected, with default-buttons', async () => {
-    const page = await newE2EPage({
-      html: `
-        <ion-datetime show-default-buttons="true"></ion-datetime>
-      `,
-    });
-
-    await testHighlight(page);
-  });
 });
 
 test('datetime:rtl: basic', async () => {
