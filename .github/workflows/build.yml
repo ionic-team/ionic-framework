@@ -77,11 +77,11 @@ jobs:
   # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354
   verify-screenshots:
     if: ${{ always() }}
-    needs: [test-core-screenshot]
+    needs: test-core-screenshot
     runs-on: ubuntu-latest
     steps:
       - name: Check build matrix status
-        if: ${{ needs.build.result != 'success' }}
+        if: ${{ needs.test-core-screenshot.result != 'success' }}
         run: exit 1
 
   build-vue:
