@@ -39,7 +39,6 @@ describe('inheritAttributes()', () => {
 });
 
 describe('inheritAriaAttributes()', () => {
-
   it('should inherit ARIA attributes defined on the HTML element', () => {
     const el = document.createElement('div');
     el.setAttribute('aria-label', 'myLabel');
@@ -50,7 +49,7 @@ describe('inheritAriaAttributes()', () => {
     expect(attributeObject).toEqual({
       'aria-label': 'myLabel',
       'aria-describedby': 'myDescription',
-    })
+    });
   });
 
   it('should inherit the role attribute defined on the HTML element', () => {
@@ -60,7 +59,7 @@ describe('inheritAriaAttributes()', () => {
     const attributeObject = inheritAriaAttributes(el);
 
     expect(attributeObject).toEqual({
-      role: 'button'
+      role: 'button',
     });
   });
 });
