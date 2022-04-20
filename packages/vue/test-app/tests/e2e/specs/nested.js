@@ -30,7 +30,7 @@ describe('Nested', () => {
 })
 
 describe('Nested - Replace', () => {
-  it.only('should replace a route but still be able to go back to main outlet', () => {
+  it('should replace a route but still be able to go back to main outlet', () => {
     cy.visit('http://localhost:8080');
 
     cy.routerPush('/nested');
