@@ -4,6 +4,13 @@ on:
   pull_request:
     branches: [ '**' ]
 
+# When pushing a new commit we should
+# cancel the previous test run to not
+# consume more runners than we need to.
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-core:
     runs-on: ubuntu-latest
@@ -55,8 +62,8 @@ jobs:
         # add new items to the shard array
         # and change the value of totalShards
         # to be the length of the shard array.
-        shard: [1, 2, 3, 4, 5]
-        totalShards: [5]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        totalShards: [20]
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +72,24 @@ jobs:
         with:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
+
+  # Screenshots are required to pass
+  # in order for the branch to be merge
+  # eligible. However, the screenshot tests
+  # are run on n runners where n can change
+  # over time. The verify-screenshots step allows
+  # us to have a required status check for screenshot
+  # results without having to manually add each
+  # matrix run in the branch protection rules
+  # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354
+  verify-screenshots:
+    if: ${{ always() }}
+    needs: test-core-screenshot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-core-screenshot.result != 'success' }}
+        run: exit 1
 
   build-vue:
     needs: [build-core]

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.2](https://github.com/ionic-team/ionic-framework/compare/v6.1.1...v6.1.2) (2022-04-20)
+
+
+### Bug Fixes
+
+* **datetime:** time picker display matches dynamically set value ([#25010](https://github.com/ionic-team/ionic-framework/issues/25010)) ([11493a0](https://github.com/ionic-team/ionic-framework/commit/11493a086a4e3f2a4e9d3acdf5a9d49e810a5ef0)), closes [#24967](https://github.com/ionic-team/ionic-framework/issues/24967)
+* **modal:** add canDismiss option to modal options ([#25144](https://github.com/ionic-team/ionic-framework/issues/25144)) ([2984ddf](https://github.com/ionic-team/ionic-framework/commit/2984ddf111b6acbd9e47ed90830b6522179b6cee)), closes [#25143](https://github.com/ionic-team/ionic-framework/issues/25143)
+
+
+
+
+
 ## [6.1.1](https://github.com/ionic-team/ionic-framework/compare/v6.1.0...v6.1.1) (2022-04-15)
 
 
