@@ -32,7 +32,7 @@ test.describe('modal: canDismiss', () => {
 
       expect(returnValue).toBe(false);
     });
-    test('should not dismiss when canDismiss is Promise<true>', async ({ page }) => {
+    test('should dismiss when canDismiss is Promise<true>', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#radio-promise-true');
