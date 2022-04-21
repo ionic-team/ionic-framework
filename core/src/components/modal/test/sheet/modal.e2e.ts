@@ -30,7 +30,7 @@ test.describe('sheet modal: backdrop', () => {
 
     await ionModalDidDismiss.next();
   });
-  test('should present another the sheet modal when clicking an inactive backdrop', async ({ page }) => {
+  test('should present another sheet modal when clicking an inactive backdrop', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
     await page.click('#backdrop-inactive');
