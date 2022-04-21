@@ -2,9 +2,10 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color } from '../../interface';
-import { ButtonInterface } from '../../utils/element-interface';
-import { inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, Color } from '../../interface';
+import type { ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -67,7 +68,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
 
     if (this.defaultHref === undefined) {
       this.defaultHref = config.get('backButtonDefaultHref');
