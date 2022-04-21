@@ -8,7 +8,7 @@ import type {
   StyleEventDetail,
   TextFieldTypes,
 } from '../../interface';
-import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAriaAttributes, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**

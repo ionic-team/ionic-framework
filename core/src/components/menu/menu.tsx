@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
+import { assert, clamp, inheritAriaAttributes, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';

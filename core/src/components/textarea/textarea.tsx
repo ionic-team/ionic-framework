@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAriaAttributes, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**

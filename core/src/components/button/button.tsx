@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
+import { hasShadowDom, inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**

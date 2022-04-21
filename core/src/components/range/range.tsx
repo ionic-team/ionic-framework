@@ -10,7 +10,7 @@ import type {
   RangeValue,
   StyleEventDetail,
 } from '../../interface';
-import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { clamp, debounceEvent, getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
