@@ -12,6 +12,14 @@ There are two ways to use `ion-modal`: inline or via the `modalController`. Each
 
 When using `ion-modal` with Angular, React, or Vue, the component you pass in will be destroyed when the modal is dismissed. As this functionality is provided by the JavaScript framework, using `ion-modal` without a JavaScript framework will not destroy the component you passed in. If this is a needed functionality, we recommend using the `modalController` instead.
 
+### Using isOpen
+
+When using inline modals, developers have access to the `isOpen` property which allows them to control the state of the modal through the state of their application. This is helpful for opening a modal after a state change without needing to explicitly call the `present` method on `ion-modal`.
+
+ Note that `isOpen` uses a one way data binding. This means that a reactive variable that sets `isOpen` to `true` will not be automatically set to `false` when the modal dismisses. Developers need to listen for the `ionModalDidDismiss` or `didDismiss` events and set the reactive variable to `false` themselves.
+ 
+ The reason for this is it prevents the internals of `ion-modal` from being tightly coupled with the state of the application. With a one way data binding, the modal only needs to concern itself with the boolean value that the reactive variable provides. With a two way data binding, the modal needs to concern itself with both the boolean value as well as the existence of the reactive variable itself. This can lead to non-deterministic behaviors and make applications harder to debug.
+
 ### Angular 
 
 Since the component you passed in needs to be created when the modal is presented and destroyed when the modal is dismissed, we are unable to project the content using `<ng-content>` internally. Instead, we use `<ng-container>` which expects an `<ng-template>` to be passed in. As a result, when passing in your component you will need to wrap it in an `<ng-template>`:

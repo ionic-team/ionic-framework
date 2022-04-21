@@ -10,6 +10,14 @@ There are two ways to use `ion-popover`: inline or via the `popoverController`. 
 
 When using `ion-popover` with Angular, React, or Vue, the component you pass in will be destroyed when the popover is dismissed. As this functionality is provided by the JavaScript framework, using `ion-popover` without a JavaScript framework will not destroy the component you passed in. If this is a needed functionality, we recommend using the `popoverController` instead.
 
+### Using isOpen
+
+When using inline popovers, developers have access to the `isOpen` property which allows them to control the state of the popover through the state of their application. This is helpful for opening a popover after a state change without needing to explicitly call the `present` method on `ion-popover`.
+
+ Note that `isOpen` uses a one way data binding. This means that a reactive variable that sets `isOpen` to `true` will not be automatically set to `false` when the popover dismisses. Developers need to listen for the `ionPopoverDidDismiss` or `didDismiss` events and set the reactive variable to `false` themselves.
+ 
+ The reason for this is it prevents the internals of `ion-popover` from being tightly coupled with the state of the application. With a one way data binding, the popover only needs to concern itself with the boolean value that the reactive variable provides. With a two way data binding, the popover needs to concern itself with both the boolean value as well as the existence of the reactive variable itself. This can lead to non-deterministic behaviors and make applications harder to debug.
+
 ### Angular 
 
 Since the component you passed in needs to be created when the popover is presented and destroyed when the popover is dismissed, we are unable to project the content using `<ng-content>` internally. Instead, we use `<ng-container>` which expects an `<ng-template>` to be passed in. As a result, when passing in your component you will need to wrap it in an `<ng-template>`:
