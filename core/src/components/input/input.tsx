@@ -10,7 +10,7 @@ import type {
   TextFieldTypes,
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
-import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -257,7 +257,10 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label', 'tabindex', 'title']);
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+      ...inheritAttributes(this.el, ['tabindex', 'title']),
+    };
   }
 
   connectedCallback() {
