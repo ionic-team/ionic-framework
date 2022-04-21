@@ -25,8 +25,6 @@ export const componentOnReady = (el: any, callback: any) => {
   }
 }
 
-export type Attributes = { [key: string]: any };
-
 /**
  * Elements inside of web components sometimes need to inherit global attributes
  * set on the host. For example, the inner input in `ion-input` should inherit

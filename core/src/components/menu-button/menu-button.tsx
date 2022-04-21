@@ -4,7 +4,6 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
-import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';

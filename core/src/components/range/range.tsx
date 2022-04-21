@@ -1,17 +1,6 @@
-import {
-  Component,
-  ComponentInterface,
-  Element,
-  Event,
-  EventEmitter,
-  Host,
-  Prop,
-  State,
-  Watch,
-  h,
-} from "@stencil/core";
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from "../../global/ionic-global";
+import { getIonMode } from '../../global/ionic-global';
 import type {
   Color,
   Gesture,
@@ -20,16 +9,9 @@ import type {
   RangeChangeEventDetail,
   RangeValue,
   StyleEventDetail,
-} from "../../interface";
-import type { Attributes } from "../../utils/helpers";
-import {
-  inheritAriaAttributes,
-  clamp,
-  debounceEvent,
-  getAriaLabel,
-  renderHiddenInput,
-} from "../../utils/helpers";
-import { createColorClasses, hostContext } from "../../utils/theme";
+} from '../../interface';
+import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -45,14 +27,15 @@ import { createColorClasses, hostContext } from "../../utils/theme";
  * @part bar-active - The active part of the bar.
  */
 @Component({
-  tag: "ion-range",
+  tag: 'ion-range',
   styleUrls: {
-    ios: "range.ios.scss",
-    md: "range.md.scss",
+    ios: 'range.ios.scss',
+    md: 'range.md.scss'
   },
-  shadow: true,
+  shadow: true
 })
 export class Range implements ComponentInterface {
+
   private rangeId?: string;
   private didLoad = false;
   private noUpdate = false;
@@ -82,7 +65,7 @@ export class Range implements ComponentInterface {
    */
   @Prop() debounce = 0;
 
-  @Watch("debounce")
+  @Watch('debounce')
   protected debounceChanged() {
     this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
@@ -92,7 +75,7 @@ export class Range implements ComponentInterface {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name = "";
+  @Prop() name = '';
 
   /**
    * Show two knobs.
@@ -103,7 +86,7 @@ export class Range implements ComponentInterface {
    * Minimum integer value of the range.
    */
   @Prop() min = 0;
-  @Watch("min")
+  @Watch('min')
   protected minChanged() {
     if (!this.noUpdate) {
       this.updateRatio();
@@ -114,7 +97,7 @@ export class Range implements ComponentInterface {
    * Maximum integer value of the range.
    */
   @Prop() max = 100;
-  @Watch("max")
+  @Watch('max')
   protected maxChanged() {
     if (!this.noUpdate) {
       this.updateRatio();
@@ -148,7 +131,7 @@ export class Range implements ComponentInterface {
    * If `true`, the user cannot interact with the range.
    */
   @Prop() disabled = false;
-  @Watch("disabled")
+  @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
       this.gesture.enable(!this.disabled);
@@ -160,7 +143,7 @@ export class Range implements ComponentInterface {
    * the value of the range.
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
-  @Watch("value")
+  @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
       this.updateRatio();
@@ -173,18 +156,18 @@ export class Range implements ComponentInterface {
 
   private clampBounds = (value: any): number => {
     return clamp(this.min, value, this.max);
-  };
+  }
 
   private ensureValueInBounds = (value: any) => {
     if (this.dualKnobs) {
       return {
         lower: this.clampBounds(value.lower),
-        upper: this.clampBounds(value.upper),
+        upper: this.clampBounds(value.upper)
       };
     } else {
       return this.clampBounds(value);
     }
-  };
+  }
 
   /**
    * Emitted when the value property has changed.
@@ -210,27 +193,25 @@ export class Range implements ComponentInterface {
   private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
     if (rangeSlider) {
-      this.gesture = (await import("../../utils/gesture")).createGesture({
+      this.gesture = (await import('../../utils/gesture')).createGesture({
         el: rangeSlider,
-        gestureName: "range",
+        gestureName: 'range',
         gesturePriority: 100,
         threshold: 0,
-        onStart: (ev) => this.onStart(ev),
-        onMove: (ev) => this.onMove(ev),
-        onEnd: (ev) => this.onEnd(ev),
+        onStart: ev => this.onStart(ev),
+        onMove: ev => this.onMove(ev),
+        onEnd: ev => this.onEnd(ev),
       });
       this.gesture.enable(!this.disabled);
     }
-  };
+  }
 
   componentWillLoad() {
     /**
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
-    this.rangeId = this.el.hasAttribute("id")
-      ? this.el.getAttribute("id")!
-      : `ion-r-${rangeIds++}`;
+    this.rangeId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
 
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
@@ -270,26 +251,26 @@ export class Range implements ComponentInterface {
     if (!isIncrease) {
       step *= -1;
     }
-    if (knob === "A") {
+    if (knob === 'A') {
       this.ratioA = clamp(0, this.ratioA + step, 1);
     } else {
       this.ratioB = clamp(0, this.ratioB + step, 1);
     }
     this.updateValue();
-  };
+  }
 
   private getValue(): RangeValue {
     const value = this.value || 0;
     if (this.dualKnobs) {
-      if (typeof value === "object") {
+      if (typeof value === 'object') {
         return value;
       }
       return {
         lower: 0,
-        upper: value,
+        upper: value
       };
     } else {
-      if (typeof value === "object") {
+      if (typeof value === 'object') {
         return value.upper;
       }
       return value;
@@ -298,26 +279,26 @@ export class Range implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
-      interactive: true,
-      "interactive-disabled": this.disabled,
+      'interactive': true,
+      'interactive-disabled': this.disabled
     });
   }
 
   private onStart(detail: GestureDetail) {
-    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
+    const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (document.dir === "rtl") {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
     this.pressedKnob =
       !this.dualKnobs ||
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
-        ? "A"
-        : "B";
+        ? 'A'
+        : 'B';
 
     this.setFocus(this.pressedKnob);
 
@@ -339,7 +320,7 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (document.dir === "rtl") {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -353,7 +334,7 @@ export class Range implements ComponentInterface {
     }
 
     // update which knob is pressed
-    if (this.pressedKnob === "A") {
+    if (this.pressedKnob === 'A') {
       this.ratioA = ratio;
     } else {
       this.ratioB = ratio;
@@ -404,7 +385,7 @@ export class Range implements ComponentInterface {
       ? valA
       : {
           lower: Math.min(valA, valB),
-          upper: Math.max(valA, valB),
+          upper: Math.max(valA, valB)
         };
 
     this.noUpdate = false;
@@ -412,9 +393,7 @@ export class Range implements ComponentInterface {
 
   private setFocus(knob: KnobName) {
     if (this.el.shadowRoot) {
-      const knobEl = this.el.shadowRoot.querySelector(
-        knob === "A" ? ".range-knob-a" : ".range-knob-b"
-      ) as HTMLElement | undefined;
+      const knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b') as HTMLElement | undefined;
       if (knobEl) {
         knobEl.focus();
       }
@@ -427,7 +406,7 @@ export class Range implements ComponentInterface {
       this.ionBlur.emit();
       this.emitStyle();
     }
-  };
+  }
 
   private onFocus = () => {
     if (!this.hasFocus) {
@@ -435,23 +414,10 @@ export class Range implements ComponentInterface {
       this.ionFocus.emit();
       this.emitStyle();
     }
-  };
+  }
 
   render() {
-    const {
-      min,
-      max,
-      step,
-      el,
-      handleKeyboard,
-      pressedKnob,
-      disabled,
-      pin,
-      ratioLower,
-      ratioUpper,
-      inheritedAttributes,
-      rangeId,
-    } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper, inheritedAttributes, rangeId } = this;
 
     /**
      * Look for external label, ion-label, or aria-labelledby.
@@ -460,26 +426,26 @@ export class Range implements ComponentInterface {
      */
     let { labelText } = getAriaLabel(el, rangeId!);
     if (labelText === undefined || labelText === null) {
-      labelText = inheritedAttributes["aria-label"];
+      labelText = inheritedAttributes['aria-label'];
     }
     const mode = getIonMode(this);
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
     const doc = document;
-    const isRTL = doc.dir === "rtl";
-    const start = isRTL ? "right" : "left";
-    const end = isRTL ? "left" : "right";
+    const isRTL = doc.dir === 'rtl';
+    const start = isRTL ? 'right' : 'left';
+    const end = isRTL ? 'left' : 'right';
 
     const tickStyle = (tick: any) => {
       return {
-        [start]: tick[start],
+        [start]: tick[start]
       };
     };
 
     const barStyle = {
       [start]: barStart,
-      [end]: barEnd,
+      [end]: barEnd
     };
 
     const ticks = [];
@@ -498,13 +464,7 @@ export class Range implements ComponentInterface {
       }
     }
 
-    renderHiddenInput(
-      true,
-      el,
-      this.name,
-      JSON.stringify(this.getValue()),
-      disabled
-    );
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
     return (
       <Host
@@ -513,26 +473,24 @@ export class Range implements ComponentInterface {
         id={rangeId}
         class={createColorClasses(this.color, {
           [mode]: true,
-          "in-item": hostContext("ion-item", el),
-          "range-disabled": disabled,
-          "range-pressed": pressedKnob !== undefined,
-          "range-has-pin": pin,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin
         })}
       >
+
         <slot name="start"></slot>
-        <div
-          class="range-slider"
-          ref={(rangeEl) => (this.rangeSlider = rangeEl)}
-        >
-          {ticks.map((tick) => (
+        <div class="range-slider" ref={rangeEl => this.rangeSlider = rangeEl}>
+          {ticks.map(tick => (
             <div
               style={tickStyle(tick)}
               role="presentation"
               class={{
-                "range-tick": true,
-                "range-tick-active": tick.active,
+                'range-tick': true,
+                'range-tick-active': tick.active
               }}
-              part={tick.active ? "tick-active" : "tick"}
+              part={tick.active ? 'tick-active' : 'tick'}
             />
           ))}
 
@@ -544,9 +502,9 @@ export class Range implements ComponentInterface {
             part="bar-active"
           />
 
-          {renderKnob(isRTL, {
-            knob: "A",
-            pressed: pressedKnob === "A",
+          { renderKnob(isRTL, {
+            knob: 'A',
+            pressed: pressedKnob === 'A',
             value: this.valA,
             ratio: this.ratioA,
             pin,
@@ -554,22 +512,21 @@ export class Range implements ComponentInterface {
             handleKeyboard,
             min,
             max,
-            labelText,
+            labelText
           })}
 
-          {this.dualKnobs &&
-            renderKnob(isRTL, {
-              knob: "B",
-              pressed: pressedKnob === "B",
-              value: this.valB,
-              ratio: this.ratioB,
-              pin,
-              disabled,
-              handleKeyboard,
-              min,
-              max,
-              labelText,
-            })}
+          { this.dualKnobs && renderKnob(isRTL, {
+            knob: 'B',
+            pressed: pressedKnob === 'B',
+            value: this.valB,
+            ratio: this.ratioB,
+            pin,
+            disabled,
+            handleKeyboard,
+            min,
+            max,
+            labelText
+          })}
         </div>
         <slot name="end"></slot>
       </Host>
@@ -591,22 +548,8 @@ interface RangeKnob {
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-const renderKnob = (
-  isRTL: boolean,
-  {
-    knob,
-    value,
-    ratio,
-    min,
-    max,
-    disabled,
-    pressed,
-    pin,
-    handleKeyboard,
-    labelText,
-  }: RangeKnob
-) => {
-  const start = isRTL ? "right" : "left";
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText }: RangeKnob) => {
+  const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
     const style: any = {};
@@ -620,23 +563,24 @@ const renderKnob = (
     <div
       onKeyDown={(ev: KeyboardEvent) => {
         const key = ev.key;
-        if (key === "ArrowLeft" || key === "ArrowDown") {
+        if (key === 'ArrowLeft' || key === 'ArrowDown') {
           handleKeyboard(knob, false);
           ev.preventDefault();
           ev.stopPropagation();
-        } else if (key === "ArrowRight" || key === "ArrowUp") {
+
+        } else if (key === 'ArrowRight' || key === 'ArrowUp') {
           handleKeyboard(knob, true);
           ev.preventDefault();
           ev.stopPropagation();
         }
       }}
       class={{
-        "range-knob-handle": true,
-        "range-knob-a": knob === "A",
-        "range-knob-b": knob === "B",
-        "range-knob-pressed": pressed,
-        "range-knob-min": value === min,
-        "range-knob-max": value === max,
+        'range-knob-handle': true,
+        'range-knob-a': knob === 'A',
+        'range-knob-b': knob === 'B',
+        'range-knob-pressed': pressed,
+        'range-knob-min': value === min,
+        'range-knob-max': value === max
       }}
       style={knobStyle()}
       role="slider"
@@ -644,14 +588,10 @@ const renderKnob = (
       aria-label={labelText}
       aria-valuemin={min}
       aria-valuemax={max}
-      aria-disabled={disabled ? "true" : null}
+      aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && (
-        <div class="range-pin" role="presentation" part="pin">
-          {Math.round(value)}
-        </div>
-      )}
+      {pin && <div class="range-pin" role="presentation" part="pin">{Math.round(value)}</div>}
       <div class="range-knob" role="presentation" part="knob" />
     </div>
   );
