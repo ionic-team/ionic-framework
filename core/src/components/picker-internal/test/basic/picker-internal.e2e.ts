@@ -1,6 +1,6 @@
 import type { TestInfo } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { isLinuxUserAgent, test } from '@utils/test/playwright';
+import { test } from '@utils/test/playwright';
 
 test.describe('picker-internal', () => {
   test('inline pickers should not have visual regression', async ({ page }) => {
@@ -13,8 +13,8 @@ test.describe('picker-internal', () => {
     );
   });
 
-  test('popover picker should not have visual regression', async ({ page }, testInfo: TestInfo) => {
-    test.skip(testInfo.project.name === 'Mobile Safari' && isLinuxUserAgent(testInfo), 'Mobile Safari on Linux renders the selected option incorrectly');
+  test('popover picker should not have visual regression', async ({ page, userAgent }, testInfo: TestInfo) => {
+    test.skip(testInfo.project.name === 'Mobile Safari' && userAgent?.includes('Linux') === true, 'Mobile Safari on Linux renders the selected option incorrectly');
 
     await page.goto(`/src/components/picker-internal/test/basic`);
 
@@ -31,8 +31,8 @@ test.describe('picker-internal', () => {
     );
   });
 
-  test('modal picker should not have visual regression', async ({ page }, testInfo: TestInfo) => {
-    test.skip(testInfo.project.name === 'Mobile Safari' && isLinuxUserAgent(testInfo), 'Mobile Safari on Linux renders the selected option incorrectly');
+  test('modal picker should not have visual regression', async ({ page, userAgent }, testInfo: TestInfo) => {
+    test.skip(testInfo.project.name === 'Mobile Safari' && userAgent?.includes('Linux') === true, 'Mobile Safari on Linux renders the selected option incorrectly');
 
     await page.goto(`/src/components/picker-internal/test/basic`);
 
