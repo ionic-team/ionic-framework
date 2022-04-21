@@ -41,7 +41,7 @@ test.describe('sheet modal: backdrop', () => {
 
     await page.waitForSelector('.custom-height', { state: 'visible' });
   });
-  test('input should outside sheet modal should be focusable when backdrop is inactive', async ({ page }) => {
+  test('input outside sheet modal should be focusable when backdrop is inactive', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
     await page.click('#backdrop-inactive');
