@@ -31,6 +31,10 @@ test.describe('modal: focus trapping', () => {
     expect(dismissButton).toBeFocused();
     await page.keyboard.press('Tab');
 
+    if (browserName === 'webkit') {
+      await page.keyboard.up('Alt');
+    }
+
     expect(dismissButton).toBeFocused();
   });
 
@@ -50,6 +54,10 @@ test.describe('modal: focus trapping', () => {
     // Focus #basic-modal button
     await page.keyboard.press('Tab');
     expect(modalButton).toBeFocused();
+
+    if (browserName === 'webkit') {
+      await page.keyboard.up('Alt');
+    }
 
     await page.keyboard.press('Space');
     await ionModalDidPresent.next();
