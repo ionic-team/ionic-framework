@@ -4,7 +4,7 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
-import { debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
+import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -220,7 +220,10 @@ export class Textarea implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['title']);
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+      ...inheritAttributes(this.el, ['title']),
+    };
   }
 
   componentDidLoad() {
