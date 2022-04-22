@@ -142,7 +142,7 @@ export const isMonthDisabled = (
 export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const prevMonth = {
     ...getPreviousMonth(refParts),
-    day: 1,
+    day: null,
   };
   return isMonthDisabled(prevMonth, {
     minParts,
@@ -157,7 +157,7 @@ export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: Datetime
 export const isNextMonthDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts) => {
   const nextMonth = {
     ...getNextMonth(refParts),
-    day: 1,
+    day: null,
   };
   return isMonthDisabled(nextMonth, {
     maxParts,
