@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('popover: nested', async () => {
   test.beforeEach(async ({ page }) => {
-    page.goto('/src/components/popover/test/nested');
+    await page.goto('/src/components/popover/test/nested');
   });
 
   test('should render correctly', async ({ page }) => {
