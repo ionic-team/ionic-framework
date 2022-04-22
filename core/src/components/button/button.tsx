@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
-import { hasShadowDom, inheritAttributes } from '../../utils/helpers';
+import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -137,7 +137,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   private get hasIconOnly() {

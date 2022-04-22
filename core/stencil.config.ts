@@ -166,10 +166,6 @@ export const config: Config = {
       includeGlobalScripts: false
     },
     {
-      type: 'docs-readme',
-      strict: true
-    },
-    {
       type: 'docs-json',
       file: '../docs/core.json'
     },

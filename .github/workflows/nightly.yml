@@ -4,7 +4,7 @@ on:
   schedule:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
-    - cron: '00 06 * * 1,5'
+    - cron: '00 06 * * 1-5'
 
 jobs:
   nightly-build:
