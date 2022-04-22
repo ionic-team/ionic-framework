@@ -13,7 +13,7 @@ test.describe('popover: rendering', async () => {
       'no-event-popover',
       'custom-class-popover',
       'header-popover',
-      'translucent-header-popover'
+      'translucent-header-popover',
     ];
 
     for (const id of buttonIDs) {
@@ -81,7 +81,7 @@ test.describe('popover: focus trap', async () => {
 
   test('should not override keyboard interactions for textarea elements', async ({ page }) => {
     await openPopover(page, 'popover-with-textarea');
-    await page.waitForFunction(() => document.activeElement?.tagName === "ION-POPOVER");
+    await page.waitForFunction(() => document.activeElement?.tagName === 'ION-POPOVER');
 
     await page.keyboard.press('Tab');
     // Checking within ion-textarea
