@@ -20,12 +20,17 @@
   background-repeat: repeat-x;
 
   content: "";
-}
 
-.header-collapse-condense {
-  display: none;
+  // For Collapse scroll
+  opacity: var(--opacity-scale);
 }
 
 .header-md.ion-no-border::after {
   display: none;
+}
+
+// Collapse
+// --------------------------------------------------
+.header-collapse-condense::after {
+  content: none;
 }

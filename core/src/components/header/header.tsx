@@ -71,12 +71,6 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const mode = getIonMode(this);
-
-    if (mode !== 'ios') {
-      return;
-    }
-
     const { collapse } = this;
     const hasCondense = collapse === 'condense';
     const hasFade = collapse === 'fade';

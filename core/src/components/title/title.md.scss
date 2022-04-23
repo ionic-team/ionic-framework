@@ -25,3 +25,34 @@
   font-weight: normal;
 }
 
+// Title: Large
+// --------------------------------------------------
+
+:host(.title-large) {
+  @include padding(0, 16px);
+  @include transform-origin(left, center);
+
+  bottom: 0;
+
+  align-items: flex-end;
+
+  min-width: 100%;
+
+  padding-bottom: 6px;
+
+  font-size: 34px;
+
+  text-align: start;
+}
+
+:host(.title-large.title-rtl) {
+  @include transform-origin(right, center);
+}
+
+:host(.title-large.ion-cloned-element) {
+  --color: #{$text-color};
+}
+
+:host(.title-large) .toolbar-title {
+  @include transform-origin(inherit);
+}
