@@ -38,7 +38,6 @@ export class Header implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies in iOS mode.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */
@@ -81,7 +80,7 @@ export class Header implements ComponentInterface {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
-      // Cloned elements are always needed in iOS transition
+      // Cloned elements are always needed
       writeTask(() => {
         const title = cloneElement('ion-title') as HTMLIonTitleElement;
         title.size = 'large';
@@ -182,7 +181,7 @@ export class Header implements ComponentInterface {
     this.intersectionObserver.observe(scrollHeaderIndex.toolbars[scrollHeaderIndex.toolbars.length - 1].el);
 
     /**
-     * Handle scaling of large iOS titles and
+     * Handle scaling of large titles and
      * showing/hiding border on last toolbar
      * in primary header
      */
