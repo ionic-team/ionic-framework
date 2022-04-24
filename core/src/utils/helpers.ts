@@ -103,6 +103,74 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
   return attributeObject;
 };
 
+/**
+ * List of available ARIA attributes + `role`.
+ * Removed deprecated attributes.
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+ */
+const ariaAttributes = [
+  'role',
+  'aria-activedescendant',
+  'aria-atomic',
+  'aria-autocomplete',
+  'aria-braillelabel',
+  'aria-brailleroledescription',
+  'aria-busy',
+  'aria-checked',
+  'aria-colcount',
+  'aria-colindex',
+  'aria-colindextext',
+  'aria-colspan',
+  'aria-controls',
+  'aria-current',
+  'aria-describedby',
+  'aria-description',
+  'aria-details',
+  'aria-disabled',
+  'aria-errormessage',
+  'aria-expanded',
+  'aria-flowto',
+  'aria-haspopup',
+  'aria-hidden',
+  'aria-invalid',
+  'aria-keyshortcuts',
+  'aria-label',
+  'aria-labelledby',
+  'aria-level',
+  'aria-live',
+  'aria-multiline',
+  'aria-multiselectable',
+  'aria-orientation',
+  'aria-owns',
+  'aria-placeholder',
+  'aria-posinset',
+  'aria-pressed',
+  'aria-readonly',
+  'aria-relevant',
+  'aria-required',
+  'aria-roledescription',
+  'aria-rowcount',
+  'aria-rowindex',
+  'aria-rowindextext',
+  'aria-rowspan',
+  'aria-selected',
+  'aria-setsize',
+  'aria-sort',
+  'aria-valuemax',
+  'aria-valuemin',
+  'aria-valuenow',
+  'aria-valuetext',
+];
+
+/**
+ * Returns an array of aria attributes that should be copied from
+ * the shadow host element to a target within the light DOM.
+ * @param el The element that the attributes should be copied from.
+ */
+export const inheritAriaAttributes = (el: HTMLElement) => {
+  return inheritAttributes(el, ariaAttributes);
+};
+
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   if (typeof (window as any) !== 'undefined') {
     const win = window as any;

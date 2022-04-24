@@ -5,7 +5,7 @@ import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
-import { inheritAttributes } from '../../utils/helpers';
+import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -124,7 +124,7 @@ export class Breadcrumb implements ComponentInterface {
   @Event() collapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   private isClickable(): boolean {
