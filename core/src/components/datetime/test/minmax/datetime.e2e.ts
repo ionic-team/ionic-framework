@@ -9,7 +9,24 @@ test.describe('datetime: minmax', () => {
       description: 'https://github.com/ionic-team/ionic-framework/issues/25073'
     });
 
-    await page.setContent(`<ion-datetime min="2022-04-22" max="2022-05-21" value="2022-04-22T10:00:00"></ion-datetime>`);
+    await page.setContent(`
+      <ion-datetime min="2022-04-22" max="2022-05-21" value="2022-04-22T10:00:00"></ion-datetime>
+
+      <script>
+        const observer = new MutationObserver((mutationRecords) => {
+          if (mutationRecords) {
+            window.dispatchEvent(new CustomEvent('datetimeMonthDidChange'));
+          }
+        });
+
+        const initDatetimeChangeEvent = () => {
+          observer.observe(document.querySelector('ion-datetime').shadowRoot.querySelector('.calendar-body'), {
+            subtree: true,
+            childList: true
+          });
+        }
+      </script>
+  `);
 
     await page.waitForSelector('.datetime-ready');
 
@@ -18,6 +35,18 @@ test.describe('datetime: minmax', () => {
 
     expect(nextButton).toBeEnabled();
     expect(prevButton).toBeDisabled();
+
+    await page.evaluate('initDatetimeChangeEvent()');
+
+    const monthDidChangeSpy = await page.spyOnEvent('datetimeMonthDidChange');
+
+    await nextButton.click();
+    await page.waitForChanges();
+
+    await monthDidChangeSpy.next();
+
+    expect(nextButton).toBeDisabled();
+    expect(prevButton).toBeEnabled();
   });
 
 });
