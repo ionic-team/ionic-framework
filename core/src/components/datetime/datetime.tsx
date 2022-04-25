@@ -67,6 +67,15 @@ export class Datetime implements ComponentInterface {
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
   private overlayIsPresenting = false;
+
+  /**
+   * Whether to highlight the active day with a solid circle (as opposed
+   * to the outline circle around today). If you don't specify an initial
+   * value for the datetime, it doesn't automatically init to a default to
+   * avoid unwanted change events firing. If the solid circle were still
+   * shown then, it would look like a date had already been selected, which
+   * is misleading UX.
+   */
   private highlightActiveParts = false;
 
   private parsedMinuteValues?: number[];
@@ -1437,6 +1446,12 @@ export class Datetime implements ComponentInterface {
                     return;
                   }
 
+                  /**
+                   * Note that for datetimes with confirm/cancel buttons, the value
+                   * isn't updated until you call confirm(). We need to bring the
+                   * solid circle back on day click for UX reasons, rather than only
+                   * show the circle if `value` is truthy.
+                   */
                   this.highlightActiveParts = true;
 
                   this.setWorkingParts({
