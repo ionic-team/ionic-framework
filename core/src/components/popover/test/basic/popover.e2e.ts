@@ -28,8 +28,7 @@ test.describe('popover: htmlAttributes', async () => {
     await openPopover(page, 'basic-popover');
 
     const alert = page.locator('ion-popover');
-    const attribute = alert.evaluate((el: HTMLIonPopoverElement) => el.getAttribute('data-testid'));
-    expect(attribute).toEqual('basic-popover');
+    expect(alert).toHaveAttribute('data-testid', 'basic-popover');
   });
 });
 
@@ -79,12 +78,17 @@ test.describe('popover: focus trap', async () => {
     await expectActiveElementTextToEqual(page, 'Item 3');
   });
 
-  test('should not override keyboard interactions for textarea elements', async ({ page }) => {
+  test('should not override keyboard interactions for textarea elements', async ({ page }, testInfo) => {
     await openPopover(page, 'popover-with-textarea');
     await page.waitForFunction(() => document.activeElement?.tagName === 'ION-POPOVER');
 
     await page.keyboard.press('Tab');
-    // Checking within ion-textarea
+
+    // for Firefox, ion-textarea is focused first
+    // need to tab again to get to native input
+    if (testInfo.project.name === 'firefox') {
+      await page.keyboard.press('Tab');
+    }
 
     let activeElementTagName = await page.evaluate(() => document.activeElement!.tagName);
     let scrollTop = null;

@@ -13,13 +13,15 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidPresent.next();
 
     const parentPopover = page.locator('.parent-popover');
-    expect(parentPopover).not.toHaveClass('overlay-hidden');
+    expect(parentPopover).not.toHaveClass(/overlay-hidden/);
 
+    // note: alignment="start" is needed on popovers so all buttons are on-screen in iOS mode
+    // otherwise this one goes off the top of the screen and tests hang/fail
     await page.click('#open-with-popover');
     await ionPopoverDidPresent.next();
 
     const nestedPopover = page.locator('.child-popover-one');
-    expect(nestedPopover).not.toHaveClass('overlay-hidden');
+    expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`
@@ -37,11 +39,11 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidPresent.next();
 
     const backdrop = page.locator('.parent-popover ion-backdrop');
-    await backdrop.click();
+    await backdrop.click({ position: { x: 5, y: 5 } });
     await ionPopoverDidDismiss.next();
 
     const nestedPopover = await page.locator('.child-popover-one');
-    expect(nestedPopover).toHaveClass('overlay-hidden');
+    expect(nestedPopover).toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`
@@ -62,7 +64,7 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidPresent.next();
 
     const nestedPopover = page.locator('.child-popover-three');
-    expect(nestedPopover).not.toHaveClass('overlay-hidden');
+    expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`
@@ -83,15 +85,15 @@ test.describe('popover: nested', async () => {
     await page.click('#share-other-popover');
     await ionPopoverDidPresent.next();
 
-    const backdrop = page.locator('.parent-popover >>> ion-backdrop');
-    await backdrop.click();
+    const backdrop = page.locator('.parent-popover ion-backdrop');
+    await backdrop.click({ position: { x: 5, y: 5 } });
     await ionPopoverDidDismiss.next();
 
     const nestedPopoverOne = page.locator('.child-popover-one');
-    expect(nestedPopoverOne).toHaveClass('overlay-hidden');
+    expect(nestedPopoverOne).toHaveClass(/overlay-hidden/);
 
     const nestedPopoverTwo = page.locator('.child-popover-three');
-    expect(nestedPopoverTwo).toHaveClass('overlay-hidden');
+    expect(nestedPopoverTwo).toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`
@@ -115,8 +117,8 @@ test.describe('popover: nested', async () => {
 
     const openWithPopover = page.locator('.child-popover-one');
     const sharePopover = page.locator('.child-popover-two');
-    expect(openWithPopover).toHaveClass('overlay-hidden');
-    expect(sharePopover).not.toHaveClass('overlay-hidden');
+    expect(openWithPopover).toHaveClass(/overlay-hidden/);
+    expect(sharePopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`
