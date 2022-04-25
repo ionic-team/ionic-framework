@@ -6,7 +6,7 @@ test.describe('card modal', () => {
     await page.goto('/src/components/modal/test/card');
 
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
-  })
+  });
   test.describe('card modal: rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
