@@ -11,6 +11,7 @@ import { initPageEvents } from './page/event-spy';
 import {
   getSnapshotSettings,
   goto as goToPage,
+  setContent,
   setIonViewport,
   spyOnEvent,
   waitForChanges,
@@ -31,9 +32,11 @@ type CustomFixtures = {
 export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     const originalGoto = page.goto.bind(page);
+    const originalSetContent = page.setContent.bind(page);
 
     // Overridden Playwright methods
     page.goto = (url: string) => goToPage(page, url, testInfo, originalGoto);
+    page.setContent = (html: string, options?) => setContent(originalSetContent, page, testInfo, html, options);
     // Custom Ionic methods
     page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
     page.setIonViewport = () => setIonViewport(page);
