@@ -52,25 +52,6 @@ test.describe('sheet modal: backdrop', () => {
     await input.click();
     expect(input).toBeFocused();
   });
-  test('input outside sheet modal should not be focusable when backdrop is active', async ({ page }) => {
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-    await page.click('#backdrop-active');
-
-    await ionModalDidPresent.next();
-
-    const input = await page.locator('#root-input input');
-
-    /**
-     * Input is behind the active backdrop
-     * so users will click the backdrop first
-     * before getting the input. Using force
-     * allows us to test focus trapping even
-     * when the backdrop is enabled.
-     */
-    await input.click({ force: true });
-    expect(input).not.toBeFocused();
-  })
 });
 
 test.describe('sheet modal: setting the breakpoint', () => {
