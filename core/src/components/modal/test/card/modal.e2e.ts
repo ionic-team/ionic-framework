@@ -51,7 +51,7 @@ test.describe('card modal', () => {
       );
     });
   });
-  test.describe.only('card modal: swipe to close', () => {
+  test.describe('card modal: swipe to close', () => {
     test('it should swipe to close when swiped on the header', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
