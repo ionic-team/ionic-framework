@@ -6,8 +6,11 @@ const DID_CHANGE = 'ionTabsDidChange';
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: 'IonTabs',
   emits: [WILL_CHANGE, DID_CHANGE],
+  props: {
+    noOutlet: { type: Boolean, default: false },
+  },
   render() {
-    const { $slots: slots, $emit } = this;
+    const { $slots: slots, $emit, noOutlet } = this;
     const slottedContent = slots.default && slots.default();
     let routerOutlet;
 
@@ -19,10 +22,6 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       routerOutlet = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'IonRouterOutlet');
     }
 
-    if (!routerOutlet) {
-      throw new Error('IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
-    }
-
     let childrenToRender = [
       h('div', {
         class: 'tabs-inner',
@@ -31,8 +30,14 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
             'flex': '1',
             'contain': 'layout size style'
         }
-      }, routerOutlet)
+      })
     ];
+    if (!noOutlet) {
+      if (!routerOutlet) {
+        throw new Error('IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
+      }
+      childrenToRender.push(routerOutlet)
+    }
 
     /**
      * If ion-tab-bar has slot="top" it needs to be
@@ -65,6 +70,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
          */
         slottedTabBar.props._tabsWillChange = (tab: string) => $emit(WILL_CHANGE, { tab });
         slottedTabBar.props._tabsDidChange = (tab: string) => $emit(DID_CHANGE, { tab });
+        slottedTabBar.props.noOutlet = noOutlet;
       }
 
       if (hasTopSlotTabBar) {

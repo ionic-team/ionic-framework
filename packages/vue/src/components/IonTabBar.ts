@@ -33,7 +33,8 @@ export const IonTabBar = defineComponent({
   name: 'IonTabBar',
   props: {
     _tabsWillChange: { type: Function, default: () => {} },
-    _tabsDidChange: { type: Function, default: () => {} }
+    _tabsDidChange: { type: Function, default: () => {} },
+    noOutlet: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -45,7 +46,9 @@ export const IonTabBar = defineComponent({
     }
   },
   updated() {
-    this.setupTabState(inject('navManager'));
+    if(!this.noOutlet) {
+      this.setupTabState(inject('navManager'));
+    }
   },
   methods: {
     setupTabState(ionRouter: any) {
@@ -165,11 +168,13 @@ export const IonTabBar = defineComponent({
     }
   },
   mounted() {
-    const ionRouter: any = inject('navManager');
+    if(!this.noOutlet) {
+      const ionRouter: any = inject('navManager');
 
-    this.setupTabState(ionRouter);
+      this.setupTabState(ionRouter);
 
-    ionRouter.registerHistoryChangeListener(() => this.checkActiveTab(ionRouter));
+      ionRouter.registerHistoryChangeListener(() => this.checkActiveTab(ionRouter));
+    }
   },
   setup(_, { slots }) {
     defineCustomElement('ion-tab-bar', IonTabBarCmp);
