@@ -18,12 +18,6 @@ test.describe('datetime: minmax', () => {
 
     expect(nextButton).toBeEnabled();
     expect(prevButton).toBeDisabled();
-
-    await nextButton.click();
-    await page.waitForChanges(400); // offset for scroll snap delay
-
-    expect(nextButton).toBeDisabled();
-    expect(prevButton).toBeEnabled();
   });
 
 });
