@@ -7,7 +7,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
-import { inheritAttributes } from '../../utils/helpers';
+import { inheritAriaAttributes } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
@@ -61,7 +61,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   componentDidLoad() {
