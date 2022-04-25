@@ -14,10 +14,6 @@ export const setContent = async (page: Page, html: string) => {
     throw new Error('setContent unavailable: page is already closed');
   }
 
-  if (typeof html !== 'string') {
-    throw new Error('invalid html: must be a string');
-  }
-
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
 
   const output = `
