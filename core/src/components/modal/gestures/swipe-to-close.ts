@@ -1,12 +1,12 @@
 import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
+import { isIonContent } from '../../../utils/content';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
-import { isIonContent } from '../../../utils/content';
 
 
 // Defaults for the card swipe animation

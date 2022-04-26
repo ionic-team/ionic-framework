@@ -15,6 +15,7 @@ import type {
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
+import { getScrollElement, findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
@@ -30,7 +31,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
-import { getScrollElement, findIonContent, printIonContentErrorMsg } from '../../utils/content';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
