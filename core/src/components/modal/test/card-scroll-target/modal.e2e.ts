@@ -3,9 +3,9 @@ import { dragElementBy, test } from '@utils/test/playwright';
 
 test.describe('card modal - scroll target', () => {
   test.beforeEach(async ({ page }, testInfo) => {
-    await page.goto('/src/components/modal/test/card/scroll-target.html');
-
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
+
+    await page.goto('/src/components/modal/test/card-scroll-target');
   });
   test.describe('card modal: swipe to close', () => {
     test('it should swipe to close when swiped on the header', async ({ page }) => {

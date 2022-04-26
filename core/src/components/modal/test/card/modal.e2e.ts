@@ -3,9 +3,9 @@ import { dragElementBy, test } from '@utils/test/playwright';
 
 test.describe('card modal', () => {
   test.beforeEach(async ({ page }, testInfo) => {
-    await page.goto('/src/components/modal/test/card');
-
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
+
+    await page.goto('/src/components/modal/test/card');
   });
   test.describe('card modal: rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
