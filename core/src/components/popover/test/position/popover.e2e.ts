@@ -3,7 +3,6 @@ import { test } from '@utils/test/playwright';
 
 import { openPopover } from '../test.utils';
 
-// split tests up to avoid running into 30s timeout for whole thing
 test.describe('popover: position', async () => {
   /**
    * The popovers have showBackdrop=false so we can open all of them at once

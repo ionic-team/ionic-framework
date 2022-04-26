@@ -24,8 +24,7 @@ const testPopover = async (page: E2EPage, buttonID: string) => {
   await closePopover(page);
   expect(popover).not.toBeVisible();
 
+  // ensure popover can be opened multiple times
   await openPopover(page, buttonID);
-
-  await page.setIonViewport();
-  expect(await page.screenshot()).toMatchSnapshot(`popover-inline-${buttonID}-${page.getSnapshotSettings()}.png`);
+  expect(popover).toBeVisible();
 };

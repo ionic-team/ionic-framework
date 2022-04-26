@@ -42,9 +42,6 @@ test.describe('popover: nested', async () => {
 
     const nestedPopover = await page.locator('.child-popover-one');
     expect(nestedPopover).toHaveClass(/overlay-hidden/);
-
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-dismiss-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render multiple levels of nesting correctly', async ({ page }) => {
@@ -88,9 +85,6 @@ test.describe('popover: nested', async () => {
 
     const nestedPopoverTwo = page.locator('.child-popover-three');
     expect(nestedPopoverTwo).toHaveClass(/overlay-hidden/);
-
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-multiple-dismiss-${page.getSnapshotSettings()}.png`);
   });
 
   test('should dismiss sibling nested popover when another sibling popover is opened', async ({ page }) => {
@@ -111,8 +105,5 @@ test.describe('popover: nested', async () => {
     const sharePopover = page.locator('.child-popover-two');
     expect(openWithPopover).toHaveClass(/overlay-hidden/);
     expect(sharePopover).not.toHaveClass(/overlay-hidden/);
-
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-sibling-dismiss-${page.getSnapshotSettings()}.png`);
   });
 });

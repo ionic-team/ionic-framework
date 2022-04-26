@@ -21,9 +21,6 @@ test.describe('popover: dismissOnSelect', async () => {
 
     // ensure parent popover is still open
     expect(popover).toBeVisible();
-
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-hover-trigger-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not dismiss a popover when clicking a click trigger', async ({ page }, testInfo) => {
@@ -45,8 +42,5 @@ test.describe('popover: dismissOnSelect', async () => {
 
     // ensure parent popover is still open
     expect(popover).toBeVisible();
-
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-click-trigger-${page.getSnapshotSettings()}.png`);
   });
 });
