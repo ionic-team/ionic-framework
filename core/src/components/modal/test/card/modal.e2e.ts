@@ -103,6 +103,6 @@ test.describe('card modal', () => {
       await dragElementBy(content, page, 0, 20);
 
       expect(content).toHaveJSProperty('scrollY', true);
-    })
+    });
   });
 });

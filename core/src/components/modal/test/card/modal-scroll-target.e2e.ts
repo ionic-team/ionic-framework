@@ -41,7 +41,7 @@ test.describe('card modal - scroll target', () => {
       const modal = await page.locator('ion-modal');
       const content = (await page.$('ion-modal .ion-content-scroll-host'))!;
 
-      await content.evaluate((el: HTMLElement) => el.scrollTop = 500);
+      await content.evaluate((el: HTMLElement) => (el.scrollTop = 500));
 
       await dragElementBy(content, page, 0, 500);
 
@@ -59,6 +59,6 @@ test.describe('card modal - scroll target', () => {
       await dragElementBy(content, page, 0, 20);
 
       expect(content).not.toHaveCSS('overflow', 'hidden');
-    })
+    });
   });
 });

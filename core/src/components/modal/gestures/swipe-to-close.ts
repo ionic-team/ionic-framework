@@ -7,8 +7,6 @@ import { clamp } from '../../../utils/helpers';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
-
-
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
@@ -36,7 +34,7 @@ export const createSwipeToCloseGesture = (
     } else {
       return true;
     }
-  }
+  };
   const initialScrollY = getScrollY();
 
   const disableContentScroll = () => {
@@ -45,7 +43,7 @@ export const createSwipeToCloseGesture = (
     } else {
       contentEl.style.setProperty('overflow', 'hidden');
     }
-  }
+  };
 
   const resetContentScroll = () => {
     if (isIonContent(contentEl)) {
@@ -53,7 +51,7 @@ export const createSwipeToCloseGesture = (
     } else {
       contentEl.style.removeProperty('overflow');
     }
-  }
+  };
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
