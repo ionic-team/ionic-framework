@@ -25,7 +25,7 @@ describe('Nested', () => {
     cy.ionBackClick('tab1');
 
     cy.ionPageDoesNotExist('tab1');
-    cy.ionPageVisible('home');
+    cy.ionPageVisible('routeroutlet');
   });
 })
 
