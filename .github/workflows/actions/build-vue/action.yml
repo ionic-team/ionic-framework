@@ -35,6 +35,10 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/vue
+    - name: Check Diff
+      run: git diff --exit-code
+      shell: bash
+      working-directory: ./packages/vue
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue

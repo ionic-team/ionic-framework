@@ -39,6 +39,10 @@ runs:
       run: npm run test.spec
       shell: bash
       working-directory: ./packages/react
+    - name: Check Diff
+      run: git diff --exit-code
+      shell: bash
+      working-directory: ./packages/react
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react
