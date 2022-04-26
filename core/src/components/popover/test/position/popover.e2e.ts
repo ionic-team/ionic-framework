@@ -1,47 +1,32 @@
-import type { E2EPage } from '@utils/test/playwright';
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-import { screenshotPopover } from '../test.utils';
+import { openPopover } from '../test.utils';
 
 // split tests up to avoid running into 30s timeout for whole thing
 test.describe('popover: position', async () => {
-  test('should render side=top correctly', async ({ page }) => {
-    await testPopover(page, 'top', 'start');
-    await testPopover(page, 'top', 'center');
-    await testPopover(page, 'top', 'end');
-  });
+  /**
+   * The popovers have showBackdrop=false so we can open all of them at once
+   * and massively cut down on screenshots taken. The content has its own
+   * backdrop so you can still see the popovers.
+   */
+  test('should not have visual regressions', async ({ page }, testInfo) => {
+    test.skip(
+      testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
+      'Skip mobile to avoid extra-long viewport screenshots.'
+    );
 
-  test('should render side=right correctly', async ({ page }) => {
-    await testPopover(page, 'right', 'start');
-    await testPopover(page, 'right', 'center');
-    await testPopover(page, 'right', 'end');
-  });
+    await page.goto('/src/components/popover/test/position');
 
-  test('should render side=bottom correctly', async ({ page }) => {
-    await testPopover(page, 'bottom', 'start');
-    await testPopover(page, 'bottom', 'center');
-    await testPopover(page, 'bottom', 'end');
-  });
+    const sides = ['top', 'right', 'bottom', 'left', 'start', 'end'];
+    const alignments = ['start', 'center', 'end'];
 
-  test('should render side=left correctly', async ({ page }) => {
-    await testPopover(page, 'left', 'start');
-    await testPopover(page, 'left', 'center');
-    await testPopover(page, 'left', 'end');
-  });
+    for(const side of sides) {
+      for(const alignment of alignments) {
+        await openPopover(page, `${side}-${alignment}`, true);
+      }
+    }
 
-  test('should render side=start correctly', async ({ page }) => {
-    await testPopover(page, 'start', 'start');
-    await testPopover(page, 'start', 'center');
-    await testPopover(page, 'start', 'end');
-  });
-
-  test('should render side=end correctly', async ({ page }) => {
-    await testPopover(page, 'end', 'start');
-    await testPopover(page, 'end', 'center');
-    await testPopover(page, 'end', 'end');
+    expect(await page.screenshot()).toMatchSnapshot(`popover-position-${page.getSnapshotSettings()}.png`);
   });
 });
-
-const testPopover = async (page: E2EPage, side: string, alignment: string) => {
-  await screenshotPopover(page, `${side}-${alignment}`, 'position');
-};
