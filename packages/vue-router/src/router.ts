@@ -497,7 +497,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * then IonTabs will not invoke this.
    */
   const handleSetCurrentTab = (tab: string) => {
-
     /**
      * Note that the current page that we
      * are on is not necessarily the last item

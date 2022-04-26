@@ -2,7 +2,8 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { componentOnReady } from '../../utils/helpers';
+import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
+
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -77,13 +78,12 @@ export class InfiniteScroll implements ComponentInterface {
   @Event() ionInfinite!: EventEmitter<void>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
-      console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
+      printIonContentErrorMsg(this.el);
       return;
     }
-    await new Promise((resolve) => componentOnReady(contentEl, resolve));
-    this.scrollEl = await contentEl.getScrollElement();
+    this.scrollEl = await getScrollElement(contentEl);
     this.thresholdChanged();
     this.disabledChanged();
     if (this.position === 'top') {

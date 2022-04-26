@@ -1,4 +1,5 @@
 import type { Config } from '../../interface';
+import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
@@ -28,7 +29,7 @@ export const startInputShims = (config: Config) => {
 
     const inputRoot = componentEl.shadowRoot || componentEl;
     const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
-    const scrollEl = componentEl.closest('ion-content');
+    const scrollEl = findClosestIonContent(componentEl);
     const footerEl = !scrollEl ? (componentEl.closest('ion-footer') as HTMLIonFooterElement | null) : null;
 
     if (!inputEl) {

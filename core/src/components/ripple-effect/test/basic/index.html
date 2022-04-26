@@ -46,18 +46,18 @@
 
       <ion-content class="ion-padding" no-bounce>
         <p>
-          <ion-button size="small">Small</ion-button>
+          <ion-button id="small-btn" size="small">Small</ion-button>
         </p>
         <p>
-          <ion-button size="large">Large</ion-button>
+          <ion-button id="large-btn" size="large">Large</ion-button>
         </p>
         <p>
-          <ion-button size="large" fill="outline">Large</ion-button>
+          <ion-button id="large-btn-outline" size="large" fill="outline">Large</ion-button>
         </p>
         <p>
-          <ion-button size="large" fill="clear">Large</ion-button>
+          <ion-button id="large-btn-clear" size="large" fill="clear">Large</ion-button>
         </p>
-        <div class="my-block ion-activatable">
+        <div class="my-block ion-activatable" id="ripple-with-button">
           <ion-ripple-effect></ion-ripple-effect>
           This is just a div + effect behind
           <ion-button onclick="buttonClicked()">Nested button</ion-button>

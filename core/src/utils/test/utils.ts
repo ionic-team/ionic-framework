@@ -94,14 +94,14 @@ export const listenForEvent = async (
  * element.
  */
 export const dragElementBy = async (
-  element: any,
+  element: ElementHandle<Element>,
   page: any,
   x = 0,
   y = 0,
   startCoordinates?: { x: number; y: number }
 ): Promise<void> => {
   try {
-    const boundingBox = await element.boundingBox();
+    const boundingBox = (await element.boundingBox())!;
 
     const startX = startCoordinates?.x === undefined ? boundingBox.x + boundingBox.width / 2 : startCoordinates.x;
     const startY = startCoordinates?.y === undefined ? boundingBox.y + boundingBox.height / 2 : startCoordinates.y;
@@ -199,6 +199,30 @@ export const checkComponentModeClasses = async (el: E2EElement, globalMode: stri
 export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
   expect(el).toHaveClass(`${mode}`);
+};
+
+/**
+ * Scrolls to a specific x/y coordinate within a scroll container. Supports custom
+ * method for `ion-content` implementations.
+ *
+ * @param page The Puppeteer page object
+ * @param selector The element to scroll within.
+ * @param x The x coordinate to scroll to.
+ * @param y The y coordinate to scroll to.
+ */
+export const scrollTo = async (page: E2EPage, selector: string, x: number, y: number) => {
+  await page.evaluate(async (selector) => {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      if (el.tagName === 'ION-CONTENT') {
+        await (el as any).scrollToPoint(x, y);
+      } else {
+        el.scroll(x, y);
+      }
+    } else {
+      console.error(`Unable to find element with selector: ${selector}`);
+    }
+  }, selector);
 };
 
 /**

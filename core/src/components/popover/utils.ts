@@ -337,6 +337,14 @@ export const configureKeyboardInteraction = (popoverEl: HTMLIonPopoverElement) =
     const activeElement = document.activeElement as HTMLElement | null;
     let items: HTMLIonItemElement[] = [];
 
+    const targetTagName = (ev.target as HTMLElement)?.tagName;
+    /**
+     * Only handle custom keyboard interactions for the host popover element
+     * and children ion-item elements.
+     */
+    if (targetTagName !== 'ION-POPOVER' && targetTagName !== 'ION-ITEM') {
+      return;
+    }
     /**
      * Complex selectors with :not() are :not supported
      * in older versions of Chromium so we need to do a

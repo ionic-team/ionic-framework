@@ -212,6 +212,12 @@ export interface Animation {
    * upon the animation ending
    */
   onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
+
+  /**
+   * Returns `true` if the animation is running.
+   * Returns `false` otherwise.
+   */
+  isRunning(): boolean;
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;

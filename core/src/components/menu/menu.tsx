@@ -7,7 +7,7 @@ import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, S
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import type { Attributes } from '../../utils/helpers';
-import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
+import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
 
@@ -226,7 +226,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   async componentDidLoad() {
@@ -398,6 +398,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     this.beforeAnimation(shouldOpen);
+
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
@@ -619,12 +620,17 @@ export class Menu implements ComponentInterface, MenuI {
       // emit open event
       this.ionDidOpen.emit();
 
-      // focus menu content for screen readers
-      if (this.menuInnerEl) {
-        this.focusFirstDescendant();
+      /**
+       * Move focus to the menu to prepare focus trapping, as long as
+       * it isn't already focused. Use the host element instead of the
+       * first descendant to avoid the scroll position jumping around.
+       */
+      const focusedMenu = document.activeElement?.closest('ion-menu');
+      if (focusedMenu !== this.el) {
+        this.el.focus();
       }
 
-      // setup focus trapping
+      // start focus trapping
       document.addEventListener('focus', this.handleFocus, true);
     } else {
       // remove css classes and unhide content from screen readers

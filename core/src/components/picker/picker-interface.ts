@@ -1,5 +1,3 @@
-import type { JSXBase } from '@stencil/core/internal';
-
 import type { AnimationBuilder, Mode } from '../../interface';
 
 export interface PickerOptions {
@@ -19,7 +17,10 @@ export interface PickerOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type PickerAttributes = JSXBase.HTMLAttributes<HTMLElement>;
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type PickerAttributes = { [key: string]: any };
 
 export interface PickerButton {
   text?: string;
