@@ -93,5 +93,16 @@ test.describe('card modal', () => {
 
       expect(modal).toBeVisible();
     });
+    test('content should be scrollable after gesture ends', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#card');
+      await ionModalDidPresent.next();
+
+      const content = await page.locator('ion-modal ion-content');
+      await dragElementBy(content, page, 0, 20);
+
+      expect(content).toHaveJSProperty('scrollY', true);
+    })
   });
 });

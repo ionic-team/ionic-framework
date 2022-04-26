@@ -2,22 +2,58 @@ import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
-import { clamp, getElementRoot } from '../../../utils/helpers';
+import { clamp } from '../../../utils/helpers';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
+
+import { isIonContent } from '../../../utils/content';
+
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
-export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
+export const createSwipeToCloseGesture = (
+  el: HTMLIonModalElement,
+  contentEl: HTMLElement,
+  scrollEl: HTMLElement,
+  animation: Animation,
+  onDismiss: () => void
+) => {
   const height = el.offsetHeight;
   let isOpen = false;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.2;
-  const contentEl = el.querySelector('ion-content') as HTMLIonContentElement;
-  const initialScrollY = contentEl.scrollY;
+  const getScrollY = () => {
+    if (isIonContent(contentEl)) {
+      return (contentEl as HTMLIonContentElement).scrollY;
+      /**
+       * Custom scroll containers are intended to be
+       * used with virtual scrolling, so we assume
+       * there is scrolling in this case.
+       */
+    } else {
+      return true;
+    }
+  }
+  const initialScrollY = getScrollY();
+
+  const disableContentScroll = () => {
+    if (isIonContent(contentEl)) {
+      (contentEl as HTMLIonContentElement).scrollY = false;
+    } else {
+      contentEl.style.setProperty('overflow', 'hidden');
+    }
+  }
+
+  const resetContentScroll = () => {
+    if (isIonContent(contentEl)) {
+      (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
+    } else {
+      contentEl.style.removeProperty('overflow');
+    }
+  }
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
@@ -35,8 +71,6 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      */
     const content = target.closest('ion-content');
     if (content) {
-      const root = getElementRoot(content);
-      const scrollEl = root.querySelector('.inner-scroll') as HTMLElement;
       return scrollEl.scrollTop === 0;
     }
 
@@ -72,7 +106,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * happen at the same time as the gesture.
      */
     if (deltaY > 0) {
-      contentEl.scrollY = false;
+      disableContentScroll();
     }
 
     animation.progressStart(true, isOpen ? 1 : 0);
@@ -88,7 +122,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * happen at the same time as the gesture.
      */
     if (deltaY > 0) {
-      contentEl.scrollY = false;
+      disableContentScroll();
     }
 
     /**
@@ -171,7 +205,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
 
     gesture.enable(false);
 
-    contentEl.scrollY = initialScrollY;
+    resetContentScroll();
 
     animation
       .onFinish(() => {
