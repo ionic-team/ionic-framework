@@ -27,7 +27,7 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Install Angular Dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
       shell: bash
       working-directory: ./angular
     - name: Link @ionic/core
