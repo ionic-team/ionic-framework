@@ -9,7 +9,7 @@ runs:
         ref: ${{ github.event.pull_request.head.sha }}
     - uses: actions/setup-node@v1
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - name: Cache Node Modules
       uses: actions/cache@v2
