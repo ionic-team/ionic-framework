@@ -111,7 +111,8 @@ const config: PlaywrightTestConfig = {
   projects: generateProjects(),
   webServer: {
     command: 'serve -p 3333',
-    port: 3333
+    port: 3333,
+    reuseExistingServer: !process.env.CI
   }
 };
 

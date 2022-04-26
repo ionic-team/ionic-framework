@@ -10,9 +10,9 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   delegate?: FrameworkDelegate;
   animated?: boolean;
   /**
- * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
- * @deprecated - To prevent modals from dismissing, use canDismiss instead.
- */
+   * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+   * @deprecated - To prevent modals from dismissing, use canDismiss instead.
+   */
   swipeToClose?: boolean;
   canDismiss?: boolean | (() => Promise<boolean>);
 
