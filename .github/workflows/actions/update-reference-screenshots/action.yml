@@ -18,7 +18,7 @@ runs:
       # directory, including nested directories.
       # It then unzips every .zip to the root directory
       run: |
-        find . -type f -name '*.zip' -exec unzip -q -o -d ../ -- '{}'  -x '*.zip' \;
+        find . -type f -name 'UpdatedScreenshots-*.zip' -exec unzip -q -o -d ../ {} \;
       shell: bash
       working-directory: ./artifacts
     - name: Push Screenshots
