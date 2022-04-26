@@ -16,9 +16,7 @@ test.describe('popover: trigger', async () => {
     await ionPopoverDidPresent.next();
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-trigger-right-click-trigger-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-trigger-right-click-trigger-${page.getSnapshotSettings()}.png`);
   });
 
   test('should open popover by hovering over trigger', async ({ page }) => {
@@ -30,9 +28,7 @@ test.describe('popover: trigger', async () => {
     await ionPopoverDidPresent.next();
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-trigger-hover-trigger-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-trigger-hover-trigger-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not close main popover with dismiss-on-select when clicking a trigger', async ({ page }) => {
@@ -42,8 +38,6 @@ test.describe('popover: trigger', async () => {
     await openPopover(page, 'nested-click-trigger-two');
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-trigger-nested-click-trigger-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-trigger-nested-click-trigger-${page.getSnapshotSettings()}.png`);
   });
 });

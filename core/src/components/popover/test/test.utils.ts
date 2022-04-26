@@ -24,7 +24,5 @@ export const screenshotPopover = async (page: E2EPage, buttonID: string, testNam
 
   await openPopover(page, buttonID);
   await page.setIonViewport();
-  expect(await page.screenshot()).toMatchSnapshot(`
-    popover-${testName}-${buttonID}-${page.getSnapshotSettings()}.png
-  `);
+  expect(await page.screenshot()).toMatchSnapshot(`popover-${testName}-${buttonID}-${page.getSnapshotSettings()}.png`);
 };

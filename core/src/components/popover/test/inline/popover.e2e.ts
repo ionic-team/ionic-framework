@@ -27,7 +27,5 @@ const testPopover = async (page: E2EPage, buttonID: string) => {
   await openPopover(page, buttonID);
 
   await page.setIonViewport();
-  expect(await page.screenshot()).toMatchSnapshot(`
-    popover-inline-${buttonID}-${page.getSnapshotSettings()}.png
-  `);
+  expect(await page.screenshot()).toMatchSnapshot(`popover-inline-${buttonID}-${page.getSnapshotSettings()}.png`);
 };

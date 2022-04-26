@@ -24,9 +24,7 @@ test.describe('popover: nested', async () => {
     expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-nested-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-${page.getSnapshotSettings()}.png`);
   });
 
   test('should dismiss when clicking backdrop', async ({ page }) => {
@@ -46,9 +44,7 @@ test.describe('popover: nested', async () => {
     expect(nestedPopover).toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-nested-dismiss-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-dismiss-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render multiple levels of nesting correctly', async ({ page }) => {
@@ -67,9 +63,7 @@ test.describe('popover: nested', async () => {
     expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-nested-multiple-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-multiple-${page.getSnapshotSettings()}.png`);
   });
 
   test('clicking backdrop should dismiss multiple levels of popover', async ({ page }) => {
@@ -96,9 +90,7 @@ test.describe('popover: nested', async () => {
     expect(nestedPopoverTwo).toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-nested-multiple-dismiss-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-multiple-dismiss-${page.getSnapshotSettings()}.png`);
   });
 
   test('should dismiss sibling nested popover when another sibling popover is opened', async ({ page }) => {
@@ -121,8 +113,6 @@ test.describe('popover: nested', async () => {
     expect(sharePopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`
-      popover-nested-sibling-dismiss-${page.getSnapshotSettings()}.png
-    `);
+    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-sibling-dismiss-${page.getSnapshotSettings()}.png`);
   });
 });
