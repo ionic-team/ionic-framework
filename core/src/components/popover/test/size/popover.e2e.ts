@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 import { openPopover, screenshotPopover } from '../test.utils';
