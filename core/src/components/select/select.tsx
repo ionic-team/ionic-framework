@@ -188,8 +188,8 @@ export class Select implements ComponentInterface {
     if (this.disabled || this.isExpanded) {
       return undefined;
     }
-    const overlay = (this.overlay = await this.createOverlay(event));
     this.isExpanded = true;
+    const overlay = (this.overlay = await this.createOverlay(event));
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;

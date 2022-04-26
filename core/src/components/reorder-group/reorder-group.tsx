@@ -1,7 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { findClosestIonContent, getScrollElement } from '../../utils/content';
