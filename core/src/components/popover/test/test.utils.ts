@@ -2,7 +2,7 @@ import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 
-export const openPopover = async (page: E2EPage, buttonID: string, useEvalClick=false) => {
+export const openPopover = async (page: E2EPage, buttonID: string, useEvalClick = false) => {
   const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
   const trigger = page.locator(`#${buttonID}`);
@@ -14,7 +14,7 @@ export const openPopover = async (page: E2EPage, buttonID: string, useEvalClick=
    * previous popover. Rather than set backdropDismiss=false on all popovers, we can call
    * the click method on the button directly to avoid this behavior.
    */
-  if(useEvalClick) {
+  if (useEvalClick) {
     trigger.evaluate((el: HTMLElement) => el.click());
   } else {
     await trigger.click();

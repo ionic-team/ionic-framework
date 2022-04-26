@@ -14,7 +14,7 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
       ion-app > ion-content {
-        --background: #DDDDDD;
+        --background: #dddddd;
       }
       .grid {
         display: grid;
@@ -71,7 +71,13 @@
           <div class="grid-item">
             <h2>Bottom</h2>
             <ion-button id="bottom-trigger">Click to Open</ion-button>
-            <ion-popover show-backdrop="false" class="bottom-popover" trigger="bottom-trigger" side="bottom" size="cover">
+            <ion-popover
+              show-backdrop="false"
+              class="bottom-popover"
+              trigger="bottom-trigger"
+              side="bottom"
+              size="cover"
+            >
               <ion-content class="ion-padding"> Hello World </ion-content>
             </ion-popover>
           </div>

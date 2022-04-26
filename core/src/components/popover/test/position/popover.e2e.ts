@@ -20,8 +20,8 @@ test.describe('popover: position', async () => {
     const sides = ['top', 'right', 'bottom', 'left', 'start', 'end'];
     const alignments = ['start', 'center', 'end'];
 
-    for(const side of sides) {
-      for(const alignment of alignments) {
+    for (const side of sides) {
+      for (const alignment of alignments) {
         await openPopover(page, `${side}-${alignment}`, true);
       }
     }

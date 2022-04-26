@@ -14,7 +14,7 @@ test.describe('popover: arrow rendering', async () => {
       testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
       'Skip mobile to avoid extra-long viewport screenshots.'
     );
-    
+
     await page.goto('/src/components/popover/test/arrow');
 
     const sides = ['top', 'right', 'bottom', 'left', 'start', 'end'];

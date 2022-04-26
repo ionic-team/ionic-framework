@@ -10,7 +10,7 @@ test.describe('popover: dismissOnSelect', async () => {
 
   test('should not dismiss a popover when clicking a hover trigger', async ({ page }) => {
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-    
+
     await openPopover(page, 'hover-trigger');
     const popover = page.locator('.hover-trigger-popover');
     const hoverTrigger = page.locator('#more-hover-trigger');

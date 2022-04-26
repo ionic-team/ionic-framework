@@ -17,7 +17,7 @@
     </script>
     <style>
       ion-app > ion-content {
-        --background: #DDDDDD;
+        --background: #dddddd;
       }
       .grid {
         display: grid;
@@ -72,7 +72,9 @@
 
           <div class="grid-item">
             <h2>No Event</h2>
-            <ion-button id="no-event-trigger" onclick="openPopover('no-event-popover', null, 'true')">Trigger</ion-button>
+            <ion-button id="no-event-trigger" onclick="openPopover('no-event-popover', null, 'true')"
+              >Trigger</ion-button
+            >
           </div>
         </div>
       </ion-content>
@@ -101,7 +103,7 @@
           cssClass,
           size: 'cover',
           event: ev,
-          showBackdrop
+          showBackdrop,
         });
         await popover.present();
       };
