@@ -4,7 +4,6 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTas
 import { getIonMode } from '../../global/ionic-global';
 import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 
-
 @Component({
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss',
