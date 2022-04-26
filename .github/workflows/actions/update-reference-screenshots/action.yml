@@ -9,7 +9,7 @@ runs:
   steps:
     - uses: actions/setup-node@v1
       with:
-        node-version: 15.x
+        node-version: 16.x
     - uses: actions/download-artifact@v2
       with:
         path: ./artifacts
