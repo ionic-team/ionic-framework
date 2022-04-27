@@ -7,7 +7,7 @@ import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, S
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import type { Attributes } from '../../utils/helpers';
-import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
+import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
 
@@ -226,7 +226,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   async componentDidLoad() {

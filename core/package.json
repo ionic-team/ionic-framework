@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.1.2",
+  "version": "6.1.3",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -75,10 +75,9 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "npm run clean && npm run build.css && stencil build --docs --es5 --docs-json dist/docs.json && npm run cdnloader",
+    "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json && npm run cdnloader",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
-    "build.docs": "stencil build --docs",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "clean": "node scripts/clean.js",
     "cdnloader": "node scripts/copy-cdn-loader.js",
