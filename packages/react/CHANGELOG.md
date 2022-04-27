@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.3-nightly.20220427](https://github.com/ionic-team/ionic/compare/v6.1.2...v6.1.3-nightly.20220427) (2022-04-27)
+
+
+### Bug Fixes
+
+* **vue:** canDismiss definition is now exposed ([#25195](https://github.com/ionic-team/ionic/issues/25195)) ([e5e0e24](https://github.com/ionic-team/ionic/commit/e5e0e24f76c15c1a49f759b1a140e337f5393edd))
+
+
+
+
+
 ## [6.1.2](https://github.com/ionic-team/ionic/compare/v6.1.1...v6.1.2) (2022-04-20)
 
 **Note:** Version bump only for package @ionic/react
