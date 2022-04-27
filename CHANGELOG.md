@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.3](https://github.com/ionic-team/ionic-framework/compare/v6.1.2...v6.1.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **core:** inherit aria attributes on host elements ([#25156](https://github.com/ionic-team/ionic-framework/issues/25156)) ([611832b](https://github.com/ionic-team/ionic-framework/commit/611832b0d51da295c1bf2897972c4e8baf6e23a3)), closes [#20127](https://github.com/ionic-team/ionic-framework/issues/20127)
+* **datetime:** if no default value, don't highlight active day until one is selected ([#25151](https://github.com/ionic-team/ionic-framework/issues/25151)) ([9896939](https://github.com/ionic-team/ionic-framework/commit/98969395abd400cc44d2d3825581a63eb64a56e0))
+* **picker-column-internal:** center active item when rapidly opened ([#25155](https://github.com/ionic-team/ionic-framework/issues/25155)) ([8e17fa9](https://github.com/ionic-team/ionic-framework/commit/8e17fa9d5f9b00139693e34bc93b1f9c718ea3cf)), closes [#25154](https://github.com/ionic-team/ionic-framework/issues/25154)
+* **select:** avoid duplicate dialogs and backdrops when clicking ([#25175](https://github.com/ionic-team/ionic-framework/issues/25175)) ([70d2784](https://github.com/ionic-team/ionic-framework/commit/70d278414eb5124d17c5ffaba5231c6bfd285656)), closes [#25126](https://github.com/ionic-team/ionic-framework/issues/25126)
+* **vue:** canDismiss definition is now exposed ([#25195](https://github.com/ionic-team/ionic-framework/issues/25195)) ([e5e0e24](https://github.com/ionic-team/ionic-framework/commit/e5e0e24f76c15c1a49f759b1a140e337f5393edd))
+* **vue:** replacing routes across nested outlets preserves previous route info ([#25171](https://github.com/ionic-team/ionic-framework/issues/25171)) ([7b71607](https://github.com/ionic-team/ionic-framework/commit/7b716076b66fbb5bd4620ea8ba74318bbbc1b7e8)), closes [#25017](https://github.com/ionic-team/ionic-framework/issues/25017)
+
+
+
+
+
 ## [6.1.2](https://github.com/ionic-team/ionic-framework/compare/v6.1.1...v6.1.2) (2022-04-20)
 
 
