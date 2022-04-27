@@ -81,8 +81,8 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
     }
   }, []);
 
-  const dismiss = useCallback(async () => {
-    overlayRef.current && (await overlayRef.current.dismiss());
+  const dismiss = useCallback(async (data?: any, role?: string) => {
+    overlayRef.current && (await overlayRef.current.dismiss(data, role));
     overlayRef.current = undefined;
     containerElRef.current = undefined;
   }, []);
