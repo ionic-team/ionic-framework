@@ -83,16 +83,24 @@ export const createLocationHistory = () => {
    */
   const clearHistory = (routeInfo?: RouteInfo) => {
     if (routeInfo) {
+      const { position, tab } = routeInfo;
 
       /**
        * If there is no route index in locationHistory
        * then there will not be any route index in
        * tabs either.
        */
-      const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
+      const existingRouteIndex = locationHistory.findIndex(r => r.position === position);
       if (existingRouteIndex === -1) return;
 
       locationHistory.splice(existingRouteIndex);
+
+      const clearTabHistory = (tab: string) => {
+        const existingTabRouteIndex = tabsHistory[tab].findIndex(r => r.position === position);
+        if (existingTabRouteIndex === -1) return;
+
+        tabsHistory[tab].splice(existingTabRouteIndex);
+      }
 
       /**
        * We also need to search the current tab
@@ -101,14 +109,9 @@ export const createLocationHistory = () => {
        * tab stack as that means we will lose
        * a reference to the root tab route.
        */
-      const { tab } = routeInfo;
       const tabHistory = tabsHistory[tab];
       if (tab && tabHistory) {
-        const existingTabRouteIndex = tabHistory.findIndex(r => r.position === routeInfo.position);
-        if (existingTabRouteIndex === -1) return;
-
-        tabsHistory[tab].splice(existingTabRouteIndex);
-
+        clearTabHistory(tab);
       /**
        * If we are not clearing items after
        * a tabs page, it is still possible
@@ -124,18 +127,13 @@ export const createLocationHistory = () => {
        */
       } else {
         for (const tab in tabsHistory) {
-          const existingRouteIndex = tabsHistory[tab].findIndex(r => r.position >= routeInfo.position);
-
-          if (existingRouteIndex > -1) {
-            tabsHistory[tab].splice(existingRouteIndex);
-          }
+          clearTabHistory(tab);
         }
       }
-
     } else {
-      Object.keys(tabsHistory).forEach(key => {
-        tabsHistory[key] = [];
-      });
+      for (const tab in tabsHistory) {
+        tabsHistory[tab] = [];
+      }
 
       locationHistory.length = 0;
     }
