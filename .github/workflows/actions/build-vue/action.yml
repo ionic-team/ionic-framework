@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-node@v1
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - name: Cache Core Node Modules
       uses: actions/cache@v2
@@ -33,6 +33,10 @@ runs:
       working-directory: ./packages/vue
     - name: Build
       run: npm run build
+      shell: bash
+      working-directory: ./packages/vue
+    - name: Check Diff
+      run: git diff --exit-code
       shell: bash
       working-directory: ./packages/vue
     - uses: ./.github/workflows/actions/upload-archive
