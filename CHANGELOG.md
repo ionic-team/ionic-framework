@@ -1,3 +1,12 @@
+## [5.9.4](https://github.com/ionic-team/ionic/compare/v5.9.3...v5.9.4) (2022-04-27)
+
+
+### Bug Fixes
+
+* **core:** inherit aria attributes on host elements ([#25156](https://github.com/ionic-team/ionic/issues/25156)) ([#25169](https://github.com/ionic-team/ionic/issues/25169)) ([ffb056d](https://github.com/ionic-team/ionic/commit/ffb056d50e126a1b89f5133de1e7516d0c29a61a))
+
+
+
 ## [5.9.3](https://github.com/ionic-team/ionic/compare/v5.9.2...v5.9.3) (2021-12-15)
 
 
