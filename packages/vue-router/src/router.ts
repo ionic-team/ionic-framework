@@ -502,30 +502,52 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * we cannot use locationHistory.last() here.
      */
     const ri = { ...locationHistory.current(initialHistoryPosition, currentHistoryPosition) };
+
+    /**
+     * handleHistoryChange is tabs-agnostic by design.
+     * One side effect of this is that certain tabs
+     * routes have extraneous/incorrect information
+     * that we need to remove. To not tightly couple
+     * handleHistoryChange with tabs, we let the
+     * handleSetCurrentTab function. This function is
+     * only called by IonTabs.
+     */
+
     if (ri.tab !== tab) {
       ri.tab = tab;
       locationHistory.update(ri);
     }
 
     /**
-     * When going from /non-tabs-page --> /tabs/tab1,
-     * the route entry for /tabs/tab1 will say that that pushedByRoute
-     * value for it was /non-tabs-page. This is incorrect as non-tabs
-     * pages cannot push tabs pages due to tabs being in separate stacks.
+     * lastPathname typically equals pushedByRoute
+     * when navigating in a linear manner. When switching between
+     * tabs, this is almost never the case.
      *
-     * This is done in handleHistoryChange. However, handleHistoryChange
-     * has no way of knowing if the pushedByRoute value it is assigning is
-     * a tab or not. As a result, it is the responsibility of IonTabs to
-     * correct the route information entry for the tabs page.
+     * Example: /tabs/tabs1 --> /tabs/tab2 --> /tabs/tab1
+     * The latest Tab 1 route would have the following information
+     * lastPathname: '/tabs/tab2'
+     * pushedByRoute: '/tabs/tab2'
      *
-     * To do this we get the last route entry the user was on.
-     * If this route entry was indeed in the same tab (i.e. a child page)
-     * then handleSetCurrentTab would have already fired for that route, so
-     * the tab information would have already been set.
+     * A tab cannot push another tab, so we need to set
+     * pushedByRoute to `undefined`. Alternative way of thinking
+     * about this: You cannot swipe to go back from Tab 1 to Tab 2.
      *
-     * If we did not do this then the ion-back-button on Tab 1 would appear
-     * and take users back to /non-tabs-page which goes against the concept
-     * of each tab being in its own stack.
+     * However, there are some instances where we do want to keep
+     * the pushedByRoute. As a result, we need to ensure that
+     * we only wipe the pushedByRoute state when the both of the
+     * following conditions are met:
+     * 1. pushedByRoute is different from lastPathname
+     * 2. The tab for the pushedByRoute info is different
+     * from the current route tab.
+     *
+     * Example of when we would not want to clear pushedByRoute:
+     * /tabs/tab1 --> /tabs/tab1/child --> /tabs/tab2 --> /tabs/tab1/child
+     * The latest Tab 1 Child route would have the following information:
+     * lastPathname: '/tabs/tab2'
+     * pushedByRoute: '/tabs/tab1
+     *
+     * In this case, /tabs/tab1/child should be able to swipe to go back
+     * to /tabs/tab1 so we want to keep the pushedByRoute.
      */
     const pushedByRoute = locationHistory.findLastLocation(ri);
     if (ri.pushedByRoute !== ri.lastPathname && pushedByRoute?.tab !== tab) {
