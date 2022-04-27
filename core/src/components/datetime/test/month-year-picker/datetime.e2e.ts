@@ -12,6 +12,7 @@ test.describe('datetime: month-year picker', () => {
 
     const pickerButton = page.locator('#date-time .calendar-month-year > ion-item');
     await pickerButton.click();
+    await page.waitForChanges();
     expect(datetimeFooter).not.toBeVisible();
   });
 
