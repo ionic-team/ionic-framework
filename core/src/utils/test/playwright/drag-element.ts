@@ -1,8 +1,13 @@
-import type { Locator } from '@playwright/test';
+import type { ElementHandle, Locator } from '@playwright/test';
 
 import type { E2EPage } from './';
 
-export const dragElementBy = async (el: Locator, page: E2EPage, dragByX = 0, dragByY = 0) => {
+export const dragElementBy = async (
+  el: Locator | ElementHandle<SVGElement | HTMLElement>,
+  page: E2EPage,
+  dragByX = 0,
+  dragByY = 0
+) => {
   const boundingBox = await el.boundingBox();
 
   if (!boundingBox) {
