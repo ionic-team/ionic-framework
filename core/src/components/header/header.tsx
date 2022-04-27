@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { inheritAttributes } from '../../utils/helpers';
+import { inheritAriaAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive, setToolbarBackgroundOpacity } from './header.utils';
@@ -46,7 +46,7 @@ export class Header implements ComponentInterface {
   @Prop() translucent = false;
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['role']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   async componentDidLoad() {

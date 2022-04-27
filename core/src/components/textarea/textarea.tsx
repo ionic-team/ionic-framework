@@ -1,8 +1,8 @@
 import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
+import type { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import { debounceEvent, findItemLabel, inheritAriaAttributes, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -214,7 +214,10 @@ export class Textarea implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['title']);
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+      ...inheritAttributes(this.el, ['title']),
+    };
   }
 
   componentDidLoad() {
