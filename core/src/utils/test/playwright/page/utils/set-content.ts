@@ -35,7 +35,7 @@ export const setContent = async (page: Page, html: string) => {
   `;
 
   if (baseUrl) {
-    await page.route(baseUrl, route => {
+    await page.route(baseUrl, (route) => {
       if (route.request().url() === `${baseUrl}/`) {
         /**
          * Intercepts the empty page request and returns the
@@ -44,7 +44,7 @@ export const setContent = async (page: Page, html: string) => {
         route.fulfill({
           status: 200,
           contentType: 'text/html',
-          body: output
+          body: output,
         });
       } else {
         // Allow all other requests to pass through
@@ -56,4 +56,4 @@ export const setContent = async (page: Page, html: string) => {
   }
 
   await page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 });
-}
+};

@@ -26,13 +26,13 @@ export const goto = async (page: Page, url: string, testInfo: TestInfo, original
 
   testInfo.annotations.push({
     type: 'mode',
-    description: formattedMode
+    description: formattedMode,
   });
 
   if (rtl) {
     testInfo.annotations.push({
       type: 'rtl',
-      description: 'true'
+      description: 'true',
     });
   }
 

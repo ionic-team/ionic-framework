@@ -2,11 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: minmax', () => {
-
   test('calendar arrow navigation should respect min/max values', async ({ page }) => {
     test.info().annotations.push({
       type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/25073'
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25073',
     });
 
     await page.setContent(`
@@ -48,5 +47,4 @@ test.describe('datetime: minmax', () => {
     expect(nextButton).toBeDisabled();
     expect(prevButton).toBeEnabled();
   });
-
 });
