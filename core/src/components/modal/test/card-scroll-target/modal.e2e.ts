@@ -8,18 +8,6 @@ test.describe('card modal - scroll target', () => {
     await page.goto('/src/components/modal/test/card-scroll-target');
   });
   test.describe('card modal: swipe to close', () => {
-    test('it should swipe to close when swiped on the header', async ({ page }) => {
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-
-      await page.click('#card');
-      await ionModalDidPresent.next();
-
-      const header = await page.locator('ion-modal ion-header');
-      await dragElementBy(header, page, 0, 500);
-
-      await ionModalDidDismiss.next();
-    });
     test('it should swipe to close when swiped on the content', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
