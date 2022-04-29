@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -7,7 +7,7 @@ import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, S
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
+import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd, raf } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
 
@@ -413,7 +413,7 @@ export class Menu implements ComponentInterface, MenuI {
    */
   private async getMenuWidth(): Promise<number> {
     return new Promise((resolve) => {
-      readTask(() => {
+      raf(() => {
         resolve(this.menuInnerEl!.offsetWidth);
       });
     })
@@ -589,6 +589,7 @@ export class Menu implements ComponentInterface, MenuI {
      * is open.
      */
     this.el.setAttribute('tabindex', '0');
+    console.log('writing')
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
