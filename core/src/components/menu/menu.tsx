@@ -407,9 +407,13 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Gets the width of a menu in a
-   * readTask callback to avoid a
-   * forced layout.
+   * We write to the DOM in beforeAnimation.
+   * If we just got offsetWidth without an raf
+   * we would be forcing a recalculation and layout.
+   * Using an raf allows the browser to schedule
+   * this function such that the width value is already
+   * cached after the browser has updated the DOM from
+   * beforeAnimation.
    */
   private async getMenuWidth(): Promise<number> {
     return new Promise((resolve) => {
