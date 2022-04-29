@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.4-nightly.20220429](https://github.com/ionic-team/ionic-framework/compare/v6.1.3...v6.1.4-nightly.20220429) (2022-04-29)
+
+
+### Bug Fixes
+
+* **modal:** card modal can now be swiped to close on the content ([#25185](https://github.com/ionic-team/ionic-framework/issues/25185)) ([7633ddb](https://github.com/ionic-team/ionic-framework/commit/7633ddbc845745dfe36b5c8025c54c22c083c2f4)), closes [#22046](https://github.com/ionic-team/ionic-framework/issues/22046)
+
+
+
+
+
 ## [6.1.3](https://github.com/ionic-team/ionic-framework/compare/v6.1.2...v6.1.3) (2022-04-27)
 
 
