@@ -94,7 +94,6 @@ const ModalHook: React.FC = () => {
                 cssClass: 'my-class',
                 onDidDismiss: (ev) => {
                   const { data, role } = ev.detail;
-                  console.log('dude', ev.detail);
                   setDismissedData(data);
                   setDismissedRole(role);
                 },
