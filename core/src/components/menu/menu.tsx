@@ -420,12 +420,6 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   private async loadAnimation(): Promise<void> {
-    /**
-     * The overlay animation type does not
-     * need the width of the menu. This
-     * lets us avoid a force layout from
-     * the offsetWidth line below.
-     */
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
     const width = await this.getMenuWidth();
