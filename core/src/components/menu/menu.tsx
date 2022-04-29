@@ -408,7 +408,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   /**
    * We write to the DOM in beforeAnimation.
-   * If we just got offsetWidth without an raf
+   * If we just get offsetWidth without an raf
    * we would be forcing a recalculation and layout.
    * Using an raf allows the browser to schedule
    * this function such that the width value is already
@@ -593,7 +593,6 @@ export class Menu implements ComponentInterface, MenuI {
      * is open.
      */
     this.el.setAttribute('tabindex', '0');
-    console.log('writing')
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
