@@ -3,8 +3,6 @@ import { devices, expect } from '@playwright/test';
 
 import { matchers } from './src/utils/test/playwright';
 
-import './global';
-
 expect.extend(matchers);
 
 const projects = [
