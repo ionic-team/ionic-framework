@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -406,10 +406,29 @@ export class Menu implements ComponentInterface, MenuI {
     return true;
   }
 
+  /**
+   * Gets the width of a menu in a
+   * readTask callback to avoid a
+   * forced layout.
+   */
+  private async getMenuWidth(): Promise<number> {
+    return new Promise((resolve) => {
+      readTask(() => {
+        resolve(this.menuInnerEl!.offsetWidth);
+      });
+    })
+  }
+
   private async loadAnimation(): Promise<void> {
+    /**
+     * The overlay animation type does not
+     * need the width of the menu. This
+     * lets us avoid a force layout from
+     * the offsetWidth line below.
+     */
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
-    const width = this.menuInnerEl!.offsetWidth;
+    const width = await this.getMenuWidth();
     if (width === this.width && this.animation !== undefined) {
       return;
     }
