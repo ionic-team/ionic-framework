@@ -1763,6 +1763,7 @@ export class Datetime implements ComponentInterface {
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
+    const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1778,6 +1779,7 @@ export class Datetime implements ComponentInterface {
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,
+            'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
           }),
