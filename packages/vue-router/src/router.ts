@@ -125,7 +125,34 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         ) {
           router.back();
         } else {
-          router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });
+
+          /**
+           * When going back to a child page of a tab
+           * after being on another tab, we need to use
+           * router.go() here instead of pushing or replacing.
+           * Consider the following example:
+           * /tabs/tab1 --> /tabs/tab1/child1 --> /tabs/tab1/child2
+           * --> /tabs/tab2 (via Tab 2 button) --> /tabs/tab1/child2 (via Tab 1 button)
+           *
+           * Pressing the ion-back-button on /tabs/tab1/child2 should take
+           * us back to /tabs/tab1/child1 not /tabs/tab2 because each tab
+           * is its own stack.
+           *
+           * If we called pressed the ion-back-button and this code called
+           * router.replace, then the state of /tabs/tab1/child2 would
+           * be replaced with /tabs/tab1/child1. However, this means that
+           * there would be two /tabs/tab1/child1 entries in the location
+           * history as the original /tabs/tab1/child1 entry is still there.
+           * As a result, clicking the ion-back-button on /tabs/tab1/child1 does
+           * nothing because this code would try to route to the same page
+           * we are currently on.
+           *
+           * If we called router.push instead then we would push a
+           * new /tabs/tab1/child1 entry to the location history. This
+           * is not good because we would have two /tabs/tab1/child1 entries
+           * separated by a /tabs/tab1/child2 entry.
+           */
+          router.go(prevInfo.position - routeInfo.position);
         }
       } else {
         handleNavigate(defaultHref, 'pop', 'back');
@@ -468,9 +495,63 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * then IonTabs will not invoke this.
    */
   const handleSetCurrentTab = (tab: string) => {
-    const ri = { ...locationHistory.last() };
+    /**
+     * Note that the current page that we
+     * are on is not necessarily the last item
+     * in the locationHistory stack. As a result,
+     * we cannot use locationHistory.last() here.
+     */
+    const ri = { ...locationHistory.current(initialHistoryPosition, currentHistoryPosition) };
+
+    /**
+     * handleHistoryChange is tabs-agnostic by design.
+     * One side effect of this is that certain tabs
+     * routes have extraneous/incorrect information
+     * that we need to remove. To not tightly couple
+     * handleHistoryChange with tabs, we let the
+     * handleSetCurrentTab function. This function is
+     * only called by IonTabs.
+     */
+
     if (ri.tab !== tab) {
       ri.tab = tab;
+      locationHistory.update(ri);
+    }
+
+    /**
+     * lastPathname typically equals pushedByRoute
+     * when navigating in a linear manner. When switching between
+     * tabs, this is almost never the case.
+     *
+     * Example: /tabs/tabs1 --> /tabs/tab2 --> /tabs/tab1
+     * The latest Tab 1 route would have the following information
+     * lastPathname: '/tabs/tab2'
+     * pushedByRoute: '/tabs/tab2'
+     *
+     * A tab cannot push another tab, so we need to set
+     * pushedByRoute to `undefined`. Alternative way of thinking
+     * about this: You cannot swipe to go back from Tab 1 to Tab 2.
+     *
+     * However, there are some instances where we do want to keep
+     * the pushedByRoute. As a result, we need to ensure that
+     * we only wipe the pushedByRoute state when the both of the
+     * following conditions are met:
+     * 1. pushedByRoute is different from lastPathname
+     * 2. The tab for the pushedByRoute info is different
+     * from the current route tab.
+     *
+     * Example of when we would not want to clear pushedByRoute:
+     * /tabs/tab1 --> /tabs/tab1/child --> /tabs/tab2 --> /tabs/tab1/child
+     * The latest Tab 1 Child route would have the following information:
+     * lastPathname: '/tabs/tab2'
+     * pushedByRoute: '/tabs/tab1
+     *
+     * In this case, /tabs/tab1/child should be able to swipe to go back
+     * to /tabs/tab1 so we want to keep the pushedByRoute.
+     */
+    const pushedByRoute = locationHistory.findLastLocation(ri);
+    if (ri.pushedByRoute !== ri.lastPathname && pushedByRoute?.tab !== tab) {
+      ri.pushedByRoute = undefined;
       locationHistory.update(ri);
     }
   }

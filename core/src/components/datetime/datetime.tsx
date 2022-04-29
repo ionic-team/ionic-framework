@@ -68,6 +68,16 @@ export class Datetime implements ComponentInterface {
   private clearFocusVisible?: () => void;
   private overlayIsPresenting = false;
 
+  /**
+   * Whether to highlight the active day with a solid circle (as opposed
+   * to the outline circle around today). If you don't specify an initial
+   * value for the datetime, it doesn't automatically init to a default to
+   * avoid unwanted change events firing. If the solid circle were still
+   * shown then, it would look like a date had already been selected, which
+   * is misleading UX.
+   */
+  private highlightActiveParts = false;
+
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
@@ -1058,6 +1068,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private processValue = (value?: string | null) => {
+    this.highlightActiveParts = !!value;
     const valueToProcess = value || getToday();
     const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
@@ -1349,6 +1360,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMonth(month: number, year: number) {
+    const { highlightActiveParts } = this;
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
@@ -1424,7 +1436,7 @@ export class Datetime implements ComponentInterface {
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
-                  'calendar-day-active': isActive,
+                  'calendar-day-active': isActive && highlightActiveParts,
                   'calendar-day-today': isToday,
                 }}
                 aria-selected={ariaSelected}
@@ -1433,6 +1445,14 @@ export class Datetime implements ComponentInterface {
                   if (day === null) {
                     return;
                   }
+
+                  /**
+                   * Note that for datetimes with confirm/cancel buttons, the value
+                   * isn't updated until you call confirm(). We need to bring the
+                   * solid circle back on day click for UX reasons, rather than only
+                   * show the circle if `value` is truthy.
+                   */
+                  this.highlightActiveParts = true;
 
                   this.setWorkingParts({
                     ...this.workingParts,
@@ -1743,6 +1763,7 @@ export class Datetime implements ComponentInterface {
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
+    const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1758,6 +1779,7 @@ export class Datetime implements ComponentInterface {
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,
+            'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
           }),

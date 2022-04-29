@@ -1,5 +1,9 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import { devices, expect } from '@playwright/test';
+
+import { matchers } from './src/utils/test/playwright';
+
+expect.extend(matchers);
 
 const projects = [
   {
