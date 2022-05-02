@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.4-nightly.20220502](https://github.com/ionic-team/ionic/compare/v6.1.3...v6.1.4-nightly.20220502) (2022-05-02)
+
+
+### Bug Fixes
+
+* **react:** useIonModal/useIonPopover dismiss accepts data and role ([#25209](https://github.com/ionic-team/ionic/issues/25209)) ([68b2f8b](https://github.com/ionic-team/ionic/commit/68b2f8bfe10946580b996e48c4ec1e2df94b8d49)), closes [#25208](https://github.com/ionic-team/ionic/issues/25208)
+
+
+
+
+
 ## [6.1.3](https://github.com/ionic-team/ionic/compare/v6.1.2...v6.1.3) (2022-04-27)
 
 
