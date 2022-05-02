@@ -39,38 +39,29 @@ test.describe('popover: focus trap', async () => {
 
   test('should focus the first ion-item on ArrowDown', async ({ page }) => {
     await openPopover(page, 'basic-popover');
-    const item0 = page.locator('ion-popover ion-item:nth-of-type(1)');
 
     await page.keyboard.press('ArrowDown');
-    expect(item0).toBeFocused();
+    await expectActiveElementTextToEqual(page, 'Item 0');
   });
 
-  test.only('should trap focus', async ({ page }) => {
+  test('should trap focus', async ({ page, browserName }) => {
     await openPopover(page, 'basic-popover');
 
-    const item0 = page.locator('ion-popover ion-item:nth-of-type(1)');
-    // const item1 = page.locator('ion-popover ion-item:nth-of-type(2)');
-    // const item2 = page.locator('ion-popover ion-item:nth-of-type(3)');
-    const item3 = page.locator('ion-popover ion-item:nth-of-type(4)');
-
     await page.keyboard.press('Tab');
-    expect(item0).toBeFocused();
+    
+    await expectActiveElementTextToEqual(page, 'Item 0');
 
     await page.keyboard.down('Shift');
+    if(browserName === 'webkit') {
+      await page.keyboard.down('Alt');
+    }
     await page.keyboard.press('Tab');
     await page.keyboard.up('Shift');
-    await page.waitForChanges();
-    const data = await page.evaluate(async () => {
-      await new Promise(resolve => requestAnimationFrame(resolve));
-      const el = document.activeElement;
-      return {
-        tag: el?.tagName,
-        index: el?.parentNode && Array.from(el.parentNode.querySelectorAll('ion-item')).indexOf(el as HTMLIonItemElement) + 1
-      };
-    });
-    console.log(JSON.stringify(data));
+    if(browserName === 'webkit') {
+      await page.keyboard.up('Alt');
+    }
+
     await expectActiveElementTextToEqual(page, 'Item 3');
-    expect(item3).toBeFocused();
 
     await page.keyboard.press('Tab');
 
@@ -165,6 +156,8 @@ test.describe('popover: focus trap', async () => {
     expect(scrollTop).toBeGreaterThanOrEqual(previousScrollTop);
   });
 });
+
+// TODO(FW-1424): convert these to Playwright assertions where possible
 
 /**
  * Focusing happens async inside of popover so we need
