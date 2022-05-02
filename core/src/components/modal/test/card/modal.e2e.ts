@@ -125,7 +125,9 @@ test.describe('card modal', () => {
 
       await ionModalDidPresent.next();
 
-      expect(await page.screenshot()).toMatchSnapshot(`modal-card-custom-present-tablet-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(
+        `modal-card-custom-present-tablet-${page.getSnapshotSettings()}.png`
+      );
     });
     test('should not have visual regressions with stacked cards', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -136,7 +138,9 @@ test.describe('card modal', () => {
       await page.click('.add');
       await ionModalDidPresent.next();
 
-      expect(await page.screenshot()).toMatchSnapshot(`modal-card-stacked-present-tablet-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(
+        `modal-card-stacked-present-tablet-${page.getSnapshotSettings()}.png`
+      );
     });
     test('should not have visual regressions with stacked custom cards', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
