@@ -150,7 +150,7 @@ test.describe('modal: backdrop', () => {
     await page.goto('/src/components/modal/test/basic');
   });
 
-  test('it should dismiss the modal when clicking the backdrop', async ({ page }, testInfo) => {
+  test('it should dismiss the modal when clicking the backdrop', async ({ page }) => {
     await page.setViewportSize(TabletViewport);
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
