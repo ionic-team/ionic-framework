@@ -7,10 +7,15 @@ expect.extend(matchers);
 
 const projects = [
   {
+    /**
+     * This is really just desktop Firefox
+     * but with a mobile viewport.
+     */
     name: 'Mobile Firefox',
     use: {
       browserName: 'firefox',
-      ...devices['Pixel 5']
+      width: 320,
+      height: 568
     },
   },
   {
