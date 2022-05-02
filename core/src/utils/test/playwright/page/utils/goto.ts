@@ -24,6 +24,18 @@ export const goto = async (page: Page, url: string, testInfo: TestInfo, original
 
   const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
 
+  testInfo.annotations.push({
+    type: 'mode',
+    description: formattedMode,
+  });
+
+  if (rtl) {
+    testInfo.annotations.push({
+      type: 'rtl',
+      description: 'true',
+    });
+  }
+
   const result = await Promise.all([
     page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
     originalFn(formattedUrl),
