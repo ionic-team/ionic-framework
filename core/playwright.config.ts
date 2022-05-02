@@ -14,8 +14,10 @@ const projects = [
     name: 'Mobile Firefox',
     use: {
       browserName: 'firefox',
-      width: 320,
-      height: 568
+      viewport: {
+        width: 320,
+        height: 568
+      }
     },
   },
   {
