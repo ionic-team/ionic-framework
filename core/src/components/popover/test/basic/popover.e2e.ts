@@ -48,16 +48,16 @@ test.describe('popover: focus trap', async () => {
     await openPopover(page, 'basic-popover');
 
     await page.keyboard.press('Tab');
-    
+
     await expectActiveElementTextToEqual(page, 'Item 0');
 
     await page.keyboard.down('Shift');
-    if(browserName === 'webkit') {
+    if (browserName === 'webkit') {
       await page.keyboard.down('Alt');
     }
     await page.keyboard.press('Tab');
     await page.keyboard.up('Shift');
-    if(browserName === 'webkit') {
+    if (browserName === 'webkit') {
       await page.keyboard.up('Alt');
     }
 
