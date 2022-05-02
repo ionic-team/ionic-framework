@@ -9,8 +9,8 @@ const projects = [
   {
     name: 'Mobile Firefox',
     use: {
-      ...devices['Pixel 5'],
-      browserName: 'firefox'
+      browserName: 'firefox',
+      ...devices['Pixel 5']
     },
   },
   {
