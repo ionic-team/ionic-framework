@@ -14,9 +14,19 @@ const projects = [
     name: 'Mobile Firefox',
     use: {
       browserName: 'firefox',
+      /**
+       * This is the Pixel 5 configuration.
+       * We can't use devices['Pixel 5']
+       * because the "isMobile" option is
+       * not supported on Firefox.
+       */
       viewport: {
-        width: 320,
-        height: 568
+        width: 393,
+        height: 727
+      },
+      screen: {
+        width: 393,
+        height: 851
       }
     },
   },
