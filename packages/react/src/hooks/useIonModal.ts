@@ -40,5 +40,5 @@ export type UseIonModalResult = [
   /**
    * Dismisses the modal
    */
-  () => void
+  (data?: any, role?: string) => void
 ];

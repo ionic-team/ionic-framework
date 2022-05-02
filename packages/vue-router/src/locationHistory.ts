@@ -6,9 +6,6 @@ export const createLocationHistory = () => {
 
   const add = (routeInfo: RouteInfo) => {
     switch (routeInfo.routerAction) {
-      case "replace":
-        replaceRoute(routeInfo);
-        break;
       case "pop":
         pop(routeInfo);
         break;
@@ -39,13 +36,6 @@ export const createLocationHistory = () => {
     } else if (routeInfo.tab) {
       tabsHistory[routeInfo.tab] = [routeInfo];
     }
-  }
-
-  const replaceRoute = (routeInfo: RouteInfo) => {
-    const routeInfos = getTabsHistory(routeInfo.tab);
-    routeInfos && routeInfos.pop();
-    locationHistory.pop();
-    addRoute(routeInfo);
   }
 
   const pop = (routeInfo: RouteInfo) => {
@@ -93,16 +83,24 @@ export const createLocationHistory = () => {
    */
   const clearHistory = (routeInfo?: RouteInfo) => {
     if (routeInfo) {
+      const { position, tab } = routeInfo;
 
       /**
        * If there is no route index in locationHistory
        * then there will not be any route index in
        * tabs either.
        */
-      const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
+      const existingRouteIndex = locationHistory.findIndex(r => r.position === position);
       if (existingRouteIndex === -1) return;
 
       locationHistory.splice(existingRouteIndex);
+
+      const clearTabHistory = (tab: string) => {
+        const existingTabRouteIndex = tabsHistory[tab].findIndex(r => r.position === position);
+        if (existingTabRouteIndex === -1) return;
+
+        tabsHistory[tab].splice(existingTabRouteIndex);
+      }
 
       /**
        * We also need to search the current tab
@@ -111,19 +109,31 @@ export const createLocationHistory = () => {
        * tab stack as that means we will lose
        * a reference to the root tab route.
        */
-      const { tab } = routeInfo;
       const tabHistory = tabsHistory[tab];
       if (tab && tabHistory) {
-        const existingTabRouteIndex = tabHistory.findIndex(r => r.position === routeInfo.position);
-        if (existingTabRouteIndex === -1) return;
-
-        tabsHistory[tab].splice(existingTabRouteIndex);
+        clearTabHistory(tab);
+      /**
+       * If we are not clearing items after
+       * a tabs page, it is still possible
+       * that there are future tabs pages to clear.
+       * As a result, we need to search through
+       * all the tab stacks and remove views that appear
+       * after the given routeInfo.
+       *
+       * Example: /non-tabs-page --> /tabs/tab1 --> /non-tabs-page
+       * (via router.go(-1)) --> /tabs/tab2. The /tabs/tab1 history
+       * has been overwritten with /tabs/tab2. As a result,
+       * the /tabs/tab1 route info in the Tab 1 stack should be removed.
+       */
+      } else {
+        for (const tab in tabsHistory) {
+          clearTabHistory(tab);
+        }
       }
-
     } else {
-      Object.keys(tabsHistory).forEach(key => {
-        tabsHistory[key] = [];
-      });
+      for (const tab in tabsHistory) {
+        tabsHistory[tab] = [];
+      }
 
       locationHistory.length = 0;
     }

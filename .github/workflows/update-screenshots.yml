@@ -23,8 +23,8 @@ jobs:
         # add new items to the shard array
         # and change the value of totalShards
         # to be the length of the shard array.
-        shard: [1, 2, 3, 4, 5]
-        totalShards: [5]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        totalShards: [20]
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:

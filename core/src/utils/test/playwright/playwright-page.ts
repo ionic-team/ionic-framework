@@ -8,13 +8,7 @@ import type {
 import { test as base } from '@playwright/test';
 
 import { initPageEvents } from './page/event-spy';
-import {
-  getSnapshotSettings,
-  goto as goToPage,
-  setIonViewport,
-  spyOnEvent,
-  waitForChanges,
-} from './page/utils';
+import { getSnapshotSettings, goto as goToPage, setIonViewport, spyOnEvent, waitForChanges } from './page/utils';
 import type { E2EPage } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
