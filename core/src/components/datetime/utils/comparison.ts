@@ -18,7 +18,8 @@ export const isBefore = (baseParts: DatetimeParts, compareParts: DatetimeParts) 
     (baseParts.year === compareParts.year && baseParts.month < compareParts.month) ||
     (baseParts.year === compareParts.year &&
       baseParts.month === compareParts.month &&
-      baseParts.day! < compareParts.day!)
+      baseParts.day &&
+      baseParts.day < compareParts.day!)
   );
 };
 
@@ -31,6 +32,7 @@ export const isAfter = (baseParts: DatetimeParts, compareParts: DatetimeParts) =
     (baseParts.year === compareParts.year && baseParts.month > compareParts.month) ||
     (baseParts.year === compareParts.year &&
       baseParts.month === compareParts.month &&
-      baseParts.day! > compareParts.day!)
+      baseParts.day &&
+      baseParts.day > compareParts.day!)
   );
 };

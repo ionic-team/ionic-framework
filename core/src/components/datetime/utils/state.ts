@@ -140,7 +140,10 @@ export const isMonthDisabled = (
  * previous navigation button is disabled.
  */
 export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
-  const prevMonth = getPreviousMonth(refParts);
+  const prevMonth = {
+    ...getPreviousMonth(refParts),
+    day: null,
+  };
   return isMonthDisabled(prevMonth, {
     minParts,
     maxParts,
@@ -152,7 +155,10 @@ export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: Datetime
  * determine if the next navigation button is disabled.
  */
 export const isNextMonthDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts) => {
-  const nextMonth = getNextMonth(refParts);
+  const nextMonth = {
+    ...getNextMonth(refParts),
+    day: null,
+  };
   return isMonthDisabled(nextMonth, {
     maxParts,
   });
