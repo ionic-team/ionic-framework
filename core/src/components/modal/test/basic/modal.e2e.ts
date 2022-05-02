@@ -42,6 +42,7 @@ test.describe('modal: focus trapping', () => {
     page,
     browserName,
   }) => {
+    test.skip(browserName === 'firefox', 'Focus is flaky on Firefox');
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
