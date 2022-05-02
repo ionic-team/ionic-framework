@@ -8,7 +8,14 @@ import type {
 import { test as base } from '@playwright/test';
 
 import { initPageEvents } from './page/event-spy';
-import { getSnapshotSettings, goto as goToPage, setIonViewport, spyOnEvent, waitForChanges } from './page/utils';
+import {
+  getSnapshotSettings,
+  goto as goToPage,
+  setContent,
+  setIonViewport,
+  spyOnEvent,
+  waitForChanges,
+} from './page/utils';
 import type { E2EPage } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
@@ -28,6 +35,7 @@ export const test = base.extend<CustomFixtures>({
 
     // Overridden Playwright methods
     page.goto = (url: string) => goToPage(page, url, testInfo, originalGoto);
+    page.setContent = (html: string) => setContent(page, html);
     // Custom Ionic methods
     page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
     page.setIonViewport = () => setIonViewport(page);
