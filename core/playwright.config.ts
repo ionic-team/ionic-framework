@@ -7,22 +7,10 @@ expect.extend(matchers);
 
 const projects = [
   {
-    name: 'chromium',
-
+    name: 'Mobile Firefox',
     use: {
-      ...devices['Desktop Chrome'],
-    },
-  },
-  {
-    name: 'firefox',
-    use: {
-      ...devices['Desktop Firefox'],
-    },
-  },
-  {
-    name: 'webkit',
-    use: {
-      ...devices['Desktop Safari'],
+      ...devices['Pixel 5'],
+      browserName: 'firefox'
     },
   },
   {
