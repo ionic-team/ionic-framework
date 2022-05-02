@@ -6,6 +6,8 @@ test.describe('menu - focus-trap', () => {
     await page.goto('/src/components/menu/test/focus-trap');
   });
   test('it should trap focus inside of the menu', async ({ page, browserName }) => {
+    test.skip(browserName === 'firefox', 'Focus trapping does not work on Firefox');
+
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
     const menu = await page.locator('ion-menu');
@@ -22,11 +24,7 @@ test.describe('menu - focus-trap', () => {
 
     // do it again to make sure focus stays inside menu
     await page.keyboard.press('Tab');
-
-    // Firefox seems to focus the menu not the button itself.
-    if (browserName !== 'firefox') {
-      expect(button).toBeFocused()
-    }
+    expect(button).toBeFocused()
   });
   test('focus trapping with modals should not interfere with menu focus trapping', async ({ page, browserName }) => {
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
