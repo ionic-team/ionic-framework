@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, TabletViewport } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
@@ -98,6 +98,35 @@ test.describe('modal: rendering', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${page.getSnapshotSettings()}.png`);
   });
+  test('should not have visual regressions with tablet viewport', async ({ page }) => {
+    await page.setViewportSize(TabletViewport);
+    await page.goto('/src/components/modal/test/basic');
+
+    const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
+    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+    const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    await page.click('#basic-modal');
+
+    await ionModalWillPresent.next();
+    await ionModalDidPresent.next();
+
+    const modal = await page.locator('ion-modal');
+
+    await page.setIonViewport();
+
+    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-tablet-${page.getSnapshotSettings()}.png`);
+
+    await modal.evaluate((el: HTMLIonModalElement) => {
+      el.dismiss();
+    });
+
+    await ionModalWillDismiss.next();
+    await ionModalDidDismiss.next();
+
+    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-tablet-${page.getSnapshotSettings()}.png`);
+  });
 });
 
 test.describe('modal: htmlAttributes inheritance', () => {
@@ -122,10 +151,7 @@ test.describe('modal: backdrop', () => {
   });
 
   test('it should dismiss the modal when clicking the backdrop', async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
-      'The modal covers the entire screen on mobile, so the backdrop is not clickable.'
-    );
+    await page.setViewportSize(TabletViewport);
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
