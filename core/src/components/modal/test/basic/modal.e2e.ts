@@ -90,7 +90,9 @@ test.describe('modal: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(
+      `modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`
+    );
 
     await modal.evaluate((el: HTMLIonModalElement) => {
       el.dismiss();
@@ -99,8 +101,10 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${screenshotModifier}${page.getSnapshotSettings()}.png`);
-  }
+    expect(await page.screenshot()).toMatchSnapshot(
+      `modal-basic-dismiss-${screenshotModifier}${page.getSnapshotSettings()}.png`
+    );
+  };
 
   test('should not have visual regressions', async ({ page }) => {
     await runVisualTests(page);
