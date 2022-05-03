@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test, Viewports } from '@utils/test/playwright';
+import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
@@ -72,7 +73,7 @@ test.describe('modal: focus trapping', () => {
 });
 
 test.describe('modal: rendering', () => {
-  test('should not have visual regressions', async ({ page }) => {
+  const runVisualTests = async (page: E2EPage, screenshotModifier: string = '') => {
     await page.goto('/src/components/modal/test/basic');
 
     const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
@@ -89,7 +90,7 @@ test.describe('modal: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`);
 
     await modal.evaluate((el: HTMLIonModalElement) => {
       el.dismiss();
@@ -98,36 +99,15 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${screenshotModifier}${page.getSnapshotSettings()}.png`);
+  }
+
+  test('should not have visual regressions', async ({ page }) => {
+    await runVisualTests(page);
   });
   test('should not have visual regressions with tablet viewport', async ({ page }) => {
     await page.setViewportSize(Viewports.tablet.portrait);
-    await page.goto('/src/components/modal/test/basic');
-
-    const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
-    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-    const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-    await page.click('#basic-modal');
-
-    await ionModalWillPresent.next();
-    await ionModalDidPresent.next();
-
-    const modal = await page.locator('ion-modal');
-
-    await page.setIonViewport();
-
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-tablet-${page.getSnapshotSettings()}.png`);
-
-    await modal.evaluate((el: HTMLIonModalElement) => {
-      el.dismiss();
-    });
-
-    await ionModalWillDismiss.next();
-    await ionModalDidDismiss.next();
-
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-tablet-${page.getSnapshotSettings()}.png`);
+    await runVisualTests(page, 'tablet-');
   });
 });
 
