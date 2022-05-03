@@ -15,4 +15,4 @@ test.describe('menu - ensure component works without ion-app', () => {
     await menu.evaluate((el: HTMLIonMenuElement) => el.close());
     await ionDidClose.next();
   });
-})
+});

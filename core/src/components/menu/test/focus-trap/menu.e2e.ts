@@ -24,7 +24,7 @@ test.describe('menu - focus-trap', () => {
 
     // do it again to make sure focus stays inside menu
     await page.keyboard.press('Tab');
-    expect(button).toBeFocused()
+    expect(button).toBeFocused();
   });
   test('focus trapping with modals should not interfere with menu focus trapping', async ({ page, browserName }) => {
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
@@ -81,7 +81,7 @@ test.describe('menu - focus-trap', () => {
     if (browserName === 'webkit') {
       await page.keyboard.up('Alt');
     }
-  })
+  });
   test('swipe gesture should still work after focus trapping modal is dismissed', async ({ page }) => {
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');

@@ -73,9 +73,9 @@ test.describe('menu - basic', () => {
       const scrollTop = await content.evaluate(async (el: HTMLIonContentElement) => {
         const contentScrollEl = await el.getScrollElement();
         return contentScrollEl.scrollTop;
-      })
+      });
 
       expect(scrollTop).toEqual(200);
     });
   });
-})
+});

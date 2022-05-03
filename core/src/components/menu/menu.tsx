@@ -420,7 +420,7 @@ export class Menu implements ComponentInterface, MenuI {
       raf(() => {
         resolve(this.menuInnerEl!.offsetWidth);
       });
-    })
+    });
   }
 
   private async loadAnimation(): Promise<void> {
