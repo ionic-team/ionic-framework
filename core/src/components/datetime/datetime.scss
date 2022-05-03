@@ -153,6 +153,10 @@
   }
 }
 
+:host(.month-year-picker-open) .datetime-footer {
+  display: none;
+}
+
 :host(.datetime-readonly),
 :host(.datetime-disabled) {
   pointer-events: none;

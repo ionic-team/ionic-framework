@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
+import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
@@ -42,6 +43,8 @@ test.describe('modal: focus trapping', () => {
     page,
     browserName,
   }) => {
+    // TODO FW-1436
+    test.skip(browserName === 'firefox', 'Focus is flaky on Firefox');
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -70,7 +73,7 @@ test.describe('modal: focus trapping', () => {
 });
 
 test.describe('modal: rendering', () => {
-  test('should not have visual regressions', async ({ page }) => {
+  const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
     await page.goto('/src/components/modal/test/basic');
 
     const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
@@ -87,7 +90,9 @@ test.describe('modal: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-present-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(
+      `modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`
+    );
 
     await modal.evaluate((el: HTMLIonModalElement) => {
       el.dismiss();
@@ -96,7 +101,17 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(
+      `modal-basic-dismiss-${screenshotModifier}${page.getSnapshotSettings()}.png`
+    );
+  };
+
+  test('should not have visual regressions', async ({ page }) => {
+    await runVisualTests(page);
+  });
+  test('should not have visual regressions with tablet viewport', async ({ page }) => {
+    await page.setViewportSize(Viewports.tablet.portrait);
+    await runVisualTests(page, 'tablet-');
   });
 });
 
@@ -121,11 +136,8 @@ test.describe('modal: backdrop', () => {
     await page.goto('/src/components/modal/test/basic');
   });
 
-  test('it should dismiss the modal when clicking the backdrop', async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
-      'The modal covers the entire screen on mobile, so the backdrop is not clickable.'
-    );
+  test('it should dismiss the modal when clicking the backdrop', async ({ page }) => {
+    await page.setViewportSize(Viewports.tablet.portrait);
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
