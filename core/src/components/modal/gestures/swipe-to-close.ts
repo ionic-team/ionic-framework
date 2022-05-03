@@ -23,6 +23,7 @@ export const createSwipeToCloseGesture = (
   let isOpen = false;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.2;
+  const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
   const getScrollY = () => {
     if (isIonContent(contentEl)) {
       return (contentEl as HTMLIonContentElement).scrollY;
@@ -69,7 +70,16 @@ export const createSwipeToCloseGesture = (
      */
     const content = target.closest('ion-content');
     if (content) {
-      return scrollEl.scrollTop === 0;
+      /**
+       * The card should never swipe to close
+       * on the content with a refresher.
+       * Note: We cannot solve this by making the
+       * swipeToClose gesture have a higher priority
+       * than the refresher gesture as the iOS native
+       * refresh gesture uses a scroll listener in
+       * addition to a gesture.
+       */
+      return !hasRefresherInContent && scrollEl.scrollTop === 0;
     }
 
     /**
