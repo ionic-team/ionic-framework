@@ -6,6 +6,7 @@ test.describe('datetime: selecting a day', () => {
   const testHighlight = async (page: E2EPage, datetimeID: string) => {
     const today = new Date();
     await page.goto('/src/components/datetime/test/basic');
+    await page.setIonViewport();
 
     const todayBtn = page.locator(
       `#${datetimeID} .calendar-day[data-day='${today.getDate()}'][data-month='${today.getMonth() + 1}']`
