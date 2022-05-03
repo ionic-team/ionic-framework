@@ -73,7 +73,7 @@ test.describe('modal: focus trapping', () => {
 });
 
 test.describe('modal: rendering', () => {
-  const runVisualTests = async (page: E2EPage, screenshotModifier: string = '') => {
+  const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
     await page.goto('/src/components/modal/test/basic');
 
     const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');

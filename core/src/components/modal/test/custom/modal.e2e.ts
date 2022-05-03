@@ -3,7 +3,7 @@ import { test, Viewports } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('modal: custom rendering', () => {
-  const runVisualTests = async (page: E2EPage, screenshotModifier: string = '') => {
+  const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
     await page.goto('/src/components/modal/test/custom');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
