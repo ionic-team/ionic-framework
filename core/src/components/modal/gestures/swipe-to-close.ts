@@ -70,7 +70,6 @@ export const createSwipeToCloseGesture = (
      */
     const content = target.closest('ion-content');
     if (content) {
-
       /**
        * The card should never swipe to close
        * on the content with a refresher.
