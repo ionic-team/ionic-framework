@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.4-nightly.20220503](https://github.com/ionic-team/ionic-framework/compare/v6.1.3...v6.1.4-nightly.20220503) (2022-05-03)
+
+
+### Bug Fixes
+
+* **datetime:** arrow navigation respects min/max values ([#25182](https://github.com/ionic-team/ionic-framework/issues/25182)) ([6946e09](https://github.com/ionic-team/ionic-framework/commit/6946e09815da605e37ff8e4d613a14288ea35fb0)), closes [#25073](https://github.com/ionic-team/ionic-framework/issues/25073)
+* **datetime:** hide footer when month-year picker is open ([#25205](https://github.com/ionic-team/ionic-framework/issues/25205)) ([aa5e1b9](https://github.com/ionic-team/ionic-framework/commit/aa5e1b962150b9ed9629812ec566873784526c83))
+* **modal:** card modal can now be swiped to close on the content ([#25185](https://github.com/ionic-team/ionic-framework/issues/25185)) ([7633ddb](https://github.com/ionic-team/ionic-framework/commit/7633ddbc845745dfe36b5c8025c54c22c083c2f4)), closes [#22046](https://github.com/ionic-team/ionic-framework/issues/22046)
+* **react:** useIonModal/useIonPopover dismiss accepts data and role ([#25209](https://github.com/ionic-team/ionic-framework/issues/25209)) ([68b2f8b](https://github.com/ionic-team/ionic-framework/commit/68b2f8bfe10946580b996e48c4ec1e2df94b8d49)), closes [#25208](https://github.com/ionic-team/ionic-framework/issues/25208)
+* **vue:** switching between tabs and going back resolves to correct route ([#25206](https://github.com/ionic-team/ionic-framework/issues/25206)) ([b4ba70e](https://github.com/ionic-team/ionic-framework/commit/b4ba70ea148d4f8fc7475d3de798b485238470c8)), closes [#24303](https://github.com/ionic-team/ionic-framework/issues/24303)
+
+
+
+
+
 ## [6.1.3](https://github.com/ionic-team/ionic-framework/compare/v6.1.2...v6.1.3) (2022-04-27)
 
 
