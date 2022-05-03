@@ -43,7 +43,7 @@ export const test = base.extend<CustomFixtures>({
     page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);
 
     // Custom event behavior
-    initPageEvents(page);
+    await initPageEvents(page);
 
     await use(page);
   },
