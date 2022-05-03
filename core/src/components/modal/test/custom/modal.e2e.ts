@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test, TabletViewport } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
 
 test.describe('modal: custom rendering', () => {
   test('should not have visual regressions', async ({ page }) => {
@@ -16,7 +16,7 @@ test.describe('modal: custom rendering', () => {
   });
 
   test('should not have visual regressions with tablet viewport', async ({ page }) => {
-    await page.setViewportSize(TabletViewport);
+    await page.setViewportSize(Viewports.tablet.portrait);
     await page.goto('/src/components/modal/test/custom');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 

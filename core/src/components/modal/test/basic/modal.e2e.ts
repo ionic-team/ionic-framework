@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test, TabletViewport } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
@@ -101,7 +101,7 @@ test.describe('modal: rendering', () => {
     expect(await page.screenshot()).toMatchSnapshot(`modal-basic-dismiss-${page.getSnapshotSettings()}.png`);
   });
   test('should not have visual regressions with tablet viewport', async ({ page }) => {
-    await page.setViewportSize(TabletViewport);
+    await page.setViewportSize(Viewports.tablet.portrait);
     await page.goto('/src/components/modal/test/basic');
 
     const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
@@ -153,7 +153,7 @@ test.describe('modal: backdrop', () => {
   });
 
   test('it should dismiss the modal when clicking the backdrop', async ({ page }) => {
-    await page.setViewportSize(TabletViewport);
+    await page.setViewportSize(Viewports.tablet.portrait);
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');

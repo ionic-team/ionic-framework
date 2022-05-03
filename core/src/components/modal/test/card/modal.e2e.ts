@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { dragElementBy, test, TabletViewport } from '@utils/test/playwright';
+import { dragElementBy, test, Viewports } from '@utils/test/playwright';
 
 test.describe('card modal', () => {
   test.beforeEach(async ({ page }, testInfo) => {
@@ -107,7 +107,7 @@ test.describe('card modal', () => {
   });
   test.describe('card modal: rendering - tablet', () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(TabletViewport);
+      await page.setViewportSize(Viewports.tablet.portrait);
     });
     test('should not have visual regressions', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -158,7 +158,7 @@ test.describe('card modal', () => {
   });
   test.describe('card modal: swipe to close - tablet', () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(TabletViewport);
+      await page.setViewportSize(Viewports.tablet.portrait);
     });
     test('it should swipe to close when swiped on the header', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
