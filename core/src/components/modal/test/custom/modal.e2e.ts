@@ -1,8 +1,9 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
+import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('modal: custom rendering', () => {
-  test('should not have visual regressions', async ({ page }) => {
+  const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
     await page.goto('/src/components/modal/test/custom');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -12,6 +13,16 @@ test.describe('modal: custom rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-custom-present-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(
+      `modal-custom-present-${screenshotModifier}${page.getSnapshotSettings()}.png`
+    );
+  };
+  test('should not have visual regressions', async ({ page }) => {
+    await runVisualTests(page);
+  });
+
+  test('should not have visual regressions with tablet viewport', async ({ page }) => {
+    await page.setViewportSize(Viewports.tablet.portrait);
+    await runVisualTests(page, 'tablet-');
   });
 });

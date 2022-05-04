@@ -7,22 +7,27 @@ expect.extend(matchers);
 
 const projects = [
   {
-    name: 'chromium',
-
+    /**
+     * This is really just desktop Firefox
+     * but with a mobile viewport.
+     */
+    name: 'Mobile Firefox',
     use: {
-      ...devices['Desktop Chrome'],
-    },
-  },
-  {
-    name: 'firefox',
-    use: {
-      ...devices['Desktop Firefox'],
-    },
-  },
-  {
-    name: 'webkit',
-    use: {
-      ...devices['Desktop Safari'],
+      browserName: 'firefox',
+      /**
+       * This is the Pixel 5 configuration.
+       * We can't use devices['Pixel 5']
+       * because the "isMobile" option is
+       * not supported on Firefox.
+       */
+      viewport: {
+        width: 393,
+        height: 727
+      },
+      screen: {
+        width: 393,
+        height: 851
+      }
     },
   },
   {
