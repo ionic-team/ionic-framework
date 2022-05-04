@@ -1,5 +1,6 @@
 import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
+import { isIonContent } from '../../../utils/content';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
@@ -11,11 +12,47 @@ export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
-export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
+export const createSwipeToCloseGesture = (
+  el: HTMLIonModalElement,
+  contentEl: HTMLElement,
+  scrollEl: HTMLElement,
+  animation: Animation,
+  onDismiss: () => void
+) => {
   const height = el.offsetHeight;
   let isOpen = false;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.2;
+  const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
+  const getScrollY = () => {
+    if (isIonContent(contentEl)) {
+      return (contentEl as HTMLIonContentElement).scrollY;
+      /**
+       * Custom scroll containers are intended to be
+       * used with virtual scrolling, so we assume
+       * there is scrolling in this case.
+       */
+    } else {
+      return true;
+    }
+  };
+  const initialScrollY = getScrollY();
+
+  const disableContentScroll = () => {
+    if (isIonContent(contentEl)) {
+      (contentEl as HTMLIonContentElement).scrollY = false;
+    } else {
+      contentEl.style.setProperty('overflow', 'hidden');
+    }
+  };
+
+  const resetContentScroll = () => {
+    if (isIonContent(contentEl)) {
+      (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
+    } else {
+      contentEl.style.removeProperty('overflow');
+    }
+  };
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
@@ -24,17 +61,41 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
       return true;
     }
 
-    const contentOrFooter = target.closest('ion-content, ion-footer');
-    if (contentOrFooter === null) {
+    /**
+     * If we are swiping on the content,
+     * swiping should only be possible if
+     * the content is scrolled all the way
+     * to the top so that we do not interfere
+     * with scrolling.
+     */
+    const content = target.closest('ion-content');
+    if (content) {
+      /**
+       * The card should never swipe to close
+       * on the content with a refresher.
+       * Note: We cannot solve this by making the
+       * swipeToClose gesture have a higher priority
+       * than the refresher gesture as the iOS native
+       * refresh gesture uses a scroll listener in
+       * addition to a gesture.
+       */
+      return !hasRefresherInContent && scrollEl.scrollTop === 0;
+    }
+
+    /**
+     * Card should be swipeable on all
+     * parts of the modal except for the footer.
+     */
+    const footer = target.closest('ion-footer');
+    if (footer === null) {
       return true;
     }
-    // Target is in the content or the footer so do not start the gesture.
-    // We could be more nuanced here and allow it for content that
-    // does not need to scroll.
+
     return false;
   };
 
-  const onStart = () => {
+  const onStart = (detail: GestureDetail) => {
+    const { deltaY } = detail;
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -43,11 +104,46 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * TODO (FW-937)
      * Remove undefined check
      */
+
     canDismissBlocksGesture = el.canDismiss !== undefined && el.canDismiss !== true;
+
+    /**
+     * If we are pulling down, then
+     * it is possible we are pulling on the
+     * content. We do not want scrolling to
+     * happen at the same time as the gesture.
+     */
+    if (deltaY > 0) {
+      disableContentScroll();
+    }
+
     animation.progressStart(true, isOpen ? 1 : 0);
   };
 
   const onMove = (detail: GestureDetail) => {
+    const { deltaY } = detail;
+
+    /**
+     * If we are pulling down, then
+     * it is possible we are pulling on the
+     * content. We do not want scrolling to
+     * happen at the same time as the gesture.
+     */
+    if (deltaY > 0) {
+      disableContentScroll();
+    }
+
+    /**
+     * If we are swiping on the content
+     * then the swipe gesture should only
+     * happen if we are pulling down.
+     *
+     * However, if we pull up and
+     * then down such that the scroll position
+     * returns to 0, we should be able to swipe
+     * the card.
+     */
+
     const step = detail.deltaY / height;
 
     /**
@@ -116,6 +212,8 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     isOpen = shouldComplete;
 
     gesture.enable(false);
+
+    resetContentScroll();
 
     animation
       .onFinish(() => {

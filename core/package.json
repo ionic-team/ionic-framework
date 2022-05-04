@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.1.3",
+  "version": "6.1.4",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,6 +31,7 @@
     "loader/"
   ],
   "dependencies": {
+    "@axe-core/playwright": "^4.4.2",
     "@stencil/core": "^2.14.2",
     "ionicons": "^6.0.0",
     "tslib": "^2.1.0"

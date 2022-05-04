@@ -15,6 +15,7 @@ import type {
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
+import { getScrollElement, findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
@@ -283,11 +284,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Watch('swipeToClose')
-  swipeToCloseChanged(enable: boolean) {
+  async swipeToCloseChanged(enable: boolean) {
     if (this.gesture) {
       this.gesture.enable(enable);
     } else if (enable) {
-      this.initSwipeToClose();
+      await this.initSwipeToClose();
     }
   }
 
@@ -474,7 +475,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
        * not run canDismiss on swipe as there would be no swipe gesture created.
        */
     } else if (this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined)) {
-      this.initSwipeToClose();
+      await this.initSwipeToClose();
     }
 
     /* tslint:disable-next-line */
@@ -504,17 +505,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentTransition = undefined;
   }
 
-  private initSwipeToClose() {
+  private async initSwipeToClose() {
     if (getIonMode(this) !== 'ios') {
       return;
     }
+
+    const { el } = this;
 
     // All of the elements needed for the swipe gesture
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = (this.animation = animationBuilder(this.el, { presentingEl: this.presentingElement }));
-    this.gesture = createSwipeToCloseGesture(this.el, ani, () => {
+    const ani = (this.animation = animationBuilder(el, { presentingEl: this.presentingElement }));
+
+    const contentEl = findIonContent(el);
+    if (!contentEl) {
+      printIonContentErrorMsg(el);
+      return;
+    }
+    const scrollEl = await getScrollElement(contentEl);
+
+    this.gesture = createSwipeToCloseGesture(el, contentEl, scrollEl, ani, () => {
       /**
        * While the gesture animation is finishing
        * it is possible for a user to tap the backdrop.
