@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
 
 import { openPopover, screenshotPopover } from '../test.utils';
 
@@ -9,13 +9,9 @@ test.describe('popover: size', async () => {
    * and massively cut down on screenshots taken. The content has its own
    * backdrop so you can still see the popovers.
    */
-  test('should calculate popover width based on sizing method', async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
-      'Skip mobile to avoid popovers overlapping, or needing an extra-long viewport to avoid this.'
-    );
-
+  test('should calculate popover width based on sizing method', async ({ page }) => {
     await page.goto('/src/components/popover/test/size');
+    await page.setViewportSize(Viewports.tablet.portrait); // avoid popovers overlapping
 
     const sameTimeTriggers = ['auto-trigger', 'cover-trigger', 'event-trigger'];
 

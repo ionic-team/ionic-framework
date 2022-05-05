@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
 
 import { openPopover } from '../test.utils';
 
@@ -9,13 +9,9 @@ test.describe('popover: position', async () => {
    * and massively cut down on screenshots taken. The content has its own
    * backdrop so you can still see the popovers.
    */
-  test('should not have visual regressions', async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.name === 'Mobile Chrome' || testInfo.project.name === 'Mobile Safari',
-      'Skip mobile to avoid extra-long viewport screenshots.'
-    );
-
+  test('should not have visual regressions', async ({ page }) => {
     await page.goto('/src/components/popover/test/position');
+    await page.setViewportSize(Viewports.tablet.portrait); // avoid extra-long viewport screenshots
 
     const sides = ['top', 'right', 'bottom', 'left', 'start', 'end'];
     const alignments = ['start', 'center', 'end'];
