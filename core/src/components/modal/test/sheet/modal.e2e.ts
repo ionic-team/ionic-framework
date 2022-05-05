@@ -137,7 +137,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
   test('it should reset the breakpoint value on dismiss', async ({ page }) => {
     test.info().annotations.push({
       type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/25245'
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25245',
     });
 
     await page.setContent(`
