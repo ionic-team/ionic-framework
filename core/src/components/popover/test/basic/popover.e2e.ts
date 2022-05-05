@@ -84,7 +84,7 @@ test.describe('popover: focus trap', async () => {
     await expectActiveElementTextToEqual(page, 'Item 3');
   });
 
-  test.only('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
+  test('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
     await openPopover(page, 'popover-with-textarea');
     await page.waitForFunction(() => document.activeElement?.tagName === 'ION-POPOVER');
 
