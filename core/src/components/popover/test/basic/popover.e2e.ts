@@ -84,7 +84,7 @@ test.describe('popover: focus trap', async () => {
     await expectActiveElementTextToEqual(page, 'Item 3');
   });
 
-  test('should not override keyboard interactions for textarea elements', async ({ page }, testInfo) => {
+  test.only('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
     await openPopover(page, 'popover-with-textarea');
     await page.waitForFunction(() => document.activeElement?.tagName === 'ION-POPOVER');
 
@@ -92,7 +92,7 @@ test.describe('popover: focus trap', async () => {
 
     // for Firefox, ion-textarea is focused first
     // need to tab again to get to native input
-    if (testInfo.project.name === 'firefox') {
+    if (browserName === 'firefox') {
       await page.keyboard.press('Tab');
     }
 
