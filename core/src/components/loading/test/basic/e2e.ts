@@ -37,78 +37,9 @@ test('loading: focus trap', async () => {
   expect(activeElementTextThree).toEqual('Click impatiently to load faster');
 });
 
-test('loading: basic', async () => {
-  await testLoading(DIRECTORY, '#basic-loading');
-});
 
-test('loading: long content basic', async () => {
-  await testLoading(DIRECTORY, '#long-content-loading');
-});
-
-test('loading: no spinner basic', async () => {
-  await testLoading(DIRECTORY, '#no-spinner-loading');
-});
-
-test('loading: translucent basic', async () => {
-  await testLoading(DIRECTORY, '#translucent-loading');
-});
-
-test('loading: custom class basic', async () => {
-  await testLoading(DIRECTORY, '#custom-class-loading');
-});
 
 test('loading: backdrop standalone', async () => {
   await testLoading(DIRECTORY, '#backdrop-loading');
 });
 
-test('loading: html content basic', async () => {
-  await testLoading(DIRECTORY, '#html-content-loading');
-});
-
-/**
- * RTL Tests
- */
-
-test('loading:rtl: basic basic', async () => {
-  await testLoading(DIRECTORY, '#basic-loading', true);
-});
-
-test('loading:rtl: long content basic', async () => {
-  await testLoading(DIRECTORY, '#long-content-loading', true);
-});
-
-test('loading:rtl: no spinner basic', async () => {
-  await testLoading(DIRECTORY, '#no-spinner-loading', true);
-});
-
-test('loading:rtl: translucent basic', async () => {
-  await testLoading(DIRECTORY, '#translucent-loading', true);
-});
-
-test('loading:rtl: custom class basic', async () => {
-  await testLoading(DIRECTORY, '#custom-class-loading', true);
-});
-
-test('loading:rtl: backdrop standalone', async () => {
-  await testLoading(DIRECTORY, '#backdrop-loading', true);
-});
-
-test('loading:rtl: html content basic', async () => {
-  await testLoading(DIRECTORY, '#html-content-loading', true);
-});
-
-test('loading: htmlAttributes', async () => {
-  const page = await newE2EPage({ url: '/src/components/loading/test/basic?ionic:_testing=true' });
-
-  await page.click('#basic-loading');
-  await page.waitForSelector('#basic-loading');
-
-  const alert = await page.find('ion-loading');
-
-  expect(alert).not.toBe(null);
-  await alert.waitForVisible();
-
-  const attribute = await page.evaluate(() => document.querySelector('ion-loading').getAttribute('data-testid'));
-
-  expect(attribute).toEqual('basic-loading');
-});
