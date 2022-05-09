@@ -442,6 +442,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await this.currentTransition;
     }
 
+    if (this.breakpoints !== undefined) {
+      /**
+       * If the modal is presented multiple times (inline modals), we
+       * need to reset the current breakpoint to the initial breakpoint.
+       */
+      this.currentBreakpoint = this.initialBreakpoint;
+    }
+
     const data = {
       ...this.componentProps,
       modal: this.el,
@@ -668,16 +676,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
       enteringAnimation.forEach((ani) => ani.destroy());
     }
-
-    if (this.currentBreakpoint) {
-      /**
-       * If the modal is inline and presented again, the visual breakpoint
-       * will not match the current breakpoint. We reset the breakpoint back
-       * to the initial breakpoint on dismiss to resolve this issue.
-       */
-      this.currentBreakpoint = this.initialBreakpoint;
-    }
-
     this.currentTransition = undefined;
     this.animation = undefined;
     return dismissed;
