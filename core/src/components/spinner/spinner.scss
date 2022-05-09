@@ -24,10 +24,18 @@
 }
 
 svg {
-  @include position(0, null, null, 0);
   @include transform-origin(center);
 
   position: absolute;
+
+  /**
+   * Do not use @include position
+   * as the alignment of the elements with
+   * a spinner should not be RTL aware.
+   */
+  top: 0;
+  /* stylelint-disable-next-line property-disallowed-list */
+  left: 0;
 
   width: 100%;
   height: 100%;
