@@ -37,9 +37,6 @@ test('loading: focus trap', async () => {
   expect(activeElementTextThree).toEqual('Click impatiently to load faster');
 });
 
-
-
 test('loading: backdrop standalone', async () => {
   await testLoading(DIRECTORY, '#backdrop-loading');
 });
-

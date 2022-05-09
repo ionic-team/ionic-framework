@@ -1,6 +1,6 @@
-import { test, E2EPage } from '@utils/test/playwright';
-
 import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
+import { test } from '@utils/test/playwright';
 
 test.describe('loading: basic', () => {
   test.beforeEach(async ({ page }) => {
@@ -15,7 +15,9 @@ test.describe('loading: basic', () => {
 
       await ionLoadingDidPresent.next();
 
-      expect(await page.screenshot()).toMatchSnapshot(`loading-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(
+        `loading-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`
+      );
 
       const loading = await page.locator('ion-loading');
       await loading.evaluate((el: HTMLIonLoadingElement) => el.dismiss());
@@ -23,7 +25,7 @@ test.describe('loading: basic', () => {
       await ionLoadingDidDismiss.next();
 
       expect(loading).toBeHidden();
-    }
+    };
     test('should open a basic loader', async ({ page }) => {
       await runVisualTest(page, '#basic-loading', 'basic');
     });
@@ -56,7 +58,7 @@ test.describe('loading: basic', () => {
     });
   });
   test.describe('loading: focus trapping', () => {
-    test('it should trap focus in the loader', async ({ page, browserName}) => {
+    test('it should trap focus in the loader', async ({ page, browserName }) => {
       const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
 
       await page.click('#html-content-loading');

@@ -1,7 +1,5 @@
-import { test } from '@utils/test/playwright';
-
 import { expect } from '@playwright/test';
-
+import { test } from '@utils/test/playwright';
 
 test.describe('loading: standalone', () => {
   test.beforeEach(async ({ page }) => {
