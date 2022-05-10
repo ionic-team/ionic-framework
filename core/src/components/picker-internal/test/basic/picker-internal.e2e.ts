@@ -1,10 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-const isMobileSafariLinux = (userAgent?: string) => {
-  return userAgent?.includes('Linux') === true && userAgent?.includes('Mobile Safari') === true;
-};
-
 test.describe('picker-internal', () => {
   test('inline pickers should not have visual regression', async ({ page }) => {
     await page.goto(`/src/components/picker-internal/test/basic`);
@@ -19,7 +15,7 @@ test.describe('picker-internal', () => {
   test.describe('within overlay:', () => {
     // TODO (FW-1397): Remove this test.skip when the issue is fixed.
     test.skip(
-      ({ userAgent }) => isMobileSafariLinux(userAgent),
+      ({ browserName }) => browserName === 'webkit',
       'Mobile Safari on Linux renders the selected option incorrectly'
     );
 
