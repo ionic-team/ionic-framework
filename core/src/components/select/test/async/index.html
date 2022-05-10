@@ -44,8 +44,10 @@
           });
 
           select.value = options[0];
+
+          window.dispatchEvent(new CustomEvent('selectValueSet'));
         });
-      }, 5000);
+      }, 1000);
     </script>
   </body>
 </html>
