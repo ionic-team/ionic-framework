@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.5-nightly.20220510](https://github.com/ionic-team/ionic-framework/compare/v6.1.4...v6.1.5-nightly.20220510) (2022-05-10)
+
+
+### Bug Fixes
+
+* **core:** @axe-core/playwright should be a devDependency ([#25244](https://github.com/ionic-team/ionic-framework/issues/25244)) ([617ec48](https://github.com/ionic-team/ionic-framework/commit/617ec48265157d1502c443395472c21ebdb2989e)), closes [#25242](https://github.com/ionic-team/ionic-framework/issues/25242)
+* **modal:** add canDismiss input binding for angular ([#25240](https://github.com/ionic-team/ionic-framework/issues/25240)) ([bdf0383](https://github.com/ionic-team/ionic-framework/commit/bdf0383b0c9ec4595129a2633760fd4f4788df90)), closes [#25239](https://github.com/ionic-team/ionic-framework/issues/25239)
+* **spinner:** alignment is now correct in rtl ([#25260](https://github.com/ionic-team/ionic-framework/issues/25260)) ([e3c996d](https://github.com/ionic-team/ionic-framework/commit/e3c996dea878a8dd276a0ca99f59b330125f9b75))
+
+
+
+
+
 ## [6.1.4](https://github.com/ionic-team/ionic-framework/compare/v6.1.3...v6.1.4) (2022-05-04)
 
 
