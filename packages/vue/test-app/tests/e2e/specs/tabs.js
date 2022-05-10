@@ -534,6 +534,51 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab2');
     cy.ionPageHidden('tab1');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/25255
+  it('should not error when going back to root tab multiple times', () => {
+    cy.visit('http://localhost:8080/tabs');
+
+    cy.routerPush('/tabs/tab1/childone');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1childone');
+    cy.ionPageVisible('tab2');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageHidden('tab2');
+    cy.ionPageVisible('tab1childone');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab2');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageHidden('tab2');
+    cy.ionPageVisible('tab1');
+
+    cy.routerPush('/tabs/tab1/childone');
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1childone');
+    cy.ionPageVisible('tab2');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageHidden('tab2');
+    cy.ionPageVisible('tab1childone');
+
+    cy.get('ion-tab-button#tab-button-tab1').click();
+    cy.ionPageDoesNotExist('tab1childone');
+    cy.ionPageVisible('tab1');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {
