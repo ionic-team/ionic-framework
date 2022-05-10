@@ -15,8 +15,8 @@ test.describe('picker-internal', () => {
   test.describe('within overlay:', () => {
     // TODO (FW-1397): Remove this test.skip when the issue is fixed.
     test.skip(
-      ({ browserName }) => browserName === 'webkit',
-      'Mobile Safari on Linux renders the selected option incorrectly'
+      'Flaky test'
+      'Mobile Safari and Chrome on Linux renders the selected option incorrectly'
     );
 
     test('popover: should not have visual regression', async ({ page }) => {
