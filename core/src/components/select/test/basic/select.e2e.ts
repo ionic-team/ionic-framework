@@ -85,7 +85,9 @@ test.describe('select: basic', () => {
         expect(popoverOption1).toBeFocused();
       }
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(`select-popover-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-popover-diff-${page.getSnapshotSettings()}.png`
+      );
 
       await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
 
