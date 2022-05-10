@@ -24,7 +24,7 @@ test.describe('popover: dismissOnSelect', async () => {
   });
 
   test('should not dismiss a popover when clicking a click trigger', async ({ page, browserName }) => {
-    // TODO
+    // TODO FW-1486
     test.skip(
       browserName === 'firefox',
       'Parent popover disappears when click trigger is clicked. Cannot replicate locally. Needs further investigation.'
