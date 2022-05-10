@@ -2,15 +2,6 @@ import type { E2EPage } from '@stencil/core/testing';
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('item: counter', () => {
-  it('should match existing visual screenshots', async () => {
-    const page = await newE2EPage({
-      url: '/src/components/item/test/counter?ionic:_testing=true',
-    });
-
-    const compare = await page.compareScreenshot();
-    expect(compare).toMatchScreenshot();
-  });
-
   describe('custom formatter', () => {
     let page: E2EPage;
 
