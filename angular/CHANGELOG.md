@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.5](https://github.com/ionic-team/ionic/compare/v6.1.4...v6.1.5) (2022-05-11)
+
+
+### Bug Fixes
+
+* **modal:** add canDismiss input binding for angular ([#25240](https://github.com/ionic-team/ionic/issues/25240)) ([bdf0383](https://github.com/ionic-team/ionic/commit/bdf0383b0c9ec4595129a2633760fd4f4788df90)), closes [#25239](https://github.com/ionic-team/ionic/issues/25239)
+
+
+
+
+
 ## [6.1.4](https://github.com/ionic-team/ionic/compare/v6.1.3...v6.1.4) (2022-05-04)
 
 **Note:** Version bump only for package @ionic/angular
