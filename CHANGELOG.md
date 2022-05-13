@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6-nightly.20220513](https://github.com/ionic-team/ionic-framework/compare/v6.1.5...v6.1.6-nightly.20220513) (2022-05-13)
+
+
+### Bug Fixes
+
+* **loading:** spinner now respects —spinner-color ([#25261](https://github.com/ionic-team/ionic-framework/issues/25261)) ([65f4c74](https://github.com/ionic-team/ionic-framework/commit/65f4c742e7a5e5756f6f72dd853e38e885f90385)), closes [#25180](https://github.com/ionic-team/ionic-framework/issues/25180)
+
+
+
+
+
 ## [6.1.5](https://github.com/ionic-team/ionic-framework/compare/v6.1.4...v6.1.5) (2022-05-11)
 
 
