@@ -140,12 +140,13 @@ Before creating a pull request, please read our requirements that explains the m
 
 #### Modifying Documentation
 
-1. Locate the `readme.md` file in the component's directory.
-2. Modify the documentation **above** the line that says `<!-- Auto Generated Below -->` in this file.
-3. To update any of the auto generated documentation below that line, make the relevant changes in the following places:
-  - `Usage`: update the component's usage examples in the component's `usage/` directory
-  - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`)
-  - `CSS Custom Properties`: update the component's main Sass file (`*.scss`)
+- Changes to manually written documentation should be made in the `ionic-docs` repo: https://github.com/ionic-team/ionic-docs/tree/main/docs
+  - In your `ionic-docs` PR, please add a link back to the related `ionic-framework` PR.
+- Changes to auto generated documentation should be made in the `ionic-framework` repo. These can be done in the same PR as your fix or feature.
+  - Run `npm run build` and commit all updates to ensure your changes make it into the generated documentation.
+  - `Usage`: update the component's usage examples in the component's `usage/` directory.
+  - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`).
+  - `CSS Custom Properties`: update the component's main Sass file (`*.scss`).
 
 
 #### Modifying Tests
