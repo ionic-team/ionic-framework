@@ -539,9 +539,11 @@ ion-ripple-effect {
 .item-counter {
   @include margin-horizontal(auto, null);
 
-  padding-inline-start: 16px;
+  color: #{$background-color-step-550};
 
   white-space: nowrap;
+
+  padding-inline-start: 16px;
 }
 
 // Item: Reduced Motion
