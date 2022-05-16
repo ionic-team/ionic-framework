@@ -14,16 +14,18 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <style>
+    ion-app > ion-content {
+      --background: #dddddd;
+    }
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      grid-row-gap: 20px;
+      grid-row-gap: 40px;
       grid-column-gap: 20px;
-
-      padding: 200px;
     }
     .grid-item {
       margin: 0 auto;
+      text-align: center;
     }
     h2 {
       font-size: 12px;
@@ -64,7 +66,7 @@
               trigger="top-start"
               side="top"
               alignment="start"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -78,7 +80,7 @@
               trigger="top-center"
               side="top"
               alignment="center"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -87,7 +89,7 @@
           <div class="grid-item">
             <h2>Top, End</h2>
             <ion-button id="top-end">Click to Open</ion-button>
-            <ion-popover class="top-end-popover" trigger="top-end" side="top" alignment="end" show-backdrop="true">
+            <ion-popover class="top-end-popover" trigger="top-end" side="top" alignment="end" show-backdrop="false">
               <list-page></list-page>
             </ion-popover>
           </div>
@@ -100,7 +102,7 @@
               trigger="right-start"
               side="right"
               alignment="start"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -114,7 +116,7 @@
               trigger="right-center"
               side="right"
               alignment="center"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -128,7 +130,7 @@
               trigger="right-end"
               side="right"
               alignment="end"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -142,7 +144,7 @@
               trigger="bottom-start"
               side="bottom"
               alignment="start"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -156,7 +158,7 @@
               trigger="bottom-center"
               side="bottom"
               alignment="center"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -170,7 +172,7 @@
               trigger="bottom-end"
               side="bottom"
               alignment="end"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -184,7 +186,7 @@
               trigger="left-start"
               side="left"
               alignment="start"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -198,7 +200,7 @@
               trigger="left-center"
               side="left"
               alignment="center"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -207,7 +209,7 @@
           <div class="grid-item">
             <h2>Left, End</h2>
             <ion-button id="left-end">Click to Open</ion-button>
-            <ion-popover class="left-end-popover" trigger="left-end" side="left" alignment="end" show-backdrop="true">
+            <ion-popover class="left-end-popover" trigger="left-end" side="left" alignment="end" show-backdrop="false">
               <list-page></list-page>
             </ion-popover>
           </div>
@@ -220,7 +222,7 @@
               trigger="start-start"
               side="start"
               alignment="start"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -234,7 +236,7 @@
               trigger="start-center"
               side="start"
               alignment="center"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -248,7 +250,7 @@
               trigger="start-end"
               side="start"
               alignment="end"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -262,7 +264,7 @@
               trigger="end-start"
               side="end"
               alignment="start"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -276,7 +278,7 @@
               trigger="end-center"
               side="end"
               alignment="center"
-              show-backdrop="true"
+              show-backdrop="false"
             >
               <list-page></list-page>
             </ion-popover>
@@ -285,7 +287,7 @@
           <div class="grid-item">
             <h2>End, End</h2>
             <ion-button id="end-end">Click to Open</ion-button>
-            <ion-popover class="end-end-popover" trigger="end-end" side="end" alignment="end" show-backdrop="true">
+            <ion-popover class="end-end-popover" trigger="end-end" side="end" alignment="end" show-backdrop="false">
               <list-page></list-page>
             </ion-popover>
           </div>
