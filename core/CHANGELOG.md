@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6-nightly.20220516](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6-nightly.20220516) (2022-05-16)
+
+
+### Bug Fixes
+
+* **loading:** spinner now respects —spinner-color ([#25261](https://github.com/ionic-team/ionic/issues/25261)) ([65f4c74](https://github.com/ionic-team/ionic/commit/65f4c742e7a5e5756f6f72dd853e38e885f90385)), closes [#25180](https://github.com/ionic-team/ionic/issues/25180)
+* **modal:** reset breakpoint to initial breakpoint on present ([#25246](https://github.com/ionic-team/ionic/issues/25246)) ([2557bf3](https://github.com/ionic-team/ionic/commit/2557bf3c3eed9e33e89e07a8d73489da8d81bee3)), closes [#25245](https://github.com/ionic-team/ionic/issues/25245)
+
+
+
+
+
 ## [6.1.5](https://github.com/ionic-team/ionic/compare/v6.1.4...v6.1.5) (2022-05-11)
 
 
