@@ -18,7 +18,7 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
 
   expect(await page.screenshot()).toMatchSnapshot(`picker-${description}-column-initial-${page.getSnapshotSettings()}.png`);
 
-  const columns = await page.locator('.picker-opt-selected');
+  const columns = page.locator('.picker-opt-selected');
   const spy = await page.spyOnEvent('ionPickerColChange');
 
   const screenshots = [];
