@@ -511,7 +511,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentTransition = undefined;
   }
 
-  private async initSwipeToClose() {
+  private initSwipeToClose() {
     if (getIonMode(this) !== 'ios') {
       return;
     }
