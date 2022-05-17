@@ -11,7 +11,6 @@ test.describe('range: basic', () => {
   });
 
   test('should emit start/end events', async ({ page }) => {
-
     await page.setContent(`<ion-range value="20"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -40,7 +39,7 @@ test.describe('range: basic', () => {
   });
 
   test('should emit start/end events, keyboard', async ({ page }) => {
-    await page.setContent(`<ion-range value="20"></ion-range>`)
+    await page.setContent(`<ion-range value="20"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
     const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
@@ -54,5 +53,4 @@ test.describe('range: basic', () => {
     expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
     expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
   });
-
 });

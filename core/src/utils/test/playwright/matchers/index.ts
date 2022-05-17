@@ -3,5 +3,5 @@ import { toHaveReceivedEventDetail } from './toHaveReceivedEventDetail';
 
 export const matchers = {
   toHaveReceivedEvent,
-  toHaveReceivedEventDetail
+  toHaveReceivedEventDetail,
 };

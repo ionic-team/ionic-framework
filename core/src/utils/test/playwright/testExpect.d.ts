@@ -12,5 +12,5 @@ interface CustomMatchers<R = unknown> {
 
 declare namespace PlaywrightTest {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface Matchers<R> extends CustomMatchers<R> { }
+  interface Matchers<R> extends CustomMatchers<R> {}
 }

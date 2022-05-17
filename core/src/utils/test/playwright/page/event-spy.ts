@@ -18,7 +18,7 @@ export class EventSpy {
   private queuedHandler: (() => void)[] = [];
   public events: CustomEvent[] = [];
 
-  constructor(public eventName: string) { }
+  constructor(public eventName: string) {}
 
   get length() {
     return this.events.length;
@@ -144,7 +144,7 @@ export const addE2EListener = async (page: E2EPage, eventName: string, callback:
           isSerializedEvent: true,
         };
         return serializedEvent;
-      }
+      };
 
       window.addEventListener(eventName as string, (ev: Event) => {
         (window as any).ionicOnEvent(id, (window as any).serializeStencilEvent(ev));

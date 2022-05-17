@@ -22,15 +22,15 @@ export function toHaveReceivedEventDetail(eventSpy: EventSpy, eventDetail: any) 
   if (!eventSpy.eventName) {
     return {
       message: () => `toHaveReceivedEventDetail did not receive an event spy`,
-      pass: false
-    }
+      pass: false,
+    };
   }
 
   if (!eventSpy.lastEvent) {
     return {
       message: () => `event "${eventSpy.eventName}" was not received`,
-      pass: false
-    }
+      pass: false,
+    };
   }
 
   const pass = deepEqual(eventSpy.lastEvent.detail, eventDetail);
