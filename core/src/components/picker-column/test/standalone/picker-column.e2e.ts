@@ -16,5 +16,4 @@ test.describe('picker-column', () => {
       await testPickerColumn(page, '#multiple-column-button', 'multiple');
     });
   });
-
 });

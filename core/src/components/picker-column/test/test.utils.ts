@@ -16,14 +16,16 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
 
   await page.waitForTimeout(100);
 
-  expect(await page.screenshot()).toMatchSnapshot(`picker-${description}-column-initial-${page.getSnapshotSettings()}.png`);
+  expect(await page.screenshot()).toMatchSnapshot(
+    `picker-${description}-column-initial-${page.getSnapshotSettings()}.png`
+  );
 
   const columns = page.locator('.picker-opt-selected');
   const spy = await page.spyOnEvent('ionPickerColChange');
 
   const screenshots = [];
 
-  for (let i = 0; i < await columns.count(); i++) {
+  for (let i = 0; i < (await columns.count()); i++) {
     const column = columns.nth(i);
 
     await dragElementBy(column, page, 0, -100);
@@ -33,8 +35,8 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
 
     screenshots.push({
       name: `picker-${description}-column-diff-${i}-${page.getSnapshotSettings()}.png`,
-      screenshot: await page.screenshot()
-    })
+      screenshot: await page.screenshot(),
+    });
   }
 
   for (const screenshot of screenshots) {
