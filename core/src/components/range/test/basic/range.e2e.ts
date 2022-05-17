@@ -7,7 +7,7 @@ test.describe('range: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`range-diff-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`range-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test('should emit start/end events', async ({ page }) => {
