@@ -27,8 +27,6 @@ export const enableScrollAssist = (
     // focus this input if the pointer hasn't moved XX pixels
     // and the input doesn't already have focus
     if (!hasPointerMoved(6, coord, endCoord) && !isFocused(inputEl)) {
-      ev.stopPropagation();
-
       // begin the input focus process
       jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
     }
