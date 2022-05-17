@@ -88,7 +88,9 @@ test.describe('card modal', () => {
       await content.waitForElementState('stable');
       expect(modal).toBeVisible();
     });
-    test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({ page }) => {
+    test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
+      page,
+    }) => {
       const modal = await cardModalPage.openModalByTrigger('#card');
 
       await page.click('ion-button.replace');

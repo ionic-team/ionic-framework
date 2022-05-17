@@ -12,11 +12,7 @@ export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
-export const createSwipeToCloseGesture = (
-  el: HTMLIonModalElement,
-  animation: Animation,
-  onDismiss: () => void
-) => {
+export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
   const height = el.offsetHeight;
   let isOpen = false;
   let canDismissBlocksGesture = false;
@@ -38,7 +34,9 @@ export const createSwipeToCloseGesture = (
   };
 
   const disableContentScroll = () => {
-    if (!contentEl) { return; }
+    if (!contentEl) {
+      return;
+    }
 
     if (isIonContent(contentEl)) {
       (contentEl as HTMLIonContentElement).scrollY = false;
@@ -48,7 +46,9 @@ export const createSwipeToCloseGesture = (
   };
 
   const resetContentScroll = () => {
-    if (!contentEl) { return; }
+    if (!contentEl) {
+      return;
+    }
 
     if (isIonContent(contentEl)) {
       (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
