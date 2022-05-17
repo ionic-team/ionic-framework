@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6-nightly.20220517](https://github.com/ionic-team/ionic-framework/compare/v6.1.5...v6.1.6-nightly.20220517) (2022-05-17)
+
+
+### Bug Fixes
+
+* **loading:** spinner now respects —spinner-color ([#25261](https://github.com/ionic-team/ionic-framework/issues/25261)) ([65f4c74](https://github.com/ionic-team/ionic-framework/commit/65f4c742e7a5e5756f6f72dd853e38e885f90385)), closes [#25180](https://github.com/ionic-team/ionic-framework/issues/25180)
+* **modal:** reset breakpoint to initial breakpoint on present ([#25246](https://github.com/ionic-team/ionic-framework/issues/25246)) ([2557bf3](https://github.com/ionic-team/ionic-framework/commit/2557bf3c3eed9e33e89e07a8d73489da8d81bee3)), closes [#25245](https://github.com/ionic-team/ionic-framework/issues/25245)
+* **scroll-assist:** touch end events continue to bubble on inputs ([#25282](https://github.com/ionic-team/ionic-framework/issues/25282)) ([780f16d](https://github.com/ionic-team/ionic-framework/commit/780f16d9e04ee5aaaf91bb7c6ef15c72cc8aeb45)), closes [#25229](https://github.com/ionic-team/ionic-framework/issues/25229)
+
+
+
+
+
 ## [6.1.5](https://github.com/ionic-team/ionic-framework/compare/v6.1.4...v6.1.5) (2022-05-11)
 
 
