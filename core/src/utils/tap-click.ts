@@ -186,9 +186,9 @@ const getActivatableTarget = (ev: UIEvent): any => {
     /**
      * EventTarget is not always Element.
      * However, we know that the target will
-     * always be an HTMLElement in this scenario.
+     * always be an Element in this scenario.
      */
-    return (ev.target as HTMLElement).closest('.ion-activatable');
+    return (ev.target as Element).closest('.ion-activatable');
   }
 };
 
