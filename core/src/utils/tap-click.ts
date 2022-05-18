@@ -172,10 +172,10 @@ const getActivatableTarget = (ev: UIEvent): any => {
      * objects other than Element can be targets too.
      * For example, AudioContext can be a target. In this
      * case, we know that the event is a UIEvent so we
-     * can assume that the path will contain either HTMLElement
+     * can assume that the path will contain either Element
      * or ShadowRoot.
      */
-    const path = ev.composedPath() as HTMLElement[] | ShadowRoot[];
+    const path = ev.composedPath() as Element[] | ShadowRoot[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
       if (!(el instanceof ShadowRoot) && el.classList.contains('ion-activatable')) {
