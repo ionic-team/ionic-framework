@@ -57,7 +57,7 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  const pointerDown = (ev: any) => {
+  const pointerDown = (ev: UIEvent) => {
     if (activatableEle || isScrolling()) {
       return;
     }
@@ -165,9 +165,18 @@ export const startTapClick = (config: Config) => {
   doc.addEventListener('contextmenu', onContextMenu, true);
 };
 
-const getActivatableTarget = (ev: any): any => {
+const getActivatableTarget = (ev: UIEvent): any => {
   if (ev.composedPath) {
-    const path = ev.composedPath() as HTMLElement[];
+
+    /**
+     * composedPath returns EventTarget[]. However,
+     * objects other than Element can be targets too.
+     * For example, AudioContext can be a target. In this
+     * case, we know that the event is a UIEvent so we
+     * can assume that the path will contain either HTMLElement
+     * or ShadowRoot.
+     */
+    const path = ev.composedPath() as HTMLElement[] | ShadowRoot[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
       if (!(el instanceof ShadowRoot) && el.classList.contains('ion-activatable')) {
@@ -175,7 +184,12 @@ const getActivatableTarget = (ev: any): any => {
       }
     }
   } else {
-    return ev.target.closest('.ion-activatable');
+    /**
+     * EventTarget is not always Element.
+     * However, we know that the target will
+     * always be an HTMLElement in this scenario.
+     */
+    return (ev.target as HTMLElement).closest('.ion-activatable');
   }
 };
 
