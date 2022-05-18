@@ -13,8 +13,13 @@ import type { Page } from '@playwright/test';
  */
 export const setIonViewport = async (page: Page) => {
   const currentViewport = page.viewportSize();
+  const ionContent = await page.$('ion-content');
 
-  const pixelAmountRenderedOffscreen = await page.evaluate(() => {
+  if (ionContent) {
+    await ionContent.waitForElementState('stable');
+  }
+
+  const pixelAmountRenderedOffscreen = await page.evaluate(async () => {
     const content = document.querySelector('ion-content');
     if (content) {
       const innerScroll = content.shadowRoot!.querySelector('.inner-scroll')!;
