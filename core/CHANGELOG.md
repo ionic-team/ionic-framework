@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
+
+
+### Bug Fixes
+
+* **loading:** spinner now respects —spinner-color ([#25261](https://github.com/ionic-team/ionic/issues/25261)) ([65f4c74](https://github.com/ionic-team/ionic/commit/65f4c742e7a5e5756f6f72dd853e38e885f90385)), closes [#25180](https://github.com/ionic-team/ionic/issues/25180)
+* **modal:** reset breakpoint to initial breakpoint on present ([#25246](https://github.com/ionic-team/ionic/issues/25246)) ([2557bf3](https://github.com/ionic-team/ionic/commit/2557bf3c3eed9e33e89e07a8d73489da8d81bee3)), closes [#25245](https://github.com/ionic-team/ionic/issues/25245)
+* **scroll-assist:** touch end events continue to bubble on inputs ([#25282](https://github.com/ionic-team/ionic/issues/25282)) ([780f16d](https://github.com/ionic-team/ionic/commit/780f16d9e04ee5aaaf91bb7c6ef15c72cc8aeb45)), closes [#25229](https://github.com/ionic-team/ionic/issues/25229)
+
+
+
+
+
+## [6.1.5](https://github.com/ionic-team/ionic/compare/v6.1.4...v6.1.5) (2022-05-11)
+
+
+### Bug Fixes
+
+* **core:** @axe-core/playwright should be a devDependency ([#25244](https://github.com/ionic-team/ionic/issues/25244)) ([617ec48](https://github.com/ionic-team/ionic/commit/617ec48265157d1502c443395472c21ebdb2989e)), closes [#25242](https://github.com/ionic-team/ionic/issues/25242)
+* **item:** counter has appropriate contrast ([#25266](https://github.com/ionic-team/ionic/issues/25266)) ([750be33](https://github.com/ionic-team/ionic/commit/750be33772e9ba71a3cda35709d17b7912aa68e2)), closes [#25262](https://github.com/ionic-team/ionic/issues/25262)
+* **spinner:** alignment is now correct in rtl ([#25260](https://github.com/ionic-team/ionic/issues/25260)) ([e3c996d](https://github.com/ionic-team/ionic/commit/e3c996dea878a8dd276a0ca99f59b330125f9b75))
+
+
+
+
+
 ## [6.1.4](https://github.com/ionic-team/ionic/compare/v6.1.3...v6.1.4) (2022-05-04)
 
 

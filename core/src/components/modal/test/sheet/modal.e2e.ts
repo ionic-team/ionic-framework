@@ -133,4 +133,65 @@ test.describe('sheet modal: setting the breakpoint', () => {
       expect(ionBreakpointDidChange.events.length).toBe(1);
     });
   });
+
+  test('it should reset the breakpoint value on dismiss', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25245',
+    });
+
+    await page.setContent(`
+      <ion-content>
+        <ion-button id="open-modal">Open</ion-button>
+        <ion-modal trigger="open-modal" initial-breakpoint="0.25">
+          <ion-content>
+            <ion-button id="dismiss" onclick="modal.dismiss();">Dismiss</ion-button>
+            <ion-button id="set-breakpoint">Set breakpoint</ion-button>
+          </ion-content>
+        </ion-modal>
+      </ion-content>
+      <script>
+        const modal = document.querySelector('ion-modal');
+        const setBreakpointButton = document.querySelector('#set-breakpoint');
+
+        modal.breakpoints = [0.25, 0.5, 1];
+
+        setBreakpointButton.addEventListener('click', () => {
+          modal.setCurrentBreakpoint(0.5);
+        });
+      </script>
+    `);
+
+    const modal = page.locator('ion-modal');
+    const dismissButton = page.locator('#dismiss');
+    const openButton = page.locator('#open-modal');
+    const setBreakpointButton = page.locator('#set-breakpoint');
+
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+    const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+
+    await openButton.click();
+    await ionModalDidPresent.next();
+
+    await setBreakpointButton.click();
+    await ionBreakpointDidChange.next();
+
+    await dismissButton.click();
+    await ionModalDidDismiss.next();
+
+    await openButton.click();
+    await ionModalDidPresent.next();
+
+    const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint());
+
+    expect(breakpoint).toBe(0.25);
+
+    await setBreakpointButton.click();
+    await ionBreakpointDidChange.next();
+
+    const updatedBreakpoint = await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint());
+
+    expect(updatedBreakpoint).toBe(0.5);
+  });
 });
