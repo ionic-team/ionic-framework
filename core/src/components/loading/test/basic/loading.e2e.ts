@@ -39,7 +39,7 @@ test.describe('loading: basic', () => {
       await runVisualTest(page, '#translucent-loading', 'translucent');
     });
     test('should open a loader with a custom class', async ({ page }) => {
-      await runVisualTest(page, '#no-spinner-loading', 'no-spinner');
+      await runVisualTest(page, '#custom-class-loading', 'custom-class');
     });
     test('should open a loader with html content', async ({ page }) => {
       await runVisualTest(page, '#html-content-loading', 'html-content');
