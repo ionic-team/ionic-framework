@@ -19,16 +19,7 @@ export const IonTabButton = /*@__PURE__*/ (() =>
       this.handleIonTabButtonClick = this.handleIonTabButtonClick.bind(this);
     }
 
-    handleIonTabButtonClick(ev: CustomEvent<any>, onClickFn: ((e: any) => void) | undefined) {
-      if (onClickFn !== undefined) {
-        /**
-         * If the user provides an onClick function, we call it
-         * with the original event. We execute this first,
-         * so that the user has the chance to prevent the
-         * default behavior.
-         */
-        onClickFn(ev);
-      }
+    handleIonTabButtonClick() {
       if (this.props.onClick) {
         this.props.onClick(
           new CustomEvent('ionTabButtonClick', {
@@ -43,10 +34,15 @@ export const IonTabButton = /*@__PURE__*/ (() =>
     }
 
     render() {
+      /**
+       * onClick is excluded from the props, since it has a custom
+       * implementation within IonTabBar.tsx. Calling onClick within this
+       * component would result in duplicate handler calls.
+       */
       const { onClick, ...rest } = this.props;
       return (
         <IonTabButtonInner
-          onIonTabButtonClick={(ev) => this.handleIonTabButtonClick(ev, onClick)}
+          onIonTabButtonClick={this.handleIonTabButtonClick}
           {...rest}
         ></IonTabButtonInner>
       );
