@@ -167,7 +167,6 @@ export const startTapClick = (config: Config) => {
 
 const getActivatableTarget = (ev: UIEvent): any => {
   if (ev.composedPath) {
-
     /**
      * composedPath returns EventTarget[]. However,
      * objects other than Element can be targets too.
