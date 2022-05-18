@@ -183,11 +183,6 @@ const getActivatableTarget = (ev: UIEvent): any => {
       }
     }
   } else {
-    /**
-     * EventTarget is not always Element.
-     * However, we know that the target will
-     * always be an Element in this scenario.
-     */
     return (ev.target as Element).closest('.ion-activatable');
   }
 };
