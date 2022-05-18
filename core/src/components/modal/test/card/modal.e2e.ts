@@ -88,6 +88,21 @@ test.describe('card modal', () => {
       await content.waitForElementState('stable');
       expect(modal).toBeVisible();
     });
+    test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
+      page,
+    }) => {
+      const modal = await cardModalPage.openModalByTrigger('#card');
+
+      await page.click('ion-button.replace');
+
+      const content = (await page.$('ion-modal ion-content'))!;
+      await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
+
+      await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
+
+      await content.waitForElementState('stable');
+      expect(modal).toBeVisible();
+    });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
@@ -143,6 +158,21 @@ test.describe('card modal', () => {
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled', async ({ page }) => {
       const modal = await cardModalPage.openModalByTrigger('#card');
+
+      const content = (await page.$('ion-modal ion-content'))!;
+      await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
+
+      await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
+
+      await content.waitForElementState('stable');
+      expect(modal).toBeVisible();
+    });
+    test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
+      page,
+    }) => {
+      const modal = await cardModalPage.openModalByTrigger('#card');
+
+      await page.click('ion-button.replace');
 
       const content = (await page.$('ion-modal ion-content'))!;
       await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
