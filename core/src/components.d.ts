@@ -4402,15 +4402,15 @@ declare namespace LocalJSX {
          */
         "fullscreen"?: boolean;
         /**
-          * Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents`
+          * Emitted while scrolling. This event is disabled by default. Set `scrollEvents` to `true` to enable.
          */
         "onIonScroll"?: (event: CustomEvent<ScrollDetail>) => void;
         /**
-          * Emitted when the scroll has ended.
+          * Emitted when the scroll has ended. This event is disabled by default. Set `scrollEvents` to `true` to enable.
          */
         "onIonScrollEnd"?: (event: CustomEvent<ScrollBaseDetail>) => void;
         /**
-          * Emitted when the scroll has started.
+          * Emitted when the scroll has started. This event is disabled by default. Set `scrollEvents` to `true` to enable.
          */
         "onIonScrollStart"?: (event: CustomEvent<ScrollBaseDetail>) => void;
         /**
