@@ -211,17 +211,13 @@ export class Accordion implements ComponentInterface {
   };
 
   private expandAccordion = (initialUpdate = false) => {
-    if (initialUpdate) {
+    const { contentEl, contentElWrapper } = this;
+    if (initialUpdate || contentEl === undefined || contentElWrapper === undefined) {
       this.state = AccordionState.Expanded;
       return;
     }
 
     if (this.state === AccordionState.Expanded) {
-      return;
-    }
-
-    const { contentEl, contentElWrapper } = this;
-    if (contentEl === undefined || contentElWrapper === undefined) {
       return;
     }
 
@@ -250,17 +246,13 @@ export class Accordion implements ComponentInterface {
   };
 
   private collapseAccordion = (initialUpdate = false) => {
-    if (initialUpdate) {
+    const { contentEl } = this;
+    if (initialUpdate || contentEl === undefined) {
       this.state = AccordionState.Collapsed;
       return;
     }
 
     if (this.state === AccordionState.Collapsed) {
-      return;
-    }
-
-    const { contentEl } = this;
-    if (contentEl === undefined) {
       return;
     }
 
