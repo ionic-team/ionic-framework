@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.7-nightly.20220519](https://github.com/ionic-team/ionic-framework/compare/v6.1.6...v6.1.7-nightly.20220519) (2022-05-19)
+
+
+### Bug Fixes
+
+* **modal:** swipe to close on content blocks scroll in ion-nav ([#25300](https://github.com/ionic-team/ionic-framework/issues/25300)) ([fdc55c0](https://github.com/ionic-team/ionic-framework/commit/fdc55c072765c87ad7c783e6d8a238b007f5f3ff)), closes [#25298](https://github.com/ionic-team/ionic-framework/issues/25298)
+* **react:** add param types to useIonPopover dismiss function ([#25311](https://github.com/ionic-team/ionic-framework/issues/25311)) ([7111370](https://github.com/ionic-team/ionic-framework/commit/7111370dd787fdec78a1e3368679bc4c73570b98))
+* **vue:** correct views are now unmounted in tabs ([#25270](https://github.com/ionic-team/ionic-framework/issues/25270)) ([5e23fb1](https://github.com/ionic-team/ionic-framework/commit/5e23fb1ce4e5b6e53828bde59268170f604167ba)), closes [#25255](https://github.com/ionic-team/ionic-framework/issues/25255)
+
+
+
+
+
 ## [6.1.6](https://github.com/ionic-team/ionic-framework/compare/v6.1.5...v6.1.6) (2022-05-18)
 
 
