@@ -15,7 +15,7 @@ import type {
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
-import { getScrollElement, findIonContent, printIonContentErrorMsg } from '../../utils/content';
+import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
@@ -511,7 +511,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentTransition = undefined;
   }
 
-  private async initSwipeToClose() {
+  private initSwipeToClose() {
     if (getIonMode(this) !== 'ios') {
       return;
     }
@@ -529,9 +529,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       printIonContentErrorMsg(el);
       return;
     }
-    const scrollEl = await getScrollElement(contentEl);
 
-    this.gesture = createSwipeToCloseGesture(el, contentEl, scrollEl, ani, () => {
+    this.gesture = createSwipeToCloseGesture(el, ani, () => {
       /**
        * While the gesture animation is finishing
        * it is possible for a user to tap the backdrop.
