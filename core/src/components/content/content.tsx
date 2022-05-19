@@ -92,18 +92,20 @@ export class Content implements ComponentInterface {
   @Prop() scrollEvents = false;
 
   /**
-   * Emitted when the scroll has started.
+   * Emitted when the scroll has started. This event is disabled by default.
+   * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScrollStart!: EventEmitter<ScrollBaseDetail>;
 
   /**
    * Emitted while scrolling. This event is disabled by default.
-   * Look at the property: `scrollEvents`
+   * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScroll!: EventEmitter<ScrollDetail>;
 
   /**
-   * Emitted when the scroll has ended.
+   * Emitted when the scroll has ended. This event is disabled by default.
+   * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
