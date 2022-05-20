@@ -9,6 +9,18 @@ export type LocatorOptions = {
 };
 
 export interface E2ELocator extends Locator {
+  /**
+   * Creates a new EventSpy and listens
+   * on the element for an event.
+   * The test will timeout if the event
+   * never fires.
+   *
+   * Usage:
+   * const input = page.locator('ion-input');
+   * const ionChange = await locator.spyOnEvent('ionChange');
+   * ...
+   * await ionChange.next();
+   */
   spyOnEvent: (eventName: string) => void;
 }
 

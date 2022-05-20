@@ -30,6 +30,10 @@ export interface E2EPage extends Page {
    */
   goto: (url: string) => Promise<null | Response>;
 
+  /**
+   * Find an element by selector.
+   * See https://playwright.dev/docs/locators for more information.
+   */
   locator: (selector: string, options?: LocatorOptions) => E2ELocator;
 
   /**
