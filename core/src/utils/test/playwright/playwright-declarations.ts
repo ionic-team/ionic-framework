@@ -1,7 +1,7 @@
 import type { Page, Response } from '@playwright/test';
 
 import type { EventSpy } from './page/event-spy';
-import type {LocatorOptions, E2ELocator} from './page/utils/locator';
+import type { LocatorOptions, E2ELocator } from './page/utils/locator';
 
 export interface E2EPage extends Page {
   /**

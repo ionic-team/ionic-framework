@@ -24,13 +24,18 @@ export interface E2ELocator extends Locator {
   spyOnEvent: (eventName: string) => void;
 }
 
-export const locator = (page: E2EPage, originalFn: typeof page.locator, selector: string, options?: LocatorOptions): E2ELocator => {
+export const locator = (
+  page: E2EPage,
+  originalFn: typeof page.locator,
+  selector: string,
+  options?: LocatorOptions
+): E2ELocator => {
   const locator = originalFn(selector, options) as E2ELocator;
   locator.spyOnEvent = async (eventName: string) => {
     const spy = new EventSpy(eventName);
     const handle = await locator.evaluateHandle((node: HTMLElement) => node);
     await addE2EListener(page, handle, eventName, (ev: CustomEvent) => spy.push(ev));
     return spy;
-  }
+  };
   return locator;
-}
+};

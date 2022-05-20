@@ -3,7 +3,7 @@ import type {
   PlaywrightTestOptions,
   PlaywrightWorkerArgs,
   PlaywrightWorkerOptions,
-  TestInfo
+  TestInfo,
 } from '@playwright/test';
 import { test as base } from '@playwright/test';
 
@@ -15,7 +15,7 @@ import {
   setIonViewport,
   spyOnEvent,
   waitForChanges,
-  locator
+  locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
 import type { E2EPage } from './playwright-declarations';
