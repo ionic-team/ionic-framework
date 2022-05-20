@@ -1,6 +1,7 @@
 import type { Page, Response } from '@playwright/test';
 
 import type { EventSpy } from './page/event-spy';
+import type {LocatorOptions, E2ELocator} from './page/utils/locator';
 
 export interface E2EPage extends Page {
   /**
@@ -28,6 +29,9 @@ export interface E2EPage extends Page {
    * [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor.
    */
   goto: (url: string) => Promise<null | Response>;
+
+  locator: (selector: string, options?: LocatorOptions) => E2ELocator;
+
   /**
    * Increases the size of the page viewport to match the `ion-content` contents.
    * Use this method when taking full-screen screenshots.
