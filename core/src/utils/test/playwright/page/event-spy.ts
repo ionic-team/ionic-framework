@@ -1,5 +1,6 @@
-import type { E2EPage } from '../playwright-declarations';
 import type { JSHandle } from '@playwright/test';
+
+import type { E2EPage } from '../playwright-declarations';
 
 /**
  * The EventSpy class allows

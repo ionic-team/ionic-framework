@@ -1,4 +1,5 @@
 import type { Locator } from '@playwright/test';
+
 import type { E2EPage } from '../../playwright-declarations';
 import { EventSpy, addE2EListener } from '../event-spy';
 

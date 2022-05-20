@@ -17,8 +17,8 @@ import {
   waitForChanges,
   locator
 } from './page/utils';
-import type { E2EPage } from './playwright-declarations';
 import type { LocatorOptions } from './page/utils';
+import type { E2EPage } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
