@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
-import { dragElementBy, test } from '@utils/test/playwright';
+//import { expect } from '@playwright/test';
+import { test, dragElementBy } from '@utils/test/playwright';
 
 test.describe('card modal - nav', () => {
   test.beforeEach(async ({ page }, testInfo) => {
@@ -14,23 +14,16 @@ test.describe('card modal - nav', () => {
     await page.click('#open-modal');
     await ionModalDidPresent.next();
 
+    const nav = page.locator('ion-nav') as any;
+    const ionNavDidChange = await nav.spyOnEvent('ionNavDidChange');
+
     await page.click('#go-page-two');
 
-    const nav = await page.locator('ion-nav');
-
-    await nav.evaluate((el: HTMLIonNavElement) => {
-      return new Promise((resolve) => {
-        el.addEventListener('ionNavDidChange', resolve);
-      })
-    });
+    await ionNavDidChange.next();
 
     const content = await page.locator('.page-two-content');
-    await dragElementBy(nav, page, 1000, 0, 0);
+    await dragElementBy(content, page, 1000, 0, 0);
 
-    await nav.evaluate((el: HTMLIonNavElement) => {
-      return new Promise((resolve) => {
-        el.addEventListener('ionNavDidChange', resolve);
-      })
-    });
+    await ionNavDidChange.next();
   });
 });
