@@ -8,6 +8,8 @@ test.describe('app: safe-area', () => {
 
     await page.click(trigger);
     await presentEvent.next();
+
+    // Sometimes the inner content takes a frame or two to render
     await page.waitForChanges();
 
     expect(await page.screenshot()).toMatchSnapshot(`app-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`);
