@@ -30,6 +30,8 @@ import { NavigationPage1Component } from './navigation-page1/navigation-page1.co
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 import { AlertComponent } from './alert/alert.component';
+import { AccordionComponent } from './accordion/accordion.component';
+import { AccordionModalComponent } from './accordion/accordion-modal/accordion-modal.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { AlertComponent } from './alert/alert.component';
     NavigationPage1Component,
     NavigationPage2Component,
     NavigationPage3Component,
-    AlertComponent
+    AlertComponent,
+    AccordionComponent,
+    AccordionModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
