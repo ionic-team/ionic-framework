@@ -32,5 +32,5 @@ export const locator = (page: E2EPage, originalFn: typeof page.locator, selector
     await addE2EListener(page, handle, eventName, (ev: CustomEvent) => spy.push(ev));
     return spy;
   }
-  return locator as E2ELocator;
+  return locator;
 }
