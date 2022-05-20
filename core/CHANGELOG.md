@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.7-nightly.20220520](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7-nightly.20220520) (2022-05-20)
+
+
+### Bug Fixes
+
+* **menu:** rtl menu no longer disappears on ios 15 ([#25309](https://github.com/ionic-team/ionic/issues/25309)) ([6005431](https://github.com/ionic-team/ionic/commit/60054310afbab6151f6c29ff6e74666acd181a41)), closes [#25192](https://github.com/ionic-team/ionic/issues/25192)
+* **modal:** swipe to close on content blocks scroll in ion-nav ([#25300](https://github.com/ionic-team/ionic/issues/25300)) ([fdc55c0](https://github.com/ionic-team/ionic/commit/fdc55c072765c87ad7c783e6d8a238b007f5f3ff)), closes [#25298](https://github.com/ionic-team/ionic/issues/25298)
+
+
+
+
+
 ## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
 
 
