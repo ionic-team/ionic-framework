@@ -4,7 +4,6 @@ import { test } from '@utils/test/playwright';
 import { pullToRefresh } from '../test.utils';
 
 test.describe('refresher: basic', () => {
-
   test.beforeEach(async ({ page }) => {
     await page.goto('/src/components/refresher/test/basic');
   });
@@ -22,7 +21,6 @@ test.describe('refresher: basic', () => {
   });
 
   test.describe('native refresher', () => {
-
     test('should load more items when performing a pull-to-refresh', async ({ page }) => {
       const refresherContent = page.locator('ion-refresher-content');
       refresherContent.evaluateHandle((el: any) => {

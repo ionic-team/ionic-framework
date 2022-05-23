@@ -68,5 +68,5 @@ export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     page = await extendPageFixture(page, testInfo);
     await use(page);
-  }
+  },
 });
