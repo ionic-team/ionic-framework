@@ -1,16 +1,18 @@
+import { expect } from '@playwright/test';
 import { test, dragElementBy } from '@utils/test/playwright';
 import { CardModalPage } from '../fixtures';
 
 test.describe('card modal - nav', () => {
   let cardModalPage: CardModalPage;
-  test.beforeEach(async ({ page }, testInfo) => {
+  test.beforeEach(async ({ page, browserName }, testInfo) => {
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
     test.skip(testInfo.project.metadata.rtl === true, 'This test only verifies that the gesture activates inside of a modal.');
+    test.skip(browserName !== 'chromium', 'dragElementBy is flaky outside of Chrome browsers.');
 
     cardModalPage = new CardModalPage(page);
     await cardModalPage.navigate('/src/components/modal/test/card-nav?ionic:_testing=false');
   });
-  test('it should swipe to go back', async ({ page }) => {
+  test.only('it should swipe to go back', async ({ page }) => {
     await cardModalPage.openModalByTrigger('#open-modal');
 
     const nav = page.locator('ion-nav') as any;
@@ -20,8 +22,12 @@ test.describe('card modal - nav', () => {
 
     await ionNavDidChange.next();
 
-    const content = await page.locator('.page-two-content');
-    await dragElementBy(content, page, 1000, 0, 0);
+    const pageOne = page.locator('page-one');
+    expect(pageOne).toHaveClass(/ion-page-hidden/);
+
+    const content = page.locator('.page-two-content');
+
+    await dragElementBy(content, page, 1000, 0, 10);
 
     await ionNavDidChange.next();
   });
