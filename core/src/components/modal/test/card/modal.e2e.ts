@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test, Viewports } from '@utils/test/playwright';
+
 import { CardModalPage } from '../fixtures';
 
 test.describe('card modal', () => {

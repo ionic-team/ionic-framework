@@ -18,8 +18,8 @@ export const dragElementBy = async (
     );
   }
 
-  const startX = (startXCoord === undefined) ? boundingBox.x + boundingBox.width / 2 : startXCoord;
-  const startY = (startYCoord === undefined) ? boundingBox.y + boundingBox.height / 2 : startYCoord;
+  const startX = startXCoord === undefined ? boundingBox.x + boundingBox.width / 2 : startXCoord;
+  const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
   const midX = startX + dragByX / 2;
   const midY = startY + dragByY / 2;

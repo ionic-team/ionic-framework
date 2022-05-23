@@ -1,12 +1,16 @@
 import { expect } from '@playwright/test';
 import { test, dragElementBy } from '@utils/test/playwright';
+
 import { CardModalPage } from '../fixtures';
 
 test.describe('card modal - nav', () => {
   let cardModalPage: CardModalPage;
   test.beforeEach(async ({ page, browserName }, testInfo) => {
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
-    test.skip(testInfo.project.metadata.rtl === true, 'This test only verifies that the gesture activates inside of a modal.');
+    test.skip(
+      testInfo.project.metadata.rtl === true,
+      'This test only verifies that the gesture activates inside of a modal.'
+    );
     test.skip(browserName !== 'chromium', 'dragElementBy is flaky outside of Chrome browsers.');
 
     cardModalPage = new CardModalPage(page);
@@ -42,5 +46,5 @@ test.describe('card modal - nav', () => {
     await ionNavDidChange.next();
 
     await cardModalPage.swipeToCloseModal('ion-modal ion-content.page-two-content');
-  })
+  });
 });
