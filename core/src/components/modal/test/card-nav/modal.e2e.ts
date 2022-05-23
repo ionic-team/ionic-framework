@@ -1,18 +1,17 @@
-//import { expect } from '@playwright/test';
 import { test, dragElementBy } from '@utils/test/playwright';
+import { CardModalPage } from '../fixtures';
 
 test.describe('card modal - nav', () => {
+  let cardModalPage: CardModalPage;
   test.beforeEach(async ({ page }, testInfo) => {
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
     test.skip(testInfo.project.metadata.rtl === true, 'This test only verifies that the gesture activates inside of a modal.');
 
-    await page.goto('/src/components/modal/test/card-nav?ionic:_testing=false');
+    cardModalPage = new CardModalPage(page);
+    await cardModalPage.navigate('/src/components/modal/test/card-nav?ionic:_testing=false');
   });
   test('it should swipe to go back', async ({ page }) => {
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-    await page.click('#open-modal');
-    await ionModalDidPresent.next();
+    await cardModalPage.openModalByTrigger('#open-modal');
 
     const nav = page.locator('ion-nav') as any;
     const ionNavDidChange = await nav.spyOnEvent('ionNavDidChange');
@@ -26,4 +25,16 @@ test.describe('card modal - nav', () => {
 
     await ionNavDidChange.next();
   });
+  test('should swipe to close', async ({ page }) => {
+    await cardModalPage.openModalByTrigger('#open-modal');
+
+    const nav = page.locator('ion-nav') as any;
+    const ionNavDidChange = await nav.spyOnEvent('ionNavDidChange');
+
+    await page.click('#go-page-two');
+
+    await ionNavDidChange.next();
+
+    await cardModalPage.swipeToCloseModal('ion-modal ion-content.page-two-content');
+  })
 });
