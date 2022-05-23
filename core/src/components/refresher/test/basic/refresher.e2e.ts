@@ -1,36 +1,16 @@
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
-import { extendPageFixture, dragElementBy, test } from '@utils/test/playwright';
+import { test } from '@utils/test/playwright';
 
-const pullToRefresh = async (page: E2EPage) => {
-  const target = page.locator('body');
-
-  const ev = await page.spyOnEvent('ionRefreshComplete');
-  await dragElementBy(target, page, 0, 400);
-  await ev.next();
-}
+import { pullToRefresh } from '../test.utils';
 
 test.describe('refresher: basic', () => {
 
-  let context: any;
-  let page: E2EPage;
-
-  test.beforeEach(async ({ browser }) => {
-    context = await browser.newContext({
-      recordVideo: {
-        dir: 'playwright-recordings/refresher/basic/'
-      }
-    });
-    page = await extendPageFixture(await context.newPage());
-    await page.goto('/src/components/refresher/test/basic', { waitUntil: 'networkidle' });
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/src/components/refresher/test/basic');
   });
 
-  test.afterEach(async () => {
-    await context.close();
-  })
-
   test.describe('legacy refresher', () => {
-    test('should load more items when performing a pull-to-refresh', async () => {
+    test('should load more items when performing a pull-to-refresh', async ({ page }) => {
       const items = page.locator('ion-item');
 
       expect(await items.count()).toBe(30);
@@ -43,7 +23,7 @@ test.describe('refresher: basic', () => {
 
   test.describe('native refresher', () => {
 
-    test('should load more items when performing a pull-to-refresh', async () => {
+    test('should load more items when performing a pull-to-refresh', async ({ page }) => {
       const refresherContent = page.locator('ion-refresher-content');
       refresherContent.evaluateHandle((el: any) => {
         // Resets the pullingIcon to enable the native refresher

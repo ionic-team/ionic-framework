@@ -1,15 +1,7 @@
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
-import { dragElementBy, test } from '@utils/test/playwright';
+import { test } from '@utils/test/playwright';
 
-const pullToRefresh = async (page: E2EPage, selector: string) => {
-  const target = page.locator(selector);
-  const ev = await page.spyOnEvent('ionRefreshComplete');
-
-  await dragElementBy(target, page, 0, 300);
-
-  await ev.next();
-}
+import { pullToRefresh } from '../test.utils';
 
 test.describe('refresher: custom scroll target', () => {
 
