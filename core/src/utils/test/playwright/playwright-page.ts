@@ -15,7 +15,9 @@ import {
   setIonViewport,
   spyOnEvent,
   waitForChanges,
+  locator,
 } from './page/utils';
+import type { LocatorOptions } from './page/utils';
 import type { E2EPage } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
@@ -37,12 +39,15 @@ type CustomFixtures = {
  */
 export async function extendPageFixture(page: E2EPage, testInfo?: TestInfo) {
   const originalGoto = page.goto.bind(page);
+  const originalLocator = page.locator.bind(page);
+
   // Overridden Playwright methods
 
   if (testInfo) {
     page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
   }
   page.setContent = (html: string) => setContent(page, html);
+  page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
 

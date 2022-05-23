@@ -1,3 +1,5 @@
+import type { JSHandle } from '@playwright/test';
+
 import type { E2EPage } from '../playwright-declarations';
 
 /**
@@ -90,15 +92,20 @@ export const initPageEvents = async (page: E2EPage) => {
  * page context to updates the _e2eEvents map
  * when an event is fired.
  */
-export const addE2EListener = async (page: E2EPage, eventName: string, callback: (ev: any) => void) => {
+export const addE2EListener = async (
+  page: E2EPage,
+  elmHandle: JSHandle,
+  eventName: string,
+  callback: (ev: any) => void
+) => {
   const id = page._e2eEventsIds++;
   page._e2eEvents.set(id, {
     eventName,
     callback,
   });
 
-  await page.evaluate(
-    ([eventName, id]) => {
+  await elmHandle.evaluate(
+    (elm, [eventName, id]) => {
       (window as any).stencilSerializeEventTarget = (target: any) => {
         // BROWSER CONTEXT
         if (!target) {
@@ -146,7 +153,7 @@ export const addE2EListener = async (page: E2EPage, eventName: string, callback:
         return serializedEvent;
       };
 
-      window.addEventListener(eventName as string, (ev: Event) => {
+      elm.addEventListener(eventName as string, (ev: Event) => {
         (window as any).ionicOnEvent(id, (window as any).serializeStencilEvent(ev));
       });
     },
