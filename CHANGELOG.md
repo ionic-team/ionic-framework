@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.7-nightly.20220523](https://github.com/ionic-team/ionic-framework/compare/v6.1.6...v6.1.7-nightly.20220523) (2022-05-23)
+
+
+### Bug Fixes
+
+* **accordion:** accordions expand when using binding ([#25322](https://github.com/ionic-team/ionic-framework/issues/25322)) ([61e571e](https://github.com/ionic-team/ionic-framework/commit/61e571e585ed8ad9b0ca2f98f57bb16616413ba6)), closes [#25307](https://github.com/ionic-team/ionic-framework/issues/25307)
+* **menu:** rtl menu no longer disappears on ios 15 ([#25309](https://github.com/ionic-team/ionic-framework/issues/25309)) ([6005431](https://github.com/ionic-team/ionic-framework/commit/60054310afbab6151f6c29ff6e74666acd181a41)), closes [#25192](https://github.com/ionic-team/ionic-framework/issues/25192)
+* **modal:** swipe to close on content blocks scroll in ion-nav ([#25300](https://github.com/ionic-team/ionic-framework/issues/25300)) ([fdc55c0](https://github.com/ionic-team/ionic-framework/commit/fdc55c072765c87ad7c783e6d8a238b007f5f3ff)), closes [#25298](https://github.com/ionic-team/ionic-framework/issues/25298)
+* **react:** add param types to useIonPopover dismiss function ([#25311](https://github.com/ionic-team/ionic-framework/issues/25311)) ([7111370](https://github.com/ionic-team/ionic-framework/commit/7111370dd787fdec78a1e3368679bc4c73570b98))
+* **react:** IonTabButton will call custom onClick handlers ([#25313](https://github.com/ionic-team/ionic-framework/issues/25313)) ([6034418](https://github.com/ionic-team/ionic-framework/commit/6034418b33c32fdd682c470eaf61b9fcbe86c4bb)), closes [#22511](https://github.com/ionic-team/ionic-framework/issues/22511)
+* **vue:** correct views are now unmounted in tabs ([#25270](https://github.com/ionic-team/ionic-framework/issues/25270)) ([5e23fb1](https://github.com/ionic-team/ionic-framework/commit/5e23fb1ce4e5b6e53828bde59268170f604167ba)), closes [#25255](https://github.com/ionic-team/ionic-framework/issues/25255)
+
+
+
+
+
 ## [6.1.6](https://github.com/ionic-team/ionic-framework/compare/v6.1.5...v6.1.6) (2022-05-18)
 
 

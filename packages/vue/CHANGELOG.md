@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.7-nightly.20220523](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7-nightly.20220523) (2022-05-23)
+
+
+### Bug Fixes
+
+* **vue:** correct views are now unmounted in tabs ([#25270](https://github.com/ionic-team/ionic/issues/25270)) ([5e23fb1](https://github.com/ionic-team/ionic/commit/5e23fb1ce4e5b6e53828bde59268170f604167ba)), closes [#25255](https://github.com/ionic-team/ionic/issues/25255)
+
+
+
+
+
 ## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
 
 **Note:** Version bump only for package @ionic/vue
