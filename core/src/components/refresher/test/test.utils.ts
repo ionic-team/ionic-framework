@@ -13,6 +13,8 @@ import type { E2EPage } from '@utils/test/playwright';
 const pullToRefresh = async (page: E2EPage, selector = 'body') => {
   const target = page.locator(selector);
 
+  await page.waitForChanges();
+
   const ev = await page.spyOnEvent('ionRefreshComplete');
   const boundingBox = await target.boundingBox();
 
