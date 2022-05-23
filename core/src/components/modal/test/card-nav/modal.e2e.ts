@@ -12,7 +12,7 @@ test.describe('card modal - nav', () => {
     cardModalPage = new CardModalPage(page);
     await cardModalPage.navigate('/src/components/modal/test/card-nav?ionic:_testing=false');
   });
-  test.only('it should swipe to go back', async ({ page }) => {
+  test('it should swipe to go back', async ({ page }) => {
     await cardModalPage.openModalByTrigger('#open-modal');
 
     const nav = page.locator('ion-nav') as any;
