@@ -11,7 +11,7 @@ import type { E2EPage } from "@utils/test/playwright";
  * @param selector The element selector to center the drag gesture on. Defaults to `body`.
  */
 const pullToRefresh = async (page: E2EPage, selector = 'body') => {
-  const target = await page.locator(selector);
+  const target = page.locator(selector);
 
   const ev = await page.spyOnEvent('ionRefreshComplete');
   const boundingBox = await target.boundingBox();

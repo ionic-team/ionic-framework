@@ -63,17 +63,5 @@ export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     page = await extendPageFixture(page, testInfo);
     await use(page);
-  },
-  browser: async ({ browser }, use) => {
-    const originalNewPage = browser.newPage.bind(browser);
-
-    browser.newPage = async (options: any) => {
-      const page = await originalNewPage(options);
-      return await extendPageFixture(page as E2EPage);
-    };
-
-    await use(browser);
-
-    return browser;
   }
 });
