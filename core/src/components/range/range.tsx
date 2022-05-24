@@ -13,11 +13,11 @@ import type {
   RangeValue,
   StyleEventDetail,
 } from '../../interface';
+import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
-import { findClosestIonContent, disableContentScrollY, restoryContentScrollY } from '../../utils/content';
 
 import type { PinFormatter } from './range-interface';
 
@@ -349,7 +349,7 @@ export class Range implements ComponentInterface {
   private onEnd(detail: GestureDetail) {
     const { contentEl, initialContentScrollY } = this;
     if (contentEl) {
-      restoryContentScrollY(contentEl, initialContentScrollY);
+      resetContentScrollY(contentEl, initialContentScrollY);
     }
 
     this.update(detail.currentX);
