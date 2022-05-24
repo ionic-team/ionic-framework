@@ -37,23 +37,17 @@ type CustomFixtures = {
  * @param testInfo The test info.
  * @returns The modified playwright page with extended functionality.
  */
-export async function extendPageFixture(page: E2EPage, testInfo?: TestInfo) {
+export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
   const originalGoto = page.goto.bind(page);
   const originalLocator = page.locator.bind(page);
 
   // Overridden Playwright methods
-
-  if (testInfo) {
-    page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
-  }
+  page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
   page.setContent = (html: string) => setContent(page, html);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
-
-  if (testInfo) {
-    page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
-  }
+  page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
   page.setIonViewport = () => setIonViewport(page);
   page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
   page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);
