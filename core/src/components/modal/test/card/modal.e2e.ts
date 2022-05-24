@@ -1,38 +1,7 @@
 import { expect } from '@playwright/test';
-import { dragElementBy, test, Viewports } from '@utils/test/playwright';
-import type { E2EPage, EventSpy } from '@utils/test/playwright';
+import { test, Viewports } from '@utils/test/playwright';
 
-class CardModalPage {
-  private ionModalDidPresent!: EventSpy;
-  private ionModalDidDismiss!: EventSpy;
-  private page: E2EPage;
-
-  constructor(page: E2EPage) {
-    this.page = page;
-  }
-  async navigate() {
-    const { page } = this;
-    await page.goto('/src/components/modal/test/card');
-    this.ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-    this.ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-  }
-  async openModalByTrigger(selector: string) {
-    await this.page.click(selector);
-    await this.ionModalDidPresent.next();
-
-    return this.page.locator('ion-modal');
-  }
-
-  async swipeToCloseModal(selector: string, waitForDismiss = true, swipeY = 500) {
-    const { page } = this;
-    const elementRef = await page.locator(selector);
-    await dragElementBy(elementRef, page, 0, swipeY);
-
-    if (waitForDismiss) {
-      await this.ionModalDidDismiss.next();
-    }
-  }
-}
+import { CardModalPage } from '../fixtures';
 
 test.describe('card modal', () => {
   let cardModalPage: CardModalPage;
@@ -40,7 +9,7 @@ test.describe('card modal', () => {
     test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
 
     cardModalPage = new CardModalPage(page);
-    await cardModalPage.navigate();
+    await cardModalPage.navigate('/src/components/modal/test/card');
   });
   test.describe('card modal: rendering', () => {
     test('should not have visual regressions', async ({ page }) => {

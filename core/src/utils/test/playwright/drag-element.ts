@@ -6,7 +6,9 @@ export const dragElementBy = async (
   el: Locator | ElementHandle<SVGElement | HTMLElement>,
   page: E2EPage,
   dragByX = 0,
-  dragByY = 0
+  dragByY = 0,
+  startXCoord?: number,
+  startYCoord?: number
 ) => {
   const boundingBox = await el.boundingBox();
 
@@ -16,8 +18,8 @@ export const dragElementBy = async (
     );
   }
 
-  const startX = boundingBox.x + boundingBox.width / 2;
-  const startY = boundingBox.y + boundingBox.height / 2;
+  const startX = startXCoord === undefined ? boundingBox.x + boundingBox.width / 2 : startXCoord;
+  const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
   const midX = startX + dragByX / 2;
   const midY = startY + dragByY / 2;

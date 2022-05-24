@@ -277,7 +277,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
   const gesture = createGesture({
     el,
     gestureName: 'modalSwipeToClose',
-    gesturePriority: 40,
+    gesturePriority: 39,
     direction: 'y',
     threshold: 10,
     canStart,
