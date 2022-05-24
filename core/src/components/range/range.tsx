@@ -248,7 +248,7 @@ export class Range implements ComponentInterface {
     this.didLoad = true;
   }
 
-  async connectedCallback() {
+  connectedCallback() {
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
