@@ -60,8 +60,6 @@ test.describe('range: basic', () => {
 
     await page.goto(`/src/components/range/test/basic`);
 
-    const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
-
     const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
     const scrollEl = page.locator('ion-content .inner-scroll');
 
@@ -74,8 +72,6 @@ test.describe('range: basic', () => {
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();
     await page.mouse.move(centerX + 30, centerY);
-
-    await rangeStart.next();
 
     /**
      * Do not use scrollToBottom() or other scrolling methods
