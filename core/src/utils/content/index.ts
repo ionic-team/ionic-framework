@@ -2,8 +2,8 @@ import { componentOnReady } from '../helpers';
 import { printRequiredElementError } from '../logging';
 
 const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
-const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
-const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
+export const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
+export const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
 /**
  * Selector used for implementations reliant on `<ion-content>` for scroll event changes.
  *

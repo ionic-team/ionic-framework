@@ -1,5 +1,4 @@
-import type { E2EPage } from '@stencil/core/testing';
-import { dragElementBy } from '@utils/test';
+import type { E2EPage } from '@utils/test/playwright';
 
 /**
  * Emulates a pull-to-refresh drag gesture (pulls down and releases).
@@ -12,10 +11,28 @@ import { dragElementBy } from '@utils/test';
  * @param selector The element selector to center the drag gesture on. Defaults to `body`.
  */
 const pullToRefresh = async (page: E2EPage, selector = 'body') => {
-  const target = (await page.$(selector))!;
+  const target = page.locator(selector);
 
-  await dragElementBy(target, page, 0, 200);
-  const ev = await page.spyOnEvent('ionRefreshComplete', 'document');
+  await page.waitForSelector('ion-refresher.hydrated', { state: 'attached' });
+
+  const ev = await page.spyOnEvent('ionRefreshComplete');
+  const boundingBox = await target.boundingBox();
+
+  if (!boundingBox) {
+    return;
+  }
+
+  const startX = boundingBox.x + boundingBox.width / 2;
+  const startY = boundingBox.y + boundingBox.height / 2;
+
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+
+  for (let i = 0; i < 400; i += 20) {
+    await page.mouse.move(startX, startY + i);
+  }
+
+  await page.mouse.up();
   await ev.next();
 };
 

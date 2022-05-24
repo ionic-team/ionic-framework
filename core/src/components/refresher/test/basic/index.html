@@ -53,7 +53,7 @@
         refresher.complete();
         render();
         // Custom event consumed by e2e tests
-        document.dispatchEvent(new CustomEvent('ionRefreshComplete'));
+        window.dispatchEvent(new CustomEvent('ionRefreshComplete'));
       });
 
       function render() {
