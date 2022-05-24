@@ -102,7 +102,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * that we can correctly reset the scrollY
      * prop when the gesture ends.
      */
-    initialScrollY = getScrollY()
+    initialScrollY = getScrollY();
 
     /**
      * If canDismiss is anything other than `true`
