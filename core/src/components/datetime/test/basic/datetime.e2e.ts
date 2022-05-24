@@ -29,3 +29,20 @@ test.describe('datetime: selecting a day', () => {
     await testHighlight(page, 'custom-datetime');
   });
 });
+
+test.describe('datetime: confirm date', () => {
+  test('should not update value if Done was clicked without selecting a day first', async ({ page }) => {
+    await page.goto('/src/components/datetime/test/basic');
+
+    const datetime = page.locator('#custom-datetime');
+
+    const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+    expect(value).toBeUndefined();
+
+    await datetime.evaluate(async (el: HTMLIonDatetimeElement) => {
+      await el.confirm();
+    });
+    const valueAgain = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+    expect(valueAgain).toBeUndefined();
+  });
+});
