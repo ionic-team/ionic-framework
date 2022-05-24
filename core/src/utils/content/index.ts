@@ -101,3 +101,26 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
 export const printIonContentErrorMsg = (el: HTMLElement) => {
   return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR);
 };
+
+
+export const disableContentScrollY = (contentEl: HTMLElement): boolean => {
+  if (isIonContent(contentEl)) {
+    const ionContent = (contentEl as HTMLIonContentElement);
+    const initialScrollY = ionContent.scrollY;
+    ionContent.scrollY = false;
+
+    return initialScrollY;
+  } else {
+    contentEl.style.setProperty('overflow', 'hidden');
+
+    return true;
+  }
+}
+
+export const restoryContentScrollY = (contentEl: HTMLElement, initialScrollY: boolean) => {
+  if (isIonContent(contentEl)) {
+    (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
+  } else {
+    contentEl.style.removeProperty('overflow');
+  }
+}

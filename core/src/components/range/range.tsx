@@ -17,6 +17,7 @@ import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+import { findClosestIonContent, disableContentScrollY, restoryContentScrollY } from '../../utils/content';
 
 import type { PinFormatter } from './range-interface';
 
@@ -50,6 +51,8 @@ export class Range implements ComponentInterface {
   private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
   private inheritedAttributes: Attributes = {};
+  private contentEl: HTMLElement | null = null;
+  private initialContentScrollY = true;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -245,7 +248,7 @@ export class Range implements ComponentInterface {
     this.didLoad = true;
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
@@ -259,6 +262,8 @@ export class Range implements ComponentInterface {
     if (this.didLoad) {
       this.setupGesture();
     }
+
+    this.contentEl = findClosestIonContent(this.el);
   }
 
   disconnectedCallback() {
@@ -313,6 +318,11 @@ export class Range implements ComponentInterface {
   }
 
   private onStart(detail: GestureDetail) {
+    const { contentEl } = this;
+    if (contentEl) {
+      this.initialContentScrollY = disableContentScrollY(contentEl);
+    }
+
     const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
     const currentX = detail.currentX;
 
@@ -337,6 +347,11 @@ export class Range implements ComponentInterface {
   }
 
   private onEnd(detail: GestureDetail) {
+    const { contentEl, initialContentScrollY } = this;
+    if (contentEl) {
+      restoryContentScrollY(contentEl, initialContentScrollY);
+    }
+
     this.update(detail.currentX);
     this.pressedKnob = undefined;
 
