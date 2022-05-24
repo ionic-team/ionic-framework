@@ -2,7 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('item-sliding: scroll-target', () => {
-  test('should not scroll when the item-sliding is swiped in custom scroll target', async ({ page, browserName }, testInfo) => {
+  test('should not scroll when the item-sliding is swiped in custom scroll target', async ({
+    page,
+    browserName,
+  }, testInfo) => {
     test.skip(browserName === 'webkit', 'mouse.wheel is not available in WebKit');
     test.skip(testInfo.project.metadata.rtl === true, 'This feature does not have RTL-specific behaviors');
 
@@ -15,7 +18,7 @@ test.describe('item-sliding: scroll-target', () => {
 
     const box = (await itemSlidingEl.boundingBox())!;
     const centerX = box.x + box.width / 2;
-    const centerY = box.y + box.height / 2
+    const centerY = box.y + box.height / 2;
 
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();

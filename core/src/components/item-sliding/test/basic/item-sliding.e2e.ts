@@ -15,7 +15,7 @@ test.describe('item-sliding: basic', () => {
 
     const box = (await itemSlidingEl.boundingBox())!;
     const centerX = box.x + box.width / 2;
-    const centerY = box.y + box.height / 2
+    const centerY = box.y + box.height / 2;
 
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();
