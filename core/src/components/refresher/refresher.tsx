@@ -769,7 +769,6 @@ const enum RefresherState {
   Refreshing = 1 << 3,
   Cancelling = 1 << 4,
   Completing = 1 << 5,
-  Stable = 1 << 6,
 
   _BUSY_ = Refreshing | Cancelling | Completing,
 }
