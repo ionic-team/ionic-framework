@@ -28,7 +28,7 @@ const pullToRefresh = async (page: E2EPage, selector = 'body') => {
   await page.mouse.move(startX, startY);
   await page.mouse.down();
 
-  for (let i = 0; i < 400; i += 50) {
+  for (let i = 0; i < 400; i += 20) {
     await page.mouse.move(startX, startY + i);
   }
 
