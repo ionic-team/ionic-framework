@@ -12,6 +12,14 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .ion-content-scroll-host {
+        width: 100%;
+        height: 100%;
+
+        overflow-y: scroll;
+      }
+    </style>
   </head>
   <body>
     <ion-app>
@@ -22,7 +30,7 @@
       </ion-header>
 
       <ion-content class="ion-padding" scroll-y="false">
-        <div id="scroll-target" class="ion-content-scroll-host">
+        <div class="ion-content-scroll-host">
 
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur faucibus nulla a nunc tincidunt semper. Nam nibh lorem, pharetra ac ex ac, tempus fringilla est. Aenean tincidunt ipsum pellentesque, consequat libero id, feugiat leo. In vestibulum faucibus velit, non tincidunt erat tincidunt in. Donec a diam sed nisl convallis maximus. Aenean cursus sagittis lorem vitae tristique. Pellentesque pellentesque, quam eget lobortis finibus, lectus lorem maximus purus, quis sagittis tortor sem sed tellus.</p>
 

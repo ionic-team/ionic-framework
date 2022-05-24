@@ -9,7 +9,7 @@ test.describe('range: scroll-target', () => {
     await page.goto(`/src/components/range/test/scroll-target`);
 
     const knobEl = page.locator('ion-range .range-knob-handle');
-    const scrollEl = page.locator('ion-content .inner-scroll');
+    const scrollEl = page.locator('.ion-content-scroll-host');
 
     expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
@@ -28,6 +28,7 @@ test.describe('range: scroll-target', () => {
      * However, simulating a user gesture should not scroll the content.
      */
     await page.mouse.wheel(0, 100);
+    await page.waitForChanges();
 
     expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
   });

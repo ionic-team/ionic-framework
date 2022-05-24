@@ -80,6 +80,7 @@ test.describe('range: basic', () => {
      * However, simulating a user gesture should not scroll the content.
      */
     await page.mouse.wheel(0, 100);
+    await page.waitForChanges();
 
     expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
   });
