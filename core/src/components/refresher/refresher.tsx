@@ -449,6 +449,12 @@ export class Refresher implements ComponentInterface {
 
     const customScrollTarget = contentEl.querySelector(ION_CONTENT_CLASS_SELECTOR);
 
+    /**
+     * Query the custom scroll target (if available), first. In refresher implementations,
+     * the ion-refresher element will always be a direct child of ion-content (slot="fixed"). By
+     * querying the custom scroll target first and falling back to the ion-content element,
+     * the correct scroll element will be returned by the implementation.
+     */
     this.scrollEl = await getScrollElement(customScrollTarget ?? contentEl);
 
     /**
