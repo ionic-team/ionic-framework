@@ -749,7 +749,6 @@ export class Refresher implements ComponentInterface {
           // Used internally for styling
           [`refresher-${mode}`]: true,
           'refresher-native': this.nativeRefresher,
-          'refresher-inactive': this.state === RefresherState.Inactive,
           'refresher-active': this.state !== RefresherState.Inactive,
           'refresher-pulling': this.state === RefresherState.Pulling,
           'refresher-ready': this.state === RefresherState.Ready,
