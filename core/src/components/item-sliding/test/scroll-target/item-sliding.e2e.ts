@@ -1,15 +1,15 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('range: scroll-target', () => {
-  test('should not scroll when the knob is swiped in custom scroll target', async ({ page, browserName }, testInfo) => {
+test.describe('item-sliding: scroll-target', () => {
+  test('should not scroll when the item-sliding is swiped in custom scroll target', async ({ page, browserName }, testInfo) => {
     test.skip(browserName === 'webkit', 'mouse.wheel is not available in WebKit');
     test.skip(testInfo.project.metadata.rtl === true, 'This feature does not have RTL-specific behaviors');
 
-    await page.goto(`/src/components/range/test/scroll-target`);
+    await page.goto(`/src/components/item-sliding/test/scroll-target`);
 
-    const itemSlidingEl = page.locator('#two-options');
-    const scrollEl = page.locator('ion-content .inner-scroll');
+    const itemSlidingEl = page.locator('ion-item-sliding');
+    const scrollEl = page.locator('.ion-content-scroll-host');
 
     expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
