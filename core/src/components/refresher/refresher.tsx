@@ -749,6 +749,7 @@ export class Refresher implements ComponentInterface {
           // Used internally for styling
           [`refresher-${mode}`]: true,
           'refresher-native': this.nativeRefresher,
+          'refresher-inactive': this.state === RefresherState.Inactive,
           'refresher-active': this.state !== RefresherState.Inactive,
           'refresher-pulling': this.state === RefresherState.Pulling,
           'refresher-ready': this.state === RefresherState.Ready,
@@ -768,6 +769,7 @@ const enum RefresherState {
   Refreshing = 1 << 3,
   Cancelling = 1 << 4,
   Completing = 1 << 5,
+  Stable = 1 << 6,
 
   _BUSY_ = Refreshing | Cancelling | Completing,
 }
