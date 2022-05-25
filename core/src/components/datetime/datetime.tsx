@@ -1673,7 +1673,8 @@ export class Datetime implements ComponentInterface {
       this.minParts,
       this.maxParts,
       this.parsedHourValues,
-      this.parsedMinuteValues
+      this.parsedMinuteValues,
+      this.value
     );
 
     const hoursItems = hours.map((hour) => {
