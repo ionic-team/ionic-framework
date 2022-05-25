@@ -133,7 +133,10 @@ export type PredefinedColors =
   | 'light'
   | 'medium'
   | 'dark';
-export type Color = PredefinedColors | string;
+
+type LiteralUnion<T extends U, U = string> = T | (U & Record<never, never>);
+
+export type Color = LiteralUnion<PredefinedColors, string>;
 export type Mode = 'ios' | 'md';
 export type ComponentTags = string;
 // eslint-disable-next-line
