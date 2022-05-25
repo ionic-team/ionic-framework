@@ -1,4 +1,4 @@
-import { getPartsFromCalendarDay } from '../utils/parse';
+import { clampDate, getPartsFromCalendarDay } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -18,3 +18,22 @@ describe('getPartsFromCalendarDay()', () => {
 });
 
 // TODO: parseDate()
+
+describe('clampDate()', () => {
+
+  it('should return the max month when the value is greater than the max', () => {
+    const value = clampDate('2022-05-24', '2021-06-05', '2021-08-19');
+    expect(value).toEqual('2021-08-19');
+  });
+
+  it('should return the min month when the value is less than the min', () => {
+    const value = clampDate('2020-05-24', '2021-06-05', '2021-08-19');
+    expect(value).toEqual('2021-06-05');
+  });
+
+  it('should return the value when the value is greater than the min and less than the max', () => {
+    const value = clampDate('2021-07-10', '2021-06-05', '2021-08-19');
+    expect(value).toEqual('2021-07-10');
+  });
+
+});

@@ -106,3 +106,13 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
     tzOffset,
   };
 };
+
+export const clampDate = (date: string, min?: string, max?: string): string => {
+  const parsedDate = new Date(date);
+  if (min && parsedDate < new Date(min)) {
+    return min;
+  } else if (max && parsedDate > new Date(max)) {
+    return max;
+  }
+  return date;
+}

@@ -37,7 +37,7 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -1077,7 +1077,7 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
-    const valueToProcess = value || getToday();
+    const valueToProcess = clampDate(value || getToday(), this.min, this.max);
     const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
 
     this.setWorkingParts({
