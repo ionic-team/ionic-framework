@@ -79,7 +79,14 @@
 
   overflow: hidden;
 
-  touch-action: manipulation;
+  /**
+   * touch-action: manipulation is an alias
+   * for this, but WebKit has an issue
+   * where pointercancel events are not fired
+   * when scrolling: https://bugs.webkit.org/show_bug.cgi?id=240917
+   * Using the long form below avoids the issue.
+   */
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 .scroll-y,
