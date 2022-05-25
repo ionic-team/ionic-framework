@@ -64,7 +64,7 @@ export const dragElementByYAxis = async (
 
   for (let i = 0; i < dragByY; i += 20) {
     await page.mouse.move(startX, startY + i);
-  };
+  }
 
   await page.mouse.up();
 };
