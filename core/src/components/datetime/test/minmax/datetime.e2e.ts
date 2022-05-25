@@ -65,8 +65,12 @@ test.describe('datetime: minmax', () => {
       await page.click('.time-body');
       await ionPopoverDidPresent.next();
 
-      const hours = page.locator('ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)');
-      const minutes = page.locator('ion-popover ion-picker-column-internal:nth-child(2) .picker-item:not(.picker-item-empty)');
+      const hours = page.locator(
+        'ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)'
+      );
+      const minutes = page.locator(
+        'ion-popover ion-picker-column-internal:nth-child(2) .picker-item:not(.picker-item-empty)'
+      );
 
       expect(await hours.count()).toBe(12);
       expect(await minutes.count()).toBe(60);

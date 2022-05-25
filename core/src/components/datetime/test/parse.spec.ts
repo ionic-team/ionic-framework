@@ -20,7 +20,6 @@ describe('getPartsFromCalendarDay()', () => {
 // TODO: parseDate()
 
 describe('clampDate()', () => {
-
   it('should return the max month when the value is greater than the max', () => {
     const value = clampDate('2022-05-24', '2021-06-05', '2021-08-19');
     expect(value).toEqual('2021-08-19');
@@ -35,5 +34,4 @@ describe('clampDate()', () => {
     const value = clampDate('2021-07-10', '2021-06-05', '2021-08-19');
     expect(value).toEqual('2021-07-10');
   });
-
 });

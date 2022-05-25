@@ -115,4 +115,4 @@ export const clampDate = (date: string, min?: string, max?: string): string => {
     return max;
   }
   return date;
-}
+};
