@@ -61,7 +61,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime(today, 'h12', min, undefined, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(11);
     expect(minutes.length).toEqual(60);
@@ -81,7 +81,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime(today, 'h12', min, undefined, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -101,7 +101,7 @@ describe('generateTime()', () => {
       hour: 7,
       minute: 44,
     };
-    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(7);
     expect(minutes.length).toEqual(45);
@@ -121,7 +121,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -141,7 +141,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime(today, 'h12', min, undefined, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
@@ -161,7 +161,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, max, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
@@ -185,7 +185,7 @@ describe('generateTime()', () => {
       year: 2021,
     };
 
-    const { hours, minutes } = generateTime(today, 'h12', min, max);
+    const { hours, minutes } = generateTime(today, 'h12', min, max, undefined, undefined, new Date().toISOString());
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -199,7 +199,7 @@ describe('generateTime()', () => {
       minute: 43,
     };
 
-    const { hours, minutes } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
+    const { hours, minutes } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20], new Date().toISOString());
 
     expect(hours).toStrictEqual([1, 2, 3]);
     expect(minutes).toStrictEqual([10, 15, 20]);
@@ -223,7 +223,7 @@ describe('generateTime()', () => {
         minute: 50,
       };
 
-      const { hours } = generateTime(refValue, 'h23', minParts);
+      const { hours } = generateTime(refValue, 'h23', minParts, undefined, undefined, undefined, new Date().toISOString());
 
       expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
     });
@@ -246,7 +246,7 @@ describe('generateTime()', () => {
           minute: 30,
         };
 
-        const { hours, minutes } = generateTime(refValue, 'h23', minParts);
+        const { hours, minutes } = generateTime(refValue, 'h23', minParts, undefined, undefined, undefined, new Date().toISOString());
 
         expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
         expect(minutes.length).toEqual(60);
@@ -278,7 +278,7 @@ describe('generateTime()', () => {
         minute: 40,
       };
 
-      const { hours } = generateTime(refValue, 'h23', minParts, maxParts);
+      const { hours } = generateTime(refValue, 'h23', minParts, maxParts, undefined, undefined, new Date().toISOString());
 
       expect(hours).toStrictEqual([19, 20]);
     });
@@ -300,7 +300,7 @@ describe('generateTime()', () => {
         minute: 2,
       };
 
-      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts, undefined, undefined, new Date().toISOString());
 
       expect(minutes).toStrictEqual([0, 1, 2]);
     });
@@ -322,7 +322,7 @@ describe('generateTime()', () => {
         minute: 2,
       };
 
-      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts, undefined, undefined, new Date().toISOString());
 
       expect(minutes.length).toEqual(60);
     });
