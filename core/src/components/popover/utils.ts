@@ -863,7 +863,6 @@ export const calculateWindowAdjustment = (
    */
   if (triggerTop + triggerHeight + contentHeight > bodyHeight && (side === 'top' || side === 'bottom')) {
     if (triggerTop - contentHeight > 0) {
-
       /**
        * While we strive to align the popover with the trigger
        * on smaller screens this is not always possible. As a result,

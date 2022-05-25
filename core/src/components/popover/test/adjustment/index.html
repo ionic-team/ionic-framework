@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Popover - Arrow</title>
+    <title>Popover - Adjustment</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
@@ -66,12 +66,9 @@
   <body>
     <ion-app>
       <ion-content>
-        <p style="text-align: center">
-          Click everywhere to open the popover.
-        </p>
+        <p style="text-align: center">Click everywhere to open the popover.</p>
       </ion-content>
     </ion-app>
-
 
     <script>
       // Follow element for popover position.
@@ -89,17 +86,17 @@
       window.addEventListener('click', handleButtonClick);
 
       document.body.addEventListener('pointermove', (ev) => {
-        followEl.style.left = `${ev.clientX-50}px`;
-        followEl.style.top = `${ev.clientY-50}px`;
+        followEl.style.left = `${ev.clientX - 50}px`;
+        followEl.style.top = `${ev.clientY - 50}px`;
       });
 
       async function handleButtonClick(ev) {
         await dismissPopover();
 
         popover = await popoverController.create({
-          component: "popover-example-page",
+          component: 'popover-example-page',
           event: ev,
-          translucent: true
+          translucent: true,
         });
 
         return popover.present();
@@ -118,7 +115,7 @@
       }
 
       customElements.define(
-        "popover-example-page",
+        'popover-example-page',
         class ModalContent extends HTMLElement {
           connectedCallback() {
             this.innerHTML = `
@@ -134,7 +131,6 @@
           }
         }
       );
-
     </script>
   </body>
 </html>

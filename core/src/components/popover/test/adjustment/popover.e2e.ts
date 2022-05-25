@@ -15,7 +15,7 @@ test.describe('popover: adjustment', async () => {
      */
     await page.setViewportSize({
       width: 500,
-      height: 400
+      height: 400,
     });
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
