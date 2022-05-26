@@ -1,4 +1,5 @@
 import { win } from '../../utils/window';
+import { StatusBar, Style } from '../../utils/native/status-bar';
 
 /**
  * Use y = mx + b to
@@ -64,7 +65,7 @@ export const setCardStatusBarDark = () => {
     return;
   }
 
-  console.log('STUB: Set status bar style light text for dark background');
+  StatusBar.setStyle({ style: Style.Dark });
 };
 
 export const setCardStatusBarDefault = () => {
@@ -72,5 +73,5 @@ export const setCardStatusBarDefault = () => {
     return;
   }
 
-  console.log('STUB: set status bar style back to default ');
+  StatusBar.setStyle({ style: Style.Default });
 };
