@@ -25,12 +25,13 @@
     </ion-app>
 
     <script>
-      window.addEventListener('click', handleButtonClick);
+      document.querySelector('ion-content').addEventListener('click', handleButtonClick);
 
       async function handleButtonClick(ev) {
         const popover = await popoverController.create({
           component: 'popover-example-page',
           event: ev,
+          reference: 'event'
         });
 
         popover.present();
