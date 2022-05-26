@@ -4,7 +4,7 @@ import { isIonContent, findClosestIonContent } from '../../../utils/content';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
 import { clamp, getElementRoot } from '../../../utils/helpers';
-import { setStatusBarDark, setStatusBarDefault } from '../utils';
+import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -224,7 +224,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * crossed a certain threshold.
      */
     if (clampedStep >= DISMISS_THRESHOLD && lastStep < DISMISS_THRESHOLD) {
-      setStatusBarDefault();
+      setCardStatusBarDefault();
 
       /**
        * However, if we swipe back up, then the
@@ -232,7 +232,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
        * text on a dark background.
        */
     } else if (clampedStep < DISMISS_THRESHOLD && lastStep >= DISMISS_THRESHOLD) {
-      setStatusBarDark();
+      setCardStatusBarDark();
     }
 
     lastStep = clampedStep;

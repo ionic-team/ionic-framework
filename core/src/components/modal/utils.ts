@@ -1,3 +1,5 @@
+import { win } from '../../utils/window';
+
 /**
  * Use y = mx + b to
  * figure out the backdrop value
@@ -50,10 +52,21 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
   return x * slope + b;
 };
 
-export const setStatusBarDark = () => {
+/**
+ * The tablet/desktop card modal activates
+ * when the window width is >= 768.
+ * At that point, the presenting element
+ * is not transformed, so we do not need to
+ * adjust the status bar color.
+ */
+export const setCardStatusBarDark = () => {
+  if (!win || win.innerWidth >= 768) { return; }
+
   console.log('STUB: Set status bar style light text for dark background');
 };
 
-export const setStatusBarDefault = () => {
+export const setCardStatusBarDefault = () => {
+  if (!win || win.innerWidth >= 768) { return; }
+
   console.log('STUB: set status bar style back to default ');
 };

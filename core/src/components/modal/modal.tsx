@@ -31,7 +31,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
-import { setStatusBarDark, setStatusBarDefault } from './utils';
+import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -484,7 +484,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * by the time the card animation is done.
      */
     if (hasCardModal) {
-      setStatusBarDark();
+      setCardStatusBarDark();
     }
 
     await this.currentTransition;
@@ -650,7 +650,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
     if (hasCardModal) {
-      setStatusBarDefault();
+      setCardStatusBarDefault();
     }
 
     /* tslint:disable-next-line */
