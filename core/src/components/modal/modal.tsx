@@ -483,7 +483,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * start of the animation so that it completes
      * by the time the card animation is done.
      */
-    if (hasCardModal) {
+    if (hasCardModal && getIonMode(this) === 'ios') {
       setCardStatusBarDark();
     }
 
@@ -649,7 +649,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * TODO (FW-937)
      */
     const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
-    if (hasCardModal) {
+    if (hasCardModal && getIonMode(this) === 'ios') {
       setCardStatusBarDefault();
     }
 
