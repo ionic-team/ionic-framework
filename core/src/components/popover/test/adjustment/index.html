@@ -16,52 +16,6 @@
       import { popoverController } from '../../../../dist/ionic/index.esm.js';
       window.popoverController = popoverController;
     </script>
-    <style>
-      .app {
-        background: #222;
-        color: #fff;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-      }
-
-      .frame {
-        width: 320px;
-        animation: size 5s linear infinite alternate;
-      }
-
-      .test {
-        background: rgba(255, 0, 0, 0.2);
-      }
-
-      .react {
-        text-align: center;
-        opacity: 0;
-        font-size: 2em;
-        padding: 10px;
-        animation: show 5s linear infinite alternate;
-      }
-
-      .react small {
-        font-size: 0.5em;
-        opacity: 0.5;
-      }
-
-      @keyframes size {
-        to {
-          width: 200px;
-        }
-      }
-
-      @keyframes show {
-        60% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-    </style>
   </head>
   <body>
     <ion-app>
@@ -71,63 +25,31 @@
     </ion-app>
 
     <script>
-      // Follow element for popover position.
-      const followEl = document.createElement('div');
-      followEl.style.position = 'absolute';
-      followEl.classList.add('test');
-      followEl.style.left = '0';
-      followEl.style.top = '0';
-      followEl.style.width = '100px';
-      followEl.style.height = '100px';
-      //followEl.style.backgroundColor = 'yellow';
-      followEl.style.borderRadius = '50px';
-      document.body.append(followEl);
-
       window.addEventListener('click', handleButtonClick);
 
-      document.body.addEventListener('pointermove', (ev) => {
-        followEl.style.left = `${ev.clientX - 50}px`;
-        followEl.style.top = `${ev.clientY - 50}px`;
-      });
-
       async function handleButtonClick(ev) {
-        await dismissPopover();
-
-        popover = await popoverController.create({
+        const popover = await popoverController.create({
           component: 'popover-example-page',
           event: ev,
-          translucent: true,
         });
 
-        return popover.present();
-      }
-
-      async function dismissPopover() {
-        let i = 10;
-        while (i--) {
-          const popover = await popoverController.getTop();
-          if (popover) {
-            await popover.dismiss();
-          } else {
-            break;
-          }
-        }
+        popover.present();
       }
 
       customElements.define(
         'popover-example-page',
-        class ModalContent extends HTMLElement {
+        class PopoverContent extends HTMLElement {
           connectedCallback() {
             this.innerHTML = `
-                <ion-list>
-                  <ion-list-header>Ionic</ion-list-header>
-                  <ion-item button>Learn Ionic</ion-item>
-                  <ion-item button>Documentation</ion-item>
-                  <ion-item button>Showcase</ion-item>
-                  <ion-item button>GitHub Repo</ion-item>
-                  <ion-item button>Another Item</ion-item>
-                </ion-list>
-              `;
+              <ion-list>
+                <ion-list-header>Ionic</ion-list-header>
+                <ion-item button>Learn Ionic</ion-item>
+                <ion-item button>Documentation</ion-item>
+                <ion-item button>Showcase</ion-item>
+                <ion-item button>GitHub Repo</ion-item>
+                <ion-item button>Another Item</ion-item>
+              </ion-list>
+            `;
           }
         }
       );
