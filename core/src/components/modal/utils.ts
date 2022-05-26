@@ -1,5 +1,5 @@
-import { win } from '../../utils/window';
 import { StatusBar, Style } from '../../utils/native/status-bar';
+import { win } from '../../utils/window';
 
 /**
  * Use y = mx + b to
@@ -59,9 +59,14 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
  * At that point, the presenting element
  * is not transformed, so we do not need to
  * adjust the status bar color.
+ *
+ * Note: We check supportsDefaultStatusBarStyle so that
+ * Capacitor <= 2 users do not get their status bar
+ * stuck in an inconsistent state due to a lack of
+ * support for Style.Default.
  */
 export const setCardStatusBarDark = () => {
-  if (!win || win.innerWidth >= 768) {
+  if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
     return;
   }
 
@@ -69,7 +74,7 @@ export const setCardStatusBarDark = () => {
 };
 
 export const setCardStatusBarDefault = () => {
-  if (!win || win.innerWidth >= 768) {
+  if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
     return;
   }
 
