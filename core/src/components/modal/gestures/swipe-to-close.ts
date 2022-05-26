@@ -226,11 +226,11 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     if (clampedStep >= DISMISS_THRESHOLD && lastStep < DISMISS_THRESHOLD) {
       setStatusBarDefault();
 
-    /**
-     * However, if we swipe back up, then the
-     * status bar style should be set to have light
-     * text on a dark background.
-     */
+      /**
+       * However, if we swipe back up, then the
+       * status bar style should be set to have light
+       * text on a dark background.
+       */
     } else if (clampedStep < DISMISS_THRESHOLD && lastStep >= DISMISS_THRESHOLD) {
       setStatusBarDark();
     }
