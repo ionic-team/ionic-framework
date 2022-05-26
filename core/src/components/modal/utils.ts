@@ -60,13 +60,17 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
  * adjust the status bar color.
  */
 export const setCardStatusBarDark = () => {
-  if (!win || win.innerWidth >= 768) { return; }
+  if (!win || win.innerWidth >= 768) {
+    return;
+  }
 
   console.log('STUB: Set status bar style light text for dark background');
 };
 
 export const setCardStatusBarDefault = () => {
-  if (!win || win.innerWidth >= 768) { return; }
+  if (!win || win.innerWidth >= 768) {
+    return;
+  }
 
   console.log('STUB: set status bar style back to default ');
 };
