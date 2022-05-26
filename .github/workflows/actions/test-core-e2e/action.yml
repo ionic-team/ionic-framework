@@ -1,0 +1,25 @@
+name: 'Test Core E2E'
+description: 'Test Core E2E'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Test
+      run: npm run test.e2e -- --ci --no-build
+      shell: bash
+      working-directory: ./core

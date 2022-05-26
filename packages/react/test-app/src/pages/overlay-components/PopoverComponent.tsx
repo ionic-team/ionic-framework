@@ -30,6 +30,8 @@ const PopoverComponent: React.FC = () => {
     event: undefined,
   });
 
+  const [renderItem, setRenderItem] = useState(true);
+
   return (
     <IonPage>
       <IonContent>
@@ -70,6 +72,12 @@ const PopoverComponent: React.FC = () => {
         >
           Show Popover, hide after 250 ms
         </IonButton>
+        {renderItem && <IonItem>
+          <IonButton id="openPopover">Open</IonButton>
+          <IonPopover id="popoverInItem" trigger="openPopover" dismissOnSelect={true}>
+            <IonButton id="removeItem" onClick={() => setRenderItem(false)}>Remove Item</IonButton>
+          </IonPopover>
+        </IonItem>}
       </IonContent>
     </IonPage>
   );

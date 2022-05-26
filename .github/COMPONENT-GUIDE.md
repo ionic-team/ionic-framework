@@ -12,6 +12,7 @@
 - [Accessibility](#accessibility)
   * [Checkbox](#checkbox)
   * [Switch](#switch)
+  * [Accordion](#accordion)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
@@ -356,9 +357,9 @@ ion-ripple-effect {
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/button)
-- [ion-back-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/back-button)
-- [ion-menu-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/menu-button)
+- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
+- [ion-back-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/back-button)
+- [ion-menu-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/menu-button)
 
 ### References
 
@@ -372,7 +373,7 @@ ion-ripple-effect {
 
 #### Example Components
 
-- [ion-checkbox](https://github.com/ionic-team/ionic/tree/master/core/src/components/checkbox)
+- [ion-checkbox](https://github.com/ionic-team/ionic/tree/main/core/src/components/checkbox)
 
 #### VoiceOver
 
@@ -498,7 +499,7 @@ This is a compromise we have to make in order for it to work with the other scre
 
 #### Example Components
 
-- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
+- [ion-toggle](https://github.com/ionic-team/ionic/tree/main/core/src/components/toggle)
 
 #### Voiceover
 
@@ -624,6 +625,19 @@ You are currently on a switch. To select or deselect this checkbox, press Contro
 
 There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196354
 
+### Accordion
+
+#### Example Components
+
+- [ion-accordion](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion)
+- [ion-accordion-group](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion-group)
+
+#### NVDA
+
+In order to use the arrow keys to navigate the accordions, users must be in "Focus Mode". Typically, NVDA automatically switches between Browse and Focus modes when inside of a form, but not every accordion needs a form.
+
+You can either wrap your `ion-accordion-group` in a form, or manually toggle Focus Mode using NVDA's keyboard shortcut.
+
 
 ## Rendering Anchor or Button
 
@@ -631,11 +645,11 @@ Certain components can render an `<a>` or a `<button>` depending on the presence
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/button)
-- [ion-card](https://github.com/ionic-team/ionic/tree/master/core/src/components/card)
-- [ion-fab-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/fab-button)
-- [ion-item-option](https://github.com/ionic-team/ionic/tree/master/core/src/components/item-option)
-- [ion-item](https://github.com/ionic-team/ionic/tree/master/core/src/components/item)
+- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
+- [ion-card](https://github.com/ionic-team/ionic/tree/main/core/src/components/card)
+- [ion-fab-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/fab-button)
+- [ion-item-option](https://github.com/ionic-team/ionic/tree/main/core/src/components/item-option)
+- [ion-item](https://github.com/ionic-team/ionic/tree/main/core/src/components/item)
 
 ### Component Structure
 

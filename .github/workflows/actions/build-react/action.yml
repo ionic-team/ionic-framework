@@ -1,0 +1,50 @@
+name: 'Build Ionic React'
+description: 'Build Ionic React'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Install React Dependencies
+      run: npm install --legacy-peer-deps
+      shell: bash
+      working-directory: ./packages/react
+    - name: Sync
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/react
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/react
+    - name: Build
+      run: npm run build
+      shell: bash
+      working-directory: ./packages/react
+    - name: Test Spec
+      run: npm run test.spec
+      shell: bash
+      working-directory: ./packages/react
+    - name: Check Diff
+      run: git diff --exit-code
+      shell: bash
+      working-directory: ./packages/react
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react
+        output: packages/react/ReactBuild.zip
+        paths: packages/react/dist packages/react/css

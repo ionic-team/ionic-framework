@@ -1,21 +1,16 @@
-import { defineCustomElements } from '@ionic/core/loader';
-import { addIcons } from 'ionicons';
-import {
-  arrowBackSharp,
-  caretBackSharp,
-  chevronBack,
-  chevronForward,
-  close,
-  closeCircle,
-  closeSharp,
-  menuOutline,
-  menuSharp,
-  reorderThreeOutline,
-  reorderTwoSharp,
-  searchOutline,
-  searchSharp,
-} from 'ionicons/icons';
+import { IonicConfig, initialize } from '@ionic/core/components';
+
 export {
+  // UTILS
+  createAnimation,
+  createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  IonicSwiper,
+  IonicSlides,
+  getTimeGivenProgression,
+
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -23,19 +18,18 @@ export {
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
-  createGesture,
   Gesture,
   GestureConfig,
   GestureDetail,
-  iosTransitionAnimation,
-  IonicSafeString,
-  mdTransitionAnimation,
   NavComponentWithProps,
-  setupConfig,
-  IonicSwiper,
 
   SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
 
   ActionSheetOptions,
   ActionSheetButton,
@@ -46,9 +40,33 @@ export {
   AlertInputAttributes,
   AlertButton,
 
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
   LoadingOptions,
 
+  MenuCustomEvent,
+
   ModalOptions,
+
+  NavCustomEvent,
 
   PickerOptions,
   PickerButton,
@@ -57,11 +75,48 @@ export {
 
   PopoverOptions,
 
-  ToastOptions,
-  ToastButton
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
 
-} from '@ionic/core';
+  RangeCustomEvent,
+  RangeChangeEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeKnobMoveEndEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
+  ToastOptions,
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
+} from '@ionic/core/components';
+
 export * from './proxies';
+export * from './routing-proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';
@@ -75,6 +130,7 @@ export { IonModal } from './IonModal';
 export { IonPopover } from './IonPopover';
 
 // Custom Components
+export { IonApp } from './IonApp';
 export { IonPage } from './IonPage';
 export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
@@ -103,25 +159,19 @@ export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
 export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
 export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
-// Icons that are used by internal components
-addIcons({
-  'arrow-back-sharp': arrowBackSharp,
-  'caret-back-sharp': caretBackSharp,
-  'chevron-back': chevronBack,
-  'chevron-forward': chevronForward,
-  close,
-  'close-circle': closeCircle,
-  'close-sharp': closeSharp,
-  'menu-outline': menuOutline,
-  'menu-sharp': menuSharp,
-  'reorder-two-sharp': reorderTwoSharp,
-  'reorder-three-outline': reorderThreeOutline,
-  'search-outline': searchOutline,
-  'search-sharp': searchSharp,
-});
+export const setupIonicReact = (config: IonicConfig = {}) => {
+  /**
+   * By default Ionic Framework hides elements that
+   * are not hydrated, but in the CE build there is no
+   * hydration.
+   * TODO: Remove when all integrations have been
+   * migrated to CE build.
+   */
+  if (typeof (document as any) !== 'undefined') {
+    document.documentElement.classList.add('ion-ce');
+  }
 
-// TODO: defineCustomElements() is asyncronous
-// We need to use the promise
-if (typeof window !== 'undefined') {
-  defineCustomElements(window);
+  initialize({
+    ...config
+  });
 }

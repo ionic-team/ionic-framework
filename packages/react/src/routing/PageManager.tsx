@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mergeRefs } from '../components/utils';
+import { mergeRefs } from '../components/react-component-lib/utils';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 import { RouteInfo } from '../models';
 

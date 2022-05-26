@@ -1,8 +1,11 @@
-import { ModalOptions, modalController } from '@ionic/core';
+import { ModalOptions, modalController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 import { useCallback } from 'react';
 
+import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
-import { ReactComponentOrElement, useOverlay } from './useOverlay';
+import { useOverlay } from './useOverlay';
 
 /**
  * A hook for presenting/dismissing an IonModal component
@@ -17,6 +20,7 @@ export function useIonModal(
   const controller = useOverlay<ModalOptions, HTMLIonModalElement>(
     'IonModal',
     modalController,
+    defineCustomElement,
     component,
     componentProps
   );
@@ -36,5 +40,5 @@ export type UseIonModalResult = [
   /**
    * Dismisses the modal
    */
-  () => void
+  (data?: any, role?: string) => void
 ];

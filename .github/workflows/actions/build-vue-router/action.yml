@@ -1,0 +1,51 @@
+name: 'Build Ionic Vue Router'
+description: 'Builds Ionic Vue Router'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue
+        path: ./packages/vue
+        filename: VueBuild.zip
+    - name: Install Vue Router Dependencies
+      run: npm install
+      shell: bash
+      working-directory: ./packages/vue-router
+    - name: Sync
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/vue-router
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/vue-router
+    - name: Build
+      run: npm run build
+      shell: bash
+      working-directory: ./packages/vue-router
+    - name: Test Spec
+      run: npm run test.spec
+      shell: bash
+      working-directory: ./packages/vue-router
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-vue-router
+        output: ./packages/vue-router/VueRouterBuild.zip
+        paths: packages/vue-router/dist

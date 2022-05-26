@@ -1,8 +1,11 @@
-import { PopoverOptions, popoverController } from '@ionic/core';
+import { PopoverOptions, popoverController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-popover.js';
 import { useCallback } from 'react';
 
+import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
-import { ReactComponentOrElement, useOverlay } from './useOverlay';
+import { useOverlay } from './useOverlay';
 
 /**
  * A hook for presenting/dismissing an IonPicker component
@@ -14,6 +17,7 @@ export function useIonPopover(component: ReactComponentOrElement, componentProps
   const controller = useOverlay<PopoverOptions, HTMLIonPopoverElement>(
     'IonPopover',
     popoverController,
+    defineCustomElement,
     component,
     componentProps
   );
@@ -33,5 +37,5 @@ export type UseIonPopoverResult = [
   /**
    * Dismisses the popover
    */
-  () => void
+  (data?: any, role?: string) => void
 ];

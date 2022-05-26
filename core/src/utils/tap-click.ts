@@ -1,4 +1,4 @@
-import { Config } from '../interface';
+import type { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
@@ -15,6 +15,7 @@ export const startTapClick = (config: Config) => {
   const clearDefers = new WeakMap<HTMLElement, any>();
 
   const isScrolling = () => {
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     return scrollingEl !== undefined && scrollingEl.parentElement !== null;
   };
 
@@ -43,6 +44,10 @@ export const startTapClick = (config: Config) => {
     }
   };
 
+  const onContextMenu = (ev: MouseEvent) => {
+    pointerUp(ev);
+  };
+
   const cancelActive = () => {
     clearTimeout(activeDefer);
     activeDefer = undefined;
@@ -52,7 +57,7 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  const pointerDown = (ev: any) => {
+  const pointerDown = (ev: UIEvent) => {
     if (activatableEle || isScrolling()) {
       return;
     }
@@ -108,6 +113,7 @@ export const startTapClick = (config: Config) => {
     el.classList.add(ACTIVATED);
 
     const rippleEffect = useRippleEffect && getRippleEffect(el);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (rippleEffect && rippleEffect.addRipple) {
       removeRipple();
       activeRipple = rippleEffect.addRipple(x, y);
@@ -116,7 +122,7 @@ export const startTapClick = (config: Config) => {
 
   const removeRipple = () => {
     if (activeRipple !== undefined) {
-      activeRipple.then(remove => remove());
+      activeRipple.then((remove) => remove());
       activeRipple = undefined;
     }
   };
@@ -140,7 +146,7 @@ export const startTapClick = (config: Config) => {
   };
 
   const doc = document;
-  doc.addEventListener('ionScrollStart', ev => {
+  doc.addEventListener('ionScrollStart', (ev) => {
     scrollingEl = ev.target as HTMLElement;
     cancelActive();
   });
@@ -155,19 +161,29 @@ export const startTapClick = (config: Config) => {
 
   doc.addEventListener('mousedown', onMouseDown, true);
   doc.addEventListener('mouseup', onMouseUp, true);
+
+  doc.addEventListener('contextmenu', onContextMenu, true);
 };
 
-const getActivatableTarget = (ev: any): any => {
+const getActivatableTarget = (ev: UIEvent): any => {
   if (ev.composedPath) {
-    const path = ev.composedPath() as HTMLElement[];
+    /**
+     * composedPath returns EventTarget[]. However,
+     * objects other than Element can be targets too.
+     * For example, AudioContext can be a target. In this
+     * case, we know that the event is a UIEvent so we
+     * can assume that the path will contain either Element
+     * or ShadowRoot.
+     */
+    const path = ev.composedPath() as Element[] | ShadowRoot[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.classList && el.classList.contains('ion-activatable')) {
+      if (!(el instanceof ShadowRoot) && el.classList.contains('ion-activatable')) {
         return el;
       }
     }
   } else {
-    return ev.target.closest('.ion-activatable');
+    return (ev.target as Element).closest('.ion-activatable');
   }
 };
 

@@ -1,18 +1,22 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
+import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, clamp, inheritAttributes, isEndSide as isEnd } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
+import { getOverlay } from '../../utils/overlays';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
-const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
+const focusableQueryString =
+  '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 
 /**
  * @part container - The container for the menu content.
@@ -22,12 +26,11 @@ const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=h
   tag: 'ion-menu',
   styleUrls: {
     ios: 'menu.ios.scss',
-    md: 'menu.md.scss'
+    md: 'menu.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Menu implements ComponentInterface, MenuI {
-
   private animation?: any;
   private lastOnEnd = 0;
   private gesture?: Gesture;
@@ -42,9 +45,23 @@ export class Menu implements ComponentInterface, MenuI {
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
 
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
-  private handleFocus = (ev: Event) => this.trapKeyboardFocus(ev, document);
+  private handleFocus = (ev: FocusEvent) => {
+    /**
+     * Overlays have their own focus trapping listener
+     * so we do not want the two listeners to conflict
+     * with each other. If the top-most overlay that is
+     * open does not contain this ion-menu, then ion-menu's
+     * focus trapping should not run.
+     */
+    const lastOverlay = getOverlay(document);
+    if (lastOverlay && !lastOverlay.contains(this.el)) {
+      return;
+    }
+
+    this.trapKeyboardFocus(ev, document);
+  };
 
   @Element() el!: HTMLIonMenuElement;
 
@@ -99,7 +116,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.ionMenuChange.emit({
       disabled: this.disabled,
-      open: this._isOpen
+      open: this._isOpen,
     });
   }
 
@@ -154,6 +171,12 @@ export class Menu implements ComponentInterface, MenuI {
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async connectedCallback() {
+    // TODO: connectedCallback is fired in CE build
+    // before WC is defined. This needs to be fixed in Stencil.
+    if (typeof (customElements as any) !== 'undefined') {
+      await customElements.whenDefined('ion-menu');
+    }
+
     if (this.type === undefined) {
       this.type = config.get('menuType', 'overlay');
     }
@@ -163,29 +186,19 @@ export class Menu implements ComponentInterface, MenuI {
       return;
     }
 
-    const el = this.el;
-    const parent = el.parentNode as any;
+    const content = this.contentId !== undefined ? document.getElementById(this.contentId) : null;
 
-    if (this.contentId === undefined) {
-      console.warn(`[DEPRECATED][ion-menu] Using the [main] attribute is deprecated, please use the "contentId" property instead:
-BEFORE:
-  <ion-menu>...</ion-menu>
-  <div main>...</div>
-
-AFTER:
-  <ion-menu contentId="main-content"></ion-menu>
-  <div id="main-content">...</div>
-`);
-    }
-    const content = this.contentId !== undefined
-      ? document.getElementById(this.contentId)
-      : parent && parent.querySelector && parent.querySelector('[main]');
-
-    if (!content || !content.tagName) {
-      // requires content element
+    if (content === null) {
       console.error('Menu: must have a "content" element to listen for drag events on.');
       return;
     }
+
+    if (this.el.contains(content)) {
+      console.error(
+        `Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`
+      );
+    }
+
     this.contentEl = content as HTMLElement;
 
     // add menu's content classes
@@ -203,17 +216,17 @@ AFTER:
       gesturePriority: 30,
       threshold: 10,
       blurOnStart: true,
-      canStart: ev => this.canStart(ev),
+      canStart: (ev) => this.canStart(ev),
       onWillStart: () => this.onWillStart(),
       onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: (ev) => this.onEnd(ev),
     });
     this.updateState();
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   async componentDidLoad() {
@@ -245,9 +258,7 @@ AFTER:
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
     if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
-      const shouldClose = (ev.composedPath)
-        ? !ev.composedPath().includes(this.menuInnerEl)
-        : false;
+      const shouldClose = ev.composedPath ? !ev.composedPath().includes(this.menuInnerEl) : false;
 
       if (shouldClose) {
         ev.preventDefault();
@@ -344,7 +355,9 @@ AFTER:
 
   private trapKeyboardFocus(ev: Event, doc: Document) {
     const target = ev.target as HTMLElement | null;
-    if (!target) { return; }
+    if (!target) {
+      return;
+    }
 
     /**
      * If the target is inside the menu contents, let the browser
@@ -385,6 +398,7 @@ AFTER:
     }
 
     this.beforeAnimation(shouldOpen);
+
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
@@ -420,8 +434,8 @@ AFTER:
     const easing = mode === 'ios' ? iosEasing : mdEasing;
     const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
-      .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? easingReverse : easing)
+      .direction(isReversed ? 'reverse' : 'normal')
+      .easing(isReversed ? easingReverse : easing)
       .onFinish(() => {
         if (ani.getDirection() === 'reverse') {
           ani.direction('normal');
@@ -451,16 +465,11 @@ AFTER:
     }
     if (this._isOpen) {
       return true;
-    // TODO error
+      // TODO error
     } else if (menuController._getOpenSync()) {
       return false;
     }
-    return checkEdgeSide(
-      window,
-      detail.currentX,
-      this.isEndSide,
-      this.maxEdgeStart
-    );
+    return checkEdgeSide(window, detail.currentX, this.isEndSide, this.maxEdgeStart);
   }
 
   private onWillStart(): Promise<void> {
@@ -475,7 +484,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
+    (this.animation as Animation).progressStart(true, this._isOpen ? 1 : 0);
   }
 
   private onMove(detail: GestureDetail) {
@@ -487,7 +496,7 @@ AFTER:
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation.progressStep((this._isOpen) ? 1 - stepValue : stepValue);
+    this.animation.progressStep(this._isOpen ? 1 - stepValue : stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -502,15 +511,17 @@ AFTER:
     const stepValue = delta / width;
     const velocity = detail.velocityX;
     const z = width / 2.0;
-    const shouldCompleteRight =
-      velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
+    const shouldCompleteRight = velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
 
-    const shouldCompleteLeft =
-      velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z);
+    const shouldCompleteLeft = velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z);
 
     const shouldComplete = isOpen
-      ? isEndSide ? shouldCompleteRight : shouldCompleteLeft
-      : isEndSide ? shouldCompleteLeft : shouldCompleteRight;
+      ? isEndSide
+        ? shouldCompleteRight
+        : shouldCompleteLeft
+      : isEndSide
+      ? shouldCompleteLeft
+      : shouldCompleteRight;
 
     let shouldOpen = !isOpen && shouldComplete;
     if (isOpen && !shouldComplete) {
@@ -520,7 +531,7 @@ AFTER:
     this.lastOnEnd = detail.currentTime;
 
     // Account for rounding errors in JS
-    let newStepValue = (shouldComplete) ? 0.001 : -0.001;
+    let newStepValue = shouldComplete ? 0.001 : -0.001;
 
     /**
      * TODO: stepValue can sometimes return a negative
@@ -528,7 +539,7 @@ AFTER:
      * for the cubic bezier curve (at least with web animations)
      * Not sure if the negative step value is an error or not
      */
-    const adjustedStepValue = (stepValue < 0) ? 0.01 : stepValue;
+    const adjustedStepValue = stepValue < 0 ? 0.01 : stepValue;
 
     /**
      * Animation will be reversed here, so need to
@@ -538,16 +549,15 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 0.9999))[0] || 0;
+    newStepValue +=
+      getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 0.9999))[0] || 0;
 
-    const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
+    const playTo = this._isOpen ? !shouldComplete : shouldComplete;
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(
-        () => this.afterAnimation(shouldOpen),
-        { oneTimeCallback: true })
-      .progressEnd((playTo) ? 1 : 0, (this._isOpen) ? 1 - newStepValue : newStepValue, 300);
+      .onFinish(() => this.afterAnimation(shouldOpen), { oneTimeCallback: true })
+      .progressEnd(playTo ? 1 : 0, this._isOpen ? 1 - newStepValue : newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
@@ -610,12 +620,17 @@ AFTER:
       // emit open event
       this.ionDidOpen.emit();
 
-      // focus menu content for screen readers
-      if (this.menuInnerEl) {
-        this.focusFirstDescendant();
+      /**
+       * Move focus to the menu to prepare focus trapping, as long as
+       * it isn't already focused. Use the host element instead of the
+       * first descendant to avoid the scroll position jumping around.
+       */
+      const focusedMenu = document.activeElement?.closest('ion-menu');
+      if (focusedMenu !== this.el) {
+        this.el.focus();
       }
 
-      // setup focus trapping
+      // start focus trapping
       document.addEventListener('focus', this.handleFocus, true);
     } else {
       // remove css classes and unhide content from screen readers
@@ -696,19 +711,15 @@ AFTER:
           'menu-enabled': !disabled,
           'menu-side-end': isEndSide,
           'menu-side-start': !isEndSide,
-          'menu-pane-visible': isPaneVisible
+          'menu-pane-visible': isPaneVisible,
         }}
       >
-        <div
-          class="menu-inner"
-          part="container"
-          ref={el => this.menuInnerEl = el}
-        >
+        <div class="menu-inner" part="container" ref={(el) => (this.menuInnerEl = el)}>
           <slot></slot>
         </div>
 
         <ion-backdrop
-          ref={el => this.backdropEl = el}
+          ref={(el) => (this.backdropEl = el)}
           class="menu-backdrop"
           tappable={false}
           stopPropagation={false}
@@ -719,20 +730,11 @@ AFTER:
   }
 }
 
-const computeDelta = (
-  deltaX: number,
-  isOpen: boolean,
-  isEndSide: boolean
-): number => {
+const computeDelta = (deltaX: number, isOpen: boolean, isEndSide: boolean): number => {
   return Math.max(0, isOpen !== isEndSide ? -deltaX : deltaX);
 };
 
-const checkEdgeSide = (
-  win: Window,
-  posX: number,
-  isEndSide: boolean,
-  maxEdgeStart: number
-): boolean => {
+const checkEdgeSide = (win: Window, posX: number, isEndSide: boolean, maxEdgeStart: number): boolean => {
   if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {

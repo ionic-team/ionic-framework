@@ -1,6 +1,22 @@
-import { copyVisualViewport, setKeyboardClose, setKeyboardOpen, keyboardDidClose, keyboardDidOpen, keyboardDidResize, resetKeyboardAssist, startKeyboardAssist, trackViewportChanges, KEYBOARD_DID_OPEN, KEYBOARD_DID_CLOSE } from '../keyboard';
+import {
+  copyVisualViewport,
+  setKeyboardClose,
+  setKeyboardOpen,
+  keyboardDidClose,
+  keyboardDidOpen,
+  keyboardDidResize,
+  resetKeyboardAssist,
+  startKeyboardAssist,
+  trackViewportChanges,
+  KEYBOARD_DID_OPEN,
+  KEYBOARD_DID_CLOSE,
+} from '../keyboard';
 
-const mockVisualViewport = (win: Window, visualViewport: any = { width: 320, height: 568 }, layoutViewport = { innerWidth: 320, innerHeight: 568 }): any => {
+const mockVisualViewport = (
+  win: Window,
+  visualViewport: any = { width: 320, height: 568 },
+  layoutViewport = { innerWidth: 320, innerHeight: 568 }
+): any => {
   win.visualViewport = {
     width: 320,
     height: 568,
@@ -10,17 +26,17 @@ const mockVisualViewport = (win: Window, visualViewport: any = { width: 320, hei
     pageLeft: 0,
     scale: 1,
     onresize: undefined,
-    onscroll: undefined
+    onscroll: undefined,
   };
 
   win.visualViewport = Object.assign(win.visualViewport, visualViewport);
   win = Object.assign(win, layoutViewport);
-  win.dispatchEvent = jest.fn(() => {});
+  win.dispatchEvent = jest.fn();
 
   trackViewportChanges(win);
 
   return win;
-}
+};
 
 const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
   win.visualViewport = Object.assign(win.visualViewport, visualViewport);
@@ -30,14 +46,13 @@ const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
   } else {
     trackViewportChanges(win);
   }
-}
+};
 
 const resizeLayoutViewport = (win: Window, layoutViewport: any = {}) => {
   win = Object.assign(win, { innerWidth: layoutViewport.width, innerHeight: layoutViewport.height });
-}
+};
 
 describe('Keyboard Assist Tests', () => {
-
   describe('copyVisualViewport()', () => {
     it('should properly copy the visual viewport', () => {
       const visualViewport = {
@@ -47,7 +62,7 @@ describe('Keyboard Assist Tests', () => {
         offsetLeft: 10,
         pageTop: 0,
         pageLeft: 0,
-        scale: 2
+        scale: 2,
       };
 
       const copiedViewport = copyVisualViewport(visualViewport);
@@ -66,7 +81,7 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardOpen()', () => {
     it('should dispatch the keyboard open event on the window', () => {
-      window.dispatchEvent = jest.fn(() => {});
+      window.dispatchEvent = jest.fn();
 
       setKeyboardOpen(window);
 
@@ -77,7 +92,7 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardClose()', () => {
     it('should dispatch the keyboard close event on the window', () => {
-      window.dispatchEvent = jest.fn(() => {});
+      window.dispatchEvent = jest.fn();
 
       setKeyboardClose(window);
 
