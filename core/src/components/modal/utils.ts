@@ -49,3 +49,11 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
 
   return x * slope + b;
 };
+
+export const setStatusBarDark = () => {
+  console.log('STUB: Set status bar style light text for dark background');
+}
+
+export const setStatusBarDefault = () => {
+  console.log('STUB: set status bar style back to default ');
+}
