@@ -464,16 +464,18 @@ import type { ScrollBaseDetail as IContentScrollBaseDetail } from '@ionic/core';
 import type { ScrollDetail as IContentScrollDetail } from '@ionic/core';
 export declare interface IonContent extends Components.IonContent {
   /**
-   * Emitted when the scroll has started. 
+   * Emitted when the scroll has started. This event is disabled by default.
+Set `scrollEvents` to `true` to enable. 
    */
   ionScrollStart: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
   /**
    * Emitted while scrolling. This event is disabled by default.
-Look at the property: `scrollEvents` 
+Set `scrollEvents` to `true` to enable. 
    */
   ionScroll: EventEmitter<CustomEvent<IContentScrollDetail>>;
   /**
-   * Emitted when the scroll has ended. 
+   * Emitted when the scroll has ended. This event is disabled by default.
+Set `scrollEvents` to `true` to enable. 
    */
   ionScrollEnd: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
 

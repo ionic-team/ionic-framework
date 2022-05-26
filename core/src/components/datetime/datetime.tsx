@@ -442,18 +442,26 @@ export class Datetime implements ComponentInterface {
   @Method()
   async confirm(closeOverlay = false) {
     /**
-     * Prevent convertDataToISO from doing any
-     * kind of transformation based on timezone
-     * This cancels out any change it attempts to make
-     *
-     * Important: Take the timezone offset based on
-     * the date that is currently selected, otherwise
-     * there can be 1 hr difference when dealing w/ DST
+     * If highlightActiveParts is false, this means the datetime was inited
+     * without a value, and the user hasn't selected one yet. We shouldn't
+     * update the value in this case, since otherwise it would be mysteriously
+     * set to today.
      */
-    const date = new Date(convertDataToISO(this.activeParts));
-    this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
+    if (this.highlightActiveParts) {
+      /**
+       * Prevent convertDataToISO from doing any
+       * kind of transformation based on timezone
+       * This cancels out any change it attempts to make
+       *
+       * Important: Take the timezone offset based on
+       * the date that is currently selected, otherwise
+       * there can be 1 hr difference when dealing w/ DST
+       */
+      const date = new Date(convertDataToISO(this.activeParts));
+      this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
 
-    this.value = convertDataToISO(this.activeParts);
+      this.value = convertDataToISO(this.activeParts);
+    }
 
     if (closeOverlay) {
       this.closeParentOverlay();

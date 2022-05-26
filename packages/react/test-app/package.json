@@ -23,6 +23,7 @@
     "eject": "react-scripts eject",
     "sync": "sh ./scripts/sync.sh",
     "cypress": "cypress run --headless --browser chrome",
+    "cypress.open": "cypress open",
     "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
   },
   "eslintConfig": {
