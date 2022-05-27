@@ -268,6 +268,12 @@ export const createSheetGesture = (
      * currentBreakpoint = 0.25
      * step = 0.45
      * This should return 0.25.
+     * Tests to add:
+     * Explicitly swiping from 1, over 0.5 to 0 should dismiss the sheet
+     * Quickly swiping from 1 down should snap to 0.5 and should never snap to 0.
+     * Explicitly swiping up from 0.25 over 0.5 should allow you to snap to 1.
+     * Quickly swiping up from 0.25 should snap to 0.5 and never to 1.
+     * Quickly swiping from 1 down should snap to 0 (given breakpoints [0, 1])
      */
     return step;
   }
