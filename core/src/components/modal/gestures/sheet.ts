@@ -257,6 +257,22 @@ export const createSheetGesture = (
     const threshold = (detail.deltaY + velocity * 1000) / height;
 
     /**
+     * FIXME: This has a bug where you cannot swipe
+     * from 1 all the way to 0 by dragging. To fix this
+     * we need to get the nearest breakpoint relative to the
+     * delay and use that as the current breakpoint, not the
+     * currentBreakpoint (which should really be "startingBreakpoint").
+     * Example:
+     * breakpoints = [0, 0.5, 1]
+     * currentBreakpoint = 1
+     * currentBreakpoint - threshold = 0.1
+     * Because currentBreakpoint is 1, then
+     * the "next" breakpoint is going to be 0.5.
+     * As a result, you will never be able to swipe
+     * to 0.1 even though you explicitly swiped over 0.5;
+     */
+
+    /**
      * When quickly swiping, users should not be
      * able to swipe over a breakpoint.
      * Example:
