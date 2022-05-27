@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Sheet - Velocity</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ionic App" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Sheet</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <ion-button id="open-sheet">Open Sheet</ion-button>
+
+          <ion-modal trigger="open-sheet">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Title</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding" scroll-y="false">
+              Modal Content
+            </ion-content>
+          </ion-modal>
+        </ion-content>
+    </ion-app>
+    <script>
+      const modal = document.querySelector('ion-modal');
+      modal.initialBreakpoint = 1;
+      modal.breakpoints = [0, 1];
+    </script>
+  </body>
+</html>

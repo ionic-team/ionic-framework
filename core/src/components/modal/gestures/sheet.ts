@@ -228,15 +228,46 @@ export const createSheetGesture = (
     animation.progressStep(offset);
   };
 
+  /**
+   * Get the next/previous breakpoint based
+   * on how a user is swiping (up or down).
+   */
+  const getNextBreakpoint = (currentBreakpoint: number, velocity: number) => {
+    const currentBreakpointIndex = breakpoints.findIndex(b => b === currentBreakpoint);
+
+    // User is swiping up
+    if (velocity < 0) {
+      return breakpoints[currentBreakpointIndex + 1] ?? currentBreakpoint;
+
+    // User is swiping down
+    } else if (velocity > 0) {
+      return breakpoints[currentBreakpointIndex - 1] ?? currentBreakpoint;
+    }
+
+    // User is somehow not swiping. How did you even do that?
+    return currentBreakpoint;
+  }
+
   const onEnd = (detail: GestureDetail) => {
     /**
      * When the gesture releases, we need to determine
      * the closest breakpoint to snap to.
      */
     const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 100) / height;
-    const diff = currentBreakpoint - threshold;
-    const closest = breakpoints.reduce((a, b) => {
+    const threshold = (detail.deltaY + velocity * 1000) / height;
+
+    /**
+     * When quickly swiping, users should not be
+     * able to swipe over a breakpoint.
+     * Example:
+     * If you have breakpoints [0, 0.5, 1], users
+     * should never be able to swipe from 1 directly
+     * to 0 (dismissing).
+     */
+    const nextBreakpoint = getNextBreakpoint(currentBreakpoint, velocity);
+    const diff = Math.max(nextBreakpoint, currentBreakpoint - threshold);
+
+    const closest = [currentBreakpoint, nextBreakpoint].reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
