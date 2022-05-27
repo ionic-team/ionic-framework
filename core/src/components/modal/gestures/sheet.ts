@@ -248,6 +248,30 @@ export const createSheetGesture = (
     return currentBreakpoint;
   }
 
+  const findMinimumStartingBreakpoint = (step: number, velocity: number) => {
+    // STUB
+    /**
+     * In here we need to find the closest breakpoint without going
+     * over to the next breakpoint. This is used as the
+     * basis to find the next breakpoint to snap to and allows
+     * users to explicitly swipe from 1, over 0.5, to 0.
+     * Example 1:
+     * breakpoints = [0, 0.5, 1]
+     * currentBreakpoint = 1
+     * step = 0.67
+     * This should return 1 because we want to find
+     * the closest step that we have already passed.
+     * As we have not passed 0.5, we should not use that.
+     *
+     * Example 2:
+     * breakpoints = [0, 0.25, 0.5, 1]
+     * currentBreakpoint = 0.25
+     * step = 0.45
+     * This should return 0.25.
+     */
+    return step;
+  }
+
   const onEnd = (detail: GestureDetail) => {
     /**
      * When the gesture releases, we need to determine
@@ -271,6 +295,8 @@ export const createSheetGesture = (
      * As a result, you will never be able to swipe
      * to 0.1 even though you explicitly swiped over 0.5;
      */
+     const step = currentBreakpoint - (detail.deltaY) / height;
+     const minimumPassedBreakpoint = findMinimumStartingBreakpoint(step, velocity);
 
     /**
      * When quickly swiping, users should not be
@@ -280,10 +306,10 @@ export const createSheetGesture = (
      * should never be able to swipe from 1 directly
      * to 0 (dismissing).
      */
-    const nextBreakpoint = getNextBreakpoint(currentBreakpoint, velocity);
-    const diff = Math.max(nextBreakpoint, currentBreakpoint - threshold);
+    const nextBreakpoint = getNextBreakpoint(minimumPassedBreakpoint, velocity);
+    const diff = Math.max(nextBreakpoint, minimumPassedBreakpoint - threshold);
 
-    const closest = [currentBreakpoint, nextBreakpoint].reduce((a, b) => {
+    const closest = [minimumPassedBreakpoint, nextBreakpoint].reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
