@@ -9,24 +9,14 @@ import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
-import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import {
-  generateMonths,
-  generateTime,
-  getCalendarYears,
-  getDaysOfMonth,
-  getDaysOfWeek,
-  getPickerMonths,
-  getToday,
-} from './utils/data';
-import { addTimePadding, getFormattedHour, getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { generateMonths, getDaysOfMonth, getDaysOfWeek, getToday } from './utils/data';
+import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
   getEndOfWeek,
-  getInternalHourValue,
   getNextDay,
   getNextMonth,
   getNextWeek,
@@ -38,6 +28,7 @@ import {
   getStartOfWeek,
 } from './utils/manipulation';
 import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import { renderMonthPickerColumnData, renderYearPickerColumnData, renderTimePickerColumnsData } from './utils/render';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -45,8 +36,6 @@ import {
   isNextMonthDisabled,
   isPrevMonthDisabled,
 } from './utils/state';
-
-import { renderMonthPickerColumnData, renderYearPickerColumnData, renderTimePickerColumnsData } from './utils/render';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -1253,14 +1242,22 @@ export class Datetime implements ComponentInterface {
         {this.renderYearPickerColumn(forcePresentation)}
         {this.renderTimePickerColumns(forcePresentation)}
       </ion-picker-internal>
-    )
+    );
   }
 
   private renderMonthPickerColumn(forcePresentation: string) {
     const { workingParts } = this;
-    if (forcePresentation === 'year' || forcePresentation === 'time') { return };
+    if (forcePresentation === 'year' || forcePresentation === 'time') {
+      return;
+    }
 
-    const months = renderMonthPickerColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+    const months = renderMonthPickerColumnData(
+      this.locale,
+      workingParts,
+      this.minParts,
+      this.maxParts,
+      this.parsedMonthValues
+    );
 
     return (
       <ion-picker-column-internal
@@ -1295,11 +1292,13 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       ></ion-picker-column-internal>
-    )
+    );
   }
   private renderYearPickerColumn(forcePresentation: string) {
     const { workingParts } = this;
-    if (forcePresentation === 'month' || forcePresentation === 'time') { return; }
+    if (forcePresentation === 'month' || forcePresentation === 'time') {
+      return;
+    }
 
     const years = renderYearPickerColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
 
@@ -1336,10 +1335,12 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       ></ion-picker-column-internal>
-    )
+    );
   }
   private renderTimePickerColumns(forcePresentation: string) {
-    if (['date', 'month', 'month-year', 'year'].includes(forcePresentation)) { return [] }
+    if (['date', 'month', 'month-year', 'year'].includes(forcePresentation)) {
+      return [];
+    }
 
     const { hoursData, minutesData, ampmData } = renderTimePickerColumnsData(
       this.locale,
@@ -1354,8 +1355,8 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderHourPickerColumn(hoursData),
       this.renderMinutePickerColumn(minutesData),
-      this.renderAMPMPickerColumn(ampmData)
-    ]
+      this.renderAMPMPickerColumn(ampmData),
+    ];
   }
 
   private renderHourPickerColumn(hoursData: any[]) {
@@ -1410,7 +1411,9 @@ export class Datetime implements ComponentInterface {
   }
   private renderAMPMPickerColumn(ampmData: any[]) {
     const { workingParts, activePartsClone } = this;
-    if (ampmData.length === 0) { return []; }
+    if (ampmData.length === 0) {
+      return [];
+    }
 
     return (
       <ion-picker-column-internal
@@ -1721,13 +1724,7 @@ export class Datetime implements ComponentInterface {
     const { presentation } = this;
     const timeOnlyPresentation = presentation === 'time';
 
-    return (
-      <div class="datetime-time">
-        {timeOnlyPresentation
-          ? this.renderTimePicker()
-          : this.renderTimeOverlay()}
-      </div>
-    );
+    return <div class="datetime-time">{timeOnlyPresentation ? this.renderTimePicker() : this.renderTimeOverlay()}</div>;
   }
 
   private renderCalendarViewHeader(mode: Mode) {
@@ -1769,7 +1766,7 @@ export class Datetime implements ComponentInterface {
    */
   private renderPresentationDateTime(mode: Mode, preferWheel: boolean) {
     if (preferWheel) {
-      return [this.renderWheelView(), this.renderFooter()]
+      return [this.renderWheelView(), this.renderFooter()];
     } else {
       return [
         this.renderCalendarViewHeader(mode),
@@ -1786,7 +1783,7 @@ export class Datetime implements ComponentInterface {
    */
   private renderPresentationTimeDate(mode: Mode, preferWheel: boolean) {
     if (preferWheel) {
-      return [this.renderWheelView(), this.renderFooter()]
+      return [this.renderWheelView(), this.renderFooter()];
     } else {
       return [
         this.renderCalendarViewHeader(mode),
@@ -1803,7 +1800,7 @@ export class Datetime implements ComponentInterface {
    */
   private renderPresentationDate(mode: Mode, preferWheel: boolean) {
     if (preferWheel) {
-      return [this.renderWheelView(), this.renderFooter()]
+      return [this.renderWheelView(), this.renderFooter()];
     } else {
       return [
         this.renderCalendarViewHeader(mode),
@@ -1815,11 +1812,24 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size, preferWheel } = this;
+    const {
+      name,
+      value,
+      disabled,
+      el,
+      color,
+      isPresented,
+      readonly,
+      showMonthAndYear,
+      presentation,
+      size,
+      preferWheel,
+    } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
-      const prefersWheel = preferWheel && (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date');
+    const prefersWheel =
+      preferWheel && (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date');
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation || prefersWheel;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation && !prefersWheel;
 

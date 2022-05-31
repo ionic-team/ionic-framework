@@ -1,9 +1,9 @@
+import type { DatetimeParts } from '../datetime-interface';
+
 import { getPickerMonths, getCalendarYears, generateTime } from './data';
 import { getFormattedHour, addTimePadding } from './format';
-import { getInternalHourValue } from './manipulation';
-
-import type { DatetimeParts } from '../datetime-interface';
 import { is24Hour } from './helpers';
+import { getInternalHourValue } from './manipulation';
 
 /**
  * This file contains utils that assist in determining which
@@ -25,7 +25,7 @@ export const renderMonthPickerColumnData = (
   allowedMonthValues?: number[]
 ) => {
   return getPickerMonths(locale, refParts, minParts, maxParts, allowedMonthValues);
-}
+};
 
 export const renderYearPickerColumnData = (
   refParts: DatetimeParts,
@@ -34,12 +34,10 @@ export const renderYearPickerColumnData = (
   allowedYearValues?: number[]
 ) => {
   const years = getCalendarYears(refParts, minParts, maxParts, allowedYearValues);
-  return years.map(year => (
-    {
-      text: `${year}`,
-      value: year
-    }
-  ))
+  return years.map((year) => ({
+    text: `${year}`,
+    value: year,
+  }));
 };
 
 export const renderTimePickerColumnsData = (
@@ -92,6 +90,6 @@ export const renderTimePickerColumnsData = (
   return {
     minutesData: minutesItems,
     hoursData: hoursItems,
-    ampmData: ampmItems
-  }
-}
+    ampmData: ampmItems,
+  };
+};
