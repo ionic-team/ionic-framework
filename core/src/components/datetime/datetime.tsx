@@ -1248,7 +1248,7 @@ export class Datetime implements ComponentInterface {
   private renderMonthPickerColumn(forcePresentation: string) {
     const { workingParts } = this;
     if (forcePresentation === 'year' || forcePresentation === 'time') {
-      return;
+      return [];
     }
 
     const months = renderMonthPickerColumnData(
@@ -1297,7 +1297,7 @@ export class Datetime implements ComponentInterface {
   private renderYearPickerColumn(forcePresentation: string) {
     const { workingParts } = this;
     if (forcePresentation === 'month' || forcePresentation === 'time') {
-      return;
+      return [];
     }
 
     const years = renderYearPickerColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
