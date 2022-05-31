@@ -1438,7 +1438,7 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderWheelView() {
+  private renderWheelView(forcePresentation?: string) {
     const { locale } = this;
     const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
@@ -1450,7 +1450,7 @@ export class Datetime implements ComponentInterface {
             [`order-${columnOrder}`]: true,
           }}
         >
-          {this.renderWheelPicker()}
+          {this.renderWheelPicker(forcePresentation)}
         </div>
       </div>
     );
@@ -1774,7 +1774,7 @@ export class Datetime implements ComponentInterface {
       return [
         this.renderCalendarViewHeader(mode),
         this.renderCalendar(mode),
-        this.renderWheelView(),
+        this.renderWheelView('month-year'),
         this.renderTime(),
         this.renderFooter(),
       ];
@@ -1792,7 +1792,7 @@ export class Datetime implements ComponentInterface {
         this.renderCalendarViewHeader(mode),
         this.renderTime(),
         this.renderCalendar(mode),
-        this.renderWheelView(),
+        this.renderWheelView('month-year'),
         this.renderFooter(),
       ];
     }
@@ -1808,7 +1808,7 @@ export class Datetime implements ComponentInterface {
       return [
         this.renderCalendarViewHeader(mode),
         this.renderCalendar(mode),
-        this.renderWheelView(),
+        this.renderWheelView('month-year'),
         this.renderFooter(),
       ];
     }
