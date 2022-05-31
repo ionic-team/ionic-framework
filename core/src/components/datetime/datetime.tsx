@@ -46,7 +46,7 @@ import {
   isPrevMonthDisabled,
 } from './utils/state';
 
-import { renderMonthPickerColumnData, renderYearPickerColumnData } from './utils/render';
+import { renderMonthPickerColumnData, renderYearPickerColumnData, renderTimePickerColumnsData } from './utils/render';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -1246,18 +1246,19 @@ export class Datetime implements ComponentInterface {
     this.showMonthAndYear = !this.showMonthAndYear;
   };
 
-  private renderWheelPicker() {
+  private renderWheelPicker(forcePresentation: string = this.presentation) {
     return (
       <ion-picker-internal>
-        {this.renderMonthPickerColumn()}
-        {this.renderYearPickerColumn()}
+        {this.renderMonthPickerColumn(forcePresentation)}
+        {this.renderYearPickerColumn(forcePresentation)}
+        {this.renderTimePickerColumns(forcePresentation)}
       </ion-picker-internal>
     )
   }
 
-  private renderMonthPickerColumn() {
-    const { presentation, workingParts } = this;
-    if (presentation === 'year' || presentation === 'time') { return };
+  private renderMonthPickerColumn(forcePresentation: string) {
+    const { workingParts } = this;
+    if (forcePresentation === 'year' || forcePresentation === 'time') { return };
 
     const months = renderMonthPickerColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
 
@@ -1280,7 +1281,7 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          if (presentation === 'month' || presentation === 'month-year') {
+          if (forcePresentation === 'month' || forcePresentation === 'month-year') {
             this.setActiveParts({
               ...this.activeParts,
               month: ev.detail.value,
@@ -1296,9 +1297,9 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     )
   }
-  private renderYearPickerColumn() {
-    const { presentation, workingParts } = this;
-    if (presentation === 'month' || presentation === 'time') { return; }
+  private renderYearPickerColumn(forcePresentation: string) {
+    const { workingParts } = this;
+    if (forcePresentation === 'month' || forcePresentation === 'time') { return; }
 
     const years = renderYearPickerColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
 
@@ -1321,7 +1322,7 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          if (presentation === 'year' || presentation === 'month-year') {
+          if (forcePresentation === 'year' || forcePresentation === 'month-year') {
             this.setActiveParts({
               ...this.activeParts,
               year: ev.detail.value,
@@ -1336,6 +1337,105 @@ export class Datetime implements ComponentInterface {
         }}
       ></ion-picker-column-internal>
     )
+  }
+  private renderTimePickerColumns(forcePresentation: string) {
+    if (['date', 'month', 'month-year', 'year'].includes(forcePresentation)) { return [] }
+
+    const { hoursData, minutesData, ampmData } = renderTimePickerColumnsData(
+      this.locale,
+      this.workingParts,
+      this.hourCycle,
+      this.minParts,
+      this.maxParts,
+      this.parsedHourValues,
+      this.parsedMinuteValues
+    );
+
+    return [
+      this.renderHourPickerColumn(hoursData),
+      this.renderMinutePickerColumn(minutesData),
+      this.renderAMPMPickerColumn(ampmData)
+    ]
+  }
+
+  private renderHourPickerColumn(hoursData: any[]) {
+    const { workingParts, activePartsClone } = this;
+    if (hoursData.length === 0) return [];
+
+    return (
+      <ion-picker-column-internal
+        color={this.color}
+        value={activePartsClone.hour}
+        items={hoursData}
+        numericInput
+        onIonChange={(ev: CustomEvent) => {
+          this.setWorkingParts({
+            ...workingParts,
+            hour: ev.detail.value,
+          });
+          this.setActiveParts({
+            ...activePartsClone,
+            hour: ev.detail.value,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+  private renderMinutePickerColumn(minutesData: any[]) {
+    const { workingParts, activePartsClone } = this;
+    if (minutesData.length === 0) return [];
+
+    return (
+      <ion-picker-column-internal
+        color={this.color}
+        value={activePartsClone.minute}
+        items={minutesData}
+        numericInput
+        onIonChange={(ev: CustomEvent) => {
+          this.setWorkingParts({
+            ...workingParts,
+            minute: ev.detail.value,
+          });
+          this.setActiveParts({
+            ...activePartsClone,
+            minute: ev.detail.value,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+  private renderAMPMPickerColumn(ampmData: any[]) {
+    const { workingParts, activePartsClone } = this;
+    if (ampmData.length === 0) { return []; }
+
+    return (
+      <ion-picker-column-internal
+        color={this.color}
+        value={activePartsClone.ampm}
+        items={ampmData}
+        onIonChange={(ev: CustomEvent) => {
+          const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
+
+          this.setWorkingParts({
+            ...workingParts,
+            ampm: ev.detail.value,
+            hour,
+          });
+
+          this.setActiveParts({
+            ...activePartsClone,
+            ampm: ev.detail.value,
+            hour,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
   }
 
   private renderWheelView() {
@@ -1542,86 +1642,12 @@ export class Datetime implements ComponentInterface {
     return <slot name="time-label">Time</slot>;
   }
 
-  private renderTimePicker(
-    hoursItems: PickerColumnItem[],
-    minutesItems: PickerColumnItem[],
-    ampmItems: PickerColumnItem[],
-    use24Hour: boolean
-  ) {
-    const { color, activePartsClone, workingParts } = this;
-
-    return (
-      <ion-picker-internal>
-        <ion-picker-column-internal
-          color={color}
-          value={activePartsClone.hour}
-          items={hoursItems}
-          numericInput
-          onIonChange={(ev: CustomEvent) => {
-            this.setWorkingParts({
-              ...workingParts,
-              hour: ev.detail.value,
-            });
-            this.setActiveParts({
-              ...activePartsClone,
-              hour: ev.detail.value,
-            });
-
-            ev.stopPropagation();
-          }}
-        ></ion-picker-column-internal>
-        <ion-picker-column-internal
-          color={color}
-          value={activePartsClone.minute}
-          items={minutesItems}
-          numericInput
-          onIonChange={(ev: CustomEvent) => {
-            this.setWorkingParts({
-              ...workingParts,
-              minute: ev.detail.value,
-            });
-            this.setActiveParts({
-              ...activePartsClone,
-              minute: ev.detail.value,
-            });
-
-            ev.stopPropagation();
-          }}
-        ></ion-picker-column-internal>
-        {!use24Hour && (
-          <ion-picker-column-internal
-            color={color}
-            value={activePartsClone.ampm}
-            items={ampmItems}
-            onIonChange={(ev: CustomEvent) => {
-              const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
-
-              this.setWorkingParts({
-                ...workingParts,
-                ampm: ev.detail.value,
-                hour,
-              });
-
-              this.setActiveParts({
-                ...activePartsClone,
-                ampm: ev.detail.value,
-                hour,
-              });
-
-              ev.stopPropagation();
-            }}
-          ></ion-picker-column-internal>
-        )}
-      </ion-picker-internal>
-    );
+  private renderTimePicker() {
+    return this.renderWheelPicker('time');
   }
 
-  private renderTimeOverlay(
-    hoursItems: PickerColumnItem[],
-    minutesItems: PickerColumnItem[],
-    ampmItems: PickerColumnItem[],
-    use24Hour: boolean
-  ) {
+  private renderTimeOverlay() {
+    const use24Hour = is24Hour(this.locale, this.hourCycle);
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
       <button
@@ -1679,7 +1705,7 @@ export class Datetime implements ComponentInterface {
         keyboardEvents
         ref={(el) => (this.popoverRef = el)}
       >
-        {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}
+        {this.renderTimePicker()}
       </ion-popover>,
     ];
   }
@@ -1692,52 +1718,14 @@ export class Datetime implements ComponentInterface {
    * should just be the default segment.
    */
   private renderTime() {
-    const { workingParts, presentation } = this;
+    const { presentation } = this;
     const timeOnlyPresentation = presentation === 'time';
-    const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const { hours, minutes, am, pm } = generateTime(
-      workingParts,
-      use24Hour ? 'h23' : 'h12',
-      this.minParts,
-      this.maxParts,
-      this.parsedHourValues,
-      this.parsedMinuteValues
-    );
-
-    const hoursItems = hours.map((hour) => {
-      return {
-        text: getFormattedHour(hour, use24Hour),
-        value: getInternalHourValue(hour, use24Hour, workingParts.ampm),
-      };
-    });
-
-    const minutesItems = minutes.map((minute) => {
-      return {
-        text: addTimePadding(minute),
-        value: minute,
-      };
-    });
-
-    const ampmItems = [];
-    if (am) {
-      ampmItems.push({
-        text: 'AM',
-        value: 'am',
-      });
-    }
-
-    if (pm) {
-      ampmItems.push({
-        text: 'PM',
-        value: 'pm',
-      });
-    }
 
     return (
       <div class="datetime-time">
         {timeOnlyPresentation
-          ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)
-          : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
+          ? this.renderTimePicker()
+          : this.renderTimeOverlay()}
       </div>
     );
   }
