@@ -1263,7 +1263,17 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDatePickerColunns(forcePresentation: string) {
-    return [this.renderMonthPickerColumn(forcePresentation), this.renderYearPickerColumn(forcePresentation)];
+    return [
+      this.renderMonthPickerColumn(forcePresentation),
+      this.renderDayPickerColumn(forcePresentation),
+      this.renderYearPickerColumn(forcePresentation)
+    ];
+  }
+
+  private renderDayPickerColumn(forcePresentation: string) {
+    if (forcePresentation !== 'date') return [];
+
+    return <div>HELLO</div>
   }
 
   private renderMonthPickerColumn(forcePresentation: string) {
@@ -1461,15 +1471,10 @@ export class Datetime implements ComponentInterface {
     const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
-      <div class="datetime-year">
-        <div
-          class={{
-            'datetime-year-body': true,
-            [`order-${columnOrder}`]: true,
-          }}
-        >
-          {this.renderWheelPicker(forcePresentation)}
-        </div>
+      <div class={{
+        [`order-${columnOrder}`]: true,
+      }}>
+        {this.renderWheelPicker(forcePresentation)}
       </div>
     );
   }
@@ -1754,6 +1759,14 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  private renderMonthAndYear(forcePresentation?: string) {
+    return (
+      <div class="datetime-year">
+        {this.renderWheelView(forcePresentation)}
+      </div>
+    )
+  }
+
   /**
    * Render entry point
    * All presentation types are rendered from here.
@@ -1776,7 +1789,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderMonthAndYear('month-year'),
           this.renderTime(),
           this.renderFooter(),
         ];
@@ -1785,7 +1798,7 @@ export class Datetime implements ComponentInterface {
           this.renderCalendarViewHeader(mode),
           this.renderTime(),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderMonthAndYear('month-year'),
           this.renderFooter(),
         ];
       case 'time':
@@ -1798,7 +1811,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderMonthAndYear('month-year'),
           this.renderFooter(),
         ];
     }
