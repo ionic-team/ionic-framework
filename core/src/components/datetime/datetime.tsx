@@ -9,6 +9,7 @@ import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
+import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import { generateMonths, getDaysOfMonth, getDaysOfWeek, getToday } from './utils/data';
 import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
@@ -1176,6 +1177,16 @@ export class Datetime implements ComponentInterface {
     });
   };
 
+  private toggleMonthAndYearView = () => {
+    this.showMonthAndYear = !this.showMonthAndYear;
+  };
+
+  /**
+   * Universal render methods
+   * These are pieces of datetime that
+   * are rendered independently of presentation.
+   */
+
   private renderFooter() {
     const { showDefaultButtons, showClearButton } = this;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
@@ -1231,9 +1242,9 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private toggleMonthAndYearView = () => {
-    this.showMonthAndYear = !this.showMonthAndYear;
-  };
+  /**
+   * Wheel picker render methods
+   */
 
   private renderWheelPicker(forcePresentation: string = this.presentation) {
     return (
@@ -1359,7 +1370,7 @@ export class Datetime implements ComponentInterface {
     ];
   }
 
-  private renderHourPickerColumn(hoursData: any[]) {
+  private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
     const { workingParts, activePartsClone } = this;
     if (hoursData.length === 0) return [];
 
@@ -1384,7 +1395,7 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     );
   }
-  private renderMinutePickerColumn(minutesData: any[]) {
+  private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
     const { workingParts, activePartsClone } = this;
     if (minutesData.length === 0) return [];
 
@@ -1409,7 +1420,7 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     );
   }
-  private renderAMPMPickerColumn(ampmData: any[]) {
+  private renderAMPMPickerColumn(ampmData: PickerColumnItem[]) {
     const { workingParts, activePartsClone } = this;
     if (ampmData.length === 0) {
       return [];
@@ -1459,6 +1470,10 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  /**
+   * Grid Render Methods
+   */
+
   private renderCalendarHeader(mode: Mode) {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
@@ -1497,7 +1512,6 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderMonth(month: number, year: number) {
     const { highlightActiveParts } = this;
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
@@ -1616,7 +1630,6 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
@@ -1626,7 +1639,6 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderCalendar(mode: Mode) {
     return (
       <div class="datetime-calendar">
@@ -1635,7 +1647,6 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderTimeLabel() {
     const hasSlottedTimeLabel = this.el.querySelector('[slot="time-label"]') !== null;
     if (!hasSlottedTimeLabel && !this.showDefaultTimeLabel) {
@@ -1644,11 +1655,6 @@ export class Datetime implements ComponentInterface {
 
     return <slot name="time-label">Time</slot>;
   }
-
-  private renderTimePicker() {
-    return this.renderWheelPicker('time');
-  }
-
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
     return [
@@ -1708,25 +1714,10 @@ export class Datetime implements ComponentInterface {
         keyboardEvents
         ref={(el) => (this.popoverRef = el)}
       >
-        {this.renderTimePicker()}
+        {this.renderWheelPicker('time')}
       </ion-popover>,
     ];
   }
-
-  /**
-   * Render time picker inside of datetime.
-   * Do not pass color prop to segment on
-   * iOS mode. MD segment has been customized and
-   * should take on the color prop, but iOS
-   * should just be the default segment.
-   */
-  private renderTime() {
-    const { presentation } = this;
-    const timeOnlyPresentation = presentation === 'time';
-
-    return <div class="datetime-time">{timeOnlyPresentation ? this.renderTimePicker() : this.renderTimeOverlay()}</div>;
-  }
-
   private renderCalendarViewHeader(mode: Mode) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
@@ -1743,13 +1734,56 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  /**
+   * Render time picker inside of datetime.
+   * Do not pass color prop to segment on
+   * iOS mode. MD segment has been customized and
+   * should take on the color prop, but iOS
+   * should just be the default segment.
+   */
+  private renderTime() {
+    const { presentation } = this;
+    const timeOnlyPresentation = presentation === 'time';
+
+    return (
+      <div class="datetime-time">{timeOnlyPresentation ? this.renderWheelPicker() : this.renderTimeOverlay()}</div>
+    );
+  }
+
+  /**
+   * Render entry point
+   * All presentation types are rendered from here.
+   */
+
   private renderDatetime(mode: Mode) {
     const { presentation, preferWheel } = this;
+
+    /**
+     * Certain presentation types have separate grid and wheel displays.
+     * If preferWheel is true then we should show a wheel picker instead.
+     */
+    const hasWheelVariant = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    if (preferWheel && hasWheelVariant) {
+      return [this.renderWheelView(), this.renderFooter()];
+    }
+
     switch (presentation) {
       case 'date-time':
-        return this.renderPresentationDateTime(mode, preferWheel);
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderCalendar(mode),
+          this.renderWheelView('month-year'),
+          this.renderTime(),
+          this.renderFooter(),
+        ];
       case 'time-date':
-        return this.renderPresentationTimeDate(mode, preferWheel);
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderTime(),
+          this.renderCalendar(mode),
+          this.renderWheelView('month-year'),
+          this.renderFooter(),
+        ];
       case 'time':
         return [this.renderTime(), this.renderFooter()];
       case 'month':
@@ -1757,81 +1791,22 @@ export class Datetime implements ComponentInterface {
       case 'year':
         return [this.renderWheelView(), this.renderFooter()];
       default:
-        return this.renderPresentationDate(mode, preferWheel);
-    }
-  }
-
-  /**
-   * Renders the appropriate pieces of datetime when presentation="date-time".
-   */
-  private renderPresentationDateTime(mode: Mode, preferWheel: boolean) {
-    if (preferWheel) {
-      return [this.renderWheelView(), this.renderFooter()];
-    } else {
-      return [
-        this.renderCalendarViewHeader(mode),
-        this.renderCalendar(mode),
-        this.renderWheelView('month-year'),
-        this.renderTime(),
-        this.renderFooter(),
-      ];
-    }
-  }
-
-  /**
-   * Renders the appropriate pieces of datetime when presentation="time-date".
-   */
-  private renderPresentationTimeDate(mode: Mode, preferWheel: boolean) {
-    if (preferWheel) {
-      return [this.renderWheelView(), this.renderFooter()];
-    } else {
-      return [
-        this.renderCalendarViewHeader(mode),
-        this.renderTime(),
-        this.renderCalendar(mode),
-        this.renderWheelView('month-year'),
-        this.renderFooter(),
-      ];
-    }
-  }
-
-  /**
-   * Renders the appropriate pieces of datetime when presentation="date".
-   */
-  private renderPresentationDate(mode: Mode, preferWheel: boolean) {
-    if (preferWheel) {
-      return [this.renderWheelView(), this.renderFooter()];
-    } else {
-      return [
-        this.renderCalendarViewHeader(mode),
-        this.renderCalendar(mode),
-        this.renderWheelView('month-year'),
-        this.renderFooter(),
-      ];
+        return [
+          this.renderCalendarViewHeader(mode),
+          this.renderCalendar(mode),
+          this.renderWheelView('month-year'),
+          this.renderFooter(),
+        ];
     }
   }
 
   render() {
-    const {
-      name,
-      value,
-      disabled,
-      el,
-      color,
-      isPresented,
-      readonly,
-      showMonthAndYear,
-      presentation,
-      size,
-      preferWheel,
-    } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
-    const prefersWheel =
-      preferWheel && (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date');
-    const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation || prefersWheel;
-    const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation && !prefersWheel;
+    const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
+    const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
 
     renderHiddenInput(true, el, name, value, disabled);
 
