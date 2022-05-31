@@ -46,6 +46,8 @@ import {
   isPrevMonthDisabled,
 } from './utils/state';
 
+import { renderMonthPickerColumnData, renderYearPickerColumnData } from './utils/render';
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -1244,19 +1246,100 @@ export class Datetime implements ComponentInterface {
     this.showMonthAndYear = !this.showMonthAndYear;
   };
 
-  private renderYearView() {
-    const { presentation, workingParts, locale } = this;
-    const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
-    const showMonth = presentation !== 'year';
-    const showYear = presentation !== 'month';
+  private renderWheelPicker() {
+    return (
+      <ion-picker-internal>
+        {this.renderMonthPickerColumn()}
+        {this.renderYearPickerColumn()}
+      </ion-picker-internal>
+    )
+  }
 
-    const months = getPickerMonths(locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
-    const years = calendarYears.map((year) => {
-      return {
-        text: `${year}`,
-        value: year,
-      };
-    });
+  private renderMonthPickerColumn() {
+    const { presentation, workingParts } = this;
+    if (presentation === 'year' || presentation === 'time') { return };
+
+    const months = renderMonthPickerColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+
+    return (
+      <ion-picker-column-internal
+        class="month-column"
+        color={this.color}
+        items={months}
+        value={workingParts.month}
+        onIonChange={(ev: CustomEvent) => {
+          // Due to a Safari 14 issue we need to destroy
+          // the intersection observer before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          this.setWorkingParts({
+            ...this.workingParts,
+            month: ev.detail.value,
+          });
+
+          if (presentation === 'month' || presentation === 'month-year') {
+            this.setActiveParts({
+              ...this.activeParts,
+              month: ev.detail.value,
+            });
+          }
+
+          // We can re-attach the intersection observer after
+          // the working parts have been updated.
+          this.initializeCalendarIOListeners();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    )
+  }
+  private renderYearPickerColumn() {
+    const { presentation, workingParts } = this;
+    if (presentation === 'month' || presentation === 'time') { return; }
+
+    const years = renderYearPickerColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
+
+    return (
+      <ion-picker-column-internal
+        class="year-column"
+        color={this.color}
+        items={years}
+        value={workingParts.year}
+        onIonChange={(ev: CustomEvent) => {
+          // Due to a Safari 14 issue we need to destroy
+          // the intersection observer before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          this.setWorkingParts({
+            ...this.workingParts,
+            year: ev.detail.value,
+          });
+
+          if (presentation === 'year' || presentation === 'month-year') {
+            this.setActiveParts({
+              ...this.activeParts,
+              year: ev.detail.value,
+            });
+          }
+
+          // We can re-attach the intersection observer after
+          // the working parts have been updated.
+          this.initializeCalendarIOListeners();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    )
+  }
+
+  private renderWheelView() {
+    const { locale } = this;
     const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
@@ -1267,76 +1350,7 @@ export class Datetime implements ComponentInterface {
             [`order-${columnOrder}`]: true,
           }}
         >
-          <ion-picker-internal>
-            {showMonth && (
-              <ion-picker-column-internal
-                class="month-column"
-                color={this.color}
-                items={months}
-                value={workingParts.month}
-                onIonChange={(ev: CustomEvent) => {
-                  // Due to a Safari 14 issue we need to destroy
-                  // the intersection observer before we update state
-                  // and trigger a re-render.
-                  if (this.destroyCalendarIO) {
-                    this.destroyCalendarIO();
-                  }
-
-                  this.setWorkingParts({
-                    ...this.workingParts,
-                    month: ev.detail.value,
-                  });
-
-                  if (presentation === 'month' || presentation === 'month-year') {
-                    this.setActiveParts({
-                      ...this.activeParts,
-                      month: ev.detail.value,
-                    });
-                  }
-
-                  // We can re-attach the intersection observer after
-                  // the working parts have been updated.
-                  this.initializeCalendarIOListeners();
-
-                  ev.stopPropagation();
-                }}
-              ></ion-picker-column-internal>
-            )}
-            {showYear && (
-              <ion-picker-column-internal
-                class="year-column"
-                color={this.color}
-                items={years}
-                value={workingParts.year}
-                onIonChange={(ev: CustomEvent) => {
-                  // Due to a Safari 14 issue we need to destroy
-                  // the intersection observer before we update state
-                  // and trigger a re-render.
-                  if (this.destroyCalendarIO) {
-                    this.destroyCalendarIO();
-                  }
-
-                  this.setWorkingParts({
-                    ...this.workingParts,
-                    year: ev.detail.value,
-                  });
-
-                  if (presentation === 'year' || presentation === 'month-year') {
-                    this.setActiveParts({
-                      ...this.activeParts,
-                      year: ev.detail.value,
-                    });
-                  }
-
-                  // We can re-attach the intersection observer after
-                  // the working parts have been updated.
-                  this.initializeCalendarIOListeners();
-
-                  ev.stopPropagation();
-                }}
-              ></ion-picker-column-internal>
-            )}
-          </ion-picker-internal>
+          {this.renderWheelPicker()}
         </div>
       </div>
     );
@@ -1745,47 +1759,81 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDatetime(mode: Mode) {
-    const { presentation } = this;
+    const { presentation, preferWheel } = this;
     switch (presentation) {
       case 'date-time':
-        return [
-          this.renderCalendarViewHeader(mode),
-          this.renderCalendar(mode),
-          this.renderYearView(),
-          this.renderTime(),
-          this.renderFooter(),
-        ];
+        return this.renderPresentationDateTime(mode, preferWheel);
       case 'time-date':
-        return [
-          this.renderCalendarViewHeader(mode),
-          this.renderTime(),
-          this.renderCalendar(mode),
-          this.renderYearView(),
-          this.renderFooter(),
-        ];
+        return this.renderPresentationTimeDate(mode, preferWheel);
       case 'time':
         return [this.renderTime(), this.renderFooter()];
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderYearView(), this.renderFooter()];
+        return [this.renderWheelView(), this.renderFooter()];
       default:
-        return [
-          this.renderCalendarViewHeader(mode),
-          this.renderCalendar(mode),
-          this.renderYearView(),
-          this.renderFooter(),
-        ];
+        return this.renderPresentationDate(mode, preferWheel);
+    }
+  }
+
+  /**
+   * Renders the appropriate pieces of datetime when presentation="date-time".
+   */
+  private renderPresentationDateTime(mode: Mode, preferWheel: boolean) {
+    if (preferWheel) {
+      return [this.renderWheelView(), this.renderFooter()]
+    } else {
+      return [
+        this.renderCalendarViewHeader(mode),
+        this.renderCalendar(mode),
+        this.renderWheelView(),
+        this.renderTime(),
+        this.renderFooter(),
+      ];
+    }
+  }
+
+  /**
+   * Renders the appropriate pieces of datetime when presentation="time-date".
+   */
+  private renderPresentationTimeDate(mode: Mode, preferWheel: boolean) {
+    if (preferWheel) {
+      return [this.renderWheelView(), this.renderFooter()]
+    } else {
+      return [
+        this.renderCalendarViewHeader(mode),
+        this.renderTime(),
+        this.renderCalendar(mode),
+        this.renderWheelView(),
+        this.renderFooter(),
+      ];
+    }
+  }
+
+  /**
+   * Renders the appropriate pieces of datetime when presentation="date".
+   */
+  private renderPresentationDate(mode: Mode, preferWheel: boolean) {
+    if (preferWheel) {
+      return [this.renderWheelView(), this.renderFooter()]
+    } else {
+      return [
+        this.renderCalendarViewHeader(mode),
+        this.renderCalendar(mode),
+        this.renderWheelView(),
+        this.renderFooter(),
+      ];
     }
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size, preferWheel } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
-    const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
-    const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
+      const prefersWheel = preferWheel && (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date');
+    const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation || prefersWheel;
+    const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation && !prefersWheel;
 
     renderHiddenInput(true, el, name, value, disabled);
 
