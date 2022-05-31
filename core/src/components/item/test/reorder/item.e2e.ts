@@ -7,7 +7,7 @@ test.describe('item: reorder', () => {
 
     await page.setIonViewport();
 
-    await page.click('[text=Edit]');
+    await page.click('text=Edit');
 
     expect(await page.screenshot()).toMatchSnapshot(`item-reorder-diff-${page.getSnapshotSettings()}.png`);
   });
