@@ -83,7 +83,6 @@ test.describe('datetime: presentation', () => {
 
     expect(ionChangeSpy.length).toBe(1);
   });
-
 });
 
 test.describe('datetime: presentation: time', () => {
