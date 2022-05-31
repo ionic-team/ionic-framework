@@ -1,6 +1,11 @@
 import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
-import { isIonContent, findClosestIonContent } from '../../../utils/content';
+import {
+  isIonContent,
+  findClosestIonContent,
+  disableContentScrollY,
+  resetContentScrollY,
+} from '../../../utils/content';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
 import { clamp, getElementRoot } from '../../../utils/helpers';
@@ -30,30 +35,6 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
        */
     } else {
       return true;
-    }
-  };
-
-  const disableContentScroll = () => {
-    if (!contentEl) {
-      return;
-    }
-
-    if (isIonContent(contentEl)) {
-      (contentEl as HTMLIonContentElement).scrollY = false;
-    } else {
-      contentEl.style.setProperty('overflow', 'hidden');
-    }
-  };
-
-  const resetContentScroll = () => {
-    if (!contentEl) {
-      return;
-    }
-
-    if (isIonContent(contentEl)) {
-      (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
-    } else {
-      contentEl.style.removeProperty('overflow');
     }
   };
 
@@ -145,8 +126,8 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * content. We do not want scrolling to
      * happen at the same time as the gesture.
      */
-    if (deltaY > 0) {
-      disableContentScroll();
+    if (deltaY > 0 && contentEl) {
+      disableContentScrollY(contentEl);
     }
 
     animation.progressStart(true, isOpen ? 1 : 0);
@@ -161,8 +142,8 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * content. We do not want scrolling to
      * happen at the same time as the gesture.
      */
-    if (deltaY > 0) {
-      disableContentScroll();
+    if (deltaY > 0 && contentEl) {
+      disableContentScrollY(contentEl);
     }
 
     /**
@@ -245,7 +226,9 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
 
     gesture.enable(false);
 
-    resetContentScroll();
+    if (contentEl) {
+      resetContentScrollY(contentEl, initialScrollY);
+    }
 
     animation
       .onFinish(() => {
