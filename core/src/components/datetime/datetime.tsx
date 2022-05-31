@@ -1508,7 +1508,7 @@ export class Datetime implements ComponentInterface {
     return (
       <div
         class={{
-          [`order-${columnOrder}`]: true,
+          [`wheel-order-${columnOrder}`]: true,
         }}
       >
         {this.renderWheelPicker(forcePresentation)}

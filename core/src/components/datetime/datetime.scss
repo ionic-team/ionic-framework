@@ -58,21 +58,20 @@
  * the order we need to manually switch
  * the text alignment too.
  */
-:host .datetime-year .order-month-first .month-column {
-  order: 1;
+
+:host .wheel-order-year-first .day-column {
+  order: 3;
+
+  text-align: end;
 }
 
-:host .datetime-year .order-month-first .year-column {
-  order: 2;
-}
-
-:host .datetime-year .order-year-first .month-column {
+:host .wheel-order-year-first .month-column {
   order: 2;
 
   text-align: end;
 }
 
-:host .datetime-year .order-year-first .year-column {
+:host .wheel-order-year-first .year-column {
   order: 1;
 
   text-align: start;
