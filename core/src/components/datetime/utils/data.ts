@@ -342,6 +342,41 @@ export const getMonthColumnData = (
   return months;
 };
 
+export const getDayColumnData = (
+  locale: string,
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[]
+): PickerColumnItem[] => {
+  const { month, year } = refParts;
+  const days = [];
+
+  const numDaysInMonth = getNumDaysInMonth(month, year);
+  const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
+  const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
+
+  if (dayValues !== undefined) {
+    let processedDays = dayValues;
+    processedDays = processedDays.filter((day) => day >= minDay && day <= maxDay);
+    processedDays.forEach((processedDay) => {
+      const date = new Date(`${month}/${processedDay}/${year} GMT+0000`);
+
+      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      days.push({ text: dayString, value: processedDay });
+    });
+  } else {
+    for (let i = minDay; i <= maxDay; i++) {
+      const date = new Date(`${month}/${i}/${year} GMT+0000`);
+
+      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      days.push({ text: dayString, value: i });
+    }
+  }
+
+  return days;
+};
+
 export const getYearColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,

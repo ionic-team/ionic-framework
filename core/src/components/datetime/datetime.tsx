@@ -17,6 +17,7 @@ import {
   getDaysOfWeek,
   getToday,
   getMonthColumnData,
+  getDayColumnData,
   getYearColumnData,
   getTimeColumnsData,
 } from './utils/data';
@@ -1266,14 +1267,48 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderMonthPickerColumn(forcePresentation),
       this.renderDayPickerColumn(forcePresentation),
-      this.renderYearPickerColumn(forcePresentation)
+      this.renderYearPickerColumn(forcePresentation),
     ];
   }
 
   private renderDayPickerColumn(forcePresentation: string) {
+    const { workingParts } = this;
     if (forcePresentation !== 'date') return [];
 
-    return <div>HELLO</div>
+    const days = getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues);
+
+    return (
+      <ion-picker-column-internal
+        class="day-column"
+        color={this.color}
+        items={days}
+        value={workingParts.day || this.todayParts.day}
+        onIonChange={(ev: CustomEvent) => {
+          // Due to a Safari 14 issue we need to destroy
+          // the intersection observer before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          this.setWorkingParts({
+            ...this.workingParts,
+            day: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...this.activeParts,
+            day: ev.detail.value,
+          });
+
+          // We can re-attach the intersection observer after
+          // the working parts have been updated.
+          this.initializeCalendarIOListeners();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
   }
 
   private renderMonthPickerColumn(forcePresentation: string) {
@@ -1471,9 +1506,11 @@ export class Datetime implements ComponentInterface {
     const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
-      <div class={{
-        [`order-${columnOrder}`]: true,
-      }}>
+      <div
+        class={{
+          [`order-${columnOrder}`]: true,
+        }}
+      >
         {this.renderWheelPicker(forcePresentation)}
       </div>
     );
@@ -1760,11 +1797,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMonthAndYear(forcePresentation?: string) {
-    return (
-      <div class="datetime-year">
-        {this.renderWheelView(forcePresentation)}
-      </div>
-    )
+    return <div class="datetime-year">{this.renderWheelView(forcePresentation)}</div>;
   }
 
   /**
