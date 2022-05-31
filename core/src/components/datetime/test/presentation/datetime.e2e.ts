@@ -35,7 +35,7 @@ test.describe('datetime: presentation', () => {
     await page.locator('select').selectOption('time');
     await page.waitForChanges();
 
-    await page.locator('text=12 >> nth=0').click();
+    await page.locator('text=AM').click();
 
     await ionChangeSpy.next();
 
