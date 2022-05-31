@@ -1249,11 +1249,14 @@ export class Datetime implements ComponentInterface {
   private renderWheelPicker(forcePresentation: string = this.presentation) {
     return (
       <ion-picker-internal>
-        {this.renderMonthPickerColumn(forcePresentation)}
-        {this.renderYearPickerColumn(forcePresentation)}
+        {this.renderDatePickerColunns(forcePresentation)}
         {this.renderTimePickerColumns(forcePresentation)}
       </ion-picker-internal>
     );
+  }
+
+  private renderDatePickerColunns(forcePresentation: string) {
+    return [this.renderMonthPickerColumn(forcePresentation), this.renderYearPickerColumn(forcePresentation)];
   }
 
   private renderMonthPickerColumn(forcePresentation: string) {
