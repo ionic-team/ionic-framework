@@ -3,8 +3,9 @@ import type { PickerColumnItem } from '../../picker-column-internal/picker-colum
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { getNumDaysInMonth } from './helpers';
-import { getNextMonth, getPreviousMonth } from './manipulation';
+import { getFormattedHour, addTimePadding } from './format';
+import { getNumDaysInMonth, is24Hour } from './helpers';
+import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
 /**
  * Returns the current date as
@@ -370,4 +371,58 @@ export const getYearColumnData = (
     text: `${year}`,
     value: year,
   }));
+};
+
+export const getTimeColumnsData = (
+  locale: string,
+  refParts: DatetimeParts,
+  hourCycle?: 'h23' | 'h12',
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  allowedHourValues?: number[],
+  allowedMinuteVaues?: number[]
+): { [key: string]: PickerColumnItem[] } => {
+  const use24Hour = is24Hour(locale, hourCycle);
+  const { hours, minutes, am, pm } = generateTime(
+    refParts,
+    use24Hour ? 'h23' : 'h12',
+    minParts,
+    maxParts,
+    allowedHourValues,
+    allowedMinuteVaues
+  );
+
+  const hoursItems = hours.map((hour) => {
+    return {
+      text: getFormattedHour(hour, use24Hour),
+      value: getInternalHourValue(hour, use24Hour, refParts.ampm),
+    };
+  });
+  const minutesItems = minutes.map((minute) => {
+    return {
+      text: addTimePadding(minute),
+      value: minute,
+    };
+  });
+
+  const ampmItems = [];
+  if (am && !use24Hour) {
+    ampmItems.push({
+      text: 'AM',
+      value: 'am',
+    });
+  }
+
+  if (pm && !use24Hour) {
+    ampmItems.push({
+      text: 'PM',
+      value: 'pm',
+    });
+  }
+
+  return {
+    minutesData: minutesItems,
+    hoursData: hoursItems,
+    ampmData: ampmItems,
+  };
 };

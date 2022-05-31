@@ -18,6 +18,7 @@ import {
   getToday,
   getMonthColumnData,
   getYearColumnData,
+  getTimeColumnsData,
 } from './utils/data';
 import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
@@ -36,7 +37,6 @@ import {
   getStartOfWeek,
 } from './utils/manipulation';
 import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
-import { renderTimePickerColumnsData } from './utils/render';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -1357,7 +1357,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { hoursData, minutesData, ampmData } = renderTimePickerColumnsData(
+    const { hoursData, minutesData, ampmData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
