@@ -1,4 +1,5 @@
 import type { Mode } from '../../../interface';
+import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
@@ -276,13 +277,13 @@ export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   ];
 };
 
-export const getPickerMonths = (
+export const getMonthColumnData = (
   locale: string,
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   monthValues?: number[]
-) => {
+): PickerColumnItem[] => {
   const { year } = refParts;
   const months = [];
 
@@ -340,31 +341,33 @@ export const getPickerMonths = (
   return months;
 };
 
-export const getCalendarYears = (
+export const getYearColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   yearValues?: number[]
-) => {
+): PickerColumnItem[] => {
+  let processedYears = [];
   if (yearValues !== undefined) {
-    let processedYears = yearValues;
+    processedYears = yearValues;
     if (maxParts?.year !== undefined) {
       processedYears = processedYears.filter((year) => year <= maxParts.year!);
     }
     if (minParts?.year !== undefined) {
       processedYears = processedYears.filter((year) => year >= minParts.year!);
     }
-    return processedYears;
   } else {
     const { year } = refParts;
     const maxYear = maxParts?.year || year;
     const minYear = minParts?.year || year - 100;
 
-    const years = [];
     for (let i = maxYear; i >= minYear; i--) {
-      years.push(i);
+      processedYears.push(i);
     }
-
-    return years;
   }
+
+  return processedYears.map((year) => ({
+    text: `${year}`,
+    value: year,
+  }));
 };

@@ -11,7 +11,14 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import { generateMonths, getDaysOfMonth, getDaysOfWeek, getToday } from './utils/data';
+import {
+  generateMonths,
+  getDaysOfMonth,
+  getDaysOfWeek,
+  getToday,
+  getMonthColumnData,
+  getYearColumnData,
+} from './utils/data';
 import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
 import {
@@ -29,7 +36,7 @@ import {
   getStartOfWeek,
 } from './utils/manipulation';
 import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
-import { renderMonthPickerColumnData, renderYearPickerColumnData, renderTimePickerColumnsData } from './utils/render';
+import { renderTimePickerColumnsData } from './utils/render';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -1265,13 +1272,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const months = renderMonthPickerColumnData(
-      this.locale,
-      workingParts,
-      this.minParts,
-      this.maxParts,
-      this.parsedMonthValues
-    );
+    const months = getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
 
     return (
       <ion-picker-column-internal
@@ -1314,7 +1315,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const years = renderYearPickerColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
+    const years = getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
 
     return (
       <ion-picker-column-internal
