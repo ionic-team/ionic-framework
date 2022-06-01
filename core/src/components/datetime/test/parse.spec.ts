@@ -1,4 +1,4 @@
-import { getPartsFromCalendarDay } from '../utils/parse';
+import { getPartsFromCalendarDay, parseAmPm, parseLocalizedAmPm } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -18,3 +18,32 @@ describe('getPartsFromCalendarDay()', () => {
 });
 
 // TODO: parseDate()
+
+describe('parseAmPm()', () => {
+
+  it('should return pm when the hour is greater than or equal to 12', () => {
+    expect(parseAmPm(12)).toEqual('pm');
+    expect(parseAmPm(13)).toEqual('pm');
+  });
+
+  it('should return am when the hour is less than 12', () => {
+    expect(parseAmPm(11)).toEqual('am');
+  });
+});
+
+describe('parseLocalizedAmPm', () => {
+  it('should return AM when the date is in the morning', () => {
+    const date = new Date();
+    date.setHours(0);
+
+    expect(parseLocalizedAmPm('en-US', date.toISOString())).toEqual('AM');
+  });
+
+  it('should return PM when the date is in the afternoon', () => {
+    const date = new Date();
+    date.setHours(13);
+
+    expect(parseLocalizedAmPm('en-US', date.toISOString())).toEqual('PM');
+  });
+
+});
