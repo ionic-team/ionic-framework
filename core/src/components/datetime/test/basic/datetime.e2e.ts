@@ -28,6 +28,23 @@ test.describe('datetime: selecting a day', () => {
   test('should not highlight a day until one is selected, with default-buttons', async ({ page }) => {
     await testHighlight(page, 'custom-datetime');
   });
+  test('should update the active day', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime show-default-buttons="true" value="2021-12-25T12:40:00.000Z"></ion-datetime>
+    `);
+
+    const activeDay = await page.locator('ion-datetime .calendar-day-active');
+
+    expect(activeDay).toHaveText('25');
+
+    const dayBtn = await page.locator('ion-datetime .calendar-day[data-day="13"][data-month="12"]');
+    dayBtn.click();
+    await page.waitForChanges();
+
+    const newActiveDay = await page.locator('ion-datetime .calendar-day-active');
+
+    expect(newActiveDay).toHaveText('13');
+  })
 });
 
 test.describe('datetime: confirm date', () => {
@@ -45,4 +62,61 @@ test.describe('datetime: confirm date', () => {
     const valueAgain = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
     expect(valueAgain).toBeUndefined();
   });
+  test.skip('should set the date value based on the selected date', async () => {
+    // TODO
+  });
 });
+
+test.describe('datetime: footer', () => {
+  test('should render default buttons', async ({ page }) => {
+    await page.setContent('<ion-datetime show-default-buttons="true"></ion-datetime>');
+
+    const cancelButton = page.locator('ion-datetime #cancel-button');
+    expect(cancelButton).toHaveText('Cancel');
+
+    const confirmButton = page.locator('ion-datetime #confirm-button');
+    expect(confirmButton).toHaveText('Done');
+
+    const datetime = page.locator('ion-datetime');
+    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-default-buttons-${page.getSnapshotSettings()}.png`);
+  })
+  test('should render clear button', async ({ page }) => {
+    await page.setContent('<ion-datetime show-clear-button="true"></ion-datetime>');
+
+    const clearButton = page.locator('ion-datetime #clear-button');
+    expect(clearButton).toHaveText('Clear');
+
+    const datetime = page.locator('ion-datetime');
+    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-clear-button-${page.getSnapshotSettings()}.png`);
+  })
+  test('should render default and clear buttons', async ({ page }) => {
+    await page.setContent('<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>');
+
+    const cancelButton = page.locator('ion-datetime #cancel-button');
+    expect(cancelButton).toHaveText('Cancel');
+
+    const confirmButton = page.locator('ion-datetime #confirm-button');
+    expect(confirmButton).toHaveText('Done');
+
+    const clearButton = page.locator('ion-datetime #clear-button');
+    expect(clearButton).toHaveText('Clear');
+
+    const datetime = page.locator('ion-datetime');
+    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-default-clear-buttons-${page.getSnapshotSettings()}.png`);
+  })
+  test('should render custom buttons', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime>
+        <ion-buttons slot="buttons">
+          <ion-button id="custom-button" color="primary">Hello!</ion-button>
+        </ion-buttons>
+      </ion-datetime>
+    `);
+
+    const customButton = page.locator('ion-datetime #custom-button');
+    expect(customButton).toBeVisible();
+
+    const datetime = page.locator('ion-datetime');
+    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-custom-buttons-${page.getSnapshotSettings()}.png`);
+  })
+})
