@@ -226,9 +226,13 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
+        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement;
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
+        }
+
+        if (activeElement.disabled) {
+          return;
         }
 
         /**
@@ -280,7 +284,7 @@ export class PickerColumnInternal implements ComponentInterface {
   };
 
   get activeItem() {
-    return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]`) as HTMLElement | null;
+    return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]:not([disabled])`) as HTMLElement | null;
   }
 
   render() {
