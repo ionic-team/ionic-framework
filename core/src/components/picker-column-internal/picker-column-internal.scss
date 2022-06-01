@@ -34,7 +34,17 @@
 }
 
 :host .picker-item {
+  display: block;
+
   height: 34px;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: inherit;
 
   line-height: 34px;
 
@@ -42,12 +52,15 @@
 
   white-space: nowrap;
 
+  cursor: pointer;
+
   overflow: hidden;
 
   scroll-snap-align: center;
 }
 
-:host .picker-item-empty {
+:host .picker-item-empty,
+:host .picker-item[disabled] {
   scroll-snap-align: none;
 }
 

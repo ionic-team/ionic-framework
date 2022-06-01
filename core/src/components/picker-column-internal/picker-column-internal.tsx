@@ -146,7 +146,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private setValue(value?: string | number) {
     const { items } = this;
     this.value = value;
-    const findItem = items.find((item) => item.value === value);
+    const findItem = items.find((item) => item.value === value && item.disabled !== true);
     if (findItem) {
       this.ionChange.emit(findItem);
     }
@@ -301,7 +301,8 @@ export class PickerColumnInternal implements ComponentInterface {
         <div class="picker-item picker-item-empty">&nbsp;</div>
         {items.map((item, index) => {
           return (
-            <div
+            <button
+              disabled={item.disabled}
               class="picker-item"
               data-value={item.value}
               data-index={index}
@@ -310,7 +311,7 @@ export class PickerColumnInternal implements ComponentInterface {
               }}
             >
               {item.text}
-            </div>
+            </button>
           );
         })}
         <div class="picker-item picker-item-empty">&nbsp;</div>
