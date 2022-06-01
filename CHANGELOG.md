@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.8-nightly.20220601](https://github.com/ionic-team/ionic-framework/compare/v6.1.7...v6.1.8-nightly.20220601) (2022-06-01)
+
+
+### Bug Fixes
+
+* **all:** improve compatibility with vite ([#25381](https://github.com/ionic-team/ionic-framework/issues/25381)) ([d83bcd2](https://github.com/ionic-team/ionic-framework/commit/d83bcd2b7f9937550008f995ff91517777584373)), closes [#23823](https://github.com/ionic-team/ionic-framework/issues/23823)
+* **item-sliding:** swiping inside of virtual scroller now prevents scrolling ([#25345](https://github.com/ionic-team/ionic-framework/issues/25345)) ([5a1a5f6](https://github.com/ionic-team/ionic-framework/commit/5a1a5f6b4c2ab4059158986e907fff45d03be753))
+* **range:** dragging knob no longer scrolls page ([#25343](https://github.com/ionic-team/ionic-framework/issues/25343)) ([0b92dff](https://github.com/ionic-team/ionic-framework/commit/0b92dffa92c05705ff83518c10608e3dc3651d51)), closes [#19004](https://github.com/ionic-team/ionic-framework/issues/19004)
+* **react:** present controller overlays in React 18 ([#25361](https://github.com/ionic-team/ionic-framework/issues/25361)) ([01c40ea](https://github.com/ionic-team/ionic-framework/commit/01c40eae5509f1c150d79269a7a75c05112fa343)), closes [#25247](https://github.com/ionic-team/ionic-framework/issues/25247)
+
+
+
+
+
 ## [6.1.7](https://github.com/ionic-team/ionic-framework/compare/v6.1.6...v6.1.7) (2022-05-26)
 
 
