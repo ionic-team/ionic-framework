@@ -524,7 +524,8 @@ export class Datetime implements ComponentInterface {
   };
 
   private get isCalendarPicker() {
-    return this.presentation === 'date' || this.presentation === 'date-time' || this.presentation === 'time-date';
+    const { presentation } = this;
+    return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
   }
 
   /**
