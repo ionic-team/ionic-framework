@@ -1265,8 +1265,8 @@ export class Datetime implements ComponentInterface {
 
   private renderDatePickerColunns(forcePresentation: string) {
     const { workingParts } = this;
-    const shouldRenderMonth = forcePresentation !== 'year' && forcePresentation !== 'time';
-    const months = shouldRenderMonth
+    const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
+    const months = shouldRenderMonths
       ? getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues)
       : [];
 
