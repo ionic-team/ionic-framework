@@ -364,4 +364,4 @@ export const getTimePickerPopoverMinWidth = (ampmLabels: string[]): string => {
   }
 
   return popoverMinWidth;
-}
+};

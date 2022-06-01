@@ -498,5 +498,5 @@ describe('getTimePickerPopoverMinWidth', () => {
   });
   it('should return a calculated width when the am/pm label lengths are greater than 2', () => {
     expect(getTimePickerPopoverMinWidth(['முற்பகல்', 'பிற்பகல்'])).toEqual('calc(200px + 6ch)');
-  })
+  });
 });

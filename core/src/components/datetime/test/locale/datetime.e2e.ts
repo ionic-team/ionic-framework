@@ -1,19 +1,16 @@
-
 import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: locale', () => {
-
   let datetimeFixture: DatetimeLocaleFixture;
 
   test.beforeEach(async ({ page }) => {
     datetimeFixture = new DatetimeLocaleFixture(page);
     await datetimeFixture.goto();
-  })
+  });
 
   test.describe('en-US', () => {
-
     test.beforeEach(async () => {
       await datetimeFixture.setLocale('en-US');
     });
@@ -29,11 +26,9 @@ test.describe('datetime: locale', () => {
     test('time picker should not have visual regressions', async () => {
       await datetimeFixture.expectLocalizedTimePicker();
     });
-
   });
 
   test.describe('ta-IN', () => {
-
     test.beforeEach(async () => {
       await datetimeFixture.setLocale('ta-IN');
     });
@@ -49,11 +44,9 @@ test.describe('datetime: locale', () => {
     test('time picker should not have visual regressions', async () => {
       await datetimeFixture.expectLocalizedTimePicker();
     });
-
   });
 
   test.describe('ja-JP', () => {
-
     test.beforeEach(async () => {
       await datetimeFixture.setLocale('ja-JP');
     });
@@ -69,11 +62,9 @@ test.describe('datetime: locale', () => {
     test('time picker should not have visual regressions', async () => {
       await datetimeFixture.expectLocalizedTimePicker();
     });
-
   });
 
   test.describe('es-ES', () => {
-
     test.beforeEach(async () => {
       await datetimeFixture.setLocale('es-ES');
     });
@@ -89,14 +80,10 @@ test.describe('datetime: locale', () => {
     test('time picker should not have visual regressions', async () => {
       await datetimeFixture.expectLocalizedTimePicker();
     });
-
   });
-
-
 });
 
 class DatetimeLocaleFixture {
-
   readonly page: E2EPage;
   locale = 'en-US';
 
@@ -117,7 +104,9 @@ class DatetimeLocaleFixture {
   async expectLocalizedDatePicker() {
     await this.page.setIonViewport();
     // Captures a screenshot of the datepicker with localized am/pm labels
-    expect(await this.page.screenshot()).toMatchSnapshot(`datetime-locale-${this.locale}-diff-${this.page.getSnapshotSettings()}.png`);
+    expect(await this.page.screenshot()).toMatchSnapshot(
+      `datetime-locale-${this.locale}-diff-${this.page.getSnapshotSettings()}.png`
+    );
   }
 
   async expectLocalizedMonthYearPicker() {
@@ -127,7 +116,9 @@ class DatetimeLocaleFixture {
     await monthYearButton.click();
     await this.page.waitForChanges();
     // Capture a screenshot of the month/year picker with localized month labels.
-    expect(await this.page.screenshot()).toMatchSnapshot(`datetime-locale-${this.locale}-month-year-diff-${this.page.getSnapshotSettings()}.png`);
+    expect(await this.page.screenshot()).toMatchSnapshot(
+      `datetime-locale-${this.locale}-month-year-diff-${this.page.getSnapshotSettings()}.png`
+    );
   }
 
   async expectLocalizedTimePicker() {
@@ -138,7 +129,8 @@ class DatetimeLocaleFixture {
     await timePickerButton.click();
     await timePickerPopoverPresentSpy.next();
     // Capture a screenshot of the time picker with localized am/pm labels
-    expect(await this.page.screenshot()).toMatchSnapshot(`datetime-locale-${this.locale}-time-diff-${this.page.getSnapshotSettings()}.png`);
+    expect(await this.page.screenshot()).toMatchSnapshot(
+      `datetime-locale-${this.locale}-time-diff-${this.page.getSnapshotSettings()}.png`
+    );
   }
-
 }

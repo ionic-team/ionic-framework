@@ -114,7 +114,7 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
  */
 export const parseAmPm = (hour: number) => {
   return hour >= 12 ? 'pm' : 'am';
-}
+};
 
 /**
  * Parses the locale's string representation of the day period (am/pm) for a given
@@ -131,4 +131,4 @@ export const parseLocalizedAmPm = (locale: string, dateStringIso: string) => {
   })
     .formatToParts(new Date(dateStringIso))
     .find((part) => part.type === 'dayPeriod')?.value;
-}
+};

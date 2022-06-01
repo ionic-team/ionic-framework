@@ -20,7 +20,6 @@ describe('getPartsFromCalendarDay()', () => {
 // TODO: parseDate()
 
 describe('parseAmPm()', () => {
-
   it('should return pm when the hour is greater than or equal to 12', () => {
     expect(parseAmPm(12)).toEqual('pm');
     expect(parseAmPm(13)).toEqual('pm');
@@ -45,5 +44,4 @@ describe('parseLocalizedAmPm', () => {
 
     expect(parseLocalizedAmPm('en-US', date.toISOString())).toEqual('PM');
   });
-
 });
