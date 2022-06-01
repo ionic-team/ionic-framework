@@ -1,5 +1,8 @@
 import type { DatetimeParts } from '../datetime-interface';
 
+import { convertDataToISO } from './manipulation';
+import { parseLocalizedAmPm } from './parse';
+
 const get12HourTime = (hour: number) => {
   return hour % 12 || 12;
 };
@@ -12,7 +15,7 @@ const getFormattedAMPM = (ampm?: string) => {
   return ampm.toUpperCase();
 };
 
-export const getFormattedTime = (refParts: DatetimeParts, use24Hour: boolean): string => {
+export const getFormattedTime = (locale: string, refParts: DatetimeParts, use24Hour: boolean): string => {
   if (refParts.hour === undefined || refParts.minute === undefined) {
     return 'Invalid Time';
   }
@@ -24,7 +27,10 @@ export const getFormattedTime = (refParts: DatetimeParts, use24Hour: boolean): s
     return `${hour}:${minute}`;
   }
 
-  return `${hour}:${minute} ${getFormattedAMPM(refParts.ampm)}`;
+  const date = new Date(convertDataToISO(refParts));
+  const ampm = parseLocalizedAmPm(locale, date.toISOString());
+
+  return `${hour}:${minute} ${ampm ?? getFormattedAMPM(refParts.ampm)}`;
 };
 
 /**

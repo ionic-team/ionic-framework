@@ -36,8 +36,15 @@ import {
   getPreviousWeek,
   getPreviousYear,
   getStartOfWeek,
+  getTimePickerPopoverMinWidth,
 } from './utils/manipulation';
-import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import {
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseLocalizedAmPm,
+} from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -1079,6 +1086,7 @@ export class Datetime implements ComponentInterface {
     this.highlightActiveParts = !!value;
     const valueToProcess = value || getToday();
     const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+    const ampm = parseAmPm(hour);
 
     this.setWorkingParts({
       month,
@@ -1087,7 +1095,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm,
     });
 
     this.activeParts = {
@@ -1097,7 +1105,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm,
     };
   };
 
@@ -1623,7 +1631,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getFormattedTime(this.activePartsClone, use24Hour)}
+        {getFormattedTime(this.locale, this.activePartsClone, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -1645,6 +1653,7 @@ export class Datetime implements ComponentInterface {
         }}
         style={{
           '--offset-y': '-10px',
+          '--min-width': getTimePickerPopoverMinWidth(ampmItems.map((item) => item.text)),
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.
@@ -1664,7 +1673,7 @@ export class Datetime implements ComponentInterface {
    * should just be the default segment.
    */
   private renderTime() {
-    const { workingParts, presentation } = this;
+    const { workingParts, presentation, locale } = this;
     const timeOnlyPresentation = presentation === 'time';
     const use24Hour = is24Hour(this.locale, this.hourCycle);
     const { hours, minutes, am, pm } = generateTime(
@@ -1692,15 +1701,23 @@ export class Datetime implements ComponentInterface {
 
     const ampmItems = [];
     if (am) {
+      const tempAmDate = new Date();
+      tempAmDate.setHours(0);
+      const localizedAmText = parseLocalizedAmPm(locale, tempAmDate.toISOString());
+
       ampmItems.push({
-        text: 'AM',
+        text: localizedAmText ?? 'AM',
         value: 'am',
       });
     }
 
     if (pm) {
+      const tempPmDate = new Date();
+      tempPmDate.setHours(12);
+      const localizedPmText = parseLocalizedAmPm(locale, tempPmDate.toISOString());
+
       ampmItems.push({
-        text: 'PM',
+        text: localizedPmText ?? 'PM',
         value: 'pm',
       });
     }

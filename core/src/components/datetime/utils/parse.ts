@@ -106,3 +106,29 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
     tzOffset,
   };
 };
+
+/**
+ * Parses an hour and returns if the value is in the morning (am) or afternoon (pm).
+ * @param hour The hour to format, should be 0-23
+ * @returns `pm` if the hour is greater than or equal to 12, `am` if less than 12.
+ */
+export const parseAmPm = (hour: number) => {
+  return hour >= 12 ? 'pm' : 'am';
+}
+
+/**
+ * Parses the locale's string representation of the day period (am/pm) for a given
+ * date string value.
+ *
+ * @param locale The locale to format the day period in.
+ * @param value The date string, in ISO format.
+ * @returns The localized day period (am/pm) representation of the given value.
+ */
+export const parseLocalizedAmPm = (locale: string, dateStringIso: string) => {
+  return new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    timeZone: 'UTC',
+  })
+    .formatToParts(new Date(dateStringIso))
+    .find((part) => part.type === 'dayPeriod')?.value;
+}
