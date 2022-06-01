@@ -7,6 +7,8 @@ test.describe('datetime: date wheel rendering', () => {
       <ion-datetime presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
     `);
 
+    const datetime = page.locator('ion-datetime');
+
     expect(await datetime.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
   });
   test('should respect the min bounds', async ({ page }) => {
