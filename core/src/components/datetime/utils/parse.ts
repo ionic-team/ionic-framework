@@ -110,15 +110,16 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
 };
 
 export const clampDate = (date: string, min?: string, max?: string): string => {
-  const parsedDate = parseDate(date);
+  const dateParts = parseDate(date);
   if (min) {
     const minParts = parseDate(min);
-    if (isBefore(parsedDate, minParts)) {
+    if (isBefore(dateParts, minParts)) {
       return min;
     }
-  } else if (max) {
+  }
+  if (max) {
     const maxParts = parseDate(max);
-    if (isAfter(parsedDate, maxParts)) {
+    if (isAfter(dateParts, maxParts)) {
       return max;
     }
   }
