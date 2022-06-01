@@ -3,9 +3,11 @@ import { test } from '@utils/test/playwright';
 
 test.describe('datetime: date wheel rendering', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto('/src/components/datetime/test/prefer-wheel');
+    await page.setContent(`
+      <ion-datetime presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
+    `);
 
-    expect(await page.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
+    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
   });
   test('should respect the min bounds', async ({ page }) => {
     await page.setContent(`
