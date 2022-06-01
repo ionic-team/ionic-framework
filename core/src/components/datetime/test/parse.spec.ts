@@ -20,18 +20,45 @@ describe('getPartsFromCalendarDay()', () => {
 // TODO: parseDate()
 
 describe('clampDate()', () => {
+
+  const minParts = {
+    year: 2021,
+    month: 6,
+    day: 5
+  };
+
+  const maxParts = {
+    year: 2021,
+    month: 8,
+    day: 19
+  }
   it('should return the max month when the value is greater than the max', () => {
-    const value = clampDate('2022-05-24', '2021-06-05', '2021-08-19');
-    expect(value).toEqual('2021-08-19');
+    const dateParts = {
+      year: 2022,
+      month: 5,
+      day: 24
+    }
+    const value = clampDate(dateParts, minParts, maxParts);
+    expect(value).toStrictEqual(maxParts);
   });
 
   it('should return the min month when the value is less than the min', () => {
-    const value = clampDate('2020-05-24', '2021-06-05', '2021-08-19');
-    expect(value).toEqual('2021-06-05');
+    const dateParts = {
+      year: 2020,
+      month: 5,
+      day: 24
+    }
+    const value = clampDate(dateParts, minParts, maxParts);
+    expect(value).toStrictEqual(minParts)
   });
 
   it('should return the value when the value is greater than the min and less than the max', () => {
-    const value = clampDate('2021-07-10', '2021-06-05', '2021-08-19');
-    expect(value).toEqual('2021-07-10');
+    const dateParts = {
+      year: 2021,
+      month: 7,
+      day: 10
+    }
+    const value = clampDate(dateParts, minParts, maxParts);
+    expect(value).toStrictEqual(dateParts);
   });
 });

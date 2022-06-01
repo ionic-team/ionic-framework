@@ -109,19 +109,12 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
   };
 };
 
-export const clampDate = (date: string, min?: string, max?: string): string => {
-  const dateParts = parseDate(date);
-  if (min) {
-    const minParts = parseDate(min);
-    if (isBefore(dateParts, minParts)) {
-      return min;
-    }
+export const clampDate = (dateParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts): DatetimeParts => {
+  if (minParts && isBefore(dateParts, minParts)) {
+    return minParts;
   }
-  if (max) {
-    const maxParts = parseDate(max);
-    if (isAfter(dateParts, maxParts)) {
-      return max;
-    }
+  else if (maxParts && isAfter(dateParts, maxParts)) {
+    return maxParts;
   }
-  return date;
+  return dateParts;
 };

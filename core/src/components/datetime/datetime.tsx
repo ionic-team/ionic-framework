@@ -1083,8 +1083,8 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
-    const valueToProcess = clampDate(value || getToday(), this.min, this.max);
-    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+    const valueToProcess = parseDate(value || getToday());
+    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
 
     this.setWorkingParts({
       month,
@@ -1093,7 +1093,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm: hour! >= 12 ? 'pm' : 'am',
     });
 
     this.activeParts = {
@@ -1103,7 +1103,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm: hour! >= 12 ? 'pm' : 'am',
     };
   };
 
