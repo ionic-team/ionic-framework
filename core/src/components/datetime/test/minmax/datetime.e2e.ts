@@ -51,8 +51,8 @@ test.describe('datetime: minmax', () => {
   test.describe('when the datetime does not have a value', () => {
     test('all time values should be available for selection', async ({ page }) => {
       /**
-       * When the datetime does not have an active value, all time values should
-       * be available for selection.
+       * When the datetime does not have an initial value and today falls outside of
+       * the specified min and max values, all times values should be available for selection.
        */
       await page.setContent(`
         <ion-datetime min="2022-04-22T04:10:00" max="2022-05-21T21:30:00"></ion-datetime>

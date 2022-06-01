@@ -1670,11 +1670,10 @@ export class Datetime implements ComponentInterface {
     const { hours, minutes, am, pm } = generateTime(
       workingParts,
       use24Hour ? 'h23' : 'h12',
-      this.minParts,
-      this.maxParts,
+      this.value ? this.minParts : undefined,
+      this.value ? this.maxParts : undefined,
       this.parsedHourValues,
-      this.parsedMinuteValues,
-      this.value
+      this.parsedMinuteValues
     );
 
     const hoursItems = hours.map((hour) => {

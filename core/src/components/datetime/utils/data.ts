@@ -150,8 +150,7 @@ export const generateTime = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   hourValues?: number[],
-  minuteValues?: number[],
-  currentValue?: string | null
+  minuteValues?: number[]
 ) => {
   const use24Hour = hourCycle === 'h23';
   let processedHours = use24Hour ? hour23 : hour12;
@@ -167,7 +166,7 @@ export const generateTime = (
     processedMinutes = processedMinutes.filter((minute) => minuteValues.includes(minute));
   }
 
-  if (minParts && currentValue !== undefined) {
+  if (minParts) {
     /**
      * If ref day is the same as the
      * minimum allowed day, filter hour/minute
@@ -219,7 +218,7 @@ export const generateTime = (
     }
   }
 
-  if (maxParts && currentValue !== undefined) {
+  if (maxParts) {
     /**
      * If ref day is the same as the
      * maximum allowed day, filter hour/minute
