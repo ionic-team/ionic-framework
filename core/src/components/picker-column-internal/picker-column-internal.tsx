@@ -305,9 +305,11 @@ export class PickerColumnInternal implements ComponentInterface {
         <div class="picker-item picker-item-empty">&nbsp;</div>
         {items.map((item, index) => {
           return (
-            <button
-              disabled={item.disabled}
-              class="picker-item"
+            <div
+              class={{
+                'picker-item': true,
+                'picker-item-disabled': item.disabled || false
+              }}
               data-value={item.value}
               data-index={index}
               onClick={(ev: Event) => {
@@ -315,7 +317,7 @@ export class PickerColumnInternal implements ComponentInterface {
               }}
             >
               {item.text}
-            </button>
+            </div>
           );
         })}
         <div class="picker-item picker-item-empty">&nbsp;</div>
