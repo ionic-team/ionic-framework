@@ -1,5 +1,3 @@
-
-
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
@@ -12,4 +10,3 @@ test.describe('item: disabled state', () => {
     expect(await page.screenshot()).toMatchSnapshot(`item-disabled-diff-${page.getSnapshotSettings()}.png`);
   });
 });
-

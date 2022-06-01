@@ -11,7 +11,6 @@ test.describe('item: counter', () => {
   });
 
   test.describe('custom formatter', () => {
-
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/item/test/counter');
     });

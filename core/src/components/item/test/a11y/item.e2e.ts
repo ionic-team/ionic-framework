@@ -1,5 +1,3 @@
-
-
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';

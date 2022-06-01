@@ -38,8 +38,7 @@
               <ion-datetime
                 name="date"
                 id="datetime"
-                min="1994-03-14"
-                max="2017-12-09"
+                value="2022-04-01T10:00"
                 display-format="MM/DD/YYYY"
               ></ion-datetime>
             </ion-item>
@@ -137,7 +136,7 @@
           <ion-item>
             <ion-checkbox slot="start" id="checkbox-start"></ion-checkbox>
             <ion-label>Multiple inputs w/ cover</ion-label>
-            <ion-datetime placeholder="startTime" display-format="HH:mm" id="datetime-end"></ion-datetime>
+            <ion-datetime placeholder="startTime" id="datetime-end" value="2022-04-01T10:00"> </ion-datetime>
             <ion-checkbox slot="end" id="checkbox-end"></ion-checkbox>
           </ion-item>
 
@@ -222,7 +221,7 @@
         const { datetime, select, toggle, text, placeholder, checkbox, range } = getInputs();
         text.value = placeholder.value = 'Some text';
         toggle.checked = checkbox.checked = true;
-        datetime.value = '2016-12-09';
+        datetime.value = '2022-04-01T10:00';
         range.value = 20;
         select.value = 'nes';
       }
