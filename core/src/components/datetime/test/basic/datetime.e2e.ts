@@ -44,7 +44,7 @@ test.describe('datetime: selecting a day', () => {
     const newActiveDay = await page.locator('ion-datetime .calendar-day-active');
 
     expect(newActiveDay).toHaveText('13');
-  })
+  });
 });
 
 test.describe('datetime: confirm date', () => {
@@ -78,8 +78,10 @@ test.describe('datetime: footer', () => {
     expect(confirmButton).toHaveText('Done');
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-default-buttons-${page.getSnapshotSettings()}.png`);
-  })
+    expect(await datetime.screenshot()).toMatchSnapshot(
+      `datetime-footer-default-buttons-${page.getSnapshotSettings()}.png`
+    );
+  });
   test('should render clear button', async ({ page }) => {
     await page.setContent('<ion-datetime show-clear-button="true"></ion-datetime>');
 
@@ -87,8 +89,10 @@ test.describe('datetime: footer', () => {
     expect(clearButton).toHaveText('Clear');
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-clear-button-${page.getSnapshotSettings()}.png`);
-  })
+    expect(await datetime.screenshot()).toMatchSnapshot(
+      `datetime-footer-clear-button-${page.getSnapshotSettings()}.png`
+    );
+  });
   test('should render default and clear buttons', async ({ page }) => {
     await page.setContent('<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>');
 
@@ -102,8 +106,10 @@ test.describe('datetime: footer', () => {
     expect(clearButton).toHaveText('Clear');
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-default-clear-buttons-${page.getSnapshotSettings()}.png`);
-  })
+    expect(await datetime.screenshot()).toMatchSnapshot(
+      `datetime-footer-default-clear-buttons-${page.getSnapshotSettings()}.png`
+    );
+  });
   test('should render custom buttons', async ({ page }) => {
     await page.setContent(`
       <ion-datetime>
@@ -117,6 +123,8 @@ test.describe('datetime: footer', () => {
     expect(customButton).toBeVisible();
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-footer-custom-buttons-${page.getSnapshotSettings()}.png`);
-  })
-})
+    expect(await datetime.screenshot()).toMatchSnapshot(
+      `datetime-footer-custom-buttons-${page.getSnapshotSettings()}.png`
+    );
+  });
+});
