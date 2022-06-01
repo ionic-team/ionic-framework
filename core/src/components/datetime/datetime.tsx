@@ -442,12 +442,13 @@ export class Datetime implements ComponentInterface {
   @Method()
   async confirm(closeOverlay = false) {
     /**
-     * If highlightActiveParts is false, this means the datetime was inited
-     * without a value, and the user hasn't selected one yet. We shouldn't
-     * update the value in this case, since otherwise it would be mysteriously
-     * set to today.
+     * We only update the value if the presentation is not a calendar picker,
+     * or if `highlightActiveParts` is true; indicating that the user
+     * has selected a date from the calendar picker.
+     *
+     * Otherwise "today" would accidentally be set as the value.
      */
-    if (this.highlightActiveParts) {
+    if (this.highlightActiveParts || !this.isCalendarPicker) {
       /**
        * Prevent convertDataToISO from doing any
        * kind of transformation based on timezone
@@ -521,6 +522,11 @@ export class Datetime implements ComponentInterface {
 
     this.confirm();
   };
+
+  private get isCalendarPicker() {
+    const { presentation } = this;
+    return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+  }
 
   /**
    * Stencil sometimes sets calendarBodyRef to null on rerender, even though

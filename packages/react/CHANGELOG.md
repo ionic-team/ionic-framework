@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
+
+
+### Bug Fixes
+
+* **all:** improve compatibility with vite ([#25381](https://github.com/ionic-team/ionic/issues/25381)) ([d83bcd2](https://github.com/ionic-team/ionic/commit/d83bcd2b7f9937550008f995ff91517777584373)), closes [#23823](https://github.com/ionic-team/ionic/issues/23823)
+* **react:** present controller overlays in React 18 ([#25361](https://github.com/ionic-team/ionic/issues/25361)) ([01c40ea](https://github.com/ionic-team/ionic/commit/01c40eae5509f1c150d79269a7a75c05112fa343)), closes [#25247](https://github.com/ionic-team/ionic/issues/25247)
+
+
+
+
+
+## [6.1.7](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7) (2022-05-26)
+
+
+### Bug Fixes
+
+* **range:** interfaces are now correctly exported ([#25342](https://github.com/ionic-team/ionic/issues/25342)) ([15f0c06](https://github.com/ionic-team/ionic/commit/15f0c0669f7598386edf487f408462b90ed91a08)), closes [#25341](https://github.com/ionic-team/ionic/issues/25341)
+* **react:** add param types to useIonPopover dismiss function ([#25311](https://github.com/ionic-team/ionic/issues/25311)) ([7111370](https://github.com/ionic-team/ionic/commit/7111370dd787fdec78a1e3368679bc4c73570b98))
+* **react:** IonTabButton will call custom onClick handlers ([#25313](https://github.com/ionic-team/ionic/issues/25313)) ([6034418](https://github.com/ionic-team/ionic/commit/6034418b33c32fdd682c470eaf61b9fcbe86c4bb)), closes [#22511](https://github.com/ionic-team/ionic/issues/22511)
+
+
+
+
+
 ## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
 
 **Note:** Version bump only for package @ionic/react
