@@ -62,6 +62,8 @@
 :host .picker-item-empty,
 :host .picker-item[disabled] {
   scroll-snap-align: none;
+
+  cursor: default;
 }
 
 :host(.picker-column-active) .picker-item.picker-item-active {
