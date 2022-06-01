@@ -1264,16 +1264,26 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDatePickerColunns(forcePresentation: string) {
-    const { workingParts } = this;
+    const { workingParts, isDateEnabled } = this;
     const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
     const months = shouldRenderMonths
       ? getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues)
       : [];
 
     const shouldRenderDays = forcePresentation === 'date';
-    const days = shouldRenderDays
+    let days = shouldRenderDays
       ? getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues)
       : [];
+
+    if (isDateEnabled) {
+      days = days.map(dayObject => {
+        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year };
+        return {
+          ...dayObject,
+          disabled: isDateEnabled(convertDataToISO(referenceParts))
+        }
+      })
+    }
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
