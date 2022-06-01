@@ -1264,18 +1264,30 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDatePickerColunns(forcePresentation: string) {
-    return [
-      this.renderMonthPickerColumn(forcePresentation),
-      this.renderDayPickerColumn(forcePresentation),
-      this.renderYearPickerColumn(forcePresentation),
-    ];
+    const { workingParts } = this;
+    const shouldRenderMonth = forcePresentation !== 'year' && forcePresentation !== 'time';
+    const months = shouldRenderMonth
+      ? getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues)
+      : [];
+
+    const shouldRenderDays = forcePresentation === 'date';
+    const days = shouldRenderDays
+      ? getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues)
+      : [];
+
+    const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
+    const years = shouldRenderYears
+      ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      : [];
+
+    return [this.renderMonthPickerColumn(months), this.renderDayPickerColumn(days), this.renderYearPickerColumn(years)];
   }
 
-  private renderDayPickerColumn(forcePresentation: string) {
+  private renderDayPickerColumn(days: PickerColumnItem[]) {
+    if (days.length === 0) {
+      return [];
+    }
     const { workingParts } = this;
-    if (forcePresentation !== 'date') return [];
-
-    const days = getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues);
 
     return (
       <ion-picker-column-internal
@@ -1310,14 +1322,12 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     );
   }
-
-  private renderMonthPickerColumn(forcePresentation: string) {
-    const { workingParts } = this;
-    if (forcePresentation === 'year' || forcePresentation === 'time') {
+  private renderMonthPickerColumn(months: PickerColumnItem[]) {
+    if (months.length === 0) {
       return [];
     }
 
-    const months = getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+    const { workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1338,12 +1348,10 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          if (forcePresentation === 'month' || forcePresentation === 'month-year') {
-            this.setActiveParts({
-              ...this.activeParts,
-              month: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...this.activeParts,
+            month: ev.detail.value,
+          });
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1354,13 +1362,11 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     );
   }
-  private renderYearPickerColumn(forcePresentation: string) {
+  private renderYearPickerColumn(years: PickerColumnItem[]) {
     const { workingParts } = this;
-    if (forcePresentation === 'month' || forcePresentation === 'time') {
+    if (years.length === 0) {
       return [];
     }
-
-    const years = getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
 
     return (
       <ion-picker-column-internal
@@ -1381,12 +1387,10 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          if (forcePresentation === 'year' || forcePresentation === 'month-year') {
-            this.setActiveParts({
-              ...this.activeParts,
-              year: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...this.activeParts,
+            year: ev.detail.value,
+          });
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
