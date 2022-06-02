@@ -34,19 +34,7 @@
 }
 
 :host .picker-item {
-  display: block;
-
   height: 34px;
-
-  border: none;
-
-  outline: none;
-
-  background: transparent;
-
-  color: inherit;
-
-  font-size: inherit;
 
   line-height: 34px;
 
@@ -54,22 +42,21 @@
 
   white-space: nowrap;
 
-  cursor: pointer;
-
   overflow: hidden;
 
   scroll-snap-align: center;
 }
 
 :host .picker-item-empty,
-:host .picker-item[disabled] {
+:host .picker-item.picker-item-disabled {
   scroll-snap-align: none;
 
   cursor: default;
 }
 
-:host .picker-item[disabled] {
+:host .picker-item.picker-item-disabled {
   opacity: 0.4;
+  pointer-events: none;
 }
 
 :host(.picker-column-active) .picker-item.picker-item-active {
