@@ -26,16 +26,12 @@ test.describe('datetime: display', () => {
       select.selectOption('time');
       await page.waitForChanges();
 
-      expect(await datetime.screenshot()).toMatchSnapshot(
-        `datetime-display-time-${page.getSnapshotSettings()}.png`
-      );
+      expect(await datetime.screenshot()).toMatchSnapshot(`datetime-display-time-${page.getSnapshotSettings()}.png`);
 
       select.selectOption('date');
       await page.waitForChanges();
 
-      expect(await datetime.screenshot()).toMatchSnapshot(
-        `datetime-display-date-${page.getSnapshotSettings()}.png`
-      );
+      expect(await datetime.screenshot()).toMatchSnapshot(`datetime-display-date-${page.getSnapshotSettings()}.png`);
     });
 
     test('cover size should not have visual regressions', async ({ page }) => {
@@ -69,16 +65,12 @@ test.describe('datetime: display', () => {
       select.selectOption('time');
       await page.waitForChanges();
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `datetime-display-cover-time-${page.getSnapshotSettings()}.png`
-      );
+      expect(await page.screenshot()).toMatchSnapshot(`datetime-display-cover-time-${page.getSnapshotSettings()}.png`);
 
       select.selectOption('date');
       await page.waitForChanges();
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `datetime-display-cover-date-${page.getSnapshotSettings()}.png`
-      );
+      expect(await page.screenshot()).toMatchSnapshot(`datetime-display-cover-date-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('datetime: switch presentations', () => {
@@ -119,5 +111,5 @@ test.describe('datetime: display', () => {
 
       expect(calendarMonthYear).toHaveText('February 2022');
     });
-  })
-})
+  });
+});
