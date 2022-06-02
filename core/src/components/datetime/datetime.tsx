@@ -1276,7 +1276,7 @@ export class Datetime implements ComponentInterface {
       : [];
 
     if (isDateEnabled) {
-      days = days.map(dayObject => {
+      days = days.map((dayObject) => {
         const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year };
 
         let disabled;
@@ -1296,9 +1296,9 @@ export class Datetime implements ComponentInterface {
 
         return {
           ...dayObject,
-          disabled
-        }
-      })
+          disabled,
+        };
+      });
     }
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
