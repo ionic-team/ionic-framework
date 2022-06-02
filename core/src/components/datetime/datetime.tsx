@@ -1264,6 +1264,16 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDatePickerColunns(forcePresentation: string) {
+    return forcePresentation === 'date-time' || forcePresentation === 'time-date'
+      ? this.renderCombinedDatePickerColumn(forcePresentation)
+      : this.renderIndividualDatePickerColumns(forcePresentation);
+  }
+
+  private renderCombinedDatePickerColumn(forcePresentation: string) {
+    return ['Stub for date-time picker'];
+  }
+
+  private renderIndividualDatePickerColumns(forcePresentation: string) {
     const { workingParts, isDateEnabled } = this;
     const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
     const months = shouldRenderMonths
