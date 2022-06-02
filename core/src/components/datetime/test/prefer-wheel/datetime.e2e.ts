@@ -58,4 +58,26 @@ test.describe('datetime: date wheel rendering', () => {
     expect(await disabledYears.count()).toBe(0);
     expect(await disabledDays.count()).toBe(15);
   });
+  test.only('should respect month, day, and year preferences', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime
+        presentation="date"
+        prefer-wheel="true"
+        value="2022-01-01"
+        month-values="4,6"
+        day-values="1,2,3,4,5"
+        year-values="2022,2020,2019"
+      ></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+    const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
+    const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+
+    expect(await monthValues.count()).toBe(2);
+    expect(await yearValues.count()).toBe(3);
+    expect(await dayValues.count()).toBe(5);
+  });
 });
