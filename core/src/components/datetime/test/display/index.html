@@ -42,7 +42,7 @@
       const datetime = document.querySelector('ion-datetime');
 
       const mutationObserver = new MutationObserver(() => {
-        document.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
+        window.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
       });
 
       const initCalendarMonthChangeObserver = async () => {
