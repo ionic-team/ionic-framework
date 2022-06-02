@@ -109,11 +109,14 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
   };
 };
 
-export const clampDate = (dateParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts): DatetimeParts => {
+export const clampDate = (
+  dateParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
   if (minParts && isBefore(dateParts, minParts)) {
     return minParts;
-  }
-  else if (maxParts && isAfter(dateParts, maxParts)) {
+  } else if (maxParts && isAfter(dateParts, maxParts)) {
     return maxParts;
   }
   return dateParts;
