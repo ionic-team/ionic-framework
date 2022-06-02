@@ -58,7 +58,7 @@ test.describe('datetime: date wheel rendering', () => {
     expect(await disabledYears.count()).toBe(0);
     expect(await disabledDays.count()).toBe(15);
   });
-  test.only('should respect month, day, and year preferences', async ({ page }) => {
+  test('should respect month, day, and year preferences', async ({ page }) => {
     await page.setContent(`
       <ion-datetime
         presentation="date"
