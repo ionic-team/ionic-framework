@@ -31,4 +31,31 @@ test.describe('datetime: date wheel rendering', () => {
     const dayValues = page.locator('ion-datetime .day-column .picker-item[data-value]');
     expect(await dayValues.count()).toEqual(1);
   });
+  test('should respect isDateEnabled preference', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime presentation="date" prefer-wheel="true" value="2022-01-01"></ion-datetime>
+
+      <script>
+        const datetime = document.querySelector('ion-datetime');
+
+        datetime.isDateEnabled = (dateIsoString) => {
+          const date = new Date(dateIsoString);
+          if (date.getUTCDate() % 2 === 0) {
+            return false;
+          }
+          return true;
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const disabledMonths = page.locator('.month-column .picker-item[disabled]');
+    const disabledYears = page.locator('.year-column .picker-item[disabled]');
+    const disabledDays = page.locator('.day-column .picker-item[disabled]');
+
+    expect(await disabledMonths.count()).toBe(0);
+    expect(await disabledYears.count()).toBe(0);
+    expect(await disabledDays.count()).toBe(15);
+  });
 });

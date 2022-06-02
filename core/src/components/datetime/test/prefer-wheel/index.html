@@ -52,13 +52,13 @@
       };
       datetime.isDateEnabled = (dateIsoString) => {
         const date = new Date(dateIsoString);
-        console.log('hi',date.getUTCDate() % 2)
+        console.log('hi', date.getUTCDate() % 2);
         if (date.getUTCDate() % 2 === 0) {
           // Disables even dates
           return false;
         }
         return true;
-      }
+      };
     </script>
   </body>
 </html>
