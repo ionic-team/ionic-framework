@@ -19,7 +19,7 @@ import {
   getMonthColumnData,
   getDayColumnData,
   getYearColumnData,
-  getTimeColumnsData,
+  getTimeColumnsData
 } from './utils/data';
 import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
@@ -45,6 +45,8 @@ import {
   isNextMonthDisabled,
   isPrevMonthDisabled,
 } from './utils/state';
+import { isSameDay } from './utils/comparison';
+
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -1270,7 +1272,68 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn(forcePresentation: string) {
-    return ['Stub for date-time picker'];
+    const { workingParts, locale, minParts, maxParts, todayParts } = this;
+    const monthsToRender = generateMonths(workingParts);
+
+    // TODO clean this up
+    monthsToRender[0].day = monthsToRender[1].day = monthsToRender[2].day = null;
+
+    const min = minParts || monthsToRender[0];
+    const max = maxParts || monthsToRender[2];
+
+    const months = getMonthColumnData(locale, workingParts, min, max, this.parsedMonthValues, { month: 'short' });
+
+    let pickerItems: PickerColumnItem[] = [];
+    months.forEach(month => {
+      const referenceParts = { month: month.value as number, day: null, year: workingParts.year };
+      const days = getDayColumnData(locale, referenceParts, min, max, this.parsedDayValues, { month: 'short', day: 'numeric', weekday: 'short' });
+      days.forEach(day => {
+        const isToday = isSameDay({ ...referenceParts, day: day.value as number }, todayParts);
+        pickerItems.push({
+          // TODO Localize this
+          text: (isToday) ? 'Today' : day.text,
+          value: `${workingParts.year}-${month.value}-${day.value}`
+        })
+      })
+    })
+
+    const todayString = (workingParts.day) ? `${workingParts.year}-${workingParts.month}-${workingParts.day}` : `${todayParts.year}-${todayParts.month}-${todayParts.vadaylue}`
+
+    console.log('picker items',pickerItems)
+
+    return (
+      <ion-picker-column-internal
+        class="day-column"
+        color={this.color}
+        items={pickerItems}
+        value={todayString}
+        onIonChange={(ev: CustomEvent) => {
+          // Due to a Safari 14 issue we need to destroy
+          // the intersection observer before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          /*this.setWorkingParts({
+            ...this.workingParts,
+            day: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...this.activeParts,
+            day: ev.detail.value,
+          });*/
+          console.log('STUB')
+
+          // We can re-attach the intersection observer after
+          // the working parts have been updated.
+          this.initializeCalendarIOListeners();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
   }
 
   private renderIndividualDatePickerColumns(forcePresentation: string) {

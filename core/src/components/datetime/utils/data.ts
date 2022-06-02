@@ -283,7 +283,10 @@ export const getMonthColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  monthValues?: number[]
+  monthValues?: number[],
+  formatOptions: Intl.DateTimeFormatOptions = {
+    month: 'long'
+  }
 ): PickerColumnItem[] => {
   const { year } = refParts;
   const months = [];
@@ -300,7 +303,7 @@ export const getMonthColumnData = (
     processedMonths.forEach((processedMonth) => {
       const date = new Date(`${processedMonth}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: processedMonth });
     });
   } else {
@@ -334,7 +337,7 @@ export const getMonthColumnData = (
        */
       const date = new Date(`${i}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: i });
     }
   }
@@ -347,7 +350,10 @@ export const getDayColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  dayValues?: number[]
+  dayValues?: number[],
+  formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric'
+  }
 ): PickerColumnItem[] => {
   const { month, year } = refParts;
   const days = [];
@@ -362,14 +368,14 @@ export const getDayColumnData = (
     processedDays.forEach((processedDay) => {
       const date = new Date(`${month}/${processedDay}/${year} GMT+0000`);
 
-      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      const dayString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       days.push({ text: dayString, value: processedDay });
     });
   } else {
     for (let i = minDay; i <= maxDay; i++) {
       const date = new Date(`${month}/${i}/${year} GMT+0000`);
 
-      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      const dayString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       days.push({ text: dayString, value: i });
     }
   }

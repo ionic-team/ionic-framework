@@ -29,7 +29,13 @@
         </select>
         <label for="locale-input">Locale:</label>
         <input type="text" id="locale-input" placeholder="en-US" />
-        <ion-datetime value="2022-05-29T16:30:00" presentation="date" prefer-wheel="true"></ion-datetime>
+        <ion-datetime
+          value="2022-05-29T16:30:00"
+          presentation="date"
+          prefer-wheel="true"
+          max="2022-06-15T16:30:00"
+          min="2022-04-05T16:30:00"
+        ></ion-datetime>
       </ion-content>
     </ion-app>
 
