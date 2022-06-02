@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.9-nightly.20220602](https://github.com/ionic-team/ionic-framework/compare/v6.1.8...v6.1.9-nightly.20220602) (2022-06-02)
+
+
+### Bug Fixes
+
+* **datetime:** emit ionChange for non-calendar picker presentation ([#25380](https://github.com/ionic-team/ionic-framework/issues/25380)) ([4e6a60b](https://github.com/ionic-team/ionic-framework/commit/4e6a60b6a42287e5091728aecb61f6097e131b83)), closes [#25375](https://github.com/ionic-team/ionic-framework/issues/25375)
+
+
+
+
+
 ## [6.1.8](https://github.com/ionic-team/ionic-framework/compare/v6.1.7...v6.1.8) (2022-06-01)
 
 
