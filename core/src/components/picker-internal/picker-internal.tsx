@@ -303,7 +303,7 @@ export class PickerInternal implements ComponentInterface {
       return;
     }
 
-    const values = inputModeColumn.items.filter(item => item.disabled !== true);
+    const values = inputModeColumn.items.filter((item) => item.disabled !== true);
 
     /**
      * If users pause for a bit, the search

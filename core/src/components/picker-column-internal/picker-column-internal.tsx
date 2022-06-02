@@ -284,7 +284,9 @@ export class PickerColumnInternal implements ComponentInterface {
   };
 
   get activeItem() {
-    return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]:not([disabled])`) as HTMLElement | null;
+    return getElementRoot(this.el).querySelector(
+      `.picker-item[data-value="${this.value}"]:not([disabled])`
+    ) as HTMLElement | null;
   }
 
   render() {
@@ -308,7 +310,7 @@ export class PickerColumnInternal implements ComponentInterface {
             <div
               class={{
                 'picker-item': true,
-                'picker-item-disabled': item.disabled || false
+                'picker-item-disabled': item.disabled || false,
               }}
               data-value={item.value}
               data-index={index}
