@@ -12,7 +12,8 @@
     "jsxFactory": "h",
     "lib": [
       "dom",
-      "es2017"
+      "es2017",
+      "es2020"
     ],
     "module": "esnext",
     "moduleResolution": "node",

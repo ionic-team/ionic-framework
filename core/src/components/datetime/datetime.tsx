@@ -19,7 +19,8 @@ import {
   getMonthColumnData,
   getDayColumnData,
   getYearColumnData,
-  getTimeColumnsData
+  getTimeColumnsData,
+  getCombinedDateColumnData,
 } from './utils/data';
 import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
@@ -45,8 +46,6 @@ import {
   isNextMonthDisabled,
   isPrevMonthDisabled,
 } from './utils/state';
-import { isSameDay } from './utils/comparison';
-
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -1267,43 +1266,57 @@ export class Datetime implements ComponentInterface {
 
   private renderDatePickerColunns(forcePresentation: string) {
     return forcePresentation === 'date-time' || forcePresentation === 'time-date'
-      ? this.renderCombinedDatePickerColumn(forcePresentation)
+      ? this.renderCombinedDatePickerColumn()
       : this.renderIndividualDatePickerColumns(forcePresentation);
   }
 
-  private renderCombinedDatePickerColumn(forcePresentation: string) {
+  private renderCombinedDatePickerColumn() {
     const { workingParts, locale, minParts, maxParts, todayParts } = this;
+
+    /**
+     * By default, generate a range of 3 months:
+     * Previous month, current month, and next month
+     */
     const monthsToRender = generateMonths(workingParts);
 
-    // TODO clean this up
-    monthsToRender[0].day = monthsToRender[1].day = monthsToRender[2].day = null;
+    /**
+     * generateMonths returns the day data as well,
+     * but we do not want the day value to act as a max/min
+     * on the data we are going to generate.
+     */
+    for (let i = 0; i <= monthsToRender.length - 1; i++) {
+      monthsToRender[i].day = null;
+    }
 
+    /**
+     * If developers have provided their own
+     * min/max values, use that instead. Otherwise,
+     * fallback to the default range of 3 months.
+     */
     const min = minParts || monthsToRender[0];
-    const max = maxParts || monthsToRender[2];
+    const max = maxParts || monthsToRender[monthsToRender.length - 1];
 
-    const months = getMonthColumnData(locale, workingParts, min, max, this.parsedMonthValues, { month: 'short' });
+    const pickerItems = getCombinedDateColumnData(
+      locale,
+      workingParts,
+      todayParts,
+      min,
+      max,
+      this.parsedDayValues,
+      this.parsedMonthValues
+    );
 
-    let pickerItems: PickerColumnItem[] = [];
-    months.forEach(month => {
-      const referenceParts = { month: month.value as number, day: null, year: workingParts.year };
-      const days = getDayColumnData(locale, referenceParts, min, max, this.parsedDayValues, { month: 'short', day: 'numeric', weekday: 'short' });
-      days.forEach(day => {
-        const isToday = isSameDay({ ...referenceParts, day: day.value as number }, todayParts);
-        pickerItems.push({
-          // TODO Localize this
-          text: (isToday) ? 'Today' : day.text,
-          value: `${workingParts.year}-${month.value}-${day.value}`
-        })
-      })
-    })
-
-    const todayString = (workingParts.day) ? `${workingParts.year}-${workingParts.month}-${workingParts.day}` : `${todayParts.year}-${todayParts.month}-${todayParts.vadaylue}`
-
-    console.log('picker items',pickerItems)
+    /**
+     * If we have selected a day already, then default the column
+     * to that value. Otherwise, default it to today.
+     */
+    const todayString = workingParts.day
+      ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+      : `${todayParts.year}-${todayParts.month}-${todayParts.vadaylue}`;
 
     return (
       <ion-picker-column-internal
-        class="day-column"
+        class="date-column"
         color={this.color}
         items={pickerItems}
         value={todayString}
@@ -1315,16 +1328,17 @@ export class Datetime implements ComponentInterface {
             this.destroyCalendarIO();
           }
 
-          /*this.setWorkingParts({
-            ...this.workingParts,
-            day: ev.detail.value,
+          // TODO Fixme
+          /*console.log('got',ev.detail.value)
+
+          this.setWorkingParts({
+            ...this.workingParts
           });
 
           this.setActiveParts({
-            ...this.activeParts,
-            day: ev.detail.value,
+            ...this.activeParts
           });*/
-          console.log('STUB')
+          console.log('STUB');
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.

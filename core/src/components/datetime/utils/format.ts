@@ -103,3 +103,17 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 };
+
+/**
+ * Gets a localized version of "Today"
+ * Falls back to "Today" in English for
+ * browsers that do not support RelativeTimeFormat.
+ */
+export const getTodayLabel = (locale: string) => {
+  if ('RelativeTimeFormat' in Intl) {
+    const label = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(0, 'day');
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  } else {
+    return 'Today';
+  }
+};

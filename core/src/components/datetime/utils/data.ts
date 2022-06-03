@@ -3,7 +3,7 @@ import type { PickerColumnItem } from '../../picker-column-internal/picker-colum
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { getFormattedHour, addTimePadding } from './format';
+import { getFormattedHour, addTimePadding, getTodayLabel } from './format';
 import { getNumDaysInMonth, is24Hour } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
@@ -285,7 +285,7 @@ export const getMonthColumnData = (
   maxParts?: DatetimeParts,
   monthValues?: number[],
   formatOptions: Intl.DateTimeFormatOptions = {
-    month: 'long'
+    month: 'long',
   }
 ): PickerColumnItem[] => {
   const { year } = refParts;
@@ -352,7 +352,7 @@ export const getDayColumnData = (
   maxParts?: DatetimeParts,
   dayValues?: number[],
   formatOptions: Intl.DateTimeFormatOptions = {
-    day: 'numeric'
+    day: 'numeric',
   }
 ): PickerColumnItem[] => {
   const { month, year } = refParts;
@@ -412,6 +412,56 @@ export const getYearColumnData = (
     text: `${year}`,
     value: year,
   }));
+};
+
+/**
+ * Creates and returns picker items
+ * that represent the days in a month.
+ * Example: "Thu, Jun 2"
+ */
+export const getCombinedDateColumnData = (
+  locale: string,
+  refParts: DatetimeParts,
+  todayParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[],
+  monthValues?: number[]
+): PickerColumnItem[] => {
+  let columns: PickerColumnItem[] = [];
+
+  const months = getMonthColumnData(locale, refParts, minParts, maxParts, monthValues, { month: 'short' });
+
+  /**
+   * Get all of the days in the month.
+   * From there, generate an array where
+   * each item has the month, date, and day
+   * of work as the text.
+   */
+  months.forEach((monthObject) => {
+    const referenceMonth = { month: monthObject.value as number, day: null, year: refParts.year };
+    const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
+      month: 'short',
+      day: 'numeric',
+      weekday: 'short',
+    });
+
+    const days = monthDays.map((dayObject) => {
+      const isToday = isSameDay({ ...referenceMonth, day: dayObject.value as number }, todayParts);
+
+      /**
+       * Today's date should read as "Today" (localized)
+       * not the actual date string
+       */
+      return {
+        text: isToday ? getTodayLabel(locale) : dayObject.text,
+        value: `${refParts.year}-${monthObject.value}-${dayObject.value}`,
+      };
+    });
+    columns = [...columns, ...days];
+  });
+
+  return columns;
 };
 
 export const getTimeColumnsData = (
