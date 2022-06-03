@@ -47,4 +47,33 @@ test.describe('datetime: minmax', () => {
     expect(nextButton).toBeDisabled();
     expect(prevButton).toBeEnabled();
   });
+
+  test.describe('when the datetime does not have a value', () => {
+    test('all time values should be available for selection', async ({ page }) => {
+      /**
+       * When the datetime does not have an initial value and today falls outside of
+       * the specified min and max values, all times values should be available for selection.
+       */
+      await page.setContent(`
+        <ion-datetime min="2022-04-22T04:10:00" max="2022-05-21T21:30:00"></ion-datetime>
+    `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('.time-body');
+      await ionPopoverDidPresent.next();
+
+      const hours = page.locator(
+        'ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)'
+      );
+      const minutes = page.locator(
+        'ion-popover ion-picker-column-internal:nth-child(2) .picker-item:not(.picker-item-empty)'
+      );
+
+      expect(await hours.count()).toBe(12);
+      expect(await minutes.count()).toBe(60);
+    });
+  });
 });
