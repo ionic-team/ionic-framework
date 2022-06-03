@@ -62,8 +62,34 @@ test.describe('datetime: confirm date', () => {
     const valueAgain = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
     expect(valueAgain).toBeUndefined();
   });
-  test.skip('should set the date value based on the selected date', async () => {
-    // TODO
+  test('should set the date value based on the selected date', async ({ page }) => {
+    await page.setContent(`
+      <button id="bind">Bind datetimeMonthDidChange event</button>
+      <ion-datetime value="2021-12-25T12:40:00.000Z"></ion-datetime>
+      <script type="module">
+        import { InitMonthDidChangeEvent } from '/src/components/datetime/test/utils/month-did-change-event.js';
+        document.querySelector('button').addEventListener('click', function() {
+          InitMonthDidChangeEvent();
+        });
+      </script>
+    `);
+
+    const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
+    const eventButton = page.locator('button#bind');
+    await eventButton.click();
+
+    const buttons = page.locator('ion-datetime .calendar-next-prev ion-button');
+    await buttons.nth(1).click();
+
+    await datetimeMonthDidChange.next();
+
+    const datetime = page.locator('ion-datetime');
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm());
+
+    // Value may include timezone information so we need to check
+    // that the value at least includes the correct date/time info.
+    const value = (await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value))!;
+    expect(value.includes('2021-12-25T12:40:00')).toBe(true);
   });
 });
 
