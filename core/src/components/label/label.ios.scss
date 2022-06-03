@@ -11,7 +11,6 @@
   line-height: $label-ios-text-wrap-line-height;
 }
 
-
 // iOS Stacked & Floating Labels
 // --------------------------------------------------
 
@@ -23,14 +22,14 @@
 
 :host(.label-floating) {
   @include margin(null, null, 0, null);
-  @include transform(translate3d(0, 29px, 0));
+  @include transform(translate(0, 29px));
   @include transform-origin(start, top);
 
   transition: transform 150ms ease-in-out;
 }
 
 :host-context(.item-textarea).label-floating {
-  @include transform(translate3d(0, 28px, 0));
+  @include transform(translate(0, 28px));
 }
 
 :host-context(.item-has-focus).label-stacked,
@@ -41,7 +40,7 @@
 :host-context(.item-has-focus).label-floating,
 :host-context(.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-has-value).label-floating {
-  @include transform(translate3d(0, 0, 0), scale(.82));
+  @include transform(scale(0.82));
 }
 
 // iOS Typography
@@ -74,7 +73,12 @@
 }
 
 ::slotted(*) p {
-  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
+  @include margin(
+    $item-ios-paragraph-margin-top,
+    $item-ios-paragraph-margin-end,
+    $item-ios-paragraph-margin-bottom,
+    $item-ios-paragraph-margin-start
+  );
 
   font-size: $item-ios-paragraph-font-size;
 
