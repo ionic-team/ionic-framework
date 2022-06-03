@@ -10,6 +10,7 @@ test.describe('datetime: position', () => {
     await openDateTimeBtn.click();
 
     await ionPopoverDidPresent.next();
+    await page.waitForSelector('.datetime-ready');
 
     expect(await page.screenshot()).toMatchSnapshot(`datetime-position-base-${page.getSnapshotSettings()}.png`);
 
