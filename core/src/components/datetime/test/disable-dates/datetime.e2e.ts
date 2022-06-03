@@ -86,6 +86,32 @@ test.describe('datetime: disable dates', () => {
         expect(await disabledDays.count()).toBe(91);
       });
     });
+    test.describe('when isDateEnabled throws an exception', () => {
+      test.beforeEach(async ({ page }) => {
+        const datetime = page.locator('ion-datetime');
+        await datetime.evaluate((el: HTMLIonDatetimeElement) => {
+          el.isDateEnabled = (dateIsoString: string) => {
+            const date = new Date(dateIsoString);
+
+            if (date.getUTCDate() === 10 && date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
+              // Throws an exception on October 10, 2021
+              // Expected behavior: the day should be enabled
+              throw new Error('Expected exception for e2e test.');
+            }
+            return false;
+          };
+        });
+      });
+      test('calendar days should be enabled', async ({ page }) => {
+        await page.waitForChanges();
+
+        const enabledDays = page.locator(
+          'ion-datetime .calendar-month:nth-child(2) .calendar-day:not([disabled]):not(.calendar-day-padding)'
+        );
+
+        expect(await enabledDays.count()).toBe(1);
+      });
+    });
   });
   test.describe('check example usages', () => {
     test.beforeEach(async ({ page }) => {
