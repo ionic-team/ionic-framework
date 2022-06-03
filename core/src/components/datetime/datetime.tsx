@@ -36,7 +36,6 @@ import {
   getPreviousWeek,
   getPreviousYear,
   getStartOfWeek,
-  getTimePickerPopoverMinWidth,
 } from './utils/manipulation';
 import {
   convertToArrayOfNumbers,
@@ -1653,7 +1652,7 @@ export class Datetime implements ComponentInterface {
         }}
         style={{
           '--offset-y': '-10px',
-          '--min-width': getTimePickerPopoverMinWidth(ampmItems.map((item) => item.text)),
+          '--min-width': 'auto',
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.

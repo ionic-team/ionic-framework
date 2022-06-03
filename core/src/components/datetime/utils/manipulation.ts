@@ -332,36 +332,3 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
 
   return newHour;
 };
-
-/**
- * Calculates the minimum width of the `ion-popover` used for the time picker,
- * by calculating the offset of characters from the localized am/pm labels.
- * @param ampmLabels The localized am/pm labels
- * @returns The CSS width value for the popover.
- */
-export const getTimePickerPopoverMinWidth = (ampmLabels: string[]): string => {
-  let popoverMinWidth = 'initial';
-  let ampmLabelSize = 2;
-
-  for (const label of ampmLabels) {
-    if (label.length > ampmLabelSize) {
-      ampmLabelSize = label.length;
-    }
-  }
-
-  if (ampmLabelSize > 2) {
-    /**
-     * Increase the width of the popover by the number of additional characters
-     * by the longest am/pm string value.
-     *
-     * For example:
-     * "பிற்பகல்" is 8 characters long.
-     * We subtract 2 characters, since the default width expects am/pm which is 2 characters.
-     * We use the `ch` unit so that the browser can calculate the width properly.
-     * The return value would be: calc(200px + 6ch)
-     */
-    popoverMinWidth = `calc(200px + ${ampmLabelSize - 2}ch)`;
-  }
-
-  return popoverMinWidth;
-};

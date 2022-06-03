@@ -14,7 +14,6 @@ import {
   calculateHourFromAMPM,
   subtractDays,
   addDays,
-  getTimePickerPopoverMinWidth,
 } from '../utils/manipulation';
 
 describe('addDays()', () => {
@@ -486,17 +485,5 @@ describe('getPreviousYear()', () => {
       year: 2023,
       day: 28,
     });
-  });
-});
-
-describe('getTimePickerPopoverMinWidth', () => {
-  it('should return initial when the am/pm labels are empty', () => {
-    expect(getTimePickerPopoverMinWidth(['', ''])).toEqual('initial');
-  });
-  it('should return initial when the am/pm labels are am or pm', () => {
-    expect(getTimePickerPopoverMinWidth(['am', 'pm'])).toEqual('initial');
-  });
-  it('should return a calculated width when the am/pm label lengths are greater than 2', () => {
-    expect(getTimePickerPopoverMinWidth(['முற்பகல்', 'பிற்பகல்'])).toEqual('calc(200px + 6ch)');
   });
 });
