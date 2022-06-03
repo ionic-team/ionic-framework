@@ -116,6 +116,7 @@ test.describe('datetime: disable dates', () => {
   test.describe('check example usages', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/datetime/test/disable-dates');
+      await page.waitForSelector('.datetime-ready');
     });
 
     test('should disable a specific date', async ({ page }) => {
