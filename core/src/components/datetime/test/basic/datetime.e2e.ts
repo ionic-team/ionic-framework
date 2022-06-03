@@ -33,15 +33,15 @@ test.describe('datetime: selecting a day', () => {
       <ion-datetime show-default-buttons="true" value="2021-12-25T12:40:00.000Z"></ion-datetime>
     `);
 
-    const activeDay = await page.locator('ion-datetime .calendar-day-active');
+    const activeDay = page.locator('ion-datetime .calendar-day-active');
 
     expect(activeDay).toHaveText('25');
 
-    const dayBtn = await page.locator('ion-datetime .calendar-day[data-day="13"][data-month="12"]');
-    dayBtn.click();
+    const dayBtn = page.locator('ion-datetime .calendar-day[data-day="13"][data-month="12"]');
+    await dayBtn.click();
     await page.waitForChanges();
 
-    const newActiveDay = await page.locator('ion-datetime .calendar-day-active');
+    const newActiveDay = page.locator('ion-datetime .calendar-day-active');
 
     expect(newActiveDay).toHaveText('13');
   });
