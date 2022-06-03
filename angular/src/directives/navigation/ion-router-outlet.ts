@@ -259,10 +259,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
          * where `this.environmentInjector` is a provider of `EnvironmentInjector` from @angular/core.
          */
         const environmentInjector = resolverOrInjector ?? this.environmentInjector;
-        // cmpRef = this.activated = location.createComponent(component, {
-        //   index: location.length,
-        //   environmentInjector
-        // } as any);
         cmpRef = this.activated = this.location.createComponent(component, {
           index: this.location.length,
           injector,
