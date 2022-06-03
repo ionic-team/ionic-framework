@@ -1,13 +1,10 @@
 import type { DatetimeParts } from '../datetime-interface';
 
-import { convertDataToISO } from './manipulation';
-import { parseLocalizedAmPm } from './parse';
-
 const get12HourTime = (hour: number) => {
   return hour % 12 || 12;
 };
 
-const getFormattedAMPM = (ampm?: string) => {
+const getFormattedDayPeriod = (ampm?: string) => {
   if (ampm === undefined) {
     return '';
   }
@@ -27,10 +24,9 @@ export const getFormattedTime = (locale: string, refParts: DatetimeParts, use24H
     return `${hour}:${minute}`;
   }
 
-  const date = new Date(convertDataToISO(refParts));
-  const ampm = parseLocalizedAmPm(locale, date.toISOString());
+  const dayPeriod = getLocalizedDayPeriod(locale, refParts.ampm);
 
-  return `${hour}:${minute} ${ampm ?? getFormattedAMPM(refParts.ampm)}`;
+  return `${hour}:${minute} ${dayPeriod ?? getFormattedDayPeriod(refParts.ampm)}`;
 };
 
 /**
@@ -109,3 +105,30 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 };
+
+const dateAm = new Date('2022T01:00');
+const datePm = new Date('2022T13:00');
+
+/**
+ * Formats the locale's string representation of the day period (am/pm) for a given
+ * ref parts day period.
+ *
+ * @param locale The locale to format the day period in.
+ * @param value The date string, in ISO format.
+ * @returns The localized day period (am/pm) representation of the given value.
+ */
+export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | undefined) => {
+  const date = dayPeriod === 'am' ? dateAm : datePm;
+  const localizedDayPeriod = new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    timeZone: 'UTC'
+  })
+    .formatToParts(date)
+    .find((part) => part.type === 'dayPeriod');
+
+  if (localizedDayPeriod) {
+    return localizedDayPeriod.value;
+  }
+
+  return getFormattedDayPeriod(dayPeriod);
+}

@@ -20,7 +20,14 @@ import {
   getPickerMonths,
   getToday,
 } from './utils/data';
-import { addTimePadding, getFormattedHour, getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import {
+  addTimePadding,
+  getFormattedHour,
+  getFormattedTime,
+  getLocalizedDayPeriod,
+  getMonthAndDay,
+  getMonthAndYear,
+} from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -37,13 +44,7 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import {
-  convertToArrayOfNumbers,
-  getPartsFromCalendarDay,
-  parseAmPm,
-  parseDate,
-  parseLocalizedAmPm,
-} from './utils/parse';
+import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseAmPm, parseDate } from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -1700,23 +1701,15 @@ export class Datetime implements ComponentInterface {
 
     const ampmItems = [];
     if (am) {
-      const tempAmDate = new Date();
-      tempAmDate.setHours(0);
-      const localizedAmText = parseLocalizedAmPm(locale, tempAmDate.toISOString());
-
       ampmItems.push({
-        text: localizedAmText ?? 'AM',
+        text: getLocalizedDayPeriod(locale, 'am'),
         value: 'am',
       });
     }
 
     if (pm) {
-      const tempPmDate = new Date();
-      tempPmDate.setHours(12);
-      const localizedPmText = parseLocalizedAmPm(locale, tempPmDate.toISOString());
-
       ampmItems.push({
-        text: localizedPmText ?? 'PM',
+        text: getLocalizedDayPeriod(locale, 'pm'),
         value: 'pm',
       });
     }

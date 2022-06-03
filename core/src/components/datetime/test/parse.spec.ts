@@ -29,19 +29,3 @@ describe('parseAmPm()', () => {
     expect(parseAmPm(11)).toEqual('am');
   });
 });
-
-describe('parseLocalizedAmPm', () => {
-  it('should return AM when the date is in the morning', () => {
-    const date = new Date();
-    date.setHours(0);
-
-    expect(parseLocalizedAmPm('en-US', date.toISOString())).toEqual('AM');
-  });
-
-  it('should return PM when the date is in the afternoon', () => {
-    const date = new Date();
-    date.setHours(13);
-
-    expect(parseLocalizedAmPm('en-US', date.toISOString())).toEqual('PM');
-  });
-});
