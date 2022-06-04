@@ -1,0 +1,64 @@
+@import "../../themes/ionic.globals";
+
+// Picker Internal
+// --------------------------------------------------
+
+:host {
+  @include padding(0px, 16px, 0px, 16px);
+
+  height: 200px;
+
+  outline: none;
+
+  font-size: 22px;
+  scroll-snap-type: y mandatory;
+
+  /**
+   * Need to explicitly set overflow-x: hidden
+   * for older implementations of scroll snapping.
+   */
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  // Hide scrollbars on Firefox
+  scrollbar-width: none;
+
+  text-align: center;
+}
+
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+:host::-webkit-scrollbar {
+  display: none;
+}
+
+:host .picker-item {
+  height: 34px;
+
+  line-height: 34px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  scroll-snap-align: center;
+}
+
+:host .picker-item-empty {
+  scroll-snap-align: none;
+}
+
+:host(.picker-column-active) .picker-item.picker-item-active {
+  color: current-color(base);
+}
+
+@media (any-hover: hover) {
+  :host(:focus) {
+    outline: none;
+
+    background: current-color(base, 0.2);
+  }
+}

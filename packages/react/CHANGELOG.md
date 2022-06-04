@@ -1,116 +1,235 @@
-# [4.10.0-rc3]
+# Change Log
 
-## Bug fixes
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-Pages should maintain their original previous page id [2afcb6](https://github.com/ionic-team/ionic/commit/2afcb6c80b167b95beb79641504d9237b498dbef), fixes [#19351](https://github.com/ionic-team/ionic/issues/19351)
+## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
 
-Dismiss overlay component on unmount, [3c2694](https://github.com/ionic-team/ionic/commit/3c26946d47b37d42dfaa3294cfb6bf8f0ef11aa4), fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
 
-Render first route even if url is same, fixes [#19392](https://github.com/ionic-team/ionic/issues/19392)
+### Bug Fixes
 
-## Breaking Changes
+* **all:** improve compatibility with vite ([#25381](https://github.com/ionic-team/ionic/issues/25381)) ([d83bcd2](https://github.com/ionic-team/ionic/commit/d83bcd2b7f9937550008f995ff91517777584373)), closes [#23823](https://github.com/ionic-team/ionic/issues/23823)
+* **react:** present controller overlays in React 18 ([#25361](https://github.com/ionic-team/ionic/issues/25361)) ([01c40ea](https://github.com/ionic-team/ionic/commit/01c40eae5509f1c150d79269a7a75c05112fa343)), closes [#25247](https://github.com/ionic-team/ionic/issues/25247)
 
-### Events have been updated to use proper types from React
 
-The types for events (such as `onClick`) were not typed correctly prior to RC3. Before, they were the normal browser events, but now they are the proper React Synthetic events. Therefore, you might have type errors that need to be remedied:
 
-```typescript
-function handleClick(e: MouseEvent) {
-  ...
-}
-```
 
-Will need to become: 
 
-```typescript
-function handleClick(e: React.MouseEvent) {
-  ...
-}
-```
+## [6.1.7](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7) (2022-05-26)
 
-Some Ionic components have the option to pass the event to them (like `IonPopover`). For these, you can access the `nativeEvent` property on the React synthetic event.
 
-### Components with href attributes and the new routerLink prop
-As of RC3, components that use the href prop (`IonButton`, `IonItem`, etc..), no longer run these links through the router. As a result, page transitions are no longer applied to these links. To maintain page transitions, use the new `routerLink` prop instead. The href prop should be used when you want to enforce a full browser transition on the page, or when you need to link to an external resource.
+### Bug Fixes
 
-# [4.9.0-rc2]
+* **range:** interfaces are now correctly exported ([#25342](https://github.com/ionic-team/ionic/issues/25342)) ([15f0c06](https://github.com/ionic-team/ionic/commit/15f0c0669f7598386edf487f408462b90ed91a08)), closes [#25341](https://github.com/ionic-team/ionic/issues/25341)
+* **react:** add param types to useIonPopover dismiss function ([#25311](https://github.com/ionic-team/ionic/issues/25311)) ([7111370](https://github.com/ionic-team/ionic/commit/7111370dd787fdec78a1e3368679bc4c73570b98))
+* **react:** IonTabButton will call custom onClick handlers ([#25313](https://github.com/ionic-team/ionic/issues/25313)) ([6034418](https://github.com/ionic-team/ionic/commit/6034418b33c32fdd682c470eaf61b9fcbe86c4bb)), closes [#22511](https://github.com/ionic-team/ionic/issues/22511)
 
-## Features
 
-Dependencies upgraded to work with Ionic Core 4.9
 
-## Bug Fixes
 
-IonPage should be root page for Ionic Pages - fixes [#19146](https://github.com/ionic-team/ionic/issues/19146)
 
-## Breaking Changes
+## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
 
-### IonPage should be the parent component of Ionic Pages
+**Note:** Version bump only for package @ionic/react
 
-`IonPage` is a specialized component that is meant to be the parent container for an Ionic Page, which typically consists of `IonHeader` and `IonContent` components. Previous to RC3, the `@ionic/react-router` library would add this component itself, but this caused some confusion around how `IonPage` should be used and why it was even available. Devs would sometimes include `IonPage` themselves as the parent of their pages, but this could cause issues with page transitions.
 
-To clear up this confusion, we decided to stop adding the `IonPage` component in the framework and offer guidance that devs should use `IonPage` as the base component in their Ionic Pages.
 
-Apps migrating from a previous version to RC2 will need to make sure `IonPage` is used as the root component for every Ionic page. Ionic Pages typically have `IonHeader` and `IonContent` tags and are the components rendered by the routes. The starters used a React Fragment before, and this fragment needs to be changed to `IonPage`. Any other uses of `IonPage` should probably be removed.
 
-Example:
 
-An Ionic Page before RC2 most likely has a React fragment as its root:
+## [6.1.5](https://github.com/ionic-team/ionic/compare/v6.1.4...v6.1.5) (2022-05-11)
 
-``` jsx
-<>
-  <IonHeader>/* header stuff */</IonHeader>
-  <IonContent>/* content stuff */</IonContent>
-</>
-```
+**Note:** Version bump only for package @ionic/react
 
-In RC2 and greater, the fragment should be updated to an IonPage component:
 
-``` jsx
-<IonPage>
-  <IonHeader>/* header stuff */</IonHeader>
-  <IonContent>/* content stuff */</IonContent>
-</IonPage>
-```
 
-### ViewManager
 
-The `<ViewManager />` component is no longer needed and can be removed. The views inside of an `<IonRouterOutlet>` are now managed by an internal stack manager and don't need the explicit ViewManager anymore.
 
-`ViewManager` is now a noop component and shows a warning message while in development. `ViewManager` will be removed in the final release of @ionic/react.
+## [6.1.4](https://github.com/ionic-team/ionic/compare/v6.1.3...v6.1.4) (2022-05-04)
 
-## Other Changes
 
-### Tab Route Setup
+### Bug Fixes
 
-Prior to RC2, tabs had to specify a tab name in their routes which helped with the page transitions. This was set up in the form of a regex named parameter like so:
+* **react:** useIonModal/useIonPopover dismiss accepts data and role ([#25209](https://github.com/ionic-team/ionic/issues/25209)) ([68b2f8b](https://github.com/ionic-team/ionic/commit/68b2f8bfe10946580b996e48c4ec1e2df94b8d49)), closes [#25208](https://github.com/ionic-team/ionic/issues/25208)
 
-`<Route path="/:tab(tab1)" component={Tab1} exact={true} />`
 
-This is no longer a requirement. Routes setup this way will continue to work, but the complexity in the path can be removed and updated to:
 
-`<Route path="/tab1" component={Tab1} exact={true} />`
 
-# [4.8.0-rc1]
 
-## Features
+## [6.1.3](https://github.com/ionic-team/ionic/compare/v6.1.2...v6.1.3) (2022-04-27)
 
-Dependencies upgraded to work with Ionic Core 4.8
 
-## Bug Fixes
+### Bug Fixes
 
-Attributes applied to Ionic Components now show up in the DOM and are visible in devtools
+* **vue:** canDismiss definition is now exposed ([#25195](https://github.com/ionic-team/ionic/issues/25195)) ([e5e0e24](https://github.com/ionic-team/ionic/commit/e5e0e24f76c15c1a49f759b1a140e337f5393edd))
 
-`IonBackButton` now preserves the query string parameters from the referring page: https://github.com/ionic-team/ionic/pull/19150/commits/2e2068ee5ea467636b4454e1106df1d8f05230d2
 
-Supporting class attributes as well as className attributes for Ionic React components: https://github.com/ionic-team/ionic/pull/19150/commits/bef7bc8b1b190bf704fd6960711672bfd7aedfa6, closes [#19107](https://github.com/ionic-team/ionic/issues/19107)
 
-Exporting the previously missing isPlatform method from core: https://github.com/ionic-team/ionic/pull/19150/commits/fc817471582785a00db77ee922a73ccfda42b870, closes [#19122] https://github.com/ionic-team/ionic/issues/19122
 
-# [4.8.0-rc0]
 
-Welcome to React RC! 
+## [6.1.2](https://github.com/ionic-team/ionic/compare/v6.1.1...v6.1.2) (2022-04-20)
 
-### Breaking Changes
+**Note:** Version bump only for package @ionic/react
 
-There is a new `ViewManager` component exported from @ionic/react-router. If you have an `IonRouterOutlet` component outside of a tabs component, you will need to wrap the `IonRouterOutlet` with the `ViewManager` to preserve the transitions and state management that the IonRouterOutlet provide on its own in the betas.
+
+
+
+
+## [6.1.1](https://github.com/ionic-team/ionic/compare/v6.1.0...v6.1.1) (2022-04-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [6.1.0](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.1.0) (2022-04-13)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.16](https://github.com/ionic-team/ionic/compare/v6.0.15...v6.0.16) (2022-04-08)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.15](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.14](https://github.com/ionic-team/ionic/compare/v6.0.13...v6.0.14) (2022-03-30)
+
+
+### Bug Fixes
+
+* **react:** treeshake ionic/core bundle ([#24989](https://github.com/ionic-team/ionic/issues/24989)) ([a296ca8](https://github.com/ionic-team/ionic/commit/a296ca875c18ec01bfc57972571e95a6d79f5678)), closes [#24497](https://github.com/ionic-team/ionic/issues/24497)
+
+
+
+
+
+## [6.0.13](https://github.com/ionic-team/ionic/compare/v6.0.12...v6.0.13) (2022-03-23)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.12](https://github.com/ionic-team/ionic/compare/v6.0.11...v6.0.12) (2022-03-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.11](https://github.com/ionic-team/ionic/compare/v6.0.10...v6.0.11) (2022-03-09)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.10](https://github.com/ionic-team/ionic/compare/v6.0.9...v6.0.10) (2022-03-02)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.9](https://github.com/ionic-team/ionic/compare/v6.0.8...v6.0.9) (2022-02-23)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.8](https://github.com/ionic-team/ionic/compare/v6.0.7...v6.0.8) (2022-02-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.7](https://github.com/ionic-team/ionic/compare/v6.0.6...v6.0.7) (2022-02-09)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.0.6](https://github.com/ionic-team/ionic/compare/v6.0.5...v6.0.6) (2022-02-09)
+
+
+### Bug Fixes
+
+* **angular, react,  vue:** overlays no longer throw errors when used inside tests ([#24681](https://github.com/ionic-team/ionic/issues/24681)) ([897ae4a](https://github.com/ionic-team/ionic/commit/897ae4a4546ac0dd811125d5513ef23d133a1589)), closes [#24549](https://github.com/ionic-team/ionic/issues/24549) [#24590](https://github.com/ionic-team/ionic/issues/24590)
+
+
+
+
+
+## [6.0.5](https://github.com/ionic-team/ionic/compare/v6.0.4...v6.0.5) (2022-02-02)
+
+
+### Bug Fixes
+
+* **react-router:** remove page transition flicker on outlet mounting ([#24667](https://github.com/ionic-team/ionic/issues/24667)) ([bdb5c42](https://github.com/ionic-team/ionic/commit/bdb5c421d2d1f72c123c254e50c6d31b3c1a8f42)), closes [#24666](https://github.com/ionic-team/ionic/issues/24666)
+* **react:** nested router outlets will not reanimate entered views ([#24672](https://github.com/ionic-team/ionic/issues/24672)) ([43aa6c1](https://github.com/ionic-team/ionic/commit/43aa6c11f42fd5cf455c50419d5f5fbb327b2901)), closes [#24107](https://github.com/ionic-team/ionic/issues/24107)
+
+
+### Performance Improvements
+
+* **various:** don't use lazy-loaded icon names in components ([#24671](https://github.com/ionic-team/ionic/issues/24671)) ([484de50](https://github.com/ionic-team/ionic/commit/484de5074de212dffb4bf4f73bade7acec103fe8))
+
+
+
+
+
+## [6.0.4](https://github.com/ionic-team/ionic/compare/v6.0.3...v6.0.4) (2022-01-26)
+
+
+### Bug Fixes
+
+* **react:** setupIonicReact no longer crashes in SSR environment ([#24604](https://github.com/ionic-team/ionic/issues/24604)) ([360643d](https://github.com/ionic-team/ionic/commit/360643d96a03b345c83b88c9ff06e9aa254dee81))
+
+
+
+
+
+## [6.0.3](https://github.com/ionic-team/ionic/compare/v6.0.2...v6.0.3) (2022-01-19)
+
+
+### Bug Fixes
+
+* **react:** add useRef wrapper to useIonOverlay state to avoid stale references ([#24553](https://github.com/ionic-team/ionic/issues/24553)) ([bce849c](https://github.com/ionic-team/ionic/commit/bce849c5f324522002eff7f8a5e5023150e9201c))
+* **react:** prevent errors when dismissing inline popover after containing element is removed ([#24569](https://github.com/ionic-team/ionic/issues/24569)) ([c8a392a](https://github.com/ionic-team/ionic/commit/c8a392aef5fbf25f59a573897d970c41abac04d2))
+
+
+
+
+
+## [6.0.2](https://github.com/ionic-team/ionic/compare/v6.0.1...v6.0.2) (2022-01-11)
+
+
+### Bug Fixes
+
+* **breadcrumb:** support routerLink on breadcrumb ([#24509](https://github.com/ionic-team/ionic/issues/24509)) ([5bb1414](https://github.com/ionic-team/ionic/commit/5bb1414f7fa04ea07954cb3f68883ee2f162586a)), closes [#24493](https://github.com/ionic-team/ionic/issues/24493)
+* **react,vue:** backdrop for inline modal/popover overlay ([#24453](https://github.com/ionic-team/ionic/issues/24453)) ([77f8412](https://github.com/ionic-team/ionic/commit/77f8412b746222793cd9d17f12f50d512ab5e886)), closes [#24449](https://github.com/ionic-team/ionic/issues/24449)
+* **react:** building app for production now works correctly with vite ([#24515](https://github.com/ionic-team/ionic/issues/24515)) ([32fad3d](https://github.com/ionic-team/ionic/commit/32fad3d02cb6b012a772de03eafe3e3a6b1300e0)), closes [#24229](https://github.com/ionic-team/ionic/issues/24229)
+* **react:** scrolling to bottom of modal contents ([#24510](https://github.com/ionic-team/ionic/issues/24510)) ([1462cef](https://github.com/ionic-team/ionic/commit/1462cef69225e20582e2f9a0b8fd655ca2066b79)), closes [#24478](https://github.com/ionic-team/ionic/issues/24478)

@@ -1,0 +1,18 @@
+name: 'Test Core Clean Build'
+description: 'Test Core Clean Build'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Check Diff
+      run: git diff --exit-code
+      shell: bash
+      working-directory: ./core

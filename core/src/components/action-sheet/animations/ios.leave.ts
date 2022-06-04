@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
@@ -9,9 +9,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
-  backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')!).fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.action-sheet-wrapper')!)

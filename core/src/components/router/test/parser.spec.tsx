@@ -1,10 +1,9 @@
 import { mockWindow } from '@stencil/core/testing';
 
-import { RouteRedirect, RouteTree } from '../utils/interface';
+import type { RouteRedirect, RouteTree } from '../utils/interface';
 import { flattenRouterTree, readRedirects, readRouteNodes } from '../utils/parser';
 
 describe('parser', () => {
-
   describe('readRoutes', () => {
     it('should read URL', () => {
       const root = win.document.createElement('div');
@@ -25,15 +24,25 @@ describe('parser', () => {
       r4.appendChild(r6);
 
       const expected: RouteTree = [
-        { path: [''], id: 'main-page', children: [], params: undefined },
-        { path: ['one-page'], id: 'one-page', children: [], params: undefined },
-        { path: ['secondpage'], id: 'second-page', params: undefined, children: [
-          { path: ['5', 'hola'], id: '4', params: undefined, children: [
-            { path: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
-            { path: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
-          ] }
-        ] },
-        { path: ['path'], id: '6', children: [], params: undefined }
+        { segments: [''], id: 'main-page', children: [], params: undefined },
+        { segments: ['one-page'], id: 'one-page', children: [], params: undefined },
+        {
+          segments: ['secondpage'],
+          id: 'second-page',
+          params: undefined,
+          children: [
+            {
+              segments: ['5', 'hola'],
+              id: '4',
+              params: undefined,
+              children: [
+                { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+                { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined },
+              ],
+            },
+          ],
+        },
+        { segments: ['path'], id: '6', children: [], params: undefined },
       ];
       expect(readRouteNodes(root)).toEqual(expected);
     });
@@ -58,7 +67,7 @@ describe('parser', () => {
 
       const expected: RouteRedirect[] = [
         { from: [''], to: undefined },
-        { from: [''], to: { segments: ['workout'] }},
+        { from: [''], to: { segments: ['workout'] } },
         { from: ['*'], to: undefined },
         { from: ['workout', '*'], to: { segments: [''] } },
         { from: ['path', 'hey'], to: { segments: ['path', 'to', 'login'] } },
@@ -71,21 +80,39 @@ describe('parser', () => {
   describe('flattenRouterTree', () => {
     it('should process routes', () => {
       const entries: RouteTree = [
-        { path: [''], id: 'hola', children: [], params: undefined },
-        { path: ['one-page'], id: 'one-page', children: [], params: undefined },
-        { path: ['secondpage'], id: 'second-page', params: undefined, children: [
-          { path: ['5', 'hola'], id: '4', params: undefined, children: [
-            { path: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
-            { path: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
-          ] }
-        ] }
+        { segments: [''], id: 'hola', children: [], params: undefined },
+        { segments: ['one-page'], id: 'one-page', children: [], params: undefined },
+        {
+          segments: ['secondpage'],
+          id: 'second-page',
+          params: undefined,
+          children: [
+            {
+              segments: ['5', 'hola'],
+              id: '4',
+              params: undefined,
+              children: [
+                { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+                { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined },
+              ],
+            },
+          ],
+        },
       ];
       const routes = flattenRouterTree(entries);
       expect(routes).toEqual([
-        [{ path: [''], id: 'hola' }],
-        [{ path: ['one-page'], id: 'one-page' }],
-        [{ path: ['secondpage'], id: 'second-page' }, { path: ['5', 'hola'], id: '4' }, { path: ['path', 'to', 'five'], id: '5' }],
-        [{ path: ['secondpage'], id: 'second-page' }, { path: ['5', 'hola'], id: '4' }, { path: ['path', 'to', 'five2'], id: '6' }],
+        [{ segments: [''], id: 'hola' }],
+        [{ segments: ['one-page'], id: 'one-page' }],
+        [
+          { segments: ['secondpage'], id: 'second-page' },
+          { segments: ['5', 'hola'], id: '4' },
+          { segments: ['path', 'to', 'five'], id: '5' },
+        ],
+        [
+          { segments: ['secondpage'], id: 'second-page' },
+          { segments: ['5', 'hola'], id: '4' },
+          { segments: ['path', 'to', 'five2'], id: '6' },
+        ],
       ]);
     });
   });
@@ -103,7 +130,7 @@ export function mockRouteElement(win: Window, path: string, component: string) {
   return el;
 }
 
-export function mockRedirectElement(win: Window, from: string | undefined | null, to: string | undefined | null) {
+function mockRedirectElement(win: Window, from: string | undefined | null, to: string | undefined | null) {
   const el = win.document.createElement('ion-route-redirect');
   if (from != null) {
     el.setAttribute('from', from);

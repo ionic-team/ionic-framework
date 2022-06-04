@@ -1,9 +1,59 @@
-import { EventEmitter } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { Side } from '../interface';
+import type { Side } from '../interface';
 
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
+
+export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
+  return new Promise((resolve) => {
+    transitionEnd(el, expectedDuration, resolve);
+  });
+};
+
+/**
+ * Allows developer to wait for a transition
+ * to finish and fallback to a timer if the
+ * transition is cancelled or otherwise
+ * never finishes. Also see transitionEndAsync
+ * which is an await-able version of this.
+ */
+const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
+  let unRegTrans: (() => void) | undefined;
+  let animationTimeout: any;
+  const opts: any = { passive: true };
+  const ANIMATION_FALLBACK_TIMEOUT = 500;
+
+  const unregister = () => {
+    if (unRegTrans) {
+      unRegTrans();
+    }
+  };
+
+  const onTransitionEnd = (ev?: Event) => {
+    if (ev === undefined || el === ev.target) {
+      unregister();
+      callback(ev as TransitionEvent);
+    }
+  };
+
+  if (el) {
+    el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+    el.addEventListener('transitionend', onTransitionEnd, opts);
+    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
+
+    unRegTrans = () => {
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+        animationTimeout = undefined;
+      }
+      el.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+      el.removeEventListener('transitionend', onTransitionEnd, opts);
+    };
+  }
+
+  return unregister;
+};
 
 /**
  * Waits for a component to be ready for
@@ -23,7 +73,9 @@ export const componentOnReady = (el: any, callback: any) => {
   } else {
     raf(() => callback(el));
   }
-}
+};
+
+export type Attributes = { [key: string]: any };
 
 /**
  * Elements inside of web components sometimes need to inherit global attributes
@@ -36,9 +88,9 @@ export const componentOnReady = (el: any, callback: any) => {
  * does not trigger a re-render.
  */
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
-  const attributeObject: { [k: string]: any } = {};
+  const attributeObject: Attributes = {};
 
-  attributes.forEach(attr => {
+  attributes.forEach((attr) => {
     if (el.hasAttribute(attr)) {
       const value = el.getAttribute(attr);
       if (value !== null) {
@@ -49,12 +101,80 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
   });
 
   return attributeObject;
-}
+};
+
+/**
+ * List of available ARIA attributes + `role`.
+ * Removed deprecated attributes.
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+ */
+const ariaAttributes = [
+  'role',
+  'aria-activedescendant',
+  'aria-atomic',
+  'aria-autocomplete',
+  'aria-braillelabel',
+  'aria-brailleroledescription',
+  'aria-busy',
+  'aria-checked',
+  'aria-colcount',
+  'aria-colindex',
+  'aria-colindextext',
+  'aria-colspan',
+  'aria-controls',
+  'aria-current',
+  'aria-describedby',
+  'aria-description',
+  'aria-details',
+  'aria-disabled',
+  'aria-errormessage',
+  'aria-expanded',
+  'aria-flowto',
+  'aria-haspopup',
+  'aria-hidden',
+  'aria-invalid',
+  'aria-keyshortcuts',
+  'aria-label',
+  'aria-labelledby',
+  'aria-level',
+  'aria-live',
+  'aria-multiline',
+  'aria-multiselectable',
+  'aria-orientation',
+  'aria-owns',
+  'aria-placeholder',
+  'aria-posinset',
+  'aria-pressed',
+  'aria-readonly',
+  'aria-relevant',
+  'aria-required',
+  'aria-roledescription',
+  'aria-rowcount',
+  'aria-rowindex',
+  'aria-rowindextext',
+  'aria-rowspan',
+  'aria-selected',
+  'aria-setsize',
+  'aria-sort',
+  'aria-valuemax',
+  'aria-valuemin',
+  'aria-valuenow',
+  'aria-valuetext',
+];
+
+/**
+ * Returns an array of aria attributes that should be copied from
+ * the shadow host element to a target within the light DOM.
+ * @param el The element that the attributes should be copied from.
+ */
+export const inheritAriaAttributes = (el: HTMLElement) => {
+  return inheritAttributes(el, ariaAttributes);
+};
 
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   if (typeof (window as any) !== 'undefined') {
     const win = window as any;
-    const config = win && win.Ionic && win.Ionic.config;
+    const config = win?.Ionic?.config;
     if (config) {
       const ael = config.get('_ael');
       if (ael) {
@@ -71,7 +191,7 @@ export const addEventListener = (el: any, eventName: string, callback: any, opts
 export const removeEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   if (typeof (window as any) !== 'undefined') {
     const win = window as any;
-    const config = win && win.Ionic && win.Ionic.config;
+    const config = win?.Ionic?.config;
     if (config) {
       const rel = config.get('_rel');
       if (rel) {
@@ -124,6 +244,25 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
   return null;
 };
 
+export const focusElement = (el: HTMLElement) => {
+  el.focus();
+
+  /**
+   * When programmatically focusing an element,
+   * the focus-visible utility will not run because
+   * it is expecting a keyboard event to have triggered this;
+   * however, there are times when we need to manually control
+   * this behavior so we call the `setFocus` method on ion-app
+   * which will let us explicitly set the elements to focus.
+   */
+  if (el.classList.contains('ion-focusable')) {
+    const app = el.closest('ion-app');
+    if (app) {
+      app.setFocus([el]);
+    }
+  }
+};
+
 /**
  * This method is used for Ionic's input components that use Shadow DOM. In
  * order to properly label the inputs to work with screen readers, we need
@@ -137,7 +276,10 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
  * @param componentEl The shadow element that needs the aria label
  * @param inputId The unique identifier for the input
  */
-export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label: Element | null, labelId: string, labelText: string | null | undefined } => {
+export const getAriaLabel = (
+  componentEl: HTMLElement,
+  inputId: string
+): { label: Element | null; labelId: string; labelText: string | null | undefined } => {
   let labelText;
 
   // If the user provides their own label via the aria-labelledby attr
@@ -148,13 +290,10 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
   // a custom label using the label element
   const componentId = componentEl.id;
 
-  let labelId = labelledBy !== null && labelledBy.trim() !== ''
-    ? labelledBy
-    : inputId + '-lbl';
+  let labelId = labelledBy !== null && labelledBy.trim() !== '' ? labelledBy : inputId + '-lbl';
 
-  let label = labelledBy !== null && labelledBy.trim() !== ''
-    ? document.getElementById(labelledBy)
-    : findItemLabel(componentEl);
+  let label =
+    labelledBy !== null && labelledBy.trim() !== '' ? document.getElementById(labelledBy) : findItemLabel(componentEl);
 
   if (label) {
     if (labelledBy === null) {
@@ -164,8 +303,8 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
     labelText = label.textContent;
     label.setAttribute('aria-hidden', 'true');
 
-  // if there is no label, check to see if the user has provided
-  // one by setting an id on the component and using the label element
+    // if there is no label, check to see if the user has provided
+    // one by setting an id on the component and using the label element
   } else if (componentId.trim() !== '') {
     label = document.querySelector(`label[for="${componentId}"]`);
 
@@ -195,7 +334,13 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
  * @param value The value of the input
  * @param disabled If true, the input is disabled
  */
-export const renderHiddenInput = (always: boolean, container: HTMLElement, name: string, value: string | undefined | null, disabled: boolean) => {
+export const renderHiddenInput = (
+  always: boolean,
+  container: HTMLElement,
+  name: string,
+  value: string | undefined | null,
+  disabled: boolean
+) => {
   if (always || hasShadowDom(container)) {
     let input = container.querySelector('input.aux-input') as HTMLInputElement | null;
     if (!input) {
@@ -218,7 +363,7 @@ export const assert = (actual: any, reason: string) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
     console.error(message);
-    debugger; // tslint:disable-line
+    debugger; // eslint-disable-line
     throw new Error(message);
   }
 };
@@ -227,7 +372,7 @@ export const now = (ev: UIEvent) => {
   return ev.timeStamp || Date.now();
 };
 
-export const pointerCoord = (ev: any): { x: number, y: number } => {
+export const pointerCoord = (ev: any): { x: number; y: number } => {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
@@ -253,8 +398,10 @@ export const pointerCoord = (ev: any): { x: number, y: number } => {
 export const isEndSide = (side: Side): boolean => {
   const isRTL = document.dir === 'rtl';
   switch (side) {
-    case 'start': return isRTL;
-    case 'end': return !isRTL;
+    case 'start':
+      return isRTL;
+    case 'end':
+      return !isRTL;
     default:
       throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
   }
@@ -268,7 +415,7 @@ export const debounceEvent = (event: EventEmitter, wait: number): EventEmitter =
   const original = (event as any)._original || event;
   return {
     _original: event,
-    emit: debounce(original.emit.bind(original), wait)
+    emit: debounce(original.emit.bind(original), wait),
   } as EventEmitter;
 };
 
@@ -278,4 +425,40 @@ export const debounce = (func: (...args: any[]) => void, wait = 0) => {
     clearTimeout(timer);
     timer = setTimeout(func, wait, ...args);
   };
+};
+
+/**
+ * Check whether the two string maps are shallow equal.
+ *
+ * undefined is treated as an empty map.
+ *
+ * @returns whether the keys are the same and the values are shallow equal.
+ */
+export const shallowEqualStringMap = (
+  map1: { [k: string]: any } | undefined,
+  map2: { [k: string]: any } | undefined
+): boolean => {
+  map1 ??= {};
+  map2 ??= {};
+
+  if (map1 === map2) {
+    return true;
+  }
+
+  const keys1 = Object.keys(map1);
+
+  if (keys1.length !== Object.keys(map2).length) {
+    return false;
+  }
+
+  for (const k1 of keys1) {
+    if (!(k1 in map2)) {
+      return false;
+    }
+    if (map1[k1] !== map2[k1]) {
+      return false;
+    }
+  }
+
+  return true;
 };

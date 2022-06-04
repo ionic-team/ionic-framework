@@ -1,145 +1,140 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Split Pane - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Split Pane - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <body>
+    <ion-app>
+      <ion-split-pane id="splitPane" content-id="split-content">
+        <ion-menu side="start" content-id="split-content">
+          <ion-header>
+            <ion-toolbar color="secondary">
+              <ion-title>Left Menu</ion-title>
+            </ion-toolbar>
+          </ion-header>
 
-<body>
-  <ion-app>
-    <ion-split-pane id="splitPane" content-id="split-content">
+          <ion-content>
+            <ion-list>
+              <ion-item>Open end Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+              <ion-item>Close Menu</ion-item>
+            </ion-list>
+          </ion-content>
 
-      <ion-menu side="start" content-id="split-content">
+          <ion-footer>
+            <ion-toolbar color="secondary">
+              <ion-title>Footer</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+        </ion-menu>
 
-        <ion-header>
-          <ion-toolbar color="secondary">
-            <ion-title>Left Menu</ion-title>
-          </ion-toolbar>
-        </ion-header>
+        <div class="ion-page" id="split-content">
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+                <ion-menu-button auto-hide="false"></ion-menu-button>
+              </ion-buttons>
 
-        <ion-content>
-          <ion-list>
-            <ion-item>Open end Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-          </ion-list>
-        </ion-content>
+              <ion-title>Navigation</ion-title>
+            </ion-toolbar>
+          </ion-header>
 
-        <ion-footer>
-          <ion-toolbar color="secondary">
-            <ion-title>Footer</ion-title>
-          </ion-toolbar>
-        </ion-footer>
+          <ion-content class="ion-padding">
+            <h1>Page 1</h1>
+            <ion-button onclick="menu()">Disable/enable menu</ion-button>
+            <f></f>
+            <f></f>
+            <f></f>
+            <f></f>
 
-      </ion-menu>
+            <ion-item>
+              <ion-label>Toggle Side Min Width</ion-label>
+              <ion-toggle id="side-min-width"></ion-toggle>
+            </ion-item>
 
-      <div class='ion-page' id="split-content">
+            <ion-item>
+              <ion-label>Toggle Side Max Width</ion-label>
+              <ion-toggle id="side-max-width"></ion-toggle>
+            </ion-item>
 
-        <ion-header>
-          <ion-toolbar>
+            <ion-item>
+              <ion-label>Toggle Side Fixed Width</ion-label>
+              <ion-toggle id="side-width"></ion-toggle>
+            </ion-item>
+          </ion-content>
+        </div>
+      </ion-split-pane>
+    </ion-app>
+    <ion-menu-controller></ion-menu-controller>
 
-            <ion-buttons slot="start">
-              <ion-menu-button></ion-menu-button>
-              <ion-menu-button auto-hide="false"></ion-menu-button>
-            </ion-buttons>
+    <script>
+      const sideMinWidth = document.querySelector('ion-toggle#side-min-width');
+      const sideMaxWidth = document.querySelector('ion-toggle#side-max-width');
+      const sideWidth = document.querySelector('ion-toggle#side-width');
 
-            <ion-title>Navigation</ion-title>
-          </ion-toolbar>
-        </ion-header>
+      const splitPane = document.querySelector('ion-split-pane');
 
-        <ion-content class="ion-padding">
-          <h1>Page 1</h1>
-          <ion-button onclick="menu()">Disable/enable menu</ion-button>
-          <f></f>
-          <f></f>
-          <f></f>
-          <f></f>
-          
-          <ion-item>
-            <ion-label>Toggle Side Min Width</ion-label>
-            <ion-toggle id="side-min-width"></ion-toggle>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label>Toggle Side Max Width</ion-label>
-            <ion-toggle id="side-max-width"></ion-toggle>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label>Toggle Side Fixed Width</ion-label>
-            <ion-toggle id="side-width"></ion-toggle>
-          </ion-item>
-        </ion-content>
-      </div>
-    </ion-split-pane>
+      sideMinWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-min-width'));
+      sideMaxWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-max-width'));
+      sideWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-width'));
 
-  </ion-app>
-  <ion-menu-controller></ion-menu-controller>
+      const menuCtrl = document.querySelector('ion-menu-controller');
+      function openStart() {
+        menuCtrl.open('start');
+      }
 
-  <script>
-    const sideMinWidth = document.querySelector('ion-toggle#side-min-width');
-    const sideMaxWidth = document.querySelector('ion-toggle#side-max-width');
-    const sideWidth = document.querySelector('ion-toggle#side-width');
+      async function menu() {
+        menuCtrl.enable(!(await menuCtrl.isEnabled()));
+      }
+    </script>
 
-    const splitPane = document.querySelector('ion-split-pane');
-    
-    sideMinWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-min-width'));    
-    sideMaxWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-max-width'));    
-    sideWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-width')); 
+    <style>
+      .side-width {
+        --side-width: 150px;
+        --side-min-width: 150px;
+      }
 
-    const menuCtrl = document.querySelector('ion-menu-controller');
-    function openStart() {
-      menuCtrl.open('start');
-    }
+      .side-min-width {
+        --side-min-width: 500px;
+      }
 
-    async function menu() {
-      menuCtrl.enable(!await menuCtrl.isEnabled());
-    }
-  </script>
+      .side-max-width {
+        --side-max-width: 75px;
+        --side-min-width: 0px;
+      }
 
-  <style>
-    .side-width {
-      --side-width: 150px;
-      --side-min-width: 150px;
-    }
-    
-    .side-min-width {
-      --side-min-width: 500px;
-    }
-    
-    .side-max-width {
-      --side-max-width: 75px;
-      --side-min-width: 0px;
-    }
-    
-    f {
-      display: block;
-      height: 150px;
-      width: 150px;
-      background-color: blue;
-      margin: 15px auto;
-    }
+      f {
+        display: block;
+        height: 150px;
+        width: 150px;
+        background-color: blue;
+        margin: 15px auto;
+      }
 
-    f:last-child {
-      background-color: red;
-    }
-
-  </style>
-</body>
-
+      f:last-child {
+        background-color: red;
+      }
+    </style>
+  </body>
 </html>

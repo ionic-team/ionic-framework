@@ -1,6 +1,6 @@
 import { h, defineComponent } from 'vue';
 
-export const IonPage = defineComponent({
+export const IonPage = /*@__PURE__*/ defineComponent({
   name: 'IonPage',
   props: {
     isInOutlet: { type: Boolean, default: false },
@@ -12,11 +12,12 @@ export const IonPage = defineComponent({
   setup(props, { attrs, slots }) {
     const hidePageClass = (props.isInOutlet) ? 'ion-page-invisible' : '';
     return () => {
+      const existingClasses = attrs.class ?? '';
       return h(
         'div',
         {
-          ['class']: `ion-page ${hidePageClass}`,
           ...attrs,
+          ['class']: `ion-page ${hidePageClass} ${existingClasses}`,
           ref: 'ionPage'
         },
         slots.default && slots.default()

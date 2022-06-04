@@ -1,4 +1,6 @@
-import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+import type { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+
+import type { PlatformConfig } from './platform';
 
 export interface IonicConfig {
   /**
@@ -171,14 +173,14 @@ export interface IonicConfig {
   pickerLeave?: AnimationBuilder;
 
   /**
-   * EXPERIMENTAL: Adds a page shadow to transitioning pages on iOS. Disabled by default.
-   */
-  experimentalTransitionShadow?: boolean;
-
-  /**
    * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
    */
   sanitizerEnabled?: boolean;
+
+  /**
+   * Overrides the default platform detection methods.
+   */
+  platform?: PlatformConfig;
 
   // PRIVATE configs
   keyboardHeight?: number;
@@ -195,25 +197,27 @@ export interface IonicConfig {
   _zoneGate?: (h: () => any) => any;
   _ael?: (el: any, name: string, cb: any, opts: any) => any;
   _rel?: (el: any, name: string, cb: any, opts: any) => any;
+  _ce?: (eventName: string, opts: any) => any;
 }
 
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
   const Ionic = win.Ionic;
+  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
     return;
   }
   win.Ionic = win.Ionic || {};
   win.Ionic.config = {
     ...win.Ionic.config,
-    ...config
+    ...config,
   };
   return win.Ionic.config;
 };
 
 export const getMode = (): Mode => {
   const win = window as any;
-  const config = win && win.Ionic && win.Ionic.config;
+  const config = win?.Ionic?.config;
   if (config) {
     if (config.mode) {
       return config.mode;

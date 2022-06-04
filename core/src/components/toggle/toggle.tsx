@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -16,12 +18,11 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-toggle',
   styleUrls: {
     ios: 'toggle.ios.scss',
-    md: 'toggle.md.scss'
+    md: 'toggle.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Toggle implements ComponentInterface {
-
   private inputId = `ion-tg-${toggleIds++}`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
@@ -87,7 +88,7 @@ export class Toggle implements ComponentInterface {
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
       checked: isChecked,
-      value: this.value
+      value: this.value,
     });
   }
 
@@ -107,8 +108,8 @@ export class Toggle implements ComponentInterface {
       threshold: 5,
       passive: false,
       onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: (ev) => this.onEnd(ev),
     });
     this.disabledChanged();
   }
@@ -138,7 +139,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (shouldToggle(document, this.checked, detail.deltaX, -10)) {
+    if (shouldToggle(isRTL(this.el), this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
       hapticSelection();
     }
@@ -167,15 +168,15 @@ export class Toggle implements ComponentInterface {
     if (this.lastDrag + 300 < Date.now()) {
       this.checked = !this.checked;
     }
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { activated, color, checked, disabled, el, inputId, name } = this;
@@ -183,7 +184,7 @@ export class Toggle implements ComponentInterface {
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
 
-    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
       <Host
@@ -198,7 +199,7 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          'interactive': true
+          interactive: true,
         })}
       >
         <div class="toggle-icon" part="track">
@@ -206,9 +207,7 @@ export class Toggle implements ComponentInterface {
             <div class="toggle-inner" part="handle" />
           </div>
         </div>
-        <label htmlFor={inputId}>
-          {labelText}
-        </label>
+        <label htmlFor={inputId}>{labelText}</label>
         <input
           type="checkbox"
           role="switch"
@@ -217,22 +216,18 @@ export class Toggle implements ComponentInterface {
           id={inputId}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={focusEl => this.focusEl = focusEl}
+          ref={(focusEl) => (this.focusEl = focusEl)}
         />
       </Host>
     );
   }
 }
 
-const shouldToggle = (doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean => {
-  const isRTL = doc.dir === 'rtl';
-
+const shouldToggle = (rtl: boolean, checked: boolean, deltaX: number, margin: number): boolean => {
   if (checked) {
-    return (!isRTL && (margin > deltaX)) ||
-      (isRTL && (- margin < deltaX));
+    return (!rtl && margin > deltaX) || (rtl && -margin < deltaX);
   } else {
-    return (!isRTL && (- margin < deltaX)) ||
-      (isRTL && (margin > deltaX));
+    return (!rtl && -margin < deltaX) || (rtl && margin > deltaX);
   }
 };
 

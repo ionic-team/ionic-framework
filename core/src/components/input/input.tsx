@@ -1,8 +1,16 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
-import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import type {
+  AutocompleteTypes,
+  Color,
+  InputChangeEventDetail,
+  StyleEventDetail,
+  TextFieldTypes,
+} from '../../interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -12,16 +20,16 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-input',
   styleUrls: {
     ios: 'input.ios.scss',
-    md: 'input.md.scss'
+    md: 'input.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Input implements ComponentInterface {
-
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
+  private isComposing = false;
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -117,7 +125,7 @@ export class Input implements ComponentInterface {
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
    */
-  @Prop() max?: string;
+  @Prop() max?: string | number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
@@ -127,7 +135,7 @@ export class Input implements ComponentInterface {
   /**
    * The minimum value, which must not be greater than its maximum (max attribute) value.
    */
-  @Prop() min?: string;
+  @Prop() min?: string | number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
@@ -151,8 +159,10 @@ export class Input implements ComponentInterface {
 
   /**
    * Instructional text that shows before the input has a value.
+   * This property applies only when the `type` property is set to `"email"`,
+   * `"number"`, `"password"`, `"search"`, `"tel"`, `"text"`, or `"url"`, otherwise it is ignored.
    */
-  @Prop() placeholder?: string | null;
+  @Prop() placeholder?: string;
 
   /**
    * If `true`, the user cannot modify the value.
@@ -193,7 +203,7 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when a keyboard input occurred.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+  @Event() ionInput!: EventEmitter<InputEvent>;
 
   /**
    * Emitted when the value has changed.
@@ -229,29 +239,64 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
+    const nativeInput = this.nativeInput;
+    const value = this.getValue();
+    if (nativeInput && nativeInput.value !== value && !this.isComposing) {
+      /**
+       * Assigning the native input's value on attribute
+       * value change, allows `ionInput` implementations
+       * to override the control's value.
+       *
+       * Used for patterns such as input trimming (removing whitespace),
+       * or input masking.
+       */
+      nativeInput.value = value;
+    }
     this.emitStyle();
     this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label', 'tabindex', 'title']);
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+      ...inheritAttributes(this.el, ['tabindex', 'title']),
+    };
   }
 
   connectedCallback() {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
-      }));
+      document.dispatchEvent(
+        new CustomEvent('ionInputDidLoad', {
+          detail: this.el,
+        })
+      );
+    }
+  }
+
+  componentDidLoad() {
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      // TODO: FW-729 Update to JSX bindings when Stencil resolves bug with:
+      // https://github.com/ionic-team/stencil/issues/3235
+      nativeInput.addEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.addEventListener('compositionend', this.onCompositionEnd);
     }
   }
 
   disconnectedCallback() {
     if (Build.isBrowser) {
-      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
-      }));
+      document.dispatchEvent(
+        new CustomEvent('ionInputDidUnload', {
+          detail: this.el,
+        })
+      );
+    }
+    const nativeInput = this.nativeInput;
+    if (nativeInput) {
+      nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
+      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
     }
   }
 
@@ -288,21 +333,18 @@ export class Input implements ComponentInterface {
 
   private shouldClearOnEdit() {
     const { type, clearOnEdit } = this;
-    return (clearOnEdit === undefined)
-      ? type === 'password'
-      : clearOnEdit;
+    return clearOnEdit === undefined ? type === 'password' : clearOnEdit;
   }
 
   private getValue(): string {
-    return typeof this.value === 'number' ? this.value.toString() :
-      (this.value || '').toString();
+    return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
   }
 
   private emitStyle() {
     this.ionStyle.emit({
-      'interactive': true,
-      'input': true,
-      'has-placeholder': this.placeholder != null,
+      interactive: true,
+      input: true,
+      'has-placeholder': this.placeholder !== undefined,
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus,
       'interactive-disabled': this.disabled,
@@ -314,8 +356,8 @@ export class Input implements ComponentInterface {
     if (input) {
       this.value = input.value || '';
     }
-    this.ionInput.emit(ev as KeyboardEvent);
-  }
+    this.ionInput.emit(ev as InputEvent);
+  };
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
@@ -325,7 +367,7 @@ export class Input implements ComponentInterface {
     if (this.fireFocusEvents) {
       this.ionBlur.emit(ev);
     }
-  }
+  };
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
@@ -335,7 +377,7 @@ export class Input implements ComponentInterface {
     if (this.fireFocusEvents) {
       this.ionFocus.emit(ev);
     }
-  }
+  };
 
   private onKeydown = (ev: KeyboardEvent) => {
     if (this.shouldClearOnEdit()) {
@@ -349,11 +391,21 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
-  }
+  };
+
+  private onCompositionStart = () => {
+    this.isComposing = true;
+  };
+
+  private onCompositionEnd = () => {
+    this.isComposing = false;
+  };
 
   private clearTextOnEnter = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter') { this.clearTextInput(ev); }
-  }
+    if (ev.key === 'Enter') {
+      this.clearTextInput(ev);
+    }
+  };
 
   private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
@@ -374,7 +426,7 @@ export class Input implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.value = '';
     }
-  }
+  };
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
@@ -402,12 +454,12 @@ export class Input implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
-          'has-focus': this.hasFocus
+          'has-focus': this.hasFocus,
         })}
       >
         <input
           class="native-input"
-          ref={input => this.nativeInput = input}
+          ref={(input) => (this.nativeInput = input)}
           aria-labelledby={label ? labelId : null}
           disabled={this.disabled}
           accept={this.accept}
@@ -438,14 +490,16 @@ export class Input implements ComponentInterface {
           onKeyDown={this.onKeydown}
           {...this.inheritedAttributes}
         />
-        {(this.clearInput && !this.readonly && !this.disabled) && <button
-          aria-label="reset"
-          type="button"
-          class="input-clear-icon"
-          onTouchStart={this.clearTextInput}
-          onMouseDown={this.clearTextInput}
-          onKeyDown={this.clearTextOnEnter}
-        />}
+        {this.clearInput && !this.readonly && !this.disabled && (
+          <button
+            aria-label="reset"
+            type="button"
+            class="input-clear-icon"
+            onTouchStart={this.clearTextInput}
+            onMouseDown={this.clearTextInput}
+            onKeyDown={this.clearTextOnEnter}
+          />
+        )}
       </Host>
     );
   }

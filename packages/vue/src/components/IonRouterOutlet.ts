@@ -8,35 +8,30 @@ import {
   watch,
   shallowRef,
   InjectionKey,
-  onUnmounted
+  onUnmounted,
+  Ref
 } from 'vue';
-import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
+import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core/components';
+import { IonRouterOutlet as IonRouterOutletCmp } from '@ionic/core/components/ion-router-outlet.js';
 import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
-import { fireLifecycle, generateId, getConfig } from '../utils';
+import { fireLifecycle, generateId, getConfig, defineCustomElement } from '../utils';
+
+const isViewVisible = (enteringEl: HTMLElement) => {
+  return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
+}
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
-export const IonRouterOutlet = defineComponent({
+export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   name: 'IonRouterOutlet',
-  setup(_, { attrs }) {
+  setup() {
+    defineCustomElement('ion-router-outlet', IonRouterOutletCmp);
+
     const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
-    let usingDeprecatedRouteSetup = false;
-
-    // TODO: Remove in Ionic Vue v6.0
-    if (attrs.tabs && route.matched[depth]?.children?.length > 0) {
-      console.warn('[@ionic/vue Deprecation]: Your child routes are nested inside of each tab in your routing config. This format will not be supported in Ionic Vue v6.0. Instead, write your child routes as sibling routes. See https://ionicframework.com/docs/vue/navigation#child-routes-within-tabs for more information.');
-      usingDeprecatedRouteSetup = true;
-    }
-    const matchedRouteRef: any = computed(() => {
-      const matchedRoute = route.matched[depth];
-
-      if (matchedRoute && attrs.tabs && route.matched[depth + 1] && usingDeprecatedRouteSetup) {
-        return route.matched[route.matched.length - 1];
-      }
-
-      return matchedRoute;
-    });
+    const matchedRouteRef: any = computed(() => route.matched[depth]);
+    let previousMatchedRouteRef: Ref | undefined;
+    let previousMatchedPath: string | undefined;
 
     provide(viewDepthKey, depth + 1)
     provide(matchedRouteKey, matchedRouteRef);
@@ -56,31 +51,55 @@ export const IonRouterOutlet = defineComponent({
     let parentOutletPath: string;
 
     /**
-     * We need to watch the route object
-     * to listen for navigation changes.
-     * Previously we had watched matchedRouteRef,
-     * but if you had a /page/:id route, going from
-     * page/1 to page/2 would not cause this callback
-     * to fire since the matchedRouteRef was the same.
+     * Note: Do not listen for matchedRouteRef by itself here
+     * as the callback will not fire for parameterized routes (i.e. /page/:id).
+     * So going from /page/1 to /page/2 would not fire this callback if we
+     * only listened for changes to matchedRouteRef.
      */
-    watch(() => [route, matchedRouteRef.value], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
+    watch(() => [route, matchedRouteRef.value], ([currentRoute, currentMatchedRouteRef]) => {
       /**
-       * If the matched route ref has changed,
-       * then we need to set up a new view item.
-       * If the matched route ref has not changed,
-       * it is possible that this is a parameterized URL
-       * change such as /page/1 to /page/2. In that case,
-       * we can assume that the `route` object has changed,
-       * but we should only set up a new view item in this outlet
-       * if that last matched view item matches our current matched
-       * view item otherwise if we had this in a nested outlet the
-       * parent outlet would re-render as well as the child page.
+       * This callback checks whether or not a router outlet
+       * needs to respond to a change in the matched route.
+       * It handles a few cases:
+       * 1. The matched route is undefined. This means that
+       * the matched route is not applicable to this outlet.
+       * For example, a /settings route is not applicable
+       * to a /tabs/... route.
+       *
+       * Note: When going back to a tabs outlet from a non-tabs outlet,
+       * the tabs outlet should NOT attempt a page transition from the
+       * previous tab to the active tab. To do this we compare the current
+       * route with the previous route. Unfortunately, we cannot rely on the
+       * previous value provided by Vue in the watch callback. This is because
+       * when coming back to the tabs context, the previous matched route will
+       * be undefined (because nothing in the tabs context matches /settings)
+       * but the current matched route will be defined and so a transition
+       * will always occur.
+       *
+       * 2. The matched route is defined and is different than
+       * the previously matched route. This is the most
+       * common case such as when you go from /page1 to /page2.
+       *
+       * 3. The matched route is the same but the parameters are different.
+       * This is a special case for parameterized routes (i.e. /page/:id).
+       * When going from /page/1 to /page/2, the matched route object will
+       * be the same, but we still need to perform a page transition. To do this
+       * we check if the parameters are different (i.e. 1 vs 2). To avoid enumerating
+       * all of the keys in the params object, we check the url path to
+       * see if they are different after ensuring we are in a parameterized route.
        */
-      if (
-        currentMatchedRouteRef !== previousMatchedRouteRef ||
-        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef
-      ) {
+      if (currentMatchedRouteRef === undefined) { return; }
+
+      const matchedDifferentRoutes = currentMatchedRouteRef !== previousMatchedRouteRef;
+      const matchedDifferentParameterRoutes = (
+        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef &&
+        currentRoute.path !== previousMatchedPath
+      );
+
+      if (matchedDifferentRoutes || matchedDifferentParameterRoutes) {
         setupViewItem(matchedRouteRef);
+        previousMatchedRouteRef = currentMatchedRouteRef;
+        previousMatchedPath = currentRoute.path;
       }
     });
 
@@ -98,15 +117,15 @@ export const IonRouterOutlet = defineComponent({
        * to make sure the view is in the outlet we want.
        */
       const routeInfo = ionRouter.getLeavingRouteInfo();
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
 
       return !!enteringViewItem;
     }
     const onStart = async () => {
       const routeInfo = ionRouter.getLeavingRouteInfo();
       const { routerAnimation } = routeInfo;
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
-      const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
+      const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
@@ -161,7 +180,7 @@ export const IonRouterOutlet = defineComponent({
          * re-hide the page that was going to enter.
          */
         const routeInfo = ionRouter.getCurrentRouteInfo();
-        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id, usingDeprecatedRouteSetup);
+        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
         enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
       }
@@ -214,10 +233,10 @@ export const IonRouterOutlet = defineComponent({
 
     const handlePageTransition = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname } = routeInfo;
+      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname, delta } = routeInfo;
 
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id, usingDeprecatedRouteSetup);
-      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id, true, usingDeprecatedRouteSetup);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
+      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
       const enteringEl = enteringViewItem.ionPageElement;
 
       /**
@@ -230,11 +249,33 @@ export const IonRouterOutlet = defineComponent({
 
 See https://ionicframework.com/docs/vue/navigation#ionpage for more information.`);
       }
-
       if (enteringViewItem === leavingViewItem) return;
 
       if (!leavingViewItem && prevRouteLastPathname) {
-        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id, usingDeprecatedRouteSetup);
+        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id);
+      }
+
+      /**
+       * If the entering view is already
+       * visible, then no transition is needed.
+       * This is most common when navigating
+       * from a tabs page to a non-tabs page
+       * and then back to the tabs page.
+       * Even when the tabs context navigated away,
+       * the inner tabs page was still active.
+       * This also avoids an issue where
+       * the previous tabs page is incorrectly
+       * unmounted since it would automatically
+       * unmount the previous view.
+       *
+       * This should also only apply to entering and
+       * leaving items in the same router outlet (i.e.
+       * Tab1 and Tab2), otherwise this will
+       * return early for swipe to go back when
+       * going from a non-tabs page to a tabs page.
+       */
+      if (isViewVisible(enteringEl) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
+        return;
       }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
@@ -276,6 +317,8 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
 
+        const usingLinearNavigation = viewStacks.size() === 1;
+
         if (routerAction === 'replace') {
           leavingViewItem.mount = false;
           leavingViewItem.ionPageElement = undefined;
@@ -286,10 +329,19 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
-            viewStacks.unmountLeavingViews(id, enteringViewItem, leavingViewItem);
+
+            /**
+             * router.go() expects navigation to be
+             * linear. If an app is using multiple stacks then
+             * it is not using linear navigation. As a result, router.go()
+             * will not give the results that developers are expecting.
+             */
+            if (usingLinearNavigation) {
+              viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
+            }
           }
-        } else {
-          viewStacks.mountIntermediaryViews(id, enteringViewItem, leavingViewItem);
+        } else if (usingLinearNavigation) {
+          viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
         fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
@@ -332,7 +384,7 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id, usingDeprecatedRouteSetup);
+      let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);

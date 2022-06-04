@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "5.8.0",
+  "version": "6.1.8",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -20,6 +20,7 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rimraf dist && rimraf dist-transpiled && rimraf routing",
     "compile": "npm run tsc && rollup -c",
@@ -29,7 +30,8 @@
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
+    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js",
+    "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -39,8 +41,8 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.8.0",
-    "ionicons": "^5.1.2",
+    "@ionic/core": "^6.1.8",
+    "ionicons": "^6.0.2",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -52,6 +54,7 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
+    "@testing-library/react-hooks": "^7.0.1",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.0.14",
     "@types/react": "16.14.0",
@@ -77,6 +80,7 @@
       "<rootDir>/jest.setup.js"
     ],
     "testPathIgnorePatterns": [
+      "cypress",
       "node_modules",
       "dist-transpiled",
       "dist",

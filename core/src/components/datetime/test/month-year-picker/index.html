@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Month-Year Picker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+        grid-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Month-Year Picker</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default Presentation</h2>
+            <ion-datetime
+              id="date-time"
+              value="2021-10-01T10:18"
+              locale="en-US"
+              show-default-buttons="true"
+            ></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Month-Year Presentation</h2>
+            <ion-datetime
+              id="month-year"
+              presentation="month-year"
+              value="2021-10-01T10:18"
+              locale="en-US"
+              show-default-buttons="true"
+            ></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

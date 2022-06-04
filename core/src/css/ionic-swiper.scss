@@ -4,7 +4,7 @@
 // Slides
 // --------------------------------------------------
 
-.swiper-container {
+.swiper {
 
   // These values are the same for iOS and MD
   // We just do not add a .md or .ios class beforehand
@@ -33,11 +33,11 @@
 // Pagination Bullets
 // --------------------------------------------------
 
-.swiper-pagination-bullet {
+.swiper .swiper-pagination-bullet {
   background: var(--bullet-background);
 }
 
-.swiper-pagination-bullet-active {
+.swiper .swiper-pagination-bullet-active {
   background: var(--bullet-background-active);
 }
 
@@ -45,36 +45,29 @@
 // Pagination Progress Bar
 // --------------------------------------------------
 
-.swiper-pagination-progressbar {
+.swiper .swiper-pagination-progressbar {
   background: var(--progress-bar-background);
 }
 
-.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+.swiper .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
   background: var(--progress-bar-background-active);
 }
 
 // Scrollbar
 // --------------------------------------------------
 
-.swiper-scrollbar {
+.swiper .swiper-scrollbar {
   background: var(--scroll-bar-background);
 }
 
-.swiper-scrollbar-drag {
+.swiper .swiper-scrollbar-drag {
   background: var(--scroll-bar-background-active);
 }
 
 // Slide
 // --------------------------------------------------
 
-ion-slide {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-}
-
-.slide-zoom {
+.swiper .slide-zoom {
   display: block;
 
   width: 100%;
@@ -82,7 +75,7 @@ ion-slide {
   text-align: center;
 }
 
-.swiper-slide {
+.swiper .swiper-slide {
 
   // Center slide text vertically
   display: flex;
@@ -101,7 +94,7 @@ ion-slide {
   box-sizing: border-box;
 }
 
-.swiper-slide img {
+.swiper .swiper-slide img {
   width: auto;
   max-width: 100%;
   height: auto;

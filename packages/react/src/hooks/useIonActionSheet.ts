@@ -1,4 +1,6 @@
-import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core';
+import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -10,26 +12,28 @@ import { useController } from './useController';
 export function useIonActionSheet(): UseIonActionSheetResult {
   const controller = useController<ActionSheetOptions, HTMLIonActionSheetElement>(
     'IonActionSheet',
-    actionSheetController
+    actionSheetController,
+    defineCustomElement
   );
 
-  function present(buttons: ActionSheetButton[], header?: string): void;
-  function present(options: ActionSheetOptions & HookOverlayOptions): void;
-  function present(buttonsOrOptions: ActionSheetButton[] | ActionSheetOptions & HookOverlayOptions, header?: string) {
-    if (Array.isArray(buttonsOrOptions)) {
-      controller.present({
-        buttons: buttonsOrOptions,
-        header
-      });
-    } else {
-      controller.present(buttonsOrOptions);
-    }
-  }
+  const present = useCallback(
+    (
+      buttonsOrOptions: ActionSheetButton[] | (ActionSheetOptions & HookOverlayOptions),
+      header?: string
+    ) => {
+      if (Array.isArray(buttonsOrOptions)) {
+        return controller.present({
+          buttons: buttonsOrOptions,
+          header,
+        });
+      } else {
+        return controller.present(buttonsOrOptions);
+      }
+    },
+    [controller.present]
+  );
 
-  return [
-    present,
-    controller.dismiss
-  ];
+  return [present, controller.dismiss];
 }
 
 export type UseIonActionSheetResult = [
@@ -39,15 +43,15 @@ export type UseIonActionSheetResult = [
      * @param buttons An array of buttons for the action sheet
      * @param header Optional - Title for the action sheet
      */
-    (buttons: ActionSheetButton[], header?: string | undefined): void;
+    (buttons: ActionSheetButton[], header?: string | undefined): Promise<void>;
     /**
      * Presents the action sheet
      * @param options The options to pass to the IonActionSheet
      */
-    (options: ActionSheetOptions & HookOverlayOptions): void;
+    (options: ActionSheetOptions & HookOverlayOptions): Promise<void>;
   },
   /**
    * Dismisses the action sheet
    */
-  () => void
+  () => Promise<void>
 ];

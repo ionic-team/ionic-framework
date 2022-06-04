@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { enableAutoUnmount, mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {
   IonicVue,
@@ -8,10 +8,13 @@ import {
   IonTabs,
   IonTabBar,
   IonTabButton,
-  IonLabel
+  IonLabel,
+  useIonRouter
 } from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router';
 import { waitForRouter } from './utils';
+
+enableAutoUnmount(afterEach);
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -30,6 +33,7 @@ describe('Routing', () => {
   it('should pass no props', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -57,6 +61,7 @@ describe('Routing', () => {
   it('should pass route props as an object', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -84,6 +89,7 @@ describe('Routing', () => {
   it('should pass route props as a function', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -128,6 +134,7 @@ describe('Routing', () => {
   it('should pass route params as props', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
@@ -156,13 +163,15 @@ describe('Routing', () => {
     const leaveHook = jest.fn();
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       setup() {
         onBeforeRouteLeave(leaveHook);
       }
     };
 
     const Page2 = {
-      ...BasePage
+      ...BasePage,
+      name: 'Page2',
     };
 
     const router = createRouter({
@@ -191,10 +200,12 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22492
   it('should show correct view when replacing', async () => {
     const Tabs = {
-      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel },
+      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel, IonRouterOutlet },
+      name: 'Tabs',
       template: `
         <ion-page>
           <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="top">
               <ion-tab-button tab="tab1" href="/tabs/tab1">
                 <ion-label>Tab 1</ion-label>
@@ -209,14 +220,17 @@ describe('Routing', () => {
     }
     const Tab1 = {
       components: { IonPage },
+      name: 'Tab1',
       template: `<ion-page>Tab 1</ion-page>`
     }
     const Tab2 = {
       components: { IonPage },
+      name: 'Tab2',
       template: `<ion-page>Tab 2</ion-page>`
     }
     const Parent = {
       ...BasePage,
+      name: 'Parent',
       template: `<ion-page>Parent Page</ion-page>`
     }
 
@@ -225,11 +239,13 @@ describe('Routing', () => {
       routes: [
         { path: '/', redirect: '/tabs/tab1' },
         { path: '/parent', component: Parent },
-        { path: '/tabs/', component: Tabs, children: [
-          { path: '/', redirect: 'tab1' },
-          { path: 'tab1', component: Tab1 },
-          { path: 'tab2', component: Tab2 }
-        ]}
+        {
+          path: '/tabs/', component: Tabs, children: [
+            { path: '/', redirect: 'tab1' },
+            { path: 'tab1', component: Tab1 },
+            { path: 'tab2', component: Tab2 }
+          ]
+        }
       ]
     });
 
@@ -267,13 +283,15 @@ describe('Routing', () => {
   it('should show the latest props passed to a route', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
     };
 
     const Home = {
-      ...BasePage
+      ...BasePage,
+      name: 'Home',
     }
 
     const router = createRouter({
@@ -304,21 +322,25 @@ describe('Routing', () => {
     router.push('/xyz');
     await waitForRouter();
 
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'xyz' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(1);
+    expect(cmpAgain[0].props()).toEqual({ title: 'xyz' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23043
   it('should call the props function again when params change', async () => {
     const Page1 = {
       ...BasePage,
+      name: 'Page1',
       props: {
         title: { type: String, default: 'Default Title' }
       }
     };
 
     const Home = {
-      ...BasePage
+      ...BasePage,
+      name: 'Home',
     }
 
     const propsFn = jest.fn((route) => {
@@ -355,13 +377,16 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(propsFn.mock.calls.length).toBe(2);
-    const cmpAgain = wrapper.findComponent(Page1);
-    expect(cmpAgain.props()).toEqual({ title: 'abc Title' });
+    const cmpAgain = wrapper.findAllComponents(Page1);
+
+    expect(cmpAgain.length).toEqual(1);
+    expect(cmpAgain[0].props()).toEqual({ title: 'abc Title' });
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
   it('should update props on a parameterized url', async () => {
     const Page = {
+      name: 'Page',
       props: {
         id: { type: String, default: 'Default ID' }
       },
@@ -391,7 +416,9 @@ describe('Routing', () => {
     router.push('/page/2');
     await waitForRouter();
 
-    expect(page.props()).toEqual({ id: '2' });
+    const pageAgain = wrapper.findAllComponents(Page);
+    expect(pageAgain[0].props()).toEqual({ id: '1' });
+    expect(pageAgain[1].props()).toEqual({ id: '2' });
   });
 
   it('should fire guard written in a component', async () => {
@@ -404,11 +431,13 @@ describe('Routing', () => {
       beforeRouteLeave() {
         beforeRouteLeaveSpy();
       },
+      name: 'Page',
       components: { IonPage },
       template: `<ion-page></ion-page>`
     }
     const Page2 = {
       components: { IonPage },
+      name: 'Page2',
       template: `<ion-page></ion-page>`
     }
 
@@ -440,5 +469,231 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(2);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it('canGoBack() should return the correct value', async () => {
+    const Page = {
+      components: { IonPage },
+      name: 'Page',
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      name: 'Page2',
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      name: 'AppWithInject',
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page },
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.back();
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
+  it('canGoBack() should return the correct value when using router.go', async () => {
+    const Page = {
+      components: { IonPage },
+      name: 'Page',
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      name: 'Page2',
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      name: 'Page3',
+      template: `<ion-page></ion-page>`
+    }
+    const AppWithInject = {
+      components: { IonApp, IonRouterOutlet },
+      name: 'AppWithInject',
+      template: '<ion-app><ion-router-outlet /></ion-app>',
+      setup() {
+        const ionRouter = useIonRouter();
+        return { ionRouter }
+      }
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(AppWithInject, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const ionRouter = wrapper.vm.ionRouter;
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+
+    router.go(-2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(false);
+
+    router.go(2);
+    await waitForRouter();
+
+    expect(ionRouter.canGoBack()).toEqual(true);
+  });
+
+  it('should not mount intermediary components when delta is 1', async () => {
+    const Page = {
+      components: { IonPage },
+      name: 'Page',
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      name: 'Page2',
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      name: 'Page3',
+      template: `<ion-page></ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+        { path: '/', redirect: '/page' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    expect(wrapper.findComponent(Page).exists()).toBe(true);
+
+    router.push('/page2');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(true);
+
+    router.back();
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    expect(wrapper.findComponent(Page3).exists()).toBe(true);
+  });
+
+  it('should unmount intermediary components when using router.go', async () => {
+    const Page = {
+      components: { IonPage },
+      name: 'Page',
+      template: `<ion-page></ion-page>`
+    }
+    const Page2 = {
+      components: { IonPage },
+      name: 'Page2',
+      template: `<ion-page></ion-page>`
+    }
+    const Page3 = {
+      components: { IonPage },
+      name: 'Page3',
+      template: `<ion-page></ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page', component: Page },
+        { path: '/page2', component: Page2 },
+        { path: '/page3', component: Page3 },
+        { path: '/', redirect: '/page' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/page2');
+    await waitForRouter();
+
+    router.push('/page3');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page2).exists()).toBe(true);
+    expect(wrapper.findComponent(Page3).exists()).toBe(true);
+
+    router.go(-2);
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Page).exists()).toBe(true);
+    expect(wrapper.findComponent(Page2).exists()).toBe(false);
+    expect(wrapper.findComponent(Page3).exists()).toBe(false);
   });
 });

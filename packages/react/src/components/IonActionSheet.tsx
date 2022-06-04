@@ -2,17 +2,18 @@ import {
   ActionSheetButton as ActionSheetButtonCore,
   ActionSheetOptions as ActionSheetOptionsCore,
   actionSheetController as actionSheetControllerCore,
-} from '@ionic/core';
+} from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';
 
 import { createOverlayComponent } from './createOverlayComponent';
 
 export interface ActionSheetButton extends Omit<ActionSheetButtonCore, 'icon'> {
   icon?:
-    | {
-        ios: string;
-        md: string;
-      }
-    | string;
+  | {
+    ios: string;
+    md: string;
+  }
+  | string;
 }
 
 export interface ActionSheetOptions extends Omit<ActionSheetOptionsCore, 'buttons'> {
@@ -29,4 +30,4 @@ const actionSheetController = {
 export const IonActionSheet = /*@__PURE__*/ createOverlayComponent<
   ActionSheetOptions,
   HTMLIonActionSheetElement
->('IonActionSheet', actionSheetController);
+>('ion-action-sheet', actionSheetController, defineCustomElement);

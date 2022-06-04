@@ -3,7 +3,9 @@ import {
   PickerColumn,
   PickerOptions,
   pickerController,
-} from '@ionic/core';
+} from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-picker.js';
+import { useCallback } from 'react';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
@@ -15,24 +17,23 @@ import { useController } from './useController';
 export function useIonPicker(): UseIonPickerResult {
   const controller = useController<PickerOptions, HTMLIonPickerElement>(
     'IonPicker',
-    pickerController
+    pickerController,
+    defineCustomElement
   );
 
-  function present(columns: PickerColumn[], buttons?: PickerButton[]): void;
-  function present(options: PickerOptions & HookOverlayOptions): void;
-  function present(
+  const present = useCallback((
     columnsOrOptions: PickerColumn[] | (PickerOptions & HookOverlayOptions),
     buttons?: PickerButton[]
-  ) {
+  ) => {
     if (Array.isArray(columnsOrOptions)) {
-      controller.present({
+      return controller.present({
         columns: columnsOrOptions,
         buttons: buttons ?? [{ text: 'Ok' }],
       });
     } else {
-      controller.present(columnsOrOptions);
+      return controller.present(columnsOrOptions);
     }
-  }
+  }, [controller.present]);
 
   return [present, controller.dismiss];
 }
@@ -44,15 +45,15 @@ export type UseIonPickerResult = [
      * @param columns Array of columns to be displayed in the picker.
      * @param buttons Optional - Array of buttons to be displayed at the top of the picker.
      */
-    (columns: PickerColumn[], buttons?: PickerButton[]): void;
+    (columns: PickerColumn[], buttons?: PickerButton[]): Promise<void>;
     /**
      * Presents the picker
      * @param options The options to pass to the IonPicker
      */
-    (options: PickerOptions & HookOverlayOptions): void;
+    (options: PickerOptions & HookOverlayOptions): Promise<void>;
   },
   /**
    * Dismisses the picker
    */
-  () => void
+  () => Promise<void>
 ];

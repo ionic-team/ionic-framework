@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, StyleEventDetail } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import type { Color, StyleEventDetail } from '../../interface';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -11,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-label',
   styleUrls: {
     ios: 'label.ios.scss',
-    md: 'label.md.scss'
+    md: 'label.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Label implements ComponentInterface {
   private inRange = false;
@@ -48,7 +49,7 @@ export class Label implements ComponentInterface {
 
   componentWillLoad() {
     this.inRange = !!this.el.closest('ion-range');
-    this.noAnimate = (this.position === 'floating');
+    this.noAnimate = this.position === 'floating';
     this.emitStyle();
     this.emitColor();
   }
@@ -76,7 +77,7 @@ export class Label implements ComponentInterface {
 
     this.ionColor.emit({
       'item-label-color': color !== undefined,
-      [`ion-color-${color}`]: color !== undefined
+      [`ion-color-${color}`]: color !== undefined,
     });
   }
 
@@ -88,8 +89,8 @@ export class Label implements ComponentInterface {
     // is a direct child of the item
     if (!inRange) {
       this.ionStyle.emit({
-        'label': true,
-        [`label-${position}`]: position !== undefined
+        label: true,
+        [`label-${position}`]: position !== undefined,
       });
     }
   }
@@ -101,11 +102,12 @@ export class Label implements ComponentInterface {
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
+          'in-item-color': hostContext('ion-item.ion-color', this.el),
           [`label-${position}`]: position !== undefined,
-          [`label-no-animate`]: (this.noAnimate)
+          [`label-no-animate`]: this.noAnimate,
+          'label-rtl': document.dir === 'rtl',
         })}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

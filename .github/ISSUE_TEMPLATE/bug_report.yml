@@ -4,7 +4,7 @@ title: 'bug: '
 body:
   - type: checkboxes
     attributes:
-      label: Prequisites
+      label: Prerequisites
       description: Please ensure you have completed all of the following.
       options:
         - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
@@ -21,6 +21,7 @@ body:
         - label: v4.x
         - label: v5.x
         - label: v6.x
+        - label: Nightly
   - type: textarea
     attributes:
       label: Current Behavior
@@ -49,7 +50,7 @@ body:
       label: Ionic Info
       description: Please run `ionic info` from within your Ionic Framework project directory and paste the output below.
     validations:
-      requred: true
+      required: true
   - type: textarea
     attributes:
       label: Additional Information

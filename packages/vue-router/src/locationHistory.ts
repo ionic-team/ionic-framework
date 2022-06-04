@@ -6,9 +6,6 @@ export const createLocationHistory = () => {
 
   const add = (routeInfo: RouteInfo) => {
     switch (routeInfo.routerAction) {
-      case "replace":
-        replaceRoute(routeInfo);
-        break;
       case "pop":
         pop(routeInfo);
         break;
@@ -39,13 +36,6 @@ export const createLocationHistory = () => {
     } else if (routeInfo.tab) {
       tabsHistory[routeInfo.tab] = [routeInfo];
     }
-  }
-
-  const replaceRoute = (routeInfo: RouteInfo) => {
-    const routeInfos = getTabsHistory(routeInfo.tab);
-    routeInfos && routeInfos.pop();
-    locationHistory.pop();
-    addRoute(routeInfo);
   }
 
   const pop = (routeInfo: RouteInfo) => {
@@ -85,11 +75,68 @@ export const createLocationHistory = () => {
     locationHistory.push(routeInfo);
   }
 
-  const clearHistory = () => {
-    locationHistory.length = 0;
-    Object.keys(tabsHistory).forEach(key => {
-      tabsHistory[key] = [];
-    });
+  /**
+   * Wipes the location history arrays.
+   * You can optionally provide a routeInfo
+   * object which will wipe that entry
+   * and every entry that appears after it.
+   */
+  const clearHistory = (routeInfo?: RouteInfo) => {
+    if (routeInfo) {
+      const { position, tab } = routeInfo;
+
+      /**
+       * If there is no route index in locationHistory
+       * then there will not be any route index in
+       * tabs either.
+       */
+      const existingRouteIndex = locationHistory.findIndex(r => r.position === position);
+      if (existingRouteIndex === -1) return;
+
+      locationHistory.splice(existingRouteIndex);
+
+      const clearTabHistory = (tab: string) => {
+        const existingTabRouteIndex = tabsHistory[tab].findIndex(r => r.position === position);
+        if (existingTabRouteIndex === -1) return;
+
+        tabsHistory[tab].splice(existingTabRouteIndex);
+      }
+
+      /**
+       * We also need to search the current tab
+       * to correctly reset the individual tab
+       * stack. We should not clear the entire
+       * tab stack as that means we will lose
+       * a reference to the root tab route.
+       */
+      const tabHistory = tabsHistory[tab];
+      if (tab && tabHistory) {
+        clearTabHistory(tab);
+      /**
+       * If we are not clearing items after
+       * a tabs page, it is still possible
+       * that there are future tabs pages to clear.
+       * As a result, we need to search through
+       * all the tab stacks and remove views that appear
+       * after the given routeInfo.
+       *
+       * Example: /non-tabs-page --> /tabs/tab1 --> /non-tabs-page
+       * (via router.go(-1)) --> /tabs/tab2. The /tabs/tab1 history
+       * has been overwritten with /tabs/tab2. As a result,
+       * the /tabs/tab1 route info in the Tab 1 stack should be removed.
+       */
+      } else {
+        for (const tab in tabsHistory) {
+          clearTabHistory(tab);
+        }
+      }
+    } else {
+      for (const tab in tabsHistory) {
+        tabsHistory[tab] = [];
+      }
+
+      locationHistory.length = 0;
+    }
   }
   const getTabsHistory = (tab: string): RouteInfo[] => {
     let history;
@@ -104,13 +151,6 @@ export const createLocationHistory = () => {
   }
 
   const size = () => locationHistory.length;
-
-  const updateByHistoryPosition = (routeInfo: RouteInfo) => {
-    const existingRouteIndex = locationHistory.findIndex(r => r.position === routeInfo.position);
-    if (existingRouteIndex === -1) return;
-
-    locationHistory[existingRouteIndex].pathname = routeInfo.pathname;
-  }
 
   /**
    * Finds and returns the location history item
@@ -127,9 +167,19 @@ export const createLocationHistory = () => {
     const index = currentHistory - initialHistory;
     return locationHistory[index] || last();
   }
-  const previous = () => locationHistory[locationHistory.length - 2] || last();
   const last = () => locationHistory[locationHistory.length - 1];
-  const canGoBack = (deep: number = 1) => locationHistory.length > deep;
+
+  /**
+   * With the introduction of router.go support, we no longer remove
+   * items from locationHistory as they may be needed again in the future.
+   * As a result, we need to look at the current position in location history
+   * to see if users can navigate back n pages. Previously we were checking
+   * the length of locationHistory, but that only worked since we were pruning
+   * the array.
+   */
+  const canGoBack = (deep: number = 1, initialHistory: number, currentHistory: number) => {
+    return currentHistory - deep >= initialHistory;
+  }
 
   const getFirstRouteInfoForTab = (tab: string): RouteInfo | undefined => {
     const tabHistory = getTabsHistory(tab);
@@ -190,15 +240,14 @@ export const createLocationHistory = () => {
 
   return {
     current,
-    updateByHistoryPosition,
     size,
     last,
-    previous,
     add,
     canGoBack,
     update,
     getFirstRouteInfoForTab,
     getCurrentRouteInfoForTab,
-    findLastLocation
+    findLastLocation,
+    clearHistory
   }
 }

@@ -1,8 +1,10 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
+import type { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -12,17 +14,16 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-textarea',
   styleUrls: {
     ios: 'textarea.ios.scss',
-    md: 'textarea.md.scss'
+    md: 'textarea.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Textarea implements ComponentInterface {
-
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
   private didBlurAfterEdit = false;
   private textareaWrapper?: HTMLElement;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -47,6 +48,7 @@ export class Textarea implements ComponentInterface {
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
   @Prop() autocapitalize = 'none';
 
@@ -112,7 +114,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder?: string | null;
+  @Prop() placeholder?: string;
 
   /**
    * If `true`, the user cannot modify the value.
@@ -177,7 +179,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when a keyboard input occurred.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+  @Event() ionInput!: EventEmitter<InputEvent>;
 
   /**
    * Emitted when the styles change.
@@ -199,22 +201,29 @@ export class Textarea implements ComponentInterface {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
-      }));
+      document.dispatchEvent(
+        new CustomEvent('ionInputDidLoad', {
+          detail: this.el,
+        })
+      );
     }
   }
 
   disconnectedCallback() {
     if (Build.isBrowser) {
-      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
-      }));
+      document.dispatchEvent(
+        new CustomEvent('ionInputDidUnload', {
+          detail: this.el,
+        })
+      );
     }
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['title']);
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+      ...inheritAttributes(this.el, ['title']),
+    };
   }
 
   componentDidLoad() {
@@ -267,13 +276,13 @@ export class Textarea implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'interactive': true,
-      'textarea': true,
-      'input': true,
+      interactive: true,
+      textarea: true,
+      input: true,
       'interactive-disabled': this.disabled,
-      'has-placeholder': this.placeholder != null,
+      'has-placeholder': this.placeholder !== undefined,
       'has-value': this.hasValue(),
-      'has-focus': this.hasFocus
+      'has-focus': this.hasFocus,
     });
   }
 
@@ -316,8 +325,8 @@ export class Textarea implements ComponentInterface {
       this.value = this.nativeInput.value;
     }
     this.emitStyle();
-    this.ionInput.emit(ev as KeyboardEvent);
-  }
+    this.ionInput.emit(ev as InputEvent);
+  };
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
@@ -326,7 +335,7 @@ export class Textarea implements ComponentInterface {
     if (this.fireFocusEvents) {
       this.ionFocus.emit(ev);
     }
-  }
+  };
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
@@ -335,11 +344,11 @@ export class Textarea implements ComponentInterface {
     if (this.fireFocusEvents) {
       this.ionBlur.emit(ev);
     }
-  }
+  };
 
   private onKeyDown = () => {
     this.checkClearOnEdit();
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
@@ -357,14 +366,11 @@ export class Textarea implements ComponentInterface {
           [mode]: true,
         })}
       >
-        <div
-          class="textarea-wrapper"
-          ref={el => this.textareaWrapper = el}
-        >
+        <div class="textarea-wrapper" ref={(el) => (this.textareaWrapper = el)}>
           <textarea
             class="native-textarea"
             aria-labelledby={label ? labelId : null}
-            ref={el => this.nativeInput = el}
+            ref={(el) => (this.nativeInput = el)}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
             enterKeyHint={this.enterkeyhint}

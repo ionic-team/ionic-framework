@@ -78,6 +78,15 @@
   box-sizing: border-box;
 
   overflow: hidden;
+
+  /**
+   * touch-action: manipulation is an alias
+   * for this, but WebKit has an issue
+   * where pointercancel events are not fired
+   * when scrolling: https://bugs.webkit.org/show_bug.cgi?id=240917
+   * Using the long form below avoids the issue.
+   */
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 .scroll-y,
@@ -106,19 +115,13 @@
 }
 
 .scroll-y {
-  touch-action: pan-y;
   overflow-y: var(--overflow);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  touch-action: pan-x;
   overflow-x: var(--overflow);
   overscroll-behavior-x: contain;
-}
-
-.scroll-x.scroll-y {
-  touch-action: auto;
 }
 
 .overscroll::before,
@@ -140,19 +143,42 @@
 }
 
 :host(.content-sizing) {
+  display: flex;
+
+  flex-direction: column;
+
+  /**
+   * This resolves a sizing issue in popovers where extra long content
+   * would overflow the popover's height, preventing scrolling. It's a
+   * quirk of flexbox that forces the content to shrink to fit.
+   *
+   * overflow: hidden can't be used here because it prevents the visual
+   * effect from showing on translucent headers.
+   */
+  min-height: 0;
+
   contain: none;
 }
 :host(.content-sizing) .inner-scroll {
   position: relative;
+
+  /**
+   * Because the outer content has display: flex here (to help enable
+   * scrolling in a popover), offsetting via `top` (such as when using
+   * a translucent header) creates white space under the content. Use
+   * a negative margin instead to keep the bottom in place. (A similar
+   * thing happens with `bottom` and footers.)
+   */
+  top: 0;
+  bottom: 0;
+
+  margin-top: calc(var(--offset-top) * -1);
+  margin-bottom: calc(var(--offset-bottom) * -1);
 }
 
 .transition-effect {
   display: none;
   position: absolute;
-
-  /* stylelint-disable property-disallowed-list */
-  left: -100%;
-  /* stylelint-enable property-disallowed-list */
 
   width: 100%;
   height: 100vh;
@@ -160,6 +186,18 @@
   opacity: 0;
 
   pointer-events: none;
+}
+
+:host(.content-ltr) .transition-effect {
+  /* stylelint-disable property-disallowed-list */
+  left: -100%;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.content-rtl) .transition-effect {
+  /* stylelint-disable property-disallowed-list */
+  right: -100%;
+  /* stylelint-enable property-disallowed-list */
 }
 
 .transition-cover {
@@ -181,10 +219,6 @@
   display: block;
   position: absolute;
 
-  /* stylelint-disable property-disallowed-list */
-  right: 0;
-  /* stylelint-enable property-disallowed-list */
-
   width: 10px;
   height: 100%;
 
@@ -193,10 +227,35 @@
   background-size: 10px 16px;
 }
 
+:host(.content-ltr) .transition-shadow {
+  /* stylelint-disable property-disallowed-list */
+  right: 0;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.content-rtl) .transition-shadow {
+  /* stylelint-disable property-disallowed-list */
+  left: 0;
+  /* stylelint-enable property-disallowed-list */
+
+  transform: scaleX(-1);
+}
+
 
 // Content: Fixed
 // --------------------------------------------------
 
 ::slotted([slot="fixed"]) {
   position: absolute;
+
+  /**
+   * When presenting ion-content inside of an ion-modal, the .inner-scroll
+   * element is composited. In WebKit, the fixed content is not composited
+   * causing it to appear under the main scrollable content as a result.
+   * The fixed content is correctly composited in other browsers. Adding
+   * the translateZ forces the fixed content to be composited so it correctly
+   * shows on top of the scrollable content. Setting a negative z-index will
+   * still allow the fixed content to appear under the scroll content if specified.
+   */
+  transform: translateZ(0);
 }

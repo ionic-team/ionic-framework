@@ -50,7 +50,6 @@ Cypress.Commands.add('ionPageVisible', (pageId) => {
 Cypress.Commands.add('ionPageHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('have.class', 'ion-page-hidden')
-    .should('have.length', 1)
 })
 
 Cypress.Commands.add('ionBackClick', (pageId) => {
@@ -83,9 +82,39 @@ Cypress.Commands.add('routerGo', (n) => {
   });
 });
 
+Cypress.Commands.add('ionRouterNavigate', (...args) => {
+  cy.window().then(win => {
+    win.debugIonRouter.navigate(...args);
+  });
+});
+
+Cypress.Commands.add('ionRouterBack', () => {
+  cy.window().then(win => {
+    win.debugIonRouter.back();
+  });
+});
+
+Cypress.Commands.add('ionRouterReplace', (path) => {
+  cy.window().then(win => {
+    win.debugIonRouter.replace(path);
+  });
+});
+
 Cypress.Commands.add('ionBackButtonHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('be.visible', true)
     .find('ion-back-button')
     .should('not.be.visible')
 });
+
+/**
+ * If running in a browser, hardwareBackButton: true
+ * must be set in Ionic config for this to work.
+ */
+Cypress.Commands.add('hardwareBackButton', () => {
+  cy.document().then(doc => {
+    const ev = new CustomEvent('backbutton');
+
+    doc.dispatchEvent(ev);
+  })
+})

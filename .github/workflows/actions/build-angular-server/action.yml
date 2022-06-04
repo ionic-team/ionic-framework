@@ -1,0 +1,22 @@
+name: 'Build Ionic Angular Server'
+description: 'Build Ionic Angular Server'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - name: Install Angular Server Dependencies
+      run: npm install --legacy-peer-deps
+      shell: bash
+      working-directory: ./packages/angular-server
+    - name: Build
+      run: npm run build.prod
+      shell: bash
+      working-directory: ./packages/angular-server
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-angular-server
+        output: packages/angular-server/AngularServerBuild.zip
+        paths: packages/angular-server/dist
