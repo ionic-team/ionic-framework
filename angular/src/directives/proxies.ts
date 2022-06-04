@@ -1344,7 +1344,7 @@ called when the async operation has completed.
 @ProxyCmp({
   defineCustomElementFn: undefined,
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
-  methods: ['complete', 'cancel', 'getProgress']
+  methods: ['start', 'complete', 'cancel', 'getProgress']
 })
 @Component({
   selector: 'ion-refresher',
