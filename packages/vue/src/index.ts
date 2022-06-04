@@ -1,7 +1,10 @@
-import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-
 export * from './proxies';
+
+export { UseBackButtonResult, useBackButton } from './hooks/back-button';
+export { UseKeyboardResult, useKeyboard } from './hooks/keyboard';
+export { onIonViewWillEnter, onIonViewDidEnter, onIonViewWillLeave, onIonViewDidLeave } from './hooks/lifecycle';
+export { UseIonRouterResult, useIonRouter } from './hooks/router';
+
 export { IonicVue } from './ionic-vue';
 
 export { IonBackButton } from './components/IonBackButton';
@@ -16,37 +19,32 @@ export { IonApp } from './components/IonApp';
 
 export * from './components/Overlays';
 
-export { IonKeyboardRef, IonRouter, useBackButton, useIonRouter, useKeyboard } from './hooks';
-
 export {
   modalController,
-  popoverController
+  popoverController,
+  alertController,
+  actionSheetController,
+  loadingController,
+  pickerController,
+  toastController
 } from './controllers';
 
 export * from './globalExtensions';
 
 export {
-  // Overlay Controllers
-  alertController,
-  actionSheetController,
-  menuController,
-  loadingController,
-  pickerController,
-  toastController,
-
-  // Security
-  IonicSafeString,
-
-  // Platform
-  isPlatform, Platforms, getPlatforms,
-
-  // Gesture
-  Gesture,
-  GestureConfig,
-  GestureDetail,
+  // UTILS
+  createAnimation,
   createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  IonicSwiper,
+  IonicSlides,
+  getPlatforms,
+  isPlatform,
+  menuController,
+  getTimeGivenProgression,
 
-  // Animations
+  // TYPES
   Animation,
   AnimationBuilder,
   AnimationCallbackOptions,
@@ -54,28 +52,102 @@ export {
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
-  iosTransitionAnimation,
-  mdTransitionAnimation,
-  getTimeGivenProgression,
+  Gesture,
+  GestureConfig,
+  GestureDetail,
+  NavComponentWithProps,
 
-  // Hardware Back Button
-  BackButtonEvent
-} from '@ionic/core';
+  SpinnerTypes,
 
-// Icons that are used by internal components
-addIcons({
-  'arrow-back-sharp': arrowBackSharp,
-  'caret-back-sharp': caretBackSharp,
-  'chevron-back': chevronBack,
-  'chevron-forward': chevronForward,
-  'close': close,
-  'close-circle': closeCircle,
-  'close-sharp': closeSharp,
-  'menu-outline': menuOutline,
-  'menu-sharp': menuSharp,
-  'reorder-two-sharp': reorderTwoSharp,
-  'reorder-three-outline': reorderThreeOutline,
-  'search-outline': searchOutline,
-  'search-sharp': searchSharp,
-});
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
+
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
+  LoadingOptions,
+
+  MenuCustomEvent,
+
+  ModalOptions,
+
+  NavCustomEvent,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
+
+  Platforms,
+  PlatformConfig,
+
+  PopoverOptions,
+
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
+
+  RangeCustomEvent,
+  RangeChangeEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeKnobMoveEndEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
+  ToastOptions,
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
+} from '@ionic/core/components';

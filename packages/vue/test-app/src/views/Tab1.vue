@@ -17,19 +17,23 @@
 
       <ExploreContainer name="Tab 1 page" />
 
-      <ion-item router-link="/tabs/tab1/child-one" id="child-one">
+      <ion-item button router-link="/tabs/tab1/childone" id="child-one">
         <ion-label>Go to Tab 1 Child 1</ion-label>
       </ion-item>
-      <ion-item router-link="/nested" id="nested">
+      <ion-item button router-link="/nested" id="nested">
         <ion-label>Go to Nested Outlet</ion-label>
       </ion-item>
 
-      <ion-item router-link="/tabs-secondary" id="tabs-secondary">
+      <ion-item button router-link="/tabs-secondary" id="tabs-secondary">
         <ion-label>Go to Secondary Tabs</ion-label>
       </ion-item>
 
-      <ion-item router-link="/tabs" id="tabs-primary">
+      <ion-item button router-link="/tabs" id="tabs-primary">
         <ion-label>Go to Primary Tabs</ion-label>
+      </ion-item>
+
+      <ion-item router-link="/tabs/tab1/child-one?key=value" id="child-one-query-string">
+        <ion-label>Go to Tab 1 Child 1 with Query Params</ion-label>
       </ion-item>
     </ion-content>
   </ion-page>
@@ -40,7 +44,6 @@ import { IonButtons, IonBackButton, IonPage, IonHeader, IonItem, IonLabel, IonTo
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
-  name: 'Tab1',
   components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent, IonPage }
 }
 </script>

@@ -1,9 +1,8 @@
-
-export interface RadioGroupChangeEventDetail {
-  value: any;
+export interface RadioGroupChangeEventDetail<T = any> {
+  value: T;
 }
 
-export interface RadioChangeEventDetail {
-  value: any;
-  checked: boolean;
+export interface RadioGroupCustomEvent<T = any> extends CustomEvent {
+  detail: RadioGroupChangeEventDetail<T>;
+  target: HTMLIonRadioGroupElement;
 }

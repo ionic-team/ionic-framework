@@ -9,10 +9,9 @@ export const createPointerEvents = (
   pointerUp: any,
   options: {
     passive?: boolean;
-    capture?: boolean
+    capture?: boolean;
   }
 ) => {
-
   let rmTouchStart: (() => void) | undefined;
   let rmTouchMove: (() => void) | undefined;
   let rmTouchEnd: (() => void) | undefined;
@@ -30,11 +29,21 @@ export const createPointerEvents = (
     if (!rmTouchMove && pointerMove) {
       rmTouchMove = addEventListener(el, 'touchmove', pointerMove, options);
     }
+
+    /**
+     * Events are dispatched on the element that is tapped and bubble up to
+     * the reference element in the gesture. In the event that the element this
+     * event was first dispatched on is removed from the DOM, the event will no
+     * longer bubble up to our reference element. This leaves the gesture in an
+     * unusable state. To account for this, the touchend and touchcancel listeners
+     * should be added to the event target so that they still fire even if the target
+     * is removed from the DOM.
+     */
     if (!rmTouchEnd) {
-      rmTouchEnd = addEventListener(el, 'touchend', handleTouchEnd, options);
+      rmTouchEnd = addEventListener(ev.target, 'touchend', handleTouchEnd, options);
     }
     if (!rmTouchCancel) {
-      rmTouchCancel = addEventListener(el, 'touchcancel', handleTouchEnd, options);
+      rmTouchCancel = addEventListener(ev.target, 'touchcancel', handleTouchEnd, options);
     }
   };
 
@@ -105,7 +114,6 @@ export const createPointerEvents = (
       }
       rmTouchStart = rmMouseStart = undefined;
       stop();
-
     } else {
       if (!rmTouchStart) {
         rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
@@ -124,7 +132,7 @@ export const createPointerEvents = (
   return {
     enable,
     stop,
-    destroy
+    destroy,
   };
 };
 

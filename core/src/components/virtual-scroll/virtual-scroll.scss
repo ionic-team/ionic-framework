@@ -16,7 +16,7 @@ ion-virtual-scroll > .virtual-loading {
 }
 
 ion-virtual-scroll > .virtual-item {
-  /* stylelint-disable declaration-no-important, property-blacklist */
+  /* stylelint-disable declaration-no-important, property-disallowed-list */
   position: absolute !important;
 
   top: 0 !important;

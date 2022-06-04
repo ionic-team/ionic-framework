@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, TabBarChangedEventDetail } from '../../interface';
+import type { Color, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -11,11 +12,13 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-tab-bar',
   styleUrls: {
     ios: 'tab-bar.ios.scss',
-    md: 'tab-bar.md.scss'
+    md: 'tab-bar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class TabBar implements ComponentInterface {
+  private keyboardWillShowHandler?: () => void;
+  private keyboardWillHideHandler?: () => void;
 
   @Element() el!: HTMLElement;
 
@@ -26,7 +29,7 @@ export class TabBar implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * The selected tab component
@@ -36,7 +39,7 @@ export class TabBar implements ComponentInterface {
   selectedTabChanged() {
     if (this.selectedTab !== undefined) {
       this.ionTabBarChanged.emit({
-        tab: this.selectedTab
+        tab: this.selectedTab,
       });
     }
   }
@@ -51,20 +54,34 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
-  @Listen('keyboardWillHide', { target: 'window' })
-  protected onKeyboardWillHide() {
-    setTimeout(() => this.keyboardVisible = false, 50);
+  componentWillLoad() {
+    this.selectedTabChanged();
   }
 
-  @Listen('keyboardWillShow', { target: 'window' })
-  protected onKeyboardWillShow() {
-    if (this.el.getAttribute('slot') !== 'top') {
-      this.keyboardVisible = true;
+  connectedCallback() {
+    if (typeof (window as any) !== 'undefined') {
+      this.keyboardWillShowHandler = () => {
+        if (this.el.getAttribute('slot') !== 'top') {
+          this.keyboardVisible = true;
+        }
+      };
+
+      this.keyboardWillHideHandler = () => {
+        setTimeout(() => (this.keyboardVisible = false), 50);
+      };
+
+      window.addEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
+      window.addEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
     }
   }
 
-  componentWillLoad() {
-    this.selectedTabChanged();
+  disconnectedCallback() {
+    if (typeof (window as any) !== 'undefined') {
+      window.removeEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
+      window.removeEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
+
+      this.keyboardWillShowHandler = this.keyboardWillHideHandler = undefined;
+    }
   }
 
   render() {

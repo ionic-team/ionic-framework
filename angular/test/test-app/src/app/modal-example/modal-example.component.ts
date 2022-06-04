@@ -1,4 +1,5 @@
 import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 @Component({
@@ -9,12 +10,18 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
 
   @Input() value: string;
 
+  form = new FormGroup({
+    select: new FormControl([])
+  });
+
   valueFromParams: string;
   onInit = 0;
   willEnter = 0;
   didEnter = 0;
   willLeave = 0;
   didLeave = 0;
+
+  modal: HTMLElement;
 
   constructor(
     private modalCtrl: ModalController,

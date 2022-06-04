@@ -33,7 +33,9 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -47,7 +49,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "progress": false,
@@ -85,38 +86,13 @@
             "browserTarget": "test-app:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "styles": ["src/styles.css"],
-            "scripts": [],
-            "assets": ["src/favicon.ico", "src/assets"]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "test-app:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "test-app:serve:production"
-            },
-            "ci": {
-              "devServerTarget": "test-app:serve:ci"
-            }
-          }
-        },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         },
         "server": {
@@ -164,5 +140,8 @@
       }
     }
   },
-  "defaultProject": "test-app"
+  "defaultProject": "test-app",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

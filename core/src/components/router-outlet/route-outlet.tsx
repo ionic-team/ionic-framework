@@ -1,25 +1,40 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import type {
+  Animation,
+  AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
+  FrameworkDelegate,
+  Gesture,
+  NavOutlet,
+  RouteID,
+  RouteWrite,
+  RouterDirection,
+  RouterOutletOptions,
+  SwipeGestureHandler,
+} from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { shallowEqualStringMap } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
 
 @Component({
   tag: 'ion-router-outlet',
   styleUrl: 'route-outlet.scss',
-  shadow: true
+  shadow: true,
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
-
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;
+  private activeParams: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
-  private animationEnabled = true;
+  private gestureOrAnimationInProgress = false;
 
   @Element() el!: HTMLElement;
 
@@ -36,10 +51,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
    */
   @Prop() animated = true;
 
-  /**
-   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
-   * However, this property allows to create custom transition using `AnimateBuilder` functions.
-   */
+  /** This property allows to create custom transition using AnimateBuilder functions. */
   @Prop() animation?: AnimationBuilder;
 
   /** @internal */
@@ -61,25 +73,33 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
   async connectedCallback() {
+    const onStart = () => {
+      this.gestureOrAnimationInProgress = true;
+      if (this.swipeHandler) {
+        this.swipeHandler.onStart();
+      }
+    };
+
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
-      () => this.swipeHandler && this.swipeHandler.onStart(),
-      step => this.ani && this.ani.progressStep(step),
+      () => !this.gestureOrAnimationInProgress && !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => onStart(),
+      (step) => this.ani?.progressStep(step),
       (shouldComplete, step, dur) => {
         if (this.ani) {
-          this.animationEnabled = false;
+          this.ani.onFinish(
+            () => {
+              this.gestureOrAnimationInProgress = false;
 
-          this.ani.onFinish(() => {
-            this.animationEnabled = true;
-
-            if (this.swipeHandler) {
-              this.swipeHandler.onEnd(shouldComplete);
-            }
-          }, { oneTimeCallback: true });
+              if (this.swipeHandler) {
+                this.swipeHandler.onEnd(shouldComplete);
+              }
+            },
+            { oneTimeCallback: true }
+          );
 
           // Account for rounding errors in JS
-          let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+          let newStepValue = shouldComplete ? -0.001 : 0.001;
 
           /**
            * Animation will be reversed here, so need to
@@ -97,7 +117,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
           }
 
           this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
-
+        } else {
+          this.gestureOrAnimationInProgress = false;
         }
       }
     );
@@ -117,7 +138,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   /** @internal */
   @Method()
-  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
+  async commit(
+    enteringEl: HTMLElement,
+    leavingEl: HTMLElement | undefined,
+    opts?: RouterOutletOptions
+  ): Promise<boolean> {
     const unlock = await this.lock();
     let changed = false;
     try {
@@ -131,15 +156,20 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   /** @internal */
   @Method()
-  async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder): Promise<RouteWrite> {
+  async setRouteId(
+    id: string,
+    params: ComponentProps | undefined,
+    direction: RouterDirection,
+    animation?: AnimationBuilder
+  ): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 'root' ? 0 : undefined,
       direction: direction === 'back' ? 'back' : 'forward',
-      animationBuilder: animation
+      animationBuilder: animation,
     });
     return {
       changed,
-      element: this.activeEl
+      element: this.activeEl,
     };
   }
 
@@ -147,23 +177,37 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
     const active = this.activeEl;
-    return active ? {
-      id: active.tagName,
-      element: active,
-    } : undefined;
+    return active
+      ? {
+          id: active.tagName,
+          element: active,
+          params: this.activeParams,
+        }
+      : undefined;
   }
 
-  private async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.activeComponent === component) {
+  private async setRoot(
+    component: ComponentRef,
+    params?: ComponentProps,
+    opts?: RouterOutletOptions
+  ): Promise<boolean> {
+    if (this.activeComponent === component && shallowEqualStringMap(params, this.activeParams)) {
       return false;
     }
 
     // attach entering view to DOM
     const leavingEl = this.activeEl;
-    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
+    const enteringEl = await attachComponent(
+      this.delegate,
+      this.el,
+      component,
+      ['ion-page', 'ion-page-invisible'],
+      params
+    );
 
     this.activeComponent = component;
     this.activeEl = enteringEl;
+    this.activeParams = params;
 
     // commit animation
     await this.commit(enteringEl, leavingEl, opts);
@@ -172,7 +216,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return true;
   }
 
-  private async transition(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts: RouterOutletOptions = {}): Promise<boolean> {
+  private async transition(
+    enteringEl: HTMLElement,
+    leavingEl: HTMLElement | undefined,
+    opts: RouterOutletOptions = {}
+  ): Promise<boolean> {
     if (leavingEl === enteringEl) {
       return false;
     }
@@ -182,7 +230,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
     const { el, mode } = this;
     const animated = this.animated && config.getBoolean('animated', true);
-    const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
+    const animationBuilder = opts.animationBuilder || this.animation || config.get('navAnimation');
 
     await transition({
       mode,
@@ -190,10 +238,39 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       enteringEl,
       leavingEl,
       baseEl: el,
-      progressCallback: (opts.progressAnimation
-        ? ani => this.ani = ani
-        : undefined
-      ),
+      progressCallback: opts.progressAnimation
+        ? (ani) => {
+            /**
+             * Because this progress callback is called asynchronously
+             * it is possible for the gesture to start and end before
+             * the animation is ever set. In that scenario, we should
+             * immediately call progressEnd so that the transition promise
+             * resolves and the gesture does not get locked up.
+             */
+            if (ani !== undefined && !this.gestureOrAnimationInProgress) {
+              this.gestureOrAnimationInProgress = true;
+              ani.onFinish(
+                () => {
+                  this.gestureOrAnimationInProgress = false;
+                  if (this.swipeHandler) {
+                    this.swipeHandler.onEnd(false);
+                  }
+                },
+                { oneTimeCallback: true }
+              );
+
+              /**
+               * Playing animation to beginning
+               * with a duration of 0 prevents
+               * any flickering when the animation
+               * is later cleaned up.
+               */
+              ani.progressEnd(0, 0, 0);
+            } else {
+              this.ani = ani;
+            }
+          }
+        : undefined,
       ...opts,
       animationBuilder,
     });
@@ -207,7 +284,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private async lock() {
     const p = this.waitPromise;
     let resolve!: () => void;
-    this.waitPromise = new Promise(r => resolve = r);
+    this.waitPromise = new Promise((r) => (resolve = r));
 
     if (p !== undefined) {
       await p;
@@ -216,8 +293,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   }
 
   render() {
-    return (
-      <slot></slot>
-    );
+    return <slot></slot>;
   }
 }

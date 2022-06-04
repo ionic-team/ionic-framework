@@ -105,12 +105,12 @@
     @include margin-horizontal(-13px, null);
 
     @include multi-dir() {
-      /* stylelint-disable-next-line property-blacklist */
+      /* stylelint-disable-next-line property-disallowed-list */
       border-radius: 50% 50% 50% 0;
     }
 
     @include rtl() {
-      /* stylelint-disable-next-line property-blacklist */
+      /* stylelint-disable-next-line property-disallowed-list */
       left: unset;
     }
 

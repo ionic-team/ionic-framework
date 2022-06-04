@@ -3,7 +3,7 @@ import { RouteInfo } from '../models/RouteInfo';
 import { ViewItem } from './ViewItem';
 
 export abstract class ViewStacks {
-  private viewStacks: { [key: string]: ViewItem[]; } = {};
+  private viewStacks: { [key: string]: ViewItem[] } = {};
 
   constructor() {
     this.add = this.add.bind(this);
@@ -30,17 +30,17 @@ export abstract class ViewStacks {
   }
 
   getViewItemsForOutlet(outletId: string) {
-    return (this.viewStacks[outletId] || []);
+    return this.viewStacks[outletId] || [];
   }
 
   remove(viewItem: ViewItem) {
     const { outletId } = viewItem;
     const viewStack = this.viewStacks[outletId];
     if (viewStack) {
-      const viewItemToRemove = viewStack.find(x => x.id === viewItem.id);
+      const viewItemToRemove = viewStack.find((x) => x.id === viewItem.id);
       if (viewItemToRemove) {
         viewItemToRemove.mount = false;
-        this.viewStacks[outletId] = viewStack.filter(x => x.id !== viewItemToRemove.id);
+        this.viewStacks[outletId] = viewStack.filter((x) => x.id !== viewItemToRemove.id);
       }
     }
   }
@@ -52,15 +52,29 @@ export abstract class ViewStacks {
   protected getAllViewItems() {
     const keys = this.getStackIds();
     const viewItems: ViewItem[] = [];
-    keys.forEach(k => {
+    keys.forEach((k) => {
       viewItems.push(...this.viewStacks[k]);
     });
     return viewItems;
   }
 
-  abstract createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement): ViewItem;
+  abstract createViewItem(
+    outletId: string,
+    reactElement: React.ReactElement,
+    routeInfo: RouteInfo,
+    page?: HTMLElement
+  ): ViewItem;
   abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
   abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
-  abstract findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
-  abstract getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo, reRender: () => void, setInTransition: () => void): React.ReactNode[];
+  abstract findLeavingViewItemByRouteInfo(
+    routeInfo: RouteInfo,
+    outletId?: string
+  ): ViewItem | undefined;
+  abstract getChildrenToRender(
+    outletId: string,
+    ionRouterOutlet: React.ReactElement,
+    routeInfo: RouteInfo,
+    reRender: () => void,
+    setInTransition: () => void
+  ): React.ReactNode[];
 }

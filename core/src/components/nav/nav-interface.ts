@@ -1,4 +1,11 @@
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import type {
+  Animation,
+  AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
+  FrameworkDelegate,
+  Mode,
+} from '../../interface';
 
 import { ViewController } from './view-controller';
 
@@ -47,24 +54,43 @@ export interface NavOptions extends RouterOutletOptions {
 
 export type Page = new (...args: any[]) => any;
 
-export type TransitionResolveFn = (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string) => void;
+export type TransitionResolveFn = (
+  hasCompleted: boolean,
+  requiresTransition: boolean,
+  enteringName?: string,
+  leavingName?: string,
+  direction?: string
+) => void;
 
 export type TransitionRejectFn = (rejectReason: any, transition?: Animation) => void;
 
-export type TransitionDoneFn = (hasCompleted: boolean, requiresTransition: boolean, enteringView?: ViewController, leavingView?: ViewController, direction?: string) => void;
+export type TransitionDoneFn = (
+  hasCompleted: boolean,
+  requiresTransition: boolean,
+  enteringView?: ViewController,
+  leavingView?: ViewController,
+  direction?: string
+) => void;
 
 export interface TransitionInstruction {
   opts: NavOptions | undefined | null;
+  /** The index where to insert views. A negative number means at the end */
   insertStart?: number;
   insertViews?: any[];
   removeView?: ViewController;
+  /** The index of the first view to remove. A negative number means the last view */
   removeStart?: number;
+  /** The number of view to remove. A negative number means all views from removeStart */
   removeCount?: number;
   resolve?: (hasCompleted: boolean) => void;
   reject?: (rejectReason: string) => void;
   done?: TransitionDoneFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
+}
+
+export interface NavCustomEvent extends CustomEvent {
+  target: HTMLIonNavElement;
 }
 
 export { ViewController };

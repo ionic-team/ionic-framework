@@ -25,7 +25,6 @@
   pointer-events: none;
 }
 
-
 .radio-icon {
   display: flex;
 
@@ -38,11 +37,25 @@
   contain: layout size style;
 }
 
-button {
-  @include input-cover();
-}
-
 .radio-icon,
 .radio-inner {
   box-sizing: border-box;
+}
+
+label {
+  @include input-cover();
+
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
+
+input {
+  @include visually-hidden();
+}
+
+:host(:focus) {
+  outline: none;
 }

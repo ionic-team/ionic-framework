@@ -1,4 +1,3 @@
-
 export interface IonicGlobal {
   config?: any;
   asyncQueue?: boolean;
@@ -10,6 +9,6 @@ export interface IonicWindow extends Window {
 }
 
 export interface HTMLStencilElement extends HTMLElement {
-  componentOnReady(): Promise<this>;
-  forceUpdate(): void;
+  componentOnReady?(): Promise<this>;
+  forceUpdate?(): void;
 }

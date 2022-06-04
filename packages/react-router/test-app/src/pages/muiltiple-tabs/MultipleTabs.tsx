@@ -1,5 +1,20 @@
 import React from 'react';
-import { IonSplitPane, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel, IonPage, IonContent, IonHeader, IonMenuButton, IonButtons, IonIcon, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonSplitPane,
+  IonRouterOutlet,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonLabel,
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonButtons,
+  IonIcon,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 
 import { Route, Redirect } from 'react-router';
 import { Menu } from './Menu';
@@ -10,13 +25,25 @@ const MultipleTabs: React.FC = () => {
     <IonSplitPane contentId="main">
       <Menu />
       <IonRouterOutlet id="main">
-        <Route path="/multiple-tabs/tab1" render={() => {
-          return <Tab1 />;
-        }} exact={false} />
-        <Route path="/multiple-tabs/tab2" render={() => {
-          return <Tab2 />;
-        }} exact={false} />
-        <Route path="/multiple-tabs" render={() => <Redirect to="/multiple-tabs/tab1" />} exact={true} />
+        <Route
+          path="/multiple-tabs/tab1"
+          render={() => {
+            return <Tab1 />;
+          }}
+          exact={false}
+        />
+        <Route
+          path="/multiple-tabs/tab2"
+          render={() => {
+            return <Tab2 />;
+          }}
+          exact={false}
+        />
+        <Route
+          path="/multiple-tabs"
+          render={() => <Redirect to="/multiple-tabs/tab1" />}
+          exact={true}
+        />
       </IonRouterOutlet>
     </IonSplitPane>
   );
@@ -37,10 +64,13 @@ const Tab1: React.FC = () => {
           <IonIcon icon={ellipse} />
           <IonLabel>Page B</IonLabel>
         </IonTabButton>
-
       </IonTabBar>
       <IonRouterOutlet id="tab1">
-        <Route path="/multiple-tabs/tab1" render={() => <Redirect to="/multiple-tabs/tab1/pagea" />} exact={true} />
+        <Route
+          path="/multiple-tabs/tab1"
+          render={() => <Redirect to="/multiple-tabs/tab1/pagea" />}
+          exact={true}
+        />
         {/* <Redirect path="/multiple-tabs/event" to="/multiple-tabs/tab1/pagea" exact={true} /> */}
         <Route path="/multiple-tabs/tab1/pagea" render={() => <Page name="PageA" />} exact={true} />
         <Route path="/multiple-tabs/tab1/pageb" render={() => <Page name="PageB" />} exact={true} />
@@ -63,7 +93,11 @@ const Tab2: React.FC = () => {
         </IonTabButton>
       </IonTabBar>
       <IonRouterOutlet id="tab2">
-        <Route path="/multiple-tabs/tab2" render={() => <Redirect to="/multiple-tabs/tab2/pagec" />} exact={true} />
+        <Route
+          path="/multiple-tabs/tab2"
+          render={() => <Redirect to="/multiple-tabs/tab2/pagec" />}
+          exact={true}
+        />
         {/* <Redirect path="/multiple-tabs/tab2" to="/multiple-tabs/tab2/pagec" exact={true} /> */}
         <Route path="/multiple-tabs/tab2/pagec" render={() => <Page name="PageC" />} exact={true} />
         <Route path="/multiple-tabs/tab2/paged" render={() => <Page name="PageD" />} exact={true} />
@@ -72,7 +106,7 @@ const Tab2: React.FC = () => {
   );
 };
 
-const Page: React.FC<{ name: string; }> = ({ name }) => {
+const Page: React.FC<{ name: string }> = ({ name }) => {
   return (
     <IonPage data-pageid={name}>
       <IonHeader>
@@ -83,12 +117,7 @@ const Page: React.FC<{ name: string; }> = ({ name }) => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        {name}
-      </IonContent>
+      <IonContent>{name}</IonContent>
     </IonPage>
   );
 };
-
-
-

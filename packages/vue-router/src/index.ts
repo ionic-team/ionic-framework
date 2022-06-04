@@ -15,7 +15,7 @@ export const createRouter = (opts: IonicVueRouterOptions) => {
 
   const router = createVueRouter(routerOptions);
   const ionRouter = createIonRouter(opts, router);
-  const viewStacks = createViewStacks();
+  const viewStacks = createViewStacks(router);
 
   const oldInstall = router.install.bind(router);
   router.install = (app: App) => {

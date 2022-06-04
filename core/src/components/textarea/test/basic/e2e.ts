@@ -2,14 +2,14 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('textarea: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/textarea/test/basic?ionic:_testing=true'
+    url: '/src/components/textarea/test/basic?ionic:_testing=true',
   });
 
   const compares = [];
 
   compares.push(await page.compareScreenshot());
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   compares.push(await page.compareScreenshot('value changed'));
 
   for (const compare of compares) {

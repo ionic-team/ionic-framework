@@ -29,9 +29,9 @@ export interface Animation {
    */
   destroy(clearStyleSheets?: boolean): void;
 
-  progressStart(forceLinearEasing: boolean, step?: number): void;
-  progressStep(step: number): void;
-  progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): void;
+  progressStart(forceLinearEasing?: boolean, step?: number): Animation;
+  progressStep(step: number): Animation;
+  progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
@@ -212,6 +212,12 @@ export interface Animation {
    * upon the animation ending
    */
   onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
+
+  /**
+   * Returns `true` if the animation is running.
+   * Returns `false` otherwise.
+   */
+  isRunning(): boolean;
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;

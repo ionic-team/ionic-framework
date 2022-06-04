@@ -1,6 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 
 /**
  * @part image - The inner `img` element.
@@ -8,11 +11,11 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
-  shadow: true
+  shadow: true,
 })
 export class Img implements ComponentInterface {
-
   private io?: IntersectionObserver;
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
 
@@ -45,6 +48,10 @@ export class Img implements ComponentInterface {
   /** Emitted when the img fails to load */
   @Event() ionError!: EventEmitter<void>;
 
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['draggable']);
+  }
+
   componentDidLoad() {
     this.addIO();
   }
@@ -57,13 +64,16 @@ export class Img implements ComponentInterface {
       typeof (window as any) !== 'undefined' &&
       'IntersectionObserver' in window &&
       'IntersectionObserverEntry' in window &&
-      'isIntersecting' in window.IntersectionObserverEntry.prototype) {
+      'isIntersecting' in window.IntersectionObserverEntry.prototype
+    ) {
       this.removeIO();
-      this.io = new IntersectionObserver(data => {
-        // because there will only ever be one instance
-        // of the element we are observing
-        // we can just use data[0]
-        if (data[0].isIntersecting) {
+      this.io = new IntersectionObserver((data) => {
+        /**
+         * On slower devices, it is possible for an intersection observer entry to contain multiple
+         * objects in the array. This happens when quickly scrolling an image into view and then out of
+         * view. In this case, the last object represents the current state of the component.
+         */
+        if (data[data.length - 1].isIntersecting) {
           this.load();
           this.removeIO();
         }
@@ -84,11 +94,11 @@ export class Img implements ComponentInterface {
 
   private onLoad = () => {
     this.ionImgDidLoad.emit();
-  }
+  };
 
   private onError = () => {
     this.ionError.emit();
-  }
+  };
 
   private removeIO() {
     if (this.io) {
@@ -98,17 +108,38 @@ export class Img implements ComponentInterface {
   }
 
   render() {
+    const { loadSrc, alt, onLoad, loadError, inheritedAttributes } = this;
+    const { draggable } = inheritedAttributes;
     return (
       <Host class={getIonMode(this)}>
         <img
           decoding="async"
-          src={this.loadSrc}
-          alt={this.alt}
-          onLoad={this.onLoad}
-          onError={this.loadError}
+          src={loadSrc}
+          alt={alt}
+          onLoad={onLoad}
+          onError={loadError}
           part="image"
+          draggable={isDraggable(draggable)}
         />
       </Host>
     );
   }
 }
+
+/**
+ * Enumerated strings must be set as booleans
+ * as Stencil will not render 'false' in the DOM.
+ * The need to explicitly render draggable="true"
+ * as only certain elements are draggable by default.
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/draggable.
+ */
+const isDraggable = (draggable?: string): boolean | undefined => {
+  switch (draggable) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      return undefined;
+  }
+};

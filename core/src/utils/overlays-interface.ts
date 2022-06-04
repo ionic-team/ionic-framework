@@ -1,6 +1,6 @@
-import { EventEmitter } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { AnimationBuilder, HTMLStencilElement } from '../interface';
+import type { AnimationBuilder, HTMLStencilElement } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
@@ -21,6 +21,11 @@ export interface OverlayInterface {
   willPresent: EventEmitter<void>;
   willDismiss: EventEmitter<OverlayEventDetail>;
   didDismiss: EventEmitter<OverlayEventDetail>;
+
+  didPresentShorthand?: EventEmitter<void>;
+  willPresentShorthand?: EventEmitter<void>;
+  willDismissShorthand?: EventEmitter<OverlayEventDetail>;
+  didDismissShorthand?: EventEmitter<OverlayEventDetail>;
 
   present(): Promise<void>;
   dismiss(data?: any, role?: string): Promise<boolean>;

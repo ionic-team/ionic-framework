@@ -1,17 +1,20 @@
-import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { menuController } from '../../utils/menu-controller';
 
 import { updateVisibility } from './menu-toggle-util';
 
+/**
+ * @slot - Content is placed inside the toggle to act as the click target.
+ */
 @Component({
   tag: 'ion-menu-toggle',
   styleUrl: 'menu-toggle.scss',
-  shadow: true
+  shadow: true,
 })
 export class MenuToggle implements ComponentInterface {
-
   @State() visible = false;
 
   /**
@@ -44,7 +47,7 @@ export class MenuToggle implements ComponentInterface {
 
   private onClick = () => {
     return menuController.toggle(this.menu);
-  }
+  };
 
   render() {
     const mode = getIonMode(this);

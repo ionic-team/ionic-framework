@@ -1,20 +1,27 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Listen, Method, Prop } from '@stencil/core';
 
-import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import type {
+  AnimationBuilder,
+  BackButtonEvent,
+  RouteChain,
+  RouterDirection,
+  RouterEventDetail,
+} from '../../interface';
 import { debounce } from '../../utils/helpers';
+import type { NavigationHookResult } from '../route/route-interface';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
 import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
-import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
+import { findChainForIDs, findChainForSegments, findRouteRedirect } from './utils/matching';
 import { readRedirects, readRoutes } from './utils/parser';
-import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
+import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from './utils/path';
 
 @Component({
-  tag: 'ion-router'
+  tag: 'ion-router',
 })
 export class Router implements ComponentInterface {
-
   private previousPath: string | null = null;
   private busy = false;
   private state = 0;
@@ -24,9 +31,8 @@ export class Router implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * By default `ion-router` will match the routes at the root path ("/").
-   * That can be changed when
-   *
+   * The root path to use when matching URLs. By default, this is set to "/", but you can specify
+   * an alternate prefix for all URL paths.
    */
   @Prop() root = '/';
 
@@ -40,7 +46,7 @@ export class Router implements ComponentInterface {
    * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
    * requires additional server-side configuration in order to properly work.
    *
-   * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
+   * On the other side hash-navigation is much easier to deploy, it even works over the file protocol.
    *
    * By default, this property is `true`, change to `false` to allow hash-less URLs.
    */
@@ -57,11 +63,19 @@ export class Router implements ComponentInterface {
   @Event() ionRouteDidChange!: EventEmitter<RouterEventDetail>;
 
   async componentWillLoad() {
-    console.debug('[ion-router] router will load');
     await waitUntilNavNode();
-    console.debug('[ion-router] found nav');
 
-    await this.onRoutesChanged();
+    const canProceed = await this.runGuards(this.getSegments());
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        const { redirect } = canProceed;
+        const path = parsePath(redirect);
+        this.setSegments(path.segments, ROUTER_INTENT_NONE, path.queryString);
+        await this.writeNavStateRoot(path.segments, ROUTER_INTENT_NONE);
+      }
+    } else {
+      await this.onRoutesChanged();
+    }
   }
 
   componentDidLoad() {
@@ -72,22 +86,22 @@ export class Router implements ComponentInterface {
   @Listen('popstate', { target: 'window' })
   protected async onPopState() {
     const direction = this.historyDirection();
-    let path = this.getPath();
+    let segments = this.getSegments();
 
-    const canProceed = await this.runGuards(path);
+    const canProceed = await this.runGuards(segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
+        segments = parsePath(canProceed.redirect).segments;
+      } else {
+        return false;
       }
-      return false;
     }
-    console.debug('[ion-router] URL changed -> update nav', path, direction);
-    return this.writeNavStateRoot(path, direction);
+    return this.writeNavStateRoot(segments, direction);
   }
 
   @Listen('ionBackButton', { target: 'document' })
   protected onBackButton(ev: BackButtonEvent) {
-    ev.detail.register(0, processNextHandler => {
+    ev.detail.register(0, (processNextHandler) => {
       this.back();
       processNextHandler();
     });
@@ -109,38 +123,36 @@ export class Router implements ComponentInterface {
   }
 
   /**
-   * Navigate to the specified URL.
+   * Navigate to the specified path.
    *
-   * @param url The url to navigate to.
+   * @param path The path to navigate to.
    * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
-  async push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
-    if (url.startsWith('.')) {
-      url = (new URL(url, window.location.href)).pathname;
+  async push(path: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
+    if (path.startsWith('.')) {
+      const currentPath = this.previousPath ?? '/';
+      // Convert currentPath to an URL by pre-pending a protocol and a host to resolve the relative path.
+      const url = new URL(path, `https://host/${currentPath}`);
+      path = url.pathname + url.search;
     }
-    console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
-    let path = parsePath(url);
-    let queryString = url.split('?')[1];
+    let parsedPath = parsePath(path);
 
-    const canProceed = await this.runGuards(path);
+    const canProceed = await this.runGuards(parsedPath.segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
-        queryString = canProceed.redirect.split('?')[1];
+        parsedPath = parsePath(canProceed.redirect);
       } else {
         return false;
       }
     }
 
-    this.setPath(path, direction, queryString);
-    return this.writeNavStateRoot(path, direction, animation);
+    this.setSegments(parsedPath.segments, direction, parsedPath.queryString);
+    return this.writeNavStateRoot(parsedPath.segments, direction, animation);
   }
 
-  /**
-   * Go back to previous page in the window.history.
-   */
+  /** Go back to previous page in the window.history. */
   @Method()
   back(): Promise<void> {
     window.history.back();
@@ -150,8 +162,6 @@ export class Router implements ComponentInterface {
   /** @internal */
   @Method()
   async printDebug() {
-    console.debug('CURRENT PATH', this.getPath());
-    console.debug('PREVIOUS PATH', this.previousPath);
     printRoutes(readRoutes(this.el));
     printRedirects(readRedirects(this.el));
   }
@@ -165,34 +175,38 @@ export class Router implements ComponentInterface {
     }
     const { ids, outlet } = await readNavState(window.document.body);
     const routes = readRoutes(this.el);
-    const chain = routerIDsToChain(ids, routes);
+    const chain = findChainForIDs(ids, routes);
     if (!chain) {
-      console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
+      console.warn(
+        '[ion-router] no matching URL for ',
+        ids.map((i) => i.id)
+      );
       return false;
     }
 
-    const path = chainToPath(chain);
-    if (!path) {
+    const segments = chainToSegments(chain);
+    if (!segments) {
       console.warn('[ion-router] router could not match path because some required param is missing');
       return false;
     }
 
-    console.debug('[ion-router] nav changed -> update URL', ids, path);
-    this.setPath(path, direction);
+    this.setSegments(segments, direction);
 
-    await this.safeWriteNavState(outlet, chain, ROUTER_INTENT_NONE, path, null, ids.length);
+    await this.safeWriteNavState(outlet, chain, ROUTER_INTENT_NONE, segments, null, ids.length);
     return true;
   }
 
+  /** This handler gets called when a `ion-route-redirect` component is added to the DOM or if the from or to property of such node changes. */
   private onRedirectChanged() {
-    const path = this.getPath();
-    if (path && routeRedirect(path, readRedirects(this.el))) {
-      this.writeNavStateRoot(path, ROUTER_INTENT_NONE);
+    const segments = this.getSegments();
+    if (segments && findRouteRedirect(segments, readRedirects(this.el))) {
+      this.writeNavStateRoot(segments, ROUTER_INTENT_NONE);
     }
   }
 
+  /** This handler gets called when a `ion-route` component is added to the DOM or if the from or to property of such node changes. */
   private onRoutesChanged() {
-    return this.writeNavStateRoot(this.getPath(), ROUTER_INTENT_NONE);
+    return this.writeNavStateRoot(this.getSegments(), ROUTER_INTENT_NONE);
   }
 
   private historyDirection() {
@@ -200,7 +214,7 @@ export class Router implements ComponentInterface {
 
     if (win.history.state === null) {
       this.state++;
-      win.history.replaceState(this.state, win.document.title, win.document.location && win.document.location.href);
+      win.history.replaceState(this.state, win.document.title, win.document.location?.href);
     }
 
     const state = win.history.state;
@@ -209,52 +223,61 @@ export class Router implements ComponentInterface {
 
     if (state > lastState || (state >= lastState && lastState > 0)) {
       return ROUTER_INTENT_FORWARD;
-    } else if (state < lastState) {
-      return ROUTER_INTENT_BACK;
-    } else {
-      return ROUTER_INTENT_NONE;
     }
+    if (state < lastState) {
+      return ROUTER_INTENT_BACK;
+    }
+    return ROUTER_INTENT_NONE;
   }
 
-  private async writeNavStateRoot(path: string[] | null, direction: RouterDirection, animation?: AnimationBuilder): Promise<boolean> {
-    if (!path) {
+  private async writeNavStateRoot(
+    segments: string[] | null,
+    direction: RouterDirection,
+    animation?: AnimationBuilder
+  ): Promise<boolean> {
+    if (!segments) {
       console.error('[ion-router] URL is not part of the routing set');
       return false;
     }
 
     // lookup redirect rule
     const redirects = readRedirects(this.el);
-    const redirect = routeRedirect(path, redirects);
+    const redirect = findRouteRedirect(segments, redirects);
 
     let redirectFrom: string[] | null = null;
+
     if (redirect) {
-      this.setPath(redirect.to!, direction);
+      const { segments: toSegments, queryString } = redirect.to!;
+      this.setSegments(toSegments, direction, queryString);
       redirectFrom = redirect.from;
-      path = redirect.to!;
+      segments = toSegments;
     }
 
     // lookup route chain
     const routes = readRoutes(this.el);
-    const chain = routerPathToChain(path, routes);
+    const chain = findChainForSegments(segments, routes);
     if (!chain) {
       console.error('[ion-router] the path does not match any route');
       return false;
     }
 
     // write DOM give
-    return this.safeWriteNavState(document.body, chain, direction, path, redirectFrom, 0, animation);
+    return this.safeWriteNavState(document.body, chain, direction, segments, redirectFrom, 0, animation);
   }
 
   private async safeWriteNavState(
-    node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
-    path: string[], redirectFrom: string[] | null,
+    node: HTMLElement | undefined,
+    chain: RouteChain,
+    direction: RouterDirection,
+    segments: string[],
+    redirectFrom: string[] | null,
     index = 0,
     animation?: AnimationBuilder
   ): Promise<boolean> {
     const unlock = await this.lock();
     let changed = false;
     try {
-      changed = await this.writeNavState(node, chain, direction, path, redirectFrom, index, animation);
+      changed = await this.writeNavState(node, chain, direction, segments, redirectFrom, index, animation);
     } catch (e) {
       console.error(e);
     }
@@ -265,37 +288,56 @@ export class Router implements ComponentInterface {
   private async lock() {
     const p = this.waitPromise;
     let resolve!: () => void;
-    this.waitPromise = new Promise(r => resolve = r);
+    this.waitPromise = new Promise((r) => (resolve = r));
 
     if (p !== undefined) {
       await p;
     }
     return resolve;
   }
-  private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
-    if (!to || !from) { return true; }
+
+  /**
+   * Executes the beforeLeave hook of the source route and the beforeEnter hook of the target route if they exist.
+   *
+   * When the beforeLeave hook does not return true (to allow navigating) then that value is returned early and the beforeEnter is executed.
+   * Otherwise the beforeEnterHook hook of the target route is executed.
+   */
+  private async runGuards(
+    to: string[] | null = this.getSegments(),
+    from?: string[] | null
+  ): Promise<NavigationHookResult> {
+    if (from === undefined) {
+      from = parsePath(this.previousPath).segments;
+    }
+
+    if (!to || !from) {
+      return true;
+    }
 
     const routes = readRoutes(this.el);
 
-    const toChain = routerPathToChain(to, routes);
-    const fromChain = routerPathToChain(from, routes);
-
-    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
+    const fromChain = findChainForSegments(from, routes);
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
-    if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
+    if (canLeave === false || typeof canLeave === 'object') {
+      return canLeave;
+    }
 
-    const canEnter = beforeEnterHook ? await beforeEnterHook() : true;
-    if (canEnter === false || typeof canEnter === 'object') { return canEnter; }
+    const toChain = findChainForSegments(to, routes);
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
 
-    return true;
+    return beforeEnterHook ? beforeEnterHook() : true;
   }
 
   private async writeNavState(
-    node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
-    path: string[], redirectFrom: string[] | null,
-    index = 0, animation?: AnimationBuilder
+    node: HTMLElement | undefined,
+    chain: RouteChain,
+    direction: RouterDirection,
+    segments: string[],
+    redirectFrom: string[] | null,
+    index = 0,
+    animation?: AnimationBuilder
   ): Promise<boolean> {
     if (this.busy) {
       console.warn('[ion-router] router is busy, transition was cancelled');
@@ -304,17 +346,13 @@ export class Router implements ComponentInterface {
     this.busy = true;
 
     // generate route event and emit will change
-    const routeEvent = this.routeChangeEvent(path, redirectFrom);
+    const routeEvent = this.routeChangeEvent(segments, redirectFrom);
     if (routeEvent) {
       this.ionRouteWillChange.emit(routeEvent);
     }
 
     const changed = await writeNavState(node, chain, direction, index, false, animation);
     this.busy = false;
-
-    if (changed) {
-      console.debug('[ion-router] route changed', path);
-    }
 
     // emit did change
     if (routeEvent) {
@@ -323,23 +361,23 @@ export class Router implements ComponentInterface {
     return changed;
   }
 
-  private setPath(path: string[], direction: RouterDirection, queryString?: string) {
+  private setSegments(segments: string[], direction: RouterDirection, queryString?: string) {
     this.state++;
-    writePath(window.history, this.root, this.useHash, path, direction, this.state, queryString);
+    writeSegments(window.history, this.root, this.useHash, segments, direction, this.state, queryString);
   }
 
-  private getPath(): string[] | null {
-    return readPath(window.location, this.root, this.useHash);
+  private getSegments(): string[] | null {
+    return readSegments(window.location, this.root, this.useHash);
   }
 
-  private routeChangeEvent(path: string[], redirectFromPath: string[] | null): RouterEventDetail | null {
+  private routeChangeEvent(toSegments: string[], redirectFromSegments: string[] | null): RouterEventDetail | null {
     const from = this.previousPath;
-    const to = generatePath(path);
+    const to = generatePath(toSegments);
     this.previousPath = to;
     if (to === from) {
       return null;
     }
-    const redirectedFrom = redirectFromPath ? generatePath(redirectFromPath) : null;
+    const redirectedFrom = redirectFromSegments ? generatePath(redirectFromSegments) : null;
     return {
       from,
       redirectedFrom,
