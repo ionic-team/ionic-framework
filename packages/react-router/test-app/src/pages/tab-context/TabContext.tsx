@@ -1,12 +1,27 @@
 import React, { useContext } from 'react';
-import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonTabsContext, IonButton } from '@ionic/react';
+import {
+  IonTabs,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton,
+  IonTitle,
+  IonContent,
+  IonTabsContext,
+  IonButton,
+} from '@ionic/react';
 import { Route, Redirect } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
 
-interface TabsContext {
-}
+interface TabsContextProps {}
 
-const TabsContext: React.FC<TabsContext> = () => {
+const TabsContext: React.FC<TabsContextProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
@@ -29,7 +44,6 @@ const TabsContext: React.FC<TabsContext> = () => {
 };
 
 const Tab1 = () => {
-
   const tabContext = useContext(IonTabsContext);
 
   return (
@@ -43,9 +57,7 @@ const Tab1 = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div>
-          Page: {tabContext.activeTab}
-        </div>
+        <div>Page: {tabContext.activeTab}</div>
         <IonButton onClick={() => tabContext.selectTab('tab2')}>Go to tab2</IonButton>
       </IonContent>
     </IonPage>
@@ -53,7 +65,6 @@ const Tab1 = () => {
 };
 
 const Tab2 = () => {
-
   const tabContext = useContext(IonTabsContext);
 
   return (
@@ -67,9 +78,7 @@ const Tab2 = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div>
-          Page: {tabContext.activeTab}
-        </div>
+        <div>Page: {tabContext.activeTab}</div>
         <IonButton onClick={() => tabContext.selectTab('tab1')}>Go to tab1</IonButton>
       </IonContent>
     </IonPage>

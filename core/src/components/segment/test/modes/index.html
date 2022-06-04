@@ -1,108 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment - Modes</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Segment - Modes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment - Modes</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-<body>
-  <ion-app>
+      <ion-content>
+        <h2>Mode: segment & button ios</h2>
+        <ion-segment mode="ios" value="kittens">
+          <ion-segment-button mode="ios" value="puppies">
+            <ion-label>Puppies</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="ios" value="kittens">
+            <ion-label>Kittens</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="ios" value="turtles">
+            <ion-label>Turtles</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Segment - Modes</ion-title>
-      </ion-toolbar>
-    </ion-header>
+        <h2>Mode: segment ios</h2>
+        <ion-segment mode="ios" value="kittens">
+          <ion-segment-button value="puppies">
+            <ion-label>Puppies</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="kittens">
+            <ion-label>Kittens</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="turtles">
+            <ion-label>Turtles</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-    <ion-content>
-      <h2>Mode: segment & button ios</h2>
-      <ion-segment mode="ios" value="kittens">
-        <ion-segment-button mode="ios" value="puppies">
-          <ion-label>Puppies</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="kittens">
-          <ion-label>Kittens</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="turtles">
-          <ion-label>Turtles</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+        <h2>Mode: segment ios, button: md</h2>
+        <ion-segment mode="ios" value="kittens">
+          <ion-segment-button mode="md" value="puppies">
+            <ion-label>Puppies</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" value="kittens">
+            <ion-label>Kittens</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" value="turtles">
+            <ion-label>Turtles</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-      <h2>Mode: segment ios</h2>
-      <ion-segment mode="ios" value="kittens">
-        <ion-segment-button value="puppies">
-          <ion-label>Puppies</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="kittens">
-          <ion-label>Kittens</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="turtles">
-          <ion-label>Turtles</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+        <hr />
 
-      <h2>Mode: segment ios, button: md</h2>
-      <ion-segment mode="ios" value="kittens">
-        <ion-segment-button mode="md" value="puppies">
-          <ion-label>Puppies</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="md" value="kittens">
-          <ion-label>Kittens</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="md" value="turtles">
-          <ion-label>Turtles</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+        <h2>Mode: segment & button md</h2>
+        <ion-segment mode="md" value="kittens">
+          <ion-segment-button mode="md" value="puppies">
+            <ion-label>Puppies</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" value="kittens">
+            <ion-label>Kittens</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" value="turtles">
+            <ion-label>Turtles</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-      <hr>
+        <h2>Mode: segment md</h2>
+        <ion-segment mode="md" value="kittens">
+          <ion-segment-button value="puppies">
+            <ion-label>Puppies</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="kittens">
+            <ion-label>Kittens</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="turtles">
+            <ion-label>Turtles</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-      <h2>Mode: segment & button md</h2>
-      <ion-segment mode="md" value="kittens">
-        <ion-segment-button mode="md" value="puppies">
-          <ion-label>Puppies</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="md" value="kittens">
-          <ion-label>Kittens</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="md" value="turtles">
-          <ion-label>Turtles</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-
-
-      <h2>Mode: segment md</h2>
-      <ion-segment mode="md" value="kittens">
-        <ion-segment-button value="puppies">
-          <ion-label>Puppies</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="kittens">
-          <ion-label>Kittens</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="turtles">
-          <ion-label>Turtles</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-
-      <h2>Mode: segment md, button: ios</h2>
-      <ion-segment mode="md" value="kittens">
-        <ion-segment-button mode="ios" value="puppies">
-          <ion-label>Puppies</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="kittens">
-          <ion-label>Kittens</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="turtles">
-          <ion-label>Turtles</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-content>
-  </ion-app>
-</body>
-
+        <h2>Mode: segment md, button: ios</h2>
+        <ion-segment mode="md" value="kittens">
+          <ion-segment-button mode="ios" value="puppies">
+            <ion-label>Puppies</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="ios" value="kittens">
+            <ion-label>Kittens</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="ios" value="turtles">
+            <ion-label>Turtles</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-content>
+    </ion-app>
+  </body>
 </html>

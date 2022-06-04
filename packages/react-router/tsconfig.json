@@ -23,13 +23,8 @@
     "jsx": "react",
     "target": "es2017"
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
-  "exclude": [
-    "**/__tests__/**"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["**/__tests__/**"],
   "compileOnSave": false,
   "buildOnSave": false
 }

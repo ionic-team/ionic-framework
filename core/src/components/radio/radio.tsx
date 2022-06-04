@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, StyleEventDetail } from '../../interface';
-import { addEventListener, findItemLabel, removeEventListener } from '../../utils/helpers';
+import type { Color, StyleEventDetail } from '../../interface';
+import { addEventListener, getAriaLabel, removeEventListener } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -15,16 +16,16 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-radio',
   styleUrls: {
     ios: 'radio.ios.scss',
-    md: 'radio.md.scss'
+    md: 'radio.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Radio implements ComponentInterface {
-  private buttonEl?: HTMLButtonElement;
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
+  private nativeInput!: HTMLInputElement;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRadioElement;
 
   /**
    * If `true`, the radio is selected.
@@ -42,7 +43,7 @@ export class Radio implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop() color?: Color;
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -77,10 +78,11 @@ export class Radio implements ComponentInterface {
 
   /** @internal */
   @Method()
-  async setFocus() {
-    if (this.buttonEl) {
-      this.buttonEl.focus();
-    }
+  async setFocus(ev: any) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.el.focus();
   }
 
   /** @internal */
@@ -93,7 +95,7 @@ export class Radio implements ComponentInterface {
     if (this.value === undefined) {
       this.value = this.inputId;
     }
-    const radioGroup = this.radioGroup = this.el.closest('ion-radio-group');
+    const radioGroup = (this.radioGroup = this.el.closest('ion-radio-group'));
     if (radioGroup) {
       this.updateState();
       addEventListener(radioGroup, 'ionChange', this.updateState);
@@ -126,50 +128,56 @@ export class Radio implements ComponentInterface {
     if (this.radioGroup) {
       this.checked = this.radioGroup.value === this.value;
     }
-  }
+  };
+
+  private onClick = () => {
+    this.checked = this.nativeInput.checked;
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { inputId, disabled, checked, color, el, buttonTabindex } = this;
     const mode = getIonMode(this);
-    const labelId = inputId + '-lbl';
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+
     return (
       <Host
-        role="radio"
-        aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
-        aria-labelledby={labelId}
+        aria-hidden={disabled ? 'true' : null}
+        aria-labelledby={label ? labelId : null}
+        role="radio"
+        tabindex={buttonTabindex}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
-          'interactive': true,
+          interactive: true,
           'radio-checked': checked,
           'radio-disabled': disabled,
         })}
       >
         <div class="radio-icon" part="container">
           <div class="radio-inner" part="mark" />
+          <div class="radio-ripple"></div>
         </div>
-        <button
-          ref={btnEl => this.buttonEl = btnEl}
-          type="button"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
+        <label htmlFor={inputId}>{labelText}</label>
+        <input
+          type="radio"
+          checked={checked}
           disabled={disabled}
-          tabindex={buttonTabindex}
-        >
-        </button>
+          tabindex="-1"
+          id={inputId}
+          ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+        />
       </Host>
     );
   }

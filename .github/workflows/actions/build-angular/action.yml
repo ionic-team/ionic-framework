@@ -1,0 +1,57 @@
+name: 'Build Ionic Angular'
+description: 'Build Ionic Angular'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - name: Cache Core Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json')}}-v2
+    - name: Cache Angular Node Modules
+      uses: actions/cache@v2
+      env:
+        cache-name: angular-node-modules
+      with:
+        path: ./angular/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./angular/package-lock.json')}}-v2
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Install Angular Dependencies
+      run: npm install --legacy-peer-deps
+      shell: bash
+      working-directory: ./angular
+    - name: Link @ionic/core
+      run: npm link
+      shell: bash
+      working-directory: ./core
+    - name: Link @ionic/core in @ionic/angular
+      run: npm link @ionic/core
+      shell: bash
+      working-directory: ./angular
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./angular
+    - name: Build
+      run: npm run build
+      shell: bash
+      working-directory: ./angular
+    - name: Check Diff
+      run: git diff --exit-code
+      shell: bash
+      working-directory: ./angular
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-angular
+        output: ./angular/AngularBuild.zip
+        paths: ./angular/dist

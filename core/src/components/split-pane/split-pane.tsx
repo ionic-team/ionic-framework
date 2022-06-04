@@ -1,35 +1,39 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
 const QUERY: { [key: string]: string } = {
-  'xs': '(min-width: 0px)',
-  'sm': '(min-width: 576px)',
-  'md': '(min-width: 768px)',
-  'lg': '(min-width: 992px)',
-  'xl': '(min-width: 1200px)',
-  'never': ''
+  xs: '(min-width: 0px)',
+  sm: '(min-width: 576px)',
+  md: '(min-width: 768px)',
+  lg: '(min-width: 992px)',
+  xl: '(min-width: 1200px)',
+  never: '',
 };
 
 @Component({
   tag: 'ion-split-pane',
   styleUrls: {
     ios: 'split-pane.ios.scss',
-    md: 'split-pane.md.scss'
+    md: 'split-pane.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class SplitPane implements ComponentInterface {
-
   private rmL: any;
 
   @Element() el!: HTMLElement;
   @State() visible = false;
 
   /**
-   * The content `id` of the split-pane's main content.
+   * The `id` of the main content. When using
+   * a router this is typically `ion-router-outlet`.
+   * When not using a router, this is typically
+   * your main view's `ion-content`. This is not the
+   * id of the `ion-content` inside of your `ion-menu`.
    */
   @Prop({ reflect: true }) contentId?: string;
 
@@ -48,7 +52,7 @@ export class SplitPane implements ComponentInterface {
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() ionSplitPaneVisible!: EventEmitter<{visible: boolean}>;
+  @Event() ionSplitPaneVisible!: EventEmitter<{ visible: boolean }>;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
@@ -56,7 +60,12 @@ export class SplitPane implements ComponentInterface {
     this.ionSplitPaneVisible.emit(detail);
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    // TODO: connectedCallback is fired in CE build
+    // before WC is defined. This needs to be fixed in Stencil.
+    if (typeof (customElements as any) !== 'undefined') {
+      await customElements.whenDefined('ion-split-pane');
+    }
     this.styleChildren();
     this.updateState();
   }
@@ -118,8 +127,7 @@ export class SplitPane implements ComponentInterface {
     if (!this.visible) {
       return false;
     }
-    return element.parentElement === this.el
-      && element.classList.contains(SPLIT_PANE_SIDE);
+    return element.parentElement === this.el && element.classList.contains(SPLIT_PANE_SIDE);
   }
 
   private styleChildren() {
@@ -157,7 +165,7 @@ export class SplitPane implements ComponentInterface {
           // Used internally for styling
           [`split-pane-${mode}`]: true,
 
-          'split-pane-visible': this.visible
+          'split-pane-visible': this.visible,
         }}
       >
         <slot></slot>

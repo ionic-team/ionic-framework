@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('searchbar: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/searchbar/test/basic?ionic:_testing=true'
+    url: '/src/components/searchbar/test/basic?ionic:_testing=true',
   });
 
   const compares = [];
@@ -11,7 +11,7 @@ test('searchbar: basic', async () => {
   let searchbar = await page.find('#basic');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#basic');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 
@@ -21,7 +21,7 @@ test('searchbar: basic', async () => {
   searchbar = await page.find('#noCancel');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#noCancel');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 
@@ -34,7 +34,7 @@ test('searchbar: basic', async () => {
 
 test('searchbar:rtl: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/searchbar/test/basic?ionic:_testing=true&rtl=true'
+    url: '/src/components/searchbar/test/basic?ionic:_testing=true&rtl=true',
   });
 
   const compares = [];
@@ -43,7 +43,7 @@ test('searchbar:rtl: basic', async () => {
   let searchbar = await page.find('#basic');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#basic');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 
@@ -53,7 +53,7 @@ test('searchbar:rtl: basic', async () => {
   searchbar = await page.find('#noCancel');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#noCancel');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 

@@ -166,6 +166,10 @@
   }
 }
 
+:host(:focus) {
+  outline: none;
+}
+
 // Segment Button: Hover
 // --------------------------------------------------
 

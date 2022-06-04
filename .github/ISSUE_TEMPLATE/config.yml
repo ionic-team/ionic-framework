@@ -1,0 +1,10 @@
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/ionic-team/ionic-docs/issues/new/choose
+    about: This issue tracker is not for documentation issues. Please file documentation issues on the Ionic Docs repo.
+  - name: 💻 CLI
+    url: https://github.com/ionic-team/ionic-cli/issues/new/choose
+    about: This issue tracker is not for CLI issues. Please file CLI issues on the Ionic CLI repo.
+  - name: 🤔 Support Question
+    url: https://forum.ionicframework.com/
+    about: This issue tracker is not for support questions. Please post your question on the Ionic Forums.

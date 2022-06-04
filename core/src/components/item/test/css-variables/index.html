@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - CSS Variables</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <style>
+    ion-item {
+      --padding-top: 20px;
+      --background: #eee;
+    }
+  </style>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item CSS variables</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding-vertical">
+        <ion-list class="basic">
+          <ion-item>
+            <ion-label>Item 1</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Item 2</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Item 3</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

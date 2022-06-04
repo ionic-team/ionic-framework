@@ -1,12 +1,13 @@
-import { Animation } from '../../interface';
+import type { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
-import { TransitionOptions, getIonPageElement } from '../transition';
+import type { TransitionOptions } from '../transition';
+import { getIonPageElement } from '../transition';
 
 export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): Animation => {
   const OFF_BOTTOM = '40px';
   const CENTER = '0px';
 
-  const backDirection = (opts.direction === 'back');
+  const backDirection = opts.direction === 'back';
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
@@ -14,17 +15,11 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
   const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
   const rootTransition = createAnimation();
 
-  rootTransition
-    .addElement(ionPageElement)
-    .fill('both')
-    .beforeRemoveClass('ion-page-invisible');
+  rootTransition.addElement(ionPageElement).fill('both').beforeRemoveClass('ion-page-invisible');
 
   // animate the component itself
   if (backDirection) {
-    rootTransition
-      .duration(opts.duration || 200)
-      .easing('cubic-bezier(0.47,0,0.745,0.715)');
-
+    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
   } else {
     rootTransition
       .duration(opts.duration || 280)
@@ -43,14 +38,12 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
   // setup leaving view
   if (leavingEl && backDirection) {
     // leaving content
-    rootTransition
-      .duration(opts.duration || 200)
-      .easing('cubic-bezier(0.47,0,0.745,0.715)');
+    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
 
     const leavingPage = createAnimation();
     leavingPage
       .addElement(getIonPageElement(leavingEl))
-      .onFinish(currentStep => {
+      .onFinish((currentStep) => {
         if (currentStep === 1 && leavingPage.elements.length > 0) {
           leavingPage.elements[0].style.setProperty('display', 'none');
         }

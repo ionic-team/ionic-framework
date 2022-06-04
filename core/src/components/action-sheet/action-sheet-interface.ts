@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode } from '../../interface';
+import type { AnimationBuilder, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -11,15 +11,23 @@ export interface ActionSheetOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
+  htmlAttributes?: ActionSheetAttributes;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
 
-export interface ActionSheetButton {
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type ActionSheetAttributes = { [key: string]: any };
+
+export interface ActionSheetButton<T = any> {
   text?: string;
   role?: 'cancel' | 'destructive' | 'selected' | string;
   icon?: string;
   cssClass?: string | string[];
+  id?: string;
   handler?: () => boolean | void | Promise<boolean | void>;
+  data?: T;
 }

@@ -9,8 +9,8 @@ interface HapticNotificationOptions {
 
 const HapticEngine = {
   getEngine() {
-    const win = (window as any);
-    return (win.TapticEngine) || (win.Capacitor && win.Capacitor.isPluginAvailable('Haptics') && win.Capacitor.Plugins.Haptics);
+    const win = window as any;
+    return win.TapticEngine || (win.Capacitor?.isPluginAvailable('Haptics') && win.Capacitor.Plugins.Haptics);
   },
   available() {
     return !!this.getEngine();
@@ -19,7 +19,7 @@ const HapticEngine = {
     return !!(window as any).TapticEngine;
   },
   isCapacitor() {
-    const win = (window as any);
+    const win = window as any;
     return !!win.Capacitor;
   },
   impact(options: HapticImpactOptions) {
@@ -73,7 +73,7 @@ const HapticEngine = {
     } else {
       engine.gestureSelectionEnd();
     }
-  }
+  },
 };
 
 /**

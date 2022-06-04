@@ -6,6 +6,7 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 - [Creating an Issue](#creating-an-issue)
   * [Creating a Good Code Reproduction](#creating-a-good-code-reproduction)
 - [Creating a Pull Request](#creating-a-pull-request)
+  * [Requirements](#requirements)
   * [Setup](#setup)
   * [Core](#core)
     + [Modifying Components](#modifying-components)
@@ -15,6 +16,12 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
     + [Modifying Tests](#modifying-tests)
       - [Screenshot Tests](#screenshot-tests)
     + [Building Changes](#building-changes)
+  * [Angular, React, and Vue](#angular-react-and-vue)
+    + [Modifying Files](#modifying-files)
+    + [Preview Changes](#preview-changes-1)
+    + [Lint Changes](#lint-changes-1)
+    + [Modifying Tests](#modifying-tests-1)
+    + [Building Changes](#building-changes-1)
   * [Submit Pull Request](#submit-pull-request)
 - [Commit Message Guidelines](#commit-message-guidelines)
   * [Commit Message Format](#commit-message-format)
@@ -30,12 +37,12 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 ## Contributing Etiquette
 
-Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
+Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/main/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
 ## Creating an Issue
 
-* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
+* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Discord](https://ionic.link/discord).
 
 * It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
 
@@ -77,17 +84,23 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 ## Creating a Pull Request
 
-* We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
+Before creating a pull request, please read our requirements that explains the minimal details to have your PR considered and merged into the codebase. 
 
-* Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+### Requirements
+1. PRs must reference an existing issue that describes the issue or feature being submitted.
+2. PRs must have a reproduction app or the issue must include a reproduction app to verify changes against.
+3. PRs must include tests covering the changed behavior or a description of why tests cannot be written.
 
+> Note: We appreciate you taking the time to contribute! Before submitting a pull request, please take the time to comment on the issue you are wanting to resolve. This helps us prevent duplicate effort or advise if the team is already addressing the issue.
+
+* Looking for an issue to fix? Look through our issues with the [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 
 1. [Download the installer](https://nodejs.org/) for the LTS version of Node.js. This is the best way to also [install npm](https://blog.npmjs.org/post/85484771375/how-to-install-npm#_=_).
 2. Fork this repository.
 3. Clone your fork.
-4. Create a new branch from master for your change.
+4. Create a new branch from main for your change.
 5. Navigate into the directory of the package you wish to modify (core, angular, etc.).
 6. Run `npm install` to install dependencies for this package.
 7. Follow the steps for the specific package below.
@@ -127,12 +140,13 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 #### Modifying Documentation
 
-1. Locate the `readme.md` file in the component's directory.
-2. Modify the documentation **above** the line that says `<!-- Auto Generated Below -->` in this file.
-3. To update any of the auto generated documentation below that line, make the relevant changes in the following places:
-  - `Usage`: update the component's usage examples in the component's `usage/` directory
-  - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`)
-  - `CSS Custom Properties`: update the component's main Sass file (`*.scss`)
+- Changes to manually written documentation should be made in the `ionic-docs` repo: https://github.com/ionic-team/ionic-docs/tree/main/docs
+  - In your `ionic-docs` PR, please add a link back to the related `ionic-framework` PR.
+- Changes to auto generated documentation should be made in the `ionic-framework` repo. These can be done in the same PR as your fix or feature.
+  - Run `npm run build` and commit all updates to ensure your changes make it into the generated documentation.
+  - `Usage`: update the component's usage examples in the component's `usage/` directory.
+  - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`).
+  - `CSS Custom Properties`: update the component's main Sass file (`*.scss`).
 
 
 #### Modifying Tests
@@ -160,17 +174,73 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
 4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
 
+### Angular, React, and Vue
+
+#### Modifying Files
+
+1. Locate the files inside the relevant root directory:
+  - Angular: `/angular/src`
+  - React: `/packages/react/src`
+  - Vue: `/packages/vue/src`
+2. Make your changes to the files. If the change is overly complex or out of the ordinary, add comments so we can understand the changes.
+3. Run lint on the directory and make sure there are no errors.
+4. Build the project.
+5. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
+6. [Submit a Pull Request](#submit-pull-request) of your changes.
+
+
+
+#### Preview Changes
+
+1. Run `npm run start` inside of the relevant test app directory. This will sync your previously built changes into a test Ionic app:
+  - Angular: `/angular/test-app`
+  - React: `/packages/react/test-app`
+  - Vue: `/packages/vue/test-app`
+2. In a browser, navigate to the page you wish to test.
+3. Alternatively, create a new page if you need to test something that is not already there.
+
+
+#### Lint Changes
+
+1. Run `npm run lint` to lint the TypeScript in the relevant directory:
+  - Angular: `/angular/src`
+  - React: `/packages/react/src`
+  - Vue: `/packages/vue/src`
+2. If there are lint errors, run `npm run lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
+
+#### Modifying Tests
+
+1. Locate the test to modify inside the relevant test app directory:
+  - Angular: `/angular/test-app/e2e/src`
+  - React: `/packages/react/test-app/cypress/integration`
+  - Vue: `/packages/vue/test-app/tests/e2e`
+2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
+3. If a new test is needed, copy an existing test, rename it, and edit the content in the test file.
+4. Run `npm run test` to run your tests.
+
+#### Building Changes
+
+1. Once all changes have been made, run `npm run build` inside of the root directory. This will add your changes to any auto-generated files, if necessary.
+2. Review the changes and, if everything looks correct, [commit](#commit-message-format) the changes.
+3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
+4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
 
 ### Submit Pull Request
 
-1. [Create a new pull request](https://github.com/ionic-team/ionic/compare) with the `master` branch as the `base`. You may need to click on `compare across forks` to find your changes.
+1. [Create a new pull request](https://github.com/ionic-team/ionic/compare) with the `main` branch as the `base`. You may need to click on `compare across forks` to find your changes.
 2. See the [Creating a pull request from a fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) GitHub help article for more information.
 3. Please fill out the provided Pull Request template to the best of your ability and include any issues that are related.
+
+### Review Process for Feature PRs
+
+The team has an internal design process for new Ionic features, which must be completed before the PR can be reviewed or merged. As a result of the design process, community feature PRs are subject to large changes. In some cases, the team may instead create a separate PR using pieces of the community PR. Either way, you will always receive co-author commit credit when the feature is merged.
+
+To expedite the process, please ensure that all feature PRs have an associated issue created, with a clear use case for why the feature should be added to Ionic.
 
 
 ## Commit Message Guidelines
 
-We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).
+We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/main/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit).
 
 ### Commit Message Format
 

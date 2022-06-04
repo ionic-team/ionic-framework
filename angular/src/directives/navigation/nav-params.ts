@@ -19,8 +19,7 @@
  * ```
  */
 export class NavParams {
-
-  constructor(public data: {[key: string]: any} = {}) {}
+  constructor(public data: { [key: string]: any } = {}) {}
 
   /**
    * Get the value of a nav-parameter for the current view

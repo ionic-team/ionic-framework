@@ -1,0 +1,162 @@
+name: 'Ionic Framework Build'
+
+on:
+  pull_request:
+    branches: [ '**' ]
+
+# When pushing a new commit we should
+# cancel the previous test run to not
+# consume more runners than we need to.
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Checkout the latest commit in this branch
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: ./.github/workflows/actions/build-core
+
+  test-core-clean-build:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-clean-build
+
+  test-core-lint:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-lint
+
+  test-core-spec:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-spec
+
+  test-core-e2e:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-e2e
+
+  test-core-screenshot:
+    strategy:
+      # This ensures that all screenshot shard
+      # failures are reported so the dev can
+      # review everything at once.
+      fail-fast: false
+      matrix:
+        # Divide the tests into n buckets
+        # and run those buckets in parallel.
+        # To increase the number of shards,
+        # add new items to the shard array
+        # and change the value of totalShards
+        # to be the length of the shard array.
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        totalShards: [20]
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/actions/test-core-screenshot
+        with:
+          shard: ${{ matrix.shard }}
+          totalShards: ${{ matrix.totalShards }}
+
+  # Screenshots are required to pass
+  # in order for the branch to be merge
+  # eligible. However, the screenshot tests
+  # are run on n runners where n can change
+  # over time. The verify-screenshots step allows
+  # us to have a required status check for screenshot
+  # results without having to manually add each
+  # matrix run in the branch protection rules
+  # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354
+  verify-screenshots:
+    if: ${{ always() }}
+    needs: test-core-screenshot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-core-screenshot.result != 'success' }}
+        run: exit 1
+
+  build-vue:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-vue
+
+  build-vue-router:
+    needs: [build-vue]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-vue-router
+
+  test-vue-e2e:
+    needs: [build-vue, build-vue-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-vue-e2e
+
+  build-angular:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-angular
+
+  build-angular-server:
+    needs: [build-angular]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-angular-server
+
+  test-angular-e2e:
+    needs: [build-angular, build-angular-server]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-angular-e2e
+
+  build-react:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-react
+
+  build-react-router:
+    needs: [build-react]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build-react-router
+
+  test-react-router-e2e:
+    needs: [build-react, build-react-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-react-router-e2e
+
+  test-react-e2e:
+    needs: [build-react, build-react-router]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/test-react-e2e

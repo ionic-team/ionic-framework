@@ -1,11 +1,28 @@
 import { h, defineComponent, VNode } from 'vue';
-import { IonRouterOutlet } from './IonRouterOutlet';
 
-export const IonTabs = defineComponent({
+const WILL_CHANGE = 'ionTabsWillChange';
+const DID_CHANGE = 'ionTabsDidChange';
+
+export const IonTabs = /*@__PURE__*/ defineComponent({
   name: 'IonTabs',
+  emits: [WILL_CHANGE, DID_CHANGE],
   render() {
-    const { $slots: slots } = this;
+    const { $slots: slots, $emit } = this;
     const slottedContent = slots.default && slots.default();
+    let routerOutlet;
+
+    /**
+     * Developers must pass an ion-router-outlet
+     * inside of ion-tabs.
+     */
+    if (slottedContent && slottedContent.length > 0) {
+      routerOutlet = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'IonRouterOutlet');
+    }
+
+    if (!routerOutlet) {
+      throw new Error('IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information.');
+    }
+
     let childrenToRender = [
       h('div', {
         class: 'tabs-inner',
@@ -14,9 +31,7 @@ export const IonTabs = defineComponent({
             'flex': '1',
             'contain': 'layout size style'
         }
-      }, [
-        h(IonRouterOutlet, { tabs: true })
-      ])
+      }, routerOutlet)
     ];
 
     /**
@@ -25,22 +40,42 @@ export const IonTabs = defineComponent({
      * not show above the tab content.
      */
     if (slottedContent && slottedContent.length > 0) {
-      const topSlottedTabBar = slottedContent.find((child: VNode) => {
-        const isTabBar = child.type && (child.type as any).name === 'IonTabBar';
-        const hasTopSlot = child.props?.slot === 'top';
+      /**
+       * Render all content except for router outlet
+       * since that needs to be inside of `.tabs-inner`.
+       */
+      const filteredContent = slottedContent.filter((child: VNode) => (
+        !child.type ||
+        (child.type && (child.type as any).name !== 'IonRouterOutlet')
+      ));
 
-        return isTabBar && hasTopSlot;
-      });
+      const slottedTabBar = filteredContent.find((child: VNode) => child.type && (child.type as any).name === 'IonTabBar');
+      const hasTopSlotTabBar = slottedTabBar && slottedTabBar.props?.slot === 'top';
 
-      if (topSlottedTabBar) {
+      if (slottedTabBar) {
+        if (!slottedTabBar.props) {
+          slottedTabBar.props = {};
+        }
+        /**
+         * ionTabsWillChange and ionTabsDidChange are
+         * fired from `ion-tabs`, so we need to pass these down
+         * as props so they can fire when the active tab changes.
+         * TODO: We may want to move logic from the tab bar into here
+         * so we do not have code split across two components.
+         */
+        slottedTabBar.props._tabsWillChange = (tab: string) => $emit(WILL_CHANGE, { tab });
+        slottedTabBar.props._tabsDidChange = (tab: string) => $emit(DID_CHANGE, { tab });
+      }
+
+      if (hasTopSlotTabBar) {
         childrenToRender = [
-          ...slottedContent,
+          ...filteredContent,
           ...childrenToRender
         ];
       } else {
         childrenToRender = [
           ...childrenToRender,
-          ...slottedContent
+          ...filteredContent
         ]
       }
     }

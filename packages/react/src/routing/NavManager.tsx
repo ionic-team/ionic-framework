@@ -1,5 +1,4 @@
-
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
 import { IonRouterContext, IonRouterContextState } from '../components/IonRouterContext';
@@ -14,8 +13,16 @@ import PageManager from './PageManager';
 
 interface NavManagerProps {
   routeInfo: RouteInfo;
+  onNativeBack: () => void;
   onNavigateBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
-  onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, animationBuilder?: AnimationBuilder, options?: any, tab?: string) => void;
+  onNavigate: (
+    path: string,
+    action: RouteAction,
+    direction?: RouterDirection,
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) => void;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
@@ -26,16 +33,24 @@ interface NavManagerProps {
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
+  _isMounted = false;
 
   ionRouterContextValue: IonRouterContextState = {
-    push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => {
+    push: (
+      pathname: string,
+      routerDirection?: RouterDirection,
+      routeAction?: RouteAction,
+      routerOptions?: RouterOptions,
+      animationBuilder?: AnimationBuilder
+    ) => {
       this.navigate(pathname, routerDirection, routeAction, animationBuilder, routerOptions);
     },
     back: (animationBuilder?: AnimationBuilder) => {
       this.goBack(undefined, animationBuilder);
     },
     canGoBack: () => this.props.locationHistory.canGoBack(),
-    routeInfo: this.props.routeInfo
+    nativeBack: () => this.props.onNativeBack(),
+    routeInfo: this.props.routeInfo,
   };
 
   constructor(props: NavManagerProps) {
@@ -55,20 +70,47 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     };
 
     if (typeof document !== 'undefined') {
-      document.addEventListener('ionBackButton', (e: any) => {
-        e.detail.register(0, (processNextHandler: () => void) => {
-          this.goBack();
-          processNextHandler();
-        });
-      });
+      this.handleHardwareBackButton = this.handleHardwareBackButton.bind(this);
+      document.addEventListener('ionBackButton', this.handleHardwareBackButton);
     }
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('ionBackButton', this.handleHardwareBackButton);
+      this._isMounted = false;
+    }
+  }
+
+  handleHardwareBackButton(e: any) {
+    e.detail.register(0, (processNextHandler: () => void) => {
+      if (this._isMounted) {
+        this.nativeGoBack();
+        processNextHandler();
+      }
+    });
   }
 
   goBack(route?: string | RouteInfo, animationBuilder?: AnimationBuilder) {
     this.props.onNavigateBack(route, animationBuilder);
   }
 
-  navigate(path: string, direction: RouterDirection = 'forward', action: RouteAction = 'push', animationBuilder?: AnimationBuilder, options?: any, tab?: string) {
+  nativeGoBack() {
+    this.props.onNativeBack();
+  }
+
+  navigate(
+    path: string,
+    direction: RouterDirection = 'forward',
+    action: RouteAction = 'push',
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) {
     this.props.onNavigate(path, action, direction, animationBuilder, options, tab);
   }
 
@@ -91,11 +133,12 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
+        <IonRouterContext.Provider
+          value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}
+        >
           {this.props.children}
         </IonRouterContext.Provider>
       </NavContext.Provider>
     );
   }
-
 }

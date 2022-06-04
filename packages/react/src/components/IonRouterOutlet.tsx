@@ -1,5 +1,4 @@
-
-import { JSX as LocalJSX } from '@ionic/core';
+import { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
@@ -11,16 +10,15 @@ import { createForwardRef } from './utils';
 
 type Props = LocalJSX.IonRouterOutlet & {
   basePath?: string;
-  ref?: React.RefObject<any>;
+  ref?: React.Ref<any>;
   ionPage?: boolean;
 };
 
 interface InternalProps extends Props {
-  forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
+  forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
 }
 
-interface InternalState {
-}
+interface InternalState {}
 
 class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
   context!: React.ContextType<typeof NavContext>;
@@ -30,32 +28,29 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
   }
 
   render() {
-
     const StackManager = this.context.getStackManager();
     const { children, forwardedRef, ...props } = this.props;
 
-    return (
-      this.context.hasIonicRouter() ? (
-        props.ionPage ? (
-          <OutletPageManager
-            StackManager={StackManager}
-            routeInfo={this.context.routeInfo}
-            {...props}
-          >
-            {children}
-          </OutletPageManager>
-        ) : (
-            <StackManager routeInfo={this.context.routeInfo}>
-              <IonRouterOutletInner {...props} forwardedRef={forwardedRef}>
-                {children}
-              </IonRouterOutletInner>
-            </StackManager>
-          )
+    return this.context.hasIonicRouter() ? (
+      props.ionPage ? (
+        <OutletPageManager
+          StackManager={StackManager}
+          routeInfo={this.context.routeInfo}
+          {...props}
+        >
+          {children}
+        </OutletPageManager>
       ) : (
-          <IonRouterOutletInner ref={forwardedRef} {...this.props}>
-            {this.props.children}
+        <StackManager routeInfo={this.context.routeInfo}>
+          <IonRouterOutletInner {...props} forwardedRef={forwardedRef}>
+            {children}
           </IonRouterOutletInner>
-        )
+        </StackManager>
+      )
+    ) : (
+      <IonRouterOutletInner ref={forwardedRef} {...this.props}>
+        {this.props.children}
+      </IonRouterOutletInner>
     );
   }
 
@@ -64,4 +59,7 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
   }
 }
 
-export const IonRouterOutlet = createForwardRef<Props & IonicReactProps, HTMLIonRouterOutletElement>(IonRouterOutletContainer, 'IonRouterOutlet');
+export const IonRouterOutlet = createForwardRef<
+  Props & IonicReactProps,
+  HTMLIonRouterOutletElement
+>(IonRouterOutletContainer, 'IonRouterOutlet');

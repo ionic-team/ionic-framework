@@ -1,6 +1,6 @@
 import { h, Teleport, VNode } from 'vue';
 import { addTeleportedUserComponent, removeTeleportedUserComponent } from './components/IonApp';
-export const VueDelegate = () => {
+export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent) => {
   let Component: VNode | undefined;
   const attachViewToDom = (parentElement: HTMLElement, component: any, componentProps: any = {}, classes?: string[]) => {
     /**
@@ -22,13 +22,13 @@ export const VueDelegate = () => {
       h(component, { ...componentProps })
     );
 
-    addTeleportedUserComponent(Component);
+    addFn(Component);
 
     return div;
   }
 
   const removeViewFromDom = () => {
-    Component && removeTeleportedUserComponent(Component);
+    Component && removeFn(Component);
     return Promise.resolve();
   }
 

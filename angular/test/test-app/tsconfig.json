@@ -6,7 +6,7 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "module": "esnext",
+    "module": "es2020",
     "target": "es2015",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -16,6 +16,11 @@
     "lib": [
       "es2018",
       "dom"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-eslint-language-service"
+      }
     ]
   }
 }

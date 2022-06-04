@@ -1,8 +1,6 @@
-import {
-  IonApp
-} from '@ionic/react';
+import { IonApp, setupIonicReact } from '@ionic/react';
 import React from 'react';
-import { Route, Redirect, BrowserRouter, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -20,11 +18,10 @@ import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 
-
 /* Theme variables */
 import './theme/variables.css';
 import Main from './pages/Main';
-import { IonReactRouter } from './ReactRouter/IonReactRouter';
+import { IonReactRouter } from '@ionic/react-router';
 import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
 import Routing from './pages/routing/Routing';
 import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
@@ -35,7 +32,13 @@ import ReplaceAction from './pages/replace-action/Replace';
 import TabsContext from './pages/tab-context/TabContext';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
-debugger;
+import Refs from './pages/refs/Refs';
+import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
+import Tabs from './pages/tabs/Tabs';
+import TabsSecondary from './pages/tabs/TabsSecondary';
+
+setupIonicReact();
+
 const App: React.FC = () => {
   return (
     <IonApp>
@@ -51,6 +54,10 @@ const App: React.FC = () => {
         <Route path="/tab-context" component={TabsContext} />
         <Route path="/outlet-ref" component={OutletRef} />
         <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
+        <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
+        <Route path="/tabs" component={Tabs} />
+        <Route path="/tabs-secondary" component={TabsSecondary} />
+        <Route path="/refs" component={Refs} />
       </IonReactRouter>
     </IonApp>
   );

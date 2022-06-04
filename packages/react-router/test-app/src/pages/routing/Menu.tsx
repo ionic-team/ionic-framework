@@ -7,14 +7,11 @@ import {
   IonListHeader,
   IonMenu,
   IonMenuToggle,
-  IonNote,
 } from '@ionic/react';
 import React from 'react';
-import { bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp } from 'ionicons/icons';
+import { heartOutline, heartSharp, mailOutline, mailSharp } from 'ionicons/icons';
 
-
-interface MenuProps {
-}
+interface MenuProps {}
 
 interface AppPage {
   url: string;
@@ -28,36 +25,35 @@ const appPages: AppPage[] = [
     title: 'Tabs',
     url: '/routing/tabs',
     iosIcon: mailOutline,
-    mdIcon: mailSharp
+    mdIcon: mailSharp,
   },
   {
     title: 'Favorites',
     url: '/routing/favorites',
     iosIcon: heartOutline,
-    mdIcon: heartSharp
+    mdIcon: heartSharp,
   },
   {
     title: 'Other Page',
     url: '/routing/otherpage',
     iosIcon: heartOutline,
-    mdIcon: heartSharp
+    mdIcon: heartSharp,
   },
   {
     title: 'Home with redirect',
     url: '/routing/redirect',
     iosIcon: heartOutline,
-    mdIcon: heartSharp
+    mdIcon: heartSharp,
   },
   {
     title: 'Home with router',
     url: '/routing/redirect-routing',
     iosIcon: heartOutline,
-    mdIcon: heartSharp
+    mdIcon: heartSharp,
   },
 ];
 
 const Menu: React.FunctionComponent<MenuProps> = () => {
-
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
@@ -66,7 +62,12 @@ const Menu: React.FunctionComponent<MenuProps> = () => {
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
-                <IonItem routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
+                <IonItem
+                  routerLink={appPage.url}
+                  routerDirection="none"
+                  lines="none"
+                  detail={false}
+                >
                   <IonIcon slot="start" icon={appPage.iosIcon} />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>

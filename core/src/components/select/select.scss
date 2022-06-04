@@ -50,14 +50,22 @@
   opacity: var(--placeholder-opacity);
 }
 
-button {
+label {
   @include input-cover();
+
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
+
+button {
+  @include visually-hidden();
 }
 
 .select-icon {
   position: relative;
-
-  opacity: .33;
 }
 
 .select-text {

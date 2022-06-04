@@ -1,10 +1,18 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import type {
+  AnimationBuilder,
+  LoadingAttributes,
+  OverlayEventDetail,
+  OverlayInterface,
+  SpinnerTypes,
+} from '../../interface';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
-import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
+import type { IonicSafeString } from '../../utils/sanitization';
+import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -19,9 +27,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-loading',
   styleUrls: {
     ios: 'loading.ios.scss',
-    md: 'loading.md.scss'
+    md: 'loading.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
@@ -93,6 +101,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * Additional attributes to pass to the loader.
+   */
+  @Prop() htmlAttributes?: LoadingAttributes;
+
+  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -119,10 +132,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   componentWillLoad() {
     if (this.spinner === undefined) {
       const mode = getIonMode(this);
-      this.spinner = config.get(
-        'loadingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
-      );
+      this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
     }
   }
 
@@ -134,10 +144,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
     if (this.duration > 0) {
-      this.durationTimeout = setTimeout(
-        () => this.dismiss(),
-        this.duration + 10
-      );
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
     }
   }
 
@@ -176,22 +183,24 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   render() {
-    const { message, spinner } = this;
+    const { message, spinner, htmlAttributes } = this;
     const mode = getIonMode(this);
     return (
       <Host
-        onIonBackdropTap={this.onBackdropTap}
         tabindex="-1"
+        {...(htmlAttributes as any)}
         style={{
-          zIndex: `${40000 + this.overlayIndex}`
+          zIndex: `${40000 + this.overlayIndex}`,
         }}
+        onIonBackdropTap={this.onBackdropTap}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
-          'loading-translucent': this.translucent
+          'overlay-hidden': true,
+          'loading-translucent': this.translucent,
         }}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />

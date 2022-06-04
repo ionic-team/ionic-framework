@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons>
-          <ion-button @click="dismiss">Dismiss</ion-button>
+          <ion-button @click="dismiss" id="dismiss">Dismiss</ion-button>
         </ion-buttons>
         <ion-title>Modal</ion-title>
       </ion-toolbar>
@@ -28,7 +28,6 @@ import {
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'ModalContent',
   props: {
     title: { type: String, default: 'Default Title' }
   },

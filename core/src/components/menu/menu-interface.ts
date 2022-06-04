@@ -1,4 +1,4 @@
-import { Animation, Side } from '../../interface';
+import type { Animation, Side } from '../../interface';
 
 export interface MenuI {
   el: HTMLIonMenuElement;
@@ -37,4 +37,9 @@ export interface MenuControllerI {
 export interface MenuChangeEventDetail {
   disabled: boolean;
   open: boolean;
+}
+
+export interface MenuCustomEvent<T = any> extends CustomEvent {
+  detail: T;
+  target: HTMLIonMenuElement;
 }

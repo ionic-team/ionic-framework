@@ -1,9 +1,122 @@
+import { IonicConfig, initialize } from '@ionic/core/components';
 
-import { defineCustomElements } from '@ionic/core/loader';
-import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
+export {
+  // UTILS
+  createAnimation,
+  createGesture,
+  iosTransitionAnimation,
+  mdTransitionAnimation,
+  IonicSwiper,
+  IonicSlides,
+  getTimeGivenProgression,
+
+  // TYPES
+  Animation,
+  AnimationBuilder,
+  AnimationCallbackOptions,
+  AnimationDirection,
+  AnimationFill,
+  AnimationKeyFrames,
+  AnimationLifecycle,
+  Gesture,
+  GestureConfig,
+  GestureDetail,
+  NavComponentWithProps,
+
+  SpinnerTypes,
+
+  AccordionGroupCustomEvent,
+  AccordionGroupChangeEventDetail,
+
+  BreadcrumbCustomEvent,
+  BreadcrumbCollapsedClickEventDetail,
+
+  ActionSheetOptions,
+  ActionSheetButton,
+
+  AlertOptions,
+  AlertInput,
+  AlertTextareaAttributes,
+  AlertInputAttributes,
+  AlertButton,
+
+  BackButtonEvent,
+
+  CheckboxCustomEvent,
+  CheckboxChangeEventDetail,
+
+  DatetimeCustomEvent,
+  DatetimeChangeEventDetail,
+
+  InfiniteScrollCustomEvent,
+
+  InputCustomEvent,
+  InputChangeEventDetail,
+
+  ItemReorderEventDetail,
+  ItemReorderCustomEvent,
+
+  ItemSlidingCustomEvent,
+
+  IonicSafeString,
+
+  LoadingOptions,
+
+  MenuCustomEvent,
+
+  ModalOptions,
+
+  NavCustomEvent,
+
+  PickerOptions,
+  PickerButton,
+  PickerColumn,
+  PickerColumnOption,
+
+  PopoverOptions,
+
+  RadioGroupCustomEvent,
+  RadioGroupChangeEventDetail,
+
+  RangeCustomEvent,
+  RangeChangeEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeKnobMoveEndEventDetail,
+
+  RefresherCustomEvent,
+  RefresherEventDetail,
+
+  RouterEventDetail,
+  RouterCustomEvent,
+
+  ScrollBaseCustomEvent,
+  ScrollBaseDetail,
+  ScrollDetail,
+  ScrollCustomEvent,
+
+  SearchbarCustomEvent,
+  SearchbarChangeEventDetail,
+
+  SegmentChangeEventDetail,
+  SegmentCustomEvent,
+
+  SelectChangeEventDetail,
+  SelectCustomEvent,
+
+  TabsCustomEvent,
+
+  TextareaChangeEventDetail,
+  TextareaCustomEvent,
+
+  ToastOptions,
+  ToastButton,
+
+  ToggleChangeEventDetail,
+  ToggleCustomEvent,
+} from '@ionic/core/components';
+
 export * from './proxies';
+export * from './routing-proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';
@@ -17,6 +130,7 @@ export { IonModal } from './IonModal';
 export { IonPopover } from './IonPopover';
 
 // Custom Components
+export { IonApp } from './IonApp';
 export { IonPage } from './IonPage';
 export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
@@ -36,25 +150,28 @@ export * from './hrefprops';
 // Ionic Animations
 export { CreateAnimation } from './CreateAnimation';
 
-// Icons that are used by internal components
-addIcons({
-  'arrow-back-sharp': arrowBackSharp,
-  'caret-back-sharp': caretBackSharp,
-  'chevron-back': chevronBack,
-  'chevron-forward': chevronForward,
-  'close': close,
-  'close-circle': closeCircle,
-  'close-sharp': closeSharp,
-  'menu-outline': menuOutline,
-  'menu-sharp': menuSharp,
-  'reorder-two-sharp': reorderTwoSharp,
-  'reorder-three-outline': reorderThreeOutline,
-  'search-outline': searchOutline,
-  'search-sharp': searchSharp,
-});
+// Hooks
+export { useIonActionSheet, UseIonActionSheetResult } from '../hooks/useIonActionSheet';
+export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
+export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
+export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
+export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
+export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
+export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
-// TODO: defineCustomElements() is asyncronous
-// We need to use the promise
-if (typeof window !== 'undefined') {
-  defineCustomElements(window);
+export const setupIonicReact = (config: IonicConfig = {}) => {
+  /**
+   * By default Ionic Framework hides elements that
+   * are not hydrated, but in the CE build there is no
+   * hydration.
+   * TODO: Remove when all integrations have been
+   * migrated to CE build.
+   */
+  if (typeof (document as any) !== 'undefined') {
+    document.documentElement.classList.add('ion-ce');
+  }
+
+  initialize({
+    ...config
+  });
 }
