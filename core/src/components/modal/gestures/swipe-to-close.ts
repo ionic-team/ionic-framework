@@ -1,9 +1,14 @@
 import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
-import { isIonContent } from '../../../utils/content';
+import {
+  isIonContent,
+  findClosestIonContent,
+  disableContentScrollY,
+  resetContentScrollY,
+} from '../../../utils/content';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
-import { clamp } from '../../../utils/helpers';
+import { clamp, getElementRoot } from '../../../utils/helpers';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -12,19 +17,16 @@ export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
-export const createSwipeToCloseGesture = (
-  el: HTMLIonModalElement,
-  contentEl: HTMLElement,
-  scrollEl: HTMLElement,
-  animation: Animation,
-  onDismiss: () => void
-) => {
+export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
   const height = el.offsetHeight;
   let isOpen = false;
   let canDismissBlocksGesture = false;
+  let contentEl: HTMLElement | null = null;
+  let scrollEl: HTMLElement | null = null;
   const canDismissMaxStep = 0.2;
+  let initialScrollY = true;
   const getScrollY = () => {
-    if (isIonContent(contentEl)) {
+    if (contentEl && isIonContent(contentEl)) {
       return (contentEl as HTMLIonContentElement).scrollY;
       /**
        * Custom scroll containers are intended to be
@@ -33,23 +35,6 @@ export const createSwipeToCloseGesture = (
        */
     } else {
       return true;
-    }
-  };
-  const initialScrollY = getScrollY();
-
-  const disableContentScroll = () => {
-    if (isIonContent(contentEl)) {
-      (contentEl as HTMLIonContentElement).scrollY = false;
-    } else {
-      contentEl.style.setProperty('overflow', 'hidden');
-    }
-  };
-
-  const resetContentScroll = () => {
-    if (isIonContent(contentEl)) {
-      (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
-    } else {
-      contentEl.style.removeProperty('overflow');
     }
   };
 
@@ -66,10 +51,40 @@ export const createSwipeToCloseGesture = (
      * the content is scrolled all the way
      * to the top so that we do not interfere
      * with scrolling.
+     *
+     * We cannot assume that the `ion-content`
+     * target will remain consistent between
+     * swipes. For example, when using
+     * ion-nav within a card modal it is
+     * possible to swipe, push a view, and then
+     * swipe again. The target content will not
+     * be the same between swipes.
      */
-    const content = target.closest('ion-content');
-    if (content) {
-      return scrollEl.scrollTop === 0;
+    contentEl = findClosestIonContent(target);
+    if (contentEl) {
+      /**
+       * The card should never swipe to close
+       * on the content with a refresher.
+       * Note: We cannot solve this by making the
+       * swipeToClose gesture have a higher priority
+       * than the refresher gesture as the iOS native
+       * refresh gesture uses a scroll listener in
+       * addition to a gesture.
+       *
+       * Note: Do not use getScrollElement here
+       * because we need this to be a synchronous
+       * operation, and getScrollElement is
+       * asynchronous.
+       */
+      if (isIonContent(contentEl)) {
+        const root = getElementRoot(contentEl);
+        scrollEl = root.querySelector('.inner-scroll');
+      } else {
+        scrollEl = contentEl;
+      }
+
+      const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
+      return !hasRefresherInContent && scrollEl!.scrollTop === 0;
     }
 
     /**
@@ -86,6 +101,14 @@ export const createSwipeToCloseGesture = (
 
   const onStart = (detail: GestureDetail) => {
     const { deltaY } = detail;
+
+    /**
+     * Get the initial scrollY value so
+     * that we can correctly reset the scrollY
+     * prop when the gesture ends.
+     */
+    initialScrollY = getScrollY();
+
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -103,8 +126,8 @@ export const createSwipeToCloseGesture = (
      * content. We do not want scrolling to
      * happen at the same time as the gesture.
      */
-    if (deltaY > 0) {
-      disableContentScroll();
+    if (deltaY > 0 && contentEl) {
+      disableContentScrollY(contentEl);
     }
 
     animation.progressStart(true, isOpen ? 1 : 0);
@@ -119,8 +142,8 @@ export const createSwipeToCloseGesture = (
      * content. We do not want scrolling to
      * happen at the same time as the gesture.
      */
-    if (deltaY > 0) {
-      disableContentScroll();
+    if (deltaY > 0 && contentEl) {
+      disableContentScrollY(contentEl);
     }
 
     /**
@@ -203,7 +226,9 @@ export const createSwipeToCloseGesture = (
 
     gesture.enable(false);
 
-    resetContentScroll();
+    if (contentEl) {
+      resetContentScrollY(contentEl, initialScrollY);
+    }
 
     animation
       .onFinish(() => {
@@ -235,7 +260,7 @@ export const createSwipeToCloseGesture = (
   const gesture = createGesture({
     el,
     gestureName: 'modalSwipeToClose',
-    gesturePriority: 40,
+    gesturePriority: 39,
     direction: 'y',
     threshold: 10,
     canStart,

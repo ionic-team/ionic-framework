@@ -178,12 +178,22 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
   }
 
   private onTabButtonClick(
-    e: CustomEvent<{ href: string; selected: boolean; tab: string; routeOptions: unknown }>
+    e: CustomEvent<{ href: string; selected: boolean; tab: string; routeOptions: unknown }>,
+    onClickFn?: (e: any) => void
   ) {
     const tappedTab = this.state.tabs[e.detail.tab];
     const originalHref = tappedTab.originalHref;
     const currentHref = e.detail.href;
     const { activeTab: prevActiveTab } = this.state;
+
+    if (onClickFn) {
+      /**
+       * If the user provides an onClick function, we call it
+       * with the original event.
+       */
+      onClickFn(e);
+    }
+
     // this.props.onSetCurrentTab(e.detail.tab, this.props.routeInfo);
     // Clicking the current tab will bring you back to the original href
     if (prevActiveTab === e.detail.tab) {
@@ -232,7 +242,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         return React.cloneElement(child, {
           href,
           routeOptions,
-          onClick: this.onTabButtonClick,
+          onClick: (ev: CustomEvent) => this.onTabButtonClick(ev, child.props.onClick),
         });
       }
       return null;

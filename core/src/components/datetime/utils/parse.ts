@@ -1,5 +1,7 @@
 import type { DatetimeParts } from '../datetime-interface';
 
+import { isAfter, isBefore } from './comparison';
+
 const ISO_8601_REGEXP =
   // eslint-disable-next-line no-useless-escape
   /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
@@ -105,4 +107,17 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
     millisecond: parse[7],
     tzOffset,
   };
+};
+
+export const clampDate = (
+  dateParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
+  if (minParts && isBefore(dateParts, minParts)) {
+    return minParts;
+  } else if (maxParts && isAfter(dateParts, maxParts)) {
+    return maxParts;
+  }
+  return dateParts;
 };

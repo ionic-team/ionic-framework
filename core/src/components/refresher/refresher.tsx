@@ -4,7 +4,12 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTas
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
+import {
+  getScrollElement,
+  ION_CONTENT_CLASS_SELECTOR,
+  ION_CONTENT_ELEMENT_SELECTOR,
+  printIonContentErrorMsg,
+} from '../../utils/content';
 import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
@@ -436,13 +441,21 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const contentEl = findClosestIonContent(this.el);
+    const contentEl = this.el.closest(ION_CONTENT_ELEMENT_SELECTOR);
     if (!contentEl) {
       printIonContentErrorMsg(this.el);
       return;
     }
 
-    this.scrollEl = await getScrollElement(contentEl);
+    const customScrollTarget = contentEl.querySelector(ION_CONTENT_CLASS_SELECTOR);
+
+    /**
+     * Query the custom scroll target (if available), first. In refresher implementations,
+     * the ion-refresher element will always be a direct child of ion-content (slot="fixed"). By
+     * querying the custom scroll target first and falling back to the ion-content element,
+     * the correct scroll element will be returned by the implementation.
+     */
+    this.scrollEl = await getScrollElement(customScrollTarget ?? contentEl);
 
     /**
      * Query the host `ion-content` directly (if it is available), to use its
@@ -452,9 +465,7 @@ export class Refresher implements ComponentInterface {
      * This makes it so that implementers do not need to re-create the background content
      * element and styles.
      */
-    const backgroundContentHost = this.el.closest('ion-content') ?? contentEl;
-
-    this.backgroundContentEl = getElementRoot(backgroundContentHost).querySelector(
+    this.backgroundContentEl = getElementRoot(contentEl ?? customScrollTarget).querySelector(
       '#background-content'
     ) as HTMLElement;
 

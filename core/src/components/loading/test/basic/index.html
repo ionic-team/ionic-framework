@@ -56,7 +56,7 @@
         <ion-button
           id="custom-class-loading"
           expand="block"
-          onclick="openLoading({duration: 5000,message: 'Please wait...', cssClass: 'custom-class custom-loading'})"
+          onclick="openLoading({duration: 5000,message: 'Please wait...', spinner: 'lines-sharp', cssClass: 'custom-class custom-loading'})"
           >Show Loading with cssClass</ion-button
         >
         <ion-button id="backdrop-loading" expand="block" onclick="openLoading({backdropDismiss: true})"
@@ -112,15 +112,15 @@
       }
 
       .custom-loading {
-        --background: rgba(37, 210, 223, 0.8);
-        --spinner-color: white;
+        --background: rgba(255, 255, 255, 0.8);
+        --spinner-color: #ea445a;
 
         --height: 100%;
         --max-height: auto;
         --width: 100%;
         --max-width: auto;
 
-        color: white;
+        color: #3478f6;
       }
 
       f {

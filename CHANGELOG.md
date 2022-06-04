@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.8](https://github.com/ionic-team/ionic-framework/compare/v6.1.7...v6.1.8) (2022-06-01)
+
+
+### Bug Fixes
+
+* **all:** improve compatibility with vite ([#25381](https://github.com/ionic-team/ionic-framework/issues/25381)) ([d83bcd2](https://github.com/ionic-team/ionic-framework/commit/d83bcd2b7f9937550008f995ff91517777584373)), closes [#23823](https://github.com/ionic-team/ionic-framework/issues/23823)
+* **item-sliding:** swiping inside of virtual scroller now prevents scrolling ([#25345](https://github.com/ionic-team/ionic-framework/issues/25345)) ([5a1a5f6](https://github.com/ionic-team/ionic-framework/commit/5a1a5f6b4c2ab4059158986e907fff45d03be753))
+* **range:** dragging knob no longer scrolls page ([#25343](https://github.com/ionic-team/ionic-framework/issues/25343)) ([0b92dff](https://github.com/ionic-team/ionic-framework/commit/0b92dffa92c05705ff83518c10608e3dc3651d51)), closes [#19004](https://github.com/ionic-team/ionic-framework/issues/19004)
+* **react:** present controller overlays in React 18 ([#25361](https://github.com/ionic-team/ionic-framework/issues/25361)) ([01c40ea](https://github.com/ionic-team/ionic-framework/commit/01c40eae5509f1c150d79269a7a75c05112fa343)), closes [#25247](https://github.com/ionic-team/ionic-framework/issues/25247)
+
+
+
+
+
+## [6.1.7](https://github.com/ionic-team/ionic-framework/compare/v6.1.6...v6.1.7) (2022-05-26)
+
+
+### Bug Fixes
+
+* **accordion:** accordions expand when using binding ([#25322](https://github.com/ionic-team/ionic-framework/issues/25322)) ([61e571e](https://github.com/ionic-team/ionic-framework/commit/61e571e585ed8ad9b0ca2f98f57bb16616413ba6)), closes [#25307](https://github.com/ionic-team/ionic-framework/issues/25307)
+* **datetime:** don't update value on confirm call if no date was selected ([#25338](https://github.com/ionic-team/ionic-framework/issues/25338)) ([9e5b10a](https://github.com/ionic-team/ionic-framework/commit/9e5b10a2155c6b9de565931da384e0e49aeca7b7))
+* **item, list:** list aria roles are added ([#25336](https://github.com/ionic-team/ionic-framework/issues/25336)) ([311c634](https://github.com/ionic-team/ionic-framework/commit/311c634d20e9e597db676d6f54e4b79cfe742a61)), closes [#19939](https://github.com/ionic-team/ionic-framework/issues/19939)
+* **menu:** rtl menu no longer disappears on ios 15 ([#25309](https://github.com/ionic-team/ionic-framework/issues/25309)) ([6005431](https://github.com/ionic-team/ionic-framework/commit/60054310afbab6151f6c29ff6e74666acd181a41)), closes [#25192](https://github.com/ionic-team/ionic-framework/issues/25192)
+* **modal:** swipe to close on content blocks scroll in ion-nav ([#25300](https://github.com/ionic-team/ionic-framework/issues/25300)) ([fdc55c0](https://github.com/ionic-team/ionic-framework/commit/fdc55c072765c87ad7c783e6d8a238b007f5f3ff)), closes [#25298](https://github.com/ionic-team/ionic-framework/issues/25298)
+* **nav:** swipe to go back works inside card modal ([#25333](https://github.com/ionic-team/ionic-framework/issues/25333)) ([0156be6](https://github.com/ionic-team/ionic-framework/commit/0156be61cbf73b25cb3c2cba1bd20adebbb3db4f)), closes [#25327](https://github.com/ionic-team/ionic-framework/issues/25327)
+* **range:** interfaces are now correctly exported ([#25342](https://github.com/ionic-team/ionic-framework/issues/25342)) ([15f0c06](https://github.com/ionic-team/ionic-framework/commit/15f0c0669f7598386edf487f408462b90ed91a08)), closes [#25341](https://github.com/ionic-team/ionic-framework/issues/25341)
+* **react:** add param types to useIonPopover dismiss function ([#25311](https://github.com/ionic-team/ionic-framework/issues/25311)) ([7111370](https://github.com/ionic-team/ionic-framework/commit/7111370dd787fdec78a1e3368679bc4c73570b98))
+* **react:** IonTabButton will call custom onClick handlers ([#25313](https://github.com/ionic-team/ionic-framework/issues/25313)) ([6034418](https://github.com/ionic-team/ionic-framework/commit/6034418b33c32fdd682c470eaf61b9fcbe86c4bb)), closes [#22511](https://github.com/ionic-team/ionic-framework/issues/22511)
+* **refresher:** attach scroll listener to custom scroll target ([#25335](https://github.com/ionic-team/ionic-framework/issues/25335)) ([8f5e4cd](https://github.com/ionic-team/ionic-framework/commit/8f5e4cd9350b10a98afb7c98353c6719eee918bb)), closes [#25318](https://github.com/ionic-team/ionic-framework/issues/25318)
+* **types:** improve intellisense with colors ([#25347](https://github.com/ionic-team/ionic-framework/issues/25347)) ([97cfbbb](https://github.com/ionic-team/ionic-framework/commit/97cfbbb65d3e63c32d720e01c7368c68616bb531))
+* **vue:** correct views are now unmounted in tabs ([#25270](https://github.com/ionic-team/ionic-framework/issues/25270)) ([5e23fb1](https://github.com/ionic-team/ionic-framework/commit/5e23fb1ce4e5b6e53828bde59268170f604167ba)), closes [#25255](https://github.com/ionic-team/ionic-framework/issues/25255)
+
+
+
+
+
+## [6.1.6](https://github.com/ionic-team/ionic-framework/compare/v6.1.5...v6.1.6) (2022-05-18)
+
+
+### Bug Fixes
+
+* **loading:** spinner now respects —spinner-color ([#25261](https://github.com/ionic-team/ionic-framework/issues/25261)) ([65f4c74](https://github.com/ionic-team/ionic-framework/commit/65f4c742e7a5e5756f6f72dd853e38e885f90385)), closes [#25180](https://github.com/ionic-team/ionic-framework/issues/25180)
+* **modal:** reset breakpoint to initial breakpoint on present ([#25246](https://github.com/ionic-team/ionic-framework/issues/25246)) ([2557bf3](https://github.com/ionic-team/ionic-framework/commit/2557bf3c3eed9e33e89e07a8d73489da8d81bee3)), closes [#25245](https://github.com/ionic-team/ionic-framework/issues/25245)
+* **scroll-assist:** touch end events continue to bubble on inputs ([#25282](https://github.com/ionic-team/ionic-framework/issues/25282)) ([780f16d](https://github.com/ionic-team/ionic-framework/commit/780f16d9e04ee5aaaf91bb7c6ef15c72cc8aeb45)), closes [#25229](https://github.com/ionic-team/ionic-framework/issues/25229)
+
+
+
+
+
+## [6.1.5](https://github.com/ionic-team/ionic-framework/compare/v6.1.4...v6.1.5) (2022-05-11)
+
+
+### Bug Fixes
+
+* **core:** @axe-core/playwright should be a devDependency ([#25244](https://github.com/ionic-team/ionic-framework/issues/25244)) ([617ec48](https://github.com/ionic-team/ionic-framework/commit/617ec48265157d1502c443395472c21ebdb2989e)), closes [#25242](https://github.com/ionic-team/ionic-framework/issues/25242)
+* **item:** counter has appropriate contrast ([#25266](https://github.com/ionic-team/ionic-framework/issues/25266)) ([750be33](https://github.com/ionic-team/ionic-framework/commit/750be33772e9ba71a3cda35709d17b7912aa68e2)), closes [#25262](https://github.com/ionic-team/ionic-framework/issues/25262)
+* **modal:** add canDismiss input binding for angular ([#25240](https://github.com/ionic-team/ionic-framework/issues/25240)) ([bdf0383](https://github.com/ionic-team/ionic-framework/commit/bdf0383b0c9ec4595129a2633760fd4f4788df90)), closes [#25239](https://github.com/ionic-team/ionic-framework/issues/25239)
+* **spinner:** alignment is now correct in rtl ([#25260](https://github.com/ionic-team/ionic-framework/issues/25260)) ([e3c996d](https://github.com/ionic-team/ionic-framework/commit/e3c996dea878a8dd276a0ca99f59b330125f9b75))
+
+
+
+
+
+## [6.1.4](https://github.com/ionic-team/ionic-framework/compare/v6.1.3...v6.1.4) (2022-05-04)
+
+
+### Bug Fixes
+
+* **datetime:** arrow navigation respects min/max values ([#25182](https://github.com/ionic-team/ionic-framework/issues/25182)) ([6946e09](https://github.com/ionic-team/ionic-framework/commit/6946e09815da605e37ff8e4d613a14288ea35fb0)), closes [#25073](https://github.com/ionic-team/ionic-framework/issues/25073)
+* **datetime:** hide footer when month-year picker is open ([#25205](https://github.com/ionic-team/ionic-framework/issues/25205)) ([aa5e1b9](https://github.com/ionic-team/ionic-framework/commit/aa5e1b962150b9ed9629812ec566873784526c83))
+* **modal:** card modal can now be swiped to close on the content ([#25185](https://github.com/ionic-team/ionic-framework/issues/25185)) ([7633ddb](https://github.com/ionic-team/ionic-framework/commit/7633ddbc845745dfe36b5c8025c54c22c083c2f4)), closes [#22046](https://github.com/ionic-team/ionic-framework/issues/22046)
+* **modal:** card modal no longer dismisses from content with refresher ([#25227](https://github.com/ionic-team/ionic-framework/issues/25227)) ([c4f811f](https://github.com/ionic-team/ionic-framework/commit/c4f811f1dde0dcbcdaebaa3a4f5ef87e192b5cc5))
+* **react:** useIonModal/useIonPopover dismiss accepts data and role ([#25209](https://github.com/ionic-team/ionic-framework/issues/25209)) ([68b2f8b](https://github.com/ionic-team/ionic-framework/commit/68b2f8bfe10946580b996e48c4ec1e2df94b8d49)), closes [#25208](https://github.com/ionic-team/ionic-framework/issues/25208)
+* **vue:** switching between tabs and going back resolves to correct route ([#25206](https://github.com/ionic-team/ionic-framework/issues/25206)) ([b4ba70e](https://github.com/ionic-team/ionic-framework/commit/b4ba70ea148d4f8fc7475d3de798b485238470c8)), closes [#24303](https://github.com/ionic-team/ionic-framework/issues/24303)
+
+
+
+
+
 ## [6.1.3](https://github.com/ionic-team/ionic-framework/compare/v6.1.2...v6.1.3) (2022-04-27)
 
 

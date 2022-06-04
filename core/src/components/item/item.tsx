@@ -389,6 +389,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
+    const inList = hostContext('ion-list', this.el);
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -402,13 +403,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
             'item-disabled': disabled,
-            'in-list': hostContext('ion-list', this.el),
+            'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
           }),
         }}
+        role={inList ? 'listitem' : null}
       >
         <TagType {...attrs} class="item-native" part="native" disabled={disabled} {...clickFn}>
           <slot name="start"></slot>
