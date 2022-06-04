@@ -58,5 +58,5 @@ export interface AlertButton {
   role?: 'cancel' | 'destructive' | string;
   cssClass?: string | string[];
   id?: string;
-  handler?: (value: any) => boolean | void | {[key: string]: any} | Promise<boolean | void | {[key: string]: any}>;
+  handler?: (value: any) => boolean | void | { [key: string]: any } | Promise<boolean | void | { [key: string]: any }>;
 }
