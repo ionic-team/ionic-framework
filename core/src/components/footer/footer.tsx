@@ -55,11 +55,11 @@ export class Footer implements ComponentInterface {
     if (typeof (window as any) !== 'undefined') {
       this.keyboardWillShowHandler = () => {
         this.keyboardVisible = true;
-      }
+      };
 
       this.keyboardWillHideHandler = () => {
-        setTimeout(() => this.keyboardVisible = false, 50);
-      }
+        setTimeout(() => (this.keyboardVisible = false), 50);
+      };
 
       window.addEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
       window.addEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
