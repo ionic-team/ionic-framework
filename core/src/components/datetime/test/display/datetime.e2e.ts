@@ -83,8 +83,6 @@ test.describe('datetime: display', () => {
   });
   test.describe('datetime: switch presentations', () => {
     test('month selection should work after changing presentation', async ({ page, browserName }) => {
-      test.skip(browserName === 'firefox', 'This test is flaky in Firefox');
-
       await page.goto('/src/components/datetime/test/display');
       const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange');
       await page.waitForSelector('.datetime-ready');
