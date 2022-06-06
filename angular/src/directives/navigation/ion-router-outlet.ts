@@ -20,7 +20,6 @@ import { componentOnReady } from '@ionic/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
-
 import { EnvironmentInjector } from '../../di/r3_injector';
 import { AnimationBuilder } from '../../ionic-core';
 import { Config } from '../../providers/config';
