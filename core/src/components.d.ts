@@ -848,6 +848,10 @@ export namespace Components {
          */
         "horizontal"?: 'start' | 'end' | 'center';
         /**
+          * Opens/Closes the FAB list container.
+         */
+        "toggle": () => Promise<void>;
+        /**
           * Where to align the fab vertically in the viewport.
          */
         "vertical"?: 'top' | 'bottom' | 'center';

@@ -62,22 +62,23 @@ export class Fab implements ComponentInterface {
     return this.el.querySelector('ion-fab-button');
   }
 
-  private onClick = () => {
+  /**
+   * Opens/Closes the FAB list container.
+   * @internal
+   */
+  @Method()
+  async toggle() {
     const hasList = !!this.el.querySelector('ion-fab-list');
-    const getButton = this.getFab();
-    const isButtonDisabled = getButton?.disabled;
-
-    if (hasList && !isButtonDisabled) {
+    if (hasList) {
       this.activated = !this.activated;
     }
-  };
+  }
 
   render() {
     const { horizontal, vertical, edge } = this;
     const mode = getIonMode(this);
     return (
       <Host
-        onClick={this.onClick}
         class={{
           [mode]: true,
           [`fab-horizontal-${horizontal}`]: horizontal !== undefined,

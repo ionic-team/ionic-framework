@@ -22,6 +22,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private fab: HTMLIonFabElement | null = null;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -119,12 +121,25 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  connectedCallback() {
+    this.fab = this.el.closest('ion-fab');
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   };
 
   private onBlur = () => {
     this.ionBlur.emit();
+  };
+
+  private onClick = () => {
+    const { fab } = this;
+    if (!fab) {
+      return;
+    }
+
+    fab.toggle();
   };
 
   render() {
@@ -144,6 +159,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
     return (
       <Host
+        onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
