@@ -1672,7 +1672,7 @@ export class Datetime implements ComponentInterface {
         }}
         style={{
           '--offset-y': '-10px',
-          '--min-width': 'auto',
+          '--min-width': 'fit-content',
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.
