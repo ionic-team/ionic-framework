@@ -207,7 +207,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
   }
 
-  activateWith(activatedRoute: ActivatedRoute, resolverOrInjector?: ComponentFactoryResolver | null): void {
+  activateWith(activatedRoute: ActivatedRoute, resolverOrInjector?: ComponentFactoryResolver | EnvironmentInjector | null): void {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
