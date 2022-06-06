@@ -18,7 +18,9 @@ test.describe('picker-column-internal: disabled', () => {
       </script>
     `);
 
-    const pickerItems = page.locator('ion-picker-column-internal .picker-item:not(.picker-item-empty, .picker-item-disabled)');
+    const pickerItems = page.locator(
+      'ion-picker-column-internal .picker-item:not(.picker-item-empty, .picker-item-disabled)'
+    );
 
     expect(await pickerItems.count()).toBe(3);
   });
@@ -77,9 +79,30 @@ test.describe('picker-column-internal: disabled', () => {
     `);
 
     const pickerColumn = page.locator('ion-picker-column-internal');
-    await pickerColumn.evaluate((el: HTMLIonPickerColumnInternalElement) => el.value = 'b');
+    await pickerColumn.evaluate((el: HTMLIonPickerColumnInternalElement) => (el.value = 'b'));
 
     await page.waitForChanges();
+
+    const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
+    expect(disabledItem).toHaveClass(/picker-item-disabled/);
+    expect(disabledItem).not.toHaveClass(/picker-item-active/);
+  });
+  test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
+    await page.setContent(`
+      <ion-picker-internal>
+        <ion-picker-column-internal></ion-picker-column-internal>
+      </ion-picker-internal>
+
+      <script>
+        const column = document.querySelector('ion-picker-column-internal');
+        column.items = [
+          { text: 'A', value: 'a' },
+          { text: 'B', value: 'b', disabled: true },
+          { text: 'C', value: 'c' }
+        ]
+        column.value = 'b'
+      </script>
+    `);
 
     const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
     expect(disabledItem).toHaveClass(/picker-item-disabled/);
