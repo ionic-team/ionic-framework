@@ -23,12 +23,12 @@ import {
 import {
   addTimePadding,
   getFormattedHour,
-  getFormattedTime,
+  getLocalizedTime,
   getLocalizedDayPeriod,
   getMonthAndDay,
   getMonthAndYear,
 } from './utils/format';
-import { is24Hour, isMonthFirstLocale } from './utils/helpers';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -1528,71 +1528,90 @@ export class Datetime implements ComponentInterface {
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
   ) {
-    const { color, activePartsClone, workingParts } = this;
-
+    const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
     return (
       <ion-picker-internal>
-        <ion-picker-column-internal
-          color={color}
-          value={activePartsClone.hour}
-          items={hoursItems}
-          numericInput
-          onIonChange={(ev: CustomEvent) => {
-            this.setWorkingParts({
-              ...workingParts,
-              hour: ev.detail.value,
-            });
-            this.setActiveParts({
-              ...activePartsClone,
-              hour: ev.detail.value,
-            });
-
-            ev.stopPropagation();
-          }}
-        ></ion-picker-column-internal>
-        <ion-picker-column-internal
-          color={color}
-          value={activePartsClone.minute}
-          items={minutesItems}
-          numericInput
-          onIonChange={(ev: CustomEvent) => {
-            this.setWorkingParts({
-              ...workingParts,
-              minute: ev.detail.value,
-            });
-            this.setActiveParts({
-              ...activePartsClone,
-              minute: ev.detail.value,
-            });
-
-            ev.stopPropagation();
-          }}
-        ></ion-picker-column-internal>
-        {!use24Hour && (
-          <ion-picker-column-internal
-            color={color}
-            value={activePartsClone.ampm}
-            items={ampmItems}
-            onIonChange={(ev: CustomEvent) => {
-              const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
-
-              this.setWorkingParts({
-                ...workingParts,
-                ampm: ev.detail.value,
-                hour,
-              });
-
-              this.setActiveParts({
-                ...activePartsClone,
-                ampm: ev.detail.value,
-                hour,
-              });
-
-              ev.stopPropagation();
-            }}
-          ></ion-picker-column-internal>
-        )}
+        {isDayPeriodRTL && this.renderTimePickerDayPeriodColumn(ampmItems)}
+        {this.renderTimePickerHourColumn(hoursItems)}
+        {this.renderTimePickerMinuteColumn(minutesItems)}
+        {!use24Hour && !isDayPeriodRTL && this.renderTimePickerDayPeriodColumn(ampmItems)}
       </ion-picker-internal>
+    );
+  }
+
+  private renderTimePickerHourColumn(hoursItems: PickerColumnItem[]) {
+    const { color, activePartsClone, workingParts } = this;
+    return (
+      <ion-picker-column-internal
+        color={color}
+        value={activePartsClone.hour}
+        items={hoursItems}
+        numericInput
+        onIonChange={(ev: CustomEvent) => {
+          this.setWorkingParts({
+            ...workingParts,
+            hour: ev.detail.value,
+          });
+          this.setActiveParts({
+            ...activePartsClone,
+            hour: ev.detail.value,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderTimePickerMinuteColumn(minutesItems: PickerColumnItem[]) {
+    const { color, activePartsClone, workingParts } = this;
+    return (
+      <ion-picker-column-internal
+        color={color}
+        value={activePartsClone.minute}
+        items={minutesItems}
+        numericInput
+        onIonChange={(ev: CustomEvent) => {
+          this.setWorkingParts({
+            ...workingParts,
+            minute: ev.detail.value,
+          });
+          this.setActiveParts({
+            ...activePartsClone,
+            minute: ev.detail.value,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderTimePickerDayPeriodColumn(ampmItems: PickerColumnItem[]) {
+    const { color, activePartsClone, workingParts } = this;
+    return (
+      <ion-picker-column-internal
+        color={color}
+        value={activePartsClone.ampm}
+        items={ampmItems}
+        onIonChange={(ev: CustomEvent) => {
+          const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
+
+          this.setWorkingParts({
+            ...workingParts,
+            ampm: ev.detail.value,
+            hour,
+          });
+
+          this.setActiveParts({
+            ...activePartsClone,
+            ampm: ev.detail.value,
+            hour,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
     );
   }
 
@@ -1631,7 +1650,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getFormattedTime(this.locale, this.activePartsClone, use24Hour)}
+        {getLocalizedTime(this.locale, this.activePartsClone, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"

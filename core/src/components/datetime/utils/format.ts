@@ -1,18 +1,20 @@
 import type { DatetimeParts } from '../datetime-interface';
 
+import { convertDataToISO } from './manipulation';
+
 const get12HourTime = (hour: number) => {
   return hour % 12 || 12;
 };
 
-const getFormattedDayPeriod = (ampm?: string) => {
-  if (ampm === undefined) {
+const getFormattedDayPeriod = (dayPeriod?: string) => {
+  if (dayPeriod === undefined) {
     return '';
   }
 
-  return ampm.toUpperCase();
+  return dayPeriod.toUpperCase();
 };
 
-export const getFormattedTime = (locale: string, refParts: DatetimeParts, use24Hour: boolean): string => {
+export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24Hour: boolean): string => {
   if (refParts.hour === undefined || refParts.minute === undefined) {
     return 'Invalid Time';
   }
@@ -24,9 +26,11 @@ export const getFormattedTime = (locale: string, refParts: DatetimeParts, use24H
     return `${hour}:${minute}`;
   }
 
-  const dayPeriod = getLocalizedDayPeriod(locale, refParts.ampm);
-
-  return `${hour}:${minute} ${dayPeriod ?? getFormattedDayPeriod(refParts.ampm)}`;
+  return new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(convertDataToISO(refParts)));
 };
 
 /**
@@ -106,8 +110,19 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 };
 
-const dateAm = new Date('2022T01:00');
-const datePm = new Date('2022T13:00');
+const dateAm = () => {
+  const date = new Date('2022T01:00');
+  const tzOffset = date.getTimezoneOffset();
+  date.setMinutes(date.getMinutes() - tzOffset);
+  return date;
+};
+
+const datePm = () => {
+  const date = new Date('2022T13:00');
+  const tzOffset = date.getTimezoneOffset();
+  date.setMinutes(date.getMinutes() - tzOffset);
+  return date;
+};
 
 /**
  * Formats the locale's string representation of the day period (am/pm) for a given
@@ -118,10 +133,10 @@ const datePm = new Date('2022T13:00');
  * @returns The localized day period (am/pm) representation of the given value.
  */
 export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | undefined) => {
-  const date = dayPeriod === 'am' ? dateAm : datePm;
+  const date = dayPeriod === 'am' ? dateAm() : datePm();
   const localizedDayPeriod = new Intl.DateTimeFormat(locale, {
     hour: 'numeric',
-    timeZone: 'UTC'
+    timeZone: 'UTC',
   })
     .formatToParts(date)
     .find((part) => part.type === 'dayPeriod');
@@ -131,4 +146,4 @@ export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | u
   }
 
   return getFormattedDayPeriod(dayPeriod);
-}
+};
