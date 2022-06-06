@@ -43,13 +43,17 @@ test.describe('datetime: display', () => {
       await page.setViewportSize({ width: 500, height: 500 });
       await page.goto('/src/components/datetime/test/display');
       await page.waitForSelector('.datetime-ready');
+      const changeEvent = await page.spyOnEvent('change');
 
       const select = page.locator('select#presentation');
       const sizeSelect = page.locator('select#size');
 
       sizeSelect.selectOption('cover');
+      await changeEvent.next();
 
       select.selectOption('date-time');
+      await changeEvent.next();
+
       await page.waitForChanges();
 
       expect(await page.screenshot()).toMatchSnapshot(
@@ -57,6 +61,7 @@ test.describe('datetime: display', () => {
       );
 
       select.selectOption('time-date');
+      await changeEvent.next();
       await page.waitForChanges();
 
       expect(await page.screenshot()).toMatchSnapshot(
@@ -64,11 +69,13 @@ test.describe('datetime: display', () => {
       );
 
       select.selectOption('time');
+      await changeEvent.next();
       await page.waitForChanges();
 
       expect(await page.screenshot()).toMatchSnapshot(`datetime-display-cover-time-${page.getSnapshotSettings()}.png`);
 
       select.selectOption('date');
+      await changeEvent.next();
       await page.waitForChanges();
 
       expect(await page.screenshot()).toMatchSnapshot(`datetime-display-cover-date-${page.getSnapshotSettings()}.png`);
