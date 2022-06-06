@@ -41,9 +41,7 @@ test.describe('datetime: selecting a day', () => {
     await dayBtn.click();
     await page.waitForChanges();
 
-    const newActiveDay = page.locator('ion-datetime .calendar-day-active');
-
-    expect(newActiveDay).toHaveText('13');
+    expect(activeDay).toHaveText('13');
   });
 });
 
