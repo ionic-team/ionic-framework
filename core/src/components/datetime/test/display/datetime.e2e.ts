@@ -42,6 +42,7 @@ test.describe('datetime: display', () => {
        */
       await page.setViewportSize({ width: 500, height: 500 });
       await page.goto('/src/components/datetime/test/display');
+      await page.waitForSelector('.datetime-ready');
 
       const select = page.locator('select#presentation');
       const sizeSelect = page.locator('select#size');
