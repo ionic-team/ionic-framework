@@ -120,7 +120,9 @@ test.describe('datetime: footer', () => {
     );
   });
   test('should render default and clear buttons', async ({ page }) => {
-    await page.setContent('<ion-datetime value="2022-06-03" show-default-buttons="true" show-clear-button="true"></ion-datetime>');
+    await page.setContent(
+      '<ion-datetime value="2022-06-03" show-default-buttons="true" show-clear-button="true"></ion-datetime>'
+    );
 
     const cancelButton = page.locator('ion-datetime #cancel-button');
     expect(cancelButton).toHaveText('Cancel');
