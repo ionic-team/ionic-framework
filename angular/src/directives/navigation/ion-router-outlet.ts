@@ -74,10 +74,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.nativeEl.swipeHandler = swipe
       ? {
-        canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
-        onStart: () => this.stackCtrl.startBackTransition(),
-        onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
-      }
+          canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
+          onStart: () => this.stackCtrl.startBackTransition(),
+          onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
+        }
       : undefined;
   }
 
@@ -208,7 +208,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
   }
 
-  activateWith(activatedRoute: ActivatedRoute, resolverOrInjector?: ComponentFactoryResolver | EnvironmentInjector | null): void {
+  activateWith(
+    activatedRoute: ActivatedRoute,
+    resolverOrInjector?: ComponentFactoryResolver | EnvironmentInjector | null
+  ): void {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
@@ -395,7 +398,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 class OutletInjector implements Injector {
-  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) { }
+  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) {}
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {
