@@ -95,7 +95,7 @@ test.describe('datetime: confirm date', () => {
 
 test.describe('datetime: footer', () => {
   test('should render default buttons', async ({ page }) => {
-    await page.setContent('<ion-datetime show-default-buttons="true"></ion-datetime>');
+    await page.setContent('<ion-datetime value="2022-06-03" show-default-buttons="true"></ion-datetime>');
 
     const cancelButton = page.locator('ion-datetime #cancel-button');
     expect(cancelButton).toHaveText('Cancel');
@@ -109,7 +109,7 @@ test.describe('datetime: footer', () => {
     );
   });
   test('should render clear button', async ({ page }) => {
-    await page.setContent('<ion-datetime show-clear-button="true"></ion-datetime>');
+    await page.setContent('<ion-datetime value="2022-06-03" show-clear-button="true"></ion-datetime>');
 
     const clearButton = page.locator('ion-datetime #clear-button');
     expect(clearButton).toHaveText('Clear');
@@ -120,7 +120,7 @@ test.describe('datetime: footer', () => {
     );
   });
   test('should render default and clear buttons', async ({ page }) => {
-    await page.setContent('<ion-datetime show-default-buttons="true" show-clear-button="true"></ion-datetime>');
+    await page.setContent('<ion-datetime value="2022-06-03" show-default-buttons="true" show-clear-button="true"></ion-datetime>');
 
     const cancelButton = page.locator('ion-datetime #cancel-button');
     expect(cancelButton).toHaveText('Cancel');
@@ -138,7 +138,7 @@ test.describe('datetime: footer', () => {
   });
   test('should render custom buttons', async ({ page }) => {
     await page.setContent(`
-      <ion-datetime>
+      <ion-datetime value="2022-06-03">
         <ion-buttons slot="buttons">
           <ion-button id="custom-button" color="primary">Hello!</ion-button>
         </ion-buttons>
