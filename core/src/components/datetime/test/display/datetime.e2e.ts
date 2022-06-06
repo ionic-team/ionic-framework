@@ -12,7 +12,7 @@ test.describe('datetime: display', () => {
         expect(await datetime.screenshot()).toMatchSnapshot(
           `datetime-display-date-time-${page.getSnapshotSettings()}.png`
         );
-      })
+      });
       test('time-date should not have any visual regressions', async ({ page }) => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="time-date"></ion-datetime>
@@ -21,26 +21,22 @@ test.describe('datetime: display', () => {
         expect(await datetime.screenshot()).toMatchSnapshot(
           `datetime-display-time-date-${page.getSnapshotSettings()}.png`
         );
-      })
+      });
       test('time should not have any visual regressions', async ({ page }) => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
         `);
         const datetime = page.locator('ion-datetime');
-        expect(await datetime.screenshot()).toMatchSnapshot(
-          `datetime-display-time-${page.getSnapshotSettings()}.png`
-        );
-      })
+        expect(await datetime.screenshot()).toMatchSnapshot(`datetime-display-time-${page.getSnapshotSettings()}.png`);
+      });
       test('date should not have any visual regressions', async ({ page }) => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="date"></ion-datetime>
         `);
         const datetime = page.locator('ion-datetime');
-        expect(await datetime.screenshot()).toMatchSnapshot(
-          `datetime-display-date-${page.getSnapshotSettings()}.png`
-        );
-      })
-    })
+        expect(await datetime.screenshot()).toMatchSnapshot(`datetime-display-date-${page.getSnapshotSettings()}.png`);
+      });
+    });
     test.describe('cover sizes', () => {
       test.beforeEach(async ({ page }) => {
         /**
@@ -58,7 +54,7 @@ test.describe('datetime: display', () => {
         expect(await datetime.screenshot()).toMatchSnapshot(
           `datetime-display-cover-date-time-${page.getSnapshotSettings()}.png`
         );
-      })
+      });
       test('time-date should not have any visual regressions', async ({ page }) => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time-date"></ion-datetime>
@@ -67,7 +63,7 @@ test.describe('datetime: display', () => {
         expect(await datetime.screenshot()).toMatchSnapshot(
           `datetime-display-cover-time-date-${page.getSnapshotSettings()}.png`
         );
-      })
+      });
       test('time should not have any visual regressions', async ({ page }) => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
@@ -76,7 +72,7 @@ test.describe('datetime: display', () => {
         expect(await datetime.screenshot()).toMatchSnapshot(
           `datetime-display-cover-time-${page.getSnapshotSettings()}.png`
         );
-      })
+      });
       test('date should not have any visual regressions', async ({ page }) => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="date"></ion-datetime>
@@ -85,8 +81,8 @@ test.describe('datetime: display', () => {
         expect(await datetime.screenshot()).toMatchSnapshot(
           `datetime-display-cover-date-${page.getSnapshotSettings()}.png`
         );
-      })
-    })
+      });
+    });
   });
   test.describe('datetime: switch presentations', () => {
     test('month selection should work after changing presentation', async ({ page }) => {
