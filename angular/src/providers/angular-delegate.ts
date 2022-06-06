@@ -17,9 +17,9 @@ import {
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core';
 
-import { isComponentFactoryResolver } from '../util/util';
 import { EnvironmentInjector } from '../di/r3_injector';
 import { NavParams } from '../directives/navigation/nav-params';
+import { isComponentFactoryResolver } from '../util/util';
 
 @Injectable()
 export class AngularDelegate {

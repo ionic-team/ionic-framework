@@ -19,12 +19,13 @@ import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_
 import { componentOnReady } from '@ionic/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-import { isComponentFactoryResolver } from '../../util/util';
+
 
 import { EnvironmentInjector } from '../../di/r3_injector';
 import { AnimationBuilder } from '../../ionic-core';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
+import { isComponentFactoryResolver } from '../../util/util';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
