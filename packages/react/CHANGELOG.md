@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.9-nightly.20220606](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9-nightly.20220606) (2022-06-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
 
 
