@@ -12,6 +12,7 @@ export class ModalController extends OverlayBaseController<ModalOptions, HTMLIon
     private angularDelegate: AngularDelegate,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
+    // TODO: FW-1641: Migrate to Angular's version once Angular 13 is dropped
     @Optional() private environmentInjector: EnvironmentInjector
   ) {
     super(modalController);

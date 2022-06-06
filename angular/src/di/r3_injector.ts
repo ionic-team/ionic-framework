@@ -1,6 +1,9 @@
 /**
  * This class is taken directly from Angular's codebase. It can be removed once
  * we remove support for < Angular 14. The replacement class will come from @angular/core.
+ *
+ * TODO: FW-1641: Remove this class once Angular 13 support is dropped.
+ *
  */
 import { Injector, ProviderToken, InjectFlags } from '@angular/core';
 /**

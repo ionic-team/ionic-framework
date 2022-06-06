@@ -73,10 +73,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.nativeEl.swipeHandler = swipe
       ? {
-          canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
-          onStart: () => this.stackCtrl.startBackTransition(),
-          onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
-        }
+        canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
+        onStart: () => this.stackCtrl.startBackTransition(),
+        onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
+      }
       : undefined;
   }
 
@@ -247,6 +247,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
         /**
          * Angular 14 and higher.
          *
+         * TODO: FW-1641: Migrate once Angular 13 support is dropped.
+         *
          * When we drop < Angular 14, we can replace the following code with:
          * ```ts
           const environmentInjector = resolverOrInjector ?? this.environmentInjector;
@@ -392,7 +394,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 class OutletInjector implements Injector {
-  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) {}
+  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) { }
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {
