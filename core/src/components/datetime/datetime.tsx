@@ -409,6 +409,20 @@ export class Datetime implements ComponentInterface {
   @Prop() size: 'cover' | 'fixed' = 'fixed';
 
   /**
+   * If `true`, a wheel picker will be rendered instead of a calendar grid
+   * where possible. If `false`, a calendar grid will be rendered instead of
+   * a wheel picker where possible.
+   *
+   * A wheel picker can be rendered instead of a grid when `presentation` is
+   * one of the following values: `'date'`, `'date-time'`, or `'time-date'`.
+   *
+   * A wheel picker will always be rendered regardless of
+   * the `preferWheel` value when `presentation` is one of the following values:
+   * `'time'`, `'month'`, `'month-year'`, or `'year'`.
+   */
+  @Prop() preferWheel = false;
+
+  /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel!: EventEmitter<void>;
