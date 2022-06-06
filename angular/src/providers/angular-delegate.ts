@@ -17,12 +17,13 @@ import {
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core';
 
+import { isComponentFactoryResolver } from '../util/util';
 import { EnvironmentInjector } from '../di/r3_injector';
 import { NavParams } from '../directives/navigation/nav-params';
 
 @Injectable()
 export class AngularDelegate {
-  constructor(private zone: NgZone, private appRef: ApplicationRef) {}
+  constructor(private zone: NgZone, private appRef: ApplicationRef) { }
 
   create(
     resolverOrInjector: ComponentFactoryResolver,
@@ -43,7 +44,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private location: ViewContainerRef | undefined,
     private appRef: ApplicationRef,
     private zone: NgZone
-  ) {}
+  ) { }
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
     return this.zone.run(() => {
@@ -182,7 +183,3 @@ const getProviders = (params: { [key: string]: any }) => {
 const provideNavParamsInjectable = (params: { [key: string]: any }) => {
   return new NavParams(params);
 };
-
-function isComponentFactoryResolver(item: any): item is ComponentFactoryResolver {
-  return !!item.resolveComponentFactory;
-}

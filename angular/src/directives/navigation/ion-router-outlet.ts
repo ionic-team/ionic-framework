@@ -19,6 +19,7 @@ import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_
 import { componentOnReady } from '@ionic/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { isComponentFactoryResolver } from '../../util/util';
 
 import { EnvironmentInjector } from '../../di/r3_injector';
 import { AnimationBuilder } from '../../ionic-core';
@@ -407,8 +408,4 @@ class OutletInjector implements Injector {
 
     return this.parent.get(token, notFoundValue);
   }
-}
-
-function isComponentFactoryResolver(item: any): item is ComponentFactoryResolver {
-  return !!item.resolveComponentFactory;
 }
