@@ -5,7 +5,6 @@ import { now, pointerCoord } from './helpers';
 export const startTapClick = (config: Config) => {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
-  let scrollingEl: HTMLElement | undefined;
 
   let activatableEle: HTMLElement | undefined;
   let activeRipple: Promise<() => void> | undefined;
@@ -13,11 +12,6 @@ export const startTapClick = (config: Config) => {
 
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
-
-  const isScrolling = () => {
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    return scrollingEl !== undefined && scrollingEl.parentElement !== null;
-  };
 
   // Touch Events
   const onTouchStart = (ev: TouchEvent) => {
@@ -58,10 +52,9 @@ export const startTapClick = (config: Config) => {
   };
 
   const pointerDown = (ev: UIEvent) => {
-    if (activatableEle || isScrolling()) {
+    if (activatableEle) {
       return;
     }
-    scrollingEl = undefined;
     setActivatedElement(getActivatableTarget(ev), ev);
   };
 
@@ -146,18 +139,25 @@ export const startTapClick = (config: Config) => {
   };
 
   const doc = document;
-  doc.addEventListener('ionScrollStart', (ev) => {
-    scrollingEl = ev.target as HTMLElement;
-    cancelActive();
-  });
-  doc.addEventListener('ionScrollEnd', () => {
-    scrollingEl = undefined;
-  });
   doc.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);
   doc.addEventListener('touchcancel', onTouchEnd, true);
   doc.addEventListener('touchend', onTouchEnd, true);
+
+  /**
+   * Tap click effects such as the ripple effect should
+   * not happen when scrolling. For example, if a user scrolls
+   * the page but also happens to do a touchstart on a button
+   * as part of the scroll, the ripple effect should not
+   * be dispatched. The ripple effect should only happen
+   * if the button is activated and the page is not scrolling.
+   *
+   * pointercancel is dispatched on a gesture when scrolling
+   * starts, so this lets us avoid having to listen for
+   * ion-content's scroll events.
+   */
+  doc.addEventListener('pointercancel', cancelActive, true);
 
   doc.addEventListener('mousedown', onMouseDown, true);
   doc.addEventListener('mouseup', onMouseUp, true);
