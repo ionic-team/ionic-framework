@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.9-nightly.20220607](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9-nightly.20220607) (2022-06-07)
+
+
+### Bug Fixes
+
+* **all:** ripple effect is no longer added when scrolling ([#25352](https://github.com/ionic-team/ionic/issues/25352)) ([0b275af](https://github.com/ionic-team/ionic/commit/0b275af5ac06f470b4d908b889f513956bf5d868)), closes [#22030](https://github.com/ionic-team/ionic/issues/22030)
+* **datetime:** emit ionChange for non-calendar picker presentation ([#25380](https://github.com/ionic-team/ionic/issues/25380)) ([4e6a60b](https://github.com/ionic-team/ionic/commit/4e6a60b6a42287e5091728aecb61f6097e131b83)), closes [#25375](https://github.com/ionic-team/ionic/issues/25375)
+* **datetime:** ensure that default month shown is always in bounds ([#25351](https://github.com/ionic-team/ionic/issues/25351)) ([866d452](https://github.com/ionic-team/ionic/commit/866d4528ad1b8ffa65258595d553ea934daa4add)), closes [#25320](https://github.com/ionic-team/ionic/issues/25320)
+* **label:** text contents will repaint on change ([#25395](https://github.com/ionic-team/ionic/issues/25395)) ([52ec741](https://github.com/ionic-team/ionic/commit/52ec74193b4e2478cb84a6dfea261cb2113dcbff))
+
+
+
+
+
 ## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
 
 
