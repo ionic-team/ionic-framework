@@ -377,7 +377,6 @@ export const getDayColumnData = (
   return days;
 };
 
-
 export const getYearColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
