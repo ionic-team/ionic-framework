@@ -338,11 +338,11 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show after the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsAfterCollapse": number;
         /**
-          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show before the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsBeforeCollapse": number;
         /**
@@ -4228,11 +4228,11 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show after the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsAfterCollapse"?: number;
         /**
-          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show before the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsBeforeCollapse"?: number;
         /**
