@@ -1263,13 +1263,13 @@ export class Datetime implements ComponentInterface {
   private renderWheelPicker(forcePresentation: string = this.presentation) {
     return (
       <ion-picker-internal>
-        {this.renderDatePickerColunns(forcePresentation)}
+        {this.renderDatePickerColumns(forcePresentation)}
         {this.renderTimePickerColumns(forcePresentation)}
       </ion-picker-internal>
     );
   }
 
-  private renderDatePickerColunns(forcePresentation: string) {
+  private renderDatePickerColumns(forcePresentation: string) {
     const { workingParts } = this;
     const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
     const months = shouldRenderMonths
