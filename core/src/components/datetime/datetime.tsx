@@ -1845,11 +1845,7 @@ export class Datetime implements ComponentInterface {
    * toggle in the calendar header.
    */
   private renderCalendarViewMonthYearPicker() {
-    return (
-      <div class="datetime-year">
-        {this.renderWheelView('month-year')}
-      </div>
-    )
+    return <div class="datetime-year">{this.renderWheelView('month-year')}</div>;
   }
 
   /**
