@@ -1729,64 +1729,6 @@ export class Datetime implements ComponentInterface {
     ];
   }
 
-  /**
-   * Render time picker inside of datetime.
-   * Do not pass color prop to segment on
-   * iOS mode. MD segment has been customized and
-   * should take on the color prop, but iOS
-   * should just be the default segment.
-   */
-  private renderTime() {
-    const { workingParts, presentation } = this;
-    const timeOnlyPresentation = presentation === 'time';
-    const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const { hours, minutes, am, pm } = generateTime(
-      workingParts,
-      use24Hour ? 'h23' : 'h12',
-      this.value ? this.minParts : undefined,
-      this.value ? this.maxParts : undefined,
-      this.parsedHourValues,
-      this.parsedMinuteValues
-    );
-
-    const hoursItems = hours.map((hour) => {
-      return {
-        text: getFormattedHour(hour, use24Hour),
-        value: getInternalHourValue(hour, use24Hour, workingParts.ampm),
-      };
-    });
-
-    const minutesItems = minutes.map((minute) => {
-      return {
-        text: addTimePadding(minute),
-        value: minute,
-      };
-    });
-
-    const ampmItems = [];
-    if (am) {
-      ampmItems.push({
-        text: 'AM',
-        value: 'am',
-      });
-    }
-
-    if (pm) {
-      ampmItems.push({
-        text: 'PM',
-        value: 'pm',
-      });
-    }
-
-    return (
-      <div class="datetime-time">
-        {timeOnlyPresentation
-          ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)
-          : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
-      </div>
-    );
-  }
-
   private renderCalendarViewHeader(mode: Mode) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
