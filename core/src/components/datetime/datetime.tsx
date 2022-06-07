@@ -1092,7 +1092,7 @@ export class Datetime implements ComponentInterface {
     this.highlightActiveParts = !!value;
     const valueToProcess = parseDate(value || getToday());
     const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
-    const ampm = parseAmPm(hour);
+    const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
       month,
