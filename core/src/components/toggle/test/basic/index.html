@@ -28,6 +28,11 @@
       <ion-content id="content">
         <ion-list>
           <ion-item>
+            <ion-label>Orange</ion-label>
+            <ion-toggle id="orange" slot="start" name="orange"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
             <ion-label>Apple</ion-label>
             <ion-toggle slot="start" name="apple" checked></ion-toggle>
           </ion-item>
@@ -44,7 +49,7 @@
 
           <ion-item>
             <ion-label>Grape, checked, disabled</ion-label>
-            <ion-toggle slot="start" id="grapeChecked" name="grape" checked disabled></ion-toggle>
+            <ion-toggle slot="start" id="grapeChecked" value="grape" name="grape" checked disabled></ion-toggle>
           </ion-item>
 
           <ion-item>
