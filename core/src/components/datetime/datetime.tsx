@@ -1367,8 +1367,8 @@ export class Datetime implements ComponentInterface {
       this.locale,
       this.workingParts,
       this.hourCycle,
-      this.minParts,
-      this.maxParts,
+      this.value ? this.minParts : undefined,
+      this.value ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );
