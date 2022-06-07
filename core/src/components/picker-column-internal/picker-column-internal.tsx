@@ -146,7 +146,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private setValue(value?: string | number) {
     const { items } = this;
     this.value = value;
-    const findItem = items.find((item) => item.value === value);
+    const findItem = items.find((item) => item.value === value && item.disabled !== true);
     if (findItem) {
       this.ionChange.emit(findItem);
     }
@@ -226,9 +226,13 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
+        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement;
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
+        }
+
+        if (activeElement.disabled) {
+          return;
         }
 
         /**
@@ -280,7 +284,9 @@ export class PickerColumnInternal implements ComponentInterface {
   };
 
   get activeItem() {
-    return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]`) as HTMLElement | null;
+    return getElementRoot(this.el).querySelector(
+      `.picker-item[data-value="${this.value}"]:not([disabled])`
+    ) as HTMLElement | null;
   }
 
   render() {
@@ -301,16 +307,20 @@ export class PickerColumnInternal implements ComponentInterface {
         <div class="picker-item picker-item-empty">&nbsp;</div>
         {items.map((item, index) => {
           return (
-            <div
-              class="picker-item"
+            <button
+              class={{
+                'picker-item': true,
+                'picker-item-disabled': item.disabled || false,
+              }}
               data-value={item.value}
               data-index={index}
               onClick={(ev: Event) => {
                 this.centerPickerItemInView(ev.target as HTMLElement);
               }}
+              disabled={item.disabled}
             >
               {item.text}
-            </div>
+            </button>
           );
         })}
         <div class="picker-item picker-item-empty">&nbsp;</div>
