@@ -37,7 +37,7 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -456,12 +456,13 @@ export class Datetime implements ComponentInterface {
   @Method()
   async confirm(closeOverlay = false) {
     /**
-     * If highlightActiveParts is false, this means the datetime was inited
-     * without a value, and the user hasn't selected one yet. We shouldn't
-     * update the value in this case, since otherwise it would be mysteriously
-     * set to today.
+     * We only update the value if the presentation is not a calendar picker,
+     * or if `highlightActiveParts` is true; indicating that the user
+     * has selected a date from the calendar picker.
+     *
+     * Otherwise "today" would accidentally be set as the value.
      */
-    if (this.highlightActiveParts) {
+    if (this.highlightActiveParts || !this.isCalendarPicker) {
       /**
        * Prevent convertDataToISO from doing any
        * kind of transformation based on timezone
@@ -485,7 +486,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Resets the internal state of the datetime but does not update the value.
    * Passing a valid ISO-8601 string will reset the state of the component to the provided date.
-   * If no value is provided, the internal state will be reset to today.
+   * If no value is provided, the internal state will be reset to the clamped value of the min, max and today.
    */
   @Method()
   async reset(startDate?: string) {
@@ -535,6 +536,11 @@ export class Datetime implements ComponentInterface {
 
     this.confirm();
   };
+
+  private get isCalendarPicker() {
+    const { presentation } = this;
+    return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+  }
 
   /**
    * Stencil sometimes sets calendarBodyRef to null on rerender, even though
@@ -1091,8 +1097,8 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
-    const valueToProcess = value || getToday();
-    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+    const valueToProcess = parseDate(value || getToday());
+    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
 
     this.setWorkingParts({
       month,
@@ -1101,7 +1107,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm: hour! >= 12 ? 'pm' : 'am',
     });
 
     this.activeParts = {
@@ -1111,7 +1117,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm: hour! >= 12 ? 'pm' : 'am',
     };
   };
 
@@ -1684,8 +1690,8 @@ export class Datetime implements ComponentInterface {
     const { hours, minutes, am, pm } = generateTime(
       workingParts,
       use24Hour ? 'h23' : 'h12',
-      this.minParts,
-      this.maxParts,
+      this.value ? this.minParts : undefined,
+      this.value ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );

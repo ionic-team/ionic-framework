@@ -38,13 +38,15 @@ export class Breadcrumbs implements ComponentInterface {
 
   /**
    * The number of breadcrumbs to show before the collapsed indicator.
-   * If this property exists `maxItems` will be ignored.
+   * If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`,
+   * the breadcrumbs will not be collapsed.
    */
   @Prop() itemsBeforeCollapse = 1;
 
   /**
    * The number of breadcrumbs to show after the collapsed indicator.
-   * If this property exists `maxItems` will be ignored.
+   * If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`,
+   * the breadcrumbs will not be collapsed.
    */
   @Prop() itemsAfterCollapse = 1;
 
