@@ -6,6 +6,7 @@ import {
   Injectable,
   InjectionToken,
   Injector,
+  ComponentRef,
 } from '@angular/core';
 import {
   FrameworkDelegate,
@@ -16,18 +17,20 @@ import {
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core';
 
+import { EnvironmentInjector } from '../di/r3_injector';
 import { NavParams } from '../directives/navigation/nav-params';
+import { isComponentFactoryResolver } from '../util/util';
 
 @Injectable()
 export class AngularDelegate {
   constructor(private zone: NgZone, private appRef: ApplicationRef) {}
 
   create(
-    resolver: ComponentFactoryResolver,
+    resolverOrInjector: ComponentFactoryResolver,
     injector: Injector,
     location?: ViewContainerRef
   ): AngularFrameworkDelegate {
-    return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
+    return new AngularFrameworkDelegate(resolverOrInjector, injector, location, this.appRef, this.zone);
   }
 }
 
@@ -36,7 +39,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   private elEventsMap = new WeakMap<HTMLElement, () => void>();
 
   constructor(
-    private resolver: ComponentFactoryResolver,
+    private resolverOrInjector: ComponentFactoryResolver | EnvironmentInjector,
     private injector: Injector,
     private location: ViewContainerRef | undefined,
     private appRef: ApplicationRef,
@@ -48,7 +51,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
       return new Promise((resolve) => {
         const el = attachView(
           this.zone,
-          this.resolver,
+          this.resolverOrInjector,
           this.injector,
           this.location,
           this.appRef,
@@ -85,7 +88,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 
 export const attachView = (
   zone: NgZone,
-  resolver: ComponentFactoryResolver,
+  resolverOrInjector: ComponentFactoryResolver | EnvironmentInjector,
   injector: Injector,
   location: ViewContainerRef | undefined,
   appRef: ApplicationRef,
@@ -96,14 +99,29 @@ export const attachView = (
   params: any,
   cssClasses: string[] | undefined
 ): any => {
-  const factory = resolver.resolveComponentFactory(component);
+  let componentRef: ComponentRef<any>;
   const childInjector = Injector.create({
     providers: getProviders(params),
     parent: injector,
   });
-  const componentRef = location
-    ? location.createComponent(factory, location.length, childInjector)
-    : factory.create(childInjector);
+
+  if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+    // Angular 13 and lower
+    const factory = resolverOrInjector.resolveComponentFactory(component);
+    componentRef = location
+      ? location.createComponent(factory, location.length, childInjector)
+      : factory.create(childInjector);
+  } else if (location) {
+    // Angular 14
+    const environmentInjector = resolverOrInjector;
+    componentRef = location.createComponent(component, {
+      index: location.indexOf,
+      injector: childInjector,
+      environmentInjector,
+    } as any);
+  } else {
+    return null;
+  }
 
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
