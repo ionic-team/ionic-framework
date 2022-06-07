@@ -1837,6 +1837,22 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * Renders the month/year picker that is
+   * displayed on the calendar grid.
+   * The .datetime-year class has additional
+   * styles that let us show/hide the
+   * picker when the user clicks on the
+   * toggle in the calendar header.
+   */
+  private renderCalendarViewMonthYearPicker() {
+    return (
+      <div class="datetime-year">
+        {this.renderWheelView('month-year')}
+      </div>
+    )
+  }
+
+  /**
    * Render entry point
    * All presentation types are rendered from here.
    */
@@ -1858,7 +1874,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
           this.renderFooter(),
         ];
@@ -1867,7 +1883,7 @@ export class Datetime implements ComponentInterface {
           this.renderCalendarViewHeader(mode),
           this.renderTime(),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
       case 'time':
@@ -1880,7 +1896,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
     }
