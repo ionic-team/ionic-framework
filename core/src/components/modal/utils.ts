@@ -24,7 +24,7 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
    * This is simplified from:
    * m = (1 - 0) / (maxBreakpoint - backdropBreakpoint)
    */
-  const slope = 1 / (1 - backdropBreakpoint);
+  const slope = Math.min(1 / (1 - backdropBreakpoint), 1);
 
   /**
    * From here, compute b which is
