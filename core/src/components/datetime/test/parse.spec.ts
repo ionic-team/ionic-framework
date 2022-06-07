@@ -1,4 +1,4 @@
-import { getPartsFromCalendarDay, parseAmPm, parseLocalizedAmPm } from '../utils/parse';
+import { getPartsFromCalendarDay, parseAmPm } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {

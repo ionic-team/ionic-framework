@@ -104,7 +104,7 @@ class DatetimeLocaleFixture {
   async expectLocalizedDatePicker() {
     await Promise.all([
       this.page.locator('#am.datetime-ready').waitFor({ state: 'attached' }),
-      this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' })
+      this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' }),
     ]);
     await this.page.setIonViewport();
     // Captures a screenshot of the datepicker with localized am/pm labels
@@ -116,7 +116,7 @@ class DatetimeLocaleFixture {
   async expectLocalizedMonthYearPicker() {
     await Promise.all([
       this.page.locator('#am.datetime-ready').waitFor({ state: 'attached' }),
-      this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' })
+      this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' }),
     ]);
     await this.page.setIonViewport();
     // Opens the month/year picker
@@ -132,7 +132,7 @@ class DatetimeLocaleFixture {
   async expectLocalizedTimePicker() {
     await Promise.all([
       this.page.locator('#am.datetime-ready').waitFor({ state: 'attached' }),
-      this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' })
+      this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' }),
     ]);
     await this.page.setIonViewport();
     // Opens the timepicker
