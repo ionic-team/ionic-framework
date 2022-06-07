@@ -1531,16 +1531,18 @@ export class Datetime implements ComponentInterface {
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
     return (
       <ion-picker-internal>
-        {isDayPeriodRTL && this.renderTimePickerDayPeriodColumn(ampmItems)}
-        {this.renderTimePickerHourColumn(hoursItems)}
-        {this.renderTimePickerMinuteColumn(minutesItems)}
-        {!use24Hour && !isDayPeriodRTL && this.renderTimePickerDayPeriodColumn(ampmItems)}
+        {isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
+        {this.renderHourPickerColumn(hoursItems)}
+        {this.renderMinutePickerColumn(minutesItems)}
+        {!use24Hour && !isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
       </ion-picker-internal>
     );
   }
 
-  private renderTimePickerHourColumn(hoursItems: PickerColumnItem[]) {
+  private renderHourPickerColumn(hoursItems: PickerColumnItem[]) {
     const { color, activePartsClone, workingParts } = this;
+    if (hoursItems.length === 0) return [];
+
     return (
       <ion-picker-column-internal
         color={color}
@@ -1563,8 +1565,10 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderTimePickerMinuteColumn(minutesItems: PickerColumnItem[]) {
+  private renderMinutePickerColumn(minutesItems: PickerColumnItem[]) {
     const { color, activePartsClone, workingParts } = this;
+    if (minutesItems.length === 0) return [];
+
     return (
       <ion-picker-column-internal
         color={color}
@@ -1587,13 +1591,15 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderTimePickerDayPeriodColumn(ampmItems: PickerColumnItem[]) {
+  private renderDayPeriodPickerColumn(dayPeriodItems: PickerColumnItem[]) {
     const { color, activePartsClone, workingParts } = this;
+    if (dayPeriodItems.length === 0) return [];
+
     return (
       <ion-picker-column-internal
         color={color}
         value={activePartsClone.ampm}
-        items={ampmItems}
+        items={dayPeriodItems}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
 
