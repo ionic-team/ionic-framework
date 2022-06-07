@@ -306,6 +306,7 @@ export class PickerColumnInternal implements ComponentInterface {
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>
         {items.map((item, index) => {
+          return (
             <button
               class={{
                 'picker-item': true,
