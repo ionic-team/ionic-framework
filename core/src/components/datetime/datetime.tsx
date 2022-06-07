@@ -1270,16 +1270,42 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDatePickerColumns(forcePresentation: string) {
-    const { workingParts } = this;
+    const { workingParts, isDateEnabled } = this;
     const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
     const months = shouldRenderMonths
       ? getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues)
       : [];
 
     const shouldRenderDays = forcePresentation === 'date';
-    const days = shouldRenderDays
+    let days = shouldRenderDays
       ? getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues)
       : [];
+
+    if (isDateEnabled) {
+      days = days.map(dayObject => {
+        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year };
+
+        let disabled;
+        try {
+          /**
+           * The `isDateEnabled` implementation is try-catch wrapped
+           * to prevent exceptions in the user's function from
+           * interrupting the calendar rendering.
+           */
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+        } catch (e) {
+          printIonError(
+            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            e
+          );
+        }
+
+        return {
+          ...dayObject,
+          disabled
+        }
+      })
+    }
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
