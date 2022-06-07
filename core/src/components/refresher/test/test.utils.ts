@@ -1,4 +1,5 @@
 import type { E2EPage } from '@utils/test/playwright';
+import { dragElementByYAxis } from '@utils/test/playwright';
 
 /**
  * Emulates a pull-to-refresh drag gesture (pulls down and releases).
@@ -16,23 +17,8 @@ const pullToRefresh = async (page: E2EPage, selector = 'body') => {
   await page.waitForSelector('ion-refresher.hydrated', { state: 'attached' });
 
   const ev = await page.spyOnEvent('ionRefreshComplete');
-  const boundingBox = await target.boundingBox();
 
-  if (!boundingBox) {
-    return;
-  }
-
-  const startX = boundingBox.x + boundingBox.width / 2;
-  const startY = boundingBox.y + boundingBox.height / 2;
-
-  await page.mouse.move(startX, startY);
-  await page.mouse.down();
-
-  for (let i = 0; i < 400; i += 20) {
-    await page.mouse.move(startX, startY + i);
-  }
-
-  await page.mouse.up();
+  await dragElementByYAxis(target, page, 400);
   await ev.next();
 };
 
