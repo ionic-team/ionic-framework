@@ -34,7 +34,6 @@ test.describe('datetime: date wheel rendering', () => {
   test('should respect isDateEnabled preference', async ({ page }) => {
     await page.setContent(`
       <ion-datetime presentation="date" prefer-wheel="true" value="2022-01-01"></ion-datetime>
-
       <script>
         const datetime = document.querySelector('ion-datetime');
         datetime.isDateEnabled = (dateIsoString) => {
@@ -89,8 +88,10 @@ test.describe('datetime: date wheel rendering', () => {
         max="2022-03-01"
         day-values="1,2,3"
         value="2022-01-01"
-      </ion-datetime>
+      ></ion-datetime>
     `);
+
+    await page.waitForSelector('.datetime-ready');
 
     const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
     const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
@@ -149,8 +150,7 @@ test.describe('datetime: date-time wheel rendering', () => {
 
     await page.waitForSelector('.datetime-ready');
 
-    // TODO: Change this to [disabled] after sync
-    const disabledDates = page.locator('.date-column .picker-item.picker-item-disabled');
+    const disabledDates = page.locator('.date-column .picker-item[disabled]');
 
     expect(await disabledDates.count()).toBe(44);
   });
