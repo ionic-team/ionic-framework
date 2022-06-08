@@ -61,7 +61,7 @@ test('it should render year and month with a ja-JP locale', async () => {
   await page.waitForChanges();
 
   const yearBody = await page.find('ion-datetime >>> .datetime-year-body');
-  expect(yearBody).toHaveClass('order-year-first');
+  expect(yearBody).toHaveClass('wheel-order-year-first');
 
   screenshotCompares.push(await page.compareScreenshot());
 
