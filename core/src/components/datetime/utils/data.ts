@@ -430,6 +430,7 @@ export const getCombinedDateColumnData = (
 ): PickerColumnItem[] => {
   let columns: PickerColumnItem[] = [];
 
+  // TODO: This does not work when the previous month is in the previous year.
   const months = getMonthColumnData(locale, refParts, minParts, maxParts, monthValues, { month: 'short' });
 
   /**
