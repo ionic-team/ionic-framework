@@ -4,7 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('datetime: prefer wheel', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({
-      width: 350,
+      width: 400,
       height: 200,
     });
   });
