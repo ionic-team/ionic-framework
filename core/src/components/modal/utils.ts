@@ -23,6 +23,9 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
    *
    * This is simplified from:
    * m = (1 - 0) / (maxBreakpoint - backdropBreakpoint)
+   *
+   * We prevent the slope from being greater than 1, since with a backdropBreakpoint
+   * value of 1, the slope would evaluate to Infinity.
    */
   const slope = Math.min(1 / (1 - backdropBreakpoint), 1);
 
