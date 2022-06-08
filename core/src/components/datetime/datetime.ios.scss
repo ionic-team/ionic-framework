@@ -8,9 +8,9 @@
   --title-color: #{$text-color-step-400};
 }
 
-:host(.datetime-presentation-date-time),
-:host(.datetime-presentation-time-date),
-:host(.datetime-presentation-date) {
+:host(.datetime-presentation-date-time:not(.datetime-prefer-wheel)),
+:host(.datetime-presentation-time-date:not(.datetime-prefer-wheel)),
+:host(.datetime-presentation-date:not(.datetime-prefer-wheel)) {
   min-height: 350px;
 }
 

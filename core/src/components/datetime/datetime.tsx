@@ -1968,7 +1968,7 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
+    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, preferWheel, presentation, size } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
@@ -1992,6 +1992,7 @@ export class Datetime implements ComponentInterface {
             'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
+            [`datetime-prefer-wheel`]: preferWheel
           }),
         }}
       >
