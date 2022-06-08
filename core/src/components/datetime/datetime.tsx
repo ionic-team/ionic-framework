@@ -1262,12 +1262,20 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderWheelPicker(forcePresentation: string = this.presentation) {
-    return (
-      <ion-picker-internal>
-        {this.renderDatePickerColumns(forcePresentation)}
-        {this.renderTimePickerColumns(forcePresentation)}
-      </ion-picker-internal>
-    );
+    /**
+     * If presentation="time-date" we switch the
+     * order of the render array here instead of
+     * manually reordering each date/time picker
+     * column with CSS. This allows for additional
+     * flexibility if we need to render subsets
+     * of the date/time data or do additional ordering
+     * within the child render functions.
+     */
+    const renderArray =
+      forcePresentation === 'time-date'
+        ? [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)]
+        : [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)];
+    return <ion-picker-internal>{renderArray}</ion-picker-internal>;
   }
 
   private renderDatePickerColumns(forcePresentation: string) {
