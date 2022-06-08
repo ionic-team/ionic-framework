@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.9](https://github.com/ionic-team/ionic-framework/compare/v6.1.8...v6.1.9) (2022-06-08)
+
+
+### Bug Fixes
+
+* **all:** ripple effect is no longer added when scrolling ([#25352](https://github.com/ionic-team/ionic-framework/issues/25352)) ([0b275af](https://github.com/ionic-team/ionic-framework/commit/0b275af5ac06f470b4d908b889f513956bf5d868)), closes [#22030](https://github.com/ionic-team/ionic-framework/issues/22030)
+* **angular:** add support for Angular 14 ([#25403](https://github.com/ionic-team/ionic-framework/issues/25403)) ([122cdcc](https://github.com/ionic-team/ionic-framework/commit/122cdcc8253e46d9537105b11045fd7d9ccd8917)), closes [#25353](https://github.com/ionic-team/ionic-framework/issues/25353)
+* **datetime:** emit ionChange for non-calendar picker presentation ([#25380](https://github.com/ionic-team/ionic-framework/issues/25380)) ([4e6a60b](https://github.com/ionic-team/ionic-framework/commit/4e6a60b6a42287e5091728aecb61f6097e131b83)), closes [#25375](https://github.com/ionic-team/ionic-framework/issues/25375)
+* **datetime:** ensure that default month shown is always in bounds ([#25351](https://github.com/ionic-team/ionic-framework/issues/25351)) ([866d452](https://github.com/ionic-team/ionic-framework/commit/866d4528ad1b8ffa65258595d553ea934daa4add)), closes [#25320](https://github.com/ionic-team/ionic-framework/issues/25320)
+* **label:** text contents will repaint on change ([#25395](https://github.com/ionic-team/ionic-framework/issues/25395)) ([52ec741](https://github.com/ionic-team/ionic-framework/commit/52ec74193b4e2478cb84a6dfea261cb2113dcbff))
+
+
+
+
+
 ## [6.1.8](https://github.com/ionic-team/ionic-framework/compare/v6.1.7...v6.1.8) (2022-06-01)
 
 
