@@ -8,10 +8,16 @@ test.describe('datetime: prefer wheel', () => {
       height: 200,
     });
   });
+  /**
+   * When taking screenshots, be sure to
+   * set the datetime to size="cover". There
+   * are rendering quirks on Linux
+   * if the datetime is too small.
+   */
   test.describe('datetime: date wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
+        <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
@@ -108,7 +114,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date-time wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+        <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(
@@ -196,7 +202,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: time-date wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(
