@@ -1273,8 +1273,8 @@ export class Datetime implements ComponentInterface {
      */
     const renderArray =
       forcePresentation === 'time-date'
-        ? [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)]
-        : [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)];
+        ? [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)]
+        : [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)];
     return <ion-picker-internal>{renderArray}</ion-picker-internal>;
   }
 
