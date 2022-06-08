@@ -1295,7 +1295,6 @@ export class Datetime implements ComponentInterface {
     const min = minParts || monthsToRender[0];
     const max = maxParts || monthsToRender[monthsToRender.length - 1];
 
-console.log(min,max)
     const pickerItems = getCombinedDateColumnData(
       locale,
       workingParts,
