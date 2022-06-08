@@ -37,7 +37,6 @@ test.describe('datetime: date wheel rendering', () => {
 
       <script>
         const datetime = document.querySelector('ion-datetime');
-
         datetime.isDateEnabled = (dateIsoString) => {
           const date = new Date(dateIsoString);
           if (date.getUTCDate() % 2 === 0) {
@@ -80,9 +79,28 @@ test.describe('datetime: date wheel rendering', () => {
     expect(await yearValues.count()).toBe(3);
     expect(await dayValues.count()).toBe(5);
   });
+  test('should correctly localize the date data', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime
+        presentation="date"
+        prefer-wheel="true"
+        locale="ja-JP"
+        min="2022-01-01"
+        max="2022-03-01"
+        day-values="1,2,3"
+        value="2022-01-01"
+      </ion-datetime>
+    `);
+
+    const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+    const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+
+    expect(monthValues).toHaveText(['1月', '2月', '3月']);
+    expect(dayValues).toHaveText(['1日', '2日', '3日']);
+  });
 });
 
-test.describe.only('datetime: date-time wheel rendering', () => {
+test.describe('datetime: date-time wheel rendering', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setContent(`
       <ion-datetime presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>

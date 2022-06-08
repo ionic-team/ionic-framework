@@ -35,8 +35,8 @@ test('it should render month and year with an en-US locale', async () => {
   await button.click();
   await page.waitForChanges();
 
-  const yearBody = await page.find('ion-datetime >>> .datetime-year-body');
-  expect(yearBody).toHaveClass('order-month-first');
+  const yearBody = await page.find('ion-datetime >>> .wheel-order-month-first');
+  expect(yearBody).not.toBeNull();
 
   screenshotCompares.push(await page.compareScreenshot());
 
@@ -60,8 +60,8 @@ test('it should render year and month with a ja-JP locale', async () => {
   await button.click();
   await page.waitForChanges();
 
-  const yearBody = await page.find('ion-datetime >>> .datetime-year-body');
-  expect(yearBody).toHaveClass('order-year-first');
+  const yearBody = await page.find('ion-datetime >>> .wheel-order-year-first');
+  expect(yearBody).not.toBeNull();
 
   screenshotCompares.push(await page.compareScreenshot());
 

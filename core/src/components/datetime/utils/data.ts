@@ -345,6 +345,17 @@ export const getMonthColumnData = (
   return months;
 };
 
+/**
+ * Returns information regarding
+ * selectable dates (i.e 1st, 2nd, 3rd, etc)
+ * within a reference month.
+ * @param locale The locale to format the date with
+ * @param refParts The reference month/year to generate dates for
+ * @param minParts The minimum bound on the date that can be returned
+ * @param maxParts The maximum bound on the date that can be returned
+ * @param dayValues The allowed date values
+ * @returns Date data to be used in ion-picker-column-internal
+ */
 export const getDayColumnData = (
   locale: string,
   refParts: DatetimeParts,
@@ -357,6 +368,13 @@ export const getDayColumnData = (
 ): PickerColumnItem[] => {
   const { month, year } = refParts;
   const days = [];
+
+  /**
+   * If we have max/min bounds that in the same
+   * month/year as the refParts, we should
+   * use the define day as the max/min day.
+   * Otherwise, fallback to the max/min days in a month.
+   */
 
   const numDaysInMonth = getNumDaysInMonth(month, year);
   const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
