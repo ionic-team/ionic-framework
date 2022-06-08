@@ -414,6 +414,11 @@ export const getYearColumnData = (
   }));
 };
 
+interface CombinedDateColumnData {
+  parts: DatetimeParts[];
+  items: PickerColumnItem[];
+}
+
 /**
  * Creates and returns picker items
  * that represent the days in a month.
@@ -427,8 +432,9 @@ export const getCombinedDateColumnData = (
   maxParts?: DatetimeParts,
   dayValues?: number[],
   monthValues?: number[]
-): PickerColumnItem[] => {
-  let columns: PickerColumnItem[] = [];
+): CombinedDateColumnData => {
+  let items: PickerColumnItem[] = [];
+  let parts: DatetimeParts[] = [];
 
   // TODO: This does not work when the previous month is in the previous year.
   const months = getMonthColumnData(locale, refParts, minParts, maxParts, monthValues, { month: 'short' });
@@ -447,22 +453,45 @@ export const getCombinedDateColumnData = (
       weekday: 'short',
     });
 
-    const days = monthDays.map((dayObject) => {
+    const dateParts: DatetimeParts[] = [];
+    const dateColumnItems: PickerColumnItem[] = [];
+
+    monthDays.forEach((dayObject) => {
       const isToday = isSameDay({ ...referenceMonth, day: dayObject.value as number }, todayParts);
 
       /**
        * Today's date should read as "Today" (localized)
        * not the actual date string
        */
-      return {
+      dateColumnItems.push({
         text: isToday ? getTodayLabel(locale) : dayObject.text,
         value: `${refParts.year}-${monthObject.value}-${dayObject.value}`,
-      };
-    });
-    columns = [...columns, ...days];
+      });
+
+      /**
+       * When selecting a date in the wheel picker
+       * we need access to the raw datetime parts data.
+       * The picker column only accepts values of
+       * type string or number, so we need to return
+       * two sets of data: A data set to be passed
+       * to the picker column, and a data set to
+       * be used to reference the raw data when
+       * updating the picker column value.
+       */
+      dateParts.push({
+        month: monthObject.value as number,
+        year: refParts.year,
+        day: dayObject.value as number
+      });
+    })
+    parts = [...parts, ...dateParts];
+    items = [...items, ...dateColumnItems];
   });
 
-  return columns;
+  return {
+    parts,
+    items
+  };
 };
 
 export const getTimeColumnsData = (

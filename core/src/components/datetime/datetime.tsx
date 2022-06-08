@@ -1278,6 +1278,7 @@ export class Datetime implements ComponentInterface {
      * Previous month, current month, and next month
      */
     const monthsToRender = generateMonths(workingParts);
+
     /**
      * generateMonths returns the day data as well,
      * but we do not want the day value to act as a max/min
@@ -1295,7 +1296,7 @@ export class Datetime implements ComponentInterface {
     const min = minParts || monthsToRender[0];
     const max = maxParts || monthsToRender[monthsToRender.length - 1];
 
-    const pickerItems = getCombinedDateColumnData(
+    const { items, parts } = getCombinedDateColumnData(
       locale,
       workingParts,
       todayParts,
@@ -1317,7 +1318,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="date-column"
         color={this.color}
-        items={pickerItems}
+        items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
           // Due to a Safari 14 issue we need to destroy
@@ -1327,17 +1328,18 @@ export class Datetime implements ComponentInterface {
             this.destroyCalendarIO();
           }
 
-          // TODO Fixme
-          /*console.log('got',ev.detail.value)
+          const { value } = ev.detail;
+          const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
 
           this.setWorkingParts({
-            ...this.workingParts
+            ...this.workingParts,
+            ...findPart
           });
 
           this.setActiveParts({
-            ...this.activeParts
-          });*/
-          console.log('STUB');
+            ...this.activeParts,
+            ...findPart
+          });
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1973,6 +1975,7 @@ export class Datetime implements ComponentInterface {
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
+    const hasWheelVariant = (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1991,7 +1994,7 @@ export class Datetime implements ComponentInterface {
             'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
-            [`datetime-prefer-wheel`]: preferWheel
+            [`datetime-prefer-wheel`]: hasWheelVariant
           }),
         }}
       >
