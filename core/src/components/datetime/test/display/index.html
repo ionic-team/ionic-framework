@@ -36,13 +36,13 @@
 
     <br /><br />
 
-    <ion-datetime value="2022-02-22"></ion-datetime>
+    <ion-datetime value="2022-02-22T16:30:00"></ion-datetime>
 
     <script>
       const datetime = document.querySelector('ion-datetime');
 
       const mutationObserver = new MutationObserver(() => {
-        document.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
+        window.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
       });
 
       const initCalendarMonthChangeObserver = async () => {

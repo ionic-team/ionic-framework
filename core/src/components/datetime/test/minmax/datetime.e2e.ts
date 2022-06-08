@@ -47,7 +47,36 @@ test.describe('datetime: minmax', () => {
     expect(nextButton).toBeDisabled();
     expect(prevButton).toBeEnabled();
   });
+  test('datetime: minmax months disabled', async ({ page }) => {
+    await page.goto('/src/components/datetime/test/minmax');
+    const calendarMonths = page.locator('ion-datetime#inside .calendar-month');
 
+    await page.waitForSelector('.datetime-ready');
+
+    expect(calendarMonths.nth(0)).not.toHaveClass(/calendar-month-disabled/);
+    expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
+    expect(calendarMonths.nth(2)).toHaveClass(/calendar-month-disabled/);
+  });
+
+  test('datetime: minmax navigation disabled', async ({ page }) => {
+    await page.goto('/src/components/datetime/test/minmax');
+    await page.waitForSelector('.datetime-ready');
+
+    const navButtons = page.locator('ion-datetime#outside .calendar-next-prev ion-button');
+
+    expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
+    expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
+  });
+  test('datetime: min including day should not disable month', async ({ page }) => {
+    await page.goto('/src/components/datetime/test/minmax');
+    await page.waitForSelector('.datetime-ready');
+
+    const calendarMonths = page.locator('ion-datetime#min-with-day .calendar-month');
+
+    expect(calendarMonths.nth(0)).toHaveClass(/calendar-month-disabled/);
+    expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
+    expect(calendarMonths.nth(2)).not.toHaveClass(/calendar-month-disabled/);
+  });
   test.describe('when the datetime does not have a value', () => {
     test('all time values should be available for selection', async ({ page }) => {
       /**
