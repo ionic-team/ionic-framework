@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.9-nightly.20220608](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9-nightly.20220608) (2022-06-08)
+
+
+### Bug Fixes
+
+* **angular:** add support for Angular 14 ([#25403](https://github.com/ionic-team/ionic/issues/25403)) ([122cdcc](https://github.com/ionic-team/ionic/commit/122cdcc8253e46d9537105b11045fd7d9ccd8917)), closes [#25353](https://github.com/ionic-team/ionic/issues/25353)
+
+
+
+
+
 ## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
 
 **Note:** Version bump only for package @ionic/angular
