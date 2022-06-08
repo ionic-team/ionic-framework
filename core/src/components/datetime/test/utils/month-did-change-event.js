@@ -7,7 +7,7 @@
 export function InitMonthDidChangeEvent(datetimeSelector = 'ion-datetime') {
   const observer = new MutationObserver((mutationRecords) => {
     if (mutationRecords[0].type === 'characterData') {
-      document.dispatchEvent(new CustomEvent('datetimeMonthDidChange'));
+      window.dispatchEvent(new CustomEvent('datetimeMonthDidChange'));
     }
   });
 

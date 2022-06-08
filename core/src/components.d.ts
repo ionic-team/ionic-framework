@@ -338,11 +338,11 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show after the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsAfterCollapse": number;
         /**
-          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show before the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsBeforeCollapse": number;
         /**
@@ -798,7 +798,7 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no value is provided, the internal state will be reset to today.
+          * Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no value is provided, the internal state will be reset to the clamped value of the min, max and today.
          */
         "reset": (startDate?: string | undefined) => Promise<void>;
         /**
@@ -4228,11 +4228,11 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The number of breadcrumbs to show after the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show after the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsAfterCollapse"?: number;
         /**
-          * The number of breadcrumbs to show before the collapsed indicator. If this property exists `maxItems` will be ignored.
+          * The number of breadcrumbs to show before the collapsed indicator. If `itemsBeforeCollapse` + `itemsAfterCollapse` is greater than `maxItems`, the breadcrumbs will not be collapsed.
          */
         "itemsBeforeCollapse"?: number;
         /**
