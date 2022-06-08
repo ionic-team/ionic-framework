@@ -5,18 +5,16 @@ test.describe('datetime: prefer wheel', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({
       width: 350,
-      height: 300
+      height: 200,
     });
-  })
+  });
   test.describe('datetime: date wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
       `);
 
-      const datetime = page.locator('ion-datetime');
-
-      expect(await datetime.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
@@ -113,9 +111,7 @@ test.describe('datetime: prefer wheel', () => {
         <ion-datetime presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
       `);
 
-      const datetime = page.locator('ion-datetime');
-
-      expect(await datetime.screenshot()).toMatchSnapshot(
+      expect(await page.screenshot()).toMatchSnapshot(
         `datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`
       );
     });
@@ -203,9 +199,7 @@ test.describe('datetime: prefer wheel', () => {
         <ion-datetime presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
       `);
 
-      const datetime = page.locator('ion-datetime');
-
-      expect(await datetime.screenshot()).toMatchSnapshot(
+      expect(await page.screenshot()).toMatchSnapshot(
         `datetime-wheel-time-date-diff-${page.getSnapshotSettings()}.png`
       );
     });
@@ -287,4 +281,4 @@ test.describe('datetime: prefer wheel', () => {
       expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
     });
   });
-})
+});
