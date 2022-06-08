@@ -1278,7 +1278,6 @@ export class Datetime implements ComponentInterface {
      * Previous month, current month, and next month
      */
     const monthsToRender = generateMonths(workingParts);
-
     /**
      * generateMonths returns the day data as well,
      * but we do not want the day value to act as a max/min
@@ -1296,6 +1295,7 @@ export class Datetime implements ComponentInterface {
     const min = minParts || monthsToRender[0];
     const max = maxParts || monthsToRender[monthsToRender.length - 1];
 
+console.log(min,max)
     const pickerItems = getCombinedDateColumnData(
       locale,
       workingParts,
