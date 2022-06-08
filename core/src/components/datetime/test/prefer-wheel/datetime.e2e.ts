@@ -82,7 +82,7 @@ test.describe('datetime: date wheel rendering', () => {
   });
 });
 
-test.describe('datetime: date-time wheel rendering', () => {
+test.describe.only('datetime: date-time wheel rendering', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setContent(`
       <ion-datetime presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
@@ -90,7 +90,9 @@ test.describe('datetime: date-time wheel rendering', () => {
 
     const datetime = page.locator('ion-datetime');
 
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`);
+    expect(await datetime.screenshot()).toMatchSnapshot(
+      `datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`
+    );
   });
   test('should respect the min bounds', async ({ page }) => {
     await page.setContent(`
@@ -112,9 +114,9 @@ test.describe('datetime: date-time wheel rendering', () => {
     const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
     expect(await dayValues.count()).toEqual(41);
   });
-  test.skip('should respect isDateEnabled preference', async ({ page }) => {
+  test('should respect isDateEnabled preference', async ({ page }) => {
     await page.setContent(`
-      <ion-datetime presentation="date-time" prefer-wheel="true" value="2022-02-01"></ion-datetime>
+      <ion-datetime presentation="date-time" prefer-wheel="true" value="2022-02-01T16:30:00"></ion-datetime>
       <script>
         const datetime = document.querySelector('ion-datetime');
         datetime.isDateEnabled = (dateIsoString) => {
@@ -129,9 +131,10 @@ test.describe('datetime: date-time wheel rendering', () => {
 
     await page.waitForSelector('.datetime-ready');
 
-    const disabledDates = page.locator('.day-column .picker-item[disabled]');
+    // TODO: Change this to [disabled] after sync
+    const disabledDates = page.locator('.date-column .picker-item.picker-item-disabled');
 
-    expect(await disabledDates.count()).toBe(46);
+    expect(await disabledDates.count()).toBe(44);
   });
   test('should respect month, day, and year preferences', async ({ page }) => {
     await page.setContent(`
@@ -169,5 +172,4 @@ test.describe('datetime: date-time wheel rendering', () => {
 
     expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
   });
-
 });

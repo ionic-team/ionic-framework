@@ -1271,7 +1271,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { workingParts, locale, minParts, maxParts, todayParts } = this;
+    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
     /**
      * By default, generate a range of 3 months:
@@ -1296,7 +1296,7 @@ export class Datetime implements ComponentInterface {
     const min = minParts || monthsToRender[0];
     const max = maxParts || monthsToRender[monthsToRender.length - 1];
 
-    const { items, parts } = getCombinedDateColumnData(
+    const result = getCombinedDateColumnData(
       locale,
       workingParts,
       todayParts,
@@ -1305,6 +1305,34 @@ export class Datetime implements ComponentInterface {
       this.parsedDayValues,
       this.parsedMonthValues
     );
+    let items = result.items;
+    const parts = result.parts;
+
+    if (isDateEnabled) {
+      items = items.map((itemObject, index) => {
+        const referenceParts = parts[index];
+
+        let disabled;
+        try {
+          /**
+           * The `isDateEnabled` implementation is try-catch wrapped
+           * to prevent exceptions in the user's function from
+           * interrupting the calendar rendering.
+           */
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+        } catch (e) {
+          printIonError(
+            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            e
+          );
+        }
+
+        return {
+          ...itemObject,
+          disabled,
+        };
+      });
+    }
 
     /**
      * If we have selected a day already, then default the column
@@ -1333,12 +1361,12 @@ export class Datetime implements ComponentInterface {
 
           this.setWorkingParts({
             ...this.workingParts,
-            ...findPart
+            ...findPart,
           });
 
           this.setActiveParts({
             ...this.activeParts,
-            ...findPart
+            ...findPart,
           });
 
           // We can re-attach the intersection observer after
@@ -1969,13 +1997,26 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, preferWheel, presentation, size } = this;
+    const {
+      name,
+      value,
+      disabled,
+      el,
+      color,
+      isPresented,
+      readonly,
+      showMonthAndYear,
+      preferWheel,
+      presentation,
+      size,
+    } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
-    const hasWheelVariant = (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
+    const hasWheelVariant =
+      (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1994,7 +2035,7 @@ export class Datetime implements ComponentInterface {
             'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
-            [`datetime-prefer-wheel`]: hasWheelVariant
+            [`datetime-prefer-wheel`]: hasWheelVariant,
           }),
         }}
       >

@@ -481,16 +481,16 @@ export const getCombinedDateColumnData = (
       dateParts.push({
         month: monthObject.value as number,
         year: refParts.year,
-        day: dayObject.value as number
+        day: dayObject.value as number,
       });
-    })
+    });
     parts = [...parts, ...dateParts];
     items = [...items, ...dateColumnItems];
   });
 
   return {
     parts,
-    items
+    items,
   };
 };
 
