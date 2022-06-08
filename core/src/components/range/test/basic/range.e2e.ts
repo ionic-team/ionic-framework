@@ -10,7 +10,7 @@ test.describe('range: basic', () => {
     expect(await page.screenshot()).toMatchSnapshot(`range-diff-${page.getSnapshotSettings()}.png`);
   });
 
-  test('should emit start/end events', async ({ page }) => {
+  test('should emit start/end events', async ({ page }, testInfo) => {
     await page.setContent(`<ion-range value="20"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -18,7 +18,7 @@ test.describe('range: basic', () => {
 
     const rangeEl = page.locator('ion-range');
 
-    await dragElementBy(rangeEl, page, 300, 0);
+    await dragElementBy(rangeEl, page, testInfo.project.metadata.rtl ? -300 : 300, 0);
     await page.waitForChanges();
 
     /**
