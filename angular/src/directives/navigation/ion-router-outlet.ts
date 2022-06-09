@@ -243,7 +243,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const component = snapshot.routeConfig!.component as any;
+      const component = snapshot.routeConfig!.component ?? snapshot.component;
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       // We create an activated route proxy object that will maintain future updates for this component
