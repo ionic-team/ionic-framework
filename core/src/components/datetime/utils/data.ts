@@ -375,7 +375,6 @@ export const getDayColumnData = (
    * use the define day as the max/min day.
    * Otherwise, fallback to the max/min days in a month.
    */
-
   const numDaysInMonth = getNumDaysInMonth(month, year);
   const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
   const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
