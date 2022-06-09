@@ -19,7 +19,7 @@
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
+    "@types/jest": "^27.5.2",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.3",
