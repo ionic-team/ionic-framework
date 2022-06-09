@@ -37,7 +37,7 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -472,7 +472,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Resets the internal state of the datetime but does not update the value.
    * Passing a valid ISO-8601 string will reset the state of the component to the provided date.
-   * If no value is provided, the internal state will be reset to today.
+   * If no value is provided, the internal state will be reset to the clamped value of the min, max and today.
    */
   @Method()
   async reset(startDate?: string) {
@@ -1083,8 +1083,8 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
-    const valueToProcess = value || getToday();
-    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+    const valueToProcess = parseDate(value || getToday());
+    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
 
     this.setWorkingParts({
       month,
@@ -1093,7 +1093,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm: hour! >= 12 ? 'pm' : 'am',
     });
 
     this.activeParts = {
@@ -1103,7 +1103,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm: hour! >= 12 ? 'pm' : 'am',
     };
   };
 
@@ -1676,8 +1676,8 @@ export class Datetime implements ComponentInterface {
     const { hours, minutes, am, pm } = generateTime(
       workingParts,
       use24Hour ? 'h23' : 'h12',
-      this.minParts,
-      this.maxParts,
+      this.value ? this.minParts : undefined,
+      this.value ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );

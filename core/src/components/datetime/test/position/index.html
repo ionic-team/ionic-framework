@@ -8,6 +8,11 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-popover.datetime-popover {
+        --min-width: 300px;
+      }
+    </style>
   </head>
 
   <body>
@@ -18,9 +23,9 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-button onclick="presentPopover(defaultPopover, event)">Present Popover</ion-button>
+        <ion-button id="open-datetime" onclick="presentPopover(defaultPopover, event)">Present Popover</ion-button>
         <ion-popover class="datetime-popover" id="default-popover">
-          <ion-datetime></ion-datetime>
+          <ion-datetime value="2022-05-03"></ion-datetime>
         </ion-popover>
       </ion-content>
 

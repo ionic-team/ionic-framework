@@ -73,7 +73,7 @@ $picker-md-option-font-size:                        22px !default;
 $picker-md-option-height:                           42px !default;
 
 /// @prop - Offset y of the picker option
-$picker-md-option-offset-y:                         (($picker-md-height - $picker-md-toolbar-height) / 2) - ($picker-md-option-height / 2) - 10 !default;
+$picker-md-option-offset-y:                         (($picker-md-height - $picker-md-toolbar-height) * 0.5) - ($picker-md-option-height * 0.5) - 10 !default;
 
 /// @prop - Text color of the selected picker option
 $picker-md-option-selected-color:                   ion-color(primary, base) !default;

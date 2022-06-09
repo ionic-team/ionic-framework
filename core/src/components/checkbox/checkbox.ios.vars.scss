@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../themes/ionic.globals.ios";
 @import "../item/item.ios.vars";
 
@@ -41,16 +42,16 @@ $checkbox-ios-checkmark-border-style:     solid !default;
 $checkbox-ios-checkmark-border-color:     ion-color(primary, contrast) !default;
 
 /// @prop - Top of the checkmark in the checkbox
-$checkbox-ios-checkmark-top:              $checkbox-ios-icon-size / 6 !default;
+$checkbox-ios-checkmark-top:              math.div($checkbox-ios-icon-size, 6) !default;
 
 /// @prop - Start of the checkmark in the checkbox
-$checkbox-ios-checkmark-start:            ($checkbox-ios-icon-size / 3) + 1px !default;
+$checkbox-ios-checkmark-start:            math.div($checkbox-ios-icon-size, 3) + 1px !default;
 
 /// @prop - Width of the checkmark in the checkbox
-$checkbox-ios-checkmark-width:            ($checkbox-ios-icon-size / 6) + 1px !default;
+$checkbox-ios-checkmark-width:            math.div($checkbox-ios-icon-size, 6) + 1px !default;
 
 /// @prop - Height of the checkmark in the checkbox
-$checkbox-ios-checkmark-height:           $checkbox-ios-icon-size / 2 !default;
+$checkbox-ios-checkmark-height:           $checkbox-ios-icon-size * 0.5 !default;
 
 /// @prop - Opacity of the disabled checkbox
 $checkbox-ios-disabled-opacity:           .3 !default;
