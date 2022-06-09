@@ -13,7 +13,7 @@ runs:
         cache-name: core-node-modules
       with:
         path: ./core/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v4
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
     - name: Install Dependencies
       run: npm install --legacy-peer-deps
       shell: bash
