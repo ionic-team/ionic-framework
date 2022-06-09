@@ -45,7 +45,7 @@
 }
 
 :host .calendar-action-buttons ion-buttons {
-  @include padding($datetime-ios-padding / 2, 0, 0, 0);
+  @include padding($datetime-ios-padding * 0.5, 0, 0, 0);
 }
 
 :host .calendar-action-buttons ion-buttons ion-button {
@@ -55,7 +55,7 @@
 // Calendar / Header / Days of Week
 // -----------------------------------
 :host .calendar-days-of-week {
-  @include padding(0, $datetime-ios-padding / 2, 0, $datetime-ios-padding / 2);
+  @include padding(0, $datetime-ios-padding * 0.5, 0, $datetime-ios-padding * 0.5);
 
   color: $text-color-step-700;
 
@@ -79,7 +79,7 @@
    * this padding a snapping point if applied
    * on .calendar-month
    */
-  @include padding($datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
+  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
 
   height: calc(100% - #{$datetime-ios-padding});
 }
@@ -136,7 +136,7 @@
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
-  @include padding($datetime-ios-padding / 2, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
+  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   font-size: 16px;
 }
@@ -148,7 +148,7 @@
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
-  @include padding($datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
+  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
 
   border-top: $datetime-ios-border-color;
 }
