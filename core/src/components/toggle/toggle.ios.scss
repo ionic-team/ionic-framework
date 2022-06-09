@@ -30,6 +30,9 @@
   background: current-color(base);
 }
 
+:host(.ion-color-light.toggle-checked) .toggle-switch-icon.checked {
+  color: #{ion-color(dark, base)};
+}
 
 // iOS Toggle Background Track: Unchecked
 // ----------------------------------------------------------
@@ -40,8 +43,9 @@
   transform: translate3d(0, 0, 0);
 
   transition: background-color $toggle-ios-transition-duration;
-}
 
+  color: #{ion-color(medium, base)};
+}
 
 // iOS Toggle Inner Knob: Unchecked
 // ----------------------------------------------------------
@@ -50,6 +54,27 @@
   will-change: transform;
 }
 
+.toggle-switch-icon {
+  position: absolute;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+}
+
+.toggle-switch-icon.checked {
+  color: #{ion-color(light, base)};
+
+  left: -4px;
+  transform: translateX(-100%) rotate(90deg);
+}
+
+.toggle-switch-icon.unchecked {
+  right: 6px;
+}
+
+.toggle-icon-wrapper {
+  position: initial;
+}
 
 // iOS Toggle Background Oval: Activated or Checked
 // ----------------------------------------------------------
@@ -59,7 +84,6 @@
   transform: scale3d(0, 0, 0);
 }
 
-
 // iOS Toggle Background Oval: Activated and Checked
 // ----------------------------------------------------------
 
@@ -67,14 +91,12 @@
   transform: scale3d(0, 0, 0);
 }
 
-
 // iOS Toggle Inner Knob: Activated and Unchecked
 // ----------------------------------------------------------
 
 :host(.toggle-activated) .toggle-inner {
   width: calc(var(--handle-width) + 6px);
 }
-
 
 // iOS Toggle Inner Knob: Activated and Checked
 // ----------------------------------------------------------
@@ -93,7 +115,6 @@
   }
 }
 
-
 // iOS Toggle: Disabled
 // ----------------------------------------------------------
 
@@ -103,15 +124,24 @@
   opacity: $toggle-ios-disabled-opacity;
 }
 
-
 // iOS Toggle Within An Item
 // ----------------------------------------------------------
 
 :host(.in-item[slot]) {
   @include margin($toggle-ios-media-margin);
-  @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
+  @include padding(
+    $toggle-ios-item-end-padding-top,
+    $toggle-ios-item-end-padding-end,
+    $toggle-ios-item-end-padding-bottom,
+    $toggle-ios-item-end-padding-start
+  );
 }
 
-:host(.in-item[slot="start"]) {
-  @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
+:host(.in-item[slot='start']) {
+  @include padding(
+    $toggle-ios-item-start-padding-top,
+    $toggle-ios-item-start-padding-end,
+    $toggle-ios-item-start-padding-bottom,
+    $toggle-ios-item-start-padding-start
+  );
 }
