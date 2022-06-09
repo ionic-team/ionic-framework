@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.10-nightly.20220609](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10-nightly.20220609) (2022-06-09)
+
+
+### Bug Fixes
+
+* **fab-button:** improve ripple effect behavior on click ([#25413](https://github.com/ionic-team/ionic/issues/25413)) ([efdaf90](https://github.com/ionic-team/ionic/commit/efdaf90c5a767211e0034bab7cce5bd463ff5aa0)), closes [#21772](https://github.com/ionic-team/ionic/issues/21772)
+
+
+
+
+
 ## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
 
 
