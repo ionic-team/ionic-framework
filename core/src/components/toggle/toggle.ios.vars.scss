@@ -14,7 +14,7 @@ $toggle-ios-height:                    32px !default;
 $toggle-ios-border-width:              2px !default;
 
 /// @prop - Border radius of the toggle
-$toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
+$toggle-ios-border-radius:             $toggle-ios-height * 0.5 !default;
 
 /// @prop - Background color of the unchecked toggle
 $toggle-ios-background-color-off:      rgba($text-color-rgb, .088) !default;
@@ -32,7 +32,7 @@ $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
 $toggle-ios-handle-max-height:         calc(100% - (var(--handle-spacing) * 2)) !default;
 
 /// @prop - Border radius of the toggle handle
-$toggle-ios-handle-border-radius:      $toggle-ios-width / 2 !default;
+$toggle-ios-handle-border-radius:      $toggle-ios-width * 0.5 !default;
 
 /// @prop - Box shadow of the toggle handle
 $toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
@@ -68,7 +68,7 @@ $toggle-ios-item-start-padding-start:  0 !default;
 $toggle-ios-item-end-padding-top:      6px !default;
 
 /// @prop - Padding end of the toggle positioned on the end in an item
-$toggle-ios-item-end-padding-end:      ($item-ios-padding-end / 2) !default;
+$toggle-ios-item-end-padding-end:      ($item-ios-padding-end * 0.5) !default;
 
 /// @prop - Padding bottom of the toggle positioned on the end in an item
 $toggle-ios-item-end-padding-bottom:   5px !default;
