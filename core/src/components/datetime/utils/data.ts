@@ -342,6 +342,58 @@ export const getMonthColumnData = (
   return months;
 };
 
+/**
+ * Returns information regarding
+ * selectable dates (i.e 1st, 2nd, 3rd, etc)
+ * within a reference month.
+ * @param locale The locale to format the date with
+ * @param refParts The reference month/year to generate dates for
+ * @param minParts The minimum bound on the date that can be returned
+ * @param maxParts The maximum bound on the date that can be returned
+ * @param dayValues The allowed date values
+ * @returns Date data to be used in ion-picker-column-internal
+ */
+export const getDayColumnData = (
+  locale: string,
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[]
+): PickerColumnItem[] => {
+  const { month, year } = refParts;
+  const days = [];
+
+  /**
+   * If we have max/min bounds that in the same
+   * month/year as the refParts, we should
+   * use the define day as the max/min day.
+   * Otherwise, fallback to the max/min days in a month.
+   */
+  const numDaysInMonth = getNumDaysInMonth(month, year);
+  const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
+  const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
+
+  if (dayValues !== undefined) {
+    let processedDays = dayValues;
+    processedDays = processedDays.filter((day) => day >= minDay && day <= maxDay);
+    processedDays.forEach((processedDay) => {
+      const date = new Date(`${month}/${processedDay}/${year} GMT+0000`);
+
+      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      days.push({ text: dayString, value: processedDay });
+    });
+  } else {
+    for (let i = minDay; i <= maxDay; i++) {
+      const date = new Date(`${month}/${i}/${year} GMT+0000`);
+
+      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      days.push({ text: dayString, value: i });
+    }
+  }
+
+  return days;
+};
+
 export const getYearColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,

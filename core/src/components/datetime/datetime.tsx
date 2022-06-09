@@ -17,6 +17,7 @@ import {
   getDaysOfWeek,
   getToday,
   getMonthColumnData,
+  getDayColumnData,
   getYearColumnData,
   getTimeColumnsData,
 } from './utils/data';
@@ -1262,23 +1263,105 @@ export class Datetime implements ComponentInterface {
   private renderWheelPicker(forcePresentation: string = this.presentation) {
     return (
       <ion-picker-internal>
-        {this.renderDatePickerColunns(forcePresentation)}
+        {this.renderDatePickerColumns(forcePresentation)}
         {this.renderTimePickerColumns(forcePresentation)}
       </ion-picker-internal>
     );
   }
 
-  private renderDatePickerColunns(forcePresentation: string) {
-    return [this.renderMonthPickerColumn(forcePresentation), this.renderYearPickerColumn(forcePresentation)];
+  private renderDatePickerColumns(forcePresentation: string) {
+    const { workingParts, isDateEnabled } = this;
+    const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
+    const months = shouldRenderMonths
+      ? getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues)
+      : [];
+
+    const shouldRenderDays = forcePresentation === 'date';
+    let days = shouldRenderDays
+      ? getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues)
+      : [];
+
+    if (isDateEnabled) {
+      days = days.map((dayObject) => {
+        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year };
+
+        let disabled;
+        try {
+          /**
+           * The `isDateEnabled` implementation is try-catch wrapped
+           * to prevent exceptions in the user's function from
+           * interrupting the calendar rendering.
+           */
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+        } catch (e) {
+          printIonError(
+            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            e
+          );
+        }
+
+        return {
+          ...dayObject,
+          disabled,
+        };
+      });
+    }
+
+    const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
+    const years = shouldRenderYears
+      ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      : [];
+
+    return [this.renderMonthPickerColumn(months), this.renderDayPickerColumn(days), this.renderYearPickerColumn(years)];
   }
 
-  private renderMonthPickerColumn(forcePresentation: string) {
-    const { workingParts } = this;
-    if (forcePresentation === 'year' || forcePresentation === 'time') {
+  private renderDayPickerColumn(days: PickerColumnItem[]) {
+    if (days.length === 0) {
       return [];
     }
 
-    const months = getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
+    const { workingParts } = this;
+
+    return (
+      <ion-picker-column-internal
+        class="day-column"
+        color={this.color}
+        items={days}
+        value={workingParts.day || this.todayParts.day}
+        onIonChange={(ev: CustomEvent) => {
+          // Due to a Safari 14 issue we need to destroy
+          // the intersection observer before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          this.setWorkingParts({
+            ...this.workingParts,
+            day: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...this.activeParts,
+            day: ev.detail.value,
+          });
+
+          // We can re-attach the intersection observer after
+          // the working parts have been updated.
+          this.initializeCalendarIOListeners();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderMonthPickerColumn(months: PickerColumnItem[]) {
+    if (months.length === 0) {
+      return [];
+    }
+
+    const { workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1299,12 +1382,10 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          if (forcePresentation === 'month' || forcePresentation === 'month-year') {
-            this.setActiveParts({
-              ...this.activeParts,
-              month: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...this.activeParts,
+            month: ev.detail.value,
+          });
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1315,13 +1396,12 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     );
   }
-  private renderYearPickerColumn(forcePresentation: string) {
-    const { workingParts } = this;
-    if (forcePresentation === 'month' || forcePresentation === 'time') {
+  private renderYearPickerColumn(years: PickerColumnItem[]) {
+    if (years.length === 0) {
       return [];
     }
 
-    const years = getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
+    const { workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1342,12 +1422,10 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          if (forcePresentation === 'year' || forcePresentation === 'month-year') {
-            this.setActiveParts({
-              ...this.activeParts,
-              year: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...this.activeParts,
+            year: ev.detail.value,
+          });
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1467,15 +1545,12 @@ export class Datetime implements ComponentInterface {
     const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
-      <div class="datetime-year">
-        <div
-          class={{
-            'datetime-year-body': true,
-            [`order-${columnOrder}`]: true,
-          }}
-        >
-          {this.renderWheelPicker(forcePresentation)}
-        </div>
+      <div
+        class={{
+          [`wheel-order-${columnOrder}`]: true,
+        }}
+      >
+        {this.renderWheelPicker(forcePresentation)}
       </div>
     );
   }
@@ -1762,6 +1837,18 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * Renders the month/year picker that is
+   * displayed on the calendar grid.
+   * The .datetime-year class has additional
+   * styles that let us show/hide the
+   * picker when the user clicks on the
+   * toggle in the calendar header.
+   */
+  private renderCalendarViewMonthYearPicker() {
+    return <div class="datetime-year">{this.renderWheelView('month-year')}</div>;
+  }
+
+  /**
    * Render entry point
    * All presentation types are rendered from here.
    */
@@ -1783,7 +1870,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
           this.renderFooter(),
         ];
@@ -1792,7 +1879,7 @@ export class Datetime implements ComponentInterface {
           this.renderCalendarViewHeader(mode),
           this.renderTime(),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
       case 'time':
@@ -1805,7 +1892,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderCalendarViewHeader(mode),
           this.renderCalendar(mode),
-          this.renderWheelView('month-year'),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
     }
