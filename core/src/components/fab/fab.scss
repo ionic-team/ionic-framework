@@ -15,7 +15,7 @@
 
 :host(.fab-horizontal-center) {
   @include position(null, null, null, 50%);
-  @include margin-horizontal(-$fab-size / 2, null);
+  @include margin-horizontal(-$fab-size * 0.5, null);
 }
 
 :host(.fab-horizontal-start) {
@@ -39,7 +39,7 @@
 }
 
 :host(.fab-vertical-top.fab-edge) {
-  top: -$fab-size / 2;
+  top: -$fab-size * 0.5;
 }
 
 
@@ -48,12 +48,12 @@
 }
 
 :host(.fab-vertical-bottom.fab-edge) {
-  bottom: -$fab-size / 2;
+  bottom: -$fab-size * 0.5;
 }
 
 
 :host(.fab-vertical-center) {
-  @include margin(-$fab-size / 2, null, null, null);
+  @include margin(-$fab-size * 0.5, null, null, null);
 
   top: 50%;
 }
