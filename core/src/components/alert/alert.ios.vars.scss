@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../themes/ionic.globals.ios";
 @import "../item/item.ios.vars";
 
@@ -275,16 +276,16 @@ $alert-ios-checkbox-background-color-off:               $item-ios-background !de
 $alert-ios-checkbox-background-color-on:                ion-color(primary, base) !default;
 
 /// @prop - Top of the icon in the checkbox alert
-$alert-ios-checkbox-icon-top:                           $alert-ios-checkbox-size / 6 !default;
+$alert-ios-checkbox-icon-top:                           math.div($alert-ios-checkbox-size, 6) !default;
 
 /// @prop - Start of the icon in the checkbox alert
-$alert-ios-checkbox-icon-start:                         ($alert-ios-checkbox-size / 3) + 1px !default;
+$alert-ios-checkbox-icon-start:                         math.div($alert-ios-checkbox-size, 3) + 1px !default;
 
 /// @prop - Width of the icon in the checkbox alert
-$alert-ios-checkbox-icon-width:                         ($alert-ios-checkbox-size / 6) + 1px !default;
+$alert-ios-checkbox-icon-width:                         math.div($alert-ios-checkbox-size, 6) + 1px !default;
 
 /// @prop - Height of the icon in the checkbox alert
-$alert-ios-checkbox-icon-height:                        $alert-ios-checkbox-size / 2 !default;
+$alert-ios-checkbox-icon-height:                        $alert-ios-checkbox-size * 0.5 !default;
 
 /// @prop - Border width of the icon in the checkbox alert
 $alert-ios-checkbox-icon-border-width:                  $alert-ios-checkbox-border-width !default;
