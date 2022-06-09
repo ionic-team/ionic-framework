@@ -14,7 +14,7 @@ $label-ios-text-color-focused:         null !default;
 $label-ios-margin-top:                 $item-ios-padding-top !default;
 
 /// @prop - Margin end of the label
-$label-ios-margin-end:                 ($item-ios-padding-end / 2) !default;
+$label-ios-margin-end:                 ($item-ios-padding-end * 0.5) !default;
 
 /// @prop - Margin bottom of the label
 $label-ios-margin-bottom:              $item-ios-padding-bottom !default;

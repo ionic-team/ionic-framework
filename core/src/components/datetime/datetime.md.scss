@@ -115,7 +115,7 @@
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
-  @include padding($datetime-md-padding / 2, $datetime-md-padding, $datetime-md-padding / 2, $datetime-md-padding);
+  @include padding($datetime-md-padding * 0.5, $datetime-md-padding, $datetime-md-padding * 0.5, $datetime-md-padding);
 }
 
 :host .time-header {
