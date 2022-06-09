@@ -14,6 +14,7 @@ import {
   Optional,
   Output,
   SkipSelf,
+  Input,
 } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
 import { componentOnReady } from '@ionic/core';
@@ -55,6 +56,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   tabsPrefix: string | undefined;
 
+  /**
+   * @experimental
+   *
+   * The `EnvironmentInjector` provider instance from the parent component.
+   * Required for using standalone components with `ion-router-outlet`.
+   *
+   * Will be deprecated and removed when Angular 13 support is dropped.
+   */
+  @Input() environmentInjector: EnvironmentInjector;
+
   @Output() stackEvents = new EventEmitter<any>();
   // eslint-disable-next-line @angular-eslint/no-output-rename
   @Output('activate') activateEvents = new EventEmitter<any>();
@@ -74,10 +85,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.nativeEl.swipeHandler = swipe
       ? {
-          canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
-          onStart: () => this.stackCtrl.startBackTransition(),
-          onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
-        }
+        canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
+        onStart: () => this.stackCtrl.startBackTransition(),
+        onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
+      }
       : undefined;
   }
 
@@ -88,7 +99,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     @Optional() @Attribute('tabs') tabs: string,
     private config: Config,
     private navCtrl: NavController,
-    @Optional() private environmentInjector: EnvironmentInjector,
     commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
@@ -398,7 +408,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 class OutletInjector implements Injector {
-  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) {}
+  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) { }
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {
