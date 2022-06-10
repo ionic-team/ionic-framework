@@ -199,7 +199,7 @@
 // --------------------------------------------------
 
 :host(.fab-button-small) {
-  @include margin(($fab-size - $fab-small-size) / 2);
+  @include margin(($fab-size - $fab-small-size) * 0.5);
 
   width: #{$fab-small-size};
   height: #{$fab-small-size};

@@ -203,13 +203,13 @@ $alert-md-radio-border-color-off:             $text-color-step-450 !default;
 $alert-md-radio-border-color-on:              $alert-md-button-text-color !default;
 
 /// @prop - Width of the icon in the alert radio
-$alert-md-radio-icon-width:                   $alert-md-radio-width / 2 !default;
+$alert-md-radio-icon-width:                   $alert-md-radio-width * 0.5 !default;
 
 /// @prop - Height of the icon in the alert radio
 $alert-md-radio-icon-height:                  $alert-md-radio-icon-width !default;
 
 /// @prop - Top of the icon in the alert radio
-$alert-md-radio-icon-top:                     ($alert-md-radio-width - $alert-md-radio-icon-width - $alert-md-radio-border-width * 2) / 2 !default;
+$alert-md-radio-icon-top:                     ($alert-md-radio-width - $alert-md-radio-icon-width - $alert-md-radio-border-width * 2) * 0.5 !default;
 
 /// @prop - Start of the icon in the radio alert
 $alert-md-radio-icon-start:                   $alert-md-radio-icon-top !default;
