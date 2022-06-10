@@ -8,7 +8,7 @@
   --background: #{$item-divider-ios-background};
   --color: #{$item-divider-ios-color};
   --padding-start: #{$item-divider-ios-padding-start};
-  --inner-padding-end: #{$item-divider-ios-padding-end / 2};
+  --inner-padding-end: #{$item-divider-ios-padding-end * 0.5};
 
   @include border-radius(0);
 
