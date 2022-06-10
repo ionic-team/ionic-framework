@@ -14,7 +14,7 @@ $textarea-ios-font-size:                     inherit !default;
 $textarea-ios-padding-top:                    $item-ios-padding-top !default;
 
 /// @prop - Margin end of the textarea
-$textarea-ios-padding-end:                    ($item-ios-padding-end / 2) !default;
+$textarea-ios-padding-end:                    ($item-ios-padding-end * 0.5) !default;
 
 /// @prop - Margin bottom of the textarea
 $textarea-ios-padding-bottom:                 $item-ios-padding-bottom !default;

@@ -44,11 +44,11 @@
 }
 
 .range-tick {
-  @include margin-horizontal(-($range-ios-tick-width / 2), null);
+  @include margin-horizontal(-($range-ios-tick-width * 0.5), null);
   @include border-radius($range-ios-tick-border-radius);
 
   position: absolute;
-  top: ($range-ios-hit-height / 2) - ($range-ios-tick-height / 2) + ($range-ios-bar-height / 2);
+  top: ($range-ios-hit-height * 0.5) - ($range-ios-tick-height * 0.5) + ($range-ios-bar-height * 0.5);
 
   width: $range-ios-tick-width;
   height: $range-ios-tick-height;
