@@ -2,10 +2,6 @@ import type { DatetimeParts } from '../datetime-interface';
 
 import { convertDataToISO } from './manipulation';
 
-const get12HourTime = (hour: number) => {
-  return hour % 12 || 12;
-};
-
 const getFormattedDayPeriod = (dayPeriod?: string) => {
   if (dayPeriod === undefined) {
     return '';
@@ -19,17 +15,11 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
     return 'Invalid Time';
   }
 
-  const hour = use24Hour ? getFormattedHour(refParts.hour, use24Hour) : get12HourTime(refParts.hour);
-  const minute = addTimePadding(refParts.minute);
-
-  if (use24Hour) {
-    return `${hour}:${minute}`;
-  }
-
   return new Intl.DateTimeFormat(locale, {
     hour: 'numeric',
     minute: 'numeric',
     timeZone: 'UTC',
+    hour12: !use24Hour,
   }).format(new Date(convertDataToISO(refParts)));
 };
 
