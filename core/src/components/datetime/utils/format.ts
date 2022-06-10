@@ -110,19 +110,43 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 };
 
-const dateAm = () => {
-  const date = new Date('2022T01:00');
+/**
+ * When calling toISOString(), the browser
+ * will convert the date to UTC time by either adding
+ * or subtracting the time zone offset.
+ * To work around this, we need to either add
+ * or subtract the time zone offset to the Date
+ * object prior to calling toISOString().
+ * This allows us to get an ISO string
+ * that is in the user's time zone.
+ *
+ * Example:
+ * Time zone offset is 240
+ * Meaning: The browser needs to add 240 minutes
+ * to the Date object to get UTC time.
+ * What Ionic does: We subtract 240 minutes
+ * from the Date object. The browser then adds
+ * 240 minutes in toISOString(). The result
+ * is a time that is in the user's time zone
+ * and not UTC.
+ *
+ * Note: Some timezones include minute adjustments
+ * such as 30 or 45 minutes. This is why we use setMinutes
+ * instead of setHours.
+ * Example: India Standard Time
+ * Timezone offset: -330 = -5.5 hours.
+ *
+ * List of timezones with 30 and 45 minute timezones:
+ * https://www.timeanddate.com/time/time-zones-interesting.html
+ */
+export const removeDateTzOffset = (date: Date) => {
   const tzOffset = date.getTimezoneOffset();
   date.setMinutes(date.getMinutes() - tzOffset);
   return date;
 };
 
-const datePm = () => {
-  const date = new Date('2022T13:00');
-  const tzOffset = date.getTimezoneOffset();
-  date.setMinutes(date.getMinutes() - tzOffset);
-  return date;
-};
+const DATE_AM = removeDateTzOffset(new Date('2022T01:00'));
+const DATE_PM = removeDateTzOffset(new Date('2022T13:00'));
 
 /**
  * Formats the locale's string representation of the day period (am/pm) for a given
@@ -133,7 +157,7 @@ const datePm = () => {
  * @returns The localized day period (am/pm) representation of the given value.
  */
 export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | undefined) => {
-  const date = dayPeriod === 'am' ? dateAm() : datePm();
+  const date = dayPeriod === 'am' ? DATE_AM : DATE_PM;
   const localizedDayPeriod = new Intl.DateTimeFormat(locale, {
     hour: 'numeric',
     timeZone: 'UTC',

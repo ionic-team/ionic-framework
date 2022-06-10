@@ -2,6 +2,7 @@ import type { Mode } from '../../../interface';
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
+import { removeDateTzOffset } from './format';
 import { getNumDaysInMonth } from './helpers';
 import { getNextMonth, getPreviousMonth } from './manipulation';
 
@@ -27,31 +28,8 @@ export const getToday = () => {
    * object prior to calling toISOString().
    * This allows us to get an ISO string
    * that is in the user's time zone.
-   *
-   * Example:
-   * Time zone offset is 240
-   * Meaning: The browser needs to add 240 minutes
-   * to the Date object to get UTC time.
-   * What Ionic does: We subtract 240 minutes
-   * from the Date object. The browser then adds
-   * 240 minutes in toISOString(). The result
-   * is a time that is in the user's time zone
-   * and not UTC.
-   *
-   * Note: Some timezones include minute adjustments
-   * such as 30 or 45 minutes. This is why we use setMinutes
-   * instead of setHours.
-   * Example: India Standard Time
-   * Timezone offset: -330 = -5.5 hours.
-   *
-   * List of timezones with 30 and 45 minute timezones:
-   * https://www.timeanddate.com/time/time-zones-interesting.html
    */
-  const date = new Date();
-  const tzOffset = date.getTimezoneOffset();
-  date.setMinutes(date.getMinutes() - tzOffset);
-
-  return date.toISOString();
+  return removeDateTzOffset(new Date()).toISOString();
 };
 
 const minutes = [
