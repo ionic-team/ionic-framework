@@ -1537,7 +1537,7 @@ export class Datetime implements ComponentInterface {
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
     return (
       <ion-picker-internal>
-        {isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
+        {!use24Hour && isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
         {this.renderHourPickerColumn(hoursItems)}
         {this.renderMinutePickerColumn(minutesItems)}
         {!use24Hour && !isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
