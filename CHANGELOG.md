@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.10-nightly.20220610](https://github.com/ionic-team/ionic-framework/compare/v6.1.9...v6.1.10-nightly.20220610) (2022-06-10)
+
+
+### Bug Fixes
+
+* **fab-button:** improve ripple effect behavior on click ([#25413](https://github.com/ionic-team/ionic-framework/issues/25413)) ([efdaf90](https://github.com/ionic-team/ionic-framework/commit/efdaf90c5a767211e0034bab7cce5bd463ff5aa0)), closes [#21772](https://github.com/ionic-team/ionic-framework/issues/21772)
+* **popover:** ensure popover does not go offscreen when adjusting top position ([#25350](https://github.com/ionic-team/ionic-framework/issues/25350)) ([6926538](https://github.com/ionic-team/ionic-framework/commit/692653842b43b5e36c51163f8261fde3b5bea40d)), closes [#25349](https://github.com/ionic-team/ionic-framework/issues/25349)
+
+
+
+
+
 ## [6.1.9](https://github.com/ionic-team/ionic-framework/compare/v6.1.8...v6.1.9) (2022-06-08)
 
 
