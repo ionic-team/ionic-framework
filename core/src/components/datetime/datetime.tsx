@@ -1354,7 +1354,7 @@ export class Datetime implements ComponentInterface {
      */
     const todayString = workingParts.day
       ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-      : `${todayParts.year}-${todayParts.month}-${todayParts.vadaylue}`;
+      : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
 
     return (
       <ion-picker-column-internal
