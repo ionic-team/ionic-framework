@@ -2963,6 +2963,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Enables the on/off accessibility switch labels within the toggle.
+         */
+        "enableOnOffLabels": boolean | undefined;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -2970,10 +2974,6 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
-        /**
-          * Enables the on/off accessibility switch labels within the toggle.
-         */
-        "switchLabelsEnabled": boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -6902,6 +6902,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Enables the on/off accessibility switch labels within the toggle.
+         */
+        "enableOnOffLabels"?: boolean | undefined;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -6925,10 +6929,6 @@ declare namespace LocalJSX {
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: IonToggleCustomEvent<StyleEventDetail>) => void;
-        /**
-          * Enables the on/off accessibility switch labels within the toggle.
-         */
-        "switchLabelsEnabled"?: boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
