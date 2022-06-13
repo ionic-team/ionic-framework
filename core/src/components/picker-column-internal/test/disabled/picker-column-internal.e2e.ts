@@ -19,9 +19,7 @@ test.describe('picker-column-internal: disabled', () => {
     `);
 
     const picker = page.locator('ion-picker-internal');
-    expect(await picker.screenshot()).toMatchSnapshot(
-      `picker-internal-disabled-${page.getSnapshotSettings()}.png`
-    );
+    expect(await picker.screenshot()).toMatchSnapshot(`picker-internal-disabled-${page.getSnapshotSettings()}.png`);
   });
   test('all picker items should be enabled by default', async ({ page }) => {
     await page.setContent(`
