@@ -207,10 +207,20 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
       return Promise.resolve();
     };
+    const onEnd = (shouldContinue: boolean) => {
+      if (shouldContinue) {
+        this.skipTransition = true;
+
+        this.context.goBack();
+      } else {
+        return false;
+      }
+    }
+
     routerOutlet.swipeHandler = {
       canStart,
       onStart,
-      onEnd: (_shouldContinue) => true,
+      onEnd
     };
   }
 
