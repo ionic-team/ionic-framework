@@ -25,6 +25,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   context!: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
+  skipTransition: boolean;
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
@@ -39,6 +40,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.transitionPage = this.transitionPage.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
     this.id = generateId('routerOutlet');
+    this.skipTransition = false;
   }
 
   componentDidMount() {
@@ -187,15 +189,23 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const canStart = () => {
       const config = getConfig();
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
-      if (swipeEnabled) {
-        return this.context.canGoBack();
-      } else {
-        return false;
-      }
+      if (!swipeEnabled) return false;
+
+      const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: this.props.routeInfo.pushedByRoute || '' } as any, this.id);
+
+      return !!enteringViewItem;
     };
 
-    const onStart = () => {
-      this.context.goBack();
+    const onStart = async () => {
+      const { routeInfo } = this.props;
+      const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+
+      if (enteringViewItem && leavingViewItem) {
+        await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
+      }
+
+      return Promise.resolve();
     };
     routerOutlet.swipeHandler = {
       canStart,
@@ -207,14 +217,17 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   async transitionPage(
     routeInfo: RouteInfo,
     enteringViewItem: ViewItem,
-    leavingViewItem?: ViewItem
+    leavingViewItem?: ViewItem,
+    forceDirection?: any,
+    progressAnimation?: boolean
   ) {
     const routerOutlet = this.routerOutletElement!;
 
-    const direction =
+    const routeInfoFallbackDirection =
       routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
         ? undefined
         : routeInfo.routeDirection;
+    const direction = forceDirection ?? routeInfoFallbackDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (
@@ -254,7 +267,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         duration: direction === undefined ? 0 : undefined,
         direction: direction as any,
         showGoBack: !!routeInfo.pushedByRoute,
-        progressAnimation: false,
+        progressAnimation: progressAnimation || false,
         animationBuilder: routeInfo.routeAnimation,
       });
     }
