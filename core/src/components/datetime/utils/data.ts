@@ -453,7 +453,7 @@ export const getCombinedDateColumnData = (
   let items: PickerColumnItem[] = [];
   let parts: DatetimeParts[] = [];
 
-  // TODO: This does not work when the previous month is in the previous year.
+  // TODO(FW-1693) This does not work when the previous month is in the previous year.
   const months = getMonthColumnData(locale, refParts, minParts, maxParts, monthValues, { month: 'short' });
 
   /**
