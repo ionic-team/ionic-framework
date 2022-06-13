@@ -1,3 +1,6 @@
+import { StatusBar, Style } from '../../utils/native/status-bar';
+import { win } from '../../utils/window';
+
 /**
  * Use y = mx + b to
  * figure out the backdrop value
@@ -56,4 +59,32 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
    */
 
   return x * slope + b;
+};
+
+/**
+ * The tablet/desktop card modal activates
+ * when the window width is >= 768.
+ * At that point, the presenting element
+ * is not transformed, so we do not need to
+ * adjust the status bar color.
+ *
+ * Note: We check supportsDefaultStatusBarStyle so that
+ * Capacitor <= 2 users do not get their status bar
+ * stuck in an inconsistent state due to a lack of
+ * support for Style.Default.
+ */
+export const setCardStatusBarDark = () => {
+  if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
+    return;
+  }
+
+  StatusBar.setStyle({ style: Style.Dark });
+};
+
+export const setCardStatusBarDefault = () => {
+  if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
+    return;
+  }
+
+  StatusBar.setStyle({ style: Style.Default });
 };
