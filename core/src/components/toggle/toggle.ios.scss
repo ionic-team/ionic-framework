@@ -64,12 +64,26 @@
 .toggle-switch-icon.checked {
   color: #{ion-color(light, base)};
 
-  left: -4px;
-  transform: translateX(-100%) rotate(90deg);
+  @include ltr() {
+    left: -4px;
+    transform: translateX(-100%) rotate(90deg);
+  }
+
+  @include rtl() {
+    right: -4px;
+    transform: translateX(100%) rotate(90deg);
+  }
 }
 
 .toggle-switch-icon.unchecked {
-  right: 6px;
+  @include ltr() {
+    right: 6px;
+  }
+
+  @include rtl() {
+    right: initial;
+    left: 6px;
+  }
 }
 
 .toggle-icon-wrapper {
@@ -117,8 +131,6 @@
 
 // iOS Toggle: Disabled
 // ----------------------------------------------------------
-
-// .item-ios.item-toggle-disabled ion-label
 
 :host(.toggle-disabled) {
   opacity: $toggle-ios-disabled-opacity;
