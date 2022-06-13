@@ -67,7 +67,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() switchLabelsEnabled = false;
+  @Prop() switchLabelsEnabled: boolean | undefined = undefined;
 
   /**
    * Emitted when the value property has changed.
