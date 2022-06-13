@@ -56,33 +56,36 @@
 
 .toggle-switch-icon {
   position: absolute;
-  z-index: 1;
+
   width: 13px;
   height: 13px;
+
+  z-index: 1;
 }
 
 .toggle-switch-icon.checked {
-  color: #{ion-color(light, base)};
-
   @include ltr() {
-    left: -4px;
+    @include position(null, null, null, -4px);
+
     transform: translateX(-100%) rotate(90deg);
   }
 
   @include rtl() {
-    right: -4px;
+    @include position(null, -4px, null, null);
+
     transform: translateX(100%) rotate(90deg);
   }
+
+  color: #{ion-color(light, base)};
 }
 
 .toggle-switch-icon.unchecked {
   @include ltr() {
-    right: 6px;
+    @include position(null, 6px, null, null);
   }
 
   @include rtl() {
-    right: initial;
-    left: 6px;
+    @include position(null, initial, null, 6px);
   }
 }
 
@@ -149,7 +152,7 @@
   );
 }
 
-:host(.in-item[slot='start']) {
+:host(.in-item[slot="start"]) {
   @include padding(
     $toggle-ios-item-start-padding-top,
     $toggle-ios-item-start-padding-end,

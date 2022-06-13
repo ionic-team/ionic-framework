@@ -1,113 +1,110 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toggle - OnOffSwitchLabels</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Toggle - OnOffSwitchLabels</title>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-</head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toggle - switchLabelsEnabled</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-<body>
-  <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Toggle - switchLabelsEnabled</ion-title>
-      </ion-toolbar>
-    </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-label>Unchecked</ion-label>
+            <ion-toggle slot="end" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-    <ion-content>
+          <ion-item>
+            <ion-label>Checked</ion-label>
+            <ion-toggle slot="end" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-      <ion-list>
-        <ion-item>
-          <ion-label>Unchecked</ion-label>
-          <ion-toggle slot="end" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Secondary Unchecked</ion-label>
+            <ion-toggle slot="end" color="secondary" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Checked</ion-label>
-          <ion-toggle slot="end" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Secondary Checked</ion-label>
+            <ion-toggle slot="end" color="secondary" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Secondary Unchecked</ion-label>
-          <ion-toggle slot="end" color="secondary" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Success Unchecked</ion-label>
+            <ion-toggle slot="end" color="success" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Secondary Checked</ion-label>
-          <ion-toggle slot="end" color="secondary" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Success Checked</ion-label>
+            <ion-toggle slot="end" color="success" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Success Unchecked</ion-label>
-          <ion-toggle slot="end" color="success" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Danger Unchecked</ion-label>
+            <ion-toggle slot="end" color="danger" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Success Checked</ion-label>
-          <ion-toggle slot="end" color="success" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Danger Checked</ion-label>
+            <ion-toggle slot="end" color="danger" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Danger Unchecked</ion-label>
-          <ion-toggle slot="end" color="danger" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Tertiary Unchecked</ion-label>
+            <ion-toggle slot="end" color="tertiary" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Danger Checked</ion-label>
-          <ion-toggle slot="end" color="danger" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Tertiary Checked</ion-label>
+            <ion-toggle slot="end" color="tertiary" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Tertiary Unchecked</ion-label>
-          <ion-toggle slot="end" color="tertiary" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Light Unchecked</ion-label>
+            <ion-toggle slot="end" color="light" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Tertiary Checked</ion-label>
-          <ion-toggle slot="end" color="tertiary" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Light Checked</ion-label>
+            <ion-toggle slot="end" color="light" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Light Unchecked</ion-label>
-          <ion-toggle slot="end" color="light" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Medium Unchecked</ion-label>
+            <ion-toggle slot="end" color="medium" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Light Checked</ion-label>
-          <ion-toggle slot="end" color="light" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Medium Checked</ion-label>
+            <ion-toggle slot="end" color="medium" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Medium Unchecked</ion-label>
-          <ion-toggle slot="end" color="medium" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Dark Unchecked</ion-label>
+            <ion-toggle slot="end" color="dark" switch-labels-enabled="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Medium Checked</ion-label>
-          <ion-toggle slot="end" color="medium" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Dark Unchecked</ion-label>
-          <ion-toggle slot="end" color="dark" switch-labels-enabled="true"></ion-toggle>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Dark Checked</ion-label>
-          <ion-toggle slot="end" color="dark" switch-labels-enabled="true" checked></ion-toggle>
-        </ion-item>
-      </ion-list>
-
-    </ion-content>
-
-  </ion-app>
-</body>
-
+          <ion-item>
+            <ion-label>Dark Checked</ion-label>
+            <ion-toggle slot="end" color="dark" switch-labels-enabled="true" checked></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
 </html>

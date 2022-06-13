@@ -11,5 +11,4 @@ test.describe('toggle: switchLabelsEnabled', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`toggle-switch-labels-diff-${page.getSnapshotSettings()}.png`);
   });
-
 });
