@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('toggle: onOffSwitchLabels', () => {
+test.describe('toggle: switchLabelsEnabled', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(`/src/components/toggle/test/on-off-switch-labels`);
   });

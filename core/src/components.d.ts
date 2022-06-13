@@ -2973,7 +2973,7 @@ export namespace Components {
         /**
           * Enables the on/off accessibility switch labels within the toggle.
          */
-        "onOffSwitchLabelsEnabled": boolean;
+        "switchLabelsEnabled": boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -6928,7 +6928,7 @@ declare namespace LocalJSX {
         /**
           * Enables the on/off accessibility switch labels within the toggle.
          */
-        "onOffSwitchLabelsEnabled"?: boolean;
+        "switchLabelsEnabled"?: boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */

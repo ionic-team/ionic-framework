@@ -67,7 +67,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() onOffSwitchLabelsEnabled = false;
+  @Prop() switchLabelsEnabled = false;
 
   /**
    * Emitted when the value property has changed.
@@ -199,7 +199,7 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, inputId, name, onOffSwitchLabelsEnabled } = this;
+    const { activated, color, checked, disabled, el, inputId, name, switchLabelsEnabled } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
@@ -224,13 +224,13 @@ export class Toggle implements ComponentInterface {
       >
         <div class="toggle-icon" part="track">
           <div class="toggle-icon-wrapper">
-            {onOffSwitchLabelsEnabled && mode === 'ios' && (
+            {switchLabelsEnabled && mode === 'ios' && (
               <ion-icon class="toggle-switch-icon checked" icon={this.getSwitchLabelIcon(true)}></ion-icon>
             )}
             <div class="toggle-inner" part="handle">
-              {onOffSwitchLabelsEnabled && mode === 'md' && this.renderOnOffSwitchLabels()}
+              {switchLabelsEnabled && mode === 'md' && this.renderOnOffSwitchLabels()}
             </div>
-            {onOffSwitchLabelsEnabled && mode === 'ios' && (
+            {switchLabelsEnabled && mode === 'ios' && (
               <ion-icon class="toggle-switch-icon unchecked" icon={this.getSwitchLabelIcon(false)}></ion-icon>
             )}
           </div>
