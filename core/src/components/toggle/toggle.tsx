@@ -3,7 +3,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
@@ -184,16 +184,15 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private getSwitchLabelIcon = (checked: boolean) => {
-    const mode = getIonMode(this);
+  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
     if (mode === 'md') {
       return checked ? checkmarkOutline : removeOutline;
     }
     return checked ? removeOutline : ellipseOutline;
   };
 
-  private renderOnOffSwitchLabels() {
-    const icon = this.getSwitchLabelIcon(this.checked);
+  private renderOnOffSwitchLabels(mode: Mode) {
+    const icon = this.getSwitchLabelIcon(mode, this.checked);
 
     return <ion-icon class="toggle-switch-icon" icon={icon}></ion-icon>;
   }
@@ -225,13 +224,13 @@ export class Toggle implements ComponentInterface {
         <div class="toggle-icon" part="track">
           <div class="toggle-icon-wrapper">
             {switchLabelsEnabled && mode === 'ios' && (
-              <ion-icon class="toggle-switch-icon checked" icon={this.getSwitchLabelIcon(true)}></ion-icon>
+              <ion-icon class="toggle-switch-icon checked" icon={this.getSwitchLabelIcon(mode, true)}></ion-icon>
             )}
             <div class="toggle-inner" part="handle">
-              {switchLabelsEnabled && mode === 'md' && this.renderOnOffSwitchLabels()}
+              {switchLabelsEnabled && mode === 'md' && this.renderOnOffSwitchLabels(mode)}
             </div>
             {switchLabelsEnabled && mode === 'ios' && (
-              <ion-icon class="toggle-switch-icon unchecked" icon={this.getSwitchLabelIcon(false)}></ion-icon>
+              <ion-icon class="toggle-switch-icon unchecked" icon={this.getSwitchLabelIcon(mode, false)}></ion-icon>
             )}
           </div>
         </div>
