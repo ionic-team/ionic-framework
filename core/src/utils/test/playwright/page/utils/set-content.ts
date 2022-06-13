@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -8,8 +8,9 @@ import type { Page } from '@playwright/test';
  *
  * @param page The Playwright page object.
  * @param html The HTML content to set on the page.
+ * @param testInfo The TestInfo associated with the current test run.
  */
-export const setContent = async (page: Page, html: string) => {
+export const setContent = async (page: Page, html: string, testInfo: TestInfo) => {
   if (page.isClosed()) {
     throw new Error('setContent unavailable: page is already closed');
   }
@@ -18,7 +19,7 @@ export const setContent = async (page: Page, html: string) => {
 
   const output = `
     <!DOCTYPE html>
-    <html>
+    <html dir="${testInfo.project.metadata.rtl ? 'rtl' : 'ltr'}">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
@@ -26,7 +27,13 @@ export const setContent = async (page: Page, html: string) => {
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
-
+        <script>
+          window.Ionic = {
+            config: {
+              mode: '${testInfo.project.metadata.mode}'
+            }
+          }
+        </script>
       </head>
       <body>
         ${html}
