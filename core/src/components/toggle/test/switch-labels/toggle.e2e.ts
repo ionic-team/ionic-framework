@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('toggle: switchLabelsEnabled', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/toggle/test/on-off-switch-labels`);
+    await page.goto(`/src/components/toggle/test/switch-labels`);
   });
 
   test('should not have visual regressions', async ({ page }) => {
