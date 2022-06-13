@@ -30,10 +30,6 @@
   background: current-color(base);
 }
 
-:host(.ion-color-light.toggle-checked) .toggle-switch-icon.checked {
-  color: #{ion-color(dark, base)};
-}
-
 // iOS Toggle Background Track: Unchecked
 // ----------------------------------------------------------
 
@@ -43,8 +39,6 @@
   transform: translate3d(0, 0, 0);
 
   transition: background-color $toggle-ios-transition-duration;
-
-  color: #{ion-color(medium, base)};
 }
 
 // iOS Toggle Inner Knob: Unchecked
@@ -54,6 +48,9 @@
   will-change: transform;
 }
 
+// iOS Toggle On Off Labels (Icons)
+// ----------------------------------------------------------
+
 .toggle-switch-icon {
   position: absolute;
 
@@ -61,6 +58,18 @@
   height: 13px;
 
   z-index: 1;
+}
+
+.toggle-switch-icon.unchecked {
+  @include ltr() {
+    @include position(null, 6px, null, null);
+  }
+
+  @include rtl() {
+    @include position(null, initial, null, 6px);
+  }
+
+  color: $toggle-ios-on-off-label-color;
 }
 
 .toggle-switch-icon.checked {
@@ -76,17 +85,7 @@
     transform: translateX(100%) rotate(90deg);
   }
 
-  color: #{ion-color(light, base)};
-}
-
-.toggle-switch-icon.unchecked {
-  @include ltr() {
-    @include position(null, 6px, null, null);
-  }
-
-  @include rtl() {
-    @include position(null, initial, null, 6px);
-  }
+  color: $toggle-ios-on-off-label-checked-color;
 }
 
 .toggle-icon-wrapper {
