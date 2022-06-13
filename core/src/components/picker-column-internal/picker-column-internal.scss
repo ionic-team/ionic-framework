@@ -75,6 +75,10 @@
   cursor: default;
 }
 
+:host .picker-item.picker-item-disabled {
+  opacity: 0.4;
+}
+
 :host(.picker-column-active) .picker-item.picker-item-active {
   color: current-color(base);
 }
