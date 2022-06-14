@@ -1600,7 +1600,7 @@ export namespace Components {
          */
         "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
         /**
-          * If `true`, a backdrop will be displayed behind the modal.
+          * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
         /**
@@ -1966,7 +1966,7 @@ export namespace Components {
          */
         "reference": PositionReference;
         /**
-          * If `true`, a backdrop will be displayed behind the popover.
+          * If `true`, a backdrop will be displayed behind the popover. This property controls whether or not the backdrop darkens the screen when the popover is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
         /**
@@ -5528,7 +5528,7 @@ declare namespace LocalJSX {
          */
         "presentingElement"?: HTMLElement;
         /**
-          * If `true`, a backdrop will be displayed behind the modal.
+          * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
         /**
@@ -5816,7 +5816,7 @@ declare namespace LocalJSX {
          */
         "reference"?: PositionReference;
         /**
-          * If `true`, a backdrop will be displayed behind the popover.
+          * If `true`, a backdrop will be displayed behind the popover. This property controls whether or not the backdrop darkens the screen when the popover is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
         /**
