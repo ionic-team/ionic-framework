@@ -37,7 +37,7 @@ import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/Dynamic
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
 
-setupIonicReact();
+setupIonicReact({ mode: "ios" });
 
 const App: React.FC = () => {
   return (
