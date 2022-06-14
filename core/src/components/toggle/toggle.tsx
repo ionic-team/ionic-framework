@@ -191,10 +191,18 @@ export class Toggle implements ComponentInterface {
     return checked ? removeOutline : ellipseOutline;
   };
 
-  private renderOnOffSwitchLabels(mode: Mode) {
-    const icon = this.getSwitchLabelIcon(mode, this.checked);
+  private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
+    const icon = this.getSwitchLabelIcon(mode, checked);
 
-    return <ion-icon class="toggle-switch-icon" icon={icon}></ion-icon>;
+    return (
+      <ion-icon
+        class={{
+          'toggle-switch-icon': true,
+          'toggle-switch-icon--checked': checked,
+        }}
+        icon={icon}
+      ></ion-icon>
+    );
   }
 
   render() {
@@ -222,17 +230,16 @@ export class Toggle implements ComponentInterface {
         })}
       >
         <div class="toggle-icon" part="track">
+          {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
+           since the wrapper is translated when the handle is interacted with and
+           this would move the on/off labels outside of the view box */}
+          {enableOnOffLabels && mode === 'ios' && this.renderOnOffSwitchLabels(mode, true)}
           <div class="toggle-icon-wrapper">
-            {enableOnOffLabels && mode === 'ios' && (
-              <ion-icon class="toggle-switch-icon checked" icon={this.getSwitchLabelIcon(mode, true)}></ion-icon>
-            )}
             <div class="toggle-inner" part="handle">
-              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode)}
+              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
             </div>
-            {enableOnOffLabels && mode === 'ios' && (
-              <ion-icon class="toggle-switch-icon unchecked" icon={this.getSwitchLabelIcon(mode, false)}></ion-icon>
-            )}
           </div>
+          {enableOnOffLabels && mode === 'ios' && this.renderOnOffSwitchLabels(mode, false)}
         </div>
         <label htmlFor={inputId}>{labelText}</label>
         <input

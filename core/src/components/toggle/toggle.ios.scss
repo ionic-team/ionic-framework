@@ -52,7 +52,7 @@
   will-change: transform;
 }
 
-// iOS Toggle On Off Labels (Icons)
+// iOS Toggle On/Off Labels
 // ----------------------------------------------------------
 
 .toggle-switch-icon {
@@ -61,12 +61,10 @@
   width: 13px;
   height: 13px;
 
-  z-index: 1;
-
-  transition: opacity $toggle-ios-transition-duration;
+  transition: opacity $toggle-ios-transition-duration, color $toggle-ios-transition-duration;
 }
 
-.toggle-switch-icon.unchecked {
+.toggle-switch-icon {
   @include ltr() {
     @include position(null, 6px, null, null);
   }
@@ -78,24 +76,20 @@
   color: $toggle-ios-on-off-label-color;
 }
 
-.toggle-switch-icon.checked {
-  @include ltr() {
-    @include position(null, null, null, -4px);
-
-    transform: translateX(-100%) rotate(90deg);
-  }
-
-  @include rtl() {
-    @include position(null, -4px, null, null);
-
-    transform: translateX(100%) rotate(90deg);
-  }
-
+:host(.toggle-checked) .toggle-switch-icon {
   color: $toggle-ios-on-off-label-checked-color;
 }
 
-.toggle-icon-wrapper {
-  position: initial;
+.toggle-switch-icon--checked {
+  @include ltr() {
+    @include position(null, null, null, 4px);
+  }
+
+  @include rtl() {
+    @include position(null, 4px, null, null);
+  }
+
+  transform: rotate(90deg);
 }
 
 // iOS Toggle Background Oval: Activated or Checked
