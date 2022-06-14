@@ -112,7 +112,7 @@ export const getTodayLabel = (locale: string) => {
   } else {
     return 'Today';
   }
-}
+};
 
 /**
  * When calling toISOString(), the browser
