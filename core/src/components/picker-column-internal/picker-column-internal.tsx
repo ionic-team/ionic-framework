@@ -264,6 +264,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
+          hapticSelectionEnd();
 
           /**
            * Certain tasks (such as those that
@@ -293,7 +294,6 @@ export class PickerColumnInternal implements ComponentInterface {
 
           if (selectedItem.value !== this.value) {
             this.setValue(selectedItem.value);
-            hapticSelectionEnd();
           }
         }, 250);
       });
