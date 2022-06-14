@@ -121,3 +121,12 @@ export const clampDate = (
   }
   return dateParts;
 };
+
+/**
+ * Parses an hour and returns if the value is in the morning (am) or afternoon (pm).
+ * @param hour The hour to format, should be 0-23
+ * @returns `pm` if the hour is greater than or equal to 12, `am` if less than 12.
+ */
+export const parseAmPm = (hour: number) => {
+  return hour >= 12 ? 'pm' : 'am';
+};
