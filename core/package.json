@@ -62,7 +62,6 @@
     "fs-extra": "^9.0.1",
     "jest": "^26.4.1",
     "jest-cli": "^26.4.1",
-    "np": "^6.4.0",
     "pixelmatch": "4.0.2",
     "prettier": "^2.6.1",
     "puppeteer": "^10.4.0",
