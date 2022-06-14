@@ -11,9 +11,10 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(1, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
         grid-gap: 60px 20px;
       }
+
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -37,21 +38,57 @@
       }
     </style>
   </head>
+
   <body>
     <ion-app>
       <ion-header translucent="true">
         <ion-toolbar>
           <ion-title>Datetime - Locale</ion-title>
         </ion-toolbar>
+        <ion-toolbar>
+          <select class="ion-margin-end" slot="end">
+            <option value="en-US">en-US</option>
+            <option value="es-ES">es-ES</option>
+            <option value="ja-JP">ja-JP</option>
+            <option value="ta-IN">ta-IN</option>
+          </select>
+        </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Default</h2>
-            <ion-datetime show-default-title="true" show-default-buttons="true" locale="en-US"></ion-datetime>
+            <h2>Default (AM)</h2>
+            <ion-datetime
+              id="am"
+              show-default-title="true"
+              show-default-buttons="true"
+              locale="en-US"
+              value="2022-04-19T04:20:00"
+            ></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Default (PM)</h2>
+            <ion-datetime
+              id="pm"
+              show-default-title="true"
+              show-default-buttons="true"
+              locale="en-US"
+              value="2022-04-19T14:20:00"
+            ></ion-datetime>
           </div>
         </div>
       </ion-content>
     </ion-app>
+    <script>
+      const select = document.querySelector('select');
+      const datetimes = document.querySelectorAll('ion-datetime');
+
+      select.addEventListener('change', (ev) => {
+        const locale = ev.target.value;
+        datetimes.forEach((datetime) => {
+          datetime.locale = locale;
+        });
+      });
+    </script>
   </body>
 </html>

@@ -22,8 +22,8 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isMonthFirstLocale } from './utils/helpers';
+import { getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -38,7 +38,7 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseAmPm, parseDate } from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -1100,6 +1100,7 @@ export class Datetime implements ComponentInterface {
     this.highlightActiveParts = !!value;
     const valueToProcess = parseDate(value || getToday());
     const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
+    const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
       month,
@@ -1108,7 +1109,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour! >= 12 ? 'pm' : 'am',
+      ampm,
     });
 
     this.activeParts = {
@@ -1118,7 +1119,7 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour! >= 12 ? 'pm' : 'am',
+      ampm,
     };
   };
 
@@ -1565,7 +1566,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { hoursData, minutesData, ampmData } = getTimeColumnsData(
+    const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
@@ -1578,7 +1579,7 @@ export class Datetime implements ComponentInterface {
     return [
       this.renderHourPickerColumn(hoursData),
       this.renderMinutePickerColumn(minutesData),
-      this.renderAMPMPickerColumn(ampmData),
+      this.renderDayPeriodPickerColumn(dayPeriodData),
     ];
   }
 
@@ -1632,17 +1633,20 @@ export class Datetime implements ComponentInterface {
       ></ion-picker-column-internal>
     );
   }
-  private renderAMPMPickerColumn(ampmData: PickerColumnItem[]) {
+  private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
     const { workingParts, activePartsClone } = this;
-    if (ampmData.length === 0) {
+    if (dayPeriodData.length === 0) {
       return [];
     }
 
+    const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
+
     return (
       <ion-picker-column-internal
+        style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         value={activePartsClone.ampm}
-        items={ampmData}
+        items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
 
@@ -1864,6 +1868,7 @@ export class Datetime implements ComponentInterface {
 
     return <slot name="time-label">Time</slot>;
   }
+
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
     return [
@@ -1895,7 +1900,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getFormattedTime(this.activePartsClone, use24Hour)}
+        {getLocalizedTime(this.locale, this.activePartsClone, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -1917,6 +1922,7 @@ export class Datetime implements ComponentInterface {
         }}
         style={{
           '--offset-y': '-10px',
+          '--min-width': 'fit-content',
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.
