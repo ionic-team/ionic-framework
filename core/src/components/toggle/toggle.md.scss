@@ -1,5 +1,5 @@
-@import "./toggle";
-@import "./toggle.md.vars";
+@import './toggle';
+@import './toggle.md.vars';
 
 // Material Design Toggle
 // -----------------------------------------
@@ -35,7 +35,7 @@
 }
 
 :host(.toggle-checked) .toggle-inner {
-  color: $toggle-md-on-off-label-checked-color;
+  color: var(--ion-color-contrast, $toggle-md-on-off-label-checked-color);
 }
 
 // Material Design Toggle Background Track: Unchecked
@@ -52,7 +52,7 @@
   will-change: background-color, transform;
 
   display: flex;
-  
+
   align-items: center;
   justify-content: center;
 
@@ -104,7 +104,7 @@
   cursor: pointer;
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item[slot='start']) {
   @include padding(
     $toggle-md-item-start-padding-top,
     $toggle-md-item-start-padding-end,
