@@ -263,6 +263,20 @@ export class PickerColumnInternal implements ComponentInterface {
         activeElement.classList.add(PICKER_COL_ACTIVE);
 
         timeout = setTimeout(() => {
+          this.isScrolling = false;
+
+          /**
+           * Certain tasks (such as those that
+           * cause re-renders) should only be done
+           * once scrolling has finished, otherwise
+           * flickering may occur.
+           */
+          const { scrollEndCallback } = this;
+          if (scrollEndCallback) {
+            scrollEndCallback();
+            this.scrollEndCallback = undefined;
+          }
+
           const dataIndex = activeElement.getAttribute('data-index');
 
           /**
@@ -280,19 +294,6 @@ export class PickerColumnInternal implements ComponentInterface {
           if (selectedItem.value !== this.value) {
             this.setValue(selectedItem.value);
             hapticSelectionEnd();
-            this.isScrolling = false;
-
-            /**
-             * Certain tasks (such as those that
-             * cause re-renders) should only be done
-             * once scrolling has finished, otherwise
-             * flickering may occur.
-             */
-            const { scrollEndCallback } = this;
-            if (scrollEndCallback) {
-              scrollEndCallback();
-              this.scrollEndCallback = undefined;
-            }
           }
         }, 250);
       });
