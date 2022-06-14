@@ -1,5 +1,5 @@
-@import './toggle';
-@import './toggle.md.vars';
+@import "./toggle";
+@import "./toggle.md.vars";
 
 // Material Design Toggle
 // -----------------------------------------
@@ -104,7 +104,7 @@
   cursor: pointer;
 }
 
-:host(.in-item[slot='start']) {
+:host(.in-item[slot="start"]) {
   @include padding(
     $toggle-md-item-start-padding-top,
     $toggle-md-item-start-padding-end,
