@@ -306,8 +306,19 @@ export class PickerColumnInternal implements ComponentInterface {
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>
         {items.map((item, index) => {
+          {
+            /*
+            Users should be able to tab
+            between multiple columns. As a result,
+            we set tabindex here so that tabbing switches
+            between columns instead of buttons. Users
+            can still use arrow keys on the keyboard to
+            navigate the column up and down.
+          */
+          }
           return (
             <button
+              tabindex="-1"
               class={{
                 'picker-item': true,
                 'picker-item-disabled': item.disabled || false,
