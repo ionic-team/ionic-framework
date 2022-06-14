@@ -3,7 +3,7 @@ import type { PickerColumnItem } from '../../picker-column-internal/picker-colum
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { getFormattedHour, addTimePadding } from './format';
+import { getFormattedHour, addTimePadding, getTodayLabel } from './format';
 import { getNumDaysInMonth, is24Hour } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
@@ -283,7 +283,10 @@ export const getMonthColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  monthValues?: number[]
+  monthValues?: number[],
+  formatOptions: Intl.DateTimeFormatOptions = {
+    month: 'long',
+  }
 ): PickerColumnItem[] => {
   const { year } = refParts;
   const months = [];
@@ -300,7 +303,7 @@ export const getMonthColumnData = (
     processedMonths.forEach((processedMonth) => {
       const date = new Date(`${processedMonth}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: processedMonth });
     });
   } else {
@@ -334,7 +337,7 @@ export const getMonthColumnData = (
        */
       const date = new Date(`${i}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: i });
     }
   }
@@ -358,7 +361,10 @@ export const getDayColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  dayValues?: number[]
+  dayValues?: number[],
+  formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+  }
 ): PickerColumnItem[] => {
   const { month, year } = refParts;
   const days = [];
@@ -379,14 +385,14 @@ export const getDayColumnData = (
     processedDays.forEach((processedDay) => {
       const date = new Date(`${month}/${processedDay}/${year} GMT+0000`);
 
-      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      const dayString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       days.push({ text: dayString, value: processedDay });
     });
   } else {
     for (let i = minDay; i <= maxDay; i++) {
       const date = new Date(`${month}/${i}/${year} GMT+0000`);
 
-      const dayString = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' }).format(date);
+      const dayString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       days.push({ text: dayString, value: i });
     }
   }
@@ -423,6 +429,86 @@ export const getYearColumnData = (
     text: `${year}`,
     value: year,
   }));
+};
+
+interface CombinedDateColumnData {
+  parts: DatetimeParts[];
+  items: PickerColumnItem[];
+}
+
+/**
+ * Creates and returns picker items
+ * that represent the days in a month.
+ * Example: "Thu, Jun 2"
+ */
+export const getCombinedDateColumnData = (
+  locale: string,
+  refParts: DatetimeParts,
+  todayParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[],
+  monthValues?: number[]
+): CombinedDateColumnData => {
+  let items: PickerColumnItem[] = [];
+  let parts: DatetimeParts[] = [];
+
+  // TODO(FW-1693) This does not work when the previous month is in the previous year.
+  const months = getMonthColumnData(locale, refParts, minParts, maxParts, monthValues, { month: 'short' });
+
+  /**
+   * Get all of the days in the month.
+   * From there, generate an array where
+   * each item has the month, date, and day
+   * of work as the text.
+   */
+  months.forEach((monthObject) => {
+    const referenceMonth = { month: monthObject.value as number, day: null, year: refParts.year };
+    const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
+      month: 'short',
+      day: 'numeric',
+      weekday: 'short',
+    });
+
+    const dateParts: DatetimeParts[] = [];
+    const dateColumnItems: PickerColumnItem[] = [];
+
+    monthDays.forEach((dayObject) => {
+      const isToday = isSameDay({ ...referenceMonth, day: dayObject.value as number }, todayParts);
+
+      /**
+       * Today's date should read as "Today" (localized)
+       * not the actual date string
+       */
+      dateColumnItems.push({
+        text: isToday ? getTodayLabel(locale) : dayObject.text,
+        value: `${refParts.year}-${monthObject.value}-${dayObject.value}`,
+      });
+
+      /**
+       * When selecting a date in the wheel picker
+       * we need access to the raw datetime parts data.
+       * The picker column only accepts values of
+       * type string or number, so we need to return
+       * two sets of data: A data set to be passed
+       * to the picker column, and a data set to
+       * be used to reference the raw data when
+       * updating the picker column value.
+       */
+      dateParts.push({
+        month: monthObject.value as number,
+        year: refParts.year,
+        day: dayObject.value as number,
+      });
+    });
+    parts = [...parts, ...dateParts];
+    items = [...items, ...dateColumnItems];
+  });
+
+  return {
+    parts,
+    items,
+  };
 };
 
 export const getTimeColumnsData = (

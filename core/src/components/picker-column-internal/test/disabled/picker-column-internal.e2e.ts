@@ -2,6 +2,25 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('picker-column-internal: disabled', () => {
+  test('should not have visual regressions', async ({ page }) => {
+    await page.setContent(`
+      <ion-picker-internal>
+        <ion-picker-column-internal value="b"></ion-picker-column-internal>
+      </ion-picker-internal>
+
+      <script>
+        const column = document.querySelector('ion-picker-column-internal');
+        column.items = [
+          { text: 'A', value: 'a', disabled: true },
+          { text: 'B', value: 'b' },
+          { text: 'C', value: 'c', disabled: true }
+        ]
+      </script>
+    `);
+
+    const picker = page.locator('ion-picker-internal');
+    expect(await picker.screenshot()).toMatchSnapshot(`picker-internal-disabled-${page.getSnapshotSettings()}.png`);
+  });
   test('all picker items should be enabled by default', async ({ page }) => {
     await page.setContent(`
       <ion-picker-internal>

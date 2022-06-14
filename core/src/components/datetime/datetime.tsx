@@ -20,6 +20,7 @@ import {
   getDayColumnData,
   getYearColumnData,
   getTimeColumnsData,
+  getCombinedDateColumnData,
 } from './utils/data';
 import { getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isMonthFirstLocale } from './utils/helpers';
@@ -1261,15 +1262,138 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderWheelPicker(forcePresentation: string = this.presentation) {
-    return (
-      <ion-picker-internal>
-        {this.renderDatePickerColumns(forcePresentation)}
-        {this.renderTimePickerColumns(forcePresentation)}
-      </ion-picker-internal>
-    );
+    /**
+     * If presentation="time-date" we switch the
+     * order of the render array here instead of
+     * manually reordering each date/time picker
+     * column with CSS. This allows for additional
+     * flexibility if we need to render subsets
+     * of the date/time data or do additional ordering
+     * within the child render functions.
+     */
+    const renderArray =
+      forcePresentation === 'time-date'
+        ? [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)]
+        : [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)];
+    return <ion-picker-internal>{renderArray}</ion-picker-internal>;
   }
 
   private renderDatePickerColumns(forcePresentation: string) {
+    return forcePresentation === 'date-time' || forcePresentation === 'time-date'
+      ? this.renderCombinedDatePickerColumn()
+      : this.renderIndividualDatePickerColumns(forcePresentation);
+  }
+
+  private renderCombinedDatePickerColumn() {
+    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+
+    /**
+     * By default, generate a range of 3 months:
+     * Previous month, current month, and next month
+     */
+    const monthsToRender = generateMonths(workingParts);
+
+    /**
+     * generateMonths returns the day data as well,
+     * but we do not want the day value to act as a max/min
+     * on the data we are going to generate.
+     */
+    for (let i = 0; i <= monthsToRender.length - 1; i++) {
+      monthsToRender[i].day = null;
+    }
+
+    /**
+     * If developers have provided their own
+     * min/max values, use that instead. Otherwise,
+     * fallback to the default range of 3 months.
+     */
+    const min = minParts || monthsToRender[0];
+    const max = maxParts || monthsToRender[monthsToRender.length - 1];
+
+    const result = getCombinedDateColumnData(
+      locale,
+      workingParts,
+      todayParts,
+      min,
+      max,
+      this.parsedDayValues,
+      this.parsedMonthValues
+    );
+    let items = result.items;
+    const parts = result.parts;
+
+    if (isDateEnabled) {
+      items = items.map((itemObject, index) => {
+        const referenceParts = parts[index];
+
+        let disabled;
+        try {
+          /**
+           * The `isDateEnabled` implementation is try-catch wrapped
+           * to prevent exceptions in the user's function from
+           * interrupting the calendar rendering.
+           */
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+        } catch (e) {
+          printIonError(
+            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            e
+          );
+        }
+
+        return {
+          ...itemObject,
+          disabled,
+        };
+      });
+    }
+
+    /**
+     * If we have selected a day already, then default the column
+     * to that value. Otherwise, default it to today.
+     */
+    const todayString = workingParts.day
+      ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+      : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+
+    return (
+      <ion-picker-column-internal
+        class="date-column"
+        color={this.color}
+        items={items}
+        value={todayString}
+        onIonChange={(ev: CustomEvent) => {
+          // Due to a Safari 14 issue we need to destroy
+          // the intersection observer before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarIO) {
+            this.destroyCalendarIO();
+          }
+
+          const { value } = ev.detail;
+          const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
+
+          this.setWorkingParts({
+            ...this.workingParts,
+            ...findPart,
+          });
+
+          this.setActiveParts({
+            ...this.activeParts,
+            ...findPart,
+          });
+
+          // We can re-attach the intersection observer after
+          // the working parts have been updated.
+          this.initializeCalendarIOListeners();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderIndividualDatePickerColumns(forcePresentation: string) {
     const { workingParts, isDateEnabled } = this;
     const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
     const months = shouldRenderMonths
@@ -1803,7 +1927,6 @@ export class Datetime implements ComponentInterface {
       </ion-popover>,
     ];
   }
-
   private renderCalendarViewHeader(mode: Mode) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
@@ -1899,12 +2022,26 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
+    const {
+      name,
+      value,
+      disabled,
+      el,
+      color,
+      isPresented,
+      readonly,
+      showMonthAndYear,
+      preferWheel,
+      presentation,
+      size,
+    } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
+    const hasWheelVariant =
+      (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -1923,6 +2060,7 @@ export class Datetime implements ComponentInterface {
             'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
+            [`datetime-prefer-wheel`]: hasWheelVariant,
           }),
         }}
       >
