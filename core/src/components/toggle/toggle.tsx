@@ -234,12 +234,12 @@ export class Toggle implements ComponentInterface {
            since the wrapper is translated when the handle is interacted with and
            this would move the on/off labels outside of the view box */}
           {enableOnOffLabels && mode === 'ios' && this.renderOnOffSwitchLabels(mode, true)}
+          {enableOnOffLabels && mode === 'ios' && this.renderOnOffSwitchLabels(mode, false)}
           <div class="toggle-icon-wrapper">
             <div class="toggle-inner" part="handle">
               {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
             </div>
           </div>
-          {enableOnOffLabels && mode === 'ios' && this.renderOnOffSwitchLabels(mode, false)}
         </div>
         <label htmlFor={inputId}>{labelText}</label>
         <input

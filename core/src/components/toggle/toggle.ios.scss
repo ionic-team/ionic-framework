@@ -73,11 +73,17 @@
     @include position(null, initial, null, 6px);
   }
 
-  color: $toggle-ios-on-off-label-color;
+  color: var(--ion-color-step-600, $toggle-ios-on-off-label-color);
 }
 
-:host(.toggle-checked) .toggle-switch-icon {
-  color: $toggle-ios-on-off-label-checked-color;
+:host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon--checked {
+  // The color contrast of iOS default on/off labels fails to meet WCAG 2.0.
+  // We use Ionic's color contrast variables to meet the WCAG 2.0 standard (AAA).
+  color: var(--ion-color-contrast, $toggle-ios-on-off-label-checked-color);
+}
+
+:host(.toggle-checked) .toggle-switch-icon:not(.toggle-switch-icon--checked) {
+  opacity: 0;
 }
 
 .toggle-switch-icon--checked {
