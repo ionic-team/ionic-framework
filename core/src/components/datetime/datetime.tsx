@@ -1534,13 +1534,11 @@ export class Datetime implements ComponentInterface {
     ampmItems: PickerColumnItem[],
     use24Hour: boolean
   ) {
-    const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
     return (
       <ion-picker-internal>
-        {!use24Hour && isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
         {this.renderHourPickerColumn(hoursItems)}
         {this.renderMinutePickerColumn(minutesItems)}
-        {!use24Hour && !isDayPeriodRTL && this.renderDayPeriodPickerColumn(ampmItems)}
+        {!use24Hour && this.renderDayPeriodPickerColumn(ampmItems)}
       </ion-picker-internal>
     );
   }
@@ -1598,11 +1596,14 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderDayPeriodPickerColumn(dayPeriodItems: PickerColumnItem[]) {
-    const { color, activePartsClone, workingParts } = this;
     if (dayPeriodItems.length === 0) return [];
+
+    const { color, activePartsClone, workingParts, locale } = this;
+    const isDayPeriodRTL = isLocaleDayPeriodRTL(locale);
 
     return (
       <ion-picker-column-internal
+        style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={color}
         value={activePartsClone.ampm}
         items={dayPeriodItems}
