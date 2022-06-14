@@ -30,6 +30,10 @@
   background: current-color(base);
 }
 
+:host(.toggle-activated) .toggle-switch-icon {
+  opacity: 0;
+}
+
 // iOS Toggle Background Track: Unchecked
 // ----------------------------------------------------------
 
@@ -58,6 +62,8 @@
   height: 13px;
 
   z-index: 1;
+
+  transition: opacity $toggle-ios-transition-duration;
 }
 
 .toggle-switch-icon.unchecked {
