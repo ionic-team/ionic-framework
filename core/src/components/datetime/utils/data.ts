@@ -523,7 +523,7 @@ export const getTimeColumnsData = (
   const dayPeriodItems = [];
   if (am && !use24Hour) {
     dayPeriodItems.push({
-      text: getLocalizedDayPeriod(locale, 'pm'),
+      text: getLocalizedDayPeriod(locale, 'am'),
       value: 'am',
     });
   }
