@@ -101,6 +101,20 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
 };
 
 /**
+ * Gets a localized version of "Today"
+ * Falls back to "Today" in English for
+ * browsers that do not support RelativeTimeFormat.
+ */
+export const getTodayLabel = (locale: string) => {
+  if ('RelativeTimeFormat' in Intl) {
+    const label = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(0, 'day');
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  } else {
+    return 'Today';
+  }
+};
+
+/**
  * When calling toISOString(), the browser
  * will convert the date to UTC time by either adding
  * or subtracting the time zone offset.

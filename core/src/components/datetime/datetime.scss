@@ -19,10 +19,35 @@
   overflow: hidden;
 }
 
+/**
+ * When using the wheel picker to switch
+ * between months, sometimes the allowed
+ * dates may be filtered. As a result, it
+ * is possible to get a layout shift as
+ * the picker column will shrink to fit the
+ * widest item in the column. Setting a minimum
+ * width avoids this layout shifting.
+ */
+ion-picker-column-internal {
+  min-width: 26px;
+}
+
 :host(.datetime-size-fixed) {
   width: auto;
-  max-width: 350px;
   height: auto;
+}
+
+:host(.datetime-size-fixed:not(.datetime-prefer-wheel)) {
+  max-width: 350px;
+}
+
+/**
+ * This ensures that the picker is apppropriately
+ * sized and never truncates the text.
+ */
+:host(.datetime-size-fixed.datetime-prefer-wheel) {
+  min-width: 350px;
+  max-width: max-content;
 }
 
 :host(.datetime-size-cover) {
@@ -58,21 +83,19 @@
  * the order we need to manually switch
  * the text alignment too.
  */
-:host .datetime-year .order-month-first .month-column {
-  order: 1;
+:host .wheel-order-year-first .day-column {
+ order: 3;
+
+ text-align: end;
 }
 
-:host .datetime-year .order-month-first .year-column {
-  order: 2;
-}
-
-:host .datetime-year .order-year-first .month-column {
+:host .wheel-order-year-first .month-column {
   order: 2;
 
   text-align: end;
 }
 
-:host .datetime-year .order-year-first .year-column {
+:host .wheel-order-year-first .year-column {
   order: 1;
 
   text-align: start;

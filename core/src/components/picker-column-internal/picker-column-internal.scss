@@ -34,6 +34,9 @@
 }
 
 :host .picker-item {
+  @include padding(0);
+  @include margin(0);
+
   display: block;
 
   width: 100%;
@@ -46,9 +49,13 @@
 
   background: transparent;
 
+  color: inherit;
+
   font-size: inherit;
 
   line-height: 34px;
+
+  text-align: inherit;
 
   text-overflow: ellipsis;
 
@@ -66,6 +73,10 @@
   scroll-snap-align: none;
 
   cursor: default;
+}
+
+:host .picker-item.picker-item-disabled {
+  opacity: 0.4;
 }
 
 :host(.picker-column-active) .picker-item.picker-item-active {
