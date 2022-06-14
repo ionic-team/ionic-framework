@@ -82,7 +82,7 @@
 
 .toggle-switch-icon--checked {
   @include ltr() {
-    @include position(null, null, null, 4px);
+    @include position(null, initial, null, 4px);
   }
 
   @include rtl() {

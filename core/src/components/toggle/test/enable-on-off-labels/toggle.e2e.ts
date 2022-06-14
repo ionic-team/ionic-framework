@@ -11,4 +11,22 @@ test.describe('toggle: enableOnOffLabels', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`toggle-on-off-labels-diff-${page.getSnapshotSettings()}.png`);
   });
+
+  test.describe('dark mode', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
+
+      await page.click('#dark-mode');
+      await page.waitForChanges();
+
+      await page.setIonViewport();
+
+      expect(await page.screenshot()).toMatchSnapshot(
+        `toggle-on-off-labels-dark-mode-diff-${page.getSnapshotSettings()}.png`
+      );
+    });
+  });
 });
