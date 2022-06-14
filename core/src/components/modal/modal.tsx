@@ -166,6 +166,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, a backdrop will be displayed behind the modal.
+   * This property controls whether or not the backdrop
+   * darkens the screen when the modal is presented.
+   * It does not control whether or not the backdrop
+   * is active or present in the DOM.
    */
   @Prop() showBackdrop = true;
 
