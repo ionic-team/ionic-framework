@@ -35,11 +35,7 @@
 }
 
 :host(.toggle-checked) .toggle-inner {
-  color: #{ion-color(light, base)};
-}
-
-:host(.ion-color-light.toggle-checked) .toggle-inner {
-  color: #{ion-color(dark, base)};
+  color: $toggle-md-on-off-label-checked-color;
 }
 
 // Material Design Toggle Background Track: Unchecked
@@ -59,6 +55,8 @@
   
   align-items: center;
   justify-content: center;
+
+  color: $toggle-md-on-off-label-color;
 }
 
 .toggle-inner .toggle-switch-icon {
