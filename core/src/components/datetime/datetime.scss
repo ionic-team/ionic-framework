@@ -33,8 +33,8 @@ ion-picker-column-internal {
 }
 
 :host(.datetime-size-fixed) {
-  height: auto;
   width: auto;
+  height: auto;
 }
 
 :host(.datetime-size-fixed:not(.datetime-prefer-wheel)) {
