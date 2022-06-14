@@ -6,6 +6,8 @@ import {
   ViewItem,
   generateId,
   getConfig,
+  AnimationBuilder,
+  iosTransitionAnimation,
 } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
@@ -194,13 +196,83 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
     };
 
-    const onStart = () => {
-      this.context.goBack();
+    const onStart = async () => {
+      const routeInfo = this.props.routeInfo;
+      const routerAnimation = routeInfo.routeAnimation;
+      
+      // How to correctly get the previous route's ID?
+      const enteringViewItem = this.context.findViewItemByPathname(routeInfo.pushedByRoute || '', (parseInt(routeInfo.id) - 1).toString());
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, routeInfo.id);
+
+      
+      if (leavingViewItem) {
+        let animationBuilder = routerAnimation ?? iosTransitionAnimation;
+        const enteringEl = enteringViewItem!.ionPageElement;
+        const leavingEl = leavingViewItem.ionPageElement;
+
+        await transition(
+          enteringEl!,
+          leavingEl!,
+          'back',
+          this.context.canGoBack(),
+          true,
+          animationBuilder
+        );
+      }
+
+      return Promise.resolve();
     };
+
+    const transition = (
+      enteringEl: HTMLElement,
+      leavingEl: HTMLElement,
+      direction: any, // TODO types
+      showGoBack: boolean,
+      progressAnimation: boolean,
+      animationBuilder?: AnimationBuilder
+    ) => {
+      return new Promise(resolve => {
+        // if (skipTransition) {
+        //   skipTransition = false;
+        //   return resolve(false);
+        // }
+
+        if (enteringEl === leavingEl) {
+          return resolve(false);
+        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(async () => {
+            enteringEl.classList.add('ion-page-invisible');
+
+            const result = await this.routerOutletElement?.commit(enteringEl, leavingEl, {
+              deepWait: true,
+              duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
+              direction,
+              showGoBack,
+              progressAnimation,
+              animationBuilder
+            });
+
+            return resolve(result);
+          });
+        });
+      });
+    }
+
     routerOutlet.swipeHandler = {
       canStart,
       onStart,
-      onEnd: (_shouldContinue) => true,
+      onEnd: (_shouldContinue) => {
+        console.log("onEnd", _shouldContinue);
+        if (_shouldContinue) {
+          this.context.goBack();
+        } else {
+          // TODO: handle incomplete swipe-back.
+        }
+
+        return true;
+      },
     };
   }
 
