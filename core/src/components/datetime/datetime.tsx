@@ -1544,8 +1544,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursItems: PickerColumnItem[]) {
-    const { color, activePartsClone, workingParts } = this;
     if (hoursItems.length === 0) return [];
+
+    const { color, activePartsClone, workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1570,8 +1571,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderMinutePickerColumn(minutesItems: PickerColumnItem[]) {
-    const { color, activePartsClone, workingParts } = this;
     if (minutesItems.length === 0) return [];
+
+    const { color, activePartsClone, workingParts } = this;
 
     return (
       <ion-picker-column-internal
