@@ -200,10 +200,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const routeInfo = this.props.routeInfo;
       const routerAnimation = routeInfo.routeAnimation;
       
-      // How to correctly get the previous route's ID?
-      const enteringViewItem = this.context.findViewItemByPathname(routeInfo.pushedByRoute || '', (parseInt(routeInfo.id) - 1).toString());
+      const enteringViewItem = this.context.findViewItemByPathname(routeInfo.pushedByRoute || '', routeInfo.id);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, routeInfo.id);
-
       
       if (leavingViewItem) {
         let animationBuilder = routerAnimation ?? iosTransitionAnimation;
@@ -243,7 +241,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
         requestAnimationFrame(() => {
           requestAnimationFrame(async () => {
-            enteringEl.classList.add('ion-page-invisible');
+            // enteringEl.classList.add('ion-page-invisible');
 
             const result = await this.routerOutletElement?.commit(enteringEl, leavingEl, {
               deepWait: true,
