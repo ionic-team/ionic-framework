@@ -62,22 +62,22 @@
 
   transform: translateY(-50%);
 
-  width: 13px;
-  height: 13px;
+  width: 11px;
+  height: 11px;
 
   transition: opacity $toggle-ios-transition-duration, color $toggle-ios-transition-duration;
 }
 
 .toggle-switch-icon {
   @include ltr() {
-    @include position(null, 6px, null, null);
+    @include position(null, 8px, null, null);
   }
 
   @include rtl() {
-    @include position(null, initial, null, 6px);
+    @include position(null, initial, null, 8px);
   }
 
-  color: var(--ion-color-step-600, $toggle-ios-on-off-label-color);
+  color: var(--ion-color-step-300, $toggle-ios-on-off-label-color);
 }
 
 :host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon--checked {
@@ -98,6 +98,9 @@
   @include rtl() {
     @include position(null, 4px, null, null);
   }
+
+  width: 15px;
+  height: 15px;
 
   transform: translateY(-50%) rotate(90deg);
 }
