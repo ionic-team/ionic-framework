@@ -848,6 +848,10 @@ export namespace Components {
          */
         "horizontal"?: 'start' | 'end' | 'center';
         /**
+          * Opens/Closes the FAB list container.
+         */
+        "toggle": () => Promise<void>;
+        /**
           * Where to align the fab vertically in the viewport.
          */
         "vertical"?: 'top' | 'bottom' | 'center';
@@ -1596,7 +1600,7 @@ export namespace Components {
          */
         "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
         /**
-          * If `true`, a backdrop will be displayed behind the modal.
+          * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
         /**
@@ -1615,7 +1619,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
+          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         /**
@@ -1962,7 +1966,7 @@ export namespace Components {
          */
         "reference": PositionReference;
         /**
-          * If `true`, a backdrop will be displayed behind the popover.
+          * If `true`, a backdrop will be displayed behind the popover. This property controls whether or not the backdrop darkens the screen when the popover is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
         /**
@@ -2276,7 +2280,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * This property allows to create custom transition using AnimateBuilder functions.
+          * This property allows to create custom transition using AnimationBuilder functions.
          */
         "animation"?: AnimationBuilder;
         "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
@@ -5524,7 +5528,7 @@ declare namespace LocalJSX {
          */
         "presentingElement"?: HTMLElement;
         /**
-          * If `true`, a backdrop will be displayed behind the modal.
+          * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
         /**
@@ -5543,7 +5547,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
+          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
@@ -5812,7 +5816,7 @@ declare namespace LocalJSX {
          */
         "reference"?: PositionReference;
         /**
-          * If `true`, a backdrop will be displayed behind the popover.
+          * If `true`, a backdrop will be displayed behind the popover. This property controls whether or not the backdrop darkens the screen when the popover is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
         /**
@@ -6160,7 +6164,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * This property allows to create custom transition using AnimateBuilder functions.
+          * This property allows to create custom transition using AnimationBuilder functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;

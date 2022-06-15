@@ -89,6 +89,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private config: Config,
     private navCtrl: NavController,
     @Optional() private environmentInjector: EnvironmentInjector,
+    @Optional() private componentFactoryResolver: ComponentFactoryResolver,
     commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
@@ -242,6 +243,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
 
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
+
+      /**
+       * The resolver is not always provided and is required in < Angular 14.
+       * Fallback to the class-level provider when the resolver is not set.
+       */
+      resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
 
       if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
         // Backwards compatibility for Angular 13 and lower

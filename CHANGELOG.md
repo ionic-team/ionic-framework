@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.10](https://github.com/ionic-team/ionic-framework/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+
+### Bug Fixes
+
+* **angular:** router compatibility with Angular 12/13 ([#25456](https://github.com/ionic-team/ionic-framework/issues/25456)) ([7b105a3](https://github.com/ionic-team/ionic-framework/commit/7b105a3471e5bc588ba63f820b707e131c878b6f)), closes [#25448](https://github.com/ionic-team/ionic-framework/issues/25448)
+* **fab-button:** improve ripple effect behavior on click ([#25413](https://github.com/ionic-team/ionic-framework/issues/25413)) ([efdaf90](https://github.com/ionic-team/ionic-framework/commit/efdaf90c5a767211e0034bab7cce5bd463ff5aa0)), closes [#21772](https://github.com/ionic-team/ionic-framework/issues/21772)
+* **modal:** backdrop animation when backdropBreakpoint is 1 ([#25430](https://github.com/ionic-team/ionic-framework/issues/25430)) ([c10df52](https://github.com/ionic-team/ionic-framework/commit/c10df52f39c527dd7e03176c56a2e6cb0ebe455f)), closes [#25402](https://github.com/ionic-team/ionic-framework/issues/25402)
+* **modal:** status bar color now correct with sheet modal ([#25424](https://github.com/ionic-team/ionic-framework/issues/25424)) ([377c4f5](https://github.com/ionic-team/ionic-framework/commit/377c4f597b972818d90132017d50c33074ddadab)), closes [#20501](https://github.com/ionic-team/ionic-framework/issues/20501)
+* **picker-column-internal:** switching off an input mode column preserves scroll ([#25467](https://github.com/ionic-team/ionic-framework/issues/25467)) ([989429d](https://github.com/ionic-team/ionic-framework/commit/989429d65cf57ef8fb69854639f8eac1a12369bc))
+* **popover:** ensure popover does not go offscreen when adjusting top position ([#25350](https://github.com/ionic-team/ionic-framework/issues/25350)) ([6926538](https://github.com/ionic-team/ionic-framework/commit/692653842b43b5e36c51163f8261fde3b5bea40d)), closes [#25349](https://github.com/ionic-team/ionic-framework/issues/25349)
+
+
+
+
+
 ## [6.1.9](https://github.com/ionic-team/ionic-framework/compare/v6.1.8...v6.1.9) (2022-06-08)
 
 

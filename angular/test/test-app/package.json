@@ -31,7 +31,7 @@
     "@angular/router": "^13.1.3",
     "@ionic/angular": "^6.0.12",
     "@ionic/angular-server": "^6.0.12",
-    "@nguniversal/express-engine": "^12.1.1",
+    "@nguniversal/express-engine": "^13.1.1",
     "angular-in-memory-web-api": "^0.11.0",
     "core-js": "^2.6.11",
     "express": "^4.15.2",
@@ -60,9 +60,9 @@
     "eslint": "^7.26.0",
     "ts-loader": "^6.2.2",
     "ts-node": "^8.3.0",
-    "typescript": "^4.5.5",
+    "typescript": "~4.6.0",
     "wait-on": "^5.2.1",
     "webpack": "^5.61.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.9.2"
   }
 }
