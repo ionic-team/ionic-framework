@@ -493,6 +493,18 @@ button, a {
   position: relative;
 }
 
+// Chrome injects host styles that conflict with the
+// positioning of ion-datetime.
+// These styles reset the position so that ion-datetime
+// displays correctly with multiple inputs in an item.
+:host(.item-multiple-inputs) {
+  @include rtl() {
+    ::slotted(ion-datetime) {
+      @include position-horizontal(0, 0);
+    }
+  }
+}
+
 // Item Textarea
 // --------------------------------------------------
 
