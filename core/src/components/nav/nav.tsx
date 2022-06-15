@@ -67,7 +67,7 @@ export class Nav implements NavOutlet {
 
   /**
    * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
-   * However, this property allows to create custom transition using `AnimateBuilder` functions.
+   * However, this property allows to create custom transition using `AnimationBuilder` functions.
    */
   @Prop() animation?: AnimationBuilder;
 

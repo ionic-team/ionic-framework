@@ -14,8 +14,8 @@
    * @prop --knob-border-radius: Border radius of the range knob
    * @prop --knob-box-shadow: Box shadow of the range knob
    * @prop --knob-size: Size of the range knob
-   * @prop --pin-background: Background of the range pin
-   * @prop --pin-color: Color of the range pin
+   * @prop --pin-background: Background of the range pin (only available in MD mode)
+   * @prop --pin-color: Color of the range pin (only available in MD mode)
    */
   --knob-handle-size: calc(var(--knob-size) * 2);
 
@@ -72,14 +72,8 @@
 }
 
 .range-knob-handle {
-  @include position(
-    calc((var(--height) - var(--knob-handle-size)) / 2),
-    null, null, 0
-  );
-  @include margin-horizontal(
-    calc(0px - var(--knob-handle-size) / 2),
-    null
-  );
+  @include position(calc((var(--height) - var(--knob-handle-size)) / 2), null, null, 0);
+  @include margin-horizontal(calc(0px - var(--knob-handle-size) / 2), null);
 
   @include rtl() {
     /* stylelint-disable-next-line property-disallowed-list */
@@ -120,11 +114,7 @@
 
 .range-knob {
   @include border-radius(var(--knob-border-radius));
-  @include position(
-    calc(50% - var(--knob-size) / 2),
-    null, null,
-    calc(50% - var(--knob-size) / 2)
-  );
+  @include position(calc(50% - var(--knob-size) / 2), null, null, calc(50% - var(--knob-size) / 2));
 
   @include rtl() {
     /* stylelint-disable-next-line property-disallowed-list */
@@ -147,7 +137,6 @@
   will-change: left, right;
 }
 
-
 // Range in Item
 // ----------------------------
 
@@ -165,12 +154,9 @@
 //   width: 100%;
 // }
 
-
-
 :host(.in-item) {
   width: 100%;
 }
-
 
 :host(.in-item) ::slotted(ion-label) {
   align-self: center;
