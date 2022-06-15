@@ -48,6 +48,5 @@ test.describe('item: counter', () => {
 
       expect(await itemCounter.textContent()).toBe('test label');
     });
-
   });
 });
