@@ -28,7 +28,7 @@ test.describe('datetime: closing time popover', () => {
     await page.waitForChanges();
 
     expect(calendarMonthYear).toHaveText(currentMonthAndYear);
-  })
+  });
 });
 
 test.describe('datetime: selecting a day', () => {
