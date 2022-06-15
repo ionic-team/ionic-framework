@@ -242,15 +242,29 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       animationBuilder?: AnimationBuilder
     ) => {
       return new Promise(resolve => {
+        // NOTE: When transitioning between two instances of the same component
+        // (with different props) enteringEl and leavingEl may be identical.
+        // To handle that, clone the leaving element and transition from that.
+        let clone: HTMLElement | undefined;
         if (enteringEl === leavingEl) {
-          return resolve(false);
+          clone = clonePageElement(leavingEl.outerHTML);
+
+          if (!clone) {
+            // TODO: should probably use this return value to trigger a goBack, even though the transition didn't happen.
+            return resolve(false);
+          }
         }
 
         requestAnimationFrame(() => {
           requestAnimationFrame(async () => {
             // enteringEl.classList.add('ion-page-invisible');
 
-            const result = await this.routerOutletElement?.commit(enteringEl, leavingEl, {
+            const leavingOrClonedEl = clone ?? leavingEl;
+            if (leavingOrClonedEl === clone) {
+              this.routerOutletElement?.appendChild(clone);
+            }
+
+            const result = await this.routerOutletElement?.commit(enteringEl, leavingOrClonedEl, {
               deepWait: true,
               duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
               direction,
@@ -258,6 +272,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
               progressAnimation,
               animationBuilder
             });
+
+            if (leavingOrClonedEl === clone) {
+              this.routerOutletElement?.removeChild(clone);
+            }
 
             return resolve(result);
           });
