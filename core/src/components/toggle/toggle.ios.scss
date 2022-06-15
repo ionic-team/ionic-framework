@@ -77,7 +77,7 @@
     @include position(null, initial, null, 8px);
   }
 
-  color: var(--ion-color-step-300, $toggle-ios-on-off-label-color);
+  color: var(--ion-color-dark);
 }
 
 :host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon--checked {
