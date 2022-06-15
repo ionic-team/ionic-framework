@@ -30,7 +30,6 @@ export const setIonViewport = async (page: Page, options?: SetIonViewportOptions
     return [0, 0];
   });
 
-
   const width = (currentViewport?.width ?? 640) + (options?.resizeViewportWidth ? x : 0);
   const height = (currentViewport?.height ?? 480) + y;
 
