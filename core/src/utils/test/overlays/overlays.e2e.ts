@@ -10,7 +10,7 @@ test.describe('overlays: focus', () => {
           <ion-input autofocus="true"></ion-input>
         </ion-content>
       </ion-modal>
-    `)
+    `);
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const button = page.locator('ion-button');
