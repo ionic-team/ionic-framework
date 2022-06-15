@@ -60,10 +60,10 @@
 
   top: 50%;
 
-  transform: translateY(-50%);
-
   width: 11px;
   height: 11px;
+
+  transform: translateY(-50%);
 
   transition: opacity $toggle-ios-transition-duration, color $toggle-ios-transition-duration;
 }
