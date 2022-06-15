@@ -1,4 +1,5 @@
 import {
+  AnimationBuilder,
   RouteInfo,
   RouteManagerContext,
   StackContext,
@@ -6,7 +7,6 @@ import {
   ViewItem,
   generateId,
   getConfig,
-  AnimationBuilder,
   iosTransitionAnimation,
 } from '@ionic/react';
 import React from 'react';
@@ -207,14 +207,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
       const routeInfo = this.props.routeInfo;
       const routerAnimation = routeInfo.routeAnimation;
-      
+
       const outletId = this.id;
       const enteringViewItem = this.context.findViewItemByPathname(routeInfo.pushedByRoute || '', outletId);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, outletId);
-      
+
       if (leavingViewItem) {
         const defaultAnimationBuilder = routerOutlet.mode === 'ios' ? iosTransitionAnimation : undefined;
-        let animationBuilder = routerAnimation ?? defaultAnimationBuilder;
+        const animationBuilder = routerAnimation ?? defaultAnimationBuilder;
         const enteringEl = enteringViewItem?.ionPageElement;
         const leavingEl = leavingViewItem.ionPageElement;
 
@@ -305,7 +305,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     leavingViewItem?: ViewItem
   ) {
     const routerOutlet = this.routerOutletElement!;
-    
+
     // HACK: when swiping back, the transition has already happened.
     // This flag prevents a redundant transition after the swipe completes.
     const { skipTransition } = this;
