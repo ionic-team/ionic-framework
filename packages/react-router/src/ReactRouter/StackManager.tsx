@@ -200,6 +200,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     };
 
     const onStart = async () => {
+      if (routerOutlet.mode !== 'ios') {
+        this.context.goBack();
+        return;
+      }
+
       const routeInfo = this.props.routeInfo;
       const routerAnimation = routeInfo.routeAnimation;
       
@@ -208,7 +213,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, outletId);
       
       if (leavingViewItem) {
-        let animationBuilder = routerAnimation ?? iosTransitionAnimation;
+        const defaultAnimationBuilder = routerOutlet.mode === 'ios' ? iosTransitionAnimation : undefined;
+        let animationBuilder = routerAnimation ?? defaultAnimationBuilder;
         const enteringEl = enteringViewItem!.ionPageElement;
         const leavingEl = leavingViewItem.ionPageElement;
 
