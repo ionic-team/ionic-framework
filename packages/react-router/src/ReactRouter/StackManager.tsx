@@ -203,8 +203,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const routeInfo = this.props.routeInfo;
       const routerAnimation = routeInfo.routeAnimation;
       
-      const enteringViewItem = this.context.findViewItemByPathname(routeInfo.pushedByRoute || '', routeInfo.id);
-      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, routeInfo.id);
+      const outletId = this.id;
+      const enteringViewItem = this.context.findViewItemByPathname(routeInfo.pushedByRoute || '', outletId);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, outletId);
       
       if (leavingViewItem) {
         let animationBuilder = routerAnimation ?? iosTransitionAnimation;
