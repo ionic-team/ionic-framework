@@ -215,17 +215,19 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (leavingViewItem) {
         const defaultAnimationBuilder = routerOutlet.mode === 'ios' ? iosTransitionAnimation : undefined;
         let animationBuilder = routerAnimation ?? defaultAnimationBuilder;
-        const enteringEl = enteringViewItem!.ionPageElement;
+        const enteringEl = enteringViewItem?.ionPageElement;
         const leavingEl = leavingViewItem.ionPageElement;
 
-        await transition(
-          enteringEl!,
-          leavingEl!,
-          'back',
-          this.context.canGoBack(),
-          true,
-          animationBuilder
-        );
+        if (enteringEl && leavingEl) {
+          await transition(
+            enteringEl,
+            leavingEl,
+            'back',
+            this.context.canGoBack(),
+            true,
+            animationBuilder
+          );
+        }
       }
 
       return Promise.resolve();
