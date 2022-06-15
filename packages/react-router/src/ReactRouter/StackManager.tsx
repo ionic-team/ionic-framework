@@ -287,7 +287,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       canStart,
       onStart,
       onEnd: (_shouldContinue) => {
-        console.log("onEnd", _shouldContinue);
         if (_shouldContinue) {
           // HACK: this flag prevents a redundant transition upon going back.
           this.skipTransition = true;
