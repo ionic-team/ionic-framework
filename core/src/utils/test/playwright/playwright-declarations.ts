@@ -98,7 +98,7 @@ export interface E2EPage extends Page {
 
 export interface SetIonViewportOptions {
   /**
-   * `true` if the viewport should be scale to match the `ion-content`
+   * `true` if the viewport should be scaled to match the `ion-content`
    * scrollable width. Defaults to `false`.
    */
   resizeViewportWidth?: boolean;
