@@ -35,6 +35,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   private pendingPageTransition = false;
 
+  // HACK: this flag a duplicate transition after swiping back.
+  private skipTransition = false;
+
   constructor(props: StackManagerProps) {
     super(props);
     this.registerIonPage = this.registerIonPage.bind(this);
@@ -230,11 +233,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       animationBuilder?: AnimationBuilder
     ) => {
       return new Promise(resolve => {
-        // if (skipTransition) {
-        //   skipTransition = false;
-        //   return resolve(false);
-        // }
-
         if (enteringEl === leavingEl) {
           return resolve(false);
         }
@@ -264,9 +262,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       onEnd: (_shouldContinue) => {
         console.log("onEnd", _shouldContinue);
         if (_shouldContinue) {
+          // HACK: this flag prevents a redundant transition upon going back.
+          this.skipTransition = true;
+
           this.context.goBack();
-        } else {
-          // TODO: handle incomplete swipe-back.
         }
 
         return true;
@@ -280,6 +279,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     leavingViewItem?: ViewItem
   ) {
     const routerOutlet = this.routerOutletElement!;
+    
+    // HACK: when swiping back, the transition has already happened.
+    // This flag prevents a redundant transition after the swipe completes.
+    const { skipTransition } = this;
+    const resetSkipTransition = () => this.skipTransition = false;
 
     const direction =
       routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
@@ -319,6 +323,15 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       enteringEl.classList.add('ion-page');
       enteringEl.classList.add('ion-page-invisible');
 
+      // HACK: when swiping back, the transition has already happened.
+      // This flag prevents a redundant transition after the swipe completes.
+      const animated = !skipTransition;
+      if (skipTransition) {
+        // Reset the flag so that only the transition that gets skipped is
+        // the one immediately following the swipe.
+        resetSkipTransition();
+      }
+
       await routerOutlet.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
@@ -326,6 +339,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         showGoBack: !!routeInfo.pushedByRoute,
         progressAnimation: false,
         animationBuilder: routeInfo.routeAnimation,
+        animated,
       });
     }
   }
