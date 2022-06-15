@@ -6,80 +6,102 @@ test.describe('item: inputs', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/item/test/inputs`);
 
-    await page.setIonViewport();
+    const screenshots = [];
+
+    const disableToggle = page.locator('#btnDisabled');
+    const submitBtn = page.locator('#submit');
 
     // Check form
-    await page.click('#submit');
+    await submitBtn.click();
     await checkFormResult(
       page,
       '{"date":"2022-04-01T10:00","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
     );
-    await page.waitForTimeout(100);
 
     // Default case, enabled and no value
-    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-${page.getSnapshotSettings()}.png`);
+    screenshots.push({
+      name: `item-inputs-${page.getSnapshotSettings()}.png`,
+      screenshot: await captureScreenshot(page),
+    });
 
     // Disable everything
-    const disableToggle = page.locator('#btnDisabled');
     await disableToggle.click();
-    await page.waitForTimeout(300);
+    await page.waitForChanges();
 
     // check form
-    await page.click('#submit');
-    await page.waitForTimeout(100);
+    await submitBtn.click();
     await checkFormResult(page, '{}');
-    await page.waitForTimeout(100);
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-should-disable-all-${page.getSnapshotSettings()}.png`);
+    screenshots.push({
+      name: `item-should-disable-all-${page.getSnapshotSettings()}.png`,
+      screenshot: await captureScreenshot(page),
+    });
 
     // Reenable and set some value
     await disableToggle.click();
     await page.click('#btnSomeValue');
-    await page.waitForTimeout(100);
 
     // check form
-    await page.click('#submit');
+    await submitBtn.click();
     await checkFormResult(
       page,
       '{"date":"2022-04-01T10:00","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}'
     );
-    await page.waitForTimeout(100);
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `item-should-reenable-and-set-value-${page.getSnapshotSettings()}.png`
-    );
+    screenshots.push({
+      name: `item-should-reenable-and-set-value-${page.getSnapshotSettings()}.png`,
+      screenshot: await captureScreenshot(page),
+    });
 
     // Set "null"
     await page.click('#btnNullValue');
-    await page.waitForTimeout(100);
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-set-null-${page.getSnapshotSettings()}.png`);
+    screenshots.push({
+      name: `item-should-set-null-${page.getSnapshotSettings()}.png`,
+      screenshot: await captureScreenshot(page),
+    });
 
     // Set "empty"
     await page.click('#btnEmptyValue');
-    await page.waitForTimeout(100);
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-should-set-empty-${page.getSnapshotSettings()}.png`);
+    screenshots.push({
+      name: `item-should-set-empty-${page.getSnapshotSettings()}.png`,
+      screenshot: await captureScreenshot(page),
+    });
 
     // Test multiple
     await page.click('#checkbox-start');
     await page.click('#datetime-end');
-    await page.waitForTimeout(300);
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `item-should-check-checkbox-and-open-datepicker-${page.getSnapshotSettings()}.png`
-    );
+    screenshots.push({
+      name: `item-should-check-checkbox-and-open-datepicker-${page.getSnapshotSettings()}.png`,
+      screenshot: await captureScreenshot(page),
+    });
 
     await page.click('#button-end');
-    await page.waitForTimeout(100);
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `item-should-change-button-color-to-red-${page.getSnapshotSettings()}.png`
-    );
+    screenshots.push({
+      name: `item-should-change-button-color-to-red-${page.getSnapshotSettings()}.png`,
+      screenshot: await page.screenshot(),
+    });
+
+    for (const screenshot of screenshots) {
+      expect(screenshot.screenshot).toMatchSnapshot(screenshot.name);
+    }
   });
 });
 
 const checkFormResult = async (page: E2EPage, content: string) => {
   const div = page.locator('#form-result');
   expect(await div.textContent()).toEqual(content);
+};
+
+/**
+ * Resizes the viewport and captures a screenshot.
+ * Required for this test suite, since the DOM size is not
+ * the same at each test case.
+ */
+const captureScreenshot = async (page: E2EPage) => {
+  await page.setIonViewport();
+  return page.screenshot();
 };
