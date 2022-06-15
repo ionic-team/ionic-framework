@@ -58,6 +58,10 @@
 .toggle-switch-icon {
   position: absolute;
 
+  top: 50%;
+
+  transform: translateY(-50%);
+
   width: 13px;
   height: 13px;
 
@@ -95,7 +99,7 @@
     @include position(null, 4px, null, null);
   }
 
-  transform: rotate(90deg);
+  transform: translateY(-50%) rotate(90deg);
 }
 
 // iOS Toggle Background Oval: Activated or Checked

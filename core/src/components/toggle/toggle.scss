@@ -82,11 +82,9 @@ input {
 .toggle-icon {
   @include border-radius(var(--border-radius));
 
-  display: flex;
+  display: block;
 
   position: relative;
-  
-  align-items: center;
 
   width: 100%;
   height: 100%;
