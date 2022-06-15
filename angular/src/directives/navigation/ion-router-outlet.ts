@@ -245,7 +245,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
 
       /**
-       * The resolver is not always provided and is required in < Angular 14.
+       * The resolver is not always provided and is required in Angular 12.
        * Fallback to the class-level provider when the resolver is not set.
        */
       resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
