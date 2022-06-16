@@ -1,10 +1,10 @@
-import { JSX } from '@ionic/core/components';
+import type { JSX } from '@ionic/core/components';
 import { defineCustomElement as defineIonApp } from '@ionic/core/components/ion-app.js';
 import { defineCustomElement as defineIonBackButton } from '@ionic/core/components/ion-back-button.js';
 import { defineCustomElement as defineIonRouterOutlet } from '@ionic/core/components/ion-router-outlet.js';
 import { defineCustomElement as defineIonTabBar } from '@ionic/core/components/ion-tab-bar.js';
 import { defineCustomElement as defineIonTabButton } from '@ionic/core/components/ion-tab-button.js';
-import { JSX as IoniconsJSX } from 'ionicons';
+import type { JSX as IoniconsJSX } from 'ionicons';
 import { defineCustomElement as defineIonIcon } from 'ionicons/components/ion-icon.js';
 
 import { /*@__PURE__*/ createReactComponent } from './react-component-lib';

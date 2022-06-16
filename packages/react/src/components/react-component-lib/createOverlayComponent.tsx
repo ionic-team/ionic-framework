@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { OverlayEventDetail } from './interfaces';
+import type { OverlayEventDetail } from './interfaces';
+import type {
+  StencilReactForwardedRef} from './utils';
 import {
-  StencilReactForwardedRef,
   attachProps,
   dashToPascalCase,
   defineCustomElement,

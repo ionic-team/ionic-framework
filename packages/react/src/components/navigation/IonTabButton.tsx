@@ -1,8 +1,8 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
-import { RouterOptions } from '../../models';
-import { IonicReactProps } from '../IonicReactProps';
+import type { RouterOptions } from '../../models';
+import type { IonicReactProps } from '../IonicReactProps';
 import { IonTabButtonInner } from '../inner-proxies';
 
 type Props = LocalJSX.IonTabButton &

@@ -1,4 +1,5 @@
-import { IonicConfig, initialize } from '@ionic/core/components';
+import type { IonicConfig} from '@ionic/core/components';
+import { initialize } from '@ionic/core/components';
 
 export {
   // UTILS

@@ -1,6 +1,7 @@
-import {
+import type {
   ActionSheetButton as ActionSheetButtonCore,
-  ActionSheetOptions as ActionSheetOptionsCore,
+  ActionSheetOptions as ActionSheetOptionsCore} from '@ionic/core/components';
+import {
   actionSheetController as actionSheetControllerCore,
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';

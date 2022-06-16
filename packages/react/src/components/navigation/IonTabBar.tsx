@@ -1,9 +1,9 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React, { useContext } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
-import { RouteInfo } from '../../models';
-import { IonicReactProps } from '../IonicReactProps';
+import type { RouteInfo } from '../../models';
+import type { IonicReactProps } from '../IonicReactProps';
 import { IonTabBarInner } from '../inner-proxies';
 import { createForwardRef } from '../utils';
 

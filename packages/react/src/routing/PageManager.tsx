@@ -2,7 +2,7 @@ import React from 'react';
 
 import { mergeRefs } from '../components/react-component-lib/utils';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
-import { RouteInfo } from '../models';
+import type { RouteInfo } from '../models';
 
 import { StackContext } from './StackContext';
 

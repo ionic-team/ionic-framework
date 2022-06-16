@@ -8,7 +8,7 @@ import { IonItem as IonItemCmp } from '@ionic/core/components/ion-item.js';
 import { IonRouterLink as IonRouterLinkCmp } from '@ionic/core/components/ion-router-link.js';
 
 import { createRoutingComponent } from './createRoutingComponent';
-import { HrefProps } from './hrefprops';
+import type { HrefProps } from './hrefprops';
 
 export const IonRouterLink = /*@__PURE__*/ createRoutingComponent<
   HrefProps<JSX.IonRouterLink>,

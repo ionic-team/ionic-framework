@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RouteInfo } from '../models/RouteInfo';
+import type { RouteInfo } from '../models/RouteInfo';
 
 export interface StackContextState {
   registerIonPage: (page: HTMLElement, routeInfo: RouteInfo) => void;

@@ -1,10 +1,11 @@
-import {
+import type {
   Animation,
   AnimationCallbackOptions,
   AnimationDirection,
   AnimationFill,
   AnimationKeyFrames,
-  AnimationLifecycle,
+  AnimationLifecycle} from '@ionic/core/components';
+import {
   createAnimation,
 } from '@ionic/core/components';
 import React from 'react';
