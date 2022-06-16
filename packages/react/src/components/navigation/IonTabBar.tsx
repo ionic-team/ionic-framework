@@ -227,6 +227,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         | undefined
     ) => {
       if (
+        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
         child != null &&
         child.props &&
         (child.type === IonTabButton || (child as any).type.isTabButton)

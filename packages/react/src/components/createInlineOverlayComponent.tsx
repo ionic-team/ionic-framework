@@ -62,7 +62,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.ref.current?.addEventListener('willPresent', (evt: any) => {
         this.setState({ isOpen: true });
 
-        this.props.onWillPresent && this.props.onWillPresent(evt);
+        this.props.onWillPresent?.(evt);
       });
 
       /**
@@ -92,7 +92,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
           this.setState({ isOpen: false });
         }
 
-        this.props.onDidDismiss && this.props.onDidDismiss(evt);
+        this.props.onDidDismiss?.(evt);
       });
     }
 

@@ -116,12 +116,14 @@ export const createOverlayComponent = <
         ...cProps,
         ref: this.props.forwardedRef,
         [didDismissEventName]: this.handleDismiss,
+        /* eslint-disable @typescript-eslint/prefer-optional-chain */
         [didPresentEventName]: (e: CustomEvent) =>
           this.props.onDidPresent && this.props.onDidPresent(e),
         [willDismissEventName]: (e: CustomEvent) =>
           this.props.onWillDismiss && this.props.onWillDismiss(e),
         [willPresentEventName]: (e: CustomEvent) =>
           this.props.onWillPresent && this.props.onWillPresent(e),
+          /* eslint-enable @typescript-eslint/prefer-optional-chain */
       };
 
       this.overlay = await controller.create({
