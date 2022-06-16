@@ -39,7 +39,7 @@ export const getPlatforms = () => {
 export const getConfig = (): CoreConfig | null => {
   if (typeof (window as any) !== 'undefined') {
     const Ionic = (window as any).Ionic;
-    if (Ionic && Ionic.config) {
+    if (Ionic?.config) {
       return Ionic.config;
     }
   }
