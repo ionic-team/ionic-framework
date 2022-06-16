@@ -466,7 +466,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         let props = {
           ref: c.vueComponentRef,
           key: c.pathname,
-          isInOutlet: true,
           registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
         }
 

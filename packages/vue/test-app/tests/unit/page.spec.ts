@@ -64,7 +64,7 @@ describe('IonPage', () => {
   });
   it('should not re-add ion-page-invisible when setting the class', async () => {
     const Page1 = {
-      template: `<ion-page :is-in-outlet="true" :class="{ 'custom-class': addClass }"></ion-page>`,
+      template: `<ion-page :class="{ 'custom-class': addClass }"></ion-page>`,
       name: 'Page1',
       components: { IonPage },
       data() {
