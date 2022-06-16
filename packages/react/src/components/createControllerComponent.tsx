@@ -94,6 +94,10 @@ export const createControllerComponent = <
     }
 
     async present(prevProps?: Props) {
+      /**
+       * This is used to exclude certain keys from the `prop` object.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } =
         this.props;
 

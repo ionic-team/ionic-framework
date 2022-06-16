@@ -39,6 +39,7 @@ export const IonTabButton = /*@__PURE__*/ (() =>
        * implementation within IonTabBar.tsx. Calling onClick within this
        * component would result in duplicate handler calls.
        */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { onClick, ...rest } = this.props;
       return (
         <IonTabButtonInner
