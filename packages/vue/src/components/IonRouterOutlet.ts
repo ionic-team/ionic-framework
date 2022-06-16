@@ -427,6 +427,11 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * as a result of a navigation change.
        */
       if (viewItem.registerCallback) {
+        /**
+         * Page should be hidden initially
+         * to avoid flickering.
+         */
+        ionPageEl.classList.add('ion-page-invisible');
         viewItem.registerCallback();
 
       /**
