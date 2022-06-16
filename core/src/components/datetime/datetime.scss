@@ -341,9 +341,12 @@
    * Explicit position values are required here
    * as pseudo element positioning is incorrect
    * in older implementations of css grid.
+   *
+   * TODO: FW-1720: Remove top/left styles when depreciating iOS 13 support
    */
-
-  @include position(50%, null, null, 50%);
+  top: 50%;
+  /* stylelint-disable-next-line property-disallowed-list */
+  left: 50%;
 
   position: absolute;
 
