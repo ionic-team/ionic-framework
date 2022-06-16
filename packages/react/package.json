@@ -25,13 +25,14 @@
     "clean": "rimraf dist && rimraf dist-transpiled && rimraf routing",
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --yolo --no-release-draft",
-    "lint": "eslint src",
+    "lint": "eslint src && npm run prettier -- --write",
     "lint.fix": "npm run lint -- --fix",
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
     "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js",
-    "sync": "sh ./scripts/sync.sh"
+    "sync": "sh ./scripts/sync.sh",
+    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\""
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
