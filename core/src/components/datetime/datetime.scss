@@ -337,6 +337,9 @@
 :host .calendar-day:after {
   @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
+
+  position: absolute;
+  
   /**
    * Explicit position values are required here
    * as pseudo element positioning is incorrect
@@ -348,8 +351,6 @@
   top: 50%;
   /* stylelint-disable-next-line property-disallowed-list */
   left: 50%;
-
-  position: absolute;
 
   width: 32px;
   height: 32px;
