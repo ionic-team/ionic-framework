@@ -90,7 +90,7 @@ export class LocationHistory {
 
   private _replace(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
-    routeInfos && routeInfos.pop();
+    routeInfos?.pop();
     this.locationHistory.pop();
     this._add(routeInfo);
   }

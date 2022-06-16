@@ -61,9 +61,11 @@ export function useOverlay<OptionsType, OverlayType extends OverlayBase>(
 
     attachProps(overlayRef.current, {
       [didDismissEventName]: handleDismiss,
+      /* eslint-disable @typescript-eslint/prefer-optional-chain */
       [didPresentEventName]: (e: CustomEvent) => onDidPresent && onDidPresent(e),
       [willDismissEventName]: (e: CustomEvent) => onWillDismiss && onWillDismiss(e),
       [willPresentEventName]: (e: CustomEvent) => onWillPresent && onWillPresent(e),
+      /* eslint-enable @typescript-eslint/prefer-optional-chain */
     });
 
     overlayRef.current.present();
