@@ -102,6 +102,10 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     }
 
     render() {
+      /**
+       * This is used to exclude certain keys from the `prop` object.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {

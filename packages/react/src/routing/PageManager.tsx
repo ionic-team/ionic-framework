@@ -88,6 +88,10 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
   }
 
   render() {
+    /**
+     * This is used to exclude certain keys from the `prop` object.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { className, children, routeInfo, forwardedRef, ...props } = this.props;
 
     return (

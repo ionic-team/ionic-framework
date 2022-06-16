@@ -114,15 +114,11 @@ export const createOverlayComponent = <
     }
 
     async present(prevProps?: Props) {
-      const {
-        children,
-        isOpen,
-        onDidDismiss,
-        onDidPresent,
-        onWillDismiss,
-        onWillPresent,
-        ...cProps
-      } = this.props;
+      /**
+       * This is used to exclude certain keys from the `prop` object.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { children, isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
       const elementProps = {
         ...cProps,
         ref: this.props.forwardedRef,
