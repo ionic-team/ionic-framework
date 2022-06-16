@@ -1,2 +1,3 @@
 src/components/react-component-lib/createComponent.tsx
+src/components/react-component-lib/createOverlayComponent.tsx
 src/components/react-component-lib/utils
