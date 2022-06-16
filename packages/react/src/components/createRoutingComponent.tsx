@@ -1,9 +1,9 @@
-import type { AnimationBuilder } from '@ionic/core/components';
-import React, { createElement } from 'react';
+import type { AnimationBuilder } from "@ionic/core/components";
+import React, { createElement } from "react";
 
-import { NavContext } from '../contexts/NavContext';
-import type { RouterOptions } from '../models';
-import type { RouterDirection } from '../models/RouterDirection';
+import { NavContext } from "../contexts/NavContext";
+import type { RouterOptions } from "../models";
+import type { RouterDirection } from "../models/RouterDirection";
 
 import {
   attachProps,
@@ -12,10 +12,11 @@ import {
   defineCustomElement,
   isCoveredByReact,
   mergeRefs,
-} from './react-component-lib/utils';
-import { createForwardRef } from './utils';
+} from "./react-component-lib/utils";
+import { createForwardRef } from "./utils";
 
-interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
+interface IonicReactInternalProps<ElementType>
+  extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   href?: string;
   routerLink?: string;
@@ -32,17 +33,19 @@ export const createRoutingComponent = <PropType, ElementType>(
   defineCustomElement(tagName, customElement);
 
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
+  const ReactComponent = class extends React.Component<
+    IonicReactInternalProps<PropType>
+  > {
     context!: React.ContextType<typeof NavContext>;
     ref: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>
+    stableMergedRefs: React.RefCallback<HTMLElement>;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
     }
 
     componentDidMount() {
@@ -55,7 +58,8 @@ export const createRoutingComponent = <PropType, ElementType>(
     }
 
     private handleClick = (e: React.MouseEvent<PropType>) => {
-      const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
+      const { routerLink, routerDirection, routerOptions, routerAnimation } =
+        this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
         this.context.navigate(
@@ -73,15 +77,18 @@ export const createRoutingComponent = <PropType, ElementType>(
        * This is used to exclude certain keys from the `prop` object.
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
+      const { children, forwardedRef, style, className, ref, ...cProps } =
+        this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {
-        if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+        if (name.indexOf("on") === 0 && name[2] === name[2].toUpperCase()) {
           const eventName = name.substring(2).toLowerCase();
           if (isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
-        } else if (['string', 'boolean', 'number'].includes(typeof (cProps as any)[name])) {
+        } else if (
+          ["string", "boolean", "number"].includes(typeof (cProps as any)[name])
+        ) {
           (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
         }
         return acc;

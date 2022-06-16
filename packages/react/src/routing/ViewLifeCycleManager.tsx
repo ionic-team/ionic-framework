@@ -1,6 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
+import {
+  DefaultIonLifeCycleContext,
+  IonLifeCycleContext,
+} from "../contexts/IonLifeCycleContext";
 
 interface ViewTransitionManagerProps {
   removeView: () => void;

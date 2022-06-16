@@ -1,6 +1,6 @@
-import type { RouteInfo } from '../models/RouteInfo';
+import type { RouteInfo } from "../models/RouteInfo";
 
-import type { ViewItem } from './ViewItem';
+import type { ViewItem } from "./ViewItem";
 
 export abstract class ViewStacks {
   private viewStacks: { [key: string]: ViewItem[] } = {};
@@ -40,7 +40,9 @@ export abstract class ViewStacks {
       const viewItemToRemove = viewStack.find((x) => x.id === viewItem.id);
       if (viewItemToRemove) {
         viewItemToRemove.mount = false;
-        this.viewStacks[outletId] = viewStack.filter((x) => x.id !== viewItemToRemove.id);
+        this.viewStacks[outletId] = viewStack.filter(
+          (x) => x.id !== viewItemToRemove.id
+        );
       }
     }
   }
@@ -64,8 +66,14 @@ export abstract class ViewStacks {
     routeInfo: RouteInfo,
     page?: HTMLElement
   ): ViewItem;
-  abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
-  abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
+  abstract findViewItemByPathname(
+    pathname: string,
+    outletId?: string
+  ): ViewItem | undefined;
+  abstract findViewItemByRouteInfo(
+    routeInfo: RouteInfo,
+    outletId?: string
+  ): ViewItem | undefined;
   abstract findLeavingViewItemByRouteInfo(
     routeInfo: RouteInfo,
     outletId?: string

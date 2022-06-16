@@ -1,9 +1,12 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from "react";
 
-import type { LifeCycleCallback } from '../contexts/IonLifeCycleContext';
-import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
+import type { LifeCycleCallback } from "../contexts/IonLifeCycleContext";
+import { IonLifeCycleContext } from "../contexts/IonLifeCycleContext";
 
-export const useIonViewWillEnter = (callback: LifeCycleCallback, deps: any[] = []) => {
+export const useIonViewWillEnter = (
+  callback: LifeCycleCallback,
+  deps: any[] = []
+) => {
   const context = useContext(IonLifeCycleContext);
   const id = useRef<number | undefined>();
   id.current = id.current || Math.floor(Math.random() * 1000000);
@@ -13,7 +16,10 @@ export const useIonViewWillEnter = (callback: LifeCycleCallback, deps: any[] = [
   }, deps);
 };
 
-export const useIonViewDidEnter = (callback: LifeCycleCallback, deps: any[] = []) => {
+export const useIonViewDidEnter = (
+  callback: LifeCycleCallback,
+  deps: any[] = []
+) => {
   const context = useContext(IonLifeCycleContext);
   const id = useRef<number | undefined>();
   id.current = id.current || Math.floor(Math.random() * 1000000);
@@ -23,7 +29,10 @@ export const useIonViewDidEnter = (callback: LifeCycleCallback, deps: any[] = []
   }, deps);
 };
 
-export const useIonViewWillLeave = (callback: LifeCycleCallback, deps: any[] = []) => {
+export const useIonViewWillLeave = (
+  callback: LifeCycleCallback,
+  deps: any[] = []
+) => {
   const context = useContext(IonLifeCycleContext);
   const id = useRef<number | undefined>();
   id.current = id.current || Math.floor(Math.random() * 1000000);
@@ -33,7 +42,10 @@ export const useIonViewWillLeave = (callback: LifeCycleCallback, deps: any[] = [
   }, deps);
 };
 
-export const useIonViewDidLeave = (callback: LifeCycleCallback, deps: any[] = []) => {
+export const useIonViewDidLeave = (
+  callback: LifeCycleCallback,
+  deps: any[] = []
+) => {
   const context = useContext(IonLifeCycleContext);
   const id = useRef<number | undefined>();
   id.current = id.current || Math.floor(Math.random() * 1000000);

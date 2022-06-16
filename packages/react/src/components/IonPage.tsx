@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { NavContext } from '../contexts/NavContext';
-import PageManager from '../routing/PageManager';
+import { NavContext } from "../contexts/NavContext";
+import PageManager from "../routing/PageManager";
 
-import type { IonicReactProps } from './IonicReactProps';
-import { createForwardRef } from './utils';
+import type { IonicReactProps } from "./IonicReactProps";
+import { createForwardRef } from "./utils";
 
-type IonPageProps = IonicReactProps
+type IonPageProps = IonicReactProps;
 
 interface IonPageInternalProps extends IonPageProps {
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
@@ -24,7 +24,7 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
 
     return this.context.hasIonicRouter() ? (
       <PageManager
-        className={className ? `${className}` : ''}
+        className={className ? `${className}` : ""}
         routeInfo={this.context.routeInfo}
         forwardedRef={forwardedRef}
         {...props}
@@ -33,7 +33,7 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
       </PageManager>
     ) : (
       <div
-        className={className ? `ion-page ${className}` : 'ion-page'}
+        className={className ? `ion-page ${className}` : "ion-page"}
         ref={forwardedRef}
         {...props}
       >
@@ -43,7 +43,7 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
   }
 
   static get displayName() {
-    return 'IonPage';
+    return "IonPage";
   }
 
   static get contextType() {
@@ -51,4 +51,4 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
   }
 }
 
-export const IonPage = createForwardRef(IonPageInternal, 'IonPage');
+export const IonPage = createForwardRef(IonPageInternal, "IonPage");

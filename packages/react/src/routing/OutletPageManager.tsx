@@ -1,11 +1,11 @@
-import { componentOnReady } from '@ionic/core/components';
-import React from 'react';
+import { componentOnReady } from "@ionic/core/components";
+import React from "react";
 
-import { IonRouterOutletInner } from '../components/inner-proxies';
-import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
-import type { RouteInfo } from '../models';
+import { IonRouterOutletInner } from "../components/inner-proxies";
+import { IonLifeCycleContext } from "../contexts/IonLifeCycleContext";
+import type { RouteInfo } from "../models";
 
-import { StackContext } from './StackContext';
+import { StackContext } from "./StackContext";
 
 interface OutletPageManagerProps {
   className?: string;
@@ -26,23 +26,26 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
   componentDidMount() {
     if (this.ionRouterOutlet) {
       componentOnReady(this.ionRouterOutlet, () => {
-        this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
+        this.context.registerIonPage(
+          this.ionRouterOutlet!,
+          this.props.routeInfo!
+        );
       });
 
       this.ionRouterOutlet.addEventListener(
-        'ionViewWillEnter',
+        "ionViewWillEnter",
         this.ionViewWillEnterHandler.bind(this)
       );
       this.ionRouterOutlet.addEventListener(
-        'ionViewDidEnter',
+        "ionViewDidEnter",
         this.ionViewDidEnterHandler.bind(this)
       );
       this.ionRouterOutlet.addEventListener(
-        'ionViewWillLeave',
+        "ionViewWillLeave",
         this.ionViewWillLeaveHandler.bind(this)
       );
       this.ionRouterOutlet.addEventListener(
-        'ionViewDidLeave',
+        "ionViewDidLeave",
         this.ionViewDidLeaveHandler.bind(this)
       );
     }
@@ -51,19 +54,19 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
   componentWillUnmount() {
     if (this.ionRouterOutlet) {
       this.ionRouterOutlet.removeEventListener(
-        'ionViewWillEnter',
+        "ionViewWillEnter",
         this.ionViewWillEnterHandler.bind(this)
       );
       this.ionRouterOutlet.removeEventListener(
-        'ionViewDidEnter',
+        "ionViewDidEnter",
         this.ionViewDidEnterHandler.bind(this)
       );
       this.ionRouterOutlet.removeEventListener(
-        'ionViewWillLeave',
+        "ionViewWillLeave",
         this.ionViewWillLeaveHandler.bind(this)
       );
       this.ionRouterOutlet.removeEventListener(
-        'ionViewDidLeave',
+        "ionViewDidLeave",
         this.ionViewDidLeaveHandler.bind(this)
       );
     }
@@ -94,7 +97,9 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
           return (
             <StackManager routeInfo={routeInfo}>
               <IonRouterOutletInner
-                setRef={(val: HTMLIonRouterOutletElement) => (this.ionRouterOutlet = val)}
+                setRef={(val: HTMLIonRouterOutletElement) =>
+                  (this.ionRouterOutlet = val)
+                }
                 {...props}
               >
                 {children}

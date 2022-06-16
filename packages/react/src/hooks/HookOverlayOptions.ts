@@ -1,4 +1,4 @@
-import type { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from "@ionic/core/components";
 
 export interface HookOverlayOptions {
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;

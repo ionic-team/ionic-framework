@@ -1,12 +1,12 @@
-import type { ModalOptions} from '@ionic/core/components';
-import { modalController } from '@ionic/core/components';
-import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
-import { useCallback } from 'react';
+import type { ModalOptions } from "@ionic/core/components";
+import { modalController } from "@ionic/core/components";
+import { defineCustomElement } from "@ionic/core/components/ion-modal.js";
+import { useCallback } from "react";
 
-import type { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+import type { ReactComponentOrElement } from "../models/ReactComponentOrElement";
 
-import type { HookOverlayOptions } from './HookOverlayOptions';
-import { useOverlay } from './useOverlay';
+import type { HookOverlayOptions } from "./HookOverlayOptions";
+import { useOverlay } from "./useOverlay";
 
 /**
  * A hook for presenting/dismissing an IonModal component
@@ -19,7 +19,7 @@ export function useIonModal(
   componentProps?: any
 ): UseIonModalResult {
   const controller = useOverlay<ModalOptions, HTMLIonModalElement>(
-    'IonModal',
+    "IonModal",
     modalController,
     defineCustomElement,
     component,
@@ -27,7 +27,10 @@ export function useIonModal(
   );
 
   const present = useCallback(
-    (options: Omit<ModalOptions, 'component' | 'componentProps'> & HookOverlayOptions = {}) => {
+    (
+      options: Omit<ModalOptions, "component" | "componentProps"> &
+        HookOverlayOptions = {}
+    ) => {
       controller.present(options as any);
     },
     [controller.present]
@@ -37,7 +40,10 @@ export function useIonModal(
 }
 
 export type UseIonModalResult = [
-  (options?: Omit<ModalOptions, 'component' | 'componentProps'> & HookOverlayOptions) => void,
+  (
+    options?: Omit<ModalOptions, "component" | "componentProps"> &
+      HookOverlayOptions
+  ) => void,
   /**
    * Dismisses the modal
    */

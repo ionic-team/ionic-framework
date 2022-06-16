@@ -1,12 +1,12 @@
-import type { OverlayEventDetail } from '@ionic/core/components';
-import React from 'react';
+import type { OverlayEventDetail } from "@ionic/core/components";
+import React from "react";
 
 import {
   attachProps,
   dashToPascalCase,
   defineCustomElement,
   setRef,
-} from './react-component-lib/utils';
+} from "./react-component-lib/utils";
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -78,10 +78,17 @@ export const createControllerComponent = <
     }
 
     async componentDidUpdate(prevProps: Props) {
-      if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
+      if (
+        prevProps.isOpen !== this.props.isOpen &&
+        this.props.isOpen === true
+      ) {
         this.present(prevProps);
       }
-      if (this.overlay && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
+      if (
+        this.overlay &&
+        prevProps.isOpen !== this.props.isOpen &&
+        this.props.isOpen === false
+      ) {
         await this.overlay.dismiss();
       }
     }
@@ -98,8 +105,14 @@ export const createControllerComponent = <
        * This is used to exclude certain keys from the `prop` object.
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } =
-        this.props;
+      const {
+        isOpen,
+        onDidDismiss,
+        onDidPresent,
+        onWillDismiss,
+        onWillPresent,
+        ...cProps
+      } = this.props;
 
       if (this.overlay) {
         this.overlay.remove();
@@ -119,7 +132,7 @@ export const createControllerComponent = <
             this.props.onWillDismiss && this.props.onWillDismiss(e),
           [willPresentEventName]: (e: CustomEvent) =>
             this.props.onWillPresent && this.props.onWillPresent(e),
-            /* eslint-enable @typescript-eslint/prefer-optional-chain */
+          /* eslint-enable @typescript-eslint/prefer-optional-chain */
         },
         prevProps
       );

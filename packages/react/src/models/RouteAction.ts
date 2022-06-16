@@ -1,1 +1,1 @@
-export type RouteAction = 'push' | 'replace' | 'pop';
+export type RouteAction = "push" | "replace" | "pop";

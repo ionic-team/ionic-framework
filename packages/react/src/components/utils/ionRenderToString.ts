@@ -1,5 +1,5 @@
-import type { SerializeDocumentOptions} from '@ionic/core/hydrate';
-import { renderToString } from '@ionic/core/hydrate';
+import type { SerializeDocumentOptions } from "@ionic/core/hydrate";
+import { renderToString } from "@ionic/core/hydrate";
 
 export async function ionRenderToString(
   html: string,
@@ -12,28 +12,28 @@ export async function ionRenderToString(
       clientHydrateAnnotations: false,
       excludeComponents: [
         // overlays
-        'ion-action-sheet',
-        'ion-alert',
-        'ion-loading',
-        'ion-modal',
-        'ion-picker',
-        'ion-popover',
-        'ion-toast',
+        "ion-action-sheet",
+        "ion-alert",
+        "ion-loading",
+        "ion-modal",
+        "ion-picker",
+        "ion-popover",
+        "ion-toast",
 
         // navigation
-        'ion-router',
-        'ion-route',
-        'ion-route-redirect',
-        'ion-router-link',
-        'ion-router-outlet',
+        "ion-router",
+        "ion-route",
+        "ion-route-redirect",
+        "ion-router-link",
+        "ion-router-outlet",
 
         // tabs
-        'ion-tabs',
-        'ion-tab',
+        "ion-tabs",
+        "ion-tab",
 
         // auxiliary
-        'ion-picker-column',
-        'ion-virtual-scroll',
+        "ion-picker-column",
+        "ion-virtual-scroll",
       ],
       userAgent,
     },

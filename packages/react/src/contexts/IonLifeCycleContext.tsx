@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface IonLifeCycleContextInterface {
   onIonViewWillEnter: (callback: () => void) => void;
@@ -11,39 +11,42 @@ export interface IonLifeCycleContextInterface {
   ionViewDidLeave: () => void;
 }
 
-export const IonLifeCycleContext = /*@__PURE__*/ React.createContext<IonLifeCycleContextInterface>({
-  onIonViewWillEnter: () => {
-    return;
-  },
-  ionViewWillEnter: () => {
-    return;
-  },
-  onIonViewDidEnter: () => {
-    return;
-  },
-  ionViewDidEnter: () => {
-    return;
-  },
-  onIonViewWillLeave: () => {
-    return;
-  },
-  ionViewWillLeave: () => {
-    return;
-  },
-  onIonViewDidLeave: () => {
-    return;
-  },
-  ionViewDidLeave: () => {
-    return;
-  },
-});
+export const IonLifeCycleContext =
+  /*@__PURE__*/ React.createContext<IonLifeCycleContextInterface>({
+    onIonViewWillEnter: () => {
+      return;
+    },
+    ionViewWillEnter: () => {
+      return;
+    },
+    onIonViewDidEnter: () => {
+      return;
+    },
+    ionViewDidEnter: () => {
+      return;
+    },
+    onIonViewWillLeave: () => {
+      return;
+    },
+    ionViewWillLeave: () => {
+      return;
+    },
+    onIonViewDidLeave: () => {
+      return;
+    },
+    ionViewDidLeave: () => {
+      return;
+    },
+  });
 
 export interface LifeCycleCallback {
   (): void;
   id?: number;
 }
 
-export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextInterface {
+export const DefaultIonLifeCycleContext = class
+  implements IonLifeCycleContextInterface
+{
   ionViewWillEnterCallbacks: LifeCycleCallback[] = [];
   ionViewDidEnterCallbacks: LifeCycleCallback[] = [];
   ionViewWillLeaveCallbacks: LifeCycleCallback[] = [];
@@ -52,7 +55,9 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
 
   onIonViewWillEnter(callback: LifeCycleCallback) {
     if (callback.id) {
-      const index = this.ionViewWillEnterCallbacks.findIndex((x) => x.id === callback.id);
+      const index = this.ionViewWillEnterCallbacks.findIndex(
+        (x) => x.id === callback.id
+      );
       if (index > -1) {
         this.ionViewWillEnterCallbacks[index] = callback;
       } else {
@@ -69,7 +74,9 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
 
   onIonViewDidEnter(callback: LifeCycleCallback) {
     if (callback.id) {
-      const index = this.ionViewDidEnterCallbacks.findIndex((x) => x.id === callback.id);
+      const index = this.ionViewDidEnterCallbacks.findIndex(
+        (x) => x.id === callback.id
+      );
       if (index > -1) {
         this.ionViewDidEnterCallbacks[index] = callback;
       } else {
@@ -86,7 +93,9 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
 
   onIonViewWillLeave(callback: LifeCycleCallback) {
     if (callback.id) {
-      const index = this.ionViewWillLeaveCallbacks.findIndex((x) => x.id === callback.id);
+      const index = this.ionViewWillLeaveCallbacks.findIndex(
+        (x) => x.id === callback.id
+      );
       if (index > -1) {
         this.ionViewWillLeaveCallbacks[index] = callback;
       } else {
@@ -103,7 +112,9 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
 
   onIonViewDidLeave(callback: LifeCycleCallback) {
     if (callback.id) {
-      const index = this.ionViewDidLeaveCallbacks.findIndex((x) => x.id === callback.id);
+      const index = this.ionViewDidLeaveCallbacks.findIndex(
+        (x) => x.id === callback.id
+      );
       if (index > -1) {
         this.ionViewDidLeaveCallbacks[index] = callback;
       } else {

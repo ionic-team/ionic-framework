@@ -1,25 +1,29 @@
-import type { ActionSheetButton, ActionSheetOptions} from '@ionic/core/components';
-import { actionSheetController } from '@ionic/core/components';
-import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';
-import { useCallback } from 'react';
+import type {
+  ActionSheetButton,
+  ActionSheetOptions,
+} from "@ionic/core/components";
+import { actionSheetController } from "@ionic/core/components";
+import { defineCustomElement } from "@ionic/core/components/ion-action-sheet.js";
+import { useCallback } from "react";
 
-import type { HookOverlayOptions } from './HookOverlayOptions';
-import { useController } from './useController';
+import type { HookOverlayOptions } from "./HookOverlayOptions";
+import { useController } from "./useController";
 
 /**
  * A hook for presenting/dismissing an IonActionSheet component
  * @returns Returns the present and dismiss methods in an array
  */
 export function useIonActionSheet(): UseIonActionSheetResult {
-  const controller = useController<ActionSheetOptions, HTMLIonActionSheetElement>(
-    'IonActionSheet',
-    actionSheetController,
-    defineCustomElement
-  );
+  const controller = useController<
+    ActionSheetOptions,
+    HTMLIonActionSheetElement
+  >("IonActionSheet", actionSheetController, defineCustomElement);
 
   const present = useCallback(
     (
-      buttonsOrOptions: ActionSheetButton[] | (ActionSheetOptions & HookOverlayOptions),
+      buttonsOrOptions:
+        | ActionSheetButton[]
+        | (ActionSheetOptions & HookOverlayOptions),
       header?: string
     ) => {
       if (Array.isArray(buttonsOrOptions)) {

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { NavContext } from '../contexts/NavContext';
+import { NavContext } from "../contexts/NavContext";
 
 export interface IonRouteProps {
   path?: string;
@@ -13,7 +13,10 @@ export interface IonRouteProps {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IonRouteState {}
 
-export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> {
+export class IonRoute extends React.PureComponent<
+  IonRouteProps,
+  IonRouteState
+> {
   context!: React.ContextType<typeof NavContext>;
 
   render() {
@@ -21,7 +24,7 @@ export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> 
 
     if (!this.context.hasIonicRouter() || !IonRoute) {
       console.error(
-        'You either do not have an Ionic Router package, or your router does not support using <IonRoute>'
+        "You either do not have an Ionic Router package, or your router does not support using <IonRoute>"
       );
       return null;
     }

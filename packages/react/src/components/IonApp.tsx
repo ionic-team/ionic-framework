@@ -1,13 +1,13 @@
-import type { JSX as LocalJSX } from '@ionic/core/components';
-import React from 'react';
+import type { JSX as LocalJSX } from "@ionic/core/components";
+import React from "react";
 
-import type { IonContextInterface } from '../contexts/IonContext';
-import { IonContext } from '../contexts/IonContext';
-import type { ReactComponentOrElement } from '../models';
+import type { IonContextInterface } from "../contexts/IonContext";
+import { IonContext } from "../contexts/IonContext";
+import type { ReactComponentOrElement } from "../models";
 
-import { IonOverlayManager } from './IonOverlayManager';
-import type { IonicReactProps } from './IonicReactProps';
-import { IonAppInner } from './inner-proxies';
+import { IonOverlayManager } from "./IonOverlayManager";
+import type { IonicReactProps } from "./IonicReactProps";
+import { IonAppInner } from "./inner-proxies";
 
 type Props = LocalJSX.IonApp &
   IonicReactProps & {
@@ -16,7 +16,11 @@ type Props = LocalJSX.IonApp &
 
 export const IonApp = /*@__PURE__*/ (() =>
   class extends React.Component<Props> {
-    addOverlayCallback?: (id: string, overlay: any, containerElement: HTMLDivElement) => void;
+    addOverlayCallback?: (
+      id: string,
+      overlay: any,
+      containerElement: HTMLDivElement
+    ) => void;
     removeOverlayCallback?: (id: string) => void;
 
     constructor(props: Props) {
@@ -60,6 +64,6 @@ export const IonApp = /*@__PURE__*/ (() =>
     }
 
     static get displayName() {
-      return 'IonApp';
+      return "IonApp";
     }
   })();

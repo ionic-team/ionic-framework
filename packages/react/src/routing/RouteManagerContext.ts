@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import type { RouteInfo } from '../models/RouteInfo';
+import type { RouteInfo } from "../models/RouteInfo";
 
-import type { ViewItem } from './ViewItem';
+import type { ViewItem } from "./ViewItem";
 
 export interface RouteManagerContextState {
   addViewItem: (viewItem: ViewItem) => void;
@@ -14,9 +14,18 @@ export interface RouteManagerContextState {
     routeInfo: RouteInfo,
     page?: HTMLElement
   ) => ViewItem;
-  findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
-  findLeavingViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
-  findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
+  findViewItemByPathname(
+    pathname: string,
+    outletId?: string
+  ): ViewItem | undefined;
+  findLeavingViewItemByRouteInfo: (
+    routeInfo: RouteInfo,
+    outletId?: string
+  ) => ViewItem | undefined;
+  findViewItemByRouteInfo: (
+    routeInfo: RouteInfo,
+    outletId?: string
+  ) => ViewItem | undefined;
   getChildrenToRender: (
     outletId: string,
     ionRouterOutlet: React.ReactElement,
@@ -27,15 +36,16 @@ export interface RouteManagerContextState {
   unMountViewItem: (viewItem: ViewItem) => void;
 }
 
-export const RouteManagerContext = /*@__PURE__*/ React.createContext<RouteManagerContextState>({
-  addViewItem: () => undefined,
-  canGoBack: () => undefined as any,
-  clearOutlet: () => undefined,
-  createViewItem: () => undefined as any,
-  findViewItemByPathname: () => undefined,
-  findLeavingViewItemByRouteInfo: () => undefined,
-  findViewItemByRouteInfo: () => undefined,
-  getChildrenToRender: () => undefined as any,
-  goBack: () => undefined,
-  unMountViewItem: () => undefined,
-});
+export const RouteManagerContext =
+  /*@__PURE__*/ React.createContext<RouteManagerContextState>({
+    addViewItem: () => undefined,
+    canGoBack: () => undefined as any,
+    clearOutlet: () => undefined,
+    createViewItem: () => undefined as any,
+    findViewItemByPathname: () => undefined,
+    findLeavingViewItemByRouteInfo: () => undefined,
+    findViewItemByRouteInfo: () => undefined,
+    getChildrenToRender: () => undefined as any,
+    goBack: () => undefined,
+    unMountViewItem: () => undefined,
+  });

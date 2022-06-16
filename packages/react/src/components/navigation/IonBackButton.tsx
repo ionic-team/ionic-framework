@@ -1,11 +1,11 @@
-import type { JSX as LocalJSX } from '@ionic/core/components';
-import React from 'react';
+import type { JSX as LocalJSX } from "@ionic/core/components";
+import React from "react";
 
-import { NavContext } from '../../contexts/NavContext';
-import type { IonicReactProps } from '../IonicReactProps';
-import { IonBackButtonInner } from '../inner-proxies';
+import { NavContext } from "../../contexts/NavContext";
+import type { IonicReactProps } from "../IonicReactProps";
+import { IonBackButtonInner } from "../inner-proxies";
 
-type Props = Omit<LocalJSX.IonBackButton, 'icon'> &
+type Props = Omit<LocalJSX.IonBackButton, "icon"> &
   IonicReactProps & {
     icon?:
       | {
@@ -31,11 +31,16 @@ export const IonBackButton = /*@__PURE__*/ (() =>
     };
 
     render() {
-      return <IonBackButtonInner onClick={this.clickButton} {...this.props}></IonBackButtonInner>;
+      return (
+        <IonBackButtonInner
+          onClick={this.clickButton}
+          {...this.props}
+        ></IonBackButtonInner>
+      );
     }
 
     static get displayName() {
-      return 'IonBackButton';
+      return "IonBackButton";
     }
 
     static get contextType() {

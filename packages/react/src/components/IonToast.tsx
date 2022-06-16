@@ -1,14 +1,13 @@
 import type {
   ToastButton as ToastButtonCore,
-  ToastOptions as ToastOptionsCore} from '@ionic/core/components';
-import {
-  toastController as toastControllerCore,
-} from '@ionic/core/components';
-import { IonToast as IonToastCmp } from '@ionic/core/components/ion-toast.js';
+  ToastOptions as ToastOptionsCore,
+} from "@ionic/core/components";
+import { toastController as toastControllerCore } from "@ionic/core/components";
+import { IonToast as IonToastCmp } from "@ionic/core/components/ion-toast.js";
 
-import { createControllerComponent } from './createControllerComponent';
+import { createControllerComponent } from "./createControllerComponent";
 
-export interface ToastButton extends Omit<ToastButtonCore, 'icon'> {
+export interface ToastButton extends Omit<ToastButtonCore, "icon"> {
   icon?:
     | {
         ios: string;
@@ -17,7 +16,7 @@ export interface ToastButton extends Omit<ToastButtonCore, 'icon'> {
     | string;
 }
 
-export interface ToastOptions extends Omit<ToastOptionsCore, 'buttons'> {
+export interface ToastOptions extends Omit<ToastOptionsCore, "buttons"> {
   buttons?: (ToastButton | string)[];
 }
 
@@ -28,8 +27,7 @@ const toastController = {
   getTop: () => toastControllerCore.getTop(),
 };
 
-export const IonToast = /*@__PURE__*/ createControllerComponent<ToastOptions, HTMLIonToastElement>(
-  'ion-toast',
-  toastController,
-  IonToastCmp
-);
+export const IonToast = /*@__PURE__*/ createControllerComponent<
+  ToastOptions,
+  HTMLIonToastElement
+>("ion-toast", toastController, IonToastCmp);

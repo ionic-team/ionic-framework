@@ -1,10 +1,10 @@
-import type { ToastOptions} from '@ionic/core/components';
-import { toastController } from '@ionic/core/components';
-import { defineCustomElement } from '@ionic/core/components/ion-toast.js';
-import { useCallback } from 'react';
+import type { ToastOptions } from "@ionic/core/components";
+import { toastController } from "@ionic/core/components";
+import { defineCustomElement } from "@ionic/core/components/ion-toast.js";
+import { useCallback } from "react";
 
-import type { HookOverlayOptions } from './HookOverlayOptions';
-import { useController } from './useController';
+import type { HookOverlayOptions } from "./HookOverlayOptions";
+import { useController } from "./useController";
 
 /**
  * A hook for presenting/dismissing an IonToast component
@@ -12,26 +12,29 @@ import { useController } from './useController';
  */
 export function useIonToast(): UseIonToastResult {
   const controller = useController<ToastOptions, HTMLIonToastElement>(
-    'IonToast',
+    "IonToast",
     toastController,
     defineCustomElement
   );
 
-  const present = useCallback((messageOrOptions: string | ToastOptions & HookOverlayOptions, duration?: number) => {
-    if (typeof messageOrOptions === 'string') {
-      return controller.present({
-        message: messageOrOptions,
-        duration
-      });
-    } else {
-      return controller.present(messageOrOptions);
-    }
-  }, [controller.present]);
+  const present = useCallback(
+    (
+      messageOrOptions: string | (ToastOptions & HookOverlayOptions),
+      duration?: number
+    ) => {
+      if (typeof messageOrOptions === "string") {
+        return controller.present({
+          message: messageOrOptions,
+          duration,
+        });
+      } else {
+        return controller.present(messageOrOptions);
+      }
+    },
+    [controller.present]
+  );
 
-  return [
-    present,
-    controller.dismiss
-  ];
+  return [present, controller.dismiss];
 }
 
 export type UseIonToastResult = [

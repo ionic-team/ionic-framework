@@ -1,12 +1,12 @@
-import type { JSX as LocalJSX } from '@ionic/core/components';
-import React from 'react';
+import type { JSX as LocalJSX } from "@ionic/core/components";
+import React from "react";
 
-import { NavContext } from '../contexts/NavContext';
-import OutletPageManager from '../routing/OutletPageManager';
+import { NavContext } from "../contexts/NavContext";
+import OutletPageManager from "../routing/OutletPageManager";
 
-import type { IonicReactProps } from './IonicReactProps';
-import { IonRouterOutletInner } from './inner-proxies';
-import { createForwardRef } from './utils';
+import type { IonicReactProps } from "./IonicReactProps";
+import { IonRouterOutletInner } from "./inner-proxies";
+import { createForwardRef } from "./utils";
 
 type Props = LocalJSX.IonRouterOutlet & {
   basePath?: string;
@@ -21,7 +21,10 @@ interface InternalProps extends Props {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface InternalState {}
 
-class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
+class IonRouterOutletContainer extends React.Component<
+  InternalProps,
+  InternalState
+> {
   context!: React.ContextType<typeof NavContext>;
 
   constructor(props: InternalProps) {
@@ -63,4 +66,4 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
 export const IonRouterOutlet = createForwardRef<
   Props & IonicReactProps,
   HTMLIonRouterOutletElement
->(IonRouterOutletContainer, 'IonRouterOutlet');
+>(IonRouterOutletContainer, "IonRouterOutlet");

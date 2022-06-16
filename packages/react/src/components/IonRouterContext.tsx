@@ -1,8 +1,8 @@
-import type { AnimationBuilder } from '@ionic/core/components';
-import React, { useContext } from 'react';
+import type { AnimationBuilder } from "@ionic/core/components";
+import React, { useContext } from "react";
 
-import type { RouteAction, RouterDirection, RouterOptions } from '../models';
-import type { RouteInfo } from '../models/RouteInfo';
+import type { RouteAction, RouterDirection, RouterOptions } from "../models";
+import type { RouteInfo } from "../models/RouteInfo";
 
 export interface IonRouterContextState {
   routeInfo: RouteInfo;
@@ -21,16 +21,16 @@ export interface IonRouterContextState {
 export const IonRouterContext = React.createContext<IonRouterContextState>({
   routeInfo: undefined as any,
   push: () => {
-    throw new Error('An Ionic Router is required for IonRouterContext');
+    throw new Error("An Ionic Router is required for IonRouterContext");
   },
   back: () => {
-    throw new Error('An Ionic Router is required for IonRouterContext');
+    throw new Error("An Ionic Router is required for IonRouterContext");
   },
   canGoBack: () => {
-    throw new Error('An Ionic Router is required for IonRouterContext');
+    throw new Error("An Ionic Router is required for IonRouterContext");
   },
   nativeBack: () => {
-    throw new Error('An Ionic Router is required for IonRouterContext');
+    throw new Error("An Ionic Router is required for IonRouterContext");
   },
 });
 

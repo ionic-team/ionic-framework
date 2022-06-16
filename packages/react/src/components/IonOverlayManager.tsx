@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 
-import type { ReactComponentOrElement } from '../models';
+import type { ReactComponentOrElement } from "../models";
 
 interface IonOverlayManagerProps {
   onAddOverlay: (
@@ -77,7 +77,11 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
     <>
       {overlayKeys.map((key) => {
         const overlay = overlays[key];
-        return ReactDOM.createPortal(overlay.component, overlay.containerElement, `overlay-${key}`);
+        return ReactDOM.createPortal(
+          overlay.component,
+          overlay.containerElement,
+          `overlay-${key}`
+        );
       })}
     </>
   );

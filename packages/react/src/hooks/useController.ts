@@ -1,9 +1,9 @@
-import type { OverlayEventDetail } from '@ionic/core/components';
-import { useCallback, useMemo, useRef } from 'react';
+import type { OverlayEventDetail } from "@ionic/core/components";
+import { useCallback, useMemo, useRef } from "react";
 
-import { attachProps } from '../components/react-component-lib/utils';
+import { attachProps } from "../components/react-component-lib/utils";
 
-import type { HookOverlayOptions } from './HookOverlayOptions';
+import type { HookOverlayOptions } from "./HookOverlayOptions";
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -16,10 +16,22 @@ export function useController<OptionsType, OverlayType extends OverlayBase>(
   defineCustomElement: () => void
 ) {
   const overlayRef = useRef<OverlayType>();
-  const didDismissEventName = useMemo(() => `on${displayName}DidDismiss`, [displayName]);
-  const didPresentEventName = useMemo(() => `on${displayName}DidPresent`, [displayName]);
-  const willDismissEventName = useMemo(() => `on${displayName}WillDismiss`, [displayName]);
-  const willPresentEventName = useMemo(() => `on${displayName}WillPresent`, [displayName]);
+  const didDismissEventName = useMemo(
+    () => `on${displayName}DidDismiss`,
+    [displayName]
+  );
+  const didPresentEventName = useMemo(
+    () => `on${displayName}DidPresent`,
+    [displayName]
+  );
+  const willDismissEventName = useMemo(
+    () => `on${displayName}WillDismiss`,
+    [displayName]
+  );
+  const willPresentEventName = useMemo(
+    () => `on${displayName}WillPresent`,
+    [displayName]
+  );
 
   defineCustomElement();
 
@@ -29,7 +41,13 @@ export function useController<OptionsType, OverlayType extends OverlayBase>(
         return;
       }
 
-      const { onDidDismiss, onWillDismiss, onDidPresent, onWillPresent, ...rest } = options;
+      const {
+        onDidDismiss,
+        onWillDismiss,
+        onDidPresent,
+        onWillPresent,
+        ...rest
+      } = options;
 
       const handleDismiss = (event: CustomEvent<OverlayEventDetail<any>>) => {
         if (onDidDismiss) {
@@ -45,9 +63,12 @@ export function useController<OptionsType, OverlayType extends OverlayBase>(
       attachProps(overlayRef.current, {
         [didDismissEventName]: handleDismiss,
         /* eslint-disable @typescript-eslint/prefer-optional-chain */
-        [didPresentEventName]: (e: CustomEvent) => onDidPresent && onDidPresent(e),
-        [willDismissEventName]: (e: CustomEvent) => onWillDismiss && onWillDismiss(e),
-        [willPresentEventName]: (e: CustomEvent) => onWillPresent && onWillPresent(e),
+        [didPresentEventName]: (e: CustomEvent) =>
+          onDidPresent && onDidPresent(e),
+        [willDismissEventName]: (e: CustomEvent) =>
+          onWillDismiss && onWillDismiss(e),
+        [willPresentEventName]: (e: CustomEvent) =>
+          onWillPresent && onWillPresent(e),
         /* eslint-enable @typescript-eslint/prefer-optional-chain */
       });
 

@@ -1,5 +1,5 @@
-import type { IonicConfig} from '@ionic/core/components';
-import { initialize } from '@ionic/core/components';
+import type { IonicConfig } from "@ionic/core/components";
+import { initialize } from "@ionic/core/components";
 
 export {
   // UTILS
@@ -23,142 +23,117 @@ export {
   GestureConfig,
   GestureDetail,
   NavComponentWithProps,
-
   SpinnerTypes,
-
   AccordionGroupCustomEvent,
   AccordionGroupChangeEventDetail,
-
   BreadcrumbCustomEvent,
   BreadcrumbCollapsedClickEventDetail,
-
   ActionSheetOptions,
   ActionSheetButton,
-
   AlertOptions,
   AlertInput,
   AlertTextareaAttributes,
   AlertInputAttributes,
   AlertButton,
-
   BackButtonEvent,
-
   CheckboxCustomEvent,
   CheckboxChangeEventDetail,
-
   DatetimeCustomEvent,
   DatetimeChangeEventDetail,
-
   InfiniteScrollCustomEvent,
-
   InputCustomEvent,
   InputChangeEventDetail,
-
   ItemReorderEventDetail,
   ItemReorderCustomEvent,
-
   ItemSlidingCustomEvent,
-
   IonicSafeString,
-
   LoadingOptions,
-
   MenuCustomEvent,
-
   ModalOptions,
-
   NavCustomEvent,
-
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
-
   PopoverOptions,
-
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
-
   RangeCustomEvent,
   RangeChangeEventDetail,
   RangeKnobMoveStartEventDetail,
   RangeKnobMoveEndEventDetail,
-
   RefresherCustomEvent,
   RefresherEventDetail,
-
   RouterEventDetail,
   RouterCustomEvent,
-
   ScrollBaseCustomEvent,
   ScrollBaseDetail,
   ScrollDetail,
   ScrollCustomEvent,
-
   SearchbarCustomEvent,
   SearchbarChangeEventDetail,
-
   SegmentChangeEventDetail,
   SegmentCustomEvent,
-
   SelectChangeEventDetail,
   SelectCustomEvent,
-
   TabsCustomEvent,
-
   TextareaChangeEventDetail,
   TextareaCustomEvent,
-
   ToastOptions,
   ToastButton,
-
   ToggleChangeEventDetail,
   ToggleCustomEvent,
-} from '@ionic/core/components';
+} from "@ionic/core/components";
 
-export * from './proxies';
-export * from './routing-proxies';
+export * from "./proxies";
+export * from "./routing-proxies";
 
 // createControllerComponent
-export { IonAlert } from './IonAlert';
-export { IonLoading } from './IonLoading';
-export * from './IonToast';
-export { IonPicker } from './IonPicker';
+export { IonAlert } from "./IonAlert";
+export { IonLoading } from "./IonLoading";
+export * from "./IonToast";
+export { IonPicker } from "./IonPicker";
 
 // createOverlayComponent
-export * from './IonActionSheet';
-export { IonModal } from './IonModal';
-export { IonPopover } from './IonPopover';
+export * from "./IonActionSheet";
+export { IonModal } from "./IonModal";
+export { IonPopover } from "./IonPopover";
 
 // Custom Components
-export { IonApp } from './IonApp';
-export { IonPage } from './IonPage';
-export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
-export { IonTabs } from './navigation/IonTabs';
-export { IonTabBar } from './navigation/IonTabBar';
-export { IonTabButton } from './navigation/IonTabButton';
-export { IonBackButton } from './navigation/IonBackButton';
-export { IonRouterOutlet } from './IonRouterOutlet';
-export { IonIcon } from './IonIcon';
-export * from './IonRoute';
-export * from './IonRedirect';
-export * from './IonRouterContext';
+export { IonApp } from "./IonApp";
+export { IonPage } from "./IonPage";
+export {
+  IonTabsContext,
+  IonTabsContextState,
+} from "./navigation/IonTabsContext";
+export { IonTabs } from "./navigation/IonTabs";
+export { IonTabBar } from "./navigation/IonTabBar";
+export { IonTabButton } from "./navigation/IonTabButton";
+export { IonBackButton } from "./navigation/IonBackButton";
+export { IonRouterOutlet } from "./IonRouterOutlet";
+export { IonIcon } from "./IonIcon";
+export * from "./IonRoute";
+export * from "./IonRedirect";
+export * from "./IonRouterContext";
 
 // Utils
-export { isPlatform, getPlatforms, getConfig } from './utils';
-export * from './hrefprops';
+export { isPlatform, getPlatforms, getConfig } from "./utils";
+export * from "./hrefprops";
 
 // Ionic Animations
-export { CreateAnimation } from './CreateAnimation';
+export { CreateAnimation } from "./CreateAnimation";
 
 // Hooks
-export { useIonActionSheet, UseIonActionSheetResult } from '../hooks/useIonActionSheet';
-export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
-export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
-export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
-export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
-export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
-export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
+export {
+  useIonActionSheet,
+  UseIonActionSheetResult,
+} from "../hooks/useIonActionSheet";
+export { useIonAlert, UseIonAlertResult } from "../hooks/useIonAlert";
+export { useIonToast, UseIonToastResult } from "../hooks/useIonToast";
+export { useIonModal, UseIonModalResult } from "../hooks/useIonModal";
+export { useIonPopover, UseIonPopoverResult } from "../hooks/useIonPopover";
+export { useIonPicker, UseIonPickerResult } from "../hooks/useIonPicker";
+export { useIonLoading, UseIonLoadingResult } from "../hooks/useIonLoading";
 
 export const setupIonicReact = (config: IonicConfig = {}) => {
   /**
@@ -168,11 +143,11 @@ export const setupIonicReact = (config: IonicConfig = {}) => {
    * TODO: Remove when all integrations have been
    * migrated to CE build.
    */
-  if (typeof (document as any) !== 'undefined') {
-    document.documentElement.classList.add('ion-ce');
+  if (typeof (document as any) !== "undefined") {
+    document.documentElement.classList.add("ion-ce");
   }
 
   initialize({
-    ...config
+    ...config,
   });
-}
+};

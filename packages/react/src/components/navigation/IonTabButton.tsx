@@ -1,9 +1,9 @@
-import type { JSX as LocalJSX } from '@ionic/core/components';
-import React from 'react';
+import type { JSX as LocalJSX } from "@ionic/core/components";
+import React from "react";
 
-import type { RouterOptions } from '../../models';
-import type { IonicReactProps } from '../IonicReactProps';
-import { IonTabButtonInner } from '../inner-proxies';
+import type { RouterOptions } from "../../models";
+import type { IonicReactProps } from "../IonicReactProps";
+import { IonTabButtonInner } from "../inner-proxies";
 
 type Props = LocalJSX.IonTabButton &
   IonicReactProps & {
@@ -22,7 +22,7 @@ export const IonTabButton = /*@__PURE__*/ (() =>
     handleIonTabButtonClick() {
       if (this.props.onClick) {
         this.props.onClick(
-          new CustomEvent('ionTabButtonClick', {
+          new CustomEvent("ionTabButtonClick", {
             detail: {
               tab: this.props.tab,
               href: this.props.href,
@@ -50,6 +50,6 @@ export const IonTabButton = /*@__PURE__*/ (() =>
     }
 
     static get displayName() {
-      return 'IonTabButton';
+      return "IonTabButton";
     }
   })();

@@ -1,16 +1,14 @@
-import type {
-  Config as CoreConfig,
-  Platforms} from '@ionic/core/components';
+import type { Config as CoreConfig, Platforms } from "@ionic/core/components";
 import {
   getPlatforms as getPlatformsCore,
   isPlatform as isPlatformCore,
-} from '@ionic/core/components';
-import React from 'react';
+} from "@ionic/core/components";
+import React from "react";
 
-import type { IonicReactProps } from '../IonicReactProps';
+import type { IonicReactProps } from "../IonicReactProps";
 
 export type IonicReactExternalProps<PropType, ElementType> = PropType &
-  Omit<React.HTMLAttributes<ElementType>, 'style'> &
+  Omit<React.HTMLAttributes<ElementType>, "style"> &
   IonicReactProps;
 
 export const createForwardRef = <PropType, ElementType>(
@@ -37,7 +35,7 @@ export const getPlatforms = () => {
 };
 
 export const getConfig = (): CoreConfig | null => {
-  if (typeof (window as any) !== 'undefined') {
+  if (typeof (window as any) !== "undefined") {
     const Ionic = (window as any).Ionic;
     if (Ionic?.config) {
       return Ionic.config;

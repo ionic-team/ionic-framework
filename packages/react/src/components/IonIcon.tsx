@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { NavContext } from '../contexts/NavContext';
+import { NavContext } from "../contexts/NavContext";
 
-import type { IonicReactProps } from './IonicReactProps';
-import { IonIconInner } from './inner-proxies';
-import { createForwardRef, isPlatform } from './utils';
+import type { IonicReactProps } from "./IonicReactProps";
+import { IonIconInner } from "./inner-proxies";
+import { createForwardRef, isPlatform } from "./utils";
 
 interface IonIconProps {
   color?: string;
@@ -13,7 +13,7 @@ interface IonIconProps {
   ios?: string;
   lazy?: boolean;
   md?: string;
-  mode?: 'ios' | 'md';
+  mode?: "ios" | "md";
   name?: string;
   size?: string;
   src?: string;
@@ -27,7 +27,9 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
   constructor(props: InternalProps) {
     super(props);
     if (this.props.name) {
-      console.warn('In Ionic React, you import icons from "ionicons/icons" and set the icon you imported to the "icon" property. Setting the "name" property has no effect.');
+      console.warn(
+        'In Ionic React, you import icons from "ionicons/icons" and set the icon you imported to the "icon" property. Setting the "name" property has no effect.'
+      );
     }
   }
 
@@ -37,7 +39,7 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
     let iconToUse: typeof icon;
 
     if (ios || md) {
-      if (isPlatform('ios')) {
+      if (isPlatform("ios")) {
         iconToUse = ios ?? md ?? icon;
       } else {
         iconToUse = md ?? ios ?? icon;
@@ -58,7 +60,7 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
   }
 }
 
-export const IonIcon = createForwardRef<IonIconProps & IonicReactProps, HTMLIonIconElement>(
-  IonIconContainer,
-  'IonIcon'
-);
+export const IonIcon = createForwardRef<
+  IonIconProps & IonicReactProps,
+  HTMLIonIconElement
+>(IonIconContainer, "IonIcon");

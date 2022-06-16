@@ -4,11 +4,10 @@ import type {
   AnimationDirection,
   AnimationFill,
   AnimationKeyFrames,
-  AnimationLifecycle} from '@ionic/core/components';
-import {
-  createAnimation,
-} from '@ionic/core/components';
-import React from 'react';
+  AnimationLifecycle,
+} from "@ionic/core/components";
+import { createAnimation } from "@ionic/core/components";
+import React from "react";
 
 interface PartialPropertyValue {
   property: string;
@@ -101,27 +100,33 @@ export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
     return (
       <>
         {React.Children.map(children, (child, id) =>
-          React.cloneElement(child as any, { ref: (el: any) => this.nodes.set(id, el) })
+          React.cloneElement(child as any, {
+            ref: (el: any) => this.nodes.set(id, el),
+          })
         )}
       </>
     );
   }
 }
 
-const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
+const checkConfig = (
+  animation: Animation,
+  currentProps: any = {},
+  prevProps: any = {}
+) => {
   const reservedProps = [
-    'children',
-    'progressStart',
-    'progressStep',
-    'progressEnd',
-    'pause',
-    'stop',
-    'destroy',
-    'play',
-    'from',
-    'to',
-    'fromTo',
-    'onFinish',
+    "children",
+    "progressStart",
+    "progressStep",
+    "progressEnd",
+    "pause",
+    "stop",
+    "destroy",
+    "play",
+    "from",
+    "to",
+    "fromTo",
+    "onFinish",
   ];
   for (const key in currentProps) {
     if (
@@ -149,25 +154,37 @@ const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: an
   const fromToValues = currentProps.fromTo;
   if (fromToValues && fromToValues !== prevProps.fromTo) {
     const values = Array.isArray(fromToValues) ? fromToValues : [fromToValues];
-    values.forEach((val) => animation.fromTo(val.property, val.fromValue, val.toValue));
+    values.forEach((val) =>
+      animation.fromTo(val.property, val.fromValue, val.toValue)
+    );
   }
 
   const onFinishValues = currentProps.onFinish;
   if (onFinishValues && onFinishValues !== prevProps.onFinish) {
-    const values = Array.isArray(onFinishValues) ? onFinishValues : [onFinishValues];
+    const values = Array.isArray(onFinishValues)
+      ? onFinishValues
+      : [onFinishValues];
     values.forEach((val) => animation.onFinish(val.callback, val.opts));
   }
 };
 
-const checkProgress = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
+const checkProgress = (
+  animation: Animation,
+  currentProps: any = {},
+  prevProps: any = {}
+) => {
   const { progressStart, progressStep, progressEnd } = currentProps;
 
   if (
     progressStart &&
-    (prevProps.progressStart?.forceLinearEasing !== progressStart?.forceLinearEasing ||
+    (prevProps.progressStart?.forceLinearEasing !==
+      progressStart?.forceLinearEasing ||
       prevProps.progressStart?.step !== progressStart?.step)
   ) {
-    animation.progressStart(progressStart.forceLinearEasing, progressStart.step);
+    animation.progressStart(
+      progressStart.forceLinearEasing,
+      progressStart.step
+    );
   }
 
   if (progressStep && prevProps.progressStep?.step !== progressStep?.step) {
@@ -180,11 +197,19 @@ const checkProgress = (animation: Animation, currentProps: any = {}, prevProps: 
       prevProps.progressEnd?.step !== progressEnd?.step ||
       prevProps?.dur !== progressEnd?.dur)
   ) {
-    animation.progressEnd(progressEnd.playTo, progressEnd.step, progressEnd.dur);
+    animation.progressEnd(
+      progressEnd.playTo,
+      progressEnd.step,
+      progressEnd.dur
+    );
   }
 };
 
-const checkPlayback = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
+const checkPlayback = (
+  animation: Animation,
+  currentProps: any = {},
+  prevProps: any = {}
+) => {
   if (!prevProps.play && currentProps.play) {
     animation.play();
   }

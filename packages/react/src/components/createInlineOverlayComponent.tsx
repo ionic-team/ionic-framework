@@ -1,5 +1,5 @@
-import type { OverlayEventDetail } from '@ionic/core/components'
-import React, { createElement } from 'react';
+import type { OverlayEventDetail } from "@ionic/core/components";
+import React, { createElement } from "react";
 
 import {
   attachProps,
@@ -7,14 +7,15 @@ import {
   dashToPascalCase,
   isCoveredByReact,
   mergeRefs,
-} from './react-component-lib/utils';
-import { createForwardRef } from './utils';
+} from "./react-component-lib/utils";
+import { createForwardRef } from "./utils";
 
 type InlineOverlayState = {
   isOpen: boolean;
-}
+};
 
-interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
+interface IonicReactInternalProps<ElementType>
+  extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   ref?: React.Ref<any>;
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
@@ -31,17 +32,20 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
+  const ReactComponent = class extends React.Component<
+    IonicReactInternalProps<PropType>,
+    InlineOverlayState
+  > {
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>
+    stableMergedRefs: React.RefCallback<HTMLElement>;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
       // Component is hidden by default
       this.state = { isOpen: false };
       // Create a local ref to the inner child element.
@@ -59,7 +63,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * cause the event handlers to be
        * destroyed and re-created.
        */
-      this.ref.current?.addEventListener('willPresent', (evt: any) => {
+      this.ref.current?.addEventListener("willPresent", (evt: any) => {
         this.setState({ isOpen: true });
 
         this.props.onWillPresent?.(evt);
@@ -77,7 +81,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * of the Web Component so React can
        * cleanup properly.
        */
-      this.ref.current?.addEventListener('didDismiss', (evt: any) => {
+      this.ref.current?.addEventListener("didDismiss", (evt: any) => {
         const wrapper = this.wrapperRef.current;
         const el = this.ref.current;
 
@@ -106,15 +110,18 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * This is used to exclude certain keys from the `prop` object.
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
+      const { children, forwardedRef, style, className, ref, ...cProps } =
+        this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {
-        if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+        if (name.indexOf("on") === 0 && name[2] === name[2].toUpperCase()) {
           const eventName = name.substring(2).toLowerCase();
           if (isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
-        } else if (['string', 'boolean', 'number'].includes(typeof (cProps as any)[name])) {
+        } else if (
+          ["string", "boolean", "number"].includes(typeof (cProps as any)[name])
+        ) {
           (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
         }
         return acc;
@@ -132,17 +139,24 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return createElement(tagName, newProps, (this.state.isOpen) ?
-        createElement('div', {
-          id: 'ion-react-wrapper',
-          ref: this.wrapperRef,
-          style: {
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
-          }
-        }, children) :
-        null
+      return createElement(
+        tagName,
+        newProps,
+        this.state.isOpen
+          ? createElement(
+              "div",
+              {
+                id: "ion-react-wrapper",
+                ref: this.wrapperRef,
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                },
+              },
+              children
+            )
+          : null
       );
     }
 

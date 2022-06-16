@@ -1,4 +1,4 @@
-import type { RouteInfo } from '../models/RouteInfo';
+import type { RouteInfo } from "../models/RouteInfo";
 
 // const RESTRICT_SIZE = 100;
 
@@ -9,15 +9,15 @@ export class LocationHistory {
   } = {};
 
   add(routeInfo: RouteInfo) {
-    if (routeInfo.routeAction === 'push' || routeInfo.routeAction == null) {
+    if (routeInfo.routeAction === "push" || routeInfo.routeAction == null) {
       this._add(routeInfo);
-    } else if (routeInfo.routeAction === 'pop') {
+    } else if (routeInfo.routeAction === "pop") {
       this._pop(routeInfo);
-    } else if (routeInfo.routeAction === 'replace') {
+    } else if (routeInfo.routeAction === "replace") {
       this._replace(routeInfo);
     }
 
-    if (routeInfo.routeDirection === 'root') {
+    if (routeInfo.routeDirection === "root") {
       this._clear();
       this._add(routeInfo);
     }
@@ -27,18 +27,22 @@ export class LocationHistory {
     const routeInfos = this._getRouteInfosByKey(tab);
     if (routeInfos) {
       routeInfos.forEach((ri) => {
-        this.locationHistory = this.locationHistory.filter((x) => x.id !== ri.id);
+        this.locationHistory = this.locationHistory.filter(
+          (x) => x.id !== ri.id
+        );
       });
       this.tabHistory[tab] = [];
     }
   }
 
   update(routeInfo: RouteInfo) {
-    const locationIndex = this.locationHistory.findIndex((x) => x.id === routeInfo.id);
+    const locationIndex = this.locationHistory.findIndex(
+      (x) => x.id === routeInfo.id
+    );
     if (locationIndex > -1) {
       this.locationHistory.splice(locationIndex, 1, routeInfo);
     }
-    const tabArray = this.tabHistory[routeInfo.tab || ''];
+    const tabArray = this.tabHistory[routeInfo.tab || ""];
     if (tabArray) {
       const tabIndex = tabArray.findIndex((x) => x.id === routeInfo.id);
       if (tabIndex > -1) {
@@ -64,10 +68,12 @@ export class LocationHistory {
   }
 
   private _areRoutesEqual(route1?: RouteInfo, route2?: RouteInfo) {
-    if(!route1 || !route2) {
+    if (!route1 || !route2) {
       return false;
     }
-    return route1.pathname === route2.pathname && route1.search === route2.search;
+    return (
+      route1.pathname === route2.pathname && route1.search === route2.search
+    );
   }
 
   private _pop(routeInfo: RouteInfo) {
