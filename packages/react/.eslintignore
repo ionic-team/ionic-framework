@@ -1,5 +1,1 @@
-dist
-dist-transpiled
-*.md
-build
 src/components/react-component-lib/createComponent.tsx
