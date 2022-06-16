@@ -18,6 +18,7 @@ interface InternalProps extends Props {
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface InternalState {}
 
 class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
