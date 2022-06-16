@@ -9,7 +9,7 @@ export const IonPage = /*@__PURE__*/ defineComponent({
   mounted() {
     this.$props.registerIonPage(this.$refs.ionPage);
   },
-  setup(props, { attrs, slots }) {
+  setup(_, { attrs, slots }) {
     return () => {
       return h(
         'div',
