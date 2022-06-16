@@ -1,6 +1,7 @@
-import {
+import type {
   ToastButton as ToastButtonCore,
-  ToastOptions as ToastOptionsCore,
+  ToastOptions as ToastOptionsCore} from '@ionic/core/components';
+import {
   toastController as toastControllerCore,
 } from '@ionic/core/components';
 import { IonToast as IonToastCmp } from '@ionic/core/components/ion-toast.js';

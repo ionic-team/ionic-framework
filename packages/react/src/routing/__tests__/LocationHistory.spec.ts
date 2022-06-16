@@ -1,6 +1,6 @@
-import { LocationHistory } from '../LocationHistory';
-import { RouteInfo } from '../../models/RouteInfo';
+import type { RouteInfo } from '../../models/RouteInfo';
 import { generateId } from '../../utils/generateId';
+import { LocationHistory } from '../LocationHistory';
 
 let log = false;
 
@@ -199,7 +199,7 @@ describe('LocationHistory', () => {
 });
 
 function createRoute(
-  pathname: string = '',
+  pathname = '',
   prevRoute?: RouteInfo,
   tab?: string,
   routeAction = 'push'

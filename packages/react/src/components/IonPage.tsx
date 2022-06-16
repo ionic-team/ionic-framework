@@ -3,10 +3,10 @@ import React from 'react';
 import { NavContext } from '../contexts/NavContext';
 import PageManager from '../routing/PageManager';
 
-import { IonicReactProps } from './IonicReactProps';
+import type { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
-interface IonPageProps extends IonicReactProps {}
+type IonPageProps = IonicReactProps
 
 interface IonPageInternalProps extends IonPageProps {
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;

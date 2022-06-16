@@ -1,4 +1,5 @@
-import { LoadingOptions, loadingController } from '@ionic/core/components';
+import type { LoadingOptions} from '@ionic/core/components';
+import { loadingController } from '@ionic/core/components';
 import { IonLoading as IonLoadingCmp } from '@ionic/core/components/ion-loading.js';
 
 import { createControllerComponent } from './createControllerComponent';

@@ -1,7 +1,7 @@
-import { AnimationBuilder, RouterDirection } from '@ionic/core/components';
+import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 import React from 'react';
 
-import { RouteInfo } from '../models';
+import type { RouteInfo } from '../models';
 
 export interface NavContextState {
   getIonRoute: () => any;

@@ -1,6 +1,6 @@
-import { RouteInfo } from '../models/RouteInfo';
+import type { RouteInfo } from '../models/RouteInfo';
 
-import { ViewItem } from './ViewItem';
+import type { ViewItem } from './ViewItem';
 
 export abstract class ViewStacks {
   private viewStacks: { [key: string]: ViewItem[] } = {};

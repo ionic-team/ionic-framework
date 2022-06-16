@@ -13,7 +13,7 @@ describe('isCoveredByReact', () => {
 
 describe('syncEvent', () => {
   it('should add event on sync and readd on additional syncs', () => {
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     const addEventListener = jest.spyOn(div, 'addEventListener');
     const removeEventListener = jest.spyOn(div, 'removeEventListener');
     const ionClickCallback = jest.fn();
@@ -36,7 +36,7 @@ describe('attachProps', () => {
   it('should pass props to a dom node', () => {
     const onIonClickCallback = () => {};
 
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     utils.attachProps(div, {
       children: [],
       style: 'color: red',

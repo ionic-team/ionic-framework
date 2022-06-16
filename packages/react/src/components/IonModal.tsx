@@ -1,4 +1,4 @@
-import { JSX } from '@ionic/core/components';
+import type { JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 
 import { createInlineOverlayComponent } from './createInlineOverlayComponent'

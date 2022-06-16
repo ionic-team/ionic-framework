@@ -1,10 +1,10 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 import OutletPageManager from '../routing/OutletPageManager';
 
-import { IonicReactProps } from './IonicReactProps';
+import type { IonicReactProps } from './IonicReactProps';
 import { IonRouterOutletInner } from './inner-proxies';
 import { createForwardRef } from './utils';
 

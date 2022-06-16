@@ -1,9 +1,9 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from '@ionic/core/components';
 import { useCallback, useMemo, useRef } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
 
-import { HookOverlayOptions } from './HookOverlayOptions';
+import type { HookOverlayOptions } from './HookOverlayOptions';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
