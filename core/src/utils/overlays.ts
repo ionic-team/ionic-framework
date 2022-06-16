@@ -430,7 +430,13 @@ export const present = async (
     focusPreviousElementOnDismiss(overlay.el);
   }
 
-  if (overlay.keyboardClose) {
+  /**
+   * If the focused element is already
+   * inside the overlay component then
+   * focus should not be moved from that
+   * to the overlay container.
+   */
+  if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
     overlay.el.focus();
   }
 };
