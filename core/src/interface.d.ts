@@ -37,6 +37,57 @@ export * from './components/toast/toast-interface';
 export * from './components/toggle/toggle-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
+// Component custom event interfaces
+export {
+  IonAccordionGroupCustomEvent,
+  IonActionSheetCustomEvent,
+  IonAlertCustomEvent,
+  IonBackdropCustomEvent,
+  IonBreadcrumbCustomEvent,
+  IonBreadcrumbsCustomEvent,
+  IonButtonCustomEvent,
+  IonCheckboxCustomEvent,
+  IonContentCustomEvent,
+  IonDatetimeCustomEvent,
+  IonFabButtonCustomEvent,
+  IonImgCustomEvent,
+  IonInfiniteScrollCustomEvent,
+  IonInputCustomEvent,
+  IonItemOptionsCustomEvent,
+  IonItemSlidingCustomEvent,
+  IonLabelCustomEvent,
+  IonLoadingCustomEvent,
+  IonMenuCustomEvent,
+  IonModalCustomEvent,
+  IonNavCustomEvent,
+  IonPickerColumnCustomEvent,
+  IonPickerColumnInternalCustomEvent,
+  IonPickerCustomEvent,
+  IonPickerInternalCustomEvent,
+  IonPopoverCustomEvent,
+  IonRadioCustomEvent,
+  IonRadioGroupCustomEvent,
+  IonRangeCustomEvent,
+  IonRefresherCustomEvent,
+  IonReorderGroupCustomEvent,
+  IonRouteCustomEvent,
+  IonRouteRedirectCustomEvent,
+  IonRouterCustomEvent,
+  IonRouterOutletCustomEvent,
+  IonSearchbarCustomEvent,
+  IonSegmentCustomEvent,
+  IonSelectCustomEvent,
+  IonSlidesCustomEvent,
+  IonSplitPaneCustomEvent,
+  IonTabBarCustomEvent,
+  IonTabButtonCustomEvent,
+  IonTabsCustomEvent,
+  IonTextareaCustomEvent,
+  IonTitleCustomEvent,
+  IonToastCustomEvent,
+  IonToggleCustomEvent
+} from './components';
+
 // Types from utils
 export {
   Animation,
