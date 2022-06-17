@@ -2,11 +2,11 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color } from '../../interface';
+import type { Color, IonPickerInternalCustomEvent } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
-import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
+import type { PickerInternalChangeEventDetail } from '../picker-internal/picker-internal-interfaces';
 
 import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
@@ -174,7 +174,7 @@ export class PickerColumnInternal implements ComponentInterface {
    * needs to check if it is the one being made available
    * for text entry.
    */
-  private inputModeChange = (ev: PickerInternalCustomEvent) => {
+  private inputModeChange = (ev: IonPickerInternalCustomEvent<PickerInternalChangeEventDetail>) => {
     if (!this.numericInput) {
       return;
     }
