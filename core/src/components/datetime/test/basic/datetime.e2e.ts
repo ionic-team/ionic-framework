@@ -2,6 +2,35 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
+test.describe('datetime: closing time popover', () => {
+  test('it should not change months', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25438',
+    });
+
+    await page.setContent(`
+      <ion-datetime></ion-datetime>
+    `);
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+    const timeButton = page.locator('.time-body');
+    const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
+    const currentMonthAndYear = await calendarMonthYear.evaluate((el: HTMLElement) => el.innerText);
+
+    await timeButton.click();
+    await ionPopoverDidPresent.next();
+
+    await page.keyboard.press('Escape');
+
+    await ionPopoverDidDismiss.next();
+    await page.waitForChanges();
+
+    expect(calendarMonthYear).toHaveText(currentMonthAndYear);
+  });
+});
+
 test.describe('datetime: selecting a day', () => {
   const testHighlight = async (page: E2EPage, datetimeID: string) => {
     const today = new Date();
