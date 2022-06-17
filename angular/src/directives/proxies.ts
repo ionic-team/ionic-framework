@@ -5,6 +5,8 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 import { Components } from '@ionic/core';
 
+import type { IonAccordionGroupCustomEvent, IonBackdropCustomEvent, IonBreadcrumbCustomEvent, IonBreadcrumbsCustomEvent, IonButtonCustomEvent, IonCheckboxCustomEvent, IonContentCustomEvent, IonDatetimeCustomEvent, IonFabButtonCustomEvent, IonImgCustomEvent, IonInfiniteScrollCustomEvent, IonInputCustomEvent, IonItemOptionsCustomEvent, IonItemSlidingCustomEvent, IonMenuCustomEvent, IonNavCustomEvent, IonRadioCustomEvent, IonRadioGroupCustomEvent, IonRangeCustomEvent, IonRefresherCustomEvent, IonReorderGroupCustomEvent, IonSearchbarCustomEvent, IonSegmentCustomEvent, IonSelectCustomEvent, IonSlidesCustomEvent, IonSplitPaneCustomEvent, IonTextareaCustomEvent, IonToggleCustomEvent } from '@ionic/core';
+
 
 
 
@@ -33,7 +35,7 @@ export declare interface IonAccordionGroup extends Components.IonAccordionGroup 
   /**
    * Emitted when the value property has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<IAccordionGroupAccordionGroupChangeEventDetail>>;
+  ionChange: EventEmitter<IonAccordionGroupCustomEvent<IAccordionGroupAccordionGroupChangeEventDetail>>;
 
 }
 
@@ -120,7 +122,7 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
   /**
    * Emitted when the backdrop is tapped. 
    */
-  ionBackdropTap: EventEmitter<CustomEvent<void>>;
+  ionBackdropTap: EventEmitter<IonBackdropCustomEvent<void>>;
 
 }
 
@@ -169,11 +171,11 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   /**
    * Emitted when the breadcrumb has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonBreadcrumbCustomEvent<void>>;
   /**
    * Emitted when the breadcrumb loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonBreadcrumbCustomEvent<void>>;
 
 }
 
@@ -201,7 +203,7 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   /**
    * Emitted when the collapsed indicator is clicked on. 
    */
-  ionCollapsedClick: EventEmitter<CustomEvent<IBreadcrumbsBreadcrumbCollapsedClickEventDetail>>;
+  ionCollapsedClick: EventEmitter<IonBreadcrumbsCustomEvent<IBreadcrumbsBreadcrumbCollapsedClickEventDetail>>;
 
 }
 
@@ -229,11 +231,11 @@ export declare interface IonButton extends Components.IonButton {
   /**
    * Emitted when the button has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonButtonCustomEvent<void>>;
   /**
    * Emitted when the button loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonButtonCustomEvent<void>>;
 
 }
 
@@ -387,15 +389,15 @@ export declare interface IonCheckbox extends Components.IonCheckbox {
   /**
    * Emitted when the checked property has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<ICheckboxCheckboxChangeEventDetail>>;
+  ionChange: EventEmitter<IonCheckboxCustomEvent<ICheckboxCheckboxChangeEventDetail>>;
   /**
    * Emitted when the checkbox has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonCheckboxCustomEvent<void>>;
   /**
    * Emitted when the checkbox loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonCheckboxCustomEvent<void>>;
 
 }
 
@@ -467,17 +469,17 @@ export declare interface IonContent extends Components.IonContent {
    * Emitted when the scroll has started. This event is disabled by default.
 Set `scrollEvents` to `true` to enable. 
    */
-  ionScrollStart: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
+  ionScrollStart: EventEmitter<IonContentCustomEvent<IContentScrollBaseDetail>>;
   /**
    * Emitted while scrolling. This event is disabled by default.
 Set `scrollEvents` to `true` to enable. 
    */
-  ionScroll: EventEmitter<CustomEvent<IContentScrollDetail>>;
+  ionScroll: EventEmitter<IonContentCustomEvent<IContentScrollDetail>>;
   /**
    * Emitted when the scroll has ended. This event is disabled by default.
 Set `scrollEvents` to `true` to enable. 
    */
-  ionScrollEnd: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
+  ionScrollEnd: EventEmitter<IonContentCustomEvent<IContentScrollBaseDetail>>;
 
 }
 
@@ -506,19 +508,19 @@ export declare interface IonDatetime extends Components.IonDatetime {
   /**
    * Emitted when the datetime selection was cancelled. 
    */
-  ionCancel: EventEmitter<CustomEvent<void>>;
+  ionCancel: EventEmitter<IonDatetimeCustomEvent<void>>;
   /**
    * Emitted when the value (selected date) has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<IDatetimeDatetimeChangeEventDetail>>;
+  ionChange: EventEmitter<IonDatetimeCustomEvent<IDatetimeDatetimeChangeEventDetail>>;
   /**
    * Emitted when the datetime has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonDatetimeCustomEvent<void>>;
   /**
    * Emitted when the datetime loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonDatetimeCustomEvent<void>>;
 
 }
 
@@ -569,11 +571,11 @@ export declare interface IonFabButton extends Components.IonFabButton {
   /**
    * Emitted when the button has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonFabButtonCustomEvent<void>>;
   /**
    * Emitted when the button loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonFabButtonCustomEvent<void>>;
 
 }
 
@@ -706,15 +708,15 @@ export declare interface IonImg extends Components.IonImg {
   /**
    * Emitted when the img src has been set 
    */
-  ionImgWillLoad: EventEmitter<CustomEvent<void>>;
+  ionImgWillLoad: EventEmitter<IonImgCustomEvent<void>>;
   /**
    * Emitted when the image has finished loading 
    */
-  ionImgDidLoad: EventEmitter<CustomEvent<void>>;
+  ionImgDidLoad: EventEmitter<IonImgCustomEvent<void>>;
   /**
    * Emitted when the img fails to load 
    */
-  ionError: EventEmitter<CustomEvent<void>>;
+  ionError: EventEmitter<IonImgCustomEvent<void>>;
 
 }
 
@@ -745,7 +747,7 @@ the threshold distance. From within your infinite handler,
 you must call the infinite scroll's `complete()` method when
 your async operation has completed. 
    */
-  ionInfinite: EventEmitter<CustomEvent<void>>;
+  ionInfinite: EventEmitter<IonInfiniteScrollCustomEvent<void>>;
 
 }
 
@@ -795,19 +797,19 @@ export declare interface IonInput extends Components.IonInput {
   /**
    * Emitted when a keyboard input occurred. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<IonInputCustomEvent<InputEvent>>;
   /**
    * Emitted when the value has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<IInputInputChangeEventDetail>>;
+  ionChange: EventEmitter<IonInputCustomEvent<IInputInputChangeEventDetail>>;
   /**
    * Emitted when the input loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
+  ionBlur: EventEmitter<IonInputCustomEvent<FocusEvent>>;
   /**
    * Emitted when the input has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
+  ionFocus: EventEmitter<IonInputCustomEvent<FocusEvent>>;
 
 }
 
@@ -918,7 +920,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   /**
    * Emitted when the item has been fully swiped. 
    */
-  ionSwipe: EventEmitter<CustomEvent<any>>;
+  ionSwipe: EventEmitter<IonItemOptionsCustomEvent<any>>;
 
 }
 
@@ -946,7 +948,7 @@ export declare interface IonItemSliding extends Components.IonItemSliding {
   /**
    * Emitted when the sliding position changes. 
    */
-  ionDrag: EventEmitter<CustomEvent<any>>;
+  ionDrag: EventEmitter<IonItemSlidingCustomEvent<any>>;
 
 }
 
@@ -1039,19 +1041,19 @@ export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is about to be opened. 
    */
-  ionWillOpen: EventEmitter<CustomEvent<void>>;
+  ionWillOpen: EventEmitter<IonMenuCustomEvent<void>>;
   /**
    * Emitted when the menu is about to be closed. 
    */
-  ionWillClose: EventEmitter<CustomEvent<void>>;
+  ionWillClose: EventEmitter<IonMenuCustomEvent<void>>;
   /**
    * Emitted when the menu is open. 
    */
-  ionDidOpen: EventEmitter<CustomEvent<void>>;
+  ionDidOpen: EventEmitter<IonMenuCustomEvent<void>>;
   /**
    * Emitted when the menu is closed. 
    */
-  ionDidClose: EventEmitter<CustomEvent<void>>;
+  ionDidClose: EventEmitter<IonMenuCustomEvent<void>>;
 
 }
 
@@ -1122,11 +1124,11 @@ export declare interface IonNav extends Components.IonNav {
   /**
    * Event fired when the nav will change components 
    */
-  ionNavWillChange: EventEmitter<CustomEvent<void>>;
+  ionNavWillChange: EventEmitter<IonNavCustomEvent<void>>;
   /**
    * Event fired when the nav has changed components 
    */
-  ionNavDidChange: EventEmitter<CustomEvent<void>>;
+  ionNavDidChange: EventEmitter<IonNavCustomEvent<void>>;
 
 }
 
@@ -1218,11 +1220,11 @@ export declare interface IonRadio extends Components.IonRadio {
   /**
    * Emitted when the radio button has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonRadioCustomEvent<void>>;
   /**
    * Emitted when the radio button loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonRadioCustomEvent<void>>;
 
 }
 
@@ -1250,7 +1252,7 @@ export declare interface IonRadioGroup extends Components.IonRadioGroup {
   /**
    * Emitted when the value has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<IRadioGroupRadioGroupChangeEventDetail>>;
+  ionChange: EventEmitter<IonRadioGroupCustomEvent<IRadioGroupRadioGroupChangeEventDetail>>;
 
 }
 
@@ -1280,25 +1282,25 @@ export declare interface IonRange extends Components.IonRange {
   /**
    * Emitted when the value property has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<IRangeRangeChangeEventDetail>>;
+  ionChange: EventEmitter<IonRangeCustomEvent<IRangeRangeChangeEventDetail>>;
   /**
    * Emitted when the range has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonRangeCustomEvent<void>>;
   /**
    * Emitted when the range loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonRangeCustomEvent<void>>;
   /**
    * Emitted when the user starts moving the range knob, whether through
 mouse drag, touch gesture, or keyboard interaction. 
    */
-  ionKnobMoveStart: EventEmitter<CustomEvent<IRangeRangeKnobMoveStartEventDetail>>;
+  ionKnobMoveStart: EventEmitter<IonRangeCustomEvent<IRangeRangeKnobMoveStartEventDetail>>;
   /**
    * Emitted when the user finishes moving the range knob, whether through
 mouse drag, touch gesture, or keyboard interaction. 
    */
-  ionKnobMoveEnd: EventEmitter<CustomEvent<IRangeRangeKnobMoveEndEventDetail>>;
+  ionKnobMoveEnd: EventEmitter<IonRangeCustomEvent<IRangeRangeKnobMoveEndEventDetail>>;
 
 }
 
@@ -1329,15 +1331,15 @@ further than the `pullMin` or pulls the content down and exceeds the pullMax.
 Updates the refresher state to `refreshing`. The `complete()` method should be
 called when the async operation has completed. 
    */
-  ionRefresh: EventEmitter<CustomEvent<IRefresherRefresherEventDetail>>;
+  ionRefresh: EventEmitter<IonRefresherCustomEvent<IRefresherRefresherEventDetail>>;
   /**
    * Emitted while the user is pulling down the content and exposing the refresher. 
    */
-  ionPull: EventEmitter<CustomEvent<void>>;
+  ionPull: EventEmitter<IonRefresherCustomEvent<void>>;
   /**
    * Emitted when the user begins to start pulling down. 
    */
-  ionStart: EventEmitter<CustomEvent<void>>;
+  ionStart: EventEmitter<IonRefresherCustomEvent<void>>;
 
 }
 
@@ -1408,7 +1410,7 @@ export declare interface IonReorderGroup extends Components.IonReorderGroup {
 Once the event has been emitted, the `complete()` method then needs
 to be called in order to finalize the reorder action. 
    */
-  ionItemReorder: EventEmitter<CustomEvent<IReorderGroupItemReorderEventDetail>>;
+  ionItemReorder: EventEmitter<IonReorderGroupCustomEvent<IReorderGroupItemReorderEventDetail>>;
 
 }
 
@@ -1478,27 +1480,27 @@ export declare interface IonSearchbar extends Components.IonSearchbar {
   /**
    * Emitted when a keyboard input occurred. 
    */
-  ionInput: EventEmitter<CustomEvent<KeyboardEvent>>;
+  ionInput: EventEmitter<IonSearchbarCustomEvent<KeyboardEvent>>;
   /**
    * Emitted when the value has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<ISearchbarSearchbarChangeEventDetail>>;
+  ionChange: EventEmitter<IonSearchbarCustomEvent<ISearchbarSearchbarChangeEventDetail>>;
   /**
    * Emitted when the cancel button is clicked. 
    */
-  ionCancel: EventEmitter<CustomEvent<void>>;
+  ionCancel: EventEmitter<IonSearchbarCustomEvent<void>>;
   /**
    * Emitted when the clear input button is clicked. 
    */
-  ionClear: EventEmitter<CustomEvent<void>>;
+  ionClear: EventEmitter<IonSearchbarCustomEvent<void>>;
   /**
    * Emitted when the input loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonSearchbarCustomEvent<void>>;
   /**
    * Emitted when the input has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonSearchbarCustomEvent<void>>;
 
 }
 
@@ -1528,7 +1530,7 @@ export declare interface IonSegment extends Components.IonSegment {
    * Emitted when the value property has changed and any
 dragging pointer has been released from `ion-segment`. 
    */
-  ionChange: EventEmitter<CustomEvent<ISegmentSegmentChangeEventDetail>>;
+  ionChange: EventEmitter<IonSegmentCustomEvent<ISegmentSegmentChangeEventDetail>>;
 
 }
 
@@ -1577,23 +1579,23 @@ export declare interface IonSelect extends Components.IonSelect {
   /**
    * Emitted when the value has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<ISelectSelectChangeEventDetail>>;
+  ionChange: EventEmitter<IonSelectCustomEvent<ISelectSelectChangeEventDetail>>;
   /**
    * Emitted when the selection is cancelled. 
    */
-  ionCancel: EventEmitter<CustomEvent<void>>;
+  ionCancel: EventEmitter<IonSelectCustomEvent<void>>;
   /**
    * Emitted when the overlay is dismissed. 
    */
-  ionDismiss: EventEmitter<CustomEvent<void>>;
+  ionDismiss: EventEmitter<IonSelectCustomEvent<void>>;
   /**
    * Emitted when the select has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonSelectCustomEvent<void>>;
   /**
    * Emitted when the select loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonSelectCustomEvent<void>>;
 
 }
 
@@ -1683,67 +1685,67 @@ export declare interface IonSlides extends Components.IonSlides {
   /**
    * Emitted after Swiper initialization 
    */
-  ionSlidesDidLoad: EventEmitter<CustomEvent<void>>;
+  ionSlidesDidLoad: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the user taps/clicks on the slide's container. 
    */
-  ionSlideTap: EventEmitter<CustomEvent<void>>;
+  ionSlideTap: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the user double taps on the slide's container. 
    */
-  ionSlideDoubleTap: EventEmitter<CustomEvent<void>>;
+  ionSlideDoubleTap: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted before the active slide has changed. 
    */
-  ionSlideWillChange: EventEmitter<CustomEvent<void>>;
+  ionSlideWillChange: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted after the active slide has changed. 
    */
-  ionSlideDidChange: EventEmitter<CustomEvent<void>>;
+  ionSlideDidChange: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the next slide has started. 
    */
-  ionSlideNextStart: EventEmitter<CustomEvent<void>>;
+  ionSlideNextStart: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the previous slide has started. 
    */
-  ionSlidePrevStart: EventEmitter<CustomEvent<void>>;
+  ionSlidePrevStart: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the next slide has ended. 
    */
-  ionSlideNextEnd: EventEmitter<CustomEvent<void>>;
+  ionSlideNextEnd: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the previous slide has ended. 
    */
-  ionSlidePrevEnd: EventEmitter<CustomEvent<void>>;
+  ionSlidePrevEnd: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the slide transition has started. 
    */
-  ionSlideTransitionStart: EventEmitter<CustomEvent<void>>;
+  ionSlideTransitionStart: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the slide transition has ended. 
    */
-  ionSlideTransitionEnd: EventEmitter<CustomEvent<void>>;
+  ionSlideTransitionEnd: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the slider is actively being moved. 
    */
-  ionSlideDrag: EventEmitter<CustomEvent<void>>;
+  ionSlideDrag: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the slider is at its initial position. 
    */
-  ionSlideReachStart: EventEmitter<CustomEvent<void>>;
+  ionSlideReachStart: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the slider is at the last slide. 
    */
-  ionSlideReachEnd: EventEmitter<CustomEvent<void>>;
+  ionSlideReachEnd: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the user first touches the slider. 
    */
-  ionSlideTouchStart: EventEmitter<CustomEvent<void>>;
+  ionSlideTouchStart: EventEmitter<IonSlidesCustomEvent<void>>;
   /**
    * Emitted when the user releases the touch. 
    */
-  ionSlideTouchEnd: EventEmitter<CustomEvent<void>>;
+  ionSlideTouchEnd: EventEmitter<IonSlidesCustomEvent<void>>;
 
 }
 
@@ -1793,7 +1795,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   /**
    * Expression to be called when the split-pane visibility has changed 
    */
-  ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
+  ionSplitPaneVisible: EventEmitter<IonSplitPaneCustomEvent<{ visible: boolean }>>;
 
 }
 
@@ -1884,19 +1886,19 @@ export declare interface IonTextarea extends Components.IonTextarea {
   /**
    * Emitted when the input value has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>;
+  ionChange: EventEmitter<IonTextareaCustomEvent<ITextareaTextareaChangeEventDetail>>;
   /**
    * Emitted when a keyboard input occurred. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<IonTextareaCustomEvent<InputEvent>>;
   /**
    * Emitted when the input loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
+  ionBlur: EventEmitter<IonTextareaCustomEvent<FocusEvent>>;
   /**
    * Emitted when the input has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
+  ionFocus: EventEmitter<IonTextareaCustomEvent<FocusEvent>>;
 
 }
 
@@ -1965,15 +1967,15 @@ export declare interface IonToggle extends Components.IonToggle {
   /**
    * Emitted when the value property has changed. 
    */
-  ionChange: EventEmitter<CustomEvent<IToggleToggleChangeEventDetail>>;
+  ionChange: EventEmitter<IonToggleCustomEvent<IToggleToggleChangeEventDetail>>;
   /**
    * Emitted when the toggle has focus. 
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonToggleCustomEvent<void>>;
   /**
    * Emitted when the toggle loses focus. 
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonToggleCustomEvent<void>>;
 
 }
 
