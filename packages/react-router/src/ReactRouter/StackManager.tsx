@@ -35,7 +35,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   private pendingPageTransition = false;
 
-  // HACK: this flag a duplicate transition after swiping back.
+  // HACK: this flag prevents a duplicate transition after swiping back.
   private skipTransition = false;
 
   constructor(props: StackManagerProps) {
