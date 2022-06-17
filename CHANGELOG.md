@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.11-nightly.20220617](https://github.com/ionic-team/ionic-framework/compare/v6.1.10...v6.1.11-nightly.20220617) (2022-06-17)
+
+
+### Bug Fixes
+
+* **item:** multiple input appearance when using datetime ([#25484](https://github.com/ionic-team/ionic-framework/issues/25484)) ([3089f38](https://github.com/ionic-team/ionic-framework/commit/3089f38f4d335c44e9913e874813dd4205c2b160)), closes [#25479](https://github.com/ionic-team/ionic-framework/issues/25479)
+* **overlays:** focus is not moved if active element is in overlay ([#25481](https://github.com/ionic-team/ionic-framework/issues/25481)) ([dcc2da2](https://github.com/ionic-team/ionic-framework/commit/dcc2da2800e69d938b4a62db436d9f07d9663dce)), closes [#24127](https://github.com/ionic-team/ionic-framework/issues/24127) [#24820](https://github.com/ionic-team/ionic-framework/issues/24820)
+* **refresher:** quickly swiping down no longer causes duplicate refresh ([#25476](https://github.com/ionic-team/ionic-framework/issues/25476)) ([3abfa78](https://github.com/ionic-team/ionic-framework/commit/3abfa780ccb32484b4d9f1b509e7ab910dfb901a)), closes [#25418](https://github.com/ionic-team/ionic-framework/issues/25418)
+
+
+
+
+
 ## [6.1.10](https://github.com/ionic-team/ionic-framework/compare/v6.1.9...v6.1.10) (2022-06-15)
 
 
