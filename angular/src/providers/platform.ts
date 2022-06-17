@@ -253,7 +253,7 @@ export class Platform {
 }
 
 const readQueryParam = (url: string, key: string) => {
-  key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+  key = key.replace(/[[\]\\]/g, '\\$&');
   const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
