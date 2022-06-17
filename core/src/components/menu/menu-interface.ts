@@ -39,6 +39,10 @@ export interface MenuChangeEventDetail {
   open: boolean;
 }
 
+/**
+ * @deprecated
+ * Use `IonMenuCustomEvent` instead. This interface will be removed in the next major version of Ionic.
+ */
 export interface MenuCustomEvent<T = any> extends CustomEvent {
   detail: T;
   target: HTMLIonMenuElement;

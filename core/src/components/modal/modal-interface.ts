@@ -40,6 +40,10 @@ export interface ModalBreakpointChangeEventDetail {
   breakpoint: number;
 }
 
+/**
+ * @deprecated
+ * Use `IonModalCustomEvent` instead. This interface will be removed in the next major version of Ionic.
+ */
 export interface ModalCustomEvent extends CustomEvent {
   target: HTMLIonModalElement;
 }

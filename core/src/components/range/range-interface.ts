@@ -16,6 +16,10 @@ export interface RangeKnobMoveEndEventDetail {
   value: RangeValue;
 }
 
+/**
+ * @deprecated
+ * Use `IonRangeCustomEvent` instead. This interface will be removed in the next major version of Ionic.
+ */
 export interface RangeCustomEvent extends CustomEvent {
   detail: RangeChangeEventDetail | RangeKnobMoveStartEventDetail | RangeKnobMoveEndEventDetail;
   target: HTMLIonRangeElement;

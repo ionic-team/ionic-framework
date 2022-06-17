@@ -89,6 +89,10 @@ export interface TransitionInstruction {
   enteringRequiresTransition?: boolean;
 }
 
+/**
+ * @deprecated
+ * Use `IonNavCustomEvent` instead. This interface will be removed in the next major version of Ionic.
+ */
 export interface NavCustomEvent extends CustomEvent {
   target: HTMLIonNavElement;
 }

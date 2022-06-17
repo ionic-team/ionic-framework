@@ -4,6 +4,10 @@ export interface SegmentChangeEventDetail {
   value?: string;
 }
 
+/**
+ * @deprecated
+ * Use `IonSegmentCustomEvent` instead. This interface will be removed in the next major version of Ionic.
+ */
 export interface SegmentCustomEvent extends CustomEvent {
   detail: SegmentChangeEventDetail;
   target: HTMLIonSegmentElement;

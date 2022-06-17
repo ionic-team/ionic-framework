@@ -6,6 +6,10 @@ export interface DatetimeChangeEventDetail {
   value?: string | null;
 }
 
+/**
+ * @deprecated
+ * Use `IonDatetimeCustomEvent` instead. This interface will be removed in the next major version of Ionic.
+ */
 export interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
   target: HTMLIonDatetimeElement;
