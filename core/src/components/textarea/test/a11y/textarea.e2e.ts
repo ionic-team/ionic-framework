@@ -14,12 +14,12 @@ test.describe('textarea: a11y', () => {
   });
 
   test('set a default aria-labelledby when a neighboring ion-label exist', async ({ page }) => {
-    await page.setContent(
-      `<ion-item>
-      <ion-label>A11y Test</ion-label>
-      <ion-textarea></ion-textarea>
-    </ion-item>`
-    );
+    await page.setContent(`
+      <ion-item>
+        <ion-label>A11y Test</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+    `);
 
     const label = page.locator('ion-label');
     const textarea = page.locator('ion-textarea textarea');
