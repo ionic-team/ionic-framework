@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('textarea: autogrow', () => {
-
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/textarea/test/autogrow`);
 
@@ -10,5 +9,4 @@ test.describe('textarea: autogrow', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`textarea-autogrow-diff-${page.getSnapshotSettings()}.png`);
   });
-
 });

@@ -11,7 +11,6 @@ test.describe('textarea: basic', () => {
   });
 
   test.describe('with floating labels', () => {
-
     /**
      * Verifies the display of a floating label above an `ion-textarea`.
      */
@@ -28,6 +27,5 @@ test.describe('textarea: basic', () => {
 
       expect(await item.screenshot()).toMatchSnapshot(`textarea-floating-label-diff-${page.getSnapshotSettings()}.png`);
     });
-
-  })
+  });
 });

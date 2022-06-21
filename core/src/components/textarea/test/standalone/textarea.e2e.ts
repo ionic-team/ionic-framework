@@ -12,5 +12,4 @@ test.describe('textarea: standalone', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`textarea-standalone-diff-${page.getSnapshotSettings()}.png`);
   });
-
 });

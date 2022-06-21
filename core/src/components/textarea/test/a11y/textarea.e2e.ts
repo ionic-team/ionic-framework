@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('textarea: a11y', () => {
-
   test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({ page }) => {
     await page.setContent(`<ion-textarea></ion-textarea>`);
 
@@ -28,5 +27,4 @@ test.describe('textarea: a11y', () => {
 
     expect(ariaLabelledBy).toBe(await label.getAttribute('id'));
   });
-
 });
