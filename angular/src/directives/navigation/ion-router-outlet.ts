@@ -235,8 +235,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const snapshot = (activatedRoute as any)._futureSnapshot;
 
       if (snapshot.component) {
-        throw new Error(`[Ionic Error] Standalone components are not currently supported with ion-router-outlet.
-        You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404`);
+        throw new Error(
+          'Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
+        );
       }
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
