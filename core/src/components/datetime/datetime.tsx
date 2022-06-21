@@ -308,6 +308,12 @@ export class Datetime implements ComponentInterface {
   @Prop() firstDayOfWeek = 0;
 
   /**
+   * If `true`, multiple dates can be selected at once. Only
+   * applies to `presentation="date"`.
+   */
+  @Prop() multiple = false;
+
+  /**
    * The value of the datetime as a valid ISO 8601 datetime string.
    */
   @Prop({ mutable: true }) value?: string | null;
@@ -1124,6 +1130,11 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
+    const { multiple, presentation } = this;
+    if(multiple && presentation !== 'date') {
+      printIonWarning('Multiple date selection is only supported for presentation="date".');
+    }
+
     this.processMinParts();
     this.processMaxParts();
     this.processValue(this.value);

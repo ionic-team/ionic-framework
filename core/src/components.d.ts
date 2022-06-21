@@ -786,6 +786,10 @@ export namespace Components {
          */
         "monthValues"?: number[] | number | string;
         /**
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"`.
+         */
+        "multiple": boolean;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -4687,6 +4691,10 @@ declare namespace LocalJSX {
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
         "monthValues"?: number[] | number | string;
+        /**
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"`.
+         */
+        "multiple"?: boolean;
         /**
           * The name of the control, which is submitted with the form data.
          */
