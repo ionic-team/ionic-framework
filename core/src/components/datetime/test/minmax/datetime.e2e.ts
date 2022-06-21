@@ -109,7 +109,7 @@ test.describe('datetime: minmax', () => {
     });
   });
 
-  test.only('setting value outside bounds should show in-bounds month', async ({ page }) => {
+  test('setting value outside bounds should show in-bounds month', async ({ page }) => {
     await page.setContent(`
       <ion-datetime min="2021-06-01" max="2021-06-30" value="2021-05-01"></ion-datetime>
     `);
