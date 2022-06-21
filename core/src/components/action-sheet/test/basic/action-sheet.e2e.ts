@@ -85,9 +85,11 @@ test.describe('action sheet: basic', () => {
       await actionSheetFixture.open('#scrollWithoutCancel');
       await actionSheetFixture.screenshot('scroll-without-cancel');
     });
-    test('should open custom backdrop action sheet', async () => {
+    test('should open custom backdrop action sheet', async ({ page }) => {
       await actionSheetFixture.open('#customBackdrop');
-      await actionSheetFixture.screenshot('custom-backdrop');
+
+      const backdrop = page.locator('ion-action-sheet ion-backdrop');
+      expect(backdrop).toHaveCSS('opacity', '1');
     });
     test('should open alert from action sheet', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
