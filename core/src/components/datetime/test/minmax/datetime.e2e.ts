@@ -47,6 +47,7 @@ test.describe('datetime: minmax', () => {
     expect(nextButton).toBeDisabled();
     expect(prevButton).toBeEnabled();
   });
+
   test('datetime: minmax months disabled', async ({ page }) => {
     await page.goto('/src/components/datetime/test/minmax');
     const calendarMonths = page.locator('ion-datetime#inside .calendar-month');
@@ -67,6 +68,7 @@ test.describe('datetime: minmax', () => {
     expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
     expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
   });
+
   test('datetime: min including day should not disable month', async ({ page }) => {
     await page.goto('/src/components/datetime/test/minmax');
     await page.waitForSelector('.datetime-ready');
@@ -77,6 +79,7 @@ test.describe('datetime: minmax', () => {
     expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
     expect(calendarMonths.nth(2)).not.toHaveClass(/calendar-month-disabled/);
   });
+
   test.describe('when the datetime does not have a value', () => {
     test('all time values should be available for selection', async ({ page }) => {
       /**
@@ -104,5 +107,16 @@ test.describe('datetime: minmax', () => {
       expect(await hours.count()).toBe(12);
       expect(await minutes.count()).toBe(60);
     });
+  });
+
+  test.only('setting value outside bounds should show in-bounds month', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime min="2021-06-01" max="2021-06-30" value="2021-05-01"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
+    expect(calendarMonthYear).toHaveText('June 2021');
   });
 });
