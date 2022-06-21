@@ -233,6 +233,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
+
+      if (snapshot.component) {
+        throw new Error(`[Ionic Error] Standalone components are not currently supported with ion-router-outlet.
+        You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404`);
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component as any;
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
