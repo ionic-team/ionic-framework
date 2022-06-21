@@ -53,7 +53,8 @@ export class Input implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+   * This attribute is ignored.
+   * @deprecated
    */
   @Prop() accept?: string;
 
@@ -143,7 +144,7 @@ export class Input implements ComponentInterface {
   @Prop() minlength?: number;
 
   /**
-   * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+   * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"`, otherwise it is ignored.
    */
   @Prop() multiple?: boolean;
 
