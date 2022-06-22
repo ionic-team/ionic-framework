@@ -40,7 +40,6 @@ import type { SelectCompareFn } from './select-interface';
 export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
-  private didInit = false;
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
 
@@ -150,11 +149,9 @@ export class Select implements ComponentInterface {
   @Watch('value')
   valueChanged() {
     this.emitStyle();
-    if (this.didInit) {
-      this.ionChange.emit({
-        value: this.value,
-      });
-    }
+    this.ionChange.emit({
+      value: this.value,
+    });
   }
 
   async connectedCallback() {
@@ -171,10 +168,6 @@ export class Select implements ComponentInterface {
       this.mutationO.disconnect();
       this.mutationO = undefined;
     }
-  }
-
-  componentDidLoad() {
-    this.didInit = true;
   }
 
   /**
