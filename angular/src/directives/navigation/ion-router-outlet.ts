@@ -234,10 +234,19 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
 
+      /**
+       * Angular 14 introduces a new `loadComponent` property to the route config,
+       * that assigns the component to load to the `component` property of
+       * the route snapshot. We can check for the presence of this property
+       * to determine if the route is using standalone components.
+       *
+       * TODO: FW-1631: Remove this check when supporting standalone components
+       */
       if (snapshot.component) {
-        throw new Error(
-          'Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
+        console.warn(
+          '[Ionic Warning]: Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
         );
+        return;
       }
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
