@@ -25,7 +25,9 @@ test.describe('textarea: basic', () => {
 
       const item = page.locator('ion-item');
 
-      expect(await item.screenshot()).toMatchSnapshot(`textarea-floating-label-initial-${page.getSnapshotSettings()}.png`);
+      expect(await item.screenshot()).toMatchSnapshot(
+        `textarea-floating-label-initial-${page.getSnapshotSettings()}.png`
+      );
 
       const textarea = page.locator('textarea');
       await textarea.evaluate((el: HTMLIonTextareaElement) => {
