@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.11](https://github.com/ionic-team/ionic-framework/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+
+### Bug Fixes
+
+* **datetime:** closing time picker no longer changes month ([#25478](https://github.com/ionic-team/ionic-framework/issues/25478)) ([f9ab9b5](https://github.com/ionic-team/ionic-framework/commit/f9ab9b54ddb5a3004673e4aaa9cb62fd8e97ba07)), closes [#25438](https://github.com/ionic-team/ionic-framework/issues/25438)
+* **item:** multiple input appearance when using datetime ([#25484](https://github.com/ionic-team/ionic-framework/issues/25484)) ([3089f38](https://github.com/ionic-team/ionic-framework/commit/3089f38f4d335c44e9913e874813dd4205c2b160)), closes [#25479](https://github.com/ionic-team/ionic-framework/issues/25479)
+* **item:** multiple input appearance when using datetime ([#25498](https://github.com/ionic-team/ionic-framework/issues/25498)) ([1a8d23d](https://github.com/ionic-team/ionic-framework/commit/1a8d23da8125d54c3119eacb51206f7541c9f410)), closes [#25484](https://github.com/ionic-team/ionic-framework/issues/25484) [#25483](https://github.com/ionic-team/ionic-framework/issues/25483)
+* **overlays:** focus is not moved if active element is in overlay ([#25481](https://github.com/ionic-team/ionic-framework/issues/25481)) ([dcc2da2](https://github.com/ionic-team/ionic-framework/commit/dcc2da2800e69d938b4a62db436d9f07d9663dce)), closes [#24127](https://github.com/ionic-team/ionic-framework/issues/24127) [#24820](https://github.com/ionic-team/ionic-framework/issues/24820)
+* **refresher:** quickly swiping down no longer causes duplicate refresh ([#25476](https://github.com/ionic-team/ionic-framework/issues/25476)) ([3abfa78](https://github.com/ionic-team/ionic-framework/commit/3abfa780ccb32484b4d9f1b509e7ab910dfb901a)), closes [#25418](https://github.com/ionic-team/ionic-framework/issues/25418)
+* **vue:** adding class to IonPage no longer hides component ([#25490](https://github.com/ionic-team/ionic-framework/issues/25490)) ([cbaa971](https://github.com/ionic-team/ionic-framework/commit/cbaa9711f094975569e2fcb28060f8e456804073))
+* **vue:** components have correct type definitions ([#25499](https://github.com/ionic-team/ionic-framework/issues/25499)) ([b1821e9](https://github.com/ionic-team/ionic-framework/commit/b1821e9d0a55f20f74696f119de724ab70647977)), closes [#25485](https://github.com/ionic-team/ionic-framework/issues/25485)
+
+
+
+
+
 ## [6.1.10](https://github.com/ionic-team/ionic-framework/compare/v6.1.9...v6.1.10) (2022-06-15)
 
 
