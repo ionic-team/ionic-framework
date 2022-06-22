@@ -94,14 +94,22 @@ test.describe('action sheet: basic', () => {
     });
   });
   test.describe.only('action sheet: focus trap', () => {
-    test('it should trap focus in action sheet', async ({ page }) => {
-      await actionSheetFixture.open('#basic');
+    test.describe('action sheet: focus trap', () => {
+      test('it should trap focus in action sheet', async ({ page, browserName }) => {
+        const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
-      await page.keyboard.press('Tab');
-      expect(page.locator('ion-action-sheet #delete-button')).toBeFocused();
+        await actionSheetFixture.open('#basic');
+        const buttons = page.locator('ion-action-sheet button');
 
-      //await page.keyboard.press('Shift+Tab');
-      //expect(buttons.nth(4)).toBeFocused();
+        await page.keyboard.press(tabKey);
+        await expect(buttons.nth(0)).toBeFocused();
+
+        await page.keyboard.press(`Shift+${tabKey}`);
+        await expect(buttons.nth(4)).toBeFocused();
+
+        await page.keyboard.press(tabKey);
+        await expect(buttons.nth(0)).toBeFocused();
+      });
     });
   });
 });
