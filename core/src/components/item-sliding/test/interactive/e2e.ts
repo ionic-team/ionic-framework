@@ -4,7 +4,7 @@ import { openItemSliding } from '../test.utils';
 
 test('item-sliding: interactive', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item-sliding/test/interactive?ionic:_testing=true'
+    url: '/src/components/item-sliding/test/interactive?ionic:_testing=true',
   });
 
   const compares = [];
@@ -31,7 +31,7 @@ test('item-sliding: interactive', async () => {
 const slideAndDelete = async (item: any, page: any) => {
   try {
     // Get the element's ID
-    const id = await(await item.getProperty('id')).jsonValue();
+    const id = await (await item.getProperty('id')).jsonValue();
     await openItemSliding(`#${id}`, page);
     await deleteItemSliding(item, page, id);
   } catch (err) {

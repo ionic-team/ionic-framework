@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('textarea: autogrow', async () => {
   const page = await newE2EPage({
-    url: '/src/components/textarea/test/autogrow?ionic:_testing=true'
+    url: '/src/components/textarea/test/autogrow?ionic:_testing=true',
   });
 
   const compares = [];

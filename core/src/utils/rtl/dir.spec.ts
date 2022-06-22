@@ -1,9 +1,7 @@
 import { isRTL } from './dir';
 
 describe('rtl: dir', () => {
-
   describe('with host element', () => {
-
     it('should return true', () => {
       expect(isRTL({ dir: 'rtl' })).toBe(true);
     });
@@ -12,11 +10,9 @@ describe('rtl: dir', () => {
       expect(isRTL({ dir: 'ltr' })).toBe(false);
       expect(isRTL({ dir: '' })).toBe(false);
     });
-
   });
 
   describe('without host element', () => {
-
     it('should return true', () => {
       global.document.dir = 'rtl';
       expect(isRTL()).toBe(true);
@@ -26,7 +22,5 @@ describe('rtl: dir', () => {
       global.document.dir = 'ltr';
       expect(isRTL()).toBe(false);
     });
-
   });
-
 });

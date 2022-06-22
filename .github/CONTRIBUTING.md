@@ -140,12 +140,13 @@ Before creating a pull request, please read our requirements that explains the m
 
 #### Modifying Documentation
 
-1. Locate the `readme.md` file in the component's directory.
-2. Modify the documentation **above** the line that says `<!-- Auto Generated Below -->` in this file.
-3. To update any of the auto generated documentation below that line, make the relevant changes in the following places:
-  - `Usage`: update the component's usage examples in the component's `usage/` directory
-  - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`)
-  - `CSS Custom Properties`: update the component's main Sass file (`*.scss`)
+- Changes to manually written documentation should be made in the `ionic-docs` repo: https://github.com/ionic-team/ionic-docs/tree/main/docs
+  - In your `ionic-docs` PR, please add a link back to the related `ionic-framework` PR.
+- Changes to auto generated documentation should be made in the `ionic-framework` repo. These can be done in the same PR as your fix or feature.
+  - Run `npm run build` and commit all updates to ensure your changes make it into the generated documentation.
+  - `Usage`: update the component's usage examples in the component's `usage/` directory.
+  - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`).
+  - `CSS Custom Properties`: update the component's main Sass file (`*.scss`).
 
 
 #### Modifying Tests
@@ -229,6 +230,12 @@ Before creating a pull request, please read our requirements that explains the m
 1. [Create a new pull request](https://github.com/ionic-team/ionic/compare) with the `main` branch as the `base`. You may need to click on `compare across forks` to find your changes.
 2. See the [Creating a pull request from a fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) GitHub help article for more information.
 3. Please fill out the provided Pull Request template to the best of your ability and include any issues that are related.
+
+### Review Process for Feature PRs
+
+The team has an internal design process for new Ionic features, which must be completed before the PR can be reviewed or merged. As a result of the design process, community feature PRs are subject to large changes. In some cases, the team may instead create a separate PR using pieces of the community PR. Either way, you will always receive co-author commit credit when the feature is merged.
+
+To expedite the process, please ensure that all feature PRs have an associated issue created, with a clear use case for why the feature should be added to Ionic.
 
 
 ## Commit Message Guidelines

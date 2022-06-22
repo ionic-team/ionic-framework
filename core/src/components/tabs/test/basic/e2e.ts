@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('tabs: basic', async () => {
   const page = await newE2EPage({
-    url: '/src/components/tabs/test/basic?ionic:_testing=true'
+    url: '/src/components/tabs/test/basic?ionic:_testing=true',
   });
 
   let compare = await page.compareScreenshot();

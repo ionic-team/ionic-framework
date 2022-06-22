@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
@@ -14,13 +14,9 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
-  backdropAnimation
-    .addElement(root.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
+  backdropAnimation.addElement(root.querySelector('ion-backdrop')!).fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
-  wrapperAnimation
-    .addElement(root.querySelector('.popover-wrapper')!)
-    .fromTo('opacity', 0.99, 0);
+  wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).fromTo('opacity', 0.99, 0);
 
   return baseAnimation
     .easing('ease')

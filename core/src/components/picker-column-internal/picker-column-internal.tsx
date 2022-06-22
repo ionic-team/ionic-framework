@@ -1,13 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
-import { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
+import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
-import { PickerColumnItem } from './picker-column-internal-interfaces';
+import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -17,13 +18,14 @@ import { PickerColumnItem } from './picker-column-internal-interfaces';
   tag: 'ion-picker-column-internal',
   styleUrls: {
     ios: 'picker-column-internal.ios.scss',
-    md: 'picker-column-internal.md.scss'
+    md: 'picker-column-internal.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
-  private hapticsStarted = false;
+  private isScrolling = false;
+  private scrollEndCallback?: () => void;
   private isColumnVisible = false;
 
   @State() isActive = false;
@@ -67,16 +69,10 @@ export class PickerColumnInternal implements ComponentInterface {
   valueChange() {
     if (this.isColumnVisible) {
       /**
-       * Only scroll the active item into view and emit the value
-       * change, when the picker column is actively visible to the user.
+       * Only scroll the active item into view when the picker column
+       * is actively visible to the user.
        */
-      const { items, value } = this;
       this.scrollActiveItemIntoView();
-
-      const findItem = items.find(item => item.value === value);
-      if (findItem) {
-        this.ionChange.emit(findItem);
-      }
     }
   }
 
@@ -91,6 +87,7 @@ export class PickerColumnInternal implements ComponentInterface {
       const ev = entries[0];
 
       if (ev.isIntersecting) {
+        this.isColumnVisible = true;
         /**
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
@@ -101,20 +98,39 @@ export class PickerColumnInternal implements ComponentInterface {
         this.activeItem?.classList.add(PICKER_COL_ACTIVE);
 
         this.initializeScrollListener();
-        this.isColumnVisible = true;
       } else {
+        this.isColumnVisible = false;
+
         if (this.destroyScrollListener) {
           this.destroyScrollListener();
           this.destroyScrollListener = undefined;
         }
-        this.isColumnVisible = false;
       }
-    }
-    new IntersectionObserver(visibleCallback, { threshold: 0.01 }).observe(this.el);
+    };
+    new IntersectionObserver(visibleCallback, { threshold: 0.001 }).observe(this.el);
 
     const parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null;
     if (parentEl !== null) {
       parentEl.addEventListener('ionInputModeChange', (ev: any) => this.inputModeChange(ev));
+    }
+  }
+
+  componentDidRender() {
+    const { activeItem, items, isColumnVisible, value } = this;
+
+    if (isColumnVisible) {
+      if (activeItem) {
+        this.scrollActiveItemIntoView();
+      } else if (items[0]?.value !== value) {
+        /**
+         * If the picker column does not have an active item and the current value
+         * does not match the first item in the picker column, that means
+         * the value is out of bounds. In this case, we assign the value to the
+         * first item to match the scroll position of the column.
+         *
+         */
+        this.setValue(items[0].value);
+      }
     }
   }
 
@@ -128,14 +144,30 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
-    this.el.scroll({
-      // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
-      top: target.offsetTop - (3 * target.clientHeight) + (target.clientHeight / 2),
-      left: 0,
-      behavior: smooth ? 'smooth' : undefined
-    });
+  private setValue(value?: string | number) {
+    const { items } = this;
+    this.value = value;
+    const findItem = items.find((item) => item.value === value);
+    if (findItem) {
+      this.ionChange.emit(findItem);
+    }
   }
+
+  private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
+    const { el, isColumnVisible } = this;
+    if (isColumnVisible) {
+      // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
+      const top = target.offsetTop - 3 * target.clientHeight + target.clientHeight / 2;
+
+      if (el.scrollTop !== top) {
+        el.scroll({
+          top,
+          left: 0,
+          behavior: smooth ? 'smooth' : undefined,
+        });
+      }
+    }
+  };
 
   /**
    * When ionInputModeChange is emitted, each column
@@ -143,7 +175,9 @@ export class PickerColumnInternal implements ComponentInterface {
    * for text entry.
    */
   private inputModeChange = (ev: PickerInternalCustomEvent) => {
-    if (!this.numericInput) { return; }
+    if (!this.numericInput) {
+      return;
+    }
 
     const { useInputMode, inputModeColumn } = ev.detail;
 
@@ -154,12 +188,31 @@ export class PickerColumnInternal implements ComponentInterface {
     const isColumnActive = inputModeColumn === undefined || inputModeColumn === this.el;
 
     if (!useInputMode || !isColumnActive) {
-      this.isActive = false;
+      this.setInputModeActive(false);
       return;
     }
 
-    this.isActive = true;
-  }
+    this.setInputModeActive(true);
+  };
+
+  /**
+   * Setting isActive will cause a re-render.
+   * As a result, we do not want to cause the
+   * re-render mid scroll as this will cause
+   * the picker column to jump back to
+   * whatever value was selected at the
+   * start of the scroll interaction.
+   */
+  private setInputModeActive = (state: boolean) => {
+    if (this.isScrolling) {
+      this.scrollEndCallback = () => {
+        this.isActive = state;
+      };
+      return;
+    }
+
+    this.isActive = state;
+  };
 
   /**
    * When the column scrolls, the component
@@ -180,9 +233,9 @@ export class PickerColumnInternal implements ComponentInterface {
           timeout = undefined;
         }
 
-        if (!this.hapticsStarted) {
+        if (!this.isScrolling) {
           hapticSelectionStart();
-          this.hapticsStarted = true;
+          this.isScrolling = true;
         }
 
         /**
@@ -190,8 +243,8 @@ export class PickerColumnInternal implements ComponentInterface {
          * which is the month/year that we want to select
          */
         const bbox = el.getBoundingClientRect();
-        const centerX = bbox.x + (bbox.width / 2);
-        const centerY = bbox.y + (bbox.height / 2);
+        const centerX = bbox.x + bbox.width / 2;
+        const centerY = bbox.y + bbox.height / 2;
 
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
         if (activeEl !== null) {
@@ -210,6 +263,21 @@ export class PickerColumnInternal implements ComponentInterface {
         activeElement.classList.add(PICKER_COL_ACTIVE);
 
         timeout = setTimeout(() => {
+          this.isScrolling = false;
+          hapticSelectionEnd();
+
+          /**
+           * Certain tasks (such as those that
+           * cause re-renders) should only be done
+           * once scrolling has finished, otherwise
+           * flickering may occur.
+           */
+          const { scrollEndCallback } = this;
+          if (scrollEndCallback) {
+            scrollEndCallback();
+            this.scrollEndCallback = undefined;
+          }
+
           const dataIndex = activeElement.getAttribute('data-index');
 
           /**
@@ -217,18 +285,18 @@ export class PickerColumnInternal implements ComponentInterface {
            * possible we hit one of the
            * empty padding columns.
            */
-          if (dataIndex === null) { return; }
+          if (dataIndex === null) {
+            return;
+          }
 
           const index = parseInt(dataIndex, 10);
           const selectedItem = this.items[index];
 
           if (selectedItem.value !== this.value) {
-            this.value = selectedItem.value;
-            hapticSelectionEnd();
-            this.hapticsStarted = false;
+            this.setValue(selectedItem.value);
           }
         }, 250);
-      })
+      });
     };
 
     /**
@@ -240,9 +308,9 @@ export class PickerColumnInternal implements ComponentInterface {
 
       this.destroyScrollListener = () => {
         el.removeEventListener('scroll', scrollCallback);
-      }
+      };
     });
-  }
+  };
 
   get activeItem() {
     return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]`) as HTMLElement | null;
@@ -258,7 +326,7 @@ export class PickerColumnInternal implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
-          ['picker-column-numeric-input']: numericInput
+          ['picker-column-numeric-input']: numericInput,
         })}
       >
         <div class="picker-item picker-item-empty">&nbsp;</div>
@@ -273,8 +341,10 @@ export class PickerColumnInternal implements ComponentInterface {
               onClick={(ev: Event) => {
                 this.centerPickerItemInView(ev.target as HTMLElement);
               }}
-            >{item.text}</div>
-          )
+            >
+              {item.text}
+            </div>
+          );
         })}
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>

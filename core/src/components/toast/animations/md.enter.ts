@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
@@ -23,9 +23,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, position: string): Animati
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     case 'middle':
-      const topPosition = Math.floor(
-        baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2
-      );
+      const topPosition = Math.floor(baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2);
       wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
@@ -34,8 +32,5 @@ export const mdEnterAnimation = (baseEl: HTMLElement, position: string): Animati
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
   }
-  return baseAnimation
-    .easing('cubic-bezier(.36,.66,.04,1)')
-    .duration(400)
-    .addAnimation(wrapperAnimation);
+  return baseAnimation.easing('cubic-bezier(.36,.66,.04,1)').duration(400).addAnimation(wrapperAnimation);
 };

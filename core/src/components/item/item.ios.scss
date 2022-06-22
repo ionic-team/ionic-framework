@@ -8,7 +8,7 @@
   --min-height: #{$item-ios-min-height};
   --transition: background-color 200ms linear, opacity 200ms linear;
   --padding-start: #{$item-ios-padding-start};
-  --inner-padding-end: #{$item-ios-padding-end / 2};
+  --inner-padding-end: #{$item-ios-padding-end * 0.5};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
   --background-activated: #000;
@@ -170,7 +170,7 @@
 
 ::slotted(ion-avatar[slot="end"]),
 ::slotted(ion-thumbnail[slot="end"]) {
-  @include margin(($item-ios-padding-end / 2));
+  @include margin(($item-ios-padding-end * 0.5));
 }
 
 

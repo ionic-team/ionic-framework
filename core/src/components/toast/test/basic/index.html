@@ -1,226 +1,297 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Toast - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
   <script type="module">
     import { toastController } from '../../../../dist/ionic/index.esm.js';
     window.toastController = toastController;
   </script>
-<body>
-  <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Toast - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toast - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-content class="ion-padding" id="content">
-      <ion-button expand="block" id="show-bottom-toast" onclick="openToast({ message: 'Hellooo', position: 'bottom', duration: 2000, htmlAttributes: { 'data-testid': 'basic-toast' } })">
-        Position Bottom
-      </ion-button>
+      <ion-content class="ion-padding" id="content">
+        <ion-button
+          expand="block"
+          id="show-bottom-toast"
+          onclick="openToast({ message: 'Hellooo', position: 'bottom', duration: 2000, htmlAttributes: { 'data-testid': 'basic-toast' } })"
+        >
+          Position Bottom
+        </ion-button>
 
-      <ion-button expand="block" id="show-top-toast" onclick="openToast({ message: 'Hellooo', position: 'top', duration: 2000 })">
-        Position Top
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="show-top-toast"
+          onclick="openToast({ message: 'Hellooo', position: 'top', duration: 2000 })"
+        >
+          Position Top
+        </ion-button>
 
-      <ion-button expand="block" id="show-middle-toast" onclick="openToast({ message: 'Hellooo', position: 'middle', duration: 2000 })">
-        Position Middle
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="show-middle-toast"
+          onclick="openToast({ message: 'Hellooo', position: 'middle', duration: 2000 })"
+        >
+          Position Middle
+        </ion-button>
 
-      <ion-button expand="block" onclick="openToast({header: 'Toast header', message: 'Toast message', duration: 2000})">
-        Header Toast
-      </ion-button>
+        <ion-button
+          expand="block"
+          onclick="openToast({header: 'Toast header', message: 'Toast message', duration: 2000})"
+        >
+          Header Toast
+        </ion-button>
 
-      <ion-button expand="block" onclick="openToast({header: 'Toast header', message: 'Really long message that should go all of the way to the button', buttons: ['Action'] })">
-        Header + Action Toast
-      </ion-button>
+        <ion-button
+          expand="block"
+          onclick="openToast({header: 'Toast header', message: 'Really long message that should go all of the way to the button', buttons: ['Action'] })"
+        >
+          Header + Action Toast
+        </ion-button>
 
-      <ion-button expand="block" id="two-line-toast" onclick="openToast({message: 'Two-line message\nwith action.', buttons: ['Action'] })">
-        Long Message
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="two-line-toast"
+          onclick="openToast({message: 'Two-line message\nwith action.', buttons: ['Action'] })"
+        >
+          Long Message
+        </ion-button>
 
-      <ion-button expand="block" id="close-button-toast" onclick="openToast({message: 'click to close', buttons: ['Close'] })">
-        Close Button
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="close-button-toast"
+          onclick="openToast({message: 'click to close', buttons: ['Close'] })"
+        >
+          Close Button
+        </ion-button>
 
-      <ion-button expand="block" id="custom-close-text-toast" onclick="openToast({message: 'click to close', buttons: ['closing time'] })">
-        Custom Close Button
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="custom-close-text-toast"
+          onclick="openToast({message: 'click to close', buttons: ['closing time'] })"
+        >
+          Custom Close Button
+        </ion-button>
 
-      <ion-button expand="block" id="custom-action-buttons-toast" onclick="openToastWithButtonOptions()">
-        Custom Buttons
-      </ion-button>
+        <ion-button expand="block" id="custom-action-buttons-toast" onclick="openToastWithButtonOptions()">
+          Custom Buttons
+        </ion-button>
 
-      <ion-button expand="block" id="translucent-toast" onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true})">
-        Translucent Toast
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="translucent-toast"
+          onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true})"
+        >
+          Translucent Toast
+        </ion-button>
 
-      <ion-button expand="block" id="color-toast" onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'danger'})">
-        Color Toast
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="color-toast"
+          onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'danger'})"
+        >
+          Color Toast
+        </ion-button>
 
-      <ion-button expand="block" id="light-color-toast" onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'light'})">
-        Light Color Toast
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="light-color-toast"
+          onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'light'})"
+        >
+          Light Color Toast
+        </ion-button>
 
-      <ion-button expand="block" id="custom-class-toast" onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'my-custom-class'})">
-        Custom Class
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="custom-class-toast"
+          onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'my-custom-class'})"
+        >
+          Custom Class
+        </ion-button>
 
-      <ion-button expand="block" id="toast-start-and-end" onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'toast-start-and-end'})">
-        Show Toast with start-end position
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="toast-start-and-end"
+          onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'toast-start-and-end'})"
+        >
+          Show Toast with start-end position
+        </ion-button>
 
-      <ion-button expand="block" id="toast-html" onclick="openToast({message: '<ion-button>Button in a Toast!</ion-button>', buttons: ['Close'] })">
-        Show HTML Toast
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="toast-html"
+          onclick="openToast({message: '<ion-button>Button in a Toast!</ion-button>', buttons: ['Close'] })"
+        >
+          Show HTML Toast
+        </ion-button>
 
-      <ion-button expand="block" id="toast-with-icon" onclick="openToast({ header: 'Bluetooth', message: 'Device connected.', icon: 'bluetooth', duration: 2000 })">
-        Toast with Icon
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="toast-with-icon"
+          onclick="openToast({ header: 'Bluetooth', message: 'Device connected.', icon: 'bluetooth', duration: 2000 })"
+        >
+          Toast with Icon
+        </ion-button>
 
-      <ion-button expand="block" id="toast-with-icon-2" onclick="openToast({ message: 'An error has occurred!', icon: 'warning', color: 'danger', duration: 2000 })">
-        Toast with Icon 2
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="toast-with-icon-2"
+          onclick="openToast({ message: 'An error has occurred!', icon: 'warning', color: 'danger', duration: 2000 })"
+        >
+          Toast with Icon 2
+        </ion-button>
 
-      <ion-button expand="block" id="toast-with-icon-3" onclick="openToast({ message: 'Debug me...', icon: 'bug', buttons: ['Close'] })">
-        Toast with Icon 3
-      </ion-button>
+        <ion-button
+          expand="block"
+          id="toast-with-icon-3"
+          onclick="openToast({ message: 'Debug me...', icon: 'bug', buttons: ['Close'] })"
+        >
+          Toast with Icon 3
+        </ion-button>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <f class="red"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="green"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="blue"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="yellow"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="pink"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="purple"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="black"></f>
-          </ion-col>
-          <ion-col size="6">
-            <f class="orange"></f>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <f class="red"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="green"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="blue"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="yellow"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="pink"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="purple"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="black"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="orange"></f>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ion-app>
+    <script>
+      window.addEventListener('ionToastDidDismiss', function (e) {
+        console.log('didDismiss', e);
+      });
+      window.addEventListener('ionToastWillDismiss', function (e) {
+        console.log('willDismiss', e);
+      });
 
-  </ion-app>
-  <script>
-    window.addEventListener('ionToastDidDismiss', function (e) { console.log('didDismiss', e) })
-    window.addEventListener('ionToastWillDismiss', function (e) { console.log('willDismiss', e) })
+      async function openToast(opts) {
+        const toast = await toastController.create(opts);
+        await toast.present();
+      }
 
-    async function openToast(opts) {
-      const toast = await toastController.create(opts);
-      await toast.present();
-    }
+      async function openToastWithButtonOptions() {
+        const opts = {
+          message: 'click to close',
+          buttons: [
+            {
+              side: 'start',
+              icon: 'star',
+              handler: () => {
+                console.log('favorite button clicked!');
+                return false;
+              },
+            },
+            {
+              text: 'Close',
+              side: 'end',
+              role: 'cancel',
+              handler: () => {
+                console.log('close button clicked!');
+              },
+            },
+          ],
+        };
+        await openToast(opts);
+      }
+    </script>
 
-    async function openToastWithButtonOptions() {
-      const opts = {
-        message: 'click to close',
-        buttons: [
-          {
-            side: 'start',
-            icon: 'star',
-            handler: () => {
-              console.log('favorite button clicked!')
-              return false;
-            }
-          },
-          {
-            text: 'Close',
-            side: 'end',
-            role: 'cancel',
-            handler: () => {
-              console.log('close button clicked!');
-            }
-          }
-        ]
-      };
-      await openToast(opts);
-    }
-  </script>
+    <style>
+      .my-custom-class {
+        --border-radius: 20px;
+        --border-width: 5px;
+        --border-style: double;
+        --border-color: yellow;
+        --background: lightyellow;
+        --button-color: black;
+        --color: black;
+        --width: 180px;
+        --height: 180px;
+      }
 
-  <style>
-    .my-custom-class {
-      --border-radius: 20px;
-      --border-width: 5px;
-      --border-style: double;
-      --border-color: yellow;
-      --background: lightyellow;
-      --button-color: black;
-      --color: black;
-      --width: 180px;
-      --height: 180px;
-    }
+      f {
+        display: block;
+        background: blue;
 
-    f {
-      display: block;
-      background: blue;
+        width: 100%;
+        height: 200px;
+        margin: 20px auto;
+      }
 
-      width: 100%;
-      height: 200px;
-      margin: 20px auto;
-    }
+      .red {
+        background-color: #ea445a;
+      }
 
-    .red {
-      background-color: #ea445a;
-    }
+      .green {
+        background-color: #76d672;
+      }
 
-    .green {
-      background-color: #76d672;
-    }
+      .blue {
+        background-color: #3478f6;
+      }
 
-    .blue {
-      background-color: #3478f6;
-    }
+      .yellow {
+        background-color: #ffff80;
+      }
 
-    .yellow {
-      background-color: #ffff80;
-    }
+      .pink {
+        background-color: #ff6b86;
+      }
 
-    .pink {
-      background-color: #ff6b86;
-    }
+      .purple {
+        background-color: #7e34f6;
+      }
 
-    .purple {
-      background-color: #7e34f6;
-    }
+      .black {
+        background-color: #000;
+      }
 
-    .black {
-      background-color: #000;
-    }
+      .orange {
+        background-color: #f69234;
+      }
 
-    .orange {
-      background-color: #f69234;
-    }
-
-    .toast-start-and-end {
-      --start: 0;
-      --end: 0;
-      --max-width: 100%;
-    }
-  </style>
-</body>
-
+      .toast-start-and-end {
+        --start: 0;
+        --end: 0;
+        --max-width: 100%;
+      }
+    </style>
+  </body>
 </html>

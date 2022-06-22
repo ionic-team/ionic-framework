@@ -27,10 +27,10 @@ export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => 
     const fadeStart = maxScroll - fadeDuration;
     const distanceToStart = scrollTop - fadeStart;
 
-    const scale = clamp(0, 1 - (distanceToStart / fadeDuration), 1);
+    const scale = clamp(0, 1 - distanceToStart / fadeDuration, 1);
 
     writeTask(() => {
       baseEl.style.setProperty('--opacity-scale', scale.toString());
-    })
+    });
   });
-}
+};

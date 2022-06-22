@@ -166,10 +166,6 @@ export const config: Config = {
       includeGlobalScripts: false
     },
     {
-      type: 'docs-readme',
-      strict: true
-    },
-    {
       type: 'docs-json',
       file: '../docs/core.json'
     },
@@ -258,9 +254,15 @@ export const config: Config = {
     scriptDataOpts: true
   },
   testing: {
+    testRegex: '(/__tests__/.*|(\\.|/)(test|spec)|[//](e2e))\\.[jt]sx?$',
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
     waitBeforeScreenshot: 20,
+    moduleNameMapper: {
+      "@utils/test": ["<rootDir>/src/utils/test/utils"],
+      "@utils/logging": ["<rootDir>/src/utils/logging"],
+
+    },
     emulate: [
       {
         userAgent: 'iPhone',

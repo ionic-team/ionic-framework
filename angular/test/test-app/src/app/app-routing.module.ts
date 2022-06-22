@@ -20,9 +20,11 @@ import { NavigationPage1Component } from './navigation-page1/navigation-page1.co
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 import { AlertComponent } from './alert/alert.component';
+import { AccordionComponent } from './accordion/accordion.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
+  { path: 'accordions', component: AccordionComponent },
   { path: 'alerts', component: AlertComponent },
   { path: 'inputs', component: InputsComponent },
   { path: 'form', component: FormComponent },

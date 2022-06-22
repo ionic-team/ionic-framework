@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('accordion: multiple - open', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion/test/multiple?ionic:_testing=true'
+    url: '/src/components/accordion/test/multiple?ionic:_testing=true',
   });
 
   const screenshotCompares = [];
@@ -11,7 +11,6 @@ test('accordion: multiple - open', async () => {
 
   const accordionGroup = await page.find('ion-accordion-group');
   const diningAccordion = await page.find('ion-accordion[value="dining"] ion-item[slot="header"]');
-  const attractionsAccordion = await page.find('ion-accordion[value="attractions"] ion-item[slot="header"]');
 
   const groupValue = await accordionGroup.getProperty('value');
   expect(groupValue).toEqual('attractions');
@@ -31,7 +30,7 @@ test('accordion: multiple - open', async () => {
 
 test('accordion: multiple - close', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion/test/multiple?ionic:_testing=true'
+    url: '/src/components/accordion/test/multiple?ionic:_testing=true',
   });
 
   const screenshotCompares = [];

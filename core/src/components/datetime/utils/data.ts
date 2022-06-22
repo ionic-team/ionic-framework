@@ -1,46 +1,63 @@
-import { Mode } from '../../../interface';
-import { DatetimeParts } from '../datetime-interface';
+import type { Mode } from '../../../interface';
+import type { DatetimeParts } from '../datetime-interface';
 
-import {
-  isAfter,
-  isBefore,
-  isSameDay
-} from './comparison';
-import {
-  getNumDaysInMonth
-} from './helpers';
-import {
-  getNextMonth,
-  getPreviousMonth
-} from './manipulation';
+import { isAfter, isBefore, isSameDay } from './comparison';
+import { getNumDaysInMonth } from './helpers';
+import { getNextMonth, getPreviousMonth } from './manipulation';
 
 /**
  * Returns the current date as
  * an ISO string in the user's
- * timezone.
+ * time zone.
  */
 export const getToday = () => {
   /**
-   * Grab the current date object
-   * as well as the timezone offset
+   * ion-datetime intentionally does not
+   * parse time zones/do automatic time zone
+   * conversion when accepting user input.
+   * However when we get today's date string,
+   * we want it formatted relative to the user's
+   * time zone.
+   *
+   * When calling toISOString(), the browser
+   * will convert the date to UTC time by either adding
+   * or subtracting the time zone offset.
+   * To work around this, we need to either add
+   * or subtract the time zone offset to the Date
+   * object prior to calling toISOString().
+   * This allows us to get an ISO string
+   * that is in the user's time zone.
+   *
+   * Example:
+   * Time zone offset is 240
+   * Meaning: The browser needs to add 240 minutes
+   * to the Date object to get UTC time.
+   * What Ionic does: We subtract 240 minutes
+   * from the Date object. The browser then adds
+   * 240 minutes in toISOString(). The result
+   * is a time that is in the user's time zone
+   * and not UTC.
+   *
+   * Note: Some timezones include minute adjustments
+   * such as 30 or 45 minutes. This is why we use setMinutes
+   * instead of setHours.
+   * Example: India Standard Time
+   * Timezone offset: -330 = -5.5 hours.
+   *
+   * List of timezones with 30 and 45 minute timezones:
+   * https://www.timeanddate.com/time/time-zones-interesting.html
    */
   const date = new Date();
   const tzOffset = date.getTimezoneOffset();
+  date.setMinutes(date.getMinutes() - tzOffset);
 
-  /**
-   * When converting to ISO string, everything is
-   * set to UTC. Since we want to show these dates
-   * relative to the user's timezone, we need to
-   * subtract the timezone offset from the date
-   * so that when `toISOString()` adds it back
-   * there was a net change of zero hours from the
-   * local date.
-   */
-  date.setHours(date.getHours() - (tzOffset / 60))
   return date.toISOString();
-}
+};
 
-const minutes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
+const minutes = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+  32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+];
 const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
@@ -59,7 +76,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) =>
    * but is configurable via `firstDayOfWeek`.
    */
   const weekdayFormat = mode === 'ios' ? 'short' : 'narrow';
-  const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat })
+  const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat });
   const startDate = new Date('11/01/2020');
   const daysOfWeek = [];
 
@@ -71,11 +88,11 @@ export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) =>
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate() + i);
 
-    daysOfWeek.push(intl.format(currentDate))
+    daysOfWeek.push(intl.format(currentDate));
   }
 
   return daysOfWeek;
-}
+};
 
 /**
  * Returns an array containing all of the
@@ -107,7 +124,8 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
    * this will generate 5 filler days (0, 1, 2, 3, 4), and then day of week 5 will have
    * the first day of the month.
    */
-  const offset = firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
+  const offset =
+    firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
 
   let days = [];
   for (let i = 1; i <= numDays; i++) {
@@ -115,14 +133,11 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
   }
 
   for (let i = 0; i <= offset; i++) {
-    days = [
-      { day: null, dayOfWeek: null },
-      ...days
-    ]
+    days = [{ day: null, dayOfWeek: null }, ...days];
   }
 
   return days;
-}
+};
 
 /**
  * Given a local, reference datetime parts and option
@@ -144,15 +159,14 @@ export const generateTime = (
   let isPMAllowed = true;
 
   if (hourValues) {
-    processedHours = processedHours.filter(hour => hourValues.includes(hour));
+    processedHours = processedHours.filter((hour) => hourValues.includes(hour));
   }
 
   if (minuteValues) {
-    processedMinutes = processedMinutes.filter(minute => minuteValues.includes(minute))
+    processedMinutes = processedMinutes.filter((minute) => minuteValues.includes(minute));
   }
 
   if (minParts) {
-
     /**
      * If ref day is the same as the
      * minimum allowed day, filter hour/minute
@@ -165,7 +179,7 @@ export const generateTime = (
        * all hours/minutes in that case.
        */
       if (minParts.hour !== undefined) {
-        processedHours = processedHours.filter(hour => {
+        processedHours = processedHours.filter((hour) => {
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
           return (use24Hour ? hour : convertedHour) >= minParts.hour!;
         });
@@ -186,7 +200,7 @@ export const generateTime = (
           }
         }
 
-        processedMinutes = processedMinutes.filter(minute => {
+        processedMinutes = processedMinutes.filter((minute) => {
           if (isPastMinHour) {
             return true;
           }
@@ -217,7 +231,7 @@ export const generateTime = (
        * all hours/minutes in that case.
        */
       if (maxParts.hour !== undefined) {
-        processedHours = processedHours.filter(hour => {
+        processedHours = processedHours.filter((hour) => {
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
           return (use24Hour ? hour : convertedHour) <= maxParts.hour!;
         });
@@ -228,7 +242,7 @@ export const generateTime = (
         // For example if the max hour is 10:30 and the current hour is 10:00,
         // users should be able to select 00-30 minutes.
         // If the current hour is 09:00, users should be able to select 00-60 minutes.
-        processedMinutes = processedMinutes.filter(minute => minute <= maxParts.minute!);
+        processedMinutes = processedMinutes.filter((minute) => minute <= maxParts.minute!);
       }
 
       /**
@@ -246,9 +260,9 @@ export const generateTime = (
     hours: processedHours,
     minutes: processedMinutes,
     am: isAMAllowed,
-    pm: isPMAllowed
-  }
-}
+    pm: isPMAllowed,
+  };
+};
 
 /**
  * Given DatetimeParts, generate the previous,
@@ -258,9 +272,9 @@ export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   return [
     getPreviousMonth(refParts),
     { month: refParts.month, year: refParts.year, day: refParts.day },
-    getNextMonth(refParts)
-  ]
-}
+    getNextMonth(refParts),
+  ];
+};
 
 export const getPickerMonths = (
   locale: string,
@@ -275,16 +289,16 @@ export const getPickerMonths = (
   if (monthValues !== undefined) {
     let processedMonths = monthValues;
     if (maxParts?.month !== undefined) {
-      processedMonths = processedMonths.filter(month => month <= maxParts.month!);
+      processedMonths = processedMonths.filter((month) => month <= maxParts.month!);
     }
     if (minParts?.month !== undefined) {
-      processedMonths = processedMonths.filter(month => month >= minParts.month!);
+      processedMonths = processedMonths.filter((month) => month >= minParts.month!);
     }
 
-    processedMonths.forEach(processedMonth => {
-      const date = new Date(`${processedMonth}/1/${year}`);
+    processedMonths.forEach((processedMonth) => {
+      const date = new Date(`${processedMonth}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: processedMonth });
     });
   } else {
@@ -292,15 +306,39 @@ export const getPickerMonths = (
     const minMonth = minParts && minParts.year === year ? minParts.month : 1;
 
     for (let i = minMonth; i <= maxMonth; i++) {
-      const date = new Date(`${i}/1/${year}`);
+      /**
+       *
+       * There is a bug on iOS 14 where
+       * Intl.DateTimeFormat takes into account
+       * the local timezone offset when formatting dates.
+       *
+       * Forcing the timezone to 'UTC' fixes the issue. However,
+       * we should keep this workaround as it is safer. In the event
+       * this breaks in another browser, we will not be impacted
+       * because all dates will be interpreted in UTC.
+       *
+       * Example:
+       * new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "March"
+       * new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' }).format(new Date('Sat Apr 01 2006 00:00:00 GMT-0400 (EDT)')) // "April"
+       *
+       * In certain timezones, iOS 14 shows the wrong
+       * date for .toUTCString(). To combat this, we
+       * force all of the timezones to GMT+0000 (UTC).
+       *
+       * Example:
+       * Time Zone: Central European Standard Time
+       * new Date('1/1/1992').toUTCString() // "Tue, 31 Dec 1991 23:00:00 GMT"
+       * new Date('1/1/1992 GMT+0000').toUTCString() // "Wed, 01 Jan 1992 00:00:00 GMT"
+       */
+      const date = new Date(`${i}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: i });
     }
   }
 
   return months;
-}
+};
 
 export const getCalendarYears = (
   refParts: DatetimeParts,
@@ -311,16 +349,16 @@ export const getCalendarYears = (
   if (yearValues !== undefined) {
     let processedYears = yearValues;
     if (maxParts?.year !== undefined) {
-      processedYears = processedYears.filter(year => year <= maxParts.year!);
+      processedYears = processedYears.filter((year) => year <= maxParts.year!);
     }
     if (minParts?.year !== undefined) {
-      processedYears = processedYears.filter(year => year >= minParts.year!);
+      processedYears = processedYears.filter((year) => year >= minParts.year!);
     }
     return processedYears;
   } else {
     const { year } = refParts;
-    const maxYear = (maxParts?.year || year);
-    const minYear = (minParts?.year || year - 100);
+    const maxYear = maxParts?.year || year;
+    const minYear = minParts?.year || year - 100;
 
     const years = [];
     for (let i = maxYear; i >= minYear; i--) {
@@ -329,4 +367,4 @@ export const getCalendarYears = (
 
     return years;
   }
-}
+};

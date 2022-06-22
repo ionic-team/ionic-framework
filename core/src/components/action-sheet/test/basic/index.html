@@ -1,459 +1,516 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Action Sheet - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Action Sheet - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
   <script type="module">
     import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
     window.actionSheetController = actionSheetController;
   </script>
 
-<body>
-  <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Action Sheet - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Action Sheet - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-content class="ion-padding">
-      <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-      <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
-      <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
-      <ion-button expand="block" id="custom" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
-      <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
-      <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
-      <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-      <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
-      <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</ion-button>
-      <ion-button expand="block" id="buttonData" onclick="presentWithButtonData()">Button data</ion-button>
-    </ion-content>
+      <ion-content class="ion-padding">
+        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()"
+          >Alert from Action Sheet</ion-button
+        >
+        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
+        <ion-button expand="block" id="custom" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
+        <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
+        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()"
+          >No Backdrop Dismiss</ion-button
+        >
+        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
+        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()"
+          >Scroll Without Cancel</ion-button
+        >
+        <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')"
+          >Custom Backdrop Opacity</ion-button
+        >
+        <ion-button expand="block" id="buttonData" onclick="presentWithButtonData()">Button data</ion-button>
+      </ion-content>
+    </ion-app>
 
-  </ion-app>
+    <style>
+      .my-color-class {
+        --background: #292929;
+        --button-background-selected: #222222;
 
-  <style>
-    .my-color-class {
-      --background: #292929;
-      --button-background-selected: #222222;
+        --color: #dfdfdf;
+        --button-color: #dfdfdf;
+      }
 
-      --color: #dfdfdf;
-      --button-color: #dfdfdf;
-    }
+      .my-custom-class {
+        --ion-safe-area-top: 20px;
+        --ion-safe-area-bottom: 40px;
 
-    .my-custom-class {
-      --ion-safe-area-top: 20px;
-      --ion-safe-area-bottom: 40px;
+        --max-width: 300px;
+        --height: 325px;
+      }
 
-      --max-width: 300px;
-      --height: 325px;
-    }
+      .custom-backdrop {
+        --ion-backdrop-opacity: 1;
+      }
 
-    .custom-backdrop {
-      --ion-backdrop-opacity: 1;
-    }
-
-    #delete-button {
-      color: #eb445a;
-    }
-
-  </style>
-  <script>
-    window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
-    async function openActionSheet(opts) {
-      const actionSheet = await actionSheetController.create(opts);
-      await actionSheet.present();
-    }
-
-    async function presentBasic() {
-      const mode = Ionic.mode;
-      await openActionSheet({
-        header: "Albums",
-        subHeader: 'This is a sub header inside of an action sheet',
-        htmlAttributes: {
-          'data-testid': 'basic-action-sheet'
-        },
-        buttons: [{
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          id: 'delete-button',
-          handler: () => {
-            console.log('Delete clicked');
-          }
-        }, {
-          text: 'Share',
-          icon: 'share',
-          cssClass: 'ion-activated',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        }, {
-          text: 'Play (open modal)',
-          icon: 'chevron-forward-circle',
-          handler: () => {
-            console.log('Play clicked');
-          }
-        }, {
-          text: 'Favorite',
-          icon: mode === 'md' ? 'heart' : null,
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        }, {
-          text: 'Cancel',
-          icon: mode === 'md' ? 'close' : null,
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
+      #delete-button {
+        color: #eb445a;
+      }
+    </style>
+    <script>
+      window.addEventListener('ionActionSheetDidDismiss', function (e) {
+        console.log('didDismiss', e);
       });
-    }
+      async function openActionSheet(opts) {
+        const actionSheet = await actionSheetController.create(opts);
+        await actionSheet.present();
+      }
 
-    async function presentAlert() {
-      await openActionSheet({
-        buttons: [{
-          text: 'Open Alert',
-          handler: async () => {
-            const alert = Object.assign(document.createElement('ion-alert'), {
-              header: 'Alert from Action Sheet',
-              subHeader: 'Subtitle',
-              message: 'This is an alert message.',
-              buttons: [{
-                text: 'Okay',
-                handler: async () => {
-                  await actionSheetController.dismiss();
-                  return false;
-                }
-              }]
-            });
-            document.body.appendChild(alert);
-            await alert.present();
-            return false;
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
-      });
-    }
-
-    async function presentCancelOnly() {
-      await openActionSheet({
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel', // will always sort to be on the bottom
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-    }
-
-    async function presentWithCssClass(classList) {
-      await openActionSheet({
-        header: "Custom Css Class",
-        cssClass: classList ? classList : "my-color-class my-custom-class",
-        buttons: [
-          {
-            text: 'Add to Favorites',
-            icon: 'star',
-            cssClass: 'my-custom-button customClass ion-activated',
-            handler: () => {
-              console.log('Add to Favorites clicked');
-            }
+      async function presentBasic() {
+        const mode = Ionic.mode;
+        await openActionSheet({
+          header: 'Albums',
+          subHeader: 'This is a sub header inside of an action sheet',
+          htmlAttributes: {
+            'data-testid': 'basic-action-sheet',
           },
-          {
-            text: 'Duplicate',
-            icon: 'copy',
-            handler: () => {
-              console.log('Duplicate clicked');
-            }
-          },
-          {
-            text: 'Move to Album',
-            icon: 'move',
-            handler: () => {
-              console.log('Move to Album clicked');
-            }
-          },
-          {
-            text: 'Delete',
-            icon: 'trash',
-            role: 'destructive',
-            handler: () => {
-              console.log('Delete clicked');
-            }
-          },
-          {
-            text: 'Cancel',
-            role: 'cancel', // will always sort to be on the bottom
-            handler: () => {
-              console.log('Delete clicked');
-            }
-          }
-        ]
-      });
-    }
+          buttons: [
+            {
+              text: 'Delete',
+              role: 'destructive',
+              icon: 'trash',
+              id: 'delete-button',
+              handler: () => {
+                console.log('Delete clicked');
+              },
+            },
+            {
+              text: 'Share',
+              icon: 'share',
+              cssClass: 'ion-activated',
+              handler: () => {
+                console.log('Share clicked');
+              },
+            },
+            {
+              text: 'Play (open modal)',
+              icon: 'chevron-forward-circle',
+              handler: () => {
+                console.log('Play clicked');
+              },
+            },
+            {
+              text: 'Favorite',
+              icon: mode === 'md' ? 'heart' : null,
+              handler: () => {
+                console.log('Favorite clicked');
+              },
+            },
+            {
+              text: 'Cancel',
+              icon: mode === 'md' ? 'close' : null,
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              },
+            },
+          ],
+        });
+      }
 
-    async function presentIcons() {
-      await openActionSheet({
-        header: "Albums",
-        buttons: [{
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          handler: () => {
-            console.log('Delete clicked');
-          }
-        }, {
-          text: 'Share',
-          icon: 'share',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        }, {
-          text: 'Play (open modal)',
-          icon: 'chevron-forward-circle',
-          handler: () => {
-            console.log('Play clicked');
-          }
-        }, {
-          text: 'Favorite',
-          icon: 'heart',
-          role: 'selected',
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          icon: 'close',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
-      });
-    }
+      async function presentAlert() {
+        await openActionSheet({
+          buttons: [
+            {
+              text: 'Open Alert',
+              handler: async () => {
+                const alert = Object.assign(document.createElement('ion-alert'), {
+                  header: 'Alert from Action Sheet',
+                  subHeader: 'Subtitle',
+                  message: 'This is an alert message.',
+                  buttons: [
+                    {
+                      text: 'Okay',
+                      handler: async () => {
+                        await actionSheetController.dismiss();
+                        return false;
+                      },
+                    },
+                  ],
+                });
+                document.body.appendChild(alert);
+                await alert.present();
+                return false;
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              },
+            },
+          ],
+        });
+      }
 
-    async function presentNoBackdropDismiss() {
-      await openActionSheet({
-        backdropDismiss: false,
-        buttons: [{
-          text: 'Archive',
-          handler: () => {
-            console.log('Archive clicked');
-          }
-        }, {
-          text: 'Destructive',
-          role: 'destructive',
-          handler: () => {
-            console.log('Destructive clicked');
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
-      });
-    }
+      async function presentCancelOnly() {
+        await openActionSheet({
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel', // will always sort to be on the bottom
+              handler: () => {
+                console.log('Cancel clicked');
+              },
+            },
+          ],
+        });
+      }
 
-    async function presentScroll() {
-      await openActionSheet({
-        buttons: [
-          {
-            text: 'Add Reaction',
-            handler: () => {
-              console.log('Add Reaction clicked');
-            }
-          }, {
-            text: 'Copy Text',
-            cssClass: 'ion-activated',
-            handler: () => {
-              console.log('Copy Text clicked');
-            }
-          }, {
-            text: 'Share Text',
-            handler: () => {
-              console.log('Share Text clicked');
-            }
-          }, {
-            text: 'Copy Link to Message',
-            handler: () => {
-              console.log('Copy Link to Message clicked');
-            }
-          }, {
-            text: 'Remind Me',
-            handler: () => {
-              console.log('Remind Me clicked');
-            }
-          }, {
-            text: 'Pin File',
-            handler: () => {
-              console.log('Pin File clicked');
-            }
-          }, {
-            text: 'Star File',
-            handler: () => {
-              console.log('Star File clicked');
-            }
-          }, {
-            text: 'Mark Unread',
-            handler: () => {
-              console.log('Mark Unread clicked');
-            }
-          }, {
-            text: 'Mark Read',
-            handler: () => {
-              console.log('Mark Read clicked');
-            }
-          }, {
-            text: 'Edit Title',
-            handler: () => {
-              console.log('Edit Title clicked');
-            }
-          }, {
-            text: 'Erase Title',
-            handler: () => {
-              console.log('Erase Title clicked');
-            }
-          }, {
-            text: 'Save Image',
-            handler: () => {
-              console.log('Save Image clicked');
-            }
-          }, {
-            text: 'Copy Image',
-            handler: () => {
-              console.log('Copy Image clicked');
-            }
-          }, {
-            text: 'Erase Image',
-            handler: () => {
-              console.log('Erase Image clicked');
-            }
-          }, {
-            text: 'Delete File',
-            role: 'destructive',
-            handler: () => {
-              console.log('Delete File clicked');
-            }
-          }, {
-            text: 'Cancel',
-            role: 'cancel', // will always sort to be on the bottom
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-    }
+      async function presentWithCssClass(classList) {
+        await openActionSheet({
+          header: 'Custom Css Class',
+          cssClass: classList ? classList : 'my-color-class my-custom-class',
+          buttons: [
+            {
+              text: 'Add to Favorites',
+              icon: 'star',
+              cssClass: 'my-custom-button customClass ion-activated',
+              handler: () => {
+                console.log('Add to Favorites clicked');
+              },
+            },
+            {
+              text: 'Duplicate',
+              icon: 'copy',
+              handler: () => {
+                console.log('Duplicate clicked');
+              },
+            },
+            {
+              text: 'Move to Album',
+              icon: 'move',
+              handler: () => {
+                console.log('Move to Album clicked');
+              },
+            },
+            {
+              text: 'Delete',
+              icon: 'trash',
+              role: 'destructive',
+              handler: () => {
+                console.log('Delete clicked');
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel', // will always sort to be on the bottom
+              handler: () => {
+                console.log('Delete clicked');
+              },
+            },
+          ],
+        });
+      }
 
-    async function presentScrollNoCancel() {
-      await openActionSheet({
-        buttons: [
-          {
-            text: 'Add Reaction',
-            handler: () => {
-              console.log('Add Reaction clicked');
-            }
-          }, {
-            text: 'Copy Text',
-            handler: () => {
-              console.log('Copy Text clicked');
-            }
-          }, {
-            text: 'Share Text',
-            handler: () => {
-              console.log('Share Text clicked');
-            }
-          }, {
-            text: 'Copy Link to Message',
-            handler: () => {
-              console.log('Copy Link to Message clicked');
-            }
-          }, {
-            text: 'Remind Me',
-            handler: () => {
-              console.log('Remind Me clicked');
-            }
-          }, {
-            text: 'Pin File',
-            handler: () => {
-              console.log('Pin File clicked');
-            }
-          }, {
-            text: 'Star File',
-            handler: () => {
-              console.log('Star File clicked');
-            }
-          }, {
-            text: 'Mark Unread',
-            handler: () => {
-              console.log('Mark Unread clicked');
-            }
-          }, {
-            text: 'Edit Title',
-            handler: () => {
-              console.log('Edit Title clicked');
-            }
-          }, {
-            text: 'Save Image',
-            handler: () => {
-              console.log('Save Image clicked');
-            }
-          }, {
-            text: 'Copy Image',
-            handler: () => {
-              console.log('Copy Image clicked');
-            }
-          }, {
-            text: 'Delete File',
-            role: 'destructive',
-            handler: () => {
-              console.log('Delete File clicked');
-            }
-          }
-        ]
-      });
-    }
+      async function presentIcons() {
+        await openActionSheet({
+          header: 'Albums',
+          buttons: [
+            {
+              text: 'Delete',
+              role: 'destructive',
+              icon: 'trash',
+              handler: () => {
+                console.log('Delete clicked');
+              },
+            },
+            {
+              text: 'Share',
+              icon: 'share',
+              handler: () => {
+                console.log('Share clicked');
+              },
+            },
+            {
+              text: 'Play (open modal)',
+              icon: 'chevron-forward-circle',
+              handler: () => {
+                console.log('Play clicked');
+              },
+            },
+            {
+              text: 'Favorite',
+              icon: 'heart',
+              role: 'selected',
+              handler: () => {
+                console.log('Favorite clicked');
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              icon: 'close',
+              handler: () => {
+                console.log('Cancel clicked');
+              },
+            },
+          ],
+        });
+      }
 
-    async function presentWithButtonData() {
-      await openActionSheet({
-        buttons: [
-          {
-            text: 'Option 1',
-            id: 'option',
-            data: {
-              type: '1'
-            }
-          },
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            id: 'cancel',
-            data: {
-              type: 'cancel'
-            }
-          }
-        ]
-      });
-    }
-  </script>
-</body>
+      async function presentNoBackdropDismiss() {
+        await openActionSheet({
+          backdropDismiss: false,
+          buttons: [
+            {
+              text: 'Archive',
+              handler: () => {
+                console.log('Archive clicked');
+              },
+            },
+            {
+              text: 'Destructive',
+              role: 'destructive',
+              handler: () => {
+                console.log('Destructive clicked');
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              },
+            },
+          ],
+        });
+      }
 
+      async function presentScroll() {
+        await openActionSheet({
+          buttons: [
+            {
+              text: 'Add Reaction',
+              handler: () => {
+                console.log('Add Reaction clicked');
+              },
+            },
+            {
+              text: 'Copy Text',
+              cssClass: 'ion-activated',
+              handler: () => {
+                console.log('Copy Text clicked');
+              },
+            },
+            {
+              text: 'Share Text',
+              handler: () => {
+                console.log('Share Text clicked');
+              },
+            },
+            {
+              text: 'Copy Link to Message',
+              handler: () => {
+                console.log('Copy Link to Message clicked');
+              },
+            },
+            {
+              text: 'Remind Me',
+              handler: () => {
+                console.log('Remind Me clicked');
+              },
+            },
+            {
+              text: 'Pin File',
+              handler: () => {
+                console.log('Pin File clicked');
+              },
+            },
+            {
+              text: 'Star File',
+              handler: () => {
+                console.log('Star File clicked');
+              },
+            },
+            {
+              text: 'Mark Unread',
+              handler: () => {
+                console.log('Mark Unread clicked');
+              },
+            },
+            {
+              text: 'Mark Read',
+              handler: () => {
+                console.log('Mark Read clicked');
+              },
+            },
+            {
+              text: 'Edit Title',
+              handler: () => {
+                console.log('Edit Title clicked');
+              },
+            },
+            {
+              text: 'Erase Title',
+              handler: () => {
+                console.log('Erase Title clicked');
+              },
+            },
+            {
+              text: 'Save Image',
+              handler: () => {
+                console.log('Save Image clicked');
+              },
+            },
+            {
+              text: 'Copy Image',
+              handler: () => {
+                console.log('Copy Image clicked');
+              },
+            },
+            {
+              text: 'Erase Image',
+              handler: () => {
+                console.log('Erase Image clicked');
+              },
+            },
+            {
+              text: 'Delete File',
+              role: 'destructive',
+              handler: () => {
+                console.log('Delete File clicked');
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel', // will always sort to be on the bottom
+              handler: () => {
+                console.log('Cancel clicked');
+              },
+            },
+          ],
+        });
+      }
+
+      async function presentScrollNoCancel() {
+        await openActionSheet({
+          buttons: [
+            {
+              text: 'Add Reaction',
+              handler: () => {
+                console.log('Add Reaction clicked');
+              },
+            },
+            {
+              text: 'Copy Text',
+              handler: () => {
+                console.log('Copy Text clicked');
+              },
+            },
+            {
+              text: 'Share Text',
+              handler: () => {
+                console.log('Share Text clicked');
+              },
+            },
+            {
+              text: 'Copy Link to Message',
+              handler: () => {
+                console.log('Copy Link to Message clicked');
+              },
+            },
+            {
+              text: 'Remind Me',
+              handler: () => {
+                console.log('Remind Me clicked');
+              },
+            },
+            {
+              text: 'Pin File',
+              handler: () => {
+                console.log('Pin File clicked');
+              },
+            },
+            {
+              text: 'Star File',
+              handler: () => {
+                console.log('Star File clicked');
+              },
+            },
+            {
+              text: 'Mark Unread',
+              handler: () => {
+                console.log('Mark Unread clicked');
+              },
+            },
+            {
+              text: 'Edit Title',
+              handler: () => {
+                console.log('Edit Title clicked');
+              },
+            },
+            {
+              text: 'Save Image',
+              handler: () => {
+                console.log('Save Image clicked');
+              },
+            },
+            {
+              text: 'Copy Image',
+              handler: () => {
+                console.log('Copy Image clicked');
+              },
+            },
+            {
+              text: 'Delete File',
+              role: 'destructive',
+              handler: () => {
+                console.log('Delete File clicked');
+              },
+            },
+          ],
+        });
+      }
+
+      async function presentWithButtonData() {
+        await openActionSheet({
+          buttons: [
+            {
+              text: 'Option 1',
+              id: 'option',
+              data: {
+                type: '1',
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              id: 'cancel',
+              data: {
+                type: 'cancel',
+              },
+            },
+          ],
+        });
+      }
+    </script>
+  </body>
 </html>

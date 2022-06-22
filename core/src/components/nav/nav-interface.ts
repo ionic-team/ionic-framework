@@ -1,4 +1,11 @@
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import type {
+  Animation,
+  AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
+  FrameworkDelegate,
+  Mode,
+} from '../../interface';
 
 import { ViewController } from './view-controller';
 
@@ -47,11 +54,23 @@ export interface NavOptions extends RouterOutletOptions {
 
 export type Page = new (...args: any[]) => any;
 
-export type TransitionResolveFn = (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string) => void;
+export type TransitionResolveFn = (
+  hasCompleted: boolean,
+  requiresTransition: boolean,
+  enteringName?: string,
+  leavingName?: string,
+  direction?: string
+) => void;
 
 export type TransitionRejectFn = (rejectReason: any, transition?: Animation) => void;
 
-export type TransitionDoneFn = (hasCompleted: boolean, requiresTransition: boolean, enteringView?: ViewController, leavingView?: ViewController, direction?: string) => void;
+export type TransitionDoneFn = (
+  hasCompleted: boolean,
+  requiresTransition: boolean,
+  enteringView?: ViewController,
+  leavingView?: ViewController,
+  direction?: string
+) => void;
 
 export interface TransitionInstruction {
   opts: NavOptions | undefined | null;

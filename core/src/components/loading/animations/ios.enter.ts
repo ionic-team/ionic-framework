@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
@@ -13,16 +13,14 @@ export const iosEnterAnimation = (baseEl: HTMLElement): Animation => {
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
-      'pointer-events': 'none'
+      'pointer-events': 'none',
     })
     .afterClearStyles(['pointer-events']);
 
-  wrapperAnimation
-    .addElement(baseEl.querySelector('.loading-wrapper')!)
-    .keyframes([
-      { offset: 0, opacity: 0.01, transform: 'scale(1.1)' },
-      { offset: 1, opacity: 1, transform: 'scale(1)' }
-    ]);
+  wrapperAnimation.addElement(baseEl.querySelector('.loading-wrapper')!).keyframes([
+    { offset: 0, opacity: 0.01, transform: 'scale(1.1)' },
+    { offset: 1, opacity: 1, transform: 'scale(1)' },
+  ]);
 
   return baseAnimation
     .addElement(baseEl)

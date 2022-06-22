@@ -1,19 +1,20 @@
-import { Component, ComponentInterface, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
-const win = (typeof (window as any) !== 'undefined') ? window as any : undefined;
+const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
 const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
   tag: 'ion-col',
   styleUrl: 'col.scss',
-  shadow: true
+  shadow: true,
 })
 export class Col implements ComponentInterface {
-
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
@@ -193,18 +194,20 @@ export class Col implements ComponentInterface {
     }
 
     // If the size is set to auto then don't calculate a size
-    const colSize = (columns === 'auto')
-      ? 'auto'
-      // If CSS supports variables we should use the grid columns var
-      : SUPPORTS_VARS ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-        // Convert the columns to a percentage by dividing by the total number
-        // of columns (12) and then multiplying by 100
-        : ((columns / 12) * 100) + '%';
+    const colSize =
+      columns === 'auto'
+        ? 'auto'
+        : // If CSS supports variables we should use the grid columns var
+        SUPPORTS_VARS
+        ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
+        : // Convert the columns to a percentage by dividing by the total number
+          // of columns (12) and then multiplying by 100
+          (columns / 12) * 100 + '%';
 
     return {
-      'flex': `0 0 ${colSize}`,
-      'width': `${colSize}`,
-      'max-width': `${colSize}`
+      flex: `0 0 ${colSize}`,
+      width: `${colSize}`,
+      'max-width': `${colSize}`,
     };
   }
 
@@ -219,14 +222,16 @@ export class Col implements ComponentInterface {
     // If the number of columns passed are greater than 0 and less than
     // 12 we can position the column, else default to auto
     const amount = SUPPORTS_VARS
-      // If CSS supports variables we should use the grid columns var
-      ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-      // Convert the columns to a percentage by dividing by the total number
+      ? // If CSS supports variables we should use the grid columns var
+        `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
+      : // Convert the columns to a percentage by dividing by the total number
       // of columns (12) and then multiplying by 100
-      : (columns > 0 && columns < 12) ? (columns / 12 * 100) + '%' : 'auto';
+      columns > 0 && columns < 12
+      ? (columns / 12) * 100 + '%'
+      : 'auto';
 
     return {
-      [modifier]: amount
+      [modifier]: amount,
     };
   }
 
@@ -248,7 +253,7 @@ export class Col implements ComponentInterface {
     return (
       <Host
         class={{
-          [mode]: true
+          [mode]: true,
         }}
         style={{
           ...this.calculateOffset(isRTL),

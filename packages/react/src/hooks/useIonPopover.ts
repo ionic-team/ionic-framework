@@ -37,5 +37,5 @@ export type UseIonPopoverResult = [
   /**
    * Dismisses the popover
    */
-  () => void
+  (data?: any, role?: string) => void
 ];

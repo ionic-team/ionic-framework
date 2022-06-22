@@ -28,7 +28,6 @@ import { useRouter } from 'vue-router';
 import { ref, defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Tabs',
   components: { IonButton, IonContent, IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet },
   setup() {
     const tabs = ref([

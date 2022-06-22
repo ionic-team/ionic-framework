@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -11,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-note',
   styleUrls: {
     ios: 'note.ios.scss',
-    md: 'note.md.scss'
+    md: 'note.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Note implements ComponentInterface {
   /**
@@ -35,5 +36,4 @@ export class Note implements ComponentInterface {
       </Host>
     );
   }
-
 }

@@ -139,7 +139,7 @@ export class StackController {
         enteringView.ref.changeDetectorRef.reattach();
 
         return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false, animationBuilder)
-          .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
+          .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location, this.zone))
           .then(() => ({
             enteringView,
             direction,
@@ -201,7 +201,7 @@ export class StackController {
       this.skipTransition = true;
       this.pop(1);
     } else if (this.activeView) {
-      cleanup(this.activeView, this.views, this.views, this.location);
+      cleanup(this.activeView, this.views, this.views, this.location, this.zone);
     }
   }
 
@@ -294,11 +294,17 @@ export class StackController {
   }
 }
 
-const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
+const cleanupAsync = (
+  activeRoute: RouteView,
+  views: RouteView[],
+  viewsSnapshot: RouteView[],
+  location: Location,
+  zone: NgZone
+) => {
   if (typeof (requestAnimationFrame as any) === 'function') {
     return new Promise<void>((resolve) => {
       requestAnimationFrame(() => {
-        cleanup(activeRoute, views, viewsSnapshot, location);
+        cleanup(activeRoute, views, viewsSnapshot, location, zone);
         resolve();
       });
     });
@@ -306,8 +312,18 @@ const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot:
   return Promise.resolve();
 };
 
-const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
-  viewsSnapshot.filter((view) => !views.includes(view)).forEach(destroyView);
+const cleanup = (
+  activeRoute: RouteView,
+  views: RouteView[],
+  viewsSnapshot: RouteView[],
+  location: Location,
+  zone: NgZone
+) => {
+  /**
+   * Re-enter the Angular zone when destroying page components. This will allow
+   * lifecycle events (`ngOnDestroy`) to be run inside the Angular zone.
+   */
+  zone.run(() => viewsSnapshot.filter((view) => !views.includes(view)).forEach(destroyView));
 
   views.forEach((view) => {
     /**

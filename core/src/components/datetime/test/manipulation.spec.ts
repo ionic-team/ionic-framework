@@ -13,58 +13,78 @@ import {
   getInternalHourValue,
   calculateHourFromAMPM,
   subtractDays,
-  addDays
+  addDays,
 } from '../utils/manipulation';
 
 describe('addDays()', () => {
   it('should correctly add days', () => {
-    expect(addDays({
-      day: 1,
-      month: 1,
-      year: 2021
-    }, 31)).toEqual({
+    expect(
+      addDays(
+        {
+          day: 1,
+          month: 1,
+          year: 2021,
+        },
+        31
+      )
+    ).toEqual({
       day: 1,
       month: 2,
-      year: 2021
-    })
+      year: 2021,
+    });
 
-    expect(addDays({
-      day: 31,
-      month: 12,
-      year: 2021
-    }, 1)).toEqual({
+    expect(
+      addDays(
+        {
+          day: 31,
+          month: 12,
+          year: 2021,
+        },
+        1
+      )
+    ).toEqual({
       day: 1,
       month: 1,
-      year: 2022
-    })
-  })
-})
+      year: 2022,
+    });
+  });
+});
 
 describe('subtractDays()', () => {
   it('should correctly subtract days', () => {
-    expect(subtractDays({
-      day: 1,
-      month: 1,
-      year: 2021
-    }, 1)).toEqual({
+    expect(
+      subtractDays(
+        {
+          day: 1,
+          month: 1,
+          year: 2021,
+        },
+        1
+      )
+    ).toEqual({
       day: 31,
       month: 12,
-      year: 2020
-    })
+      year: 2020,
+    });
 
-    expect(subtractDays({
-      day: 1,
-      month: 2,
-      year: 2021
-    }, 31)).toEqual({
+    expect(
+      subtractDays(
+        {
+          day: 1,
+          month: 2,
+          year: 2021,
+        },
+        31
+      )
+    ).toEqual({
       day: 1,
       month: 1,
-      year: 2021
-    })
-  })
-})
+      year: 2021,
+    });
+  });
+});
 
-describe('getInternalHourValue()',() => {
+describe('getInternalHourValue()', () => {
   it('should correctly get the internal hour value', () => {
     expect(getInternalHourValue(12, true)).toEqual(12);
     expect(getInternalHourValue(12, true)).toEqual(12);
@@ -107,9 +127,8 @@ describe('calculateHourFromAMPM()', () => {
     expect(calculateHourFromAMPM({ hour: 22, ampm: 'pm' }, 'am')).toEqual(10);
     expect(calculateHourFromAMPM({ hour: 23, ampm: 'pm' }, 'am')).toEqual(11);
     expect(calculateHourFromAMPM({ hour: 0, ampm: 'pm' }, 'am')).toEqual(12);
-  })
+  });
 });
-
 
 describe('convert12HourTo24Hour()', () => {
   it('should correctly convert 12 hour to 24 hour', () => {
@@ -138,235 +157,271 @@ describe('convert12HourTo24Hour()', () => {
     expect(convert12HourTo24Hour(9, 'pm')).toEqual(21);
     expect(convert12HourTo24Hour(10, 'pm')).toEqual(22);
     expect(convert12HourTo24Hour(11, 'pm')).toEqual(23);
-  })
-})
+  });
+});
 
 describe('getStartOfWeek()', () => {
   it('should correctly return the start of the week', () => {
-    expect(getStartOfWeek({
-      month: 5,
-      day: 17,
-      year: 2021,
-      dayOfWeek: 1
-    })).toEqual({
+    expect(
+      getStartOfWeek({
+        month: 5,
+        day: 17,
+        year: 2021,
+        dayOfWeek: 1,
+      })
+    ).toEqual({
       month: 5,
       day: 16,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getStartOfWeek({
-      month: 5,
-      day: 1,
-      year: 2021,
-      dayOfWeek: 6
-    })).toEqual({
+    expect(
+      getStartOfWeek({
+        month: 5,
+        day: 1,
+        year: 2021,
+        dayOfWeek: 6,
+      })
+    ).toEqual({
       month: 4,
       day: 25,
       year: 2021,
     });
 
-    expect(getStartOfWeek({
-      month: 1,
-      day: 2,
-      year: 2021,
-      dayOfWeek: 6
-    })).toEqual({
+    expect(
+      getStartOfWeek({
+        month: 1,
+        day: 2,
+        year: 2021,
+        dayOfWeek: 6,
+      })
+    ).toEqual({
       month: 12,
       day: 27,
-      year: 2020
+      year: 2020,
     });
-  })
+  });
 });
 
 describe('getEndOfWeek()', () => {
   it('should correctly return the end of the week', () => {
-    expect(getEndOfWeek({
-      month: 5,
-      day: 17,
-      year: 2021,
-      dayOfWeek: 1
-    })).toEqual({
+    expect(
+      getEndOfWeek({
+        month: 5,
+        day: 17,
+        year: 2021,
+        dayOfWeek: 1,
+      })
+    ).toEqual({
       month: 5,
       day: 22,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getEndOfWeek({
-      month: 5,
-      day: 31,
-      year: 2021,
-      dayOfWeek: 1
-    })).toEqual({
+    expect(
+      getEndOfWeek({
+        month: 5,
+        day: 31,
+        year: 2021,
+        dayOfWeek: 1,
+      })
+    ).toEqual({
       month: 6,
       day: 5,
       year: 2021,
     });
 
-    expect(getEndOfWeek({
-      month: 12,
-      day: 29,
-      year: 2021,
-      dayOfWeek: 3
-    })).toEqual({
+    expect(
+      getEndOfWeek({
+        month: 12,
+        day: 29,
+        year: 2021,
+        dayOfWeek: 3,
+      })
+    ).toEqual({
       month: 1,
       day: 1,
-      year: 2022
+      year: 2022,
     });
-  })
+  });
 });
 
 describe('getNextWeek()', () => {
   it('should correctly return the next week', () => {
-    expect(getNextWeek({
-      month: 5,
-      day: 17,
-      year: 2021
-    })).toEqual({
+    expect(
+      getNextWeek({
+        month: 5,
+        day: 17,
+        year: 2021,
+      })
+    ).toEqual({
       month: 5,
       day: 24,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getNextWeek({
-      month: 5,
-      day: 31,
-      year: 2021
-    })).toEqual({
+    expect(
+      getNextWeek({
+        month: 5,
+        day: 31,
+        year: 2021,
+      })
+    ).toEqual({
       month: 6,
       day: 7,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getNextWeek({
-      month: 12,
-      day: 29,
-      year: 2021
-    })).toEqual({
+    expect(
+      getNextWeek({
+        month: 12,
+        day: 29,
+        year: 2021,
+      })
+    ).toEqual({
       month: 1,
       day: 5,
-      year: 2022
+      year: 2022,
     });
-  })
-})
+  });
+});
 
 describe('getPreviousWeek()', () => {
   it('should correctly return the previous week', () => {
-    expect(getPreviousWeek({
-      month: 5,
-      day: 17,
-      year: 2021
-    })).toEqual({
+    expect(
+      getPreviousWeek({
+        month: 5,
+        day: 17,
+        year: 2021,
+      })
+    ).toEqual({
       month: 5,
       day: 10,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getPreviousWeek({
-      month: 5,
-      day: 1,
-      year: 2021
-    })).toEqual({
+    expect(
+      getPreviousWeek({
+        month: 5,
+        day: 1,
+        year: 2021,
+      })
+    ).toEqual({
       month: 4,
       day: 24,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getPreviousWeek({
-      month: 1,
-      day: 4,
-      year: 2021
-    })).toEqual({
+    expect(
+      getPreviousWeek({
+        month: 1,
+        day: 4,
+        year: 2021,
+      })
+    ).toEqual({
       month: 12,
       day: 28,
-      year: 2020
+      year: 2020,
     });
-  })
-})
+  });
+});
 
 describe('getNextDay()', () => {
   it('should correctly return the next day', () => {
-    expect(getNextDay({
-      month: 5,
-      day: 17,
-      year: 2021
-    })).toEqual({
+    expect(
+      getNextDay({
+        month: 5,
+        day: 17,
+        year: 2021,
+      })
+    ).toEqual({
       month: 5,
       day: 18,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getNextDay({
-      month: 5,
-      day: 31,
-      year: 2021
-    })).toEqual({
+    expect(
+      getNextDay({
+        month: 5,
+        day: 31,
+        year: 2021,
+      })
+    ).toEqual({
       month: 6,
       day: 1,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getNextDay({
-      month: 12,
-      day: 31,
-      year: 2021
-    })).toEqual({
+    expect(
+      getNextDay({
+        month: 12,
+        day: 31,
+        year: 2021,
+      })
+    ).toEqual({
       month: 1,
       day: 1,
-      year: 2022
+      year: 2022,
     });
-  })
-})
+  });
+});
 
 describe('getPreviousDay()', () => {
   it('should correctly return the previous day', () => {
-    expect(getPreviousDay({
-      month: 5,
-      day: 17,
-      year: 2021
-    })).toEqual({
+    expect(
+      getPreviousDay({
+        month: 5,
+        day: 17,
+        year: 2021,
+      })
+    ).toEqual({
       month: 5,
       day: 16,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getPreviousDay({
-      month: 5,
-      day: 1,
-      year: 2021
-    })).toEqual({
+    expect(
+      getPreviousDay({
+        month: 5,
+        day: 1,
+        year: 2021,
+      })
+    ).toEqual({
       month: 4,
       day: 30,
-      year: 2021
+      year: 2021,
     });
 
-    expect(getPreviousDay({
-      month: 1,
-      day: 1,
-      year: 2021
-    })).toEqual({
+    expect(
+      getPreviousDay({
+        month: 1,
+        day: 1,
+        year: 2021,
+      })
+    ).toEqual({
       month: 12,
       day: 31,
-      year: 2020
+      year: 2020,
     });
-  })
-})
+  });
+});
 
 describe('getNextMonth()', () => {
   it('should return correct next month', () => {
     expect(getNextMonth({ month: 5, year: 2021, day: 1 })).toEqual({
       month: 6,
       year: 2021,
-      day: 1
+      day: 1,
     });
     expect(getNextMonth({ month: 12, year: 2021, day: 30 })).toEqual({
       month: 1,
       year: 2022,
-      day: 30
+      day: 30,
     });
     expect(getNextMonth({ month: 12, year: 1999, day: 30 })).toEqual({
       month: 1,
       year: 2000,
-      day: 30
+      day: 30,
     });
   });
 });
@@ -376,17 +431,17 @@ describe('getPreviousMonth()', () => {
     expect(getPreviousMonth({ month: 5, year: 2021, day: 1 })).toEqual({
       month: 4,
       year: 2021,
-      day: 1
+      day: 1,
     });
     expect(getPreviousMonth({ month: 1, year: 2021, day: 30 })).toEqual({
       month: 12,
       year: 2020,
-      day: 30
+      day: 30,
     });
     expect(getPreviousMonth({ month: 1, year: 2000, day: 30 })).toEqual({
       month: 12,
       year: 1999,
-      day: 30
+      day: 30,
     });
   });
 });
@@ -396,18 +451,18 @@ describe('getNextYear()', () => {
     expect(getNextYear({ month: 5, year: 2021, day: 1 })).toEqual({
       month: 5,
       year: 2022,
-      day: 1
+      day: 1,
     });
     expect(getNextYear({ month: 12, year: 1999, day: 30 })).toEqual({
       month: 12,
       year: 2000,
-      day: 30
+      day: 30,
     });
     // Leap year
     expect(getNextYear({ month: 2, year: 2024, day: 29 })).toEqual({
       month: 2,
       year: 2025,
-      day: 28
+      day: 28,
     });
   });
 });
@@ -417,18 +472,18 @@ describe('getPreviousYear()', () => {
     expect(getPreviousYear({ month: 5, year: 2021, day: 1 })).toEqual({
       month: 5,
       year: 2020,
-      day: 1
+      day: 1,
     });
     expect(getPreviousYear({ month: 12, year: 1999, day: 30 })).toEqual({
       month: 12,
       year: 1998,
-      day: 30
+      day: 30,
     });
     // Leap year
     expect(getPreviousYear({ month: 2, year: 2024, day: 29 })).toEqual({
       month: 2,
       year: 2023,
-      day: 28
+      day: 28,
     });
   });
 });

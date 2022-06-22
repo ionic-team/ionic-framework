@@ -20,6 +20,12 @@ describe('Nested Outlet', () => {
     cy.ionPageVisible('app-nested-outlet-page2');
 
     cy.get('ion-router-outlet ion-router-outlet app-nested-outlet-page2 h1').should('have.text', 'Nested page 2');
+
+    cy.get('#goto-nested-page1').click();
+    cy.ionPageVisible('app-nested-outlet-page');
+
+    cy.get('#goto-nested-page2').click();
   });
+
 });
 

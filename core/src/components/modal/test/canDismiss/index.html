@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - canDismiss</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import { modalController, actionSheetController } from '../../../../dist/ionic/index.esm.js';
+      window.modalController = modalController;
+      window.actionSheetController = actionSheetController;
+    </script>
+
+    <style>
+      form {
+        display: inline-block;
+        margin: 0 20px 20px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="root-page ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - canDismiss</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <form id="handler">
+            <input type="radio" id="radio-true" value="true" name="canDismiss" checked />
+            <label for="radio-true">
+              <code>canDismiss="true"</code>
+            </label>
+
+            <br />
+
+            <input type="radio" id="radio-false" value="false" name="canDismiss" />
+            <label for="radio-false">
+              <code>canDismiss="false"</code>
+            </label>
+
+            <br />
+
+            <input type="radio" id="radio-promise-true" value="promise-true" name="canDismiss" />
+            <label for="radio-promise-true">
+              <code>Promise&lt;true&gt;</code>
+            </label>
+
+            <br />
+
+            <input type="radio" id="radio-promise-false" value="promise-false" name="canDismiss" />
+            <label for="radio-promise-false">
+              <code>Promise&lt;false&gt;</code>
+            </label>
+
+            <br />
+
+            <input type="radio" id="radio-action-sheet" value="action-sheet" name="canDismiss" />
+            <label for="radio-action-sheet">
+              <code>Action Sheet</code>
+            </label>
+          </form>
+
+          <form id="modal-type">
+            <input type="radio" id="radio-regular" value="regular" name="modalType" checked />
+            <label for="radio-regular">
+              <code>Regular</code>
+            </label>
+
+            <br />
+
+            <input type="radio" id="radio-card" value="card" name="modalType" />
+            <label for="radio-card">
+              <code>Card</code>
+            </label>
+
+            <br />
+
+            <input type="radio" id="radio-sheet" value="sheet" name="modalType" />
+            <label for="radio-sheet">
+              <code>Sheet</code>
+            </label>
+          </form>
+
+          <br />
+
+          <ion-button id="show-modal" onclick="createModal()"> Show Modal </ion-button>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      const rootPage = document.querySelector('.root-page');
+      const handlerForm = document.querySelector('form#handler');
+      const modalTypeForm = document.querySelector('form#modal-type');
+      const modal = document.querySelector('ion-modal');
+
+      let handler = true;
+      let type = 'regular';
+
+      handlerForm.addEventListener('change', (ev) => {
+        switch (ev.target.value) {
+          case 'true':
+            handler = true;
+            break;
+          case 'false':
+            handler = false;
+            break;
+          case 'promise-true':
+            handler = () => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(true);
+
+                  setTimeout(() => {
+                    const event = new CustomEvent('ionHandlerDone');
+                    window.dispatchEvent(event);
+                  }, 1000);
+                }, 250);
+              });
+            };
+            break;
+          case 'promise-false':
+            handler = () => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(false);
+
+                  setTimeout(() => {
+                    const event = new CustomEvent('ionHandlerDone');
+                    window.dispatchEvent(event);
+                  }, 1000);
+                }, 250);
+              });
+            };
+            break;
+          case 'action-sheet':
+            handler = async () => {
+              const actionSheet = await actionSheetController.create({
+                header: 'Are you sure you want to discard your changes?',
+                buttons: [
+                  {
+                    cssClass: 'button-confirm',
+                    text: 'Discard Changes',
+                    role: 'destructive',
+                  },
+                  {
+                    cssClass: 'button-cancel',
+                    text: 'Keep Editing',
+                    role: 'cancel',
+                  },
+                ],
+              });
+
+              await actionSheet.present();
+
+              const { role } = await actionSheet.onDidDismiss();
+
+              if (role === 'destructive') {
+                return true;
+              }
+
+              return false;
+            };
+          default:
+            break;
+        }
+      });
+      modalTypeForm.addEventListener('change', (ev) => {
+        switch (ev.target.value) {
+          case 'regular':
+            type = 'regular';
+            break;
+          case 'card':
+            type = 'card';
+            break;
+          case 'sheet':
+            type = 'sheet';
+            break;
+          default:
+            break;
+        }
+      });
+
+      const createModal = async () => {
+        const el = document.createElement('div');
+        el.innerHTML = `
+          <ion-header id="modal-header">
+            <ion-toolbar>
+              <ion-title>Modal</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            Modal with canDismiss
+          </ion-content>
+        `;
+        const opts = {
+          component: el,
+          canDismiss: handler,
+        };
+
+        if (type === 'card') {
+          opts.presentingElement = rootPage;
+        } else if (type === 'sheet') {
+          opts.breakpoints = [0, 0.25, 0.5, 1];
+          opts.initialBreakpoint = 0.25;
+        }
+
+        const modal = await modalController.create(opts);
+
+        await modal.present();
+      };
+    </script>
+  </body>
+</html>

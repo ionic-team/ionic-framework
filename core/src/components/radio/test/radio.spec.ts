@@ -6,6 +6,6 @@ describe('ion-radio', () => {
 
     await radio.connectedCallback();
 
-    expect(radio.value).toEqual('ion-rb-0');    
+    expect(radio.value).toEqual('ion-rb-0');
   });
 });

@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nav Push</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Nav Push</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <body onload="loadFirstPage()">
+    <ion-app>
+      <ion-nav></ion-nav>
+    </ion-app>
+    <style>
+      f {
+        display: block;
+        margin: 15px auto;
+        max-width: 150px;
+        height: 150px;
+        background: blue;
+      }
 
-<body onload="loadFirstPage()">
-  <ion-app>
-    <ion-nav></ion-nav>
-  </ion-app>
-  <style>
-    f {
-      display: block;
-      margin: 15px auto;
-      max-width: 150px;
-      height: 150px;
-      background: blue;
-    }
+      f:last-of-type {
+        background: yellow;
+      }
+    </style>
+  </body>
 
-    f:last-of-type {
-      background: yellow;
-    }
-
-  </style>
-</body>
-
-<script>
-
-  class FirstPage extends HTMLElement {
-    async connectedCallback() {
-      this.innerHTML = `
+  <script>
+    class FirstPage extends HTMLElement {
+      async connectedCallback() {
+        this.innerHTML = `
 
         <ion-header>
           <ion-toolbar>
@@ -49,12 +50,12 @@
           </ion-nav-link>
         </ion-content>
       `;
+      }
     }
-  }
 
-  class SecondPage extends HTMLElement {
-    async connectedCallback() {
-      this.innerHTML = `
+    class SecondPage extends HTMLElement {
+      async connectedCallback() {
+        this.innerHTML = `
 
         <ion-header>
           <ion-toolbar>
@@ -71,12 +72,12 @@
           </ion-nav-link>
         </ion-content>
       `;
+      }
     }
-  }
 
-  class ThirdPage extends HTMLElement {
-    async connectedCallback() {
-      this.innerHTML = `
+    class ThirdPage extends HTMLElement {
+      async connectedCallback() {
+        this.innerHTML = `
 
         <ion-header>
           <ion-toolbar>
@@ -90,17 +91,16 @@
           </ion-nav-link>
         </ion-content>
       `;
+      }
     }
-  }
 
-  customElements.define('page-one', FirstPage);
-  customElements.define('page-two', SecondPage);
-  customElements.define('page-three', ThirdPage);
+    customElements.define('page-one', FirstPage);
+    customElements.define('page-two', SecondPage);
+    customElements.define('page-three', ThirdPage);
 
-  async function loadFirstPage() {
-    const nav = document.querySelector('ion-nav');
-    await nav.setRoot('page-one');
-  }
-</script>
-
+    async function loadFirstPage() {
+      const nav = document.querySelector('ion-nav');
+      await nav.setRoot('page-one');
+    }
+  </script>
 </html>

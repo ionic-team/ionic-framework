@@ -1,9 +1,9 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { AxePuppeteer } from '@axe-core/puppeteer';
+import { newE2EPage } from '@stencil/core/testing';
 
 test('accordion: axe', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion/test/standalone?ionic:_testing=true'
+    url: '/src/components/accordion/test/standalone?ionic:_testing=true',
   });
 
   const results = await new AxePuppeteer(page).analyze();
@@ -12,7 +12,7 @@ test('accordion: axe', async () => {
 
 test('accordion: standalone', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion/test/standalone?ionic:_testing=true'
+    url: '/src/components/accordion/test/standalone?ionic:_testing=true',
   });
 
   const compare = await page.compareScreenshot();

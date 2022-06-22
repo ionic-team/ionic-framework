@@ -1,4 +1,5 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+import type { E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 test('item: inputs', async () => {
   const page = await newE2EPage({
@@ -75,9 +76,7 @@ test('item: inputs', async () => {
   await page.click('#datetime-end');
   await page.waitForTimeout(300);
 
-  compare = await page.compareScreenshot(
-    'should check checkbox and open datepicker'
-  );
+  compare = await page.compareScreenshot('should check checkbox and open datepicker');
   expect(compare).toMatchScreenshot();
 
   await page.click('#button-end');

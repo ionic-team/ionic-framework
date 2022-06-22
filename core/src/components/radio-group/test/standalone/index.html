@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Radio Group - Standalone</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Radio Group - Standalone</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/core.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <body>
+    <ion-radio-group value="danger">
+      <ion-radio aria-label="Default"></ion-radio>
 
-<body>
-  <ion-radio-group value="danger">
-    <ion-radio aria-label="Default"></ion-radio>
+      <ion-radio aria-label="Primary" color="primary"></ion-radio>
+      <ion-radio aria-label="Secondary" color="secondary"></ion-radio>
+      <ion-radio aria-label="Tertiary" color="tertiary"></ion-radio>
+      <ion-radio aria-label="Success" color="success"></ion-radio>
+      <ion-radio aria-label="Warning" color="warning"></ion-radio>
+      <ion-radio aria-label="Danger" color="danger" value="danger"></ion-radio>
+      <ion-radio aria-label="Light" color="light"></ion-radio>
+      <ion-radio aria-label="Medium" color="medium"></ion-radio>
+      <ion-radio aria-label="Dark" color="dark"></ion-radio>
 
-    <ion-radio aria-label="Primary" color="primary"></ion-radio>
-    <ion-radio aria-label="Secondary" color="secondary"></ion-radio>
-    <ion-radio aria-label="Tertiary" color="tertiary"></ion-radio>
-    <ion-radio aria-label="Success" color="success"></ion-radio>
-    <ion-radio aria-label="Warning" color="warning"></ion-radio>
-    <ion-radio aria-label="Danger" color="danger" value="danger"></ion-radio>
-    <ion-radio aria-label="Light" color="light"></ion-radio>
-    <ion-radio aria-label="Medium" color="medium"></ion-radio>
-    <ion-radio aria-label="Dark" color="dark"></ion-radio>
-
-    <ion-radio aria-label="Default" disabled></ion-radio>
-    <ion-radio aria-label="Secondary" color="secondary" disabled></ion-radio>
-  </ion-radio-group>
-
-  <p>
-    allow-empty-selection="true":&nbsp;
-    <ion-radio-group allow-empty-selection="true">
-      <ion-radio aria-label="Primary" color="primary" value="1"></ion-radio>
-      <ion-radio aria-label="Secondary" color="secondary" value="2"></ion-radio>
-      <ion-radio aria-label="Tertiary" color="tertiary" value="3"></ion-radio>
+      <ion-radio aria-label="Default" disabled></ion-radio>
+      <ion-radio aria-label="Secondary" color="secondary" disabled></ion-radio>
     </ion-radio-group>
-  </p>
 
-  <style>
-    /* to be able to see the radio buttons */
-    .radio-ios {
-      border: 1px solid #dedede;
-      padding: 10px 5px;
-    }
-  </style>
-</body>
+    <p>
+      allow-empty-selection="true":&nbsp;
+      <ion-radio-group allow-empty-selection="true">
+        <ion-radio aria-label="Primary" color="primary" value="1"></ion-radio>
+        <ion-radio aria-label="Secondary" color="secondary" value="2"></ion-radio>
+        <ion-radio aria-label="Tertiary" color="tertiary" value="3"></ion-radio>
+      </ion-radio-group>
+    </p>
+
+    <style>
+      /* to be able to see the radio buttons */
+      .radio-ios {
+        border: 1px solid #dedede;
+        padding: 10px 5px;
+      }
+    </style>
+  </body>
 </html>

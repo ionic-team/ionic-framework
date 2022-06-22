@@ -44,7 +44,6 @@ import { IonButtons, IonBackButton, IonPage, IonHeader, IonItem, IonLabel, IonTo
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
-  name: 'Tab1',
   components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent, IonPage }
 }
 </script>

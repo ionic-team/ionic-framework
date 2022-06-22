@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Disable Dates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+        grid-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Disable Dates</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Disable Specific Date</h2>
+            <ion-datetime id="specificDate" value="2021-10-01"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disable Weekends</h2>
+            <ion-datetime id="weekends" value="2021-10-01"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disable Date Range</h2>
+            <ion-datetime id="dateRange" value="2021-10-01"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disable Month</h2>
+            <ion-datetime id="month" value="2021-10-01"></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+
+      <script>
+        const specificDateDisabled = document.querySelector('#specificDate');
+        specificDateDisabled.isDateEnabled = (dateIsoString) => {
+          const date = new Date(dateIsoString);
+          // Disables October 10, 2021.
+          if (date.getUTCDate() === 10 && date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
+            return false;
+          }
+          return true;
+        };
+
+        const weekendsDisabled = document.querySelector('#weekends');
+        weekendsDisabled.isDateEnabled = (dateIsoString) => {
+          const date = new Date(dateIsoString);
+          // Disables Sunday and Saturday
+          if (date.getUTCDay() === 0 || date.getUTCDay() === 6) {
+            return false;
+          }
+          return true;
+        };
+
+        const dateRangeDisabled = document.querySelector('#dateRange');
+        dateRangeDisabled.isDateEnabled = (dateIsoString) => {
+          const date = new Date(dateIsoString);
+          // Disables dates between October 10, 2021 and October 20, 2021.
+          if (date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
+            if (date.getUTCDate() >= 10 && date.getUTCDate() <= 20) {
+              return false;
+            }
+          }
+          return true;
+        };
+
+        const monthDisabled = document.querySelector('#month');
+        monthDisabled.isDateEnabled = (dateIsoString) => {
+          const date = new Date(dateIsoString);
+          // Disables October (every year)
+          if (date.getUTCMonth() === 9) {
+            return false;
+          }
+          return true;
+        };
+      </script>
+    </ion-app>
+  </body>
+</html>

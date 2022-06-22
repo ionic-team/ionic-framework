@@ -48,6 +48,18 @@ describe('useIonModal', () => {
     cy.get('ion-modal').should('not.exist');
   });
 
+  it('display modal and dismiss with data and role', () => {
+    //show modal
+    cy.get('ion-button').contains('Show Modal using component param').click();
+
+    //close modal
+    cy.get('ion-button').contains('Close').click();
+    cy.get('ion-modal').should('not.exist');
+
+    //verify role and data on main page was updated
+    cy.contains('Dismissed with role: close');
+    cy.contains('Data: {"test":true}');
+  });
 
   // This test should pass in v6, skipping until merged with v6
   it.skip('display modal with context', () => {

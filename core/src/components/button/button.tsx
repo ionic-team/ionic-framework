@@ -1,9 +1,11 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, RouterDirection } from '../../interface';
-import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { hasShadowDom, inheritAttributes } from '../../utils/helpers';
+import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -20,7 +22,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   tag: 'ion-button',
   styleUrls: {
     ios: 'button.ios.scss',
-    md: 'button.md.scss'
+    md: 'button.md.scss',
   },
   shadow: true,
 })
@@ -28,7 +30,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
 
@@ -135,7 +137,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   private get hasIconOnly() {
@@ -157,7 +159,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private handleClick = (ev: Event) => {
     if (this.type === 'button') {
       openURL(this.href, ev, this.routerDirection, this.routerAnimation);
-
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
       // climb up the dom to see if we're in a <form>
@@ -174,29 +175,44 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         fakeButton.remove();
       }
     }
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
-    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong, inheritedAttributes } = this;
+    const {
+      buttonType,
+      type,
+      disabled,
+      rel,
+      target,
+      size,
+      href,
+      color,
+      expand,
+      hasIconOnly,
+      shape,
+      strong,
+      inheritedAttributes,
+    } = this;
     const finalSize = size === undefined && this.inItem ? 'small' : size;
-    const TagType = href === undefined ? 'button' : 'a' as any;
-    const attrs = (TagType === 'button')
-      ? { type }
-      : {
-        download: this.download,
-        href,
-        rel,
-        target
-      };
+    const TagType = href === undefined ? 'button' : ('a' as any);
+    const attrs =
+      TagType === 'button'
+        ? { type }
+        : {
+            download: this.download,
+            href,
+            rel,
+            target,
+          };
 
     let fill = this.fill;
     if (fill === undefined) {

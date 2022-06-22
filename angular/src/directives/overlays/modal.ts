@@ -11,7 +11,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
-import { Components } from '@ionic/core';
+import { Components, ModalBreakpointChangeEventDetail } from '@ionic/core';
 
 export declare interface IonModal extends Components.IonModal {
   /**
@@ -30,6 +30,10 @@ export declare interface IonModal extends Components.IonModal {
    * Emitted after the modal has dismissed.
    */
   ionModalDidDismiss: EventEmitter<CustomEvent>;
+  /**
+   * Emitted after the modal breakpoint has changed.
+   */
+  ionBreakpointDidChange: EventEmitter<CustomEvent<ModalBreakpointChangeEventDetail>>;
   /**
    * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
    */
@@ -53,6 +57,7 @@ export declare interface IonModal extends Components.IonModal {
     'backdropBreakpoint',
     'backdropDismiss',
     'breakpoints',
+    'canDismiss',
     'cssClass',
     'enterAnimation',
     'event',
@@ -68,17 +73,18 @@ export declare interface IonModal extends Components.IonModal {
     'translucent',
     'trigger',
   ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'setCurrentBreakpoint', 'getCurrentBreakpoint'],
 })
 @Component({
   selector: 'ion-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div class="ion-page"><ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container></div>`,
+  template: `<div class="ion-page" *ngIf="isCmpOpen"><ng-container [ngTemplateOutlet]="template"></ng-container></div>`,
   inputs: [
     'animated',
     'backdropBreakpoint',
     'backdropDismiss',
     'breakpoints',
+    'canDismiss',
     'cssClass',
     'enterAnimation',
     'event',
@@ -119,6 +125,7 @@ export class IonModal {
       'ionModalWillPresent',
       'ionModalWillDismiss',
       'ionModalDidDismiss',
+      'ionBreakpointDidChange',
       'didPresent',
       'willPresent',
       'willDismiss',

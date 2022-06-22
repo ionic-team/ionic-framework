@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('segment: colors', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/colors?ionic:_testing=true'
+    url: '/src/components/segment/test/colors?ionic:_testing=true',
   });
 
   await page.waitForTimeout(250);
@@ -13,7 +13,7 @@ test('segment: colors', async () => {
 
 test('segment:rtl: colors', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/colors?ionic:_testing=true&rtl=true'
+    url: '/src/components/segment/test/colors?ionic:_testing=true&rtl=true',
   });
 
   await page.waitForTimeout(250);

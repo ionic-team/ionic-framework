@@ -27,7 +27,7 @@ ion-action-sheet,prop,buttons,(string | ActionSheetButton<any>)[],[],false,false
 ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-action-sheet,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
-ion-action-sheet,prop,htmlAttributes,ActionSheetAttributes | undefined,undefined,false,false
+ion-action-sheet,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-action-sheet,prop,keyboardClose,boolean,true,false,false
 ion-action-sheet,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
@@ -72,7 +72,7 @@ ion-alert,prop,buttons,(string | AlertButton)[],[],false,false
 ion-alert,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-alert,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,header,string | undefined,undefined,false,false
-ion-alert,prop,htmlAttributes,AlertAttributes | undefined,undefined,false,false
+ion-alert,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -103,7 +103,7 @@ ion-avatar,shadow
 ion-avatar,css-prop,--border-radius
 
 ion-back-button,shadow
-ion-back-button,prop,color,string | undefined,undefined,false,true
+ion-back-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
 ion-back-button,prop,icon,null | string | undefined,undefined,false,false
@@ -154,7 +154,7 @@ ion-backdrop,prop,visible,boolean,true,false,false
 ion-backdrop,event,ionBackdropTap,void,true
 
 ion-badge,shadow
-ion-badge,prop,color,string | undefined,undefined,false,true
+ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,css-prop,--background
 ion-badge,css-prop,--color
@@ -165,7 +165,7 @@ ion-badge,css-prop,--padding-top
 
 ion-breadcrumb,shadow
 ion-breadcrumb,prop,active,boolean,false,false,false
-ion-breadcrumb,prop,color,string | undefined,undefined,false,false
+ion-breadcrumb,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,false
 ion-breadcrumb,prop,disabled,boolean,false,false,false
 ion-breadcrumb,prop,download,string | undefined,undefined,false,false
 ion-breadcrumb,prop,href,string | undefined,undefined,false,false
@@ -187,7 +187,7 @@ ion-breadcrumb,part,native
 ion-breadcrumb,part,separator
 
 ion-breadcrumbs,shadow
-ion-breadcrumbs,prop,color,string | undefined,undefined,false,false
+ion-breadcrumbs,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,false
 ion-breadcrumbs,prop,itemsAfterCollapse,number,1,false,false
 ion-breadcrumbs,prop,itemsBeforeCollapse,number,1,false,false
 ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
@@ -198,7 +198,7 @@ ion-breadcrumbs,css-prop,--color
 
 ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false
-ion-button,prop,color,string | undefined,undefined,false,true
+ion-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
@@ -245,7 +245,7 @@ ion-buttons,prop,collapse,boolean,false,false,false
 
 ion-card,shadow
 ion-card,prop,button,boolean,false,false,false
-ion-card,prop,color,string | undefined,undefined,false,true
+ion-card,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-card,prop,disabled,boolean,false,false,false
 ion-card,prop,download,string | undefined,undefined,false,false
 ion-card,prop,href,string | undefined,undefined,false,false
@@ -263,23 +263,23 @@ ion-card-content,none
 ion-card-content,prop,mode,"ios" | "md",undefined,false,false
 
 ion-card-header,shadow
-ion-card-header,prop,color,string | undefined,undefined,false,true
+ion-card-header,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-card-header,prop,mode,"ios" | "md",undefined,false,false
 ion-card-header,prop,translucent,boolean,false,false,false
 
 ion-card-subtitle,shadow
-ion-card-subtitle,prop,color,string | undefined,undefined,false,true
+ion-card-subtitle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-card-subtitle,prop,mode,"ios" | "md",undefined,false,false
 ion-card-subtitle,css-prop,--color
 
 ion-card-title,shadow
-ion-card-title,prop,color,string | undefined,undefined,false,true
+ion-card-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-card-title,prop,mode,"ios" | "md",undefined,false,false
 ion-card-title,css-prop,--color
 
 ion-checkbox,shadow
 ion-checkbox,prop,checked,boolean,false,false,false
-ion-checkbox,prop,color,string | undefined,undefined,false,true
+ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
@@ -303,7 +303,7 @@ ion-checkbox,part,container
 ion-checkbox,part,mark
 
 ion-chip,shadow
-ion-chip,prop,color,string | undefined,undefined,false,true
+ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
@@ -344,7 +344,7 @@ ion-col,css-prop,--ion-grid-column-padding-xs
 ion-col,css-prop,--ion-grid-columns
 
 ion-content,shadow
-ion-content,prop,color,string | undefined,undefined,false,true
+ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
@@ -373,13 +373,14 @@ ion-content,part,scroll
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
 ion-datetime,prop,clearText,string,'Clear',false,false
-ion-datetime,prop,color,string | undefined,'primary',false,false
+ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
 ion-datetime,prop,hourCycle,"h12" | "h23" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
+ion-datetime,prop,isDateEnabled,((dateIsoString: string) => boolean) | undefined,undefined,false,false
 ion-datetime,prop,locale,string,'default',false,false
 ion-datetime,prop,max,string | undefined,undefined,false,false
 ion-datetime,prop,min,string | undefined,undefined,false,false
@@ -417,7 +418,7 @@ ion-fab,method,close,close() => Promise<void>
 ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
 ion-fab-button,prop,closeIcon,string,close,false,false
-ion-fab-button,prop,color,string | undefined,undefined,false,true
+ion-fab-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,download,string | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
@@ -514,7 +515,7 @@ ion-input,prop,autocorrect,"off" | "on",'off',false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
 ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
-ion-input,prop,color,string | undefined,undefined,false,true
+ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
@@ -554,8 +555,9 @@ ion-input,css-prop,--placeholder-opacity
 
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
-ion-item,prop,color,string | undefined,undefined,false,true
+ion-item,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-item,prop,counter,boolean,false,false,false
+ion-item,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
 ion-item,prop,detailIcon,string,chevronForward,false,false
 ion-item,prop,disabled,boolean,false,false,false
@@ -609,7 +611,7 @@ ion-item,part,detail-icon
 ion-item,part,native
 
 ion-item-divider,shadow
-ion-item-divider,prop,color,string | undefined,undefined,false,true
+ion-item-divider,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-item-divider,prop,mode,"ios" | "md",undefined,false,false
 ion-item-divider,prop,sticky,boolean,false,false,false
 ion-item-divider,css-prop,--background
@@ -626,7 +628,7 @@ ion-item-divider,css-prop,--padding-top
 ion-item-group,none
 
 ion-item-option,shadow
-ion-item-option,prop,color,string | undefined,undefined,false,true
+ion-item-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-item-option,prop,disabled,boolean,false,false,false
 ion-item-option,prop,download,string | undefined,undefined,false,false
 ion-item-option,prop,expandable,boolean,false,false,false
@@ -653,7 +655,7 @@ ion-item-sliding,method,open,open(side: Side | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,any,true
 
 ion-label,scoped
-ion-label,prop,color,string | undefined,undefined,false,true
+ion-label,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-label,prop,mode,"ios" | "md",undefined,false,false
 ion-label,prop,position,"fixed" | "floating" | "stacked" | undefined,undefined,false,false
 ion-label,css-prop,--color
@@ -665,7 +667,7 @@ ion-list,prop,mode,"ios" | "md",undefined,false,false
 ion-list,method,closeSlidingItems,closeSlidingItems() => Promise<boolean>
 
 ion-list-header,shadow
-ion-list-header,prop,color,string | undefined,undefined,false,true
+ion-list-header,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-list-header,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-list-header,prop,mode,"ios" | "md",undefined,false,false
 ion-list-header,css-prop,--background
@@ -681,7 +683,7 @@ ion-loading,prop,backdropDismiss,boolean,false,false,false
 ion-loading,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-loading,prop,htmlAttributes,LoadingAttributes | undefined,undefined,false,false
+ion-loading,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
@@ -737,7 +739,7 @@ ion-menu,part,container
 
 ion-menu-button,shadow
 ion-menu-button,prop,autoHide,boolean,true,false,false
-ion-menu-button,prop,color,string | undefined,undefined,false,true
+ion-menu-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-menu-button,prop,disabled,boolean,false,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
@@ -767,9 +769,10 @@ ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropBreakpoint,number,0,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
+ion-modal,prop,canDismiss,(() => Promise<boolean>) | boolean | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
-ion-modal,prop,htmlAttributes,ModalAttributes | undefined,undefined,false,false
+ion-modal,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
 ion-modal,prop,keyboardClose,boolean,true,false,false
@@ -780,11 +783,14 @@ ion-modal,prop,showBackdrop,boolean,true,false,false
 ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,prop,trigger,string | undefined,undefined,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-modal,method,getCurrentBreakpoint,getCurrentBreakpoint() => Promise<number | undefined>
 ion-modal,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,present,present() => Promise<void>
+ion-modal,method,setCurrentBreakpoint,setCurrentBreakpoint(breakpoint: number) => Promise<void>
 ion-modal,event,didDismiss,OverlayEventDetail<any>,true
 ion-modal,event,didPresent,void,true
+ion-modal,event,ionBreakpointDidChange,ModalBreakpointChangeEventDetail,true
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true
@@ -836,7 +842,7 @@ ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | und
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
 ion-note,shadow
-ion-note,prop,color,string | undefined,undefined,false,true
+ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
@@ -848,7 +854,7 @@ ion-picker,prop,columns,PickerColumn[],[],false,false
 ion-picker,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-picker,prop,duration,number,0,false,false
 ion-picker,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-picker,prop,htmlAttributes,PickerAttributes | undefined,undefined,false,false
+ion-picker,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-picker,prop,keyboardClose,boolean,true,false,false
 ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
@@ -877,7 +883,7 @@ ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
 ion-popover,shadow
-ion-popover,prop,alignment,"center" | "end" | "start",'start',false,false
+ion-popover,prop,alignment,"center" | "end" | "start" | undefined,undefined,false,false
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
@@ -886,7 +892,7 @@ ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,fa
 ion-popover,prop,dismissOnSelect,boolean,false,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
-ion-popover,prop,htmlAttributes,PopoverAttributes | undefined,undefined,false,false
+ion-popover,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -927,7 +933,7 @@ ion-popover,part,content
 
 ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false
-ion-progress-bar,prop,color,string | undefined,undefined,false,true
+ion-progress-bar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-progress-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
@@ -940,7 +946,7 @@ ion-progress-bar,part,stream
 ion-progress-bar,part,track
 
 ion-radio,shadow
-ion-radio,prop,color,string | undefined,undefined,false,true
+ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
@@ -961,7 +967,7 @@ ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 
 ion-range,shadow
-ion-range,prop,color,string | undefined,undefined,false,true
+ion-range,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-range,prop,debounce,number,0,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
@@ -978,6 +984,8 @@ ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
+ion-range,event,ionKnobMoveEnd,RangeKnobMoveEndEventDetail,true
+ion-range,event,ionKnobMoveStart,RangeKnobMoveStartEventDetail,true
 ion-range,css-prop,--bar-background
 ion-range,css-prop,--bar-background-active
 ion-range,css-prop,--bar-border-radius
@@ -1050,7 +1058,7 @@ ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
 
 ion-router-link,shadow
-ion-router-link,prop,color,string | undefined,undefined,false,true
+ion-router-link,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-router-link,prop,href,string | undefined,undefined,false,false
 ion-router-link,prop,rel,string | undefined,undefined,false,false
 ion-router-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -1073,7 +1081,7 @@ ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
-ion-searchbar,prop,color,string | undefined,undefined,false,true
+ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
@@ -1107,7 +1115,7 @@ ion-searchbar,css-prop,--placeholder-font-weight
 ion-searchbar,css-prop,--placeholder-opacity
 
 ion-segment,shadow
-ion-segment,prop,color,string | undefined,undefined,false,true
+ion-segment,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-segment,prop,disabled,boolean,false,false,false
 ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
@@ -1122,7 +1130,7 @@ ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
 ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
-ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
+ion-segment-button,prop,value,string,'ion-sb-' + ids++,false,false
 ion-segment-button,css-prop,--background
 ion-segment-button,css-prop,--background-checked
 ion-segment-button,css-prop,--background-focused
@@ -1172,6 +1180,7 @@ ion-select,method,open,open(event?: UIEvent | undefined) => Promise<any>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail<any>,true
+ion-select,event,ionDismiss,void,true
 ion-select,event,ionFocus,void,true
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
@@ -1240,7 +1249,7 @@ ion-slides,css-prop,--scroll-bar-background
 ion-slides,css-prop,--scroll-bar-background-active
 
 ion-spinner,shadow
-ion-spinner,prop,color,string | undefined,undefined,false,true
+ion-spinner,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-spinner,prop,duration,number | undefined,undefined,false,false
 ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | undefined,undefined,false,false
 ion-spinner,prop,paused,boolean,false,false,false
@@ -1262,7 +1271,7 @@ ion-tab,prop,tab,string,undefined,true,false
 ion-tab,method,setActive,setActive() => Promise<void>
 
 ion-tab-bar,shadow
-ion-tab-bar,prop,color,string | undefined,undefined,false,true
+ion-tab-bar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-tab-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-tab-bar,prop,selectedTab,string | undefined,undefined,false,false
 ion-tab-bar,prop,translucent,boolean,false,false,false
@@ -1301,7 +1310,7 @@ ion-tabs,event,ionTabsDidChange,{ tab: string; },false
 ion-tabs,event,ionTabsWillChange,{ tab: string; },false
 
 ion-text,shadow
-ion-text,prop,color,string | undefined,undefined,false,true
+ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-text,prop,mode,"ios" | "md",undefined,false,false
 
 ion-textarea,scoped
@@ -1309,7 +1318,7 @@ ion-textarea,prop,autoGrow,boolean,false,false,false
 ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
-ion-textarea,prop,color,string | undefined,undefined,false,true
+ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-textarea,prop,cols,number | undefined,undefined,false,false
 ion-textarea,prop,debounce,number,0,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
@@ -1349,19 +1358,19 @@ ion-thumbnail,css-prop,--border-radius
 ion-thumbnail,css-prop,--size
 
 ion-title,shadow
-ion-title,prop,color,string | undefined,undefined,false,true
+ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
-ion-toast,prop,color,string | undefined,undefined,false,true
+ion-toast,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
 ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,header,string | undefined,undefined,false,false
-ion-toast,prop,htmlAttributes,ToastAttributes | undefined,undefined,false,false
+ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-toast,prop,icon,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -1402,7 +1411,7 @@ ion-toast,part,message
 
 ion-toggle,shadow
 ion-toggle,prop,checked,boolean,false,false,false
-ion-toggle,prop,color,string | undefined,undefined,false,true
+ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
@@ -1426,7 +1435,7 @@ ion-toggle,part,handle
 ion-toggle,part,track
 
 ion-toolbar,shadow
-ion-toolbar,prop,color,string | undefined,undefined,false,true
+ion-toolbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toolbar,prop,mode,"ios" | "md",undefined,false,false
 ion-toolbar,css-prop,--background
 ion-toolbar,css-prop,--border-color

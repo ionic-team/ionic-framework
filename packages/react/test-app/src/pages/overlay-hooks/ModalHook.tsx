@@ -13,7 +13,7 @@ import { useContext } from 'react';
 const Body: React.FC<{
   type: string;
   count: number;
-  onDismiss: () => void;
+  onDismiss: (data?: any, role?: string) => void;
   onIncrement: () => void;
 }> = ({ count, onDismiss, onIncrement, type }) => (
   <IonPage>
@@ -27,7 +27,7 @@ const Body: React.FC<{
       <IonButton expand="block" onClick={() => onIncrement()}>
         Increment Count
       </IonButton>
-      <IonButton expand="block" onClick={() => onDismiss()}>
+      <IonButton expand="block" onClick={() => onDismiss({ test: true }, 'close')}>
         Close
       </IonButton>
     </IonContent>
@@ -42,13 +42,16 @@ const ModalWithContext: React.FC = () => {
 const ModalHook: React.FC = () => {
   const [count, setCount] = useState(0);
 
+  const [dismissedRole, setDismissedRole] = useState<string | undefined>();
+  const [dismissedData, setDismissedData] = useState();
+
   const handleIncrement = useCallback(() => {
     setCount(count + 1);
   }, [count, setCount]);
 
-  const handleDismissWithComponent = useCallback(() => {
-    dismissWithComponent();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleDismissWithComponent = useCallback((data, role) => {
+    dismissWithComponent(data, role);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDismissWithElement = useCallback(() => {
@@ -89,6 +92,11 @@ const ModalHook: React.FC = () => {
             onClick={() => {
               presentWithComponent({
                 cssClass: 'my-class',
+                onDidDismiss: (ev) => {
+                  const { data, role } = ev.detail;
+                  setDismissedData(data);
+                  setDismissedRole(role);
+                },
               });
             }}
           >
@@ -127,6 +135,8 @@ const ModalHook: React.FC = () => {
           </IonButton>
 
           <div>Count: {count}</div>
+          <div>Dismissed with role: {dismissedRole}</div>
+          <div>Data: {dismissedData && JSON.stringify(dismissedData)}</div>
         </IonContent>
       </IonPage>
     </MyContext.Provider>

@@ -1,4 +1,4 @@
-import { AnimationBuilder, BackButtonEvent, MenuI } from '../../interface';
+import type { AnimationBuilder, BackButtonEvent, MenuI } from '../../interface';
 import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
 import { componentOnReady } from '../helpers';
 
@@ -53,7 +53,8 @@ const createMenuController = () => {
   const isOpen = async (menu?: string | null): Promise<boolean> => {
     if (menu != null) {
       const menuEl = await get(menu);
-      return (menuEl !== undefined && menuEl.isOpen());
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+      return menuEl !== undefined && menuEl.isOpen();
     } else {
       const menuEl = await getOpen();
       return menuEl !== undefined;
@@ -74,23 +75,22 @@ const createMenuController = () => {
     if (menu === 'start' || menu === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      const menuRef = find(m => m.side === menu && !m.disabled);
+      const menuRef = find((m) => m.side === menu && !m.disabled);
       if (menuRef) {
         return menuRef;
       }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return find(m => m.side === menu);
-
+      return find((m) => m.side === menu);
     } else if (menu != null) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
-      return find(m => m.menuId === menu);
+      return find((m) => m.menuId === menu);
     }
 
     // return the first enabled menu
-    const menuEl = find(m => !m.disabled);
+    const menuEl = find((m) => !m.disabled);
     if (menuEl) {
       return menuEl;
     }
@@ -149,9 +149,7 @@ const createMenuController = () => {
     // then find all the other menus on this same side
     // and automatically disable other same side menus
     const side = menu.side;
-    menus
-      .filter(m => m.side === side && m !== menu)
-      .forEach(m => m.disabled = true);
+    menus.filter((m) => m.side === side && m !== menu).forEach((m) => (m.disabled = true));
   };
 
   const _setOpen = async (menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> => {
@@ -178,15 +176,15 @@ const createMenuController = () => {
   };
 
   const _getOpenSync = (): HTMLIonMenuElement | undefined => {
-    return find(m => m._isOpen);
+    return find((m) => m._isOpen);
   };
 
   const getMenusSync = (): HTMLIonMenuElement[] => {
-    return menus.map(menu => menu.el);
+    return menus.map((menu) => menu.el);
   };
 
   const isAnimatingSync = (): boolean => {
-    return menus.some(menu => menu.isAnimating);
+    return menus.some((menu) => menu.isAnimating);
   };
 
   const find = (predicate: (menu: MenuI) => boolean): HTMLIonMenuElement | undefined => {
@@ -199,8 +197,9 @@ const createMenuController = () => {
 
   const waitUntilReady = () => {
     return Promise.all(
-      Array.from(document.querySelectorAll('ion-menu'))
-        .map(menu => new Promise(resolve => componentOnReady(menu, resolve)))
+      Array.from(document.querySelectorAll('ion-menu')).map(
+        (menu) => new Promise((resolve) => componentOnReady(menu, resolve))
+      )
     );
   };
 
@@ -208,7 +207,6 @@ const createMenuController = () => {
   registerAnimation('push', menuPushAnimation);
   registerAnimation('overlay', menuOverlayAnimation);
 
-  /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
     document.addEventListener('ionBackButton', (ev: any) => {
       const openMenu = _getOpenSync();
@@ -242,4 +240,4 @@ const createMenuController = () => {
   };
 };
 
-export const menuController = /*@__PURE__*/createMenuController();
+export const menuController = /*@__PURE__*/ createMenuController();

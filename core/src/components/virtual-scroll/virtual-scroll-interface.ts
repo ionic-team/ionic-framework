@@ -1,4 +1,3 @@
-
 export interface Cell {
   i: number;
   index: number;

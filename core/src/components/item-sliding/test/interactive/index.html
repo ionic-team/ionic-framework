@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item Sliding - Standalone</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Item Sliding - Standalone</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/core.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <body>
+    <ion-list></ion-list>
 
-<body>
-  <ion-list></ion-list>
-
-  <script>
-    let lists = document.getElementsByTagName('ion-list');
+    <script>
+      let lists = document.getElementsByTagName('ion-list');
       for (var i = 0; i < lists.length; i++) {
         for (var j = 0; j < 3; j++) {
           addSlidingItem(lists[i]);
@@ -39,7 +42,6 @@
           </ion-item-options>
         `;
 
-
         slidingItem.id = `item-${list.childElementCount}`;
 
         list.appendChild(slidingItem);
@@ -49,6 +51,6 @@
         const slidingElement = optionElement.parentNode.parentNode;
         lists[0].removeChild(slidingElement);
       }
-  </script>
-</body>
+    </script>
+  </body>
 </html>

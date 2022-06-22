@@ -3,7 +3,7 @@ import {
   getMonthAndDay,
   getFormattedHour,
   addTimePadding,
-  getMonthAndYear
+  getMonthAndYear,
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -27,6 +27,11 @@ describe('generateDayAriaLabel()', () => {
 
     expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Monday, May 31');
   });
+  it('should return Saturday, April 1', () => {
+    const reference = { month: 4, day: 1, year: 2006 };
+
+    expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, April 1');
+  });
 });
 
 describe('getMonthAndDay()', () => {
@@ -37,7 +42,15 @@ describe('getMonthAndDay()', () => {
   it('should return mar, 11 may', () => {
     expect(getMonthAndDay('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mar, 11 may');
   });
-})
+
+  it('should return Sat, Apr 1', () => {
+    expect(getMonthAndDay('en-US', { month: 4, day: 1, year: 2006 })).toEqual('Sat, Apr 1');
+  });
+
+  it('should return sáb, 1 abr', () => {
+    expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
+  });
+});
 
 describe('getFormattedHour()', () => {
   it('should only add padding if using 24 hour time', () => {
@@ -46,7 +59,7 @@ describe('getFormattedHour()', () => {
 
     expect(getFormattedHour(10, true)).toEqual('10');
     expect(getFormattedHour(10, false)).toEqual('10');
-  })
+  });
 });
 
 describe('addTimePadding()', () => {
@@ -55,7 +68,7 @@ describe('addTimePadding()', () => {
     expect(addTimePadding(9)).toEqual('09');
     expect(addTimePadding(10)).toEqual('10');
     expect(addTimePadding(100)).toEqual('100');
-  })
+  });
 });
 
 describe('getMonthAndYear()', () => {
@@ -63,7 +76,15 @@ describe('getMonthAndYear()', () => {
     expect(getMonthAndYear('en-US', { month: 5, day: 11, year: 2021 })).toEqual('May 2021');
   });
 
-  it('should return mar, 11 may', () => {
+  it('should return mayo de 2021', () => {
     expect(getMonthAndYear('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mayo de 2021');
   });
-})
+
+  it('should return April 2006', () => {
+    expect(getMonthAndYear('en-US', { month: 4, day: 1, year: 2006 })).toEqual('April 2006');
+  });
+
+  it('should return abril de 2006', () => {
+    expect(getMonthAndYear('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('abril de 2006');
+  });
+});

@@ -1,11 +1,13 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, h } from '@stencil/core';
 import { menuOutline, menuSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
-import { ButtonInterface } from '../../utils/element-interface';
-import { inheritAttributes } from '../../utils/helpers';
+import type { Color } from '../../interface';
+import type { ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
@@ -20,12 +22,12 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   tag: 'ion-menu-button',
   styleUrls: {
     ios: 'menu-button.ios.scss',
-    md: 'menu-button.md.scss'
+    md: 'menu-button.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
-  private inheritedAttributes: { [k: string]: any } = {};
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -59,7 +61,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   componentDidLoad() {
@@ -74,7 +76,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   private onClick = async () => {
     return menuController.toggle(this.menu);
-  }
+  };
 
   render() {
     const { color, disabled, inheritedAttributes } = this;
@@ -83,7 +85,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {
-      type: this.type
+      type: this.type,
     };
 
     const ariaLabel = inheritedAttributes['aria-label'] || 'menu';
@@ -95,22 +97,16 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         aria-hidden={hidden ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
-          'button': true,  // ion-buttons target .button
+          button: true, // ion-buttons target .button
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
-          'ion-focusable': true
+          'ion-focusable': true,
         })}
       >
-        <button
-          {...attrs}
-          disabled={disabled}
-          class="button-native"
-          part="native"
-          aria-label={ariaLabel}
-        >
+        <button {...attrs} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
           <span class="button-inner">
             <slot>
               <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>

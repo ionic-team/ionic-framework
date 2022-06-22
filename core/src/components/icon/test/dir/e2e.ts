@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 test('icon: dir', async () => {
   const page = await newE2EPage({
-    url: '/src/components/icon/test/dir?ionic:_testing=true'
+    url: '/src/components/icon/test/dir?ionic:_testing=true',
   });
 
   const compare = await page.compareScreenshot();
@@ -11,7 +11,7 @@ test('icon: dir', async () => {
 
 test('icon: dir, rtl', async () => {
   const page = await newE2EPage({
-    url: '/src/components/icon/test/dir?ionic:_testing=true&rtl=true'
+    url: '/src/components/icon/test/dir?ionic:_testing=true&rtl=true',
   });
 
   const compare = await page.compareScreenshot();

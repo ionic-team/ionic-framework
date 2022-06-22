@@ -1,0 +1,60 @@
+name: 'Ionic Nightly Build'
+
+on:
+  schedule:
+    # Run every Monday-Friday
+    # at 6:00 UTC (6:00 am UTC)
+    - cron: '00 06 * * 1-5'
+
+jobs:
+  nightly-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Install Dependencies
+        run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
+        shell: bash
+      - name: Prepare NPM Token
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        shell: bash
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Configure Identity
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      # A 1 is required before the timestamp
+      # as lerna will fail when there is a leading 0
+      # See https://github.com/lerna/lerna/issues/2840
+      - name: Create Nightly Hash
+        # The date should output YYYYMMDD
+        # so that it is human readable
+        run: |
+          echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
+        shell: bash
+      - name: Checkout Nightly Branch
+        run: |
+          git checkout -b nightly-$(echo "${{ env.DATE }}")
+          git push origin nightly-$(echo "${{ env.DATE }}")
+        shell: bash
+      - name: Create Nightly Build
+        run: |
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-nightly.$(echo "${{ env.DATE }}") --no-verify-access --yes --force-publish='*' --dist-tag nightly --conventional-commits --conventional-prerelease --exact --create-release github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+      # We need to push the commit changes in order for the tags
+      # to get updated, but we don't need to keep the changelog
+      # changes around.
+      - name: Delete Nightly Branch
+        run: |
+          git checkout main
+          git branch -D nightly-$(echo "${{ env.DATE }}")
+          git push origin --delete nightly-$(echo "${{ env.DATE }}")
+        shell: bash

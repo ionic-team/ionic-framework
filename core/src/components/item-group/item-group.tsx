@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Host, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -6,11 +7,10 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-item-group',
   styleUrls: {
     ios: 'item-group.ios.scss',
-    md: 'item-group.md.scss'
-  }
+    md: 'item-group.md.scss',
+  },
 })
 export class ItemGroup implements ComponentInterface {
-
   render() {
     const mode = getIonMode(this);
     return (
@@ -22,10 +22,9 @@ export class ItemGroup implements ComponentInterface {
           // Used internally for styling
           [`item-group-${mode}`]: true,
 
-          'item': true
+          item: true,
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

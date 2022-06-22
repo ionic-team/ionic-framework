@@ -41,7 +41,7 @@ describe('Hardware Back Button', () => {
   it('should call multiple callbacks', () => {
     const cbSpy = (processNextHandler) => {
       processNextHandler();
-    }
+    };
     const cbSpyTwo = jest.fn();
     document.addEventListener('ionBackButton', (ev) => {
       ev.detail.register(100, cbSpy);
@@ -56,4 +56,4 @@ describe('Hardware Back Button', () => {
 const dispatchBackButtonEvent = () => {
   const ev = new Event('backbutton');
   document.dispatchEvent(ev);
-}
+};

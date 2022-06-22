@@ -1,4 +1,4 @@
-import { componentOnReady } from '@ionic/core';
+import { componentOnReady } from '@ionic/core/components';
 import React from 'react';
 
 import { IonRouterOutletInner } from '../components/inner-proxies';

@@ -317,6 +317,8 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
 
+        const usingLinearNavigation = viewStacks.size() === 1;
+
         if (routerAction === 'replace') {
           leavingViewItem.mount = false;
           leavingViewItem.ionPageElement = undefined;
@@ -327,9 +329,18 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
             leavingViewItem.mount = false;
             leavingViewItem.ionPageElement = undefined;
             leavingViewItem.ionRoute = false;
-            viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
+
+            /**
+             * router.go() expects navigation to be
+             * linear. If an app is using multiple stacks then
+             * it is not using linear navigation. As a result, router.go()
+             * will not give the results that developers are expecting.
+             */
+            if (usingLinearNavigation) {
+              viewStacks.unmountLeavingViews(id, enteringViewItem, delta);
+            }
           }
-        } else {
+        } else if (usingLinearNavigation) {
           viewStacks.mountIntermediaryViews(id, leavingViewItem, delta);
         }
 
@@ -416,6 +427,11 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * as a result of a navigation change.
        */
       if (viewItem.registerCallback) {
+        /**
+         * Page should be hidden initially
+         * to avoid flickering.
+         */
+        ionPageEl.classList.add('ion-page-invisible');
         viewItem.registerCallback();
 
       /**
@@ -450,7 +466,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         let props = {
           ref: c.vueComponentRef,
           key: c.pathname,
-          isInOutlet: true,
           registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
         }
 

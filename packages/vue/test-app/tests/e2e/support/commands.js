@@ -106,3 +106,15 @@ Cypress.Commands.add('ionBackButtonHidden', (pageId) => {
     .find('ion-back-button')
     .should('not.be.visible')
 });
+
+/**
+ * If running in a browser, hardwareBackButton: true
+ * must be set in Ionic config for this to work.
+ */
+Cypress.Commands.add('hardwareBackButton', () => {
+  cy.document().then(doc => {
+    const ev = new CustomEvent('backbutton');
+
+    doc.dispatchEvent(ev);
+  })
+})

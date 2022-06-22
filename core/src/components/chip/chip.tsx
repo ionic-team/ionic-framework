@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -11,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-chip',
   styleUrls: {
     ios: 'chip.ios.scss',
-    md: 'chip.md.scss'
+    md: 'chip.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Chip implements ComponentInterface {
   /**

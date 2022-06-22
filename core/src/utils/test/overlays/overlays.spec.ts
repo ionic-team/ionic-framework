@@ -1,7 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { setRootAriaHidden } from '../../overlays';
-import { RouterOutlet } from '../../../components/router-outlet/route-outlet';
+
 import { Nav } from '../../../components/nav/nav';
+import { RouterOutlet } from '../../../components/router-outlet/route-outlet';
+import { setRootAriaHidden } from '../../overlays';
 
 describe('setRootAriaHidden()', () => {
   it('should correctly remove and re-add router outlet from accessibility tree', async () => {
@@ -9,7 +10,7 @@ describe('setRootAriaHidden()', () => {
       components: [RouterOutlet],
       html: `
         <ion-router-outlet></ion-router-outlet>
-      `
+      `,
     });
 
     const routerOutlet = page.body.querySelector('ion-router-outlet');
@@ -28,7 +29,7 @@ describe('setRootAriaHidden()', () => {
       components: [Nav],
       html: `
         <ion-nav></ion-nav>
-      `
+      `,
     });
 
     const nav = page.body.querySelector('ion-nav');
@@ -48,7 +49,7 @@ describe('setRootAriaHidden()', () => {
       html: `
         <div id="ion-view-container-root"></div>
         <div id="not-container-root"></div>
-      `
+      `,
     });
 
     const containerRoot = page.body.querySelector('#ion-view-container-root');
@@ -67,11 +68,11 @@ describe('setRootAriaHidden()', () => {
   });
 
   it('should not error if router outlet was not found', async () => {
-    const page = await newSpecPage({
+    await newSpecPage({
       components: [],
       html: `
         <div></div>
-      `
+      `,
     });
 
     setRootAriaHidden(true);

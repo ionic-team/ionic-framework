@@ -1,8 +1,15 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Listen, Method, Prop } from '@stencil/core';
 
-import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import type {
+  AnimationBuilder,
+  BackButtonEvent,
+  RouteChain,
+  RouterDirection,
+  RouterEventDetail,
+} from '../../interface';
 import { debounce } from '../../utils/helpers';
-import { NavigationHookResult } from '../route/route-interface';
+import type { NavigationHookResult } from '../route/route-interface';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
@@ -12,10 +19,9 @@ import { readRedirects, readRoutes } from './utils/parser';
 import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from './utils/path';
 
 @Component({
-  tag: 'ion-router'
+  tag: 'ion-router',
 })
 export class Router implements ComponentInterface {
-
   private previousPath: string | null = null;
   private busy = false;
   private state = 0;
@@ -95,7 +101,7 @@ export class Router implements ComponentInterface {
 
   @Listen('ionBackButton', { target: 'document' })
   protected onBackButton(ev: BackButtonEvent) {
-    ev.detail.register(0, processNextHandler => {
+    ev.detail.register(0, (processNextHandler) => {
       this.back();
       processNextHandler();
     });
@@ -136,7 +142,7 @@ export class Router implements ComponentInterface {
     const canProceed = await this.runGuards(parsedPath.segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        parsedPath = parsePath(canProceed.redirect)
+        parsedPath = parsePath(canProceed.redirect);
       } else {
         return false;
       }
@@ -171,7 +177,10 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
     const chain = findChainForIDs(ids, routes);
     if (!chain) {
-      console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
+      console.warn(
+        '[ion-router] no matching URL for ',
+        ids.map((i) => i.id)
+      );
       return false;
     }
 
@@ -221,7 +230,11 @@ export class Router implements ComponentInterface {
     return ROUTER_INTENT_NONE;
   }
 
-  private async writeNavStateRoot(segments: string[] | null, direction: RouterDirection, animation?: AnimationBuilder): Promise<boolean> {
+  private async writeNavStateRoot(
+    segments: string[] | null,
+    direction: RouterDirection,
+    animation?: AnimationBuilder
+  ): Promise<boolean> {
     if (!segments) {
       console.error('[ion-router] URL is not part of the routing set');
       return false;
@@ -253,8 +266,11 @@ export class Router implements ComponentInterface {
   }
 
   private async safeWriteNavState(
-    node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
-    segments: string[], redirectFrom: string[] | null,
+    node: HTMLElement | undefined,
+    chain: RouteChain,
+    direction: RouterDirection,
+    segments: string[],
+    redirectFrom: string[] | null,
     index = 0,
     animation?: AnimationBuilder
   ): Promise<boolean> {
@@ -272,7 +288,7 @@ export class Router implements ComponentInterface {
   private async lock() {
     const p = this.waitPromise;
     let resolve!: () => void;
-    this.waitPromise = new Promise(r => resolve = r);
+    this.waitPromise = new Promise((r) => (resolve = r));
 
     if (p !== undefined) {
       await p;
@@ -286,12 +302,17 @@ export class Router implements ComponentInterface {
    * When the beforeLeave hook does not return true (to allow navigating) then that value is returned early and the beforeEnter is executed.
    * Otherwise the beforeEnterHook hook of the target route is executed.
    */
-  private async runGuards(to: string[] | null = this.getSegments(), from?: string[] | null): Promise<NavigationHookResult> {
+  private async runGuards(
+    to: string[] | null = this.getSegments(),
+    from?: string[] | null
+  ): Promise<NavigationHookResult> {
     if (from === undefined) {
       from = parsePath(this.previousPath).segments;
     }
 
-    if (!to || !from) { return true; }
+    if (!to || !from) {
+      return true;
+    }
 
     const routes = readRoutes(this.el);
 
@@ -299,7 +320,9 @@ export class Router implements ComponentInterface {
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
-    if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
+    if (canLeave === false || typeof canLeave === 'object') {
+      return canLeave;
+    }
 
     const toChain = findChainForSegments(to, routes);
     const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
@@ -308,9 +331,13 @@ export class Router implements ComponentInterface {
   }
 
   private async writeNavState(
-    node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
-    segments: string[], redirectFrom: string[] | null,
-    index = 0, animation?: AnimationBuilder
+    node: HTMLElement | undefined,
+    chain: RouteChain,
+    direction: RouterDirection,
+    segments: string[],
+    redirectFrom: string[] | null,
+    index = 0,
+    animation?: AnimationBuilder
   ): Promise<boolean> {
     if (this.busy) {
       console.warn('[ion-router] router is busy, transition was cancelled');

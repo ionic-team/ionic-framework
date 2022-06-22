@@ -78,6 +78,11 @@ export {
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
 
+  RangeCustomEvent,
+  RangeChangeEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeKnobMoveEndEventDetail,
+
   RefresherCustomEvent,
   RefresherEventDetail,
 

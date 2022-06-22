@@ -1,4 +1,3 @@
-
 export interface RadioGroupChangeEventDetail<T = any> {
   value: T;
 }

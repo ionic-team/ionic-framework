@@ -8,14 +8,15 @@ import { addEventListener, raf, removeEventListener } from '../../utils/helpers'
  * each view is initially hidden before transitioning in.
  */
 const setupSwiperInIonic = (swiper: any, watchForIonPageChanges = true) => {
-  if (typeof (window as any) === 'undefined') { return; }
+  if (typeof (window as any) === 'undefined') {
+    return;
+  }
 
   const swiperEl = swiper.el;
   const ionPage = swiperEl.closest('.ion-page');
 
   if (!ionPage) {
     if (watchForIonPageChanges) {
-
       /**
        * If no ion page found, it is possible
        * that we are in the overlay setup step
@@ -48,7 +49,7 @@ const setupSwiperInIonic = (swiper: any, watchForIonPageChanges = true) => {
 
         mo.observe(rootNode, {
           attributeFilter: ['class'],
-          attributeOldValue: true
+          attributeOldValue: true,
         });
       }
     }
@@ -73,7 +74,7 @@ const setupSwiperInIonic = (swiper: any, watchForIonPageChanges = true) => {
         swiperEl.swiper.update();
         removeEventListener(modalOrPopover, eventName, overlayCallback);
       });
-    }
+    };
     addEventListener(modalOrPopover, eventName, overlayCallback);
   } else {
     /**
@@ -98,7 +99,7 @@ const setupSwiperInIonic = (swiper: any, watchForIonPageChanges = true) => {
 
     mo.observe(ionPage, {
       attributeFilter: ['class'],
-      attributeOldValue: true
+      attributeOldValue: true,
     });
   }
 
@@ -111,18 +112,20 @@ const setupSwiperInIonic = (swiper: any, watchForIonPageChanges = true) => {
   const onAppLoad = () => {
     swiperEl.swiper.update();
     removeEventListener(window, 'appload', onAppLoad);
-  }
+  };
 
   addEventListener(window, 'appload', onAppLoad);
-}
+};
 
 export const IonicSwiper = {
   name: 'ionic',
   on: {
     afterInit(swiper: any) {
-      console.warn('[Deprecation Warning]: The IonicSwiper module has been deprecated in favor of the IonSlides module. This change was made to better support the Swiper 7 release. The IonicSwiper module will be removed in Ionic 7.0. See https://ionicframework.com/docs/api/slides#migration for revised migration steps.');
+      console.warn(
+        '[Deprecation Warning]: The IonicSwiper module has been deprecated in favor of the IonSlides module. This change was made to better support the Swiper 7 release. The IonicSwiper module will be removed in Ionic 7.0. See https://ionicframework.com/docs/api/slides#migration for revised migration steps.'
+      );
 
       setupSwiperInIonic(swiper);
-    }
-  }
-}
+    },
+  },
+};

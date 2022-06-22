@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Modal - Host Elements</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Host Elements</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
   <script type="module">
     import { modalController } from '../../../../dist/ionic/index.esm.js';
     window.modalController = modalController;
   </script>
-<body>
-  <ion-app>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Host Elements</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Modal - Host Elements</ion-title>
-      </ion-toolbar>
-    </ion-header>
+      <ion-content class="ion-padding">
+        <p>
+          <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
+        </p>
+      </ion-content>
+    </ion-app>
 
-    <ion-content class="ion-padding">
-      <p>
-        <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
-      </p>
-    </ion-content>
-  </ion-app>
+    <script>
+      window.addEventListener('ionModalDidDismiss', function (e) {
+        console.log('DidDismiss', e);
+      });
+      window.addEventListener('ionModalWillDismiss', function (e) {
+        console.log('WillDismiss', e);
+      });
 
-  <script>
-    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
-    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
-
-    class ModalPage extends HTMLElement {
-      async connectedCallback() {
-        this.innerHTML = `
+      class ModalPage extends HTMLElement {
+        async connectedCallback() {
+          this.innerHTML = `
 
           <ion-header>
             <ion-toolbar>
@@ -49,26 +55,24 @@
             <ion-button class="dismiss">Dismiss Modal</ion-button>
           </ion-content>`;
 
-        // listen for close event
-        const button = this.querySelector('ion-button');
-        button.addEventListener('click', async () => {
-          await modalController.dismiss();
-        });
+          // listen for close event
+          const button = this.querySelector('ion-button');
+          button.addEventListener('click', async () => {
+            await modalController.dismiss();
+          });
+        }
       }
-    }
 
+      async function presentModal() {
+        // present the modal
+        const modalElement = Object.assign(document.createElement('ion-modal'), {
+          component: 'modal-page',
+        });
+        document.body.appendChild(modalElement);
+        modalElement.present();
+      }
 
-    async function presentModal() {
-      // present the modal
-      const modalElement = Object.assign(document.createElement('ion-modal'), {
-        component: 'modal-page'
-      });
-      document.body.appendChild(modalElement);
-      modalElement.present();
-    }
-
-    customElements.define('modal-page', ModalPage);
-  </script>
-</body>
-
+      customElements.define('modal-page', ModalPage);
+    </script>
+  </body>
 </html>

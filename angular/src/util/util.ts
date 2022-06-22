@@ -1,3 +1,5 @@
+import { ComponentFactoryResolver } from '@angular/core';
+
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
@@ -9,4 +11,8 @@ export const raf = (h: any): any => {
     return requestAnimationFrame(h);
   }
   return setTimeout(h);
+};
+
+export const isComponentFactoryResolver = (item: any): item is ComponentFactoryResolver => {
+  return !!item.resolveComponentFactory;
 };

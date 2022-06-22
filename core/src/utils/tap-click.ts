@@ -1,11 +1,10 @@
-import { Config } from '../interface';
+import type { Config } from '../interface';
 
 import { now, pointerCoord } from './helpers';
 
 export const startTapClick = (config: Config) => {
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
-  let scrollingEl: HTMLElement | undefined;
 
   let activatableEle: HTMLElement | undefined;
   let activeRipple: Promise<() => void> | undefined;
@@ -13,10 +12,6 @@ export const startTapClick = (config: Config) => {
 
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
-
-  const isScrolling = () => {
-    return scrollingEl !== undefined && scrollingEl.parentElement !== null;
-  };
 
   // Touch Events
   const onTouchStart = (ev: TouchEvent) => {
@@ -56,11 +51,10 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  const pointerDown = (ev: any) => {
-    if (activatableEle || isScrolling()) {
+  const pointerDown = (ev: UIEvent) => {
+    if (activatableEle) {
       return;
     }
-    scrollingEl = undefined;
     setActivatedElement(getActivatableTarget(ev), ev);
   };
 
@@ -112,6 +106,7 @@ export const startTapClick = (config: Config) => {
     el.classList.add(ACTIVATED);
 
     const rippleEffect = useRippleEffect && getRippleEffect(el);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (rippleEffect && rippleEffect.addRipple) {
       removeRipple();
       activeRipple = rippleEffect.addRipple(x, y);
@@ -120,7 +115,7 @@ export const startTapClick = (config: Config) => {
 
   const removeRipple = () => {
     if (activeRipple !== undefined) {
-      activeRipple.then(remove => remove());
+      activeRipple.then((remove) => remove());
       activeRipple = undefined;
     }
   };
@@ -144,18 +139,25 @@ export const startTapClick = (config: Config) => {
   };
 
   const doc = document;
-  doc.addEventListener('ionScrollStart', ev => {
-    scrollingEl = ev.target as HTMLElement;
-    cancelActive();
-  });
-  doc.addEventListener('ionScrollEnd', () => {
-    scrollingEl = undefined;
-  });
   doc.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);
   doc.addEventListener('touchcancel', onTouchEnd, true);
   doc.addEventListener('touchend', onTouchEnd, true);
+
+  /**
+   * Tap click effects such as the ripple effect should
+   * not happen when scrolling. For example, if a user scrolls
+   * the page but also happens to do a touchstart on a button
+   * as part of the scroll, the ripple effect should not
+   * be dispatched. The ripple effect should only happen
+   * if the button is activated and the page is not scrolling.
+   *
+   * pointercancel is dispatched on a gesture when scrolling
+   * starts, so this lets us avoid having to listen for
+   * ion-content's scroll events.
+   */
+  doc.addEventListener('pointercancel', cancelActive, true);
 
   doc.addEventListener('mousedown', onMouseDown, true);
   doc.addEventListener('mouseup', onMouseUp, true);
@@ -163,17 +165,25 @@ export const startTapClick = (config: Config) => {
   doc.addEventListener('contextmenu', onContextMenu, true);
 };
 
-const getActivatableTarget = (ev: any): any => {
+const getActivatableTarget = (ev: UIEvent): any => {
   if (ev.composedPath) {
-    const path = ev.composedPath() as HTMLElement[];
+    /**
+     * composedPath returns EventTarget[]. However,
+     * objects other than Element can be targets too.
+     * For example, AudioContext can be a target. In this
+     * case, we know that the event is a UIEvent so we
+     * can assume that the path will contain either Element
+     * or ShadowRoot.
+     */
+    const path = ev.composedPath() as Element[] | ShadowRoot[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.classList && el.classList.contains('ion-activatable')) {
+      if (!(el instanceof ShadowRoot) && el.classList.contains('ion-activatable')) {
         return el;
       }
     }
   } else {
-    return ev.target.closest('.ion-activatable');
+    return (ev.target as Element).closest('.ion-activatable');
   }
 };
 

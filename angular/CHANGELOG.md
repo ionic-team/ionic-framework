@@ -3,6 +3,212 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+
+### Bug Fixes
+
+* **angular:** router compatibility with Angular 12/13 ([#25456](https://github.com/ionic-team/ionic/issues/25456)) ([7b105a3](https://github.com/ionic-team/ionic/commit/7b105a3471e5bc588ba63f820b707e131c878b6f)), closes [#25448](https://github.com/ionic-team/ionic/issues/25448)
+
+
+
+
+
+## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
+
+
+### Bug Fixes
+
+* **angular:** add support for Angular 14 ([#25403](https://github.com/ionic-team/ionic/issues/25403)) ([122cdcc](https://github.com/ionic-team/ionic/commit/122cdcc8253e46d9537105b11045fd7d9ccd8917)), closes [#25353](https://github.com/ionic-team/ionic/issues/25353)
+
+
+
+
+
+## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.7](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7) (2022-05-26)
+
+
+### Bug Fixes
+
+* **accordion:** accordions expand when using binding ([#25322](https://github.com/ionic-team/ionic/issues/25322)) ([61e571e](https://github.com/ionic-team/ionic/commit/61e571e585ed8ad9b0ca2f98f57bb16616413ba6)), closes [#25307](https://github.com/ionic-team/ionic/issues/25307)
+* **range:** interfaces are now correctly exported ([#25342](https://github.com/ionic-team/ionic/issues/25342)) ([15f0c06](https://github.com/ionic-team/ionic/commit/15f0c0669f7598386edf487f408462b90ed91a08)), closes [#25341](https://github.com/ionic-team/ionic/issues/25341)
+
+
+
+
+
+## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.5](https://github.com/ionic-team/ionic/compare/v6.1.4...v6.1.5) (2022-05-11)
+
+
+### Bug Fixes
+
+* **modal:** add canDismiss input binding for angular ([#25240](https://github.com/ionic-team/ionic/issues/25240)) ([bdf0383](https://github.com/ionic-team/ionic/commit/bdf0383b0c9ec4595129a2633760fd4f4788df90)), closes [#25239](https://github.com/ionic-team/ionic/issues/25239)
+
+
+
+
+
+## [6.1.4](https://github.com/ionic-team/ionic/compare/v6.1.3...v6.1.4) (2022-05-04)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.3](https://github.com/ionic-team/ionic/compare/v6.1.2...v6.1.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **vue:** canDismiss definition is now exposed ([#25195](https://github.com/ionic-team/ionic/issues/25195)) ([e5e0e24](https://github.com/ionic-team/ionic/commit/e5e0e24f76c15c1a49f759b1a140e337f5393edd))
+
+
+
+
+
+## [6.1.2](https://github.com/ionic-team/ionic/compare/v6.1.1...v6.1.2) (2022-04-20)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.1](https://github.com/ionic-team/ionic/compare/v6.1.0...v6.1.1) (2022-04-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [6.1.0](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.1.0) (2022-04-13)
+
+
+### Bug Fixes
+
+* **angular:** button components now route correctly without reload ([#25071](https://github.com/ionic-team/ionic/issues/25071)) ([1c26e9b](https://github.com/ionic-team/ionic/commit/1c26e9b9b0fc45a8691e972fe17a168f89a27a79))
+* **angular:** item styling when control has value ([#24932](https://github.com/ionic-team/ionic/issues/24932)) ([eea25d0](https://github.com/ionic-team/ionic/commit/eea25d091d7eb319d6ec1de8b793881d3a10949b)), closes [#23809](https://github.com/ionic-team/ionic/issues/23809)
+* **angular:** routerLink allows opening in a new tab for link elements ([#25014](https://github.com/ionic-team/ionic/issues/25014)) ([b010f07](https://github.com/ionic-team/ionic/commit/b010f077fe51992dd9dd8ced69769a8eb91ac055)), closes [#24413](https://github.com/ionic-team/ionic/issues/24413)
+
+
+### Features
+
+* **datetime:** isDateEnabled to enable/disable specific days  ([#24898](https://github.com/ionic-team/ionic/issues/24898)) ([e932a04](https://github.com/ionic-team/ionic/commit/e932a042237e6f44bf278bcbd895d8569fc17348)), closes [#24209](https://github.com/ionic-team/ionic/issues/24209)
+* **item:** counter formatter to customize counter text display ([#24336](https://github.com/ionic-team/ionic/issues/24336)) ([171020e](https://github.com/ionic-team/ionic/commit/171020e9d200ccfdef0f01c427b295bb50dd1fef)), closes [#24327](https://github.com/ionic-team/ionic/issues/24327)
+* **modal:** ability to programmatically set current sheet breakpoint ([#24648](https://github.com/ionic-team/ionic/issues/24648)) ([3145c76](https://github.com/ionic-team/ionic/commit/3145c76934ac711038f9dcba98a385dfbe754953)), closes [#23917](https://github.com/ionic-team/ionic/issues/23917)
+* **range:** add knobMoveStart and knobMoveEnd events ([#25011](https://github.com/ionic-team/ionic/issues/25011)) ([f5cb1f8](https://github.com/ionic-team/ionic/commit/f5cb1f8444ba050042e788f9f9ec7b6309bf1b60))
+* **select:** add event for when overlay is dismissed ([#24400](https://github.com/ionic-team/ionic/issues/24400)) ([b835b7c](https://github.com/ionic-team/ionic/commit/b835b7c0c7840f41c54f96743cc0a779ff474ab6))
+
+
+
+
+
+## [6.0.16](https://github.com/ionic-team/ionic/compare/v6.0.15...v6.0.16) (2022-04-08)
+
+
+### Bug Fixes
+
+* **angular:** button components now route correctly without reload ([#25071](https://github.com/ionic-team/ionic/issues/25071)) ([fb994fa](https://github.com/ionic-team/ionic/commit/fb994fa9a7721a3575fb8d123be34aea4bf076a4))
+
+
+
+
+
+## [6.0.15](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+
+### Bug Fixes
+
+* **angular:** item styling when control has value ([#24932](https://github.com/ionic-team/ionic/issues/24932)) ([eea25d0](https://github.com/ionic-team/ionic/commit/eea25d091d7eb319d6ec1de8b793881d3a10949b)), closes [#23809](https://github.com/ionic-team/ionic/issues/23809)
+* **angular:** routerLink allows opening in a new tab for link elements ([#25014](https://github.com/ionic-team/ionic/issues/25014)) ([b010f07](https://github.com/ionic-team/ionic/commit/b010f077fe51992dd9dd8ced69769a8eb91ac055)), closes [#24413](https://github.com/ionic-team/ionic/issues/24413)
+
+
+
+
+
+## [6.0.14](https://github.com/ionic-team/ionic/compare/v6.0.13...v6.0.14) (2022-03-30)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.0.13](https://github.com/ionic-team/ionic/compare/v6.0.12...v6.0.13) (2022-03-23)
+
+
+### Bug Fixes
+
+* **angular:** ngOnDestroy runs inside angular zone ([#24949](https://github.com/ionic-team/ionic/issues/24949)) ([a8fd2d9](https://github.com/ionic-team/ionic/commit/a8fd2d9199ca92d62bce6abf8caccc7709fa5ca1)), closes [#22571](https://github.com/ionic-team/ionic/issues/22571)
+
+
+
+
+
+## [6.0.12](https://github.com/ionic-team/ionic/compare/v6.0.11...v6.0.12) (2022-03-16)
+
+
+### Bug Fixes
+
+* **tabs:** angular, fire willChange event before selected tab changes ([#24910](https://github.com/ionic-team/ionic/issues/24910)) ([d5efa11](https://github.com/ionic-team/ionic/commit/d5efa113317eaf874712134dc9b8e4502aa4760f))
+
+
+
+
+
+## [6.0.11](https://github.com/ionic-team/ionic/compare/v6.0.10...v6.0.11) (2022-03-09)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.0.10](https://github.com/ionic-team/ionic/compare/v6.0.9...v6.0.10) (2022-03-02)
+
+
+### Bug Fixes
+
+* **modal:** .ion-page element is now correctly added ([#24811](https://github.com/ionic-team/ionic/issues/24811)) ([3d0f999](https://github.com/ionic-team/ionic/commit/3d0f99904fe192fcb5f529780858a0f25f076af7)), closes [#24809](https://github.com/ionic-team/ionic/issues/24809)
+
+
+
+
+
+## [6.0.9](https://github.com/ionic-team/ionic/compare/v6.0.8...v6.0.9) (2022-02-23)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [6.0.8](https://github.com/ionic-team/ionic/compare/v6.0.7...v6.0.8) (2022-02-15)
 
 **Note:** Version bump only for package @ionic/angular

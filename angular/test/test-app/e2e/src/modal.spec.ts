@@ -10,6 +10,7 @@ describe('Modals', () => {
 
     cy.get('app-modal-example h2').should('have.text', '123');
     cy.get('app-modal-example h3').should('have.text', '321');
+    cy.get('#modalInstance').should('have.text', 'true');
 
     cy.get('#onWillDismiss').should('have.text', 'false');
     cy.get('#onDidDismiss').should('have.text', 'false');
@@ -42,7 +43,6 @@ describe('Modals', () => {
 
 });
 
-
 describe('Modals: Inline', () => {
   beforeEach(() => {
     cy.visit('/modal-inline');
@@ -52,8 +52,8 @@ describe('Modals: Inline', () => {
     cy.get('ion-list ion-item').should('not.exist');
   });
 
-  it('should have items after 1500ms', () => {
-    cy.wait(1500);
+  it('should have items after opening', () => {
+    cy.get('#open-modal').click();
 
     cy.get('ion-list ion-item:nth-child(1)').should('have.text', 'A');
     cy.get('ion-list ion-item:nth-child(2)').should('have.text', 'B');
@@ -61,7 +61,59 @@ describe('Modals: Inline', () => {
     cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
   });
 
-  it('should have a div with .ion-page', () => {
+  it('should have a div with .ion-page after opening', () => {
+    cy.get('#open-modal').click();
+
     cy.get('ion-modal').children('.ion-page').should('exist');
   });
+
+  it('should remove .ion-page when closing the modal', () => {
+    cy.get('#open-modal').click();
+
+    cy.get('ion-modal').children('.ion-page').should('exist');
+    cy.get('ion-modal').trigger('click', 20, 20);
+
+    cy.get('ion-modal').children('.ion-page').should('not.exist');
+  });
+
+  describe('setting the current breakpoint', () => {
+
+    it('should emit ionBreakpointDidChange', () => {
+      cy.get('#open-modal').click();
+
+      cy.get('ion-modal').then(modal => {
+        (modal.get(0) as any).setCurrentBreakpoint(1);
+      });
+
+      cy.get('#breakpointDidChange').should('have.text', '1');
+    });
+
+  });
+
+});
+
+describe('when in a modal', () => {
+
+  beforeEach(() => {
+    cy.visit('/modals');
+    cy.get('#action-button').click();
+    cy.get('#close-modal').click();
+    cy.get('#action-button').click();
+  });
+
+  it('should render ion-item item-has-value class when control value is set', () => {
+    cy.get('[formControlName="select"]').invoke('attr', 'value', 0);
+    cy.get('#inputWithFloatingLabel').should('have.class', 'item-has-value');
+  });
+
+  it('should not render ion-item item-has-value class when control value is undefined', () => {
+    cy.get('[formControlName="select"]').invoke('attr', 'value', undefined);
+    cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
+  });
+
+  it('should not render ion-item item-has-value class when control value is null', () => {
+    cy.get('[formControlName="select"]').invoke('attr', 'value', null);
+    cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
+  });
+
 });

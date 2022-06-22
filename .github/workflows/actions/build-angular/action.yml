@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-node@v1
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - name: Cache Core Node Modules
       uses: actions/cache@v2
@@ -27,7 +27,7 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Install Angular Dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
       shell: bash
       working-directory: ./angular
     - name: Link @ionic/core
@@ -44,6 +44,10 @@ runs:
       working-directory: ./angular
     - name: Build
       run: npm run build
+      shell: bash
+      working-directory: ./angular
+    - name: Check Diff
+      run: git diff --exit-code
       shell: bash
       working-directory: ./angular
     - uses: ./.github/workflows/actions/upload-archive

@@ -9,6 +9,15 @@ import { shallowRef } from 'vue';
 export const createViewStacks = (router: Router) => {
   let viewStacks: ViewStacks = {};
 
+  /**
+   * Returns the number of active stacks.
+   * This is useful for determining if an app
+   * is using linear navigation only or non-linear
+   * navigation. Multiple stacks indiciate an app
+   * is using non-linear navigation.
+   */
+  const size = () => Object.keys(viewStacks).length;
+
   const clear = (outletId: number) => {
     delete viewStacks[outletId];
   }
@@ -211,6 +220,7 @@ export const createViewStacks = (router: Router) => {
     add,
     remove,
     registerIonPage,
-    getViewStack
+    getViewStack,
+    size
   }
 }

@@ -4,11 +4,10 @@ import {
   IonHeader,
   IonLabel,
   IonPage,
-
   IonTitle,
   IonToolbar,
   IonItem,
-  IonList
+  IonList,
 } from '@ionic/react';
 
 interface MainProps {}
@@ -30,6 +29,11 @@ const Main: React.FC<MainProps> = () => {
         <IonList>
           <IonItem routerLink="/overlay-components">
             <IonLabel>Overlay Components</IonLabel>
+          </IonItem>
+        </IonList>
+        <IonList>
+          <IonItem routerLink="/tabs">
+            <IonLabel>Tabs</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SpinnerConfig, SpinnerTypes } from '../../interface';
+import type { Color, SpinnerConfig, SpinnerTypes } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 import { SPINNERS } from './spinner-configs';
@@ -10,10 +11,9 @@ import { SPINNERS } from './spinner-configs';
 @Component({
   tag: 'ion-spinner',
   styleUrl: 'spinner.scss',
-  shadow: true
+  shadow: true,
 })
 export class Spinner implements ComponentInterface {
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -43,7 +43,7 @@ export class Spinner implements ComponentInterface {
     if (spinnerName) {
       return spinnerName;
     }
-    return (mode === 'ios') ? 'lines' : 'circular';
+    return mode === 'ios' ? 'lines' : 'circular';
   }
 
   render() {
@@ -51,14 +51,13 @@ export class Spinner implements ComponentInterface {
     const mode = getIonMode(self);
     const spinnerName = self.getName();
     const spinner = SPINNERS[spinnerName] || SPINNERS['lines'];
-    const duration = (typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur);
+    const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
     const svgs: any[] = [];
 
     if (spinner.circles !== undefined) {
       for (let i = 0; i < spinner.circles; i++) {
         svgs.push(buildCircle(spinner, duration, i, spinner.circles));
       }
-
     } else if (spinner.lines !== undefined) {
       for (let i = 0; i < spinner.lines; i++) {
         svgs.push(buildLine(spinner, duration, i, spinner.lines));
@@ -70,7 +69,7 @@ export class Spinner implements ComponentInterface {
         class={createColorClasses(self.color, {
           [mode]: true,
           [`spinner-${spinnerName}`]: true,
-          'spinner-paused': self.paused || config.getBoolean('_testing')
+          'spinner-paused': self.paused || config.getBoolean('_testing'),
         })}
         role="progressbar"
         style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}

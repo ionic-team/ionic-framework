@@ -1,4 +1,4 @@
-import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import type { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
 import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
@@ -27,7 +27,7 @@ export const writeNavState = async (
     if (index >= chain.length || !outlet) {
       return changed;
     }
-    await new Promise(resolve => componentOnReady(outlet, resolve));
+    await new Promise((resolve) => componentOnReady(outlet, resolve));
 
     const route = chain[index];
     const result = await outlet.setRouteId(route.id, route.params, direction, animation);
@@ -64,7 +64,8 @@ export const readNavState = async (root: HTMLElement | undefined) => {
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
 
-  while (outlet = searchNavNode(node)) {
+  // eslint-disable-next-line no-cond-assign
+  while ((outlet = searchNavNode(node))) {
     const id = await outlet.getRouteId();
     if (id) {
       node = id.element;
@@ -81,7 +82,7 @@ export const waitUntilNavNode = (): Promise<void> => {
   if (searchNavNode(document.body)) {
     return Promise.resolve();
   }
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     window.addEventListener('ionNavWillLoad', () => resolve(), { once: true });
   });
 };

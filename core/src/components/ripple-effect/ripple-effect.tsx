@@ -1,14 +1,14 @@
-import { Component, ComponentInterface, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
-  shadow: true
+  shadow: true,
 })
 export class RippleEffect implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -30,7 +30,7 @@ export class RippleEffect implements ComponentInterface {
    */
   @Method()
   async addRipple(x: number, y: number) {
-    return new Promise<() => void>(resolve => {
+    return new Promise<() => void>((resolve) => {
       readTask(() => {
         const rect = this.el.getBoundingClientRect();
         const width = rect.width;
@@ -84,10 +84,9 @@ export class RippleEffect implements ComponentInterface {
         role="presentation"
         class={{
           [mode]: true,
-          'unbounded': this.unbounded
+          unbounded: this.unbounded,
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage, useIonRouter, createAnimation } from '@ionic/vue';
-import { waitForRouter } from './utils';
+import { mockAnimation, waitForRouter } from './utils';
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -59,7 +59,7 @@ describe('useIonRouter', () => {
 
     const cmp = wrapper.findComponent(Page2);
     const vm = cmp.vm as any;
-    const animFn = jest.fn();
+    const animFn = mockAnimation();
 
     vm.ionRouter.back(animFn);
     await waitForRouter();
@@ -104,7 +104,7 @@ describe('useIonRouter', () => {
 
     const cmp = wrapper.findComponent(Page2);
     const vm = cmp.vm as any;
-    const animFn = jest.fn();
+    const animFn = mockAnimation();
 
     vm.ionRouter.back();
     await waitForRouter();
@@ -153,7 +153,7 @@ describe('useIonRouter', () => {
 
     const cmp = wrapper.findComponent(Page1);
     const vm = cmp.vm as any;
-    const animFn = jest.fn();
+    const animFn = mockAnimation();
 
     vm.ionRouter.push('/page2', animFn);
     await waitForRouter();
@@ -197,13 +197,13 @@ describe('useIonRouter', () => {
 
     const cmp = wrapper.findComponent(Page1);
     const vm = cmp.vm as any;
-    const animFn = jest.fn();
+    const animFn = mockAnimation();
 
     vm.ionRouter.replace('/page2', animFn);
     await waitForRouter();
 
     expect(router.currentRoute.value.path).toEqual('/page2');
-    expect(animFn).toHaveBeenCalled();
+    expect(animFn).not.toHaveBeenCalled();
 
     expect(vm.ionRouter.canGoBack()).toEqual(false);
   })
@@ -243,7 +243,7 @@ describe('useIonRouter', () => {
 
     const cmp = wrapper.findComponent(Page1);
     const vm = cmp.vm as any;
-    const animFn = jest.fn();
+    const animFn = mockAnimation();
 
     vm.ionRouter.navigate('/page2', 'forward', 'push', animFn);
     await waitForRouter();

@@ -44,6 +44,25 @@
   z-index: $z-index-overlay;
 }
 
+/**
+ * With nested popovers, only the popover that
+ * was first presented has a popover. This is the
+ * parent popover and allows us to easily
+ * track all nested popovers from a single backdrop.
+ * As a result, nested popovers do not have backdrops
+ * and their container should not be clickable.
+ * This ensures that users can click the parent backdrop
+ * while still interacting with the nested popover inner
+ * content.
+ */
+:host(.popover-nested) {
+  pointer-events: none;
+}
+
+:host(.popover-nested) .popover-wrapper {
+  pointer-events: auto;
+}
+
 :host(.overlay-hidden) {
   display: none;
 }

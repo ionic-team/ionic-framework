@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-node@v1
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - name: Cache Core Node Modules
       uses: actions/cache@v2
@@ -16,5 +16,12 @@ runs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
     - name: Lint
       run: npm run lint
+      shell: bash
+      working-directory: ./core
+    # Lint changes should be pushed
+    # to the branch before the branch
+    # is merge eligible.
+    - name: Check Lint Results
+      run: git diff --exit-code
       shell: bash
       working-directory: ./core

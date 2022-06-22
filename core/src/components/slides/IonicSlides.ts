@@ -61,42 +61,42 @@ export const IonicSlides = (opts: any) => {
       stretch: 0,
       depth: 100,
       modifier: 1,
-      slideShadows: true
+      slideShadows: true,
     },
     flipEffect: {
       slideShadows: true,
-      limitRotation: true
+      limitRotation: true,
     },
     cubeEffect: {
       slideShadows: true,
       shadow: true,
       shadowOffset: 20,
-      shadowScale: 0.94
+      shadowScale: 0.94,
     },
     fadeEffect: {
-      crossFade: false
+      crossFade: false,
     },
     a11y: {
       prevSlideMessage: 'Previous slide',
       nextSlideMessage: 'Next slide',
       firstSlideMessage: 'This is the first slide',
-      lastSlideMessage: 'This is the last slide'
-    }
-  }
+      lastSlideMessage: 'This is the last slide',
+    },
+  };
 
   if (swiper.pagination) {
     slidesParams.pagination = {
       type: 'bullets',
       clickable: false,
       hideOnClick: false,
-    }
+    };
   }
 
   if (swiper.scrollbar) {
     slidesParams.scrollbar = {
-      hide: true
-    }
+      hide: true,
+    };
   }
 
   extendParams(slidesParams);
-}
+};

@@ -164,7 +164,6 @@ import ModalContent from '@/components/ModalContent.vue';
 import PopoverContent from '@/components/PopoverContent.vue';
 
 export default defineComponent({
-  name: 'Overlays',
   components: {
     ModalContent,
     PopoverContent,

@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, TabBarChangedEventDetail } from '../../interface';
+import type { Color, TabBarChangedEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -11,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-tab-bar',
   styleUrls: {
     ios: 'tab-bar.ios.scss',
-    md: 'tab-bar.md.scss'
+    md: 'tab-bar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class TabBar implements ComponentInterface {
   private keyboardWillShowHandler?: () => void;
@@ -38,7 +39,7 @@ export class TabBar implements ComponentInterface {
   selectedTabChanged() {
     if (this.selectedTab !== undefined) {
       this.ionTabBarChanged.emit({
-        tab: this.selectedTab
+        tab: this.selectedTab,
       });
     }
   }
@@ -63,11 +64,11 @@ export class TabBar implements ComponentInterface {
         if (this.el.getAttribute('slot') !== 'top') {
           this.keyboardVisible = true;
         }
-      }
+      };
 
       this.keyboardWillHideHandler = () => {
-        setTimeout(() => this.keyboardVisible = false, 50);
-      }
+        setTimeout(() => (this.keyboardVisible = false), 50);
+      };
 
       window.addEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
       window.addEventListener('keyboardWillHide', this.keyboardWillHideHandler!);

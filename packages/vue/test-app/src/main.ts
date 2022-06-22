@@ -38,7 +38,7 @@ window.addEventListener('unhandledrejection', (err) => {
 });
 
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, { hardwareBackButton: true })
   .use(router);
 
 router.isReady().then(() => {

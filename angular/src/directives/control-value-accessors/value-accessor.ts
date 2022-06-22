@@ -110,13 +110,17 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
 
 export const setIonicClasses = (element: ElementRef): void => {
   raf(() => {
-    const input = element.nativeElement as HTMLElement;
+    const input = element.nativeElement as HTMLInputElement;
+    const hasValue = input.value != null && input.value.toString().length > 0;
     const classes = getClasses(input);
     setClasses(input, classes);
-
     const item = input.closest('ion-item');
     if (item) {
-      setClasses(item, classes);
+      if (hasValue) {
+        setClasses(item, [...classes, 'item-has-value']);
+      } else {
+        setClasses(item, classes);
+      }
     }
   });
 };
@@ -127,7 +131,7 @@ const getClasses = (element: HTMLElement) => {
   for (let i = 0; i < classList.length; i++) {
     const item = classList.item(i);
     if (item !== null && startsWith(item, 'ng-')) {
-      classes.push(`ion-${item.substr(3)}`);
+      classes.push(`ion-${item.substring(3)}`);
     }
   }
   return classes;
@@ -135,13 +139,10 @@ const getClasses = (element: HTMLElement) => {
 
 const setClasses = (element: HTMLElement, classes: string[]) => {
   const classList = element.classList;
-  ['ion-valid', 'ion-invalid', 'ion-touched', 'ion-untouched', 'ion-dirty', 'ion-pristine'].forEach((c) =>
-    classList.remove(c)
-  );
-
-  classes.forEach((c) => classList.add(c));
+  classList.remove('ion-valid', 'ion-invalid', 'ion-touched', 'ion-untouched', 'ion-dirty', 'ion-pristine');
+  classList.add(...classes);
 };
 
 const startsWith = (input: string, search: string): boolean => {
-  return input.substr(0, search.length) === search;
+  return input.substring(0, search.length) === search;
 };
