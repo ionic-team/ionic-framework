@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: minmax', () => {
@@ -109,14 +110,28 @@ test.describe('datetime: minmax', () => {
     });
   });
 
-  test('setting value outside bounds should show in-bounds month', async ({ page }) => {
-    await page.setContent(`
-      <ion-datetime min="2021-06-01" max="2021-06-30" value="2021-05-01"></ion-datetime>
-    `);
+  test.describe('setting value outside bounds should show in-bounds month', () => {
+    const testDisplayedMonth = async (page: E2EPage, content: string) => {
+      await page.setContent(content);
+      await page.waitForSelector('.datetime-ready');
 
-    await page.waitForSelector('.datetime-ready');
+      const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
+      expect(calendarMonthYear).toHaveText('June 2021');
+    };
 
-    const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-    expect(calendarMonthYear).toHaveText('June 2021');
+    test('when min is defined', async ({ page }) => {
+      await testDisplayedMonth(page, `<ion-datetime min="2021-06-01" value="2021-05-01"></ion-datetime>`);
+    });
+
+    test('when max is defined', async ({ page }) => {
+      await testDisplayedMonth(page, `<ion-datetime max="2021-06-30" value="2021-07-01"></ion-datetime>`);
+    });
+
+    test('when both min and max are defined', async ({ page }) => {
+      await testDisplayedMonth(
+        page,
+        `<ion-datetime min="2021-06-01" max="2021-06-30" value="2021-05-01"></ion-datetime>`
+      );
+    });
   });
 });
