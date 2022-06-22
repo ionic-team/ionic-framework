@@ -93,6 +93,17 @@ test.describe('action sheet: basic', () => {
       expect(actionSheet).toBeVisible();
     });
   });
+  test.describe.only('action sheet: focus trap', () => {
+    test('it should trap focus in action sheet', async ({ page }) => {
+      await actionSheetFixture.open('#basic');
+
+      await page.keyboard.press('Tab');
+      expect(page.locator('ion-action-sheet #delete-button')).toBeFocused();
+
+      //await page.keyboard.press('Shift+Tab');
+      //expect(buttons.nth(4)).toBeFocused();
+    });
+  });
 });
 
 class ActionSheetFixture {
