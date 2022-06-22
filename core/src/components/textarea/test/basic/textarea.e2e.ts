@@ -19,17 +19,17 @@ test.describe('textarea: basic', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
       <ion-item>
-        <ion-label color="primary" position="floating">Floating Label</ion-label>
-        <ion-textarea value=""></ion-textarea>
+        <ion-label position="floating">Floating Label</ion-label>
+        <ion-textarea></ion-textarea>
       </ion-item>`);
 
       const item = page.locator('ion-item');
+      const textarea = page.locator('ion-textarea');
 
       expect(await item.screenshot()).toMatchSnapshot(
         `textarea-floating-label-initial-${page.getSnapshotSettings()}.png`
       );
 
-      const textarea = page.locator('textarea');
       await textarea.evaluate((el: HTMLIonTextareaElement) => {
         el.value = 'Updated value';
       });
