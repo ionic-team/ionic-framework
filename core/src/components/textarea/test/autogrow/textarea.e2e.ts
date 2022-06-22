@@ -32,7 +32,7 @@ test.describe('textarea: autogrow', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`textarea-autogrow-initial-${page.getSnapshotSettings()}.png`);
+    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-initial-${page.getSnapshotSettings()}.png`);
 
     await textarea.type(
       [
@@ -43,6 +43,6 @@ test.describe('textarea: autogrow', () => {
       ].join('\n')
     );
 
-    expect(await page.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
+    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
   });
 });
