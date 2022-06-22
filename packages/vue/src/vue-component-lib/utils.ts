@@ -1,7 +1,7 @@
 import { VNode, defineComponent, getCurrentInstance, h, inject, ref, Ref } from 'vue';
 
-export interface InputProps extends Object {
-  modelValue: string | boolean;
+export interface InputProps {
+  modelValue?: string | boolean;
 }
 
 const UPDATE_VALUE_EVENT = 'update:modelValue';
