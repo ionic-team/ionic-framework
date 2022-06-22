@@ -11,7 +11,7 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import { isAfter, isBefore, isSameDay } from './utils/comparison';
+import { warnIfValueOutOfBounds } from './utils/comparison';
 import {
   generateMonths,
   generateTime,
@@ -327,9 +327,7 @@ export class Datetime implements ComponentInterface {
        */
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
-        if (isBefore(valueDateParts, this.minParts) || isAfter(valueDateParts, this.maxParts)) {
-          printIonWarning('The value passed to ion-datetime is earlier than the min or later than the max.');
-        }
+        warnIfValueOutOfBounds(valueDateParts, this.minParts, this.maxParts);
 
         const { month, day, year, hour, minute } = valueDateParts;
         const ampm = hour >= 12 ? 'pm' : 'am';
@@ -1089,13 +1087,11 @@ export class Datetime implements ComponentInterface {
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
     const valueToProcess = parseDate(value || getToday());
-    const clampedDate = clampDate(valueToProcess, this.minParts, this.maxParts);
 
-    if (!isSameDay(valueToProcess, clampedDate)) {
-      printIonWarning('The value passed to ion-datetime is earlier than the min or later than the max.');
-    }
+    const { minParts, maxParts } = this;
+    warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
 
-    const { month, day, year, hour, minute, tzOffset } = clampedDate;
+    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, minParts, maxParts);
 
     this.setWorkingParts({
       month,
