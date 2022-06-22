@@ -33,4 +33,3 @@ test('action-sheet: focus trap', async () => {
   const activeElementTextThree = await getActiveElementText(page);
   expect(activeElementTextThree).toEqual('Delete');
 });
-

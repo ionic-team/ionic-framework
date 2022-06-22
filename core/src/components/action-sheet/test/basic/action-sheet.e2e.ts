@@ -1,21 +1,19 @@
 import { expect } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
-import type { Locator } from '@playwright/test';
 
 test.describe('action sheet: basic', () => {
+  let actionSheetFixture: ActionSheetFixture;
   test.beforeEach(async ({ page }) => {
     await page.goto(`/src/components/action-sheet/test/basic`);
+    actionSheetFixture = new ActionSheetFixture(page);
   });
   test.describe('action sheet: data', () => {
     test('should return data', async ({ page }) => {
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
-      const button = page.locator('#buttonData');
-      await button.click();
-
-      await ionActionSheetDidPresent.next();
+      await actionSheetFixture.open('#buttonData');
 
       const buttonOption = page.locator('ion-action-sheet button#option');
       await buttonOption.click();
@@ -24,13 +22,9 @@ test.describe('action sheet: basic', () => {
       expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' } });
     });
     test('should return cancel button data', async ({ page }) => {
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
-      const button = page.locator('#buttonData');
-      await button.click();
-
-      await ionActionSheetDidPresent.next();
+      await actionSheetFixture.open('#buttonData');
 
       const buttonOption = page.locator('ion-action-sheet button.action-sheet-cancel');
       await buttonOption.click();
@@ -38,25 +32,16 @@ test.describe('action sheet: basic', () => {
       await ionActionSheetDidDismiss.next();
       expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
     });
-  })
+  });
   test.describe('action sheet: attributes', () => {
     test('should set htmlAttributes', async ({ page }) => {
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-
-      const button = page.locator('#basic');
-      await button.click();
-
-      await ionActionSheetDidPresent.next();
+      await actionSheetFixture.open('#basic');
 
       const actionSheet = page.locator('ion-action-sheet');
       expect(actionSheet).toHaveAttribute('data-testid', 'basic-action-sheet');
     });
-  })
-  test.describe.only('action sheet: variants', () => {
-    let actionSheetFixture: ActionSheetFixture;
-    test.beforeEach(({ page }) => {
-      actionSheetFixture = new ActionSheetFixture(page);
-    })
+  });
+  test.describe('action sheet: variants', () => {
     test('should open basic action sheet', async () => {
       await actionSheetFixture.open('#basic');
       await actionSheetFixture.screenshot('basic');
@@ -98,7 +83,7 @@ test.describe('action sheet: basic', () => {
       await page.locator('#open-alert').click();
 
       await ionAlertDidPresent.next();
-    })
+    });
     test('should not dismiss action sheet when backdropDismiss: false', async ({ page }) => {
       await actionSheetFixture.open('#noBackdropDismiss');
 
@@ -106,8 +91,8 @@ test.describe('action sheet: basic', () => {
       await actionSheet.locator('ion-backdrop').click();
 
       expect(actionSheet).toBeVisible();
-    })
-  })
+    });
+  });
 });
 
 class ActionSheetFixture {
