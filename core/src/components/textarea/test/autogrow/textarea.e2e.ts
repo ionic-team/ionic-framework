@@ -5,6 +5,8 @@ test.describe('textarea: autogrow', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/textarea/test/autogrow`);
 
+    await page.waitForChanges();
+
     await page.setIonViewport();
 
     expect(await page.screenshot()).toMatchSnapshot(`textarea-autogrow-diff-${page.getSnapshotSettings()}.png`);

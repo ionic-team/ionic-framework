@@ -5,6 +5,13 @@ test.describe('textarea: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/textarea/test/basic`);
 
+    /**
+     * The auto grow implementation uses a requestAnimationFrame to append styles to the textarea
+     * on load. We need to wait for changes otherwise the screenshot can be taken before the
+     * styles are applied.
+     */
+    await page.waitForChanges();
+
     await page.setIonViewport();
 
     expect(await page.screenshot()).toMatchSnapshot(`textarea-diff-${page.getSnapshotSettings()}.png`);
