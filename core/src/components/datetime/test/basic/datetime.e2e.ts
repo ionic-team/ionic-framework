@@ -175,7 +175,7 @@ test.describe('datetime: footer', () => {
     `);
 
     const customButton = page.locator('ion-datetime #custom-button');
-    expect(customButton).toBeVisible();
+    await expect(customButton).toBeVisible();
 
     const datetime = page.locator('ion-datetime');
     expect(await datetime.screenshot()).toMatchSnapshot(

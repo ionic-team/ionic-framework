@@ -35,7 +35,7 @@ test.describe('card modal - scroll target', () => {
 
       await content.waitForElementState('stable');
 
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
