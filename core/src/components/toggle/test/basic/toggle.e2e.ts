@@ -66,14 +66,14 @@ test.describe('toggle: basic', () => {
     const toggle = page.locator('#grapeChecked');
 
     await expect(toggle).toBeDisabled();
-    expect(toggle).toHaveJSProperty('value', 'grape');
-    expect(toggle).toHaveJSProperty('name', 'grape');
+    await expect(toggle).toHaveJSProperty('value', 'grape');
+    await expect(toggle).toHaveJSProperty('name', 'grape');
 
     const hiddenInput = page.locator('#grapeChecked input[type=hidden]');
 
     await expect(hiddenInput).toBeDisabled();
-    expect(hiddenInput).toHaveJSProperty('value', 'grape');
-    expect(hiddenInput).toHaveJSProperty('name', 'grape');
+    await expect(hiddenInput).toHaveJSProperty('value', 'grape');
+    await expect(hiddenInput).toHaveJSProperty('name', 'grape');
 
     await toggle.evaluate((el: HTMLIonToggleElement) => {
       el.disabled = false;
@@ -85,7 +85,7 @@ test.describe('toggle: basic', () => {
     await page.waitForChanges();
 
     await expect(hiddenInput).not.toBeDisabled();
-    expect(hiddenInput).toHaveJSProperty('name', 'new-name');
+    await expect(hiddenInput).toHaveJSProperty('name', 'new-name');
 
     // shouldn't have a value because it's unchecked
     // note: using toHaveJSProperty to check empty string triggers error for some reason

@@ -77,7 +77,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
       const content = await page.locator('ion-modal ion-content');
-      expect(content).toHaveJSProperty('scrollY', true);
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
   });
   test.describe('card modal: rendering - tablet', () => {
@@ -156,7 +156,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
       const content = await page.locator('ion-modal ion-content');
-      expect(content).toHaveJSProperty('scrollY', true);
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
   });
 });

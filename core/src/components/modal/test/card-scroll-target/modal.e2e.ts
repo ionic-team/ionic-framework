@@ -46,7 +46,7 @@ test.describe('card modal - scroll target', () => {
       const content = await page.locator('ion-modal .ion-content-scroll-host');
       await dragElementBy(content, page, 0, 20);
 
-      expect(content).not.toHaveCSS('overflow', 'hidden');
+      await expect(content).not.toHaveCSS('overflow', 'hidden');
     });
   });
 });
