@@ -24,7 +24,7 @@ test.describe('loading: basic', () => {
 
       await ionLoadingDidDismiss.next();
 
-      expect(loading).toBeHidden();
+      await expect(loading).toBeHidden();
     };
     test('should open a basic loader', async ({ page }) => {
       await runVisualTest(page, '#basic-loading', 'basic');
