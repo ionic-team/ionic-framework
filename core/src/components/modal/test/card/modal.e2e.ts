@@ -55,7 +55,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
       page,
@@ -70,7 +70,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
@@ -134,7 +134,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
       page,
@@ -149,7 +149,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
