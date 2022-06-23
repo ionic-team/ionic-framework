@@ -16,19 +16,19 @@ test.describe('toggle: basic', () => {
     const toggle = page.locator('#orange');
 
     expect(toggle).not.toHaveClass(/toggle-checked/);
-    expect(toggle).toHaveAttribute('aria-checked', 'false');
+    await expect(toggle).toHaveAttribute('aria-checked', 'false');
 
     await toggle.click();
     await page.waitForChanges();
 
     expect(toggle).toHaveClass(/toggle-checked/);
-    expect(toggle).toHaveAttribute('aria-checked', 'true');
+    await expect(toggle).toHaveAttribute('aria-checked', 'true');
 
     await toggle.click();
     await page.waitForChanges();
 
     expect(toggle).not.toHaveClass(/toggle-checked/);
-    expect(toggle).toHaveAttribute('aria-checked', 'false');
+    await expect(toggle).toHaveAttribute('aria-checked', 'false');
   });
 
   test('should fire change event with detail', async ({ page }) => {

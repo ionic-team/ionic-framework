@@ -54,7 +54,7 @@ test.describe('loading: basic', () => {
       await ionLoadingDidPresent.next();
 
       const loading = await page.locator('ion-loading');
-      expect(loading).toHaveAttribute('data-testid', 'basic-loading');
+      await expect(loading).toHaveAttribute('data-testid', 'basic-loading');
     });
   });
   test.describe('loading: focus trapping', () => {
