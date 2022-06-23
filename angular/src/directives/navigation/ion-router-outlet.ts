@@ -242,12 +242,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
        *
        * TODO: FW-1631: Remove this check when supporting standalone components
        */
-      if (snapshot.component) {
-        console.warn(
-          '[Ionic Warning]: Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
-        );
-        return;
-      }
+      // if (snapshot.component) {
+      //   console.warn(
+      //     '[Ionic Warning]: Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
+      //   );
+      //   return;
+      // }
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component as any;
