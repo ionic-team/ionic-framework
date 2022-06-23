@@ -41,13 +41,13 @@ test.describe('datetime: selecting a day', () => {
       `#${datetimeID} .calendar-day[data-day='${today.getDate()}'][data-month='${today.getMonth() + 1}']`
     );
 
-    expect(todayBtn).toHaveClass(/calendar-day-today/);
-    expect(todayBtn).not.toHaveClass(/calendar-day-active/);
+    await expect(todayBtn).toHaveClass(/calendar-day-today/);
+    await expect(todayBtn).not.toHaveClass(/calendar-day-active/);
 
     await todayBtn.click();
     await page.waitForChanges();
 
-    expect(todayBtn).toHaveClass(/calendar-day-active/);
+    await expect(todayBtn).toHaveClass(/calendar-day-active/);
   };
 
   test('should not highlight a day until one is selected', async ({ page }) => {

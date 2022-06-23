@@ -15,19 +15,19 @@ test.describe('toggle: basic', () => {
   test('should have proper class and aria role when checked', async ({ page }) => {
     const toggle = page.locator('#orange');
 
-    expect(toggle).not.toHaveClass(/toggle-checked/);
+    await expect(toggle).not.toHaveClass(/toggle-checked/);
     await expect(toggle).toHaveAttribute('aria-checked', 'false');
 
     await toggle.click();
     await page.waitForChanges();
 
-    expect(toggle).toHaveClass(/toggle-checked/);
+    await expect(toggle).toHaveClass(/toggle-checked/);
     await expect(toggle).toHaveAttribute('aria-checked', 'true');
 
     await toggle.click();
     await page.waitForChanges();
 
-    expect(toggle).not.toHaveClass(/toggle-checked/);
+    await expect(toggle).not.toHaveClass(/toggle-checked/);
     await expect(toggle).toHaveAttribute('aria-checked', 'false');
   });
 
