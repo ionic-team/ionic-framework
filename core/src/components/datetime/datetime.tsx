@@ -11,6 +11,7 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
+import { warnIfValueOutOfBounds } from './utils/comparison';
 import {
   generateMonths,
   generateTime,
@@ -326,6 +327,8 @@ export class Datetime implements ComponentInterface {
        */
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
+        warnIfValueOutOfBounds(valueDateParts, this.minParts, this.maxParts);
+
         const { month, day, year, hour, minute } = valueDateParts;
         const ampm = hour >= 12 ? 'pm' : 'am';
 
@@ -1084,7 +1087,11 @@ export class Datetime implements ComponentInterface {
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
     const valueToProcess = parseDate(value || getToday());
-    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
+
+    const { minParts, maxParts } = this;
+    warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+
+    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, minParts, maxParts);
 
     this.setWorkingParts({
       month,
