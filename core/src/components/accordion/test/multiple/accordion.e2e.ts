@@ -9,7 +9,7 @@ test.describe('accordion: multiple', () => {
     const attractionsHeader = page.locator('ion-accordion[value="attractions"] ion-item[slot="header"]');
 
     // toHaveValue doesn't work with non-input elements
-    expect(accordionGroup).toHaveAttribute('value', 'attractions');
+    await expect(accordionGroup).toHaveAttribute('value', 'attractions');
 
     expect(await accordionGroup.screenshot()).toMatchSnapshot(`accordion-one-open-${page.getSnapshotSettings()}.png`);
 
