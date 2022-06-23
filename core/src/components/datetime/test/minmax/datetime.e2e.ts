@@ -116,7 +116,7 @@ test.describe('datetime: minmax', () => {
       await page.waitForSelector('.datetime-ready');
 
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      expect(calendarMonthYear).toHaveText('June 2021');
+      await expect(calendarMonthYear).toHaveText('June 2021');
     };
 
     test('when min is defined', async ({ page }) => {
