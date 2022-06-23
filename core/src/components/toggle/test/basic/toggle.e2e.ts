@@ -65,13 +65,13 @@ test.describe('toggle: basic', () => {
   test('should pass properties down to hidden input', async ({ page }) => {
     const toggle = page.locator('#grapeChecked');
 
-    expect(toggle).toBeDisabled();
+    await expect(toggle).toBeDisabled();
     expect(toggle).toHaveJSProperty('value', 'grape');
     expect(toggle).toHaveJSProperty('name', 'grape');
 
     const hiddenInput = page.locator('#grapeChecked input[type=hidden]');
 
-    expect(hiddenInput).toBeDisabled();
+    await expect(hiddenInput).toBeDisabled();
     expect(hiddenInput).toHaveJSProperty('value', 'grape');
     expect(hiddenInput).toHaveJSProperty('name', 'grape');
 
@@ -84,7 +84,7 @@ test.describe('toggle: basic', () => {
 
     await page.waitForChanges();
 
-    expect(hiddenInput).not.toBeDisabled();
+    await expect(hiddenInput).not.toBeDisabled();
     expect(hiddenInput).toHaveJSProperty('name', 'new-name');
 
     // shouldn't have a value because it's unchecked

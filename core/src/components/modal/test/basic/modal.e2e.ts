@@ -23,20 +23,20 @@ test.describe('modal: focus trapping', () => {
     await page.keyboard.press('Tab');
 
     const dismissButton = await page.locator('ion-button.dismiss');
-    expect(dismissButton).toBeFocused();
+    await expect(dismissButton).toBeFocused();
 
     await page.keyboard.down('Shift');
     await page.keyboard.press('Tab');
     await page.keyboard.up('Shift');
 
-    expect(dismissButton).toBeFocused();
+    await expect(dismissButton).toBeFocused();
     await page.keyboard.press('Tab');
 
     if (browserName === 'webkit') {
       await page.keyboard.up('Alt');
     }
 
-    expect(dismissButton).toBeFocused();
+    await expect(dismissButton).toBeFocused();
   });
 
   test('focus should be returned to previously focused element when dismissing modal', async ({
@@ -54,7 +54,7 @@ test.describe('modal: focus trapping', () => {
 
     // Focus #basic-modal button
     await page.keyboard.press('Tab');
-    expect(modalButton).toBeFocused();
+    await expect(modalButton).toBeFocused();
 
     if (browserName === 'webkit') {
       await page.keyboard.up('Alt');
@@ -66,7 +66,7 @@ test.describe('modal: focus trapping', () => {
     await page.keyboard.press('Escape');
     await ionModalDidDismiss.next();
 
-    expect(modalButton).toBeFocused();
+    await expect(modalButton).toBeFocused();
   });
 });
 

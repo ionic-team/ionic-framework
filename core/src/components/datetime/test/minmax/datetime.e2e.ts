@@ -33,8 +33,8 @@ test.describe('datetime: minmax', () => {
     const prevButton = page.locator('ion-datetime .calendar-next-prev ion-button:nth-child(1)');
     const nextButton = page.locator('ion-datetime .calendar-next-prev ion-button:nth-child(2)');
 
-    expect(nextButton).toBeEnabled();
-    expect(prevButton).toBeDisabled();
+    await expect(nextButton).toBeEnabled();
+    await expect(prevButton).toBeDisabled();
 
     await page.evaluate('initDatetimeChangeEvent()');
 
@@ -45,8 +45,8 @@ test.describe('datetime: minmax', () => {
 
     await monthDidChangeSpy.next();
 
-    expect(nextButton).toBeDisabled();
-    expect(prevButton).toBeEnabled();
+    await expect(nextButton).toBeDisabled();
+    await expect(prevButton).toBeEnabled();
   });
 
   test('datetime: minmax months disabled', async ({ page }) => {

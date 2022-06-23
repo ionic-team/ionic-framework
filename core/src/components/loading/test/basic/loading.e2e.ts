@@ -73,13 +73,13 @@ test.describe('loading: basic', () => {
 
       await page.keyboard.press('Tab');
 
-      expect(button).toBeFocused();
+      await expect(button).toBeFocused();
 
       await page.keyboard.down('Shift');
       await page.keyboard.press('Tab');
       await page.keyboard.up('Shift');
 
-      expect(button).toBeFocused();
+      await expect(button).toBeFocused();
 
       await page.keyboard.press('Tab');
 
@@ -87,7 +87,7 @@ test.describe('loading: basic', () => {
         await page.keyboard.up('Alt');
       }
 
-      expect(button).toBeFocused();
+      await expect(button).toBeFocused();
     });
   });
 });
