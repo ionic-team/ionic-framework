@@ -5,7 +5,7 @@ describe('Virtual Scroll', () => {
   })
 
   it('should open virtual-scroll', () => {
-    cy.get('ion-virtual-scroll > *').its('length').should('be.gte', 0);
+    cy.get('ion-virtual-scroll > *').its('length').should('be.gt', 0);
   });
 });
 
