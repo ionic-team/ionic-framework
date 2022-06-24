@@ -15,20 +15,20 @@ test.describe('toggle: basic', () => {
   test('should have proper class and aria role when checked', async ({ page }) => {
     const toggle = page.locator('#orange');
 
-    expect(toggle).not.toHaveClass(/toggle-checked/);
-    expect(toggle).toHaveAttribute('aria-checked', 'false');
+    await expect(toggle).not.toHaveClass(/toggle-checked/);
+    await expect(toggle).toHaveAttribute('aria-checked', 'false');
 
     await toggle.click();
     await page.waitForChanges();
 
-    expect(toggle).toHaveClass(/toggle-checked/);
-    expect(toggle).toHaveAttribute('aria-checked', 'true');
+    await expect(toggle).toHaveClass(/toggle-checked/);
+    await expect(toggle).toHaveAttribute('aria-checked', 'true');
 
     await toggle.click();
     await page.waitForChanges();
 
-    expect(toggle).not.toHaveClass(/toggle-checked/);
-    expect(toggle).toHaveAttribute('aria-checked', 'false');
+    await expect(toggle).not.toHaveClass(/toggle-checked/);
+    await expect(toggle).toHaveAttribute('aria-checked', 'false');
   });
 
   test('should fire change event with detail', async ({ page }) => {
@@ -65,15 +65,15 @@ test.describe('toggle: basic', () => {
   test('should pass properties down to hidden input', async ({ page }) => {
     const toggle = page.locator('#grapeChecked');
 
-    expect(toggle).toBeDisabled();
-    expect(toggle).toHaveJSProperty('value', 'grape');
-    expect(toggle).toHaveJSProperty('name', 'grape');
+    await expect(toggle).toBeDisabled();
+    await expect(toggle).toHaveJSProperty('value', 'grape');
+    await expect(toggle).toHaveJSProperty('name', 'grape');
 
     const hiddenInput = page.locator('#grapeChecked input[type=hidden]');
 
-    expect(hiddenInput).toBeDisabled();
-    expect(hiddenInput).toHaveJSProperty('value', 'grape');
-    expect(hiddenInput).toHaveJSProperty('name', 'grape');
+    await expect(hiddenInput).toBeDisabled();
+    await expect(hiddenInput).toHaveJSProperty('value', 'grape');
+    await expect(hiddenInput).toHaveJSProperty('name', 'grape');
 
     await toggle.evaluate((el: HTMLIonToggleElement) => {
       el.disabled = false;
@@ -84,8 +84,8 @@ test.describe('toggle: basic', () => {
 
     await page.waitForChanges();
 
-    expect(hiddenInput).not.toBeDisabled();
-    expect(hiddenInput).toHaveJSProperty('name', 'new-name');
+    await expect(hiddenInput).not.toBeDisabled();
+    await expect(hiddenInput).toHaveJSProperty('name', 'new-name');
 
     // shouldn't have a value because it's unchecked
     // note: using toHaveJSProperty to check empty string triggers error for some reason
