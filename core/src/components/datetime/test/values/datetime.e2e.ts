@@ -15,7 +15,7 @@ test.describe('datetime: values', () => {
      * so this ensures that dayValues is applying to all
      * rendered months, not just the initial month.
      */
-    expect(items).toHaveText(['1', '2', '3', '1', '2', '3', '1', '2', '3']);
+    await expect(items).toHaveText(['1', '2', '3', '1', '2', '3', '1', '2', '3']);
   });
   test('should render correct months', async ({ page }) => {
     await page.setContent(`
@@ -23,7 +23,7 @@ test.describe('datetime: values', () => {
     `);
 
     const items = page.locator('.month-column .picker-item:not(.picker-item-empty)');
-    expect(items).toHaveText(['May', 'June', 'October']);
+    await expect(items).toHaveText(['May', 'June', 'October']);
   });
   test('should render correct years', async ({ page }) => {
     await page.setContent(`
@@ -31,7 +31,7 @@ test.describe('datetime: values', () => {
     `);
 
     const items = page.locator('.year-column .picker-item:not(.picker-item-empty)');
-    expect(items).toHaveText(['2022', '2021', '2020']);
+    await expect(items).toHaveText(['2022', '2021', '2020']);
   });
   test('should render correct hours', async ({ page }) => {
     await page.setContent(`
@@ -39,7 +39,7 @@ test.describe('datetime: values', () => {
     `);
 
     const items = page.locator('ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)');
-    expect(items).toHaveText(['1', '2', '3']);
+    await expect(items).toHaveText(['1', '2', '3']);
   });
   test('should render correct minutes', async ({ page }) => {
     await page.setContent(`
@@ -47,6 +47,6 @@ test.describe('datetime: values', () => {
     `);
 
     const items = page.locator('ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)');
-    expect(items).toHaveText(['01', '02', '03']);
+    await expect(items).toHaveText(['01', '02', '03']);
   });
 });

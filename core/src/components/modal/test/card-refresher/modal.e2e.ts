@@ -20,6 +20,6 @@ test.describe('card modal - with refresher', () => {
 
     await content.waitForElementState('stable');
 
-    expect(modal).toBeVisible();
+    await expect(modal).toBeVisible();
   });
 });
