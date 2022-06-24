@@ -3,7 +3,18 @@ import { test, Viewports } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
+  test.beforeEach(async ({ browserName }, testInfo) => {
+    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test.skip(browserName === 'firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
+  });
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
+    /**
+     * The default WebKit behavior is to
+     * highlight items on webpages with Option-Tab.
+     * See "Press Tab to highlight each item on a webpage"
+     * in Safari Preferences > Advanced.
+     */
+    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -11,32 +22,17 @@ test.describe('modal: focus trapping', () => {
 
     await ionModalDidPresent.next();
 
-    /**
-     * The default WebKit behavior is to
-     * highlight items on webpages with Option-Tab.
-     * See "Press Tab to highlight each item on a webpage"
-     * in Safari Preferences > Advanced.
-     */
-    if (browserName === 'webkit') {
-      await page.keyboard.down('Alt');
-    }
-    await page.keyboard.press('Tab');
+    const dismissButton = page.locator('ion-button.dismiss');
 
-    const dismissButton = await page.locator('ion-button.dismiss');
-    expect(dismissButton).toBeFocused();
+    await page.keyboard.press(tabKey);
+    await expect(dismissButton).toBeFocused();
 
-    await page.keyboard.down('Shift');
-    await page.keyboard.press('Tab');
-    await page.keyboard.up('Shift');
+    await page.keyboard.press(`Shift+${tabKey}`);
 
-    expect(dismissButton).toBeFocused();
-    await page.keyboard.press('Tab');
+    await expect(dismissButton).toBeFocused();
 
-    if (browserName === 'webkit') {
-      await page.keyboard.up('Alt');
-    }
-
-    expect(dismissButton).toBeFocused();
+    await page.keyboard.press(tabKey);
+    await expect(dismissButton).toBeFocused();
   });
 
   test('focus should be returned to previously focused element when dismissing modal', async ({
@@ -47,18 +43,11 @@ test.describe('modal: focus trapping', () => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
     const modalButton = await page.locator('#basic-modal');
-
-    if (browserName === 'webkit') {
-      await page.keyboard.down('Alt');
-    }
+    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
     // Focus #basic-modal button
-    await page.keyboard.press('Tab');
-    expect(modalButton).toBeFocused();
-
-    if (browserName === 'webkit') {
-      await page.keyboard.up('Alt');
-    }
+    await page.keyboard.press(tabKey);
+    await expect(modalButton).toBeFocused();
 
     await page.keyboard.press('Space');
     await ionModalDidPresent.next();
@@ -66,7 +55,7 @@ test.describe('modal: focus trapping', () => {
     await page.keyboard.press('Escape');
     await ionModalDidDismiss.next();
 
-    expect(modalButton).toBeFocused();
+    await expect(modalButton).toBeFocused();
   });
 });
 

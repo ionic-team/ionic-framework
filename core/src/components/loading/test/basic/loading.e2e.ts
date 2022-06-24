@@ -24,7 +24,7 @@ test.describe('loading: basic', () => {
 
       await ionLoadingDidDismiss.next();
 
-      expect(loading).toBeHidden();
+      await expect(loading).toBeHidden();
     };
     test('should open a basic loader', async ({ page }) => {
       await runVisualTest(page, '#basic-loading', 'basic');
@@ -54,7 +54,7 @@ test.describe('loading: basic', () => {
       await ionLoadingDidPresent.next();
 
       const loading = await page.locator('ion-loading');
-      expect(loading).toHaveAttribute('data-testid', 'basic-loading');
+      await expect(loading).toHaveAttribute('data-testid', 'basic-loading');
     });
   });
   test.describe('loading: focus trapping', () => {
@@ -73,13 +73,13 @@ test.describe('loading: basic', () => {
 
       await page.keyboard.press('Tab');
 
-      expect(button).toBeFocused();
+      await expect(button).toBeFocused();
 
       await page.keyboard.down('Shift');
       await page.keyboard.press('Tab');
       await page.keyboard.up('Shift');
 
-      expect(button).toBeFocused();
+      await expect(button).toBeFocused();
 
       await page.keyboard.press('Tab');
 
@@ -87,7 +87,7 @@ test.describe('loading: basic', () => {
         await page.keyboard.up('Alt');
       }
 
-      expect(button).toBeFocused();
+      await expect(button).toBeFocused();
     });
   });
 });
