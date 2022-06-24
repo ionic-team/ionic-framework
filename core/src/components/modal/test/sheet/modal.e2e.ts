@@ -50,7 +50,7 @@ test.describe('sheet modal: backdrop', () => {
 
     const input = await page.locator('#root-input input');
     await input.click();
-    expect(input).toBeFocused();
+    await expect(input).toBeFocused();
   });
 });
 
