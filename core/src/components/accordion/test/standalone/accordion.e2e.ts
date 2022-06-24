@@ -14,6 +14,7 @@ test.describe('accordion: standalone', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/accordion/test/standalone`);
 
+    await page.waitForChanges();
     await page.setIonViewport();
 
     expect(await page.screenshot()).toMatchSnapshot(`accordion-standalone-${page.getSnapshotSettings()}.png`);
