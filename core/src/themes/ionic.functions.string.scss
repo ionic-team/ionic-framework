@@ -141,13 +141,7 @@
     // If the selector contains :host it means it is targeting just the host
     // element so we can change it to look for host-context
     } @else if str-contains($selector, ":host") {
-      // If the selector contains :host-context it is a shadow element, so we need
-      // to manually append the selector
-      @if str-contains($selector, ":host-context") {
-        $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
-      } @else {
-        $list: append($list, ":host-context(#{$addHostSelector})", comma);
-      }
+      $list: append($list, ":host-context(#{$addHostSelector})", comma);
     // If the selector does not contain host at all it is either a shadow
     // or normal element so append both the dir check and host-context
     } @else {

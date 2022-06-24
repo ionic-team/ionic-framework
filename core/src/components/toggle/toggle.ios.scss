@@ -70,12 +70,18 @@
 
 .toggle-switch-icon {
   @include ltr() {
-    @include position(null, 8px, null, null);
+    /* stylelint-disable-next-line property-disallowed-list */
+    right: 8px;
   }
 
   @include rtl() {
-    @include position(null, initial, null, 8px);
+    /* stylelint-disable property-disallowed-list */
+    right: initial;
+    left: 8px;
+    /* stylelint-enable property-disallowed-list */
   }
+
+  position: absolute;
 
   color: var(--ion-color-dark);
 }
@@ -92,12 +98,18 @@
 
 .toggle-switch-icon--checked {
   @include ltr() {
-    @include position(null, initial, null, 4px);
+    /* stylelint-disable property-disallowed-list */
+    right: initial;
+    left: 4px;
+    /* stylelint-enable property-disallowed-list */
   }
 
   @include rtl() {
-    @include position(null, 4px, null, null);
+    /* stylelint-disable-next-line property-disallowed-list */
+    right: 4px;
   }
+
+  position: absolute;
 
   width: 15px;
   height: 15px;
