@@ -6,12 +6,12 @@ test.describe('img: draggable', () => {
     await page.goto('/src/components/img/test/draggable');
 
     const imgDraggableTrue = page.locator('#img-draggable-true img');
-    expect(imgDraggableTrue).toHaveAttribute('draggable', 'true');
+    await expect(imgDraggableTrue).toHaveAttribute('draggable', 'true');
 
     const imgDraggableFalse = page.locator('#img-draggable-false img');
-    expect(imgDraggableFalse).toHaveAttribute('draggable', 'false');
+    await expect(imgDraggableFalse).toHaveAttribute('draggable', 'false');
 
     const imgDraggableUnset = page.locator('#img-draggable-unset img');
-    expect(imgDraggableUnset).toHaveAttribute('draggable', '');
+    await expect(imgDraggableUnset).toHaveAttribute('draggable', '');
   });
 });
