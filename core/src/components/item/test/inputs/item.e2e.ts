@@ -79,6 +79,7 @@ test.describe('item: inputs', () => {
     });
 
     await page.click('#button-end');
+    await page.waitForChanges();
 
     screenshots.push({
       name: `item-should-change-button-color-to-red-${page.getSnapshotSettings()}.png`,
@@ -93,7 +94,7 @@ test.describe('item: inputs', () => {
 
 const checkFormResult = async (page: E2EPage, content: string) => {
   const div = page.locator('#form-result');
-  expect(await div.textContent()).toEqual(content);
+  await expect(await div.textContent()).toEqual(content);
 };
 
 /**
