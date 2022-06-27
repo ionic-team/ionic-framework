@@ -66,6 +66,10 @@
 
       <ion-button @click="changeLoadingProps()" id="change-loading-props">Quickly Change Loading Props</ion-button>
 
+      <ion-button id="open-auto-mount-modal">Open Auto Mount Modal</ion-button>
+
+      <ion-button id="open-auto-mount-popover">Open Auto Mount Popover</ion-button>
+
       <br /><br />
 
       Modal onWillPresent: <div id="willPresent">{{ willPresent }}</div><br />
@@ -98,6 +102,7 @@
       </ion-loading>
 
       <ion-modal
+        id="default-modal"
         :is-open="isModalOpen"
         :swipe-to-close="true"
         :presenting-element="$parent.$refs.ionRouterOutlet"
@@ -110,6 +115,7 @@
       </ion-modal>
 
       <ion-popover
+        id="default-popover"
         css-class="popover-inline"
         :is-open="isPopoverOpen"
         :event="popoverEvent"
@@ -126,6 +132,22 @@
         @didDismiss="setToastRef(false)"
       >
       </ion-toast>
+
+      <ion-modal
+        id="auto-mount-modal"
+        :auto-mount-component="true"
+        trigger="open-auto-mount-modal"
+      >
+        <ModalContent :title="overlayProps.title"></ModalContent>
+      </ion-modal>
+
+      <ion-popover
+        id="auto-mount-popover"
+        :auto-mount-component="true"
+        trigger="open-auto-mount-popover"
+      >
+        <PopoverContent :title="overlayProps.title"></PopoverContent>
+      </ion-popover>
     </ion-content>
   </ion-page>
 </template>

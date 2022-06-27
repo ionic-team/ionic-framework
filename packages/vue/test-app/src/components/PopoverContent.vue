@@ -1,11 +1,13 @@
 <template>
   <ion-content class="ion-padding">
+    <ion-button id="dismiss" @click="dismiss">Dismiss</ion-button> <br />
     {{ title }}
   </ion-content>
 </template>
 
 <script lang="ts">
 import {
+  IonButton,
   IonContent,
   popoverController
 } from '@ionic/vue';
@@ -16,6 +18,7 @@ export default defineComponent({
     title: { type: String, default: 'Default Title' }
   },
   components: {
+    IonButton,
     IonContent
   },
   setup() {
