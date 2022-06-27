@@ -303,7 +303,7 @@ export class PickerInternal implements ComponentInterface {
       return;
     }
 
-    const values = inputModeColumn.items;
+    const values = inputModeColumn.items.filter((item) => item.disabled !== true);
 
     /**
      * If users pause for a bit, the search
@@ -374,7 +374,7 @@ export class PickerInternal implements ComponentInterface {
     zeroBehavior: 'start' | 'end' = 'start'
   ) => {
     const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
-    const item = colEl.items.find(({ text }) => text.replace(behavior, '') === value);
+    const item = colEl.items.find(({ text, disabled }) => disabled !== true && text.replace(behavior, '') === value);
 
     if (item) {
       colEl.value = item.value;

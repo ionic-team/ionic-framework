@@ -790,6 +790,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+         */
+        "preferWheel": boolean;
+        /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
         "presentation": 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
@@ -1508,6 +1512,10 @@ export namespace Components {
          */
         "animated": boolean;
         /**
+          * If `true`, the component passed into `ion-modal` will automatically be mounted when the modal is created. The component will remain mounted even when the modal is dismissed. However, the component will be destroyed when the modal is destroyed. This property is not reactive and should only be used when initially creating a modal.  Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "autoMountComponent": boolean;
+        /**
           * A decimal value between 0 and 1 that indicates the point after which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value is exclusive meaning the backdrop will become active after the value specified.
          */
         "backdropBreakpoint": number;
@@ -1886,6 +1894,10 @@ export namespace Components {
           * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow": boolean;
+        /**
+          * If `true`, the component passed into `ion-popover` will automatically be mounted when the popover is created. The component will remain mounted even when the popover is dismissed. However, the component will be destroyed when the popover is destroyed. This property is not reactive and should only be used when initially creating a popover.  Note: This feature only applies to inline popovers in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "autoMountComponent": boolean;
         /**
           * If `true`, the popover will be dismissed when the backdrop is clicked.
          */
@@ -4709,6 +4721,10 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonDatetimeCustomEvent<StyleEventDetail>) => void;
         /**
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+         */
+        "preferWheel"?: boolean;
+        /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
         "presentation"?: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
@@ -5427,6 +5443,10 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
+          * If `true`, the component passed into `ion-modal` will automatically be mounted when the modal is created. The component will remain mounted even when the modal is dismissed. However, the component will be destroyed when the modal is destroyed. This property is not reactive and should only be used when initially creating a modal.  Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "autoMountComponent"?: boolean;
+        /**
           * A decimal value between 0 and 1 that indicates the point after which the backdrop will begin to fade in when using a sheet modal. Prior to this point, the backdrop will be hidden and the content underneath the sheet can be interacted with. This value is exclusive meaning the backdrop will become active after the value specified.
          */
         "backdropBreakpoint"?: number;
@@ -5729,6 +5749,10 @@ declare namespace LocalJSX {
           * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
          */
         "arrow"?: boolean;
+        /**
+          * If `true`, the component passed into `ion-popover` will automatically be mounted when the popover is created. The component will remain mounted even when the popover is dismissed. However, the component will be destroyed when the popover is destroyed. This property is not reactive and should only be used when initially creating a popover.  Note: This feature only applies to inline popovers in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "autoMountComponent"?: boolean;
         /**
           * If `true`, the popover will be dismissed when the backdrop is clicked.
          */
