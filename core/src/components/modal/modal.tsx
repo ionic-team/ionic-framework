@@ -65,8 +65,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
-  // Whether or not the modal is moving to a new breakpoint
-  private breakpointMoving?: boolean;
+  private sheetAnimation?: Animation;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -755,12 +754,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (moveSheetToBreakpoint) {
-      this.breakpointMoving = true;
       moveSheetToBreakpoint({
         breakpoint,
         breakpointOffset: 1 - currentBreakpoint!,
         canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
-        onAnimationFinish: () => (this.breakpointMoving = false),
       });
     }
   }
@@ -799,8 +796,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private onHandleClick = () => {
-    const { breakpointMoving, handleBehavior } = this;
-    if (handleBehavior !== 'cycle' || breakpointMoving) {
+    const { sheetAnimation, handleBehavior } = this;
+    if (handleBehavior !== 'cycle' || sheetAnimation?.isRunning()) {
       /**
        * The sheet modal should not advance to the next breakpoint
        * if the handle behavior is not `cycle` or if the handle
@@ -812,8 +809,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   private onBackdropTap = () => {
-    const { breakpointMoving } = this;
-    if (breakpointMoving) {
+    const { sheetAnimation } = this;
+    if (sheetAnimation?.isRunning()) {
       /**
        * When the handle is double clicked at the largest breakpoint,
        * it will start to move to the first breakpoint. While transitioning,
