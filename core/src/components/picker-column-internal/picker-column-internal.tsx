@@ -24,7 +24,8 @@ import type { PickerColumnItem } from './picker-column-internal-interfaces';
 })
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
-  private hapticsStarted = false;
+  private isScrolling = false;
+  private scrollEndCallback?: () => void;
   private isColumnVisible = false;
 
   @State() isActive = false;
@@ -187,11 +188,30 @@ export class PickerColumnInternal implements ComponentInterface {
     const isColumnActive = inputModeColumn === undefined || inputModeColumn === this.el;
 
     if (!useInputMode || !isColumnActive) {
-      this.isActive = false;
+      this.setInputModeActive(false);
       return;
     }
 
-    this.isActive = true;
+    this.setInputModeActive(true);
+  };
+
+  /**
+   * Setting isActive will cause a re-render.
+   * As a result, we do not want to cause the
+   * re-render mid scroll as this will cause
+   * the picker column to jump back to
+   * whatever value was selected at the
+   * start of the scroll interaction.
+   */
+  private setInputModeActive = (state: boolean) => {
+    if (this.isScrolling) {
+      this.scrollEndCallback = () => {
+        this.isActive = state;
+      };
+      return;
+    }
+
+    this.isActive = state;
   };
 
   /**
@@ -213,9 +233,9 @@ export class PickerColumnInternal implements ComponentInterface {
           timeout = undefined;
         }
 
-        if (!this.hapticsStarted) {
+        if (!this.isScrolling) {
           hapticSelectionStart();
-          this.hapticsStarted = true;
+          this.isScrolling = true;
         }
 
         /**
@@ -247,6 +267,21 @@ export class PickerColumnInternal implements ComponentInterface {
         activeElement.classList.add(PICKER_COL_ACTIVE);
 
         timeout = setTimeout(() => {
+          this.isScrolling = false;
+          hapticSelectionEnd();
+
+          /**
+           * Certain tasks (such as those that
+           * cause re-renders) should only be done
+           * once scrolling has finished, otherwise
+           * flickering may occur.
+           */
+          const { scrollEndCallback } = this;
+          if (scrollEndCallback) {
+            scrollEndCallback();
+            this.scrollEndCallback = undefined;
+          }
+
           const dataIndex = activeElement.getAttribute('data-index');
 
           /**
@@ -263,8 +298,6 @@ export class PickerColumnInternal implements ComponentInterface {
 
           if (selectedItem.value !== this.value) {
             this.setValue(selectedItem.value);
-            hapticSelectionEnd();
-            this.hapticsStarted = false;
           }
         }, 250);
       });

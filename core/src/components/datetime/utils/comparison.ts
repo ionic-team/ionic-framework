@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import type { DatetimeParts } from '../datetime-interface';
 
 /**
@@ -35,4 +37,15 @@ export const isAfter = (baseParts: DatetimeParts, compareParts: DatetimeParts) =
       baseParts.day &&
       baseParts.day > compareParts.day!)
   );
+};
+
+export const warnIfValueOutOfBounds = (value: DatetimeParts, min: DatetimeParts, max: DatetimeParts) => {
+  if ((min && isBefore(value, min)) || (max && isAfter(value, max))) {
+    printIonWarning(
+      'The value provided to ion-datetime is out of bounds.\n\n' +
+        `Min: ${JSON.stringify(min)}\n` +
+        `Max: ${JSON.stringify(max)}\n` +
+        `Value: ${JSON.stringify(value)}`
+    );
+  }
 };

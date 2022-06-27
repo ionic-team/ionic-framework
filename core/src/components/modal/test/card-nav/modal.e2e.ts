@@ -27,7 +27,7 @@ test.describe('card modal - nav', () => {
     await ionNavDidChange.next();
 
     const pageOne = page.locator('page-one');
-    expect(pageOne).toHaveClass(/ion-page-hidden/);
+    await expect(pageOne).toHaveClass(/ion-page-hidden/);
 
     const content = page.locator('.page-two-content');
 

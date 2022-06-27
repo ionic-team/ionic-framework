@@ -1006,7 +1006,8 @@ export namespace Components {
     }
     interface IonInput {
         /**
-          * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+          * This attribute is ignored.
+          * @deprecated
          */
         "accept"?: string;
         /**
@@ -1082,7 +1083,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+          * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"`, otherwise it is ignored.
          */
         "multiple"?: boolean;
         /**
@@ -1604,7 +1605,7 @@ export namespace Components {
          */
         "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
         /**
-          * If `true`, a backdrop will be displayed behind the modal.
+          * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
         /**
@@ -1623,7 +1624,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
+          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         /**
@@ -1970,7 +1971,7 @@ export namespace Components {
          */
         "reference": PositionReference;
         /**
-          * If `true`, a backdrop will be displayed behind the popover.
+          * If `true`, a backdrop will be displayed behind the popover. This property controls whether or not the backdrop darkens the screen when the popover is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
         /**
@@ -2284,7 +2285,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * This property allows to create custom transition using AnimateBuilder functions.
+          * This property allows to create custom transition using AnimationBuilder functions.
          */
         "animation"?: AnimationBuilder;
         "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
@@ -4936,7 +4937,8 @@ declare namespace LocalJSX {
     }
     interface IonInput {
         /**
-          * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+          * This attribute is ignored.
+          * @deprecated
          */
         "accept"?: string;
         /**
@@ -5008,7 +5010,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+          * If `true`, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"`, otherwise it is ignored.
          */
         "multiple"?: boolean;
         /**
@@ -5536,7 +5538,7 @@ declare namespace LocalJSX {
          */
         "presentingElement"?: HTMLElement;
         /**
-          * If `true`, a backdrop will be displayed behind the modal.
+          * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
         /**
@@ -5555,7 +5557,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
+          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
@@ -5824,7 +5826,7 @@ declare namespace LocalJSX {
          */
         "reference"?: PositionReference;
         /**
-          * If `true`, a backdrop will be displayed behind the popover.
+          * If `true`, a backdrop will be displayed behind the popover. This property controls whether or not the backdrop darkens the screen when the popover is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
         /**
@@ -6172,7 +6174,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * This property allows to create custom transition using AnimateBuilder functions.
+          * This property allows to create custom transition using AnimationBuilder functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;

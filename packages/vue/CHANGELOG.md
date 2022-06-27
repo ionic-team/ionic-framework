@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+
+### Bug Fixes
+
+* **vue:** adding class to IonPage no longer hides component ([#25490](https://github.com/ionic-team/ionic/issues/25490)) ([cbaa971](https://github.com/ionic-team/ionic/commit/cbaa9711f094975569e2fcb28060f8e456804073))
+
+
+
+
+
+## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
 
 **Note:** Version bump only for package @ionic/vue
