@@ -17,14 +17,14 @@ const AutoMountComponent: React.FC = () => {
         <IonButton id="open-modal" onClick={() => setShowModal(true)}>Open Modal</IonButton>
         <IonButton id="open-popover" onClick={() => setShowPopover(true)}>Open Popover</IonButton>
 
-        <IonModal id="default-modal" isOpen={showModal} onDidDismiss={() => setShowPopover(false)}>
+        <IonModal autoMountComponent={true} id="default-modal" isOpen={showModal} onDidDismiss={() => setShowPopover(false)}>
           <IonContent>
             <IonButton onClick={() => setShowModal(false)}>Dismiss</IonButton>
             Modal Content
           </IonContent>
         </IonModal>
 
-        <IonPopover isOpen={showPopover} onDidDismiss={() => setShowPopover(false)}>
+        <IonPopover autoMountComponent={true} isOpen={showPopover} onDidDismiss={() => setShowPopover(false)}>
           <IonContent>
             <IonButton onClick={() => setShowPopover(false)}>Dismiss</IonButton>
             Popover Content
