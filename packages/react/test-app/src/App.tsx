@@ -24,6 +24,7 @@ import './theme/variables.css';
 import Main from './pages/Main';
 import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
 import OverlayComponents from './pages/overlay-components/OverlayComponents';
+import AutoMountComponent from './pages/overlay-components/AutoMountComponent';
 import Tabs from './pages/Tabs';
 
 setupIonicReact();
@@ -35,6 +36,7 @@ const App: React.FC = () => (
         <Route path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
         <Route path="/overlay-components" component={OverlayComponents} />
+        <Route path="/overlay-auto-mount" component={AutoMountComponent} />
         <Route path="/tabs" component={Tabs} />
       </IonRouterOutlet>
     </IonReactRouter>
