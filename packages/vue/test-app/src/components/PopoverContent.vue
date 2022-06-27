@@ -1,7 +1,10 @@
 <template>
   <ion-content class="ion-padding">
     <ion-button id="dismiss" @click="dismiss">Dismiss</ion-button> <br />
-    {{ title }}
+
+    <div id="title">
+      {{ title }}
+    </div>
   </ion-content>
 </template>
 
