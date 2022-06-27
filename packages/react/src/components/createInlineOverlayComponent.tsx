@@ -128,7 +128,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return createElement(tagName, newProps, (this.state.isOpen) ?
+      return createElement(tagName, newProps, (this.state.isOpen || newProps.autoMountComponent) ?
         createElement('div', {
           id: 'ion-react-wrapper',
           ref: this.wrapperRef,
