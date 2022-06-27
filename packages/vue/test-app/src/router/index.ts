@@ -26,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Overlays.vue')
   },
   {
+    path: '/overlays-auto-mount',
+    component: () => import('@/views/OverlaysAutoMount.vue')
+  },
+  {
     path: '/inputs',
     component: () => import('@/views/Inputs.vue')
   },
