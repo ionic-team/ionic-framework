@@ -30,6 +30,10 @@ export interface MoveSheetToBreakpointOptions {
    * `true` if the sheet can be transitioned and dismissed off the view.
    */
   canDismiss?: boolean;
+  /**
+   * Optional callback function when the animation is complete.
+   */
+  onAnimationFinish?: () => void;
 }
 
 export const createSheetGesture = (
@@ -248,7 +252,7 @@ export const createSheetGesture = (
   };
 
   const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
-    const { breakpoint, canDismiss, breakpointOffset } = options;
+    const { breakpoint, canDismiss, breakpointOffset, onAnimationFinish } = options;
     /**
      * canDismiss should only prevent snapping
      * when users are trying to dismiss. If canDismiss
@@ -333,6 +337,10 @@ export const createSheetGesture = (
                 }
 
                 gesture.enable(true);
+
+                if (onAnimationFinish) {
+                  onAnimationFinish();
+                }
               });
             } else {
               gesture.enable(true);
