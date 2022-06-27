@@ -9,6 +9,7 @@ import {
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
 import { clamp, getElementRoot } from '../../../utils/helpers';
+import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -18,6 +19,12 @@ export const SwipeToCloseDefaults = {
 };
 
 export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
+  /**
+   * The step value at which a card modal
+   * is eligible for dismissing via gesture.
+   */
+  const DISMISS_THRESHOLD = 0.5;
+
   const height = el.offsetHeight;
   let isOpen = false;
   let canDismissBlocksGesture = false;
@@ -25,6 +32,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
   let scrollEl: HTMLElement | null = null;
   const canDismissMaxStep = 0.2;
   let initialScrollY = true;
+  let lastStep = 0;
   const getScrollY = () => {
     if (contentEl && isIonContent(contentEl)) {
       return (contentEl as HTMLIonContentElement).scrollY;
@@ -187,6 +195,28 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     const clampedStep = clamp(0.0001, processedStep, maxStep);
 
     animation.progressStep(clampedStep);
+
+    /**
+     * When swiping down half way, the status bar style
+     * should be reset to its default value.
+     *
+     * We track lastStep so that we do not fire these
+     * functions on every onMove, only when the user has
+     * crossed a certain threshold.
+     */
+    if (clampedStep >= DISMISS_THRESHOLD && lastStep < DISMISS_THRESHOLD) {
+      setCardStatusBarDefault();
+
+      /**
+       * However, if we swipe back up, then the
+       * status bar style should be set to have light
+       * text on a dark background.
+       */
+    } else if (clampedStep < DISMISS_THRESHOLD && lastStep >= DISMISS_THRESHOLD) {
+      setCardStatusBarDark();
+    }
+
+    lastStep = clampedStep;
   };
 
   const onEnd = (detail: GestureDetail) => {
@@ -208,7 +238,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * animation can never complete until
      * canDismiss is checked.
      */
-    const shouldComplete = !isAttempingDismissWithCanDismiss && threshold >= 0.5;
+    const shouldComplete = !isAttempingDismissWithCanDismiss && threshold >= DISMISS_THRESHOLD;
     let newStepValue = shouldComplete ? -0.001 : 0.001;
 
     if (!shouldComplete) {

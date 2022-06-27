@@ -8,7 +8,7 @@ test.describe('datetime: hour cycle', () => {
     `);
 
     const timeButton = page.locator('ion-datetime .time-body');
-    expect(timeButton).toHaveText('16:30');
+    await expect(timeButton).toHaveText('16:30');
   });
   test('should set the h12 hour cycle correctly', async ({ page }) => {
     await page.setContent(`
@@ -16,6 +16,6 @@ test.describe('datetime: hour cycle', () => {
     `);
 
     const timeButton = page.locator('ion-datetime .time-body');
-    expect(timeButton).toHaveText('4:30 PM');
+    await expect(timeButton).toHaveText('4:30 PM');
   });
 });

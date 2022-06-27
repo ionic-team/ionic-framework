@@ -51,7 +51,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
    */
   @Prop() animated = true;
 
-  /** This property allows to create custom transition using AnimateBuilder functions. */
+  /** This property allows to create custom transition using AnimationBuilder functions. */
   @Prop() animation?: AnimationBuilder;
 
   /** @internal */

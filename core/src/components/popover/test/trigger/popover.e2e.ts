@@ -36,5 +36,5 @@ test.describe('popover: trigger', async () => {
 
 const checkPopover = async (page: E2EPage, popoverSelector: string) => {
   const popover = page.locator(popoverSelector);
-  expect(popover).toBeVisible();
+  await expect(popover).toBeVisible();
 };

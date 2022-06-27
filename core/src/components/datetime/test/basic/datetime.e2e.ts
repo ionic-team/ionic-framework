@@ -2,6 +2,35 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
+test.describe('datetime: closing time popover', () => {
+  test('it should not change months', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25438',
+    });
+
+    await page.setContent(`
+      <ion-datetime></ion-datetime>
+    `);
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+    const timeButton = page.locator('.time-body');
+    const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
+    const currentMonthAndYear = await calendarMonthYear.evaluate((el: HTMLElement) => el.innerText);
+
+    await timeButton.click();
+    await ionPopoverDidPresent.next();
+
+    await page.keyboard.press('Escape');
+
+    await ionPopoverDidDismiss.next();
+    await page.waitForChanges();
+
+    await expect(calendarMonthYear).toHaveText(currentMonthAndYear);
+  });
+});
+
 test.describe('datetime: selecting a day', () => {
   const testHighlight = async (page: E2EPage, datetimeID: string) => {
     const today = new Date();
@@ -12,13 +41,13 @@ test.describe('datetime: selecting a day', () => {
       `#${datetimeID} .calendar-day[data-day='${today.getDate()}'][data-month='${today.getMonth() + 1}']`
     );
 
-    expect(todayBtn).toHaveClass(/calendar-day-today/);
-    expect(todayBtn).not.toHaveClass(/calendar-day-active/);
+    await expect(todayBtn).toHaveClass(/calendar-day-today/);
+    await expect(todayBtn).not.toHaveClass(/calendar-day-active/);
 
     await todayBtn.click();
     await page.waitForChanges();
 
-    expect(todayBtn).toHaveClass(/calendar-day-active/);
+    await expect(todayBtn).toHaveClass(/calendar-day-active/);
   };
 
   test('should not highlight a day until one is selected', async ({ page }) => {
@@ -35,13 +64,13 @@ test.describe('datetime: selecting a day', () => {
 
     const activeDay = page.locator('ion-datetime .calendar-day-active');
 
-    expect(activeDay).toHaveText('25');
+    await expect(activeDay).toHaveText('25');
 
     const dayBtn = page.locator('ion-datetime .calendar-day[data-day="13"][data-month="12"]');
     await dayBtn.click();
     await page.waitForChanges();
 
-    expect(activeDay).toHaveText('13');
+    await expect(activeDay).toHaveText('13');
   });
 });
 
@@ -96,10 +125,10 @@ test.describe('datetime: footer', () => {
     await page.setContent('<ion-datetime value="2022-05-03" show-default-buttons="true"></ion-datetime>');
 
     const cancelButton = page.locator('ion-datetime #cancel-button');
-    expect(cancelButton).toHaveText('Cancel');
+    await expect(cancelButton).toHaveText('Cancel');
 
     const confirmButton = page.locator('ion-datetime #confirm-button');
-    expect(confirmButton).toHaveText('Done');
+    await expect(confirmButton).toHaveText('Done');
 
     const datetime = page.locator('ion-datetime');
     expect(await datetime.screenshot()).toMatchSnapshot(
@@ -110,7 +139,7 @@ test.describe('datetime: footer', () => {
     await page.setContent('<ion-datetime value="2022-05-03" show-clear-button="true"></ion-datetime>');
 
     const clearButton = page.locator('ion-datetime #clear-button');
-    expect(clearButton).toHaveText('Clear');
+    await expect(clearButton).toHaveText('Clear');
 
     const datetime = page.locator('ion-datetime');
     expect(await datetime.screenshot()).toMatchSnapshot(
@@ -123,13 +152,13 @@ test.describe('datetime: footer', () => {
     );
 
     const cancelButton = page.locator('ion-datetime #cancel-button');
-    expect(cancelButton).toHaveText('Cancel');
+    await expect(cancelButton).toHaveText('Cancel');
 
     const confirmButton = page.locator('ion-datetime #confirm-button');
-    expect(confirmButton).toHaveText('Done');
+    await expect(confirmButton).toHaveText('Done');
 
     const clearButton = page.locator('ion-datetime #clear-button');
-    expect(clearButton).toHaveText('Clear');
+    await expect(clearButton).toHaveText('Clear');
 
     const datetime = page.locator('ion-datetime');
     expect(await datetime.screenshot()).toMatchSnapshot(
@@ -146,7 +175,7 @@ test.describe('datetime: footer', () => {
     `);
 
     const customButton = page.locator('ion-datetime #custom-button');
-    expect(customButton).toBeVisible();
+    await expect(customButton).toBeVisible();
 
     const datetime = page.locator('ion-datetime');
     expect(await datetime.screenshot()).toMatchSnapshot(

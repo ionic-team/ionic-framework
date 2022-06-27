@@ -55,7 +55,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
       page,
@@ -70,14 +70,14 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
       const content = await page.locator('ion-modal ion-content');
-      expect(content).toHaveJSProperty('scrollY', true);
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
   });
   test.describe('card modal: rendering - tablet', () => {
@@ -134,7 +134,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
       page,
@@ -149,14 +149,14 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
       const content = await page.locator('ion-modal ion-content');
-      expect(content).toHaveJSProperty('scrollY', true);
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
   });
 });
