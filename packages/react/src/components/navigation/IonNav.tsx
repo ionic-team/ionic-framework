@@ -1,137 +1,153 @@
 // import type { JSX } from '@ionic/core/components';
-import { IonNav as IonNavCmp } from '@ionic/core/components/ion-nav.js';
-import React, { createElement } from 'react';
+import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
+import type { JSX } from '@ionic/core/components';
 import {
   attachProps,
-  camelToDashCase,
-  defineCustomElement,
+  createForwardRef,
+  dashToPascalCase,
   isCoveredByReact,
   mergeRefs,
 } from '../react-component-lib/utils';
-import { createForwardRef } from '../utils';
+import React, { createElement } from 'react';
+import { render } from 'react-dom';
 
-// export const IonNav = /*@__PURE__*/ createReactComponent<JSX.IonNav, HTMLIonNavElement>(
-//   'ion-nav',
-//   undefined,
-//   (originalProps: any, propsToPass: any) => {
-//     const delegate = {
-//       attachViewToDom: async (
-//         container: any,
-//         component: any,
-//         propsOrDataObj?: any,
-//         cssClasses?: string[]
-//       ): Promise<HTMLElement> => {
-//         console.log('attachViewToDom', {
-//           container,
-//           component,
-//           propsOrDataObj,
-//           cssClasses,
-//         });
-//         const div = document.createElement('div');
-//         cssClasses && div.classList.add(...cssClasses);
-//         container.appendChild(div);
+interface HTMLStencilElement extends HTMLElement {
+  componentOnReady(): Promise<this>;
+}
 
-//         return div;
-//       },
-//       removeViewFromDom: (container: any, component: any): Promise<void> => {
-//         console.log('removeViewFromDom', {
-//           container,
-//           component,
-//         });
-//         return Promise.resolve();
-//       },
-//     };
+interface StencilReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
+  forwardedRef: React.RefObject<ElementType>;
+  ref?: React.Ref<any>;
+}
 
-//     const newProps = {
-//       ...originalProps,
-//       ...propsToPass,
-//       delegate,
-//     };
+const createReactComponent = <
+  PropType,
+  ElementType extends HTMLStencilElement,
+  ContextStateType = {},
+  ExpandedPropsTypes = {}
+>(
+  tagName: string,
+  ReactComponentContext?: React.Context<ContextStateType>,
+  manipulatePropsFunction?: (
+    originalProps: StencilReactInternalProps<ElementType>,
+    propsToPass: any
+  ) => ExpandedPropsTypes,
+  defineCustomElement?: () => void
+) => {
+  if (defineCustomElement !== undefined) {
+    defineCustomElement();
+  }
 
-//     return newProps;
-//   },
-//   defineIonNav
-// );
+  const displayName = dashToPascalCase(tagName);
+  const ReactComponent = class extends React.Component<StencilReactInternalProps<ElementType>> {
+    componentEl!: ElementType;
 
-export const IonNav = /*@__PURE__*/ () => {
-  defineCustomElement('ion-nav', IonNavCmp);
+    setComponentElRef = (element: ElementType) => {
+      this.componentEl = element;
+    };
 
-  const displayName = 'IonNav';
-
-  const delegate = {
-    attachViewToDom: async (
-      container: any,
-      component: any,
-      propsOrDataObj?: any,
-      cssClasses?: string[]
-    ): Promise<HTMLElement> => {
-      console.log('attachViewToDom', {
-        container,
-        component,
-        propsOrDataObj,
-        cssClasses,
-      });
-      const div = document.createElement('div');
-      cssClasses && div.classList.add(...cssClasses);
-      container.appendChild(div);
-
-      return div;
-    },
-    removeViewFromDom: (container: any, component: any): Promise<void> => {
-      console.log('removeViewFromDom', {
-        container,
-        component,
-      });
-      return Promise.resolve();
-    },
-  };
-
-  const ReactComponent = class extends React.Component<React.HTMLAttributes<any>> {
-    ref: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>;
-
-    constructor(props: any) {
+    constructor(props: StencilReactInternalProps<ElementType>) {
       super(props);
-      // Create a local ref to to attach props to the wrapped element.
-      this.ref = React.createRef();
-      // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, (this.props as any).forwardedRef);
     }
 
-    componentDidUpdate(prevProps: any) {
-      const node = this.ref.current! as HTMLElement;
-      attachProps(node, this.props, prevProps);
+    componentDidMount() {
+      this.componentDidUpdate(this.props);
+    }
+
+    componentDidUpdate(prevProps: StencilReactInternalProps<ElementType>) {
+      attachProps(this.componentEl, this.props, prevProps);
+      (this.componentEl as any).delegate = delegate;
     }
 
     render() {
-      const { children, style, className, ...cProps } = this.props;
+      const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
-      const propsToPass: any = Object.keys(cProps).reduce((acc, name) => {
+      let propsToPass = Object.keys(cProps).reduce((acc, name) => {
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
           const eventName = name.substring(2).toLowerCase();
-          if (isCoveredByReact(eventName)) {
+          if (typeof document !== 'undefined' && isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
-        } else if (['string', 'boolean', 'number'].includes(typeof (cProps as any)[name])) {
-          (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
+        } else {
+          (acc as any)[name] = (cProps as any)[name];
         }
         return acc;
       }, {});
 
-      propsToPass.delegate = delegate;
+      if (manipulatePropsFunction) {
+        propsToPass = manipulatePropsFunction(this.props, propsToPass);
+      }
 
-      const newProps = {
+      const newProps: Omit<StencilReactInternalProps<ElementType>, 'forwardedRef'> = {
         ...propsToPass,
-        ref: this.stableMergedRefs,
+        ref: mergeRefs(forwardedRef, this.setComponentElRef),
         style,
       };
-      return createElement('ion-nav', newProps, children);
+
+      /**
+       * We use createElement here instead of
+       * React.createElement to work around a
+       * bug in Vite (https://github.com/vitejs/vite/issues/6104).
+       * React.createElement causes all elements to be rendered
+       * as <tagname> instead of the actual Web Component.
+       */
+      return createElement(tagName, newProps, children);
     }
 
-    static displayName() {
-      return this.displayName;
+    static get displayName() {
+      return displayName;
     }
   };
 
-  return createForwardRef<any, any>(ReactComponent, displayName);
+  // If context was passed to createReactComponent then conditionally add it to the Component Class
+  if (ReactComponentContext) {
+    ReactComponent.contextType = ReactComponentContext;
+  }
+
+  return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
 };
+
+const delegate = {
+  attachViewToDom: async (
+    container: any,
+    component: any,
+    propsOrDataObj?: any,
+    cssClasses?: string[]
+  ): Promise<any> => {
+    console.log('attachViewToDom', {
+      container,
+      component,
+      propsOrDataObj,
+      cssClasses,
+    });
+    /**
+     * Creates an HTMLElement reference from the React component. Appends the created element
+     * to the parent element container.
+     *
+     * TODO: When updating to support React 18, we will need to replace `render` with `createRoot`.
+     * ```
+     * const root = createRoot(container);
+     * const componentEl = root.render(component);
+     * ```
+     */
+    const componentEl = render(component(), container);
+
+    cssClasses && componentEl.classList.add(...cssClasses);
+
+    return componentEl;
+  },
+  removeViewFromDom: (container: any, component: any): Promise<void> => {
+    console.log('removeViewFromDom', {
+      container,
+      component,
+    });
+    return Promise.resolve();
+  },
+};
+
+export const IonNav = /*@__PURE__*/ createReactComponent<JSX.IonNav, HTMLIonNavElement>(
+  'ion-nav',
+  undefined,
+  undefined,
+  defineCustomElement
+);
