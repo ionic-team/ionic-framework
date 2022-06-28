@@ -74,7 +74,7 @@ export declare interface IonPopover extends Components.IonPopover {
 @Component({
   selector: 'ion-popover',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`,
+  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen || autoMountComponent"></ng-container>`,
   inputs: [
     'alignment',
     'animated',
