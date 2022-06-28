@@ -1,6 +1,5 @@
-import type { Config } from '../interface';
-
-import { now, pointerCoord } from './helpers';
+import type { Config } from '../../interface';
+import { now, pointerCoord } from '../helpers';
 
 export const startTapClick = (config: Config) => {
   let lastTouch = -MOUSE_WAIT * 10;
@@ -25,6 +24,11 @@ export const startTapClick = (config: Config) => {
   };
 
   const onMouseDown = (ev: MouseEvent) => {
+    // Ignore right clicks
+    if (ev.button === 2) {
+      return;
+    }
+
     const t = now(ev) - MOUSE_WAIT;
     if (lastTouch < t) {
       pointerDown(ev);
@@ -36,10 +40,6 @@ export const startTapClick = (config: Config) => {
     if (lastTouch < t) {
       pointerUp(ev);
     }
-  };
-
-  const onContextMenu = (ev: MouseEvent) => {
-    pointerUp(ev);
   };
 
   const cancelActive = () => {
@@ -161,8 +161,6 @@ export const startTapClick = (config: Config) => {
 
   doc.addEventListener('mousedown', onMouseDown, true);
   doc.addEventListener('mouseup', onMouseUp, true);
-
-  doc.addEventListener('contextmenu', onContextMenu, true);
 };
 
 const getActivatableTarget = (ev: UIEvent): any => {
