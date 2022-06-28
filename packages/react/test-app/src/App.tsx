@@ -25,6 +25,7 @@ import Main from './pages/Main';
 import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
 import OverlayComponents from './pages/overlay-components/OverlayComponents';
 import Tabs from './pages/Tabs';
+import NavComponent from './pages/navigation/NavComponent';
 
 setupIonicReact();
 
@@ -35,6 +36,7 @@ const App: React.FC = () => (
         <Route path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
         <Route path="/overlay-components" component={OverlayComponents} />
+        <Route path="/navigation" component={NavComponent} />
         <Route path="/tabs" component={Tabs} />
       </IonRouterOutlet>
     </IonReactRouter>
