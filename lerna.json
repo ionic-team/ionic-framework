@@ -5,5 +5,5 @@
     "angular",
     "packages/*"
   ],
-  "version": "6.1.11"
+  "version": "6.1.12-nightly.20220628"
 }

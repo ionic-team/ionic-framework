@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.12-nightly.20220628](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12-nightly.20220628) (2022-06-28)
+
+
+### Bug Fixes
+
+* **datetime:** add dev warnings when setting out of bounds value ([#25513](https://github.com/ionic-team/ionic/issues/25513)) ([5dfaf63](https://github.com/ionic-team/ionic/commit/5dfaf63c6582811b61339a6fa50cf551cd8724d0))
+
+
+
+
+
 ## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
 
 
