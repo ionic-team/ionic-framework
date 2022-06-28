@@ -18,6 +18,16 @@ test.describe('item: inputs', () => {
       '{"date":"2022-04-01T10:00","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
     );
 
+    /**
+     * We need to expand the viewport so that all the datetime components
+     * enter the visible viewport. This allows the I/O to fire and
+     * .datetime-ready to be added.
+     */
+    await page.setIonViewport();
+    // Wait for all datetime inputs to be ready
+    await page.waitForSelector('#datetime.datetime-ready');
+    await page.waitForSelector('#datetime-end.datetime-ready');
+
     // Default case, enabled and no value
     screenshots.push({
       name: `item-inputs-${page.getSnapshotSettings()}.png`,
