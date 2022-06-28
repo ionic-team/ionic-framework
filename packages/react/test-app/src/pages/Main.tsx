@@ -32,6 +32,11 @@ const Main: React.FC<MainProps> = () => {
           </IonItem>
         </IonList>
         <IonList>
+          <IonItem routerLink="/overlay-auto-mount">
+            <IonLabel>Auto Mount Overlay Components</IonLabel>
+          </IonItem>
+        </IonList>
+        <IonList>
           <IonItem routerLink="/tabs">
             <IonLabel>Tabs</IonLabel>
           </IonItem>
