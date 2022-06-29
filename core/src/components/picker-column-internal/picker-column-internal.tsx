@@ -36,6 +36,53 @@ export class PickerColumnInternal implements ComponentInterface {
    * A list of options to be displayed in the picker
    */
   @Prop() items: PickerColumnItem[] = [];
+  @Watch('items')
+  itemsChange(currentItems: PickerColumnItem[], previousItems: PickerColumnItem[]) {
+    const { value } = this;
+
+    /**
+     * When the items change, it is possible for the item
+     * that was selected to no longer exist. In that case, we need
+     * to automatically select the nearest item. If we do not,
+     * then the scroll position will be reset to zero and it will
+     * look like the first item was automatically selected.
+     *
+     * If we cannot find a closest item then we do nothing, and
+     * the browser will reset the scroll position to 0.
+     */
+    const findCurrentItem = currentItems.find((item) => item.value === value);
+    if (!findCurrentItem) {
+      /**
+       * The default behavior is to assume
+       * that the new set of data is similar to the old
+       * set of data, just with some items filtered out.
+       * We walk backwards through the data to find the
+       * closest enabled picker item and select it.
+       *
+       * Developers can also swap the items out for an entirely
+       * new set of data. In that case, the value we select
+       * here likely will not make much sense. For this use case,
+       * developers should update the `value` prop themselves
+       * when swapping out the data.
+       */
+      const findPreviousItemIndex = previousItems.findIndex((item) => item.value === value);
+      if (findPreviousItemIndex > -1) {
+        let nearestItem;
+        for (let i = findPreviousItemIndex - 1; i >= 0; i--) {
+          const item = currentItems[i];
+          if (item !== undefined && item.disabled !== true) {
+            nearestItem = item;
+            break;
+          }
+        }
+
+        if (nearestItem) {
+          this.setValue(nearestItem.value);
+          return;
+        }
+      }
+    }
+  }
 
   /**
    * The selected option in the picker.
