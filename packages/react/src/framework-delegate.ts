@@ -5,7 +5,7 @@ import { render, unmountComponentAtNode } from "react-dom";
  * The React Framework Delegate is an implementation of the FrameworkDelegate.
  * Responsible for managing how the framework creates, attaches, and removes components.
  */
-export const ReactDelegate = (addFn: (component: Element) => void, removeFn: (component: Element) => void): FrameworkDelegate => {
+export const ReactDelegate = (): FrameworkDelegate => {
   const attachViewToDom = async (
     container: HTMLElement,
     component: any,
@@ -25,23 +25,17 @@ export const ReactDelegate = (addFn: (component: Element) => void, removeFn: (co
     const div = document.createElement('div');
     cssClasses && div.classList.add(...cssClasses);
 
-    const el = render(component(), div);
+    render(component(), div);
 
     container.appendChild(div);
-
-    addFn(el);
 
     return div;
   }
 
-  const removeViewFromDom = (container: HTMLElement, component: HTMLElement): Promise<void> => {
-    console.log('removeViewFromDom', {
-      container,
-      component,
-    });
+  const removeViewFromDom = (_container: HTMLElement, component: HTMLElement): Promise<void> => {
+    // Unmounts the React component from the DOM.
     unmountComponentAtNode(component);
-    component && removeFn(component);
-
+    // Removes the removed view (html element) from the DOM.
     component.remove();
 
     return Promise.resolve();

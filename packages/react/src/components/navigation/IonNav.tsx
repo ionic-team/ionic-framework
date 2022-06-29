@@ -56,10 +56,7 @@ const createReactComponent = <
 
     componentDidUpdate(prevProps: StencilReactInternalProps<ElementType>) {
       attachProps(this.componentEl, this.props, prevProps);
-      this.componentEl.delegate = ReactDelegate(
-        (_el) => {},
-        (_el) => {}
-      );
+      this.componentEl.delegate = ReactDelegate();
     }
 
     render() {
