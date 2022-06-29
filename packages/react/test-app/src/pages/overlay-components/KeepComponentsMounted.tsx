@@ -7,7 +7,7 @@ import {
   IonPopover,
 } from '@ionic/react';
 
-const keepContentsMounted: React.FC = () => {
+const KeepContentsMounted: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showPopover, setShowPopover] = useState(false);
 
@@ -35,4 +35,4 @@ const keepContentsMounted: React.FC = () => {
   );
 };
 
-export default keepContentsMounted;
+export default KeepContentsMounted;
