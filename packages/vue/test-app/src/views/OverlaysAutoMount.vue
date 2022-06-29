@@ -18,7 +18,7 @@
 
       <ion-modal
         id="auto-mount-modal"
-        :auto-mount-component="true"
+        :keep-contents-mounted="true"
         trigger="open-auto-mount-modal"
       >
         <ModalContent :title="overlayProps.title"></ModalContent>
@@ -26,7 +26,7 @@
 
       <ion-popover
         id="auto-mount-popover"
-        :auto-mount-component="true"
+        :keep-contents-mounted="true"
         trigger="open-auto-mount-popover"
       >
         <PopoverContent :title="overlayProps.title"></PopoverContent>
