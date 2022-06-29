@@ -8,17 +8,17 @@ test.describe('picker-column-internal', () => {
 
   test('should render a picker item for each item', async ({ page }) => {
     const columns = page.locator('ion-picker-column-internal .picker-item:not(.picker-item-empty)');
-    expect(columns).toHaveCount(24);
+    await expect(columns).toHaveCount(24);
   });
 
   test('should render 6 empty picker items', async ({ page }) => {
     const columns = page.locator('ion-picker-column-internal .picker-item-empty');
-    expect(columns).toHaveCount(6);
+    await expect(columns).toHaveCount(6);
   });
 
   test('should not have an active item when value is not set', async ({ page }) => {
     const activeColumn = page.locator('ion-picker-column-internal .picker-item-active');
-    expect(activeColumn).toHaveCount(0);
+    await expect(activeColumn).toHaveCount(0);
   });
 
   test('should have an active item when value is set', async ({ page }) => {

@@ -11,6 +11,6 @@ test.describe('modal: trigger', () => {
     await ionModalDidPresent.next();
 
     const modal = await page.locator('.left-click-modal');
-    expect(modal).toBeVisible();
+    await expect(modal).toBeVisible();
   });
 });
