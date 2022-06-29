@@ -162,7 +162,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
         return h(
           name,
           { ...restOfProps, ref: elementRef },
-          (isOpen.value || restOfProps.autoMountComponent) ? slots : undefined
+          (isOpen.value || restOfProps.keepContentsMounted) ? slots : undefined
         )
       }
     });

@@ -264,7 +264,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * Note: This feature only applies to inline popovers in JavaScript
    * frameworks such as Angular, React, and Vue.
    */
-  @Prop() autoMountComponent = false;
+  @Prop() keepContentsMounted = false;
 
   /**
    * Emitted after the popover has presented.

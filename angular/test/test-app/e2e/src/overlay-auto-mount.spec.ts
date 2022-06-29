@@ -1,4 +1,4 @@
-describe('overlays - autoMountComponent', () => {
+describe('overlays - keepContentsMounted', () => {
   describe('modal', () => {
     it('should not mount component if false', () => {
       cy.visit('/modal-inline');

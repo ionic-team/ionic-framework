@@ -233,7 +233,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Note: This feature only applies to inline modals in JavaScript
    * frameworks such as Angular, React, and Vue.
    */
-  @Prop() autoMountComponent = false;
+  @Prop() keepContentsMounted = false;
 
   /**
    * TODO (FW-937)

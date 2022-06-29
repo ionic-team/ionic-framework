@@ -1,4 +1,4 @@
-describe('autoMountComponent', () => {
+describe('keepContentsMounted', () => {
   describe('modal', () => {
     it('should not mount component if false', () => {
       cy.visit('/overlay-components/modal');

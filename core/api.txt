@@ -767,7 +767,7 @@ ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 
 ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
-ion-modal,prop,autoMountComponent,boolean,false,false,false
+ion-modal,prop,keepContentsMounted,boolean,false,false,false
 ion-modal,prop,backdropBreakpoint,number,0,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
@@ -888,7 +888,7 @@ ion-popover,shadow
 ion-popover,prop,alignment,"center" | "end" | "start" | undefined,undefined,false,false
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,arrow,boolean,true,false,false
-ion-popover,prop,autoMountComponent,boolean,false,false,false
+ion-popover,prop,keepContentsMounted,boolean,false,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
 ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
