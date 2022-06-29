@@ -66,20 +66,37 @@ export class PickerColumnInternal implements ComponentInterface {
        * when swapping out the data.
        */
       const findPreviousItemIndex = previousItems.findIndex((item) => item.value === value);
-      if (findPreviousItemIndex > -1) {
-        let nearestItem;
-        for (let i = findPreviousItemIndex - 1; i >= 0; i--) {
-          const item = currentItems[i];
-          if (item !== undefined && item.disabled !== true) {
-            nearestItem = item;
-            break;
-          }
-        }
+      if (findPreviousItemIndex === -1) {
+        return;
+      }
 
-        if (nearestItem) {
-          this.setValue(nearestItem.value);
-          return;
+      /**
+       * Step through the current items backwards
+       * until we find a neighbor we can select.
+       * We start at the last known location of the
+       * current selected item in order to
+       * account for data that has been added. This
+       * search prioritizes stability in that it
+       * tries to keep the scroll position as close
+       * to where it was before the update.
+       * Before Items: ['a', 'b', 'c'], Selected Value: 'b'
+       * After Items:  ['a', 'dog', 'c']
+       * Even though 'dog' is a different item than 'b',
+       * it is the closest item we can select while
+       * preserving the scroll position.
+       */
+      let nearestItem;
+      for (let i = findPreviousItemIndex; i >= 0; i--) {
+        const item = currentItems[i];
+        if (item !== undefined && item.disabled !== true) {
+          nearestItem = item;
+          break;
         }
+      }
+
+      if (nearestItem) {
+        this.setValue(nearestItem.value);
+        return;
       }
     }
   }
