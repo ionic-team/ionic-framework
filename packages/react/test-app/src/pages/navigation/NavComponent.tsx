@@ -2,9 +2,9 @@ import {
   IonButton,
   IonContent,
   IonHeader,
+  IonLabel,
   IonNav,
   IonNavLink,
-  IonPage,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -16,33 +16,50 @@ const NavComponent: React.FC = () => {
       root={() => {
         return (
           <>
-            <IonPage>
-              <IonHeader>
-                <IonToolbar>
-                  <IonTitle>Page One</IonTitle>
-                </IonToolbar>
-              </IonHeader>
-              <IonContent>
-                I am the content.
-                <IonNavLink
-                  routerDirection="forward"
-                  component={() => {
-                    return (
-                      <IonPage>
-                        <IonHeader>
-                          <IonToolbar>
-                            <IonTitle>Page Two</IonTitle>
-                          </IonToolbar>
-                        </IonHeader>
-                        <IonContent>I am the page two content.</IonContent>
-                      </IonPage>
-                    );
-                  }}
-                >
-                  <IonButton>Go to Page Two</IonButton>
-                </IonNavLink>
-              </IonContent>
-            </IonPage>
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle>Page One</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <IonContent>
+              <IonLabel>Page one content</IonLabel>
+              <IonNavLink
+                routerDirection="forward"
+                component={() => {
+                  return (
+                    <>
+                      <IonHeader>
+                        <IonToolbar>
+                          <IonTitle>Page Two</IonTitle>
+                        </IonToolbar>
+                      </IonHeader>
+                      <IonContent>
+                        <IonLabel>Page two content</IonLabel>
+                        <IonNavLink
+                          routerDirection="forward"
+                          component={() => (
+                            <>
+                              <IonHeader>
+                                <IonToolbar>
+                                  <IonTitle>Page Three</IonTitle>
+                                </IonToolbar>
+                              </IonHeader>
+                              <IonContent>
+                                <IonLabel>Page three content</IonLabel>
+                              </IonContent>
+                            </>
+                          )}
+                        >
+                          <IonButton>Go to Page Three</IonButton>
+                        </IonNavLink>
+                      </IonContent>
+                    </>
+                  );
+                }}
+              >
+                <IonButton>Go to Page Two</IonButton>
+              </IonNavLink>
+            </IonContent>
           </>
         );
       }}

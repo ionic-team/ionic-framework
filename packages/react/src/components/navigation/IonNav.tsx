@@ -1,6 +1,5 @@
-// import type { JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
-import type { JSX } from '@ionic/core/components';
+import type { FrameworkDelegate, JSX } from '@ionic/core/components';
 import {
   attachProps,
   createForwardRef,
@@ -9,10 +8,11 @@ import {
   mergeRefs,
 } from '../react-component-lib/utils';
 import React, { createElement } from 'react';
-import { render } from 'react-dom';
+import { ReactDelegate } from '../../framework-delegate';
 
 interface HTMLStencilElement extends HTMLElement {
   componentOnReady(): Promise<this>;
+  delegate?: FrameworkDelegate;
 }
 
 interface StencilReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
@@ -56,7 +56,10 @@ const createReactComponent = <
 
     componentDidUpdate(prevProps: StencilReactInternalProps<ElementType>) {
       attachProps(this.componentEl, this.props, prevProps);
-      (this.componentEl as any).delegate = delegate;
+      this.componentEl.delegate = ReactDelegate(
+        (_el) => {},
+        (_el) => {}
+      );
     }
 
     render() {
@@ -105,44 +108,6 @@ const createReactComponent = <
   }
 
   return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
-};
-
-const delegate = {
-  attachViewToDom: async (
-    container: any,
-    component: any,
-    propsOrDataObj?: any,
-    cssClasses?: string[]
-  ): Promise<any> => {
-    console.log('attachViewToDom', {
-      container,
-      component,
-      propsOrDataObj,
-      cssClasses,
-    });
-    /**
-     * Creates an HTMLElement reference from the React component. Appends the created element
-     * to the parent element container.
-     *
-     * TODO: When updating to support React 18, we will need to replace `render` with `createRoot`.
-     * ```
-     * const root = createRoot(container);
-     * const componentEl = root.render(component);
-     * ```
-     */
-    const componentEl = render(component(), container);
-
-    cssClasses && componentEl.classList.add(...cssClasses);
-
-    return componentEl;
-  },
-  removeViewFromDom: (container: any, component: any): Promise<void> => {
-    console.log('removeViewFromDom', {
-      container,
-      component,
-    });
-    return Promise.resolve();
-  },
 };
 
 export const IonNav = /*@__PURE__*/ createReactComponent<JSX.IonNav, HTMLIonNavElement>(
