@@ -1,5 +1,5 @@
 import { FrameworkDelegate } from "@ionic/core/components";
-import { render } from "react-dom";
+import { render, unmountComponentAtNode } from "react-dom";
 
 /**
  * The React Framework Delegate is an implementation of the FrameworkDelegate.
@@ -39,8 +39,10 @@ export const ReactDelegate = (addFn: (component: Element) => void, removeFn: (co
       container,
       component,
     });
-    // unmountComponentAtNode(container);
+    unmountComponentAtNode(component);
     component && removeFn(component);
+
+    component.remove();
 
     return Promise.resolve();
   };
