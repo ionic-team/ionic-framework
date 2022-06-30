@@ -251,7 +251,7 @@ export const createSheetGesture = (
     });
   };
 
-  const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
+  const moveSheetToBreakpoint = async (options: MoveSheetToBreakpointOptions): Promise<boolean> => {
     const { breakpoint, canDismiss, breakpointOffset, onAnimationFinish } = options;
     /**
      * canDismiss should only prevent snapping
@@ -362,6 +362,10 @@ export const createSheetGesture = (
     } else if (!shouldRemainOpen) {
       onDismiss();
     }
+
+    await animation.play();
+
+    return true;
   };
 
   const gesture = createGesture({
