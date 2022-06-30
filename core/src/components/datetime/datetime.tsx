@@ -99,11 +99,11 @@ export class Datetime implements ComponentInterface {
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
    * Allows caching an instance of the `activeParts` in between render cycles.
    */
-  private activePartsClone!: DatetimeParts;
+  private activePartsClone!: DatetimeParts | DatetimeParts[];
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts = {
+  @State() activeParts: DatetimeParts | DatetimeParts[] = {
     month: 5,
     day: 28,
     year: 2021,
@@ -309,7 +309,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * If `true`, multiple dates can be selected at once. Only
-   * applies to `presentation="date"`.
+   * applies to `presentation="date"` and `preferWheel="false"`.
    */
   @Prop() multiple = false;
 
@@ -462,6 +462,12 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
+    // TODO
+    if(Array.isArray(this.activeParts)) {
+      console.log("confirm not implemented yet for array");
+      return;
+    }
+
     /**
      * We only update the value if the presentation is not a calendar picker,
      * or if `highlightActiveParts` is true; indicating that the user
@@ -1130,9 +1136,16 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { multiple, presentation } = this;
-    if(multiple && presentation !== 'date') {
-      printIonWarning('Multiple date selection is only supported for presentation="date".');
+    const { multiple, presentation, preferWheel } = this;
+
+    if(multiple) {
+      if(presentation !== 'date') {
+        printIonWarning('Multiple date selection is only supported for presentation="date".');
+      }
+
+      if(preferWheel) {
+        printIonWarning('Multiple date selection is not supported with preferWheel="true".');
+      }
     }
 
     this.processMinParts();
@@ -1390,8 +1403,9 @@ export class Datetime implements ComponentInterface {
             ...findPart,
           });
 
+          // wheel pickers don't support multiple selection, so assume this won't be an array
           this.setActiveParts({
-            ...this.activeParts,
+            ...this.activeParts as DatetimeParts,
             ...findPart,
           });
 
@@ -1428,7 +1442,7 @@ export class Datetime implements ComponentInterface {
            * to prevent exceptions in the user's function from
            * interrupting the calendar rendering.
            */
-          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+          disabled = !isDateEnabled(convertDataToISO(referenceParts as DatetimeParts));
         } catch (e) {
           printIonError(
             'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
@@ -1478,7 +1492,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...this.activeParts,
+            ...this.activeParts as DatetimeParts,
             day: ev.detail.value,
           });
 
@@ -1519,7 +1533,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...this.activeParts,
+            ...this.activeParts as DatetimeParts,
             month: ev.detail.value,
           });
 
@@ -1559,7 +1573,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...this.activeParts,
+            ...this.activeParts as DatetimeParts,
             year: ev.detail.value,
           });
 
@@ -1601,7 +1615,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={activePartsClone.hour}
+        value={(activePartsClone as DatetimeParts).hour}
         items={hoursData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1610,7 +1624,7 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
           this.setActiveParts({
-            ...activePartsClone,
+            ...activePartsClone as DatetimeParts,
             hour: ev.detail.value,
           });
 
@@ -1626,7 +1640,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={activePartsClone.minute}
+        value={(activePartsClone as DatetimeParts).minute}
         items={minutesData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1635,7 +1649,7 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
           this.setActiveParts({
-            ...activePartsClone,
+            ...activePartsClone as DatetimeParts,
             minute: ev.detail.value,
           });
 
@@ -1656,7 +1670,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
-        value={activePartsClone.ampm}
+        value={(activePartsClone as DatetimeParts).ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
@@ -1668,7 +1682,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...activePartsClone,
+            ...activePartsClone as DatetimeParts,
             ampm: ev.detail.value,
             hour,
           });
@@ -1911,7 +1925,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, this.activePartsClone, use24Hour)}
+        {getLocalizedTime(this.locale, this.activePartsClone as DatetimeParts, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -1950,12 +1964,16 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    // TODO: header display needs adjusting, need to dig into how it should be formatted
+    if(Array.isArray(this.activeParts)) {
+      console.log("renderCalendarViewHeader not implemented yet for array");
+    }
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts)}</div>}
+        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>}
       </div>
     );
   }
