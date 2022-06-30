@@ -189,7 +189,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const canStart = () => {
       const config = getConfig();
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
-      if (!swipeEnabled) return false;
+      if (!swipeEnabled) { return false; }
 
       const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: this.props.routeInfo.pushedByRoute || '' } as any, this.id);
 
@@ -198,6 +198,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
     const onStart = async () => {
       const { routeInfo } = this.props;
+
       const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
 
@@ -213,7 +214,15 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
         this.context.goBack();
       } else {
-        return false;
+        /**
+         * In the event that the swipe
+         * gesture was aborted, we should
+         * re-hide the page that was going to enter.
+         */
+        const { routeInfo } = this.props;
+        const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
+        enteringViewItem?.ionPageElement?.setAttribute('aria-hidden', 'true');
+        enteringViewItem?.ionPageElement?.classList.add('ion-page-hidden');
       }
     }
 
