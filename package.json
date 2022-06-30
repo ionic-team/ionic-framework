@@ -1,31 +1,11 @@
 {
   "private": true,
   "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
-  "scripts": {
-    "commitizenBranches": "git-branch-is -q --not -r \"^(main|next|release-)\""
-  },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
-    "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.3.0",
-    "git-branch-is": "^4.0.0",
-    "husky": "^4.3.8",
     "lerna": "^4.0.0",
     "semver": "^5.5.0"
   },
   "engines": {
     "node": ">= 15"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "npm run commitizenBranches --silent && commitlint -E HUSKY_GIT_PARAMS || true",
-      "prepare-commit-msg": "npm run commitizenBranches --silent && exec < /dev/tty && git cz --hook || true"
-    }
   }
 }

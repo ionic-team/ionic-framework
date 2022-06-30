@@ -150,6 +150,7 @@ export class Select implements ComponentInterface {
   @Watch('value')
   valueChanged() {
     this.emitStyle();
+    // TODO: FW-1160 - Remove the `didInit` property when ionChange behavior is changed in v7.
     if (this.didInit) {
       this.ionChange.emit({
         value: this.value,

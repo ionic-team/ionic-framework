@@ -20,6 +20,7 @@ export class ProvidersComponent {
   isDesktop: boolean = undefined;
   isMobile: boolean = undefined;
   keyboardHeight = 0;
+  queryParams = '';
 
   constructor(
     actionSheetCtrl: ActionSheetController,
@@ -64,6 +65,10 @@ export class ProvidersComponent {
       NgZone.assertInAngularZone();
       this.isResized = true;
     });
+    const firstQuery = platform.getQueryParam('firstParam');
+    const secondQuery = platform.getQueryParam('secondParam');
+    this.queryParams = `firstParam: ${firstQuery}, firstParam: ${secondQuery}`;
+
     this.isDesktop = platform.is('desktop');
     this.isMobile = platform.is('mobile');
 
