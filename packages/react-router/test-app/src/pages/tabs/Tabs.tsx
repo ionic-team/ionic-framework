@@ -22,7 +22,7 @@ interface TabsProps {}
 
 const Tabs: React.FC<TabsProps> = () => {
   return (
-    <IonTabs>
+    <IonTabs data-pageid="tabs">
       <IonRouterOutlet id="tabs">
         <Route path="/tabs/tab1" component={Tab1} exact />
         <Route path="/tabs/tab2" component={Tab2} exact />
