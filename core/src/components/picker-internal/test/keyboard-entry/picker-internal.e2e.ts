@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
+import type { E2ELocator } from '@utils/test/playwright/page/utils/locator';
 
 test.describe('picker-internal: keyboard entry', () => {
   test('should scroll to and update the value prop for a single column', async ({ page }) => {
@@ -67,8 +68,8 @@ test.describe('picker-internal: keyboard entry', () => {
     const firstColumn = page.locator('ion-picker-column-internal#first');
     const secondColumn = page.locator('ion-picker-column-internal#second');
     const highlight = page.locator('ion-picker-internal .picker-highlight');
-    const firstIonChange = await (firstColumn as any).spyOnEvent('ionChange');
-    const secondIonChange = await (secondColumn as any).spyOnEvent('ionChange');
+    const firstIonChange = await (firstColumn as E2ELocator).spyOnEvent('ionChange');
+    const secondIonChange = await (secondColumn as E2ELocator).spyOnEvent('ionChange');
 
     const box = await highlight.boundingBox();
     if (box !== null) {
