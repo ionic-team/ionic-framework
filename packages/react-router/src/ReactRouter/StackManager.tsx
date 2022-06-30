@@ -213,6 +213,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.skipTransition = true;
 
         this.context.goBack();
+
+        const leavingViewItem = this.context.findViewItemByRouteInfo(this.props.routeInfo, this.id);
+        if (leavingViewItem) {
+          leavingViewItem.mount = false;
+          this.forceUpdate();
+        }
+        return true;
       } else {
         /**
          * In the event that the swipe
@@ -228,6 +235,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           ionPageElement.classList.add('ion-page-hidden');
         }
       }
+
+      return false;
     }
 
     routerOutlet.swipeHandler = {
