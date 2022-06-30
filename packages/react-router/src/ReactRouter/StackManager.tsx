@@ -202,6 +202,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
 
+      /**
+       * When the gesture starts, kick off
+       * a transition that is controlled
+       * via a swipe gesture.
+       */
       if (enteringViewItem && leavingViewItem) {
         await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
       }
@@ -210,16 +215,23 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     };
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
+        /**
+         * This ensures that going back
+         * does not cause a duplicate
+         * page transition.
+         */
         this.skipTransition = true;
-
         this.context.goBack();
 
+        /**
+         * Unmount the leaving view so
+         * that it is removed from the DOM.
+         */
         const leavingViewItem = this.context.findViewItemByRouteInfo(this.props.routeInfo, this.id);
         if (leavingViewItem) {
           leavingViewItem.mount = false;
           this.forceUpdate();
         }
-        return true;
       } else {
         /**
          * In the event that the swipe
@@ -235,8 +247,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           ionPageElement.classList.add('ion-page-hidden');
         }
       }
-
-      return false;
     }
 
     routerOutlet.swipeHandler = {
@@ -253,6 +263,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     forceDirection?: any,
     progressAnimation?: boolean
   ) {
+    /**
+     * When finishing a swipe to go back
+     * gesture, we do not want the transition
+     * to run again, so we return early
+     * if skipTransition is true.
+     */
     if (this.skipTransition) {
       this.skipTransition = false;
       return;
