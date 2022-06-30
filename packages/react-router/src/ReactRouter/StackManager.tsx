@@ -240,6 +240,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     forceDirection?: any,
     progressAnimation?: boolean
   ) {
+    if (this.skipTransition) {
+      this.skipTransition = false;
+      return;
+    }
+
     const routerOutlet = this.routerOutletElement!;
 
     const routeInfoFallbackDirection =
