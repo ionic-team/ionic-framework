@@ -5,14 +5,14 @@ import { FrameworkDelegate } from '@ionic/core/components';
  * Responsible for managing how the framework creates, attaches, and removes components.
  */
 export const ReactDelegate = (
-  addView: (view: any) => void,
-  removeView: (view: Element) => void
+  addView: (view: JSX.Element) => void,
+  removeView: (view: JSX.Element) => void
 ): FrameworkDelegate => {
-  let view: any;
+  let view: JSX.Element;
 
   const attachViewToDom = async (
     _parentElement: HTMLElement,
-    component: any,
+    component: () => JSX.Element,
     _propsOrDataObj?: any,
     cssClasses?: string[]
   ): Promise<any> => {
@@ -35,7 +35,7 @@ export const ReactDelegate = (
   };
 
   const removeViewFromDom = (_container: HTMLElement, component: HTMLElement): Promise<void> => {
-    // Remove view still needs work, back navigation will through an assert error
+    // Remove view still needs work, back navigation will throw an assert error
     if (view) {
       removeView(view);
     }

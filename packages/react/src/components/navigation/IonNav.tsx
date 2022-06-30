@@ -7,12 +7,12 @@ const IonNavInner = createReactComponent('ion-nav', undefined, undefined, define
 
 export const IonNav = (props: any) => {
   const { children, ...restOfProps } = props;
-  const [views, setViews] = useState<any[]>([]);
+  const [views, setViews] = useState<JSX.Element[]>([]);
 
-  const addView = (view: any) => {
+  const addView = (view: JSX.Element) => {
     setViews([...views, view]);
   };
-  const removeView = (view: any) => setViews(views.filter((v) => v !== view));
+  const removeView = (view: JSX.Element) => setViews(views.filter((v) => v !== view));
 
   const delegate = ReactDelegate(addView, removeView);
 
