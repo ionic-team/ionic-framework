@@ -786,7 +786,7 @@ export namespace Components {
          */
         "monthValues"?: number[] | number | string;
         /**
-          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"`.
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
          */
         "multiple": boolean;
         /**
@@ -4692,7 +4692,7 @@ declare namespace LocalJSX {
          */
         "monthValues"?: number[] | number | string;
         /**
-          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"`.
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
          */
         "multiple"?: boolean;
         /**
