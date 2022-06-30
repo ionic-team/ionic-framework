@@ -260,8 +260,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     routeInfo: RouteInfo,
     enteringViewItem: ViewItem,
     leavingViewItem?: ViewItem,
-    forceDirection?: any,
-    progressAnimation?: boolean
+    direction?: 'forward' | 'back',
+    progressAnimation = false
   ) {
     /**
      * When finishing a swipe to go back
@@ -280,7 +280,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
         ? undefined
         : routeInfo.routeDirection;
-    const direction = forceDirection ?? routeInfoFallbackDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (
@@ -318,9 +317,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       await routerOutlet.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
-        direction: direction as any,
+        direction: direction ?? routeInfoFallbackDirection,
         showGoBack: !!routeInfo.pushedByRoute,
-        progressAnimation: progressAnimation || false,
+        progressAnimation,
         animationBuilder: routeInfo.routeAnimation,
       });
     }
