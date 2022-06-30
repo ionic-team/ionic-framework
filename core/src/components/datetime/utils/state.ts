@@ -95,18 +95,9 @@ export const getCalendarDayState = (
   maxParts?: DatetimeParts,
   dayValues?: number[]
 ) => {
-  // TODO
-  if(Array.isArray(activeParts)) {
-    console.log("getCalendarDayState not implemented yet for array");
-    return {
-      disabled: false,
-      isActive: false,
-      isToday: false,
-      ariaSelected: false,
-      ariaLabel: ''
-    };
-  }
-  const isActive = isSameDay(refParts, activeParts);
+  const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+
+  const isActive = activePartsArray.find(parts => isSameDay(refParts, parts)) !== undefined;
   const isToday = isSameDay(refParts, todayParts);
   const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
 
