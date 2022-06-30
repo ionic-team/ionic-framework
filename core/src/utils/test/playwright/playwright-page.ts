@@ -18,7 +18,7 @@ import {
   locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
-import type { E2EPage } from './playwright-declarations';
+import type { E2EPage, SetIonViewportOptions } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
@@ -48,7 +48,7 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
 
   // Custom Ionic methods
   page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
-  page.setIonViewport = () => setIonViewport(page);
+  page.setIonViewport = (options?: SetIonViewportOptions) => setIonViewport(page, options);
   page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
   page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);
 

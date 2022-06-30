@@ -67,7 +67,7 @@ export interface E2EPage extends Page {
    * Increases the size of the page viewport to match the `ion-content` contents.
    * Use this method when taking full-screen screenshots.
    */
-  setIonViewport: () => Promise<void>;
+  setIonViewport: (options?: SetIonViewportOptions) => Promise<void>;
   /**
    * This provides metadata that can be used to create a unique screenshot URL.
    * For example, we need to be able to differentiate between iOS in LTR mode and iOS in RTL mode.
@@ -94,4 +94,12 @@ export interface E2EPage extends Page {
   spyOnEvent: (eventName: string) => Promise<EventSpy>;
   _e2eEventsIds: number;
   _e2eEvents: Map<number, any>;
+}
+
+export interface SetIonViewportOptions {
+  /**
+   * `true` if the viewport should be scaled to match the `ion-content`
+   * scrollable width. Defaults to `false`.
+   */
+  resizeViewportWidth?: boolean;
 }
