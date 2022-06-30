@@ -331,6 +331,7 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
+      // TODO: most of this will need a decent restructure
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
         const { month, day, year, hour, minute } = valueDateParts;
@@ -537,10 +538,31 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private setActiveParts = (parts: DatetimeParts) => {
-    this.activeParts = {
-      ...parts,
-    };
+  private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
+    const { multiple, activeParts, highlightActiveParts } = this;
+
+    if(multiple) {
+      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+      if(removeDate) {
+        this.activeParts = activePartsArray.filter(p => JSON.stringify(p) !== JSON.stringify(parts));
+      } else if(highlightActiveParts) {
+        this.activeParts = [
+          ...activePartsArray,
+          parts
+        ];
+      } else {
+        /**
+         * If highlightActiveParts is false, that means we just have a
+         * default value of today in activeParts; we need to replace that
+         * rather than adding to it since it's just a placeholder.
+         */
+        this.activeParts = [parts];
+      }
+    } else {
+      this.activeParts = {
+        ...parts,
+      };
+    }
 
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
@@ -1785,7 +1807,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { isDateEnabled } = this;
+            const { isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
               this.locale,
@@ -1837,14 +1859,6 @@ export class Datetime implements ComponentInterface {
                     return;
                   }
 
-                  /**
-                   * Note that for datetimes with confirm/cancel buttons, the value
-                   * isn't updated until you call confirm(). We need to bring the
-                   * solid circle back on day click for UX reasons, rather than only
-                   * show the circle if `value` is truthy.
-                   */
-                  this.highlightActiveParts = true;
-
                   this.setWorkingParts({
                     ...this.workingParts,
                     month,
@@ -1852,12 +1866,31 @@ export class Datetime implements ComponentInterface {
                     year,
                   });
 
-                  this.setActiveParts({
-                    ...this.activeParts,
-                    month,
-                    day,
-                    year,
-                  });
+                  if(multiple) {
+                    this.setActiveParts({
+                      month,
+                      day,
+                      year,
+                    }, isActive);
+                  } else {
+                    this.setActiveParts({
+                      ...this.activeParts,
+                      month,
+                      day,
+                      year,
+                    });
+                  }
+
+                  /**
+                   * Note that for datetimes with confirm/cancel buttons, the value
+                   * isn't updated until you call confirm(). We need to bring the
+                   * solid circle back on day click for UX reasons, rather than only
+                   * show the circle if `value` is truthy.
+                   * 
+                   * This update needs to go after the setActiveParts call above since
+                   * its original value is used there.
+                   */
+                  this.highlightActiveParts = true;
                 }}
               >
                 {day}
