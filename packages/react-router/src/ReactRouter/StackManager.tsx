@@ -221,8 +221,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          */
         const { routeInfo } = this.props;
         const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
-        enteringViewItem?.ionPageElement?.setAttribute('aria-hidden', 'true');
-        enteringViewItem?.ionPageElement?.classList.add('ion-page-hidden');
+
+        if (enteringViewItem?.ionPageElement !== undefined) {
+          const { ionPageElement } = enteringViewItem;
+          ionPageElement.setAttribute('aria-hidden', 'true');
+          ionPageElement.classList.add('ion-page-hidden');
+        }
       }
     }
 
