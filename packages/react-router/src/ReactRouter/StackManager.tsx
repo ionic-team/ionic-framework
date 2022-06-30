@@ -275,7 +275,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       } else {
         await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
-        if (leavingViewItem && leavingViewItem.ionPageElement) {
+        if (leavingViewItem && leavingViewItem.ionPageElement && !progressAnimation) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         }
