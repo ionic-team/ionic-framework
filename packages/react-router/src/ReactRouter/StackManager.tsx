@@ -25,7 +25,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   context!: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
-  skipTransition: boolean;
+  prevProps?: StackManagerProps;
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
@@ -40,7 +40,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.transitionPage = this.transitionPage.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
     this.id = generateId('routerOutlet');
-    this.skipTransition = false;
+    this.prevProps = undefined;
   }
 
   componentDidMount() {
@@ -52,7 +52,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentDidUpdate(prevProps: StackManagerProps) {
-    if (this.props.routeInfo.pathname !== prevProps.routeInfo.pathname || this.pendingPageTransition) {
+    const { pathname } = this.props.routeInfo;
+    const { pathname: prevPathname } = prevProps.routeInfo;
+
+    if (pathname !== prevPathname) {
+      this.prevProps = prevProps;
+      this.handlePageTransition(this.props.routeInfo);
+    } else if (this.pendingPageTransition) {
       this.handlePageTransition(this.props.routeInfo);
       this.pendingPageTransition = false;
     }
@@ -140,7 +146,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         /**
          * If the entering view is already visible and the leaving view is not, the transition does not need to occur.
          */
-        if (isViewVisible(enteringViewItem.ionPageElement) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement!)) {
+        if (
+          isViewVisible(enteringViewItem.ionPageElement) &&
+          leavingViewItem !== undefined &&
+          (
+            leavingViewItem.mount === false ||
+            !isViewVisible(leavingViewItem.ionPageElement!)
+          )
+        ) {
           return;
         }
 
@@ -191,7 +204,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
       if (!swipeEnabled) { return false; }
 
-      const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: this.props.routeInfo.pushedByRoute || '' } as any, this.id);
+      const { routeInfo } = this.props;
+
+      const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
 
       return !!enteringViewItem;
     };
@@ -199,7 +215,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const onStart = async () => {
       const { routeInfo } = this.props;
 
-      const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
+      const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
 
       /**
@@ -215,23 +232,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     };
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
-        /**
-         * This ensures that going back
-         * does not cause a duplicate
-         * page transition.
-         */
-        this.skipTransition = true;
         this.context.goBack();
-
-        /**
-         * Unmount the leaving view so
-         * that it is removed from the DOM.
-         */
-        const leavingViewItem = this.context.findViewItemByRouteInfo(this.props.routeInfo, this.id);
-        if (leavingViewItem) {
-          leavingViewItem.mount = false;
-          this.forceUpdate();
-        }
       } else {
         /**
          * In the event that the swipe
@@ -239,7 +240,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * re-hide the page that was going to enter.
          */
         const { routeInfo } = this.props;
-        const enteringViewItem = this.context.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' } as any, this.id);
+
+        const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
 
         if (enteringViewItem?.ionPageElement !== undefined) {
           const { ionPageElement } = enteringViewItem;
@@ -263,17 +266,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     direction?: 'forward' | 'back',
     progressAnimation = false
   ) {
-    /**
-     * When finishing a swipe to go back
-     * gesture, we do not want the transition
-     * to run again, so we return early
-     * if skipTransition is true.
-     */
-    if (this.skipTransition) {
-      this.skipTransition = false;
-      return;
-    }
-
     const routerOutlet = this.routerOutletElement!;
 
     const routeInfoFallbackDirection =
