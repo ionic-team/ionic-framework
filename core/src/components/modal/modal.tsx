@@ -886,7 +886,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               // Prevents the handle from receiving keyboard focus when it does not cycle
               tabIndex={!isHandleCycle ? -1 : 0}
               aria-label={isHandleCycle ? 'Activate to adjust the size of the dialog overlaying the screen' : null}
-              onClick={this.onHandleClick}
+              onClick={isHandleCycle ? this.onHandleClick : undefined}
               part="handle"
             ></button>
           )}
