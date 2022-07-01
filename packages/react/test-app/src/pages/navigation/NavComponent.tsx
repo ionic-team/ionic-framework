@@ -7,18 +7,25 @@ import {
   IonNavLink,
   IonTitle,
   IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonPage
 } from '@ionic/react';
 import React from 'react';
 
 const NavComponent: React.FC = () => {
   return (
-    <IonNav
+    <IonPage>
+      <IonNav
       root={() => {
         return (
           <>
             <IonHeader>
               <IonToolbar>
                 <IonTitle>Page One</IonTitle>
+                <IonButtons>
+                  <IonBackButton />
+                </IonButtons>
               </IonToolbar>
             </IonHeader>
             <IonContent>
@@ -31,6 +38,9 @@ const NavComponent: React.FC = () => {
                       <IonHeader>
                         <IonToolbar>
                           <IonTitle>Page Two</IonTitle>
+                          <IonButtons>
+                            <IonBackButton />
+                          </IonButtons>
                         </IonToolbar>
                       </IonHeader>
                       <IonContent>
@@ -42,6 +52,9 @@ const NavComponent: React.FC = () => {
                               <IonHeader>
                                 <IonToolbar>
                                   <IonTitle>Page Three</IonTitle>
+                                  <IonButtons>
+                                    <IonBackButton />
+                                  </IonButtons>
                                 </IonToolbar>
                               </IonHeader>
                               <IonContent>
@@ -64,6 +77,7 @@ const NavComponent: React.FC = () => {
         );
       }}
     ></IonNav>
+    </IonPage>
   );
 };
 
