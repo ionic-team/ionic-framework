@@ -315,8 +315,9 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
+   * Will be an array of strings if `multiple="true"`.
    */
-  @Prop({ mutable: true }) value?: string | null;
+  @Prop({ mutable: true }) value?: string | string[] | null;
 
   /**
    * Update the datetime value when the value changes
@@ -1130,7 +1131,12 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private processValue = (value?: string | null) => {
+  private processValue = (value?: string | string[] | null) => {
+    // TODO
+    if(Array.isArray(value)) {
+      console.log("processValue not implemented yet for arrays");
+      return;
+    }
     this.highlightActiveParts = !!value;
     const valueToProcess = parseDate(value || getToday());
     const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, this.minParts, this.maxParts);
@@ -1866,6 +1872,7 @@ export class Datetime implements ComponentInterface {
                     year,
                   });
 
+                  // multiple only needs date info, so we can wipe out other fields like time
                   if(multiple) {
                     this.setActiveParts({
                       month,
@@ -2111,7 +2118,8 @@ export class Datetime implements ComponentInterface {
     const hasWheelVariant =
       (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
 
-    renderHiddenInput(true, el, name, value, disabled);
+    const formattedValue = Array.isArray(value) ? JSON.stringify(value) : value;
+    renderHiddenInput(true, el, name, formattedValue, disabled);
 
     return (
       <Host

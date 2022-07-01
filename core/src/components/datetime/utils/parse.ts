@@ -55,7 +55,13 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * We do not use the JS Date object here because
  * it adjusts the date for the current timezone.
  */
-export const parseDate = (val: string | undefined | null): any | undefined => {
+export const parseDate = (val: string | string[] | undefined | null): any | undefined => {
+  // TODO
+  if(Array.isArray(val)) {
+    console.log("parseDate not implemented yet for arrays");
+    return;
+  }
+
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[] | null = null;
