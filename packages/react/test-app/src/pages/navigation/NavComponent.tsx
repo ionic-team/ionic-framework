@@ -8,13 +8,15 @@ import {
   IonTitle,
   IonToolbar,
   IonButtons,
-  IonBackButton
+  IonBackButton,
+  IonPage
 } from '@ionic/react';
 import React from 'react';
 
 const NavComponent: React.FC = () => {
   return (
-    <IonNav
+    <IonPage>
+      <IonNav
       root={() => {
         return (
           <>
@@ -75,6 +77,7 @@ const NavComponent: React.FC = () => {
         );
       }}
     ></IonNav>
+    </IonPage>
   );
 };
 
