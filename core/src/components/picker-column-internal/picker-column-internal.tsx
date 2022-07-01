@@ -208,7 +208,15 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private setValue(value?: string | number) {
+  /**
+   * Sets the value prop and fires the ionChange event.
+   * This is used when we need to fire ionChange from
+   * user-generated events that cannot be caught with normal
+   * input/change event listeners.
+   * @internal
+   */
+  @Method()
+  async setValue(value?: string | number) {
     const { items } = this;
     this.value = value;
     const findItem = items.find((item) => item.value === value && item.disabled !== true);
