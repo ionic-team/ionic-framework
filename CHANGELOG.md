@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.12](https://github.com/ionic-team/ionic-framework/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+
+### Bug Fixes
+
+* **angular:** warn devs that standalone components are not supported ([#25516](https://github.com/ionic-team/ionic-framework/issues/25516)) ([c53785c](https://github.com/ionic-team/ionic-framework/commit/c53785c0c786113f3516c09fa512687ecb84c717))
+* **datetime:** add dev warnings when setting out of bounds value ([#25513](https://github.com/ionic-team/ionic-framework/issues/25513)) ([5dfaf63](https://github.com/ionic-team/ionic-framework/commit/5dfaf63c6582811b61339a6fa50cf551cd8724d0))
+
+
+
+
+
 ## [6.1.11](https://github.com/ionic-team/ionic-framework/compare/v6.1.10...v6.1.11) (2022-06-22)
 
 
