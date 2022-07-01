@@ -24,7 +24,8 @@ import type { PickerColumnItem } from './picker-column-internal-interfaces';
 })
 export class PickerColumnInternal implements ComponentInterface {
   private destroyScrollListener?: () => void;
-  private hapticsStarted = false;
+  private isScrolling = false;
+  private scrollEndCallback?: () => void;
   private isColumnVisible = false;
 
   @State() isActive = false;
@@ -35,6 +36,70 @@ export class PickerColumnInternal implements ComponentInterface {
    * A list of options to be displayed in the picker
    */
   @Prop() items: PickerColumnItem[] = [];
+  @Watch('items')
+  itemsChange(currentItems: PickerColumnItem[], previousItems: PickerColumnItem[]) {
+    const { value } = this;
+
+    /**
+     * When the items change, it is possible for the item
+     * that was selected to no longer exist. In that case, we need
+     * to automatically select the nearest item. If we do not,
+     * then the scroll position will be reset to zero and it will
+     * look like the first item was automatically selected.
+     *
+     * If we cannot find a closest item then we do nothing, and
+     * the browser will reset the scroll position to 0.
+     */
+    const findCurrentItem = currentItems.find((item) => item.value === value);
+    if (!findCurrentItem) {
+      /**
+       * The default behavior is to assume
+       * that the new set of data is similar to the old
+       * set of data, just with some items filtered out.
+       * We walk backwards through the data to find the
+       * closest enabled picker item and select it.
+       *
+       * Developers can also swap the items out for an entirely
+       * new set of data. In that case, the value we select
+       * here likely will not make much sense. For this use case,
+       * developers should update the `value` prop themselves
+       * when swapping out the data.
+       */
+      const findPreviousItemIndex = previousItems.findIndex((item) => item.value === value);
+      if (findPreviousItemIndex === -1) {
+        return;
+      }
+
+      /**
+       * Step through the current items backwards
+       * until we find a neighbor we can select.
+       * We start at the last known location of the
+       * current selected item in order to
+       * account for data that has been added. This
+       * search prioritizes stability in that it
+       * tries to keep the scroll position as close
+       * to where it was before the update.
+       * Before Items: ['a', 'b', 'c'], Selected Value: 'b'
+       * After Items:  ['a', 'dog', 'c']
+       * Even though 'dog' is a different item than 'b',
+       * it is the closest item we can select while
+       * preserving the scroll position.
+       */
+      let nearestItem;
+      for (let i = findPreviousItemIndex; i >= 0; i--) {
+        const item = currentItems[i];
+        if (item !== undefined && item.disabled !== true) {
+          nearestItem = item;
+          break;
+        }
+      }
+
+      if (nearestItem) {
+        this.setValue(nearestItem.value);
+        return;
+      }
+    }
+  }
 
   /**
    * The selected option in the picker.
@@ -143,7 +208,15 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private setValue(value?: string | number) {
+  /**
+   * Sets the value prop and fires the ionChange event.
+   * This is used when we need to fire ionChange from
+   * user-generated events that cannot be caught with normal
+   * input/change event listeners.
+   * @internal
+   */
+  @Method()
+  async setValue(value?: string | number) {
     const { items } = this;
     this.value = value;
     const findItem = items.find((item) => item.value === value && item.disabled !== true);
@@ -187,11 +260,30 @@ export class PickerColumnInternal implements ComponentInterface {
     const isColumnActive = inputModeColumn === undefined || inputModeColumn === this.el;
 
     if (!useInputMode || !isColumnActive) {
-      this.isActive = false;
+      this.setInputModeActive(false);
       return;
     }
 
-    this.isActive = true;
+    this.setInputModeActive(true);
+  };
+
+  /**
+   * Setting isActive will cause a re-render.
+   * As a result, we do not want to cause the
+   * re-render mid scroll as this will cause
+   * the picker column to jump back to
+   * whatever value was selected at the
+   * start of the scroll interaction.
+   */
+  private setInputModeActive = (state: boolean) => {
+    if (this.isScrolling) {
+      this.scrollEndCallback = () => {
+        this.isActive = state;
+      };
+      return;
+    }
+
+    this.isActive = state;
   };
 
   /**
@@ -213,9 +305,9 @@ export class PickerColumnInternal implements ComponentInterface {
           timeout = undefined;
         }
 
-        if (!this.hapticsStarted) {
+        if (!this.isScrolling) {
           hapticSelectionStart();
-          this.hapticsStarted = true;
+          this.isScrolling = true;
         }
 
         /**
@@ -247,6 +339,21 @@ export class PickerColumnInternal implements ComponentInterface {
         activeElement.classList.add(PICKER_COL_ACTIVE);
 
         timeout = setTimeout(() => {
+          this.isScrolling = false;
+          hapticSelectionEnd();
+
+          /**
+           * Certain tasks (such as those that
+           * cause re-renders) should only be done
+           * once scrolling has finished, otherwise
+           * flickering may occur.
+           */
+          const { scrollEndCallback } = this;
+          if (scrollEndCallback) {
+            scrollEndCallback();
+            this.scrollEndCallback = undefined;
+          }
+
           const dataIndex = activeElement.getAttribute('data-index');
 
           /**
@@ -263,8 +370,6 @@ export class PickerColumnInternal implements ComponentInterface {
 
           if (selectedItem.value !== this.value) {
             this.setValue(selectedItem.value);
-            hapticSelectionEnd();
-            this.hapticsStarted = false;
           }
         }, 250);
       });

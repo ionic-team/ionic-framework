@@ -31,6 +31,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -165,6 +166,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, a backdrop will be displayed behind the modal.
+   * This property controls whether or not the backdrop
+   * darkens the screen when the modal is presented.
+   * It does not control whether or not the backdrop
+   * is active or present in the DOM.
    */
   @Prop() showBackdrop = true;
 
@@ -466,21 +471,31 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
+    /**
+     * TODO (FW-937) - In the next major release of Ionic, all card modals
+     * will be swipeable by default. canDismiss will be used to determine if the
+     * modal can be dismissed. This check should change to check the presence of
+     * presentingElement instead.
+     *
+     * If we did not do this check, then not using swipeToClose would mean you could
+     * not run canDismiss on swipe as there would be no swipe gesture created.
+     */
+    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+
+    /**
+     * We need to change the status bar at the
+     * start of the animation so that it completes
+     * by the time the card animation is done.
+     */
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      setCardStatusBarDark();
+    }
+
     await this.currentTransition;
 
     if (this.isSheetModal) {
       this.initSheetGesture();
-
-      /**
-       * TODO (FW-937) - In the next major release of Ionic, all card modals
-       * will be swipeable by default. canDismiss will be used to determine if the
-       * modal can be dismissed. This check should change to check the presence of
-       * presentingElement instead.
-       *
-       * If we did not do this check, then not using swipeToClose would mean you could
-       * not run canDismiss on swipe as there would be no swipe gesture created.
-       */
-    } else if (this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined)) {
+    } else if (hasCardModal) {
       await this.initSwipeToClose();
     }
 
@@ -629,6 +644,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     if (role !== 'handler' && !(await this.checkCanDismiss())) {
       return false;
+    }
+
+    /**
+     * We need to start the status bar change
+     * before the animation so that the change
+     * finishes when the dismiss animation does.
+     * TODO (FW-937)
+     */
+    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      setCardStatusBarDefault();
     }
 
     /* tslint:disable-next-line */

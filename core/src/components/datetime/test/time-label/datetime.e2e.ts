@@ -9,7 +9,7 @@ test.describe('datetime: time label', () => {
     await page.waitForSelector('.datetime-ready');
 
     const timeLabel = page.locator('ion-datetime .time-header');
-    expect(timeLabel).toHaveText('Time');
+    await expect(timeLabel).toHaveText('Time');
   });
   test('should not render a custom time label', async ({ page }) => {
     await page.setContent(`
@@ -18,6 +18,6 @@ test.describe('datetime: time label', () => {
     await page.waitForSelector('.datetime-ready');
 
     const timeLabel = page.locator('ion-datetime .time-header');
-    expect(timeLabel).toHaveText('');
+    await expect(timeLabel).toHaveText('');
   });
 });

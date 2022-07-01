@@ -39,6 +39,9 @@ describe('Form', () => {
       cy.get('ion-input.required').invoke('prop', 'value', 'Some value');
       testStatus('INVALID');
 
+      // TODO: FW-1160 - Remove when v7 is released
+      cy.wait(300);
+
       cy.get('ion-select').invoke('prop', 'value', 'nes');
       testStatus('INVALID');
 

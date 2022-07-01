@@ -347,7 +347,7 @@ export class PickerInternal implements ComponentInterface {
      */
     const findItemFromCompleteValue = values.find(({ text }) => text.replace(/^0+/, '') === inputEl.value);
     if (findItemFromCompleteValue) {
-      inputModeColumn.value = findItemFromCompleteValue.value;
+      inputModeColumn.setValue(findItemFromCompleteValue.value);
       return;
     }
 
@@ -377,7 +377,7 @@ export class PickerInternal implements ComponentInterface {
     const item = colEl.items.find(({ text, disabled }) => disabled !== true && text.replace(behavior, '') === value);
 
     if (item) {
-      colEl.value = item.value;
+      colEl.setValue(item.value);
     }
   };
 
