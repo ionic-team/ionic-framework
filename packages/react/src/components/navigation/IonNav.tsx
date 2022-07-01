@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import type { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
+import React, { useState } from 'react';
 
 import { ReactDelegate } from '../../framework-delegate';
 import { createReactComponent } from '../react-component-lib';
