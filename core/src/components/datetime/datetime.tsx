@@ -11,7 +11,7 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import { warnIfValueOutOfBounds } from './utils/comparison';
+import { isSameDay, warnIfValueOutOfBounds } from './utils/comparison';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -467,11 +467,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    // TODO
-    if(Array.isArray(this.activeParts)) {
-      console.log("confirm not implemented yet for array");
-      return;
-    }
+    const { highlightActiveParts, isCalendarPicker, activeParts } = this;
 
     /**
      * We only update the value if the presentation is not a calendar picker,
@@ -480,7 +476,7 @@ export class Datetime implements ComponentInterface {
      *
      * Otherwise "today" would accidentally be set as the value.
      */
-    if (this.highlightActiveParts || !this.isCalendarPicker) {
+    if (highlightActiveParts || !isCalendarPicker) {
       /**
        * Prevent convertDataToISO from doing any
        * kind of transformation based on timezone
@@ -490,10 +486,17 @@ export class Datetime implements ComponentInterface {
        * the date that is currently selected, otherwise
        * there can be 1 hr difference when dealing w/ DST
        */
-      const date = new Date(convertDataToISO(this.activeParts));
-      this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
+      if(Array.isArray(activeParts)) {
+        const dates = convertDataToISO(activeParts).map(str => new Date(str));
+        for(let i = 0; i < dates.length; i++) {
+          activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
+        }
+      } else {
+        const date = new Date(convertDataToISO(activeParts));
+        activeParts.tzOffset = date.getTimezoneOffset() * -1;
+      }
 
-      this.value = convertDataToISO(this.activeParts);
+      this.value = convertDataToISO(activeParts);
     }
 
     if (closeOverlay) {
@@ -548,7 +551,7 @@ export class Datetime implements ComponentInterface {
     if(multiple) {
       const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
       if(removeDate) {
-        this.activeParts = activePartsArray.filter(p => JSON.stringify(p) !== JSON.stringify(parts));
+        this.activeParts = activePartsArray.filter(p => !isSameDay(p, parts));
       } else if(highlightActiveParts) {
         this.activeParts = [
           ...activePartsArray,
@@ -1468,7 +1471,7 @@ export class Datetime implements ComponentInterface {
 
     if (isDateEnabled) {
       days = days.map((dayObject) => {
-        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year };
+        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year } as DatetimeParts;
 
         let disabled;
         try {
@@ -1477,7 +1480,7 @@ export class Datetime implements ComponentInterface {
            * to prevent exceptions in the user's function from
            * interrupting the calendar rendering.
            */
-          disabled = !isDateEnabled(convertDataToISO(referenceParts as DatetimeParts));
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
         } catch (e) {
           printIonError(
             'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',

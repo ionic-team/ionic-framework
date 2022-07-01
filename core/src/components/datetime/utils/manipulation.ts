@@ -10,7 +10,14 @@ const fourDigit = (val: number | undefined): string => {
   return ('000' + (val !== undefined ? Math.abs(val) : '0')).slice(-4);
 };
 
-export const convertDataToISO = (data: DatetimeParts): string => {
+export function convertDataToISO(data: DatetimeParts): string;
+export function convertDataToISO(data: DatetimeParts[]): string[];
+export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[];
+export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[] {
+  if(Array.isArray(data)) {
+    return data.map(parts => convertDataToISO(parts));
+  }
+
   // https://www.w3.org/TR/NOTE-datetime
   let rtn = '';
   if (data.year !== undefined) {
