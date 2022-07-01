@@ -280,6 +280,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
         ? undefined
         : routeInfo.routeDirection;
+    const directionToUse = direction ?? routeInfoFallbackDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (
@@ -316,8 +317,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
       await routerOutlet.commit(enteringEl, leavingEl, {
         deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction: direction ?? routeInfoFallbackDirection,
+        duration: directionToUse === undefined ? 0 : undefined,
+        direction: directionToUse,
         showGoBack: !!routeInfo.pushedByRoute,
         progressAnimation,
         animationBuilder: routeInfo.routeAnimation,
