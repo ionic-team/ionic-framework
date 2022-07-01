@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.13-nightly.20220701](https://github.com/ionic-team/ionic-framework/compare/v6.1.12...v6.1.13-nightly.20220701) (2022-07-01)
+
+
+### Bug Fixes
+
+* **all:** long press now preserves activated state ([#25551](https://github.com/ionic-team/ionic-framework/issues/25551)) ([a8286f6](https://github.com/ionic-team/ionic-framework/commit/a8286f6e42f734a027416ac6cd659e3dce4edccb)), closes [#25544](https://github.com/ionic-team/ionic-framework/issues/25544)
+
+
+
+
+
 ## [6.1.12](https://github.com/ionic-team/ionic-framework/compare/v6.1.11...v6.1.12) (2022-06-29)
 
 
