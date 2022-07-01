@@ -57,6 +57,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
+  private sheetTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
   private currentBreakpoint?: number;
@@ -753,13 +754,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (moveSheetToBreakpoint) {
-      this.currentTransition = moveSheetToBreakpoint({
+      this.sheetTransition = moveSheetToBreakpoint({
         breakpoint,
         breakpointOffset: 1 - currentBreakpoint!,
         canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
       });
-      await this.currentTransition;
-      this.currentTransition = undefined;
+      await this.sheetTransition;
+      this.sheetTransition = undefined;
     }
   }
 
@@ -797,8 +798,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private onHandleClick = () => {
-    const { currentTransition, handleBehavior } = this;
-    if (handleBehavior !== 'cycle' || currentTransition !== undefined) {
+    const { sheetTransition, handleBehavior } = this;
+    if (handleBehavior !== 'cycle' || sheetTransition !== undefined) {
       /**
        * The sheet modal should not advance to the next breakpoint
        * if the handle behavior is not `cycle` or if the handle
@@ -810,8 +811,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   private onBackdropTap = () => {
-    const { currentTransition } = this;
-    if (currentTransition !== undefined) {
+    const { sheetTransition } = this;
+    if (sheetTransition !== undefined) {
       /**
        * When the handle is double clicked at the largest breakpoint,
        * it will start to move to the first breakpoint. While transitioning,
