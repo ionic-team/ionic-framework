@@ -129,6 +129,8 @@ ion-backdrop {
 
   background: var(--ion-color-step-350, #c0c0be);
 
+  cursor: pointer;
+
   z-index: 11;
 
   &::before {
@@ -146,10 +148,6 @@ ion-backdrop {
     transform: translate(-50%, -50%);
 
     content: "";
-  }
-
-  &--clickable {
-    cursor: pointer;
   }
 }
 

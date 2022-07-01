@@ -881,10 +881,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         <div role="dialog" class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
           {showHandle && (
             <button
-              class={{
-                'modal-handle': true,
-                'modal-handle--clickable': isHandleCycle,
-              }}
+              class="modal-handle"
               // Prevents the handle from receiving keyboard focus when it does not cycle
               tabIndex={!isHandleCycle ? -1 : 0}
               aria-label={isHandleCycle ? 'Activate to adjust the size of the dialog overlaying the screen' : null}
