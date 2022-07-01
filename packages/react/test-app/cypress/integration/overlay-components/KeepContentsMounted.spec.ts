@@ -7,13 +7,13 @@ describe('keepContentsMounted', () => {
     });
 
     it('should mount component if true', () => {
-      cy.visit('/overlay-auto-mount');
+      cy.visit('/keep-contents-mounted');
 
       cy.get('ion-modal ion-content').should('exist');
     });
 
     it('should keep component mounted after dismissing if true', () => {
-      cy.visit('/overlay-auto-mount');
+      cy.visit('/keep-contents-mounted');
 
       cy.get('#open-modal').click();
 
@@ -36,13 +36,13 @@ describe('keepContentsMounted', () => {
     });
 
     it('should mount component if true', () => {
-      cy.visit('/overlay-auto-mount');
+      cy.visit('/keep-contents-mounted');
 
       cy.get('ion-popover ion-content').should('exist');
     });
 
     it('should keep component mounted after dismissing if true', () => {
-      cy.visit('/overlay-auto-mount');
+      cy.visit('/keep-contents-mounted');
 
       cy.get('#open-popover').click();
 

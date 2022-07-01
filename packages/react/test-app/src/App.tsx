@@ -36,7 +36,7 @@ const App: React.FC = () => (
         <Route path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
         <Route path="/overlay-components" component={OverlayComponents} />
-        <Route path="/overlay-auto-mount" component={KeepContentsMounted} />
+        <Route path="/keep-contents-mounted" component={KeepContentsMounted} />
         <Route path="/tabs" component={Tabs} />
       </IonRouterOutlet>
     </IonReactRouter>
