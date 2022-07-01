@@ -48,8 +48,7 @@ import {
   IonModal,
   IonPopover,
 } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
-import { trash, share, caretForwardCircle, heart, close } from 'ionicons/icons';
+import { defineComponent } from 'vue';
 import ModalContent from '@/components/ModalContent.vue';
 import PopoverContent from '@/components/PopoverContent.vue';
 
