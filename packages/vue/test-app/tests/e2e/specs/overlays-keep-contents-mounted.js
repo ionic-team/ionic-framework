@@ -1,7 +1,7 @@
 describe('overlays - keepContentsMounted', () => {
   beforeEach(() => {
     cy.viewport(1000, 900);
-    cy.visit('http://localhost:8080/overlays-auto-mount')
+    cy.visit('http://localhost:8080/keep-contents-mounted')
   })
   describe('modal', () => {
     it('should not mount component if false', () => {

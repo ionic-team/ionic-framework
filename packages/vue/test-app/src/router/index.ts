@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Overlays.vue')
   },
   {
-    path: '/overlays-auto-mount',
+    path: '/keep-contents-mounted',
     component: () => import('@/views/OverlaysAutoMount.vue')
   },
   {
