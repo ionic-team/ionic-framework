@@ -6,8 +6,8 @@ import { Component } from "@angular/core";
  * enabled.
  */
 @Component({
-  selector: 'app-overlay-auto-mount',
-  templateUrl: 'overlay-auto-mount.component.html'
+  selector: 'app-keep-contents-mounted',
+  templateUrl: 'keep-contents-mounted.component.html'
 })
-export class OverlaykeepContentsMounted {
+export class OverlayKeepContentsMounted {
 }
