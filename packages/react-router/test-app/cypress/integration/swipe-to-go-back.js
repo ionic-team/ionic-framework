@@ -88,4 +88,36 @@ describe('Swipe To Go Back', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('tabs');
   });
+
+  it('should be able to swipe back from child tab page after visiting', () => {
+    cy.visit(`http://localhost:${port}/tabs/tab1`);
+    cy.ionPageVisible('tab1');
+
+    cy.get('#child-one').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab1child1');
+
+    cy.get('#child-two').click();
+    cy.ionPageHidden('tab1child1');
+    cy.ionPageVisible('tab1child2');
+
+    cy.ionSwipeToGoBack(true, 'ion-tabs ion-router-outlet');
+
+    cy.ionPageDoesNotExist('tab1child2');
+    cy.ionPageVisible('tab1child1');
+
+    cy.ionSwipeToGoBack(true, 'ion-tabs ion-router-outlet');
+
+    cy.ionPageDoesNotExist('tab1child1');
+    cy.ionPageVisible('tab1');
+
+    cy.get('#child-one').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab1child1');
+
+    cy.ionSwipeToGoBack(true, 'ion-tabs ion-router-outlet');
+
+    cy.ionPageDoesNotExist('tab1child1');
+    cy.ionPageVisible('tab1');
+  })
 });
