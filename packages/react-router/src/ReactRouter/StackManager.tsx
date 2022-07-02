@@ -232,14 +232,26 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     };
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
-        const { routeInfo } = this.props;
+        /**
+         * Note: We must call goBack()
+         * before unmounting the leaving view
+         * otherwise users will get a blank
+         * screen briefly. Since this.props.routeInfo
+         * will have the latest routeInfo, we need
+         * to take a copy of the old routeInfo
+         * so that we can unmount the correct view.
+         * Otherwise, we will end up unmounting the
+         * view that just transitioned in.
+         */
+        const routeInfo = { ...this.props.routeInfo };
+
+        this.context.goBack();
+
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
         if (leavingViewItem) {
           leavingViewItem.mount = false;
           this.forceUpdate();
         }
-
-        this.context.goBack();
 
       } else {
         /**
