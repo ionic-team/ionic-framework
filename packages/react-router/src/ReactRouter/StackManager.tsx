@@ -232,7 +232,15 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     };
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
+        const { routeInfo } = this.props;
+        const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+        if (leavingViewItem) {
+          leavingViewItem.mount = false;
+          this.forceUpdate();
+        }
+
         this.context.goBack();
+
       } else {
         /**
          * In the event that the swipe
