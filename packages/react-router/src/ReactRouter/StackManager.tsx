@@ -26,6 +26,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
   prevProps?: StackManagerProps;
+  skipTransition: boolean;
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
@@ -41,6 +42,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.handlePageTransition = this.handlePageTransition.bind(this);
     this.id = generateId('routerOutlet');
     this.prevProps = undefined;
+    this.skipTransition = false;
   }
 
   componentDidMount() {
@@ -146,14 +148,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         /**
          * If the entering view is already visible and the leaving view is not, the transition does not need to occur.
          */
-        if (
-          isViewVisible(enteringViewItem.ionPageElement) &&
-          leavingViewItem !== undefined &&
-          (
-            leavingViewItem.mount === false ||
-            !isViewVisible(leavingViewItem.ionPageElement!)
-          )
-        ) {
+        if (isViewVisible(enteringViewItem.ionPageElement) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement!)) {
           return;
         }
 
@@ -232,27 +227,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     };
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
-        /**
-         * Note: We must call goBack()
-         * before unmounting the leaving view
-         * otherwise users will get a blank
-         * screen briefly. Since this.props.routeInfo
-         * will have the latest routeInfo, we need
-         * to take a copy of the old routeInfo
-         * so that we can unmount the correct view.
-         * Otherwise, we will end up unmounting the
-         * view that just transitioned in.
-         */
-        const routeInfo = { ...this.props.routeInfo };
+        this.skipTransition = true;
 
         this.context.goBack();
-
-        const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
-        if (leavingViewItem) {
-          leavingViewItem.mount = false;
-          this.forceUpdate();
-        }
-
       } else {
         /**
          * In the event that the swipe
@@ -286,6 +263,17 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     direction?: 'forward' | 'back',
     progressAnimation = false
   ) {
+    /**
+     * If the transition was handled
+     * via the swipe to go back gesture,
+     * then we do not want to perform
+     * another transition.
+     */
+    if (this.skipTransition) {
+      this.skipTransition = false;
+      return;
+    }
+
     const routerOutlet = this.routerOutletElement!;
 
     const routeInfoFallbackDirection =
