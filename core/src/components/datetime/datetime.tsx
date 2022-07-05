@@ -477,26 +477,31 @@ export class Datetime implements ComponentInterface {
      * Otherwise "today" would accidentally be set as the value.
      */
     if (highlightActiveParts || !isCalendarPicker) {
-      /**
-       * Prevent convertDataToISO from doing any
-       * kind of transformation based on timezone
-       * This cancels out any change it attempts to make
-       *
-       * Important: Take the timezone offset based on
-       * the date that is currently selected, otherwise
-       * there can be 1 hr difference when dealing w/ DST
-       */
-      if(Array.isArray(activeParts)) {
-        const dates = convertDataToISO(activeParts).map(str => new Date(str));
-        for(let i = 0; i < dates.length; i++) {
-          activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
-        }
+      const activePartsIsArray = Array.isArray(activeParts);
+      if (activePartsIsArray && activeParts.length === 0) {
+        this.value = undefined;
       } else {
-        const date = new Date(convertDataToISO(activeParts));
-        activeParts.tzOffset = date.getTimezoneOffset() * -1;
-      }
+        /**
+         * Prevent convertDataToISO from doing any
+         * kind of transformation based on timezone
+         * This cancels out any change it attempts to make
+         *
+         * Important: Take the timezone offset based on
+         * the date that is currently selected, otherwise
+         * there can be 1 hr difference when dealing w/ DST
+         */
+        if (activePartsIsArray) {
+          const dates = convertDataToISO(activeParts).map(str => new Date(str));
+          for (let i = 0; i < dates.length; i++) {
+            activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
+          }
+        } else {
+          const date = new Date(convertDataToISO(activeParts));
+          activeParts.tzOffset = date.getTimezoneOffset() * -1;
+        }
 
-      this.value = convertDataToISO(activeParts);
+        this.value = convertDataToISO(activeParts);
+      }
     }
 
     if (closeOverlay) {
