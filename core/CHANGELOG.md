@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.13-nightly.20220705](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13-nightly.20220705) (2022-07-05)
+
+
+### Bug Fixes
+
+* **all:** long press now preserves activated state ([#25551](https://github.com/ionic-team/ionic/issues/25551)) ([a8286f6](https://github.com/ionic-team/ionic/commit/a8286f6e42f734a027416ac6cd659e3dce4edccb)), closes [#25544](https://github.com/ionic-team/ionic/issues/25544)
+* **datetime:** typing in time now updates value ([#25561](https://github.com/ionic-team/ionic/issues/25561)) ([1b1b1a3](https://github.com/ionic-team/ionic/commit/1b1b1a3800c4d044b4a3e7418f534e9271770ec6)), closes [#25560](https://github.com/ionic-team/ionic/issues/25560)
+
+
+
+
+
 ## [6.1.12](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12) (2022-06-29)
 
 
