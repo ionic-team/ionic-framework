@@ -198,7 +198,7 @@ export class Toggle implements ComponentInterface {
       <ion-icon
         class={{
           'toggle-switch-icon': true,
-          'toggle-switch-icon--checked': checked,
+          'toggle-switch-icon-checked': checked,
         }}
         icon={icon}
       ></ion-icon>
