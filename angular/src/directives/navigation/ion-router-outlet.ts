@@ -233,8 +233,25 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component as any;
+
+      /**
+       * Angular 14 introduces a new `loadComponent` property to the route config,
+       * that assigns the component to load to the `component` property of
+       * the route snapshot. We can check for the presence of this property
+       * to determine if the route is using standalone components.
+       *
+       * TODO: FW-1631: Remove this check when supporting standalone components
+       */
+      if (component == null && snapshot.component) {
+        console.warn(
+          '[Ionic Warning]: Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
+        );
+        return;
+      }
+
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       // We create an activated route proxy object that will maintain future updates for this component

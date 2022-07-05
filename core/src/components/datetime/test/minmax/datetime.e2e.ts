@@ -33,8 +33,8 @@ test.describe('datetime: minmax', () => {
     const prevButton = page.locator('ion-datetime .calendar-next-prev ion-button:nth-child(1)');
     const nextButton = page.locator('ion-datetime .calendar-next-prev ion-button:nth-child(2)');
 
-    expect(nextButton).toBeEnabled();
-    expect(prevButton).toBeDisabled();
+    await expect(nextButton).toBeEnabled();
+    await expect(prevButton).toBeDisabled();
 
     await page.evaluate('initDatetimeChangeEvent()');
 
@@ -45,8 +45,8 @@ test.describe('datetime: minmax', () => {
 
     await monthDidChangeSpy.next();
 
-    expect(nextButton).toBeDisabled();
-    expect(prevButton).toBeEnabled();
+    await expect(nextButton).toBeDisabled();
+    await expect(prevButton).toBeEnabled();
   });
 
   test('datetime: minmax months disabled', async ({ page }) => {
@@ -55,9 +55,9 @@ test.describe('datetime: minmax', () => {
 
     await page.waitForSelector('.datetime-ready');
 
-    expect(calendarMonths.nth(0)).not.toHaveClass(/calendar-month-disabled/);
-    expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
-    expect(calendarMonths.nth(2)).toHaveClass(/calendar-month-disabled/);
+    await expect(calendarMonths.nth(0)).not.toHaveClass(/calendar-month-disabled/);
+    await expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
+    await expect(calendarMonths.nth(2)).toHaveClass(/calendar-month-disabled/);
   });
 
   test('datetime: minmax navigation disabled', async ({ page }) => {
@@ -66,8 +66,8 @@ test.describe('datetime: minmax', () => {
 
     const navButtons = page.locator('ion-datetime#outside .calendar-next-prev ion-button');
 
-    expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
-    expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
+    await expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
+    await expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
   });
 
   test('datetime: min including day should not disable month', async ({ page }) => {
@@ -76,9 +76,9 @@ test.describe('datetime: minmax', () => {
 
     const calendarMonths = page.locator('ion-datetime#min-with-day .calendar-month');
 
-    expect(calendarMonths.nth(0)).toHaveClass(/calendar-month-disabled/);
-    expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
-    expect(calendarMonths.nth(2)).not.toHaveClass(/calendar-month-disabled/);
+    await expect(calendarMonths.nth(0)).toHaveClass(/calendar-month-disabled/);
+    await expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
+    await expect(calendarMonths.nth(2)).not.toHaveClass(/calendar-month-disabled/);
   });
 
   test.describe('when the datetime does not have a value', () => {
@@ -116,7 +116,7 @@ test.describe('datetime: minmax', () => {
       await page.waitForSelector('.datetime-ready');
 
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      expect(calendarMonthYear).toHaveText('June 2021');
+      await expect(calendarMonthYear).toHaveText('June 2021');
     };
 
     test('when min is defined', async ({ page }) => {

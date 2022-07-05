@@ -10,13 +10,13 @@ test.describe('select: compare-with', () => {
     const multipleSelect = await page.locator('#multiple');
     const singleSelect = await page.locator('#single');
 
-    expect(multipleSelect).toHaveJSProperty('value', [
+    await expect(multipleSelect).toHaveJSProperty('value', [
       {
         label: 'selected by default',
         value: '1',
       },
     ]);
-    expect(singleSelect).toHaveJSProperty('value', {
+    await expect(singleSelect).toHaveJSProperty('value', {
       label: 'selected by default',
       value: '1',
     });

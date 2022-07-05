@@ -24,6 +24,6 @@ test.describe('overlays: focus', () => {
     await ionModalDidPresent.next();
     await page.waitForChanges();
 
-    expect(page.locator('ion-input input')).toBeFocused();
+    await expect(page.locator('ion-input input')).toBeFocused();
   });
 });

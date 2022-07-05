@@ -35,13 +35,7 @@
 
             <ion-item>
               <ion-label>DateTime</ion-label>
-              <ion-datetime
-                name="date"
-                id="datetime"
-                min="1994-03-14"
-                max="2017-12-09"
-                display-format="MM/DD/YYYY"
-              ></ion-datetime>
+              <ion-datetime name="date" id="datetime" value="2022-04-01T10:00"></ion-datetime>
             </ion-item>
 
             <ion-item>
@@ -84,7 +78,7 @@
           </ion-list>
 
           <ion-button id="submit" type="submit">Submit</ion-button>
-          <p id="form-result"></p>
+          <p id="form-result">Form not submitted</p>
         </form>
 
         <ion-list>
@@ -109,10 +103,6 @@
           <ion-label> Multiple inputs/clickables </ion-label>
         </ion-list-header>
         <ion-list class="multiple">
-          <ion-item id="delayedInputItem">
-            <ion-label>Delayed input</ion-label>
-          </ion-item>
-
           <ion-item>
             <ion-label>Multiple inputs</ion-label>
             <ion-input placeholder="Input 1"></ion-input>
@@ -137,7 +127,7 @@
           <ion-item>
             <ion-checkbox slot="start" id="checkbox-start"></ion-checkbox>
             <ion-label>Multiple inputs w/ cover</ion-label>
-            <ion-datetime placeholder="startTime" display-format="HH:mm" id="datetime-end"></ion-datetime>
+            <ion-datetime placeholder="startTime" id="datetime-end" value="2022-04-01T10:00"> </ion-datetime>
             <ion-checkbox slot="end" id="checkbox-end"></ion-checkbox>
           </ion-item>
 
@@ -190,15 +180,6 @@
         clickableItem.color = color === undefined ? 'primary' : undefined;
       });
 
-      const delayedInputItem = document.querySelector('#delayedInputItem');
-      const delayedInput = document.createElement('ion-input');
-      delayedInput.type = 'number';
-      delayedInput.value = 34;
-
-      setTimeout(() => {
-        delayedInputItem.appendChild(delayedInput);
-      }, 3000);
-
       const inputs = document.querySelectorAll('ion-input, ion-textarea');
 
       for (var i = 0; i < inputs.length; i++) {
@@ -222,7 +203,7 @@
         const { datetime, select, toggle, text, placeholder, checkbox, range } = getInputs();
         text.value = placeholder.value = 'Some text';
         toggle.checked = checkbox.checked = true;
-        datetime.value = '2016-12-09';
+        datetime.value = '2022-04-01T10:00';
         range.value = 20;
         select.value = 'nes';
       }

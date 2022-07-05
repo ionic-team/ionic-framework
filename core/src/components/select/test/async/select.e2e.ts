@@ -12,6 +12,6 @@ test.describe('select: async', () => {
 
     await selectValueSet.next();
 
-    expect(select).toHaveJSProperty('value', 'bird');
+    await expect(select).toHaveJSProperty('value', 'bird');
   });
 });
