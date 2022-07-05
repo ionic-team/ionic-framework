@@ -83,7 +83,7 @@
 
   position: absolute;
 
-  color: var(--on-off-label-color, var(--ion-color-dark));
+  color: var(--ion-color-dark);
 }
 
 :host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon-checked {
