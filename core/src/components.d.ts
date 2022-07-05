@@ -1576,6 +1576,10 @@ export namespace Components {
          */
         "isOpen": boolean;
         /**
+          * If `true`, the component passed into `ion-modal` will automatically be mounted when the modal is created. The component will remain mounted even when the modal is dismissed. However, the component will be destroyed when the modal is destroyed. This property is not reactive and should only be used when initially creating a modal.  Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted": boolean;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
@@ -1944,6 +1948,10 @@ export namespace Components {
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
         "isOpen": boolean;
+        /**
+          * If `true`, the component passed into `ion-popover` will automatically be mounted when the popover is created. The component will remain mounted even when the popover is dismissed. However, the component will be destroyed when the popover is destroyed. This property is not reactive and should only be used when initially creating a popover.  Note: This feature only applies to inline popovers in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5497,6 +5505,10 @@ declare namespace LocalJSX {
          */
         "isOpen"?: boolean;
         /**
+          * If `true`, the component passed into `ion-modal` will automatically be mounted when the modal is created. The component will remain mounted even when the modal is dismissed. However, the component will be destroyed when the modal is destroyed. This property is not reactive and should only be used when initially creating a modal.  Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted"?: boolean;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
@@ -5787,6 +5799,10 @@ declare namespace LocalJSX {
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
         "isOpen"?: boolean;
+        /**
+          * If `true`, the component passed into `ion-popover` will automatically be mounted when the popover is created. The component will remain mounted even when the popover is dismissed. However, the component will be destroyed when the popover is destroyed. This property is not reactive and should only be used when initially creating a popover.  Note: This feature only applies to inline popovers in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
