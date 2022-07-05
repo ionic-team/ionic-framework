@@ -337,6 +337,8 @@ export class Refresher implements ComponentInterface {
         this.state !== RefresherState.Completing &&
         this.scrollEl!.scrollTop === 0,
       onStart: (ev: GestureDetail) => {
+        this.progress = 0;
+
         ev.data = { animation: undefined, didStart: false, cancelled: false };
       },
       onMove: (ev: GestureDetail) => {
@@ -372,10 +374,10 @@ export class Refresher implements ComponentInterface {
           return;
         }
 
+        this.gesture!.enable(false);
+
         writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
         if (this.progress <= 0.4) {
-          this.gesture!.enable(false);
-
           ev.data.animation.progressEnd(0, this.progress, 500).onFinish(() => {
             this.animations.forEach((ani) => ani.destroy());
             this.animations = [];
@@ -394,6 +396,7 @@ export class Refresher implements ComponentInterface {
           await snapBackAnimation.play();
           this.beginRefresh();
           ev.data.animation.destroy();
+          this.gesture!.enable(true);
         });
       },
     });

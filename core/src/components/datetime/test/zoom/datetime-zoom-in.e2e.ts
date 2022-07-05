@@ -33,7 +33,7 @@ test.describe('datetime: zoom in interactivity', () => {
     await datetimeMonthDidChange.next();
 
     const monthYear = page.locator('ion-datetime .calendar-month-year');
-    expect(monthYear).toHaveText('March 2022');
+    await expect(monthYear).toHaveText('March 2022');
   });
 
   test('should update the month when prev button is clicked', async ({ page }) => {
@@ -50,6 +50,6 @@ test.describe('datetime: zoom in interactivity', () => {
     await datetimeMonthDidChange.next();
 
     const monthYear = page.locator('ion-datetime .calendar-month-year');
-    expect(monthYear).toHaveText('January 2022');
+    await expect(monthYear).toHaveText('January 2022');
   });
 });

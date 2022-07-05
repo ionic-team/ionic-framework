@@ -54,6 +54,7 @@ export declare interface IonModal extends Components.IonModal {
 @ProxyCmp({
   inputs: [
     'animated',
+    'keepContentsMounted',
     'backdropBreakpoint',
     'backdropDismiss',
     'breakpoints',
@@ -78,9 +79,12 @@ export declare interface IonModal extends Components.IonModal {
 @Component({
   selector: 'ion-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div class="ion-page" *ngIf="isCmpOpen"><ng-container [ngTemplateOutlet]="template"></ng-container></div>`,
+  template: `<div class="ion-page" *ngIf="isCmpOpen || keepContentsMounted">
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+  </div>`,
   inputs: [
     'animated',
+    'keepContentsMounted',
     'backdropBreakpoint',
     'backdropDismiss',
     'breakpoints',

@@ -20,6 +20,6 @@ test.describe('loading: standalone', () => {
 
     await ionLoadingDidDismiss.next();
 
-    expect(loading).toBeHidden();
+    await expect(loading).toBeHidden();
   });
 });
