@@ -1559,7 +1559,7 @@ export namespace Components {
          */
         "handle"?: boolean;
         /**
-          * The interaction behavior for the sheet modal when the handle is pressed. Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.
+          * The interaction behavior for the sheet modal when the handle is pressed. Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is only available when the `handle` property is set to `true` and when the `breakpoints` property is set (using a sheet modal).
          */
         "handleBehavior"?: ModalHandleBehavior;
         "hasController": boolean;
@@ -5488,7 +5488,7 @@ declare namespace LocalJSX {
          */
         "handle"?: boolean;
         /**
-          * The interaction behavior for the sheet modal when the handle is pressed. Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.
+          * The interaction behavior for the sheet modal when the handle is pressed. Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is only available when the `handle` property is set to `true` and when the `breakpoints` property is set (using a sheet modal).
          */
         "handleBehavior"?: ModalHandleBehavior;
         "hasController"?: boolean;

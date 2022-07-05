@@ -65,7 +65,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private backdropEl?: HTMLIonBackdropElement;
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
-  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<any>;
+  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -146,6 +146,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * The interaction behavior for the sheet modal when the handle is pressed.
    * Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed.
    * Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.
+   *
+   * Handle behavior is only available when the `handle` property is set to `true` and
+   * when the `breakpoints` property is set (using a sheet modal).
    */
   @Prop() handleBehavior?: ModalHandleBehavior = 'none';
 
@@ -898,7 +901,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               class="modal-handle"
               // Prevents the handle from receiving keyboard focus when it does not cycle
               tabIndex={!isHandleCycle ? -1 : 0}
-              aria-label={isHandleCycle ? 'Activate to adjust the size of the dialog overlaying the screen' : null}
+              aria-label="Activate to adjust the size of the dialog overlaying the screen"
               onClick={isHandleCycle ? this.onHandleClick : undefined}
               part="handle"
             ></button>
