@@ -77,4 +77,4 @@ $toggle-ios-item-end-padding-bottom:   5px !default;
 $toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
 
 /// @prop - The text color of the on/off labels when the toggle is checked
-$toggle-ios-on-off-label-checked-color: #fff !default;
+$toggle-ios-on-off-label-checked-color: var(--on-off-label-checked-color, #fff) !default;
