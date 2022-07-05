@@ -144,11 +144,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * The interaction behavior for the sheet modal when the handle is pressed.
+   *
    * Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed.
    * Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.
    *
-   * Handle behavior is only available when the `handle` property is set to `true` and
-   * when the `breakpoints` property is set (using a sheet modal).
+   * Handle behavior is unavailable when the `handle` property is set to `false` or
+   * when the `breakpoints` property is not set (using a fullscreen or card modal).
    */
   @Prop() handleBehavior?: ModalHandleBehavior = 'none';
 
