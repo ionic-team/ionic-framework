@@ -196,6 +196,39 @@ test.describe('sheet modal: setting the breakpoint', () => {
   });
 });
 
+test.describe('sheet modal: handleBehavior cycle: focus trap', () => {
+  test.beforeEach(async ({ page, browserName }, testInfo) => {
+    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test.skip(browserName === 'firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
+    test.skip(browserName === 'webkit', 'Safari incorrectly allows keyboard focus to move to the slotted content');
+
+    await page.goto('/src/components/modal/test/sheet');
+  });
+
+  test('should trap focus on the modal handle', async ({ page, browserName }) => {
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+    const handle = page.locator('ion-modal .modal-handle');
+    const modal = page.locator('ion-modal');
+
+    await page.click('#handle-behavior-cycle-modal');
+    await ionModalDidPresent.next();
+
+    await page.waitForChanges();
+
+    await page.keyboard.press(tabKey);
+
+    /**
+     * toBeFocused looks at document.activeElement, which does not include elements
+     * that are focused within the shadow DOM.
+     */
+    const activeShadowEl = await modal.evaluate((el) => el.shadowRoot?.activeElement);
+    const handleEl = await handle.evaluate((el) => el);
+
+    await expect(activeShadowEl).toBe(handleEl);
+  });
+});
+
 test.describe('sheet modal: clicking the handle', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/src/components/modal/test/sheet');
