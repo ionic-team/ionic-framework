@@ -263,15 +263,44 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     direction?: 'forward' | 'back',
     progressAnimation = false
   ) {
-    /**
-     * If the transition was handled
-     * via the swipe to go back gesture,
-     * then we do not want to perform
-     * another transition.
-     */
-    if (this.skipTransition) {
-      this.skipTransition = false;
-      return;
+    const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
+      const skipTransition = this.skipTransition;
+
+      /**
+       * If the transition was handled
+       * via the swipe to go back gesture,
+       * then we do not want to perform
+       * another transition.
+       *
+       * We skip adding ion-page or ion-page-invisible
+       * because the entering view already exists in the DOM.
+       * If we added the classes, there would be a flicker where
+       * the view would be briefly hidden.
+       */
+      if (skipTransition) {
+        /**
+         * We need to reset skipTransition before
+         * we call routerOutlet.commit otherwise
+         * the transition triggered by the swipe
+         * to go back gesture would reset it. In
+         * that case you would see a duplicate
+         * transition triggered by handlePageTransition
+         * in componentDidUpdate.
+         */
+        this.skipTransition = false;
+      } else {
+        enteringEl.classList.add('ion-page');
+        enteringEl.classList.add('ion-page-invisible');
+      }
+
+      await routerOutlet.commit(enteringEl, leavingEl, {
+        deepWait: true,
+        duration: skipTransition || directionToUse === undefined ? 0 : undefined,
+        direction: directionToUse,
+        showGoBack: !!routeInfo.pushedByRoute,
+        progressAnimation,
+        animationBuilder: routeInfo.routeAnimation,
+      });
     }
 
     const routerOutlet = this.routerOutletElement!;
@@ -309,20 +338,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         }
       }
-    }
-
-    async function runCommit(enteringEl: HTMLElement, leavingEl?: HTMLElement) {
-      enteringEl.classList.add('ion-page');
-      enteringEl.classList.add('ion-page-invisible');
-
-      await routerOutlet.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: directionToUse === undefined ? 0 : undefined,
-        direction: directionToUse,
-        showGoBack: !!routeInfo.pushedByRoute,
-        progressAnimation,
-        animationBuilder: routeInfo.routeAnimation,
-      });
     }
   }
 
