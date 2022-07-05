@@ -776,6 +776,7 @@ ion-modal,prop,handle,boolean | undefined,undefined,false,false
 ion-modal,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
+ion-modal,prop,keepContentsMounted,boolean,false,false,false
 ion-modal,prop,keyboardClose,boolean,true,false,false
 ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,mode,"ios" | "md",undefined,false,false
@@ -895,6 +896,7 @@ ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undef
 ion-popover,prop,event,any,undefined,false,false
 ion-popover,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
+ion-popover,prop,keepContentsMounted,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,mode,"ios" | "md",undefined,false,false

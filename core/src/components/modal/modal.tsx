@@ -223,6 +223,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * If `true`, the component passed into `ion-modal` will
+   * automatically be mounted when the modal is created. The
+   * component will remain mounted even when the modal is dismissed.
+   * However, the component will be destroyed when the modal is
+   * destroyed. This property is not reactive and should only be
+   * used when initially creating a modal.
+   *
+   * Note: This feature only applies to inline modals in JavaScript
+   * frameworks such as Angular, React, and Vue.
+   */
+  @Prop() keepContentsMounted = false;
+
+  /**
    * TODO (FW-937)
    * This needs to default to true in the next
    * major release. We default it to undefined
