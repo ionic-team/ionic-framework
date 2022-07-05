@@ -571,6 +571,18 @@ export class Datetime implements ComponentInterface {
       };
     }
 
+    /**
+     * Now that the user has interacted somehow to select something, we can
+     * show the solid highlight. This needs to be done after checking it above,
+     * but before the confirm call below.
+     * 
+     * Note that for datetimes with confirm/cancel buttons, the value
+     * isn't updated until you call confirm(). We need to bring the
+     * solid circle back on day click for UX reasons, rather than only
+     * show the circle if `value` is truthy.
+     */
+    this.highlightActiveParts = true;
+
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
       return;
@@ -1897,17 +1909,6 @@ export class Datetime implements ComponentInterface {
                       year,
                     });
                   }
-
-                  /**
-                   * Note that for datetimes with confirm/cancel buttons, the value
-                   * isn't updated until you call confirm(). We need to bring the
-                   * solid circle back on day click for UX reasons, rather than only
-                   * show the circle if `value` is truthy.
-                   * 
-                   * This update needs to go after the setActiveParts call above since
-                   * its original value is used there.
-                   */
-                  this.highlightActiveParts = true;
                 }}
               >
                 {day}
