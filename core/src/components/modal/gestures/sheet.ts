@@ -247,7 +247,7 @@ export const createSheetGesture = (
     });
   };
 
-  const moveSheetToBreakpoint = async (options: MoveSheetToBreakpointOptions): Promise<void> => {
+  const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
     const { breakpoint, canDismiss, breakpointOffset } = options;
     /**
      * canDismiss should only prevent snapping
@@ -294,7 +294,13 @@ export const createSheetGesture = (
      */
     gesture.enable(false);
 
-    return new Promise((resolve) => {
+    if (shouldPreventDismiss) {
+      handleCanDismiss(baseEl, animation);
+    } else if (!shouldRemainOpen) {
+      onDismiss();
+    }
+
+    return new Promise<void>((resolve) => {
       animation
         .onFinish(
           () => {
@@ -334,10 +340,13 @@ export const createSheetGesture = (
                   }
 
                   gesture.enable(true);
+                  resolve();
                 });
               } else {
                 gesture.enable(true);
+                resolve();
               }
+            } else {
               resolve();
             }
 
@@ -350,12 +359,6 @@ export const createSheetGesture = (
           { oneTimeCallback: true }
         )
         .progressEnd(1, 0, 500);
-
-      if (shouldPreventDismiss) {
-        handleCanDismiss(baseEl, animation);
-      } else if (!shouldRemainOpen) {
-        onDismiss();
-      }
     });
   };
 
