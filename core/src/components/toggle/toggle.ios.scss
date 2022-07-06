@@ -71,13 +71,13 @@
 .toggle-switch-icon {
   @include ltr() {
     /* stylelint-disable-next-line property-disallowed-list */
-    right: 8px;
+    right: 6px;
   }
 
   @include rtl() {
     /* stylelint-disable property-disallowed-list */
     right: initial;
-    left: 8px;
+    left: 6px;
     /* stylelint-enable property-disallowed-list */
   }
 
