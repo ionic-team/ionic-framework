@@ -12,6 +12,7 @@ import type {
   Gesture,
   ModalAttributes,
   ModalBreakpointChangeEventDetail,
+  ModalHandleBehavior,
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
@@ -56,6 +57,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
+  private sheetTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
   private currentBreakpoint?: number;
@@ -63,7 +65,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private backdropEl?: HTMLIonBackdropElement;
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
-  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
+  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -139,6 +141,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * setting the `breakpoints` and `initialBreakpoint` properties.
    */
   @Prop() handle?: boolean;
+
+  /**
+   * The interaction behavior for the sheet modal when the handle is pressed.
+   *
+   * Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed.
+   * Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.
+   *
+   * Handle behavior is unavailable when the `handle` property is set to `false` or
+   * when the `breakpoints` property is not set (using a fullscreen or card modal).
+   */
+  @Prop() handleBehavior?: ModalHandleBehavior = 'none';
 
   /**
    * The component to display inside of the modal.
@@ -758,11 +771,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (moveSheetToBreakpoint) {
-      moveSheetToBreakpoint({
+      this.sheetTransition = moveSheetToBreakpoint({
         breakpoint,
         breakpointOffset: 1 - currentBreakpoint!,
         canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
       });
+      await this.sheetTransition;
+      this.sheetTransition = undefined;
     }
   }
 
@@ -774,7 +789,55 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return this.currentBreakpoint;
   }
 
+  private async moveToNextBreakpoint() {
+    const { breakpoints, currentBreakpoint } = this;
+
+    if (!breakpoints || currentBreakpoint == null) {
+      /**
+       * If the modal does not have breakpoints and/or the current
+       * breakpoint is not set, we can't move to the next breakpoint.
+       */
+      return false;
+    }
+
+    const allowedBreakpoints = breakpoints.filter((b) => b !== 0);
+    const currentBreakpointIndex = allowedBreakpoints.indexOf(currentBreakpoint);
+    const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length;
+    const nextBreakpoint = allowedBreakpoints[nextBreakpointIndex];
+
+    /**
+     * Sets the current breakpoint to the next available breakpoint.
+     * If the current breakpoint is the last breakpoint, we set the current
+     * breakpoint to the first non-zero breakpoint to avoid dismissing the sheet.
+     */
+    await this.setCurrentBreakpoint(nextBreakpoint);
+    return true;
+  }
+
+  private onHandleClick = () => {
+    const { sheetTransition, handleBehavior } = this;
+    if (handleBehavior !== 'cycle' || sheetTransition !== undefined) {
+      /**
+       * The sheet modal should not advance to the next breakpoint
+       * if the handle behavior is not `cycle` or if the handle
+       * is clicked while the sheet is moving to a breakpoint.
+       */
+      return;
+    }
+    this.moveToNextBreakpoint();
+  };
+
   private onBackdropTap = () => {
+    const { sheetTransition } = this;
+    if (sheetTransition !== undefined) {
+      /**
+       * When the handle is double clicked at the largest breakpoint,
+       * it will start to move to the first breakpoint. While transitioning,
+       * the backdrop will often receive the second click. We prevent the
+       * backdrop from dismissing the modal while moving between breakpoints.
+       */
+      return;
+    }
     this.dismiss(undefined, BACKDROP);
   };
 
@@ -792,12 +855,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior } = this;
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
     const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
+    const isHandleCycle = handleBehavior === 'cycle';
 
     return (
       <Host
@@ -833,7 +897,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
         <div role="dialog" class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
-          {showHandle && <div class="modal-handle" part="handle"></div>}
+          {showHandle && (
+            <button
+              class="modal-handle"
+              // Prevents the handle from receiving keyboard focus when it does not cycle
+              tabIndex={!isHandleCycle ? -1 : 0}
+              aria-label="Activate to adjust the size of the dialog overlaying the screen"
+              onClick={isHandleCycle ? this.onHandleClick : undefined}
+              part="handle"
+            ></button>
+          )}
           <slot></slot>
         </div>
       </Host>
