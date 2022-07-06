@@ -55,11 +55,13 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * We do not use the JS Date object here because
  * it adjusts the date for the current timezone.
  */
-export const parseDate = (val: string | string[] | undefined | null): any | undefined => {
-  // TODO
+export function parseDate(val: string): DatetimeParts;
+export function parseDate(val: string[]): DatetimeParts[];
+export function parseDate(val: undefined | null): undefined;
+export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
+export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
   if(Array.isArray(val)) {
-    console.log("parseDate not implemented yet for arrays");
-    return;
+    return val.map(valStr => parseDate(valStr));
   }
 
   // manually parse IS0 cuz Date.parse cannot be trusted
@@ -103,14 +105,13 @@ export const parseDate = (val: string | string[] | undefined | null): any | unde
     }
   }
 
+  // can also get second and millisecond from parse[6] and parse[7] if needed
   return {
     year: parse[1],
     month: parse[2],
     day: parse[3],
     hour: parse[4],
     minute: parse[5],
-    second: parse[6],
-    millisecond: parse[7],
     tzOffset,
   };
 };

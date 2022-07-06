@@ -1532,7 +1532,7 @@ export class Datetime implements ComponentInterface {
         class="day-column"
         color={this.color}
         items={days}
-        value={workingParts.day || this.todayParts.day}
+        value={'' + (workingParts.day || this.todayParts.day)}
         onIonChange={(ev: CustomEvent) => {
           // Due to a Safari 14 issue we need to destroy
           // the intersection observer before we update state
