@@ -2984,6 +2984,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Enables the on/off accessibility switch labels within the toggle.
+         */
+        "enableOnOffLabels": boolean | undefined;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -6935,6 +6939,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the toggle.
          */
         "disabled"?: boolean;
+        /**
+          * Enables the on/off accessibility switch labels within the toggle.
+         */
+        "enableOnOffLabels"?: boolean | undefined;
         /**
           * The mode determines which platform styles to use.
          */
