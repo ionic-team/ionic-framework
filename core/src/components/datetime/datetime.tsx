@@ -783,6 +783,9 @@ export class Datetime implements ComponentInterface {
       };
 
       const updateActiveMonth = () => {
+        scrollTimeout = undefined;
+        calendarBodyRef.style.removeProperty('pointer-events');
+
         /**
          * If the month did not change
          * then we can return early.
@@ -838,12 +841,29 @@ export class Datetime implements ComponentInterface {
        * need to update the DOM with the selected month.
        */
       let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+      const mode = getIonMode(this);
+      const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
       const scrollCallback = () => {
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
         }
 
-        scrollTimeout = setTimeout(updateActiveMonth, 150);
+        /**
+         * On iOS it is possible to quickly rubber band
+         * the scroll area before the scroll timeout has fired.
+         * This results in users reaching the end of the scrollable
+         * container before the DOM has updated.
+         * By setting `touch-action: none` we can ensure that
+         * subsequent swipes do not happen while the container
+         * is snapping.
+         */
+        if (needsiOSRubberBandFix) {
+          raf(() => {
+            calendarBodyRef.style.setProperty('pointer-events', 'none');
+          });
+        }
+
+        scrollTimeout = setTimeout(updateActiveMonth, 50);
       };
       calendarBodyRef.addEventListener('scroll', scrollCallback);
 
