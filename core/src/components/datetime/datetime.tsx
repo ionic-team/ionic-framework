@@ -84,7 +84,7 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-  private destroyCalendarIO?: () => void;
+  private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
 
   private minParts?: any;
@@ -717,7 +717,7 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private initializeCalendarIOListeners = () => {
+  private initializeCalendarListener = () => {
     const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) {
       return;
@@ -782,7 +782,7 @@ export class Datetime implements ComponentInterface {
         }
       };
 
-      const scrollCallback = () => {
+      const updateActiveMonth = () => {
         /**
          * If the month did not change
          * then we can return early.
@@ -838,13 +838,18 @@ export class Datetime implements ComponentInterface {
        * need to update the DOM with the selected month.
        */
       let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
-      calendarBodyRef.addEventListener('scroll', () => {
+      const scrollCallback = () => {
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
         }
 
-        scrollTimeout = setTimeout(scrollCallback, 150);
-      });
+        scrollTimeout = setTimeout(updateActiveMonth, 150);
+      }
+      calendarBodyRef.addEventListener('scroll', scrollCallback);
+
+      this.destroyCalendarListener = () => {
+        calendarBodyRef.removeEventListener('scroll', scrollCallback);
+      }
     });
   };
 
@@ -865,10 +870,10 @@ export class Datetime implements ComponentInterface {
    * if the datetime has been hidden/presented by a modal or popover.
    */
   private destroyInteractionListeners = () => {
-    const { destroyCalendarIO, destroyKeyboardMO } = this;
+    const { destroyCalendarListener, destroyKeyboardMO } = this;
 
-    if (destroyCalendarIO !== undefined) {
-      destroyCalendarIO();
+    if (destroyCalendarListener !== undefined) {
+      destroyCalendarListener();
     }
 
     if (destroyKeyboardMO !== undefined) {
@@ -877,7 +882,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private initializeListeners() {
-    this.initializeCalendarIOListeners();
+    this.initializeCalendarListener();
     this.initializeKeyboardListeners();
   }
 
@@ -1168,10 +1173,10 @@ export class Datetime implements ComponentInterface {
                 value={workingParts.month}
                 onIonChange={(ev: CustomEvent) => {
                   // Due to a Safari 14 issue we need to destroy
-                  // the intersection observer before we update state
+                  // the scroll listener before we update state
                   // and trigger a re-render.
-                  if (this.destroyCalendarIO) {
-                    this.destroyCalendarIO();
+                  if (this.destroyCalendarListener) {
+                    this.destroyCalendarListener();
                   }
 
                   this.setWorkingParts({
@@ -1186,9 +1191,9 @@ export class Datetime implements ComponentInterface {
                     });
                   }
 
-                  // We can re-attach the intersection observer after
+                  // We can re-attach the scroll listener after
                   // the working parts have been updated.
-                  this.initializeCalendarIOListeners();
+                  this.initializeCalendarListener();
 
                   ev.stopPropagation();
                 }}
@@ -1202,10 +1207,10 @@ export class Datetime implements ComponentInterface {
                 value={workingParts.year}
                 onIonChange={(ev: CustomEvent) => {
                   // Due to a Safari 14 issue we need to destroy
-                  // the intersection observer before we update state
+                  // the scroll listener before we update state
                   // and trigger a re-render.
-                  if (this.destroyCalendarIO) {
-                    this.destroyCalendarIO();
+                  if (this.destroyCalendarListener) {
+                    this.destroyCalendarListener();
                   }
 
                   this.setWorkingParts({
@@ -1220,9 +1225,9 @@ export class Datetime implements ComponentInterface {
                     });
                   }
 
-                  // We can re-attach the intersection observer after
+                  // We can re-attach the scroll listener after
                   // the working parts have been updated.
-                  this.initializeCalendarIOListeners();
+                  this.initializeCalendarListener();
 
                   ev.stopPropagation();
                 }}
