@@ -58,6 +58,7 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
 export function parseDate(val: string): DatetimeParts;
 export function parseDate(val: string[]): DatetimeParts[];
 export function parseDate(val: undefined | null): undefined;
+export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[];
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
   if(Array.isArray(val)) {

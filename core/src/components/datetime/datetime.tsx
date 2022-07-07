@@ -1172,18 +1172,21 @@ export class Datetime implements ComponentInterface {
   };
 
   private processValue = (value?: string | string[] | null) => {
-    // TODO
-    if(Array.isArray(value)) {
-      console.log("processValue not implemented yet for arrays");
-      return;
-    }
     this.highlightActiveParts = !!value;
     const valueToProcess = parseDate(value || getToday());
+    const valueIsArray = Array.isArray(valueToProcess);
 
     const { minParts, maxParts } = this;
     warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
 
-    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, minParts, maxParts);
+    /**
+     * If there are multiple values, pick an arbitrary one to clamp to. This way,
+     * if the values are across months, we always show at least one of them. Note
+     * that the values don't necessarily have to be in order.
+     */
+    const singleValue = valueIsArray ? valueToProcess[0] : valueToProcess;
+    
+    const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
     const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
@@ -1196,15 +1199,19 @@ export class Datetime implements ComponentInterface {
       ampm,
     });
 
-    this.activeParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-      tzOffset,
-      ampm,
-    };
+    if(valueIsArray) {
+      this.activeParts = [...valueToProcess];
+    } else {
+      this.activeParts = {
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        tzOffset,
+        ampm,
+      };
+    }
   };
 
   componentWillLoad() {
