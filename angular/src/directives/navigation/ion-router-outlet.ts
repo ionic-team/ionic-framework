@@ -281,9 +281,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
        */
       resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const component = snapshot.routeConfig!.component ?? snapshot.component;
+
       if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const component = snapshot.routeConfig!.component ?? snapshot.component;
         // Backwards compatibility for Angular 13 and lower
         const factory = resolverOrInjector.resolveComponentFactory(component);
         cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
