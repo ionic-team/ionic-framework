@@ -744,6 +744,8 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
+    const mode = getIonMode(this);
+    const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
      * Before setting up the IntersectionObserver,
@@ -783,8 +785,9 @@ export class Datetime implements ComponentInterface {
       };
 
       const updateActiveMonth = () => {
-        scrollTimeout = undefined;
-        calendarBodyRef.style.removeProperty('pointer-events');
+        if (needsiOSRubberBandFix) {
+          calendarBodyRef.style.removeProperty('pointer-events');
+        }
 
         /**
          * If the month did not change
@@ -841,8 +844,6 @@ export class Datetime implements ComponentInterface {
        * need to update the DOM with the selected month.
        */
       let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
-      const mode = getIonMode(this);
-      const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
       const scrollCallback = () => {
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
@@ -863,7 +864,7 @@ export class Datetime implements ComponentInterface {
           });
         }
 
-        scrollTimeout = setTimeout(updateActiveMonth, 50);
+        scrollTimeout = setTimeout(updateActiveMonth, 150);
       };
       calendarBodyRef.addEventListener('scroll', scrollCallback);
 
