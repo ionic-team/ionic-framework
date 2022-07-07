@@ -774,13 +774,13 @@ export class Datetime implements ComponentInterface {
         const month = elementInMonth.closest('.calendar-month');
 
         if (month === startMonth) {
-          return getPreviousMonth(parts)
+          return getPreviousMonth(parts);
         } else if (month === endMonth) {
-          return getNextMonth(parts)
+          return getNextMonth(parts);
         } else {
           return;
         }
-      }
+      };
 
       const scrollCallback = () => {
         /**
@@ -839,7 +839,9 @@ export class Datetime implements ComponentInterface {
        */
       let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
       calendarBodyRef.addEventListener('scroll', () => {
-        if (scrollTimeout) { clearTimeout(scrollTimeout); }
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
 
         scrollTimeout = setTimeout(scrollCallback, 250);
       });
