@@ -843,7 +843,7 @@ export class Datetime implements ComponentInterface {
           clearTimeout(scrollTimeout);
         }
 
-        scrollTimeout = setTimeout(scrollCallback, 250);
+        scrollTimeout = setTimeout(scrollCallback, 150);
       });
     });
   };
