@@ -204,7 +204,26 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
       const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
 
-      return !!enteringViewItem && enteringViewItem.mount;
+      return (
+        !!enteringViewItem &&
+        /**
+         * The root url '/' is treated as
+         * the first view item (but is never mounted),
+         * so we do not want to swipe back to the
+         * root url.
+         */
+        enteringViewItem.mount &&
+
+        /**
+         * When on the first page (whatever view
+         * you land on after the root url) it
+         * is possible for findViewItemByRouteInfo to
+         * return the exact same view you are currently on.
+         * Make sure that we are not swiping back to the same
+         * instances of a view.
+         */
+        enteringViewItem.routeData.match.path !== routeInfo.pathname
+      );
     };
 
     const onStart = async () => {
