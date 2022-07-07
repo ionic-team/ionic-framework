@@ -67,7 +67,6 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-  private overlayIsPresenting = false;
 
   /**
    * Whether to highlight the active day with a solid circle (as opposed
@@ -87,7 +86,6 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarIO?: () => void;
   private destroyKeyboardMO?: () => void;
-  private destroyOverlayListener?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
@@ -725,8 +723,6 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const mode = getIonMode(this);
-
     /**
      * For performance reasons, we only render 3
      * months at a time: The current month, the previous
@@ -755,36 +751,46 @@ export class Datetime implements ComponentInterface {
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
      */
-    let endIO: IntersectionObserver | undefined;
-    let startIO: IntersectionObserver | undefined;
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-      const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
-        const refIO = callbackType === 'start' ? startIO : endIO;
-        const refMonth = callbackType === 'start' ? startMonth : endMonth;
-        const refMonthFn = callbackType === 'start' ? getPreviousMonth : getNextMonth;
+
+      const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
+        const box = calendarBodyRef.getBoundingClientRect();
+        const root = this.el!.shadowRoot!;
 
         /**
-         * If the month is not fully in view, do not do anything
+         * Get the element that is in the center of the calendar body.
+         * This will be an element inside of the active month.
          */
-        const ev = entries[0];
-        if (!ev.isIntersecting) {
-          return;
-        }
+        const elementInMonth = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        if (!elementInMonth) return;
 
         /**
-         * When presenting an inline overlay,
-         * subsequent presentations will cause
-         * the IO to fire again (since the overlay
-         * is now visible and therefore the calendar
-         * months are intersecting).
+         * From here, we can determine if the start
+         * month or the end month was scrolled into view.
+         * If no month was changed, then we can return from
+         * the scroll callback early.
          */
-        if (this.overlayIsPresenting) {
-          this.overlayIsPresenting = false;
+        const month = elementInMonth.closest('.calendar-month');
+
+        if (month === startMonth) {
+          return getPreviousMonth(parts)
+        } else if (month === endMonth) {
+          return getNextMonth(parts)
+        } else {
           return;
         }
+      }
 
-        const { month, year, day } = refMonthFn(this.workingParts);
+      const scrollCallback = () => {
+        /**
+         * If the month did not change
+         * then we can return early.
+         */
+        const newDate = getChangedMonth(this.workingParts);
+        if (!newDate) return;
+
+        const { month, day, year } = newDate;
 
         if (
           isMonthDisabled(
@@ -799,40 +805,11 @@ export class Datetime implements ComponentInterface {
         }
 
         /**
-         * On iOS, we need to set pointer-events: none
-         * when the user is almost done with the gesture
-         * so that they cannot quickly swipe while
-         * the scrollable container is snapping.
-         * Updating the container while snapping
-         * causes WebKit to snap incorrectly.
-         */
-        if (mode === 'ios') {
-          const ratio = ev.intersectionRatio;
-          // `maxTouchPoints` will be 1 in device preview, but > 1 on device
-          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1 && navigator.maxTouchPoints > 1;
-
-          if (shouldDisable) {
-            calendarBodyRef.style.setProperty('pointer-events', 'none');
-            return;
-          }
-        }
-
-        /**
          * Prevent scrolling for other browsers
          * to give the DOM time to update and the container
          * time to properly snap.
          */
         calendarBodyRef.style.setProperty('overflow', 'hidden');
-
-        /**
-         * Remove the IO temporarily
-         * otherwise you can sometimes get duplicate
-         * events when rubber banding.
-         */
-        if (refIO === undefined) {
-          return;
-        }
-        refIO.disconnect();
 
         /**
          * Use a writeTask here to ensure
@@ -844,86 +821,28 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          // Disconnect all active intersection observers
-          // to avoid a re-render causing a duplicate event.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
-          }
-
-          raf(() => {
-            this.setWorkingParts({
-              ...this.workingParts,
-              month,
-              day: day!,
-              year,
-            });
-
-            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-            calendarBodyRef.style.removeProperty('overflow');
-            calendarBodyRef.style.removeProperty('pointer-events');
-
-            endIO?.observe(endMonth);
-            startIO?.observe(startMonth);
+          this.setWorkingParts({
+            ...this.workingParts,
+            month,
+            day: day!,
+            year,
           });
 
-          /**
-           * Now that state has been updated
-           * and the correct month is in view,
-           * we can resume the IO.
-           */
-          if (refIO === undefined) {
-            return;
-          }
-          refIO.observe(refMonth);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          calendarBodyRef.style.removeProperty('overflow');
         });
       };
 
-      const threshold =
-        mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1 ? [0.7, 1] : 1;
-
-      // Intersection observers cannot accurately detect the
-      // intersection with a threshold of 1, when the observed
-      // element width is a sub-pixel value (i.e. 334.05px).
-      // Setting a root margin to 1px solves the issue.
-      const rootMargin = '1px';
-
       /**
-       * Listen on the first month to
-       * prepend a new month and on the last
-       * month to append a new month.
-       * The 0.7 threshold is required on ios
-       * so that we can remove pointer-events
-       * when adding new months.
-       * Adding to a scroll snapping container
-       * while the container is snapping does not
-       * completely work as expected in WebKit.
-       * Adding pointer-events: none allows us to
-       * avoid these issues.
-       *
-       * This should be fine on Chromium, but
-       * when you set pointer-events: none
-       * it applies to active gestures which is not
-       * something WebKit does.
+       * When the container finishes scrolling we
+       * need to update the DOM with the selected month.
        */
+      let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+      calendarBodyRef.addEventListener('scroll', () => {
+        if (scrollTimeout) { clearTimeout(scrollTimeout); }
 
-      endIO = new IntersectionObserver((ev) => ioCallback('end', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
+        scrollTimeout = setTimeout(scrollCallback, 250);
       });
-      endIO.observe(endMonth);
-
-      startIO = new IntersectionObserver((ev) => ioCallback('start', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      startIO.observe(startMonth);
-
-      this.destroyCalendarIO = () => {
-        endIO?.disconnect();
-        startIO?.disconnect();
-      };
     });
   };
 
@@ -958,7 +877,6 @@ export class Datetime implements ComponentInterface {
   private initializeListeners() {
     this.initializeCalendarIOListeners();
     this.initializeKeyboardListeners();
-    this.initializeOverlayListener();
   }
 
   componentDidLoad() {
@@ -1053,36 +971,9 @@ export class Datetime implements ComponentInterface {
     this.prevPresentation = presentation;
 
     this.destroyInteractionListeners();
-    if (this.destroyOverlayListener !== undefined) {
-      this.destroyOverlayListener();
-    }
 
     this.initializeListeners();
   }
-
-  /**
-   * When doing subsequent presentations of an inline
-   * overlay, the IO callback will fire again causing
-   * the calendar to go back one month. We need to listen
-   * for the presentation of the overlay so we can properly
-   * cancel that IO callback.
-   */
-  private initializeOverlayListener = () => {
-    const overlay = this.el.closest('ion-popover, ion-modal');
-    if (overlay === null) {
-      return;
-    }
-
-    const overlayListener = () => {
-      this.overlayIsPresenting = true;
-    };
-
-    overlay.addEventListener('willPresent', overlayListener);
-
-    this.destroyOverlayListener = () => {
-      overlay.removeEventListener('willPresent', overlayListener);
-    };
-  };
 
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
