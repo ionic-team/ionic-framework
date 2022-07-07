@@ -864,7 +864,8 @@ export class Datetime implements ComponentInterface {
           });
         }
 
-        scrollTimeout = setTimeout(updateActiveMonth, 150);
+        // Wait ~3 frames
+        scrollTimeout = setTimeout(updateActiveMonth, 50);
       };
       calendarBodyRef.addEventListener('scroll', scrollCallback);
 
