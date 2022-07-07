@@ -202,17 +202,17 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const { routeInfo } = this.props;
 
       const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
 
-      return !!enteringViewItem;
+      return !!enteringViewItem && enteringViewItem.mount;
     };
 
     const onStart = async () => {
       const { routeInfo } = this.props;
 
       const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
-      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
       /**
        * When the gesture starts, kick off
@@ -239,7 +239,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         const { routeInfo } = this.props;
 
         const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
-        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
+        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
 
         if (enteringViewItem?.ionPageElement !== undefined) {
           const { ionPageElement } = enteringViewItem;
