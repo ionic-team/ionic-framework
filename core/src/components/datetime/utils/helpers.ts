@@ -92,3 +92,14 @@ export const isMonthFirstLocale = (locale: string) => {
 
   return parts[0].type === 'month';
 };
+
+/**
+ * Determines if the given locale formats the day period (am/pm) to the
+ * left or right of the hour.
+ * @param locale The locale to check.
+ * @returns `true` if the locale formats the day period to the left of the hour.
+ */
+export const isLocaleDayPeriodRTL = (locale: string) => {
+  const parts = new Intl.DateTimeFormat(locale, { hour: 'numeric' }).formatToParts(new Date());
+  return parts[0].type === 'dayPeriod';
+};

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.13](https://github.com/ionic-team/ionic-framework/compare/v6.1.12...v6.1.13) (2022-07-06)
+
+
+### Bug Fixes
+
+* **all:** long press now preserves activated state ([#25551](https://github.com/ionic-team/ionic-framework/issues/25551)) ([a8286f6](https://github.com/ionic-team/ionic-framework/commit/a8286f6e42f734a027416ac6cd659e3dce4edccb)), closes [#25544](https://github.com/ionic-team/ionic-framework/issues/25544)
+* **datetime:** typing in time now updates value ([#25561](https://github.com/ionic-team/ionic-framework/issues/25561)) ([1b1b1a3](https://github.com/ionic-team/ionic-framework/commit/1b1b1a3800c4d044b4a3e7418f534e9271770ec6)), closes [#25560](https://github.com/ionic-team/ionic-framework/issues/25560)
+
+
+
+
+
+## [6.1.12](https://github.com/ionic-team/ionic-framework/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+
+### Bug Fixes
+
+* **angular:** warn devs that standalone components are not supported ([#25516](https://github.com/ionic-team/ionic-framework/issues/25516)) ([c53785c](https://github.com/ionic-team/ionic-framework/commit/c53785c0c786113f3516c09fa512687ecb84c717))
+* **datetime:** add dev warnings when setting out of bounds value ([#25513](https://github.com/ionic-team/ionic-framework/issues/25513)) ([5dfaf63](https://github.com/ionic-team/ionic-framework/commit/5dfaf63c6582811b61339a6fa50cf551cd8724d0))
+
+
+
+
+
 ## [6.1.11](https://github.com/ionic-team/ionic-framework/compare/v6.1.10...v6.1.11) (2022-06-22)
 
 

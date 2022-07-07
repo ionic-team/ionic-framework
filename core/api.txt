@@ -388,6 +388,7 @@ ion-datetime,prop,minuteValues,number | number[] | string | undefined,undefined,
 ion-datetime,prop,mode,"ios" | "md",undefined,false,false
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
+ion-datetime,prop,preferWheel,boolean,false,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,showClearButton,boolean,false,false,false
@@ -772,9 +773,11 @@ ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
 ion-modal,prop,canDismiss,(() => Promise<boolean>) | boolean | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
+ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
 ion-modal,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
+ion-modal,prop,keepContentsMounted,boolean,false,false,false
 ion-modal,prop,keyboardClose,boolean,true,false,false
 ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,mode,"ios" | "md",undefined,false,false
@@ -894,6 +897,7 @@ ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undef
 ion-popover,prop,event,any,undefined,false,false
 ion-popover,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
+ion-popover,prop,keepContentsMounted,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,mode,"ios" | "md",undefined,false,false

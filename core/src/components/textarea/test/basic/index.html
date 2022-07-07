@@ -45,7 +45,7 @@
 
           <ion-item>
             <ion-label color="primary" position="floating">Floating Label</ion-label>
-            <ion-textarea id="timeout"></ion-textarea>
+            <ion-textarea></ion-textarea>
           </ion-item>
 
           <ion-item>
@@ -68,10 +68,11 @@
             <ion-textarea clear-on-edit="true"></ion-textarea>
           </ion-item>
 
-          <ion-item>
+          <!-- TODO: Re-add auto grow with PR#24205 -->
+          <!-- <ion-item>
             <ion-label color="primary">Autogrow</ion-label>
             <ion-textarea auto-grow="true"></ion-textarea>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
 
         <div class="ion-text-center">
@@ -88,11 +89,6 @@
       </ion-content>
 
       <script>
-        var textarea = document.getElementById('timeout');
-        setTimeout(() => {
-          textarea.value = 'timeout';
-        }, 1000);
-
         function toggleBoolean(id, prop) {
           var el = document.getElementById(id);
 

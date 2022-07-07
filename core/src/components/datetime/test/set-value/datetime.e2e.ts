@@ -13,7 +13,7 @@ test.describe('datetime: set-value', () => {
     await page.waitForChanges();
 
     const activeDate = page.locator('ion-datetime .calendar-day-active');
-    expect(activeDate).toHaveText('25');
+    await expect(activeDate).toHaveText('25');
   });
   test('should update the active time', async ({ page }) => {
     const datetime = page.locator('ion-datetime');
@@ -22,6 +22,6 @@ test.describe('datetime: set-value', () => {
     await page.waitForChanges();
 
     const activeDate = page.locator('ion-datetime .time-body');
-    expect(activeDate).toHaveText('12:40 PM');
+    await expect(activeDate).toHaveText('12:40 PM');
   });
 });
