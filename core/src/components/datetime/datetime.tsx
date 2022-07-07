@@ -333,32 +333,40 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      // TODO: most of this will need a decent restructure
       const valueDateParts = parseDate(this.value);
       if (valueDateParts) {
         warnIfValueOutOfBounds(valueDateParts, this.minParts, this.maxParts);
 
-        const { month, day, year, hour, minute } = valueDateParts;
-        const ampm = hour >= 12 ? 'pm' : 'am';
+        if(Array.isArray(valueDateParts)) {
+          this.activePartsClone = [...valueDateParts];
+        } else {
+          const { month, day, year, hour, minute } = valueDateParts;
+          const ampm = hour ? 
+            hour >= 12 ? 'pm' : 'am'
+            : undefined;
 
-        this.activePartsClone = {
-          ...this.activeParts,
-          month,
-          day,
-          year,
-          hour,
-          minute,
-          ampm,
-        };
+          this.activePartsClone = {
+            ...this.activeParts,
+            month,
+            day,
+            year,
+            hour,
+            minute,
+            ampm,
+          };
 
-        /**
-         * The working parts am/pm value must be updated when the value changes, to
-         * ensure the time picker hour column values are generated correctly.
-         */
-        this.setWorkingParts({
-          ...this.workingParts,
-          ampm,
-        });
+          /**
+           * The working parts am/pm value must be updated when the value changes, to
+           * ensure the time picker hour column values are generated correctly.
+           * 
+           * Note that we don't need to do this if valueDateParts is an array, since
+           * multiple="true" does not apply to time pickers.
+           */
+          this.setWorkingParts({
+            ...this.workingParts,
+            ampm,
+          });
+        }        
       } else {
         printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
       }
@@ -551,10 +559,19 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, activeParts, highlightActiveParts } = this;
+    const { multiple, activePartsClone, highlightActiveParts } = this;
 
     if(multiple) {
-      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+      /**
+       * We read from activePartsClone here because valueChanged() only updates that,
+       * so it's the more reliable source of truth. If we read from activeParts, then
+       * if you click July 1, manually set the value to July 2, and then click July 3,
+       * the new value would be [July 1, July 3], ignoring the value set.
+       * 
+       * We can then pass the new value to activeParts (rather than activePartsClone)
+       * since the clone will be updated automatically by activePartsChanged().
+       */
+      const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
       if(removeDate) {
         this.activeParts = activePartsArray.filter(p => !isSameDay(p, parts));
       } else if(highlightActiveParts) {
