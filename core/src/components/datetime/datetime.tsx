@@ -325,7 +325,14 @@ export class Datetime implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
+    const { value, minParts, maxParts, workingParts, multiple } = this;
+
     if (this.hasValue()) {
+      if(!multiple && Array.isArray(value)) {
+        this.value = value[0];
+        return; // setting this.value will trigger re-run of this function
+      }
+
       /**
        * Clones the value of the `activeParts` to the private clone, to update
        * the date display on the current render cycle without causing another render.
@@ -333,9 +340,9 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      const valueDateParts = parseDate(this.value);
+      const valueDateParts = parseDate(value);
       if (valueDateParts) {
-        warnIfValueOutOfBounds(valueDateParts, this.minParts, this.maxParts);
+        warnIfValueOutOfBounds(valueDateParts, minParts, maxParts);
 
         if(Array.isArray(valueDateParts)) {
           this.activePartsClone = [...valueDateParts];
@@ -363,18 +370,18 @@ export class Datetime implements ComponentInterface {
            * multiple="true" does not apply to time pickers.
            */
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             ampm,
           });
         }        
       } else {
-        printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
+        printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
       }
     }
 
     this.emitStyle();
     this.ionChange.emit({
-      value: this.value,
+      value: value,
     });
   }
 
@@ -1173,10 +1180,14 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | string[] | null) => {
     this.highlightActiveParts = !!value;
-    const valueToProcess = parseDate(value || getToday());
-    const valueIsArray = Array.isArray(valueToProcess);
+    let valueToProcess = parseDate(value || getToday());
 
-    const { minParts, maxParts } = this;
+    const { minParts, maxParts, multiple } = this;
+    if (!multiple && Array.isArray(value)) {
+      this.value = value[0];
+      valueToProcess = (valueToProcess as DatetimeParts[])[0];
+    }
+
     warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
 
     /**
@@ -1184,8 +1195,8 @@ export class Datetime implements ComponentInterface {
      * if the values are across months, we always show at least one of them. Note
      * that the values don't necessarily have to be in order.
      */
-    const singleValue = valueIsArray ? valueToProcess[0] : valueToProcess;
-    
+    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+
     const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
     const ampm = parseAmPm(hour!);
 
@@ -1199,7 +1210,7 @@ export class Datetime implements ComponentInterface {
       ampm,
     });
 
-    if(valueIsArray) {
+    if (Array.isArray(valueToProcess)) {
       this.activeParts = [...valueToProcess];
     } else {
       this.activeParts = {
