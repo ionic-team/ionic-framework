@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.13](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13) (2022-07-06)
+
+
+### Bug Fixes
+
+* **all:** long press now preserves activated state ([#25551](https://github.com/ionic-team/ionic/issues/25551)) ([a8286f6](https://github.com/ionic-team/ionic/commit/a8286f6e42f734a027416ac6cd659e3dce4edccb)), closes [#25544](https://github.com/ionic-team/ionic/issues/25544)
+* **datetime:** typing in time now updates value ([#25561](https://github.com/ionic-team/ionic/issues/25561)) ([1b1b1a3](https://github.com/ionic-team/ionic/commit/1b1b1a3800c4d044b4a3e7418f534e9271770ec6)), closes [#25560](https://github.com/ionic-team/ionic/issues/25560)
+
+
+
+
+
+## [6.1.12](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+
+### Bug Fixes
+
+* **datetime:** add dev warnings when setting out of bounds value ([#25513](https://github.com/ionic-team/ionic/issues/25513)) ([5dfaf63](https://github.com/ionic-team/ionic/commit/5dfaf63c6582811b61339a6fa50cf551cd8724d0))
+
+
+
+
+
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+
+### Bug Fixes
+
+* **datetime:** closing time picker no longer changes month ([#25478](https://github.com/ionic-team/ionic/issues/25478)) ([f9ab9b5](https://github.com/ionic-team/ionic/commit/f9ab9b54ddb5a3004673e4aaa9cb62fd8e97ba07)), closes [#25438](https://github.com/ionic-team/ionic/issues/25438)
+* **item:** multiple input appearance when using datetime ([#25484](https://github.com/ionic-team/ionic/issues/25484)) ([3089f38](https://github.com/ionic-team/ionic/commit/3089f38f4d335c44e9913e874813dd4205c2b160)), closes [#25479](https://github.com/ionic-team/ionic/issues/25479)
+* **item:** multiple input appearance when using datetime ([#25498](https://github.com/ionic-team/ionic/issues/25498)) ([1a8d23d](https://github.com/ionic-team/ionic/commit/1a8d23da8125d54c3119eacb51206f7541c9f410)), closes [#25484](https://github.com/ionic-team/ionic/issues/25484) [#25483](https://github.com/ionic-team/ionic/issues/25483)
+* **overlays:** focus is not moved if active element is in overlay ([#25481](https://github.com/ionic-team/ionic/issues/25481)) ([dcc2da2](https://github.com/ionic-team/ionic/commit/dcc2da2800e69d938b4a62db436d9f07d9663dce)), closes [#24127](https://github.com/ionic-team/ionic/issues/24127) [#24820](https://github.com/ionic-team/ionic/issues/24820)
+* **refresher:** quickly swiping down no longer causes duplicate refresh ([#25476](https://github.com/ionic-team/ionic/issues/25476)) ([3abfa78](https://github.com/ionic-team/ionic/commit/3abfa780ccb32484b4d9f1b509e7ab910dfb901a)), closes [#25418](https://github.com/ionic-team/ionic/issues/25418)
+* **vue:** components have correct type definitions ([#25499](https://github.com/ionic-team/ionic/issues/25499)) ([b1821e9](https://github.com/ionic-team/ionic/commit/b1821e9d0a55f20f74696f119de724ab70647977)), closes [#25485](https://github.com/ionic-team/ionic/issues/25485)
+
+
+
+
+
+## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+
+### Bug Fixes
+
+* **fab-button:** improve ripple effect behavior on click ([#25413](https://github.com/ionic-team/ionic/issues/25413)) ([efdaf90](https://github.com/ionic-team/ionic/commit/efdaf90c5a767211e0034bab7cce5bd463ff5aa0)), closes [#21772](https://github.com/ionic-team/ionic/issues/21772)
+* **modal:** backdrop animation when backdropBreakpoint is 1 ([#25430](https://github.com/ionic-team/ionic/issues/25430)) ([c10df52](https://github.com/ionic-team/ionic/commit/c10df52f39c527dd7e03176c56a2e6cb0ebe455f)), closes [#25402](https://github.com/ionic-team/ionic/issues/25402)
+* **modal:** status bar color now correct with sheet modal ([#25424](https://github.com/ionic-team/ionic/issues/25424)) ([377c4f5](https://github.com/ionic-team/ionic/commit/377c4f597b972818d90132017d50c33074ddadab)), closes [#20501](https://github.com/ionic-team/ionic/issues/20501)
+* **picker-column-internal:** switching off an input mode column preserves scroll ([#25467](https://github.com/ionic-team/ionic/issues/25467)) ([989429d](https://github.com/ionic-team/ionic/commit/989429d65cf57ef8fb69854639f8eac1a12369bc))
+* **popover:** ensure popover does not go offscreen when adjusting top position ([#25350](https://github.com/ionic-team/ionic/issues/25350)) ([6926538](https://github.com/ionic-team/ionic/commit/692653842b43b5e36c51163f8261fde3b5bea40d)), closes [#25349](https://github.com/ionic-team/ionic/issues/25349)
+
+
+
+
+
 ## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
 
 

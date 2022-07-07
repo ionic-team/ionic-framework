@@ -99,6 +99,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     @Optional() @Attribute('tabs') tabs: string,
     private config: Config,
     private navCtrl: NavController,
+    @Optional() private componentFactoryResolver: ComponentFactoryResolver,
     commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
@@ -242,8 +243,29 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component ?? snapshot.component;
+
+      /**
+       * Angular 14 introduces a new `loadComponent` property to the route config,
+       * that assigns the component to load to the `component` property of
+       * the route snapshot. We can check for the presence of this property
+       * to determine if the route is using standalone components.
+       */
+      if (component == null && snapshot.component && !this.environmentInjector) {
+        console.warn(
+          '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n' +
+          'For example:\n' +
+          'In your component class, add:\n' +
+          `   import { EnvironmentInjector } from '@angular/core';` +
+          '   constructor(public environmentInjector: EnvironmentInjector) {}\n' +
+          'In your router outlet template, add:\n' +
+          '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>'
+        )
+        return;
+      }
+
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       // We create an activated route proxy object that will maintain future updates for this component
@@ -252,6 +274,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
 
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
+
+      /**
+       * The resolver is not always provided and is required in Angular 12.
+       * Fallback to the class-level provider when the resolver is not set.
+       */
+      resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
 
       if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
         // Backwards compatibility for Angular 13 and lower

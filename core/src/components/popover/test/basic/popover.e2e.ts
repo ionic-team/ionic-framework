@@ -28,7 +28,7 @@ test.describe('popover: htmlAttributes', async () => {
     await openPopover(page, 'basic-popover');
 
     const alert = page.locator('ion-popover');
-    expect(alert).toHaveAttribute('data-testid', 'basic-popover');
+    await expect(alert).toHaveAttribute('data-testid', 'basic-popover');
   });
 });
 

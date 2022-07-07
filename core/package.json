@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.1.9",
+  "version": "6.1.13",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -47,7 +47,7 @@
     "@stencil/angular-output-target": "^0.4.0",
     "@stencil/react-output-target": "^0.2.1",
     "@stencil/sass": "^1.5.2",
-    "@stencil/vue-output-target": "^0.6.0",
+    "@stencil/vue-output-target": "^0.6.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.6.0",
     "@types/swiper": "5.4.0",
@@ -62,7 +62,6 @@
     "fs-extra": "^9.0.1",
     "jest": "^26.4.1",
     "jest-cli": "^26.4.1",
-    "np": "^6.4.0",
     "pixelmatch": "4.0.2",
     "prettier": "^2.6.1",
     "puppeteer": "^10.4.0",
@@ -117,6 +116,5 @@
   "homepage": "https://ionicframework.com/",
   "jest": {
     "preset": "@stencil/core/testing"
-  },
-  "prettier": "@ionic/prettier-config"
+  }
 }

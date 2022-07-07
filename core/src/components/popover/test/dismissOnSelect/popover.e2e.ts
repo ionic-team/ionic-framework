@@ -20,7 +20,7 @@ test.describe('popover: dismissOnSelect', async () => {
     await hoverTrigger.click();
 
     // ensure parent popover is still open
-    expect(popover).toBeVisible();
+    await expect(popover).toBeVisible();
   });
 
   test('should not dismiss a popover when clicking a click trigger', async ({ page, browserName }) => {
@@ -41,6 +41,6 @@ test.describe('popover: dismissOnSelect', async () => {
     await ionPopoverDidPresent.next(); // wait for click popover to open
 
     // ensure parent popover is still open
-    expect(popover).toBeVisible();
+    await expect(popover).toBeVisible();
   });
 });

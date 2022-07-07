@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.13](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13) (2022-07-06)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.12](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+
+### Bug Fixes
+
+* **angular:** warn devs that standalone components are not supported ([#25516](https://github.com/ionic-team/ionic/issues/25516)) ([c53785c](https://github.com/ionic-team/ionic/commit/c53785c0c786113f3516c09fa512687ecb84c717))
+
+
+
+
+
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+
+### Bug Fixes
+
+* **angular:** router compatibility with Angular 12/13 ([#25456](https://github.com/ionic-team/ionic/issues/25456)) ([7b105a3](https://github.com/ionic-team/ionic/commit/7b105a3471e5bc588ba63f820b707e131c878b6f)), closes [#25448](https://github.com/ionic-team/ionic/issues/25448)
+
+
+
+
+
 ## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
 
 
