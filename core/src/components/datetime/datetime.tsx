@@ -1172,6 +1172,7 @@ export class Datetime implements ComponentInterface {
                 items={months}
                 value={workingParts.month}
                 onIonChange={(ev: CustomEvent) => {
+                  // TODO(FW-1823) Remove this when iOS 14 support is dropped.
                   // Due to a Safari 14 issue we need to destroy
                   // the scroll listener before we update state
                   // and trigger a re-render.
@@ -1206,6 +1207,7 @@ export class Datetime implements ComponentInterface {
                 items={years}
                 value={workingParts.year}
                 onIonChange={(ev: CustomEvent) => {
+                  // TODO(FW-1823) Remove this when iOS 14 support is dropped.
                   // Due to a Safari 14 issue we need to destroy
                   // the scroll listener before we update state
                   // and trigger a re-render.
