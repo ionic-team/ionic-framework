@@ -11,7 +11,12 @@ import { StackEvent } from './stack-utils';
   selector: 'ion-tabs',
   template: ` <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner">
-      <ion-router-outlet #outlet tabs="true" [environmentInjector]="environmentInjector" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
+      <ion-router-outlet
+        #outlet
+        tabs="true"
+        [environmentInjector]="environmentInjector"
+        (stackEvents)="onPageSelected($event)"
+      ></ion-router-outlet>
     </div>
     <ng-content></ng-content>`,
   styles: [
@@ -60,7 +65,7 @@ export class IonTabs {
   @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
   @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController) {}
 
   /**
    * @internal

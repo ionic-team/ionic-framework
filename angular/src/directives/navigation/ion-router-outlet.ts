@@ -85,10 +85,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.nativeEl.swipeHandler = swipe
       ? {
-        canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
-        onStart: () => this.stackCtrl.startBackTransition(),
-        onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
-      }
+          canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
+          onStart: () => this.stackCtrl.startBackTransition(),
+          onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
+        }
       : undefined;
   }
 
@@ -248,21 +248,23 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
       /**
-       * Angular 14 introduces a new `loadComponent` property to the route config,
-       * that assigns the component to load to the `component` property of
-       * the route snapshot. We can check for the presence of this property
-       * to determine if the route is using standalone components.
+       * Angular 14 introduces a new `loadComponent` property to the route config.
+       * This function will assign a `component` property to the route snapshot.
+       * We check for the presence of this property to determine if the route is
+       * using standalone components.
        */
-      if (component == null && snapshot.component && !this.environmentInjector) {
+      if (snapshot.component && this.environmentInjector == null) {
         console.warn(
-          '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n' +
-          'For example:\n' +
-          'In your component class, add:\n' +
-          `   import { EnvironmentInjector } from '@angular/core';` +
-          '   constructor(public environmentInjector: EnvironmentInjector) {}\n' +
-          'In your router outlet template, add:\n' +
-          '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>'
-        )
+          '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n\n' +
+            'In your component class, add:\n\n' +
+            `   import { EnvironmentInjector } from '@angular/core';\n` +
+            '   constructor(public environmentInjector: EnvironmentInjector) {}\n' +
+            '\n' +
+            'In your router outlet template, add:\n\n' +
+            '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>\n\n' +
+            'Alternatively, if you are routing within ion-tabs:\n\n' +
+            '   <ion-tabs [environmentInjector]="environmentInjector"></ion-tabs>'
+        );
         return;
       }
 
@@ -436,7 +438,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 class OutletInjector implements Injector {
-  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) { }
+  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) {}
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {
