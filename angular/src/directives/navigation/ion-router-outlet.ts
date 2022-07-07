@@ -244,16 +244,14 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const component = snapshot.routeConfig!.component ?? snapshot.component;
-
       /**
        * Angular 14 introduces a new `loadComponent` property to the route config.
        * This function will assign a `component` property to the route snapshot.
        * We check for the presence of this property to determine if the route is
        * using standalone components.
        */
-      if (snapshot.component && this.environmentInjector == null) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (snapshot.routeConfig!.component == null && this.environmentInjector == null) {
         console.warn(
           '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n\n' +
             'In your component class, add:\n\n' +
@@ -284,6 +282,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
 
       if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const component = snapshot.routeConfig!.component ?? snapshot.component;
         // Backwards compatibility for Angular 13 and lower
         const factory = resolverOrInjector.resolveComponentFactory(component);
         cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
