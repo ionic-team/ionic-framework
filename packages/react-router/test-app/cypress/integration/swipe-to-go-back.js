@@ -120,4 +120,12 @@ describe('Swipe To Go Back', () => {
     cy.ionPageDoesNotExist('tab1child1');
     cy.ionPageVisible('tab1');
   })
+
+  it('should not swipe to go back to the same view you are on', () => {
+    cy.visit(`http://localhost:${port}`);
+    cy.ionPageVisible('home');
+
+    cy.ionSwipeToGoBack(false);
+    cy.ionPageVisible('home');
+  })
 });
