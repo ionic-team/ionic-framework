@@ -844,12 +844,12 @@ export class Datetime implements ComponentInterface {
         }
 
         scrollTimeout = setTimeout(updateActiveMonth, 150);
-      }
+      };
       calendarBodyRef.addEventListener('scroll', scrollCallback);
 
       this.destroyCalendarListener = () => {
         calendarBodyRef.removeEventListener('scroll', scrollCallback);
-      }
+      };
     });
   };
 
