@@ -17,7 +17,7 @@ import type {
 } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
+import { addEventListener, componentOnReady, focusElement, getElementRoot, raf, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -515,7 +515,14 @@ export const dismiss = async (
   }
 
   overlay.el.remove();
-  return true;
+
+  /**
+   * Waits 1 frame after the element has been removed from the DOM to resolve.
+   * Otherwise getTop() may return the dismissed overlay as the topmost overlay.
+   */
+  return new Promise((resolve) => {
+    raf(() => resolve(true));
+  });
 };
 
 const getAppRoot = (doc: Document) => {
