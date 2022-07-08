@@ -27,10 +27,8 @@
       </ion-header>
       <ion-content class="ion-padding" id="content">
         <ion-list>
-          <ion-list-header>
-            <ion-label> barActiveStart is 0 and value is 0. </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked">barActiveStart is 0 and value is 0.</ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -43,10 +41,8 @@
             >
             </ion-range>
           </ion-item>
-          <ion-list-header>
-            <ion-label> barActiveStart is 0 and value is 70. </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked"> barActiveStart is 0 and value is 70. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -59,10 +55,8 @@
             >
             </ion-range>
           </ion-item>
-          <ion-list-header>
-            <ion-label> barActiveStart is 0 and value is -70. </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked"> barActiveStart is 0 and value is -70. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -75,10 +69,8 @@
             >
             </ion-range>
           </ion-item>
-          <ion-list-header>
-            <ion-label> barActiveStart is -30 and value is 0. </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked"> barActiveStart is -30 and value is 0. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -91,10 +83,8 @@
             >
             </ion-range>
           </ion-item>
-          <ion-list-header>
-            <ion-label> barActiveStart is 30 and value is 0. </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked"> barActiveStart is 30 and value is 0. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -107,20 +97,13 @@
             >
             </ion-range>
           </ion-item>
-          <ion-list-header>
-            <ion-label> barActiveStart is -30, min is 0 and max is 100 (invalid barActiveStart value). </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked">invalid barActiveStart value. </ion-label>
             <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" bar-active-start="-30">
             </ion-range>
           </ion-item>
-          <ion-list-header>
-            <ion-label>
-              Dual knobs is true, barActiveStart is -30, min is -100 and max is 100 (barActiveStart is ignored with dual
-              knobs enabled).
-            </ion-label>
-          </ion-list-header>
           <ion-item>
+            <ion-label position="stacked"> barActiveStart is ignored with dual knobs enabled. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
