@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.14-nightly.20220708](https://github.com/ionic-team/ionic-framework/compare/v6.1.13...v6.1.14-nightly.20220708) (2022-07-08)
+
+
+### Bug Fixes
+
+* **react:** IonNav works with react ([#25565](https://github.com/ionic-team/ionic-framework/issues/25565)) ([420f9bb](https://github.com/ionic-team/ionic-framework/commit/420f9bbebd41f3eab6def795bcdd1933d5c5a47a)), closes [#24002](https://github.com/ionic-team/ionic-framework/issues/24002)
+
+
+
+
+
 ## [6.1.13](https://github.com/ionic-team/ionic-framework/compare/v6.1.12...v6.1.13) (2022-07-06)
 
 
