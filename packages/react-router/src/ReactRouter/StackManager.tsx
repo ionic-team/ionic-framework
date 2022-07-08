@@ -259,8 +259,21 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
         const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
         const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+        const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
-        if (enteringViewItem?.ionPageElement !== undefined) {
+        /**
+         * Ionic React has a design defect where it
+         * a) Unmounts the leaving view item when using parameterized routes
+         * b) Considers the current view to be the entering view when using
+         * parameterized routes
+         *
+         * As a result, we should not hide the view item here
+         * as it will cause the current view to be hidden.
+         */
+        if (
+          enteringViewItem !== leavingViewItem &&
+          enteringViewItem?.ionPageElement !== undefined
+        ) {
           const { ionPageElement } = enteringViewItem;
           ionPageElement.setAttribute('aria-hidden', 'true');
           ionPageElement.classList.add('ion-page-hidden');
