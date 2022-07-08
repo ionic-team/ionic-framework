@@ -143,6 +143,13 @@ export class Range implements ComponentInterface {
   @Prop() ticks = true;
 
   /**
+   * The start position of the range active bar, only available with a single knob.
+   * Valid values are between the `min` and `max` values.
+   * Defaults to the `min` value of the range.
+   */
+  @Prop() barActiveStart: number = this.min;
+
+  /**
    * If `true`, the user cannot interact with the range.
    */
   @Prop() disabled = false;
@@ -395,7 +402,7 @@ export class Range implements ComponentInterface {
     if (this.dualKnobs) {
       return Math.min(this.ratioA, this.ratioB);
     }
-    return 0;
+    return valueToRatio(this.barActiveStart, this.min, this.max);
   }
 
   private get ratioUpper() {
@@ -484,8 +491,8 @@ export class Range implements ComponentInterface {
       labelText = inheritedAttributes['aria-label'];
     }
     const mode = getIonMode(this);
-    const barStart = `${ratioLower * 100}%`;
-    const barEnd = `${100 - ratioUpper * 100}%`;
+    let barStart = `${ratioLower * 100}%`;
+    let barEnd = `${100 - ratioUpper * 100}%`;
 
     const rtl = isRTL(this.el);
 
@@ -497,6 +504,16 @@ export class Range implements ComponentInterface {
         [start]: tick[start],
       };
     };
+
+    if (this.dualKnobs === false) {
+      if (this.valA < this.barActiveStart) {
+        barStart = `${ratioUpper * 100}%`;
+        barEnd = `${100 - ratioLower * 100}%`;
+      } else {
+        barStart = `${ratioLower * 100}%`;
+        barEnd = `${100 - ratioUpper * 100}%`;
+      }
+    }
 
     const barStyle = {
       [start]: barStart,
@@ -510,7 +527,7 @@ export class Range implements ComponentInterface {
 
         const tick: any = {
           ratio,
-          active: ratio >= ratioLower && ratio <= ratioUpper,
+          active: ratio >= Math.min(ratioLower, ratioUpper) && ratio <= Math.max(ratioLower, ratioUpper),
         };
 
         tick[start] = `${ratio * 100}%`;
