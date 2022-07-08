@@ -787,6 +787,7 @@ export class Datetime implements ComponentInterface {
       const updateActiveMonth = () => {
         if (needsiOSRubberBandFix) {
           calendarBodyRef.style.removeProperty('pointer-events');
+          appliediOSRubberBandFix = false;
         }
 
         /**
@@ -844,6 +845,13 @@ export class Datetime implements ComponentInterface {
        * need to update the DOM with the selected month.
        */
       let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+
+      /**
+       * We do not want to attempt to set pointer-events
+       * multiple times within a single swipe gesture as
+       * that adds unnecessary work to the main thread.
+       */
+      let appliediOSRubberBandFix = false;
       const scrollCallback = () => {
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
@@ -854,14 +862,13 @@ export class Datetime implements ComponentInterface {
          * the scroll area before the scroll timeout has fired.
          * This results in users reaching the end of the scrollable
          * container before the DOM has updated.
-         * By setting `touch-action: none` we can ensure that
+         * By setting `pointer-events: none` we can ensure that
          * subsequent swipes do not happen while the container
          * is snapping.
          */
-        if (needsiOSRubberBandFix) {
-          raf(() => {
-            calendarBodyRef.style.setProperty('pointer-events', 'none');
-          });
+        if (!appliediOSRubberBandFix && needsiOSRubberBandFix) {
+          calendarBodyRef.style.setProperty('pointer-events', 'none');
+          appliediOSRubberBandFix = true;
         }
 
         // Wait ~3 frames
