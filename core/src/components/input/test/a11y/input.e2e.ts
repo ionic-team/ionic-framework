@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: a11y', () => {
-
   test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({ page }) => {
     await page.setContent('<ion-input></ion-input>');
 
@@ -30,5 +29,4 @@ test.describe('input: a11y', () => {
 
     await expect(ariaLabelledBy).toBe(labelId);
   });
-
 });

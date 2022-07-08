@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: basic', () => {
-
   test.beforeEach(async ({ page }) => {
     await page.goto('/src/components/input/test/basic');
   });
@@ -14,7 +13,7 @@ test.describe('input: basic', () => {
 
     compares.push({
       name: 'initial',
-      screenshot: await page.screenshot()
+      screenshot: await page.screenshot(),
     });
 
     await page.click('#fullInput');
@@ -24,7 +23,7 @@ test.describe('input: basic', () => {
 
     compares.push({
       name: 'full input focused',
-      screenshot: await page.screenshot()
+      screenshot: await page.screenshot(),
     });
 
     await page.click('#insetInput');
@@ -34,7 +33,7 @@ test.describe('input: basic', () => {
 
     compares.push({
       name: 'inset input focused',
-      screenshot: await page.screenshot()
+      screenshot: await page.screenshot(),
     });
 
     await page.click('#noneInput');
@@ -44,13 +43,11 @@ test.describe('input: basic', () => {
 
     compares.push({
       name: 'no lines input focused',
-      screenshot: await page.screenshot()
+      screenshot: await page.screenshot(),
     });
 
     for (const compare of compares) {
       expect(compare.screenshot).toMatchSnapshot(`input-diff-${compare.name}-${page.getSnapshotSettings()}.png`);
     }
   });
-
-
 });
