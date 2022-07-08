@@ -36,6 +36,7 @@ import Refs from './pages/refs/Refs';
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
+import Params from './pages/params/Params';
 
 setupIonicReact();
 
@@ -59,6 +60,7 @@ const App: React.FC = () => {
           <Route path="/tabs" component={Tabs} />
           <Route path="/tabs-secondary" component={TabsSecondary} />
           <Route path="/refs" component={Refs} />
+          <Route path="/params/:id" component={Params} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

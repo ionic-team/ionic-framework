@@ -128,4 +128,16 @@ describe('Swipe To Go Back', () => {
     cy.ionSwipeToGoBack(false);
     cy.ionPageVisible('home');
   })
+
+  it('should not hide a parameterized page when swiping and aborting', () => {
+    cy.visit(`http://localhost:${port}/params/0`);
+    cy.ionPageVisible('params-0');
+
+    cy.get('#next-page').click();
+    cy.ionPageVisible('params-1');
+
+    cy.ionSwipeToGoBack(false);
+
+    cy.ionPageVisible('params-1');
+  })
 });
