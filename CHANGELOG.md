@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.14-nightly.20220711](https://github.com/ionic-team/ionic-framework/compare/v6.1.13...v6.1.14-nightly.20220711) (2022-07-11)
+
+
+### Bug Fixes
+
+* **datetime:** datetime works within stencil apps ([#25592](https://github.com/ionic-team/ionic-framework/issues/25592)) ([7b10fa6](https://github.com/ionic-team/ionic-framework/commit/7b10fa6476c2c2896c6810c57b3160f8c8896faa)), closes [#25591](https://github.com/ionic-team/ionic-framework/issues/25591)
+* **react:** IonNav works with react ([#25565](https://github.com/ionic-team/ionic-framework/issues/25565)) ([420f9bb](https://github.com/ionic-team/ionic-framework/commit/420f9bbebd41f3eab6def795bcdd1933d5c5a47a)), closes [#24002](https://github.com/ionic-team/ionic-framework/issues/24002)
+
+
+
+
+
 ## [6.1.13](https://github.com/ionic-team/ionic-framework/compare/v6.1.12...v6.1.13) (2022-07-06)
 
 
