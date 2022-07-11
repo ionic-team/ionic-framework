@@ -143,7 +143,7 @@ export class Range implements ComponentInterface {
   @Prop() ticks = true;
 
   /**
-   * The start position of the range active bar, only available with a single knob.
+   * The start position of the range active bar, only available with a single knob (dualKnobs="false").
    * Valid values are between the `min` and `max` values.
    * Defaults to the `min` value of the range.
    */

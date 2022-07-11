@@ -2077,7 +2077,7 @@ export namespace Components {
     }
     interface IonRange {
         /**
-          * The start position of the range active bar, only available with a single knob. Valid values are between the `min` and `max` values. Defaults to the `min` value of the range.
+          * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values. Defaults to the `min` value of the range.
          */
         "barActiveStart": number;
         /**
@@ -5966,7 +5966,7 @@ declare namespace LocalJSX {
     }
     interface IonRange {
         /**
-          * The start position of the range active bar, only available with a single knob. Valid values are between the `min` and `max` values. Defaults to the `min` value of the range.
+          * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values. Defaults to the `min` value of the range.
          */
         "barActiveStart"?: number;
         /**
