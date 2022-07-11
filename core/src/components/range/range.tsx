@@ -16,6 +16,7 @@ import type {
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -147,6 +148,23 @@ export class Range implements ComponentInterface {
    * Valid values are between the `min` and `max` values.
    */
   @Prop() barActiveStart?: number;
+  @Watch('barActiveStart')
+  protected barActiveStartChanged() {
+    const { barActiveStart } = this;
+    if (barActiveStart !== undefined) {
+      if (barActiveStart > this.max) {
+        printIonWarning(
+          `Range: The value of barActiveStart (${barActiveStart}) is greater than the max (${this.max}). Accepted values are between the min and max values of the range.`,
+          this.el
+        );
+      } else if (barActiveStart < this.min) {
+        printIonWarning(
+          `Range: The value of barActiveStart (${barActiveStart}) is less than the min (${this.min}). Accepted values are between the min and max values of the range.`,
+          this.el
+        );
+      }
+    }
+  }
 
   /**
    * If `true`, the user cannot interact with the range.
@@ -258,6 +276,7 @@ export class Range implements ComponentInterface {
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
+    this.barActiveStartChanged();
 
     /**
      * If we have not yet rendered

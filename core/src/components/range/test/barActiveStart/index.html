@@ -111,8 +111,13 @@
             ></ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">invalid barActiveStart value. </ion-label>
+            <ion-label position="stacked">invalid barActiveStart value (less than min)</ion-label>
             <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" bar-active-start="-30">
+            </ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">invalid barActiveStart value (greater than max)</ion-label>
+            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" bar-active-start="110">
             </ion-range>
           </ion-item>
           <ion-item>
