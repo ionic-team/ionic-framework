@@ -1,11 +1,12 @@
 import { FrameworkDelegate } from '@ionic/core/components';
+import { cloneElement } from 'react';
 import { createPortal } from 'react-dom';
 
 export const ReactDelegate = (
-  addView: (view: React.ReactPortal) => void,
-  removeView: (view: React.ReactPortal) => void
+  addView: (view: React.ReactElement) => void,
+  removeView: (view: React.ReactElement) => void
 ): FrameworkDelegate => {
-  let Component: React.ReactPortal;
+  let Component: React.ReactElement;
 
   const attachViewToDom = async (
     parentElement: HTMLElement,
@@ -17,9 +18,9 @@ export const ReactDelegate = (
     cssClasses && div.classList.add(...cssClasses);
     parentElement.appendChild(div);
 
-    Component = createPortal(component(), div);
+    const componentWithProps = cloneElement(component(), propsOrDataObj);
 
-    Component.props = propsOrDataObj;
+    Component = createPortal(componentWithProps, div);
 
     addView(Component);
 
