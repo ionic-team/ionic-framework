@@ -13,68 +13,76 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
+const PageOne = (props: any) => {
+  return (
+    <>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Page One</IonTitle>
+          <IonButtons>
+            <IonBackButton />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent id="pageOneContent">
+        <IonLabel>Page one content</IonLabel>
+        <div id="stringifiedProps">{JSON.stringify(props)}</div>
+        <IonNavLink routerDirection="forward" component={() => <PageTwo />}>
+          <IonButton>Go to Page Two</IonButton>
+        </IonNavLink>
+      </IonContent>
+    </>
+  );
+};
+
+const PageTwo = () => {
+  return (
+    <>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Page Two</IonTitle>
+          <IonButtons>
+            <IonBackButton />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent id="pageTwoContent">
+        <IonLabel>Page two content</IonLabel>
+        <IonNavLink routerDirection="forward" component={() => <PageThree />}>
+          <IonButton>Go to Page Three</IonButton>
+        </IonNavLink>
+      </IonContent>
+    </>
+  );
+};
+
+const PageThree = () => {
+  return (
+    <>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Page Three</IonTitle>
+          <IonButtons>
+            <IonBackButton />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonLabel>Page three content</IonLabel>
+      </IonContent>
+    </>
+  );
+};
+
 const NavComponent: React.FC = () => {
   return (
     <IonPage>
       <IonNav
-        root={() => {
-          return (
-            <>
-              <IonHeader>
-                <IonToolbar>
-                  <IonTitle>Page One</IonTitle>
-                  <IonButtons>
-                    <IonBackButton />
-                  </IonButtons>
-                </IonToolbar>
-              </IonHeader>
-              <IonContent id="pageOneContent">
-                <IonLabel>Page one content</IonLabel>
-                <IonNavLink
-                  routerDirection="forward"
-                  component={() => {
-                    return (
-                      <>
-                        <IonHeader>
-                          <IonToolbar>
-                            <IonTitle>Page Two</IonTitle>
-                            <IonButtons>
-                              <IonBackButton />
-                            </IonButtons>
-                          </IonToolbar>
-                        </IonHeader>
-                        <IonContent id="pageTwoContent">
-                          <IonLabel>Page two content</IonLabel>
-                          <IonNavLink
-                            routerDirection="forward"
-                            component={() => (
-                              <>
-                                <IonHeader>
-                                  <IonToolbar>
-                                    <IonTitle>Page Three</IonTitle>
-                                    <IonButtons>
-                                      <IonBackButton />
-                                    </IonButtons>
-                                  </IonToolbar>
-                                </IonHeader>
-                                <IonContent>
-                                  <IonLabel>Page three content</IonLabel>
-                                </IonContent>
-                              </>
-                            )}
-                          >
-                            <IonButton>Go to Page Three</IonButton>
-                          </IonNavLink>
-                        </IonContent>
-                      </>
-                    );
-                  }}
-                >
-                  <IonButton>Go to Page Two</IonButton>
-                </IonNavLink>
-              </IonContent>
-            </>
-          );
+        root={() => <PageOne />}
+        rootParams={{
+          someString: 'Hello',
+          someNumber: 3,
+          someBoolean: true,
         }}
       ></IonNav>
     </IonPage>
