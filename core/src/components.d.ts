@@ -2077,9 +2077,9 @@ export namespace Components {
     }
     interface IonRange {
         /**
-          * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values. Defaults to the `min` value of the range.
+          * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values.
          */
-        "barActiveStart": number;
+        "barActiveStart"?: number;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -5966,7 +5966,7 @@ declare namespace LocalJSX {
     }
     interface IonRange {
         /**
-          * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values. Defaults to the `min` value of the range.
+          * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values.
          */
         "barActiveStart"?: number;
         /**

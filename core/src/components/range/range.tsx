@@ -145,9 +145,8 @@ export class Range implements ComponentInterface {
   /**
    * The start position of the range active bar, only available with a single knob (dualKnobs="false").
    * Valid values are between the `min` and `max` values.
-   * Defaults to the `min` value of the range.
    */
-  @Prop() barActiveStart: number = this.min;
+  @Prop() barActiveStart?: number;
 
   /**
    * If `true`, the user cannot interact with the range.
@@ -402,7 +401,11 @@ export class Range implements ComponentInterface {
     if (this.dualKnobs) {
       return Math.min(this.ratioA, this.ratioB);
     }
-    return valueToRatio(this.barActiveStart, this.min, this.max);
+    const { barActiveStart } = this;
+    if (barActiveStart == null) {
+      return 0;
+    }
+    return valueToRatio(barActiveStart, this.min, this.max);
   }
 
   private get ratioUpper() {
@@ -506,7 +509,7 @@ export class Range implements ComponentInterface {
     };
 
     if (this.dualKnobs === false) {
-      if (this.valA < this.barActiveStart) {
+      if (this.valA < (this.barActiveStart ?? this.min)) {
         barStart = `${ratioUpper * 100}%`;
         barEnd = `${100 - ratioLower * 100}%`;
       } else {
