@@ -98,6 +98,19 @@
             </ion-range>
           </ion-item>
           <ion-item>
+            <ion-label position="stacked">barActiveStart is between steps</ion-label>
+            <ion-range
+              class="ion-no-padding"
+              min="-100"
+              max="100"
+              snaps="10"
+              step="10"
+              pin="true"
+              bar-active-start="25"
+              value="0"
+            ></ion-range>
+          </ion-item>
+          <ion-item>
             <ion-label position="stacked">invalid barActiveStart value. </ion-label>
             <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" bar-active-start="-30">
             </ion-range>
