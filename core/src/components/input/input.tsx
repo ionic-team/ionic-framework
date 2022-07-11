@@ -496,7 +496,7 @@ export class Input implements ComponentInterface {
             aria-label="reset"
             type="button"
             class="input-clear-icon"
-            onTouchStart={this.clearTextInput}
+            onPointerDown={this.clearTextInput}
             onMouseDown={this.clearTextInput}
             onKeyDown={this.clearTextOnEnter}
           />
