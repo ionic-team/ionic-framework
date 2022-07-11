@@ -2055,16 +2055,12 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    // TODO: header display needs adjusting, need to dig into how it should be formatted
-    if(Array.isArray(this.activeParts)) {
-      console.log("renderCalendarViewHeader not implemented yet for array");
-    }
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>}
+        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts)}</div>}
       </div>
     );
   }
