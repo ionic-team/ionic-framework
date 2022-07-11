@@ -25,7 +25,7 @@ describe('IonNav', () => {
     cy.get('ion-nav').contains('Page one content');
   });
 
-  it('should pass rootParams to the root page', () => {
+  it('should pass params to the page', () => {
     cy.get('#stringifiedProps').should('have.text', '{"someString":"Hello","someNumber":3,"someBoolean":true}');
   });
 
