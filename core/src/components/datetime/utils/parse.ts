@@ -61,8 +61,8 @@ export function parseDate(val: undefined | null): undefined;
 export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[];
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
-  if(Array.isArray(val)) {
-    return val.map(valStr => parseDate(valStr));
+  if (Array.isArray(val)) {
+    return val.map((valStr) => parseDate(valStr));
   }
 
   // manually parse IS0 cuz Date.parse cannot be trusted
@@ -115,7 +115,7 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
     minute: parse[5],
     tzOffset,
   };
-};
+}
 
 export const clampDate = (
   dateParts: DatetimeParts,

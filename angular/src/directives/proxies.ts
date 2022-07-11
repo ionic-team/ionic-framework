@@ -1979,13 +1979,13 @@ export declare interface IonToggle extends Components.IonToggle {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })
 export class IonToggle {
   protected el: HTMLElement;

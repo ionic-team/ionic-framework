@@ -97,7 +97,7 @@ export const getCalendarDayState = (
 ) => {
   const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
 
-  const isActive = activePartsArray.find(parts => isSameDay(refParts, parts)) !== undefined;
+  const isActive = activePartsArray.find((parts) => isSameDay(refParts, parts)) !== undefined;
   const isToday = isSameDay(refParts, todayParts);
   const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
 

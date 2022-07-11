@@ -14,8 +14,8 @@ export function convertDataToISO(data: DatetimeParts): string;
 export function convertDataToISO(data: DatetimeParts[]): string[];
 export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[];
 export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[] {
-  if(Array.isArray(data)) {
-    return data.map(parts => convertDataToISO(parts));
+  if (Array.isArray(data)) {
+    return data.map((parts) => convertDataToISO(parts));
   }
 
   // https://www.w3.org/TR/NOTE-datetime
@@ -56,7 +56,7 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
   }
 
   return rtn;
-};
+}
 
 /**
  * Converts an 12 hour value to 24 hours.

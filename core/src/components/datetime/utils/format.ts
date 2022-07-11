@@ -86,15 +86,20 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
 export const getMonthAndDay = (locale: string, refParts: DatetimeParts | DatetimeParts[]) => {
   const getDate = (parts: DatetimeParts) => new Date(`${parts.month}/${parts.day}/${parts.year} GMT+0000`);
 
-  if(Array.isArray(refParts)) {
-    return refParts.map(parts => {
-      const date = getDate(parts);
-      return new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date);
-    }).join(', ');
+  if (Array.isArray(refParts)) {
+    return refParts
+      .map((parts) => {
+        const date = getDate(parts);
+        return new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date);
+      })
+      .join(', ');
   } else {
-    return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
-      getDate(refParts)
-    );
+    return new Intl.DateTimeFormat(locale, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'UTC',
+    }).format(getDate(refParts));
   }
 };
 

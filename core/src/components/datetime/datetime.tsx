@@ -328,7 +328,7 @@ export class Datetime implements ComponentInterface {
     const { value, minParts, maxParts, workingParts, multiple } = this;
 
     if (this.hasValue()) {
-      if(!multiple && Array.isArray(value)) {
+      if (!multiple && Array.isArray(value)) {
         this.value = value[0];
         return; // setting this.value will trigger re-run of this function
       }
@@ -344,13 +344,11 @@ export class Datetime implements ComponentInterface {
       if (valueDateParts) {
         warnIfValueOutOfBounds(valueDateParts, minParts, maxParts);
 
-        if(Array.isArray(valueDateParts)) {
+        if (Array.isArray(valueDateParts)) {
           this.activePartsClone = [...valueDateParts];
         } else {
           const { month, day, year, hour, minute } = valueDateParts;
-          const ampm = hour ? 
-            hour >= 12 ? 'pm' : 'am'
-            : undefined;
+          const ampm = hour ? (hour >= 12 ? 'pm' : 'am') : undefined;
 
           this.activePartsClone = {
             ...this.activeParts,
@@ -365,7 +363,7 @@ export class Datetime implements ComponentInterface {
           /**
            * The working parts am/pm value must be updated when the value changes, to
            * ensure the time picker hour column values are generated correctly.
-           * 
+           *
            * Note that we don't need to do this if valueDateParts is an array, since
            * multiple="true" does not apply to time pickers.
            */
@@ -373,7 +371,7 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             ampm,
           });
-        }        
+        }
       } else {
         printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
       }
@@ -506,7 +504,7 @@ export class Datetime implements ComponentInterface {
          * there can be 1 hr difference when dealing w/ DST
          */
         if (activePartsIsArray) {
-          const dates = convertDataToISO(activeParts).map(str => new Date(str));
+          const dates = convertDataToISO(activeParts).map((str) => new Date(str));
           for (let i = 0; i < dates.length; i++) {
             activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
           }
@@ -568,24 +566,21 @@ export class Datetime implements ComponentInterface {
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
     const { multiple, activePartsClone, highlightActiveParts } = this;
 
-    if(multiple) {
+    if (multiple) {
       /**
        * We read from activePartsClone here because valueChanged() only updates that,
        * so it's the more reliable source of truth. If we read from activeParts, then
        * if you click July 1, manually set the value to July 2, and then click July 3,
        * the new value would be [July 1, July 3], ignoring the value set.
-       * 
+       *
        * We can then pass the new value to activeParts (rather than activePartsClone)
        * since the clone will be updated automatically by activePartsChanged().
        */
       const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
-      if(removeDate) {
-        this.activeParts = activePartsArray.filter(p => !isSameDay(p, parts));
-      } else if(highlightActiveParts) {
-        this.activeParts = [
-          ...activePartsArray,
-          parts
-        ];
+      if (removeDate) {
+        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, parts));
+      } else if (highlightActiveParts) {
+        this.activeParts = [...activePartsArray, parts];
       } else {
         /**
          * If highlightActiveParts is false, that means we just have a
@@ -604,7 +599,7 @@ export class Datetime implements ComponentInterface {
      * Now that the user has interacted somehow to select something, we can
      * show the solid highlight. This needs to be done after checking it above,
      * but before the confirm call below.
-     * 
+     *
      * Note that for datetimes with confirm/cancel buttons, the value
      * isn't updated until you call confirm(). We need to bring the
      * solid circle back on day click for UX reasons, rather than only
@@ -1228,12 +1223,12 @@ export class Datetime implements ComponentInterface {
   componentWillLoad() {
     const { multiple, presentation, preferWheel } = this;
 
-    if(multiple) {
-      if(presentation !== 'date') {
+    if (multiple) {
+      if (presentation !== 'date') {
         printIonWarning('Multiple date selection is only supported for presentation="date".');
       }
 
-      if(preferWheel) {
+      if (preferWheel) {
         printIonWarning('Multiple date selection is not supported with preferWheel="true".');
       }
     }
@@ -1495,7 +1490,7 @@ export class Datetime implements ComponentInterface {
 
           // wheel pickers don't support multiple selection, so assume this won't be an array
           this.setActiveParts({
-            ...this.activeParts as DatetimeParts,
+            ...(this.activeParts as DatetimeParts),
             ...findPart,
           });
 
@@ -1523,7 +1518,11 @@ export class Datetime implements ComponentInterface {
 
     if (isDateEnabled) {
       days = days.map((dayObject) => {
-        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year } as DatetimeParts;
+        const referenceParts = {
+          month: workingParts.month,
+          day: dayObject.value,
+          year: workingParts.year,
+        } as DatetimeParts;
 
         let disabled;
         try {
@@ -1582,7 +1581,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...this.activeParts as DatetimeParts,
+            ...(this.activeParts as DatetimeParts),
             day: ev.detail.value,
           });
 
@@ -1623,7 +1622,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...this.activeParts as DatetimeParts,
+            ...(this.activeParts as DatetimeParts),
             month: ev.detail.value,
           });
 
@@ -1663,7 +1662,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...this.activeParts as DatetimeParts,
+            ...(this.activeParts as DatetimeParts),
             year: ev.detail.value,
           });
 
@@ -1714,7 +1713,7 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
           this.setActiveParts({
-            ...activePartsClone as DatetimeParts,
+            ...(activePartsClone as DatetimeParts),
             hour: ev.detail.value,
           });
 
@@ -1739,7 +1738,7 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
           this.setActiveParts({
-            ...activePartsClone as DatetimeParts,
+            ...(activePartsClone as DatetimeParts),
             minute: ev.detail.value,
           });
 
@@ -1772,7 +1771,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...activePartsClone as DatetimeParts,
+            ...(activePartsClone as DatetimeParts),
             ampm: ev.detail.value,
             hour,
           });
@@ -1935,12 +1934,15 @@ export class Datetime implements ComponentInterface {
                   });
 
                   // multiple only needs date info, so we can wipe out other fields like time
-                  if(multiple) {
-                    this.setActiveParts({
-                      month,
-                      day,
-                      year,
-                    }, isActive);
+                  if (multiple) {
+                    this.setActiveParts(
+                      {
+                        month,
+                        day,
+                        year,
+                      },
+                      isActive
+                    );
                   } else {
                     this.setActiveParts({
                       ...this.activeParts,
