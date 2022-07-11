@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
-const PageOne = (props: any) => {
+const PageOne = (props: { someString: string; someNumber: number; someBoolean: boolean }) => {
   return (
     <>
       <IonHeader>
@@ -27,7 +27,7 @@ const PageOne = (props: any) => {
       <IonContent id="pageOneContent">
         <IonLabel>Page one content</IonLabel>
         <div id="stringifiedProps">{JSON.stringify(props)}</div>
-        <IonNavLink routerDirection="forward" component={() => <PageTwo />}>
+        <IonNavLink routerDirection="forward" component={PageTwo}>
           <IonButton>Go to Page Two</IonButton>
         </IonNavLink>
       </IonContent>
@@ -48,7 +48,7 @@ const PageTwo = () => {
       </IonHeader>
       <IonContent id="pageTwoContent">
         <IonLabel>Page two content</IonLabel>
-        <IonNavLink routerDirection="forward" component={() => <PageThree />}>
+        <IonNavLink routerDirection="forward" component={PageThree}>
           <IonButton>Go to Page Three</IonButton>
         </IonNavLink>
       </IonContent>
@@ -78,13 +78,9 @@ const NavComponent: React.FC = () => {
   return (
     <IonPage>
       <IonNav
-        root={() => <PageOne />}
-        rootParams={{
-          someString: 'Hello',
-          someNumber: 3,
-          someBoolean: true,
-        }}
-      ></IonNav>
+        root={() => <PageOne someString="Hello" someNumber={3} someBoolean={true} />}
+        rootParams={{}}
+      />
     </IonPage>
   );
 };
