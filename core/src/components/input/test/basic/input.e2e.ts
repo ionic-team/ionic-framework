@@ -2,52 +2,158 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: basic', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/input/test/basic');
+  test.describe('input with overflow', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+        <ion-content>
+          <ion-list>
+            <ion-item>
+              <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      // Validates the display of an input where text extends off the edge of the component.
+      expect(await item.screenshot()).toMatchSnapshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
+    });
   });
 
-  test('should not have visual regressions', async ({ page }) => {
-    const compares = [];
-
-    await page.setIonViewport();
-
-    compares.push({
-      name: 'initial',
-      screenshot: await page.screenshot(),
+  test.describe('input with placeholder', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="Placeholder"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      // Validates the display of an input with a placeholder.
+      expect(await item.screenshot()).toMatchSnapshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
     });
+  });
 
-    await page.click('#fullInput');
-
-    const fullItem = page.locator('#fullItem');
-    await expect(fullItem).toHaveClass(/item-has-focus/);
-
-    compares.push({
-      name: 'full input focused',
-      screenshot: await page.screenshot(),
+  test.describe('input disabled', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-input value="Input disabled" disabled></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      // Validates the display of an input in a disabled state.
+      expect(await item.screenshot()).toMatchSnapshot(`input-disabled-${page.getSnapshotSettings()}.png`);
     });
+  });
 
-    await page.click('#insetInput');
+  test.describe('input with lines="full"', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+      <ion-content>
+        <ion-list>
+          <ion-item lines="full">
+            <ion-input placeholder="Full"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      const input = page.locator('ion-input');
+      // Validates the display of an input with an ion-item using lines="full".
+      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-full-${page.getSnapshotSettings()}.png`);
 
-    const insetItem = page.locator('#insetItem');
-    await expect(insetItem).toHaveClass(/item-has-focus/);
+      await input.click();
 
-    compares.push({
-      name: 'inset input focused',
-      screenshot: await page.screenshot(),
+      // Verifies that the parent item receives .item-has-focus when the input is focused.
+      await expect(item).toHaveClass(/item-has-focus/);
+      // Validates the display of an input with an ion-item using lines="full" when focused.
+      expect(await item.screenshot()).toMatchSnapshot(
+        `input-with-lines-full-focused-${page.getSnapshotSettings()}.png`
+      );
     });
+  });
 
-    await page.click('#noneInput');
+  test.describe('input with lines="inset"', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+      <ion-content>
+        <ion-list>
+          <ion-item lines="inset">
+            <ion-input placeholder="Inset"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      const input = page.locator('ion-input');
+      // Validates the display of an input with an ion-item using lines="inset".
+      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-inset-${page.getSnapshotSettings()}.png`);
 
-    const noneItem = page.locator('#noneItem');
-    await expect(noneItem).toHaveClass(/item-has-focus/);
+      await input.click();
 
-    compares.push({
-      name: 'no lines input focused',
-      screenshot: await page.screenshot(),
+      // Verifies that the parent item receives .item-has-focus when the input is focused.
+      await expect(item).toHaveClass(/item-has-focus/);
+
+      // Validates the display of an input with an ion-item using lines="inset" when focused.
+      expect(await item.screenshot()).toMatchSnapshot(
+        `input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`
+      );
     });
+  });
 
-    for (const compare of compares) {
-      expect(compare.screenshot).toMatchSnapshot(`input-diff-${compare.name}-${page.getSnapshotSettings()}.png`);
-    }
+  test.describe('input with lines="none"', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+      <ion-content>
+        <ion-list>
+          <ion-item lines="none">
+            <ion-input placeholder="None"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      const input = page.locator('ion-input');
+      // Validates the display of an input with an ion-item using lines="none".
+      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-none-${page.getSnapshotSettings()}.png`);
+
+      await input.click();
+
+      // Verifies that the parent item receives .item-has-focus when the input is focused.
+      await expect(item).toHaveClass(/item-has-focus/);
+
+      // Validates the display of an input with an ion-item using lines="none" when focused.
+      expect(await item.screenshot()).toMatchSnapshot(
+        `input-with-lines-none-focused-${page.getSnapshotSettings()}.png`
+      );
+    });
+  });
+
+  test.describe('input with clear button', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-label>Clear Input</ion-label>
+            <ion-input
+              clear-input
+              value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      `);
+      const item = page.locator('ion-item');
+      // Validates the display of an input with a clear button.
+      expect(await item.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
+    });
   });
 });
