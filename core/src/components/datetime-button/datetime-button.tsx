@@ -170,8 +170,74 @@ export class DatetimeButton implements ComponentInterface {
     }
   };
 
+  private handleDateClick = () => {
+    const { datetimeEl, datetimePresentation } = this;
+
+    if (!datetimeEl) {
+      return;
+    }
+
+    /**
+     * When clicking the date button,
+     * we need to make sure that only a date
+     * picker is displayed. For presentation styles
+     * that display content other than a date picker,
+     * we need to update the presentation style.
+     */
+    switch (datetimePresentation) {
+      case 'date-time':
+      case 'time-date':
+        datetimeEl.presentation = 'date';
+        break;
+      default:
+        break;
+    }
+
+    /**
+     * Track which button was clicked
+     * so that it can have the correct
+     * activated styles applied when
+     * the modal/popover containing
+     * the datetime is opened.
+     */
+    this.selectedButton = 'date';
+  };
+
+  private handleTimeClick = () => {
+    const { datetimeEl, datetimePresentation } = this;
+
+    if (!datetimeEl) {
+      return;
+    }
+
+    /**
+     * When clicking the time button,
+     * we need to make sure that only a time
+     * picker is displayed. For presentation styles
+     * that display content other than a time picker,
+     * we need to update the presentation style.
+     */
+    switch (datetimePresentation) {
+      case 'date-time':
+      case 'time-date':
+        datetimeEl.presentation = 'time';
+        break;
+      default:
+        break;
+    }
+
+    /**
+     * Track which button was clicked
+     * so that it can have the correct
+     * activated styles applied when
+     * the modal/popover containing
+     * the datetime is opened.
+     */
+    this.selectedButton = 'time';
+  };
+
   render() {
-    const { color, dateText, timeText, datetimePresentation } = this;
+    const { color, dateText, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
 
     const showDateTarget =
       !datetimePresentation ||
@@ -183,25 +249,26 @@ export class DatetimeButton implements ComponentInterface {
       <Host
         class={createColorClasses(color, {
           [mode]: true,
+          [`${selectedButton}-active`]: datetimeActive,
         })}
       >
         {showDateTarget && (
-          <div class="date-target-container">
+          <div class="date-target-container" onClick={() => this.handleDateClick()}>
             <slot name="date-target">
               {/*
                 The button is added inside of the <slot> so that
                 devs do not create nested interactives if they
                 decide to add in a custom ion-button.
               */}
-              <button id="date-button">{dateText}</button>
+              <button id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>{dateText}</button>
             </slot>
           </div>
         )}
 
         {showTimeTarget && (
-          <div class="time-target-container">
+          <div class="time-target-container" onClick={() => this.handleTimeClick()}>
             <slot name="time-target">
-              <button id="time-button">{timeText}</button>
+              <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>{timeText}</button>
             </slot>
           </div>
         )}
