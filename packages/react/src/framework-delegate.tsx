@@ -1,12 +1,13 @@
-import { FrameworkDelegate } from '@ionic/core/components';
 import { cloneElement } from 'react';
 import { createPortal } from 'react-dom';
+
+import { FrameworkDelegate } from '@ionic/core/components';
 
 export const ReactDelegate = (
   addView: (view: React.ReactElement) => void,
   removeView: (view: React.ReactElement) => void
 ): FrameworkDelegate => {
-  let Component: React.ReactElement;
+  const refMap = new WeakMap<() => JSX.Element, React.ReactElement>();
 
   const attachViewToDom = async (
     parentElement: HTMLElement,
@@ -19,16 +20,19 @@ export const ReactDelegate = (
     parentElement.appendChild(div);
 
     const componentWithProps = cloneElement(component(), propsOrDataObj);
+    const hostComponent = createPortal(componentWithProps, div);
 
-    Component = createPortal(componentWithProps, div);
+    refMap.set(component, hostComponent);
 
-    addView(Component);
+    addView(hostComponent);
 
     return Promise.resolve(div);
   };
 
-  const removeViewFromDom = (): Promise<void> => {
-    Component && removeView(Component);
+  const removeViewFromDom = (_container: any, component: any): Promise<void> => {
+    const hostComponent = refMap.get(component);
+    hostComponent && removeView(hostComponent);
+
     return Promise.resolve();
   };
 

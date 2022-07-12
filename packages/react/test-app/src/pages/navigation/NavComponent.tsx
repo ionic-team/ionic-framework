@@ -11,7 +11,7 @@ import {
   IonBackButton,
   IonPage,
 } from '@ionic/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 const PageOne = (props: { someString: string; someNumber: number; someBoolean: boolean }) => {
   return (
@@ -75,12 +75,14 @@ const PageThree = () => {
 };
 
 const NavComponent: React.FC = () => {
+  const root = useCallback(
+    () => <PageOne someString="Hello" someNumber={3} someBoolean={true} />,
+    []
+  );
+
   return (
     <IonPage>
-      <IonNav
-        root={() => <PageOne someString="Hello" someNumber={3} someBoolean={true} />}
-        rootParams={{}}
-      />
+      <IonNav root={root} />
     </IonPage>
   );
 };
