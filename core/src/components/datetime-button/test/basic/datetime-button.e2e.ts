@@ -43,8 +43,8 @@ test.describe('datetime-button: labels', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.date-target-container')).toContainText('Jan 1, 2022');
-    expect(await page.locator('.time-target-container')).toContainText('6:30 AM');
+    await expect(page.locator('.date-target-container')).toContainText('Jan 1, 2022');
+    await expect(page.locator('.time-target-container')).toContainText('6:30 AM');
   });
   test('should set only month and year', async ({ page }) => {
     await page.setContent(`
@@ -53,7 +53,7 @@ test.describe('datetime-button: labels', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.date-target-container')).toContainText('January 2022');
+    await expect(page.locator('.date-target-container')).toContainText('January 2022');
   });
   test('should set only year', async ({ page }) => {
     await page.setContent(`
@@ -62,7 +62,7 @@ test.describe('datetime-button: labels', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.date-target-container')).toContainText('2022');
+    await expect(page.locator('.date-target-container')).toContainText('2022');
   });
   test('should set only month', async ({ page }) => {
     await page.setContent(`
@@ -71,7 +71,7 @@ test.describe('datetime-button: labels', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.date-target-container')).toContainText('January');
+    await expect(page.locator('.date-target-container')).toContainText('January');
   });
   test('should set only time', async ({ page }) => {
     await page.setContent(`
@@ -80,7 +80,24 @@ test.describe('datetime-button: labels', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.time-target-container')).toContainText('6:30 AM');
+    await expect(page.locator('.time-target-container')).toContainText('6:30 AM');
+  });
+  test('should update the label when the value of the datetime changes', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
+      <ion-datetime id="datetime" value="2022-01-01T06:30:00" presentation="date"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    const datetime = page.locator('ion-datetime');
+    const dateTarget = page.locator('.date-target-container');
+
+    await expect(dateTarget).toContainText('Jan 1, 2022');
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2023-05-10'));
+    await page.waitForChanges();
+
+    await expect(dateTarget).toContainText('May 10, 2023');
   });
 });
 
@@ -97,8 +114,8 @@ test.describe('datetime-button: locale', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.date-target-container')).toContainText('1 ene 2022');
-    expect(await page.locator('.time-target-container')).toContainText('6:30');
+    await expect(page.locator('.date-target-container')).toContainText('1 ene 2022');
+    await expect(page.locator('.time-target-container')).toContainText('6:30');
   });
   test('should respect hour cycle even if different from locale default', async ({ page }) => {
     await page.setContent(`
@@ -107,6 +124,6 @@ test.describe('datetime-button: locale', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.locator('.time-target-container')).toContainText('16:30');
+    await expect(page.locator('.time-target-container')).toContainText('16:30');
   });
 });
