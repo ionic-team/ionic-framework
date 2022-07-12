@@ -1,7 +1,6 @@
+import { FrameworkDelegate } from '@ionic/core/components';
 import { cloneElement } from 'react';
 import { createPortal } from 'react-dom';
-
-import { FrameworkDelegate } from '@ionic/core/components';
 
 export const ReactDelegate = (
   addView: (view: React.ReactElement) => void,
