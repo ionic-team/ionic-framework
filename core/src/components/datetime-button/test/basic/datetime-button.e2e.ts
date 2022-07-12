@@ -11,7 +11,7 @@ test.describe('datetime-button: switching to correct view', () => {
       <ion-datetime id="datetime" presentation="date-time"></ion-datetime>
     `);
     await page.waitForSelector('.datetime-ready');
-  })
+  });
   test('should switch to a date-only view when the date button is clicked', async ({ page }) => {
     const datetime = page.locator('ion-datetime');
     expect(datetime).toHaveJSProperty('presentation', 'date-time');
@@ -19,7 +19,7 @@ test.describe('datetime-button: switching to correct view', () => {
     await page.locator('.date-target-container').click();
 
     expect(datetime).toHaveJSProperty('presentation', 'date');
-  })
+  });
   test('should switch to a time-only view when the time button is clicked', async ({ page }) => {
     const datetime = page.locator('ion-datetime');
     expect(datetime).toHaveJSProperty('presentation', 'date-time');
@@ -27,11 +27,12 @@ test.describe('datetime-button: switching to correct view', () => {
     await page.locator('.time-target-container').click();
 
     expect(datetime).toHaveJSProperty('presentation', 'time');
-  })
+  });
 });
 
 test.describe('datetime-button: labels', () => {
-  test.beforeEach(({ page: _page }, testInfo) => {
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(({}, testInfo) => {
     test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
     test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
   });
@@ -81,10 +82,11 @@ test.describe('datetime-button: labels', () => {
 
     expect(await page.locator('.time-target-container')).toContainText('6:30 AM');
   });
-})
+});
 
 test.describe('datetime-button: locale', () => {
-  test.beforeEach(({ page: _page }, testInfo) => {
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(({}, testInfo) => {
     test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
     test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
   });
@@ -107,4 +109,4 @@ test.describe('datetime-button: locale', () => {
 
     expect(await page.locator('.time-target-container')).toContainText('16:30');
   });
-})
+});

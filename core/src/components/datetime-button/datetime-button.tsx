@@ -3,13 +3,13 @@ import { Component, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, DatetimePresentation } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
-import { printIonError } from '../../utils/logging';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
-import { parseDate } from '../datetime/utils/parse';
+import { printIonError } from '../../utils/logging';
+import { createColorClasses } from '../../utils/theme';
 import { getToday } from '../datetime/utils/data';
-import { is24Hour } from '../datetime/utils/helpers';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
+import { is24Hour } from '../datetime/utils/helpers';
+import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -258,7 +258,9 @@ export class DatetimeButton implements ComponentInterface {
                 devs do not create nested interactives if they
                 decide to add in a custom ion-button.
               */}
-              <button id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>{dateText}</button>
+              <button id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
+                {dateText}
+              </button>
             </slot>
           </div>
         )}
@@ -266,7 +268,9 @@ export class DatetimeButton implements ComponentInterface {
         {showTimeTarget && (
           <div class="time-target-container" onClick={() => this.handleTimeClick()}>
             <slot name="time-target">
-              <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>{timeText}</button>
+              <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
+                {timeText}
+              </button>
             </slot>
           </div>
         )}
