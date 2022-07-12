@@ -46,24 +46,41 @@
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
+            <h2>No Default Value</h2>
+            <ion-datetime locale="en-US" id="noDefaultValue" presentation="date" multiple="true"></ion-datetime>
+          </div>
+          <div class="grid-item">
             <h2>Single Default Value</h2>
-            <ion-datetime presentation="date" multiple="true" value="2022-06-01"></ion-datetime>
+            <ion-datetime
+              locale="en-US"
+              id="singleDefaultValue"
+              presentation="date"
+              multiple="true"
+              value="2022-06-01"
+            ></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Multiple Default Values</h2>
-            <ion-datetime id="multipleDefaultValues" presentation="date" multiple="true"></ion-datetime>
+            <ion-datetime locale="en-US" id="multipleDefaultValues" presentation="date" multiple="true"></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Multiple Default Values - Separate Months</h2>
-            <ion-datetime id="multipeValuesSeparateMonths" presentation="date" multiple="true"></ion-datetime>
+            <ion-datetime
+              locale="en-US"
+              id="multipleValuesSeparateMonths"
+              presentation="date"
+              multiple="true"
+            ></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Multiple=False, Array For Default Value</h2>
-            <ion-datetime id="multipleFalseArrayValue" presentation="date"></ion-datetime>
+            <ion-datetime locale="en-US" id="multipleFalseArrayValue" presentation="date"></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>With Buttons</h2>
             <ion-datetime
+              locale="en-US"
+              id="withButtons"
               presentation="date"
               multiple="true"
               value="2022-06-01"
@@ -74,6 +91,8 @@
           <div class="grid-item">
             <h2>With Header</h2>
             <ion-datetime
+              locale="en-US"
+              id="withHeader"
               presentation="date"
               multiple="true"
               value="2022-06-01"
@@ -86,7 +105,7 @@
 
     <script>
       document.querySelector('#multipleDefaultValues').value = ['2022-06-01', '2022-06-02', '2022-06-03'];
-      document.querySelector('#multipeValuesSeparateMonths').value = ['2022-04-01', '2022-05-01', '2022-06-01'];
+      document.querySelector('#multipleValuesSeparateMonths').value = ['2022-04-01', '2022-05-01', '2022-06-01'];
       document.querySelector('#multipleFalseArrayValue').value = ['2022-06-01', '2022-06-02', '2022-06-03'];
     </script>
   </body>
