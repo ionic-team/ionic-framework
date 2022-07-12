@@ -726,9 +726,8 @@ export class Datetime implements ComponentInterface {
     /**
      * For performance reasons, we only render 3
      * months at a time: The current month, the previous
-     * month, and the next month. We have IntersectionObservers
-     * on the previous and next month elements to append/prepend
-     * new months.
+     * month, and the next month. We have a scroll listener
+     * on the calendar body to append/prepend new months.
      *
      * We can do this because Stencil is smart enough to not
      * re-create the .calendar-month containers, but rather
