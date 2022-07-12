@@ -133,7 +133,7 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const { value, locale, hourCycle } = datetimeEl;
+    const { value, locale, hourCycle, preferWheel } = datetimeEl;
 
     /**
      * Both ion-datetime and ion-datetime-button default
@@ -142,11 +142,19 @@ export class DatetimeButton implements ComponentInterface {
     const parsedDatetime = parseDate(value || getToday());
     const use24Hour = is24Hour(locale, hourCycle);
 
+    this.dateText = this.timeText = undefined;
+
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        this.dateText = getMonthDayAndYear(locale, parsedDatetime);
-        this.timeText = getLocalizedTime(locale, parsedDatetime, use24Hour);
+        const dateText = getMonthDayAndYear(locale, parsedDatetime);
+        const timeText = getLocalizedTime(locale, parsedDatetime, use24Hour);
+        if (preferWheel) {
+          this.dateText = `${dateText} ${timeText}`;
+        } else {
+          this.dateText = dateText;
+          this.timeText = timeText;
+        }
         break;
       case 'date':
         this.dateText = getMonthDayAndYear(locale, parsedDatetime);
@@ -185,7 +193,15 @@ export class DatetimeButton implements ComponentInterface {
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        datetimeEl.presentation = 'date';
+        /**
+         * The date+time wheel picker
+         * shows date and time together,
+         * so do not adjust the presentation
+         * in that case.
+         */
+        if (!datetimeEl.preferWheel) {
+          datetimeEl.presentation = 'date';
+        }
         break;
       default:
         break;
@@ -235,12 +251,8 @@ export class DatetimeButton implements ComponentInterface {
   };
 
   render() {
-    const { color, dateText, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
+    const { color, dateText, timeText, selectedButton, datetimeActive } = this;
 
-    const showDateTarget =
-      !datetimePresentation ||
-      ['date-time', 'time-date', 'date', 'month', 'year', 'month-year'].includes(datetimePresentation);
-    const showTimeTarget = !datetimePresentation || ['date-time', 'time-date', 'time'].includes(datetimePresentation);
     const mode = getIonMode(this);
 
     return (
@@ -250,7 +262,7 @@ export class DatetimeButton implements ComponentInterface {
           [`${selectedButton}-active`]: datetimeActive,
         })}
       >
-        {showDateTarget && (
+        {dateText && (
           <div class="date-target-container" onClick={() => this.handleDateClick()}>
             <slot name="date-target">
               {/*
@@ -265,7 +277,7 @@ export class DatetimeButton implements ComponentInterface {
           </div>
         )}
 
-        {showTimeTarget && (
+        {timeText && (
           <div class="time-target-container" onClick={() => this.handleTimeClick()}>
             <slot name="time-target">
               <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>

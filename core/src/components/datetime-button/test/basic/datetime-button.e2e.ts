@@ -54,6 +54,7 @@ test.describe('datetime-button: labels', () => {
     await page.waitForSelector('.datetime-ready');
 
     await expect(page.locator('.date-target-container')).toContainText('January 2022');
+    await expect(page.locator('.time-target-container')).toBeHidden();
   });
   test('should set only year', async ({ page }) => {
     await page.setContent(`
@@ -63,6 +64,7 @@ test.describe('datetime-button: labels', () => {
     await page.waitForSelector('.datetime-ready');
 
     await expect(page.locator('.date-target-container')).toContainText('2022');
+    await expect(page.locator('.time-target-container')).toBeHidden();
   });
   test('should set only month', async ({ page }) => {
     await page.setContent(`
@@ -72,6 +74,7 @@ test.describe('datetime-button: labels', () => {
     await page.waitForSelector('.datetime-ready');
 
     await expect(page.locator('.date-target-container')).toContainText('January');
+    await expect(page.locator('.time-target-container')).toBeHidden();
   });
   test('should set only time', async ({ page }) => {
     await page.setContent(`
@@ -80,6 +83,7 @@ test.describe('datetime-button: labels', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
+    await expect(page.locator('.date-target-container')).toBeHidden();
     await expect(page.locator('.time-target-container')).toContainText('6:30 AM');
   });
   test('should update the label when the value of the datetime changes', async ({ page }) => {
@@ -125,5 +129,37 @@ test.describe('datetime-button: locale', () => {
     await page.waitForSelector('.datetime-ready');
 
     await expect(page.locator('.time-target-container')).toContainText('16:30');
+  });
+});
+
+test.describe('datetime-button: wheel', () => {
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(({}, testInfo) => {
+    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
+    test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
+  });
+  test('should only show a single date button when presentation="date-time" and prefer-wheel="true"', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime locale="en-US" id="datetime" value="2022-01-01T06:30:00" presentation="date-time" prefer-wheel="true"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    await expect(page.locator('.date-target-container')).toContainText('Jan 1, 2022 6:30 AM');
+    await expect(page.locator('.time-target-container')).not.toBeVisible();
+  });
+  test('should only show a single date button when presentation="time-date" and prefer-wheel="true"', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime locale="en-US" id="datetime" value="2022-01-01T06:30:00" presentation="time-date" prefer-wheel="true"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    await expect(page.locator('.date-target-container')).toContainText('Jan 1, 2022 6:30 AM');
+    await expect(page.locator('.time-target-container')).not.toBeVisible();
   });
 });
