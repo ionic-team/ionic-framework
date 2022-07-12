@@ -118,8 +118,6 @@ export class DatetimeButton implements ComponentInterface {
         case 'time':
           this.selectedButton = 'time';
           break;
-        default:
-          break;
       }
     });
   }
@@ -166,8 +164,6 @@ export class DatetimeButton implements ComponentInterface {
       case 'year':
         this.dateText = getLocalizedDateTime(locale, parsedDatetime, { year: 'numeric' });
         break;
-      default:
-        break;
     }
   };
 
@@ -189,8 +185,6 @@ export class DatetimeButton implements ComponentInterface {
       case 'date-time':
       case 'time-date':
         datetimeEl.presentation = 'date';
-        break;
-      default:
         break;
     }
 
@@ -222,8 +216,6 @@ export class DatetimeButton implements ComponentInterface {
       case 'date-time':
       case 'time-date':
         datetimeEl.presentation = 'time';
-        break;
-      default:
         break;
     }
 
