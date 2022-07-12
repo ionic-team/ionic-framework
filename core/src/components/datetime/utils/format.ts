@@ -114,8 +114,7 @@ export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
  * Wrapper function for Intl.DateTimeFormat.
  * Allows developers to apply an allowed format to DatetimeParts.
  * This function also has built in safeguards for older browser bugs
- * with Intl.DateTimeFormat. It is preferred to use this function than
- * Intl.DateTimeFormat directly when calling the `format` method.
+ * with Intl.DateTimeFormat.
  */
 export const getLocalizedDateTime = (
   locale: string,
