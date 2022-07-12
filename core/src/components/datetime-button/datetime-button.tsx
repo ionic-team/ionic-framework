@@ -1,7 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Host, Prop, State, h } from '@stencil/core';
 
-import type { Color } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import type { Color, DatetimePresentation } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -12,6 +14,11 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class DatetimeButton implements ComponentInterface {
+  // STUBs
+  @State() datetimePresentation?: DatetimePresentation = 'date-time';
+  @State() dateText?: string = 'May 1, 2022';
+  @State() timeText?: string = '12:30 PM';
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -31,6 +38,41 @@ export class DatetimeButton implements ComponentInterface {
   @Prop() datetime?: string;
 
   render() {
-    return <Host></Host>;
+    const { color, dateText, timeText, datetimePresentation } = this;
+
+    const showDateTarget =
+      !datetimePresentation ||
+      ['date-time', 'time-date', 'date', 'month', 'year', 'month-year'].includes(datetimePresentation);
+    const showTimeTarget = !datetimePresentation || ['date-time', 'time-date', 'time'].includes(datetimePresentation);
+    const mode = getIonMode(this);
+
+    return (
+      <Host
+        class={createColorClasses(color, {
+          [mode]: true,
+        })}
+      >
+        {showDateTarget && (
+          <div class="date-target-container">
+            <slot name="date-target">
+              {/*
+                The button is added inside of the <slot> so that
+                devs do not create nested interactives if they
+                decide to add in a custom ion-button.
+              */}
+              <button id="date-button">{dateText}</button>
+            </slot>
+          </div>
+        )}
+
+        {showTimeTarget && (
+          <div class="time-target-container">
+            <slot name="time-target">
+              <button id="time-button">{timeText}</button>
+            </slot>
+          </div>
+        )}
+      </Host>
+    );
   }
 }

@@ -3,7 +3,14 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+  Mode,
+  StyleEventDetail,
+} from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
@@ -206,7 +213,7 @@ export class Datetime implements ComponentInterface {
    * AM/PM. `'date-time'` will show the date picker first and time picker second.
    * `'time-date'` will show the time picker first and date picker second.
    */
-  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year' = 'date-time';
+  @Prop() presentation: DatetimePresentation = 'date-time';
 
   /**
    * The text to display on the picker's cancel button.
