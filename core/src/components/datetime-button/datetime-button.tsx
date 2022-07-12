@@ -4,7 +4,12 @@ import { Component, Host, Prop, State, h } from '@stencil/core';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, DatetimePresentation } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
+import { printIonError } from '../../utils/logging';
+import { componentOnReady, addEventListener } from '../../utils/helpers';
+import { parseDate } from '../datetime/utils/parse';
+import { getToday } from '../datetime/utils/data';
+import { is24Hour } from '../datetime/utils/helpers';
+import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -14,10 +19,15 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true,
 })
 export class DatetimeButton implements ComponentInterface {
-  // STUBs
+  private datetimeEl: HTMLIonDatetimeElement | null = null;
+
+  // STUBS
   @State() datetimePresentation?: DatetimePresentation = 'date-time';
   @State() dateText?: string = 'May 1, 2022';
   @State() timeText?: string = '12:30 PM';
+  // END STUBS
+  @State() datetimeActive = false;
+  @State() selectedButton?: 'date' | 'time';
 
   /**
    * The color to use from your application's color palette.
@@ -36,6 +46,129 @@ export class DatetimeButton implements ComponentInterface {
    * associated with the datetime button.
    */
   @Prop() datetime?: string;
+
+  async componentWillLoad() {
+    const { datetime } = this;
+    if (!datetime) {
+      printIonError(
+        'An ID associated with an ion-datetime instance is required for ion-datetime-button to function properly.'
+      );
+      return;
+    }
+
+    const datetimeEl = (this.datetimeEl = document.getElementById(datetime) as HTMLIonDatetimeElement | null);
+    if (!datetimeEl) {
+      printIonError(`No ion-datetime instance found for ID '${datetime}'.`);
+      return;
+    }
+
+    /**
+     * Since the datetime can be used in any context (overlays, accordion, etc)
+     * we track when it is visible to determine when it is active.
+     * This informs which button is highlighted as well as the
+     * aria-expanded state.
+     */
+    const io = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        const ev = entries[0];
+        this.datetimeActive = ev.isIntersecting;
+      },
+      {
+        threshold: 0.01,
+      }
+    );
+
+    io.observe(datetimeEl);
+
+    componentOnReady(datetimeEl, () => {
+      const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
+
+      /**
+       * Set the initial display
+       * in the rendered buttons.
+       *
+       * From there, we need to listen
+       * for ionChange to be emitted
+       * from datetime so we know when
+       * to re-render the displayed
+       * text in the buttons.
+       */
+      this.setDateTimeText();
+      addEventListener(datetimeEl, 'ionChange', this.setDateTimeText);
+
+      /**
+       * Configure the initial selected button
+       * in the event that the datetime is displayed
+       * without clicking one of the datetime buttons.
+       * For example, a datetime could be expanded
+       * in an accordion. In this case users only
+       * need to click the accordion header to show
+       * the datetime.
+       */
+      switch (datetimePresentation) {
+        case 'date-time':
+        case 'date':
+        case 'month-year':
+        case 'month':
+        case 'year':
+          this.selectedButton = 'date';
+          break;
+        case 'time-date':
+        case 'time':
+          this.selectedButton = 'time';
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  /**
+   * Check the value property on the linked
+   * ion-datetime and then format it according
+   * to the locale specified on ion-datetime.
+   */
+  private setDateTimeText = () => {
+    const { datetimeEl, datetimePresentation } = this;
+
+    if (!datetimeEl) {
+      return;
+    }
+
+    const { value, locale, hourCycle } = datetimeEl;
+
+    /**
+     * Both ion-datetime and ion-datetime-button default
+     * to today's date and time if no value is set.
+     */
+    const parsedDatetime = parseDate(value || getToday());
+    const use24Hour = is24Hour(locale, hourCycle);
+
+    switch (datetimePresentation) {
+      case 'date-time':
+      case 'time-date':
+        this.dateText = getMonthDayAndYear(locale, parsedDatetime);
+        this.timeText = getLocalizedTime(locale, parsedDatetime, use24Hour);
+        break;
+      case 'date':
+        this.dateText = getMonthDayAndYear(locale, parsedDatetime);
+        break;
+      case 'time':
+        this.timeText = getLocalizedTime(locale, parsedDatetime, use24Hour);
+        break;
+      case 'month-year':
+        this.dateText = getMonthAndYear(locale, parsedDatetime);
+        break;
+      case 'month':
+        this.dateText = getLocalizedDateTime(locale, parsedDatetime, { month: 'long' });
+        break;
+      case 'year':
+        this.dateText = getLocalizedDateTime(locale, parsedDatetime, { year: 'numeric' });
+        break;
+      default:
+        break;
+    }
+  };
 
   render() {
     const { color, dateText, timeText, datetimePresentation } = this;
