@@ -37,6 +37,11 @@ const Main: React.FC<MainProps> = () => {
           </IonItem>
         </IonList>
         <IonList>
+          <IonItem routerLink="/navigation">
+            <IonLabel>Navigation</IonLabel>
+          </IonItem>
+        </IonList>
+        <IonList>
           <IonItem routerLink="/tabs">
             <IonLabel>Tabs</IonLabel>
           </IonItem>

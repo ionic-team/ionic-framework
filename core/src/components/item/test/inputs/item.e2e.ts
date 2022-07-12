@@ -3,7 +3,7 @@ import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('item: inputs', () => {
-  test('should not have visual regressions', async ({ page }) => {
+  test.skip('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/item/test/inputs`);
 
     const screenshots = [];
