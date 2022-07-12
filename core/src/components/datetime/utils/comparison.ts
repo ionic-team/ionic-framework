@@ -1,5 +1,4 @@
-import { printIonWarning } from '@utils/logging';
-
+import { printIonWarning } from '../../../utils/logging';
 import type { DatetimeParts } from '../datetime-interface';
 
 /**
