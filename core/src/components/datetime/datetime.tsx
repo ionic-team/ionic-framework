@@ -747,7 +747,7 @@ export class Datetime implements ComponentInterface {
     const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
-     * Before setting up the IntersectionObserver,
+     * Before setting up the scroll listener,
      * scroll the middle month into view.
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
