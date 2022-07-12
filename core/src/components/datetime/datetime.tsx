@@ -1221,15 +1221,15 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { multiple, presentation, preferWheel } = this;
+    const { el, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
-        printIonWarning('Multiple date selection is only supported for presentation="date".');
+        printIonWarning('Multiple date selection is only supported for presentation="date".', el);
       }
 
       if (preferWheel) {
-        printIonWarning('Multiple date selection is not supported with preferWheel="true".');
+        printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
       }
     }
 
