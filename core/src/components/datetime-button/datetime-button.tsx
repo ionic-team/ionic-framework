@@ -31,8 +31,6 @@ export class DatetimeButton implements ComponentInterface {
   @Prop() datetime?: string;
 
   render() {
-    return (
-      <Host></Host>
-    );
+    return <Host></Host>;
   }
 }
