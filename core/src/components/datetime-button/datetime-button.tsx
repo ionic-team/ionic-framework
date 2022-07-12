@@ -22,11 +22,9 @@ export class DatetimeButton implements ComponentInterface {
   private datetimeEl: HTMLIonDatetimeElement | null = null;
   private overlayEl: HTMLElement | null = null;
 
-  // STUBS
   @State() datetimePresentation?: DatetimePresentation = 'date-time';
-  @State() dateText?: string = 'May 1, 2022';
-  @State() timeText?: string = '12:30 PM';
-  // END STUBS
+  @State() dateText?: string;
+  @State() timeText?: string;
   @State() datetimeActive = false;
   @State() selectedButton?: 'date' | 'time';
 
