@@ -24,6 +24,7 @@ import { defineCustomElement as defineIonChip } from '@ionic/core/components/ion
 import { defineCustomElement as defineIonCol } from '@ionic/core/components/ion-col.js';
 import { defineCustomElement as defineIonContent } from '@ionic/core/components/ion-content.js';
 import { defineCustomElement as defineIonDatetime } from '@ionic/core/components/ion-datetime.js';
+import { defineCustomElement as defineIonDatetimeButton } from '@ionic/core/components/ion-datetime-button.js';
 import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-fab.js';
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
@@ -300,6 +301,13 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'ionStyle'
 ],
 'value', 'v-ion-change', 'ionChange');
+
+
+export const IonDatetimeButton = /*@__PURE__*/ defineContainer<JSX.IonDatetimeButton>('ion-datetime-button', defineIonDatetimeButton, [
+  'color',
+  'disabled',
+  'datetime'
+]);
 
 
 export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', defineIonFab, [
@@ -817,6 +825,7 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
   'checked',
   'disabled',
   'value',
+  'enableOnOffLabels',
   'ionChange',
   'ionFocus',
   'ionBlur',
