@@ -2062,7 +2062,7 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts)}</div>}
+        {mode === 'md' && !this.multiple && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>}
       </div>
     );
   }
