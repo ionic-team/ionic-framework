@@ -114,7 +114,12 @@ test.describe('datetime-button: locale', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    await expect(page.locator('.date-target-container')).toContainText('1 ene 2022');
+    /**
+     * The entire text reads 1 ene 2022, but some browsers will add
+     * a period after "ene". Just checking ene allows us to verify the
+     * behavior while avoiding these cross browser differences.
+     */
+    await expect(page.locator('.date-target-container')).toContainText(/ene/);
     await expect(page.locator('.time-target-container')).toContainText('6:30');
   });
   test('should respect hour cycle even if different from locale default', async ({ page }) => {
