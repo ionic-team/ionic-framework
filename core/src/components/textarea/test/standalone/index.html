@@ -21,7 +21,7 @@
     <ion-textarea value="thus shuld git spellchuk" spellcheck="true"></ion-textarea>
     <ion-textarea value="thus shuld NOT git spellchuk" spellcheck="false"></ion-textarea>
     <ion-textarea placeholder="Custom" class="custom"></ion-textarea>
-    <ion-textarea id="nowrap" rows="15"></ion-textarea>
+    <ion-textarea id="ascii" rows="15"></ion-textarea>
     <ion-textarea placeholder="Auto Grow!" auto-grow="true"></ion-textarea>
 
     <style>
@@ -30,17 +30,17 @@
         --color: blue;
       }
 
-      #nowrap {
+      #ascii {
         font-size: 8px;
         font-family: monospace;
         font-weight: bold;
 
-        white-space: nowrap;
+        white-space: pre;
       }
     </style>
 
     <script>
-      var textarea = document.querySelector('#nowrap');
+      var textarea = document.querySelector('#ascii');
 
       textarea.value = `@@@@@@@////////////////@@@(/#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@/////@@@@@@@@@@@@@@@///////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
