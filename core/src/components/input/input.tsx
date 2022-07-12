@@ -497,7 +497,6 @@ export class Input implements ComponentInterface {
             type="button"
             class="input-clear-icon"
             onPointerDown={this.clearTextInput}
-            onMouseDown={this.clearTextInput}
             onKeyDown={this.clearTextOnEnter}
           />
         )}
