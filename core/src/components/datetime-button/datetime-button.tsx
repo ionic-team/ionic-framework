@@ -13,6 +13,9 @@ import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot date-target - Content displayed inside of the date button.
+ * @slot time-target - Content displayed inside of the time button.
+ *
  * @part native - The native HTML button that wraps the slotted text.
  */
 @Component({
