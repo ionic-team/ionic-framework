@@ -12,6 +12,8 @@ import { is24Hour } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button that wraps the slotted text.
  */
 @Component({
   tag: 'ion-datetime-button',
@@ -235,7 +237,7 @@ export class DatetimeButton implements ComponentInterface {
   };
 
   render() {
-    const { color, dateText, timeText, datetimePresentation, selectedButton, datetimeActive } = this;
+    const { color, dateText, timeText, datetimePresentation, selectedButton, datetimeActive, disabled } = this;
 
     const showDateTarget =
       !datetimePresentation ||
@@ -248,31 +250,35 @@ export class DatetimeButton implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           [`${selectedButton}-active`]: datetimeActive,
+          ['datetime-button-disabled']: disabled,
         })}
       >
         {showDateTarget && (
-          <div class="date-target-container" onClick={() => this.handleDateClick()}>
-            <slot name="date-target">
-              {/*
-                The button is added inside of the <slot> so that
-                devs do not create nested interactives if they
-                decide to add in a custom ion-button.
-              */}
-              <button id="date-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
-                {dateText}
-              </button>
-            </slot>
-          </div>
+          <button
+            class="ion-activatable"
+            id="date-button"
+            aria-expanded={datetimeActive ? 'true' : 'false'}
+            onClick={() => this.handleDateClick()}
+            disabled={disabled}
+            part="native"
+          >
+            <slot name="date-target">{dateText}</slot>
+            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          </button>
         )}
 
         {showTimeTarget && (
-          <div class="time-target-container" onClick={() => this.handleTimeClick()}>
-            <slot name="time-target">
-              <button id="time-button" aria-expanded={datetimeActive ? 'true' : 'false'}>
-                {timeText}
-              </button>
-            </slot>
-          </div>
+          <button
+            class="ion-activatable"
+            id="time-button"
+            aria-expanded={datetimeActive ? 'true' : 'false'}
+            onClick={() => this.handleTimeClick()}
+            disabled={disabled}
+            part="native"
+          >
+            <slot name="time-target">{timeText}</slot>
+            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          </button>
         )}
       </Host>
     );

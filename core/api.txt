@@ -414,6 +414,7 @@ ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary
 ion-datetime-button,prop,datetime,string | undefined,undefined,false,false
 ion-datetime-button,prop,disabled,boolean,false,false,true
 ion-datetime-button,prop,mode,"ios" | "md",undefined,false,false
+ion-datetime-button,part,native
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
