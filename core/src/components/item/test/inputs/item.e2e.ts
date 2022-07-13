@@ -41,6 +41,11 @@ test.describe('item: inputs', () => {
   });
 
   test.describe('form data', () => {
+    // eslint-disable-next-line no-empty-pattern
+    test.beforeEach(async ({}, testInfo) => {
+      test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
+    });
+
     test('initial form data should be empty', async ({ page }) => {
       await page.click('#submit');
 
