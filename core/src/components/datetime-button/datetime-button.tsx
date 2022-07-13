@@ -87,18 +87,9 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is being used in so we can
      * correctly size it when it is presented.
      */
-    const overlayEl = this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
+    this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
 
     componentOnReady(datetimeEl, () => {
-      /**
-       * Datetimes in overlays linked with datetime-button
-       * should display full width so that the overlay
-       * can be sized correctly.
-       */
-      if (overlayEl) {
-        datetimeEl.size = 'cover';
-      }
-
       const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
 
       /**
