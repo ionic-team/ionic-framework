@@ -272,14 +272,6 @@ export class DatetimeButton implements ComponentInterface {
     overlayEl.style.setProperty('--height', `fit-content`);
 
     /**
-     * All datetime overlays should have
-     * a consistent width and border radius.
-     * This is controlled by the ion-datetime-button-overlay
-     * class which developers can customize globally.
-     */
-    overlayEl.classList.add('ion-datetime-button-overlay');
-
-    /**
      * Wheel picker styles in datetime always
      * have a fixed height of 200px. This is
      * because the buttons/headers are not shown
