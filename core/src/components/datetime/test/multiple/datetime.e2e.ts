@@ -17,7 +17,7 @@ const screenshotDatetime = async (page: E2EPage, datetimeID: string) => {
   );
 };
 
-test.describe('datetime: multiple date selection', () => {
+test.describe('datetime: multiple date selection (visual regressions)', () => {
   test('single default value should not have visual regressions', async ({ page }) => {
     await screenshotDatetime(page, 'singleDefaultValue');
   });
@@ -28,6 +28,13 @@ test.describe('datetime: multiple date selection', () => {
 
   test('header should not have visual regressions', async ({ page }) => {
     await screenshotDatetime(page, 'withHeader');
+  });
+});
+
+test.describe('datetime: multiple date selection (functionality)', () => {
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
   });
 
   test('clicking unselected days should select them', async ({ page }) => {
