@@ -24,6 +24,15 @@
         margin-top: 10px;
         margin-left: 5px;
       }
+
+      .ion-page {
+        width: 100%;
+        height: 100%;
+
+        position: relative;
+
+        contain: layout style;
+      }
     </style>
   </head>
   <body>
@@ -43,7 +52,7 @@
               <ion-datetime-button slot="end" id="default-button" datetime="default-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="default-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="date-time"
@@ -53,7 +62,7 @@
             </ion-popover>
           </div>
 
-          <div class="grid-item">
+          <!--<div class="grid-item">
             <h2>Date Only</h2>
 
             <ion-item>
@@ -200,6 +209,28 @@
               ></ion-datetime>
             </ion-popover>
           </div>
+
+          <div class="grid-item">
+            <h2>Mdoal</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button
+                slot="end"
+                id="modal-button"
+                datetime="modal-datetime"
+              ></ion-datetime-button>
+            </ion-item>
+
+            <ion-modal arrow="false" trigger="modal-button">
+              <ion-datetime
+                locale="en-US"
+                presentation="date-time"
+                id="modal-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-modal>
+          </div>-->
         </div>
       </ion-content>
     </ion-app>

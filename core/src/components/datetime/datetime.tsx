@@ -460,6 +460,12 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
+   * Emitted when componentDidRender is fired.
+   * @internal
+   */
+  @Event() ionRender!: EventEmitter<void>;
+
+  /**
    * Confirms the selected datetime value, updates the
    * `value` property, and optionally closes the popover
    * or modal that the datetime was presented in.
@@ -1080,6 +1086,10 @@ export class Datetime implements ComponentInterface {
     }
 
     this.initializeListeners();
+
+    requestAnimationFrame(() => {
+      this.ionRender.emit();
+    });
   }
 
   /**

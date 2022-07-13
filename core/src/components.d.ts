@@ -4754,6 +4754,10 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonDatetimeCustomEvent<void>) => void;
         /**
+          * Emitted when componentDidRender is fired.
+         */
+        "onIonRender"?: (event: IonDatetimeCustomEvent<void>) => void;
+        /**
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: IonDatetimeCustomEvent<StyleEventDetail>) => void;
