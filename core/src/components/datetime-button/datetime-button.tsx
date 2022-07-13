@@ -145,6 +145,7 @@ export class DatetimeButton implements ComponentInterface {
      */
     const parsedDatetime = parseDate(value || getToday());
     const use24Hour = is24Hour(locale, hourCycle);
+    parsedDatetime.tzOffset = undefined;
 
     switch (datetimePresentation) {
       case 'date-time':
