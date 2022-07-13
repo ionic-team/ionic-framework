@@ -138,7 +138,7 @@ test.describe('datetime-button: locale', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const timeTarget = page.locator('.time-target-container')
+    const timeTarget = page.locator('.time-target-container');
     await expect(timeTarget).toContainText('6:30');
 
     const firstOfMonth = page.locator('ion-datetime .calendar-day[data-month="1"][data-day="1"]');
