@@ -24,15 +24,6 @@
         margin-top: 10px;
         margin-left: 5px;
       }
-
-      .ion-page {
-        width: 100%;
-        height: 100%;
-
-        position: relative;
-
-        contain: layout style;
-      }
     </style>
   </head>
   <body>
@@ -49,7 +40,7 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button slot="end" id="default-button" datetime="default-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="default-datetime"></ion-datetime-button>
             </ion-item>
 
             <ion-popover arrow="false">
@@ -62,15 +53,15 @@
             </ion-popover>
           </div>
 
-          <!--<div class="grid-item">
+          <div class="grid-item">
             <h2>Date Only</h2>
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button slot="end" id="date-button" datetime="date-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="date-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="date-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="date"
@@ -85,10 +76,10 @@
 
             <ion-item>
               <ion-label>Start Time</ion-label>
-              <ion-datetime-button slot="end" id="time-button" datetime="time-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="time-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="time-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="time"
@@ -102,10 +93,10 @@
 
             <ion-item>
               <ion-label>Start Time</ion-label>
-              <ion-datetime-button slot="end" id="time-h23-button" datetime="time-h23-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="time-h23-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="time-h23-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="time"
@@ -120,10 +111,10 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button slot="end" id="time-date-button" datetime="time-date-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="time-date-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="time-date-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="time-date"
@@ -137,10 +128,10 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button slot="end" id="month-button" datetime="month-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="month-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="month-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="month"
@@ -156,12 +147,11 @@
               <ion-label>Start Date</ion-label>
               <ion-datetime-button
                 slot="end"
-                id="month-year-button"
                 datetime="month-year-datetime"
               ></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="month-year-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="month-year"
@@ -175,10 +165,10 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button slot="end" id="year-button" datetime="year-datetime"></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="year-datetime"></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="year-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 presentation="year"
@@ -194,12 +184,11 @@
               <ion-label>Start Date</ion-label>
               <ion-datetime-button
                 slot="end"
-                id="prefer-wheel-button"
                 datetime="prefer-wheel-datetime"
               ></ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="prefer-wheel-button">
+            <ion-popover arrow="false">
               <ion-datetime
                 locale="en-US"
                 prefer-wheel="true"
@@ -209,28 +198,6 @@
               ></ion-datetime>
             </ion-popover>
           </div>
-
-          <div class="grid-item">
-            <h2>Mdoal</h2>
-
-            <ion-item>
-              <ion-label>Start Date</ion-label>
-              <ion-datetime-button
-                slot="end"
-                id="modal-button"
-                datetime="modal-datetime"
-              ></ion-datetime-button>
-            </ion-item>
-
-            <ion-modal arrow="false" trigger="modal-button">
-              <ion-datetime
-                locale="en-US"
-                presentation="date-time"
-                id="modal-datetime"
-                value="2022-03-15T00:43:00"
-              ></ion-datetime>
-            </ion-modal>
-          </div>-->
         </div>
       </ion-content>
     </ion-app>
