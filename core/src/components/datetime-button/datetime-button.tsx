@@ -3,7 +3,7 @@ import { Component, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, DatetimePresentation } from '../../interface';
-import { componentOnReady, addEventListener, raf } from '../../utils/helpers';
+import { componentOnReady, addEventListener } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
 import { getToday } from '../datetime/utils/data';
@@ -87,7 +87,7 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is being used in so we can
      * correctly size it when it is presented.
      */
-    const overlayEl = (this.overlayEl = datetimeEl.closest('ion-modal, ion-popover'));
+    const overlayEl = this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
 
     componentOnReady(datetimeEl, () => {
       /**
@@ -269,6 +269,8 @@ export class DatetimeButton implements ComponentInterface {
 
     const { presentation } = datetimeEl;
 
+    overlayEl.style.setProperty('--height', `fit-content`);
+
     /**
      * All datetime overlays should have
      * a consistent width and border radius.
@@ -287,8 +289,6 @@ export class DatetimeButton implements ComponentInterface {
     const needsWiderWheel = presentation === 'month-year';
 
     if (hasWheelPicker) {
-      overlayEl.style.setProperty('--height', `200px`);
-
       /**
        * The default width for month-year
        * is too small, so we set it to 300px so
@@ -316,10 +316,6 @@ export class DatetimeButton implements ComponentInterface {
        */
     } else {
       overlayEl.style.setProperty('--width', '300px');
-
-      raf(() => {
-        overlayEl.style.setProperty('--height', `${datetimeEl.scrollHeight}px`);
-      });
     }
   };
 
