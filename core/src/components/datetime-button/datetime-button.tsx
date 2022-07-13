@@ -252,54 +252,14 @@ export class DatetimeButton implements ComponentInterface {
    * fills the entire container.
    */
   private setOverlaySize = () => {
-    const { overlayEl, datetimeEl } = this;
+    const { overlayEl } = this;
 
-    if (!overlayEl || !datetimeEl) {
+    if (!overlayEl) {
       return;
     }
 
-    const { presentation } = datetimeEl;
-
     overlayEl.style.setProperty('--height', `fit-content`);
-
-    /**
-     * Wheel picker styles in datetime always
-     * have a fixed height of 200px. This is
-     * because the buttons/headers are not shown
-     * with the wheel picker by design.
-     */
-    const hasWheelPicker = ['month', 'year', 'month-year', 'time'].includes(presentation);
-    const needsWiderWheel = presentation === 'month-year';
-
-    if (hasWheelPicker) {
-      /**
-       * The default width for month-year
-       * is too small, so we set it to 300px so
-       * the text is not cut off.
-       */
-      if (needsWiderWheel) {
-        overlayEl.style.setProperty('--width', '300px');
-      }
-
-      /**
-       * If we are not using the
-       * wheel picker then we need to automatically
-       * determine the height of the datetime by
-       * looking at scrollHeight. We look at scrollHeight
-       * as it will give us the height of the datetime
-       * even if it overflows outside of the overlay initially.
-       *
-       * We also wait a frame to allow the browser to
-       * unhide the overlay and calculate the size
-       * of the datetime.
-       *
-       * Doing this means developers can control the size
-       * of the overlay by setting the height of
-       * the datetime directly.
-       */
-    } else {
-      overlayEl.style.setProperty('--width', '300px');
-    }
+    overlayEl.style.setProperty('--width', 'fit-content');
   };
 
   render() {
