@@ -7,7 +7,7 @@ const setup = async (page: E2EPage, datetimeID: string, shouldNavigate = true) =
   const datetime = page.locator(`#${datetimeID}`);
   await datetime.scrollIntoViewIfNeeded();
   await page.waitForSelector(`#${datetimeID}.datetime-ready`);
-  return page.locator(`#${datetimeID}`);
+  return datetime;
 };
 
 const screenshotDatetime = async (page: E2EPage, datetimeID: string) => {
