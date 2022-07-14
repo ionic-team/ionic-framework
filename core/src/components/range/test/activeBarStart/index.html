@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Range - barActiveStart</title>
+    <title>Range - activeBarStart</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -22,13 +22,13 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Range - barActiveStart</ion-title>
+          <ion-title>Range - activeBarStart</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding" id="content">
         <ion-list>
           <ion-item>
-            <ion-label position="stacked">barActiveStart is 0 and value is 0.</ion-label>
+            <ion-label position="stacked">activeBarStart is 0 and value is 0.</ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -36,13 +36,13 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="0"
+              active-bar-start="0"
               value="0"
             >
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked"> barActiveStart is 0 and value is 70. </ion-label>
+            <ion-label position="stacked"> activeBarStart is 0 and value is 70. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -50,13 +50,13 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="0"
+              active-bar-start="0"
               value="70"
             >
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked"> barActiveStart is 0 and value is -70. </ion-label>
+            <ion-label position="stacked"> activeBarStart is 0 and value is -70. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -64,13 +64,13 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="0"
+              active-bar-start="0"
               value="-70"
             >
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked"> barActiveStart is -30 and value is 0. </ion-label>
+            <ion-label position="stacked"> activeBarStart is -30 and value is 0. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -78,13 +78,13 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="-30"
+              active-bar-start="-30"
               value="0"
             >
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked"> barActiveStart is 30 and value is 0. </ion-label>
+            <ion-label position="stacked"> activeBarStart is 30 and value is 0. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -92,13 +92,13 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="30"
+              active-bar-start="30"
               value="0"
             >
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">barActiveStart is between steps</ion-label>
+            <ion-label position="stacked">activeBarStart is between steps</ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -106,22 +106,22 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="25"
+              active-bar-start="25"
               value="0"
             ></ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">invalid barActiveStart value (less than min)</ion-label>
-            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" bar-active-start="-30">
+            <ion-label position="stacked">invalid activeBarStart value (less than min)</ion-label>
+            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" active-bar-start="-30">
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">invalid barActiveStart value (greater than max)</ion-label>
-            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" bar-active-start="110">
+            <ion-label position="stacked">invalid activeBarStart value (greater than max)</ion-label>
+            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" active-bar-start="110">
             </ion-range>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked"> barActiveStart is ignored with dual knobs enabled. </ion-label>
+            <ion-label position="stacked"> activeBarStart is ignored with dual knobs enabled. </ion-label>
             <ion-range
               class="ion-no-padding"
               min="-100"
@@ -129,7 +129,7 @@
               snaps="10"
               step="10"
               pin="true"
-              bar-active-start="-30"
+              active-bar-start="-30"
               dual-knobs="true"
               value="30"
             ></ion-range>

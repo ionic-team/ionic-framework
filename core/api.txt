@@ -971,7 +971,7 @@ ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 
 ion-range,shadow
-ion-range,prop,barActiveStart,number,this.min,false,false
+ion-range,prop,activeBarStart,number | undefined,undefined,false,false
 ion-range,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-range,prop,debounce,number,0,false,false
 ion-range,prop,disabled,boolean,false,false,false
@@ -1418,6 +1418,7 @@ ion-toggle,shadow
 ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
+ion-toggle,prop,enableOnOffLabels,boolean | undefined,undefined,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false

@@ -2079,7 +2079,7 @@ export namespace Components {
         /**
           * The start position of the range active bar, only available with a single knob (dualKnobs="false"). Valid values are between the `min` and `max` values.
          */
-        "barActiveStart"?: number;
+        "activeBarStart"?: number;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */

@@ -147,19 +147,19 @@ export class Range implements ComponentInterface {
    * The start position of the range active bar, only available with a single knob (dualKnobs="false").
    * Valid values are between the `min` and `max` values.
    */
-  @Prop() barActiveStart?: number;
-  @Watch('barActiveStart')
-  protected barActiveStartChanged() {
-    const { barActiveStart } = this;
-    if (barActiveStart !== undefined) {
-      if (barActiveStart > this.max) {
+  @Prop() activeBarStart?: number;
+  @Watch('activeBarStart')
+  protected activeBarStartChanged() {
+    const { activeBarStart } = this;
+    if (activeBarStart !== undefined) {
+      if (activeBarStart > this.max) {
         printIonWarning(
-          `Range: The value of barActiveStart (${barActiveStart}) is greater than the max (${this.max}). Accepted values are between the min and max values of the range.`,
+          `Range: The value of activeBarStart (${activeBarStart}) is greater than the max (${this.max}). Accepted values are between the min and max values of the range.`,
           this.el
         );
-      } else if (barActiveStart < this.min) {
+      } else if (activeBarStart < this.min) {
         printIonWarning(
-          `Range: The value of barActiveStart (${barActiveStart}) is less than the min (${this.min}). Accepted values are between the min and max values of the range.`,
+          `Range: The value of activeBarStart (${activeBarStart}) is less than the min (${this.min}). Accepted values are between the min and max values of the range.`,
           this.el
         );
       }
@@ -276,7 +276,7 @@ export class Range implements ComponentInterface {
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
-    this.barActiveStartChanged();
+    this.activeBarStartChanged();
 
     /**
      * If we have not yet rendered
@@ -420,11 +420,11 @@ export class Range implements ComponentInterface {
     if (this.dualKnobs) {
       return Math.min(this.ratioA, this.ratioB);
     }
-    const { barActiveStart } = this;
-    if (barActiveStart == null) {
+    const { activeBarStart } = this;
+    if (activeBarStart == null) {
       return 0;
     }
-    return valueToRatio(barActiveStart, this.min, this.max);
+    return valueToRatio(activeBarStart, this.min, this.max);
   }
 
   private get ratioUpper() {
@@ -528,7 +528,7 @@ export class Range implements ComponentInterface {
     };
 
     if (this.dualKnobs === false) {
-      if (this.valA < (this.barActiveStart ?? this.min)) {
+      if (this.valA < (this.activeBarStart ?? this.min)) {
         barStart = `${ratioUpper * 100}%`;
         barEnd = `${100 - ratioLower * 100}%`;
       } else {

@@ -1304,13 +1304,13 @@ mouse drag, touch gesture, or keyboard interaction.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['barActiveStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['barActiveStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 export class IonRange {
   protected el: HTMLElement;
@@ -1979,13 +1979,13 @@ export declare interface IonToggle extends Components.IonToggle {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })
 export class IonToggle {
   protected el: HTMLElement;
