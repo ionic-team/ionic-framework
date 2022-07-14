@@ -765,6 +765,7 @@ export class Datetime implements ComponentInterface {
          * then the user is partially swiped between two
          * months. We should wait until they finish
          * swiping in order to update the month.
+         * A 5px margin allows us to avoid sub-pixel rendering quirks.
          */
         const elementOnLeft = root.elementFromPoint(box.x + 5, box.y + box.height / 2);
         const elementOnRight = root.elementFromPoint(box.x + box.width - 5, box.y + box.height / 2);
