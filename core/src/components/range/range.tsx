@@ -528,10 +528,27 @@ export class Range implements ComponentInterface {
     };
 
     if (this.dualKnobs === false) {
+      /**
+       * When the value is less than the activeBarStart or the min value,
+       * the knob will display at the start of the active bar.
+       */
       if (this.valA < (this.activeBarStart ?? this.min)) {
+        /**
+         * Sets the bar positions relative to the upper and lower limits.
+         * Converts the ratio values into percentages, used as offsets for left/right styles.
+         *
+         * The ratioUpper refers to the knob position on the bar.
+         * The ratioLower refers to the end position of the active bar (the value).
+         */
         barStart = `${ratioUpper * 100}%`;
         barEnd = `${100 - ratioLower * 100}%`;
       } else {
+        /**
+         * Otherwise, the knob will display at the end of the active bar.
+         *
+         * The ratioLower refers to the start position of the active bar (the value).
+         * The ratioUpper refers to the knob position on the bar.
+         */
         barStart = `${ratioLower * 100}%`;
         barEnd = `${100 - ratioUpper * 100}%`;
       }
