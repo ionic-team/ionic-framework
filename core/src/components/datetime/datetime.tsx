@@ -1486,7 +1486,7 @@ export class Datetime implements ComponentInterface {
             ...findPart,
           });
 
-          if(!Array.isArray(activeParts)) {
+          if (!Array.isArray(activeParts)) {
             this.setActiveParts({
               ...activeParts,
               ...findPart,
@@ -1581,7 +1581,7 @@ export class Datetime implements ComponentInterface {
             day: ev.detail.value,
           });
 
-          if(!Array.isArray(activeParts)) {
+          if (!Array.isArray(activeParts)) {
             this.setActiveParts({
               ...activeParts,
               day: ev.detail.value,
@@ -1624,7 +1624,7 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          if(!Array.isArray(activeParts)) {
+          if (!Array.isArray(activeParts)) {
             this.setActiveParts({
               ...activeParts,
               month: ev.detail.value,
@@ -1666,7 +1666,7 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          if(!Array.isArray(activeParts)) {
+          if (!Array.isArray(activeParts)) {
             this.setActiveParts({
               ...activeParts,
               year: ev.detail.value,
@@ -1719,8 +1719,8 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             hour: ev.detail.value,
           });
-          
-          if(!Array.isArray(activePartsClone)) {
+
+          if (!Array.isArray(activePartsClone)) {
             this.setActiveParts({
               ...activePartsClone,
               hour: ev.detail.value,
@@ -1747,8 +1747,8 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             minute: ev.detail.value,
           });
-          
-          if(!Array.isArray(activePartsClone)) {
+
+          if (!Array.isArray(activePartsClone)) {
             this.setActiveParts({
               ...activePartsClone,
               minute: ev.detail.value,
@@ -1783,7 +1783,7 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          if(!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePartsClone)) {
             this.setActiveParts({
               ...activePartsClone,
               ampm: ev.detail.value,
