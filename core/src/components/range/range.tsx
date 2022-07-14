@@ -147,21 +147,23 @@ export class Range implements ComponentInterface {
    * The start position of the range active bar. This feature is only available with a single knob (dualKnobs="false").
    * Valid values are greater than or equal to the min value and less than or equal to the max value.
    */
-  @Prop() activeBarStart?: number;
+  @Prop({ mutable: true }) activeBarStart?: number;
   @Watch('activeBarStart')
   protected activeBarStartChanged() {
     const { activeBarStart } = this;
     if (activeBarStart !== undefined) {
       if (activeBarStart > this.max) {
         printIonWarning(
-          `Range: The value of activeBarStart (${activeBarStart}) is greater than the max (${this.max}). Accepted values are between the min and max values of the range.`,
+          `Range: The value of activeBarStart (${activeBarStart}) is greater than the max (${this.max}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
           this.el
         );
+        this.activeBarStart = this.max;
       } else if (activeBarStart < this.min) {
         printIonWarning(
-          `Range: The value of activeBarStart (${activeBarStart}) is less than the min (${this.min}). Accepted values are between the min and max values of the range.`,
+          `Range: The value of activeBarStart (${activeBarStart}) is less than the min (${this.min}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
           this.el
         );
+        this.activeBarStart = this.min;
       }
     }
   }
