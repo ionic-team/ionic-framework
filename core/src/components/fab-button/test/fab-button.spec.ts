@@ -2,8 +2,8 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { FabButton } from '../fab-button';
 
-describe('should inherit aria attributes to inner <button>', () => {
-  it('should ', async () => {
+describe('fab-button: aria attributes', () => {
+  it('should inherit aria attributes to inner <button>', async () => {
     const page = await newSpecPage({
       components: [FabButton],
       html: `
