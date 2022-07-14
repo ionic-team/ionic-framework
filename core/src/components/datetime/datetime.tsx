@@ -1517,11 +1517,13 @@ export class Datetime implements ComponentInterface {
 
     if (isDateEnabled) {
       days = days.map((dayObject) => {
-        const referenceParts = {
+        const { value } = dayObject;
+        const valueNum = typeof value === 'string' ? parseInt(value) : value;
+        const referenceParts: DatetimeParts = {
           month: workingParts.month,
-          day: dayObject.value,
+          day: valueNum,
           year: workingParts.year,
-        } as DatetimeParts;
+        };
 
         let disabled;
         try {
@@ -1565,7 +1567,7 @@ export class Datetime implements ComponentInterface {
         class="day-column"
         color={this.color}
         items={days}
-        value={'' + (workingParts.day || this.todayParts.day)}
+        value={(workingParts.day || this.todayParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
           // Due to a Safari 14 issue we need to destroy
           // the intersection observer before we update state
