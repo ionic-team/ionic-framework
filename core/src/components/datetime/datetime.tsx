@@ -779,6 +779,8 @@ export class Datetime implements ComponentInterface {
         const leftMonth = elementOnLeft.closest('.calendar-month');
         const rightMonth = elementOnRight.closest('.calendar-month');
 
+        console.log('change', leftMonth, rightMonth);
+
         if (leftMonth !== rightMonth) return;
 
         /**
@@ -797,18 +799,6 @@ export class Datetime implements ComponentInterface {
       };
 
       const updateActiveMonth = () => {
-        /**
-         * If user is actively touching
-         * the screen, we need to wait
-         * for both the gesture to end
-         * and for snapping to finish
-         * otherwise the component will
-         * re-render mid gesture.
-         */
-        if (isTouching) {
-          return;
-        }
-
         if (needsiOSRubberBandFix) {
           calendarBodyRef.style.removeProperty('pointer-events');
           appliediOSRubberBandFix = false;
@@ -876,16 +866,6 @@ export class Datetime implements ComponentInterface {
        * that adds unnecessary work to the main thread.
        */
       let appliediOSRubberBandFix = false;
-
-      /**
-       * If user stops scrolling but is still
-       * actively touching the screen, they may
-       * decide to scroll again. In that case,
-       * we should wait for both the scrolling
-       * and touch gesture to end before
-       * updating the working parts.
-       */
-      let isTouching = false;
       const scrollCallback = () => {
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
@@ -909,19 +889,9 @@ export class Datetime implements ComponentInterface {
         scrollTimeout = setTimeout(updateActiveMonth, 50);
       };
 
-      const setIsTouching = () => {
-        isTouching = true;
-      };
-      const clearIsTouching = () => {
-        isTouching = false;
-      };
-      calendarBodyRef.addEventListener('touchstart', setIsTouching);
-      calendarBodyRef.addEventListener('touchend', clearIsTouching);
       calendarBodyRef.addEventListener('scroll', scrollCallback);
 
       this.destroyCalendarListener = () => {
-        calendarBodyRef.removeEventListener('touchstart', setIsTouching);
-        calendarBodyRef.removeEventListener('touchend', clearIsTouching);
         calendarBodyRef.removeEventListener('scroll', scrollCallback);
       };
     });
