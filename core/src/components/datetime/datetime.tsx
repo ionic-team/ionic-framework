@@ -760,28 +760,31 @@ export class Datetime implements ComponentInterface {
         const root = this.el!.shadowRoot!;
 
         /**
-         * Check the element on the left and right edges
-         * of the body. If the two elements are not the same
-         * then the user is partially swiped between two
-         * months. We should wait until they finish
-         * swiping in order to update the month.
-         * A 5px margin allows us to avoid sub-pixel rendering quirks.
+         * Get the element that is in the center of the calendar body.
+         * This will be an element inside of the active month.
          */
-        const elementOnLeft = root.elementFromPoint(box.x + 5, box.y + box.height / 2);
-        const elementOnRight = root.elementFromPoint(box.x + box.width - 5, box.y + box.height / 2);
-
+        const elementAtCenter = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
         /**
-         * If there are no elements then the
+         * If there is no element then the
          * component may be re-rendering on a slow device.
          */
-        if (!elementOnLeft || !elementOnRight) return;
+        if (!elementAtCenter) return;
 
-        const leftMonth = elementOnLeft.closest('.calendar-month');
-        const rightMonth = elementOnRight.closest('.calendar-month');
+        const month = elementAtCenter.closest('.calendar-month');
+        if (!month) return;
 
-        console.log('change', leftMonth, rightMonth);
-
-        if (leftMonth !== rightMonth) return;
+        /**
+         * The edge of the month must be lined up with
+         * the edge of the calendar body in order for
+         * the component to update. Otherwise, it
+         * may be the case that the user has paused their
+         * swipe or the browser has not finished snapping yet.
+         * Rather than check if the x values are equal,
+         * we give it a tolerance of 2px to account for
+         * sub pixel rendering.
+         */
+        const monthBox = month.getBoundingClientRect();
+        if (Math.abs(monthBox.x - box.x) > 2) return;
 
         /**
          * From here, we can determine if the start
@@ -789,9 +792,9 @@ export class Datetime implements ComponentInterface {
          * If no month was changed, then we can return from
          * the scroll callback early.
          */
-        if (leftMonth === startMonth) {
+        if (month === startMonth) {
           return getPreviousMonth(parts);
-        } else if (leftMonth === endMonth) {
+        } else if (month === endMonth) {
           return getNextMonth(parts);
         } else {
           return;
