@@ -1393,7 +1393,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { activeParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
     /**
      * By default, generate a range of 3 months:
@@ -1482,15 +1482,16 @@ export class Datetime implements ComponentInterface {
           const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             ...findPart,
           });
 
-          // wheel pickers don't support multiple selection, so assume this won't be an array
-          this.setActiveParts({
-            ...(this.activeParts as DatetimeParts),
-            ...findPart,
-          });
+          if(!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              ...findPart,
+            });
+          }
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1557,7 +1558,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { activeParts, workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1574,14 +1575,16 @@ export class Datetime implements ComponentInterface {
           }
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             day: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...(this.activeParts as DatetimeParts),
-            day: ev.detail.value,
-          });
+          if(!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              day: ev.detail.value,
+            });
+          }
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1598,7 +1601,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { activeParts, workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1615,14 +1618,16 @@ export class Datetime implements ComponentInterface {
           }
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...(this.activeParts as DatetimeParts),
-            month: ev.detail.value,
-          });
+          if(!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              month: ev.detail.value,
+            });
+          }
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1638,7 +1643,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { activeParts, workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1655,14 +1660,16 @@ export class Datetime implements ComponentInterface {
           }
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...(this.activeParts as DatetimeParts),
-            year: ev.detail.value,
-          });
+          if(!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              year: ev.detail.value,
+            });
+          }
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
@@ -1710,10 +1717,13 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             hour: ev.detail.value,
           });
-          this.setActiveParts({
-            ...(activePartsClone as DatetimeParts),
-            hour: ev.detail.value,
-          });
+          
+          if(!Array.isArray(activePartsClone)) {
+            this.setActiveParts({
+              ...activePartsClone,
+              hour: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -1735,10 +1745,13 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             minute: ev.detail.value,
           });
-          this.setActiveParts({
-            ...(activePartsClone as DatetimeParts),
-            minute: ev.detail.value,
-          });
+          
+          if(!Array.isArray(activePartsClone)) {
+            this.setActiveParts({
+              ...activePartsClone,
+              minute: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -1768,11 +1781,13 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          this.setActiveParts({
-            ...(activePartsClone as DatetimeParts),
-            ampm: ev.detail.value,
-            hour,
-          });
+          if(!Array.isArray(activePartsClone)) {
+            this.setActiveParts({
+              ...activePartsClone,
+              ampm: ev.detail.value,
+              hour,
+            });
+          }
 
           ev.stopPropagation();
         }}
