@@ -834,6 +834,24 @@ export namespace Components {
          */
         "yearValues"?: number[] | number | string;
     }
+    interface IonDatetimeButton {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The ID of the `ion-datetime` instance associated with the datetime button.
+         */
+        "datetime"?: string;
+        /**
+          * If `true`, the user cannot interact with the button.
+         */
+        "disabled": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
     interface IonFab {
         /**
           * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active. That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
@@ -3405,6 +3423,12 @@ declare global {
         prototype: HTMLIonDatetimeElement;
         new (): HTMLIonDatetimeElement;
     };
+    interface HTMLIonDatetimeButtonElement extends Components.IonDatetimeButton, HTMLStencilElement {
+    }
+    var HTMLIonDatetimeButtonElement: {
+        prototype: HTMLIonDatetimeButtonElement;
+        new (): HTMLIonDatetimeButtonElement;
+    };
     interface HTMLIonFabElement extends Components.IonFab, HTMLStencilElement {
     }
     var HTMLIonFabElement: {
@@ -3849,6 +3873,7 @@ declare global {
         "ion-col": HTMLIonColElement;
         "ion-content": HTMLIonContentElement;
         "ion-datetime": HTMLIonDatetimeElement;
+        "ion-datetime-button": HTMLIonDatetimeButtonElement;
         "ion-fab": HTMLIonFabElement;
         "ion-fab-button": HTMLIonFabButtonElement;
         "ion-fab-list": HTMLIonFabListElement;
@@ -4772,6 +4797,24 @@ declare namespace LocalJSX {
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
          */
         "yearValues"?: number[] | number | string;
+    }
+    interface IonDatetimeButton {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The ID of the `ion-datetime` instance associated with the datetime button.
+         */
+        "datetime"?: string;
+        /**
+          * If `true`, the user cannot interact with the button.
+         */
+        "disabled"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
     }
     interface IonFab {
         /**
@@ -7061,6 +7104,7 @@ declare namespace LocalJSX {
         "ion-col": IonCol;
         "ion-content": IonContent;
         "ion-datetime": IonDatetime;
+        "ion-datetime-button": IonDatetimeButton;
         "ion-fab": IonFab;
         "ion-fab-button": IonFabButton;
         "ion-fab-list": IonFabList;
@@ -7160,6 +7204,7 @@ declare module "@stencil/core" {
             "ion-col": LocalJSX.IonCol & JSXBase.HTMLAttributes<HTMLIonColElement>;
             "ion-content": LocalJSX.IonContent & JSXBase.HTMLAttributes<HTMLIonContentElement>;
             "ion-datetime": LocalJSX.IonDatetime & JSXBase.HTMLAttributes<HTMLIonDatetimeElement>;
+            "ion-datetime-button": LocalJSX.IonDatetimeButton & JSXBase.HTMLAttributes<HTMLIonDatetimeButtonElement>;
             "ion-fab": LocalJSX.IonFab & JSXBase.HTMLAttributes<HTMLIonFabElement>;
             "ion-fab-button": LocalJSX.IonFabButton & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
             "ion-fab-list": LocalJSX.IonFabList & JSXBase.HTMLAttributes<HTMLIonFabListElement>;

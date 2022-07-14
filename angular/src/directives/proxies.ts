@@ -543,6 +543,27 @@ export class IonDatetime {
 }
 
 
+export declare interface IonDatetimeButton extends Components.IonDatetimeButton {}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['color', 'datetime', 'disabled', 'mode']
+})
+@Component({
+  selector: 'ion-datetime-button',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['color', 'datetime', 'disabled', 'mode']
+})
+export class IonDatetimeButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
 export declare interface IonFab extends Components.IonFab {}
 
 @ProxyCmp({
