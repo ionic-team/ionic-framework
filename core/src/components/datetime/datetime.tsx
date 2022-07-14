@@ -760,11 +760,25 @@ export class Datetime implements ComponentInterface {
         const root = this.el!.shadowRoot!;
 
         /**
-         * Get the element that is in the center of the calendar body.
-         * This will be an element inside of the active month.
+         * Check the element on the left and right edges
+         * of the body. If the two elements are not the same
+         * then the user is partially swiped between two
+         * months. We should wait until they finish
+         * swiping in order to update the month.
          */
-        const elementInMonth = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
-        if (!elementInMonth) return;
+        const elementOnLeft = root.elementFromPoint(box.x + 5, box.y + box.height / 2);
+        const elementOnRight = root.elementFromPoint(box.x + box.width - 5, box.y + box.height / 2);
+
+        /**
+         * If there are no elements then the
+         * component may be re-rendering on a slow device.
+         */
+        if (!elementOnLeft || !elementOnRight) return;
+
+        const leftMonth = elementOnLeft.closest('.calendar-month');
+        const rightMonth = elementOnRight.closest('.calendar-month');
+
+        if (leftMonth !== rightMonth) return;
 
         /**
          * From here, we can determine if the start
@@ -772,11 +786,9 @@ export class Datetime implements ComponentInterface {
          * If no month was changed, then we can return from
          * the scroll callback early.
          */
-        const month = elementInMonth.closest('.calendar-month');
-
-        if (month === startMonth) {
+        if (leftMonth === startMonth) {
           return getPreviousMonth(parts);
-        } else if (month === endMonth) {
+        } else if (leftMonth === endMonth) {
           return getNextMonth(parts);
         } else {
           return;
@@ -784,6 +796,18 @@ export class Datetime implements ComponentInterface {
       };
 
       const updateActiveMonth = () => {
+        /**
+         * If user is actively touching
+         * the screen, we need to wait
+         * for both the gesture to end
+         * and for snapping to finish
+         * otherwise the component will
+         * re-render mid gesture.
+         */
+        if (isTouching) {
+          return;
+        }
+
         if (needsiOSRubberBandFix) {
           calendarBodyRef.style.removeProperty('pointer-events');
           appliediOSRubberBandFix = false;
@@ -851,6 +875,16 @@ export class Datetime implements ComponentInterface {
        * that adds unnecessary work to the main thread.
        */
       let appliediOSRubberBandFix = false;
+
+      /**
+       * If user stops scrolling but is still
+       * actively touching the screen, they may
+       * decide to scroll again. In that case,
+       * we should wait for both the scrolling
+       * and touch gesture to end before
+       * updating the working parts.
+       */
+      let isTouching = false;
       const scrollCallback = () => {
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
@@ -873,9 +907,20 @@ export class Datetime implements ComponentInterface {
         // Wait ~3 frames
         scrollTimeout = setTimeout(updateActiveMonth, 50);
       };
+
+      const setIsTouching = () => {
+        isTouching = true;
+      };
+      const clearIsTouching = () => {
+        isTouching = false;
+      };
+      calendarBodyRef.addEventListener('touchstart', setIsTouching);
+      calendarBodyRef.addEventListener('touchend', clearIsTouching);
       calendarBodyRef.addEventListener('scroll', scrollCallback);
 
       this.destroyCalendarListener = () => {
+        calendarBodyRef.removeEventListener('touchstart', setIsTouching);
+        calendarBodyRef.removeEventListener('touchend', clearIsTouching);
         calendarBodyRef.removeEventListener('scroll', scrollCallback);
       };
     });
