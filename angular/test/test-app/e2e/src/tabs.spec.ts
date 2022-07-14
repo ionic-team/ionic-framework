@@ -230,13 +230,13 @@ describe('Tabs', () => {
       tab.find('#goto-next').click();
       testTabTitle('Tab 1 - Page 2 (2)');
 
-      cy.get('#tab-button-contact').click();
+      cy.ionTabClick('Tab Two');
       testTabTitle('Tab 2 - Page 1');
 
-      cy.get('#tab-button-account').click();
+      cy.ionTabClick('Tab One');
       testTabTitle('Tab 1 - Page 2 (2)');
 
-      cy.get('#tab-button-account').click();
+      cy.ionTabClick('Tab One');
       testTabTitle('Tab 1 - Page 1');
 
       testUrlContains(rootUrl);

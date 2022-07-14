@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-router-outlet') => {
-  const increment = (complete) ? 60 : 25;
+  const increment = complete ? 60 : 25;
   cy.get(selector)
     .first()
     .trigger('mousedown', 0, 275, { which: 1, force: true })
@@ -37,18 +37,16 @@ Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-rout
     .wait(50)
     .trigger('mousemove', increment * 4, 275, { which: 1, force: true })
     .wait(50)
-    .trigger('mouseup', increment * 4, 275, { which: 1, force: true })
+    .trigger('mouseup', increment * 4, 275, { which: 1, force: true });
   cy.wait(150);
-})
+});
 
 Cypress.Commands.add('testStack', (selector, expected) => {
   cy.document().then((doc) => {
-    const children = Array.from(
-      doc.querySelector(selector).children
-    ).map(el => el.tagName.toLowerCase());
+    const children = Array.from(doc.querySelector(selector).children).map((el) => el.tagName.toLowerCase());
     expect(children).to.deep.equal(expected);
-  })
-})
+  });
+});
 
 Cypress.Commands.add('testLifeCycle', (selector, expected) => {
   cy.get(`${selector} #ngOnInit`).invoke('text').should('equal', '1');
@@ -56,24 +54,26 @@ Cypress.Commands.add('testLifeCycle', (selector, expected) => {
   cy.get(`${selector} #ionViewDidEnter`).invoke('text').should('equal', expected.ionViewDidEnter.toString());
   cy.get(`${selector} #ionViewWillLeave`).invoke('text').should('equal', expected.ionViewWillLeave.toString());
   cy.get(`${selector} #ionViewDidLeave`).invoke('text').should('equal', expected.ionViewDidLeave.toString());
-})
+});
 
 Cypress.Commands.add('ionPageVisible', (selector) => {
   cy.get(selector)
     .should('have.class', 'ion-page')
     .should('not.have.class', 'ion-page-hidden')
     .should('not.have.class', 'ion-page-invisible')
-    .should('have.length', 1)
-})
+    .should('have.length', 1);
+});
 
 Cypress.Commands.add('ionPageHidden', (selector) => {
-  cy.get(selector)
-    .should('have.class', 'ion-page')
-    .should('have.class', 'ion-page-hidden')
-    .should('have.length', 1)
-})
+  cy.get(selector).should('have.class', 'ion-page').should('have.class', 'ion-page-hidden').should('have.length', 1);
+});
 
 Cypress.Commands.add('ionPageDoesNotExist', (selector) => {
-  cy.get(selector)
-    .should('not.exist')
+  cy.get(selector).should('not.exist');
+});
+
+Cypress.Commands.add('ionTabClick', (tabText) => {
+  // TODO: Figure out how to get rid of wait. It's a workaround for flakiness in CI.
+  cy.wait(250);
+  cy.contains('ion-tab-button', tabText).click({ force: true });
 });
