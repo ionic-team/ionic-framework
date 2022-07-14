@@ -547,9 +547,16 @@ export class Range implements ComponentInterface {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
 
+        const ratioMin = Math.min(ratioLower, ratioUpper);
+        const ratioMax = Math.max(ratioLower, ratioUpper);
+
         const tick: any = {
           ratio,
-          active: ratio >= Math.min(ratioLower, ratioUpper) && ratio <= Math.max(ratioLower, ratioUpper),
+          /**
+           * Sets the tick mark as active when the tick is between the min bounds and the knob.
+           * When using activeBarStart, the tick mark will be active between the knob and activeBarStart.
+           */
+          active: ratio >= ratioMin && ratio <= ratioMax,
         };
 
         tick[start] = `${ratio * 100}%`;
