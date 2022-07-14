@@ -84,7 +84,7 @@ test.describe('datetime-button: labels', () => {
     await page.waitForSelector('.datetime-ready');
 
     await expect(page.locator('#time-button')).toContainText('6:30 AM');
-    await expect(page.locator('#date-button')).toContainText('6:30 AM');
+    await expect(page.locator('#date-button')).toBeHidden();
   });
   test('should update the label when the value of the datetime changes', async ({ page }) => {
     await page.setContent(`
@@ -168,8 +168,8 @@ test.describe('datetime-button: wheel', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    await expect(page.locator('.date-target-container')).toContainText('Jan 1, 2022 6:30 AM');
-    await expect(page.locator('.time-target-container')).not.toBeVisible();
+    await expect(page.locator('#date-button')).toContainText('Jan 1, 2022 6:30 AM');
+    await expect(page.locator('#time-button')).not.toBeVisible();
   });
   test('should only show a single date button when presentation="time-date" and prefer-wheel="true"', async ({
     page,
@@ -180,7 +180,7 @@ test.describe('datetime-button: wheel', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    await expect(page.locator('.date-target-container')).toContainText('Jan 1, 2022 6:30 AM');
-    await expect(page.locator('.time-target-container')).not.toBeVisible();
+    await expect(page.locator('#date-button')).toContainText('Jan 1, 2022 6:30 AM');
+    await expect(page.locator('#time-button')).not.toBeVisible();
   });
 });
