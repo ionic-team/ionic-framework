@@ -1,118 +1,142 @@
+import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
+import type { EventSpy } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('item: inputs', () => {
-  test.skip('should not have visual regressions', async ({ page }) => {
+  let ionPopoverDidPresent: EventSpy;
+  let ionPopoverDidDismiss: EventSpy;
+
+  let formResult: Locator;
+  let popover: Locator;
+
+  test.beforeEach(async ({ page }) => {
     await page.goto(`/src/components/item/test/inputs`);
 
-    const screenshots = [];
+    ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
 
-    const disableToggle = page.locator('#btnDisabled');
-    const submitBtn = page.locator('#submit');
+    formResult = page.locator('#form-result');
+    popover = page.locator('ion-popover#optionsPopover');
+  });
 
-    // Check form
-    await submitBtn.click();
-    await checkFormResult(
-      page,
-      '{"date":"2022-04-01T10:00","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
-    );
-
-    /**
-     * We need to expand the viewport so that all the datetime components
-     * enter the visible viewport. This allows the I/O to fire and
-     * .datetime-ready to be added.
-     */
+  test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
-    // Wait for all datetime inputs to be ready
-    await page.waitForSelector('#datetime.datetime-ready');
-    await page.waitForSelector('#datetime-end.datetime-ready');
+    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-${page.getSnapshotSettings()}.png`);
+  });
 
-    // Default case, enabled and no value
-    screenshots.push({
-      name: `item-inputs-${page.getSnapshotSettings()}.png`,
-      screenshot: await captureScreenshot(page),
-    });
+  test('disabled controls should not have visual regressions', async ({ page }) => {
+    await page.click('#popover-trigger');
+    await ionPopoverDidPresent.next();
 
-    // Disable everything
-    await disableToggle.click();
+    await page.click('#btnDisabled');
+
     await page.waitForChanges();
 
-    // check form
-    await submitBtn.click();
-    await checkFormResult(page, '{}');
+    await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+    await ionPopoverDidDismiss.next();
 
-    screenshots.push({
-      name: `item-should-disable-all-${page.getSnapshotSettings()}.png`,
-      screenshot: await captureScreenshot(page),
+    await page.setIonViewport();
+    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-disabled-${page.getSnapshotSettings()}.png`);
+  });
+
+  test.describe('form data', () => {
+    // eslint-disable-next-line no-empty-pattern
+    test.beforeEach(async ({}, testInfo) => {
+      test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
     });
 
-    // Reenable and set some value
-    await disableToggle.click();
-    await page.click('#btnSomeValue');
+    test('initial form data should be empty', async ({ page }) => {
+      await page.click('#submit');
 
-    // check form
-    await submitBtn.click();
-    await checkFormResult(
-      page,
-      '{"date":"2022-04-01T10:00","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}'
-    );
-
-    screenshots.push({
-      name: `item-should-reenable-and-set-value-${page.getSnapshotSettings()}.png`,
-      screenshot: await captureScreenshot(page),
+      await expect(await formResult.textContent()).toEqual(
+        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"2022-04-01T10:00","range":"10"}'
+      );
     });
 
-    // Set "null"
-    await page.click('#btnNullValue');
+    test('form controls have some value', async ({ page }) => {
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
 
-    screenshots.push({
-      name: `item-should-set-null-${page.getSnapshotSettings()}.png`,
-      screenshot: await captureScreenshot(page),
+      await page.click('#btnSomeValue');
+      await page.waitForChanges();
+
+      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+      await ionPopoverDidDismiss.next();
+
+      await page.click('#submit');
+
+      await expect(await formResult.textContent()).toEqual(
+        '{"input":"Some value","textarea":"Some value","toggle":"on","checkbox":"on","select":"2","datetime":"2022-04-01T10:00","range":"20"}'
+      );
     });
 
-    // Set "empty"
-    await page.click('#btnEmptyValue');
+    test('form control values set to be empty', async ({ page }) => {
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
 
-    screenshots.push({
-      name: `item-should-set-empty-${page.getSnapshotSettings()}.png`,
-      screenshot: await captureScreenshot(page),
+      await page.click('#btnEmptyValue');
+      await page.waitForChanges();
+
+      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+      await ionPopoverDidDismiss.next();
+
+      await page.click('#submit');
+
+      await expect(await formResult.textContent()).toEqual(
+        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
+      );
     });
 
-    // Test multiple
-    await page.click('#checkbox-start');
-    await page.click('#datetime-end');
+    test('form control values set to null', async ({ page }) => {
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
 
-    screenshots.push({
-      name: `item-should-check-checkbox-and-open-datepicker-${page.getSnapshotSettings()}.png`,
-      screenshot: await captureScreenshot(page),
+      await page.click('#btnNullValue');
+      await page.waitForChanges();
+
+      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+      await ionPopoverDidDismiss.next();
+
+      await page.click('#submit');
+
+      await expect(await formResult.textContent()).toEqual(
+        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
+      );
     });
 
-    await page.click('#button-end');
-    await page.waitForChanges();
+    test('form control values set to undefined', async ({ page }) => {
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
 
-    screenshots.push({
-      name: `item-should-change-button-color-to-red-${page.getSnapshotSettings()}.png`,
-      screenshot: await page.screenshot(),
+      await page.click('#btnUndefinedValue');
+      await page.waitForChanges();
+
+      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+      await ionPopoverDidDismiss.next();
+
+      await page.click('#submit');
+
+      await expect(await formResult.textContent()).toEqual(
+        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
+      );
     });
 
-    for (const screenshot of screenshots) {
-      expect(screenshot.screenshot).toMatchSnapshot(screenshot.name);
-    }
+    test('should not have form data when controls are disabled', async ({ page }) => {
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
+
+      await page.click('#btnSomeValue');
+      await page.click('#btnDisabled');
+
+      await page.waitForChanges();
+
+      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+      await ionPopoverDidDismiss.next();
+
+      await page.click('#submit');
+
+      await expect(await formResult.textContent()).toEqual('{}');
+    });
   });
 });
-
-const checkFormResult = async (page: E2EPage, content: string) => {
-  const div = page.locator('#form-result');
-  await expect(await div.textContent()).toEqual(content);
-};
-
-/**
- * Resizes the viewport and captures a screenshot.
- * Required for this test suite, since the DOM size is not
- * the same at each test case.
- */
-const captureScreenshot = async (page: E2EPage) => {
-  await page.setIonViewport();
-  return page.screenshot();
-};
