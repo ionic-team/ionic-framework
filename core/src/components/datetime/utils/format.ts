@@ -178,7 +178,7 @@ export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | u
 
 /**
  * Formats the datetime's value to a string, for use in the native input.
- * 
+ *
  * @param value The value to format, either an ISO string or an array thereof.
  */
 export const formatValue = (value: string | string[] | null | undefined) => {
