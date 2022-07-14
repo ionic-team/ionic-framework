@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, State, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, DatetimePresentation } from '../../interface';
@@ -25,6 +25,8 @@ import { parseDate } from '../datetime/utils/parse';
 })
 export class DatetimeButton implements ComponentInterface {
   private datetimeEl: HTMLIonDatetimeElement | null = null;
+
+  @Element() el!: HTMLIonDatetimeButtonElement;
 
   @State() datetimePresentation?: DatetimePresentation = 'date-time';
   @State() dateText?: string;
@@ -54,14 +56,15 @@ export class DatetimeButton implements ComponentInterface {
     const { datetime } = this;
     if (!datetime) {
       printIonError(
-        'An ID associated with an ion-datetime instance is required for ion-datetime-button to function properly.'
+        'An ID associated with an ion-datetime instance is required for ion-datetime-button to function properly.',
+        this.el
       );
       return;
     }
 
     const datetimeEl = (this.datetimeEl = document.getElementById(datetime) as HTMLIonDatetimeElement | null);
     if (!datetimeEl) {
-      printIonError(`No ion-datetime instance found for ID '${datetime}'.`);
+      printIonError(`No ion-datetime instance found for ID '${datetime}'.`, this.el);
       return;
     }
 
@@ -120,8 +123,6 @@ export class DatetimeButton implements ComponentInterface {
         case 'time':
           this.selectedButton = 'time';
           break;
-        default:
-          break;
       }
     });
   }
@@ -147,6 +148,9 @@ export class DatetimeButton implements ComponentInterface {
     const parsedDatetime = parseDate(value || getToday());
     const use24Hour = is24Hour(locale, hourCycle);
 
+    // TODO(FW-1865) - Remove once FW-1831 is fixed.
+    parsedDatetime.tzOffset = undefined;
+
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
@@ -167,8 +171,6 @@ export class DatetimeButton implements ComponentInterface {
         break;
       case 'year':
         this.dateText = getLocalizedDateTime(locale, parsedDatetime, { year: 'numeric' });
-        break;
-      default:
         break;
     }
   };
@@ -191,8 +193,6 @@ export class DatetimeButton implements ComponentInterface {
       case 'date-time':
       case 'time-date':
         datetimeEl.presentation = 'date';
-        break;
-      default:
         break;
     }
 
@@ -224,8 +224,6 @@ export class DatetimeButton implements ComponentInterface {
       case 'date-time':
       case 'time-date':
         datetimeEl.presentation = 'time';
-        break;
-      default:
         break;
     }
 
