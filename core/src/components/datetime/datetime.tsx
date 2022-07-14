@@ -23,7 +23,7 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -2184,8 +2184,7 @@ export class Datetime implements ComponentInterface {
     const hasWheelVariant =
       (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
 
-    const formattedValue = Array.isArray(value) ? JSON.stringify(value) : value;
-    renderHiddenInput(true, el, name, formattedValue, disabled);
+    renderHiddenInput(true, el, name, formatValue(value), disabled);
 
     return (
       <Host
