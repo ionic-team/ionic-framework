@@ -135,6 +135,22 @@ test.describe('datetime-button: locale', () => {
 
     await expect(page.locator('.time-target-container')).toContainText('16:30');
   });
+  test('should ignore the timezone when selecting a date', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime locale="en-US" id="datetime" value="2022-01-02T06:30:00" presentation="date-time"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    const timeTarget = page.locator('.time-target-container');
+    await expect(timeTarget).toContainText('6:30');
+
+    const firstOfMonth = page.locator('ion-datetime .calendar-day[data-month="1"][data-day="1"]');
+    await firstOfMonth.click();
+    await page.waitForChanges();
+
+    await expect(timeTarget).toContainText('6:30');
+  });
 });
 
 test.describe('datetime-button: wheel', () => {
