@@ -17,4 +17,16 @@ test.describe('datetime-button: disabled buttons', () => {
     await expect(page.locator('#date-button')).toBeDisabled();
     await expect(page.locator('#time-button')).toBeDisabled();
   });
+  test('buttons should visually be disabled', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime" disabled="true"></ion-datetime-button>
+      <ion-datetime id="datetime" presentation="date-time"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    const datetimeButton = page.locator('ion-datetime-button');
+    expect(await datetimeButton.screenshot()).toMatchSnapshot(
+      `datetime-button-disabled-${page.getSnapshotSettings()}.png`
+    );
+  });
 });
