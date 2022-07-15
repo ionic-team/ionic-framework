@@ -5,7 +5,7 @@ test.describe('radio: a11y', () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(({}, testInfo) => {
     test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL logic.');
-  })
+  });
   test('tabbing should switch between radio groups', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
     await page.goto(`/src/components/radio/test/a11y`);
