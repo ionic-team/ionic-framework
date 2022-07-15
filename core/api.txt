@@ -971,6 +971,7 @@ ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 
 ion-range,shadow
+ion-range,prop,activeBarStart,number | undefined,undefined,false,false
 ion-range,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-range,prop,debounce,number,0,false,false
 ion-range,prop,disabled,boolean,false,false,false
