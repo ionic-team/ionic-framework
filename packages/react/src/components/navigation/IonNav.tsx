@@ -10,7 +10,7 @@ const IonNavInner = createReactComponent<
   HTMLIonNavElement
 >('ion-nav', undefined, undefined, defineCustomElement);
 
-export const IonNav: React.FC<JSX.IonNav> = ({ children, rootParams, ...restOfProps }) => {
+export const IonNav: React.FC<JSX.IonNav> = ({ children, ...restOfProps }) => {
   const [views, setViews] = useState<React.ReactElement[]>([]);
 
   /**
@@ -21,13 +21,6 @@ export const IonNav: React.FC<JSX.IonNav> = ({ children, rootParams, ...restOfPr
   const removeView = (view: React.ReactElement) => setViews(views.filter((v) => v !== view));
 
   const delegate = ReactDelegate(addView, removeView);
-
-  if (rootParams !== undefined) {
-    console.warn(
-      '[Ionic Warning]: IonNav: rootParams is not supported in React. Pass the props directly to the root component:\n' +
-        '<IonNav root={() => <PageOne someString="Hello" someNumber={3} someBoolean={true} />} />'
-    );
-  }
 
   return (
     <IonNavInner delegate={delegate} {...restOfProps}>

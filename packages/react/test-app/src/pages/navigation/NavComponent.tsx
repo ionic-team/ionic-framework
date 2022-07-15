@@ -11,7 +11,7 @@ import {
   IonBackButton,
   IonPage,
 } from '@ionic/react';
-import React, { useCallback } from 'react';
+import React from 'react';
 
 const PageOne = (props: { someString: string; someNumber: number; someBoolean: boolean }) => {
   return (
@@ -26,8 +26,12 @@ const PageOne = (props: { someString: string; someNumber: number; someBoolean: b
       </IonHeader>
       <IonContent id="pageOneContent">
         <IonLabel>Page one content</IonLabel>
-        <div id="stringifiedProps">{JSON.stringify(props)}</div>
-        <IonNavLink routerDirection="forward" component={PageTwo}>
+        <div id="pageOneProps">{JSON.stringify(props)}</div>
+        <IonNavLink
+          routerDirection="forward"
+          component={PageTwo}
+          componentProps={{ someValue: 'Hello' }}
+        >
           <IonButton>Go to Page Two</IonButton>
         </IonNavLink>
       </IonContent>
@@ -35,7 +39,7 @@ const PageOne = (props: { someString: string; someNumber: number; someBoolean: b
   );
 };
 
-const PageTwo = () => {
+const PageTwo = (props?: { someValue: string }) => {
   return (
     <>
       <IonHeader>
@@ -48,6 +52,7 @@ const PageTwo = () => {
       </IonHeader>
       <IonContent id="pageTwoContent">
         <IonLabel>Page two content</IonLabel>
+        <div id="pageTwoProps">{JSON.stringify(props)}</div>
         <IonNavLink routerDirection="forward" component={PageThree}>
           <IonButton>Go to Page Three</IonButton>
         </IonNavLink>
@@ -75,14 +80,16 @@ const PageThree = () => {
 };
 
 const NavComponent: React.FC = () => {
-  const root = useCallback(
-    () => <PageOne someString="Hello" someNumber={3} someBoolean={true} />,
-    []
-  );
-
   return (
     <IonPage>
-      <IonNav root={root} />
+      <IonNav
+        root={PageOne}
+        rootParams={{
+          someString: 'Hello',
+          someNumber: 3,
+          someBoolean: true,
+        }}
+      />
     </IonPage>
   );
 };

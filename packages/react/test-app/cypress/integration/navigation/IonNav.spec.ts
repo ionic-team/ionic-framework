@@ -26,7 +26,15 @@ describe('IonNav', () => {
   });
 
   it('should pass params to the page', () => {
-    cy.get('#stringifiedProps').should('have.text', '{"someString":"Hello","someNumber":3,"someBoolean":true}');
+    cy.get('#pageOneProps').should('have.text', '{"someString":"Hello","someNumber":3,"someBoolean":true}');
+  });
+
+  it('should pass componentProps to sub pages', () => {
+    cy.get('ion-button').contains('Go to Page Two').click();
+
+    cy.get('#pageTwoContent').should('be.visible');
+
+    cy.get('#pageTwoProps').should('have.text', '{"someValue":"Hello"}');
   });
 
 });
