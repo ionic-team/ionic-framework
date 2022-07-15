@@ -329,6 +329,7 @@ export class DatetimeButton implements ComponentInterface {
        * popover content will be wrong, causing
        * the popover to not align with the trigger element.
        */
+
       if (needsPresentationChange) {
         await this.waitForDatetimeChanges();
       }
@@ -370,6 +371,7 @@ export class DatetimeButton implements ComponentInterface {
             onClick={this.handleDateClick}
             disabled={disabled}
             part="native"
+            ref={(el) => (this.dateTargetEl = el)}
           >
             <slot name="date-target">{dateText}</slot>
             {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
@@ -384,6 +386,7 @@ export class DatetimeButton implements ComponentInterface {
             onClick={this.handleTimeClick}
             disabled={disabled}
             part="native"
+            ref={(el) => (this.timeTargetEl = el)}
           >
             <slot name="time-target">{timeText}</slot>
             {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
