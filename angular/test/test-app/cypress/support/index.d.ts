@@ -63,6 +63,11 @@ declare namespace Cypress {
      * ```
      */
     ionPageDoesNotExist(selector: string): Chainable<any>
+
+    /**
+     * Clicks on a tab button with the given text.
+     */
+    ionTabClick(tabText: string): Chainable<any>;
   }
 }
 
