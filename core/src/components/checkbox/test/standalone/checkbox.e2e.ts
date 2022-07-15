@@ -5,8 +5,6 @@ test.describe('checkbox: standalone', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/checkbox/test/standalone`);
 
-    await page.setIonViewport();
-
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
       `checkbox-standalone-${page.getSnapshotSettings()}.png`
     );
