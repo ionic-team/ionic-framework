@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.15-nightly.20220715](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15-nightly.20220715) (2022-07-15)
+
+
+### Bug Fixes
+
+* **fab-button:** aria attributes are inherited ([#25635](https://github.com/ionic-team/ionic/issues/25635)) ([64ae3d2](https://github.com/ionic-team/ionic/commit/64ae3d2b9729c5c6be8644b1df6c8b3d40584d3b)), closes [#25633](https://github.com/ionic-team/ionic/issues/25633)
+
+
+### Performance Improvements
+
+* **input:** passive event listener for touch start events ([#25610](https://github.com/ionic-team/ionic/issues/25610)) ([2d1efdb](https://github.com/ionic-team/ionic/commit/2d1efdbe6dd9436badab4684f2a484476489c166)), closes [#25599](https://github.com/ionic-team/ionic/issues/25599)
+
+
+
+
+
 ## [6.1.14](https://github.com/ionic-team/ionic/compare/v6.1.13...v6.1.14) (2022-07-13)
 
 
