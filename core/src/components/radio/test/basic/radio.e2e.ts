@@ -90,7 +90,9 @@ test.describe('radio: rendering', () => {
     const radio = page.locator('ion-radio');
     await radio.click();
     await page.waitForChanges();
-    expect(await radio.screenshot({ animations: 'disabled' })).toMatchSnapshot(`radio-color-${page.getSnapshotSettings()}.png`);
+    expect(await radio.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      `radio-color-${page.getSnapshotSettings()}.png`
+    );
   });
 });
 
