@@ -20,7 +20,7 @@ test.describe('action sheet: basic', () => {
       await buttonOption.click();
 
       await ionActionSheetDidDismiss.next();
-      expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' } });
+      expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' }, role: undefined });
     });
     test('should return cancel button data', async ({ page }, testInfo) => {
       test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');

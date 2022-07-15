@@ -68,7 +68,6 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-  private overlayIsPresenting = false;
 
   /**
    * Whether to highlight the active day with a solid circle (as opposed
@@ -86,9 +85,8 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-  private destroyCalendarIO?: () => void;
+  private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
-  private destroyOverlayListener?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
@@ -734,20 +732,17 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private initializeCalendarIOListeners = () => {
+  private initializeCalendarListener = () => {
     const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) {
       return;
     }
 
-    const mode = getIonMode(this);
-
     /**
      * For performance reasons, we only render 3
      * months at a time: The current month, the previous
-     * month, and the next month. We have IntersectionObservers
-     * on the previous and next month elements to append/prepend
-     * new months.
+     * month, and the next month. We have a scroll listener
+     * on the calendar body to append/prepend new months.
      *
      * We can do this because Stencil is smart enough to not
      * re-create the .calendar-month containers, but rather
@@ -763,43 +758,78 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
+    const mode = getIonMode(this);
+    const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
-     * Before setting up the IntersectionObserver,
+     * Before setting up the scroll listener,
      * scroll the middle month into view.
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
      */
-    let endIO: IntersectionObserver | undefined;
-    let startIO: IntersectionObserver | undefined;
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-      const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
-        const refIO = callbackType === 'start' ? startIO : endIO;
-        const refMonth = callbackType === 'start' ? startMonth : endMonth;
-        const refMonthFn = callbackType === 'start' ? getPreviousMonth : getNextMonth;
+
+      const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
+        const box = calendarBodyRef.getBoundingClientRect();
+        const root = this.el!.shadowRoot!;
 
         /**
-         * If the month is not fully in view, do not do anything
+         * Get the element that is in the center of the calendar body.
+         * This will be an element inside of the active month.
          */
-        const ev = entries[0];
-        if (!ev.isIntersecting) {
+        const elementAtCenter = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        /**
+         * If there is no element then the
+         * component may be re-rendering on a slow device.
+         */
+        if (!elementAtCenter) return;
+
+        const month = elementAtCenter.closest('.calendar-month');
+        if (!month) return;
+
+        /**
+         * The edge of the month must be lined up with
+         * the edge of the calendar body in order for
+         * the component to update. Otherwise, it
+         * may be the case that the user has paused their
+         * swipe or the browser has not finished snapping yet.
+         * Rather than check if the x values are equal,
+         * we give it a tolerance of 2px to account for
+         * sub pixel rendering.
+         */
+        const monthBox = month.getBoundingClientRect();
+        if (Math.abs(monthBox.x - box.x) > 2) return;
+
+        /**
+         * From here, we can determine if the start
+         * month or the end month was scrolled into view.
+         * If no month was changed, then we can return from
+         * the scroll callback early.
+         */
+        if (month === startMonth) {
+          return getPreviousMonth(parts);
+        } else if (month === endMonth) {
+          return getNextMonth(parts);
+        } else {
           return;
+        }
+      };
+
+      const updateActiveMonth = () => {
+        if (needsiOSRubberBandFix) {
+          calendarBodyRef.style.removeProperty('pointer-events');
+          appliediOSRubberBandFix = false;
         }
 
         /**
-         * When presenting an inline overlay,
-         * subsequent presentations will cause
-         * the IO to fire again (since the overlay
-         * is now visible and therefore the calendar
-         * months are intersecting).
+         * If the month did not change
+         * then we can return early.
          */
-        if (this.overlayIsPresenting) {
-          this.overlayIsPresenting = false;
-          return;
-        }
+        const newDate = getChangedMonth(this.workingParts);
+        if (!newDate) return;
 
-        const { month, year, day } = refMonthFn(this.workingParts);
+        const { month, day, year } = newDate;
 
         if (
           isMonthDisabled(
@@ -814,40 +844,11 @@ export class Datetime implements ComponentInterface {
         }
 
         /**
-         * On iOS, we need to set pointer-events: none
-         * when the user is almost done with the gesture
-         * so that they cannot quickly swipe while
-         * the scrollable container is snapping.
-         * Updating the container while snapping
-         * causes WebKit to snap incorrectly.
-         */
-        if (mode === 'ios') {
-          const ratio = ev.intersectionRatio;
-          // `maxTouchPoints` will be 1 in device preview, but > 1 on device
-          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1 && navigator.maxTouchPoints > 1;
-
-          if (shouldDisable) {
-            calendarBodyRef.style.setProperty('pointer-events', 'none');
-            return;
-          }
-        }
-
-        /**
          * Prevent scrolling for other browsers
          * to give the DOM time to update and the container
          * time to properly snap.
          */
         calendarBodyRef.style.setProperty('overflow', 'hidden');
-
-        /**
-         * Remove the IO temporarily
-         * otherwise you can sometimes get duplicate
-         * events when rubber banding.
-         */
-        if (refIO === undefined) {
-          return;
-        }
-        refIO.disconnect();
 
         /**
          * Use a writeTask here to ensure
@@ -859,85 +860,57 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          // Disconnect all active intersection observers
-          // to avoid a re-render causing a duplicate event.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
-          }
-
-          raf(() => {
-            this.setWorkingParts({
-              ...this.workingParts,
-              month,
-              day: day!,
-              year,
-            });
-
-            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-            calendarBodyRef.style.removeProperty('overflow');
-            calendarBodyRef.style.removeProperty('pointer-events');
-
-            endIO?.observe(endMonth);
-            startIO?.observe(startMonth);
+          this.setWorkingParts({
+            ...this.workingParts,
+            month,
+            day: day!,
+            year,
           });
 
-          /**
-           * Now that state has been updated
-           * and the correct month is in view,
-           * we can resume the IO.
-           */
-          if (refIO === undefined) {
-            return;
-          }
-          refIO.observe(refMonth);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          calendarBodyRef.style.removeProperty('overflow');
         });
       };
 
-      const threshold =
-        mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1 ? [0.7, 1] : 1;
-
-      // Intersection observers cannot accurately detect the
-      // intersection with a threshold of 1, when the observed
-      // element width is a sub-pixel value (i.e. 334.05px).
-      // Setting a root margin to 1px solves the issue.
-      const rootMargin = '1px';
+      /**
+       * When the container finishes scrolling we
+       * need to update the DOM with the selected month.
+       */
+      let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
       /**
-       * Listen on the first month to
-       * prepend a new month and on the last
-       * month to append a new month.
-       * The 0.7 threshold is required on ios
-       * so that we can remove pointer-events
-       * when adding new months.
-       * Adding to a scroll snapping container
-       * while the container is snapping does not
-       * completely work as expected in WebKit.
-       * Adding pointer-events: none allows us to
-       * avoid these issues.
-       *
-       * This should be fine on Chromium, but
-       * when you set pointer-events: none
-       * it applies to active gestures which is not
-       * something WebKit does.
+       * We do not want to attempt to set pointer-events
+       * multiple times within a single swipe gesture as
+       * that adds unnecessary work to the main thread.
        */
+      let appliediOSRubberBandFix = false;
+      const scrollCallback = () => {
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
 
-      endIO = new IntersectionObserver((ev) => ioCallback('end', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      endIO.observe(endMonth);
+        /**
+         * On iOS it is possible to quickly rubber band
+         * the scroll area before the scroll timeout has fired.
+         * This results in users reaching the end of the scrollable
+         * container before the DOM has updated.
+         * By setting `pointer-events: none` we can ensure that
+         * subsequent swipes do not happen while the container
+         * is snapping.
+         */
+        if (!appliediOSRubberBandFix && needsiOSRubberBandFix) {
+          calendarBodyRef.style.setProperty('pointer-events', 'none');
+          appliediOSRubberBandFix = true;
+        }
 
-      startIO = new IntersectionObserver((ev) => ioCallback('start', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      startIO.observe(startMonth);
+        // Wait ~3 frames
+        scrollTimeout = setTimeout(updateActiveMonth, 50);
+      };
 
-      this.destroyCalendarIO = () => {
-        endIO?.disconnect();
-        startIO?.disconnect();
+      calendarBodyRef.addEventListener('scroll', scrollCallback);
+
+      this.destroyCalendarListener = () => {
+        calendarBodyRef.removeEventListener('scroll', scrollCallback);
       };
     });
   };
@@ -959,10 +932,10 @@ export class Datetime implements ComponentInterface {
    * if the datetime has been hidden/presented by a modal or popover.
    */
   private destroyInteractionListeners = () => {
-    const { destroyCalendarIO, destroyKeyboardMO } = this;
+    const { destroyCalendarListener, destroyKeyboardMO } = this;
 
-    if (destroyCalendarIO !== undefined) {
-      destroyCalendarIO();
+    if (destroyCalendarListener !== undefined) {
+      destroyCalendarListener();
     }
 
     if (destroyKeyboardMO !== undefined) {
@@ -971,9 +944,8 @@ export class Datetime implements ComponentInterface {
   };
 
   private initializeListeners() {
-    this.initializeCalendarIOListeners();
+    this.initializeCalendarListener();
     this.initializeKeyboardListeners();
-    this.initializeOverlayListener();
   }
 
   componentDidLoad() {
@@ -1068,36 +1040,9 @@ export class Datetime implements ComponentInterface {
     this.prevPresentation = presentation;
 
     this.destroyInteractionListeners();
-    if (this.destroyOverlayListener !== undefined) {
-      this.destroyOverlayListener();
-    }
 
     this.initializeListeners();
   }
-
-  /**
-   * When doing subsequent presentations of an inline
-   * overlay, the IO callback will fire again causing
-   * the calendar to go back one month. We need to listen
-   * for the presentation of the overlay so we can properly
-   * cancel that IO callback.
-   */
-  private initializeOverlayListener = () => {
-    const overlay = this.el.closest('ion-popover, ion-modal');
-    if (overlay === null) {
-      return;
-    }
-
-    const overlayListener = () => {
-      this.overlayIsPresenting = true;
-    };
-
-    overlay.addEventListener('willPresent', overlayListener);
-
-    this.destroyOverlayListener = () => {
-      overlay.removeEventListener('willPresent', overlayListener);
-    };
-  };
 
   private processValue = (value?: string | null) => {
     this.highlightActiveParts = !!value;
@@ -1371,11 +1316,12 @@ export class Datetime implements ComponentInterface {
         items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           const { value } = ev.detail;
@@ -1393,7 +1339,7 @@ export class Datetime implements ComponentInterface {
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1461,11 +1407,12 @@ export class Datetime implements ComponentInterface {
         items={days}
         value={workingParts.day || this.todayParts.day}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           this.setWorkingParts({
@@ -1480,7 +1427,7 @@ export class Datetime implements ComponentInterface {
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1502,11 +1449,12 @@ export class Datetime implements ComponentInterface {
         items={months}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           this.setWorkingParts({
@@ -1521,7 +1469,7 @@ export class Datetime implements ComponentInterface {
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1542,11 +1490,12 @@ export class Datetime implements ComponentInterface {
         items={years}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           this.setWorkingParts({
@@ -1561,7 +1510,7 @@ export class Datetime implements ComponentInterface {
 
           // We can re-attach the intersection observer after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
