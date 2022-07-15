@@ -7,6 +7,8 @@ test.describe('checkbox: standalone', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`checkbox-standalone-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
+      `checkbox-standalone-${page.getSnapshotSettings()}.png`
+    );
   });
 });
