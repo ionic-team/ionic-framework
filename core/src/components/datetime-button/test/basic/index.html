@@ -145,10 +145,7 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button
-                slot="end"
-                datetime="month-year-datetime"
-              ></ion-datetime-button>
+              <ion-datetime-button slot="end" datetime="month-year-datetime"></ion-datetime-button>
             </ion-item>
 
             <ion-popover arrow="false">
@@ -178,13 +175,33 @@
             </ion-popover>
           </div>
           <div class="grid-item">
-            <h2>preferWheel</h2>
+            <h2>preferWheel / date</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="prefer-wheel-date"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                prefer-wheel="true"
+                presentation="date"
+                id="prefer-wheel-date"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>preferWheel / date-time</h2>
 
             <ion-item>
               <ion-label>Start Date</ion-label>
               <ion-datetime-button
                 slot="end"
-                datetime="prefer-wheel-datetime"
+                id="prefer-wheel-date-time-button"
+                datetime="prefer-wheel-date-time"
               ></ion-datetime-button>
             </ion-item>
 
@@ -193,7 +210,7 @@
                 locale="en-US"
                 prefer-wheel="true"
                 presentation="date-time"
-                id="prefer-wheel-datetime"
+                id="prefer-wheel-date-time"
                 value="2022-03-15T00:43:00"
               ></ion-datetime>
             </ion-popover>

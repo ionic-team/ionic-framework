@@ -57,18 +57,14 @@
 
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime-button disabled="true" slot="end" id="year-button" datetime="year-datetime">
-                <ion-button disabled="true" id="custom-date-button" slot="date-target" fill="clear">
-                  <ion-icon slot="icon-only" name="calendar"></ion-icon>
-                </ion-button>
-                <ion-button disabled="true" id="custom-time-button" slot="time-target" fill="clear">
-                  <ion-icon name="time"></ion-icon>
-                </ion-button>
+              <ion-datetime-button disabled="true" slot="end" id="custom-button" datetime="custom-datetime">
+                <ion-icon color="primary" id="custom-date-button" slot="date-target" name="calendar"></ion-icon>
+                <ion-icon color="primary" id="custom-time-button" slot="time-target" name="time"></ion-icon>
               </ion-datetime-button>
             </ion-item>
 
-            <ion-popover arrow="false" trigger="year-button">
-              <ion-datetime locale="en-US" id="year-datetime" value="2022-03-15T00:43:00"></ion-datetime>
+            <ion-popover arrow="false" trigger="custom-button">
+              <ion-datetime locale="en-US" id="custom-datetime" value="2022-03-15T00:43:00"></ion-datetime>
             </ion-popover>
           </div>
         </div>
