@@ -316,7 +316,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
-   * Will be an array of strings if `multiple="true"`.
+   * Should be an array of strings if `multiple="true"`.
    */
   @Prop({ mutable: true }) value?: string | string[] | null;
 
