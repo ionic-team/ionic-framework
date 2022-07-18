@@ -11,7 +11,7 @@ import {
   IonBackButton,
   IonPage,
 } from '@ionic/react';
-import React from 'react';
+import React, { useRef } from 'react';
 
 const PageOne = (props: { someString: string; someNumber: number; someBoolean: boolean }) => {
   return (
@@ -80,9 +80,11 @@ const PageThree = () => {
 };
 
 const NavComponent: React.FC = () => {
+  const ref = useRef<any>();
   return (
     <IonPage>
       <IonNav
+        ref={ref}
         root={PageOne}
         rootParams={{
           someString: 'Hello',
