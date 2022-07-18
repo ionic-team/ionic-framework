@@ -39,39 +39,42 @@ test.describe('datetime: multiple date selection (functionality)', () => {
 
   test('clicking unselected days should select them', async ({ page }) => {
     const datetime = await setup(page, 'singleDefaultValue');
-    const june1Button = datetime.locator('[data-month="6"][data-day="1"]');
-    const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
-    const june3Button = datetime.locator('[data-month="6"][data-day="3"]');
+    const juneButtons = datetime.locator('[data-month="6"][data-day]');
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-    await june2Button.click();
+    await juneButtons.nth(1).click();
+    await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', ['2022-06-01', '2022-06-02']);
 
-    await june3Button.click();
+    await juneButtons.nth(2).click();
+    await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', ['2022-06-01', '2022-06-02', '2022-06-03']);
 
-    await expect(june1Button).toHaveClass(/calendar-day-active/);
-    await expect(june2Button).toHaveClass(/calendar-day-active/);
-    await expect(june3Button).toHaveClass(/calendar-day-active/);
+    for (let i = 0; i < 3; i++) {
+      await expect(juneButtons.nth(i)).toHaveClass(/calendar-day-active/);
+    }
   });
 
   test('clicking selected days should unselect them', async ({ page }) => {
     const datetime = await setup(page, 'multipleDefaultValues');
-    const june1Button = datetime.locator('[data-month="6"][data-day="1"]');
-    const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
-    const june3Button = datetime.locator('[data-month="6"][data-day="3"]');
+    const juneButtons = datetime.locator('[data-month="6"][data-day]');
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-    await june1Button.click();
+    await juneButtons.nth(0).click();
+    await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', ['2022-06-02', '2022-06-03']);
 
-    await june2Button.click();
+    await juneButtons.nth(1).click();
+    await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', ['2022-06-03']);
 
-    await june3Button.click();
+    await juneButtons.nth(2).click();
+    await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', undefined);
 
-    await expect(june1Button).not.toHaveClass(/calendar-day-active/);
-    await expect(june2Button).not.toHaveClass(/calendar-day-active/);
-    await expect(june3Button).not.toHaveClass(/calendar-day-active/);
+    for (let i = 0; i < 3; i++) {
+      await expect(juneButtons.nth(i)).not.toHaveClass(/calendar-day-active/);
+    }
   });
 
   test('change event should emit with array detail', async ({ page }) => {
@@ -101,6 +104,7 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
 
     await june2Button.click();
+    await page.waitForChanges();
     await expect(datetime).toHaveJSProperty('value', '2022-06-01'); // value should not change yet
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm());
@@ -122,29 +126,26 @@ test.describe('datetime: multiple date selection (functionality)', () => {
 
   test('setting value programmatically should update active days', async ({ page }) => {
     const datetime = await setup(page, 'singleDefaultValue');
-    const june1Button = datetime.locator('[data-month="6"][data-day="1"]');
-    const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
-    const june3Button = datetime.locator('[data-month="6"][data-day="3"]');
-    const june4Button = datetime.locator('[data-month="6"][data-day="4"]');
+    const juneButtons = datetime.locator('[data-month="6"][data-day]');
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => {
       el.value = ['2022-06-01', '2022-06-02', '2022-06-03'];
     });
 
-    await expect(june1Button).toHaveClass(/calendar-day-active/);
-    await expect(june2Button).toHaveClass(/calendar-day-active/);
-    await expect(june3Button).toHaveClass(/calendar-day-active/);
+    for (let i = 0; i < 3; i++) {
+      await expect(juneButtons.nth(i)).toHaveClass(/calendar-day-active/);
+    }
 
     // ensure all days are still highlighted if we click another one after
-    await june4Button.click();
-    await expect(june1Button).toHaveClass(/calendar-day-active/);
-    await expect(june2Button).toHaveClass(/calendar-day-active/);
-    await expect(june3Button).toHaveClass(/calendar-day-active/);
-    await expect(june4Button).toHaveClass(/calendar-day-active/);
+    await juneButtons.nth(3).click();
+    for (let i = 0; i < 4; i++) {
+      await expect(juneButtons.nth(i)).toHaveClass(/calendar-day-active/);
+    }
   });
 
   test('clicking day when no default value should set value to only clicked day', async ({ page }) => {
     const datetime = await setup(page, 'noDefaultValue');
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
 
     // can't use specific data-month b/c no default value -- we don't know what it'll be
     const firstDayButton = datetime.locator('.calendar-month:nth-child(2) [data-day="1"]');
@@ -154,6 +155,7 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     if (month && month.length < 2) month = '0' + month; // pad with zero
 
     await firstDayButton.click();
+    await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', [`${year}-${month}-01`]);
   });
 });
