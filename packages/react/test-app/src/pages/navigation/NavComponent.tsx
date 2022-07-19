@@ -13,7 +13,15 @@ import {
 } from '@ionic/react';
 import React, { useRef } from 'react';
 
-const PageOne = (props: { someString: string; someNumber: number; someBoolean: boolean }) => {
+const PageOne = ({
+  nav,
+  ...restOfProps
+}: {
+  someString: string;
+  someNumber: number;
+  someBoolean: boolean;
+  nav: React.MutableRefObject<HTMLIonNavElement>;
+}) => {
   return (
     <>
       <IonHeader>
@@ -26,7 +34,8 @@ const PageOne = (props: { someString: string; someNumber: number; someBoolean: b
       </IonHeader>
       <IonContent id="pageOneContent">
         <IonLabel>Page one content</IonLabel>
-        <div id="pageOneProps">{JSON.stringify(props)}</div>
+        <div id="pageOneProps">{JSON.stringify(restOfProps)}</div>
+        <div id="navRef">Nav ref is defined: {nav.current !== null ? 'true' : 'false'}</div>
         <IonNavLink
           routerDirection="forward"
           component={PageTwo}
@@ -90,6 +99,7 @@ const NavComponent: React.FC = () => {
           someString: 'Hello',
           someNumber: 3,
           someBoolean: true,
+          nav: ref,
         }}
       />
     </IonPage>
