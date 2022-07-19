@@ -309,10 +309,10 @@ export class DatetimeButton implements ComponentInterface {
   /**
    * If the datetime is presented in an
    * overlay, the datetime and overlay
-   * should be appropriately size.
+   * should be appropriately sized.
    * These classes provide default sizing values
    * that developers can customize.
-   * The goal is to provide an overlay that
+   * The goal is to provide an overlay that is
    * reasonably sized with a datetime that
    * fills the entire container.
    */
