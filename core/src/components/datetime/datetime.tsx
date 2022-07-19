@@ -2070,8 +2070,9 @@ export class Datetime implements ComponentInterface {
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
-    const hasWheelVariant =
-      (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
+    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    const hasWheelVariant = hasDatePresentation && preferWheel;
+    const hasGrid = hasDatePresentation && !preferWheel;
 
     renderHiddenInput(true, el, name, value, disabled);
 
@@ -2091,6 +2092,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
+            [`datetime-grid`]: hasGrid,
           }),
         }}
       >
