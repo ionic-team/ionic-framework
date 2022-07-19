@@ -25,7 +25,7 @@ test.describe('radio: rendering', () => {
     const radioGroup = page.locator('ion-radio-group');
     expect(await radioGroup.screenshot()).toMatchSnapshot(`radio-group-unchecked-${page.getSnapshotSettings()}.png`);
   });
-  test('should correctly render an checked radio group', async ({ page }) => {
+  test('should correctly render a checked radio group', async ({ page }) => {
     await page.setContent(`
       <ion-radio-group value="sausage">
         <ion-item>
