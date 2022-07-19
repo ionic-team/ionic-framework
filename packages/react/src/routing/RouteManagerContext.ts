@@ -16,7 +16,7 @@ export interface RouteManagerContextState {
   ) => ViewItem;
   findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
   findLeavingViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
-  findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
+  findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) => ViewItem | undefined;
   getChildrenToRender: (
     outletId: string,
     ionRouterOutlet: React.ReactElement,
