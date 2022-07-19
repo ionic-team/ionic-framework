@@ -94,7 +94,20 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is being used in so we can
      * correctly size it when it is presented.
      */
-    this.overlayEl = datetimeEl.closest('ion-modal, ion-popover');
+    const overlayEl = (this.overlayEl = datetimeEl.closest('ion-modal, ion-popover'));
+
+    /**
+     * The .ion-datetime-button-overlay class contains
+     * styles that allow any modal/popover to be
+     * sized according to the dimensions of the datetime.
+     * If developers want a smaller/larger overlay all they need
+     * to do is change the width/height of the datetime.
+     * Additionally, this lets us avoid having to set
+     * explicit widths on each variant of datetime.
+     */
+    if (overlayEl) {
+      overlayEl.classList.add('ion-datetime-button-overlay');
+    }
 
     componentOnReady(datetimeEl, () => {
       const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
@@ -251,7 +264,7 @@ export class DatetimeButton implements ComponentInterface {
      */
     this.selectedButton = 'date';
 
-    this.setOverlaySize(ev, needsPresentationChange, this.dateTargetEl);
+    this.presentOverlay(ev, needsPresentationChange, this.dateTargetEl);
   };
 
   private handleTimeClick = (ev: Event) => {
@@ -290,7 +303,7 @@ export class DatetimeButton implements ComponentInterface {
      */
     this.selectedButton = 'time';
 
-    this.setOverlaySize(ev, needsPresentationChange, this.timeTargetEl);
+    this.presentOverlay(ev, needsPresentationChange, this.timeTargetEl);
   };
 
   /**
@@ -303,23 +316,12 @@ export class DatetimeButton implements ComponentInterface {
    * reasonably sized with a datetime that
    * fills the entire container.
    */
-  private setOverlaySize = async (ev: Event, needsPresentationChange: boolean, triggerEl?: HTMLElement) => {
+  private presentOverlay = async (ev: Event, needsPresentationChange: boolean, triggerEl?: HTMLElement) => {
     const { overlayEl } = this;
 
     if (!overlayEl) {
       return;
     }
-
-    /**
-     * We set fit-content to allow the overlay to
-     * take on the size of the datetime. If developers
-     * want a smaller/larger overlay all they need
-     * to do is change the width/height of the datetime.
-     * Additionally, this lets us avoid having to set
-     * explicit widths on each variant of datetime.
-     */
-    overlayEl.style.setProperty('--height', `fit-content`);
-    overlayEl.style.setProperty('--width', 'fit-content');
 
     if (overlayEl.tagName === 'ION-POPOVER') {
       /**
