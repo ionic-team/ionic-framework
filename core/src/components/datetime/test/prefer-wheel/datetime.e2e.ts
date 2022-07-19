@@ -198,6 +198,23 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
     });
+    test('should respect min and max bounds even across years', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date-time"
+          prefer-wheel="true"
+          value="2022-02-01"
+          min="2021-12-01"
+          max="2023-01-01"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+      expect(await dateValues.count()).toBe(427);
+    });
   });
   test.describe('datetime: time-date wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {
@@ -285,6 +302,23 @@ test.describe('datetime: prefer wheel', () => {
       const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
       expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
+    });
+    test('should respect min and max bounds even across years', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="time-date"
+          prefer-wheel="true"
+          value="2022-02-01"
+          min="2021-12-01"
+          max="2023-01-01"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+      expect(await dateValues.count()).toBe(427);
     });
   });
 });
