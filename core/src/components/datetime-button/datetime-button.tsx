@@ -254,7 +254,7 @@ export class DatetimeButton implements ComponentInterface {
     this.setOverlaySize(ev, needsPresentationChange, this.dateTargetEl);
   };
 
-  private handleTimeClick = async (ev: Event) => {
+  private handleTimeClick = (ev: Event) => {
     const { datetimeEl, datetimePresentation } = this;
 
     if (!datetimeEl) {
