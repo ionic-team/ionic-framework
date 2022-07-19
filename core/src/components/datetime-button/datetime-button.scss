@@ -16,6 +16,8 @@
   @include padding(6px, 12px, 6px, 12px);
   @include margin(0px, 2px, 0px, 2px);
 
+  position: relative;
+
   transition: 150ms color ease-in-out;
 
   border: none;
@@ -30,9 +32,19 @@
   cursor: pointer;
 
   appearance: none;
+
+  overflow: hidden;
 }
 
 :host(.time-active) #time-button,
 :host(.date-active) #date-button {
   color: current-color(base);
+}
+
+:host(.datetime-button-disabled) {
+  pointer-events: none;
+}
+
+:host(.datetime-button-disabled) button {
+  opacity: 0.4;
 }
