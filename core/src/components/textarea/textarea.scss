@@ -26,7 +26,7 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: .5;
+  --placeholder-opacity: 0.5;
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
@@ -71,7 +71,6 @@
   --padding-start: 0;
 }
 
-
 // Native Textarea
 // --------------------------------------------------
 
@@ -84,6 +83,10 @@
   max-height: inherit;
 
   &::after {
+    // This technique is used for an auto-resizing textarea.
+    // The text contents are reflected as a pseudo-element that is visually hidden.
+    // This causes the textarea container to grow as needed to fit the contents.
+
     white-space: pre-wrap;
 
     content: attr(data-replicated-value) " ";
@@ -94,12 +97,7 @@
 
 .textarea-wrapper::after,
 .native-textarea {
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start)
-  );
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
   grid-area: 1 / 1 / 2 / 2;
 }
@@ -139,7 +137,7 @@
 }
 
 .native-textarea[disabled] {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 // Input Cover: Unfocused
@@ -157,7 +155,6 @@
 
   pointer-events: none;
 }
-
 
 // Item Floating: Placeholder
 // ----------------------------------------------------------------
