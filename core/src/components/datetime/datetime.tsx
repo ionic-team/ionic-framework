@@ -1087,7 +1087,7 @@ export class Datetime implements ComponentInterface {
 
     this.initializeListeners();
 
-    requestAnimationFrame(() => {
+    raf(() => {
       this.ionRender.emit();
     });
   }
