@@ -13,7 +13,7 @@ test.describe('nav: modal-navigation', () => {
     const pageOneHeading = page.locator('page-one h1');
 
     await expect(pageOne).toBeVisible();
-    await expect(await pageOneHeading.textContent()).toBe('Page One');
+    await expect(pageOneHeading).toHaveText('Page One');
   });
 
   test('should push to the next page', async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe('nav: modal-navigation', () => {
     const pageTwoHeading = page.locator('page-two h1');
 
     await expect(pageTwo).toBeVisible();
-    await expect(await pageTwoHeading.textContent()).toBe('Page Two');
+    await expect(pageTwoHeading).toHaveText('Page Two');
   });
 
   test('should pop to the previous page', async ({ page }) => {
@@ -34,7 +34,7 @@ test.describe('nav: modal-navigation', () => {
     const pageThreeHeading = page.locator('page-three h1');
 
     await expect(pageThree).toBeVisible();
-    await expect(await pageThreeHeading.textContent()).toBe('Page Three');
+    await expect(pageThreeHeading).toHaveText('Page Three');
 
     await page.click('#go-back');
 
@@ -44,7 +44,7 @@ test.describe('nav: modal-navigation', () => {
     // Verifies the leavingView was unmounted
     await expect(pageThree).toHaveCount(0);
     await expect(pageTwo).toBeVisible();
-    await expect(await pageTwoHeading.textContent()).toBe('Page Two');
+    await expect(pageTwoHeading).toHaveText('Page Two');
   });
 
   test.describe('popping to the root', () => {
@@ -65,7 +65,7 @@ test.describe('nav: modal-navigation', () => {
       await expect(pageThree).toHaveCount(0);
 
       await expect(pageOne).toBeVisible();
-      await expect(await pageOneHeading.textContent()).toBe('Page One');
+      await expect(pageOneHeading).toHaveText('Page One');
     });
   });
 });
