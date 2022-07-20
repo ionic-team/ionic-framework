@@ -7,6 +7,10 @@ describe('IonNav', () => {
     cy.get('ion-nav').contains('Page one content');
   });
 
+  it('should have a ref defined', () => {
+    cy.get('#navRef').should('have.text', 'Nav ref is defined: true');
+  });
+
   it('should push a page', () => {
     cy.get('ion-button').contains('Go to Page Two').click();
     cy.get('#pageTwoContent').should('be.visible');
