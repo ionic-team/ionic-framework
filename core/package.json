@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.1.14",
+  "version": "6.1.15",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -41,7 +41,7 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^26.6.3",
-    "@playwright/test": "^1.20.0",
+    "@playwright/test": "^1.23.3",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.4.0",
