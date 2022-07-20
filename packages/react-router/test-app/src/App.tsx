@@ -1,4 +1,4 @@
-import { IonApp, setupIonicReact } from '@ionic/react';
+import { IonApp, setupIonicReact, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -36,6 +36,7 @@ import Refs from './pages/refs/Refs';
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
+import Params from './pages/params/Params';
 
 setupIonicReact();
 
@@ -43,21 +44,24 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <Route path="/" component={Main} exact />
-        <Route path="/routing" component={Routing} />
-        <Route path="/dynamic-routes" component={DynamicRoutes} />
-        <Route path="/multiple-tabs" component={MultipleTabs} />
-        <Route path="/dynamic-tabs" component={DynamicTabs} />
-        <Route path="/nested-outlet" component={NestedOutlet} />
-        <Route path="/nested-outlet2" component={NestedOutlet2} />
-        <Route path="/replace-action" component={ReplaceAction} />
-        <Route path="/tab-context" component={TabsContext} />
-        <Route path="/outlet-ref" component={OutletRef} />
-        <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
-        <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
-        <Route path="/tabs" component={Tabs} />
-        <Route path="/tabs-secondary" component={TabsSecondary} />
-        <Route path="/refs" component={Refs} />
+        <IonRouterOutlet>
+          <Route path="/" component={Main} exact />
+          <Route path="/routing" component={Routing} />
+          <Route path="/dynamic-routes" component={DynamicRoutes} />
+          <Route path="/multiple-tabs" component={MultipleTabs} />
+          <Route path="/dynamic-tabs" component={DynamicTabs} />
+          <Route path="/nested-outlet" component={NestedOutlet} />
+          <Route path="/nested-outlet2" component={NestedOutlet2} />
+          <Route path="/replace-action" component={ReplaceAction} />
+          <Route path="/tab-context" component={TabsContext} />
+          <Route path="/outlet-ref" component={OutletRef} />
+          <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
+          <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
+          <Route path="/tabs" component={Tabs} />
+          <Route path="/tabs-secondary" component={TabsSecondary} />
+          <Route path="/refs" component={Refs} />
+          <Route path="/params/:id" component={Params} />
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );

@@ -25,6 +25,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   context!: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
+  prevProps?: StackManagerProps;
+  skipTransition: boolean;
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
@@ -39,6 +41,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.transitionPage = this.transitionPage.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
     this.id = generateId('routerOutlet');
+    this.prevProps = undefined;
+    this.skipTransition = false;
   }
 
   componentDidMount() {
@@ -50,7 +54,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentDidUpdate(prevProps: StackManagerProps) {
-    if (this.props.routeInfo.pathname !== prevProps.routeInfo.pathname || this.pendingPageTransition) {
+    const { pathname } = this.props.routeInfo;
+    const { pathname: prevPathname } = prevProps.routeInfo;
+
+    if (pathname !== prevPathname) {
+      this.prevProps = prevProps;
+      this.handlePageTransition(this.props.routeInfo);
+    } else if (this.pendingPageTransition) {
       this.handlePageTransition(this.props.routeInfo);
       this.pendingPageTransition = false;
     }
@@ -187,34 +197,151 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const canStart = () => {
       const config = getConfig();
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
-      if (swipeEnabled) {
-        return this.context.canGoBack();
-      } else {
-        return false;
-      }
+      if (!swipeEnabled) { return false; }
+
+      const { routeInfo } = this.props;
+
+      const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+
+      return (
+        !!enteringViewItem &&
+        /**
+         * The root url '/' is treated as
+         * the first view item (but is never mounted),
+         * so we do not want to swipe back to the
+         * root url.
+         */
+        enteringViewItem.mount &&
+
+        /**
+         * When on the first page (whatever view
+         * you land on after the root url) it
+         * is possible for findViewItemByRouteInfo to
+         * return the exact same view you are currently on.
+         * Make sure that we are not swiping back to the same
+         * instances of a view.
+         */
+        enteringViewItem.routeData.match.path !== routeInfo.pathname
+      );
     };
 
-    const onStart = () => {
-      this.context.goBack();
+    const onStart = async () => {
+      const { routeInfo } = this.props;
+
+      const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+
+      /**
+       * When the gesture starts, kick off
+       * a transition that is controlled
+       * via a swipe gesture.
+       */
+      if (enteringViewItem && leavingViewItem) {
+        await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
+      }
+
+      return Promise.resolve();
     };
+    const onEnd = (shouldContinue: boolean) => {
+      if (shouldContinue) {
+        this.skipTransition = true;
+
+        this.context.goBack();
+      } else {
+        /**
+         * In the event that the swipe
+         * gesture was aborted, we should
+         * re-hide the page that was going to enter.
+         */
+        const { routeInfo } = this.props;
+
+        const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+        const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+
+        /**
+         * Ionic React has a design defect where it
+         * a) Unmounts the leaving view item when using parameterized routes
+         * b) Considers the current view to be the entering view when using
+         * parameterized routes
+         *
+         * As a result, we should not hide the view item here
+         * as it will cause the current view to be hidden.
+         */
+        if (
+          enteringViewItem !== leavingViewItem &&
+          enteringViewItem?.ionPageElement !== undefined
+        ) {
+          const { ionPageElement } = enteringViewItem;
+          ionPageElement.setAttribute('aria-hidden', 'true');
+          ionPageElement.classList.add('ion-page-hidden');
+        }
+      }
+    }
+
     routerOutlet.swipeHandler = {
       canStart,
       onStart,
-      onEnd: (_shouldContinue) => true,
+      onEnd
     };
   }
 
   async transitionPage(
     routeInfo: RouteInfo,
     enteringViewItem: ViewItem,
-    leavingViewItem?: ViewItem
+    leavingViewItem?: ViewItem,
+    direction?: 'forward' | 'back',
+    progressAnimation = false
   ) {
+    const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
+      const skipTransition = this.skipTransition;
+
+      /**
+       * If the transition was handled
+       * via the swipe to go back gesture,
+       * then we do not want to perform
+       * another transition.
+       *
+       * We skip adding ion-page or ion-page-invisible
+       * because the entering view already exists in the DOM.
+       * If we added the classes, there would be a flicker where
+       * the view would be briefly hidden.
+       */
+      if (skipTransition) {
+        /**
+         * We need to reset skipTransition before
+         * we call routerOutlet.commit otherwise
+         * the transition triggered by the swipe
+         * to go back gesture would reset it. In
+         * that case you would see a duplicate
+         * transition triggered by handlePageTransition
+         * in componentDidUpdate.
+         */
+        this.skipTransition = false;
+      } else {
+        enteringEl.classList.add('ion-page');
+        enteringEl.classList.add('ion-page-invisible');
+      }
+
+      await routerOutlet.commit(enteringEl, leavingEl, {
+        deepWait: true,
+        duration: skipTransition || directionToUse === undefined ? 0 : undefined,
+        direction: directionToUse,
+        showGoBack: !!routeInfo.pushedByRoute,
+        progressAnimation,
+        animationBuilder: routeInfo.routeAnimation,
+      });
+    }
+
     const routerOutlet = this.routerOutletElement!;
 
-    const direction =
+    const routeInfoFallbackDirection =
       routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
         ? undefined
         : routeInfo.routeDirection;
+    const directionToUse = direction ?? routeInfoFallbackDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (
@@ -238,25 +365,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       } else {
         await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
-        if (leavingViewItem && leavingViewItem.ionPageElement) {
+        if (leavingViewItem && leavingViewItem.ionPageElement && !progressAnimation) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         }
       }
-    }
-
-    async function runCommit(enteringEl: HTMLElement, leavingEl?: HTMLElement) {
-      enteringEl.classList.add('ion-page');
-      enteringEl.classList.add('ion-page-invisible');
-
-      await routerOutlet.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction: direction as any,
-        showGoBack: !!routeInfo.pushedByRoute,
-        progressAnimation: false,
-        animationBuilder: routeInfo.routeAnimation,
-      });
     }
   }
 
