@@ -95,14 +95,16 @@
   }
 }
 
-// Remove when deprecating iOS 13 support
-// iOS 13 has a bug where using grid-area with the native keyboard
-// results in a white box rendering while the grid-area is applied.
-// This is a workaround for that bug.
-.native-textarea {
-  position: absolute;
+:host(.auto-grow) {
+  // Remove when deprecating iOS 13 support
+  // iOS 13 has a bug where using grid-area with the native keyboard
+  // results in a white box rendering while the grid-area is applied.
+  // This is a workaround for that bug.
+  .native-textarea {
+    position: absolute;
 
-  height: 100%;
+    height: 100%;
+  }
 }
 
 .native-textarea,
