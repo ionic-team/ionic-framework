@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 
@@ -22,16 +22,16 @@ const IonModalInternal: React.FC<IonModalProps> = ({
   ...restOfProps
 }) => {
   const [isOpenState, setIsOpenState] = React.useState(isOpen);
-  const [views, setViews] = useState<React.ReactElement[]>([]);
-
   /**
-   * Allows us to create React components that are rendered within
-   * the context of the IonNav component.
+   * The IonModal implementation is not reliant on the framework delegate
+   * for adding or removing views. We construct an instance of the delegate
+   * and pass it to the ion-modal element to opt-out of the core framework
+   * delegate's behavior.
    */
-  const addView = (view: React.ReactElement) => setViews([...views, view]);
-  const removeView = (view: React.ReactElement) => setViews(views.filter((v) => v !== view));
-
-  const delegate = ReactDelegate(addView, removeView);
+  const delegate = ReactDelegate(
+    () => {},
+    () => {}
+  );
 
   return (
     <IonModalInner
