@@ -334,3 +334,16 @@ ion-input input::-webkit-date-and-time-value {
   --width: fit-content;
   --height: fit-content;
 }
+
+/**
+ * The grid variant can scale down when inline.
+ * When used in a `fit-content` overlay, this causes
+ * the overlay to shrink when the month/year picker is open.
+ * Explicitly setting the dimensions lets us have a consistently
+ * sized grid interface.
+ */
+.ion-datetime-button-overlay ion-datetime.datetime-grid {
+  width: 320px;
+  height: 320px;
+  min-height: 320px;
+}
