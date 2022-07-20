@@ -1,10 +1,11 @@
-import React from 'react';
 import { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
+import React from 'react';
+
+import { ReactDelegate } from '../framework-delegate';
 
 import { createReactComponent } from './react-component-lib';
 import { createForwardRef } from './utils';
-import { ReactDelegate } from '../framework-delegate';
 
 const IonModalInner = createReactComponent<
   JSX.IonModal & { delegate: FrameworkDelegate },
