@@ -37,7 +37,7 @@ const IonModalInternal: React.FC<IonModalProps> = ({
   return (
     <IonModalInner
       delegate={delegate}
-      isOpen={isOpenState}
+      isOpen={isOpen}
       ref={forwardedRef}
       {...restOfProps}
       onWillPresent={(ev) => {
