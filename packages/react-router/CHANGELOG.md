@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.15-nightly.20220720](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15-nightly.20220720) (2022-07-20)
+
+
+### Bug Fixes
+
+* **react:** swipe to go back gesture works on ios ([#25563](https://github.com/ionic-team/ionic/issues/25563)) ([7ec3683](https://github.com/ionic-team/ionic/commit/7ec3683e94e5397022560ce8489532ff40d3f40c)), closes [#22342](https://github.com/ionic-team/ionic/issues/22342)
+
+
+
+
+
 ## [6.1.14](https://github.com/ionic-team/ionic/compare/v6.1.13...v6.1.14) (2022-07-13)
 
 **Note:** Version bump only for package @ionic/react-router
