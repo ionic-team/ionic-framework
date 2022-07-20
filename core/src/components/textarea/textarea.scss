@@ -95,10 +95,21 @@
   }
 }
 
-.textarea-wrapper::after,
+// Remove when deprecating iOS 13 support
+// iOS 13 has a bug where using grid-area with the native keyboard
+// results in a white box rendering while the grid-area is applied.
+// This is a workaround for that bug.
 .native-textarea {
+  position: absolute;
+
+  height: 100%;
+}
+
+.native-textarea,
+.textarea-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
+
   grid-area: 1 / 1 / 2 / 2;
 }
 
