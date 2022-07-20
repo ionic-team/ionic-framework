@@ -43,23 +43,16 @@ export const warnIfValueOutOfBounds = (
   min: DatetimeParts,
   max: DatetimeParts
 ) => {
-  const isOutOfBounds = (value: DatetimeParts) => (min && isBefore(value, min)) || (max && isAfter(value, max));
-  const printWarning = () =>
-    printIonWarning(
-      'The value provided to ion-datetime is out of bounds.\n\n' +
-        `Min: ${JSON.stringify(min)}\n` +
-        `Max: ${JSON.stringify(max)}\n` +
-        `Value: ${JSON.stringify(value)}`
-    );
-
-  if (Array.isArray(value)) {
-    for (const val of value) {
-      if (isOutOfBounds(val)) {
-        printWarning();
-        break;
-      }
+  const valueArray = Array.isArray(value) ? value : [value];
+  for (const val of valueArray) {
+    if ((min && isBefore(val, min)) || (max && isAfter(val, max))) {
+      printIonWarning(
+        'The value provided to ion-datetime is out of bounds.\n\n' +
+          `Min: ${JSON.stringify(min)}\n` +
+          `Max: ${JSON.stringify(max)}\n` +
+          `Value: ${JSON.stringify(value)}`
+      );
+      break;
     }
-  } else if (isOutOfBounds(value)) {
-    printWarning();
   }
 };
