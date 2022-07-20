@@ -27,6 +27,7 @@ import OverlayComponents from './pages/overlay-components/OverlayComponents';
 import Tabs from './pages/Tabs';
 import NavComponent from './pages/navigation/NavComponent';
 import IonModalConditionalSibling from './pages/issues/IonModalConditionalSibling';
+import IonModalConditional from './pages/issues/IonModalConditional';
 
 setupIonicReact();
 
@@ -40,6 +41,7 @@ const App: React.FC = () => (
         <Route path="/navigation" component={NavComponent} />
         <Route path="/tabs" component={Tabs} />
         <Route path="/issue/ion-modal-conditional-sibling" component={IonModalConditionalSibling} />
+        <Route path="/issue/ion-modal-conditional" component={IonModalConditional} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
