@@ -226,13 +226,16 @@ export class ReorderGroup implements ComponentInterface {
         this.el.insertBefore(selectedItemEl, ref);
       }
 
-      if (Array.isArray(listOrReorder)) {
-        listOrReorder = reorderArray(listOrReorder, fromIndex, toIndex);
-      }
+      // setTimeout forces the style update to synchronize with the reordering.
+      setTimeout(() => {
+        if (Array.isArray(listOrReorder)) {
+          listOrReorder = reorderArray(listOrReorder, fromIndex, toIndex);
+        }
 
-      for (let i = 0; i < len; i++) {
-        children[i].style['transform'] = '';
-      }
+        for (let i = 0; i < len; i++) {
+          children[i].style['transform'] = '';
+        }
+      });
 
       selectedItemEl.style.transition = '';
       selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
