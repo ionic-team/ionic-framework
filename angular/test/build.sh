@@ -22,6 +22,9 @@ FULL_BASE_DIR="${BASE_DIR}/"
 # The full path to the built application.
 BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
 
+# Make the build directory if it does not already exist.
+mkdir -p $BUILD_DIR
+
 # First we need to copy the base application
 cp -r $FULL_BASE_DIR $BUILD_APP_DIR
 
