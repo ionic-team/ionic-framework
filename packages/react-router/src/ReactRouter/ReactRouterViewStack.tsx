@@ -107,9 +107,10 @@ export class ReactRouterViewStack extends ViewStacks {
     return children;
   }
 
-  findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
+  findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) {
     const { viewItem, match } = this.findViewItemByPath(routeInfo.pathname, outletId);
-    if (viewItem && match) {
+    const shouldUpdateMatch = updateMatch === undefined || updateMatch === true;
+    if (shouldUpdateMatch && viewItem && match) {
       viewItem.routeData.match = match;
     }
     return viewItem;

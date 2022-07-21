@@ -18,7 +18,7 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import { warnIfValueOutOfBounds } from './utils/comparison';
+import { isSameDay, warnIfValueOutOfBounds } from './utils/comparison';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -30,7 +30,7 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
 import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -75,7 +75,6 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-  private overlayIsPresenting = false;
 
   /**
    * Whether to highlight the active day with a solid circle (as opposed
@@ -93,9 +92,8 @@ export class Datetime implements ComponentInterface {
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-  private destroyCalendarIO?: () => void;
+  private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
-  private destroyOverlayListener?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
@@ -107,11 +105,11 @@ export class Datetime implements ComponentInterface {
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
    * Allows caching an instance of the `activeParts` in between render cycles.
    */
-  private activePartsClone!: DatetimeParts;
+  private activePartsClone!: DatetimeParts | DatetimeParts[];
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts = {
+  @State() activeParts: DatetimeParts | DatetimeParts[] = {
     month: 5,
     day: 28,
     year: 2021,
@@ -316,16 +314,30 @@ export class Datetime implements ComponentInterface {
   @Prop() firstDayOfWeek = 0;
 
   /**
-   * The value of the datetime as a valid ISO 8601 datetime string.
+   * If `true`, multiple dates can be selected at once. Only
+   * applies to `presentation="date"` and `preferWheel="false"`.
    */
-  @Prop({ mutable: true }) value?: string | null;
+  @Prop() multiple = false;
+
+  /**
+   * The value of the datetime as a valid ISO 8601 datetime string.
+   * Should be an array of strings if `multiple="true"`.
+   */
+  @Prop({ mutable: true }) value?: string | string[] | null;
 
   /**
    * Update the datetime value when the value changes
    */
   @Watch('value')
   protected valueChanged() {
+    const { value, minParts, maxParts, workingParts, multiple } = this;
+
     if (this.hasValue()) {
+      if (!multiple && Array.isArray(value)) {
+        this.value = value[0];
+        return; // setting this.value will trigger re-run of this function
+      }
+
       /**
        * Clones the value of the `activeParts` to the private clone, to update
        * the date display on the current render cycle without causing another render.
@@ -333,40 +345,45 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      const valueDateParts = parseDate(this.value);
+      const valueDateParts = parseDate(value);
       if (valueDateParts) {
-        warnIfValueOutOfBounds(valueDateParts, this.minParts, this.maxParts);
+        warnIfValueOutOfBounds(valueDateParts, minParts, maxParts);
 
-        const { month, day, year, hour, minute } = valueDateParts;
-        const ampm = hour >= 12 ? 'pm' : 'am';
+        if (Array.isArray(valueDateParts)) {
+          this.activePartsClone = [...valueDateParts];
+        } else {
+          const { month, day, year, hour, minute } = valueDateParts;
+          const ampm = hour ? (hour >= 12 ? 'pm' : 'am') : undefined;
 
-        this.activePartsClone = {
-          ...this.activeParts,
-          month,
-          day,
-          year,
-          hour,
-          minute,
-          ampm,
-        };
+          this.activePartsClone = {
+            ...this.activeParts,
+            month,
+            day,
+            year,
+            hour,
+            minute,
+            ampm,
+          };
 
-        /**
-         * The working parts am/pm value must be updated when the value changes, to
-         * ensure the time picker hour column values are generated correctly.
-         */
-        this.setWorkingParts({
-          ...this.workingParts,
-          ampm,
-        });
+          /**
+           * The working parts am/pm value must be updated when the value changes, to
+           * ensure the time picker hour column values are generated correctly.
+           *
+           * Note that we don't need to do this if valueDateParts is an array, since
+           * multiple="true" does not apply to time pickers.
+           */
+          this.setWorkingParts({
+            ...workingParts,
+            ampm,
+          });
+        }
       } else {
-        printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
+        printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
       }
     }
 
     this.emitStyle();
-    this.ionChange.emit({
-      value: this.value,
-    });
+    this.ionChange.emit({ value });
   }
 
   /**
@@ -472,6 +489,8 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
+    const { highlightActiveParts, isCalendarPicker, activeParts } = this;
+
     /**
      * We only update the value if the presentation is not a calendar picker,
      * or if `highlightActiveParts` is true; indicating that the user
@@ -479,20 +498,32 @@ export class Datetime implements ComponentInterface {
      *
      * Otherwise "today" would accidentally be set as the value.
      */
-    if (this.highlightActiveParts || !this.isCalendarPicker) {
-      /**
-       * Prevent convertDataToISO from doing any
-       * kind of transformation based on timezone
-       * This cancels out any change it attempts to make
-       *
-       * Important: Take the timezone offset based on
-       * the date that is currently selected, otherwise
-       * there can be 1 hr difference when dealing w/ DST
-       */
-      const date = new Date(convertDataToISO(this.activeParts));
-      this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
+    if (highlightActiveParts || !isCalendarPicker) {
+      const activePartsIsArray = Array.isArray(activeParts);
+      if (activePartsIsArray && activeParts.length === 0) {
+        this.value = undefined;
+      } else {
+        /**
+         * Prevent convertDataToISO from doing any
+         * kind of transformation based on timezone
+         * This cancels out any change it attempts to make
+         *
+         * Important: Take the timezone offset based on
+         * the date that is currently selected, otherwise
+         * there can be 1 hr difference when dealing w/ DST
+         */
+        if (activePartsIsArray) {
+          const dates = convertDataToISO(activeParts).map((str) => new Date(str));
+          for (let i = 0; i < dates.length; i++) {
+            activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
+          }
+        } else {
+          const date = new Date(convertDataToISO(activeParts));
+          activeParts.tzOffset = date.getTimezoneOffset() * -1;
+        }
 
-      this.value = convertDataToISO(this.activeParts);
+        this.value = convertDataToISO(activeParts);
+      }
     }
 
     if (closeOverlay) {
@@ -541,10 +572,49 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private setActiveParts = (parts: DatetimeParts) => {
-    this.activeParts = {
-      ...parts,
-    };
+  private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
+    const { multiple, activePartsClone, highlightActiveParts } = this;
+
+    if (multiple) {
+      /**
+       * We read from activePartsClone here because valueChanged() only updates that,
+       * so it's the more reliable source of truth. If we read from activeParts, then
+       * if you click July 1, manually set the value to July 2, and then click July 3,
+       * the new value would be [July 1, July 3], ignoring the value set.
+       *
+       * We can then pass the new value to activeParts (rather than activePartsClone)
+       * since the clone will be updated automatically by activePartsChanged().
+       */
+      const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
+      if (removeDate) {
+        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, parts));
+      } else if (highlightActiveParts) {
+        this.activeParts = [...activePartsArray, parts];
+      } else {
+        /**
+         * If highlightActiveParts is false, that means we just have a
+         * default value of today in activeParts; we need to replace that
+         * rather than adding to it since it's just a placeholder.
+         */
+        this.activeParts = [parts];
+      }
+    } else {
+      this.activeParts = {
+        ...parts,
+      };
+    }
+
+    /**
+     * Now that the user has interacted somehow to select something, we can
+     * show the solid highlight. This needs to be done after checking it above,
+     * but before the confirm call below.
+     *
+     * Note that for datetimes with confirm/cancel buttons, the value
+     * isn't updated until you call confirm(). We need to bring the
+     * solid circle back on day click for UX reasons, rather than only
+     * show the circle if `value` is truthy.
+     */
+    this.highlightActiveParts = true;
 
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
@@ -747,20 +817,17 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private initializeCalendarIOListeners = () => {
+  private initializeCalendarListener = () => {
     const calendarBodyRef = this.getCalendarBodyEl();
     if (!calendarBodyRef) {
       return;
     }
 
-    const mode = getIonMode(this);
-
     /**
      * For performance reasons, we only render 3
      * months at a time: The current month, the previous
-     * month, and the next month. We have IntersectionObservers
-     * on the previous and next month elements to append/prepend
-     * new months.
+     * month, and the next month. We have a scroll listener
+     * on the calendar body to append/prepend new months.
      *
      * We can do this because Stencil is smart enough to not
      * re-create the .calendar-month containers, but rather
@@ -776,43 +843,78 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
+    const mode = getIonMode(this);
+    const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
-     * Before setting up the IntersectionObserver,
+     * Before setting up the scroll listener,
      * scroll the middle month into view.
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
      */
-    let endIO: IntersectionObserver | undefined;
-    let startIO: IntersectionObserver | undefined;
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-      const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
-        const refIO = callbackType === 'start' ? startIO : endIO;
-        const refMonth = callbackType === 'start' ? startMonth : endMonth;
-        const refMonthFn = callbackType === 'start' ? getPreviousMonth : getNextMonth;
+
+      const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
+        const box = calendarBodyRef.getBoundingClientRect();
+        const root = this.el!.shadowRoot!;
 
         /**
-         * If the month is not fully in view, do not do anything
+         * Get the element that is in the center of the calendar body.
+         * This will be an element inside of the active month.
          */
-        const ev = entries[0];
-        if (!ev.isIntersecting) {
+        const elementAtCenter = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        /**
+         * If there is no element then the
+         * component may be re-rendering on a slow device.
+         */
+        if (!elementAtCenter) return;
+
+        const month = elementAtCenter.closest('.calendar-month');
+        if (!month) return;
+
+        /**
+         * The edge of the month must be lined up with
+         * the edge of the calendar body in order for
+         * the component to update. Otherwise, it
+         * may be the case that the user has paused their
+         * swipe or the browser has not finished snapping yet.
+         * Rather than check if the x values are equal,
+         * we give it a tolerance of 2px to account for
+         * sub pixel rendering.
+         */
+        const monthBox = month.getBoundingClientRect();
+        if (Math.abs(monthBox.x - box.x) > 2) return;
+
+        /**
+         * From here, we can determine if the start
+         * month or the end month was scrolled into view.
+         * If no month was changed, then we can return from
+         * the scroll callback early.
+         */
+        if (month === startMonth) {
+          return getPreviousMonth(parts);
+        } else if (month === endMonth) {
+          return getNextMonth(parts);
+        } else {
           return;
+        }
+      };
+
+      const updateActiveMonth = () => {
+        if (needsiOSRubberBandFix) {
+          calendarBodyRef.style.removeProperty('pointer-events');
+          appliediOSRubberBandFix = false;
         }
 
         /**
-         * When presenting an inline overlay,
-         * subsequent presentations will cause
-         * the IO to fire again (since the overlay
-         * is now visible and therefore the calendar
-         * months are intersecting).
+         * If the month did not change
+         * then we can return early.
          */
-        if (this.overlayIsPresenting) {
-          this.overlayIsPresenting = false;
-          return;
-        }
+        const newDate = getChangedMonth(this.workingParts);
+        if (!newDate) return;
 
-        const { month, year, day } = refMonthFn(this.workingParts);
+        const { month, day, year } = newDate;
 
         if (
           isMonthDisabled(
@@ -827,40 +929,11 @@ export class Datetime implements ComponentInterface {
         }
 
         /**
-         * On iOS, we need to set pointer-events: none
-         * when the user is almost done with the gesture
-         * so that they cannot quickly swipe while
-         * the scrollable container is snapping.
-         * Updating the container while snapping
-         * causes WebKit to snap incorrectly.
-         */
-        if (mode === 'ios') {
-          const ratio = ev.intersectionRatio;
-          // `maxTouchPoints` will be 1 in device preview, but > 1 on device
-          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1 && navigator.maxTouchPoints > 1;
-
-          if (shouldDisable) {
-            calendarBodyRef.style.setProperty('pointer-events', 'none');
-            return;
-          }
-        }
-
-        /**
          * Prevent scrolling for other browsers
          * to give the DOM time to update and the container
          * time to properly snap.
          */
         calendarBodyRef.style.setProperty('overflow', 'hidden');
-
-        /**
-         * Remove the IO temporarily
-         * otherwise you can sometimes get duplicate
-         * events when rubber banding.
-         */
-        if (refIO === undefined) {
-          return;
-        }
-        refIO.disconnect();
 
         /**
          * Use a writeTask here to ensure
@@ -872,85 +945,57 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          // Disconnect all active intersection observers
-          // to avoid a re-render causing a duplicate event.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
-          }
-
-          raf(() => {
-            this.setWorkingParts({
-              ...this.workingParts,
-              month,
-              day: day!,
-              year,
-            });
-
-            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-            calendarBodyRef.style.removeProperty('overflow');
-            calendarBodyRef.style.removeProperty('pointer-events');
-
-            endIO?.observe(endMonth);
-            startIO?.observe(startMonth);
+          this.setWorkingParts({
+            ...this.workingParts,
+            month,
+            day: day!,
+            year,
           });
 
-          /**
-           * Now that state has been updated
-           * and the correct month is in view,
-           * we can resume the IO.
-           */
-          if (refIO === undefined) {
-            return;
-          }
-          refIO.observe(refMonth);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          calendarBodyRef.style.removeProperty('overflow');
         });
       };
 
-      const threshold =
-        mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1 ? [0.7, 1] : 1;
-
-      // Intersection observers cannot accurately detect the
-      // intersection with a threshold of 1, when the observed
-      // element width is a sub-pixel value (i.e. 334.05px).
-      // Setting a root margin to 1px solves the issue.
-      const rootMargin = '1px';
+      /**
+       * When the container finishes scrolling we
+       * need to update the DOM with the selected month.
+       */
+      let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
       /**
-       * Listen on the first month to
-       * prepend a new month and on the last
-       * month to append a new month.
-       * The 0.7 threshold is required on ios
-       * so that we can remove pointer-events
-       * when adding new months.
-       * Adding to a scroll snapping container
-       * while the container is snapping does not
-       * completely work as expected in WebKit.
-       * Adding pointer-events: none allows us to
-       * avoid these issues.
-       *
-       * This should be fine on Chromium, but
-       * when you set pointer-events: none
-       * it applies to active gestures which is not
-       * something WebKit does.
+       * We do not want to attempt to set pointer-events
+       * multiple times within a single swipe gesture as
+       * that adds unnecessary work to the main thread.
        */
+      let appliediOSRubberBandFix = false;
+      const scrollCallback = () => {
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
 
-      endIO = new IntersectionObserver((ev) => ioCallback('end', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      endIO.observe(endMonth);
+        /**
+         * On iOS it is possible to quickly rubber band
+         * the scroll area before the scroll timeout has fired.
+         * This results in users reaching the end of the scrollable
+         * container before the DOM has updated.
+         * By setting `pointer-events: none` we can ensure that
+         * subsequent swipes do not happen while the container
+         * is snapping.
+         */
+        if (!appliediOSRubberBandFix && needsiOSRubberBandFix) {
+          calendarBodyRef.style.setProperty('pointer-events', 'none');
+          appliediOSRubberBandFix = true;
+        }
 
-      startIO = new IntersectionObserver((ev) => ioCallback('start', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      startIO.observe(startMonth);
+        // Wait ~3 frames
+        scrollTimeout = setTimeout(updateActiveMonth, 50);
+      };
 
-      this.destroyCalendarIO = () => {
-        endIO?.disconnect();
-        startIO?.disconnect();
+      calendarBodyRef.addEventListener('scroll', scrollCallback);
+
+      this.destroyCalendarListener = () => {
+        calendarBodyRef.removeEventListener('scroll', scrollCallback);
       };
     });
   };
@@ -972,10 +1017,10 @@ export class Datetime implements ComponentInterface {
    * if the datetime has been hidden/presented by a modal or popover.
    */
   private destroyInteractionListeners = () => {
-    const { destroyCalendarIO, destroyKeyboardMO } = this;
+    const { destroyCalendarListener, destroyKeyboardMO } = this;
 
-    if (destroyCalendarIO !== undefined) {
-      destroyCalendarIO();
+    if (destroyCalendarListener !== undefined) {
+      destroyCalendarListener();
     }
 
     if (destroyKeyboardMO !== undefined) {
@@ -984,9 +1029,8 @@ export class Datetime implements ComponentInterface {
   };
 
   private initializeListeners() {
-    this.initializeCalendarIOListeners();
+    this.initializeCalendarListener();
     this.initializeKeyboardListeners();
-    this.initializeOverlayListener();
   }
 
   componentDidLoad() {
@@ -1081,9 +1125,6 @@ export class Datetime implements ComponentInterface {
     this.prevPresentation = presentation;
 
     this.destroyInteractionListeners();
-    if (this.destroyOverlayListener !== undefined) {
-      this.destroyOverlayListener();
-    }
 
     this.initializeListeners();
 
@@ -1092,38 +1133,26 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  /**
-   * When doing subsequent presentations of an inline
-   * overlay, the IO callback will fire again causing
-   * the calendar to go back one month. We need to listen
-   * for the presentation of the overlay so we can properly
-   * cancel that IO callback.
-   */
-  private initializeOverlayListener = () => {
-    const overlay = this.el.closest('ion-popover, ion-modal');
-    if (overlay === null) {
-      return;
+  private processValue = (value?: string | string[] | null) => {
+    this.highlightActiveParts = !!value;
+    let valueToProcess = parseDate(value || getToday());
+
+    const { minParts, maxParts, multiple } = this;
+    if (!multiple && Array.isArray(value)) {
+      this.value = value[0];
+      valueToProcess = (valueToProcess as DatetimeParts[])[0];
     }
 
-    const overlayListener = () => {
-      this.overlayIsPresenting = true;
-    };
-
-    overlay.addEventListener('willPresent', overlayListener);
-
-    this.destroyOverlayListener = () => {
-      overlay.removeEventListener('willPresent', overlayListener);
-    };
-  };
-
-  private processValue = (value?: string | null) => {
-    this.highlightActiveParts = !!value;
-    const valueToProcess = parseDate(value || getToday());
-
-    const { minParts, maxParts } = this;
     warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
 
-    const { month, day, year, hour, minute, tzOffset } = clampDate(valueToProcess, minParts, maxParts);
+    /**
+     * If there are multiple values, pick an arbitrary one to clamp to. This way,
+     * if the values are across months, we always show at least one of them. Note
+     * that the values don't necessarily have to be in order.
+     */
+    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+
+    const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
     const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
@@ -1136,18 +1165,34 @@ export class Datetime implements ComponentInterface {
       ampm,
     });
 
-    this.activeParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-      tzOffset,
-      ampm,
-    };
+    if (Array.isArray(valueToProcess)) {
+      this.activeParts = [...valueToProcess];
+    } else {
+      this.activeParts = {
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        tzOffset,
+        ampm,
+      };
+    }
   };
 
   componentWillLoad() {
+    const { el, multiple, presentation, preferWheel } = this;
+
+    if (multiple) {
+      if (presentation !== 'date') {
+        printIonWarning('Multiple date selection is only supported for presentation="date".', el);
+      }
+
+      if (preferWheel) {
+        printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+      }
+    }
+
     this.processMinParts();
     this.processMaxParts();
     this.processValue(this.value);
@@ -1310,7 +1355,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { activeParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
     /**
      * By default, generate a range of 3 months:
@@ -1388,29 +1433,32 @@ export class Datetime implements ComponentInterface {
         items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           const { value } = ev.detail;
           const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             ...findPart,
           });
 
-          this.setActiveParts({
-            ...this.activeParts,
-            ...findPart,
-          });
+          if (!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              ...findPart,
+            });
+          }
 
-          // We can re-attach the intersection observer after
+          // We can re-attach the scroll listener after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1432,7 +1480,13 @@ export class Datetime implements ComponentInterface {
 
     if (isDateEnabled) {
       days = days.map((dayObject) => {
-        const referenceParts = { month: workingParts.month, day: dayObject.value, year: workingParts.year };
+        const { value } = dayObject;
+        const valueNum = typeof value === 'string' ? parseInt(value) : value;
+        const referenceParts: DatetimeParts = {
+          month: workingParts.month,
+          day: valueNum,
+          year: workingParts.year,
+        };
 
         let disabled;
         try {
@@ -1469,35 +1523,38 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { activeParts, workingParts } = this;
 
     return (
       <ion-picker-column-internal
         class="day-column"
         color={this.color}
         items={days}
-        value={workingParts.day || this.todayParts.day}
+        value={(workingParts.day || this.todayParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             day: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...this.activeParts,
-            day: ev.detail.value,
-          });
+          if (!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              day: ev.detail.value,
+            });
+          }
 
-          // We can re-attach the intersection observer after
+          // We can re-attach the scroll listener after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1510,7 +1567,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { activeParts, workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1519,26 +1576,29 @@ export class Datetime implements ComponentInterface {
         items={months}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...this.activeParts,
-            month: ev.detail.value,
-          });
+          if (!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              month: ev.detail.value,
+            });
+          }
 
-          // We can re-attach the intersection observer after
+          // We can re-attach the scroll listener after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1550,7 +1610,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { activeParts, workingParts } = this;
 
     return (
       <ion-picker-column-internal
@@ -1559,26 +1619,29 @@ export class Datetime implements ComponentInterface {
         items={years}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
-          // the intersection observer before we update state
+          // the scroll listener before we update state
           // and trigger a re-render.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
           }
 
           this.setWorkingParts({
-            ...this.workingParts,
+            ...workingParts,
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...this.activeParts,
-            year: ev.detail.value,
-          });
+          if (!Array.isArray(activeParts)) {
+            this.setActiveParts({
+              ...activeParts,
+              year: ev.detail.value,
+            });
+          }
 
-          // We can re-attach the intersection observer after
+          // We can re-attach the scroll listener after
           // the working parts have been updated.
-          this.initializeCalendarIOListeners();
+          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1614,7 +1677,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={activePartsClone.hour}
+        value={(activePartsClone as DatetimeParts).hour}
         items={hoursData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1622,10 +1685,13 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             hour: ev.detail.value,
           });
-          this.setActiveParts({
-            ...activePartsClone,
-            hour: ev.detail.value,
-          });
+
+          if (!Array.isArray(activePartsClone)) {
+            this.setActiveParts({
+              ...activePartsClone,
+              hour: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -1639,7 +1705,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={activePartsClone.minute}
+        value={(activePartsClone as DatetimeParts).minute}
         items={minutesData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1647,10 +1713,13 @@ export class Datetime implements ComponentInterface {
             ...workingParts,
             minute: ev.detail.value,
           });
-          this.setActiveParts({
-            ...activePartsClone,
-            minute: ev.detail.value,
-          });
+
+          if (!Array.isArray(activePartsClone)) {
+            this.setActiveParts({
+              ...activePartsClone,
+              minute: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -1669,7 +1738,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
-        value={activePartsClone.ampm}
+        value={(activePartsClone as DatetimeParts).ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
@@ -1680,11 +1749,13 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          this.setActiveParts({
-            ...activePartsClone,
-            ampm: ev.detail.value,
-            hour,
-          });
+          if (!Array.isArray(activePartsClone)) {
+            this.setActiveParts({
+              ...activePartsClone,
+              ampm: ev.detail.value,
+              hour,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -1784,7 +1855,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { isDateEnabled } = this;
+            const { isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
               this.locale,
@@ -1836,14 +1907,6 @@ export class Datetime implements ComponentInterface {
                     return;
                   }
 
-                  /**
-                   * Note that for datetimes with confirm/cancel buttons, the value
-                   * isn't updated until you call confirm(). We need to bring the
-                   * solid circle back on day click for UX reasons, rather than only
-                   * show the circle if `value` is truthy.
-                   */
-                  this.highlightActiveParts = true;
-
                   this.setWorkingParts({
                     ...this.workingParts,
                     month,
@@ -1851,12 +1914,24 @@ export class Datetime implements ComponentInterface {
                     year,
                   });
 
-                  this.setActiveParts({
-                    ...this.activeParts,
-                    month,
-                    day,
-                    year,
-                  });
+                  // multiple only needs date info, so we can wipe out other fields like time
+                  if (multiple) {
+                    this.setActiveParts(
+                      {
+                        month,
+                        day,
+                        year,
+                      },
+                      isActive
+                    );
+                  } else {
+                    this.setActiveParts({
+                      ...this.activeParts,
+                      month,
+                      day,
+                      year,
+                    });
+                  }
                 }}
               >
                 {day}
@@ -1924,7 +1999,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, this.activePartsClone, use24Hour)}
+        {getLocalizedTime(this.locale, this.activePartsClone as DatetimeParts, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -1968,7 +2043,9 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts)}</div>}
+        {mode === 'md' && !this.multiple && (
+          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>
+        )}
       </div>
     );
   }
@@ -2074,7 +2151,7 @@ export class Datetime implements ComponentInterface {
     const hasWheelVariant = hasDatePresentation && preferWheel;
     const hasGrid = hasDatePresentation && !preferWheel;
 
-    renderHiddenInput(true, el, name, value, disabled);
+    renderHiddenInput(true, el, name, formatValue(value), disabled);
 
     return (
       <Host

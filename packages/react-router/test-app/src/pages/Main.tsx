@@ -14,7 +14,7 @@ interface MainProps {}
 
 const Main: React.FC<MainProps> = () => {
   return (
-    <IonPage>
+    <IonPage data-pageid="home">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Main</IonTitle>
@@ -57,6 +57,12 @@ const Main: React.FC<MainProps> = () => {
           </IonItem>
           <IonItem routerLink="/Refs">
             <IonLabel>Refs</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/tabs" id="go-to-tabs">
+            <IonLabel>Tabs</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/params/0">
+            <IonLabel>Params</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
