@@ -25,6 +25,9 @@ import { parseDate } from '../datetime/utils/parse';
 })
 export class DatetimeButton implements ComponentInterface {
   private datetimeEl: HTMLIonDatetimeElement | null = null;
+  private overlayEl: HTMLIonModalElement | HTMLIonPopoverElement | null = null;
+  private dateTargetEl: HTMLElement | undefined;
+  private timeTargetEl: HTMLElement | undefined;
 
   @Element() el!: HTMLIonDatetimeButtonElement;
 
@@ -85,6 +88,26 @@ export class DatetimeButton implements ComponentInterface {
     );
 
     io.observe(datetimeEl);
+
+    /**
+     * Get a reference to any modal/popover
+     * the datetime is being used in so we can
+     * correctly size it when it is presented.
+     */
+    const overlayEl = (this.overlayEl = datetimeEl.closest('ion-modal, ion-popover'));
+
+    /**
+     * The .ion-datetime-button-overlay class contains
+     * styles that allow any modal/popover to be
+     * sized according to the dimensions of the datetime.
+     * If developers want a smaller/larger overlay all they need
+     * to do is change the width/height of the datetime.
+     * Additionally, this lets us avoid having to set
+     * explicit widths on each variant of datetime.
+     */
+    if (overlayEl) {
+      overlayEl.classList.add('ion-datetime-button-overlay');
+    }
 
     componentOnReady(datetimeEl, () => {
       const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
@@ -183,12 +206,30 @@ export class DatetimeButton implements ComponentInterface {
     }
   };
 
-  private handleDateClick = () => {
+  /**
+   * Waits for the ion-datetime to re-render.
+   * This is needed in order to correctly position
+   * a popover relative to the trigger element.
+   */
+  private waitForDatetimeChanges = async () => {
+    const { datetimeEl } = this;
+    if (!datetimeEl) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      datetimeEl.addEventListener('ionRender', resolve, { once: true });
+    });
+  };
+
+  private handleDateClick = async (ev: Event) => {
     const { datetimeEl, datetimePresentation } = this;
 
     if (!datetimeEl) {
       return;
     }
+
+    let needsPresentationChange = false;
 
     /**
      * When clicking the date button,
@@ -200,17 +241,17 @@ export class DatetimeButton implements ComponentInterface {
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
+        const needsChange = datetimeEl.presentation !== 'date';
         /**
          * The date+time wheel picker
          * shows date and time together,
          * so do not adjust the presentation
          * in that case.
          */
-        if (!datetimeEl.preferWheel) {
+        if (!datetimeEl.preferWheel && needsChange) {
           datetimeEl.presentation = 'date';
+          needsPresentationChange = true;
         }
-        break;
-      default:
         break;
     }
 
@@ -222,14 +263,18 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is opened.
      */
     this.selectedButton = 'date';
+
+    this.presentOverlay(ev, needsPresentationChange, this.dateTargetEl);
   };
 
-  private handleTimeClick = () => {
+  private handleTimeClick = (ev: Event) => {
     const { datetimeEl, datetimePresentation } = this;
 
     if (!datetimeEl) {
       return;
     }
+
+    let needsPresentationChange = false;
 
     /**
      * When clicking the time button,
@@ -241,7 +286,11 @@ export class DatetimeButton implements ComponentInterface {
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        datetimeEl.presentation = 'time';
+        const needsChange = datetimeEl.presentation !== 'time';
+        if (needsChange) {
+          datetimeEl.presentation = 'time';
+          needsPresentationChange = true;
+        }
         break;
     }
 
@@ -253,6 +302,54 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is opened.
      */
     this.selectedButton = 'time';
+
+    this.presentOverlay(ev, needsPresentationChange, this.timeTargetEl);
+  };
+
+  /**
+   * If the datetime is presented in an
+   * overlay, the datetime and overlay
+   * should be appropriately sized.
+   * These classes provide default sizing values
+   * that developers can customize.
+   * The goal is to provide an overlay that is
+   * reasonably sized with a datetime that
+   * fills the entire container.
+   */
+  private presentOverlay = async (ev: Event, needsPresentationChange: boolean, triggerEl?: HTMLElement) => {
+    const { overlayEl } = this;
+
+    if (!overlayEl) {
+      return;
+    }
+
+    if (overlayEl.tagName === 'ION-POPOVER') {
+      /**
+       * When the presentation on datetime changes,
+       * we need to wait for the component to re-render
+       * otherwise the computed width/height of the
+       * popover content will be wrong, causing
+       * the popover to not align with the trigger element.
+       */
+
+      if (needsPresentationChange) {
+        await this.waitForDatetimeChanges();
+      }
+
+      /**
+       * We pass the trigger button element
+       * so that the popover aligns with the individual
+       * button that was clicked, not the component container.
+       */
+      (overlayEl as HTMLIonPopoverElement).present({
+        ...ev,
+        detail: {
+          ionShadowTarget: triggerEl,
+        },
+      } as CustomEvent);
+    } else {
+      overlayEl.present();
+    }
   };
 
   render() {
@@ -273,9 +370,10 @@ export class DatetimeButton implements ComponentInterface {
             class="ion-activatable"
             id="date-button"
             aria-expanded={datetimeActive ? 'true' : 'false'}
-            onClick={() => this.handleDateClick()}
+            onClick={this.handleDateClick}
             disabled={disabled}
             part="native"
+            ref={(el) => (this.dateTargetEl = el)}
           >
             <slot name="date-target">{dateText}</slot>
             {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
@@ -287,9 +385,10 @@ export class DatetimeButton implements ComponentInterface {
             class="ion-activatable"
             id="time-button"
             aria-expanded={datetimeActive ? 'true' : 'false'}
-            onClick={() => this.handleTimeClick()}
+            onClick={this.handleTimeClick}
             disabled={disabled}
             part="native"
+            ref={(el) => (this.timeTargetEl = el)}
           >
             <slot name="time-target">{timeText}</slot>
             {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
