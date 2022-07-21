@@ -65,7 +65,7 @@ test.describe('toggle: basic', () => {
   test('should pass properties down to hidden input', async ({ page }) => {
     const toggle = page.locator('#grapeChecked');
 
-    await expect(toggle).toBeDisabled();
+    await expect(toggle).toHaveJSProperty('disabled', true);
     await expect(toggle).toHaveJSProperty('value', 'grape');
     await expect(toggle).toHaveJSProperty('name', 'grape');
 
