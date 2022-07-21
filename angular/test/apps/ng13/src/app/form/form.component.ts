@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -8,10 +8,10 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } 
 export class FormComponent {
 
   submitted = 'false';
-  profileForm: UntypedFormGroup;
-  outsideToggle = new UntypedFormControl(true);
+  profileForm: FormGroup;
+  outsideToggle = new FormControl(true);
 
-  constructor(fb: UntypedFormBuilder) {
+  constructor(fb: FormBuilder) {
     this.profileForm = fb.group({
       datetime: ['2010-08-20', Validators.required],
       select: [undefined, Validators.required],

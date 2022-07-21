@@ -1,5 +1,5 @@
 import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 @Component({
@@ -10,8 +10,8 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
 
   @Input() value: string;
 
-  form = new UntypedFormGroup({
-    select: new UntypedFormControl([])
+  form = new FormGroup({
+    select: new FormControl([])
   });
 
   valueFromParams: string;
