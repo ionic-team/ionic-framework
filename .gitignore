@@ -55,7 +55,6 @@ prerender-hydrated.html
 prerender-static.html
 
 # stencil
-angular/css/
 packages/react/css/
 packages/vue/css/
 core/components/
@@ -64,7 +63,6 @@ core/hydrate/
 core/loader/
 core/www/
 .stencil/
-angular/build/
 
 # playwright
 core/test-results/
@@ -74,5 +72,6 @@ core/**/*-snapshots
 # angular
 angular/css/
 angular/test/build/
+.angular/
 
 .npmrc
