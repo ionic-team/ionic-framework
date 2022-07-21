@@ -22,7 +22,6 @@ temp/
 core/theme-builder/
 core/test-components/
 core/css/
-angular/css/
 $RECYCLE.BIN/
 
 .DS_Store
@@ -71,5 +70,9 @@ angular/build/
 core/test-results/
 core/playwright-report/
 core/**/*-snapshots
+
+# angular
+angular/css/
+angular/test/build/
 
 .npmrc
