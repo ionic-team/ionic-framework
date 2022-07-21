@@ -89,7 +89,7 @@ test.describe('datetime: presentation', () => {
 
     await page.setContent(`
       <ion-datetime presentation="date"></ion-datetime>
-    `)
+    `);
 
     await page.waitForSelector('.datetime-ready');
 
@@ -99,11 +99,11 @@ test.describe('datetime: presentation', () => {
 
     await expect(datetime).toHaveClass(/show-month-and-year/);
 
-    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.presentation = 'time');
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.presentation = 'time'));
     await page.waitForChanges();
 
     await expect(datetime).not.toHaveClass(/show-month-and-year/);
-  })
+  });
 });
 
 test.describe('datetime: presentation: time', () => {
