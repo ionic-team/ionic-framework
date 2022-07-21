@@ -2,9 +2,9 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimePresentation } from '../../interface';
+import type { Color, DatetimePresentation, DatetimeParts } from '../../interface';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
-import { printIonError } from '../../utils/logging';
+import { printIonError, printIonWarning } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
@@ -162,13 +162,24 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const { value, locale, hourCycle, preferWheel } = datetimeEl;
+    const { value, locale, hourCycle, preferWheel, multiple } = datetimeEl;
+
+    if (multiple) {
+      printIonWarning(
+        `Multi-date selection cannot be used with ion-datetime-button.
+
+Please upvote https://github.com/ionic-team/ionic-framework/issues/25668 if you are interested in seeing this functionality added.
+      `,
+        this.el
+      );
+      return;
+    }
 
     /**
      * Both ion-datetime and ion-datetime-button default
      * to today's date and time if no value is set.
      */
-    const parsedDatetime = parseDate(value || getToday());
+    const parsedDatetime = parseDate(value || getToday()) as DatetimeParts;
     const use24Hour = is24Hour(locale, hourCycle);
 
     // TODO(FW-1865) - Remove once FW-1831 is fixed.
