@@ -44,7 +44,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Secondary</ion-label>
+          <ion-label>Secondary, disabled</ion-label>
           <ion-checkbox disabled checked color="secondary"></ion-checkbox>
         </ion-item>
 
@@ -64,7 +64,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Dark</ion-label>
+          <ion-label>Dark, --size</ion-label>
           <ion-checkbox checked color="dark" style="--size: 100px"></ion-checkbox>
         </ion-item>
 
@@ -81,11 +81,6 @@
         <ion-item>
           <ion-label>Medium</ion-label>
           <ion-checkbox checked color="medium" slot="start"></ion-checkbox>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Dark</ion-label>
-          <ion-checkbox checked color="dark" slot="start" style="--size: 100px"></ion-checkbox>
         </ion-item>
 
         <ion-item>
@@ -109,33 +104,5 @@
         </ion-item>
       </ion-content>
     </ion-app>
-
-    <script>
-      const inputs = document.querySelectorAll('ion-checkbox');
-
-      for (var i = 0; i < inputs.length; i++) {
-        const input = inputs[i];
-
-        input.addEventListener('ionBlur', function () {
-          console.log('Listen ionBlur: fired');
-        });
-
-        input.addEventListener('ionFocus', function () {
-          console.log('Listen ionFocus: fired');
-        });
-
-        input.addEventListener('ionChange', function (ev) {
-          console.log('Listen ionChange: fired', ev.detail);
-        });
-
-        input.addEventListener('click', function () {
-          console.log('Listen click: fired');
-        });
-      }
-
-      const clickItem = () => {
-        console.log('Item click: fired');
-      };
-    </script>
   </body>
 </html>
