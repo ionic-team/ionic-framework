@@ -130,7 +130,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng13]
+        apps: [ng13, ng14]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
