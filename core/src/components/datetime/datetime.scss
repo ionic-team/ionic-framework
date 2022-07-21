@@ -126,9 +126,8 @@ ion-picker-column-internal {
 }
 
 /**
- * Safari 14 has an issue where Intersection
- * Observer is incorrectly fired when
- * unhiding the calendar content.
+ * Safari 14 has an issue where a scroll event
+ * is incorrectly fired when unhiding the calendar content.
  * To workaround this, we set the opacity
  * of the content to 0 and hide it offscreen.
  *

@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
+
+
+### Bug Fixes
+
+* **datetime:** use scroll listener to detect month changes ([#25586](https://github.com/ionic-team/ionic/issues/25586)) ([b7afcb0](https://github.com/ionic-team/ionic/commit/b7afcb0f0c36d84f3b4d65844df28e6293bc1ea5)), closes [#25257](https://github.com/ionic-team/ionic/issues/25257) [#25608](https://github.com/ionic-team/ionic/issues/25608) [#24980](https://github.com/ionic-team/ionic/issues/24980)
+* **fab-button:** aria attributes are inherited ([#25635](https://github.com/ionic-team/ionic/issues/25635)) ([64ae3d2](https://github.com/ionic-team/ionic/commit/64ae3d2b9729c5c6be8644b1df6c8b3d40584d3b)), closes [#25633](https://github.com/ionic-team/ionic/issues/25633)
+* **modal:** allow for custom dialog implementations ([#25630](https://github.com/ionic-team/ionic/issues/25630)) ([a6f3ae6](https://github.com/ionic-team/ionic/commit/a6f3ae67ab91ab95408ad425156167edc3570978)), closes [#24080](https://github.com/ionic-team/ionic/issues/24080)
+
+
+### Performance Improvements
+
+* **input:** passive event listener for touch start events ([#25610](https://github.com/ionic-team/ionic/issues/25610)) ([2d1efdb](https://github.com/ionic-team/ionic/commit/2d1efdbe6dd9436badab4684f2a484476489c166)), closes [#25599](https://github.com/ionic-team/ionic/issues/25599)
+
+
+
+
+
+## [6.1.14](https://github.com/ionic-team/ionic/compare/v6.1.13...v6.1.14) (2022-07-13)
+
+
+### Bug Fixes
+
+* **datetime:** datetime works within stencil apps ([#25592](https://github.com/ionic-team/ionic/issues/25592)) ([7b10fa6](https://github.com/ionic-team/ionic/commit/7b10fa6476c2c2896c6810c57b3160f8c8896faa)), closes [#25591](https://github.com/ionic-team/ionic/issues/25591)
+
+
+
+
+
 ## [6.1.13](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13) (2022-07-06)
 
 
