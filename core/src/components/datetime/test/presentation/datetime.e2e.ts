@@ -84,7 +84,7 @@ test.describe('datetime: presentation', () => {
     expect(ionChangeSpy.length).toBe(1);
   });
 
-  test.only('switching presentation should close month/year picker', async ({ page }, testInfo) => {
+  test('switching presentation should close month/year picker', async ({ page }, testInfo) => {
     await test.skip(testInfo.project.metadata.rtl === true, 'This feature does not have RTL specific behaviors.');
 
     await page.setContent(`
