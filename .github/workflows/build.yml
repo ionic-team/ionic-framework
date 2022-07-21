@@ -127,11 +127,17 @@ jobs:
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [ng13]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/actions/test-angular-e2e
+      with:
+        app: ${{ matrix.apps }}
 
   build-react:
     needs: [build-core]
