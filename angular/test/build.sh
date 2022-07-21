@@ -14,10 +14,10 @@ BUILD_DIR="build"
 APP_DIR="${1}"
 
 # The full path to the specific application.
-FULL_APP_DIR="${APPS_DIR}/${APP_DIR}/"
+FULL_APP_DIR="${APPS_DIR}/${APP_DIR}/."
 
 # The full path to the base application.
-FULL_BASE_DIR="${BASE_DIR}/"
+FULL_BASE_DIR="${BASE_DIR}/."
 
 # The full path to the built application.
 BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
@@ -26,8 +26,8 @@ BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
 mkdir -p $BUILD_DIR
 
 # First we need to copy the base application
-cp -r $FULL_BASE_DIR $BUILD_APP_DIR
+cp -R $FULL_BASE_DIR $BUILD_APP_DIR
 
 # Then we can copy the specific app which
 # will override any files in the base application.
-cp -r $FULL_APP_DIR $BUILD_APP_DIR
+cp -R $FULL_APP_DIR $BUILD_APP_DIR
