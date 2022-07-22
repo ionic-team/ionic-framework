@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.16-nightly.20220722](https://github.com/ionic-team/ionic-framework/compare/v6.1.15...v6.1.16-nightly.20220722) (2022-07-22)
+
+
+### Bug Fixes
+
+* **vue:** input v-model accepts numbers ([#25666](https://github.com/ionic-team/ionic-framework/issues/25666)) ([ab65e9a](https://github.com/ionic-team/ionic-framework/commit/ab65e9a7b51c3a3f8c59962d3e1faff1564ab801)), closes [#25575](https://github.com/ionic-team/ionic-framework/issues/25575)
+
+
+
+
+
 ## [6.1.15](https://github.com/ionic-team/ionic-framework/compare/v6.1.14...v6.1.15) (2022-07-20)
 
 
