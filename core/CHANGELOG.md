@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.16-nightly.20220726](https://github.com/ionic-team/ionic/compare/v6.1.15...v6.1.16-nightly.20220726) (2022-07-26)
+
+
+### Bug Fixes
+
+* **nav:** pop() will unmount views within a modal ([#25638](https://github.com/ionic-team/ionic/issues/25638)) ([db28794](https://github.com/ionic-team/ionic/commit/db28794f0b75f2824ae26c101a8c52af70f43ffd)), closes [#25637](https://github.com/ionic-team/ionic/issues/25637) [#21831](https://github.com/ionic-team/ionic/issues/21831)
+* **vue:** input v-model accepts numbers ([#25666](https://github.com/ionic-team/ionic/issues/25666)) ([ab65e9a](https://github.com/ionic-team/ionic/commit/ab65e9a7b51c3a3f8c59962d3e1faff1564ab801)), closes [#25575](https://github.com/ionic-team/ionic/issues/25575)
+
+
+
+
+
 ## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
 
 
