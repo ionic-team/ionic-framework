@@ -8,7 +8,7 @@ test.describe('datetime-button: rendering', () => {
     await page.setContent(`
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-modal>
-        <ion-datetime id="datetime" show-default-title="true" show-default-buttons="true"></ion-datetime>
+        <ion-datetime id="datetime" show-default-title="true" show-default-buttons="true" value="2022-01-01T16:30:00"></ion-datetime>
       </ion-modal>
     `);
 
@@ -24,7 +24,7 @@ test.describe('datetime-button: rendering', () => {
     await page.setContent(`
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-popover>
-        <ion-datetime id="datetime" show-default-title="true" show-default-buttons="true"></ion-datetime>
+        <ion-datetime id="datetime" show-default-title="true" show-default-buttons="true" value="2022-01-01T16:30:00"></ion-datetime>
       </ion-popover>
     `);
 
