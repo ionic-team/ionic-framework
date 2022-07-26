@@ -20,7 +20,10 @@ import { parseDate } from '../datetime/utils/parse';
  */
 @Component({
   tag: 'ion-datetime-button',
-  styleUrl: 'datetime-button.scss',
+  styleUrls: {
+    ios: 'datetime-button.scss',
+    md: 'datetime-button.scss',
+  },
   shadow: true,
 })
 export class DatetimeButton implements ComponentInterface {
