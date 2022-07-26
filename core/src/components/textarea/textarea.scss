@@ -95,18 +95,6 @@
   }
 }
 
-:host(.auto-grow) {
-  // Remove when deprecating iOS 13 support
-  // iOS 13 has a bug where using grid-area with the native keyboard
-  // results in a white box rendering while the grid-area is applied.
-  // This is a workaround for that bug.
-  .native-textarea {
-    position: absolute;
-
-    height: 100%;
-  }
-}
-
 .native-textarea,
 .textarea-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
@@ -167,6 +155,13 @@
   position: absolute;
 
   pointer-events: none;
+}
+
+:host([auto-grow]) .cloned-input {
+  // Remove when deprecating iOS 13 support
+  // Workaround for iOS 13 to avoid rendering a white box
+  // when scroll assist is enabled and a user taps on a textarea with auto-grow.
+  height: 100%;
 }
 
 // Item Floating: Placeholder

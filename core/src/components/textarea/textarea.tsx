@@ -150,7 +150,7 @@ export class Textarea implements ComponentInterface {
    * If `true`, the textarea container will grow and shrink based
    * on the contents of the textarea.
    */
-  @Prop() autoGrow = false;
+  @Prop({ reflect: true }) autoGrow = false;
 
   /**
    * The value of the textarea.
