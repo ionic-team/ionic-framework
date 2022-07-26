@@ -158,9 +158,12 @@
 }
 
 :host([auto-grow]) .cloned-input {
-  // Remove when deprecating iOS 13 support
-  // Workaround for iOS 13 to avoid rendering a white box
-  // when scroll assist is enabled and a user taps on a textarea with auto-grow.
+  // Workaround for webkit rendering issue with scroll assist.
+  // When cloning the textarea and scrolling into view,
+  // a white box is rendered from the difference in height
+  // from the auto grow container.
+  // This change forces the cloned input to match the true
+  // height of the textarea container. 
   height: 100%;
 }
 
