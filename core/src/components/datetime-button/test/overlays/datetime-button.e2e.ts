@@ -75,15 +75,6 @@ test.describe('datetime-button: modal', () => {
     test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
 
     await page.setContent(`
-      // TODO Remove when FW-318 is fixed
-      <style>
-      .ion-page {
-        position: relative;
-        contain: layout style;
-        width: 100%;
-        height: 100%;
-      }
-      </style>
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
 
       <ion-modal>
