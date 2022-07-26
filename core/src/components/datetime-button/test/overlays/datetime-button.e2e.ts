@@ -3,6 +3,40 @@ import type { Locator } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 import type { EventSpy } from '@utils/test/playwright';
 
+test.describe('datetime-button: rendering', () => {
+  test('should size the modal correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal>
+        <ion-datetime id="datetime" show-default-title="true" show-default-buttons="true"></ion-datetime>
+      </ion-modal>
+    `);
+
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const dateButton = page.locator('ion-datetime-button #date-button');
+    await dateButton.click();
+    await ionModalDidPresent.next();
+
+    expect(await page.screenshot()).toMatchSnapshot(`datetime-overlay-modal-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should size the popover correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-popover>
+        <ion-datetime id="datetime" show-default-title="true" show-default-buttons="true"></ion-datetime>
+      </ion-popover>
+    `);
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const dateButton = page.locator('ion-datetime-button #date-button');
+    await dateButton.click();
+    await ionPopoverDidPresent.next();
+
+    expect(await page.screenshot()).toMatchSnapshot(`datetime-overlay-popover-${page.getSnapshotSettings()}.png`);
+  });
+});
+
 test.describe('datetime-button: popover', () => {
   let datetime: Locator;
   let popover: Locator;
