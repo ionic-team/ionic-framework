@@ -232,7 +232,7 @@ Please upvote https://github.com/ionic-team/ionic-framework/issues/25668 if you 
     }
 
     return new Promise((resolve) => {
-      datetimeEl.addEventListener('ionRender', resolve, { once: true });
+      addEventListener(datetimeEl, 'ionRender', resolve, { once: true });
     });
   };
 
