@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.2.0](https://github.com/ionic-team/ionic/compare/v6.1.15...v6.2.0) (2022-07-27)
+
+
+### Features
+
+* **angular, react, vue:** add support for autoMountComponent ([#25552](https://github.com/ionic-team/ionic/issues/25552)) ([805dfa0](https://github.com/ionic-team/ionic/commit/805dfa05663098ef9c02b0745a383b5e7555908b))
+* **datetime-button:** add button for displaying datetime in overlays ([#25655](https://github.com/ionic-team/ionic/issues/25655)) ([4997331](https://github.com/ionic-team/ionic/commit/499733105e4be23405e8afeeb26fee5cd2afc25b)), closes [#24316](https://github.com/ionic-team/ionic/issues/24316)
+
+
+
+
+
 ## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
 
 
