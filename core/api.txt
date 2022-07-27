@@ -410,6 +410,13 @@ ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
 
+ion-datetime-button,shadow
+ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-datetime-button,prop,datetime,string | undefined,undefined,false,false
+ion-datetime-button,prop,disabled,boolean,false,false,true
+ion-datetime-button,prop,mode,"ios" | "md",undefined,false,false
+ion-datetime-button,part,native
+
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
 ion-fab,prop,edge,boolean,false,false,false
