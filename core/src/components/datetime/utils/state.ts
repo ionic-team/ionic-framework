@@ -83,22 +83,40 @@ export const isDayDisabled = (
 };
 
 /**
- * Given a locale, a date, the selected date, and today's date,
+ * Given a locale, a date, the selected date(s), and today's date,
  * generate the state for a given calendar day button.
  */
 export const getCalendarDayState = (
   locale: string,
   refParts: DatetimeParts,
-  activeParts: DatetimeParts,
+  activeParts: DatetimeParts | DatetimeParts[],
   todayParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   dayValues?: number[]
 ) => {
-  const isActive = isSameDay(refParts, activeParts);
+  /**
+   * activeParts signals what day(s) are currently selected in the datetime.
+   * If multiple="true", this will be an array, but the logic in this util
+   * is the same whether we have one selected day or many because we're only
+   * calculating the state for one button. So, we treat a single activeParts value
+   * the same as an array of length one.
+   */
+  const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+
+  /**
+   * The day button is active if it is selected, or in other words, if refParts
+   * matches at least one selected date.
+   */
+  const isActive = activePartsArray.find((parts) => isSameDay(refParts, parts)) !== undefined;
+
   const isToday = isSameDay(refParts, todayParts);
   const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
 
+  /**
+   * Note that we always return one object regardless of whether activeParts
+   * was an array, since we pare down to one value for isActive.
+   */
   return {
     disabled,
     isActive,

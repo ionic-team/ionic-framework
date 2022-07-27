@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Prefer Wheel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding">
+        <label for="presentation-select">Presentation:</label>
+        <select id="presentation-select">
+          <option value="date">date</option>
+          <option value="date-time">date-time</option>
+          <option value="month">month</option>
+          <option value="month-year">month-year</option>
+          <option value="time">time</option>
+          <option value="time-date">time-date</option>
+          <option value="year">year</option>
+        </select>
+        <label for="locale-input">Locale:</label>
+        <input type="text" id="locale-input" placeholder="en-US" />
+        <ion-datetime
+          min="2019-05-05"
+          max="2023-10-01"
+          value="2022-05-31T16:30:00"
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const datetime = document.querySelector('ion-datetime');
+      const presentationSelect = document.querySelector('#presentation-select');
+      const locaelInput = document.querySelector('#locale-input');
+
+      presentationSelect.onchange = (ev) => {
+        datetime.presentation = ev.target.value;
+      };
+      locaelInput.onchange = (ev) => {
+        datetime.locale = ev.target.value || 'en-US';
+      };
+      datetime.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        if (date.getUTCDate() % 2 === 0) {
+          // Disables even dates
+          return false;
+        }
+        return true;
+      };
+    </script>
+  </body>
+</html>
