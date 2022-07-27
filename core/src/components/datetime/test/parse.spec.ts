@@ -1,4 +1,4 @@
-import { clampDate, getPartsFromCalendarDay } from '../utils/parse';
+import { clampDate, getPartsFromCalendarDay, parseAmPm } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -59,5 +59,16 @@ describe('clampDate()', () => {
     };
     const value = clampDate(dateParts, minParts, maxParts);
     expect(value).toStrictEqual(dateParts);
+  });
+});
+
+describe('parseAmPm()', () => {
+  it('should return pm when the hour is greater than or equal to 12', () => {
+    expect(parseAmPm(12)).toEqual('pm');
+    expect(parseAmPm(13)).toEqual('pm');
+  });
+
+  it('should return am when the hour is less than 12', () => {
+    expect(parseAmPm(11)).toEqual('am');
   });
 });

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -786,13 +786,21 @@ export namespace Components {
          */
         "monthValues"?: number[] | number | string;
         /**
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+         */
+        "multiple": boolean;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
         /**
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+         */
+        "preferWheel": boolean;
+        /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "presentation": 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+        "presentation": DatetimePresentation;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
@@ -822,13 +830,31 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string.
+          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
          */
-        "value"?: string | null;
+        "value"?: string | string[] | null;
         /**
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
          */
         "yearValues"?: number[] | number | string;
+    }
+    interface IonDatetimeButton {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The ID of the `ion-datetime` instance associated with the datetime button.
+         */
+        "datetime"?: string;
+        /**
+          * If `true`, the user cannot interact with the button.
+         */
+        "disabled": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
     }
     interface IonFab {
         /**
@@ -1554,6 +1580,10 @@ export namespace Components {
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
+        /**
+          * The interaction behavior for the sheet modal when the handle is pressed.  Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).
+         */
+        "handleBehavior"?: ModalHandleBehavior;
         "hasController": boolean;
         /**
           * Additional attributes to pass to the modal.
@@ -1567,6 +1597,10 @@ export namespace Components {
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
         "isOpen": boolean;
+        /**
+          * If `true`, the component passed into `ion-modal` will automatically be mounted when the modal is created. The component will remain mounted even when the modal is dismissed. However, the component will be destroyed when the modal is destroyed. This property is not reactive and should only be used when initially creating a modal.  Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1937,6 +1971,10 @@ export namespace Components {
          */
         "isOpen": boolean;
         /**
+          * If `true`, the component passed into `ion-popover` will automatically be mounted when the popover is created. The component will remain mounted even when the popover is dismissed. However, the component will be destroyed when the popover is destroyed. This property is not reactive and should only be used when initially creating a popover.  Note: This feature only applies to inline popovers in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted": boolean;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose": boolean;
@@ -2060,6 +2098,10 @@ export namespace Components {
         "value"?: any | null;
     }
     interface IonRange {
+        /**
+          * The start position of the range active bar. This feature is only available with a single knob (dualKnobs="false"). Valid values are greater than or equal to the min value and less than or equal to the max value.
+         */
+        "activeBarStart"?: number;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -2761,7 +2803,7 @@ export namespace Components {
     }
     interface IonTextarea {
         /**
-          * If `true`, the element height will increase based on the value.
+          * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
          */
         "autoGrow": boolean;
         /**
@@ -2967,6 +3009,10 @@ export namespace Components {
           * If `true`, the user cannot interact with the toggle.
          */
         "disabled": boolean;
+        /**
+          * Enables the on/off accessibility switch labels within the toggle.
+         */
+        "enableOnOffLabels": boolean | undefined;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3384,6 +3430,12 @@ declare global {
     var HTMLIonDatetimeElement: {
         prototype: HTMLIonDatetimeElement;
         new (): HTMLIonDatetimeElement;
+    };
+    interface HTMLIonDatetimeButtonElement extends Components.IonDatetimeButton, HTMLStencilElement {
+    }
+    var HTMLIonDatetimeButtonElement: {
+        prototype: HTMLIonDatetimeButtonElement;
+        new (): HTMLIonDatetimeButtonElement;
     };
     interface HTMLIonFabElement extends Components.IonFab, HTMLStencilElement {
     }
@@ -3829,6 +3881,7 @@ declare global {
         "ion-col": HTMLIonColElement;
         "ion-content": HTMLIonContentElement;
         "ion-datetime": HTMLIonDatetimeElement;
+        "ion-datetime-button": HTMLIonDatetimeButtonElement;
         "ion-fab": HTMLIonFabElement;
         "ion-fab-button": HTMLIonFabButtonElement;
         "ion-fab-list": HTMLIonFabListElement;
@@ -4689,6 +4742,10 @@ declare namespace LocalJSX {
          */
         "monthValues"?: number[] | number | string;
         /**
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+         */
+        "multiple"?: boolean;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name"?: string;
@@ -4709,13 +4766,21 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonDatetimeCustomEvent<void>) => void;
         /**
+          * Emitted when componentDidRender is fired.
+         */
+        "onIonRender"?: (event: IonDatetimeCustomEvent<void>) => void;
+        /**
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: IonDatetimeCustomEvent<StyleEventDetail>) => void;
         /**
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+         */
+        "preferWheel"?: boolean;
+        /**
           * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
          */
-        "presentation"?: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+        "presentation"?: DatetimePresentation;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
@@ -4741,13 +4806,31 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string.
+          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
          */
-        "value"?: string | null;
+        "value"?: string | string[] | null;
         /**
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
          */
         "yearValues"?: number[] | number | string;
+    }
+    interface IonDatetimeButton {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The ID of the `ion-datetime` instance associated with the datetime button.
+         */
+        "datetime"?: string;
+        /**
+          * If `true`, the user cannot interact with the button.
+         */
+        "disabled"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
     }
     interface IonFab {
         /**
@@ -5467,6 +5550,10 @@ declare namespace LocalJSX {
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
+        /**
+          * The interaction behavior for the sheet modal when the handle is pressed.  Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).
+         */
+        "handleBehavior"?: ModalHandleBehavior;
         "hasController"?: boolean;
         /**
           * Additional attributes to pass to the modal.
@@ -5480,6 +5567,10 @@ declare namespace LocalJSX {
           * If `true`, the modal will open. If `false`, the modal will close. Use this if you need finer grained control over presentation, otherwise just use the modalController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the modal dismisses. You will need to do that in your code.
          */
         "isOpen"?: boolean;
+        /**
+          * If `true`, the component passed into `ion-modal` will automatically be mounted when the modal is created. The component will remain mounted even when the modal is dismissed. However, the component will be destroyed when the modal is destroyed. This property is not reactive and should only be used when initially creating a modal.  Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5772,6 +5863,10 @@ declare namespace LocalJSX {
          */
         "isOpen"?: boolean;
         /**
+          * If `true`, the component passed into `ion-popover` will automatically be mounted when the popover is created. The component will remain mounted even when the popover is dismissed. However, the component will be destroyed when the popover is destroyed. This property is not reactive and should only be used when initially creating a popover.  Note: This feature only applies to inline popovers in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted"?: boolean;
+        /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
@@ -5925,6 +6020,10 @@ declare namespace LocalJSX {
         "value"?: any | null;
     }
     interface IonRange {
+        /**
+          * The start position of the range active bar. This feature is only available with a single knob (dualKnobs="false"). Valid values are greater than or equal to the min value and less than or equal to the max value.
+         */
+        "activeBarStart"?: number;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -6687,7 +6786,7 @@ declare namespace LocalJSX {
     }
     interface IonTextarea {
         /**
-          * If `true`, the element height will increase based on the value.
+          * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
          */
         "autoGrow"?: boolean;
         /**
@@ -6904,6 +7003,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Enables the on/off accessibility switch labels within the toggle.
+         */
+        "enableOnOffLabels"?: boolean | undefined;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -7021,6 +7124,7 @@ declare namespace LocalJSX {
         "ion-col": IonCol;
         "ion-content": IonContent;
         "ion-datetime": IonDatetime;
+        "ion-datetime-button": IonDatetimeButton;
         "ion-fab": IonFab;
         "ion-fab-button": IonFabButton;
         "ion-fab-list": IonFabList;
@@ -7120,6 +7224,7 @@ declare module "@stencil/core" {
             "ion-col": LocalJSX.IonCol & JSXBase.HTMLAttributes<HTMLIonColElement>;
             "ion-content": LocalJSX.IonContent & JSXBase.HTMLAttributes<HTMLIonContentElement>;
             "ion-datetime": LocalJSX.IonDatetime & JSXBase.HTMLAttributes<HTMLIonDatetimeElement>;
+            "ion-datetime-button": LocalJSX.IonDatetimeButton & JSXBase.HTMLAttributes<HTMLIonDatetimeButtonElement>;
             "ion-fab": LocalJSX.IonFab & JSXBase.HTMLAttributes<HTMLIonFabElement>;
             "ion-fab-button": LocalJSX.IonFabButton & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
             "ion-fab-list": LocalJSX.IonFabList & JSXBase.HTMLAttributes<HTMLIonFabListElement>;

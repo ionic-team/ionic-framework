@@ -16,6 +16,7 @@ import type {
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -143,6 +144,31 @@ export class Range implements ComponentInterface {
   @Prop() ticks = true;
 
   /**
+   * The start position of the range active bar. This feature is only available with a single knob (dualKnobs="false").
+   * Valid values are greater than or equal to the min value and less than or equal to the max value.
+   */
+  @Prop({ mutable: true }) activeBarStart?: number;
+  @Watch('activeBarStart')
+  protected activeBarStartChanged() {
+    const { activeBarStart } = this;
+    if (activeBarStart !== undefined) {
+      if (activeBarStart > this.max) {
+        printIonWarning(
+          `Range: The value of activeBarStart (${activeBarStart}) is greater than the max (${this.max}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
+          this.el
+        );
+        this.activeBarStart = this.max;
+      } else if (activeBarStart < this.min) {
+        printIonWarning(
+          `Range: The value of activeBarStart (${activeBarStart}) is less than the min (${this.min}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
+          this.el
+        );
+        this.activeBarStart = this.min;
+      }
+    }
+  }
+
+  /**
    * If `true`, the user cannot interact with the range.
    */
   @Prop() disabled = false;
@@ -252,6 +278,7 @@ export class Range implements ComponentInterface {
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
+    this.activeBarStartChanged();
 
     /**
      * If we have not yet rendered
@@ -395,7 +422,11 @@ export class Range implements ComponentInterface {
     if (this.dualKnobs) {
       return Math.min(this.ratioA, this.ratioB);
     }
-    return 0;
+    const { activeBarStart } = this;
+    if (activeBarStart == null) {
+      return 0;
+    }
+    return valueToRatio(activeBarStart, this.min, this.max);
   }
 
   private get ratioUpper() {
@@ -484,8 +515,8 @@ export class Range implements ComponentInterface {
       labelText = inheritedAttributes['aria-label'];
     }
     const mode = getIonMode(this);
-    const barStart = `${ratioLower * 100}%`;
-    const barEnd = `${100 - ratioUpper * 100}%`;
+    let barStart = `${ratioLower * 100}%`;
+    let barEnd = `${100 - ratioUpper * 100}%`;
 
     const rtl = isRTL(this.el);
 
@@ -498,6 +529,33 @@ export class Range implements ComponentInterface {
       };
     };
 
+    if (this.dualKnobs === false) {
+      /**
+       * When the value is less than the activeBarStart or the min value,
+       * the knob will display at the start of the active bar.
+       */
+      if (this.valA < (this.activeBarStart ?? this.min)) {
+        /**
+         * Sets the bar positions relative to the upper and lower limits.
+         * Converts the ratio values into percentages, used as offsets for left/right styles.
+         *
+         * The ratioUpper refers to the knob position on the bar.
+         * The ratioLower refers to the end position of the active bar (the value).
+         */
+        barStart = `${ratioUpper * 100}%`;
+        barEnd = `${100 - ratioLower * 100}%`;
+      } else {
+        /**
+         * Otherwise, the knob will display at the end of the active bar.
+         *
+         * The ratioLower refers to the start position of the active bar (the value).
+         * The ratioUpper refers to the knob position on the bar.
+         */
+        barStart = `${ratioLower * 100}%`;
+        barEnd = `${100 - ratioUpper * 100}%`;
+      }
+    }
+
     const barStyle = {
       [start]: barStart,
       [end]: barEnd,
@@ -508,9 +566,16 @@ export class Range implements ComponentInterface {
       for (let value = min; value <= max; value += step) {
         const ratio = valueToRatio(value, min, max);
 
+        const ratioMin = Math.min(ratioLower, ratioUpper);
+        const ratioMax = Math.max(ratioLower, ratioUpper);
+
         const tick: any = {
           ratio,
-          active: ratio >= ratioLower && ratio <= ratioUpper,
+          /**
+           * Sets the tick mark as active when the tick is between the min bounds and the knob.
+           * When using activeBarStart, the tick mark will be active between the knob and activeBarStart.
+           */
+          active: ratio >= ratioMin && ratio <= ratioMax,
         };
 
         tick[start] = `${ratio * 100}%`;

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.2.0 Chromium](https://github.com/ionic-team/ionic-framework/compare/v6.1.15...v6.2.0) (2022-07-27)
+
+
+### Bug Fixes
+
+* **datetime:** account for previous years with preferWheel ([#25656](https://github.com/ionic-team/ionic-framework/issues/25656)) ([3a7f5f1](https://github.com/ionic-team/ionic-framework/commit/3a7f5f166ee8d8d7e1861313e2bc6f4856e4fbe9))
+* **datetime:** switching months in wheel picker now selected nearest neighbor ([#25559](https://github.com/ionic-team/ionic-framework/issues/25559)) ([dd256e1](https://github.com/ionic-team/ionic-framework/commit/dd256e1313fa1c307f30b0dbb7fd0d1da8c555f7))
+* **datetime:** switching presentation closes month/year picker ([#25667](https://github.com/ionic-team/ionic-framework/issues/25667)) ([57a21ad](https://github.com/ionic-team/ionic-framework/commit/57a21adb38331ee5d74dacd1b0a2568f41a2d21e))
+* **nav:** pop() will unmount views within a modal ([#25638](https://github.com/ionic-team/ionic-framework/issues/25638)) ([db28794](https://github.com/ionic-team/ionic-framework/commit/db28794f0b75f2824ae26c101a8c52af70f43ffd)), closes [#25637](https://github.com/ionic-team/ionic-framework/issues/25637) [#21831](https://github.com/ionic-team/ionic-framework/issues/21831)
+* **textarea:** textarea with autogrow will size to its contents ([#24205](https://github.com/ionic-team/ionic-framework/issues/24205)) ([a9cf2ab](https://github.com/ionic-team/ionic-framework/commit/a9cf2ab87012cdb6360d10536a29213adda3f585)), closes [#24793](https://github.com/ionic-team/ionic-framework/issues/24793) [#21242](https://github.com/ionic-team/ionic-framework/issues/21242)
+* **vue:** input v-model accepts numbers ([#25666](https://github.com/ionic-team/ionic-framework/issues/25666)) ([ab65e9a](https://github.com/ionic-team/ionic-framework/commit/ab65e9a7b51c3a3f8c59962d3e1faff1564ab801)), closes [#25575](https://github.com/ionic-team/ionic-framework/issues/25575)
+
+
+### Features
+
+* **angular, react, vue:** add support for autoMountComponent ([#25552](https://github.com/ionic-team/ionic-framework/issues/25552)) ([805dfa0](https://github.com/ionic-team/ionic-framework/commit/805dfa05663098ef9c02b0745a383b5e7555908b))
+* **datetime-button:** add button for displaying datetime in overlays ([#25655](https://github.com/ionic-team/ionic-framework/issues/25655)) ([4997331](https://github.com/ionic-team/ionic-framework/commit/499733105e4be23405e8afeeb26fee5cd2afc25b)), closes [#24316](https://github.com/ionic-team/ionic-framework/issues/24316)
+* **datetime:** add multiple date selection ([#25514](https://github.com/ionic-team/ionic-framework/issues/25514)) ([9d31608](https://github.com/ionic-team/ionic-framework/commit/9d31608f2d471f531eb253832c8558d1effaf68a)), closes [#24674](https://github.com/ionic-team/ionic-framework/issues/24674)
+* **datetime:** add wheel style picker for dates and times ([#25468](https://github.com/ionic-team/ionic-framework/issues/25468)) ([3d19771](https://github.com/ionic-team/ionic-framework/commit/3d19771185301870a2eb60f1ef4afd6f1c182494)), closes [#23981](https://github.com/ionic-team/ionic-framework/issues/23981)
+* **datetime:** localize am/pm labels in time picker ([#25389](https://github.com/ionic-team/ionic-framework/issues/25389)) ([6bc0acc](https://github.com/ionic-team/ionic-framework/commit/6bc0acc4279a18c3309b11eeec76676c5015419a)), closes [#16279](https://github.com/ionic-team/ionic-framework/issues/16279)
+* **modal:** clicking handle advances to the next breakpoint ([#25540](https://github.com/ionic-team/ionic-framework/issues/25540)) ([7cdc388](https://github.com/ionic-team/ionic-framework/commit/7cdc388b7805cbf23c9e1e928aa977cd77ebc8c4)), closes [#24069](https://github.com/ionic-team/ionic-framework/issues/24069)
+* **range:** add reference point for start position of range slider ([#25598](https://github.com/ionic-team/ionic-framework/issues/25598)) ([c2781cc](https://github.com/ionic-team/ionic-framework/commit/c2781cc1c3b7e56a0e6f6c03cfa04fc2c82d6e8a)), closes [#24348](https://github.com/ionic-team/ionic-framework/issues/24348)
+* **toggle:** on/off icons for toggle ([#25459](https://github.com/ionic-team/ionic-framework/issues/25459)) ([bc0bdc4](https://github.com/ionic-team/ionic-framework/commit/bc0bdc438ba72c695f9d961ddf837ec45e7816dd)), closes [#20524](https://github.com/ionic-team/ionic-framework/issues/20524)
+
+
+
+
 ## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
 
 

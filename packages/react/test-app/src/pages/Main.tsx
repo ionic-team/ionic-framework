@@ -32,6 +32,11 @@ const Main: React.FC<MainProps> = () => {
           </IonItem>
         </IonList>
         <IonList>
+          <IonItem routerLink="/keep-contents-mounted">
+            <IonLabel>Keep Contents Mounted Overlay Components</IonLabel>
+          </IonItem>
+        </IonList>
+        <IonList>
           <IonItem routerLink="/navigation">
             <IonLabel>Navigation</IonLabel>
           </IonItem>

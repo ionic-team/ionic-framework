@@ -1,0 +1,22 @@
+<ion-content>
+  <ion-button id="open-modal" (click)="modal.present()">Open Modal</ion-button>
+  <ion-button id="open-popover" (click)="popover.present()">Open Popover</ion-button>
+
+  <ion-modal [keepContentsMounted]="true" #modal>
+    <ng-template>
+      <ion-content>
+        <ion-button (click)="modal.dismiss()">Dismiss</ion-button>
+        Modal Content
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-popover [keepContentsMounted]="true" #popover>
+    <ng-template>
+      <ion-content>
+        <ion-button (click)="popover.dismiss()">Dismiss</ion-button>
+        Popover Content
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+</ion-content>

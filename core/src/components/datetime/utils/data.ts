@@ -1,9 +1,11 @@
 import type { Mode } from '../../../interface';
+import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { getNumDaysInMonth } from './helpers';
-import { getNextMonth, getPreviousMonth } from './manipulation';
+import { getLocalizedDayPeriod, removeDateTzOffset, getFormattedHour, addTimePadding, getTodayLabel } from './format';
+import { getNumDaysInMonth, is24Hour } from './helpers';
+import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
 /**
  * Returns the current date as
@@ -27,31 +29,8 @@ export const getToday = () => {
    * object prior to calling toISOString().
    * This allows us to get an ISO string
    * that is in the user's time zone.
-   *
-   * Example:
-   * Time zone offset is 240
-   * Meaning: The browser needs to add 240 minutes
-   * to the Date object to get UTC time.
-   * What Ionic does: We subtract 240 minutes
-   * from the Date object. The browser then adds
-   * 240 minutes in toISOString(). The result
-   * is a time that is in the user's time zone
-   * and not UTC.
-   *
-   * Note: Some timezones include minute adjustments
-   * such as 30 or 45 minutes. This is why we use setMinutes
-   * instead of setHours.
-   * Example: India Standard Time
-   * Timezone offset: -330 = -5.5 hours.
-   *
-   * List of timezones with 30 and 45 minute timezones:
-   * https://www.timeanddate.com/time/time-zones-interesting.html
    */
-  const date = new Date();
-  const tzOffset = date.getTimezoneOffset();
-  date.setMinutes(date.getMinutes() - tzOffset);
-
-  return date.toISOString();
+  return removeDateTzOffset(new Date()).toISOString();
 };
 
 const minutes = [
@@ -276,13 +255,16 @@ export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   ];
 };
 
-export const getPickerMonths = (
+export const getMonthColumnData = (
   locale: string,
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
-  monthValues?: number[]
-) => {
+  monthValues?: number[],
+  formatOptions: Intl.DateTimeFormatOptions = {
+    month: 'long',
+  }
+): PickerColumnItem[] => {
   const { year } = refParts;
   const months = [];
 
@@ -298,7 +280,7 @@ export const getPickerMonths = (
     processedMonths.forEach((processedMonth) => {
       const date = new Date(`${processedMonth}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: processedMonth });
     });
   } else {
@@ -332,7 +314,7 @@ export const getPickerMonths = (
        */
       const date = new Date(`${i}/1/${year} GMT+0000`);
 
-      const monthString = new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+      const monthString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
       months.push({ text: monthString, value: i });
     }
   }
@@ -340,31 +322,247 @@ export const getPickerMonths = (
   return months;
 };
 
-export const getCalendarYears = (
+/**
+ * Returns information regarding
+ * selectable dates (i.e 1st, 2nd, 3rd, etc)
+ * within a reference month.
+ * @param locale The locale to format the date with
+ * @param refParts The reference month/year to generate dates for
+ * @param minParts The minimum bound on the date that can be returned
+ * @param maxParts The maximum bound on the date that can be returned
+ * @param dayValues The allowed date values
+ * @returns Date data to be used in ion-picker-column-internal
+ */
+export const getDayColumnData = (
+  locale: string,
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  dayValues?: number[],
+  formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+  }
+): PickerColumnItem[] => {
+  const { month, year } = refParts;
+  const days = [];
+
+  /**
+   * If we have max/min bounds that in the same
+   * month/year as the refParts, we should
+   * use the define day as the max/min day.
+   * Otherwise, fallback to the max/min days in a month.
+   */
+  const numDaysInMonth = getNumDaysInMonth(month, year);
+  const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
+  const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
+
+  if (dayValues !== undefined) {
+    let processedDays = dayValues;
+    processedDays = processedDays.filter((day) => day >= minDay && day <= maxDay);
+    processedDays.forEach((processedDay) => {
+      const date = new Date(`${month}/${processedDay}/${year} GMT+0000`);
+
+      const dayString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
+      days.push({ text: dayString, value: processedDay });
+    });
+  } else {
+    for (let i = minDay; i <= maxDay; i++) {
+      const date = new Date(`${month}/${i}/${year} GMT+0000`);
+
+      const dayString = new Intl.DateTimeFormat(locale, { ...formatOptions, timeZone: 'UTC' }).format(date);
+      days.push({ text: dayString, value: i });
+    }
+  }
+
+  return days;
+};
+
+export const getYearColumnData = (
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   yearValues?: number[]
-) => {
+): PickerColumnItem[] => {
+  let processedYears = [];
   if (yearValues !== undefined) {
-    let processedYears = yearValues;
+    processedYears = yearValues;
     if (maxParts?.year !== undefined) {
       processedYears = processedYears.filter((year) => year <= maxParts.year!);
     }
     if (minParts?.year !== undefined) {
       processedYears = processedYears.filter((year) => year >= minParts.year!);
     }
-    return processedYears;
   } else {
     const { year } = refParts;
     const maxYear = maxParts?.year || year;
     const minYear = minParts?.year || year - 100;
 
-    const years = [];
     for (let i = maxYear; i >= minYear; i--) {
-      years.push(i);
+      processedYears.push(i);
     }
-
-    return years;
   }
+
+  return processedYears.map((year) => ({
+    text: `${year}`,
+    value: year,
+  }));
+};
+
+interface CombinedDateColumnData {
+  parts: DatetimeParts[];
+  items: PickerColumnItem[];
+}
+
+/**
+ * Given a starting date and an upper bound,
+ * this functions returns an array of all
+ * month objects in that range.
+ */
+const getAllMonthsInRange = (currentParts: DatetimeParts, maxParts: DatetimeParts): DatetimeParts[] => {
+  if (currentParts.month === maxParts.month && currentParts.year === maxParts.year) {
+    return [currentParts];
+  }
+
+  return [currentParts, ...getAllMonthsInRange(getNextMonth(currentParts), maxParts)];
+};
+
+/**
+ * Creates and returns picker items
+ * that represent the days in a month.
+ * Example: "Thu, Jun 2"
+ */
+export const getCombinedDateColumnData = (
+  locale: string,
+  refParts: DatetimeParts,
+  todayParts: DatetimeParts,
+  minParts: DatetimeParts,
+  maxParts: DatetimeParts,
+  dayValues?: number[],
+  monthValues?: number[]
+): CombinedDateColumnData => {
+  let items: PickerColumnItem[] = [];
+  let parts: DatetimeParts[] = [];
+
+  /**
+   * Get all month objects from the min date
+   * to the max date. Note: Do not use getMonthColumnData
+   * as that function only generates dates within a
+   * single year.
+   */
+  let months = getAllMonthsInRange(minParts, maxParts);
+
+  /**
+   * Filter out any disallowed month values.
+   */
+  if (monthValues) {
+    months = months.filter(({ month }) => monthValues.includes(month));
+  }
+
+  /**
+   * Get all of the days in the month.
+   * From there, generate an array where
+   * each item has the month, date, and day
+   * of work as the text.
+   */
+  months.forEach((monthObject) => {
+    const referenceMonth = { month: monthObject.month, day: null, year: refParts.year };
+    const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
+      month: 'short',
+      day: 'numeric',
+      weekday: 'short',
+    });
+
+    const dateParts: DatetimeParts[] = [];
+    const dateColumnItems: PickerColumnItem[] = [];
+
+    monthDays.forEach((dayObject) => {
+      const isToday = isSameDay({ ...referenceMonth, day: dayObject.value as number }, todayParts);
+
+      /**
+       * Today's date should read as "Today" (localized)
+       * not the actual date string
+       */
+      dateColumnItems.push({
+        text: isToday ? getTodayLabel(locale) : dayObject.text,
+        value: `${refParts.year}-${monthObject.month}-${dayObject.value}`,
+      });
+
+      /**
+       * When selecting a date in the wheel picker
+       * we need access to the raw datetime parts data.
+       * The picker column only accepts values of
+       * type string or number, so we need to return
+       * two sets of data: A data set to be passed
+       * to the picker column, and a data set to
+       * be used to reference the raw data when
+       * updating the picker column value.
+       */
+      dateParts.push({
+        month: monthObject.month,
+        year: refParts.year,
+        day: dayObject.value as number,
+      });
+    });
+    parts = [...parts, ...dateParts];
+    items = [...items, ...dateColumnItems];
+  });
+
+  return {
+    parts,
+    items,
+  };
+};
+
+export const getTimeColumnsData = (
+  locale: string,
+  refParts: DatetimeParts,
+  hourCycle?: 'h23' | 'h12',
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts,
+  allowedHourValues?: number[],
+  allowedMinuteVaues?: number[]
+): { [key: string]: PickerColumnItem[] } => {
+  const use24Hour = is24Hour(locale, hourCycle);
+  const { hours, minutes, am, pm } = generateTime(
+    refParts,
+    use24Hour ? 'h23' : 'h12',
+    minParts,
+    maxParts,
+    allowedHourValues,
+    allowedMinuteVaues
+  );
+
+  const hoursItems = hours.map((hour) => {
+    return {
+      text: getFormattedHour(hour, use24Hour),
+      value: getInternalHourValue(hour, use24Hour, refParts.ampm),
+    };
+  });
+  const minutesItems = minutes.map((minute) => {
+    return {
+      text: addTimePadding(minute),
+      value: minute,
+    };
+  });
+
+  const dayPeriodItems = [];
+  if (am && !use24Hour) {
+    dayPeriodItems.push({
+      text: getLocalizedDayPeriod(locale, 'am'),
+      value: 'am',
+    });
+  }
+
+  if (pm && !use24Hour) {
+    dayPeriodItems.push({
+      text: getLocalizedDayPeriod(locale, 'pm'),
+      value: 'pm',
+    });
+  }
+
+  return {
+    minutesData: minutesItems,
+    hoursData: hoursItems,
+    dayPeriodData: dayPeriodItems,
+  };
 };
