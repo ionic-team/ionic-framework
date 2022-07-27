@@ -99,3 +99,9 @@ $toggle-md-item-end-padding-bottom:               12px !default;
 
 /// @prop - Padding start of the toggle positioned on the end in an item
 $toggle-md-item-end-padding-start:                $item-md-padding-start !default;
+
+/// @prop - The text color of the on/off labels
+$toggle-md-on-off-label-color: #000 !default;
+
+/// @prop - The text color of the on/off labels when the toggle is checked
+$toggle-md-on-off-label-checked-color: #fff !default;

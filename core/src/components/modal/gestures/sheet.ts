@@ -294,66 +294,72 @@ export const createSheetGesture = (
      */
     gesture.enable(false);
 
-    animation
-      .onFinish(
-        () => {
-          if (shouldRemainOpen) {
-            /**
-             * Once the snapping animation completes,
-             * we need to reset the animation to go
-             * from 0 to 1 so users can swipe in any direction.
-             * We then set the animation offset to the current
-             * breakpoint so that it starts at the snapped position.
-             */
-            if (wrapperAnimation && backdropAnimation) {
-              raf(() => {
-                wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
-                backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
-                animation.progressStart(true, 1 - snapToBreakpoint);
-                currentBreakpoint = snapToBreakpoint;
-                onBreakpointChange(currentBreakpoint);
-
-                /**
-                 * If the sheet is fully expanded, we can safely
-                 * enable scrolling again.
-                 */
-                if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
-                  contentEl.scrollY = true;
-                }
-
-                /**
-                 * Backdrop should become enabled
-                 * after the backdropBreakpoint value
-                 */
-                const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
-                if (shouldEnableBackdrop) {
-                  enableBackdrop();
-                } else {
-                  disableBackdrop();
-                }
-
-                gesture.enable(true);
-              });
-            } else {
-              gesture.enable(true);
-            }
-          }
-
-          /**
-           * This must be a one time callback
-           * otherwise a new callback will
-           * be added every time onEnd runs.
-           */
-        },
-        { oneTimeCallback: true }
-      )
-      .progressEnd(1, 0, 500);
-
     if (shouldPreventDismiss) {
       handleCanDismiss(baseEl, animation);
     } else if (!shouldRemainOpen) {
       onDismiss();
     }
+
+    return new Promise<void>((resolve) => {
+      animation
+        .onFinish(
+          () => {
+            if (shouldRemainOpen) {
+              /**
+               * Once the snapping animation completes,
+               * we need to reset the animation to go
+               * from 0 to 1 so users can swipe in any direction.
+               * We then set the animation offset to the current
+               * breakpoint so that it starts at the snapped position.
+               */
+              if (wrapperAnimation && backdropAnimation) {
+                raf(() => {
+                  wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
+                  backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+                  animation.progressStart(true, 1 - snapToBreakpoint);
+                  currentBreakpoint = snapToBreakpoint;
+                  onBreakpointChange(currentBreakpoint);
+
+                  /**
+                   * If the sheet is fully expanded, we can safely
+                   * enable scrolling again.
+                   */
+                  if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
+                    contentEl.scrollY = true;
+                  }
+
+                  /**
+                   * Backdrop should become enabled
+                   * after the backdropBreakpoint value
+                   */
+                  const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+                  if (shouldEnableBackdrop) {
+                    enableBackdrop();
+                  } else {
+                    disableBackdrop();
+                  }
+
+                  gesture.enable(true);
+                  resolve();
+                });
+              } else {
+                gesture.enable(true);
+                resolve();
+              }
+            } else {
+              resolve();
+            }
+
+            /**
+             * This must be a one time callback
+             * otherwise a new callback will
+             * be added every time onEnd runs.
+             */
+          },
+          { oneTimeCallback: true }
+        )
+        .progressEnd(1, 0, 500);
+    });
   };
 
   const gesture = createGesture({

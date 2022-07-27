@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { Component } from "@angular/core";
 
 /**
  * Validates that inline popovers will correctly display
@@ -9,11 +9,13 @@ import { AfterViewInit, Component } from "@angular/core";
   selector: 'app-popover-inline',
   templateUrl: 'popover-inline.component.html'
 })
-export class PopoverInlineComponent implements AfterViewInit {
+export class PopoverInlineComponent {
 
   items: string[] = [];
 
-  ngAfterViewInit(): void {
+  openPopover(popover: HTMLIonPopoverElement) {
+    popover.present();
+
     setTimeout(() => {
       this.items = ['A', 'B', 'C', 'D'];
     }, 1000);
