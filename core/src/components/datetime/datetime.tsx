@@ -1128,6 +1128,13 @@ export class Datetime implements ComponentInterface {
 
     this.initializeListeners();
 
+    /**
+     * The month/year picker from the date interface
+     * should be closed as it is not available in non-date
+     * interfaces.
+     */
+    this.showMonthAndYear = false;
+
     raf(() => {
       this.ionRender.emit();
     });
