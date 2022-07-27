@@ -3,7 +3,14 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+  Mode,
+  StyleEventDetail,
+} from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
@@ -204,7 +211,7 @@ export class Datetime implements ComponentInterface {
    * AM/PM. `'date-time'` will show the date picker first and time picker second.
    * `'time-date'` will show the time picker first and date picker second.
    */
-  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year' = 'date-time';
+  @Prop() presentation: DatetimePresentation = 'date-time';
 
   /**
    * The text to display on the picker's cancel button.
@@ -468,6 +475,12 @@ export class Datetime implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  /**
+   * Emitted when componentDidRender is fired.
+   * @internal
+   */
+  @Event() ionRender!: EventEmitter<void>;
 
   /**
    * Confirms the selected datetime value, updates the
@@ -1114,6 +1127,10 @@ export class Datetime implements ComponentInterface {
     this.destroyInteractionListeners();
 
     this.initializeListeners();
+
+    raf(() => {
+      this.ionRender.emit();
+    });
   }
 
   private processValue = (value?: string | string[] | null) => {
@@ -2130,8 +2147,9 @@ export class Datetime implements ComponentInterface {
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
-    const hasWheelVariant =
-      (presentation === 'date' || presentation === 'date-time' || presentation === 'time-date') && preferWheel;
+    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    const hasWheelVariant = hasDatePresentation && preferWheel;
+    const hasGrid = hasDatePresentation && !preferWheel;
 
     renderHiddenInput(true, el, name, formatValue(value), disabled);
 
@@ -2151,6 +2169,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
+            [`datetime-grid`]: hasGrid,
           }),
         }}
       >

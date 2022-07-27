@@ -101,6 +101,32 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
 };
 
 /**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the short month, numeric day, and full year.
+ * Example: Apr 22, 2021
+ */
+export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
+  return getLocalizedDateTime(locale, refParts, { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+/**
+ * Wrapper function for Intl.DateTimeFormat.
+ * Allows developers to apply an allowed format to DatetimeParts.
+ * This function also has built in safeguards for older browser bugs
+ * with Intl.DateTimeFormat.
+ */
+export const getLocalizedDateTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  options: Intl.DateTimeFormatOptions
+): string => {
+  const timeString = !!refParts.hour && !!refParts.minute ? ` ${refParts.hour}:${refParts.minute}` : '';
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(date);
+};
+
+/**
  * Gets a localized version of "Today"
  * Falls back to "Today" in English for
  * browsers that do not support RelativeTimeFormat.
