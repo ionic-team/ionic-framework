@@ -2803,7 +2803,7 @@ export namespace Components {
     }
     interface IonTextarea {
         /**
-          * If `true`, the element height will increase based on the value.
+          * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
          */
         "autoGrow": boolean;
         /**
@@ -6786,7 +6786,7 @@ declare namespace LocalJSX {
     }
     interface IonTextarea {
         /**
-          * If `true`, the element height will increase based on the value.
+          * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
          */
         "autoGrow"?: boolean;
         /**
