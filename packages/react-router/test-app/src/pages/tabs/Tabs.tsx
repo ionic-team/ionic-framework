@@ -22,11 +22,12 @@ interface TabsProps {}
 
 const Tabs: React.FC<TabsProps> = () => {
   return (
-    <IonTabs>
+    <IonTabs data-pageid="tabs">
       <IonRouterOutlet id="tabs">
         <Route path="/tabs/tab1" component={Tab1} exact />
         <Route path="/tabs/tab2" component={Tab2} exact />
         <Route path="/tabs/tab1/child" component={Tab1Child1} exact />
+        <Route path="/tabs/tab1/child2" component={Tab1Child2} exact />
         <Redirect from="/tabs" to="/tabs/tab1" exact />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
@@ -71,7 +72,26 @@ const Tab1Child1 = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        Tab 1 Child 1
+        <IonButton routerLink="/tabs/tab1/child2" id="child-two">Go to Tab1Child2</IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
 
+const Tab1Child2 = () => {
+  return (
+    <IonPage data-pageid="tab1child2">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton />
+          </IonButtons>
+          <IonTitle>Tab1</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        Tab 1 Child 2
       </IonContent>
     </IonPage>
   );

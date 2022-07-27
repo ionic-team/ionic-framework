@@ -3,7 +3,7 @@ export interface DatetimeOptions {
 }
 
 export interface DatetimeChangeEventDetail {
-  value?: string | null;
+  value?: string | string[] | null;
 }
 
 export interface DatetimeCustomEvent extends CustomEvent {

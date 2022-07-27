@@ -786,6 +786,10 @@ export namespace Components {
          */
         "monthValues"?: number[] | number | string;
         /**
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+         */
+        "multiple": boolean;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -826,9 +830,9 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string.
+          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
          */
-        "value"?: string | null;
+        "value"?: string | string[] | null;
         /**
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
          */
@@ -2076,6 +2080,10 @@ export namespace Components {
         "value"?: any | null;
     }
     interface IonRange {
+        /**
+          * The start position of the range active bar. This feature is only available with a single knob (dualKnobs="false"). Valid values are greater than or equal to the min value and less than or equal to the max value.
+         */
+        "activeBarStart"?: number;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -4709,6 +4717,10 @@ declare namespace LocalJSX {
          */
         "monthValues"?: number[] | number | string;
         /**
+          * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+         */
+        "multiple"?: boolean;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name"?: string;
@@ -4765,9 +4777,9 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string.
+          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
          */
-        "value"?: string | null;
+        "value"?: string | string[] | null;
         /**
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
          */
@@ -5961,6 +5973,10 @@ declare namespace LocalJSX {
         "value"?: any | null;
     }
     interface IonRange {
+        /**
+          * The start position of the range active bar. This feature is only available with a single knob (dualKnobs="false"). Valid values are greater than or equal to the min value and less than or equal to the max value.
+         */
+        "activeBarStart"?: number;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */

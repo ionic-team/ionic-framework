@@ -65,7 +65,7 @@ export abstract class ViewStacks {
     page?: HTMLElement
   ): ViewItem;
   abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
-  abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
+  abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean): ViewItem | undefined;
   abstract findLeavingViewItemByRouteInfo(
     routeInfo: RouteInfo,
     outletId?: string

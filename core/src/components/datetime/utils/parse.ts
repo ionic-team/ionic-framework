@@ -55,7 +55,16 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * We do not use the JS Date object here because
  * it adjusts the date for the current timezone.
  */
-export const parseDate = (val: string | undefined | null): any | undefined => {
+export function parseDate(val: string): DatetimeParts;
+export function parseDate(val: string[]): DatetimeParts[];
+export function parseDate(val: undefined | null): undefined;
+export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[];
+export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
+export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
+  if (Array.isArray(val)) {
+    return val.map((valStr) => parseDate(valStr));
+  }
+
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[] | null = null;
@@ -97,17 +106,16 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
     }
   }
 
+  // can also get second and millisecond from parse[6] and parse[7] if needed
   return {
     year: parse[1],
     month: parse[2],
     day: parse[3],
     hour: parse[4],
     minute: parse[5],
-    second: parse[6],
-    millisecond: parse[7],
     tzOffset,
   };
-};
+}
 
 export const clampDate = (
   dateParts: DatetimeParts,
