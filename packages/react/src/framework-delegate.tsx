@@ -1,15 +1,17 @@
 import { FrameworkDelegate } from '@ionic/core/components';
 import { createPortal } from 'react-dom';
 
+type ReactComponent = (props?: any) => JSX.Element;
+
 export const ReactDelegate = (
-  addView: (view: React.ReactPortal) => void,
-  removeView: (view: React.ReactPortal) => void
+  addView: (view: React.ReactElement) => void,
+  removeView: (view: React.ReactElement) => void
 ): FrameworkDelegate => {
-  let Component: React.ReactPortal;
+  const refMap = new WeakMap<ReactComponent, React.ReactElement>();
 
   const attachViewToDom = async (
     parentElement: HTMLElement,
-    component: () => JSX.Element,
+    component: ReactComponent,
     propsOrDataObj?: any,
     cssClasses?: string[]
   ): Promise<any> => {
@@ -17,17 +19,20 @@ export const ReactDelegate = (
     cssClasses && div.classList.add(...cssClasses);
     parentElement.appendChild(div);
 
-    Component = createPortal(component(), div);
+    const componentWithProps = component(propsOrDataObj);
+    const hostComponent = createPortal(componentWithProps, div);
 
-    Component.props = propsOrDataObj;
+    refMap.set(component, hostComponent);
 
-    addView(Component);
+    addView(hostComponent);
 
     return Promise.resolve(div);
   };
 
-  const removeViewFromDom = (): Promise<void> => {
-    Component && removeView(Component);
+  const removeViewFromDom = (_container: any, component: ReactComponent): Promise<void> => {
+    const hostComponent = refMap.get(component);
+    hostComponent && removeView(hostComponent);
+
     return Promise.resolve();
   };
 
