@@ -6,7 +6,8 @@ import { from, Observable, Subject } from 'rxjs';
 import { concatMap, filter, map, take } from 'rxjs/operators';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
-import { StackEvent } from '../directives/navigation/stack-utils';
+import { StackController } from '../directives/navigation/stack-controller';
+import { RouteView, StackEvent } from '../directives/navigation/stack-utils';
 
 import { Platform } from './platform';
 
@@ -33,7 +34,8 @@ export class NavController {
   // The queue of pending tasks to assign the top outlet.
   private topOutletQueue$ = new Subject<{
     outlet: IonRouterOutlet;
-    setActiveView: Promise<StackEvent>;
+    stackCtrl: StackController;
+    enteringView: RouteView;
   }>();
 
   // Queue of change events for assigning the top outlet (after the active view has transitioned)
@@ -69,10 +71,10 @@ export class NavController {
     this.topOutletQueue$
       .pipe(
         // Process the chain of promises for setting the active view (and wait for the transition)
-        concatMap((ev) =>
-          from(ev.setActiveView).pipe(
+        concatMap(({ outlet, stackCtrl, enteringView }) =>
+          from(stackCtrl.setActive(enteringView)).pipe(
             // Remap the data required for the implementation in the router outlet
-            map((stackEvent) => ({ stackEvent, outlet: ev.outlet }))
+            map((stackEvent) => ({ stackEvent, outlet }))
           )
         )
       )
@@ -205,10 +207,11 @@ export class NavController {
    * Setting the top outlet is depending on finishing the transition of the previous outlet
    * leaving the view, before assigning the top outlet.
    */
-  setTopOutlet(outlet: IonRouterOutlet, setActiveView: Promise<StackEvent>): Observable<StackEvent> {
+  setTopOutlet(outlet: IonRouterOutlet, stackCtrl: StackController, enteringView: RouteView): Observable<StackEvent> {
     this.topOutletQueue$.next({
       outlet,
-      setActiveView,
+      stackCtrl,
+      enteringView,
     });
 
     return this.topOutletChange$.pipe(
