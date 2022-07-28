@@ -309,13 +309,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.activatedView = enteringView;
 
-    this.navCtrl
-      .setTopOutlet(this, this.stackCtrl, enteringView)
-      // setTopOutlet() is a take(1) operation so we do not need to manually unsubscribe
-      .subscribe((stackEvent) => {
-        this.activateEvents.emit(cmpRef.instance);
-        this.stackEvents.emit(stackEvent);
-      });
+    this.navCtrl.setTopOutlet(this, this.stackCtrl.setActive(enteringView)).subscribe((stackEvent) => {
+      this.activateEvents.emit(cmpRef.instance);
+      this.stackEvents.emit(stackEvent);
+    });
   }
 
   /**
