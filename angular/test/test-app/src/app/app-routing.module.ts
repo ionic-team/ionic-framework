@@ -67,6 +67,10 @@ const routes: Routes = [
         component: NestedOutletPage2Component
       }
     ]
+  },
+  {
+    path: 'top-outlet',
+    loadChildren: () => import('./top-router-outlet/top-router-outlet.module').then(m => m.TopRouterOutletModule)
   }
 ];
 
