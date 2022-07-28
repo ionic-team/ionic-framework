@@ -1,30 +1,26 @@
 import type { DatetimeParts } from '../datetime-interface';
 
-const get12HourTime = (hour: number) => {
-  return hour % 12 || 12;
-};
+import { convertDataToISO } from './manipulation';
 
-const getFormattedAMPM = (ampm?: string) => {
-  if (ampm === undefined) {
+const getFormattedDayPeriod = (dayPeriod?: string) => {
+  if (dayPeriod === undefined) {
     return '';
   }
 
-  return ampm.toUpperCase();
+  return dayPeriod.toUpperCase();
 };
 
-export const getFormattedTime = (refParts: DatetimeParts, use24Hour: boolean): string => {
+export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24Hour: boolean): string => {
   if (refParts.hour === undefined || refParts.minute === undefined) {
     return 'Invalid Time';
   }
 
-  const hour = use24Hour ? getFormattedHour(refParts.hour, use24Hour) : get12HourTime(refParts.hour);
-  const minute = addTimePadding(refParts.minute);
-
-  if (use24Hour) {
-    return `${hour}:${minute}`;
-  }
-
-  return `${hour}:${minute} ${getFormattedAMPM(refParts.ampm)}`;
+  return new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone: 'UTC',
+    hour12: !use24Hour,
+  }).format(new Date(convertDataToISO(refParts)));
 };
 
 /**
@@ -102,4 +98,115 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+};
+
+/**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the short month, numeric day, and full year.
+ * Example: Apr 22, 2021
+ */
+export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
+  return getLocalizedDateTime(locale, refParts, { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+/**
+ * Wrapper function for Intl.DateTimeFormat.
+ * Allows developers to apply an allowed format to DatetimeParts.
+ * This function also has built in safeguards for older browser bugs
+ * with Intl.DateTimeFormat.
+ */
+export const getLocalizedDateTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  options: Intl.DateTimeFormatOptions
+): string => {
+  const timeString = !!refParts.hour && !!refParts.minute ? ` ${refParts.hour}:${refParts.minute}` : '';
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(date);
+};
+
+/**
+ * Gets a localized version of "Today"
+ * Falls back to "Today" in English for
+ * browsers that do not support RelativeTimeFormat.
+ */
+export const getTodayLabel = (locale: string) => {
+  if ('RelativeTimeFormat' in Intl) {
+    const label = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(0, 'day');
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  } else {
+    return 'Today';
+  }
+};
+
+/**
+ * When calling toISOString(), the browser
+ * will convert the date to UTC time by either adding
+ * or subtracting the time zone offset.
+ * To work around this, we need to either add
+ * or subtract the time zone offset to the Date
+ * object prior to calling toISOString().
+ * This allows us to get an ISO string
+ * that is in the user's time zone.
+ *
+ * Example:
+ * Time zone offset is 240
+ * Meaning: The browser needs to add 240 minutes
+ * to the Date object to get UTC time.
+ * What Ionic does: We subtract 240 minutes
+ * from the Date object. The browser then adds
+ * 240 minutes in toISOString(). The result
+ * is a time that is in the user's time zone
+ * and not UTC.
+ *
+ * Note: Some timezones include minute adjustments
+ * such as 30 or 45 minutes. This is why we use setMinutes
+ * instead of setHours.
+ * Example: India Standard Time
+ * Timezone offset: -330 = -5.5 hours.
+ *
+ * List of timezones with 30 and 45 minute timezones:
+ * https://www.timeanddate.com/time/time-zones-interesting.html
+ */
+export const removeDateTzOffset = (date: Date) => {
+  const tzOffset = date.getTimezoneOffset();
+  date.setMinutes(date.getMinutes() - tzOffset);
+  return date;
+};
+
+const DATE_AM = removeDateTzOffset(new Date('2022T01:00'));
+const DATE_PM = removeDateTzOffset(new Date('2022T13:00'));
+
+/**
+ * Formats the locale's string representation of the day period (am/pm) for a given
+ * ref parts day period.
+ *
+ * @param locale The locale to format the day period in.
+ * @param value The date string, in ISO format.
+ * @returns The localized day period (am/pm) representation of the given value.
+ */
+export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | undefined) => {
+  const date = dayPeriod === 'am' ? DATE_AM : DATE_PM;
+  const localizedDayPeriod = new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    timeZone: 'UTC',
+  })
+    .formatToParts(date)
+    .find((part) => part.type === 'dayPeriod');
+
+  if (localizedDayPeriod) {
+    return localizedDayPeriod.value;
+  }
+
+  return getFormattedDayPeriod(dayPeriod);
+};
+
+/**
+ * Formats the datetime's value to a string, for use in the native input.
+ *
+ * @param value The value to format, either an ISO string or an array thereof.
+ */
+export const formatValue = (value: string | string[] | null | undefined) => {
+  return Array.isArray(value) ? value.join(',') : value;
 };

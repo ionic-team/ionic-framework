@@ -21,6 +21,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   onDidPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
+  keepContentsMounted?: boolean;
 }
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
@@ -128,7 +129,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return createElement(tagName, newProps, (this.state.isOpen) ?
+      return createElement(tagName, newProps, (this.state.isOpen || this.props.keepContentsMounted) ?
         createElement('div', {
           id: 'ion-react-wrapper',
           ref: this.wrapperRef,
