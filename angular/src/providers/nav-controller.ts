@@ -2,8 +2,11 @@ import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, Router, UrlSerializer, UrlTree, NavigationStart } from '@angular/router';
 import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
+import { from, Observable, Subject } from 'rxjs';
+import { concatMap, filter, map, take } from 'rxjs/operators';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
+import { StackEvent } from '../directives/navigation/stack-utils';
 
 import { Platform } from './platform';
 
@@ -26,6 +29,18 @@ export class NavController {
   private guessDirection: RouterDirection = 'forward';
   private guessAnimation?: NavDirection;
   private lastNavId = -1;
+
+  // The queue of pending tasks to assign the top outlet.
+  private topOutletQueue$ = new Subject<{
+    outlet: IonRouterOutlet;
+    setActiveView: Promise<StackEvent>;
+  }>();
+
+  // Queue of change events for assigning the top outlet (after the active view has transitioned)
+  private topOutletChange$ = new Subject<{
+    stackEvent: StackEvent;
+    outlet: IonRouterOutlet;
+  }>();
 
   constructor(
     platform: Platform,
@@ -50,6 +65,28 @@ export class NavController {
       this.pop();
       processNextHandler();
     });
+
+    this.topOutletQueue$
+      .pipe(
+        // Process the chain of promises for setting the active view (and wait for the transition)
+        concatMap((ev) =>
+          from(ev.setActiveView).pipe(
+            // Remap the data required for the implementation in the router outlet
+            map((stackEvent) => ({ stackEvent, outlet: ev.outlet }))
+          )
+        )
+      )
+      .subscribe({
+        next: ({ stackEvent, outlet }) => {
+          // Assigns the top outlet for the nav controller
+          this.topOutlet = outlet;
+          // Notifies subscribers that the top outlet has changed
+          this.topOutletChange$.next({
+            stackEvent,
+            outlet,
+          });
+        },
+      });
   }
 
   /**
@@ -164,9 +201,22 @@ export class NavController {
 
   /**
    * @internal
+   *
+   * Setting the top outlet is depending on finishing the transition of the previous outlet
+   * leaving the view, before assigning the top outlet.
    */
-  setTopOutlet(outlet: IonRouterOutlet): void {
-    this.topOutlet = outlet;
+  setTopOutlet(outlet: IonRouterOutlet, setActiveView: Promise<StackEvent>): Observable<StackEvent> {
+    this.topOutletQueue$.next({
+      outlet,
+      setActiveView,
+    });
+
+    return this.topOutletChange$.pipe(
+      // Only returns change events for the outlet that invoked setting the outlet
+      filter((res) => res.outlet === outlet),
+      map((res) => res.stackEvent),
+      take(1)
+    );
   }
 
   /**
