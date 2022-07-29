@@ -104,8 +104,6 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
       // + or -
       tzOffset *= -1;
     }
-  } else {
-    tzOffset = new Date().getTimezoneOffset() * -1;
   }
 
   // can also get second and millisecond from parse[6] and parse[7] if needed
