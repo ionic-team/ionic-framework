@@ -195,3 +195,78 @@ test.describe('sheet modal: setting the breakpoint', () => {
     expect(updatedBreakpoint).toBe(0.5);
   });
 });
+
+test.describe('sheet modal: clicking the handle', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/src/components/modal/test/sheet');
+  });
+
+  test('should advance to the next breakpoint when handleBehavior is cycle', async ({ page }) => {
+    const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = page.locator('ion-modal');
+
+    await page.click('#handle-behavior-cycle-modal');
+    await ionModalDidPresent.next();
+
+    const handle = page.locator('ion-modal .modal-handle');
+
+    await handle.click();
+    await ionBreakpointDidChange.next();
+
+    await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(0.5);
+
+    await handle.click();
+    await ionBreakpointDidChange.next();
+
+    await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(0.75);
+
+    await handle.click();
+    await ionBreakpointDidChange.next();
+
+    await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(1);
+
+    await handle.click();
+    await ionBreakpointDidChange.next();
+
+    // Advancing from the last breakpoint should change the breakpoint to the first non-zero breakpoint
+    await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(0.25);
+  });
+
+  test('should not advance the breakpoint when handleBehavior is none', async ({ page }) => {
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = page.locator('ion-modal');
+
+    await page.click('#sheet-modal');
+    await ionModalDidPresent.next();
+
+    const handle = page.locator('ion-modal .modal-handle');
+
+    await handle.click();
+
+    await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(0.25);
+  });
+
+  test('should not dismiss the modal when backdrop is clicked and breakpoint is moving', async ({ page }) => {
+    const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = page.locator('ion-modal');
+
+    await page.click('#handle-behavior-cycle-modal');
+    await ionModalDidPresent.next();
+
+    const handle = page.locator('ion-modal .modal-handle');
+    const backdrop = page.locator('ion-modal ion-backdrop');
+
+    await handle.click();
+    backdrop.click();
+
+    await ionBreakpointDidChange.next();
+
+    await handle.click();
+
+    await ionBreakpointDidChange.next();
+
+    await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(0.75);
+  });
+});

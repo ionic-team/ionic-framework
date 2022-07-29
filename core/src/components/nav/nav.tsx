@@ -131,6 +131,10 @@ export class Nav implements NavOutlet {
     this.swipeGestureChanged();
   }
 
+  connectedCallback() {
+    this.destroyed = false;
+  }
+
   disconnectedCallback() {
     for (const view of this.views) {
       lifecycle(view.element!, LIFECYCLE_WILL_UNLOAD);
@@ -879,9 +883,13 @@ export class Nav implements NavOutlet {
     leavingView: ViewController | undefined,
     opts: NavOptions
   ): NavResult {
-    const cleanupView = hasCompleted ? enteringView : leavingView;
-    if (cleanupView) {
-      this.cleanup(cleanupView);
+    /**
+     * If the transition did not complete, the leavingView will still be the active
+     * view on the stack. Otherwise unmount all the views after the enteringView.
+     */
+    const activeView = hasCompleted ? enteringView : leavingView;
+    if (activeView) {
+      this.unmountInactiveViews(activeView);
     }
 
     return {
@@ -944,9 +952,13 @@ export class Nav implements NavOutlet {
   }
 
   /**
+   * Unmounts all inactive views after the specified active view.
+   *
    * DOM WRITE
+   *
+   * @param activeView The view that is actively visible in the stack. Used to calculate which views to unmount.
    */
-  private cleanup(activeView: ViewController) {
+  private unmountInactiveViews(activeView: ViewController) {
     // ok, cleanup time!! Destroy all of the views that are
     // INACTIVE and come after the active view
     // only do this if the views exist, though

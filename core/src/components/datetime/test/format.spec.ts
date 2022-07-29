@@ -4,6 +4,7 @@ import {
   getFormattedHour,
   addTimePadding,
   getMonthAndYear,
+  getLocalizedDayPeriod,
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -86,5 +87,15 @@ describe('getMonthAndYear()', () => {
 
   it('should return abril de 2006', () => {
     expect(getMonthAndYear('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('abril de 2006');
+  });
+});
+
+describe('getLocalizedDayPeriod', () => {
+  it('should return AM when the date is in the morning', () => {
+    expect(getLocalizedDayPeriod('en-US', 'am'));
+  });
+
+  it('should return PM when the date is in the afternoon', () => {
+    expect(getLocalizedDayPeriod('en-US', 'pm'));
   });
 });

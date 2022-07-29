@@ -36,6 +36,70 @@ export class PickerColumnInternal implements ComponentInterface {
    * A list of options to be displayed in the picker
    */
   @Prop() items: PickerColumnItem[] = [];
+  @Watch('items')
+  itemsChange(currentItems: PickerColumnItem[], previousItems: PickerColumnItem[]) {
+    const { value } = this;
+
+    /**
+     * When the items change, it is possible for the item
+     * that was selected to no longer exist. In that case, we need
+     * to automatically select the nearest item. If we do not,
+     * then the scroll position will be reset to zero and it will
+     * look like the first item was automatically selected.
+     *
+     * If we cannot find a closest item then we do nothing, and
+     * the browser will reset the scroll position to 0.
+     */
+    const findCurrentItem = currentItems.find((item) => item.value === value);
+    if (!findCurrentItem) {
+      /**
+       * The default behavior is to assume
+       * that the new set of data is similar to the old
+       * set of data, just with some items filtered out.
+       * We walk backwards through the data to find the
+       * closest enabled picker item and select it.
+       *
+       * Developers can also swap the items out for an entirely
+       * new set of data. In that case, the value we select
+       * here likely will not make much sense. For this use case,
+       * developers should update the `value` prop themselves
+       * when swapping out the data.
+       */
+      const findPreviousItemIndex = previousItems.findIndex((item) => item.value === value);
+      if (findPreviousItemIndex === -1) {
+        return;
+      }
+
+      /**
+       * Step through the current items backwards
+       * until we find a neighbor we can select.
+       * We start at the last known location of the
+       * current selected item in order to
+       * account for data that has been added. This
+       * search prioritizes stability in that it
+       * tries to keep the scroll position as close
+       * to where it was before the update.
+       * Before Items: ['a', 'b', 'c'], Selected Value: 'b'
+       * After Items:  ['a', 'dog', 'c']
+       * Even though 'dog' is a different item than 'b',
+       * it is the closest item we can select while
+       * preserving the scroll position.
+       */
+      let nearestItem;
+      for (let i = findPreviousItemIndex; i >= 0; i--) {
+        const item = currentItems[i];
+        if (item !== undefined && item.disabled !== true) {
+          nearestItem = item;
+          break;
+        }
+      }
+
+      if (nearestItem) {
+        this.setValue(nearestItem.value);
+        return;
+      }
+    }
+  }
 
   /**
    * The selected option in the picker.
@@ -155,7 +219,7 @@ export class PickerColumnInternal implements ComponentInterface {
   async setValue(value?: string | number) {
     const { items } = this;
     this.value = value;
-    const findItem = items.find((item) => item.value === value);
+    const findItem = items.find((item) => item.value === value && item.disabled !== true);
     if (findItem) {
       this.ionChange.emit(findItem);
     }
@@ -254,9 +318,13 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLElement;
+        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement;
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
+        }
+
+        if (activeElement.disabled) {
+          return;
         }
 
         /**
@@ -321,7 +389,9 @@ export class PickerColumnInternal implements ComponentInterface {
   };
 
   get activeItem() {
-    return getElementRoot(this.el).querySelector(`.picker-item[data-value="${this.value}"]`) as HTMLElement | null;
+    return getElementRoot(this.el).querySelector(
+      `.picker-item[data-value="${this.value}"]:not([disabled])`
+    ) as HTMLElement | null;
   }
 
   render() {
@@ -341,17 +411,32 @@ export class PickerColumnInternal implements ComponentInterface {
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>
         {items.map((item, index) => {
+          {
+            /*
+            Users should be able to tab
+            between multiple columns. As a result,
+            we set tabindex here so that tabbing switches
+            between columns instead of buttons. Users
+            can still use arrow keys on the keyboard to
+            navigate the column up and down.
+          */
+          }
           return (
-            <div
-              class="picker-item"
+            <button
+              tabindex="-1"
+              class={{
+                'picker-item': true,
+                'picker-item-disabled': item.disabled || false,
+              }}
               data-value={item.value}
               data-index={index}
               onClick={(ev: Event) => {
                 this.centerPickerItemInView(ev.target as HTMLElement);
               }}
+              disabled={item.disabled}
             >
               {item.text}
-            </div>
+            </button>
           );
         })}
         <div class="picker-item picker-item-empty">&nbsp;</div>

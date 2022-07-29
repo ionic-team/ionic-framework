@@ -4,13 +4,18 @@ import React, { useState } from 'react';
 
 import { ReactDelegate } from '../../framework-delegate';
 import { createReactComponent } from '../react-component-lib';
+import { createForwardRef } from '../utils';
 
 const IonNavInner = createReactComponent<
   JSX.IonNav & { delegate: FrameworkDelegate },
   HTMLIonNavElement
 >('ion-nav', undefined, undefined, defineCustomElement);
 
-export const IonNav: React.FC<JSX.IonNav> = ({ children, ...restOfProps }) => {
+type IonNavProps = JSX.IonNav & {
+  forwardedRef?: React.ForwardedRef<HTMLIonNavElement>;
+};
+
+const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...restOfProps }) => {
   const [views, setViews] = useState<React.ReactElement[]>([]);
 
   /**
@@ -23,8 +28,10 @@ export const IonNav: React.FC<JSX.IonNav> = ({ children, ...restOfProps }) => {
   const delegate = ReactDelegate(addView, removeView);
 
   return (
-    <IonNavInner delegate={delegate} {...restOfProps}>
+    <IonNavInner delegate={delegate} ref={forwardedRef} {...restOfProps}>
       {views}
     </IonNavInner>
   );
 };
+
+export const IonNav = createForwardRef<IonNavProps, HTMLIonNavElement>(IonNavInternal, 'IonNav');

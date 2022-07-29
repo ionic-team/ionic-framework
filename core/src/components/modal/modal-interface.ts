@@ -48,3 +48,8 @@ export interface ModalCustomEvent extends CustomEvent {
  * @deprecated - Use { [key: string]: any } directly instead.
  */
 export type ModalAttributes = { [key: string]: any };
+
+/**
+ * The behavior setting for modals when the handle is pressed.
+ */
+export type ModalHandleBehavior = 'none' | 'cycle';
