@@ -1,6 +1,6 @@
 import { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { ReactDelegate } from '../framework-delegate';
 
@@ -22,7 +22,9 @@ const IonModalInternal: React.FC<IonModalProps> = ({
   isOpen,
   ...restOfProps
 }) => {
-  const [isOpenState, setIsOpenState] = React.useState(isOpen);
+  const [isOpenState, setIsOpenState] = React.useState(isOpen ?? false);
+  const wrapperRef = useRef(null);
+
   /**
    * The IonModal implementation is not reliant on the framework delegate
    * for adding or removing views. We construct an instance of the delegate
@@ -47,7 +49,28 @@ const IonModalInternal: React.FC<IonModalProps> = ({
         }
       }}
       onDidDismiss={(ev) => {
-        setIsOpenState(false);
+        /**
+         * Unmount the inner component.
+         * React will call Node.removeChild
+         * which expects the child to be
+         * a direct descendent of the parent
+         * but due to the presence of
+         * Web Component slots, this is not
+         * always the case. To work around this
+         * we move the inner component to the root
+         * of the Web Component so React can
+         * cleanup properly.
+         */
+        const wrapper = wrapperRef.current;
+
+        if (wrapper && forwardedRef) {
+          const el = forwardedRef as React.MutableRefObject<HTMLIonModalElement>;
+          if (el.current) {
+            el.current.append(wrapper);
+          }
+          setIsOpenState(false);
+        }
+
         if (restOfProps.onDidDismiss) {
           restOfProps.onDidDismiss(ev);
         }
@@ -56,6 +79,7 @@ const IonModalInternal: React.FC<IonModalProps> = ({
       {isOpenState && (
         <div
           id="ion-react-wrapper"
+          ref={wrapperRef}
           style={{
             display: 'flex',
             flexDirection: 'column',
