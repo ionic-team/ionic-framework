@@ -20,7 +20,7 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
     minute: 'numeric',
     timeZone: 'UTC',
     hour12: !use24Hour,
-  }).format(new Date(convertDataToISO(refParts)));
+  }).format(removeDateTzOffset(new Date(convertDataToISO(refParts))));
 };
 
 /**
