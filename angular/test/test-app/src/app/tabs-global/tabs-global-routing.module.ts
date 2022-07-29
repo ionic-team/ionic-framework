@@ -1,19 +1,16 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+import { TabsGlobalComponent } from "./tabs-global.component";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
-        path: 'tab1',
-        loadChildren: () => import('./tab1/tab1.module').then(m => m.Tab1Module)
-      },
-      {
         path: '',
-        redirectTo: 'tab1'
+        component: TabsGlobalComponent
       }
     ])
   ],
   exports: [RouterModule]
 })
-export class TabsRoutingModule { }
+export class TabsGlobalRoutingModule { }

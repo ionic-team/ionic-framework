@@ -243,6 +243,32 @@ describe('Tabs', () => {
     });
   })
 
+  describe('entry url - /tabs/account', () => {
+    beforeEach(() => {
+      cy.visit('/tabs/account');
+    });
+    it('should pop to previous view when leaving tabs outlet', () => {
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+
+      cy.get('#goto-tab1-page2').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+
+      cy.get('#goto-global').click();
+
+      cy.get('ion-title').should('contain.text', 'Global Page');
+
+      cy.get('#goto-prev-pop').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+
+      cy.get('#goto-prev').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+    });
+  });
+
   describe('entry url - /tabs/account/nested/1', () => {
     beforeEach(() => {
       cy.visit('/tabs/account/nested/1');

@@ -55,6 +55,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'tabs-global',
+    loadChildren: () => import('./tabs-global/tabs-global.module').then(m => m.TabsGlobalModule)
+  },
+  {
     path: 'nested-outlet',
     component: NestedOutletComponent,
     children: [
@@ -68,10 +72,6 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: 'top-outlet',
-    loadChildren: () => import('./top-router-outlet/top-router-outlet.module').then(m => m.TopRouterOutletModule)
-  }
 ];
 
 @NgModule({
