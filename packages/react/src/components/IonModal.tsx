@@ -36,6 +36,8 @@ const IonModalInternal: React.FC<IonModalProps> = ({
     () => {}
   );
 
+  const mountContent = isOpenState || restOfProps.keepContentsMounted;
+
   return (
     <IonModalInner
       delegate={delegate}
@@ -76,7 +78,7 @@ const IonModalInternal: React.FC<IonModalProps> = ({
         }
       }}
     >
-      {isOpenState && (
+      {mountContent && (
         <div
           id="ion-react-wrapper"
           ref={wrapperRef}
