@@ -10,7 +10,7 @@ export class TabsTab1NestedComponent implements OnInit {
   id = '';
   constructor(
     private route: ActivatedRoute,
-    private navCtrl: NavController
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -21,7 +21,4 @@ export class TabsTab1NestedComponent implements OnInit {
     return parseInt(this.id, 10) + 1;
   }
 
-  goBack() {
-    return this.navCtrl.pop();
-  }
 }
