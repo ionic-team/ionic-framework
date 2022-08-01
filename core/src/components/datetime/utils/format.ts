@@ -24,6 +24,7 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
     new Date(
       convertDataToISO({
         ...refParts,
+        // TODO: FW-1831 will remove the need to manually set the tzOffset to undefined
         tzOffset: undefined,
       })
     )
