@@ -18,7 +18,9 @@ test.describe('searchbar: basic', () => {
     await page.waitForChanges();
 
     expect(searchbar).toHaveClass(/searchbar-has-focus/);
-    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-show-cancel-focus-${page.getSnapshotSettings()}.png`);
+    expect(await searchbar.screenshot()).toMatchSnapshot(
+      `searchbar-show-cancel-focus-${page.getSnapshotSettings()}.png`
+    );
   });
 
   test('should not show cancel button on focus if show-cancel-button=never', async ({ page }) => {
@@ -28,6 +30,8 @@ test.describe('searchbar: basic', () => {
     await page.waitForChanges();
 
     expect(searchbar).toHaveClass(/searchbar-has-focus/);
-    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-show-cancel-never-${page.getSnapshotSettings()}.png`);
+    expect(await searchbar.screenshot()).toMatchSnapshot(
+      `searchbar-show-cancel-never-${page.getSnapshotSettings()}.png`
+    );
   });
 });
