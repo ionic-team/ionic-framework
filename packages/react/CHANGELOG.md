@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.1-nightly.20220802](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1-nightly.20220802) (2022-08-02)
+
+
+### Bug Fixes
+
+* **react:** IonNav apply properties to page components  ([#25603](https://github.com/ionic-team/ionic/issues/25603)) ([61e4ffe](https://github.com/ionic-team/ionic/commit/61e4ffe47f73034808b65ee37342f540ee5a6a97)), closes [#25602](https://github.com/ionic-team/ionic/issues/25602)
+
+
+
+
+
 # [6.2.0](https://github.com/ionic-team/ionic/compare/v6.1.15...v6.2.0) (2022-07-27)
 
 
