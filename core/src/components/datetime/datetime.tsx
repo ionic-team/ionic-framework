@@ -1929,7 +1929,7 @@ export class Datetime implements ComponentInterface {
                         day,
                         year,
                       },
-                      isActive
+                      isActive && highlightActiveParts
                     );
                   } else {
                     this.setActiveParts({
