@@ -13,25 +13,23 @@ test.describe('searchbar: basic', () => {
 
   test('should show cancel button on focus if show-cancel-button=focus', async ({ page }) => {
     const searchbar = page.locator('#basic');
+    const cancelButton = searchbar.locator('.searchbar-cancel-button');
 
     await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
     await page.waitForChanges();
 
     await expect(searchbar).toHaveClass(/searchbar-has-focus/);
-    expect(await searchbar.screenshot()).toMatchSnapshot(
-      `searchbar-show-cancel-focus-${page.getSnapshotSettings()}.png`
-    );
+    await expect(cancelButton).toBeVisible();
   });
 
   test('should not show cancel button on focus if show-cancel-button=never', async ({ page }) => {
     const searchbar = page.locator('#noCancel');
+    const cancelButton = searchbar.locator('.searchbar-cancel-button');
 
     await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
     await page.waitForChanges();
 
     await expect(searchbar).toHaveClass(/searchbar-has-focus/);
-    expect(await searchbar.screenshot()).toMatchSnapshot(
-      `searchbar-show-cancel-never-${page.getSnapshotSettings()}.png`
-    );
+    await expect(cancelButton).toHaveCount(0);
   });
 });
