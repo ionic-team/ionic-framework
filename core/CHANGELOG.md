@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.1-nightly.20220803](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1-nightly.20220803) (2022-08-03)
+
+
+### Bug Fixes
+
+* **datetime:** display time in user's timezone after selection ([#25694](https://github.com/ionic-team/ionic/issues/25694)) ([11c69c8](https://github.com/ionic-team/ionic/commit/11c69c8df50b75440c9e876b4d99d469d16e144f)), closes [#25693](https://github.com/ionic-team/ionic/issues/25693)
+* **datetime:** selecting today with multiple date select now works ([#25699](https://github.com/ionic-team/ionic/issues/25699)) ([86b7000](https://github.com/ionic-team/ionic/commit/86b7000bcd1b4519e8c20907050e15ba7c99bab0))
+* **nav:** exclude nav from custom dialog ([#25689](https://github.com/ionic-team/ionic/issues/25689)) ([d1e517b](https://github.com/ionic-team/ionic/commit/d1e517bfef03b822dfa7651681013277762eda08)), closes [#25677](https://github.com/ionic-team/ionic/issues/25677) [#25688](https://github.com/ionic-team/ionic/issues/25688)
+
+
+
+
+
 # [6.2.0 Chromium](https://github.com/ionic-team/ionic-framework/compare/v6.1.15...v6.2.0) (2022-07-27)
 
 
