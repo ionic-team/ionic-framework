@@ -17,7 +17,7 @@ test.describe('searchbar: basic', () => {
     await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
     await page.waitForChanges();
 
-    expect(searchbar).toHaveClass(/searchbar-has-focus/);
+    await expect(searchbar).toHaveClass(/searchbar-has-focus/);
     expect(await searchbar.screenshot()).toMatchSnapshot(
       `searchbar-show-cancel-focus-${page.getSnapshotSettings()}.png`
     );
@@ -29,7 +29,7 @@ test.describe('searchbar: basic', () => {
     await searchbar.evaluate((el: HTMLIonSearchbarElement) => el.setFocus());
     await page.waitForChanges();
 
-    expect(searchbar).toHaveClass(/searchbar-has-focus/);
+    await expect(searchbar).toHaveClass(/searchbar-has-focus/);
     expect(await searchbar.screenshot()).toMatchSnapshot(
       `searchbar-show-cancel-never-${page.getSnapshotSettings()}.png`
     );
