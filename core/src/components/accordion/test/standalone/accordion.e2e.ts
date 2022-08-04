@@ -11,7 +11,8 @@ test.describe('accordion: standalone', () => {
     expect(results.violations).toEqual([]);
   });
 
-  test('should not have visual regressions', async ({ page }) => {
+  // TODO(FW-1842) Re-enable when flakiness has been addressed.
+  test.skip('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/accordion/test/standalone`);
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(

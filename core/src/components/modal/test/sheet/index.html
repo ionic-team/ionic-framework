@@ -115,6 +115,14 @@
           <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })"
             >Present Sheet Modal (Custom Height)</ion-button
           >
+
+          <ion-button
+            id="handle-behavior-cycle-modal"
+            onclick="presentModal({ handleBehavior: 'cycle', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })"
+          >
+            Present Sheet Modal (HandleBehavior: Cycle)</ion-button
+          >
+
           <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })"
             >Present Sheet Modal (Custom Handle)</ion-button
           >

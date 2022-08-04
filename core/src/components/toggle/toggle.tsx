@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
@@ -62,6 +63,11 @@ export class Toggle implements ComponentInterface {
    * it's only used when the toggle participates in a native `<form>`.
    */
   @Prop() value?: string | null = 'on';
+
+  /**
+   * Enables the on/off accessibility switch labels within the toggle.
+   */
+  @Prop() enableOnOffLabels: boolean | undefined = undefined;
 
   /**
    * Emitted when the value property has changed.
@@ -178,8 +184,29 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
+    if (mode === 'md') {
+      return checked ? checkmarkOutline : removeOutline;
+    }
+    return checked ? removeOutline : ellipseOutline;
+  };
+
+  private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
+    const icon = this.getSwitchLabelIcon(mode, checked);
+
+    return (
+      <ion-icon
+        class={{
+          'toggle-switch-icon': true,
+          'toggle-switch-icon-checked': checked,
+        }}
+        icon={icon}
+      ></ion-icon>
+    );
+  }
+
   render() {
-    const { activated, color, checked, disabled, el, inputId, name } = this;
+    const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
@@ -203,8 +230,15 @@ export class Toggle implements ComponentInterface {
         })}
       >
         <div class="toggle-icon" part="track">
+          {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
+           since the wrapper is translated when the handle is interacted with and
+           this would move the on/off labels outside of the view box */}
+          {enableOnOffLabels &&
+            mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
           <div class="toggle-icon-wrapper">
-            <div class="toggle-inner" part="handle" />
+            <div class="toggle-inner" part="handle">
+              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+            </div>
           </div>
         </div>
         <label htmlFor={inputId}>{labelText}</label>

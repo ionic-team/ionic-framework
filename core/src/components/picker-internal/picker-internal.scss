@@ -84,3 +84,7 @@
 :host ::slotted(ion-picker-column-internal:last-of-type) {
   text-align: end;
 }
+
+:host ::slotted(ion-picker-column-internal:only-child) {
+  text-align: center;
+}
