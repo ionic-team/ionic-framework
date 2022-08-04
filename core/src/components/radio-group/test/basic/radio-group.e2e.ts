@@ -7,9 +7,9 @@ test.describe('radio-group: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/radio-group/test/basic`);
 
-    await page.setIonViewport();
+    const list = page.locator('ion-list');
 
-    expect(await page.screenshot()).toMatchSnapshot(`radio-group-diff-${page.getSnapshotSettings()}.png`);
+    expect(await list.screenshot()).toMatchSnapshot(`radio-group-diff-${page.getSnapshotSettings()}.png`);
   });
 });
 

@@ -25,6 +25,7 @@ test.describe('radio-group: form', () => {
     await expect(disabledRadio).toHaveAttribute('disabled', '');
 
     await disabledRadio.click({ force: true });
+    await page.waitForChanges();
 
     await expect(value).toHaveText('');
   });
