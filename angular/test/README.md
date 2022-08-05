@@ -21,6 +21,16 @@ Usage:
 ./build.sh ng14
 ```
 
+## How to modify test apps
+
+To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
+
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.spec.ts` in `apps/ng14`, make sure you place the file in `apps/ng14/e2e/src/test.spec.ts`.
+
+### Version-specific tests
+
+If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.
+
 ## Adding New Test Apps
 
 As we add support for new versions of Angular, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:
