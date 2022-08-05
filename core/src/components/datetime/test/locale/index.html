@@ -48,6 +48,7 @@
         <ion-toolbar>
           <select class="ion-margin-end" slot="end">
             <option value="en-US">en-US</option>
+            <option value="en-GB">en-GB</option>
             <option value="es-ES">es-ES</option>
             <option value="ja-JP">ja-JP</option>
             <option value="ta-IN">ta-IN</option>
@@ -60,20 +61,12 @@
             <h2>Default (AM)</h2>
             <ion-datetime
               id="am"
+              prefer-wheel="true"
               show-default-title="true"
               show-default-buttons="true"
               locale="en-US"
+              presentation="date"
               value="2022-04-19T04:20:00"
-            ></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>Default (PM)</h2>
-            <ion-datetime
-              id="pm"
-              show-default-title="true"
-              show-default-buttons="true"
-              locale="en-US"
-              value="2022-04-19T14:20:00"
             ></ion-datetime>
           </div>
         </div>
