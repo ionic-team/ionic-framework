@@ -139,6 +139,15 @@ jobs:
       with:
         app: ${{ matrix.apps }}
 
+  verify-test-angular-e2e:
+    if: ${{ always() }}
+    needs: test-angular-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-angular-e2e.result != 'success' }}
+        run: exit 1
+
   build-react:
     needs: [build-core]
     runs-on: ubuntu-latest
