@@ -1,4 +1,6 @@
-<ion-popover [isOpen]="true">
+<ion-button (click)="openPopover(popover)">Open Popover</ion-button>
+
+<ion-popover #popover>
   <ng-template>
     <ion-content>
       <ion-list>

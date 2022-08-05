@@ -170,7 +170,7 @@ html.ios ion-modal.modal-card .ion-page {
  * These changes allow certain dimension values
  * such as fit-content to work correctly.
  */
-ion-modal .ion-page {
+ion-modal .ion-page:not(ion-nav .ion-page) {
   position: relative;
 
   contain: layout style;
@@ -338,4 +338,27 @@ ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-ex
 // we override the appearance only when using within an ion-input.
 ion-input input::-webkit-date-and-time-value {
   text-align: start;
+}
+
+/**
+ * The .ion-datetime-button-overlay class contains
+ * styles that allow any modal/popover to be
+ * sized according to the dimensions of the datetime
+ * when used with ion-datetime-button.
+ */
+.ion-datetime-button-overlay {
+  --width: fit-content;
+  --height: fit-content;
+}
+
+/**
+ * The grid variant can scale down when inline.
+ * When used in a `fit-content` overlay, this causes
+ * the overlay to shrink when the month/year picker is open.
+ * Explicitly setting the dimensions lets us have a consistently
+ * sized grid interface.
+ */
+.ion-datetime-button-overlay ion-datetime.datetime-grid {
+  width: 320px;
+  min-height: 320px;
 }

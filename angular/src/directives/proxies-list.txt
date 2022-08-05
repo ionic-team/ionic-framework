@@ -23,6 +23,7 @@ export const DIRECTIVES = [
   d.IonCol,
   d.IonContent,
   d.IonDatetime,
+  d.IonDatetimeButton,
   d.IonFab,
   d.IonFabButton,
   d.IonFabList,
