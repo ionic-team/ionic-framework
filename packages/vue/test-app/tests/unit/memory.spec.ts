@@ -71,6 +71,6 @@ describe('createMemoryHistory', () => {
     await pageTwoButton.trigger('click');
     await waitForRouter();
 
-    expect(push).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledTimes(2);
   });
 })
