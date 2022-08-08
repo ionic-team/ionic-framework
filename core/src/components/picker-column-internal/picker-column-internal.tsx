@@ -394,12 +394,30 @@ export class PickerColumnInternal implements ComponentInterface {
     ) as HTMLElement | null;
   }
 
+  get activeItem() {
+    const { value, items } = this;
+
+    return items.find(item => item.value === value && !item.disabled);
+  }
+
   render() {
-    const { items, color, isActive, numericInput } = this;
+    const { items, color, isActive, numericInput, activeItem } = this;
     const mode = getIonMode(this);
 
     return (
       <Host
+        /*
+          Spin button allows users to swipe
+          between picker columns and then drag
+          to select items within a single column.
+          valuetext is required because valuenow does
+          not always reflect the intended value of the
+          spinbutton. Developers must also provide either
+          aria-label or aria-labelledby on the host.
+        */
+        role="spinbutton"
+        aria-valuenow={activeItem?.value}
+        aria-valuetext={activeItem?.text}
         tabindex={0}
         class={createColorClasses(color, {
           [mode]: true,
