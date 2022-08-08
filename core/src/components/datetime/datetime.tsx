@@ -353,7 +353,7 @@ export class Datetime implements ComponentInterface {
           this.activePartsClone = [...valueDateParts];
         } else {
           const { month, day, year, hour, minute } = valueDateParts;
-          const ampm = hour ? (hour >= 12 ? 'pm' : 'am') : undefined;
+          const ampm = hour != null ? (hour >= 12 ? 'pm' : 'am') : undefined;
 
           this.activePartsClone = {
             ...this.activeParts,
