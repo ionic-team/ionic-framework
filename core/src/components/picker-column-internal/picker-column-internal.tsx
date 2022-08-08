@@ -159,7 +159,7 @@ export class PickerColumnInternal implements ComponentInterface {
         const oldActive = getElementRoot(this.el).querySelector(`.${PICKER_COL_ACTIVE}`);
         oldActive?.classList.remove(PICKER_COL_ACTIVE);
         this.scrollActiveItemIntoView();
-        this.activeItem?.classList.add(PICKER_COL_ACTIVE);
+        this.activeItemEl?.classList.add(PICKER_COL_ACTIVE);
 
         this.initializeScrollListener();
       } else {
@@ -180,10 +180,10 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   componentDidRender() {
-    const { activeItem, items, isColumnVisible, value } = this;
+    const { activeItemEl, items, isColumnVisible, value } = this;
 
     if (isColumnVisible) {
-      if (activeItem) {
+      if (activeItemEl) {
         this.scrollActiveItemIntoView();
       } else if (items[0]?.value !== value) {
         /**
@@ -201,7 +201,7 @@ export class PickerColumnInternal implements ComponentInterface {
   /** @internal  */
   @Method()
   async scrollActiveItemIntoView() {
-    const activeEl = this.activeItem;
+    const activeEl = this.activeItemEl;
 
     if (activeEl) {
       this.centerPickerItemInView(activeEl, false);
@@ -296,7 +296,7 @@ export class PickerColumnInternal implements ComponentInterface {
     const { el } = this;
 
     let timeout: any;
-    let activeEl: HTMLElement | null = this.activeItem;
+    let activeEl: HTMLElement | null = this.activeItemEl;
 
     const scrollCallback = () => {
       raf(() => {
@@ -388,7 +388,7 @@ export class PickerColumnInternal implements ComponentInterface {
     });
   };
 
-  get activeItem() {
+  get activeItemEl() {
     return getElementRoot(this.el).querySelector(
       `.picker-item[data-value="${this.value}"]:not([disabled])`
     ) as HTMLElement | null;
