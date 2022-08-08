@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.2-nightly.20220808](https://github.com/ionic-team/ionic-framework/compare/v6.2.1...v6.2.2-nightly.20220808) (2022-08-08)
+
+
+### Bug Fixes
+
+* **angular:** DatetimeButton is declared on IonicModule ([#25727](https://github.com/ionic-team/ionic-framework/issues/25727)) ([76ad1d1](https://github.com/ionic-team/ionic-framework/commit/76ad1d18c81272435db1994977aa9dd5d880504a))
+* **datetime:** add correct null check when value changes ([#25716](https://github.com/ionic-team/ionic-framework/issues/25716)) ([36bea1c](https://github.com/ionic-team/ionic-framework/commit/36bea1ca2520c9eb9ee7705abb046607a52d198d)), closes [#25714](https://github.com/ionic-team/ionic-framework/issues/25714)
+* **react:** outlet will not clear in react 18 with hot reload ([#25703](https://github.com/ionic-team/ionic-framework/issues/25703)) ([3878bf7](https://github.com/ionic-team/ionic-framework/commit/3878bf76523f2e1c26c147473fd7c07ee4d0e820)), closes [#25507](https://github.com/ionic-team/ionic-framework/issues/25507)
+
+
+
+
+
 ## [6.2.1](https://github.com/ionic-team/ionic-framework/compare/v6.2.0...v6.2.1) (2022-08-03)
 
 
