@@ -167,10 +167,10 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   const headerEl = headerIndex.el;
 
   if (active) {
-    headerIndex.el.classList.remove('header-collapse-condense-inactive');
+    headerEl.classList.remove('header-collapse-condense-inactive');
     headerEl.removeAttribute('aria-hidden');
   } else {
-    headerIndex.el.classList.add('header-collapse-condense-inactive');
+    headerEl.classList.add('header-collapse-condense-inactive');
     headerEl.setAttribute('aria-hidden', 'true');
   }
 };
