@@ -3,7 +3,8 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import { getElementRoot, raf } from '../../utils/helpers';
+import { getElementRoot, raf, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
@@ -27,6 +28,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private isScrolling = false;
   private scrollEndCallback?: () => void;
   private isColumnVisible = false;
+  private inheritedAttributes: Attributes = {};
 
   @State() isActive = false;
 
@@ -147,6 +149,10 @@ export class PickerColumnInternal implements ComponentInterface {
    * height of 0px.
    */
   componentWillLoad() {
+    this.inheritedAttributes = {
+      ...inheritAttributes(this.el, ['aria-label']),
+    };
+
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
 
@@ -401,9 +407,8 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   render() {
-    const { items, color, isActive, numericInput, activeItem } = this;
+    const { items, color, isActive, numericInput, activeItem, inheritedAttributes } = this;
     const mode = getIonMode(this);
-
     return (
       <Host
         /*
@@ -416,6 +421,15 @@ export class PickerColumnInternal implements ComponentInterface {
           aria-label or aria-labelledby on the host.
         */
         role="spinbutton"
+        /*
+         * Spin buttons require an aria label.
+         * This default label is added as a default
+         * descriptor for the column. Developers may
+         * wish to choose a label that is more
+         * representative of the data users are
+         * trying to select.
+         */
+        aria-label="Picker Item"
         aria-valuenow={activeItem?.value}
         aria-valuetext={activeItem?.text}
         tabindex={0}
@@ -424,6 +438,10 @@ export class PickerColumnInternal implements ComponentInterface {
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
         })}
+        /*
+         * This allows the default aria label to be overridden.
+         */
+        {...inheritedAttributes}
       >
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>
