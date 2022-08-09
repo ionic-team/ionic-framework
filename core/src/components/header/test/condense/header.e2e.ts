@@ -1,12 +1,12 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('header: fade', () => {
+test.describe('header: condense', () => {
   test('should be hidden from screen readers when collapsed', async ({ page }, testInfo) => {
     test.skip(testInfo.project.metadata.mode === 'md', 'Logic only applies to iOS mode');
     test.skip(testInfo.project.metadata.rtl === true, 'No RTL-specific logic');
 
-    await page.goto('/src/components/header/test/fade');
+    await page.goto('/src/components/header/test/condense');
     const header = page.locator('#collapsibleHeader');
     const content = page.locator('ion-content');
 
