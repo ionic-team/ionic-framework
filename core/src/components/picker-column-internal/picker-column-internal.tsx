@@ -397,7 +397,7 @@ export class PickerColumnInternal implements ComponentInterface {
   get activeItem() {
     const { value, items } = this;
 
-    return items.find(item => item.value === value && !item.disabled);
+    return items.find((item) => item.value === value && !item.disabled);
   }
 
   render() {
