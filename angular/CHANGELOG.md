@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **angular:** DatetimeButton is declared on IonicModule ([#25727](https://github.com/ionic-team/ionic/issues/25727)) ([76ad1d1](https://github.com/ionic-team/ionic/commit/76ad1d18c81272435db1994977aa9dd5d880504a))
+
+
+
+
+
 ## [6.2.1](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1) (2022-08-03)
 
 **Note:** Version bump only for package @ionic/angular
