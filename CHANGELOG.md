@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.2](https://github.com/ionic-team/ionic-framework/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **angular:** DatetimeButton is declared on IonicModule ([#25727](https://github.com/ionic-team/ionic-framework/issues/25727)) ([76ad1d1](https://github.com/ionic-team/ionic-framework/commit/76ad1d18c81272435db1994977aa9dd5d880504a))
+* **datetime:** add correct null check when value changes ([#25716](https://github.com/ionic-team/ionic-framework/issues/25716)) ([36bea1c](https://github.com/ionic-team/ionic-framework/commit/36bea1ca2520c9eb9ee7705abb046607a52d198d)), closes [#25714](https://github.com/ionic-team/ionic-framework/issues/25714)
+* **datetime:** preferWheel respects column ordering by locale ([#25726](https://github.com/ionic-team/ionic-framework/issues/25726)) ([dee0f51](https://github.com/ionic-team/ionic-framework/commit/dee0f513ee443c0c69ea8e38a292c900e9c70221)), closes [#25722](https://github.com/ionic-team/ionic-framework/issues/25722)
+* **react:** outlet will not clear in react 18 with hot reload ([#25703](https://github.com/ionic-team/ionic-framework/issues/25703)) ([3878bf7](https://github.com/ionic-team/ionic-framework/commit/3878bf76523f2e1c26c147473fd7c07ee4d0e820)), closes [#25507](https://github.com/ionic-team/ionic-framework/issues/25507)
+* **vue:** go back to correct view with memory history ([#25732](https://github.com/ionic-team/ionic-framework/issues/25732)) ([8327889](https://github.com/ionic-team/ionic-framework/commit/832788971a7098e52812f66563cbc0a63d3e5df7)), closes [#25705](https://github.com/ionic-team/ionic-framework/issues/25705)
+
+
+
+
+
 ## [6.2.1](https://github.com/ionic-team/ionic-framework/compare/v6.2.0...v6.2.1) (2022-08-03)
 
 
