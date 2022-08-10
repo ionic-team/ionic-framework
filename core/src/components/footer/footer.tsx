@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
@@ -19,6 +19,11 @@ import { handleFooterFade } from './footer.utils';
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback: any;
+
+  private keyboardWillShowHandler?: () => void;
+  private keyboardWillHideHandler?: () => void;
+
+  @State() keyboardVisible = false;
 
   @Element() el!: HTMLIonFooterElement;
 
@@ -44,6 +49,30 @@ export class Footer implements ComponentInterface {
 
   componentDidUpdate() {
     this.checkCollapsibleFooter();
+  }
+
+  connectedCallback() {
+    if (typeof (window as any) !== 'undefined') {
+      this.keyboardWillShowHandler = () => {
+        this.keyboardVisible = true;
+      };
+
+      this.keyboardWillHideHandler = () => {
+        setTimeout(() => (this.keyboardVisible = false), 50);
+      };
+
+      window.addEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
+      window.addEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
+    }
+  }
+
+  disconnectedCallback() {
+    if (typeof (window as any) !== 'undefined' && !this.keyboardWillShowHandler) {
+      window.removeEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
+      window.removeEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
+
+      this.keyboardWillShowHandler = this.keyboardWillHideHandler = undefined;
+    }
   }
 
   private checkCollapsibleFooter = () => {
@@ -94,6 +123,9 @@ export class Footer implements ComponentInterface {
   render() {
     const { translucent, collapse } = this;
     const mode = getIonMode(this);
+    const tabs = this.el.closest('ion-tabs');
+    const tabBar = tabs ? tabs.querySelector('ion-tab-bar') : null;
+
     return (
       <Host
         role="contentinfo"
@@ -105,6 +137,7 @@ export class Footer implements ComponentInterface {
 
           [`footer-translucent`]: translucent,
           [`footer-translucent-${mode}`]: translucent,
+          ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot === 'top'),
 
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
