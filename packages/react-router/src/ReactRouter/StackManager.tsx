@@ -18,7 +18,8 @@ interface StackManagerProps {
 
 interface StackManagerState {}
 
-const isViewVisible = (el: HTMLElement) => !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
+const isViewVisible = (el: HTMLElement) =>
+  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
 
 export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
   id: string;
@@ -33,6 +34,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     isInOutlet: () => true,
   };
 
+  private clearOutletTimeout: any;
   private pendingPageTransition = false;
 
   constructor(props: StackManagerProps) {
@@ -46,9 +48,20 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentDidMount() {
+    if (this.clearOutletTimeout) {
+      /**
+       * The clearOutlet integration with React Router is a bit hacky.
+       * It uses a timeout to clear the outlet after a transition.
+       * In React v18, components are mounted and unmounted in development mode
+       * to check for side effects.
+       *
+       * This clearTimeout prevents the outlet from being cleared when the component is re-mounted,
+       * which should only happen in development mode and as a result of a hot reload.
+       */
+      clearTimeout(this.clearOutletTimeout);
+    }
     if (this.routerOutletElement) {
       this.setupRouterOutlet(this.routerOutletElement);
-      // console.log(`SM Mount - ${this.routerOutletElement.id} (${this.id})`);
       this.handlePageTransition(this.props.routeInfo);
     }
   }
@@ -67,8 +80,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentWillUnmount() {
-    // console.log(`SM UNMount - ${(this.routerOutletElement?.id as any).id} (${this.id})`);
-    this.context.clearOutlet(this.id);
+    this.clearOutletTimeout = this.context.clearOutlet(this.id);
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
@@ -142,13 +154,20 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * to find the leaving view item to transition between.
          */
         if (!leavingViewItem && this.props.routeInfo.prevRouteLastPathname) {
-          leavingViewItem = this.context.findViewItemByPathname(this.props.routeInfo.prevRouteLastPathname, this.id);
+          leavingViewItem = this.context.findViewItemByPathname(
+            this.props.routeInfo.prevRouteLastPathname,
+            this.id
+          );
         }
 
         /**
          * If the entering view is already visible and the leaving view is not, the transition does not need to occur.
          */
-        if (isViewVisible(enteringViewItem.ionPageElement) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement!)) {
+        if (
+          isViewVisible(enteringViewItem.ionPageElement) &&
+          leavingViewItem !== undefined &&
+          !isViewVisible(leavingViewItem.ionPageElement!)
+        ) {
           return;
         }
 
@@ -197,11 +216,16 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const canStart = () => {
       const config = getConfig();
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
-      if (!swipeEnabled) { return false; }
+      if (!swipeEnabled) {
+        return false;
+      }
 
       const { routeInfo } = this.props;
 
-      const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+      const propsToUse =
+        this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
+          ? this.prevProps.routeInfo
+          : ({ pathname: routeInfo.pushedByRoute || '' } as any);
       const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
 
       return (
@@ -213,7 +237,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * root url.
          */
         enteringViewItem.mount &&
-
         /**
          * When on the first page (whatever view
          * you land on after the root url) it
@@ -229,7 +252,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const onStart = async () => {
       const { routeInfo } = this.props;
 
-      const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+      const propsToUse =
+        this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
+          ? this.prevProps.routeInfo
+          : ({ pathname: routeInfo.pushedByRoute || '' } as any);
       const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
@@ -257,7 +283,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          */
         const { routeInfo } = this.props;
 
-        const propsToUse = (this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute) ? this.prevProps.routeInfo : { pathname: routeInfo.pushedByRoute || '' } as any;
+        const propsToUse =
+          this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
+            ? this.prevProps.routeInfo
+            : ({ pathname: routeInfo.pushedByRoute || '' } as any);
         const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
@@ -279,12 +308,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           ionPageElement.classList.add('ion-page-hidden');
         }
       }
-    }
+    };
 
     routerOutlet.swipeHandler = {
       canStart,
       onStart,
-      onEnd
+      onEnd,
     };
   }
 
@@ -333,7 +362,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         progressAnimation,
         animationBuilder: routeInfo.routeAnimation,
       });
-    }
+    };
 
     const routerOutlet = this.routerOutletElement!;
 

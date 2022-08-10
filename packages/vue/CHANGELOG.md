@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **vue:** go back to correct view with memory history ([#25732](https://github.com/ionic-team/ionic/issues/25732)) ([8327889](https://github.com/ionic-team/ionic/commit/832788971a7098e52812f66563cbc0a63d3e5df7)), closes [#25705](https://github.com/ionic-team/ionic/issues/25705)
+
+
+
+
+
 ## [6.2.1](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1) (2022-08-03)
 
 **Note:** Version bump only for package @ionic/vue
