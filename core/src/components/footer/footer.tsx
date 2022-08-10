@@ -137,7 +137,7 @@ export class Footer implements ComponentInterface {
 
           [`footer-translucent`]: translucent,
           [`footer-translucent-${mode}`]: translucent,
-          ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot === 'top'),
+          ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot !== 'bottom'),
 
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
