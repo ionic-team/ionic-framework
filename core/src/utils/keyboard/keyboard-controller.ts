@@ -1,3 +1,5 @@
+import { win } from "@utils/window";
+
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
  * 
@@ -12,29 +14,25 @@ export const createKeyboardController = (
   let keyboardVisible: boolean;
 
   const init = () => {
-    if (typeof (window as any) !== 'undefined') {
-      keyboardWillShowHandler = () => {
-        keyboardVisible = true;
-        if (keyboardChangeCallback) keyboardChangeCallback(true);
-      };
+    keyboardWillShowHandler = () => {
+      keyboardVisible = true;
+      if (keyboardChangeCallback) keyboardChangeCallback(true);
+    };
 
-      keyboardWillHideHandler = () => {
-        keyboardVisible = false;
-        if (keyboardChangeCallback) keyboardChangeCallback(false);
-      };
+    keyboardWillHideHandler = () => {
+      keyboardVisible = false;
+      if (keyboardChangeCallback) keyboardChangeCallback(false);
+    };
 
-      window.addEventListener('keyboardWillShow', keyboardWillShowHandler);
-      window.addEventListener('keyboardWillHide', keyboardWillHideHandler);
-    }
+    win?.addEventListener('keyboardWillShow', keyboardWillShowHandler);
+    win?.addEventListener('keyboardWillHide', keyboardWillHideHandler);
   };
 
   const destroy = () => {
-    if (typeof (window as any) !== 'undefined') {
-      window.removeEventListener('keyboardWillShow', keyboardWillShowHandler!);
-      window.removeEventListener('keyboardWillHide', keyboardWillHideHandler!);
+    win?.removeEventListener('keyboardWillShow', keyboardWillShowHandler!);
+    win?.removeEventListener('keyboardWillHide', keyboardWillHideHandler!);
 
-      keyboardWillShowHandler = keyboardWillHideHandler = undefined;
-    }
+    keyboardWillShowHandler = keyboardWillHideHandler = undefined;
   };
 
   const isKeyboardVisible = () => keyboardVisible;
