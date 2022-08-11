@@ -60,7 +60,7 @@ export class TabBar implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.keyboardCtrl = createKeyboardController(keyboardOpen => {
+    this.keyboardCtrl = createKeyboardController((keyboardOpen) => {
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
     });
 

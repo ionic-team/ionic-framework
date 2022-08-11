@@ -1,14 +1,12 @@
-import { win } from "@utils/window";
+import { win } from '@utils/window';
 
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
- * 
+ *
  * @internal
  * @param keyboardChangeCallback A function to call when the keyboard opens or closes.
  */
-export const createKeyboardController = (
-  keyboardChangeCallback?: (keyboardOpen: boolean) => void
-) => {
+export const createKeyboardController = (keyboardChangeCallback?: (keyboardOpen: boolean) => void) => {
   let keyboardWillShowHandler: (() => void) | undefined;
   let keyboardWillHideHandler: (() => void) | undefined;
   let keyboardVisible: boolean;
@@ -41,7 +39,7 @@ export const createKeyboardController = (
 };
 
 export type KeyboardController = {
-  init: () => void,
-  destroy: () => void,
-  isKeyboardVisible: () => boolean
+  init: () => void;
+  destroy: () => void;
+  isKeyboardVisible: () => boolean;
 };
