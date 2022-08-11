@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
+import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
+import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 
 import { getIonMode } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
@@ -19,9 +21,7 @@ import { handleFooterFade } from './footer.utils';
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback: any;
-
-  private keyboardWillShowHandler?: () => void;
-  private keyboardWillHideHandler?: () => void;
+  private keyboardCtrl: KeyboardController | null = null;
 
   @State() keyboardVisible = false;
 
@@ -52,26 +52,16 @@ export class Footer implements ComponentInterface {
   }
 
   connectedCallback() {
-    if (typeof (window as any) !== 'undefined') {
-      this.keyboardWillShowHandler = () => {
-        this.keyboardVisible = true;
-      };
+    this.keyboardCtrl = createKeyboardController(keyboardOpen => {
+      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+    });
 
-      this.keyboardWillHideHandler = () => {
-        setTimeout(() => (this.keyboardVisible = false), 50);
-      };
-
-      window.addEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
-      window.addEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
-    }
+    this.keyboardCtrl.init();
   }
 
   disconnectedCallback() {
-    if (typeof (window as any) !== 'undefined' && !this.keyboardWillShowHandler) {
-      window.removeEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
-      window.removeEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
-
-      this.keyboardWillShowHandler = this.keyboardWillHideHandler = undefined;
+    if (this.keyboardCtrl) {
+      this.keyboardCtrl.destroy();
     }
   }
 
