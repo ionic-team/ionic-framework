@@ -353,7 +353,7 @@ export class Datetime implements ComponentInterface {
           this.activePartsClone = [...valueDateParts];
         } else {
           const { month, day, year, hour, minute } = valueDateParts;
-          const ampm = hour ? (hour >= 12 ? 'pm' : 'am') : undefined;
+          const ampm = hour != null ? (hour >= 12 ? 'pm' : 'am') : undefined;
 
           this.activePartsClone = {
             ...this.activeParts,
@@ -1522,7 +1522,27 @@ export class Datetime implements ComponentInterface {
       ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
-    return [this.renderMonthPickerColumn(months), this.renderDayPickerColumn(days), this.renderYearPickerColumn(years)];
+    /**
+     * Certain locales show the day before the month.
+     */
+    const showMonthFirst = isMonthFirstLocale(this.locale, { month: 'numeric', day: 'numeric' });
+
+    let renderArray = [];
+    if (showMonthFirst) {
+      renderArray = [
+        this.renderMonthPickerColumn(months),
+        this.renderDayPickerColumn(days),
+        this.renderYearPickerColumn(years),
+      ];
+    } else {
+      renderArray = [
+        this.renderDayPickerColumn(days),
+        this.renderMonthPickerColumn(months),
+        this.renderYearPickerColumn(years),
+      ];
+    }
+
+    return renderArray;
   }
 
   private renderDayPickerColumn(days: PickerColumnItem[]) {
