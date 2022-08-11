@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.3-nightly.20220811](https://github.com/ionic-team/ionic-framework/compare/v6.2.2...v6.2.3-nightly.20220811) (2022-08-11)
+
+
+### Bug Fixes
+
+* **item:** form validation caret color renders correctly ([#25725](https://github.com/ionic-team/ionic-framework/issues/25725)) ([de20541](https://github.com/ionic-team/ionic-framework/commit/de20541486bcf6e1d15f0ae5b0c5f177cce5eb38)), closes [#25719](https://github.com/ionic-team/ionic-framework/issues/25719)
+
+
+
+
+
 ## [6.2.2](https://github.com/ionic-team/ionic-framework/compare/v6.2.1...v6.2.2) (2022-08-10)
 
 
