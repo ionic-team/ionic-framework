@@ -103,7 +103,7 @@
 }
 
 :host(.item-has-focus) .item-native {
-  caret-color: var(--highlight-color-focused);
+  caret-color: var(--highlight-background);
 }
 
 // Material Design Item Lines

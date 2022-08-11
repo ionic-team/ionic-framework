@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **datetime:** add correct null check when value changes ([#25716](https://github.com/ionic-team/ionic/issues/25716)) ([36bea1c](https://github.com/ionic-team/ionic/commit/36bea1ca2520c9eb9ee7705abb046607a52d198d)), closes [#25714](https://github.com/ionic-team/ionic/issues/25714)
+* **datetime:** preferWheel respects column ordering by locale ([#25726](https://github.com/ionic-team/ionic/issues/25726)) ([dee0f51](https://github.com/ionic-team/ionic/commit/dee0f513ee443c0c69ea8e38a292c900e9c70221)), closes [#25722](https://github.com/ionic-team/ionic/issues/25722)
+
+
+
+
+
+## [6.2.1](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* **datetime:** display time in user's timezone after selection ([#25694](https://github.com/ionic-team/ionic/issues/25694)) ([11c69c8](https://github.com/ionic-team/ionic/commit/11c69c8df50b75440c9e876b4d99d469d16e144f)), closes [#25693](https://github.com/ionic-team/ionic/issues/25693)
+* **datetime:** selecting today with multiple date select now works ([#25699](https://github.com/ionic-team/ionic/issues/25699)) ([86b7000](https://github.com/ionic-team/ionic/commit/86b7000bcd1b4519e8c20907050e15ba7c99bab0))
+* **nav:** exclude nav from custom dialog ([#25689](https://github.com/ionic-team/ionic/issues/25689)) ([d1e517b](https://github.com/ionic-team/ionic/commit/d1e517bfef03b822dfa7651681013277762eda08)), closes [#25677](https://github.com/ionic-team/ionic/issues/25677) [#25688](https://github.com/ionic-team/ionic/issues/25688)
+
+
+
+
+
 # [6.2.0 Chromium](https://github.com/ionic-team/ionic-framework/compare/v6.1.15...v6.2.0) (2022-07-27)
 
 
