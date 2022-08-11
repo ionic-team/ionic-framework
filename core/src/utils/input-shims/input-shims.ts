@@ -45,7 +45,7 @@ export const startInputShims = (config: Config) => {
      * date/datetime-locale inputs on mobile devices show date picker
      * overlays instead of keyboards. As a result, scroll assist is
      * not needed. This also works around a bug in iOS <16 where
-     * scroll assist causes the browser the lock up. See FW-1997.
+     * scroll assist causes the browser to lock up. See FW-1997.
      */
     const isDateInput = inputEl.type === 'date' || inputEl.type === 'datetime-local';
     if (
