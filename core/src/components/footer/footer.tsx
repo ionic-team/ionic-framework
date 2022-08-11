@@ -23,7 +23,7 @@ export class Footer implements ComponentInterface {
   private contentScrollCallback: any;
   private keyboardCtrl: KeyboardController | null = null;
 
-  @State() keyboardVisible = false;
+  @State() private keyboardVisible = false;
 
   @Element() el!: HTMLIonFooterElement;
 
