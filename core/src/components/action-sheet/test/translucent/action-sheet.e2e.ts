@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('action sheet: translucent', () => {
-  test('should not have visual regressions', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode === 'md', 'Translucent effect is only active on iOS mode');
+  test('should not have visual regressions', async ({ page, skip }, testInfo) => {
+    skip.mode('md', 'Translucent effect is only active on iOS mode');
     test.skip(
       testInfo.project.metadata.rtl === true,
       'This tests how the component is painted, not layout. RTL tests are not needed here'
