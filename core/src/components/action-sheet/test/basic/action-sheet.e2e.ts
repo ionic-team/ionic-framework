@@ -10,8 +10,8 @@ test.describe('action sheet: basic', () => {
     actionSheetFixture = new ActionSheetFixture(page);
   });
   test.describe('action sheet: data', () => {
-    test('should return data', async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('should return data', async ({ page, skip }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
       await actionSheetFixture.open('#buttonData');
@@ -22,8 +22,8 @@ test.describe('action sheet: basic', () => {
       await ionActionSheetDidDismiss.next();
       expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' }, role: undefined });
     });
-    test('should return cancel button data', async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('should return cancel button data', async ({ page, skip }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
       await actionSheetFixture.open('#buttonData');
@@ -36,8 +36,8 @@ test.describe('action sheet: basic', () => {
     });
   });
   test.describe('action sheet: attributes', () => {
-    test('should set htmlAttributes', async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('should set htmlAttributes', async ({ page, skip }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       await actionSheetFixture.open('#basic');
 
       const actionSheet = page.locator('ion-action-sheet');
@@ -73,15 +73,15 @@ test.describe('action sheet: basic', () => {
       await actionSheetFixture.open('#scrollWithoutCancel');
       await actionSheetFixture.screenshot('scroll-without-cancel');
     });
-    test('should open custom backdrop action sheet', async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('should open custom backdrop action sheet', async ({ page, skip }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       await actionSheetFixture.open('#customBackdrop');
 
       const backdrop = page.locator('ion-action-sheet ion-backdrop');
       expect(backdrop).toHaveCSS('opacity', '1');
     });
-    test('should open alert from action sheet', async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('should open alert from action sheet', async ({ page, skip }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
       await actionSheetFixture.open('#alertFromActionSheet');
 
@@ -89,8 +89,8 @@ test.describe('action sheet: basic', () => {
 
       await ionAlertDidPresent.next();
     });
-    test('should not dismiss action sheet when backdropDismiss: false', async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('should not dismiss action sheet when backdropDismiss: false', async ({ page, skip }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       await actionSheetFixture.open('#noBackdropDismiss');
 
       const actionSheet = page.locator('ion-action-sheet');
@@ -100,8 +100,8 @@ test.describe('action sheet: basic', () => {
     });
   });
   test.describe('action sheet: focus trap', () => {
-    test('it should trap focus in action sheet', async ({ page, browserName }, testInfo) => {
-      test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+    test('it should trap focus in action sheet', async ({ page, skip, browserName }) => {
+      skip.rtl('This does not test LTR vs. RTL layout.');
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       await actionSheetFixture.open('#basic');

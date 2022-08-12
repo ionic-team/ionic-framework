@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('radio-group', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL logic.');
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl('This does not test LTR vs RTL logic.');
     await page.goto('/src/components/radio-group/test/search');
   });
 

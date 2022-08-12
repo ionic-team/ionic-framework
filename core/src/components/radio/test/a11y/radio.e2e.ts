@@ -2,9 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('radio: a11y', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL logic.');
+  test.beforeEach(({ skip }) => {
+    skip.rtl('This does not test LTR vs RTL logic.');
   });
   test('tabbing should switch between radio groups', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';

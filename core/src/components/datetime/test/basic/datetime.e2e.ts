@@ -185,9 +185,8 @@ test.describe('datetime: footer', () => {
 });
 
 test.describe('datetime: swiping', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL layouts.');
+  test.beforeEach(({ skip }, testInfo) => {
+    skip.rtl('This does not test LTR vs RTL layouts.');
     test.skip(testInfo.project.metadata.mode === 'ios', 'This does not have mode-specific logic.');
   });
   test('should move to prev month by swiping', async ({ page }) => {

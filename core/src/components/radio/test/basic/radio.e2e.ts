@@ -97,9 +97,8 @@ test.describe('radio: rendering', () => {
 });
 
 test.describe('radio: interaction', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL logic.');
+  test.beforeEach(({ skip }) => {
+    skip.rtl('This does not test LTR vs RTL logic.');
   });
   test('radio should be checked when activated', async ({ page }) => {
     await page.setContent(`
