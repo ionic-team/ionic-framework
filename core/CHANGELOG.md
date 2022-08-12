@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.3-nightly.20220812](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3-nightly.20220812) (2022-08-12)
+
+
+### Bug Fixes
+
+* **header:** hide from screen readers when collapsed ([#25744](https://github.com/ionic-team/ionic/issues/25744)) ([d0ba963](https://github.com/ionic-team/ionic/commit/d0ba9635998f2157970156438c1bb74d6b9682f2))
+* **input:** exclude date inputs from scroll assist ([#25749](https://github.com/ionic-team/ionic/issues/25749)) ([abb56d2](https://github.com/ionic-team/ionic/commit/abb56d22b4a81d1bc34c689de4ef7218e7503b20)), closes [#25745](https://github.com/ionic-team/ionic/issues/25745)
+* **item:** form validation caret color renders correctly ([#25725](https://github.com/ionic-team/ionic/issues/25725)) ([de20541](https://github.com/ionic-team/ionic/commit/de20541486bcf6e1d15f0ae5b0c5f177cce5eb38)), closes [#25719](https://github.com/ionic-team/ionic/issues/25719)
+
+
+
+
+
 ## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
 
 
