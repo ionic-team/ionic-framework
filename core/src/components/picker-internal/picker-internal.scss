@@ -37,10 +37,12 @@
   width: 100%;
 
   /**
-   * This is needed for WebKit
-   * otherwise the fade will appear
-   * underneath the picker.
+   * The transform and z-index
+   * are needed for WebKit otherwise
+   * the fade will appear underneath the picker.
    */
+  transform: translateZ(0);
+
   z-index: 1;
 
   pointer-events: none;
