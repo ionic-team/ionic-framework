@@ -488,7 +488,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
 
-    this.currentTransition = dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    this.currentTransition = dismiss(
+      this,
+      data,
+      role,
+      'popoverLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      this.keepContentsMounted,
+      this.event
+    );
     const shouldDismiss = await this.currentTransition;
     if (shouldDismiss) {
       if (destroyKeyboardInteraction) {

@@ -177,7 +177,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
+    return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, false, this.position);
   }
 
   /**

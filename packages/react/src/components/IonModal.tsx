@@ -1,10 +1,11 @@
 import { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
-import React, { useRef } from 'react';
+import React from 'react';
 
 import { ReactDelegate } from '../framework-delegate';
 
 import { createReactComponent } from './react-component-lib';
+import { camelToDashCase, isCoveredByReact } from './react-component-lib/utils';
 import { createForwardRef } from './utils';
 
 const IonModalInner = createReactComponent<
@@ -19,69 +20,44 @@ type IonModalProps = JSX.IonModal & {
 const IonModalInternal: React.FC<IonModalProps> = ({
   children,
   forwardedRef,
-  isOpen,
+  onWillPresent,
+  onDidPresent,
+  onWillDismiss,
+  onDidDismiss,
   ...restOfProps
 }) => {
-  const [isOpenState, setIsOpenState] = React.useState(isOpen ?? false);
-  const wrapperRef = useRef(null);
-
-  /**
-   * The IonModal implementation is not reliant on the framework delegate
-   * for adding or removing views. We construct an instance of the delegate
-   * and pass it to the ion-modal element to opt-out of the core framework
-   * delegate's behavior.
-   */
   const delegate = ReactDelegate(
     () => {},
     () => {}
   );
 
-  const mountContent = isOpenState || restOfProps.keepContentsMounted;
+  const propsToPass = Object.keys(restOfProps).reduce((acc, name) => {
+    if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+      const eventName = name.substring(2).toLowerCase();
+      if (isCoveredByReact(eventName)) {
+        (acc as any)[name] = (restOfProps as any)[name];
+      }
+    } else if (['string', 'boolean', 'number'].includes(typeof (restOfProps as any)[name])) {
+      (acc as any)[camelToDashCase(name)] = (restOfProps as any)[name];
+    }
+    return acc;
+  }, {});
+
+  const mountContent = restOfProps.isOpen || restOfProps.keepContentsMounted;
 
   return (
     <IonModalInner
       delegate={delegate}
-      isOpen={isOpen}
       ref={forwardedRef}
-      {...restOfProps}
-      onWillPresent={(ev) => {
-        setIsOpenState(true);
-        if (restOfProps.onWillPresent) {
-          restOfProps.onWillPresent(ev);
-        }
-      }}
-      onDidDismiss={(ev) => {
-        /**
-         * Unmount the inner component.
-         * React will call Node.removeChild
-         * which expects the child to be
-         * a direct descendent of the parent
-         * but due to the presence of
-         * Web Component slots, this is not
-         * always the case. To work around this
-         * we move the inner component to the root
-         * of the Web Component so React can
-         * cleanup properly.
-         */
-        const wrapper = wrapperRef.current;
-
-        if (wrapper && forwardedRef) {
-          const el = forwardedRef as React.MutableRefObject<HTMLIonModalElement>;
-          if (el.current) {
-            el.current.append(wrapper);
-          }
-          setIsOpenState(false);
-        }
-
-        if (restOfProps.onDidDismiss) {
-          restOfProps.onDidDismiss(ev);
-        }
-      }}
+      {...propsToPass}
+      onWillPresent={onWillPresent}
+      onDidPresent={onDidPresent}
+      onWillDismiss={onWillDismiss}
+      onDidDismiss={onDidDismiss}
     >
       {mountContent && (
         <div
           id="ion-react-wrapper"
-          ref={wrapperRef}
           style={{
             display: 'flex',
             flexDirection: 'column',
