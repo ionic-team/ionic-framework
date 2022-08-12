@@ -18,7 +18,7 @@ import {
   locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
-import type { E2EPage, SetIonViewportOptions } from './playwright-declarations';
+import type { E2EPage, E2ESkip, BrowserNameOrCallback, SetIonViewportOptions } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
@@ -29,6 +29,7 @@ type CustomTestArgs = PlaywrightTestArgs &
 
 type CustomFixtures = {
   page: E2EPage;
+  skip: E2ESkip;
 };
 
 /**
@@ -62,5 +63,23 @@ export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     page = await extendPageFixture(page, testInfo);
     await use(page);
+  },
+  skip: {
+    rtl: (reason: string) => {
+      const testInfo: TestInfo = base.info();
+      base.skip(testInfo.project.metadata.rtl === true, reason);
+    },
+    browser: (browserNameOrFunction: BrowserNameOrCallback, reason: string) => {
+      const browserName = base.info().project.use.browserName!;
+
+      if (typeof browserNameOrFunction === 'function') {
+        base.skip(browserNameOrFunction(browserName), reason);
+      } else {
+        base.skip(browserName === browserNameOrFunction, reason);
+      }
+    },
+    mode: (mode: string, reason: string) => {
+      base.skip(base.info().project.metadata.mode === mode, reason);
+    },
   },
 });

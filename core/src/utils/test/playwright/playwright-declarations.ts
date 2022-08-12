@@ -96,6 +96,14 @@ export interface E2EPage extends Page {
   _e2eEvents: Map<number, any>;
 }
 
+export type BrowserNameOrCallback = string | ((browserName: string) => boolean);
+
+export interface E2ESkip {
+  rtl: (reason: string) => void;
+  browser: (browserNameOrCallback: BrowserNameOrCallback, reason: string) => void;
+  mode: (mode: string, reason: string) => void;
+}
+
 export interface SetIonViewportOptions {
   /**
    * `true` if the viewport should be scaled to match the `ion-content`
