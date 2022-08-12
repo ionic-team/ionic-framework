@@ -1,5 +1,6 @@
 import { FrameworkDelegate, OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
+
 import { ReactInlineOverlayDelegate } from '../framework-delegate';
 
 import {
