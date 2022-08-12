@@ -15,23 +15,18 @@ export const ReactDelegate = (
     propsOrDataObj?: any,
     cssClasses?: string[]
   ): Promise<any> => {
-    if (component) {
-      const div = document.createElement('div');
-      cssClasses && div.classList.add(...cssClasses);
-      parentElement.appendChild(div);
-      /**
-       * Attaching the component to the DOM is a two-step process.
-       * 1. Create a React element from the component and supplied prop.
-       * 2. Attach the React element to the DOM.
-       *
-       */
-      const componentWithProps = component(propsOrDataObj);
-      const hostComponent = createPortal(componentWithProps, div);
-      refMap.set(component, hostComponent);
-      addView(hostComponent);
+    const div = document.createElement('div');
+    cssClasses && div.classList.add(...cssClasses);
+    parentElement.appendChild(div);
 
-      return Promise.resolve(div);
-    }
+    const componentWithProps = component(propsOrDataObj);
+    const hostComponent = createPortal(componentWithProps, div);
+
+    refMap.set(component, hostComponent);
+
+    addView(hostComponent);
+
+    return Promise.resolve(div);
   };
 
   const removeViewFromDom = (_container: any, component: ReactComponent): Promise<void> => {
