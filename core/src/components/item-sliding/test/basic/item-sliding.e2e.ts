@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('item-sliding: basic', () => {
-  test('should not scroll when the item-sliding is swiped', async ({ page, browserName, skip }) => {
-    test.skip(browserName === 'webkit', 'mouse.wheel is not available in WebKit');
+  test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
+    skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl('This feature does not have RTL-specific behaviors');
 
     await page.goto(`/src/components/item-sliding/test/basic`);

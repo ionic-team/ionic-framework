@@ -223,8 +223,8 @@ test.describe('datetime: swiping', () => {
 
     await expect(calendarHeader).toHaveText(/June 2022/);
   });
-  test('should not re-render if swipe is in progress', async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit', 'Wheel is not available in WebKit');
+  test('should not re-render if swipe is in progress', async ({ page, skip }) => {
+    skip.browser('webkit', 'Wheel is not available in WebKit');
 
     await page.setContent(`
       <ion-datetime value="2022-05-03"></ion-datetime>

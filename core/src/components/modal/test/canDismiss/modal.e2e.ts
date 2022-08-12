@@ -134,8 +134,8 @@ test.describe('modal: canDismiss', () => {
   });
 
   test.describe('card modal - iOS swiping', () => {
-    test.beforeEach(async ({ page }, testInfo) => {
-      test.skip(testInfo.project.metadata.mode !== 'ios', 'Swipe to close on a modal is only available in iOS mode.');
+    test.beforeEach(async ({ page, skip }) => {
+      skip.mode('md', 'Swipe to close on a modal is only available in iOS mode.');
 
       await page.click('#radio-card');
     });

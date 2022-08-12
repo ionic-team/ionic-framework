@@ -12,8 +12,8 @@ test.describe('button: basic', () => {
 });
 
 test.describe('button: ripple effect', () => {
-  test('should not have visual regressions', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode !== 'md', 'Ripple effect is only available in MD mode.');
+  test('should not have visual regressions', async ({ page, skip }) => {
+    skip.mode('ios', 'Ripple effect is only available in MD mode.');
 
     await page.goto(`/src/components/button/test/basic?ionic:_testing=false`);
 

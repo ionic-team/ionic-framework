@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime-button: switching to correct view', () => {
-  test.beforeEach(async ({ page, skip }, testInfo) => {
+  test.beforeEach(async ({ page, skip }) => {
     skip.rtl('No layout tests');
     skip.mode('ios', 'No mode-specific logic');
 

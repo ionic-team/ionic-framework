@@ -54,8 +54,8 @@ test.describe('range: basic', () => {
     expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
   });
 
-  test('should not scroll when the knob is swiped', async ({ page, skip, browserName }) => {
-    test.skip(browserName === 'webkit', 'mouse.wheel is not available in WebKit');
+  test('should not scroll when the knob is swiped', async ({ page, skip }) => {
+    skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl('This feature does not have RTL-specific behaviors');
 
     await page.goto(`/src/components/range/test/basic`);
