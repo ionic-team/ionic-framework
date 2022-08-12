@@ -495,7 +495,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       'popoverLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
-      this.keepContentsMounted,
       this.event
     );
     const shouldDismiss = await this.currentTransition;

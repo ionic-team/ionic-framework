@@ -1,5 +1,7 @@
-import { OverlayEventDetail } from '@ionic/core/components'
+import { OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
+import { createPortal } from 'react-dom';
+import { ReactTeleportDelegate } from '../framework-delegate';
 
 import {
   attachProps,
@@ -12,7 +14,7 @@ import { createForwardRef } from './utils';
 
 type InlineOverlayState = {
   isOpen: boolean;
-}
+};
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
@@ -32,25 +34,45 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
+  const delegate = ReactTeleportDelegate();
+  const ReactComponent = class extends React.Component<
+    IonicReactInternalProps<PropType>,
+    InlineOverlayState
+  > {
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>
+    stableMergedRefs: React.RefCallback<HTMLElement>;
+    el: HTMLElement;
+
+    modalRoot = document.querySelector('ion-app') || document.body;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
       // Component is hidden by default
       this.state = { isOpen: false };
       // Create a local ref to the inner child element.
       this.wrapperRef = React.createRef();
+
+      this.el = document.createElement('div');
     }
 
     componentDidMount() {
       this.componentDidUpdate(this.props);
+      /**
+       * The portal element is inserted in the DOM tree after
+       * the Modal's children are mounted, meaning that children
+       * will be mounted on a detached DOM node. If a child
+       * component requires to be attached to the DOM tree
+       * immediately when mounted, add state to Modal and only
+       * render the children when Modal is inserted in the DOM tree.
+       *
+       * @see https://reactjs.org/docs/portals.html#event-bubbling-through-portals
+       */
+      this.modalRoot.appendChild(this.el);
 
       /**
        * Mount the inner component
@@ -99,7 +121,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
-      attachProps(node, this.props, prevProps);
+      attachProps(node, { ...this.props, delegate }, prevProps);
+    }
+
+    componentWillUnmount() {
+      this.modalRoot.removeChild(this.el);
     }
 
     render() {
@@ -129,17 +155,27 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so conditionally render the component
        * based on the isOpen state.
        */
-      return createElement(tagName, newProps, (this.state.isOpen || this.props.keepContentsMounted) ?
-        createElement('div', {
-          id: 'ion-react-wrapper',
-          ref: this.wrapperRef,
-          style: {
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
-          }
-        }, children) :
-        null
+      return createPortal(
+        createElement(
+          tagName,
+          newProps,
+          this.state.isOpen || this.props.keepContentsMounted
+            ? createElement(
+                'div',
+                {
+                  id: 'ion-react-wrapper',
+                  ref: this.wrapperRef,
+                  style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                  },
+                },
+                children
+              )
+            : null
+        ),
+        this.el
       );
     }
 
