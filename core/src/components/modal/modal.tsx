@@ -701,17 +701,26 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     const enteringAnimation = activeAnimations.get(this) || [];
+    const { delegate, inline } = this.getDelegate();
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
-      presentingEl: this.presentingElement,
-      currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-    });
+    this.currentTransition = dismiss(
+      this,
+      data,
+      role,
+      'modalLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      inline === false || delegate === undefined,
+      {
+        presentingEl: this.presentingElement,
+        currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+      }
+    );
 
     const dismissed = await this.currentTransition;
 
     if (dismissed) {
-      const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
 
       writeTask(() => this.el.classList.remove('show-modal'));

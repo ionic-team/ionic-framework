@@ -1,7 +1,6 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import { FrameworkDelegate, OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
 import { createPortal } from 'react-dom';
-import { ReactTeleportDelegate } from '../framework-delegate';
 
 import {
   attachProps,
@@ -34,7 +33,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const delegate = ReactTeleportDelegate();
   const ReactComponent = class extends React.Component<
     IonicReactInternalProps<PropType>,
     InlineOverlayState
@@ -43,8 +41,17 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
     el: HTMLElement;
+    /**
+     * The framework delegate is effectively a no-op.
+     * We do not want the Core implementation to remove the DOM node,
+     * as it will cause problems with React rendering.
+     */
+    delegate: FrameworkDelegate = {
+      attachViewToDom: () => Promise.resolve(this.el),
+      removeViewFromDom: () => Promise.resolve(),
+    };
 
-    modalRoot = document.querySelector('ion-app') || document.body;
+    appRoot = document.querySelector('ion-app') || document.body;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
@@ -72,7 +79,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        *
        * @see https://reactjs.org/docs/portals.html#event-bubbling-through-portals
        */
-      this.modalRoot.appendChild(this.el);
+      this.appRoot.appendChild(this.el);
 
       /**
        * Mount the inner component
@@ -121,11 +128,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
-      attachProps(node, { ...this.props, delegate }, prevProps);
+      attachProps(node, { ...this.props, delegate: this.delegate }, prevProps);
     }
 
     componentWillUnmount() {
-      this.modalRoot.removeChild(this.el);
+      this.appRoot.removeChild(this.el);
     }
 
     render() {

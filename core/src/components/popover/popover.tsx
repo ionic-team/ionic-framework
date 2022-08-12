@@ -487,6 +487,12 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (dismissParentPopover && this.parentPopover) {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
+    /**
+     * If using popover inline
+     * we potentially need to use the coreDelegate
+     * so that this works in vanilla JS apps
+     */
+    const { delegate, inline } = this.getDelegate();
 
     this.currentTransition = dismiss(
       this,
@@ -495,6 +501,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       'popoverLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
+      inline === false || delegate === undefined,
       this.event
     );
     const shouldDismiss = await this.currentTransition;
@@ -508,12 +515,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         this.destroyDismissInteraction = undefined;
       }
 
-      /**
-       * If using popover inline
-       * we potentially need to use the coreDelegate
-       * so that this works in vanilla JS apps
-       */
-      const { delegate } = this.getDelegate();
       await detachComponent(delegate, this.usersElement);
     }
 

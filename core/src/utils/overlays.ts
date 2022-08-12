@@ -473,6 +473,7 @@ export const dismiss = async (
   name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
+  removeOverlay = true,
   opts?: any
 ): Promise<boolean> => {
   if (!overlay.presented) {
@@ -514,8 +515,9 @@ export const dismiss = async (
     console.error(err);
   }
 
-  // overlay.el.remove();
-
+  if (removeOverlay) {
+    overlay.el.remove();
+  }
   return true;
 };
 
