@@ -41,3 +41,51 @@ export const ReactDelegate = (
     removeViewFromDom,
   };
 };
+
+export const ReactTeleportDelegate = (): FrameworkDelegate => {
+  const teleport = document.createComment('ionic teleport');
+  let inlineOverlay: HTMLElement;
+
+  const attachViewToDom = async (
+    parentElement: HTMLElement,
+    _component: ReactComponent,
+    _propsOrDataObj?: any,
+    _cssClasses?: string[]
+  ): Promise<any> => {
+    /**
+     * Inline overlays operate in a special way. Since the overlay is
+     * rendered as a child of a component, we need to "teleport" the
+     * DOM node to the app root so that it is rendered above all other
+     * components.
+     */
+    inlineOverlay = parentElement;
+
+    const appRoot = document.querySelector('ion-app') || document.body;
+    const fragment = document.createDocumentFragment();
+
+    inlineOverlay.parentElement?.insertBefore(teleport, inlineOverlay);
+
+    fragment.appendChild(inlineOverlay);
+    appRoot.appendChild(fragment);
+
+    return fragment;
+  };
+
+  const removeViewFromDom = async (
+    _container: HTMLElement,
+    _component: ReactComponent
+  ): Promise<void> => {
+    /**
+     * We need to re-insert the inline overlay back into the
+     * original location in the DOM, before it was presented.
+     */
+    teleport.parentElement?.insertBefore(inlineOverlay, teleport);
+    // Remove the HTML comment marking the teleport location.
+    teleport.remove();
+  };
+
+  return {
+    attachViewToDom,
+    removeViewFromDom,
+  };
+};

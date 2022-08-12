@@ -1,6 +1,6 @@
 import { FrameworkDelegate, OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
-import { createPortal } from 'react-dom';
+import { ReactTeleportDelegate } from '../framework-delegate';
 
 import {
   attachProps,
@@ -40,18 +40,12 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
-    el: HTMLElement;
     /**
      * The framework delegate is effectively a no-op.
      * We do not want the Core implementation to remove the DOM node,
      * as it will cause problems with React rendering.
      */
-    delegate: FrameworkDelegate = {
-      attachViewToDom: () => Promise.resolve(this.el),
-      removeViewFromDom: () => Promise.resolve(),
-    };
-
-    appRoot = document.querySelector('ion-app') || document.body;
+    delegate: FrameworkDelegate = ReactTeleportDelegate();
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
@@ -63,23 +57,10 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.state = { isOpen: false };
       // Create a local ref to the inner child element.
       this.wrapperRef = React.createRef();
-
-      this.el = document.createElement('div');
     }
 
     componentDidMount() {
       this.componentDidUpdate(this.props);
-      /**
-       * The portal element is inserted in the DOM tree after
-       * the Modal's children are mounted, meaning that children
-       * will be mounted on a detached DOM node. If a child
-       * component requires to be attached to the DOM tree
-       * immediately when mounted, add state to Modal and only
-       * render the children when Modal is inserted in the DOM tree.
-       *
-       * @see https://reactjs.org/docs/portals.html#event-bubbling-through-portals
-       */
-      this.appRoot.appendChild(this.el);
 
       /**
        * Mount the inner component
@@ -131,10 +112,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       attachProps(node, { ...this.props, delegate: this.delegate }, prevProps);
     }
 
-    componentWillUnmount() {
-      this.appRoot.removeChild(this.el);
-    }
-
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
@@ -157,15 +134,27 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       };
 
       /**
-       * We only want the inner component
-       * to be mounted if the overlay is open,
-       * so conditionally render the component
-       * based on the isOpen state.
+       * The React element is inserted in the DOM tree after
+       * the overlay's children are mounted, meaning that children
+       * will be mounted on a detached DOM node. If a child
+       * component requires to be attached to the DOM tree
+       * immediately when mounted, add state to the overlay and only
+       * render the children when the overlay is inserted in the DOM tree.
+       *
+       * @see https://reactjs.org/docs/portals.html#event-bubbling-through-portals
        */
-      return createPortal(
+      return createElement(
+        'div',
+        {},
         createElement(
           tagName,
           newProps,
+          /**
+           * We only want the inner component
+           * to be mounted if the overlay is open,
+           * so conditionally render the component
+           * based on the isOpen state.
+           */
           this.state.isOpen || this.props.keepContentsMounted
             ? createElement(
                 'div',
@@ -181,8 +170,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
                 children
               )
             : null
-        ),
-        this.el
+        )
       );
     }
 
