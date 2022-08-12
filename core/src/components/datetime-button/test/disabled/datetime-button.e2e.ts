@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime-button: disabled buttons', () => {
-  test('buttons should not be enabled when component is disabled', async ({ page, skip }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
+  test('buttons should not be enabled when component is disabled', async ({ page, skip }) => {
+    skip.rtl('No layout tests');
     skip.mode('ios', 'No mode-specific logic');
 
     await page.setContent(`

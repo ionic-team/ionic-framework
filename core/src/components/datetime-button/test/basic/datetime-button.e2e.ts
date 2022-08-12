@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('datetime-button: switching to correct view', () => {
   test.beforeEach(async ({ page, skip }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
+    skip.rtl('No layout tests');
     skip.mode('ios', 'No mode-specific logic');
 
     await page.setContent(`
@@ -31,8 +31,8 @@ test.describe('datetime-button: switching to correct view', () => {
 });
 
 test.describe('datetime-button: labels', () => {
-  test.beforeEach(({ skip }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
+  test.beforeEach(({ skip }) => {
+    skip.rtl('No layout tests');
     skip.mode('ios', 'No mode-specific logic');
   });
   test('should set date and time labels in separate buttons', async ({ page }) => {
@@ -105,8 +105,8 @@ test.describe('datetime-button: labels', () => {
 });
 
 test.describe('datetime-button: locale', () => {
-  test.beforeEach(({ skip }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
+  test.beforeEach(({ skip }) => {
+    skip.rtl('No layout tests');
     skip.mode('ios', 'No mode-specific logic');
   });
   test('should use the same locale as datetime', async ({ page }) => {
@@ -152,8 +152,8 @@ test.describe('datetime-button: locale', () => {
 });
 
 test.describe('datetime-button: wheel', () => {
-  test.beforeEach(({ skip }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
+  test.beforeEach(({ skip }) => {
+    skip.rtl('No layout tests');
     skip.mode('ios', 'No mode-specific logic');
   });
   test('should only show a single date button when presentation="date-time" and prefer-wheel="true"', async ({
