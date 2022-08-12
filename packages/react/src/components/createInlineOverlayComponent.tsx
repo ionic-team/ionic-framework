@@ -1,6 +1,6 @@
 import { FrameworkDelegate, OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
-import { ReactTeleportDelegate } from '../framework-delegate';
+import { ReactInlineOverlayDelegate } from '../framework-delegate';
 
 import {
   attachProps,
@@ -40,12 +40,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
-    /**
-     * The framework delegate is effectively a no-op.
-     * We do not want the Core implementation to remove the DOM node,
-     * as it will cause problems with React rendering.
-     */
-    delegate: FrameworkDelegate = ReactTeleportDelegate();
+    delegate: FrameworkDelegate = ReactInlineOverlayDelegate();
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);

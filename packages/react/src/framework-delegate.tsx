@@ -42,7 +42,7 @@ export const ReactDelegate = (
   };
 };
 
-export const ReactTeleportDelegate = (): FrameworkDelegate => {
+export const ReactInlineOverlayDelegate = (): FrameworkDelegate => {
   const teleport = document.createComment('ionic teleport');
   let inlineOverlay: HTMLElement;
 
