@@ -6,7 +6,7 @@ import { CardModalPage } from '../fixtures';
 test.describe('card modal - nav', () => {
   let cardModalPage: CardModalPage;
   test.beforeEach(async ({ page, skip }) => {
-    skip.mode('md', 'Card style modal is only available on iOS');
+    skip.mode('md');
     skip.rtl('This test only verifies that the gesture activates inside of a modal.');
     skip.browser(
       (browserName: string) => browserName !== 'chromium',

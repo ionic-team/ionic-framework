@@ -3,7 +3,7 @@ import { dragElementBy, test } from '@utils/test/playwright';
 
 test.describe('card modal - scroll target', () => {
   test.beforeEach(async ({ page, skip }) => {
-    skip.mode('md', 'Card style modal is only available on iOS');
+    skip.mode('md');
 
     await page.goto('/src/components/modal/test/card-scroll-target');
   });
