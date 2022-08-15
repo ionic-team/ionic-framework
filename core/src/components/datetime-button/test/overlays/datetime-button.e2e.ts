@@ -43,7 +43,7 @@ test.describe('datetime-button: popover', () => {
   let ionPopoverDidPresent: EventSpy;
   let ionPopoverDidDismiss: EventSpy;
   test.beforeEach(async ({ page, skip }) => {
-    skip.rtl('No layout tests');
+    skip.rtl();
     skip.mode('ios', 'No mode-specific logic');
 
     await page.setContent(`
@@ -105,7 +105,7 @@ test.describe('datetime-button: modal', () => {
   let ionModalDidPresent: EventSpy;
   let ionModalDidDismiss: EventSpy;
   test.beforeEach(async ({ page, skip }) => {
-    skip.rtl('No layout tests');
+    skip.rtl();
     skip.mode('ios', 'No mode-specific logic');
 
     await page.setContent(`

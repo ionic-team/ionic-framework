@@ -42,7 +42,7 @@ test.describe('item: inputs', () => {
 
   test.describe('form data', () => {
     test.beforeEach(async ({ skip }) => {
-      skip.rtl('Does not test LTR vs. RTL layout.');
+      skip.rtl();
     });
 
     test('initial form data should be empty', async ({ page }) => {

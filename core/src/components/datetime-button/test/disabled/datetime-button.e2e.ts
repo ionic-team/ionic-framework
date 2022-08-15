@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('datetime-button: disabled buttons', () => {
   test('buttons should not be enabled when component is disabled', async ({ page, skip }) => {
-    skip.rtl('No layout tests');
+    skip.rtl();
     skip.mode('ios', 'No mode-specific logic');
 
     await page.setContent(`

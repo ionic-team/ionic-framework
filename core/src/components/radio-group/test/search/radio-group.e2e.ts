@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('radio-group', () => {
   test.beforeEach(async ({ page, skip }) => {
-    skip.rtl('This does not test LTR vs RTL logic.');
+    skip.rtl();
     await page.goto('/src/components/radio-group/test/search');
   });
 

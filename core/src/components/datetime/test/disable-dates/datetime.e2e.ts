@@ -14,7 +14,7 @@ const queryAllWorkingMonthDisabledDays = (page: E2EPage, datetimeSelector = 'ion
 
 test.describe('datetime: disable dates', () => {
   test.beforeEach(({ skip }) => {
-    skip.rtl('These tests do not check layout rendering functionality.');
+    skip.rtl();
   });
   test.describe('check return values', () => {
     test.beforeEach(async ({ page }) => {

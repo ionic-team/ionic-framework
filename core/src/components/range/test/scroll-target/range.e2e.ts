@@ -4,7 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('range: scroll-target', () => {
   test('should not scroll when the knob is swiped in custom scroll target', async ({ page, skip }) => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
-    skip.rtl('This feature does not have RTL-specific behaviors');
+    skip.rtl();
 
     await page.goto(`/src/components/range/test/scroll-target`);
 

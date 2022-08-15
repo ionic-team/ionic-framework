@@ -186,7 +186,7 @@ test.describe('datetime: footer', () => {
 
 test.describe('datetime: swiping', () => {
   test.beforeEach(({ skip }) => {
-    skip.rtl('This does not test LTR vs RTL layouts.');
+    skip.rtl();
     skip.mode('ios', 'This does not have mode-specific logic.');
   });
   test('should move to prev month by swiping', async ({ page }) => {

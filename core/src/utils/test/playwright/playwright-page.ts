@@ -65,7 +65,7 @@ export const test = base.extend<CustomFixtures>({
     await use(page);
   },
   skip: {
-    rtl: (reason = 'The functionality that is being tested is not applicable to RTL layouts.') => {
+    rtl: (reason: string = 'The functionality that is being tested is not applicable to RTL layouts.') => {
       const testInfo: TestInfo = base.info();
       base.skip(testInfo.project.metadata.rtl === true, reason);
     },

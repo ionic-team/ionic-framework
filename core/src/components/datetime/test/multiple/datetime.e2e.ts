@@ -33,7 +33,7 @@ test.describe('datetime: multiple date selection (visual regressions)', () => {
 
 test.describe('datetime: multiple date selection (functionality)', () => {
   test.beforeEach(async ({ skip }) => {
-    skip.rtl('Does not test LTR vs. RTL layout.');
+    skip.rtl();
   });
 
   test('clicking unselected days should select them', async ({ page }) => {

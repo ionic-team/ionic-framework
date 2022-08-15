@@ -85,7 +85,7 @@ test.describe('datetime: presentation', () => {
   });
 
   test('switching presentation should close month/year picker', async ({ page, skip }) => {
-    await skip.rtl('This feature does not have RTL specific behaviors.');
+    await skip.rtl();
 
     await page.setContent(`
       <ion-datetime presentation="date"></ion-datetime>

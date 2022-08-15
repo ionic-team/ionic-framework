@@ -7,7 +7,7 @@ test.describe('input: masking', () => {
   });
 
   test('should filter out spaces', async ({ page, skip }) => {
-    skip.rtl('Does not test LTR vs. RTL layout.');
+    skip.rtl();
 
     const input = page.locator('#inputTrimmed');
 

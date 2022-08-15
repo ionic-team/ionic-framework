@@ -98,7 +98,7 @@ test.describe('radio: rendering', () => {
 
 test.describe('radio: interaction', () => {
   test.beforeEach(({ skip }) => {
-    skip.rtl('This does not test LTR vs RTL logic.');
+    skip.rtl();
   });
   test('radio should be checked when activated', async ({ page }) => {
     await page.setContent(`

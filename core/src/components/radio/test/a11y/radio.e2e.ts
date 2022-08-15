@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('radio: a11y', () => {
   test.beforeEach(({ skip }) => {
-    skip.rtl('This does not test LTR vs RTL logic.');
+    skip.rtl();
   });
   test('tabbing should switch between radio groups', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';

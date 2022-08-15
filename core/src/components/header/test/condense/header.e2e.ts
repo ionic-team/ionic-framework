@@ -4,7 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('header: condense', () => {
   test('should be hidden from screen readers when collapsed', async ({ page, skip }) => {
     skip.mode('md', 'Logic only applies to iOS mode');
-    skip.rtl('No RTL-specific logic');
+    skip.rtl();
 
     await page.goto('/src/components/header/test/condense');
     const header = page.locator('#collapsibleHeader');

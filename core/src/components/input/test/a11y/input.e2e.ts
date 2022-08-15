@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('input: a11y', () => {
   test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({ page, skip }) => {
-    skip.rtl('Does not test LTR vs. RTL layout.');
+    skip.rtl();
 
     await page.setContent('<ion-input></ion-input>');
 
@@ -14,7 +14,7 @@ test.describe('input: a11y', () => {
   });
 
   test('set a default aria-labelledby when a neighboring ion-label exists', async ({ page, skip }) => {
-    skip.rtl('Does not test LTR vs. RTL layout.');
+    skip.rtl();
 
     await page.setContent(
       `

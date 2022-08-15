@@ -17,7 +17,7 @@ test.describe('radio-group: interaction', () => {
   let radioFixture: RadioFixture;
 
   test.beforeEach(({ page, skip }) => {
-    skip.rtl('This does not test LTR vs RTL logic.');
+    skip.rtl();
     radioFixture = new RadioFixture(page);
   });
 

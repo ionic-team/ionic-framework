@@ -99,9 +99,9 @@ export interface E2EPage extends Page {
 export type BrowserNameOrCallback = string | ((browserName: string) => boolean);
 
 export interface E2ESkip {
-  rtl: (reason: string) => void;
-  browser: (browserNameOrCallback: BrowserNameOrCallback, reason: string) => void;
-  mode: (mode: string, reason: string) => void;
+  rtl: (reason?: string) => void;
+  browser: (browserNameOrCallback: BrowserNameOrCallback, reason?: string) => void;
+  mode: (mode: string, reason?: string) => void;
 }
 
 export interface SetIonViewportOptions {

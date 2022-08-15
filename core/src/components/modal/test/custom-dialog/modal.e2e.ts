@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('modal: custom dialog', () => {
   test('should size custom modal correctly', async ({ page, skip }) => {
-    skip.rtl('This does not test LTR vs. RTL layout.');
+    skip.rtl();
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/24080',
