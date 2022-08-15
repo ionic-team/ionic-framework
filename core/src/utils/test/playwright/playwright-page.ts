@@ -65,11 +65,11 @@ export const test = base.extend<CustomFixtures>({
     await use(page);
   },
   skip: {
-    rtl: (reason: string) => {
+    rtl: (reason = 'The functionality that is being tested is not applicable to RTL layouts.') => {
       const testInfo: TestInfo = base.info();
       base.skip(testInfo.project.metadata.rtl === true, reason);
     },
-    browser: (browserNameOrFunction: BrowserNameOrCallback, reason: string) => {
+    browser: (browserNameOrFunction: BrowserNameOrCallback, reason = `The functionality that is being tested is not applicable to this browser.`) => {
       const browserName = base.info().project.use.browserName!;
 
       if (typeof browserNameOrFunction === 'function') {
@@ -78,7 +78,7 @@ export const test = base.extend<CustomFixtures>({
         base.skip(browserName === browserNameOrFunction, reason);
       }
     },
-    mode: (mode: string, reason: string) => {
+    mode: (mode: string, reason = `The functionality that is being tested is not applicable to ${mode} mode`) => {
       base.skip(base.info().project.metadata.mode === mode, reason);
     },
   },
