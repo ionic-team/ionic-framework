@@ -55,8 +55,6 @@ export class Footer implements ComponentInterface {
     this.keyboardCtrl = createKeyboardController((keyboardOpen) => {
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
     });
-
-    this.keyboardCtrl.init();
   }
 
   disconnectedCallback() {

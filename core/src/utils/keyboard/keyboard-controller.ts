@@ -35,6 +35,7 @@ export const createKeyboardController = (keyboardChangeCallback?: (keyboardOpen:
 
   const isKeyboardVisible = () => keyboardVisible;
 
+  init();
   return { init, destroy, isKeyboardVisible };
 };
 
