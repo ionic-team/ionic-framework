@@ -1,4 +1,4 @@
-import { win } from '@utils/window';
+import { win } from '../window';
 
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
