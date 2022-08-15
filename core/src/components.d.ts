@@ -671,6 +671,7 @@ export namespace Components {
           * If `true`, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
          */
         "fullscreen": boolean;
+        "getBackgroundElement": () => Promise<HTMLElement>;
         /**
           * Get the element where the actual scrolling takes place. This element can be used to subscribe to `scroll` events or manually modify `scrollTop`. However, it's recommended to use the API provided by `ion-content`:  i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events and `scrollToPoint()` to scroll the content into a certain point.
          */
