@@ -15,6 +15,8 @@ describe('IonNav', () => {
     cy.get('ion-button').contains('Go to Page Two').click();
     cy.get('#pageTwoContent').should('be.visible');
     cy.get('ion-nav').contains('Page two content');
+
+    cy.get('ion-nav .ion-page').should('have.length', 2);
   });
 
   it('should pop a page', () => {
@@ -23,10 +25,14 @@ describe('IonNav', () => {
     cy.get('#pageTwoContent').should('be.visible');
     cy.get('ion-nav').contains('Page two content');
 
+    cy.get('ion-nav .ion-page').should('have.length', 2);
+
     cy.get('.ion-page.can-go-back ion-back-button').click();
 
     cy.get('#pageOneContent').should('be.visible');
     cy.get('ion-nav').contains('Page one content');
+
+    cy.get('ion-nav .ion-page').should('have.length', 1);
   });
 
   it('should pass params to the page', () => {
