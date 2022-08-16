@@ -13,13 +13,8 @@ const queryAllWorkingMonthDisabledDays = (page: E2EPage, datetimeSelector = 'ion
 };
 
 test.describe('datetime: disable dates', () => {
-  /**
-   * We need to access testInfo, but Playwright
-   * requires that we destructure the first parameter.
-   */
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'These tests do not check layout rendering functionality.');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
   });
   test.describe('check return values', () => {
     test.beforeEach(async ({ page }) => {

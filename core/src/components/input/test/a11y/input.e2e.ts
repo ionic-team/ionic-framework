@@ -2,10 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: a11y', () => {
-  test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({
-    page,
-  }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
+  test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({ page, skip }) => {
+    skip.rtl();
 
     await page.setContent('<ion-input></ion-input>');
 
@@ -15,8 +13,8 @@ test.describe('input: a11y', () => {
     await expect(ariaLabelledBy).toBe(null);
   });
 
-  test('set a default aria-labelledby when a neighboring ion-label exists', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
+  test('set a default aria-labelledby when a neighboring ion-label exists', async ({ page, skip }) => {
+    skip.rtl();
 
     await page.setContent(
       `
