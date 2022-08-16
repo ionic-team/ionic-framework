@@ -443,15 +443,17 @@ export class Refresher implements ComponentInterface {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
-
     const contentEl = this.el.closest(ION_CONTENT_ELEMENT_SELECTOR);
     if (!contentEl) {
       printIonContentErrorMsg(this.el);
       return;
     }
-
+    /**
+     * Waits for the content to be ready before querying the scroll
+     * or the background content element.
+     */
+    await contentEl.componentOnReady();
     const customScrollTarget = contentEl.querySelector(ION_CONTENT_CLASS_SELECTOR);
-
     /**
      * Query the custom scroll target (if available), first. In refresher implementations,
      * the ion-refresher element will always be a direct child of ion-content (slot="fixed"). By
@@ -459,18 +461,10 @@ export class Refresher implements ComponentInterface {
      * the correct scroll element will be returned by the implementation.
      */
     this.scrollEl = await getScrollElement(customScrollTarget ?? contentEl);
-
     /**
-     * Query the host `ion-content` directly (if it is available), to use its
-     * inner #background-content has the target. Otherwise fallback to the
-     * custom scroll target host.
-     *
-     * This makes it so that implementers do not need to re-create the background content
-     * element and styles.
+     * Query the background content element from the host ion-content element directly.
      */
-    this.backgroundContentEl = getElementRoot(contentEl ?? customScrollTarget).querySelector(
-      '#background-content'
-    ) as HTMLElement;
+    this.backgroundContentEl = await contentEl.getBackgroundElement();
 
     if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);

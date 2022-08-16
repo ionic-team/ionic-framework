@@ -6,8 +6,8 @@ test.describe('input: masking', () => {
     await page.goto('/src/components/input/test/masking');
   });
 
-  test('should filter out spaces', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
+  test('should filter out spaces', async ({ page, skip }) => {
+    skip.rtl();
 
     const input = page.locator('#inputTrimmed');
 
