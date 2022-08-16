@@ -41,8 +41,8 @@ test.describe('select: compare-with', () => {
         ]
         const select = document.querySelector('ion-select');
         select.compareWith = (val1, val2) => {
-          // convert val2 to a number
-          return val1 === +val2;
+          // convert val1 to a number
+          return +val1 === val2;
         }
 
         data.forEach((d) => {
