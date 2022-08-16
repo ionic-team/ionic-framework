@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.3-nightly.20220816](https://github.com/ionic-team/ionic-framework/compare/v6.2.2...v6.2.3-nightly.20220816) (2022-08-16)
+
+
+### Bug Fixes
+
+* **datetime:** highlights now show above content in modal ([#25756](https://github.com/ionic-team/ionic-framework/issues/25756)) ([d711658](https://github.com/ionic-team/ionic-framework/commit/d7116581c8e92716f49877abc78d93dc39c34e1d)), closes [#25755](https://github.com/ionic-team/ionic-framework/issues/25755)
+* **header:** hide from screen readers when collapsed ([#25744](https://github.com/ionic-team/ionic-framework/issues/25744)) ([d0ba963](https://github.com/ionic-team/ionic-framework/commit/d0ba9635998f2157970156438c1bb74d6b9682f2))
+* **input:** exclude date inputs from scroll assist ([#25749](https://github.com/ionic-team/ionic-framework/issues/25749)) ([abb56d2](https://github.com/ionic-team/ionic-framework/commit/abb56d22b4a81d1bc34c689de4ef7218e7503b20)), closes [#25745](https://github.com/ionic-team/ionic-framework/issues/25745)
+* **item:** form validation caret color renders correctly ([#25725](https://github.com/ionic-team/ionic-framework/issues/25725)) ([de20541](https://github.com/ionic-team/ionic-framework/commit/de20541486bcf6e1d15f0ae5b0c5f177cce5eb38)), closes [#25719](https://github.com/ionic-team/ionic-framework/issues/25719)
+* **refresher:** refresher is visible with multiple custom scroll targets ([#25750](https://github.com/ionic-team/ionic-framework/issues/25750)) ([e750e33](https://github.com/ionic-team/ionic-framework/commit/e750e336167397ed996d9833763286f4881e79b5)), closes [#25495](https://github.com/ionic-team/ionic-framework/issues/25495)
+
+
+
+
+
 ## [6.2.2](https://github.com/ionic-team/ionic-framework/compare/v6.2.1...v6.2.2) (2022-08-10)
 
 
