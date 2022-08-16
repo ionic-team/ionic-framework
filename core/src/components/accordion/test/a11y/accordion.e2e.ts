@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('accordion: a11y', () => {
-  test('accordions should be keyboard navigable', async ({ page, browserName }) => {
+  test('accordions should be keyboard navigable', async ({ page, skip, browserName }) => {
     // TODO(FW-1764): remove skip once issue is resolved
-    test.skip(browserName === 'firefox', 'https://github.com/ionic-team/ionic-framework/issues/25529');
+    skip.browser('firefox', 'https://github.com/ionic-team/ionic-framework/issues/25529');
 
     await page.goto(`/src/components/accordion/test/a11y`);
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
