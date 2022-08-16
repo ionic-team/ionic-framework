@@ -6,7 +6,9 @@ import { win } from '../window';
  * @internal
  * @param keyboardChangeCallback A function to call when the keyboard opens or closes.
  */
-export const createKeyboardController = (keyboardChangeCallback?: (keyboardOpen: boolean) => void): KeyboardController => {
+export const createKeyboardController = (
+  keyboardChangeCallback?: (keyboardOpen: boolean) => void
+): KeyboardController => {
   let keyboardWillShowHandler: (() => void) | undefined;
   let keyboardWillHideHandler: (() => void) | undefined;
   let keyboardVisible: boolean;
