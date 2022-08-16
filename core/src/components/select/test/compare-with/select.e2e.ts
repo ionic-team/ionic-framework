@@ -22,7 +22,7 @@ test.describe('select: compare-with', () => {
     });
   });
 
-  test('should pass compareWith params in the correct order', async ({ page }, testInfo) => {
+  test('should work with different parameter types', async ({ page }, testInfo) => {
     test.skip(testInfo.project.metadata.rtl === true, 'This does not check LTR vs RTL layouts');
     test.skip(testInfo.project.metadata.mode === 'md', 'This logic is the same across modes');
     test.info().annotations.push({
