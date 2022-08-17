@@ -1,8 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
+import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
+import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
 
 import { handleFooterFade } from './footer.utils';
 
@@ -19,6 +21,9 @@ import { handleFooterFade } from './footer.utils';
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback: any;
+  private keyboardCtrl: KeyboardController | null = null;
+
+  @State() private keyboardVisible = false;
 
   @Element() el!: HTMLIonFooterElement;
 
@@ -44,6 +49,18 @@ export class Footer implements ComponentInterface {
 
   componentDidUpdate() {
     this.checkCollapsibleFooter();
+  }
+
+  connectedCallback() {
+    this.keyboardCtrl = createKeyboardController((keyboardOpen) => {
+      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+    });
+  }
+
+  disconnectedCallback() {
+    if (this.keyboardCtrl) {
+      this.keyboardCtrl.destroy();
+    }
   }
 
   private checkCollapsibleFooter = () => {
@@ -94,6 +111,9 @@ export class Footer implements ComponentInterface {
   render() {
     const { translucent, collapse } = this;
     const mode = getIonMode(this);
+    const tabs = this.el.closest('ion-tabs');
+    const tabBar = tabs?.querySelector('ion-tab-bar');
+
     return (
       <Host
         role="contentinfo"
@@ -105,6 +125,7 @@ export class Footer implements ComponentInterface {
 
           [`footer-translucent`]: translucent,
           [`footer-translucent-${mode}`]: translucent,
+          ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot !== 'bottom'),
 
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
