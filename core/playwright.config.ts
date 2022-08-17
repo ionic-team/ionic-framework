@@ -33,12 +33,14 @@ const projects = [
   {
     name: 'Mobile Chrome',
     use: {
+      browserName: 'chromium',
       ...devices['Pixel 5']
     }
   },
   {
     name: 'Mobile Safari',
     use: {
+      browserName: 'webkit',
       ...devices['iPhone 12']
     }
   }

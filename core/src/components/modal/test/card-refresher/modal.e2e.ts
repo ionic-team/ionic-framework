@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { dragElementBy, test } from '@utils/test/playwright';
 
 test.describe('card modal - with refresher', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
+  test.beforeEach(async ({ page, skip }) => {
+    skip.mode('md');
 
     await page.goto('/src/components/modal/test/card-refresher');
   });

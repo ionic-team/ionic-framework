@@ -89,26 +89,64 @@ test.describe('datetime: prefer wheel', () => {
       expect(await yearValues.count()).toBe(3);
       expect(await dayValues.count()).toBe(5);
     });
-    test('should correctly localize the date data', async ({ page }) => {
-      await page.setContent(`
-        <ion-datetime
-          presentation="date"
-          prefer-wheel="true"
-          locale="ja-JP"
-          min="2022-01-01"
-          max="2022-03-01"
-          day-values="1,2,3"
-          value="2022-01-01"
-        ></ion-datetime>
-      `);
+    test.describe('datetime: date wheel localization', () => {
+      test('should correctly localize the date data', async ({ page }) => {
+        await page.setContent(`
+          <ion-datetime
+            presentation="date"
+            prefer-wheel="true"
+            locale="ja-JP"
+            min="2022-01-01"
+            max="2022-03-01"
+            day-values="1,2,3"
+            value="2022-01-01"
+          ></ion-datetime>
+        `);
 
-      await page.waitForSelector('.datetime-ready');
+        await page.waitForSelector('.datetime-ready');
 
-      const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
-      const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+        const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
 
-      expect(monthValues).toHaveText(['1月', '2月', '3月']);
-      expect(dayValues).toHaveText(['1日', '2日', '3日']);
+        expect(monthValues).toHaveText(['1月', '2月', '3月']);
+        expect(dayValues).toHaveText(['1日', '2日', '3日']);
+      });
+      test('should render the columns according to locale - en-US', async ({ page }) => {
+        await page.setContent(`
+          <ion-datetime
+            presentation="date"
+            prefer-wheel="true"
+            locale="en-US"
+            value="2022-01-01"
+          ></ion-datetime>
+        `);
+
+        await page.waitForSelector('.datetime-ready');
+
+        const columns = page.locator('ion-picker-column-internal');
+
+        await expect(columns.nth(0)).toHaveClass(/month-column/);
+        await expect(columns.nth(1)).toHaveClass(/day-column/);
+        await expect(columns.nth(2)).toHaveClass(/year-column/);
+      });
+      test('should render the columns according to locale - en-GB', async ({ page }) => {
+        await page.setContent(`
+          <ion-datetime
+            presentation="date"
+            prefer-wheel="true"
+            locale="en-GB"
+            value="2022-01-01"
+          ></ion-datetime>
+        `);
+
+        await page.waitForSelector('.datetime-ready');
+
+        const columns = page.locator('ion-picker-column-internal');
+
+        await expect(columns.nth(0)).toHaveClass(/day-column/);
+        await expect(columns.nth(1)).toHaveClass(/month-column/);
+        await expect(columns.nth(2)).toHaveClass(/year-column/);
+      });
     });
   });
   test.describe('datetime: date-time wheel rendering', () => {

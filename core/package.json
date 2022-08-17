@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -54,7 +54,7 @@
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "aws-sdk": "^2.738.0",
-    "clean-css-cli": "^4.1.11",
+    "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
