@@ -39,7 +39,7 @@ export const startFocusVisible = (rootEl?: HTMLElement) => {
     }
   };
   const onFocusin = (ev: Event) => {
-    if (keyboardMode && ev.composedPath) {
+    if (keyboardMode && ev.composedPath !== undefined) {
       const toFocus = ev.composedPath().filter((el: any) => {
         if (el.classList) {
           return el.classList.contains(ION_FOCUSABLE);
