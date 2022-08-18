@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
+import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, TabBarChangedEventDetail } from '../../interface';
@@ -17,8 +19,7 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true,
 })
 export class TabBar implements ComponentInterface {
-  private keyboardWillShowHandler?: () => void;
-  private keyboardWillHideHandler?: () => void;
+  private keyboardCtrl: KeyboardController | null = null;
 
   @Element() el!: HTMLElement;
 
@@ -59,43 +60,30 @@ export class TabBar implements ComponentInterface {
   }
 
   connectedCallback() {
-    if (typeof (window as any) !== 'undefined') {
-      this.keyboardWillShowHandler = () => {
-        if (this.el.getAttribute('slot') !== 'top') {
-          this.keyboardVisible = true;
-        }
-      };
-
-      this.keyboardWillHideHandler = () => {
-        setTimeout(() => (this.keyboardVisible = false), 50);
-      };
-
-      window.addEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
-      window.addEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
-    }
+    this.keyboardCtrl = createKeyboardController((keyboardOpen) => {
+      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+    });
   }
 
   disconnectedCallback() {
-    if (typeof (window as any) !== 'undefined') {
-      window.removeEventListener('keyboardWillShow', this.keyboardWillShowHandler!);
-      window.removeEventListener('keyboardWillHide', this.keyboardWillHideHandler!);
-
-      this.keyboardWillShowHandler = this.keyboardWillHideHandler = undefined;
+    if (this.keyboardCtrl) {
+      this.keyboardCtrl.destroy();
     }
   }
 
   render() {
     const { color, translucent, keyboardVisible } = this;
     const mode = getIonMode(this);
+    const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
       <Host
         role="tablist"
-        aria-hidden={keyboardVisible ? 'true' : null}
+        aria-hidden={shouldHide ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
           'tab-bar-translucent': translucent,
-          'tab-bar-hidden': keyboardVisible,
+          'tab-bar-hidden': shouldHide,
         })}
       >
         <slot></slot>

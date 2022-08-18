@@ -5,8 +5,8 @@ import { CardModalPage } from '../fixtures';
 
 test.describe('card modal', () => {
   let cardModalPage: CardModalPage;
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
+  test.beforeEach(async ({ page, skip }) => {
+    skip.mode('md');
 
     cardModalPage = new CardModalPage(page);
     await cardModalPage.navigate('/src/components/modal/test/card');
