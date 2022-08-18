@@ -241,7 +241,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           handler: i.handler,
           min: i.min,
           max: i.max,
-          cssClass: i.cssClass || '',
+          cssClass: i.cssClass ?? '',
           attributes: i.attributes || {},
           tabindex: i.type === 'radio' && i !== focusable ? -1 : 0,
         } as AlertInput)

@@ -48,9 +48,9 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
           background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
           ionTitleEl,
           innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-          ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || [],
+          ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
         } as ToolbarIndex;
-      }) || [],
+      }),
   } as HeaderIndex;
 };
 

@@ -129,7 +129,7 @@ export const getLocalizedDateTime = (
   refParts: DatetimeParts,
   options: Intl.DateTimeFormatOptions
 ): string => {
-  const timeString = !!refParts.hour && !!refParts.minute ? ` ${refParts.hour}:${refParts.minute}` : '';
+  const timeString = refParts.hour !== undefined && refParts.minute !== undefined ? ` ${refParts.hour}:${refParts.minute}` : '';
   const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
   return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(date);
 };
