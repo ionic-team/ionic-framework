@@ -390,10 +390,6 @@ button, a {
   pointer-events: none;
 }
 
-:host(.item-interactive.item-has-focus) .item-native {
-  caret-color: var(--highlight-background);
-}
-
 // Item Input Focused
 // --------------------------------------------------
 

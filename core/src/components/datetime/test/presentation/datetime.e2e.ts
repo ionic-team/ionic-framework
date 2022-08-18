@@ -84,8 +84,8 @@ test.describe('datetime: presentation', () => {
     expect(ionChangeSpy.length).toBe(1);
   });
 
-  test('switching presentation should close month/year picker', async ({ page }, testInfo) => {
-    await test.skip(testInfo.project.metadata.rtl === true, 'This feature does not have RTL specific behaviors.');
+  test('switching presentation should close month/year picker', async ({ page, skip }) => {
+    await skip.rtl();
 
     await page.setContent(`
       <ion-datetime presentation="date"></ion-datetime>

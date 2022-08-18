@@ -185,10 +185,9 @@ test.describe('datetime: footer', () => {
 });
 
 test.describe('datetime: swiping', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL layouts.');
-    test.skip(testInfo.project.metadata.mode === 'ios', 'This does not have mode-specific logic.');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'This does not have mode-specific logic.');
   });
   test('should move to prev month by swiping', async ({ page }) => {
     await page.setContent(`
@@ -224,8 +223,8 @@ test.describe('datetime: swiping', () => {
 
     await expect(calendarHeader).toHaveText(/June 2022/);
   });
-  test('should not re-render if swipe is in progress', async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit', 'Wheel is not available in WebKit');
+  test('should not re-render if swipe is in progress', async ({ page, skip }) => {
+    skip.browser('webkit', 'Wheel is not available in WebKit');
 
     await page.setContent(`
       <ion-datetime value="2022-05-03"></ion-datetime>

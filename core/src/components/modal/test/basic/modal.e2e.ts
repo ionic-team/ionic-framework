@@ -3,9 +3,9 @@ import { test, Viewports } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('modal: focus trapping', () => {
-  test.beforeEach(async ({ browserName }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
-    test.skip(browserName === 'firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
+  test.beforeEach(async ({ skip }) => {
+    skip.rtl();
+    skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
   });
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
     /**
