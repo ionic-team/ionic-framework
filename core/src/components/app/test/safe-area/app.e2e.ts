@@ -14,11 +14,8 @@ test.describe('app: safe-area', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`app-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`);
   };
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.metadata.rtl === true,
-      'Safe area tests only check top and bottom edges. RTL checks are not required here.'
-    );
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl('Safe area tests only check top and bottom edges. RTL checks are not required here.');
 
     await page.goto(`/src/components/app/test/safe-area`);
   });
