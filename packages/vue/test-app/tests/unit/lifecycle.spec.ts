@@ -128,6 +128,14 @@ describe('Lifecycle Events', () => {
       ionViewDidLeave: jest.fn(),
     }
 
+    const NonTabPage = {
+      ...BasePage,
+      ionViewWillEnter: jest.fn(),
+      ionViewDidEnter: jest.fn(),
+      ionViewWillLeave: jest.fn(),
+      ionViewDidLeave: jest.fn(),
+    }
+
 
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
@@ -135,7 +143,7 @@ describe('Lifecycle Events', () => {
         { path: '/', component: TabsPage, children: [
           { path: 'tab1', component: Tab1Page }
         ]},
-        { path: '/non-tab', component: BasePage }
+        { path: '/non-tab', component: NonTabPage }
       ]
     });
 
@@ -155,6 +163,9 @@ describe('Lifecycle Events', () => {
     expect(Tab1Page.ionViewWillEnter).toHaveBeenCalled();
     expect(Tab1Page.ionViewDidEnter).toHaveBeenCalled();
 
+    expect(NonTabPage.ionViewWillEnter).not.toHaveBeenCalled();
+    expect(NonTabPage.ionViewDidEnter).not.toHaveBeenCalled();
+
     // Navigate out of tabs
     router.push('/non-tab');
     jest.resetAllMocks();
@@ -168,6 +179,9 @@ describe('Lifecycle Events', () => {
     //expect(Tab1Page.ionViewWillLeave).toHaveBeenCalled();
     //expect(Tab1Page.ionViewDidLeave).toHaveBeenCalled();
 
+    expect(NonTabPage.ionViewWillEnter).toHaveBeenCalled();
+    expect(NonTabPage.ionViewDidEnter).toHaveBeenCalled();
+
     // Go back
     router.back();
     jest.resetAllMocks();
@@ -179,6 +193,9 @@ describe('Lifecycle Events', () => {
     expect(Tab1Page.ionViewWillEnter).toHaveBeenCalled();
     expect(Tab1Page.ionViewDidEnter).toHaveBeenCalled();
 
+    expect(NonTabPage.ionViewWillLeave).toHaveBeenCalled();
+    expect(NonTabPage.ionViewDidLeave).toHaveBeenCalled();
+
     // Navigate out of tabs again
     router.push('/non-tab');
     jest.resetAllMocks();
@@ -186,6 +203,9 @@ describe('Lifecycle Events', () => {
 
     expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
     expect(TabsPage.ionViewDidLeave).toHaveBeenCalled();
+
+    expect(NonTabPage.ionViewWillEnter).toHaveBeenCalled();
+    expect(NonTabPage.ionViewDidEnter).toHaveBeenCalled();
 
     // Go back again
     router.back();
@@ -195,7 +215,7 @@ describe('Lifecycle Events', () => {
     expect(TabsPage.ionViewWillEnter).toHaveBeenCalled();
     expect(TabsPage.ionViewDidEnter).toHaveBeenCalled();
 
-    expect(Tab1Page.ionViewWillEnter).toHaveBeenCalled();
-    expect(Tab1Page.ionViewDidEnter).toHaveBeenCalled();
+    expect(NonTabPage.ionViewWillLeave).toHaveBeenCalled();
+    expect(NonTabPage.ionViewDidLeave).toHaveBeenCalled();
   })
 });
