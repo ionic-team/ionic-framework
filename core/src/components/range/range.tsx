@@ -320,7 +320,7 @@ export class Range implements ComponentInterface {
     this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
   };
   private getValue(): RangeValue {
-    const value = this.value;
+    const value = this.value ?? 0;
     if (this.dualKnobs) {
       if (typeof value === 'object') {
         return value;

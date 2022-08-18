@@ -576,7 +576,7 @@ export class Refresher implements ComponentInterface {
     // best to do any DOM read/writes only when absolutely necessary
     // if multi-touch then get out immediately
     const ev = detail.event as TouchEvent;
-    if (ev.touches.length > 1) {
+    if (ev.touches !== undefined && ev.touches.length > 1) {
       return;
     }
 
