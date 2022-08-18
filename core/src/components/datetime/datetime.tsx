@@ -1429,9 +1429,10 @@ export class Datetime implements ComponentInterface {
      * If we have selected a day already, then default the column
      * to that value. Otherwise, default it to today.
      */
-    const todayString = workingParts.day !== null
-      ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-      : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+    const todayString =
+      workingParts.day !== null
+        ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+        : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
 
     return (
       <ion-picker-column-internal
