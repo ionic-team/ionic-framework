@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { IonicVue, IonApp, IonRouterOutlet, IonPage } from '@ionic/vue';
+import { IonicVue, IonApp, IonRouterOutlet, IonTabs, IonPage } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { waitForRouter } from './utils';
 
@@ -40,19 +40,19 @@ const Page2 = defineComponent({
   ionViewDidLeave: jest.fn(),
 });
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes: [
-    { path: '/', component: Page1 },
-    { path: '/2', component: Page2 }
-  ]
-});
-
 describe('Lifecycle Events', () => {
   beforeAll(() => {
     (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
   });
   it('Triggers lifecycle events', async () => {
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page1 },
+        { path: '/2', component: Page2 }
+      ]
+    });
+
     // Initial render
     router.push('/');
     await router.isReady();
@@ -105,4 +105,97 @@ describe('Lifecycle Events', () => {
     expect(Page2.ionViewDidLeave).not.toHaveBeenCalled();
     expect(wrapper.html()).toContain('page2');
   });
+  it('should fire lifecycle events on inner tab page', async () => {
+    const TabsPage = {
+      template: `
+        <ion-page>
+          <ion-tabs>
+            <ion-router-outlet></ion-router-outlet>
+          </ion-tabs>
+        </ion-page>
+      `,
+      components: { IonPage, IonTabs, IonRouterOutlet },
+      ionViewWillEnter: jest.fn(),
+      ionViewDidEnter: jest.fn(),
+      ionViewWillLeave: jest.fn(),
+      ionViewDidLeave: jest.fn(),
+    }
+    const Tab1Page = {
+      ...BasePage,
+      ionViewWillEnter: jest.fn(),
+      ionViewDidEnter: jest.fn(),
+      ionViewWillLeave: jest.fn(),
+      ionViewDidLeave: jest.fn(),
+    }
+
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: TabsPage, children: [
+          { path: 'tab1', component: Tab1Page }
+        ]},
+        { path: '/non-tab', component: BasePage }
+      ]
+    });
+
+    // Initial render
+    router.push('/tab1');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    // Initial load
+    expect(TabsPage.ionViewWillEnter).toHaveBeenCalled();
+    expect(TabsPage.ionViewDidEnter).toHaveBeenCalled();
+
+    expect(Tab1Page.ionViewWillEnter).toHaveBeenCalled();
+    expect(Tab1Page.ionViewDidEnter).toHaveBeenCalled();
+
+    // Navigate out of tabs
+    router.push('/non-tab');
+    jest.resetAllMocks();
+    await waitForRouter();
+
+    expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
+    expect(TabsPage.ionViewDidLeave).toHaveBeenCalled();
+
+    // Tab1Page currently does not call leaving hooks
+    // when navigating out of tabs
+    //expect(Tab1Page.ionViewWillLeave).toHaveBeenCalled();
+    //expect(Tab1Page.ionViewDidLeave).toHaveBeenCalled();
+
+    // Go back
+    router.back();
+    jest.resetAllMocks();
+    await waitForRouter();
+
+    expect(TabsPage.ionViewWillEnter).toHaveBeenCalled();
+    expect(TabsPage.ionViewDidEnter).toHaveBeenCalled();
+
+    expect(Tab1Page.ionViewWillEnter).toHaveBeenCalled();
+    expect(Tab1Page.ionViewDidEnter).toHaveBeenCalled();
+
+    // Navigate out of tabs again
+    router.push('/non-tab');
+    jest.resetAllMocks();
+    await waitForRouter();
+
+    expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
+    expect(TabsPage.ionViewDidLeave).toHaveBeenCalled();
+
+    // Go back again
+    router.back();
+    jest.resetAllMocks();
+    await waitForRouter();
+
+    expect(TabsPage.ionViewWillEnter).toHaveBeenCalled();
+    expect(TabsPage.ionViewDidEnter).toHaveBeenCalled();
+
+    expect(Tab1Page.ionViewWillEnter).toHaveBeenCalled();
+    expect(Tab1Page.ionViewDidEnter).toHaveBeenCalled();
+  })
 });
