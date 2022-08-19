@@ -248,3 +248,34 @@ test.describe('datetime: swiping', () => {
     }
   });
 });
+
+test.describe('datetime: visibility', () => {
+  test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    await page.setContent(`
+      <ion-datetime></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+    const monthYearInterface = page.locator('ion-datetime .datetime-year');
+    const datetime = page.locator('ion-datetime');
+
+    await monthYearButton.click();
+    await page.waitForChanges();
+
+    await expect(monthYearInterface).toBeVisible();
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.setProperty('display', 'none'));
+    await expect(datetime).toBeHidden();
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
+    await expect(datetime).toBeVisible();
+
+    // month/year interface should be reset
+    await expect(monthYearInterface).toBeHidden();
+  })
+})
