@@ -277,5 +277,5 @@ test.describe('datetime: visibility', () => {
 
     // month/year interface should be reset
     await expect(monthYearInterface).toBeHidden();
-  })
-})
+  });
+});
