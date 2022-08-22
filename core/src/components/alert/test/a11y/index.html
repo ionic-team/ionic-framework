@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alert - A11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { alertController } from '../../../../dist/ionic/index.esm.js';
+    window.alertController = alertController;
+  </script>
+
+  <body>
+    <main class="ion-padding">
+      <h1>Alert - A11y</h1>
+
+      <ion-button id="noHeader" expand="block" onclick="presentNoHeader()">Alert With No Header</ion-button>
+      <ion-button id="customHeader" expand="block" onclick="presentCustomHeader()">Alert With Custom Header</ion-button>
+      <ion-button id="subHeaderOnly" expand="block" onclick="presentSubHeaderOnly()"
+        >Alert With Subheader Only</ion-button
+      >
+      <ion-button id="customAriaLabel" expand="block" onclick="presentCustomAriaLabel()"
+        >Alert With Custom Aria Label</ion-button
+      >
+    </main>
+
+    <script>
+      async function openAlert(opts) {
+        const alert = await alertController.create(opts);
+        await alert.present();
+      }
+
+      function presentNoHeader() {
+        openAlert({
+          message: 'This is an alert message.',
+          buttons: ['OK'],
+        });
+      }
+
+      function presentCustomHeader() {
+        openAlert({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          message: 'This is an alert message.',
+          buttons: ['OK'],
+        });
+      }
+
+      function presentSubHeaderOnly() {
+        openAlert({
+          subHeader: 'Subtitle',
+          message: 'This is an alert message.',
+          buttons: ['OK'],
+        });
+      }
+
+      function presentCustomAriaLabel() {
+        openAlert({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          message: 'This is an alert message with a custom aria-label.',
+          buttons: ['OK'],
+          htmlAttributes: {
+            'aria-label': 'Custom alert',
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
