@@ -10,7 +10,7 @@ import {
   ION_CONTENT_ELEMENT_SELECTOR,
   printIonContentErrorMsg,
 } from '../../utils/content';
-import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
+import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
 import {
@@ -452,38 +452,39 @@ export class Refresher implements ComponentInterface {
      * Waits for the content to be ready before querying the scroll
      * or the background content element.
      */
-    await contentEl.componentOnReady();
-    const customScrollTarget = contentEl.querySelector(ION_CONTENT_CLASS_SELECTOR);
-    /**
-     * Query the custom scroll target (if available), first. In refresher implementations,
-     * the ion-refresher element will always be a direct child of ion-content (slot="fixed"). By
-     * querying the custom scroll target first and falling back to the ion-content element,
-     * the correct scroll element will be returned by the implementation.
-     */
-    this.scrollEl = await getScrollElement(customScrollTarget ?? contentEl);
-    /**
-     * Query the background content element from the host ion-content element directly.
-     */
-    this.backgroundContentEl = await contentEl.getBackgroundElement();
+    componentOnReady(contentEl, async () => {
+      const customScrollTarget = contentEl.querySelector(ION_CONTENT_CLASS_SELECTOR);
+      /**
+       * Query the custom scroll target (if available), first. In refresher implementations,
+       * the ion-refresher element will always be a direct child of ion-content (slot="fixed"). By
+       * querying the custom scroll target first and falling back to the ion-content element,
+       * the correct scroll element will be returned by the implementation.
+       */
+      this.scrollEl = await getScrollElement(customScrollTarget ?? contentEl);
+      /**
+       * Query the background content element from the host ion-content element directly.
+       */
+      this.backgroundContentEl = await contentEl.getBackgroundElement();
 
-    if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
-      this.setupNativeRefresher(contentEl);
-    } else {
-      this.gesture = (await import('../../utils/gesture')).createGesture({
-        el: contentEl,
-        gestureName: 'refresher',
-        gesturePriority: 31,
-        direction: 'y',
-        threshold: 20,
-        passive: false,
-        canStart: () => this.canStart(),
-        onStart: () => this.onStart(),
-        onMove: (ev) => this.onMove(ev),
-        onEnd: () => this.onEnd(),
-      });
+      if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
+        this.setupNativeRefresher(contentEl);
+      } else {
+        this.gesture = (await import('../../utils/gesture')).createGesture({
+          el: contentEl,
+          gestureName: 'refresher',
+          gesturePriority: 31,
+          direction: 'y',
+          threshold: 20,
+          passive: false,
+          canStart: () => this.canStart(),
+          onStart: () => this.onStart(),
+          onMove: (ev) => this.onMove(ev),
+          onEnd: () => this.onEnd(),
+        });
 
-      this.disabledChanged();
-    }
+        this.disabledChanged();
+      }
+    });
   }
 
   disconnectedCallback() {

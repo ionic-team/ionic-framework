@@ -1086,6 +1086,15 @@ export class Datetime implements ComponentInterface {
 
       this.destroyInteractionListeners();
 
+      /**
+       * When datetime is hidden, we need to make sure that
+       * the month/year picker is closed. Otherwise,
+       * it will be open when the datetime re-appears
+       * and the scroll area of the calendar grid will be 0.
+       * As a result, the wrong month will be shown.
+       */
+      this.showMonthAndYear = false;
+
       writeTask(() => {
         this.el.classList.remove('datetime-ready');
       });
