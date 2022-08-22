@@ -871,11 +871,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       <Host
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         aria-label="modal"
         {...(htmlAttributes as any)}
         {...inheritedAttributes}
         no-router
-        tabindex="-1"
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
