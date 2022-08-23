@@ -18,7 +18,8 @@ import type {
 } from '../../interface';
 import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { raf } from '../../utils/helpers';
+import { raf, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
@@ -66,6 +67,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
+  private inheritedAttributes: Attributes = {};
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -334,7 +336,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint, swipeToClose } = this;
+    const { breakpoints, initialBreakpoint, swipeToClose, el } = this;
+
+    this.inheritedAttributes = inheritAttributes(el, ['role']);
 
     /**
      * If user has custom ID set then we should
@@ -855,7 +859,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
@@ -870,6 +874,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         role="dialog"
         tabindex="-1"
         {...(htmlAttributes as any)}
+        {...inheritedAttributes}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
