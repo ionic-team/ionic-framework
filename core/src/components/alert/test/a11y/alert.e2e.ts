@@ -9,8 +9,11 @@ const testAria = async (
   expectedAriaLabelledBy: string | null,
   expectedAriaDescribedBy: string | null
 ) => {
+  const didPresent = await page.spyOnEvent('ionAlertDidPresent');
   const button = page.locator(`#${buttonID}`);
+
   await button.click();
+  await didPresent.next();
 
   const alert = page.locator('ion-alert');
 
@@ -18,12 +21,8 @@ const testAria = async (
    * expect().toHaveAttribute() can't check for a null value, so grab and check
    * the values manually instead.
    */
-  const { ariaLabelledBy, ariaDescribedBy } = await alert.evaluate((el: HTMLIonAlertElement) => {
-    return {
-      ariaLabelledBy: el.getAttribute('aria-labelledby'),
-      ariaDescribedBy: el.getAttribute('aria-describedby'),
-    };
-  });
+  const ariaLabelledBy = await alert.getAttribute('aria-labelledby');
+  const ariaDescribedBy = await alert.getAttribute('aria-describedby');
 
   expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
