@@ -9,6 +9,10 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
+    path: '/version-test',
+    component: () => import('@/views/VersionTest.vue')
+  },
+  {
     path: '/delayed-redirect',
     beforeEnter: DelayGuard,
     component: Home
