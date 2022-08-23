@@ -13,9 +13,14 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 7.x
 
 - [Components](#version-7x-components)
+  - [Overlays](#version-7x-overlays)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 
 <h2 id="version-7x-components">Components</h2>
+
+<h4 id="version-7x-overlays">Overlays</h4>
+
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
 
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 
