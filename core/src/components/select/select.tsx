@@ -686,7 +686,7 @@ const textForValue = (
   compareWith?: string | SelectCompareFn | null
 ): string | null => {
   const selectOpt = opts.find((opt) => {
-    return compareOptions(getOptionValue(opt), value, compareWith);
+    return compareOptions(value, getOptionValue(opt), compareWith);
   });
   return selectOpt ? selectOpt.textContent : null;
 };

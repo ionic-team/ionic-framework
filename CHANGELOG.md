@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.3](https://github.com/ionic-team/ionic-framework/compare/v6.2.2...v6.2.3) (2022-08-17)
+
+
+### Bug Fixes
+
+* **css:** preserve whitespace in selectors when minifying css ([#25767](https://github.com/ionic-team/ionic-framework/issues/25767)) ([bafa759](https://github.com/ionic-team/ionic-framework/commit/bafa759655a0f3ca206255ba429f21d319c37aed)), closes [#25766](https://github.com/ionic-team/ionic-framework/issues/25766)
+* **datetime:** highlights now show above content in modal ([#25756](https://github.com/ionic-team/ionic-framework/issues/25756)) ([d711658](https://github.com/ionic-team/ionic-framework/commit/d7116581c8e92716f49877abc78d93dc39c34e1d)), closes [#25755](https://github.com/ionic-team/ionic-framework/issues/25755)
+* **footer:** remove toolbar bottom padding if near bottom slot tabs or keyboard is open ([#25746](https://github.com/ionic-team/ionic-framework/issues/25746)) ([bb37446](https://github.com/ionic-team/ionic-framework/commit/bb374460320b0ba2ee03a5a0ecebb3e7a9f0728e))
+* **header:** hide from screen readers when collapsed ([#25744](https://github.com/ionic-team/ionic-framework/issues/25744)) ([d0ba963](https://github.com/ionic-team/ionic-framework/commit/d0ba9635998f2157970156438c1bb74d6b9682f2))
+* **input:** exclude date inputs from scroll assist ([#25749](https://github.com/ionic-team/ionic-framework/issues/25749)) ([abb56d2](https://github.com/ionic-team/ionic-framework/commit/abb56d22b4a81d1bc34c689de4ef7218e7503b20)), closes [#25745](https://github.com/ionic-team/ionic-framework/issues/25745)
+* **item:** form validation caret color renders correctly ([#25725](https://github.com/ionic-team/ionic-framework/issues/25725)) ([de20541](https://github.com/ionic-team/ionic-framework/commit/de20541486bcf6e1d15f0ae5b0c5f177cce5eb38)), closes [#25719](https://github.com/ionic-team/ionic-framework/issues/25719)
+* **refresher:** refresher is visible with multiple custom scroll targets ([#25750](https://github.com/ionic-team/ionic-framework/issues/25750)) ([e750e33](https://github.com/ionic-team/ionic-framework/commit/e750e336167397ed996d9833763286f4881e79b5)), closes [#25495](https://github.com/ionic-team/ionic-framework/issues/25495)
+
+
+
+
+
+## [6.2.2](https://github.com/ionic-team/ionic-framework/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **angular:** DatetimeButton is declared on IonicModule ([#25727](https://github.com/ionic-team/ionic-framework/issues/25727)) ([76ad1d1](https://github.com/ionic-team/ionic-framework/commit/76ad1d18c81272435db1994977aa9dd5d880504a))
+* **datetime:** add correct null check when value changes ([#25716](https://github.com/ionic-team/ionic-framework/issues/25716)) ([36bea1c](https://github.com/ionic-team/ionic-framework/commit/36bea1ca2520c9eb9ee7705abb046607a52d198d)), closes [#25714](https://github.com/ionic-team/ionic-framework/issues/25714)
+* **datetime:** preferWheel respects column ordering by locale ([#25726](https://github.com/ionic-team/ionic-framework/issues/25726)) ([dee0f51](https://github.com/ionic-team/ionic-framework/commit/dee0f513ee443c0c69ea8e38a292c900e9c70221)), closes [#25722](https://github.com/ionic-team/ionic-framework/issues/25722)
+* **react:** outlet will not clear in react 18 with hot reload ([#25703](https://github.com/ionic-team/ionic-framework/issues/25703)) ([3878bf7](https://github.com/ionic-team/ionic-framework/commit/3878bf76523f2e1c26c147473fd7c07ee4d0e820)), closes [#25507](https://github.com/ionic-team/ionic-framework/issues/25507)
+* **vue:** go back to correct view with memory history ([#25732](https://github.com/ionic-team/ionic-framework/issues/25732)) ([8327889](https://github.com/ionic-team/ionic-framework/commit/832788971a7098e52812f66563cbc0a63d3e5df7)), closes [#25705](https://github.com/ionic-team/ionic-framework/issues/25705)
+
+
+
+
+
+## [6.2.1](https://github.com/ionic-team/ionic-framework/compare/v6.2.0...v6.2.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* **datetime:** display time in user's timezone after selection ([#25694](https://github.com/ionic-team/ionic-framework/issues/25694)) ([11c69c8](https://github.com/ionic-team/ionic-framework/commit/11c69c8df50b75440c9e876b4d99d469d16e144f)), closes [#25693](https://github.com/ionic-team/ionic-framework/issues/25693)
+* **datetime:** selecting today with multiple date select now works ([#25699](https://github.com/ionic-team/ionic-framework/issues/25699)) ([86b7000](https://github.com/ionic-team/ionic-framework/commit/86b7000bcd1b4519e8c20907050e15ba7c99bab0))
+* **nav:** exclude nav from custom dialog ([#25689](https://github.com/ionic-team/ionic-framework/issues/25689)) ([d1e517b](https://github.com/ionic-team/ionic-framework/commit/d1e517bfef03b822dfa7651681013277762eda08)), closes [#25677](https://github.com/ionic-team/ionic-framework/issues/25677) [#25688](https://github.com/ionic-team/ionic-framework/issues/25688)
+* **react:** IonNav apply properties to page components  ([#25603](https://github.com/ionic-team/ionic-framework/issues/25603)) ([61e4ffe](https://github.com/ionic-team/ionic-framework/commit/61e4ffe47f73034808b65ee37342f540ee5a6a97)), closes [#25602](https://github.com/ionic-team/ionic-framework/issues/25602)
+
+
+
+
+
 # [6.2.0](https://github.com/ionic-team/ionic-framework/compare/v6.1.15...v6.2.0) (2022-07-27)
 
 
