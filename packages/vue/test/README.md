@@ -6,7 +6,7 @@ Ionic Framework supports multiple versions of Vue. As a result, we need to verif
 
 Unlike other test applications, these test apps are broken up into multiple directories. These directories are then combined to create a single application. This allows us to share common application code, tests, etc so that each app is being tested the same way. Below details the different pieces that help create a single test application.
 
-**apps** - This directory contains partial applications for each version of Angular we want to test. Typically these directories contain new `package.json` files, `jest.config.js` files, and more. If you have code that is specific to a particular version of Vue, put it in this directory.
+**apps** - This directory contains partial applications for each version of Vue we want to test. Typically these directories contain new `package.json` files, `jest.config.js` files, and more. If you have code that is specific to a particular version of Vue, put it in this directory.
 
 **base** - This directory contains the base application that each test app will use. This is where tests, application logic, and more live. If you have code that needs to be run on every test app, put it in this directory.
 
