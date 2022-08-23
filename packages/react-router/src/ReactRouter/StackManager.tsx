@@ -206,8 +206,18 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
     const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
     if (foundView) {
+      const oldPageElement = foundView.ionPageElement;
       foundView.ionPageElement = page;
       foundView.ionRoute = true;
+
+      /**
+       * React 18 will unmount and remount IonPage
+       * elements in development mode when using createRoot.
+       * This can cause duplicate page transitions to occur.
+       */
+      if (oldPageElement === page) {
+        return;
+      }
     }
     this.handlePageTransition(routeInfo);
   }
