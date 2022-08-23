@@ -1,8 +1,8 @@
-import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
 import { angularOutputTarget } from '@stencil/angular-output-target';
-import { vueOutputTarget } from '@stencil/vue-output-target';
+import type { Config } from '@stencil/core';
 import { reactOutputTarget } from '@stencil/react-output-target';
+import { sass } from '@stencil/sass';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
@@ -182,7 +182,7 @@ export const config: Config = {
     angularOutputTarget({
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesArrayFile: '../angular/src/directives/proxies-list.txt',
+      directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents: [
         // overlays
         'ion-action-sheet',

@@ -65,7 +65,7 @@ jobs:
       # component playgrounds always load
       # the latest version of Ionic.
       - name: Purge JSDelivr Cache
-        run: | 
+        run: |
           curl -X POST \
             https://purge.jsdelivr.net/ \
             -H 'cache-control: no-cache' \
@@ -74,8 +74,8 @@ jobs:
           "path": [
             "/npm/@ionic/core@6/dist/ionic/ionic.esm.js",
             "/npm/@ionic/core@latest/dist/ionic/ionic.esm.js",
-            "/npm/@ionic/core@6/css/ionic.bundle.css,
-            "/npm/@ionic/core@latest/css/ionic.bundle.css
+            "/npm/@ionic/core@6/css/ionic.bundle.css",
+            "/npm/@ionic/core@latest/css/ionic.bundle.css"
           ]}'
 
 

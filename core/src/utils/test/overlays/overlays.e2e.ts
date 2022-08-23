@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('overlays: focus', () => {
-  test('should not focus the overlay container if element inside of overlay is focused', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'RTL tests are not needed as layout is not checked');
+  test('should not focus the overlay container if element inside of overlay is focused', async ({ page, skip }) => {
+    skip.rtl();
 
     await page.setContent(`
       <ion-button id="open-modal">Show Modal</ion-button>

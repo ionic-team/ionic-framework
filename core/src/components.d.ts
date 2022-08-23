@@ -672,6 +672,10 @@ export namespace Components {
          */
         "fullscreen": boolean;
         /**
+          * Returns the background content element.
+         */
+        "getBackgroundElement": () => Promise<HTMLElement>;
+        /**
           * Get the element where the actual scrolling takes place. This element can be used to subscribe to `scroll` events or manually modify `scrollTop`. However, it's recommended to use the API provided by `ion-content`:  i.e. Using `ionScroll`, `ionScrollStart`, `ionScrollEnd` for scrolling events and `scrollToPoint()` to scroll the content into a certain point.
          */
         "getScrollElement": () => Promise<HTMLElement>;
