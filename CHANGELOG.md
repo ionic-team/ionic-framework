@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.4-nightly.20220823](https://github.com/ionic-team/ionic-framework/compare/v6.2.3...v6.2.4-nightly.20220823) (2022-08-23)
+
+
+### Bug Fixes
+
+* **alert:** add default aria-label ([#25800](https://github.com/ionic-team/ionic-framework/issues/25800)) ([d395a73](https://github.com/ionic-team/ionic-framework/commit/d395a73cb6c419e6c0072746b8e4768cd5f78ef3))
+* **datetime:** close month/year picker when hidden ([#25789](https://github.com/ionic-team/ionic-framework/issues/25789)) ([3b211b6](https://github.com/ionic-team/ionic-framework/commit/3b211b60fd9a88be6e232f839ecc4be090181530)), closes [#25787](https://github.com/ionic-team/ionic-framework/issues/25787)
+* **refresher:** use componentOnReady utility for CE build ([#25783](https://github.com/ionic-team/ionic-framework/issues/25783)) ([bd715a5](https://github.com/ionic-team/ionic-framework/commit/bd715a52562f1f175d4bb6ea2dbfdd67a3e91db1)), closes [#25782](https://github.com/ionic-team/ionic-framework/issues/25782)
+* **select:** compareWith passes params in correct order ([#25764](https://github.com/ionic-team/ionic-framework/issues/25764)) ([d631195](https://github.com/ionic-team/ionic-framework/commit/d6311951243fd9b867ae5d4a7a08c8d341f8eb7a)), closes [#25759](https://github.com/ionic-team/ionic-framework/issues/25759)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic-framework/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 
