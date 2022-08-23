@@ -4,10 +4,30 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
+- [Version 7.x](#version-7x)
 - [Version 6.x](#version-6x)
 - [Version 5.x](#version-5x)
 - [Version 4.x](#version-4x)
 - [Legacy](#legacy)
+
+## Version 7.x
+
+- [Components](#version-7x-components)
+  - [Virtual Scroll](#version-7x-virtual-scroll)
+
+<h2 id="version-7x-components">Components</h2>
+
+<h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
+
+`ion-virtual-scroll` has been removed from Ionic.
+
+Developers using the component will need to migrate to a virtual scroll solution provided by their framework:
+
+- [Angular](https://ionicframework.com/docs/angular/virtual-scroll)
+- [React](https://ionicframework.com/docs/react/virtual-scroll)
+- [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
+
+Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
 
 
 ## Version 6.x
