@@ -584,12 +584,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
     const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
+    const defaultAriaLabel = header || subHeader || 'Alert';
 
     return (
       <Host
         role={role}
         aria-modal="true"
         tabindex="-1"
+        aria-label={defaultAriaLabel}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + overlayIndex}`,
