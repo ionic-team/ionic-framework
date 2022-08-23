@@ -131,7 +131,7 @@ export const createKeyframeStylesheet = (
     return existingStylesheet;
   }
 
-  const stylesheet = (element.ownerDocument || document).createElement('style');
+  const stylesheet = (element.ownerDocument ?? document).createElement('style');
   stylesheet.id = keyframeName;
   stylesheet.textContent = `@${keyframePrefix}keyframes ${keyframeName} { ${keyframeRules} } @${keyframePrefix}keyframes ${keyframeName}-alt { ${keyframeRules} }`;
 

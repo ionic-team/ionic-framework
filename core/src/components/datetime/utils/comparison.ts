@@ -14,12 +14,12 @@ export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts)
  * Returns true is the selected day is before the reference day.
  */
 export const isBefore = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
-  return (
+  return !!(
     baseParts.year < compareParts.year ||
     (baseParts.year === compareParts.year && baseParts.month < compareParts.month) ||
     (baseParts.year === compareParts.year &&
       baseParts.month === compareParts.month &&
-      baseParts.day &&
+      baseParts.day !== null &&
       baseParts.day < compareParts.day!)
   );
 };
@@ -28,12 +28,12 @@ export const isBefore = (baseParts: DatetimeParts, compareParts: DatetimeParts) 
  * Returns true is the selected day is after the reference day.
  */
 export const isAfter = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
-  return (
+  return !!(
     baseParts.year > compareParts.year ||
     (baseParts.year === compareParts.year && baseParts.month > compareParts.month) ||
     (baseParts.year === compareParts.year &&
       baseParts.month === compareParts.month &&
-      baseParts.day &&
+      baseParts.day !== null &&
       baseParts.day > compareParts.day!)
   );
 };
@@ -45,7 +45,7 @@ export const warnIfValueOutOfBounds = (
 ) => {
   const valueArray = Array.isArray(value) ? value : [value];
   for (const val of valueArray) {
-    if ((min && isBefore(val, min)) || (max && isAfter(val, max))) {
+    if ((min !== undefined && isBefore(val, min)) || (max !== undefined && isAfter(val, max))) {
       printIonWarning(
         'The value provided to ion-datetime is out of bounds.\n\n' +
           `Min: ${JSON.stringify(min)}\n` +

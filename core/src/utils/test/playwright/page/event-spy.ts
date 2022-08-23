@@ -27,11 +27,11 @@ export class EventSpy {
   }
 
   get firstEvent() {
-    return this.events[0] || null;
+    return this.events[0] ?? null;
   }
 
   get lastEvent() {
-    return this.events[this.events.length - 1] || null;
+    return this.events[this.events.length - 1] ?? null;
   }
 
   public next() {
@@ -39,7 +39,7 @@ export class EventSpy {
     this.cursor++;
 
     const next = this.events[cursor];
-    if (next) {
+    if (next !== undefined) {
       return Promise.resolve(next);
     } else {
       /**

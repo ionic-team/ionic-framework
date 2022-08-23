@@ -182,7 +182,7 @@ Please upvote https://github.com/ionic-team/ionic-framework/issues/25668 if you 
      * Both ion-datetime and ion-datetime-button default
      * to today's date and time if no value is set.
      */
-    const parsedDatetime = parseDate(value || getToday()) as DatetimeParts;
+    const parsedDatetime = parseDate(value ?? getToday()) as DatetimeParts;
     const use24Hour = is24Hour(locale, hourCycle);
 
     // TODO(FW-1865) - Remove once FW-1831 is fixed.

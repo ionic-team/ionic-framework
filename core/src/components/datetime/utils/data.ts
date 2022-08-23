@@ -353,8 +353,14 @@ export const getDayColumnData = (
    * Otherwise, fallback to the max/min days in a month.
    */
   const numDaysInMonth = getNumDaysInMonth(month, year);
-  const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
-  const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
+  const maxDay =
+    maxParts?.day !== null && maxParts?.day !== undefined && maxParts.year === year && maxParts.month === month
+      ? maxParts.day
+      : numDaysInMonth;
+  const minDay =
+    minParts?.day !== null && minParts?.day !== undefined && minParts.year === year && minParts.month === month
+      ? minParts.day
+      : 1;
 
   if (dayValues !== undefined) {
     let processedDays = dayValues;
@@ -394,8 +400,8 @@ export const getYearColumnData = (
     }
   } else {
     const { year } = refParts;
-    const maxYear = maxParts?.year || year;
-    const minYear = minParts?.year || year - 100;
+    const maxYear = maxParts?.year ?? year;
+    const minYear = minParts?.year ?? year - 100;
 
     for (let i = maxYear; i >= minYear; i--) {
       processedYears.push(i);

@@ -93,7 +93,7 @@ export class RefresherContent implements ComponentInterface {
               <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
             </div>
           )}
-          {this.pullingText && (
+          {this.pullingText !== undefined && (
             <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
           )}
         </div>
@@ -103,7 +103,7 @@ export class RefresherContent implements ComponentInterface {
               <ion-spinner name={this.refreshingSpinner}></ion-spinner>
             </div>
           )}
-          {this.refreshingText && (
+          {this.refreshingText !== undefined && (
             <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
           )}
         </div>

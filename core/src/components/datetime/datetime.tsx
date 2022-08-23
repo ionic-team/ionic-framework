@@ -1150,8 +1150,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    this.highlightActiveParts = !!value;
-    let valueToProcess = parseDate(value || getToday());
+    this.highlightActiveParts = value !== null && value !== undefined;
+    let valueToProcess = parseDate(value ?? getToday());
 
     const { minParts, maxParts, multiple } = this;
     if (!multiple && Array.isArray(value)) {
@@ -1438,9 +1438,10 @@ export class Datetime implements ComponentInterface {
      * If we have selected a day already, then default the column
      * to that value. Otherwise, default it to today.
      */
-    const todayString = workingParts.day
-      ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-      : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+    const todayString =
+      workingParts.day !== null
+        ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+        : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
 
     return (
       <ion-picker-column-internal
@@ -1566,7 +1567,7 @@ export class Datetime implements ComponentInterface {
         class="day-column"
         color={this.color}
         items={days}
-        value={(workingParts.day || this.todayParts.day) ?? undefined}
+        value={(workingParts.day !== null ? workingParts.day : this.todayParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
@@ -1689,12 +1690,14 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
+    const valueIsDefined = this.value !== null && this.value !== undefined;
+
     const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
-      this.value ? this.minParts : undefined,
-      this.value ? this.maxParts : undefined,
+      valueIsDefined ? this.minParts : undefined,
+      valueIsDefined ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );
