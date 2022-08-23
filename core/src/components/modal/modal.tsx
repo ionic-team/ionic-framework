@@ -867,6 +867,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       <Host
         no-router
         aria-modal="true"
+        role="dialog"
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
@@ -896,7 +897,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
-        <div role="dialog" class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
+        <div class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
           {showHandle && (
             <button
               class="modal-handle"
