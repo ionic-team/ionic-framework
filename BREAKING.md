@@ -4,10 +4,22 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
+- [Version 7.x](#version-7x)
 - [Version 6.x](#version-6x)
 - [Version 5.x](#version-5x)
 - [Version 4.x](#version-4x)
 - [Legacy](#legacy)
+
+## Version 7.x
+
+- [Components](#version-7x-components)
+  - [Overlays](#version-7x-overlays)
+
+<h2 id="version-7x-components">Components</h2>
+
+<h4 id="version-7x-overlays">Overlays</h4>
+
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
 
 
 ## Version 6.x
