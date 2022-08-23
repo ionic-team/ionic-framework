@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { dragElementBy, test } from '@utils/test/playwright';
 
 test.describe('card modal - scroll target', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
+  test.beforeEach(async ({ page, skip }) => {
+    skip.mode('md');
 
     await page.goto('/src/components/modal/test/card-scroll-target');
   });
@@ -35,7 +35,7 @@ test.describe('card modal - scroll target', () => {
 
       await content.waitForElementState('stable');
 
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -46,7 +46,7 @@ test.describe('card modal - scroll target', () => {
       const content = await page.locator('ion-modal .ion-content-scroll-host');
       await dragElementBy(content, page, 0, 20);
 
-      expect(content).not.toHaveCSS('overflow', 'hidden');
+      await expect(content).not.toHaveCSS('overflow', 'hidden');
     });
   });
 });

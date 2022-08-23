@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.1.10",
+  "version": "6.2.3",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^2.16.0",
+    "@stencil/core": "^2.17.4",
     "ionicons": "^6.0.2",
     "tslib": "^2.1.0"
   },
@@ -41,20 +41,20 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^26.6.3",
-    "@playwright/test": "^1.20.0",
+    "@playwright/test": "^1.23.3",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.6.1-dev.11655499531.137e1d26",
     "@stencil/react-output-target": "^0.2.1",
     "@stencil/sass": "^1.5.2",
-    "@stencil/vue-output-target": "^0.6.0",
+    "@stencil/vue-output-target": "^0.6.2",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.6.0",
     "@types/swiper": "5.4.0",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "aws-sdk": "^2.738.0",
-    "clean-css-cli": "^4.1.11",
+    "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",

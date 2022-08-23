@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.2.1](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1) (2022-08-03)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [6.2.0](https://github.com/ionic-team/ionic/compare/v6.1.15...v6.2.0) (2022-07-27)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.1.14](https://github.com/ionic-team/ionic/compare/v6.1.13...v6.1.14) (2022-07-13)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.1.13](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13) (2022-07-06)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.1.12](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 ## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
 
 **Note:** Version bump only for package @ionic/angular-server

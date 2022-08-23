@@ -5,8 +5,8 @@ import { CardModalPage } from '../fixtures';
 
 test.describe('card modal', () => {
   let cardModalPage: CardModalPage;
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
+  test.beforeEach(async ({ page, skip }) => {
+    skip.mode('md');
 
     cardModalPage = new CardModalPage(page);
     await cardModalPage.navigate('/src/components/modal/test/card');
@@ -55,7 +55,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
       page,
@@ -70,14 +70,14 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
       const content = await page.locator('ion-modal ion-content');
-      expect(content).toHaveJSProperty('scrollY', true);
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
   });
   test.describe('card modal: rendering - tablet', () => {
@@ -134,7 +134,7 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
       page,
@@ -149,14 +149,14 @@ test.describe('card modal', () => {
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
       await content.waitForElementState('stable');
-      expect(modal).toBeVisible();
+      await expect(modal).toBeVisible();
     });
     test('content should be scrollable after gesture ends', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
       const content = await page.locator('ion-modal ion-content');
-      expect(content).toHaveJSProperty('scrollY', true);
+      await expect(content).toHaveJSProperty('scrollY', true);
     });
   });
 });

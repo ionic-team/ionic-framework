@@ -82,7 +82,7 @@ test.describe('select: basic', () => {
       if (browserName !== 'firefox') {
         // select has no value, so first option should be focused by default
         const popoverOption1 = await popover.locator('.select-interface-option:first-of-type ion-radio');
-        expect(popoverOption1).toBeFocused();
+        await expect(popoverOption1).toBeFocused();
       }
 
       expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(

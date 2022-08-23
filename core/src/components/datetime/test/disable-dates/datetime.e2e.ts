@@ -13,13 +13,8 @@ const queryAllWorkingMonthDisabledDays = (page: E2EPage, datetimeSelector = 'ion
 };
 
 test.describe('datetime: disable dates', () => {
-  /**
-   * We need to access testInfo, but Playwright
-   * requires that we destructure the first parameter.
-   */
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'These tests do not check layout rendering functionality.');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
   });
   test.describe('check return values', () => {
     test.beforeEach(async ({ page }) => {
@@ -122,21 +117,21 @@ test.describe('datetime: disable dates', () => {
     test('should disable a specific date', async ({ page }) => {
       const disabledDay = queryAllDisabledDays(page, '#specificDate');
 
-      expect(disabledDay).toHaveText('10');
+      await expect(disabledDay).toHaveText('10');
     });
 
     test('should disable specific days of the week', async ({ page }) => {
       const disabledDays = queryAllWorkingMonthDisabledDays(page, '#weekends');
 
       expect(await disabledDays.count()).toEqual(10);
-      expect(disabledDays).toHaveText(['2', '3', '9', '10', '16', '17', '23', '24', '30', '31']);
+      await expect(disabledDays).toHaveText(['2', '3', '9', '10', '16', '17', '23', '24', '30', '31']);
     });
 
     test('should disable a range of dates', async ({ page }) => {
       const disabledDays = queryAllDisabledDays(page, '#dateRange');
 
       expect(await disabledDays.count()).toEqual(11);
-      expect(disabledDays).toHaveText(['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
+      await expect(disabledDays).toHaveText(['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
     });
 
     test('should disable a month', async ({ page }) => {

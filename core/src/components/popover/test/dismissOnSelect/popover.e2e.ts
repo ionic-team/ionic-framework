@@ -20,13 +20,13 @@ test.describe('popover: dismissOnSelect', async () => {
     await hoverTrigger.click();
 
     // ensure parent popover is still open
-    expect(popover).toBeVisible();
+    await expect(popover).toBeVisible();
   });
 
-  test('should not dismiss a popover when clicking a click trigger', async ({ page, browserName }) => {
+  test('should not dismiss a popover when clicking a click trigger', async ({ page, skip }) => {
     // TODO FW-1486
-    test.skip(
-      browserName === 'firefox',
+    skip.browser(
+      'firefox',
       'Parent popover disappears when click trigger is clicked. Cannot replicate locally. Needs further investigation.'
     );
 
@@ -41,6 +41,6 @@ test.describe('popover: dismissOnSelect', async () => {
     await ionPopoverDidPresent.next(); // wait for click popover to open
 
     // ensure parent popover is still open
-    expect(popover).toBeVisible();
+    await expect(popover).toBeVisible();
   });
 });

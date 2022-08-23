@@ -8,17 +8,17 @@ test.describe('picker-column-internal', () => {
 
   test('should render a picker item for each item', async ({ page }) => {
     const columns = page.locator('ion-picker-column-internal .picker-item:not(.picker-item-empty)');
-    expect(columns).toHaveCount(24);
+    await expect(columns).toHaveCount(24);
   });
 
   test('should render 6 empty picker items', async ({ page }) => {
     const columns = page.locator('ion-picker-column-internal .picker-item-empty');
-    expect(columns).toHaveCount(6);
+    await expect(columns).toHaveCount(6);
   });
 
   test('should not have an active item when value is not set', async ({ page }) => {
     const activeColumn = page.locator('ion-picker-column-internal .picker-item-active');
-    expect(activeColumn).toHaveCount(0);
+    await expect(activeColumn).toHaveCount(0);
   });
 
   test('should have an active item when value is set', async ({ page }) => {
@@ -32,8 +32,8 @@ test.describe('picker-column-internal', () => {
     expect(activeColumn).not.toBeNull();
   });
 
-  test('scrolling should change the active item', async ({ page, browserName }) => {
-    test.skip(browserName === 'firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
+  test('scrolling should change the active item', async ({ page, skip }) => {
+    skip.browser('firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
 
     await page.locator('#default').evaluate((el: HTMLIonPickerColumnInternalElement) => {
       el.scrollTop = 801;
@@ -45,8 +45,8 @@ test.describe('picker-column-internal', () => {
     expect(await activeColumn?.innerText()).toEqual('23');
   });
 
-  test('should not emit ionChange when the value is modified externally', async ({ page, browserName }) => {
-    test.skip(browserName === 'firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
+  test('should not emit ionChange when the value is modified externally', async ({ page, skip }) => {
+    skip.browser('firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
 
     const ionChangeSpy = await page.spyOnEvent('ionChange');
 
@@ -57,8 +57,8 @@ test.describe('picker-column-internal', () => {
     expect(ionChangeSpy).not.toHaveReceivedEvent();
   });
 
-  test('should emit ionChange when the picker is scrolled', async ({ page, browserName }) => {
-    test.skip(browserName === 'firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
+  test('should emit ionChange when the picker is scrolled', async ({ page, skip }) => {
+    skip.browser('firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
 
     const ionChangeSpy = await page.spyOnEvent('ionChange');
 

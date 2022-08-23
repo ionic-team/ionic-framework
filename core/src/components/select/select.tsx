@@ -150,6 +150,7 @@ export class Select implements ComponentInterface {
   @Watch('value')
   valueChanged() {
     this.emitStyle();
+    // TODO: FW-1160 - Remove the `didInit` property when ionChange behavior is changed in v7.
     if (this.didInit) {
       this.ionChange.emit({
         value: this.value,
@@ -685,7 +686,7 @@ const textForValue = (
   compareWith?: string | SelectCompareFn | null
 ): string | null => {
   const selectOpt = opts.find((opt) => {
-    return compareOptions(getOptionValue(opt), value, compareWith);
+    return compareOptions(value, getOptionValue(opt), compareWith);
   });
   return selectOpt ? selectOpt.textContent : null;
 };
