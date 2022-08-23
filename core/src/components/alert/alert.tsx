@@ -587,7 +587,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     /**
      * If the header is defined, use that. Otherwise, fall back to the subHeader.
-     * If neither is defined, don't set aria-labelled by.
+     * If neither is defined, don't set aria-labelledby.
      */
     const ariaLabelledBy = header ? hdrId : subHeader ? subHdrId : null;
 
