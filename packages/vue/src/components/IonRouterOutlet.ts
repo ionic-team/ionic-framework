@@ -88,19 +88,20 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * all of the keys in the params object, we check the url path to
        * see if they are different after ensuring we are in a parameterized route.
        */
-      if (currentMatchedRouteRef === undefined) { return; }
+      if (currentMatchedRouteRef !== undefined) {
+        const matchedDifferentRoutes = currentMatchedRouteRef !== previousMatchedRouteRef;
+        const matchedDifferentParameterRoutes = (
+          currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef &&
+          currentRoute.path !== previousMatchedPath
+        );
 
-      const matchedDifferentRoutes = currentMatchedRouteRef !== previousMatchedRouteRef;
-      const matchedDifferentParameterRoutes = (
-        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef &&
-        currentRoute.path !== previousMatchedPath
-      );
-
-      if (matchedDifferentRoutes || matchedDifferentParameterRoutes) {
-        setupViewItem(matchedRouteRef);
-        previousMatchedRouteRef = currentMatchedRouteRef;
-        previousMatchedPath = currentRoute.path;
+        if (matchedDifferentRoutes || matchedDifferentParameterRoutes) {
+          setupViewItem(matchedRouteRef);
+        }
       }
+
+      previousMatchedRouteRef = currentMatchedRouteRef;
+      previousMatchedPath = currentRoute.path;
     });
 
     const canStart = () => {
@@ -274,13 +275,13 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * return early for swipe to go back when
        * going from a non-tabs page to a tabs page.
        */
-      if (isViewVisible(enteringEl) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
+      if (isViewVisible(enteringEl) && leavingViewItem?.ionPageElement !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
         return;
       }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
-      if (leavingViewItem && enteringViewItem !== leavingViewItem) {
+      if (leavingViewItem?.ionPageElement && enteringViewItem !== leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
