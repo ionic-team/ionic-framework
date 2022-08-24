@@ -55,8 +55,11 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/dynamic-ionpage-classnames">
             <IonLabel>Dynamic IonPage Classnames</IonLabel>
           </IonItem>
-          <IonItem routerLink="/Refs">
+          <IonItem routerLink="/refs">
             <IonLabel>Refs</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/overlays">
+            <IonLabel>Overlays</IonLabel>
           </IonItem>
           <IonItem routerLink="/tabs" id="go-to-tabs">
             <IonLabel>Tabs</IonLabel>
