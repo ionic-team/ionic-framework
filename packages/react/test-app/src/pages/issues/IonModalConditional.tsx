@@ -15,7 +15,13 @@ const IonModalConditional = () => {
 
   return (
     <IonContent>
-      <IonButton id="renderModalBtn" onClick={() => setShowIonModal(true)}>
+      <IonButton
+        id="renderModalBtn"
+        onClick={() => {
+          setShowIonModal(true);
+          setIsOpen(true);
+        }}
+      >
         Render Modal
       </IonButton>
       {showIonModal && (

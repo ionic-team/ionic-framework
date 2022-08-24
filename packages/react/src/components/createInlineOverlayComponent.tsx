@@ -1,7 +1,10 @@
-import { FrameworkDelegate, OverlayEventDetail } from '@ionic/core/components';
+import {
+  FrameworkDelegate,
+  HTMLIonOverlayElement,
+  OverlayEventDetail,
+} from '@ionic/core/components';
 import React, { createElement } from 'react';
-
-import { ReactInlineOverlayDelegate } from '../framework-delegate';
+import { createPortal } from 'react-dom';
 
 import {
   attachProps,
@@ -24,6 +27,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   keepContentsMounted?: boolean;
+  isOpen?: boolean;
 }
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
@@ -38,10 +42,14 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     IonicReactInternalProps<PropType>,
     InlineOverlayState
   > {
-    ref: React.RefObject<HTMLElement>;
+    ref: React.RefObject<HTMLIonOverlayElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
-    delegate: FrameworkDelegate = ReactInlineOverlayDelegate();
+    delegate: FrameworkDelegate = {
+      attachViewToDom: () => Promise.resolve(this.ref.current!),
+      removeViewFromDom: () => Promise.resolve(),
+    };
+    isDismissing = false;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
@@ -49,8 +57,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
       this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
-      // Component is hidden by default
-      this.state = { isOpen: false };
+      this.state = { isOpen: this.props.isOpen || false };
       // Create a local ref to the inner child element.
       this.wrapperRef = React.createRef();
     }
@@ -108,6 +115,25 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       attachProps(node, { ...this.props, delegate: this.delegate }, prevProps);
     }
 
+    shouldComponentUpdate(nextProps: IonicReactInternalProps<PropType>) {
+      // Check if the overlay component is about to dismiss
+      if (
+        this.ref.current &&
+        nextProps.isOpen !== this.props.isOpen &&
+        nextProps.isOpen === false
+      ) {
+        this.isDismissing = true;
+      }
+
+      return true;
+    }
+
+    componentWillUnmount() {
+      if (this.ref.current) {
+        this.ref.current.dismiss();
+      }
+    }
+
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
@@ -129,30 +155,23 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         style,
       };
 
-      /**
-       * The React element is inserted in the DOM tree after
-       * the overlay's children are mounted, meaning that children
-       * will be mounted on a detached DOM node. If a child
-       * component requires to be attached to the DOM tree
-       * immediately when mounted, add state to the overlay and only
-       * render the children when the overlay is inserted in the DOM tree.
-       *
-       * @see https://reactjs.org/docs/portals.html#event-bubbling-through-portals
-       */
-      return createElement(
-        'div',
-        {},
-        createElement(
-          tagName,
-          newProps,
-          /**
-           * We only want the inner component
-           * to be mounted if the overlay is open,
-           * so conditionally render the component
-           * based on the isOpen state.
-           */
-          this.state.isOpen || this.props.keepContentsMounted
-            ? createElement(
+      const appRoot = document.querySelector('ion-app') || document.body;
+
+      return createPortal(
+        this.state.isOpen ||
+          this.props.isOpen ||
+          this.isDismissing ||
+          this.props.keepContentsMounted
+          ? createElement(
+              tagName,
+              newProps,
+              /**
+               * We only want the inner component
+               * to be mounted if the overlay is open,
+               * so conditionally render the component
+               * based on the isOpen state.
+               */
+              createElement(
                 'div',
                 {
                   id: 'ion-react-wrapper',
@@ -165,8 +184,9 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
                 },
                 children
               )
-            : null
-        )
+            )
+          : null,
+        appRoot
       );
     }
 
