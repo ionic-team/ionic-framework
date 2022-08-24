@@ -1462,21 +1462,3 @@ ion-toolbar,css-prop,--padding-bottom
 ion-toolbar,css-prop,--padding-end
 ion-toolbar,css-prop,--padding-start
 ion-toolbar,css-prop,--padding-top
-
-ion-virtual-scroll,none
-ion-virtual-scroll,prop,approxFooterHeight,number,30,false,false
-ion-virtual-scroll,prop,approxHeaderHeight,number,30,false,false
-ion-virtual-scroll,prop,approxItemHeight,number,45,false,false
-ion-virtual-scroll,prop,footerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
-ion-virtual-scroll,prop,footerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,headerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
-ion-virtual-scroll,prop,headerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,itemHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,items,any[] | undefined,undefined,false,false
-ion-virtual-scroll,prop,nodeRender,((el: HTMLElement | null, cell: Cell, domIndex: number) => HTMLElement) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
-ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
-ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>

@@ -19,10 +19,6 @@ import {
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
-import { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
-import { VirtualHeader } from './directives/virtual-scroll/virtual-header';
-import { VirtualItem } from './directives/virtual-scroll/virtual-item';
-import { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
 import { AngularDelegate } from './providers/angular-delegate';
 import { ConfigToken } from './providers/config';
 import { ModalController } from './providers/modal-controller';
@@ -50,12 +46,6 @@ const DECLARATIONS = [
   NavDelegate,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
-
-  // virtual scroll
-  VirtualFooter,
-  VirtualHeader,
-  VirtualItem,
-  IonVirtualScroll,
 ];
 
 @NgModule({

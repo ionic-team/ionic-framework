@@ -14,12 +14,25 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Components](#version-7x-components)
   - [Overlays](#version-7x-overlays)
+  - [Virtual Scroll](#version-7x-virtual-scroll)
 
 <h2 id="version-7x-components">Components</h2>
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
 Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+
+<h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
+
+`ion-virtual-scroll` has been removed from Ionic.
+
+Developers using the component will need to migrate to a virtual scroll solution provided by their framework:
+
+- [Angular](https://ionicframework.com/docs/angular/virtual-scroll)
+- [React](https://ionicframework.com/docs/react/virtual-scroll)
+- [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
+
+Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
 
 
 ## Version 6.x

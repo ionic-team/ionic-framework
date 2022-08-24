@@ -53,7 +53,6 @@ export const config: Config = {
     { components: ['ion-text'] },
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
-    { components: ['ion-virtual-scroll'] },
     { components: ['ion-accordion-group', 'ion-accordion'] },
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
@@ -207,7 +206,6 @@ export const config: Config = {
 
         // auxiliar
         'ion-picker-column',
-        'ion-virtual-scroll'
       ],
       /**
        * TODO: Abstract custom Ionic value accessor functionality

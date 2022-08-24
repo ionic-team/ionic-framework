@@ -35,7 +35,6 @@ export * from './components/tab-bar/tab-bar-interface';
 export * from './components/textarea/textarea-interface';
 export * from './components/toast/toast-interface';
 export * from './components/toggle/toggle-interface';
-export * from './components/virtual-scroll/virtual-scroll-interface';
 
 // Types from utils
 export {
