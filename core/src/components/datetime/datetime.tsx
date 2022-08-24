@@ -2071,20 +2071,24 @@ export class Datetime implements ComponentInterface {
       </ion-popover>,
     ];
   }
-  private renderCalendarViewHeader(mode: Mode) {
+  private renderCalendarViewHeader() {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
     }
+
+    const { activeParts } = this;
+    const isArray = Array.isArray(activeParts);
+    const headerText = isArray && activeParts.length !== 1 ?
+      `${activeParts.length} days` :
+      getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
 
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && !this.multiple && (
-          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>
-        )}
+        <div class="datetime-selected-date">{headerText}</div>
       </div>
     );
   }
@@ -2137,7 +2141,7 @@ export class Datetime implements ComponentInterface {
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2145,7 +2149,7 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
@@ -2159,7 +2163,7 @@ export class Datetime implements ComponentInterface {
         return [this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),

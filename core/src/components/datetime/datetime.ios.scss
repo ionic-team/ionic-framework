@@ -20,12 +20,15 @@
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
+  font-size: 14px;
 }
 
 :host .datetime-header .datetime-title {
   color: var(--title-color);
+}
 
-  font-size: 14px;
+:host .datetime-header .datetime-selected-date {
+  @include margin(10px, null, null, null);
 }
 
 // Calendar / Header / Action Buttons
