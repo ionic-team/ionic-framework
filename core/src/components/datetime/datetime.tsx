@@ -397,9 +397,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * If `true`, a header will be shown above the calendar
-   * picker. On `ios` mode this will include the
-   * slotted title, and on `md` mode this will include
-   * the slotted title and the selected date.
+   * picker. This will include both the slotted title, and
+   * the selected date.
    */
   @Prop() showDefaultTitle = false;
 
