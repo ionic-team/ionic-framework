@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.4](https://github.com/ionic-team/ionic-framework/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **alert:** add default aria-label ([#25800](https://github.com/ionic-team/ionic-framework/issues/25800)) ([d395a73](https://github.com/ionic-team/ionic-framework/commit/d395a73cb6c419e6c0072746b8e4768cd5f78ef3))
+* **alert:** use aria-labelledby and aria-describedby instead of aria-label ([#25805](https://github.com/ionic-team/ionic-framework/issues/25805)) ([27318d7](https://github.com/ionic-team/ionic-framework/commit/27318d75df60dfce1a90f23ba31ea2b6636ba42f))
+* **breadcrumb:** separator is not announced by narrators ([#25796](https://github.com/ionic-team/ionic-framework/issues/25796)) ([71fad38](https://github.com/ionic-team/ionic-framework/commit/71fad3884bc55b266067efb346500c848b856946))
+* **datetime:** close month/year picker when hidden ([#25789](https://github.com/ionic-team/ionic-framework/issues/25789)) ([3b211b6](https://github.com/ionic-team/ionic-framework/commit/3b211b60fd9a88be6e232f839ecc4be090181530)), closes [#25787](https://github.com/ionic-team/ionic-framework/issues/25787)
+* **modal:** role attribute can be customized ([#25804](https://github.com/ionic-team/ionic-framework/issues/25804)) ([037d579](https://github.com/ionic-team/ionic-framework/commit/037d579b2a3a660358f1e9c9b020c9510bb9c6b0))
+* **react:** duplicate page transitions do not happen on react 18 ([#25798](https://github.com/ionic-team/ionic-framework/issues/25798)) ([a39d776](https://github.com/ionic-team/ionic-framework/commit/a39d776f087514b7fa744f44ce8ce2a04ed8aa43)), closes [#25797](https://github.com/ionic-team/ionic-framework/issues/25797)
+* **refresher:** use componentOnReady utility for CE build ([#25783](https://github.com/ionic-team/ionic-framework/issues/25783)) ([bd715a5](https://github.com/ionic-team/ionic-framework/commit/bd715a52562f1f175d4bb6ea2dbfdd67a3e91db1)), closes [#25782](https://github.com/ionic-team/ionic-framework/issues/25782)
+* **select:** compareWith passes params in correct order ([#25764](https://github.com/ionic-team/ionic-framework/issues/25764)) ([d631195](https://github.com/ionic-team/ionic-framework/commit/d6311951243fd9b867ae5d4a7a08c8d341f8eb7a)), closes [#25759](https://github.com/ionic-team/ionic-framework/issues/25759)
+* **vue:** lifecycles now fire on tabs pages ([#25786](https://github.com/ionic-team/ionic-framework/issues/25786)) ([3020005](https://github.com/ionic-team/ionic-framework/commit/30200051bbab6ce57fd363668dafc49287c87c56)), closes [#25784](https://github.com/ionic-team/ionic-framework/issues/25784)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic-framework/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 
