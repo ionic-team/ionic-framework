@@ -9,6 +9,8 @@ import { useState } from 'react';
  */
 const IonModalConditional = () => {
   const [showIonModal, setShowIonModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+
   const modal = useRef<HTMLIonModalElement>(null);
 
   return (
@@ -19,8 +21,9 @@ const IonModalConditional = () => {
       {showIonModal && (
         <IonModal
           ref={modal}
-          isOpen={true}
+          isOpen={isOpen}
           onDidDismiss={() => {
+            setIsOpen(false);
             setShowIonModal(false);
           }}
         >

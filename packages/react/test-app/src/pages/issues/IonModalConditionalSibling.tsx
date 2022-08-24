@@ -10,6 +10,8 @@ import { useState } from 'react';
  */
 const IonModalConditionalSibling = () => {
   const [items, setItems] = useState<string[]>(['Item 1']);
+  const [isOpen, setIsOpen] = useState(true);
+
   const modal = useRef<HTMLIonModalElement>(null);
 
   return (
@@ -17,10 +19,11 @@ const IonModalConditionalSibling = () => {
       {items && items.map((item) => <IonCard key={item}>{item}</IonCard>)}
       <IonModal
         ref={modal}
-        isOpen={true}
+        isOpen={isOpen}
         onWillDismiss={() => {
           setItems([...items, `Item ${items.length + 1}`]);
         }}
+        onDidDismiss={() => setIsOpen(false)}
       >
         <IonContent>
           Modal Content
