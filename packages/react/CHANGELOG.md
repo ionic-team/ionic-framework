@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **react:** duplicate page transitions do not happen on react 18 ([#25798](https://github.com/ionic-team/ionic/issues/25798)) ([a39d776](https://github.com/ionic-team/ionic/commit/a39d776f087514b7fa744f44ce8ce2a04ed8aa43)), closes [#25797](https://github.com/ionic-team/ionic/issues/25797)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 **Note:** Version bump only for package @ionic/react
