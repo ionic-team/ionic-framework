@@ -10,6 +10,7 @@ import type {
   DatetimeParts,
   Mode,
   StyleEventDetail,
+  SelectedDatesLabelFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -312,6 +313,14 @@ export class Datetime implements ComponentInterface {
    * default value is `0` and represents Sunday.
    */
   @Prop() firstDayOfWeek = 0;
+
+  /**
+   * A callback used to format the header text that shows how many
+   * dates are selected. Only used if there are 0 or more than 1
+   * selected (i.e. unused for exactly 1). By default, the header
+   * text is set to "datesSelected days".
+   */
+  @Prop() selectedDatesLabelFormatter?: SelectedDatesLabelFormatter;
 
   /**
    * If `true`, multiple dates can be selected at once. Only
@@ -2077,11 +2086,26 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { activeParts } = this;
+    const { activeParts, selectedDatesLabelFormatter } = this;
     const isArray = Array.isArray(activeParts);
-    const headerText = isArray && activeParts.length !== 1 ?
-      `${activeParts.length} days` :
-      getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
+
+    let headerText;
+    if (isArray && activeParts.length !== 1) {
+      const defaultText = `${activeParts.length} days`;
+      if (selectedDatesLabelFormatter !== undefined) {
+        try {
+          headerText = selectedDatesLabelFormatter(activeParts.length);
+        } catch (e) {
+          printIonError('Exception in provided `selectedDatesLabelFormatter`: ', e);
+          headerText = defaultText; // fallback
+        }
+      } else {
+        headerText = defaultText;
+      }
+    } else {
+      // for exactly 1 day selected (multiple set or not), show a formatted version of that
+      headerText = getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
+    }
 
     return (
       <div class="datetime-header">
