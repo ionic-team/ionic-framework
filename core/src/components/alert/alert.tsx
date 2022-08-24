@@ -241,7 +241,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           handler: i.handler,
           min: i.min,
           max: i.max,
-          cssClass: i.cssClass || '',
+          cssClass: i.cssClass ?? '',
           attributes: i.attributes || {},
           tabindex: i.type === 'radio' && i !== focusable ? -1 : 0,
         } as AlertInput)
@@ -335,24 +335,24 @@ export class Alert implements ComponentInterface, OverlayInterface {
     forceUpdate(this);
   }
 
-  private buttonClick(button: AlertButton) {
+  private async buttonClick(button: AlertButton) {
     const role = button.role;
     const values = this.getValues();
     if (isCancel(role)) {
       return this.dismiss({ values }, role);
     }
-    const returnData = this.callButtonHandler(button, values);
+    const returnData = await this.callButtonHandler(button, values);
     if (returnData !== false) {
       return this.dismiss({ values, ...returnData }, button.role);
     }
-    return Promise.resolve(false);
+    return false;
   }
 
-  private callButtonHandler(button: AlertButton | undefined, data?: any) {
+  private async callButtonHandler(button: AlertButton | undefined, data?: any) {
     if (button?.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      const returnData = safeCall(button.handler, data);
+      const returnData = await safeCall(button.handler, data);
       if (returnData === false) {
         // if the return value of the handler is false then do not dismiss
         return false;
@@ -584,12 +584,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
     const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
+    const defaultAriaLabel = header || subHeader || 'Alert';
 
     return (
       <Host
         role={role}
         aria-modal="true"
         tabindex="-1"
+        aria-label={defaultAriaLabel}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + overlayIndex}`,

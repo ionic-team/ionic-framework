@@ -183,3 +183,99 @@ test.describe('datetime: footer', () => {
     );
   });
 });
+
+test.describe('datetime: swiping', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'This does not have mode-specific logic.');
+  });
+  test('should move to prev month by swiping', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime value="2022-05-03"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const calendarBody = page.locator('ion-datetime .calendar-body');
+    const calendarHeader = page.locator('ion-datetime .calendar-month-year');
+
+    await expect(calendarHeader).toHaveText(/May 2022/);
+
+    await calendarBody.evaluate((el: HTMLElement) => (el.scrollLeft = 0));
+    await page.waitForChanges();
+
+    await expect(calendarHeader).toHaveText(/April 2022/);
+  });
+  test('should move to next month by swiping', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime value="2022-05-03"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const calendarBody = page.locator('ion-datetime .calendar-body');
+    const calendarHeader = page.locator('ion-datetime .calendar-month-year');
+
+    await expect(calendarHeader).toHaveText(/May 2022/);
+
+    await calendarBody.evaluate((el: HTMLElement) => (el.scrollLeft = el.scrollWidth));
+    await page.waitForChanges();
+
+    await expect(calendarHeader).toHaveText(/June 2022/);
+  });
+  test('should not re-render if swipe is in progress', async ({ page, skip }) => {
+    skip.browser('webkit', 'Wheel is not available in WebKit');
+
+    await page.setContent(`
+      <ion-datetime value="2022-05-03"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const calendarBody = page.locator('ion-datetime .calendar-body');
+    const calendarHeader = page.locator('ion-datetime .calendar-month-year');
+
+    await expect(calendarHeader).toHaveText(/May 2022/);
+
+    const box = await calendarBody.boundingBox();
+
+    if (box) {
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.wheel(-50, 0);
+      await page.waitForChanges();
+
+      await expect(calendarHeader).toHaveText(/May 2022/);
+    }
+  });
+});
+
+test.describe('datetime: visibility', () => {
+  test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    await page.setContent(`
+      <ion-datetime></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+    const monthYearInterface = page.locator('ion-datetime .datetime-year');
+    const datetime = page.locator('ion-datetime');
+
+    await monthYearButton.click();
+    await page.waitForChanges();
+
+    await expect(monthYearInterface).toBeVisible();
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.setProperty('display', 'none'));
+    await expect(datetime).toBeHidden();
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
+    await expect(datetime).toBeVisible();
+
+    // month/year interface should be reset
+    await expect(monthYearInterface).toBeHidden();
+  });
+});

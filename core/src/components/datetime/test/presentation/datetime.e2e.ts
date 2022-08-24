@@ -83,6 +83,27 @@ test.describe('datetime: presentation', () => {
 
     expect(ionChangeSpy.length).toBe(1);
   });
+
+  test('switching presentation should close month/year picker', async ({ page, skip }) => {
+    await skip.rtl();
+
+    await page.setContent(`
+      <ion-datetime presentation="date"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const datetime = page.locator('ion-datetime');
+    const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+    await monthYearButton.click();
+
+    await expect(datetime).toHaveClass(/show-month-and-year/);
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.presentation = 'time'));
+    await page.waitForChanges();
+
+    await expect(datetime).not.toHaveClass(/show-month-and-year/);
+  });
 });
 
 test.describe('datetime: presentation: time', () => {

@@ -14,8 +14,9 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <script type="module">
-    import { alertController } from '../../../../dist/ionic/index.esm.js';
+    import { alertController, loadingController } from '../../../../dist/ionic/index.esm.js';
     window.alertController = alertController;
+    window.loadingController = loadingController;
   </script>
 
   <body>
@@ -30,9 +31,12 @@
         <ion-button id="basic" expand="block" onclick="presentAlert()">Alert</ion-button>
         <ion-button id="longMessage" expand="block" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
         <ion-button id="multipleButtons" expand="block" onclick="presentAlertMultipleButtons()"
-          >Multiple Buttons (>2)</ion-button
-        >
+          >Multiple Buttons (>2)
+        </ion-button>
         <ion-button id="noMessage" expand="block" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
+        <ion-button id="asyncHandler" expand="block" onclick="presentAlertAsyncHandler()"
+          >Alert Async Handler</ion-button
+        >
         <ion-button id="confirm" expand="block" onclick="presentAlertConfirm()">Confirm</ion-button>
         <ion-button id="prompt" expand="block" onclick="presentAlertPrompt()">Prompt</ion-button>
         <ion-button id="radio" expand="block" onclick="presentAlertRadio()">Radio</ion-button>
@@ -46,6 +50,7 @@
           --min-width: 0;
           --max-width: 200px;
         }
+
         #delete-button {
           color: #eb445a;
         }
@@ -346,6 +351,30 @@
               cssClass: 'my-class my-customClass   ',
               handler: () => {
                 console.log('Confirm Ok');
+              },
+            },
+          ],
+        });
+      }
+
+      function presentAlertAsyncHandler() {
+        openAlert({
+          header: 'Alert',
+          message: 'This is an alert with async handlers',
+          buttons: [
+            {
+              text: 'Confirm',
+              handler: () => {
+                return new Promise(async (resolve) => {
+                  const loading = await loadingController.create({
+                    message: 'Please wait...',
+                  });
+                  await loading.present();
+                  setTimeout(async () => {
+                    await loading.dismiss();
+                    resolve();
+                  }, 1000);
+                });
               },
             },
           ],

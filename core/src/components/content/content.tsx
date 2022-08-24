@@ -28,6 +28,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl?: HTMLElement;
+  private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
@@ -189,6 +190,18 @@ export class Content implements ComponentInterface {
   }
 
   /**
+   * Returns the background content element.
+   * @internal
+   */
+  @Method()
+  async getBackgroundElement(): Promise<HTMLElement> {
+    if (!this.backgroundContentEl) {
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
+    }
+    return Promise.resolve(this.backgroundContentEl!);
+  }
+
+  /**
    * Scroll to the top of the component.
    *
    * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
@@ -332,7 +345,7 @@ export class Content implements ComponentInterface {
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div id="background-content" part="background"></div>
+        <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
         <TagType
           class={{
             'inner-scroll': true,

@@ -353,8 +353,14 @@ export const getDayColumnData = (
    * Otherwise, fallback to the max/min days in a month.
    */
   const numDaysInMonth = getNumDaysInMonth(month, year);
-  const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
-  const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
+  const maxDay =
+    maxParts?.day !== null && maxParts?.day !== undefined && maxParts.year === year && maxParts.month === month
+      ? maxParts.day
+      : numDaysInMonth;
+  const minDay =
+    minParts?.day !== null && minParts?.day !== undefined && minParts.year === year && minParts.month === month
+      ? minParts.day
+      : 1;
 
   if (dayValues !== undefined) {
     let processedDays = dayValues;
@@ -394,8 +400,8 @@ export const getYearColumnData = (
     }
   } else {
     const { year } = refParts;
-    const maxYear = maxParts?.year || year;
-    const minYear = minParts?.year || year - 100;
+    const maxYear = maxParts?.year ?? year;
+    const minYear = minParts?.year ?? year - 100;
 
     for (let i = maxYear; i >= minYear; i--) {
       processedYears.push(i);
@@ -414,6 +420,19 @@ interface CombinedDateColumnData {
 }
 
 /**
+ * Given a starting date and an upper bound,
+ * this functions returns an array of all
+ * month objects in that range.
+ */
+const getAllMonthsInRange = (currentParts: DatetimeParts, maxParts: DatetimeParts): DatetimeParts[] => {
+  if (currentParts.month === maxParts.month && currentParts.year === maxParts.year) {
+    return [currentParts];
+  }
+
+  return [currentParts, ...getAllMonthsInRange(getNextMonth(currentParts), maxParts)];
+};
+
+/**
  * Creates and returns picker items
  * that represent the days in a month.
  * Example: "Thu, Jun 2"
@@ -422,16 +441,28 @@ export const getCombinedDateColumnData = (
   locale: string,
   refParts: DatetimeParts,
   todayParts: DatetimeParts,
-  minParts?: DatetimeParts,
-  maxParts?: DatetimeParts,
+  minParts: DatetimeParts,
+  maxParts: DatetimeParts,
   dayValues?: number[],
   monthValues?: number[]
 ): CombinedDateColumnData => {
   let items: PickerColumnItem[] = [];
   let parts: DatetimeParts[] = [];
 
-  // TODO(FW-1693) This does not work when the previous month is in the previous year.
-  const months = getMonthColumnData(locale, refParts, minParts, maxParts, monthValues, { month: 'short' });
+  /**
+   * Get all month objects from the min date
+   * to the max date. Note: Do not use getMonthColumnData
+   * as that function only generates dates within a
+   * single year.
+   */
+  let months = getAllMonthsInRange(minParts, maxParts);
+
+  /**
+   * Filter out any disallowed month values.
+   */
+  if (monthValues) {
+    months = months.filter(({ month }) => monthValues.includes(month));
+  }
 
   /**
    * Get all of the days in the month.
@@ -440,7 +471,7 @@ export const getCombinedDateColumnData = (
    * of work as the text.
    */
   months.forEach((monthObject) => {
-    const referenceMonth = { month: monthObject.value as number, day: null, year: refParts.year };
+    const referenceMonth = { month: monthObject.month, day: null, year: refParts.year };
     const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
       month: 'short',
       day: 'numeric',
@@ -459,7 +490,7 @@ export const getCombinedDateColumnData = (
        */
       dateColumnItems.push({
         text: isToday ? getTodayLabel(locale) : dayObject.text,
-        value: `${refParts.year}-${monthObject.value}-${dayObject.value}`,
+        value: `${refParts.year}-${monthObject.month}-${dayObject.value}`,
       });
 
       /**
@@ -473,7 +504,7 @@ export const getCombinedDateColumnData = (
        * updating the picker column value.
        */
       dateParts.push({
-        month: monthObject.value as number,
+        month: monthObject.month,
         year: refParts.year,
         day: dayObject.value as number,
       });

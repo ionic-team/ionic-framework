@@ -20,7 +20,15 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
     minute: 'numeric',
     timeZone: 'UTC',
     hour12: !use24Hour,
-  }).format(new Date(convertDataToISO(refParts)));
+  }).format(
+    new Date(
+      convertDataToISO({
+        ...refParts,
+        // TODO: FW-1831 will remove the need to manually set the tzOffset to undefined
+        tzOffset: undefined,
+      })
+    )
+  );
 };
 
 /**
@@ -101,6 +109,33 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
 };
 
 /**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the short month, numeric day, and full year.
+ * Example: Apr 22, 2021
+ */
+export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
+  return getLocalizedDateTime(locale, refParts, { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+/**
+ * Wrapper function for Intl.DateTimeFormat.
+ * Allows developers to apply an allowed format to DatetimeParts.
+ * This function also has built in safeguards for older browser bugs
+ * with Intl.DateTimeFormat.
+ */
+export const getLocalizedDateTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  options: Intl.DateTimeFormatOptions
+): string => {
+  const timeString =
+    refParts.hour !== undefined && refParts.minute !== undefined ? ` ${refParts.hour}:${refParts.minute}` : '';
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(date);
+};
+
+/**
  * Gets a localized version of "Today"
  * Falls back to "Today" in English for
  * browsers that do not support RelativeTimeFormat.
@@ -174,4 +209,13 @@ export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | u
   }
 
   return getFormattedDayPeriod(dayPeriod);
+};
+
+/**
+ * Formats the datetime's value to a string, for use in the native input.
+ *
+ * @param value The value to format, either an ISO string or an array thereof.
+ */
+export const formatValue = (value: string | string[] | null | undefined) => {
+  return Array.isArray(value) ? value.join(',') : value;
 };
