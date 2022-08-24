@@ -99,6 +99,17 @@
               show-default-title="true"
             ></ion-datetime>
           </div>
+          <div class="grid-item">
+            <h2>With Header, Custom Formatter</h2>
+            <ion-datetime
+              locale="en-US"
+              id="customFormatter"
+              presentation="date"
+              multiple="true"
+              value="2022-06-01"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
         </div>
       </ion-content>
     </ion-app>
@@ -107,6 +118,12 @@
       document.querySelector('#multipleDefaultValues').value = ['2022-06-01', '2022-06-02', '2022-06-03'];
       document.querySelector('#multipleValuesSeparateMonths').value = ['2022-04-01', '2022-05-01', '2022-06-01'];
       document.querySelector('#multipleFalseArrayValue').value = ['2022-06-01', '2022-06-02', '2022-06-03'];
+
+      const customFormatterDatetime = document.querySelector('#customFormatter');
+      customFormatterDatetime.value = ['2022-06-01', '2022-06-02', '2022-06-03'];
+      customFormatterDatetime.selectedDatesLabelFormatter = (datesSelected) => (
+        `Selected: ${datesSelected}`
+      );
     </script>
   </body>
 </html>
