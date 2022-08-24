@@ -830,7 +830,7 @@ export namespace Components {
          */
         "showDefaultTimeLabel": boolean;
         /**
-          * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
+          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.
          */
         "showDefaultTitle": boolean;
         /**
@@ -4810,7 +4810,7 @@ declare namespace LocalJSX {
          */
         "showDefaultTimeLabel"?: boolean;
         /**
-          * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
+          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.
          */
         "showDefaultTitle"?: boolean;
         /**
