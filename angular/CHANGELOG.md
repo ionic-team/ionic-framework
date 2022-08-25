@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5-nightly.20220825](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5-nightly.20220825) (2022-08-25)
+
+
+### Bug Fixes
+
+* **angular:** router outlet has mode property ([#25816](https://github.com/ionic-team/ionic/issues/25816)) ([afd0bbc](https://github.com/ionic-team/ionic/commit/afd0bbc60aa8f4edc88dc311d6484ac60117fce5)), closes [#25813](https://github.com/ionic-team/ionic/issues/25813)
+
+
+
+
+
 ## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
 
 **Note:** Version bump only for package @ionic/angular
