@@ -511,9 +511,6 @@ export class Searchbar implements ComponentInterface {
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
             spellcheck={this.spellcheck}
-            onFocusout={() => {
-              console.log('focus out');
-            }}
           />
 
           {mode === 'md' && cancelButton}
