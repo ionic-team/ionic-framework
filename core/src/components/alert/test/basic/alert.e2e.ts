@@ -12,8 +12,9 @@ const openAlert = async (page: E2EPage, buttonID: string) => {
 };
 
 const testAlert = async (page: E2EPage, buttonID: string) => {
-  const didDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+  await page.goto(`/src/components/alert/test/basic`);
 
+  const didDismiss = await page.spyOnEvent('ionAlertDidDismiss');
   const alert = await openAlert(page, buttonID);
 
   await expect(alert).toBeVisible();
@@ -26,12 +27,9 @@ const testAlert = async (page: E2EPage, buttonID: string) => {
 };
 
 test.describe('alert: basic', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/alert/test/basic`);
-  });
-
   test('focus trap should work correctly', async ({ page, skip, browserName }) => {
     skip.rtl();
+    await page.goto(`/src/components/alert/test/basic`);
 
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
@@ -50,6 +48,7 @@ test.describe('alert: basic', () => {
 
   test('should set custom attributes', async ({ page, skip }) => {
     skip.rtl();
+    await page.goto(`/src/components/alert/test/basic`);
 
     const alert = await openAlert(page, 'basic');
     expect(alert).toHaveAttribute('data-testid', 'basic-alert');
