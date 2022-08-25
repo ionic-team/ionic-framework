@@ -24,4 +24,4 @@ export interface DatetimeParts {
 
 export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
 
-export type SelectedDatesLabelFormatter = (datesSelected: number) => string;
+export type SelectedDatesLabelFormatter = (numberOfDates: number) => string;

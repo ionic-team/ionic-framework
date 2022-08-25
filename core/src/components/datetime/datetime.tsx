@@ -318,7 +318,7 @@ export class Datetime implements ComponentInterface {
    * A callback used to format the header text that shows how many
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
-   * text is set to "datesSelected days".
+   * text is set to "numberOfDates days".
    */
   @Prop() selectedDatesLabelFormatter?: SelectedDatesLabelFormatter;
 
