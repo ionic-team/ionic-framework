@@ -319,7 +319,7 @@ export class Datetime implements ComponentInterface {
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
-   * 
+   *
    * If this function returns undefined, the header text will not
    * render -- only the `title` slot.
    */
