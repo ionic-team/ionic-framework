@@ -28,6 +28,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   initialBreakpoint?: number;
   backdropBreakpoint?: number;
   handle?: boolean;
+  handleBehavior?: ModalHandleBehavior;
 }
 
 export interface ModalAnimationOptions {
