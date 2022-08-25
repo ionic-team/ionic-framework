@@ -2090,16 +2090,13 @@ export class Datetime implements ComponentInterface {
 
     let headerText: string;
     if (isArray && activeParts.length !== 1) {
-      const defaultText = `${activeParts.length} days`;
+      headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (selectedDatesLabelFormatter !== undefined) {
         try {
           headerText = selectedDatesLabelFormatter(activeParts.length);
         } catch (e) {
           printIonError('Exception in provided `selectedDatesLabelFormatter`: ', e);
-          headerText = defaultText; // fallback
         }
-      } else {
-        headerText = defaultText;
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
