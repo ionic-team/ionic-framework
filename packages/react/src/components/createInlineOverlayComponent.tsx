@@ -28,6 +28,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   keepContentsMounted?: boolean;
   isOpen?: boolean;
+  trigger?: string;
 }
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
@@ -112,7 +113,20 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
-      attachProps(node, { ...this.props, delegate: this.delegate }, prevProps);
+      attachProps(
+        node,
+        /**
+         * Overlays using a trigger require the element to be mounted in order
+         * to emit the `willPresent` event. For these implementations we opt-in to
+         * using the Core delegate's behavior of manually moving the element to the
+         * app root.
+         *
+         * For non-trigger overlays, we use a no-op delegate to allow React portals
+         * to render the element in the correct place and within React's context.
+         */
+        { ...this.props, delegate: this.props.trigger ? null : this.delegate },
+        prevProps
+      );
     }
 
     shouldComponentUpdate(nextProps: IonicReactInternalProps<PropType>) {
@@ -157,37 +171,41 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
       const appRoot = document.querySelector('ion-app') || document.body;
 
-      return createPortal(
-        this.state.isOpen ||
-          this.props.isOpen ||
-          this.isDismissing ||
-          this.props.keepContentsMounted
-          ? createElement(
-              tagName,
-              newProps,
-              /**
-               * We only want the inner component
-               * to be mounted if the overlay is open,
-               * so conditionally render the component
-               * based on the isOpen state.
-               */
-              createElement(
-                'div',
-                {
-                  id: 'ion-react-wrapper',
-                  ref: this.wrapperRef,
-                  style: {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%',
-                  },
-                },
-                children
-              )
-            )
-          : null,
-        appRoot
+      const overlay = createElement(
+        tagName,
+        newProps,
+        /**
+         * We only want the inner component
+         * to be mounted if the overlay is open,
+         * so conditionally render the component
+         * based on the isOpen state.
+         */
+        createElement(
+          'div',
+          {
+            id: 'ion-react-wrapper',
+            ref: this.wrapperRef,
+            style: {
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+            },
+          },
+          children
+        )
       );
+
+      return this.props.trigger
+        ? overlay
+        : createPortal(
+            this.state.isOpen ||
+              this.props.isOpen ||
+              this.isDismissing ||
+              this.props.keepContentsMounted
+              ? overlay
+              : null,
+            appRoot
+          );
     }
 
     static get displayName() {
