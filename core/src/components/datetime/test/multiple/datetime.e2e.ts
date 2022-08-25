@@ -190,7 +190,7 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     await expect(header).toHaveText('Selected: 0');
   });
 
-  test.only('header text should not render if custom formatter returns undefined', async ({ page }) => {
+  test('header text should not render if custom formatter returns undefined', async ({ page }) => {
     const datetime = await setup(page, 'formatterReturnsUndefined');
     const header = datetime.locator('.datetime-selected-date');
 
