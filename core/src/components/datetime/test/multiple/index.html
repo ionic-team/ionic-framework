@@ -110,6 +110,17 @@
               show-default-title="true"
             ></ion-datetime>
           </div>
+          <div class="grid-item">
+            <h2>With Header, Custom Formatter Returns Undefined</h2>
+            <ion-datetime
+              locale="en-US"
+              id="formatterReturnsUndefined"
+              presentation="date"
+              multiple="true"
+              value="2022-06-01"
+              show-default-title="true"
+            ></ion-datetime>
+          </div>
         </div>
       </ion-content>
     </ion-app>
@@ -122,6 +133,10 @@
       const customFormatterDatetime = document.querySelector('#customFormatter');
       customFormatterDatetime.value = ['2022-06-01', '2022-06-02', '2022-06-03'];
       customFormatterDatetime.selectedDatesLabelFormatter = (numberOfDates) => `Selected: ${numberOfDates}`;
+
+      const formatterReturnsUndefinedDatetime = document.querySelector('#formatterReturnsUndefined');
+      formatterReturnsUndefinedDatetime.value = ['2022-06-01', '2022-06-02', '2022-06-03'];
+      formatterReturnsUndefinedDatetime.selectedDatesLabelFormatter = () => undefined;
     </script>
   </body>
 </html>
