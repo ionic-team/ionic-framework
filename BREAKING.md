@@ -42,6 +42,14 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 The `[hidden]` attribute has been removed from Ionic's global stylesheet. The `[hidden]` attribute can continue to be used, but developers will get the [native `hidden` implementation](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/hidden) instead. The main difference is that the native implementation does not use `!important`, so it is easier to override.
 
+Developers can add the following CSS to their global stylesheet if they need the old behavior:
+
+```css
+[hidden] {
+  display: none !important;
+}
+```
+
 
 ## Version 6.x
 
