@@ -286,7 +286,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'minuteValues',
   'locale',
   'firstDayOfWeek',
-  'selectedDatesLabelFormatter',
+  'titleSelectedDatesFormatter',
   'multiple',
   'value',
   'showDefaultTitle',

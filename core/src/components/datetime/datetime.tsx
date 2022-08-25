@@ -10,7 +10,7 @@ import type {
   DatetimeParts,
   Mode,
   StyleEventDetail,
-  SelectedDatesLabelFormatter,
+  TitleSelectedDatesFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -323,7 +323,7 @@ export class Datetime implements ComponentInterface {
    * If this function returns undefined, the header text will not
    * render -- only the `title` slot.
    */
-  @Prop() selectedDatesLabelFormatter?: SelectedDatesLabelFormatter;
+  @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 
   /**
    * If `true`, multiple dates can be selected at once. Only
@@ -2088,17 +2088,17 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { activeParts, selectedDatesLabelFormatter } = this;
+    const { activeParts, titleSelectedDatesFormatter: titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string | undefined;
     if (isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
-      if (selectedDatesLabelFormatter !== undefined) {
+      if (titleSelectedDatesFormatter !== undefined) {
         try {
-          headerText = selectedDatesLabelFormatter(activeParts.length);
+          headerText = titleSelectedDatesFormatter(activeParts.length);
         } catch (e) {
-          printIonError('Exception in provided `selectedDatesLabelFormatter`: ', e);
+          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
         }
       }
     } else {
