@@ -402,12 +402,6 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private clearTextOnEnter = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter') {
-      this.clearTextInput(ev);
-    }
-  };
-
   private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
