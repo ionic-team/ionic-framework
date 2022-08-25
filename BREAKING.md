@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-7x-components)
   - [Overlays](#version-7x-overlays)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+- [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
 
@@ -35,6 +36,33 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h4 id="version-7x-browser-platform-support">Browser and Platform Support</h4>
+
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 7.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ----------------- |
+| Chrome          | 79+               |
+| Safari          | 14+               |
+| Firefox         | 63+               |
+| Edge            | 79+               |
+
+**Minimum JavaScript Framework Versions**
+
+| Framework | Supported Version     |
+| --------- | --------------------- |
+| Angular   | 13+                   |
+| React     | 17+                   |
+| Vue       | 3.0.6+                |
+
+**Minimum Mobile Platform Versions**
+
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 14+                    |
+| Android  | 5.1+ with Chromium 79+ |
 
 <h2 id="version-7x-utilities">Utilities</h2>
 

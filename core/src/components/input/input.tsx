@@ -31,16 +31,6 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
 
-  /**
-   * This is required for a WebKit bug which requires us to
-   * blur and focus an input to properly focus the input in
-   * an item with delegatesFocus. It will no longer be needed
-   * with iOS 14.
-   *
-   * @internal
-   */
-  @Prop() fireFocusEvents = true;
-
   @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
@@ -313,18 +303,6 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Sets blur on the native `input` in `ion-input`. Use this method instead of the global
-   * `input.blur()`.
-   * @internal
-   */
-  @Method()
-  async setBlur() {
-    if (this.nativeInput) {
-      this.nativeInput.blur();
-    }
-  }
-
-  /**
    * Returns the native `<input>` element used under the hood.
    */
   @Method()
@@ -365,9 +343,7 @@ export class Input implements ComponentInterface {
     this.focusChanged();
     this.emitStyle();
 
-    if (this.fireFocusEvents) {
-      this.ionBlur.emit(ev);
-    }
+    this.ionBlur.emit(ev);
   };
 
   private onFocus = (ev: FocusEvent) => {
@@ -375,9 +351,7 @@ export class Input implements ComponentInterface {
     this.focusChanged();
     this.emitStyle();
 
-    if (this.fireFocusEvents) {
-      this.ionFocus.emit(ev);
-    }
+    this.ionFocus.emit(ev);
   };
 
   private onKeydown = (ev: KeyboardEvent) => {
