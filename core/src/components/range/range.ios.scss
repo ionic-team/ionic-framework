@@ -81,7 +81,8 @@
   text-align: center;
 }
 
-.range-knob-pressed .range-pin {
+.range-knob-pressed .range-pin,
+.range-knob-handle:focus .range-pin {
   @include transform(translate3d(0, 0, 0), scale(1));
 }
 
