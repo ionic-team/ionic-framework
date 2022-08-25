@@ -64,6 +64,43 @@
   transition-timing-function: ease;
 
   z-index: 2;
+
+  &::before {
+    @include border-radius(50%);
+    position: absolute;
+    top: -9px;
+    /* stylelint-disable property-disallowed-list */
+    left: -9px;
+    /* stylelint-enable property-disallowed-list */
+
+    width: 36px;
+    height: 36px;
+
+    transform: scale(0.1);
+
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+
+    background: var(--knob-background);
+    color: inherit;
+
+    content: "";
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  &::after {
+    position: absolute;
+    top: 50%;
+    /* stylelint-disable property-disallowed-list */
+    left: 50%;
+    /* stylelint-enable property-disallowed-list */
+
+    width: 42px;
+    height: 42px;
+
+    transform: translate(-50%, -50%);
+
+    content: "";
+  }
 }
 
 .range-tick {
@@ -134,6 +171,26 @@
 .range-knob-pressed .range-pin,
 .range-knob-handle:focus .range-pin {
   @include transform(translate3d(0, -24px, 0), scale(1));
+}
+
+.range-knob-handle {
+  &:active .range-knob:before,
+  &:focus .range-knob:before,
+  &:hover .range-knob:before {
+    transform: scale(1);
+  }
+
+  &:hover .range-knob::before {
+    opacity: 0.04;
+  }
+
+  &:focus .range-knob::before {
+    opacity: 0.13;
+  }
+
+  &:active .range-knob::before {
+    opacity: 0.25;
+  }
 }
 
 :host(:not(.range-has-pin)) .range-knob-pressed .range-knob,
