@@ -4,14 +4,6 @@ These are React specific building blocks on top of [@ionic/core](https://www.npm
 
 To get started, install the Ionic CLI by running `npm i -g @ionic/cli`. Then, start a new Ionic React Project by running `ionic start myapp --type=react`.
 
-# Current Status of Components
-
-Below is a list of components yet to be implemented:
-
-| Component          |
-| ------------------ |
-| `IonVirtualScroll` |
-
 ## Publishing a Native Application
 
 You can now make use of all of the ionic components in your React application.

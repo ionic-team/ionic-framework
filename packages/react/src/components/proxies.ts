@@ -71,7 +71,6 @@ import { defineCustomElement as defineIonThumbnail } from '@ionic/core/component
 import { defineCustomElement as defineIonTitle } from '@ionic/core/components/ion-title.js';
 import { defineCustomElement as defineIonToggle } from '@ionic/core/components/ion-toggle.js';
 import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/ion-toolbar.js';
-import { defineCustomElement as defineIonVirtualScroll } from '@ionic/core/components/ion-virtual-scroll.js';
 
 export const IonAccordion = /*@__PURE__*/createReactComponent<JSX.IonAccordion, HTMLIonAccordionElement>('ion-accordion', undefined, undefined, defineIonAccordion);
 export const IonAccordionGroup = /*@__PURE__*/createReactComponent<JSX.IonAccordionGroup, HTMLIonAccordionGroupElement>('ion-accordion-group', undefined, undefined, defineIonAccordionGroup);
@@ -139,4 +138,3 @@ export const IonThumbnail = /*@__PURE__*/createReactComponent<JSX.IonThumbnail, 
 export const IonTitle = /*@__PURE__*/createReactComponent<JSX.IonTitle, HTMLIonTitleElement>('ion-title', undefined, undefined, defineIonTitle);
 export const IonToggle = /*@__PURE__*/createReactComponent<JSX.IonToggle, HTMLIonToggleElement>('ion-toggle', undefined, undefined, defineIonToggle);
 export const IonToolbar = /*@__PURE__*/createReactComponent<JSX.IonToolbar, HTMLIonToolbarElement>('ion-toolbar', undefined, undefined, defineIonToolbar);
-export const IonVirtualScroll = /*@__PURE__*/createReactComponent<JSX.IonVirtualScroll, HTMLIonVirtualScrollElement>('ion-virtual-scroll', undefined, undefined, defineIonVirtualScroll);

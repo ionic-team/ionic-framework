@@ -84,5 +84,4 @@ export declare const IonTitle: import("vue").FunctionalComponent<JSX.IonTitle & 
 export declare const IonToast: import("vue").FunctionalComponent<JSX.IonToast & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonToggle: import("vue").FunctionalComponent<JSX.IonToggle & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonToolbar: import("vue").FunctionalComponent<JSX.IonToolbar & import("./vue-component-lib/utils").InputProps, {}>;
-export declare const IonVirtualScroll: import("vue").FunctionalComponent<JSX.IonVirtualScroll & import("./vue-component-lib/utils").InputProps, {}>;
 //# sourceMappingURL=proxies.d.ts.map

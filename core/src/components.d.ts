@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -3024,73 +3024,6 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
     }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight": number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight": number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight": number;
-        /**
-          * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js virtualScroll.checkRange(lastItemLen); ```
-         */
-        "checkEnd": () => Promise<void>;
-        /**
-          * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifying by an offset and a length.
-         */
-        "checkRange": (offset: number, len?: number) => Promise<void>;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * Returns the position of the virtual item at the given index.
-         */
-        "positionForItem": (index: number) => Promise<number>;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
-    }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3839,12 +3772,6 @@ declare global {
         prototype: HTMLIonToolbarElement;
         new (): HTMLIonToolbarElement;
     };
-    interface HTMLIonVirtualScrollElement extends Components.IonVirtualScroll, HTMLStencilElement {
-    }
-    var HTMLIonVirtualScrollElement: {
-        prototype: HTMLIonVirtualScrollElement;
-        new (): HTMLIonVirtualScrollElement;
-    };
     interface HTMLElementTagNameMap {
         "ion-accordion": HTMLIonAccordionElement;
         "ion-accordion-group": HTMLIonAccordionGroupElement;
@@ -3939,7 +3866,6 @@ declare global {
         "ion-toast": HTMLIonToastElement;
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
-        "ion-virtual-scroll": HTMLIonVirtualScrollElement;
     }
 }
 declare namespace LocalJSX {
@@ -7025,61 +6951,6 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
     }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight"?: number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight"?: number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight"?: number;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
-    }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;
         "ion-accordion-group": IonAccordionGroup;
@@ -7174,7 +7045,6 @@ declare namespace LocalJSX {
         "ion-toast": IonToast;
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
-        "ion-virtual-scroll": IonVirtualScroll;
     }
 }
 export { LocalJSX as JSX };
@@ -7274,7 +7144,6 @@ declare module "@stencil/core" {
             "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
-            "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
         }
     }
 }
