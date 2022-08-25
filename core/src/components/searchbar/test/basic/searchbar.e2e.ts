@@ -37,7 +37,7 @@ test.describe('searchbar: basic', () => {
 test.describe('searchbar: clear button', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
-  })
+  });
   test('should clear the input when pressed', async ({ page }) => {
     await page.setContent(`
       <ion-searchbar value="abc" show-clear-button="always"></ion-searchbar>
@@ -52,7 +52,7 @@ test.describe('searchbar: clear button', () => {
     await page.waitForChanges();
 
     await expect(searchbar).toHaveJSProperty('value', '');
-  })
+  });
   /**
    * Note: This only tests the desktop focus behavior.
    * Mobile browsers have different restrictions around
@@ -75,5 +75,5 @@ test.describe('searchbar: clear button', () => {
     await page.waitForChanges();
 
     await expect(nativeInput).toBeFocused();
-  })
-})
+  });
+});
