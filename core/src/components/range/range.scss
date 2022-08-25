@@ -90,6 +90,9 @@
   &:active,
   &:focus {
     outline: none;
+    .range-knob:before {
+      transform: scale(1);
+    }
   }
 }
 
@@ -131,6 +134,43 @@
   box-shadow: var(--knob-box-shadow);
   z-index: 2;
   pointer-events: none;
+
+  &::before {
+    @include border-radius(50%);
+    position: absolute;
+    top: -9px;
+    /* stylelint-disable property-disallowed-list */
+    left: -9px;
+    /* stylelint-enable property-disallowed-list */
+
+    width: 36px;
+    height: 36px;
+
+    transform: scale(0.1);
+
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+
+    background: var(--knob-background);
+    color: inherit;
+
+    content: "";
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  &::after {
+    position: absolute;
+    top: 50%;
+    /* stylelint-disable property-disallowed-list */
+    left: 50%;
+    /* stylelint-enable property-disallowed-list */
+
+    width: 42px;
+    height: 42px;
+
+    transform: translate(-50%, -50%);
+
+    content: "";
+  }
 }
 
 :host(.range-pressed) .range-bar-active {

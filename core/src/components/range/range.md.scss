@@ -28,6 +28,7 @@
 
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-knob,
+:host(.ion-color) .range-knob::before,
 :host(.ion-color) .range-pin,
 :host(.ion-color) .range-pin::before,
 :host(.ion-color) .range-tick {
@@ -130,11 +131,13 @@
   }
 }
 
-.range-knob-pressed .range-pin {
+.range-knob-pressed .range-pin,
+.range-knob-handle:focus .range-pin {
   @include transform(translate3d(0, -24px, 0), scale(1));
 }
 
-:host(:not(.range-has-pin)) .range-knob-pressed .range-knob {
+:host(:not(.range-has-pin)) .range-knob-pressed .range-knob,
+:host(:not(.range-has-pin)) .range-knob-handle:focus .range-knob {
   transform: scale(1);
 }
 
