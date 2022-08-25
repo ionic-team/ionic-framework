@@ -2088,7 +2088,7 @@ export class Datetime implements ComponentInterface {
     const { activeParts, selectedDatesLabelFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
-    let headerText;
+    let headerText: string;
     if (isArray && activeParts.length !== 1) {
       const defaultText = `${activeParts.length} days`;
       if (selectedDatesLabelFormatter !== undefined) {
