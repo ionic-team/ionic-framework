@@ -31,7 +31,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -791,12 +791,27 @@ export class Datetime implements ComponentInterface {
 
     const { month, day, year, hour, minute } = parseDate(this.min);
 
+    /**
+     * When passing in `max` or `min`, developers
+     * can pass in any ISO-8601 string. This means
+     * that not all of the date/time fields are defined.
+     * For example, passing max="2012" is valid even though
+     * there is no month, day, hour, or minute data.
+     * However, all of this data is required when clamping the date
+     * so that the correct initial value can be selected. As a result,
+     * we need to fill in any omitted data with the min or max values.
+     */
     this.minParts = {
-      month,
-      day,
+      month: month ?? 1,
+      day: day ?? 1,
+      /**
+       * A year is always required for setting
+       * a min date otherwise it would not be considered
+       * a valid ISO-8601 string.
+       */
       year,
-      hour,
-      minute,
+      hour: hour ?? 0,
+      minute: minute ?? 0,
     };
   };
 
@@ -808,12 +823,27 @@ export class Datetime implements ComponentInterface {
 
     const { month, day, year, hour, minute } = parseDate(this.max);
 
+    /**
+     * When passing in `max` or `min`, developers
+     * can pass in any ISO-8601 string. This means
+     * that not all of the date/time fields are defined.
+     * For example, passing max="2012" is valid even though
+     * there is no month, day, hour, or minute data.
+     * However, all of this data is required when clamping the date
+     * so that the correct initial value can be selected. As a result,
+     * we need to fill in any omitted data with the min or max values.
+     */
     this.maxParts = {
-      month,
-      day,
+      month: month ?? 12 ,
+      day: day ?? getNumDaysInMonth(month, year),
+      /**
+       * A year is always required for setting
+       * a max date otherwise it would not be considered
+       * a valid ISO-8601 string.
+       */
       year,
-      hour,
-      minute,
+      hour: hour ?? 23,
+      minute: minute ?? 59,
     };
   };
 
