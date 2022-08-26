@@ -29,7 +29,10 @@ test.describe('action-sheet: a11y', () => {
 
   test('should not have accessibility violations when header is defined', async ({ page }) => {
     const button = page.locator('#bothHeaders');
+    const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
     await button.click();
+    await didPresent.next();
 
     /**
      * action-sheet overlays the entire screen, so
