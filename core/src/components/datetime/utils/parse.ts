@@ -140,6 +140,12 @@ export const parseAmPm = (hour: number) => {
   return hour >= 12 ? 'pm' : 'am';
 };
 
+/**
+ * Takes a max date string and creates a DatetimeParts
+ * object, filling in any missing information.
+ * For example, max="2012" would fill in the missing
+ * month, day, hour, and minute information.
+ */
 export const parseMaxParts = (max: string, todayParts: DatetimeParts) => {
   const { month, day, year, hour, minute } = parseDate(max);
 
@@ -170,6 +176,12 @@ export const parseMaxParts = (max: string, todayParts: DatetimeParts) => {
   };
 };
 
+/**
+ * Takes a min date string and creates a DatetimeParts
+ * object, filling in any missing information.
+ * For example, min="2012" would fill in the missing
+ * month, day, hour, and minute information.
+ */
 export const parseMinParts = (min: string, todayParts: DatetimeParts) => {
   const { month, day, year, hour, minute } = parseDate(min);
 
