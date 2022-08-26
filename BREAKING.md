@@ -16,6 +16,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Overlays](#version-7x-overlays)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 - [Browser and Platform Support](#version-7x-browser-platform-support)
+- [Utilities](#version-7x-utilities)
+  - [hidden attribute](#version-7x-hidden-attribute)
 
 <h2 id="version-7x-components">Components</h2>
 
@@ -61,6 +63,20 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | -------- | ---------------------- |
 | iOS      | 14+                    |
 | Android  | 5.1+ with Chromium 79+ |
+
+<h2 id="version-7x-utilities">Utilities</h2>
+
+<h4 id="version-7x-hidden-attribute">`hidden` attribute</h4>
+
+The `[hidden]` attribute has been removed from Ionic's global stylesheet. The `[hidden]` attribute can continue to be used, but developers will get the [native `hidden` implementation](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/hidden) instead. The main difference is that the native implementation is easier to override using `display` than Ionic's implementation.
+
+Developers can add the following CSS to their global stylesheet if they need the old behavior:
+
+```css
+[hidden] {
+  display: none !important;
+}
+```
 
 
 ## Version 6.x
