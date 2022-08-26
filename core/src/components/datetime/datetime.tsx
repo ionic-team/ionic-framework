@@ -789,6 +789,7 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const { todayParts } = this;
     const { month, day, year, hour, minute } = parseDate(this.min);
 
     /**
@@ -805,11 +806,11 @@ export class Datetime implements ComponentInterface {
       month: month ?? 1,
       day: day ?? 1,
       /**
-       * A year is always required for setting
-       * a min date otherwise it would not be considered
-       * a valid ISO-8601 string.
+       * Passing in "HH:mm" is a valid ISO-8601
+       * string, so we just default to the current year
+       * in this case.
        */
-      year,
+      year: year ?? todayParts.year,
       hour: hour ?? 0,
       minute: minute ?? 0,
     };
@@ -821,6 +822,7 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const { todayParts } = this;
     const { month, day, year, hour, minute } = parseDate(this.max);
 
     /**
@@ -833,17 +835,19 @@ export class Datetime implements ComponentInterface {
      * so that the correct initial value can be selected. As a result,
      * we need to fill in any omitted data with the min or max values.
      */
+
+    const yearValue = year ?? todayParts.year;
     this.maxParts = {
-      month: month ?? 12,
-      day: day ?? getNumDaysInMonth(month, year),
+      month: month,
+      day: day,
       /**
-       * A year is always required for setting
-       * a max date otherwise it would not be considered
-       * a valid ISO-8601 string.
+       * Passing in "HH:mm" is a valid ISO-8601
+       * string, so we just default to the current year
+       * in this case.
        */
-      year,
-      hour: hour ?? 23,
-      minute: minute ?? 59,
+      year: year,
+      hour: hour,
+      minute: minute,
     };
   };
 
