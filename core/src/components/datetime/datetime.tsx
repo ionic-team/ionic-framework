@@ -1970,7 +1970,7 @@ export class Datetime implements ComponentInterface {
   }
   private renderCalendarBody() {
     return (
-      <div class="calendar-body ion-focusable" ref={(el) => this.calendarBodyRef = el} tabindex="0">
+      <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
         {generateMonths(this.workingParts).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
