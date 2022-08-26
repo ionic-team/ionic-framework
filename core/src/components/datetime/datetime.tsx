@@ -1167,7 +1167,7 @@ export class Datetime implements ComponentInterface {
      * like the developer did something wrong which is
      * not true.
      */
-    if (value !== undefined) {
+    if (value !== null && value !== undefined) {
       warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
     }
 
