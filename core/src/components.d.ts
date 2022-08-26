@@ -834,7 +834,7 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  If this function returns undefined, the header text will not render -- only the `title` slot.
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -4814,7 +4814,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  If this function returns undefined, the header text will not render -- only the `title` slot.
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**

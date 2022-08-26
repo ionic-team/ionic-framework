@@ -319,9 +319,6 @@ export class Datetime implements ComponentInterface {
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
-   *
-   * If this function returns undefined, the header text will not
-   * render -- only the `title` slot.
    */
   @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 
@@ -2091,7 +2088,7 @@ export class Datetime implements ComponentInterface {
     const { activeParts, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
-    let headerText: string | undefined;
+    let headerText: string;
     if (isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
@@ -2111,7 +2108,7 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {headerText && <div class="datetime-selected-date">{headerText}</div>}
+        <div class="datetime-selected-date">{headerText}</div>
       </div>
     );
   }
