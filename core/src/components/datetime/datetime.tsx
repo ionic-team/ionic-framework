@@ -1159,7 +1159,17 @@ export class Datetime implements ComponentInterface {
       valueToProcess = (valueToProcess as DatetimeParts[])[0];
     }
 
-    warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    /**
+     * Datetime should only warn of out of bounds values
+     * if set by the user. If the `value` is undefined,
+     * we will default to today's date which may be out
+     * of bounds. In this case, the warning makes it look
+     * like the developer did something wrong which is
+     * not true.
+     */
+    if (value !== undefined) {
+      warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    }
 
     /**
      * If there are multiple values, pick an arbitrary one to clamp to. This way,
