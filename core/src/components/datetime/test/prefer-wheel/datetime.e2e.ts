@@ -276,7 +276,7 @@ test.describe('datetime: prefer wheel', () => {
       await expect(activeHour).toHaveAttribute('data-value', '23');
       await expect(activeMinute).toHaveAttribute('data-value', '59');
       await expect(activeDayPeriod).toHaveAttribute('data-value', 'pm');
-    })
+    });
   });
   test.describe('datetime: time-date wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {

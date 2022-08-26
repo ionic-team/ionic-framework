@@ -834,7 +834,7 @@ export class Datetime implements ComponentInterface {
      * we need to fill in any omitted data with the min or max values.
      */
     this.maxParts = {
-      month: month ?? 12 ,
+      month: month ?? 12,
       day: day ?? getNumDaysInMonth(month, year),
       /**
        * A year is always required for setting
