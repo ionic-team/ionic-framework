@@ -253,30 +253,6 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dateValues.count()).toBe(427);
     });
-    test.only('should set initial value to max when no value is set', async ({ page, skip }) => {
-      skip.rtl();
-
-      await page.setContent(`
-        <ion-datetime
-          presentation="date-time"
-          prefer-wheel="true"
-          max="2012"
-          locale="en-US"
-        ></ion-datetime>
-      `);
-
-      await page.waitForSelector('.datetime-ready');
-
-      const activeDate = page.locator('ion-datetime .date-column .picker-item-active');
-      const activeHour = page.locator('ion-datetime .hour-column .picker-item-active');
-      const activeMinute = page.locator('ion-datetime .minute-column .picker-item-active');
-      const activeDayPeriod = page.locator('ion-datetime .day-period-column .picker-item-active');
-
-      await expect(activeDate).toHaveAttribute('data-value', '2012-12-31');
-      await expect(activeHour).toHaveAttribute('data-value', '23');
-      await expect(activeMinute).toHaveAttribute('data-value', '59');
-      await expect(activeDayPeriod).toHaveAttribute('data-value', 'pm');
-    });
   });
   test.describe('datetime: time-date wheel rendering', () => {
     test('should not have visual regressions', async ({ page }) => {

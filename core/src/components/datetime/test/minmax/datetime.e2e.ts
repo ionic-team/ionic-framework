@@ -142,3 +142,48 @@ test.describe('datetime: minmax', () => {
     });
   });
 });
+
+test.describe.only('datetime: iso-8601', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+  });
+  test('should set initial value to max with just a year', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime
+        presentation="date-time"
+        prefer-wheel="true"
+        max="2012"
+        locale="en-US"
+      ></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const activeDate = page.locator('ion-datetime .date-column .picker-item-active');
+    const activeHour = page.locator('ion-datetime .hour-column .picker-item-active');
+    const activeMinute = page.locator('ion-datetime .minute-column .picker-item-active');
+    const activeDayPeriod = page.locator('ion-datetime .day-period-column .picker-item-active');
+
+    await expect(activeDate).toHaveAttribute('data-value', '2012-12-31');
+    await expect(activeHour).toHaveAttribute('data-value', '23');
+    await expect(activeMinute).toHaveAttribute('data-value', '59');
+    await expect(activeDayPeriod).toHaveAttribute('data-value', 'pm');
+  });
+  test('should set max correctly even with just time data', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime
+        presentation="time"
+        prefer-wheel="true"
+        value="2022-12-31T01:00"
+        max="04:59"
+        locale="en-US"
+      ></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const hourItems = page.locator('ion-datetime .hour-column .picker-item:not(.picker-item-empty)');
+
+    await expect(await hourItems.count()).toEqual(4);
+  });
+});
