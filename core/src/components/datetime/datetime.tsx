@@ -2088,7 +2088,7 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { activeParts, titleSelectedDatesFormatter: titleSelectedDatesFormatter } = this;
+    const { activeParts, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string | undefined;
@@ -2096,7 +2096,7 @@ export class Datetime implements ComponentInterface {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
-          headerText = titleSelectedDatesFormatter(activeParts.length);
+          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
         } catch (e) {
           printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
         }
