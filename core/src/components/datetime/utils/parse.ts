@@ -1,6 +1,7 @@
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore } from './comparison';
+import { getNumDaysInMonth } from './helpers';
 
 const ISO_8601_REGEXP =
   // eslint-disable-next-line no-useless-escape
@@ -122,6 +123,30 @@ export const clampDate = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts
 ): DatetimeParts => {
+  /**
+   * When passing in `max` or `min`, developers
+   * can pass in any ISO-8601 string. This means
+   * that not all of the date/time fields are defined.
+   * For example, passing max="2012" is valid even though
+   * there is no month, day, hour, or minute data.
+   * However, all of this data is required when clamping the date
+   * so that the correct initial value can be selected. As a result,
+   * we need to fill in any omitted data with the min or max values.
+   */
+  if (minParts) {
+    minParts.month = minParts.month ?? 1;
+    minParts.day = minParts.day ?? 1;
+    minParts.hour = minParts.hour ?? 0;
+    minParts.minute = minParts.minute ?? 0;
+  }
+
+  if (maxParts) {
+    maxParts.month = maxParts.month ?? 12;
+    maxParts.day = maxParts.day ?? getNumDaysInMonth(maxParts.month, maxParts.year);
+    maxParts.hour = maxParts.hour ?? 23;
+    maxParts.minute = maxParts.minute ?? 59;
+  }
+
   if (minParts && isBefore(dateParts, minParts)) {
     return minParts;
   } else if (maxParts && isAfter(dateParts, maxParts)) {
