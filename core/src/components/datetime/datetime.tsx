@@ -838,16 +838,16 @@ export class Datetime implements ComponentInterface {
 
     const yearValue = year ?? todayParts.year;
     this.maxParts = {
-      month: month,
-      day: day,
+      month: month ?? 12,
+      day: day ?? getNumDaysInMonth(month, yearValue),
       /**
        * Passing in "HH:mm" is a valid ISO-8601
        * string, so we just default to the current year
        * in this case.
        */
-      year: year,
-      hour: hour,
-      minute: minute,
+      year: yearValue,
+      hour: hour ?? 23,
+      minute: minute ?? 59,
     };
   };
 
