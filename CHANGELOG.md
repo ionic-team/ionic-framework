@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5-nightly.20220826](https://github.com/ionic-team/ionic-framework/compare/v6.2.4...v6.2.5-nightly.20220826) (2022-08-26)
+
+
+### Bug Fixes
+
+* **angular:** router outlet has mode property ([#25816](https://github.com/ionic-team/ionic-framework/issues/25816)) ([afd0bbc](https://github.com/ionic-team/ionic-framework/commit/afd0bbc60aa8f4edc88dc311d6484ac60117fce5)), closes [#25813](https://github.com/ionic-team/ionic-framework/issues/25813)
+* **modal:** handleBehavior can be used with controller ([#25821](https://github.com/ionic-team/ionic-framework/issues/25821)) ([79ef1b5](https://github.com/ionic-team/ionic-framework/commit/79ef1b57dc74fd856ed7c2904d7400d283cc081e)), closes [#25820](https://github.com/ionic-team/ionic-framework/issues/25820)
+
+
+
+
+
 ## [6.2.4](https://github.com/ionic-team/ionic-framework/compare/v6.2.3...v6.2.4) (2022-08-24)
 
 
