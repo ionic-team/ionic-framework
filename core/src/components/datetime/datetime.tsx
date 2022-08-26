@@ -1150,7 +1150,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    this.highlightActiveParts = !!value;
+    const hasValue = !!value;
+    this.highlightActiveParts = hasValue;
     let valueToProcess = parseDate(value || getToday());
 
     const { minParts, maxParts, multiple } = this;
@@ -1167,7 +1168,7 @@ export class Datetime implements ComponentInterface {
      * like the developer did something wrong which is
      * not true.
      */
-    if (value !== null && value !== undefined) {
+    if (hasValue) {
       warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
     }
 
