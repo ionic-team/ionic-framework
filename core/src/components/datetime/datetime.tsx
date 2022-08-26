@@ -31,7 +31,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -46,7 +46,15 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseAmPm, parseDate } from './utils/parse';
+import {
+  clampDate,
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseMaxParts,
+  parseMinParts,
+} from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -784,72 +792,24 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    if (this.min === undefined) {
+    const { min, todayParts } = this;
+    if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    const { todayParts } = this;
-    const { month, day, year, hour, minute } = parseDate(this.min);
-
-    /**
-     * When passing in `max` or `min`, developers
-     * can pass in any ISO-8601 string. This means
-     * that not all of the date/time fields are defined.
-     * For example, passing max="2012" is valid even though
-     * there is no month, day, hour, or minute data.
-     * However, all of this data is required when clamping the date
-     * so that the correct initial value can be selected. As a result,
-     * we need to fill in any omitted data with the min or max values.
-     */
-    this.minParts = {
-      month: month ?? 1,
-      day: day ?? 1,
-      /**
-       * Passing in "HH:mm" is a valid ISO-8601
-       * string, so we just default to the current year
-       * in this case.
-       */
-      year: year ?? todayParts.year,
-      hour: hour ?? 0,
-      minute: minute ?? 0,
-    };
+    this.minParts = parseMinParts(min, todayParts);
   };
 
   private processMaxParts = () => {
-    if (this.max === undefined) {
+    const { max, todayParts } = this;
+
+    if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    const { todayParts } = this;
-    const { month, day, year, hour, minute } = parseDate(this.max);
-
-    /**
-     * When passing in `max` or `min`, developers
-     * can pass in any ISO-8601 string. This means
-     * that not all of the date/time fields are defined.
-     * For example, passing max="2012" is valid even though
-     * there is no month, day, hour, or minute data.
-     * However, all of this data is required when clamping the date
-     * so that the correct initial value can be selected. As a result,
-     * we need to fill in any omitted data with the min or max values.
-     */
-
-    const yearValue = year ?? todayParts.year;
-    const monthValue = month ?? 12;
-    this.maxParts = {
-      month: monthValue,
-      day: day ?? getNumDaysInMonth(monthValue, yearValue),
-      /**
-       * Passing in "HH:mm" is a valid ISO-8601
-       * string, so we just default to the current year
-       * in this case.
-       */
-      year: yearValue,
-      hour: hour ?? 23,
-      minute: minute ?? 59,
-    };
+    this.maxParts = parseMaxParts(max, todayParts);
   };
 
   private initializeCalendarListener = () => {

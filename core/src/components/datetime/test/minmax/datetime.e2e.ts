@@ -143,7 +143,7 @@ test.describe('datetime: minmax', () => {
   });
 });
 
-test.describe.only('datetime: iso-8601', () => {
+test.describe('datetime: iso-8601', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
