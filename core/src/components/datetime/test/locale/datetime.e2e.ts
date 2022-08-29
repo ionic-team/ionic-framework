@@ -63,7 +63,7 @@ test.describe('datetime: locale', () => {
       await datetimeFixture.expectLocalizedTimePicker();
     });
 
-    test('should correctly localize calendar day buttons', async ({ page }) => {
+    test('should correctly localize calendar day buttons without literal', async ({ page }) => {
       await page.setContent(`
         <ion-datetime locale="ja-JP" presentation="date" value="2022-01-01"></ion-datetime>
       `);
