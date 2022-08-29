@@ -103,7 +103,7 @@ test.describe('datetime: locale', () => {
   });
 });
 
-test.describe.only('ar-EG', () => {
+test.describe('ar-EG', () => {
   test.beforeEach(async ({ skip }) => {
     skip.rtl();
     skip.mode('md');
