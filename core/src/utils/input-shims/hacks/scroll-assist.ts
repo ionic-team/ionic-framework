@@ -9,7 +9,8 @@ export const enableScrollAssist = (
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
-  keyboardHeight: number
+  keyboardHeight: number,
+  enableScrollPadding: boolean
 ) => {
   /**
    * When the input is about to receive
