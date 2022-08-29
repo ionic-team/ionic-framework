@@ -5,11 +5,9 @@ import { componentOnReady } from '../helpers';
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
 import { enableScrollAssist } from './hacks/scroll-assist';
-import { enableScrollPadding } from './hacks/scroll-padding';
 
 const INPUT_BLURRING = true;
 const SCROLL_ASSIST = true;
-const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
 export const startInputShims = (config: Config) => {
@@ -55,7 +53,7 @@ export const startInputShims = (config: Config) => {
       scrollAssist &&
       !scrollAssistMap.has(componentEl)
     ) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight);
+      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight, scrollPadding);
       scrollAssistMap.set(componentEl, rmFn);
     }
   };
@@ -80,10 +78,6 @@ export const startInputShims = (config: Config) => {
 
   if (inputBlurring && INPUT_BLURRING) {
     enableInputBlurring();
-  }
-
-  if (scrollPadding && SCROLL_PADDING) {
-    enableScrollPadding(keyboardHeight);
   }
 
   // Input might be already loaded in the DOM before ion-device-hacks did.
