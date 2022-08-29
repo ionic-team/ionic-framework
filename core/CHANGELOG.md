@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5-nightly.20220829](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5-nightly.20220829) (2022-08-29)
+
+
+### Bug Fixes
+
+* **modal:** handleBehavior can be used with controller ([#25821](https://github.com/ionic-team/ionic/issues/25821)) ([79ef1b5](https://github.com/ionic-team/ionic/commit/79ef1b57dc74fd856ed7c2904d7400d283cc081e)), closes [#25820](https://github.com/ionic-team/ionic/issues/25820)
+* **searchbar:** clear button has focus indicator ([#25828](https://github.com/ionic-team/ionic/issues/25828)) ([373b4ff](https://github.com/ionic-team/ionic/commit/373b4ffe216ba584b92014cef501f64668e1f177))
+* **searchbar:** keypress can activate clear button ([#25824](https://github.com/ionic-team/ionic/issues/25824)) ([c270756](https://github.com/ionic-team/ionic/commit/c270756356c7b23a1959ac5f4b8206a5cd1825c2))
+
+
+
+
+
 ## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
 
 
