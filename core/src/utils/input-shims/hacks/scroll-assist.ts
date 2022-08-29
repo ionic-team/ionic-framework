@@ -3,6 +3,9 @@ import { raf } from '../../helpers';
 
 import { relocateInput } from './common';
 import { getScrollData } from './scroll-data';
+import { setScrollPadding, setClearScrollPaddingListener } from './scroll-padding';
+
+let currentPadding = 0;
 
 export const enableScrollAssist = (
   componentEl: HTMLElement,
@@ -18,7 +21,7 @@ export const enableScrollAssist = (
    * mobile Safari from adjusting the viewport.
    */
   const focusIn = () => {
-    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
+    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, enableScrollPadding);
   };
   componentEl.addEventListener('focusin', focusIn, true);
 
@@ -32,7 +35,8 @@ const jsSetFocus = async (
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
-  keyboardHeight: number
+  keyboardHeight: number,
+  enableScrollPadding: boolean
 ) => {
   if (!contentEl && !footerEl) {
     return;
@@ -43,6 +47,22 @@ const jsSetFocus = async (
     // the text input is in a safe position that doesn't
     // require it to be scrolled into view, just set focus now
     inputEl.focus();
+
+    /**
+     * Even though the input does not need
+     * scroll assist, we should preserve the
+     * the scroll padding as users could be moving
+     * focus from an input that needs scroll padding
+     * to an input that does not need scroll padding.
+     * If we remove the scroll padding now, users will
+     * see the page jump.
+     */
+    if (enableScrollPadding && contentEl) {
+      currentPadding += scrollData.scrollAmount;
+      setScrollPadding(contentEl, currentPadding);
+      setClearScrollPaddingListener(inputEl, contentEl, () => currentPadding = 0);
+    }
+
     return;
   }
 
@@ -58,6 +78,17 @@ const jsSetFocus = async (
    * manually fire one here.
    */
   raf(() => componentEl.click());
+
+  /**
+   * If enabled, we can add scroll padding to
+   * the bottom of the content so that scroll assist
+   * has enough room to scroll the input above
+   * the keyboard.
+   */
+  if (enableScrollPadding && contentEl) {
+    currentPadding += scrollData.scrollAmount;
+    setScrollPadding(contentEl, currentPadding);
+  }
 
   if (typeof window !== 'undefined') {
     let scrollContentTimeout: any;
@@ -81,6 +112,15 @@ const jsSetFocus = async (
 
       // ensure this is the focused input
       inputEl.focus();
+
+      /**
+       * When the input is about to be blurred
+       * we should set a timeout to remove
+       * any scroll padding.
+       */
+      if (enableScrollPadding) {
+        setClearScrollPaddingListener(inputEl, contentEl, () => currentPadding = 0);
+      }
     };
 
     const doubleKeyboardEventListener = () => {
