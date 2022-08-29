@@ -155,12 +155,6 @@ class DatetimeLocaleFixture {
     await this.page.waitForChanges();
   }
 
-  async getDatetime() {
-    await this.waitForDatetime();
-
-    return this.page.locator('ion-datetime');
-  }
-
   async expectLocalizedDatePicker() {
     await this.waitForDatetime();
 
