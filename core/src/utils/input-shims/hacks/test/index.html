@@ -88,6 +88,24 @@
             keyboardHeight: 250,
           },
         };
+
+        const params = new URLSearchParams(window.location.href.split('?')[1]);
+        const resizeMode = params.get('resizeMode');
+
+        if (resizeMode) {
+          window.Capacitor = {
+            isPluginAvailable: (plugin) => plugin === 'Keyboard',
+            Plugins: {
+              Keyboard: {
+                getResizeMode: () => {
+                  return Promise.resolve({
+                    mode: resizeMode,
+                  });
+                },
+              },
+            },
+          };
+        }
       </script>
     </ion-app>
   </body>
