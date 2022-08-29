@@ -25,6 +25,7 @@ export const enableScrollAssist = (
    * 2. The native keyboard resize mode is either "none"
    * (keyboard overlays webview) or undefined (resize
    * information unavailable)
+   * Resize info is available on Capacitor 4+
    */
   const addScrollPadding =
     enableScrollPadding && (keyboardResize === undefined || keyboardResize.mode === KeyboardResize.None);
