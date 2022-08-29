@@ -55,7 +55,7 @@ export const setClearScrollPaddingListener = (
     if (contentEl) {
       setScrollPadding(contentEl, 0, doneCallback);
     }
-  }
+  };
 
   inputEl.addEventListener('focusout', clearScrollPadding, { once: true });
-}
+};

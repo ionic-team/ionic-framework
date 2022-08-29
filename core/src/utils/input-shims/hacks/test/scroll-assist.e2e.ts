@@ -9,15 +9,15 @@ test.describe('scroll-assist', () => {
 
       return scrollEl.scrollTop;
     });
-  }
+  };
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl();
     skip.mode('md', 'Scroll utils are only needed on iOS mode');
     skip.browser('firefox');
-    skip.browser('chromium')
+    skip.browser('chromium');
 
     await page.goto('/src/utils/input-shims/hacks/test');
-  })
+  });
   test('should not activate when input is above the keyboard', async ({ page }) => {
     const input = page.locator('#input-above-keyboard');
     const content = page.locator('ion-content');

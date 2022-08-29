@@ -1,6 +1,7 @@
 import type { Config } from '../../interface';
 import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
+import { Keyboard } from '../native/keyboard';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
@@ -10,7 +11,7 @@ const INPUT_BLURRING = true;
 const SCROLL_ASSIST = true;
 const HIDE_CARET = true;
 
-export const startInputShims = (config: Config) => {
+export const startInputShims = async (config: Config) => {
   const doc = document;
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
@@ -21,6 +22,16 @@ export const startInputShims = (config: Config) => {
 
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
+
+  /**
+   * Grab the native keyboard resize configuration
+   * and pass it to scroll assist. Scroll assist requires
+   * that we adjust the input right before the input
+   * is about to be focused. If we called `Keyboard.getResizeMode`
+   * on focusin in scroll assist, we could potentially adjust the
+   * input too late since this call is async.
+   */
+  const keyboardResizeMode = await Keyboard.getResizeMode();
 
   const registerInput = async (componentEl: HTMLElement) => {
     await new Promise((resolve) => componentOnReady(componentEl, resolve));
@@ -53,7 +64,15 @@ export const startInputShims = (config: Config) => {
       scrollAssist &&
       !scrollAssistMap.has(componentEl)
     ) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight, scrollPadding);
+      const rmFn = enableScrollAssist(
+        componentEl,
+        inputEl,
+        scrollEl,
+        footerEl,
+        keyboardHeight,
+        scrollPadding,
+        keyboardResizeMode
+      );
       scrollAssistMap.set(componentEl, rmFn);
     }
   };
