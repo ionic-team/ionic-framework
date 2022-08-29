@@ -62,6 +62,26 @@ test.describe('datetime: locale', () => {
     test('time picker should not have visual regressions', async () => {
       await datetimeFixture.expectLocalizedTimePicker();
     });
+
+    test('should correctly localize calendar day buttons', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime locale="ja-JP" presentation="date" value="2022-01-01"></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
+
+      /**
+       * Note: The Intl.DateTimeFormat typically adds literals
+       * for certain languages. For Japanese, that could look
+       * something like "29日". However, we only want the "29"
+       * to be shown.
+       */
+      await expect(datetimeButtons.nth(0)).toHaveText('1');
+      await expect(datetimeButtons.nth(1)).toHaveText('2');
+      await expect(datetimeButtons.nth(2)).toHaveText('3');
+    });
   });
 
   test.describe('es-ES', () => {

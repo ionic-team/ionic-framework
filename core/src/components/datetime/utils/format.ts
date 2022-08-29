@@ -122,10 +122,12 @@ export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
  * Given a locale and a date object,
  * return a formatted string that includes
  * the numeric day.
+ * Note: Some languages will add literal characters
+ * to the end. This function removes those literals.
  * Example: 29
  */
 export const getDay = (locale: string, refParts: DatetimeParts) => {
-  return getLocalizedDateTime(locale, refParts, { day: 'numeric' });
+  return getLocalizedDateTimeToParts(locale, refParts, { day: 'numeric' }).find((obj) => obj.type === 'day')!.value;
 };
 
 /**
@@ -138,20 +140,52 @@ export const getYear = (locale: string, refParts: DatetimeParts) => {
   return getLocalizedDateTime(locale, refParts, { year: 'numeric' });
 };
 
+const getNormalizedDate = (refParts: DatetimeParts) => {
+  const timeString = !!refParts.hour && !!refParts.minute ? ` ${refParts.hour}:${refParts.minute}` : '';
+
+  return new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
+};
+
 /**
- * Wrapper function for Intl.DateTimeFormat.
- * Allows developers to apply an allowed format to DatetimeParts.
- * This function also has built in safeguards for older browser bugs
- * with Intl.DateTimeFormat.
+ * Given a locale, DatetimeParts, and options
+ * format the DatetimeParts according to the options
+ * and locale combination. This returns a string. If
+ * you want an array of the individual pieces
+ * that make up the localized date string, use
+ * getLocalizedDateTimeToParts.
  */
 export const getLocalizedDateTime = (
   locale: string,
   refParts: DatetimeParts,
   options: Intl.DateTimeFormatOptions
 ): string => {
-  const timeString = !!refParts.hour && !!refParts.minute ? ` ${refParts.hour}:${refParts.minute}` : '';
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
-  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(date);
+  const date = getNormalizedDate(refParts);
+  return getDateTimeFormat(locale, options).format(date);
+};
+
+/**
+ * Given a locale, DatetimeParts, and options
+ * format the DatetimeParts according to the options
+ * and locale combination. This returns an array of
+ * each piece of the date.
+ */
+export const getLocalizedDateTimeToParts = (
+  locale: string,
+  refParts: DatetimeParts,
+  options: Intl.DateTimeFormatOptions
+): Intl.DateTimeFormatPart[] => {
+  const date = getNormalizedDate(refParts);
+  return getDateTimeFormat(locale, options).formatToParts(date);
+};
+
+/**
+ * Wrapper function for Intl.DateTimeFormat.
+ * Allows developers to apply an allowed format to DatetimeParts.
+ * This function also has built in safeguards for older browser bugs
+ * with Intl.DateTimeFormat.
+ */
+const getDateTimeFormat = (locale: string, options: Intl.DateTimeFormatOptions) => {
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' });
 };
 
 /**
