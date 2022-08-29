@@ -129,6 +129,16 @@ export const getDay = (locale: string, refParts: DatetimeParts) => {
 };
 
 /**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the numeric year.
+ * Example: 2022
+ */
+export const getYear = (locale: string, refParts: DatetimeParts) => {
+  return getLocalizedDateTime(locale, refParts, { year: 'numeric' });
+};
+
+/**
  * Wrapper function for Intl.DateTimeFormat.
  * Allows developers to apply an allowed format to DatetimeParts.
  * This function also has built in safeguards for older browser bugs

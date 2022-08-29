@@ -1528,7 +1528,7 @@ export class Datetime implements ComponentInterface {
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
-      ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      ? getYearColumnData(this.locale, this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
     /**
