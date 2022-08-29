@@ -10,6 +10,7 @@ import type {
   DatetimeParts,
   Mode,
   StyleEventDetail,
+  TitleSelectedDatesFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -314,6 +315,14 @@ export class Datetime implements ComponentInterface {
   @Prop() firstDayOfWeek = 0;
 
   /**
+   * A callback used to format the header text that shows how many
+   * dates are selected. Only used if there are 0 or more than 1
+   * selected (i.e. unused for exactly 1). By default, the header
+   * text is set to "numberOfDates days".
+   */
+  @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
+
+  /**
    * If `true`, multiple dates can be selected at once. Only
    * applies to `presentation="date"` and `preferWheel="false"`.
    */
@@ -388,9 +397,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * If `true`, a header will be shown above the calendar
-   * picker. On `ios` mode this will include the
-   * slotted title, and on `md` mode this will include
-   * the slotted title and the selected date.
+   * picker. This will include both the slotted title, and
+   * the selected date.
    */
   @Prop() showDefaultTitle = false;
 
@@ -2071,10 +2079,28 @@ export class Datetime implements ComponentInterface {
       </ion-popover>,
     ];
   }
-  private renderCalendarViewHeader(mode: Mode) {
+  private renderCalendarViewHeader() {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
+    }
+
+    const { activeParts, titleSelectedDatesFormatter } = this;
+    const isArray = Array.isArray(activeParts);
+
+    let headerText: string;
+    if (isArray && activeParts.length !== 1) {
+      headerText = `${activeParts.length} days`; // default/fallback for multiple selection
+      if (titleSelectedDatesFormatter !== undefined) {
+        try {
+          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
+        } catch (e) {
+          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+        }
+      }
+    } else {
+      // for exactly 1 day selected (multiple set or not), show a formatted version of that
+      headerText = getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
     }
 
     return (
@@ -2082,9 +2108,7 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && !this.multiple && (
-          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>
-        )}
+        <div class="datetime-selected-date">{headerText}</div>
       </div>
     );
   }
@@ -2137,7 +2161,7 @@ export class Datetime implements ComponentInterface {
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2145,7 +2169,7 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
@@ -2159,7 +2183,7 @@ export class Datetime implements ComponentInterface {
         return [this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
