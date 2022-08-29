@@ -57,4 +57,19 @@ test.describe('scroll-assist', () => {
 
     await expect(await getScrollPosition(content)).not.toBe(0);
   });
+
+  test('should add scroll padding for an input at the bottom of the scroll container', async ({ page }) => {
+    const input = page.locator('#input-outside-viewport');
+    const content = page.locator('ion-content');
+
+    await expect(await getScrollPosition(content)).toBe(0);
+    await expect(content).toHaveCSS('--keyboard-offset', '0px');
+
+    await input.click({ force: true });
+    await page.waitForChanges();
+    await expect(input.locator('input:not(.cloned-input)')).toBeFocused();
+
+    await expect(await getScrollPosition(content)).not.toBe(0);
+    await expect(content).not.toHaveCSS('--keyboard-offset', '0px');
+  });
 });
