@@ -83,6 +83,40 @@ test.describe('datetime: locale', () => {
   });
 });
 
+test.describe.only('ar-EG', () => {
+  test.beforeEach(async ({ skip }) => {
+    skip.rtl();
+    skip.mode('md');
+  });
+
+  test('should correctly localize calendar day buttons', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
+
+    await expect(datetimeButtons.nth(0)).toHaveText('١');
+    await expect(datetimeButtons.nth(1)).toHaveText('٢');
+    await expect(datetimeButtons.nth(2)).toHaveText('٣');
+  });
+
+  test('should correctly localize year column data', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime prefer-wheel="true" locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    const datetimeYears = page.locator('ion-datetime .year-column .picker-item:not(.picker-item-empty)');
+
+    await expect(datetimeYears.nth(0)).toHaveText('٢٠٢٢');
+    await expect(datetimeYears.nth(1)).toHaveText('٢٠٢١');
+    await expect(datetimeYears.nth(2)).toHaveText('٢٠٢٠');
+  });
+});
+
 class DatetimeLocaleFixture {
   readonly page: E2EPage;
   locale = 'en-US';
@@ -99,6 +133,12 @@ class DatetimeLocaleFixture {
     this.locale = locale;
     await this.page.locator('select').selectOption(locale);
     await this.page.waitForChanges();
+  }
+
+  async getDatetime() {
+    await this.waitForDatetime();
+
+    return this.page.locator('ion-datetime');
   }
 
   async expectLocalizedDatePicker() {
