@@ -1718,7 +1718,6 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column-internal
-        class="hour-column"
         color={this.color}
         value={(activePartsClone as DatetimeParts).hour}
         items={hoursData}
@@ -1747,7 +1746,6 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column-internal
-        class="minute-column"
         color={this.color}
         value={(activePartsClone as DatetimeParts).minute}
         items={minutesData}
@@ -1780,7 +1778,6 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column-internal
-        class="day-period-column"
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         value={(activePartsClone as DatetimeParts).ampm}
