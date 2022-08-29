@@ -119,6 +119,16 @@ export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
 };
 
 /**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the numeric day.
+ * Example: 29
+ */
+export const getDay = (locale: string, refParts: DatetimeParts) => {
+  return getLocalizedDateTime(locale, refParts, { day: 'numeric' });
+};
+
+/**
  * Wrapper function for Intl.DateTimeFormat.
  * Allows developers to apply an allowed format to DatetimeParts.
  * This function also has built in safeguards for older browser bugs

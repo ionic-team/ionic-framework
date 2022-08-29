@@ -1,7 +1,7 @@
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { generateDayAriaLabel } from './format';
+import { generateDayAriaLabel, getDay } from './format';
 import { getNextMonth, getPreviousMonth } from './manipulation';
 
 export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
@@ -123,6 +123,7 @@ export const getCalendarDayState = (
     isToday,
     ariaSelected: isActive ? 'true' : null,
     ariaLabel: generateDayAriaLabel(locale, isToday, refParts),
+    text: refParts.day != null ? getDay(locale, refParts) : null,
   };
 };
 
