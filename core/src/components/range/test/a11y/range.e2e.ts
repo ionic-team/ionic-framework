@@ -20,9 +20,6 @@ test.describe('range: a11y', () => {
     const range = page.locator('ion-range');
     const rangeHandle = page.locator('ion-range .range-knob-handle');
 
-    await page.keyboard.press(tabKey);
-    await page.waitForChanges();
-
     await rangeHandle.hover();
     await page.waitForChanges();
 
@@ -33,7 +30,13 @@ test.describe('range: a11y', () => {
 
     expect(await range.screenshot()).toMatchSnapshot(`range-focus-${page.getSnapshotSettings()}.png`);
 
-    await rangeHandle.click();
+    const box = (await rangeHandle.boundingBox())!;
+    const centerX = box.x + box.width / 2;
+    const centerY = box.y + box.height / 2;
+
+    await page.mouse.move(centerX, centerY);
+    await page.mouse.down();
+
     await page.waitForChanges();
 
     expect(await range.screenshot()).toMatchSnapshot(`range-active-${page.getSnapshotSettings()}.png`);
