@@ -149,8 +149,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.updateCounterOutput(this.getFirstInput());
   }
 
-  @Listen('ionChange')
-  handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
+  @Listen('ionInput')
+  handleIonInput(ev: CustomEvent<InputChangeEventDetail>) {
     if (this.counter && ev.target === this.getFirstInput()) {
       this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
     }

@@ -24,7 +24,7 @@ test.describe('item: counter', () => {
     test('should format on input', async ({ page }) => {
       const input = page.locator('#customFormatter ion-input');
 
-      await input.click();
+      await page.click('#customFormatter ion-input input');
       await input.type('abcde');
 
       await page.waitForChanges();
