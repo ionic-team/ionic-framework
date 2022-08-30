@@ -629,18 +629,8 @@ export class Datetime implements ComponentInterface {
     return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
   }
 
-  /**
-   * Stencil sometimes sets calendarBodyRef to null on rerender, even though
-   * the element is present. Query for it manually as a fallback.
-   *
-   * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
-   */
-  private getCalendarBodyEl = () => {
-    return this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
-  };
-
   private initializeKeyboardListeners = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -818,7 +808,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private initializeCalendarListener = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1241,7 +1231,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private nextMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1261,7 +1251,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private prevMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1839,11 +1829,11 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
-              <ion-button disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
@@ -1989,7 +1979,7 @@ export class Datetime implements ComponentInterface {
   }
   private renderCalendar(mode: Mode) {
     return (
-      <div class="datetime-calendar">
+      <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(mode)}
         {this.renderCalendarBody()}
       </div>
