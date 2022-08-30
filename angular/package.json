@@ -92,7 +92,8 @@
     },
     "allowedNonPeerDependencies": [
       "@ionic/core",
-      "jsonc-parser"
+      "jsonc-parser",
+      "ionicons"
     ]
   }
 }
