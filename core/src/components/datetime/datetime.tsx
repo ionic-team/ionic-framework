@@ -1111,7 +1111,7 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation, calendarBodyRef, minParts } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
 
     /**
      * TODO(FW-2165)
@@ -1123,8 +1123,11 @@ export class Datetime implements ComponentInterface {
      * this causes the month to change leading to `scroll-snap-align`
      * changing again, thus changing the scroll position again and causing
      * an infinite loop.
+     * This issue only applies to the calendar grid, so we can disable
+     * it if the calendar grid is not being used.
      */
-    if (calendarBodyRef && minParts !== undefined) {
+    const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
+    if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
       const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
       if (workingMonth) {
         calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
