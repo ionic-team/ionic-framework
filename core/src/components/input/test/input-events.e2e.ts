@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: events: ionChange', () => {
-
   test('should not emit ionChange when the value is updated dynamically', async ({ page }) => {
     await page.setContent(`<ion-input></ion-input>`);
 
@@ -24,7 +23,7 @@ test.describe('input: events: ionChange', () => {
 
     await nativeInput.type('new value', { delay: 100 });
     // Value change is not emitted until the control is blurred.
-    await nativeInput.evaluate(e => e.blur());
+    await nativeInput.evaluate((e) => e.blur());
 
     await ionChangeSpy.next();
 
@@ -40,5 +39,4 @@ test.describe('input: events: ionChange', () => {
 
     expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '' });
   });
-
 });
