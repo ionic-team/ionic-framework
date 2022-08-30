@@ -185,10 +185,9 @@ test.describe('datetime: footer', () => {
 });
 
 test.describe('datetime: swiping', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs RTL layouts.');
-    test.skip(testInfo.project.metadata.mode === 'ios', 'This does not have mode-specific logic.');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'This does not have mode-specific logic.');
   });
   test('should move to prev month by swiping', async ({ page }) => {
     await page.setContent(`
@@ -224,8 +223,8 @@ test.describe('datetime: swiping', () => {
 
     await expect(calendarHeader).toHaveText(/June 2022/);
   });
-  test('should not re-render if swipe is in progress', async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit', 'Wheel is not available in WebKit');
+  test('should not re-render if swipe is in progress', async ({ page, skip }) => {
+    skip.browser('webkit', 'Wheel is not available in WebKit');
 
     await page.setContent(`
       <ion-datetime value="2022-05-03"></ion-datetime>
@@ -247,5 +246,36 @@ test.describe('datetime: swiping', () => {
 
       await expect(calendarHeader).toHaveText(/May 2022/);
     }
+  });
+});
+
+test.describe('datetime: visibility', () => {
+  test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    await page.setContent(`
+      <ion-datetime></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+    const monthYearInterface = page.locator('ion-datetime .datetime-year');
+    const datetime = page.locator('ion-datetime');
+
+    await monthYearButton.click();
+    await page.waitForChanges();
+
+    await expect(monthYearInterface).toBeVisible();
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.setProperty('display', 'none'));
+    await expect(datetime).toBeHidden();
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
+    await expect(datetime).toBeVisible();
+
+    // month/year interface should be reset
+    await expect(monthYearInterface).toBeHidden();
   });
 });

@@ -33,7 +33,7 @@ import { RouteView, getUrl } from './stack-utils';
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'animation', 'swipeGesture'],
+  inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet implements OnDestroy, OnInit {

@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime-button: switching to correct view', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
-    test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'No mode-specific logic');
 
     await page.setContent(`
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
@@ -31,10 +31,9 @@ test.describe('datetime-button: switching to correct view', () => {
 });
 
 test.describe('datetime-button: labels', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
-    test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'No mode-specific logic');
   });
   test('should set date and time labels in separate buttons', async ({ page }) => {
     await page.setContent(`
@@ -106,10 +105,9 @@ test.describe('datetime-button: labels', () => {
 });
 
 test.describe('datetime-button: locale', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
-    test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'No mode-specific logic');
   });
   test('should use the same locale as datetime', async ({ page }) => {
     await page.setContent(`
@@ -154,10 +152,9 @@ test.describe('datetime-button: locale', () => {
 });
 
 test.describe('datetime-button: wheel', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === 'rtl', 'No layout tests');
-    test.skip(testInfo.project.metadata.mode === 'ios', 'No mode-specific logic');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'No mode-specific logic');
   });
   test('should only show a single date button when presentation="date-time" and prefer-wheel="true"', async ({
     page,

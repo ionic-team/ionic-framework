@@ -32,9 +32,8 @@ test.describe('datetime: multiple date selection (visual regressions)', () => {
 });
 
 test.describe('datetime: multiple date selection (functionality)', () => {
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(async ({}, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'Does not test LTR vs. RTL layout.');
+  test.beforeEach(async ({ skip }) => {
+    skip.rtl();
   });
 
   test('clicking unselected days should select them', async ({ page }) => {

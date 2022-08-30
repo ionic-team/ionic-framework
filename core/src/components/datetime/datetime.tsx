@@ -353,7 +353,7 @@ export class Datetime implements ComponentInterface {
           this.activePartsClone = [...valueDateParts];
         } else {
           const { month, day, year, hour, minute } = valueDateParts;
-          const ampm = hour ? (hour >= 12 ? 'pm' : 'am') : undefined;
+          const ampm = hour != null ? (hour >= 12 ? 'pm' : 'am') : undefined;
 
           this.activePartsClone = {
             ...this.activeParts,
@@ -629,18 +629,8 @@ export class Datetime implements ComponentInterface {
     return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
   }
 
-  /**
-   * Stencil sometimes sets calendarBodyRef to null on rerender, even though
-   * the element is present. Query for it manually as a fallback.
-   *
-   * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
-   */
-  private getCalendarBodyEl = () => {
-    return this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
-  };
-
   private initializeKeyboardListeners = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -818,7 +808,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private initializeCalendarListener = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1086,6 +1076,15 @@ export class Datetime implements ComponentInterface {
 
       this.destroyInteractionListeners();
 
+      /**
+       * When datetime is hidden, we need to make sure that
+       * the month/year picker is closed. Otherwise,
+       * it will be open when the datetime re-appears
+       * and the scroll area of the calendar grid will be 0.
+       * As a result, the wrong month will be shown.
+       */
+      this.showMonthAndYear = false;
+
       writeTask(() => {
         this.el.classList.remove('datetime-ready');
       });
@@ -1232,7 +1231,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private nextMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1252,7 +1251,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private prevMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1522,7 +1521,27 @@ export class Datetime implements ComponentInterface {
       ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
-    return [this.renderMonthPickerColumn(months), this.renderDayPickerColumn(days), this.renderYearPickerColumn(years)];
+    /**
+     * Certain locales show the day before the month.
+     */
+    const showMonthFirst = isMonthFirstLocale(this.locale, { month: 'numeric', day: 'numeric' });
+
+    let renderArray = [];
+    if (showMonthFirst) {
+      renderArray = [
+        this.renderMonthPickerColumn(months),
+        this.renderDayPickerColumn(days),
+        this.renderYearPickerColumn(years),
+      ];
+    } else {
+      renderArray = [
+        this.renderDayPickerColumn(days),
+        this.renderMonthPickerColumn(months),
+        this.renderYearPickerColumn(years),
+      ];
+    }
+
+    return renderArray;
   }
 
   private renderDayPickerColumn(days: PickerColumnItem[]) {
@@ -1810,11 +1829,11 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
-              <ion-button disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
@@ -1929,7 +1948,7 @@ export class Datetime implements ComponentInterface {
                         day,
                         year,
                       },
-                      isActive
+                      isActive && highlightActiveParts
                     );
                   } else {
                     this.setActiveParts({
@@ -1960,7 +1979,7 @@ export class Datetime implements ComponentInterface {
   }
   private renderCalendar(mode: Mode) {
     return (
-      <div class="datetime-calendar">
+      <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(mode)}
         {this.renderCalendarBody()}
       </div>
