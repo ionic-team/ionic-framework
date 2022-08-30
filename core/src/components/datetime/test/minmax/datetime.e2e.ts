@@ -164,7 +164,7 @@ test.describe('datetime: minmax', () => {
 
     const buttons = page.locator('ion-datetime .calendar-next-prev ion-button');
     await buttons.nth(1).click();
-    await page.waitForChanges()
+    await page.waitForChanges();
 
     await datetimeMonthDidChange.next();
 
@@ -174,11 +174,11 @@ test.describe('datetime: minmax', () => {
      * for the bug ships in WebKit, this will be removed.
      */
     await page.evaluate(() => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         setTimeout(resolve, 500);
-      })
+      });
     });
 
     await expect(datetimeMonthDidChange).toHaveReceivedEventTimes(1);
-  })
+  });
 });
