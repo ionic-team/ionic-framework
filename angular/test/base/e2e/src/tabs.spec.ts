@@ -266,8 +266,50 @@ describe('Tabs', () => {
       cy.get('#goto-prev').click();
 
       cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+
+      /**
+       * Verifies that when entering the tabs outlet directly,
+       * the navController.pop() method does not pop the previous view,
+       * when you are at the root of the tabs outlet.
+       */
+      cy.get('#goto-previous-page').click();
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
     });
   });
+
+  describe('entry url - /', () => {
+    it('should pop to the root outlet from the tabs outlet', () => {
+      cy.visit('/');
+  
+      cy.get('ion-title').should('contain.text', 'Test App');
+  
+      cy.get('ion-item').contains('Tabs test').click();
+  
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+  
+      cy.get('#goto-tab1-page2').click();
+  
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+  
+      cy.get('#goto-global').click();
+  
+      cy.get('ion-title').should('contain.text', 'Global Page');
+  
+      cy.get('#goto-prev-pop').click();
+  
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+  
+      cy.get('#goto-prev').click();
+  
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+  
+      cy.get('#goto-previous-page').click();
+  
+      cy.get('ion-title').should('contain.text', 'Test App');
+  
+    });
+  });
+
 
   describe('entry url - /tabs/account/nested/1', () => {
     beforeEach(() => {
