@@ -1,4 +1,4 @@
-import { clampDate, getPartsFromCalendarDay, parseAmPm } from '../utils/parse';
+import { clampDate, getPartsFromCalendarDay, parseAmPm, parseMinParts, parseMaxParts } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -70,5 +70,91 @@ describe('parseAmPm()', () => {
 
   it('should return am when the hour is less than 12', () => {
     expect(parseAmPm(11)).toEqual('am');
+  });
+});
+
+describe('parseMinParts()', () => {
+  it('should fill in missing information when not provided', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMinParts('2012', today)).toEqual({
+      month: 1,
+      day: 1,
+      year: 2012,
+      hour: 0,
+      minute: 0,
+    });
+  });
+  it('should default to current year when only given HH:mm', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMinParts('04:30', today)).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 4,
+      minute: 30,
+    });
+  });
+});
+
+describe('parseMaxParts()', () => {
+  it('should fill in missing information when not provided', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts('2012', today)).toEqual({
+      month: 12,
+      day: 31,
+      year: 2012,
+      hour: 23,
+      minute: 59,
+    });
+  });
+  it('should default to current year when only given HH:mm', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts('04:30', today)).toEqual({
+      month: 12,
+      day: 31,
+      year: 2022,
+      hour: 4,
+      minute: 30,
+    });
+  });
+  it('should fill in correct day during a leap year', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts('2012-02', today)).toEqual({
+      month: 2,
+      day: 29,
+      year: 2012,
+      hour: 23,
+      minute: 59,
+    });
   });
 });
