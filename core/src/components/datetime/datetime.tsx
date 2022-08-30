@@ -46,7 +46,15 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseAmPm, parseDate } from './utils/parse';
+import {
+  clampDate,
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseMaxParts,
+  parseMinParts,
+} from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -774,37 +782,24 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    if (this.min === undefined) {
+    const { min, todayParts } = this;
+    if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.min);
-
-    this.minParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.minParts = parseMinParts(min, todayParts);
   };
 
   private processMaxParts = () => {
-    if (this.max === undefined) {
+    const { max, todayParts } = this;
+
+    if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.max);
-
-    this.maxParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.maxParts = parseMaxParts(max, todayParts);
   };
 
   private initializeCalendarListener = () => {
@@ -1140,7 +1135,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    this.highlightActiveParts = !!value;
+    const hasValue = !!value;
+    this.highlightActiveParts = hasValue;
     let valueToProcess = parseDate(value || getToday());
 
     const { minParts, maxParts, multiple } = this;
@@ -1149,7 +1145,17 @@ export class Datetime implements ComponentInterface {
       valueToProcess = (valueToProcess as DatetimeParts[])[0];
     }
 
-    warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    /**
+     * Datetime should only warn of out of bounds values
+     * if set by the user. If the `value` is undefined,
+     * we will default to today's date which may be out
+     * of bounds. In this case, the warning makes it look
+     * like the developer did something wrong which is
+     * not true.
+     */
+    if (hasValue) {
+      warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    }
 
     /**
      * If there are multiple values, pick an arbitrary one to clamp to. This way,
