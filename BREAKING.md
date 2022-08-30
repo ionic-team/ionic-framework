@@ -13,6 +13,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 7.x
 
 - [Components](#version-7x-components)
+  - [Input](#version-7x-input)
   - [Overlays](#version-7x-overlays)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 - [Browser and Platform Support](#version-7x-browser-platform-support)
@@ -21,9 +22,15 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h2 id="version-7x-components">Components</h2>
 
+<h4 id="version-7x-input">Input</h4>
+
+`ionChange` will no longer be emitted when the `value` of `ion-input` is modified externally. `ionChange` will only be emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
+
+If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
+
 <h4 id="version-7x-overlays">Overlays</h4>
 
-Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
 
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 
@@ -44,18 +51,18 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 **Minimum Browser Versions**
 | Desktop Browser | Supported Versions |
 | --------------- | ----------------- |
-| Chrome          | 79+               |
-| Safari          | 14+               |
-| Firefox         | 63+               |
-| Edge            | 79+               |
+| Chrome | 79+ |
+| Safari | 14+ |
+| Firefox | 63+ |
+| Edge | 79+ |
 
 **Minimum JavaScript Framework Versions**
 
-| Framework | Supported Version     |
-| --------- | --------------------- |
-| Angular   | 13+                   |
-| React     | 17+                   |
-| Vue       | 3.0.6+                |
+| Framework | Supported Version |
+| --------- | ----------------- |
+| Angular   | 13+               |
+| React     | 17+               |
+| Vue       | 3.0.6+            |
 
 **Minimum Mobile Platform Versions**
 
@@ -78,37 +85,35 @@ Developers can add the following CSS to their global stylesheet if they need the
 }
 ```
 
-
 ## Version 6.x
 
 - [Components](#components)
-  * [Datetime](#datetime)
-  * [Header](#header)
-  * [Icons](#icons)
-  * [Input](#input)
-  * [Modal](#modal)
-  * [Popover](#popover)
-  * [Radio](#radio)
-  * [Searchbar](#searchbar)
-  * [Select](#select)
-  * [Tab Bar](#tab-bar)
-  * [Textarea](#textarea)
-  * [Toast](#toast)
-  * [Toolbar](#toolbar)
+  - [Datetime](#datetime)
+  - [Header](#header)
+  - [Icons](#icons)
+  - [Input](#input)
+  - [Modal](#modal)
+  - [Popover](#popover)
+  - [Radio](#radio)
+  - [Searchbar](#searchbar)
+  - [Select](#select)
+  - [Tab Bar](#tab-bar)
+  - [Textarea](#textarea)
+  - [Toast](#toast)
+  - [Toolbar](#toolbar)
 - [Config](#config)
-  * [Transition Shadow](#transition-shadow)
+  - [Transition Shadow](#transition-shadow)
 - [Angular](#angular)
-  * [Config](#config-1)
+  - [Config](#config-1)
 - [Vue](#vue)
-  * [Config](#config-2)
-  * [Tabs Config](#tabs-config)
-  * [Tabs Router Outlet](#tabs-router-outlet)
-  * [Overlay Events](#overlay-events)
-  * [Utility Function Types](#utility-function-types)
+  - [Config](#config-2)
+  - [Tabs Config](#tabs-config)
+  - [Tabs Router Outlet](#tabs-router-outlet)
+  - [Overlay Events](#overlay-events)
+  - [Utility Function Types](#utility-function-types)
 - [React](#react)
-  * [Config](#config-3)
+  - [Config](#config-3)
 - [Browser and Platform Support](#browser-and-platform-support)
-
 
 ### Components
 
@@ -123,14 +128,14 @@ The `ion-datetime` component has undergone a complete rewrite and uses a new cal
 - The `displayFormat` and `displayTimezone` properties have been removed since `ion-datetime` now displays inline with a calendar picker. To parse the UTC string provided in the payload of the `ionChange` event, we recommend using a 3rd-party date library like [date-fns](https://date-fns.org/). Here is an example of how you can take the UTC string from `ion-datetime` and format it to whatever style you prefer:
 
 ```typescript
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from "date-fns";
 
 /**
  * This is provided in the event
  * payload from the `ionChange` event.
  */
-const dateFromIonDatetime = '2021-06-04T14:23:00-04:00';
-const formattedString = format(parseISO(dateFromIonDatetime), 'MMM d, yyyy');
+const dateFromIonDatetime = "2021-06-04T14:23:00-04:00";
+const formattedString = format(parseISO(dateFromIonDatetime), "MMM d, yyyy");
 
 console.log(formattedString); // Jun 4, 2021
 ```
@@ -226,13 +231,11 @@ The default iOS toolbar background color has been updated to better reflect the 
 var(--ion-toolbar-background, var(--ion-color-step-50, #f7f7f7));
 ```
 
-
 ### Config
 
 #### Transition Shadow
 
 The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
-
 
 ### Angular
 
@@ -249,21 +252,23 @@ Additionally, the `setupConfig` function is no longer exported from `@ionic/angu
 All Ionic React applications must now import `setupIonicReact` from `@ionic/react` and call it. If you are setting a custom config with `setupConfig`, pass your config directly to `setupIonicReact` instead:
 
 **Old**
+
 ```javascript
-import { setupConfig } from '@ionic/react';
+import { setupConfig } from "@ionic/react";
 
 setupConfig({
-  mode: 'md'
-})
+  mode: "md",
+});
 ```
 
 **New**
+
 ```javascript
-import { setupIonicReact } from '@ionic/react';
+import { setupIonicReact } from "@ionic/react";
 
 setupIonicReact({
-  mode: 'md'
-})
+  mode: "md",
+});
 ```
 
 Note that all Ionic React applications must call `setupIonicReact` even if they are not setting custom configuration.
@@ -281,6 +286,7 @@ The `setupConfig` function is no longer exported from `@ionic/vue`. Developers s
 Support for child routes nested inside of tabs has been removed to better conform to Vue Router's best practices. Additional routes should be written as sibling routes with the parent tab as the path prefix:
 
 **Old**
+
 ```typescript
 const routes: Array<RouteRecordRaw> = [
   {
@@ -319,39 +325,40 @@ const routes: Array<RouteRecordRaw> = [
 ```
 
 **New**
+
 ```typescript
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    redirect: '/tabs/tab1'
+    path: "/",
+    redirect: "/tabs/tab1",
   },
   {
-    path: '/tabs/',
+    path: "/tabs/",
     component: Tabs,
     children: [
       {
-        path: '',
-        redirect: 'tab1'
+        path: "",
+        redirect: "tab1",
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue')
+        path: "tab1",
+        component: () => import("@/views/Tab1.vue"),
       },
       {
-        path: 'tab1/view',
-        component: () => import('@/views/Tab1View.vue')
+        path: "tab1/view",
+        component: () => import("@/views/Tab1View.vue"),
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
+        path: "tab2",
+        component: () => import("@/views/Tab2.vue"),
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3.vue')
-      }
-    ]
-  }
-]
+        path: "tab3",
+        component: () => import("@/views/Tab3.vue"),
+      },
+    ],
+  },
+];
 ```
 
 In the example above `tabs/tab1/view` has been rewritten has a sibling route to `tabs/tab1`. The `path` field now includes the `tab1` prefix.
@@ -361,38 +368,36 @@ In the example above `tabs/tab1/view` has been rewritten has a sibling route to 
 Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previously one was generated automatically, but this made it difficult for developers to access the properties on the generated `ion-router-outlet`.
 
 **Old**
+
 ```html
 <ion-tabs>
-  <ion-tab-bar slot="bottom">
-    ...
-  </ion-tab-bar>
+  <ion-tab-bar slot="bottom"> ... </ion-tab-bar>
 </ion-tabs>
 
 <script>
-  import { IonTabs, IonTabBar } from '@ionic/vue';
-  import { defineComponent } from 'vue';
-  
+  import { IonTabs, IonTabBar } from "@ionic/vue";
+  import { defineComponent } from "vue";
+
   export default defineComponent({
-    components: { IonTabs, IonTabBar }
+    components: { IonTabs, IonTabBar },
   });
 </script>
 ```
 
 **New**
+
 ```html
 <ion-tabs>
   <ion-router-outlet></ion-router-outlet>
-  <ion-tab-bar slot="bottom">
-    ...
-  </ion-tab-bar>
+  <ion-tab-bar slot="bottom"> ... </ion-tab-bar>
 </ion-tabs>
 
 <script>
-  import { IonTabs, IonTabBar, IonRouterOutlet } from '@ionic/vue';
-  import { defineComponent } from 'vue';
-  
+  import { IonTabs, IonTabBar, IonRouterOutlet } from "@ionic/vue";
+  import { defineComponent } from "vue";
+
   export default defineComponent({
-    components: { IonTabs, IonTabBar, IonRouterOutlet }
+    components: { IonTabs, IonTabBar, IonRouterOutlet },
   });
 </script>
 ```
@@ -404,6 +409,7 @@ Overlay events `onWillPresent`, `onDidPresent`, `onWillDismiss`, and `onDidDismi
 This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-loading`, `ion-modal`, `ion-picker`, `ion-popover`, and `ion-toast`.
 
 **Old**
+
 ```html
 <ion-modal
   :is-open="modalOpenRef"
@@ -417,6 +423,7 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
 ```
 
 **New**
+
 ```html
 <ion-modal
   :is-open="modalOpenRef"
@@ -435,7 +442,6 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
 
 - The `IonKeyboardRef` type for `useKeyboard` has been renamed to `UseKeyboardResult`.
 
-
 ### Browser and Platform Support
 
 This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic Framework v6.
@@ -443,18 +449,18 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 **Minimum Browser Versions**
 | Desktop Browser | Supported Versions |
 | --------------- | ----------------- |
-| Chrome          | 60+               |
-| Safari          | 13+               |
-| Firefox         | 63+               |
-| Edge            | 79+               |
+| Chrome | 60+ |
+| Safari | 13+ |
+| Firefox | 63+ |
+| Edge | 79+ |
 
 **Minimum JavaScript Framework Versions**
 
-| Framework | Supported Version     |
-| --------- | --------------------- |
-| Angular   | 12+                   |
-| React     | 17+                   |
-| Vue       | 3.0.6+                |
+| Framework | Supported Version |
+| --------- | ----------------- |
+| Angular   | 12+               |
+| React     | 17+               |
+| Vue       | 3.0.6+            |
 
 **Minimum Mobile Platform Versions**
 
@@ -467,43 +473,40 @@ Starting with Android 5.0, the webview was moved to a separate application that 
 
 As a result, Ionic Framework only supports Android devices and emulators running Android 5.0+ with a webview of Chromium 60 or newer. For context, this is the version that Stencil can support with no polyfills: https://stenciljs.com/docs/browser-support
 
-
-
 ## Version 5.x
 
 - [CSS](#css)
-  * [CSS Utilities](#css-utilities)
-  * [Display Classes](#display-classes)
-  * [Activated, Focused, Hover States](#activated-focused-hover-states)
-  * [Distributed Sass](#distributed-sass)
+  - [CSS Utilities](#css-utilities)
+  - [Display Classes](#display-classes)
+  - [Activated, Focused, Hover States](#activated-focused-hover-states)
+  - [Distributed Sass](#distributed-sass)
 - [Components](#components)
-  * [Action Sheet](#action-sheet)
-  * [Anchor](#anchor)
-  * [Back Button](#back-button)
-  * [Button](#button)
-  * [Card](#card)
-  * [Controllers](#controllers)
-  * [FAB Button](#fab-button)
-  * [Item](#item)
-  * [Header / Footer](#header---footer)
-  * [List Header](#list-header)
-  * [Menu](#menu)
-  * [Menu Button](#menu-button)
-  * [Nav Link](#nav-link)
-  * [Radio](#radio)
-  * [Searchbar](#searchbar)
-  * [Segment](#segment)
-  * [Segment Button](#segment-button)
-  * [Select Option](#select-option)
-  * [Skeleton Text](#skeleton-text)
-  * [Split Pane](#split-pane)
-  * [Toast](#toast)
-  * [Tabs](#tabs)
+  - [Action Sheet](#action-sheet)
+  - [Anchor](#anchor)
+  - [Back Button](#back-button)
+  - [Button](#button)
+  - [Card](#card)
+  - [Controllers](#controllers)
+  - [FAB Button](#fab-button)
+  - [Item](#item)
+  - [Header / Footer](#header---footer)
+  - [List Header](#list-header)
+  - [Menu](#menu)
+  - [Menu Button](#menu-button)
+  - [Nav Link](#nav-link)
+  - [Radio](#radio)
+  - [Searchbar](#searchbar)
+  - [Segment](#segment)
+  - [Segment Button](#segment-button)
+  - [Select Option](#select-option)
+  - [Skeleton Text](#skeleton-text)
+  - [Split Pane](#split-pane)
+  - [Toast](#toast)
+  - [Tabs](#tabs)
 - [Colors](#colors)
 - [Events](#events)
 - [Mode](#mode)
 - [Ionicons](#ionicons)
-
 
 ### CSS
 
@@ -511,7 +514,7 @@ As a result, Ionic Framework only supports Android devices and emulators running
 
 We originally added CSS utility attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our "Ionic for everyone" approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In addition to this, changing to classes prefixed with `ion` avoids conflict with native attributes and user's CSS. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
 
-Some examples of what's changed are below. *This is not all-inclusive, see the documentation linked above for all of the available CSS utility classes.*
+Some examples of what's changed are below. _This is not all-inclusive, see the documentation linked above for all of the available CSS utility classes._
 
 **Before**
 
@@ -531,28 +534,26 @@ Some examples of what's changed are below. *This is not all-inclusive, see the d
 <ion-item class="ion-wrap"></ion-item>
 ```
 
-
 #### Display Classes
 
 The responsive display classes found in the `display.css` file have had their media queries updated to better reflect how they should work. Instead of using the maximum value of the breakpoint for `.ion-hide-{breakpoint}-down` classes it will use the minimum of that breakpoint.
 
 The [Ionic breakpoints](https://ionicframework.com/docs/layout/css-utilities#ionic-breakpoints) are the following:
 
-
-| Breakpoint Name | Width   |
-| ----------------| --------|
-| xs              | 0       |
-| sm              | 576px   |
-| md              | 768px   |
-| lg              | 992px   |
-| xl              | 1200px  |
+| Breakpoint Name | Width  |
+| --------------- | ------ |
+| xs              | 0      |
+| sm              | 576px  |
+| md              | 768px  |
+| lg              | 992px  |
+| xl              | 1200px |
 
 Previously, if you added the class `ion-hide-md-down` to an element, it would hide the element when the screen size was `991px` (the maximum of the `md` breakpoint) or smaller. Now, using this same class will hide the element when the maximum screen size is `768px`.
 
 Below is a table of how the media queries have changed for each class:
 
 | Class Name          | Ionic 4                      | Ionic 5                      |
-| --------------------| -----------------------------| -----------------------------|
+| ------------------- | ---------------------------- | ---------------------------- |
 | `.ion-hide-down`    | `@media (max-width: 575px)`  | all screen sizes             |
 | `.ion-hide-sm-down` | `@media (max-width: 767px)`  | `@media (max-width: 576px)`  |
 | `.ion-hide-md-down` | `@media (max-width: 991px)`  | `@media (max-width: 768px)`  |
@@ -562,7 +563,6 @@ Below is a table of how the media queries have changed for each class:
 _Note that no changes were made to the `.ion-hide-{breakpoint}-up` classes._
 
 See the [CSS Utilities responsive display documentation](https://ionicframework.com/docs/layout/css-utilities#responsive-display-attributes) for more information.
-
 
 #### Activated, Focused, Hover States
 
@@ -603,7 +603,6 @@ It also updates the Action Sheet component so that the variables will be prefixe
 
 This allows you to still have control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill and without having to know what each opacity is.
 
-
 ##### Examples
 
 ```css
@@ -633,24 +632,22 @@ ion-action-sheet {
 
 Some variables were renamed, removed or added. See the chart below for the changes.
 
-| Old variable                            | Status  | New variable                              |
-| ----------------------------------------| --------|-------------------------------------------|
-| `--ion-toolbar-color-unchecked`         | renamed | `--ion-toolbar-segment-color`             |
-| `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
-| `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
-| `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
-| `--ion-tab-bar-color-activated`         | renamed | `--ion-tab-bar-color-selected`            |
-|                                         | added   | `--ion-toolbar-segment-indicator-color`   |
-| `--ion-toolbar-color-activated`         | removed |                                           |
-| `--ion-item-background-activated`       | removed |                                           |
-| `--ion-item-background-focused`         | removed |                                           |
-| `--ion-item-background-hover`           | removed |                                           |
-
+| Old variable                         | Status  | New variable                               |
+| ------------------------------------ | ------- | ------------------------------------------ |
+| `--ion-toolbar-color-unchecked`      | renamed | `--ion-toolbar-segment-color`              |
+| `--ion-toolbar-color-checked`        | renamed | `--ion-toolbar-segment-color-checked`      |
+| `--ion-toolbar-background-unchecked` | renamed | `--ion-toolbar-segment-background`         |
+| `--ion-toolbar-background-checked`   | renamed | `--ion-toolbar-segment-background-checked` |
+| `--ion-tab-bar-color-activated`      | renamed | `--ion-tab-bar-color-selected`             |
+|                                      | added   | `--ion-toolbar-segment-indicator-color`    |
+| `--ion-toolbar-color-activated`      | removed |                                            |
+| `--ion-item-background-activated`    | removed |                                            |
+| `--ion-item-background-focused`      | removed |                                            |
+| `--ion-item-background-hover`        | removed |                                            |
 
 #### Distributed Sass
 
 The `scss` files have been removed from `dist/`. CSS variables should be used to theme instead.
-
 
 ### Components
 
@@ -658,26 +655,25 @@ The `scss` files have been removed from `dist/`. CSS variables should be used to
 
 The following CSS variables have been renamed or added:
 
-| Old                      | New                                        |
-|--------------------------| -------------------------------------------|
-|                          | `--button-background`                      |
-| `--background-activated` | `--button-background-activated`            |
-|                          | `--button-background-activated-opacity`    |
-| `--background-selected`  | `--button-background-selected`             |
-|                          | `--button-background-focused`              |
-|                          | `--button-background-focused-opacity`      |
-|                          | `--button-background-hover`                |
-|                          | `--button-background-hover-opacity`        |
-|                          | `--button-background-selected`             |
-|                          | `--button-background-selected-opacity`     |
-|                          | `--button-color`                           |
-|                          | `--button-color-activated`                 |
-|                          | `--button-color-focused`                   |
-|                          | `--button-color-hover`                     |
-|                          | `--button-color-selected`                  |
+| Old                      | New                                     |
+| ------------------------ | --------------------------------------- |
+|                          | `--button-background`                   |
+| `--background-activated` | `--button-background-activated`         |
+|                          | `--button-background-activated-opacity` |
+| `--background-selected`  | `--button-background-selected`          |
+|                          | `--button-background-focused`           |
+|                          | `--button-background-focused-opacity`   |
+|                          | `--button-background-hover`             |
+|                          | `--button-background-hover-opacity`     |
+|                          | `--button-background-selected`          |
+|                          | `--button-background-selected-opacity`  |
+|                          | `--button-color`                        |
+|                          | `--button-color-activated`              |
+|                          | `--button-color-focused`                |
+|                          | `--button-color-hover`                  |
+|                          | `--button-color-selected`               |
 
 See the [Action Sheet CSS Custom Properties](https://ionicframework.com/docs/api/action-sheet#css-custom-properties) documentation for descriptions.
-
 
 #### Anchor
 
@@ -696,7 +692,6 @@ The `ion-anchor` component has been renamed to `ion-router-link` as this is a be
 
 Converted `ion-card` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
-
 #### Controllers
 
 The controller components (`ion-action-sheet-controller`, `ion-alert-controller`, `ion-loading-controller`, `ion-menu-controller`, `ion-modal-controller`, `ion-picker-controller`, `ion-popover-controller`, `ion-toast-controller`) have been removed from Ionic core as elements. They should be imported from `@ionic/core` instead. This will not affect projects that use Angular or React. Below is an example of the loading controller change in a JavaScript project, but this change applies to all controller elements.
@@ -708,31 +703,30 @@ The controller components (`ion-action-sheet-controller`, `ion-alert-controller`
 
 <script>
   async function presentLoading() {
-    const loadingController = document.querySelector('ion-loading-controller');
+    const loadingController = document.querySelector("ion-loading-controller");
 
     const loading = await loadingController.create({
-      message: 'Hello',
-      duration: 2000
+      message: "Hello",
+      duration: 2000,
     });
     await loading.present();
   }
 </script>
-
 ```
 
 **After**
 
 ```html
 <script type="module">
-  import { loadingController } from '@ionic/core';
+  import { loadingController } from "@ionic/core";
   window.loadingController = loadingController;
 </script>
 
 <script>
   async function presentLoading() {
     const loading = await loadingController.create({
-      message: 'Hello',
-      duration: 2000
+      message: "Hello",
+      duration: 2000,
     });
     await loading.present();
   }
@@ -743,16 +737,13 @@ The controller components (`ion-action-sheet-controller`, `ion-alert-controller`
 
 - [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
 
-
 #### Item
 
 - [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
 
-
 #### Header / Footer
 
 The `no-border` attribute has been removed, use `ion-no-border` class instead. See [CSS Utilities](#css-utilities) above for more information on why this change was made.
-
 
 #### List Header
 
@@ -782,7 +773,6 @@ The button has also been updated to default to `fill="clear"` and `size="small"`
 
 For more information see the [List Header usage](https://ionicframework.com/docs/api/list-header#usage).
 
-
 #### Menu
 
 - The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
@@ -792,8 +782,7 @@ For more information see the [List Header usage](https://ionicframework.com/docs
   **Before**
 
   ```html
-  <ion-menu>...</ion-menu>
-  <ion-content main>...</ion-content>
+  <ion-menu>...</ion-menu> <ion-content main>...</ion-content>
   ```
 
   **After**
@@ -802,18 +791,16 @@ For more information see the [List Header usage](https://ionicframework.com/docs
   <ion-menu content-id="main"></ion-menu>
   <ion-content id="main">...</ion-content>
   ```
-- The presentation type in `ios` now defaults to `"overlay"`.
 
+- The presentation type in `ios` now defaults to `"overlay"`.
 
 #### Menu Button
 
 - [Focused, Hover States](#activated-focused-hover-states) have been updated.
 
-
 #### Nav Link
 
 The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been removed in favor of using `ion-nav-link` with a `router-direction` property which accepts `”root”`, `“forward”`, and `“back”`. This reduces the need for maintaining multiple components when they all do the same thing with different transition directions. See the [documentation for nav-link](https://ionicframework.com/docs/api/nav-link) for more information.
-
 
 #### Radio
 
@@ -855,16 +842,18 @@ The `show-cancel-button` property of the searchbar no longer accepts boolean val
 
 ```html
 <ion-searchbar show-cancel-button>
-<ion-searchbar show-cancel-button="true">
-<ion-searchbar show-cancel-button="false">
+  <ion-searchbar show-cancel-button="true">
+    <ion-searchbar show-cancel-button="false"></ion-searchbar></ion-searchbar
+></ion-searchbar>
 ```
 
 **After**
 
 ```html
 <ion-searchbar show-cancel-button="focus">
-<ion-searchbar show-cancel-button="focus">
-<ion-searchbar show-cancel-button="never">
+  <ion-searchbar show-cancel-button="focus">
+    <ion-searchbar show-cancel-button="never"></ion-searchbar></ion-searchbar
+></ion-searchbar>
 ```
 
 See the [Searchbar documentation](https://ionicframework.com/docs/api/searchbar#properties) for more information.
@@ -872,7 +861,6 @@ See the [Searchbar documentation](https://ionicframework.com/docs/api/searchbar#
 ##### Inputmode
 
 The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get the old behavior, set the inputmode property to `"search"`.
-
 
 #### Segment
 
@@ -899,13 +887,13 @@ Segment was completely revamped to use the new iOS design including an all new g
 - In order to style the Segment to match the old spec, please use custom CSS. For example, to update Material Design to include a bottom line all of the time:
   ```css
   .md ion-segment::after {
-      position: absolute;
-      bottom: 0;
-      height: 2px;
-      width: 100%;
-      content: '';
-      background: rgba(0,0,0,0.5);
-      z-index: -1;
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    content: "";
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
   }
   ```
 
@@ -922,7 +910,7 @@ A `--background` variable has been added to style the `ion-segment` component. A
 
 > Note: iOS no longer checks the button background, so setting the `--background-checked` variable may have an undesired outcome. Instead, Segment uses an indicator to slide between the buttons, showing which one is checked. See the previous section on the indicator color variables.
 
-The above variables *will not* be inherited in the button if set on the `ion-segment`. In addition to this, all color variables should also be set on the button for consistency:
+The above variables _will not_ be inherited in the button if set on the `ion-segment`. In addition to this, all color variables should also be set on the button for consistency:
 
 ```
 --color: Color of the segment button
@@ -945,14 +933,13 @@ The following variables were removed due to the current spec no longer using the
 
 Some variables were renamed or added. See the chart below for the new names.
 
-| Old variable                            | Status  | New variable                              |
-| ----------------------------------------| --------|-------------------------------------------|
-| `--ion-toolbar-color-unchecked`         | renamed | `--ion-toolbar-segment-color`             |
-| `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
-| `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
-| `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
-|                                         | added   | `--ion-toolbar-segment-indicator-color`   |
-
+| Old variable                         | Status  | New variable                               |
+| ------------------------------------ | ------- | ------------------------------------------ |
+| `--ion-toolbar-color-unchecked`      | renamed | `--ion-toolbar-segment-color`              |
+| `--ion-toolbar-color-checked`        | renamed | `--ion-toolbar-segment-color-checked`      |
+| `--ion-toolbar-background-unchecked` | renamed | `--ion-toolbar-segment-background`         |
+| `--ion-toolbar-background-checked`   | renamed | `--ion-toolbar-segment-background-checked` |
+|                                      | added   | `--ion-toolbar-segment-indicator-color`    |
 
 #### Segment Button
 
@@ -978,7 +965,6 @@ The `checked` property has been removed. Developers should set the `value` prope
 </ion-segment>
 ```
 
-
 #### Select Option
 
 The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
@@ -1001,13 +987,12 @@ The `selected` property has been removed. Developers should set the `value` prop
 </ion-select>
 ```
 
-
 #### Skeleton Text
 
 The `width` property has been removed in favor of using CSS styling.
 
-
 #### Split Pane
+
 - Converted to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 - Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
   **Before**
@@ -1089,14 +1074,12 @@ dark:            #222428
 
 This will only be a breaking change in your app if you are not using one of our starters and not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
 
-
 ### Events
 
 The `@ionic/angular` Events service has been removed.
 
 - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
 - Use "Redux" for advanced state management: https://ngrx.io
-
 
 ### Mode
 
@@ -1111,16 +1094,13 @@ Mode is now cascaded from the parent to the child component. Previously, if you 
 
 Now, the `mode` only needs to be set on the `ion-segment` and it will be inherited. If this behavior is not desired set a different mode on the child component.
 
-
 ### Ionicons
 
 Ionicons 5 has been released! :tada: This brings many changes including a top to bottom re-draw of every icon, variants for each icon (filled, outline, and sharp), and the removal of auto-switching icons based on the platform.
 
 For more information, check out the [Ionicons Changelog](https://github.com/ionic-team/ionicons/blob/master/CHANGELOG.md)!
 
-
-
---------------------------------------------------------------------------------------------------
+---
 
 ## Version 4.x
 
