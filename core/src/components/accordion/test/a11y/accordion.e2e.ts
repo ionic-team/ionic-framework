@@ -12,7 +12,7 @@ test.describe('accordion: a11y', () => {
     const personalInfoHeader = page.locator('ion-accordion:first-child > ion-item');
     const billingAddressHeader = page.locator('ion-accordion:nth-child(2) > ion-item');
     const shippingAddressHeader = page.locator('ion-accordion:nth-child(3) > ion-item');
-    const addressInput = page.locator('#address1 input');
+    const addressInput = page.locator('#address1 input:not(.cloned-input)');
 
     await page.keyboard.press(tabKey);
     await expect(personalInfoHeader).toBeFocused();
