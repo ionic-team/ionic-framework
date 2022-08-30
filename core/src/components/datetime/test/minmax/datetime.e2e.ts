@@ -136,7 +136,7 @@ test.describe('datetime: minmax', () => {
   });
 
   // TODO(FW-2165)
-  test.only('should not loop infinitely in webkit', async ({ page, skip }) => {
+  test('should not loop infinitely in webkit', async ({ page, skip }) => {
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/25752',
