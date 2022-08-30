@@ -14,10 +14,10 @@ BUILD_DIR="build"
 APP_DIR="${1}"
 
 # The full path to the specific application.
-FULL_APP_DIR="${APPS_DIR}/${APP_DIR}/."
+FULL_APP_DIR="${APPS_DIR}/${APP_DIR}/e2e"
 
 # The full path to the base application.
-FULL_BASE_DIR="${BASE_DIR}/."
+FULL_BASE_DIR="${BASE_DIR}/e2e"
 
 # The full path to the built application.
 BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
@@ -32,4 +32,4 @@ cp -R $FULL_BASE_DIR $BUILD_APP_DIR
 # will override any files in the base application.
 cp -R $FULL_APP_DIR $BUILD_APP_DIR
 
-echo "Copied test app files for ${APP_DIR}"
+echo "Synced e2e tests for ${APP_DIR}"

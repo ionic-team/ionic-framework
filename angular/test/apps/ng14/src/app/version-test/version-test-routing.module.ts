@@ -1,13 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { VersionTestComponent } from "./version-test.component";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
-        path: '',
-        component: VersionTestComponent
+        path: 'standalone',
+        loadComponent: () => import('./standalone/standalone.component').then(m => m.StandaloneComponent)
       }
     ])
   ],

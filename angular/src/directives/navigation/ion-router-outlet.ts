@@ -14,6 +14,7 @@ import {
   Optional,
   Output,
   SkipSelf,
+  Input,
 } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
 import { componentOnReady } from '@ionic/core';
@@ -55,6 +56,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   tabsPrefix: string | undefined;
 
+  /**
+   * @experimental
+   *
+   * The `EnvironmentInjector` provider instance from the parent component.
+   * Required for using standalone components with `ion-router-outlet`.
+   *
+   * Will be deprecated and removed when Angular 13 support is dropped.
+   */
+  @Input() environmentInjector: EnvironmentInjector;
+
   @Output() stackEvents = new EventEmitter<any>();
   // eslint-disable-next-line @angular-eslint/no-output-rename
   @Output('activate') activateEvents = new EventEmitter<any>();
@@ -88,7 +99,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     @Optional() @Attribute('tabs') tabs: string,
     private config: Config,
     private navCtrl: NavController,
-    @Optional() private environmentInjector: EnvironmentInjector,
     @Optional() private componentFactoryResolver: ComponentFactoryResolver,
     commonLocation: Location,
     elementRef: ElementRef,
@@ -234,20 +244,24 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const component = snapshot.routeConfig!.component as any;
-
       /**
-       * Angular 14 introduces a new `loadComponent` property to the route config,
-       * that assigns the component to load to the `component` property of
-       * the route snapshot. We can check for the presence of this property
-       * to determine if the route is using standalone components.
-       *
-       * TODO: FW-1631: Remove this check when supporting standalone components
+       * Angular 14 introduces a new `loadComponent` property to the route config.
+       * This function will assign a `component` property to the route snapshot.
+       * We check for the presence of this property to determine if the route is
+       * using standalone components.
        */
-      if (component == null && snapshot.component) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (snapshot.routeConfig!.component == null && this.environmentInjector == null) {
         console.warn(
-          '[Ionic Warning]: Standalone components are not currently supported with ion-router-outlet. You can track this feature request at https://github.com/ionic-team/ionic-framework/issues/25404'
+          '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n\n' +
+            'In your component class, add:\n\n' +
+            `   import { EnvironmentInjector } from '@angular/core';\n` +
+            '   constructor(public environmentInjector: EnvironmentInjector) {}\n' +
+            '\n' +
+            'In your router outlet template, add:\n\n' +
+            '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>\n\n' +
+            'Alternatively, if you are routing within ion-tabs:\n\n' +
+            '   <ion-tabs [environmentInjector]="environmentInjector"></ion-tabs>'
         );
         return;
       }
@@ -266,6 +280,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
        * Fallback to the class-level provider when the resolver is not set.
        */
       resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const component = snapshot.routeConfig!.component ?? snapshot.component;
 
       if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
         // Backwards compatibility for Angular 13 and lower
