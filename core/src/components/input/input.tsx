@@ -244,7 +244,6 @@ export class Input implements ComponentInterface {
       nativeInput.value = value;
     }
     this.emitStyle();
-    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
 
   componentWillLoad() {
@@ -310,6 +309,17 @@ export class Input implements ComponentInterface {
     return Promise.resolve(this.nativeInput!);
   }
 
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    this.ionChange.emit({ value: value == null ? value : value.toString() });
+  }
+
   private shouldClearOnEdit() {
     const { type, clearOnEdit } = this;
     return clearOnEdit === undefined ? type === 'password' : clearOnEdit;
@@ -336,6 +346,10 @@ export class Input implements ComponentInterface {
       this.value = input.value || '';
     }
     this.ionInput.emit(ev as InputEvent);
+  };
+
+  private onChange = () => {
+    this.emitValueChange();
   };
 
   private onBlur = (ev: FocusEvent) => {
@@ -392,6 +406,12 @@ export class Input implements ComponentInterface {
     }
 
     this.value = '';
+
+    /**
+     * Clearing the text input is considered a user committed change
+     * and should emit a value change event.
+     */
+    this.emitValueChange();
 
     /**
      * This is needed for clearOnEdit
@@ -460,6 +480,7 @@ export class Input implements ComponentInterface {
           type={this.type}
           value={value}
           onInput={this.onInput}
+          onChange={this.onChange}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
