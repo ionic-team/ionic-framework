@@ -127,7 +127,7 @@ export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
  * Example: 29
  */
 export const getDay = (locale: string, refParts: DatetimeParts) => {
-  return getLocalizedDateTimeToParts(locale, refParts, { day: 'numeric' }).find((obj) => obj.type === 'day')!.value;
+  return getLocalizedDateTimeParts(locale, refParts, { day: 'numeric' }).find((obj) => obj.type === 'day')!.value;
 };
 
 /**
@@ -152,7 +152,7 @@ const getNormalizedDate = (refParts: DatetimeParts) => {
  * and locale combination. This returns a string. If
  * you want an array of the individual pieces
  * that make up the localized date string, use
- * getLocalizedDateTimeToParts.
+ * getLocalizedDateTimeParts.
  */
 export const getLocalizedDateTime = (
   locale: string,
@@ -169,7 +169,7 @@ export const getLocalizedDateTime = (
  * and locale combination. This returns an array of
  * each piece of the date.
  */
-export const getLocalizedDateTimeToParts = (
+export const getLocalizedDateTimeParts = (
   locale: string,
   refParts: DatetimeParts,
   options: Intl.DateTimeFormatOptions
