@@ -1111,7 +1111,7 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation, calendarBodyRef } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts } = this;
 
     /**
      * TODO(FW-2165)
@@ -1124,7 +1124,7 @@ export class Datetime implements ComponentInterface {
      * changing again, thus changing the scroll position again and causing
      * an infinite loop.
      */
-    if (calendarBodyRef) {
+    if (calendarBodyRef && minParts !== undefined) {
       const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
       if (workingMonth) {
         calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
