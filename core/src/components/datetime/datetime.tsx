@@ -46,7 +46,15 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseAmPm, parseDate } from './utils/parse';
+import {
+  clampDate,
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseMaxParts,
+  parseMinParts,
+} from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -774,37 +782,24 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    if (this.min === undefined) {
+    const { min, todayParts } = this;
+    if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.min);
-
-    this.minParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.minParts = parseMinParts(min, todayParts);
   };
 
   private processMaxParts = () => {
-    if (this.max === undefined) {
+    const { max, todayParts } = this;
+
+    if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.max);
-
-    this.maxParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.maxParts = parseMaxParts(max, todayParts);
   };
 
   private initializeCalendarListener = () => {
