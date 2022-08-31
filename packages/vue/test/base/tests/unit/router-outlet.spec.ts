@@ -23,6 +23,14 @@ const BasePage = {
   components: { IonPage },
 }
 
+/**
+ * While these tests use useIonRouter,
+ * they are different from the tests in hook.spec.ts
+ * in that they are testing that the correct parameters
+ * are passed to IonRouterOutlet as opposed hook.spec.ts
+ * which makes sure that the animation function is called when
+ * specifically using useIonRouter.
+ */
 describe('Routing', () => {
   it('should have an animation duration of 0 if replacing without an explicit animation', async () => {
     const Page1 = {
