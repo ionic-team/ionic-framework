@@ -67,14 +67,17 @@
 
   &::before {
     @include border-radius(50%);
-    position: absolute;
-    top: -9px;
-    /* stylelint-disable property-disallowed-list */
-    left: -9px;
-    /* stylelint-enable property-disallowed-list */
+    @include position(calc(50% - var(--knob-size)), null, null, calc(50% - var(--knob-size)));
 
-    width: 36px;
-    height: 36px;
+    @include rtl() {
+      /* stylelint-disable-next-line property-disallowed-list */
+      left: unset;
+    }
+
+    position: absolute;
+
+    width: calc(2 * var(--knob-size));
+    height: calc(2 * var(--knob-size));
 
     transform: scale(0.1);
 
