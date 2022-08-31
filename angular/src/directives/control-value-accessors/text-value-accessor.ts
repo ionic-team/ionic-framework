@@ -30,7 +30,7 @@ export class TextValueAccessorDirective extends ValueAccessor {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: TextValueAccessorDirective,
+      useExisting: InputValueAccessorDirective,
       multi: true,
     },
   ],
