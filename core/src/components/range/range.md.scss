@@ -67,7 +67,7 @@
 
   &::before {
     @include border-radius(50%);
-    @include position(calc(50% - var(--knob-size)), null, null, calc(50% - var(--knob-size)));
+    @include position(null, null, null, 0);
 
     @include rtl() {
       /* stylelint-disable-next-line property-disallowed-list */
@@ -76,12 +76,13 @@
 
     position: absolute;
 
-    width: calc(2 * var(--knob-size));
-    height: calc(2 * var(--knob-size));
+    width: var(--knob-size);
+    height: var(--knob-size);
 
-    transform: scale(0.1);
+    transform: scale(1);
 
-    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+    // Value from Material Design components for the web
+    transition: 0.267s cubic-bezier(0, 0, 0.58, 1);
 
     background: var(--knob-background);
 
@@ -163,7 +164,7 @@
 
 @media (any-hover: hover) {
   .range-knob-handle:hover .range-knob:before {
-    transform: scale(1);
+    transform: scale(2);
   }
 
   .range-knob-handle:hover .range-knob::before {
@@ -175,7 +176,7 @@
   &.ion-activated .range-knob:before,
   &.ion-focused .range-knob:before,
   &.range-knob-pressed .range-knob:before {
-    transform: scale(1);
+    transform: scale(2);
   }
 
   &.ion-focused .range-knob::before {
