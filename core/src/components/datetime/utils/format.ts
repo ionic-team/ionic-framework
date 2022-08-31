@@ -19,7 +19,11 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
     hour: 'numeric',
     minute: 'numeric',
     timeZone: 'UTC',
-    hour12: !use24Hour,
+    /**
+     * We use hourCycle here instead of hour12 due to:
+     * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
+     */
+    hourCycle: use24Hour ? 'h23' : 'h12',
   }).format(
     new Date(
       convertDataToISO({
