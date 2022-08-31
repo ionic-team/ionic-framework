@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* **action-sheet:** add aria-labelledby ([#25837](https://github.com/ionic-team/ionic/issues/25837)) ([5270151](https://github.com/ionic-team/ionic/commit/527015184e9413c1037277d3197bcaa33044c38c))
+* **datetime:** next and previous buttons have correct labels ([#25845](https://github.com/ionic-team/ionic/issues/25845)) ([41e3387](https://github.com/ionic-team/ionic/commit/41e338730d32837fc9dd8a15477e37dea4cc76c9)), closes [#25844](https://github.com/ionic-team/ionic/issues/25844)
+* **datetime:** only log out of bounds warning if value set ([#25835](https://github.com/ionic-team/ionic/issues/25835)) ([85af6ce](https://github.com/ionic-team/ionic/commit/85af6ce436890eb922d2ba32053fb8b8bc7fd4ff)), closes [#25833](https://github.com/ionic-team/ionic/issues/25833)
+* **input:** clear button is not activated on swipe ([#25825](https://github.com/ionic-team/ionic/issues/25825)) ([ff71ad4](https://github.com/ionic-team/ionic/commit/ff71ad492d7671f8e550da7e08dbde30cb05ebf7)), closes [#24857](https://github.com/ionic-team/ionic/issues/24857)
+* **modal:** handleBehavior can be used with controller ([#25821](https://github.com/ionic-team/ionic/issues/25821)) ([79ef1b5](https://github.com/ionic-team/ionic/commit/79ef1b57dc74fd856ed7c2904d7400d283cc081e)), closes [#25820](https://github.com/ionic-team/ionic/issues/25820)
+* **searchbar:** clear button has focus indicator ([#25828](https://github.com/ionic-team/ionic/issues/25828)) ([373b4ff](https://github.com/ionic-team/ionic/commit/373b4ffe216ba584b92014cef501f64668e1f177))
+* **searchbar:** keypress can activate clear button ([#25824](https://github.com/ionic-team/ionic/issues/25824)) ([c270756](https://github.com/ionic-team/ionic/commit/c270756356c7b23a1959ac5f4b8206a5cd1825c2))
+
+
+
+
+
 ## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
 
 
