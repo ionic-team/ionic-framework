@@ -40,7 +40,10 @@ describe('Inputs', () => {
 
     cy.get('ion-checkbox').invoke('prop', 'checked', true);
     cy.get('ion-toggle').invoke('prop', 'checked', true);
-    cy.get('ion-input').invoke('prop', 'value', 'hola');
+
+    cy.get('ion-input').eq(0).type('hola');
+    cy.get('ion-input input').eq(0).blur();
+
     cy.get('ion-datetime').invoke('prop', 'value', '1996-03-15');
     cy.get('ion-select').invoke('prop', 'value', 'playstation');
     cy.get('ion-range').invoke('prop', 'value', 20);
