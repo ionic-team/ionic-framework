@@ -141,7 +141,7 @@ describe('Routing', () => {
       expect.anything(),
       expect.objectContaining({
         direction: "none",
-        duration: null,
+        duration: undefined,
         animationBuilder: mockAnimation
       })
     )
