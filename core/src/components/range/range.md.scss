@@ -154,32 +154,39 @@
 }
 
 .range-knob-pressed .range-pin,
-.range-knob-handle:focus .range-pin {
+.range-knob-handle.ion-focused .range-pin {
   @include transform(translate3d(0, -24px, 0), scale(1));
 }
 
-.range-knob-handle {
-  &:active .range-knob:before,
-  &:focus .range-knob:before,
-  &:hover .range-knob:before {
+@media (any-hover: hover) {
+  .range-knob-handle:hover .range-knob:before {
     transform: scale(1);
   }
 
-  &:hover .range-knob::before {
+  .range-knob-handle:hover .range-knob::before {
     opacity: 0.04;
   }
+}
 
-  &:focus .range-knob::before {
+.range-knob-handle {
+  &.ion-activated .range-knob:before,
+  &.ion-focused .range-knob:before,
+  &.range-knob-pressed .range-knob:before {
+    transform: scale(1);
+  }
+
+  &.ion-focused .range-knob::before {
     opacity: 0.13;
   }
 
-  &:active .range-knob::before {
+  &.ion-activated .range-knob::before,
+  &.range-knob-pressed .range-knob::before {
     opacity: 0.25;
   }
 }
 
 :host(:not(.range-has-pin)) .range-knob-pressed .range-knob,
-:host(:not(.range-has-pin)) .range-knob-handle:focus .range-knob {
+:host(:not(.range-has-pin)) .range-knob-handle.ion-focused .range-knob {
   transform: scale(1);
 }
 
