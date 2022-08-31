@@ -162,7 +162,7 @@ describe('useIonRouter', () => {
     expect(animFn).toHaveBeenCalled();
   });
 
-  it.only('should correctly replace a page', async () => {
+  it('should correctly replace a page', async () => {
     const Page1 = {
       ...BasePage,
       name: 'Page1',
