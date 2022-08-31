@@ -701,6 +701,8 @@ const renderKnob = (
         'range-knob-pressed': pressed,
         'range-knob-min': value === min,
         'range-knob-max': value === max,
+        'ion-activatable': true,
+        'ion-focusable': true,
       }}
       style={knobStyle()}
       role="slider"
