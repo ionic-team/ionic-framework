@@ -1,0 +1,149 @@
+import { enableAutoUnmount, mount } from '@vue/test-utils';
+import { createRouter, createWebHistory } from '@ionic/vue-router';
+import {
+  IonicVue,
+  IonApp,
+  IonRouterOutlet,
+  IonPage,
+  useIonRouter,
+  createAnimation
+} from '@ionic/vue';
+import { onBeforeRouteLeave } from 'vue-router';
+import { waitForRouter } from './utils';
+
+enableAutoUnmount(afterEach);
+
+const App = {
+  components: { IonApp, IonRouterOutlet },
+  template: '<ion-app><ion-router-outlet /></ion-app>',
+}
+
+const BasePage = {
+  template: '<ion-page :data-pageid="name"></ion-page>',
+  components: { IonPage },
+}
+
+describe('Routing', () => {
+  it('should have an animation duration of 0 if replacing without an explicit animation', async () => {
+    const Page1 = {
+      ...BasePage,
+      setup() {
+        const ionRouter = useIonRouter();
+        const redirect = () => {
+          ionRouter.replace('/page2')
+        }
+
+        return { redirect }
+      }
+    };
+
+    const Page2 = {
+      ...BasePage
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page1 },
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /**
+     * Mock the commit function on IonRouterOutlet
+     */
+    const commitFn = jest.fn();
+    const routerOutlet = wrapper.findComponent(IonRouterOutlet);
+    routerOutlet.vm.$el.commit = commitFn;
+
+    // call redirect method on Page1
+    const cmp = wrapper.findComponent(Page1);
+    cmp.vm.redirect();
+    await waitForRouter();
+
+    expect(commitFn).toBeCalledWith(
+      /**
+       * We are not checking the first 2
+       * params in this test,
+       * so we can use expect.anything().
+       */
+      expect.anything(),
+      expect.anything(),
+      expect.objectContaining({
+        direction: "none",
+        duration: 0,
+        animationBuilder: undefined
+      })
+    )
+  });
+
+  it('should have an animation duration of null if replacing with an explicit animation', async () => {
+    const mockAnimation = jest.fn(() => createAnimation());
+    const Page1 = {
+      ...BasePage,
+      setup() {
+        const ionRouter = useIonRouter();
+        const redirect = () => {
+          ionRouter.replace('/page2', mockAnimation)
+        }
+
+        return { redirect }
+      }
+    };
+
+    const Page2 = {
+      ...BasePage
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page1 },
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    /**
+     * Mock the commit function on IonRouterOutlet
+     */
+    const commitFn = jest.fn();
+    const routerOutlet = wrapper.findComponent(IonRouterOutlet);
+    routerOutlet.vm.$el.commit = commitFn;
+
+    // call redirect method on Page1
+    const cmp = wrapper.findComponent(Page1);
+    cmp.vm.redirect();
+    await waitForRouter();
+
+    expect(commitFn).toBeCalledWith(
+      /**
+       * We are not checking the first 2
+       * params in this test,
+       * so we can use expect.anything().
+       */
+      expect.anything(),
+      expect.anything(),
+      expect.objectContaining({
+        direction: "none",
+        duration: null,
+        animationBuilder: mockAnimation
+      })
+    )
+  });
+});
