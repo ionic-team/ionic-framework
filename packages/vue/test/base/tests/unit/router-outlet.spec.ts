@@ -9,7 +9,7 @@ import {
   createAnimation
 } from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router';
-import { waitForRouter } from './utils';
+import { mockAnimation, waitForRouter } from './utils';
 
 enableAutoUnmount(afterEach);
 
@@ -86,13 +86,13 @@ describe('Routing', () => {
   });
 
   it('should have an animation duration of null if replacing with an explicit animation', async () => {
-    const mockAnimation = jest.fn(() => createAnimation());
+    const animation = mockAnimation();
     const Page1 = {
       ...BasePage,
       setup() {
         const ionRouter = useIonRouter();
         const redirect = () => {
-          ionRouter.replace('/page2', mockAnimation)
+          ionRouter.replace('/page2', animation)
         }
 
         return { redirect }
@@ -142,7 +142,7 @@ describe('Routing', () => {
       expect.objectContaining({
         direction: "none",
         duration: undefined,
-        animationBuilder: mockAnimation
+        animationBuilder: animation
       })
     )
   });
