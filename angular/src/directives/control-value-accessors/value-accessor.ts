@@ -29,7 +29,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     setIonicClasses(this.el);
   }
 
-  handleChangeEvent(el: HTMLElement, value: any): void {
+  commitValueChange(el: HTMLElement, value: any): void {
     if (el === this.el.nativeElement) {
       if (value !== this.lastValue) {
         this.lastValue = value;
