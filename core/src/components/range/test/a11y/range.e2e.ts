@@ -44,7 +44,7 @@ test.describe('range: a11y', () => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="50" pin="true"></ion-range>
+            <ion-range min="0" max="100" value="49" pin="true"></ion-range>
           </ion-content>
         </ion-app>
         `
@@ -55,6 +55,11 @@ test.describe('range: a11y', () => {
       const range = page.locator('ion-range');
 
       await page.keyboard.press(tabKey);
+
+      await expect(range).toBeFocused();
+
+      await page.keyboard.press('ArrowRight');
+
       await page.waitForChanges();
 
       expect(await range.screenshot()).toMatchSnapshot(`range-focus-with-pin-${page.getSnapshotSettings()}.png`);
