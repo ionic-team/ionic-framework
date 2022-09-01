@@ -407,11 +407,10 @@ export class Input implements ComponentInterface {
 
     this.value = '';
 
-    /**
-     * Clearing the text input is considered a user committed change
-     * and should emit a value change event.
-     */
-    this.emitValueChange();
+    this.ionInput.emit({
+      ...ev,
+      data: this.value,
+    } as InputEvent);
 
     /**
      * This is needed for clearOnEdit

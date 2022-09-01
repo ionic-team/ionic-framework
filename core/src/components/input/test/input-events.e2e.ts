@@ -30,13 +30,13 @@ test.describe('input: events: ionChange', () => {
     expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
   });
 
-  test('should emit ionChange when the user clears the input', async ({ page }) => {
+  test('should emit ionInput when the user clears the input', async ({ page }) => {
     await page.setContent(`<ion-input value="some value" clear-input="true"></ion-input>`);
 
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
+    const ionInputSpy = await page.spyOnEvent('ionInput');
 
     await page.click('ion-input .input-clear-icon');
 
-    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '' });
+    expect(ionInputSpy).toHaveReceivedEventDetail({ data: '', isTrusted: true });
   });
 });
