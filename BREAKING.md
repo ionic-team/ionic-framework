@@ -40,9 +40,9 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 <h4 id="version-7x-slides">Slides</h4>
 
-`ion-slides`, `ion-slide`, and the `IonicSwiper` module have been removed from Ionic.
+`ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
 
-Developers using these components will need to migrate to using Swiper.js directly, optionally using the `IonicSlides` module. Guides for migration and usage are linked below:
+Developers using these components will need to migrate to using Swiper.js directly, optionally using the `IonicSlides` plugin. Guides for migration and usage are linked below:
 
 - [Angular](https://ionicframework.com/docs/angular/slides)
 - [React](https://ionicframework.com/docs/react/slides)
