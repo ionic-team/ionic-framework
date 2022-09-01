@@ -21,7 +21,6 @@ import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-
 import { NavComponent } from './nav/nav.component';
 import { ViewChildComponent } from './view-child/view-child.component';
 import { ProvidersComponent } from './providers/providers.component';
-import { SlidesComponent } from './slides/slides.component';
 import { FormComponent } from './form/form.component';
 import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
@@ -47,7 +46,6 @@ import { AccordionModalComponent } from './accordion/accordion-modal/accordion-m
     NavComponent,
     ViewChildComponent,
     ProvidersComponent,
-    SlidesComponent,
     FormComponent,
     NavigationPage1Component,
     NavigationPage2Component,

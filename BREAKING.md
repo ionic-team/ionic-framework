@@ -16,6 +16,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-7x-input)
   - [Overlays](#version-7x-overlays)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+  - [Slides](#version-7x-slides)
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
@@ -43,6 +44,16 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h4 id="version-7x-slides">Slides</h4>
+
+`ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
+
+Developers using these components will need to migrate to using Swiper.js directly, optionally using the `IonicSlides` plugin. Guides for migration and usage are linked below:
+
+- [Angular](https://ionicframework.com/docs/angular/slides)
+- [React](https://ionicframework.com/docs/react/slides)
+- [Vue](https://ionicframework.com/docs/vue/slides)
 
 <h4 id="version-7x-browser-platform-support">Browser and Platform Support</h4>
 
