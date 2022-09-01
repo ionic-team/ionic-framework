@@ -20,11 +20,6 @@ test.describe('range: a11y', () => {
     const range = page.locator('ion-range');
     const rangeHandle = page.locator('ion-range .range-knob-handle');
 
-    await rangeHandle.hover();
-    await page.waitForChanges();
-
-    expect(await range.screenshot()).toMatchSnapshot(`range-hover-${page.getSnapshotSettings()}.png`);
-
     await page.keyboard.press(tabKey);
     await page.waitForChanges();
 
