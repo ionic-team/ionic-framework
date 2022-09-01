@@ -1545,7 +1545,7 @@ export class Datetime implements ComponentInterface {
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
-      ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      ? getYearColumnData(this.locale, this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
     /**
@@ -1910,7 +1910,7 @@ export class Datetime implements ComponentInterface {
             const { day, dayOfWeek } = dateObject;
             const { isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
               this.activePartsClone,
@@ -1987,7 +1987,7 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
-                {day}
+                {text}
               </button>
             );
           })}
