@@ -165,9 +165,7 @@
 @media (any-hover: hover) {
   .range-knob-handle:hover .range-knob:before {
     transform: scale(2);
-  }
-
-  .range-knob-handle:hover .range-knob::before {
+    
     opacity: 0.04;
   }
 }
