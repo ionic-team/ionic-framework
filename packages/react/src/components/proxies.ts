@@ -60,8 +60,6 @@ import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/compo
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
-import { defineCustomElement as defineIonSlide } from '@ionic/core/components/ion-slide.js';
-import { defineCustomElement as defineIonSlides } from '@ionic/core/components/ion-slides.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
 import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-tab.js';
@@ -127,8 +125,6 @@ export const IonSegmentButton = /*@__PURE__*/createReactComponent<JSX.IonSegment
 export const IonSelect = /*@__PURE__*/createReactComponent<JSX.IonSelect, HTMLIonSelectElement>('ion-select', undefined, undefined, defineIonSelect);
 export const IonSelectOption = /*@__PURE__*/createReactComponent<JSX.IonSelectOption, HTMLIonSelectOptionElement>('ion-select-option', undefined, undefined, defineIonSelectOption);
 export const IonSkeletonText = /*@__PURE__*/createReactComponent<JSX.IonSkeletonText, HTMLIonSkeletonTextElement>('ion-skeleton-text', undefined, undefined, defineIonSkeletonText);
-export const IonSlide = /*@__PURE__*/createReactComponent<JSX.IonSlide, HTMLIonSlideElement>('ion-slide', undefined, undefined, defineIonSlide);
-export const IonSlides = /*@__PURE__*/createReactComponent<JSX.IonSlides, HTMLIonSlidesElement>('ion-slides', undefined, undefined, defineIonSlides);
 export const IonSpinner = /*@__PURE__*/createReactComponent<JSX.IonSpinner, HTMLIonSpinnerElement>('ion-spinner', undefined, undefined, defineIonSpinner);
 export const IonSplitPane = /*@__PURE__*/createReactComponent<JSX.IonSplitPane, HTMLIonSplitPaneElement>('ion-split-pane', undefined, undefined, defineIonSplitPane);
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab, HTMLIonTabElement>('ion-tab', undefined, undefined, defineIonTab);

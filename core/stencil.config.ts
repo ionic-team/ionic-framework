@@ -45,7 +45,6 @@ export const config: Config = {
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
-    { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
     { components: ['ion-tabs', 'ion-tab'] },
