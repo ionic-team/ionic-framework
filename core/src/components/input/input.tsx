@@ -30,6 +30,11 @@ export class Input implements ComponentInterface {
   private didBlurAfterEdit = false;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
+  /**
+   * The last emitted ionChange event value.
+   * This value is updated when the input emits an ionChange event.
+   */
+  private previousValue?: string | null | undefined;
 
   @State() hasFocus = false;
 
@@ -317,7 +322,9 @@ export class Input implements ComponentInterface {
    */
   private emitValueChange() {
     const { value } = this;
-    this.ionChange.emit({ value: value == null ? value : value.toString() });
+    const newValue = value == null ? value : value.toString();
+    this.ionChange.emit({ value: newValue });
+    this.previousValue = newValue;
   }
 
   private shouldClearOnEdit() {
@@ -356,6 +363,16 @@ export class Input implements ComponentInterface {
     this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
+
+    if (this.value != null && this.previousValue !== this.value) {
+      /**
+       * Emits the `ionChange` event when the input loses focus,
+       * only if the input has a value and it does not match the
+       * last emitted value. This occurs when the user performs
+       * a clear action, and then blurs the input.
+       */
+      this.emitValueChange();
+    }
 
     this.ionBlur.emit(ev);
   };
