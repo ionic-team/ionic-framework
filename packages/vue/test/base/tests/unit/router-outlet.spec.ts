@@ -27,7 +27,7 @@ const BasePage = {
  * While these tests use useIonRouter,
  * they are different from the tests in hook.spec.ts
  * in that they are testing that the correct parameters
- * are passed to IonRouterOutlet as opposed hook.spec.ts
+ * are passed to IonRouterOutlet as opposed to hook.spec.ts
  * which makes sure that the animation function is called when
  * specifically using useIonRouter.
  */
