@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -1077,10 +1077,6 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents": boolean;
-        /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
@@ -1132,10 +1128,6 @@ export namespace Components {
           * If `true`, the user must fill in a value before submitting a form.
          */
         "required": boolean;
-        /**
-          * Sets blur on the native `input` in `ion-input`. Use this method instead of the global `input.blur()`.
-         */
-        "setBlur": () => Promise<void>;
         /**
           * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.
          */
@@ -2577,101 +2569,6 @@ export namespace Components {
          */
         "animated": boolean;
     }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * Get the index of the active slide.
-         */
-        "getActiveIndex": () => Promise<number>;
-        /**
-          * Get the index of the previous slide.
-         */
-        "getPreviousIndex": () => Promise<number>;
-        /**
-          * Get the Swiper instance. Use this to access the full Swiper API. See https://swiperjs.com/swiper-api for all API options.
-         */
-        "getSwiper": () => Promise<any>;
-        /**
-          * Get whether or not the current slide is the first slide.
-         */
-        "isBeginning": () => Promise<boolean>;
-        /**
-          * Get whether or not the current slide is the last slide.
-         */
-        "isEnd": () => Promise<boolean>;
-        /**
-          * Get the total number of slides.
-         */
-        "length": () => Promise<number>;
-        /**
-          * Lock or unlock the ability to slide to the next slide.
-          * @param lock If `true`, disable swiping to the next slide.
-         */
-        "lockSwipeToNext": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the previous slide.
-          * @param lock If `true`, disable swiping to the previous slide.
-         */
-        "lockSwipeToPrev": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the next or previous slide.
-          * @param lock If `true`, disable swiping to the next and previous slide.
-         */
-        "lockSwipes": (lock: boolean) => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options": any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager": boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar": boolean;
-        /**
-          * Transition to the next slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideNext": (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
-        /**
-          * Transition to the previous slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
-         */
-        "slidePrev": (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
-        /**
-          * Transition to the specified slide.
-          * @param index The index of the slide to transition to.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideTo": (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
-        /**
-          * Start auto play.
-         */
-        "startAutoplay": () => Promise<void>;
-        /**
-          * Stop auto play.
-         */
-        "stopAutoplay": () => Promise<void>;
-        /**
-          * Update the underlying slider implementation. Call this if you've added or removed child slides.
-         */
-        "update": () => Promise<void>;
-        /**
-          * Force swiper to update its height (when autoHeight is enabled) for the duration equal to 'speed' parameter.
-          * @param speed The transition duration (in ms).
-         */
-        "updateAutoHeight": (speed?: number | undefined) => Promise<void>;
-    }
     interface IonSpinner {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -2843,10 +2740,6 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents": boolean;
-        /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
@@ -2886,10 +2779,6 @@ export namespace Components {
           * The number of visible text lines for the control.
          */
         "rows"?: number;
-        /**
-          * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.blur()`.
-         */
-        "setBlur": () => Promise<void>;
         /**
           * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
          */
@@ -3039,73 +2928,6 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-    }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight": number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight": number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight": number;
-        /**
-          * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js virtualScroll.checkRange(lastItemLen); ```
-         */
-        "checkEnd": () => Promise<void>;
-        /**
-          * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifying by an offset and a length.
-         */
-        "checkRange": (offset: number, len?: number) => Promise<void>;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * Returns the position of the virtual item at the given index.
-         */
-        "positionForItem": (index: number) => Promise<number>;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
     }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
@@ -3259,10 +3081,6 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
-}
-export interface IonSlidesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLIonSlidesElement;
 }
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3765,18 +3583,6 @@ declare global {
         prototype: HTMLIonSkeletonTextElement;
         new (): HTMLIonSkeletonTextElement;
     };
-    interface HTMLIonSlideElement extends Components.IonSlide, HTMLStencilElement {
-    }
-    var HTMLIonSlideElement: {
-        prototype: HTMLIonSlideElement;
-        new (): HTMLIonSlideElement;
-    };
-    interface HTMLIonSlidesElement extends Components.IonSlides, HTMLStencilElement {
-    }
-    var HTMLIonSlidesElement: {
-        prototype: HTMLIonSlidesElement;
-        new (): HTMLIonSlidesElement;
-    };
     interface HTMLIonSpinnerElement extends Components.IonSpinner, HTMLStencilElement {
     }
     var HTMLIonSpinnerElement: {
@@ -3854,12 +3660,6 @@ declare global {
     var HTMLIonToolbarElement: {
         prototype: HTMLIonToolbarElement;
         new (): HTMLIonToolbarElement;
-    };
-    interface HTMLIonVirtualScrollElement extends Components.IonVirtualScroll, HTMLStencilElement {
-    }
-    var HTMLIonVirtualScrollElement: {
-        prototype: HTMLIonVirtualScrollElement;
-        new (): HTMLIonVirtualScrollElement;
     };
     interface HTMLElementTagNameMap {
         "ion-accordion": HTMLIonAccordionElement;
@@ -3940,8 +3740,6 @@ declare global {
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
-        "ion-slide": HTMLIonSlideElement;
-        "ion-slides": HTMLIonSlidesElement;
         "ion-spinner": HTMLIonSpinnerElement;
         "ion-split-pane": HTMLIonSplitPaneElement;
         "ion-tab": HTMLIonTabElement;
@@ -3955,7 +3753,6 @@ declare global {
         "ion-toast": HTMLIonToastElement;
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
-        "ion-virtual-scroll": HTMLIonVirtualScrollElement;
     }
 }
 declare namespace LocalJSX {
@@ -5064,10 +4861,6 @@ declare namespace LocalJSX {
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents"?: boolean;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
@@ -6570,90 +6363,6 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
     }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Emitted after the active slide has changed.
-         */
-        "onIonSlideDidChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user double taps on the slide's container.
-         */
-        "onIonSlideDoubleTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is actively being moved.
-         */
-        "onIonSlideDrag"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has ended.
-         */
-        "onIonSlideNextEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has started.
-         */
-        "onIonSlideNextStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has ended.
-         */
-        "onIonSlidePrevEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has started.
-         */
-        "onIonSlidePrevStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at the last slide.
-         */
-        "onIonSlideReachEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at its initial position.
-         */
-        "onIonSlideReachStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user taps/clicks on the slide's container.
-         */
-        "onIonSlideTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user releases the touch.
-         */
-        "onIonSlideTouchEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user first touches the slider.
-         */
-        "onIonSlideTouchStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has ended.
-         */
-        "onIonSlideTransitionEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has started.
-         */
-        "onIonSlideTransitionStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted before the active slide has changed.
-         */
-        "onIonSlideWillChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted after Swiper initialization
-         */
-        "onIonSlidesDidLoad"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options"?: any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager"?: boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar"?: boolean;
-    }
     interface IonSpinner {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -6825,10 +6534,6 @@ declare namespace LocalJSX {
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents"?: boolean;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
@@ -7049,61 +6754,6 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
     }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight"?: number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight"?: number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight"?: number;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
-    }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;
         "ion-accordion-group": IonAccordionGroup;
@@ -7183,8 +6833,6 @@ declare namespace LocalJSX {
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
-        "ion-slide": IonSlide;
-        "ion-slides": IonSlides;
         "ion-spinner": IonSpinner;
         "ion-split-pane": IonSplitPane;
         "ion-tab": IonTab;
@@ -7198,7 +6846,6 @@ declare namespace LocalJSX {
         "ion-toast": IonToast;
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
-        "ion-virtual-scroll": IonVirtualScroll;
     }
 }
 export { LocalJSX as JSX };
@@ -7283,8 +6930,6 @@ declare module "@stencil/core" {
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
-            "ion-slide": LocalJSX.IonSlide & JSXBase.HTMLAttributes<HTMLIonSlideElement>;
-            "ion-slides": LocalJSX.IonSlides & JSXBase.HTMLAttributes<HTMLIonSlidesElement>;
             "ion-spinner": LocalJSX.IonSpinner & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
             "ion-split-pane": LocalJSX.IonSplitPane & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
             "ion-tab": LocalJSX.IonTab & JSXBase.HTMLAttributes<HTMLIonTabElement>;
@@ -7298,7 +6943,6 @@ declare module "@stencil/core" {
             "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
-            "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
         }
     }
 }

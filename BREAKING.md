@@ -4,10 +4,90 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
+- [Version 7.x](#version-7x)
 - [Version 6.x](#version-6x)
 - [Version 5.x](#version-5x)
 - [Version 4.x](#version-4x)
 - [Legacy](#legacy)
+
+## Version 7.x
+
+- [Components](#version-7x-components)
+  - [Overlays](#version-7x-overlays)
+  - [Virtual Scroll](#version-7x-virtual-scroll)
+  - [Slides](#version-7x-slides)
+- [Browser and Platform Support](#version-7x-browser-platform-support)
+- [Utilities](#version-7x-utilities)
+  - [hidden attribute](#version-7x-hidden-attribute)
+
+<h2 id="version-7x-components">Components</h2>
+
+<h4 id="version-7x-overlays">Overlays</h4>
+
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+
+<h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
+
+`ion-virtual-scroll` has been removed from Ionic.
+
+Developers using the component will need to migrate to a virtual scroll solution provided by their framework:
+
+- [Angular](https://ionicframework.com/docs/angular/virtual-scroll)
+- [React](https://ionicframework.com/docs/react/virtual-scroll)
+- [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
+
+Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h4 id="version-7x-slides">Slides</h4>
+
+`ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
+
+Developers using these components will need to migrate to using Swiper.js directly, optionally using the `IonicSlides` plugin. Guides for migration and usage are linked below:
+
+- [Angular](https://ionicframework.com/docs/angular/slides)
+- [React](https://ionicframework.com/docs/react/slides)
+- [Vue](https://ionicframework.com/docs/vue/slides)
+
+<h4 id="version-7x-browser-platform-support">Browser and Platform Support</h4>
+
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 7.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ----------------- |
+| Chrome          | 79+               |
+| Safari          | 14+               |
+| Firefox         | 63+               |
+| Edge            | 79+               |
+
+**Minimum JavaScript Framework Versions**
+
+| Framework | Supported Version     |
+| --------- | --------------------- |
+| Angular   | 13+                   |
+| React     | 17+                   |
+| Vue       | 3.0.6+                |
+
+**Minimum Mobile Platform Versions**
+
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 14+                    |
+| Android  | 5.1+ with Chromium 79+ |
+
+<h2 id="version-7x-utilities">Utilities</h2>
+
+<h4 id="version-7x-hidden-attribute">`hidden` attribute</h4>
+
+The `[hidden]` attribute has been removed from Ionic's global stylesheet. The `[hidden]` attribute can continue to be used, but developers will get the [native `hidden` implementation](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/hidden) instead. The main difference is that the native implementation is easier to override using `display` than Ionic's implementation.
+
+Developers can add the following CSS to their global stylesheet if they need the old behavior:
+
+```css
+[hidden] {
+  display: none !important;
+}
+```
 
 
 ## Version 6.x

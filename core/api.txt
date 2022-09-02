@@ -1215,52 +1215,6 @@ ion-skeleton-text,css-prop,--background
 ion-skeleton-text,css-prop,--background-rgb
 ion-skeleton-text,css-prop,--border-radius
 
-ion-slide,none
-
-ion-slides,none
-ion-slides,prop,mode,"ios" | "md",undefined,false,false
-ion-slides,prop,options,any,{},false,false
-ion-slides,prop,pager,boolean,false,false,false
-ion-slides,prop,scrollbar,boolean,false,false,false
-ion-slides,method,getActiveIndex,getActiveIndex() => Promise<number>
-ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
-ion-slides,method,getSwiper,getSwiper() => Promise<any>
-ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
-ion-slides,method,isEnd,isEnd() => Promise<boolean>
-ion-slides,method,length,length() => Promise<number>
-ion-slides,method,lockSwipeToNext,lockSwipeToNext(lock: boolean) => Promise<void>
-ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(lock: boolean) => Promise<void>
-ion-slides,method,lockSwipes,lockSwipes(lock: boolean) => Promise<void>
-ion-slides,method,slideNext,slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
-ion-slides,method,slidePrev,slidePrev(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
-ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
-ion-slides,method,startAutoplay,startAutoplay() => Promise<void>
-ion-slides,method,stopAutoplay,stopAutoplay() => Promise<void>
-ion-slides,method,update,update() => Promise<void>
-ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number | undefined) => Promise<void>
-ion-slides,event,ionSlideDidChange,void,true
-ion-slides,event,ionSlideDoubleTap,void,true
-ion-slides,event,ionSlideDrag,void,true
-ion-slides,event,ionSlideNextEnd,void,true
-ion-slides,event,ionSlideNextStart,void,true
-ion-slides,event,ionSlidePrevEnd,void,true
-ion-slides,event,ionSlidePrevStart,void,true
-ion-slides,event,ionSlideReachEnd,void,true
-ion-slides,event,ionSlideReachStart,void,true
-ion-slides,event,ionSlidesDidLoad,void,true
-ion-slides,event,ionSlideTap,void,true
-ion-slides,event,ionSlideTouchEnd,void,true
-ion-slides,event,ionSlideTouchStart,void,true
-ion-slides,event,ionSlideTransitionEnd,void,true
-ion-slides,event,ionSlideTransitionStart,void,true
-ion-slides,event,ionSlideWillChange,void,true
-ion-slides,css-prop,--bullet-background
-ion-slides,css-prop,--bullet-background-active
-ion-slides,css-prop,--progress-bar-background
-ion-slides,css-prop,--progress-bar-background-active
-ion-slides,css-prop,--scroll-bar-background
-ion-slides,css-prop,--scroll-bar-background-active
-
 ion-spinner,shadow
 ion-spinner,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-spinner,prop,duration,number | undefined,undefined,false,false
@@ -1462,21 +1416,3 @@ ion-toolbar,css-prop,--padding-bottom
 ion-toolbar,css-prop,--padding-end
 ion-toolbar,css-prop,--padding-start
 ion-toolbar,css-prop,--padding-top
-
-ion-virtual-scroll,none
-ion-virtual-scroll,prop,approxFooterHeight,number,30,false,false
-ion-virtual-scroll,prop,approxHeaderHeight,number,30,false,false
-ion-virtual-scroll,prop,approxItemHeight,number,45,false,false
-ion-virtual-scroll,prop,footerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
-ion-virtual-scroll,prop,footerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,headerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
-ion-virtual-scroll,prop,headerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,itemHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,items,any[] | undefined,undefined,false,false
-ion-virtual-scroll,prop,nodeRender,((el: HTMLElement | null, cell: Cell, domIndex: number) => HTMLElement) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
-ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
-ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>

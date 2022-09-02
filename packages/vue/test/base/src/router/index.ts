@@ -38,10 +38,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Inputs.vue')
   },
   {
-    path: '/slides',
-    component: () => import('@/views/Slides.vue')
-  },
-  {
     path: '/default-href',
     component: () => import('@/views/DefaultHref.vue')
   },

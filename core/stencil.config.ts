@@ -45,7 +45,6 @@ export const config: Config = {
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
-    { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
     { components: ['ion-tabs', 'ion-tab'] },
@@ -53,7 +52,6 @@ export const config: Config = {
     { components: ['ion-text'] },
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
-    { components: ['ion-virtual-scroll'] },
     { components: ['ion-accordion-group', 'ion-accordion'] },
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
@@ -207,7 +205,6 @@ export const config: Config = {
 
         // auxiliar
         'ion-picker-column',
-        'ion-virtual-scroll'
       ],
       /**
        * TODO: Abstract custom Ionic value accessor functionality

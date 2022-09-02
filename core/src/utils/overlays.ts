@@ -307,7 +307,7 @@ const connectListeners = (doc: Document) => {
     });
 
     // handle ESC to close overlay
-    doc.addEventListener('keyup', (ev) => {
+    doc.addEventListener('keydown', (ev) => {
       if (ev.key === 'Escape') {
         const lastOverlay = getOverlay(doc);
         if (lastOverlay?.backdropDismiss) {
