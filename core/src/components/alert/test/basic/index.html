@@ -53,16 +53,11 @@
     </ion-app>
 
     <script>
-      window.addEventListener('ionAlertDidDismiss', function (e) {
-        console.log('didDismiss', e);
-      });
-      window.addEventListener('ionAlertWillDismiss', function (e) {
-        console.log('willDismiss', e);
-      });
       async function openAlert(opts) {
         const alert = await alertController.create(opts);
         await alert.present();
       }
+
       function presentAlert() {
         openAlert({
           header: 'Alert',

@@ -19,14 +19,11 @@
     <main class="ion-padding">
       <h1>Alert - A11y</h1>
 
-      <ion-button id="noHeader" expand="block" onclick="presentNoHeader()">Alert With No Header</ion-button>
-      <ion-button id="customHeader" expand="block" onclick="presentCustomHeader()">Alert With Custom Header</ion-button>
-      <ion-button id="subHeaderOnly" expand="block" onclick="presentSubHeaderOnly()"
-        >Alert With Subheader Only</ion-button
-      >
-      <ion-button id="customAriaLabel" expand="block" onclick="presentCustomAriaLabel()"
-        >Alert With Custom Aria Label</ion-button
-      >
+      <ion-button id="bothHeaders" expand="block" onclick="presentBothHeaders()">Both Headers</ion-button>
+      <ion-button id="subHeaderOnly" expand="block" onclick="presentSubHeaderOnly()">Subheader Only</ion-button>
+      <ion-button id="noHeaders" expand="block" onclick="presentNoHeaders()">No Headers</ion-button>
+      <ion-button id="noMessage" expand="block" onclick="presentNoMessage()">No Message</ion-button>
+      <ion-button id="customAria" expand="block" onclick="presentCustomAria()">Custom Aria</ion-button>
     </main>
 
     <script>
@@ -35,14 +32,7 @@
         await alert.present();
       }
 
-      function presentNoHeader() {
-        openAlert({
-          message: 'This is an alert message.',
-          buttons: ['OK'],
-        });
-      }
-
-      function presentCustomHeader() {
+      function presentBothHeaders() {
         openAlert({
           header: 'Header',
           subHeader: 'Subtitle',
@@ -59,14 +49,30 @@
         });
       }
 
-      function presentCustomAriaLabel() {
+      function presentNoHeaders() {
+        openAlert({
+          message: 'This is an alert message.',
+          buttons: ['OK'],
+        });
+      }
+
+      function presentNoMessage() {
         openAlert({
           header: 'Header',
           subHeader: 'Subtitle',
-          message: 'This is an alert message with a custom aria-label.',
+          buttons: ['OK'],
+        });
+      }
+
+      function presentCustomAria() {
+        openAlert({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          message: 'This is an alert message with custom aria attributes.',
           buttons: ['OK'],
           htmlAttributes: {
-            'aria-label': 'Custom alert',
+            'aria-labelledby': 'Custom title',
+            'aria-describedby': 'Custom description',
           },
         });
       }
