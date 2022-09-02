@@ -2569,101 +2569,6 @@ export namespace Components {
          */
         "animated": boolean;
     }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * Get the index of the active slide.
-         */
-        "getActiveIndex": () => Promise<number>;
-        /**
-          * Get the index of the previous slide.
-         */
-        "getPreviousIndex": () => Promise<number>;
-        /**
-          * Get the Swiper instance. Use this to access the full Swiper API. See https://swiperjs.com/swiper-api for all API options.
-         */
-        "getSwiper": () => Promise<any>;
-        /**
-          * Get whether or not the current slide is the first slide.
-         */
-        "isBeginning": () => Promise<boolean>;
-        /**
-          * Get whether or not the current slide is the last slide.
-         */
-        "isEnd": () => Promise<boolean>;
-        /**
-          * Get the total number of slides.
-         */
-        "length": () => Promise<number>;
-        /**
-          * Lock or unlock the ability to slide to the next slide.
-          * @param lock If `true`, disable swiping to the next slide.
-         */
-        "lockSwipeToNext": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the previous slide.
-          * @param lock If `true`, disable swiping to the previous slide.
-         */
-        "lockSwipeToPrev": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the next or previous slide.
-          * @param lock If `true`, disable swiping to the next and previous slide.
-         */
-        "lockSwipes": (lock: boolean) => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options": any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager": boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar": boolean;
-        /**
-          * Transition to the next slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideNext": (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
-        /**
-          * Transition to the previous slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
-         */
-        "slidePrev": (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
-        /**
-          * Transition to the specified slide.
-          * @param index The index of the slide to transition to.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideTo": (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
-        /**
-          * Start auto play.
-         */
-        "startAutoplay": () => Promise<void>;
-        /**
-          * Stop auto play.
-         */
-        "stopAutoplay": () => Promise<void>;
-        /**
-          * Update the underlying slider implementation. Call this if you've added or removed child slides.
-         */
-        "update": () => Promise<void>;
-        /**
-          * Force swiper to update its height (when autoHeight is enabled) for the duration equal to 'speed' parameter.
-          * @param speed The transition duration (in ms).
-         */
-        "updateAutoHeight": (speed?: number | undefined) => Promise<void>;
-    }
     interface IonSpinner {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -3177,10 +3082,6 @@ export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
 }
-export interface IonSlidesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLIonSlidesElement;
-}
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSplitPaneElement;
@@ -3682,18 +3583,6 @@ declare global {
         prototype: HTMLIonSkeletonTextElement;
         new (): HTMLIonSkeletonTextElement;
     };
-    interface HTMLIonSlideElement extends Components.IonSlide, HTMLStencilElement {
-    }
-    var HTMLIonSlideElement: {
-        prototype: HTMLIonSlideElement;
-        new (): HTMLIonSlideElement;
-    };
-    interface HTMLIonSlidesElement extends Components.IonSlides, HTMLStencilElement {
-    }
-    var HTMLIonSlidesElement: {
-        prototype: HTMLIonSlidesElement;
-        new (): HTMLIonSlidesElement;
-    };
     interface HTMLIonSpinnerElement extends Components.IonSpinner, HTMLStencilElement {
     }
     var HTMLIonSpinnerElement: {
@@ -3851,8 +3740,6 @@ declare global {
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
-        "ion-slide": HTMLIonSlideElement;
-        "ion-slides": HTMLIonSlidesElement;
         "ion-spinner": HTMLIonSpinnerElement;
         "ion-split-pane": HTMLIonSplitPaneElement;
         "ion-tab": HTMLIonTabElement;
@@ -6476,90 +6363,6 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
     }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Emitted after the active slide has changed.
-         */
-        "onIonSlideDidChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user double taps on the slide's container.
-         */
-        "onIonSlideDoubleTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is actively being moved.
-         */
-        "onIonSlideDrag"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has ended.
-         */
-        "onIonSlideNextEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has started.
-         */
-        "onIonSlideNextStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has ended.
-         */
-        "onIonSlidePrevEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has started.
-         */
-        "onIonSlidePrevStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at the last slide.
-         */
-        "onIonSlideReachEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at its initial position.
-         */
-        "onIonSlideReachStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user taps/clicks on the slide's container.
-         */
-        "onIonSlideTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user releases the touch.
-         */
-        "onIonSlideTouchEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user first touches the slider.
-         */
-        "onIonSlideTouchStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has ended.
-         */
-        "onIonSlideTransitionEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has started.
-         */
-        "onIonSlideTransitionStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted before the active slide has changed.
-         */
-        "onIonSlideWillChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted after Swiper initialization
-         */
-        "onIonSlidesDidLoad"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options"?: any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager"?: boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar"?: boolean;
-    }
     interface IonSpinner {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -7030,8 +6833,6 @@ declare namespace LocalJSX {
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
-        "ion-slide": IonSlide;
-        "ion-slides": IonSlides;
         "ion-spinner": IonSpinner;
         "ion-split-pane": IonSplitPane;
         "ion-tab": IonTab;
@@ -7129,8 +6930,6 @@ declare module "@stencil/core" {
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
-            "ion-slide": LocalJSX.IonSlide & JSXBase.HTMLAttributes<HTMLIonSlideElement>;
-            "ion-slides": LocalJSX.IonSlides & JSXBase.HTMLAttributes<HTMLIonSlidesElement>;
             "ion-spinner": LocalJSX.IonSpinner & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
             "ion-split-pane": LocalJSX.IonSplitPane & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
             "ion-tab": LocalJSX.IonTab & JSXBase.HTMLAttributes<HTMLIonTabElement>;

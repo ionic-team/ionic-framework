@@ -65,8 +65,6 @@ export const DIRECTIVES = [
   d.IonSelect,
   d.IonSelectOption,
   d.IonSkeletonText,
-  d.IonSlide,
-  d.IonSlides,
   d.IonSpinner,
   d.IonSplitPane,
   d.IonTabBar,

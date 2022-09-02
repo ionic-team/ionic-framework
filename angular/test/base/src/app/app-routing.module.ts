@@ -12,7 +12,6 @@ import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-pa
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
 import { ViewChildComponent } from './view-child/view-child.component';
 import { ProvidersComponent } from './providers/providers.component';
-import { SlidesComponent } from './slides/slides.component';
 import { FormComponent } from './form/form.component';
 import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
@@ -37,7 +36,6 @@ const routes: Routes = [
   { path: 'router-link-page', component: RouterLinkPageComponent },
   { path: 'router-link-page2/:id', component: RouterLinkPage2Component },
   { path: 'router-link-page3', component: RouterLinkPage3Component },
-  { path: 'slides', component: SlidesComponent },
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'navigation',
