@@ -21,6 +21,6 @@ export class RadioValueAccessorDirective extends ValueAccessor {
 
   @HostListener('ionSelect', ['$event.target'])
   _handleIonSelect(el: any): void {
-    this.commitValueChange(el, el.checked);
+    this.handleValueChange(el, el.checked);
   }
 }

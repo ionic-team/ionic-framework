@@ -21,7 +21,7 @@ export class TextValueAccessorDirective extends ValueAccessor {
 
   @HostListener('ionChange', ['$event.target'])
   _handleInputEvent(el: any): void {
-    this.commitValueChange(el, el.value);
+    this.handleValueChange(el, el.value);
   }
 }
 
@@ -42,6 +42,6 @@ export class InputValueAccessorDirective extends ValueAccessor {
 
   @HostListener('ionInput', ['$event.target'])
   _handleInputEvent(el: any): void {
-    this.commitValueChange(el, el.value);
+    this.handleValueChange(el, el.value);
   }
 }

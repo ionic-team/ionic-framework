@@ -20,7 +20,7 @@ export class NumericValueAccessorDirective extends ValueAccessor {
 
   @HostListener('ionInput', ['$event.target'])
   handleInputEvent(el: HTMLIonInputElement): void {
-    this.commitValueChange(el, el.value);
+    this.handleValueChange(el, el.value);
   }
 
   registerOnChange(fn: (_: number | null) => void): void {
