@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **vue:** lifecycles now fire on tabs pages ([#25786](https://github.com/ionic-team/ionic/issues/25786)) ([3020005](https://github.com/ionic-team/ionic/commit/30200051bbab6ce57fd363668dafc49287c87c56)), closes [#25784](https://github.com/ionic-team/ionic/issues/25784)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 **Note:** Version bump only for package @ionic/vue
