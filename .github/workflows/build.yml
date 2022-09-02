@@ -106,11 +106,26 @@ jobs:
     - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [vue3]
     needs: [build-vue, build-vue-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/workflows/actions/test-vue-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-vue-e2e:
+    if: ${{ always() }}
+    needs: test-vue-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-vue-e2e.result != 'success' }}
+        run: exit 1
 
   build-angular:
     needs: [build-core]

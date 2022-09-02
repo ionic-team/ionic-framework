@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5](https://github.com/ionic-team/ionic-framework/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* **action-sheet:** add aria-labelledby ([#25837](https://github.com/ionic-team/ionic-framework/issues/25837)) ([5270151](https://github.com/ionic-team/ionic-framework/commit/527015184e9413c1037277d3197bcaa33044c38c))
+* **angular:** router outlet has mode property ([#25816](https://github.com/ionic-team/ionic-framework/issues/25816)) ([afd0bbc](https://github.com/ionic-team/ionic-framework/commit/afd0bbc60aa8f4edc88dc311d6484ac60117fce5)), closes [#25813](https://github.com/ionic-team/ionic-framework/issues/25813)
+* **datetime:** next and previous buttons have correct labels ([#25845](https://github.com/ionic-team/ionic-framework/issues/25845)) ([41e3387](https://github.com/ionic-team/ionic-framework/commit/41e338730d32837fc9dd8a15477e37dea4cc76c9)), closes [#25844](https://github.com/ionic-team/ionic-framework/issues/25844)
+* **datetime:** only log out of bounds warning if value set ([#25835](https://github.com/ionic-team/ionic-framework/issues/25835)) ([85af6ce](https://github.com/ionic-team/ionic-framework/commit/85af6ce436890eb922d2ba32053fb8b8bc7fd4ff)), closes [#25833](https://github.com/ionic-team/ionic-framework/issues/25833)
+* **input:** clear button is not activated on swipe ([#25825](https://github.com/ionic-team/ionic-framework/issues/25825)) ([ff71ad4](https://github.com/ionic-team/ionic-framework/commit/ff71ad492d7671f8e550da7e08dbde30cb05ebf7)), closes [#24857](https://github.com/ionic-team/ionic-framework/issues/24857)
+* **modal:** handleBehavior can be used with controller ([#25821](https://github.com/ionic-team/ionic-framework/issues/25821)) ([79ef1b5](https://github.com/ionic-team/ionic-framework/commit/79ef1b57dc74fd856ed7c2904d7400d283cc081e)), closes [#25820](https://github.com/ionic-team/ionic-framework/issues/25820)
+* **searchbar:** clear button has focus indicator ([#25828](https://github.com/ionic-team/ionic-framework/issues/25828)) ([373b4ff](https://github.com/ionic-team/ionic-framework/commit/373b4ffe216ba584b92014cef501f64668e1f177))
+* **searchbar:** keypress can activate clear button ([#25824](https://github.com/ionic-team/ionic-framework/issues/25824)) ([c270756](https://github.com/ionic-team/ionic-framework/commit/c270756356c7b23a1959ac5f4b8206a5cd1825c2))
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic-framework/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **alert:** add default aria-label ([#25800](https://github.com/ionic-team/ionic-framework/issues/25800)) ([d395a73](https://github.com/ionic-team/ionic-framework/commit/d395a73cb6c419e6c0072746b8e4768cd5f78ef3))
+* **alert:** use aria-labelledby and aria-describedby instead of aria-label ([#25805](https://github.com/ionic-team/ionic-framework/issues/25805)) ([27318d7](https://github.com/ionic-team/ionic-framework/commit/27318d75df60dfce1a90f23ba31ea2b6636ba42f))
+* **breadcrumb:** separator is not announced by narrators ([#25796](https://github.com/ionic-team/ionic-framework/issues/25796)) ([71fad38](https://github.com/ionic-team/ionic-framework/commit/71fad3884bc55b266067efb346500c848b856946))
+* **datetime:** close month/year picker when hidden ([#25789](https://github.com/ionic-team/ionic-framework/issues/25789)) ([3b211b6](https://github.com/ionic-team/ionic-framework/commit/3b211b60fd9a88be6e232f839ecc4be090181530)), closes [#25787](https://github.com/ionic-team/ionic-framework/issues/25787)
+* **modal:** role attribute can be customized ([#25804](https://github.com/ionic-team/ionic-framework/issues/25804)) ([037d579](https://github.com/ionic-team/ionic-framework/commit/037d579b2a3a660358f1e9c9b020c9510bb9c6b0))
+* **react:** duplicate page transitions do not happen on react 18 ([#25798](https://github.com/ionic-team/ionic-framework/issues/25798)) ([a39d776](https://github.com/ionic-team/ionic-framework/commit/a39d776f087514b7fa744f44ce8ce2a04ed8aa43)), closes [#25797](https://github.com/ionic-team/ionic-framework/issues/25797)
+* **refresher:** use componentOnReady utility for CE build ([#25783](https://github.com/ionic-team/ionic-framework/issues/25783)) ([bd715a5](https://github.com/ionic-team/ionic-framework/commit/bd715a52562f1f175d4bb6ea2dbfdd67a3e91db1)), closes [#25782](https://github.com/ionic-team/ionic-framework/issues/25782)
+* **select:** compareWith passes params in correct order ([#25764](https://github.com/ionic-team/ionic-framework/issues/25764)) ([d631195](https://github.com/ionic-team/ionic-framework/commit/d6311951243fd9b867ae5d4a7a08c8d341f8eb7a)), closes [#25759](https://github.com/ionic-team/ionic-framework/issues/25759)
+* **vue:** lifecycles now fire on tabs pages ([#25786](https://github.com/ionic-team/ionic-framework/issues/25786)) ([3020005](https://github.com/ionic-team/ionic-framework/commit/30200051bbab6ce57fd363668dafc49287c87c56)), closes [#25784](https://github.com/ionic-team/ionic-framework/issues/25784)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic-framework/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 
