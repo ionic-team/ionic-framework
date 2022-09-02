@@ -3,7 +3,7 @@ import { raf } from '../../helpers';
 import type { KeyboardResizeOptions } from '../../native/keyboard';
 import { KeyboardResize } from '../../native/keyboard';
 
-import { relocateInput } from './common';
+import { relocateInput, SCROLL_AMOUNT_PADDING } from './common';
 import { getScrollData } from './scroll-data';
 import { setScrollPadding, setClearScrollPaddingListener } from './scroll-padding';
 
@@ -167,7 +167,7 @@ const jsSetFocus = async (
          */
         if (inputEl.type === 'password') {
           // Add 50px to account for the "Passwords" bar
-          scrollData.scrollAmount += 50;
+          scrollData.scrollAmount += SCROLL_AMOUNT_PADDING;
           window.addEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
         } else {
           window.addEventListener('ionKeyboardDidShow', scrollContent);

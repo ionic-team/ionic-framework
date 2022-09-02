@@ -48,7 +48,6 @@ test('component: modes', async () => {
     'ion-list',
     'ion-picker',
     'ion-refresher',
-    'ion-slides',
     'ion-split-pane',
   ];
 
@@ -130,8 +129,6 @@ test('component: modes', async () => {
     'ion-select-option',
     'ion-select-popover',
     'ion-skeleton-text',
-    'ion-slide',
-    'ion-slides',
     'ion-spinner',
     'ion-split-pane',
     'ion-tab-bar',

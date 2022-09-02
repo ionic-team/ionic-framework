@@ -69,8 +69,6 @@ export declare const IonSegmentButton: import("vue").FunctionalComponent<JSX.Ion
 export declare const IonSelect: import("vue").FunctionalComponent<JSX.IonSelect & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonSelectOption: import("vue").FunctionalComponent<JSX.IonSelectOption & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonSkeletonText: import("vue").FunctionalComponent<JSX.IonSkeletonText & import("./vue-component-lib/utils").InputProps, {}>;
-export declare const IonSlide: import("vue").FunctionalComponent<JSX.IonSlide & import("./vue-component-lib/utils").InputProps, {}>;
-export declare const IonSlides: import("vue").FunctionalComponent<JSX.IonSlides & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonSpinner: import("vue").FunctionalComponent<JSX.IonSpinner & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonSplitPane: import("vue").FunctionalComponent<JSX.IonSplitPane & import("./vue-component-lib/utils").InputProps, {}>;
 export declare const IonTab: import("vue").FunctionalComponent<JSX.IonTab & import("./vue-component-lib/utils").InputProps, {}>;

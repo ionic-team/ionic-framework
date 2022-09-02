@@ -66,8 +66,6 @@ import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/compo
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
-import { defineCustomElement as defineIonSlide } from '@ionic/core/components/ion-slide.js';
-import { defineCustomElement as defineIonSlides } from '@ionic/core/components/ion-slides.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
 import { defineCustomElement as defineIonText } from '@ionic/core/components/ion-text.js';
@@ -729,32 +727,6 @@ export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption
 
 export const IonSkeletonText = /*@__PURE__*/ defineContainer<JSX.IonSkeletonText>('ion-skeleton-text', defineIonSkeletonText, [
   'animated'
-]);
-
-
-export const IonSlide = /*@__PURE__*/ defineContainer<JSX.IonSlide>('ion-slide', defineIonSlide);
-
-
-export const IonSlides = /*@__PURE__*/ defineContainer<JSX.IonSlides>('ion-slides', defineIonSlides, [
-  'options',
-  'pager',
-  'scrollbar',
-  'ionSlidesDidLoad',
-  'ionSlideTap',
-  'ionSlideDoubleTap',
-  'ionSlideWillChange',
-  'ionSlideDidChange',
-  'ionSlideNextStart',
-  'ionSlidePrevStart',
-  'ionSlideNextEnd',
-  'ionSlidePrevEnd',
-  'ionSlideTransitionStart',
-  'ionSlideTransitionEnd',
-  'ionSlideDrag',
-  'ionSlideReachStart',
-  'ionSlideReachEnd',
-  'ionSlideTouchStart',
-  'ionSlideTouchEnd'
 ]);
 
 

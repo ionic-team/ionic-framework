@@ -6,7 +6,6 @@ export {
   createGesture,
   iosTransitionAnimation,
   mdTransitionAnimation,
-  IonicSwiper,
   IonicSlides,
   getTimeGivenProgression,
 
