@@ -8,7 +8,7 @@
   --knob-border-radius: 50%;
   --knob-background: #{$range-ios-knob-background-color};
   --knob-box-shadow: #{$range-ios-knob-box-shadow};
-  --knob-size: 28px;
+  --knob-size: #{$range-ios-knob-width};
   --bar-height: #{$range-ios-bar-height};
   --bar-background: #{$range-ios-bar-background-color};
   --bar-background-active: #{ion-color(primary, base)};
