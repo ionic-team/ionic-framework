@@ -199,7 +199,7 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when a keyboard input occurred.
    */
-  @Event() ionInput!: EventEmitter<InputEvent>;
+  @Event() ionInput!: EventEmitter<InputEvent | Event>;
 
   /**
    * Emitted when the value has changed.
@@ -424,10 +424,7 @@ export class Input implements ComponentInterface {
 
     this.value = '';
 
-    this.ionInput.emit({
-      ...ev,
-      data: this.value,
-    } as InputEvent);
+    this.ionInput.emit(ev);
 
     /**
      * This is needed for clearOnEdit
