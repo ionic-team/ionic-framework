@@ -8,7 +8,7 @@ import type { AnchorInterface, ButtonInterface } from '../../utils/element-inter
 import { raf } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-import type { InputChangeEventDetail } from '../input/input-interface';
+import type { InputInputEventDetail } from '../input/input-interface';
 
 import type { CounterFormatter } from './item-interface';
 
@@ -150,7 +150,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   @Listen('ionInput')
-  handleIonInput(ev: CustomEvent<InputChangeEventDetail>) {
+  handleIonInput(ev: CustomEvent<InputInputEventDetail>) {
     if (this.counter && ev.target === this.getFirstInput()) {
       this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
     }

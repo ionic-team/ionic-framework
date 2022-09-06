@@ -6,6 +6,7 @@ import type {
   AutocompleteTypes,
   Color,
   InputChangeEventDetail,
+  InputInputEventDetail,
   StyleEventDetail,
   TextFieldTypes,
 } from '../../interface';
@@ -199,7 +200,7 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when a keyboard input occurred.
    */
-  @Event() ionInput!: EventEmitter<InputEvent | Event>;
+  @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
   /**
    * Emitted when the value has changed.
