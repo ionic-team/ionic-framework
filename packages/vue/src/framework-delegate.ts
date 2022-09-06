@@ -1,6 +1,9 @@
 import { h, Teleport, VNode } from 'vue';
+import type { FrameworkDelegate } from '@ionic/core/components';
+
 import { addTeleportedUserComponent, removeTeleportedUserComponent } from './components/IonApp';
-export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent) => {
+
+export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent): FrameworkDelegate => {
   let Component: VNode | undefined;
   const attachViewToDom = (parentElement: HTMLElement, component: any, componentProps: any = {}, classes?: string[]) => {
     /**
@@ -24,7 +27,7 @@ export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = remov
 
     addFn(Component);
 
-    return div;
+    return Promise.resolve(div);
   }
 
   const removeViewFromDom = () => {

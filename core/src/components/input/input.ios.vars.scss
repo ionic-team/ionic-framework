@@ -11,7 +11,7 @@ $input-ios-font-size:                     inherit !default;
 $input-ios-padding-top:                    $item-ios-padding-top !default;
 
 /// @prop - Margin end of the input
-$input-ios-padding-end:                    ($item-ios-padding-end / 2) !default;
+$input-ios-padding-end:                    ($item-ios-padding-end * 0.5) !default;
 
 /// @prop - Margin bottom of the input
 $input-ios-padding-bottom:                 $item-ios-padding-bottom !default;
@@ -23,25 +23,25 @@ $input-ios-padding-start:                  0 !default;
 $input-ios-by-label-margin-start:         $item-ios-padding-start !default;
 
 /// @prop - Padding top of the inset input
-$input-ios-inset-padding-top:             ($item-ios-padding-top / 2) !default;
+$input-ios-inset-padding-top:             ($item-ios-padding-top * 0.5) !default;
 
 /// @prop - Padding end of the inset input
-$input-ios-inset-padding-end:             ($item-ios-padding-end / 2) !default;
+$input-ios-inset-padding-end:             ($item-ios-padding-end * 0.5) !default;
 
 /// @prop - Padding bottom of the inset input
-$input-ios-inset-padding-bottom:          ($item-ios-padding-bottom / 2) !default;
+$input-ios-inset-padding-bottom:          ($item-ios-padding-bottom * 0.5) !default;
 
 /// @prop - Padding start of the inset input
-$input-ios-inset-padding-start:           ($item-ios-padding-start / 2) !default;
+$input-ios-inset-padding-start:           ($item-ios-padding-start * 0.5) !default;
 
 /// @prop - Margin top of the inset input
-$input-ios-inset-margin-top:              ($item-ios-padding-top / 2) !default;
+$input-ios-inset-margin-top:              ($item-ios-padding-top * 0.5) !default;
 
 /// @prop - Margin end of the inset input
 $input-ios-inset-margin-end:              $item-ios-padding-end !default;
 
 /// @prop - Margin bottom of the inset input
-$input-ios-inset-margin-bottom:           ($item-ios-padding-bottom / 2) !default;
+$input-ios-inset-margin-bottom:           ($item-ios-padding-bottom * 0.5) !default;
 
 /// @prop - Margin start of the inset input
 $input-ios-inset-margin-start:            0 !default;

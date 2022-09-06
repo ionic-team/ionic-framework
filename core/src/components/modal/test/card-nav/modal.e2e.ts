@@ -5,13 +5,13 @@ import { CardModalPage } from '../fixtures';
 
 test.describe('card modal - nav', () => {
   let cardModalPage: CardModalPage;
-  test.beforeEach(async ({ page, browserName }, testInfo) => {
-    test.skip(testInfo.project.metadata.mode !== 'ios', 'Card style modal is only available on iOS');
-    test.skip(
-      testInfo.project.metadata.rtl === true,
-      'This test only verifies that the gesture activates inside of a modal.'
+  test.beforeEach(async ({ page, skip }) => {
+    skip.mode('md');
+    skip.rtl('This test only verifies that the gesture activates inside of a modal.');
+    skip.browser(
+      (browserName: string) => browserName !== 'chromium',
+      'dragElementBy is flaky outside of Chrome browsers.'
     );
-    test.skip(browserName !== 'chromium', 'dragElementBy is flaky outside of Chrome browsers.');
 
     cardModalPage = new CardModalPage(page);
     await cardModalPage.navigate('/src/components/modal/test/card-nav?ionic:_testing=false');
@@ -27,7 +27,7 @@ test.describe('card modal - nav', () => {
     await ionNavDidChange.next();
 
     const pageOne = page.locator('page-one');
-    expect(pageOne).toHaveClass(/ion-page-hidden/);
+    await expect(pageOne).toHaveClass(/ion-page-hidden/);
 
     const content = page.locator('.page-two-content');
 

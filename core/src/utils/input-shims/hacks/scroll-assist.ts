@@ -31,7 +31,7 @@ export const enableScrollAssist = (
       jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
     }
   };
-  componentEl.addEventListener('touchstart', touchStart, true);
+  componentEl.addEventListener('touchstart', touchStart, { capture: true, passive: true });
   componentEl.addEventListener('touchend', touchEnd, true);
 
   return () => {

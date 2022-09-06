@@ -18,7 +18,7 @@ import {
   locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
-import type { E2EPage } from './playwright-declarations';
+import type { E2EPage, E2ESkip, BrowserNameOrCallback, SetIonViewportOptions } from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
@@ -29,6 +29,7 @@ type CustomTestArgs = PlaywrightTestArgs &
 
 type CustomFixtures = {
   page: E2EPage;
+  skip: E2ESkip;
 };
 
 /**
@@ -43,12 +44,12 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
 
   // Overridden Playwright methods
   page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
-  page.setContent = (html: string) => setContent(page, html);
+  page.setContent = (html: string) => setContent(page, html, testInfo);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
   page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
-  page.setIonViewport = () => setIonViewport(page);
+  page.setIonViewport = (options?: SetIonViewportOptions) => setIonViewport(page, options);
   page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
   page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);
 
@@ -62,5 +63,26 @@ export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     page = await extendPageFixture(page, testInfo);
     await use(page);
+  },
+  skip: {
+    rtl: (reason = 'The functionality that is being tested is not applicable to RTL layouts.') => {
+      const testInfo: TestInfo = base.info();
+      base.skip(testInfo.project.metadata.rtl === true, reason);
+    },
+    browser: (
+      browserNameOrFunction: BrowserNameOrCallback,
+      reason = `The functionality that is being tested is not applicable to this browser.`
+    ) => {
+      const browserName = base.info().project.use.browserName!;
+
+      if (typeof browserNameOrFunction === 'function') {
+        base.skip(browserNameOrFunction(browserName), reason);
+      } else {
+        base.skip(browserName === browserNameOrFunction, reason);
+      }
+    },
+    mode: (mode: string, reason = `The functionality that is being tested is not applicable to ${mode} mode`) => {
+      base.skip(base.info().project.metadata.mode === mode, reason);
+    },
   },
 });

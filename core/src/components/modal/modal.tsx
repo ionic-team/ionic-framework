@@ -12,12 +12,14 @@ import type {
   Gesture,
   ModalAttributes,
   ModalBreakpointChangeEventDetail,
+  ModalHandleBehavior,
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
 import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { raf } from '../../utils/helpers';
+import { raf, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
@@ -31,6 +33,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -55,6 +58,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
+  private sheetTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
   private currentBreakpoint?: number;
@@ -62,7 +66,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private backdropEl?: HTMLIonBackdropElement;
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
-  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => void;
+  private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
+  private inheritedAttributes: Attributes = {};
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -140,6 +145,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() handle?: boolean;
 
   /**
+   * The interaction behavior for the sheet modal when the handle is pressed.
+   *
+   * Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed.
+   * Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.
+   *
+   * Handle behavior is unavailable when the `handle` property is set to `false` or
+   * when the `breakpoints` property is not set (using a fullscreen or card modal).
+   */
+  @Prop() handleBehavior?: ModalHandleBehavior = 'none';
+
+  /**
    * The component to display inside of the modal.
    * @internal
    */
@@ -165,6 +181,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, a backdrop will be displayed behind the modal.
+   * This property controls whether or not the backdrop
+   * darkens the screen when the modal is presented.
+   * It does not control whether or not the backdrop
+   * is active or present in the DOM.
    */
   @Prop() showBackdrop = true;
 
@@ -216,6 +236,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
   onTriggerChange() {
     this.configureTriggerInteraction();
   }
+
+  /**
+   * If `true`, the component passed into `ion-modal` will
+   * automatically be mounted when the modal is created. The
+   * component will remain mounted even when the modal is dismissed.
+   * However, the component will be destroyed when the modal is
+   * destroyed. This property is not reactive and should only be
+   * used when initially creating a modal.
+   *
+   * Note: This feature only applies to inline modals in JavaScript
+   * frameworks such as Angular, React, and Vue.
+   */
+  @Prop() keepContentsMounted = false;
 
   /**
    * TODO (FW-937)
@@ -303,7 +336,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint, swipeToClose } = this;
+    const { breakpoints, initialBreakpoint, swipeToClose, el } = this;
+
+    this.inheritedAttributes = inheritAttributes(el, ['role']);
 
     /**
      * If user has custom ID set then we should
@@ -466,21 +501,31 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
+    /**
+     * TODO (FW-937) - In the next major release of Ionic, all card modals
+     * will be swipeable by default. canDismiss will be used to determine if the
+     * modal can be dismissed. This check should change to check the presence of
+     * presentingElement instead.
+     *
+     * If we did not do this check, then not using swipeToClose would mean you could
+     * not run canDismiss on swipe as there would be no swipe gesture created.
+     */
+    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+
+    /**
+     * We need to change the status bar at the
+     * start of the animation so that it completes
+     * by the time the card animation is done.
+     */
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      setCardStatusBarDark();
+    }
+
     await this.currentTransition;
 
     if (this.isSheetModal) {
       this.initSheetGesture();
-
-      /**
-       * TODO (FW-937) - In the next major release of Ionic, all card modals
-       * will be swipeable by default. canDismiss will be used to determine if the
-       * modal can be dismissed. This check should change to check the presence of
-       * presentingElement instead.
-       *
-       * If we did not do this check, then not using swipeToClose would mean you could
-       * not run canDismiss on swipe as there would be no swipe gesture created.
-       */
-    } else if (this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined)) {
+    } else if (hasCardModal) {
       await this.initSwipeToClose();
     }
 
@@ -631,6 +676,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
+    /**
+     * We need to start the status bar change
+     * before the animation so that the change
+     * finishes when the dismiss animation does.
+     * TODO (FW-937)
+     */
+    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      setCardStatusBarDefault();
+    }
+
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
       window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
@@ -719,11 +775,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (moveSheetToBreakpoint) {
-      moveSheetToBreakpoint({
+      this.sheetTransition = moveSheetToBreakpoint({
         breakpoint,
         breakpointOffset: 1 - currentBreakpoint!,
         canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
       });
+      await this.sheetTransition;
+      this.sheetTransition = undefined;
     }
   }
 
@@ -735,7 +793,55 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return this.currentBreakpoint;
   }
 
+  private async moveToNextBreakpoint() {
+    const { breakpoints, currentBreakpoint } = this;
+
+    if (!breakpoints || currentBreakpoint == null) {
+      /**
+       * If the modal does not have breakpoints and/or the current
+       * breakpoint is not set, we can't move to the next breakpoint.
+       */
+      return false;
+    }
+
+    const allowedBreakpoints = breakpoints.filter((b) => b !== 0);
+    const currentBreakpointIndex = allowedBreakpoints.indexOf(currentBreakpoint);
+    const nextBreakpointIndex = (currentBreakpointIndex + 1) % allowedBreakpoints.length;
+    const nextBreakpoint = allowedBreakpoints[nextBreakpointIndex];
+
+    /**
+     * Sets the current breakpoint to the next available breakpoint.
+     * If the current breakpoint is the last breakpoint, we set the current
+     * breakpoint to the first non-zero breakpoint to avoid dismissing the sheet.
+     */
+    await this.setCurrentBreakpoint(nextBreakpoint);
+    return true;
+  }
+
+  private onHandleClick = () => {
+    const { sheetTransition, handleBehavior } = this;
+    if (handleBehavior !== 'cycle' || sheetTransition !== undefined) {
+      /**
+       * The sheet modal should not advance to the next breakpoint
+       * if the handle behavior is not `cycle` or if the handle
+       * is clicked while the sheet is moving to a breakpoint.
+       */
+      return;
+    }
+    this.moveToNextBreakpoint();
+  };
+
   private onBackdropTap = () => {
+    const { sheetTransition } = this;
+    if (sheetTransition !== undefined) {
+      /**
+       * When the handle is double clicked at the largest breakpoint,
+       * it will start to move to the first breakpoint. While transitioning,
+       * the backdrop will often receive the second click. We prevent the
+       * backdrop from dismissing the modal while moving between breakpoints.
+       */
+      return;
+    }
     this.dismiss(undefined, BACKDROP);
   };
 
@@ -753,19 +859,22 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
     const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
+    const isHandleCycle = handleBehavior === 'cycle';
 
     return (
       <Host
         no-router
         aria-modal="true"
+        role="dialog"
         tabindex="-1"
         {...(htmlAttributes as any)}
+        {...inheritedAttributes}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -793,8 +902,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
-        <div role="dialog" class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
-          {showHandle && <div class="modal-handle" part="handle"></div>}
+        <div class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
+          {showHandle && (
+            <button
+              class="modal-handle"
+              // Prevents the handle from receiving keyboard focus when it does not cycle
+              tabIndex={!isHandleCycle ? -1 : 0}
+              aria-label="Activate to adjust the size of the dialog overlaying the screen"
+              onClick={isHandleCycle ? this.onHandleClick : undefined}
+              part="handle"
+            ></button>
+          )}
           <slot></slot>
         </div>
       </Host>

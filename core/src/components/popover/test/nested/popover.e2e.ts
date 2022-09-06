@@ -13,7 +13,7 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidPresent.next();
 
     const parentPopover = page.locator('.parent-popover');
-    expect(parentPopover).not.toHaveClass(/overlay-hidden/);
+    await expect(parentPopover).not.toHaveClass(/overlay-hidden/);
 
     // note: alignment="start" is needed on popovers so all buttons are on-screen in iOS mode
     // otherwise this one goes off the top of the screen and tests hang/fail
@@ -21,7 +21,7 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidPresent.next();
 
     const nestedPopover = page.locator('.child-popover-one');
-    expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
+    await expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`popover-nested-${page.getSnapshotSettings()}.png`);
@@ -41,7 +41,7 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidDismiss.next();
 
     const nestedPopover = await page.locator('.child-popover-one');
-    expect(nestedPopover).toHaveClass(/overlay-hidden/);
+    await expect(nestedPopover).toHaveClass(/overlay-hidden/);
   });
 
   test('should render multiple levels of nesting correctly', async ({ page }) => {
@@ -57,7 +57,7 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidPresent.next();
 
     const nestedPopover = page.locator('.child-popover-three');
-    expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
+    await expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
     expect(await page.screenshot()).toMatchSnapshot(`popover-nested-multiple-${page.getSnapshotSettings()}.png`);
@@ -81,10 +81,10 @@ test.describe('popover: nested', async () => {
     await ionPopoverDidDismiss.next();
 
     const nestedPopoverOne = page.locator('.child-popover-one');
-    expect(nestedPopoverOne).toHaveClass(/overlay-hidden/);
+    await expect(nestedPopoverOne).toHaveClass(/overlay-hidden/);
 
     const nestedPopoverTwo = page.locator('.child-popover-three');
-    expect(nestedPopoverTwo).toHaveClass(/overlay-hidden/);
+    await expect(nestedPopoverTwo).toHaveClass(/overlay-hidden/);
   });
 
   test('should dismiss sibling nested popover when another sibling popover is opened', async ({ page }) => {
@@ -103,7 +103,7 @@ test.describe('popover: nested', async () => {
 
     const openWithPopover = page.locator('.child-popover-one');
     const sharePopover = page.locator('.child-popover-two');
-    expect(openWithPopover).toHaveClass(/overlay-hidden/);
-    expect(sharePopover).not.toHaveClass(/overlay-hidden/);
+    await expect(openWithPopover).toHaveClass(/overlay-hidden/);
+    await expect(sharePopover).not.toHaveClass(/overlay-hidden/);
   });
 });

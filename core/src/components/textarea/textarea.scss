@@ -26,7 +26,7 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: .5;
+  --placeholder-opacity: 0.5;
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
@@ -71,22 +71,41 @@
   --padding-start: 0;
 }
 
-
 // Native Textarea
 // --------------------------------------------------
 
 .textarea-wrapper {
+  display: grid;
+
   min-width: inherit;
   max-width: inherit;
   min-height: inherit;
   max-height: inherit;
+
+  &::after {
+    // This technique is used for an auto-resizing textarea.
+    // The text contents are reflected as a pseudo-element that is visually hidden.
+    // This causes the textarea container to grow as needed to fit the contents.
+
+    white-space: pre-wrap;
+
+    content: attr(data-replicated-value) " ";
+
+    visibility: hidden;
+  }
+}
+
+.native-textarea,
+.textarea-wrapper::after {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
+
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 .native-textarea {
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include text-inherit();
 
   display: block;
 
@@ -103,6 +122,8 @@
   resize: none;
   appearance: none;
 
+  overflow: hidden;
+
   &::placeholder {
     @include padding(0);
 
@@ -117,7 +138,7 @@
 }
 
 .native-textarea[disabled] {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 // Input Cover: Unfocused
@@ -136,6 +157,15 @@
   pointer-events: none;
 }
 
+:host([auto-grow]) .cloned-input {
+  // Workaround for webkit rendering issue with scroll assist.
+  // When cloning the textarea and scrolling into view,
+  // a white box is rendered from the difference in height
+  // from the auto grow container.
+  // This change forces the cloned input to match the true
+  // height of the textarea container. 
+  height: 100%;
+}
 
 // Item Floating: Placeholder
 // ----------------------------------------------------------------

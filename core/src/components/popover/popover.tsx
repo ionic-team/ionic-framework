@@ -128,6 +128,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * If `true`, a backdrop will be displayed behind the popover.
+   * This property controls whether or not the backdrop
+   * darkens the screen when the popover is presented.
+   * It does not control whether or not the backdrop
+   * is active or present in the DOM.
    */
   @Prop() showBackdrop = true;
 
@@ -248,6 +252,19 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.dismiss();
     }
   }
+
+  /**
+   * If `true`, the component passed into `ion-popover` will
+   * automatically be mounted when the popover is created. The
+   * component will remain mounted even when the popover is dismissed.
+   * However, the component will be destroyed when the popover is
+   * destroyed. This property is not reactive and should only be
+   * used when initially creating a popover.
+   *
+   * Note: This feature only applies to inline popovers in JavaScript
+   * frameworks such as Angular, React, and Vue.
+   */
+  @Prop() keepContentsMounted = false;
 
   /**
    * Emitted after the popover has presented.

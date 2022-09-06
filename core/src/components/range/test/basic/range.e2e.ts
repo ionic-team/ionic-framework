@@ -10,7 +10,7 @@ test.describe('range: basic', () => {
     expect(await page.screenshot()).toMatchSnapshot(`range-diff-${page.getSnapshotSettings()}.png`);
   });
 
-  test('should emit start/end events', async ({ page }) => {
+  test('should emit start/end events', async ({ page }, testInfo) => {
     await page.setContent(`<ion-range value="20"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -18,7 +18,7 @@ test.describe('range: basic', () => {
 
     const rangeEl = page.locator('ion-range');
 
-    await dragElementBy(rangeEl, page, 300, 0);
+    await dragElementBy(rangeEl, page, testInfo.project.metadata.rtl ? -300 : 300, 0);
     await page.waitForChanges();
 
     /**
@@ -52,5 +52,36 @@ test.describe('range: basic', () => {
 
     expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
     expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
+  });
+
+  test('should not scroll when the knob is swiped', async ({ page, skip }) => {
+    skip.browser('webkit', 'mouse.wheel is not available in WebKit');
+    skip.rtl();
+
+    await page.goto(`/src/components/range/test/basic`);
+
+    const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
+    const scrollEl = page.locator('ion-content .inner-scroll');
+
+    expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
+
+    const box = (await knobEl.boundingBox())!;
+    const centerX = box.x + box.width / 2;
+    const centerY = box.y + box.height / 2;
+
+    await page.mouse.move(centerX, centerY);
+    await page.mouse.down();
+    await page.mouse.move(centerX + 30, centerY);
+
+    /**
+     * Do not use scrollToBottom() or other scrolling methods
+     * on ion-content as those will update the scroll position.
+     * Setting scrollTop still works even with overflow-y: hidden.
+     * However, simulating a user gesture should not scroll the content.
+     */
+    await page.mouse.wheel(0, 100);
+    await page.waitForChanges();
+
+    expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
   });
 });

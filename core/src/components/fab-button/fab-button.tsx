@@ -5,6 +5,8 @@ import { close } from 'ionicons/icons';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import { inheritAriaAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -22,6 +24,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private fab: HTMLIonFabElement | null = null;
+  private inheritedAttributes: Attributes = {};
+
   @Element() el!: HTMLElement;
 
   /**
@@ -119,6 +124,10 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  connectedCallback() {
+    this.fab = this.el.closest('ion-fab');
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   };
@@ -127,8 +136,21 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.ionBlur.emit();
   };
 
+  private onClick = () => {
+    const { fab } = this;
+    if (!fab) {
+      return;
+    }
+
+    fab.toggle();
+  };
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
+  }
+
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size } = this;
+    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
     const inList = hostContext('ion-fab-list', el);
     const mode = getIonMode(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
@@ -144,6 +166,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
     return (
       <Host
+        onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
@@ -166,6 +189,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
+          {...inheritedAttributes}
         >
           <ion-icon icon={this.closeIcon} part="close-icon" class="close-icon" lazy={false}></ion-icon>
           <span class="button-inner">

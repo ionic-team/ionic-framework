@@ -34,6 +34,10 @@
   background: current-color(base);
 }
 
+:host(.toggle-checked) .toggle-inner {
+  color: var(--ion-color-contrast, $toggle-md-on-off-label-checked-color);
+}
+
 // Material Design Toggle Background Track: Unchecked
 // ----------------------------------------------------------
 
@@ -41,14 +45,26 @@
   transition: background-color $toggle-md-transition-duration;
 }
 
-
 // Material Design Toggle Inner Knob: Unchecked
 // ----------------------------------------------------------
 
 .toggle-inner {
   will-change: background-color, transform;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: $toggle-md-on-off-label-color;
 }
 
+.toggle-inner .toggle-switch-icon {
+  @include padding(1px);
+
+  width: 100%;
+  height: 100%;
+}
 
 // Material Design Toggle: Disabled
 // ----------------------------------------------------------
@@ -68,17 +84,31 @@
 //   opacity: $toggle-md-disabled-opacity;
 // }
 
-
 // Material Design Toggle Within An Item
 // ----------------------------------------------------------
 
 :host(.in-item[slot]) {
-  @include margin($toggle-md-media-margin-top, $toggle-md-media-margin-end, $toggle-md-media-margin-bottom, $toggle-md-media-margin-start);
-  @include padding($toggle-md-item-end-padding-top, $toggle-md-item-end-padding-end, $toggle-md-item-end-padding-bottom, $toggle-md-item-end-padding-start);
+  @include margin(
+    $toggle-md-media-margin-top,
+    $toggle-md-media-margin-end,
+    $toggle-md-media-margin-bottom,
+    $toggle-md-media-margin-start
+  );
+  @include padding(
+    $toggle-md-item-end-padding-top,
+    $toggle-md-item-end-padding-end,
+    $toggle-md-item-end-padding-bottom,
+    $toggle-md-item-end-padding-start
+  );
 
   cursor: pointer;
 }
 
 :host(.in-item[slot="start"]) {
-  @include padding($toggle-md-item-start-padding-top, $toggle-md-item-start-padding-end, $toggle-md-item-start-padding-bottom, $toggle-md-item-start-padding-start);
+  @include padding(
+    $toggle-md-item-start-padding-top,
+    $toggle-md-item-start-padding-end,
+    $toggle-md-item-start-padding-bottom,
+    $toggle-md-item-start-padding-start
+  );
 }

@@ -1,5 +1,8 @@
 import type { DatetimeParts } from '../datetime-interface';
 
+import { isAfter, isBefore } from './comparison';
+import { getNumDaysInMonth } from './helpers';
+
 const ISO_8601_REGEXP =
   // eslint-disable-next-line no-useless-escape
   /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
@@ -53,7 +56,16 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * We do not use the JS Date object here because
  * it adjusts the date for the current timezone.
  */
-export const parseDate = (val: string | undefined | null): any | undefined => {
+export function parseDate(val: string): DatetimeParts;
+export function parseDate(val: string[]): DatetimeParts[];
+export function parseDate(val: undefined | null): undefined;
+export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[];
+export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
+export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
+  if (Array.isArray(val)) {
+    return val.map((valStr) => parseDate(valStr));
+  }
+
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[] | null = null;
@@ -95,14 +107,104 @@ export const parseDate = (val: string | undefined | null): any | undefined => {
     }
   }
 
+  // can also get second and millisecond from parse[6] and parse[7] if needed
   return {
     year: parse[1],
     month: parse[2],
     day: parse[3],
     hour: parse[4],
     minute: parse[5],
-    second: parse[6],
-    millisecond: parse[7],
     tzOffset,
+  };
+}
+
+export const clampDate = (
+  dateParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
+  if (minParts && isBefore(dateParts, minParts)) {
+    return minParts;
+  } else if (maxParts && isAfter(dateParts, maxParts)) {
+    return maxParts;
+  }
+  return dateParts;
+};
+
+/**
+ * Parses an hour and returns if the value is in the morning (am) or afternoon (pm).
+ * @param hour The hour to format, should be 0-23
+ * @returns `pm` if the hour is greater than or equal to 12, `am` if less than 12.
+ */
+export const parseAmPm = (hour: number) => {
+  return hour >= 12 ? 'pm' : 'am';
+};
+
+/**
+ * Takes a max date string and creates a DatetimeParts
+ * object, filling in any missing information.
+ * For example, max="2012" would fill in the missing
+ * month, day, hour, and minute information.
+ */
+export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year, hour, minute } = parseDate(max);
+
+  /**
+   * When passing in `max` or `min`, developers
+   * can pass in any ISO-8601 string. This means
+   * that not all of the date/time fields are defined.
+   * For example, passing max="2012" is valid even though
+   * there is no month, day, hour, or minute data.
+   * However, all of this data is required when clamping the date
+   * so that the correct initial value can be selected. As a result,
+   * we need to fill in any omitted data with the min or max values.
+   */
+
+  const yearValue = year ?? todayParts.year;
+  const monthValue = month ?? 12;
+  return {
+    month: monthValue,
+    day: day ?? getNumDaysInMonth(monthValue, yearValue),
+    /**
+     * Passing in "HH:mm" is a valid ISO-8601
+     * string, so we just default to the current year
+     * in this case.
+     */
+    year: yearValue,
+    hour: hour ?? 23,
+    minute: minute ?? 59,
+  };
+};
+
+/**
+ * Takes a min date string and creates a DatetimeParts
+ * object, filling in any missing information.
+ * For example, min="2012" would fill in the missing
+ * month, day, hour, and minute information.
+ */
+export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year, hour, minute } = parseDate(min);
+
+  /**
+   * When passing in `max` or `min`, developers
+   * can pass in any ISO-8601 string. This means
+   * that not all of the date/time fields are defined.
+   * For example, passing max="2012" is valid even though
+   * there is no month, day, hour, or minute data.
+   * However, all of this data is required when clamping the date
+   * so that the correct initial value can be selected. As a result,
+   * we need to fill in any omitted data with the min or max values.
+   */
+  return {
+    month: month ?? 1,
+    day: day ?? 1,
+    /**
+     * Passing in "HH:mm" is a valid ISO-8601
+     * string, so we just default to the current year
+     * in this case.
+     */
+    year: year ?? todayParts.year,
+    hour: hour ?? 0,
+    minute: minute ?? 0,
   };
 };

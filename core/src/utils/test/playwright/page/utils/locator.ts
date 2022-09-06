@@ -21,7 +21,7 @@ export interface E2ELocator extends Locator {
    * ...
    * await ionChange.next();
    */
-  spyOnEvent: (eventName: string) => void;
+  spyOnEvent: (eventName: string) => Promise<EventSpy>;
 }
 
 export const locator = (

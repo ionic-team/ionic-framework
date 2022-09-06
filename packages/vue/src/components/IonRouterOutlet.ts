@@ -88,19 +88,20 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
        * all of the keys in the params object, we check the url path to
        * see if they are different after ensuring we are in a parameterized route.
        */
-      if (currentMatchedRouteRef === undefined) { return; }
+      if (currentMatchedRouteRef !== undefined) {
+        const matchedDifferentRoutes = currentMatchedRouteRef !== previousMatchedRouteRef;
+        const matchedDifferentParameterRoutes = (
+          currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef &&
+          currentRoute.path !== previousMatchedPath
+        );
 
-      const matchedDifferentRoutes = currentMatchedRouteRef !== previousMatchedRouteRef;
-      const matchedDifferentParameterRoutes = (
-        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef &&
-        currentRoute.path !== previousMatchedPath
-      );
-
-      if (matchedDifferentRoutes || matchedDifferentParameterRoutes) {
-        setupViewItem(matchedRouteRef);
-        previousMatchedRouteRef = currentMatchedRouteRef;
-        previousMatchedPath = currentRoute.path;
+        if (matchedDifferentRoutes || matchedDifferentParameterRoutes) {
+          setupViewItem(matchedRouteRef);
+        }
       }
+
+      previousMatchedRouteRef = currentMatchedRouteRef;
+      previousMatchedPath = currentRoute.path;
     });
 
     const canStart = () => {
@@ -216,9 +217,18 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
           requestAnimationFrame(async () => {
             enteringEl.classList.add('ion-page-invisible');
 
+            const hasRootDirection = direction === undefined || direction === 'root' || direction === 'none';
             const result = await ionRouterOutlet.value.commit(enteringEl, leavingEl, {
               deepWait: true,
-              duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
+              /**
+               * replace operations result in a direction of none.
+               * These typically do not have need animations, so we set
+               * the duration to 0. However, if a developer explicitly
+               * passes an animationBuilder, we should assume that
+               * they want an animation to be played even
+               * though it is a replace operation.
+               */
+              duration: hasRootDirection && animationBuilder === undefined ? 0 : undefined,
               direction,
               showGoBack,
               progressAnimation,
@@ -274,13 +284,13 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * return early for swipe to go back when
        * going from a non-tabs page to a tabs page.
        */
-      if (isViewVisible(enteringEl) && leavingViewItem !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
+      if (isViewVisible(enteringEl) && leavingViewItem?.ionPageElement !== undefined && !isViewVisible(leavingViewItem.ionPageElement)) {
         return;
       }
 
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
-      if (leavingViewItem && enteringViewItem !== leavingViewItem) {
+      if (leavingViewItem?.ionPageElement && enteringViewItem !== leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
@@ -427,6 +437,11 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
        * as a result of a navigation change.
        */
       if (viewItem.registerCallback) {
+        /**
+         * Page should be hidden initially
+         * to avoid flickering.
+         */
+        ionPageEl.classList.add('ion-page-invisible');
         viewItem.registerCallback();
 
       /**
@@ -461,7 +476,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         let props = {
           ref: c.vueComponentRef,
           key: c.pathname,
-          isInOutlet: true,
           registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
         }
 

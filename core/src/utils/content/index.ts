@@ -101,3 +101,37 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
 export const printIonContentErrorMsg = (el: HTMLElement) => {
   return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR);
 };
+
+/**
+ * Several components in Ionic need to prevent scrolling
+ * during a gesture (card modal, range, item sliding, etc).
+ * Use this utility to account for ion-content and custom content hosts.
+ */
+export const disableContentScrollY = (contentEl: HTMLElement): boolean => {
+  if (isIonContent(contentEl)) {
+    const ionContent = contentEl as HTMLIonContentElement;
+    const initialScrollY = ionContent.scrollY;
+    ionContent.scrollY = false;
+
+    /**
+     * This should be passed into resetContentScrollY
+     * so that we can revert ion-content's scrollY to the
+     * correct state. For example, if scrollY = false
+     * initially, we do not want to enable scrolling
+     * when we call resetContentScrollY.
+     */
+    return initialScrollY;
+  } else {
+    contentEl.style.setProperty('overflow', 'hidden');
+
+    return true;
+  }
+};
+
+export const resetContentScrollY = (contentEl: HTMLElement, initialScrollY: boolean) => {
+  if (isIonContent(contentEl)) {
+    (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
+  } else {
+    contentEl.style.removeProperty('overflow');
+  }
+};

@@ -23,8 +23,7 @@ export abstract class ViewStacks {
 
   clear(outletId: string) {
     // Give some time for the leaving views to transition before removing
-    setTimeout(() => {
-      // console.log('Removing viewstack for outletID ' + outletId);
+    return setTimeout(() => {
       delete this.viewStacks[outletId];
     }, 500);
   }
@@ -65,7 +64,7 @@ export abstract class ViewStacks {
     page?: HTMLElement
   ): ViewItem;
   abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
-  abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
+  abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean): ViewItem | undefined;
   abstract findLeavingViewItemByRouteInfo(
     routeInfo: RouteInfo,
     outletId?: string

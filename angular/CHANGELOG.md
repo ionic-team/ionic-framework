@@ -3,6 +3,141 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* **angular:** router outlet has mode property ([#25816](https://github.com/ionic-team/ionic/issues/25816)) ([afd0bbc](https://github.com/ionic-team/ionic/commit/afd0bbc60aa8f4edc88dc311d6484ac60117fce5)), closes [#25813](https://github.com/ionic-team/ionic/issues/25813)
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **angular:** DatetimeButton is declared on IonicModule ([#25727](https://github.com/ionic-team/ionic/issues/25727)) ([76ad1d1](https://github.com/ionic-team/ionic/commit/76ad1d18c81272435db1994977aa9dd5d880504a))
+
+
+
+
+
+## [6.2.1](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1) (2022-08-03)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [6.2.0](https://github.com/ionic-team/ionic/compare/v6.1.15...v6.2.0) (2022-07-27)
+
+
+### Features
+
+* **angular, react, vue:** add support for autoMountComponent ([#25552](https://github.com/ionic-team/ionic/issues/25552)) ([805dfa0](https://github.com/ionic-team/ionic/commit/805dfa05663098ef9c02b0745a383b5e7555908b))
+* **datetime-button:** add button for displaying datetime in overlays ([#25655](https://github.com/ionic-team/ionic/issues/25655)) ([4997331](https://github.com/ionic-team/ionic/commit/499733105e4be23405e8afeeb26fee5cd2afc25b)), closes [#24316](https://github.com/ionic-team/ionic/issues/24316)
+* **datetime:** add multiple date selection ([#25514](https://github.com/ionic-team/ionic/issues/25514)) ([9d31608](https://github.com/ionic-team/ionic/commit/9d31608f2d471f531eb253832c8558d1effaf68a))
+* **datetime:** add wheel style picker for dates and times ([#25468](https://github.com/ionic-team/ionic/issues/25468)) ([3d19771](https://github.com/ionic-team/ionic/commit/3d19771185301870a2eb60f1ef4afd6f1c182494))
+* **modal:** clicking handle advances to the next breakpoint ([#25540](https://github.com/ionic-team/ionic/issues/25540)) ([7cdc388](https://github.com/ionic-team/ionic/commit/7cdc388b7805cbf23c9e1e928aa977cd77ebc8c4)), closes [#24069](https://github.com/ionic-team/ionic/issues/24069)
+* **range:** add reference point for start position of range slider ([#25598](https://github.com/ionic-team/ionic/issues/25598)) ([c2781cc](https://github.com/ionic-team/ionic/commit/c2781cc1c3b7e56a0e6f6c03cfa04fc2c82d6e8a)), closes [#24348](https://github.com/ionic-team/ionic/issues/24348)
+
+
+
+
+
+## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.14](https://github.com/ionic-team/ionic/compare/v6.1.13...v6.1.14) (2022-07-13)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.13](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13) (2022-07-06)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.12](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+
+### Bug Fixes
+
+* **angular:** warn devs that standalone components are not supported ([#25516](https://github.com/ionic-team/ionic/issues/25516)) ([c53785c](https://github.com/ionic-team/ionic/commit/c53785c0c786113f3516c09fa512687ecb84c717))
+
+
+
+
+
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+
+### Bug Fixes
+
+* **angular:** router compatibility with Angular 12/13 ([#25456](https://github.com/ionic-team/ionic/issues/25456)) ([7b105a3](https://github.com/ionic-team/ionic/commit/7b105a3471e5bc588ba63f820b707e131c878b6f)), closes [#25448](https://github.com/ionic-team/ionic/issues/25448)
+
+
+
+
+
+## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
+
+
+### Bug Fixes
+
+* **angular:** add support for Angular 14 ([#25403](https://github.com/ionic-team/ionic/issues/25403)) ([122cdcc](https://github.com/ionic-team/ionic/commit/122cdcc8253e46d9537105b11045fd7d9ccd8917)), closes [#25353](https://github.com/ionic-team/ionic/issues/25353)
+
+
+
+
+
+## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [6.1.7](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7) (2022-05-26)
 
 

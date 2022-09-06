@@ -1,7 +1,7 @@
 import { VNode, defineComponent, getCurrentInstance, h, inject, ref, Ref } from 'vue';
 
-export interface InputProps extends Object {
-  modelValue: string | boolean;
+export interface InputProps<T> {
+  modelValue?: T;
 }
 
 const UPDATE_VALUE_EVENT = 'update:modelValue';
@@ -49,7 +49,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * @prop externalModelUpdateEvent - The external event to fire from your Vue component when modelUpdateEvent fires. This is used for ensuring that v-model references have been
 * correctly updated when a user's event callback fires.
 */
-export const defineContainer = <Props>(
+export const defineContainer = <Props, VModelType=string|number|boolean>(
   name: string,
   defineCustomElement: any,
   componentProps: string[] = [],
@@ -67,7 +67,7 @@ export const defineContainer = <Props>(
     defineCustomElement();
   }
 
-  const Container = defineComponent<Props & InputProps>((props: any, { attrs, slots, emit }) => {
+  const Container = defineComponent<Props & InputProps<VModelType>>((props: any, { attrs, slots, emit }) => {
     let modelPropValue = props[modelProp];
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
@@ -76,7 +76,7 @@ export const defineContainer = <Props>(
       if (vnode.el) {
         const eventsNames = Array.isArray(modelUpdateEvent) ? modelUpdateEvent : [modelUpdateEvent];
         eventsNames.forEach((eventName: string) => {
-          vnode.el.addEventListener(eventName.toLowerCase(), (e: Event) => {
+          vnode.el!.addEventListener(eventName.toLowerCase(), (e: Event) => {
             modelPropValue = (e?.target as any)[modelProp];
             emit(UPDATE_VALUE_EVENT, modelPropValue);
 

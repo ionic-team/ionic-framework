@@ -4,8 +4,8 @@
  *
  * @param message - The string message to be logged to the console.
  */
-export const printIonWarning = (message: string) => {
-  return console.warn(`[Ionic Warning]: ${message}`);
+export const printIonWarning = (message: string, ...params: any[]) => {
+  return console.warn(`[Ionic Warning]: ${message}`, ...params);
 };
 
 /*

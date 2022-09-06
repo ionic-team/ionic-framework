@@ -27,6 +27,83 @@ test.describe('datetime: presentation', () => {
       );
     }
   });
+
+  test('presentation: time: should emit ionChange', async ({ page }) => {
+    await page.goto(`/src/components/datetime/test/presentation`);
+
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
+    await page.locator('select').selectOption('time');
+    await page.waitForChanges();
+
+    await page.locator('text=AM').click();
+
+    await ionChangeSpy.next();
+
+    expect(ionChangeSpy.length).toBe(1);
+  });
+
+  test('presentation: month-year: should emit ionChange', async ({ page }) => {
+    await page.goto(`/src/components/datetime/test/presentation`);
+
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
+    await page.locator('select').selectOption('month-year');
+    await page.waitForChanges();
+
+    await page.locator('text=April').click();
+
+    await ionChangeSpy.next();
+
+    expect(ionChangeSpy.length).toBe(1);
+  });
+
+  test('presentation: month: should emit ionChange', async ({ page }) => {
+    await page.goto(`/src/components/datetime/test/presentation`);
+
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
+    await page.locator('select').selectOption('month');
+    await page.waitForChanges();
+
+    await page.locator('text=April').click();
+
+    await ionChangeSpy.next();
+
+    expect(ionChangeSpy.length).toBe(1);
+  });
+
+  test('presentation: year: should emit ionChange', async ({ page }) => {
+    await page.goto(`/src/components/datetime/test/presentation`);
+
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
+    await page.locator('select').selectOption('year');
+    await page.waitForChanges();
+
+    await page.locator('text=2021').click();
+
+    await ionChangeSpy.next();
+
+    expect(ionChangeSpy.length).toBe(1);
+  });
+
+  test('switching presentation should close month/year picker', async ({ page, skip }) => {
+    await skip.rtl();
+
+    await page.setContent(`
+      <ion-datetime presentation="date"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const datetime = page.locator('ion-datetime');
+    const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+    await monthYearButton.click();
+
+    await expect(datetime).toHaveClass(/show-month-and-year/);
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.presentation = 'time'));
+    await page.waitForChanges();
+
+    await expect(datetime).not.toHaveClass(/show-month-and-year/);
+  });
 });
 
 test.describe('datetime: presentation: time', () => {
