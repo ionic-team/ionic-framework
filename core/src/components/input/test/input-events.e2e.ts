@@ -34,7 +34,7 @@ test.describe('input: events: ionChange', () => {
 
     await ionChangeSpy.next();
 
-    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
+    expect(ionChangeSpy).toHaveReceivedEventDetail('new value');
   });
 
   test('should emit ionInput when the user clears the input', async ({ page }) => {
@@ -44,7 +44,7 @@ test.describe('input: events: ionChange', () => {
 
     await page.click('ion-input .input-clear-icon');
 
-    expect(ionInputSpy).toHaveReceivedEventDetail({ data: '', isTrusted: true });
+    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
   });
 
   test('should emit ionChange when the user clears the input and blurs the input', async ({ page }) => {
@@ -59,6 +59,6 @@ test.describe('input: events: ionChange', () => {
 
     await ionChangeSpy.next();
 
-    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '' });
+    expect(ionChangeSpy).toHaveReceivedEventDetail('');
   });
 });

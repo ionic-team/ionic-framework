@@ -1,6 +1,4 @@
-export interface InputChangeEventDetail {
-  value: string | undefined | null;
-}
+export type InputChangeEventDetail = string | undefined | null;
 
 // We recognize that InputInput is not an ideal naming pattern for this type.
 // TODO: Explore renaming this type to something more appropriate.
