@@ -147,6 +147,13 @@
   appearance: none;
 }
 
+/**
+ * Normally, we would not want to use :focus
+ * here because that would mean tapping the button
+ * on mobile would focus it (and keep it focused).
+ * However, the clear button always disappears after
+ * being activated, so we never get to that state.
+ */
 .input-clear-icon:focus {
   opacity: 0.5;
 }

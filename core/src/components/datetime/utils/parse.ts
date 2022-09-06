@@ -1,6 +1,7 @@
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore } from './comparison';
+import { getNumDaysInMonth } from './helpers';
 
 const ISO_8601_REGEXP =
   // eslint-disable-next-line no-useless-escape
@@ -137,4 +138,73 @@ export const clampDate = (
  */
 export const parseAmPm = (hour: number) => {
   return hour >= 12 ? 'pm' : 'am';
+};
+
+/**
+ * Takes a max date string and creates a DatetimeParts
+ * object, filling in any missing information.
+ * For example, max="2012" would fill in the missing
+ * month, day, hour, and minute information.
+ */
+export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year, hour, minute } = parseDate(max);
+
+  /**
+   * When passing in `max` or `min`, developers
+   * can pass in any ISO-8601 string. This means
+   * that not all of the date/time fields are defined.
+   * For example, passing max="2012" is valid even though
+   * there is no month, day, hour, or minute data.
+   * However, all of this data is required when clamping the date
+   * so that the correct initial value can be selected. As a result,
+   * we need to fill in any omitted data with the min or max values.
+   */
+
+  const yearValue = year ?? todayParts.year;
+  const monthValue = month ?? 12;
+  return {
+    month: monthValue,
+    day: day ?? getNumDaysInMonth(monthValue, yearValue),
+    /**
+     * Passing in "HH:mm" is a valid ISO-8601
+     * string, so we just default to the current year
+     * in this case.
+     */
+    year: yearValue,
+    hour: hour ?? 23,
+    minute: minute ?? 59,
+  };
+};
+
+/**
+ * Takes a min date string and creates a DatetimeParts
+ * object, filling in any missing information.
+ * For example, min="2012" would fill in the missing
+ * month, day, hour, and minute information.
+ */
+export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year, hour, minute } = parseDate(min);
+
+  /**
+   * When passing in `max` or `min`, developers
+   * can pass in any ISO-8601 string. This means
+   * that not all of the date/time fields are defined.
+   * For example, passing max="2012" is valid even though
+   * there is no month, day, hour, or minute data.
+   * However, all of this data is required when clamping the date
+   * so that the correct initial value can be selected. As a result,
+   * we need to fill in any omitted data with the min or max values.
+   */
+  return {
+    month: month ?? 1,
+    day: day ?? 1,
+    /**
+     * Passing in "HH:mm" is a valid ISO-8601
+     * string, so we just default to the current year
+     * in this case.
+     */
+    year: year ?? todayParts.year,
+    hour: hour ?? 0,
+    minute: minute ?? 0,
+  };
 };

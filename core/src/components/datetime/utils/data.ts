@@ -3,7 +3,14 @@ import type { PickerColumnItem } from '../../picker-column-internal/picker-colum
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { getLocalizedDayPeriod, removeDateTzOffset, getFormattedHour, addTimePadding, getTodayLabel } from './format';
+import {
+  getLocalizedDayPeriod,
+  removeDateTzOffset,
+  getFormattedHour,
+  addTimePadding,
+  getTodayLabel,
+  getYear,
+} from './format';
 import { getNumDaysInMonth, is24Hour } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
@@ -378,6 +385,7 @@ export const getDayColumnData = (
 };
 
 export const getYearColumnData = (
+  locale: string,
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
@@ -403,7 +411,7 @@ export const getYearColumnData = (
   }
 
   return processedYears.map((year) => ({
-    text: `${year}`,
+    text: getYear(locale, { year, month: refParts.month, day: refParts.day }),
     value: year,
   }));
 };
