@@ -74,4 +74,7 @@ angular/css/
 angular/test/build/
 .angular/
 
+# vue
+packages/vue/test/build/
+
 .npmrc
