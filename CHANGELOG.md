@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.6-nightly.20220906](https://github.com/ionic-team/ionic-framework/compare/v6.2.5...v6.2.6-nightly.20220906) (2022-09-06)
+
+
+### Bug Fixes
+
+* **datetime:** calendar day and years are now localized ([#25847](https://github.com/ionic-team/ionic-framework/issues/25847)) ([cbd1268](https://github.com/ionic-team/ionic-framework/commit/cbd1268a03204f05314f2ba284ad433457a9cf33)), closes [#25843](https://github.com/ionic-team/ionic-framework/issues/25843)
+* **datetime:** month grid no longer loops on ios ([#25857](https://github.com/ionic-team/ionic-framework/issues/25857)) ([c938054](https://github.com/ionic-team/ionic-framework/commit/c938054605dffb6c3002a64a3d8aaf36892c7a93)), closes [#25752](https://github.com/ionic-team/ionic-framework/issues/25752)
+
+
+
+
+
 ## [6.2.5](https://github.com/ionic-team/ionic-framework/compare/v6.2.4...v6.2.5) (2022-08-31)
 
 
