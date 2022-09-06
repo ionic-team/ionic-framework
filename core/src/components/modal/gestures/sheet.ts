@@ -228,56 +228,6 @@ export const createSheetGesture = (
     animation.progressStep(offset);
   };
 
-  /**
-   * Get the next/previous breakpoint based
-   * on how a user is swiping (up or down).
-   */
-  const getNextBreakpoint = (currentBreakpoint: number, velocity: number) => {
-    const currentBreakpointIndex = breakpoints.findIndex(b => b === currentBreakpoint);
-
-    // User is swiping up
-    if (velocity < 0) {
-      return breakpoints[currentBreakpointIndex + 1] ?? currentBreakpoint;
-
-    // User is swiping down
-    } else if (velocity > 0) {
-      return breakpoints[currentBreakpointIndex - 1] ?? currentBreakpoint;
-    }
-
-    // User is somehow not swiping. How did you even do that?
-    return currentBreakpoint;
-  }
-
-  const findMinimumStartingBreakpoint = (step: number, velocity: number) => {
-    // STUB
-    /**
-     * In here we need to find the closest breakpoint without going
-     * over to the next breakpoint. This is used as the
-     * basis to find the next breakpoint to snap to and allows
-     * users to explicitly swipe from 1, over 0.5, to 0.
-     * Example 1:
-     * breakpoints = [0, 0.5, 1]
-     * currentBreakpoint = 1
-     * step = 0.67
-     * This should return 1 because we want to find
-     * the closest step that we have already passed.
-     * As we have not passed 0.5, we should not use that.
-     *
-     * Example 2:
-     * breakpoints = [0, 0.25, 0.5, 1]
-     * currentBreakpoint = 0.25
-     * step = 0.45
-     * This should return 0.25.
-     * Tests to add:
-     * Explicitly swiping from 1, over 0.5 to 0 should dismiss the sheet
-     * Quickly swiping from 1 down should snap to 0.5 and should never snap to 0.
-     * Explicitly swiping up from 0.25 over 0.5 should allow you to snap to 1.
-     * Quickly swiping up from 0.25 should snap to 0.5 and never to 1.
-     * Quickly swiping from 1 down should snap to 0 (given breakpoints [0, 1])
-     */
-    return step;
-  }
-
   const onEnd = (detail: GestureDetail) => {
     /**
      * When the gesture releases, we need to determine
@@ -286,36 +236,8 @@ export const createSheetGesture = (
     const velocity = detail.velocityY;
     const threshold = (detail.deltaY + velocity * 1000) / height;
 
-    /**
-     * FIXME: This has a bug where you cannot swipe
-     * from 1 all the way to 0 by dragging. To fix this
-     * we need to get the nearest breakpoint relative to the
-     * delay and use that as the current breakpoint, not the
-     * currentBreakpoint (which should really be "startingBreakpoint").
-     * Example:
-     * breakpoints = [0, 0.5, 1]
-     * currentBreakpoint = 1
-     * currentBreakpoint - threshold = 0.1
-     * Because currentBreakpoint is 1, then
-     * the "next" breakpoint is going to be 0.5.
-     * As a result, you will never be able to swipe
-     * to 0.1 even though you explicitly swiped over 0.5;
-     */
-     const step = currentBreakpoint - (detail.deltaY) / height;
-     const minimumPassedBreakpoint = findMinimumStartingBreakpoint(step, velocity);
-
-    /**
-     * When quickly swiping, users should not be
-     * able to swipe over a breakpoint.
-     * Example:
-     * If you have breakpoints [0, 0.5, 1], users
-     * should never be able to swipe from 1 directly
-     * to 0 (dismissing).
-     */
-    const nextBreakpoint = getNextBreakpoint(minimumPassedBreakpoint, velocity);
-    const diff = Math.max(nextBreakpoint, minimumPassedBreakpoint - threshold);
-
-    const closest = [minimumPassedBreakpoint, nextBreakpoint].reduce((a, b) => {
+    const diff = currentBreakpoint - threshold;
+    const closest = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
