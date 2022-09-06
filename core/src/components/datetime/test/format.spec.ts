@@ -155,4 +155,17 @@ describe('getLocalizedTime', () => {
 
     expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
   });
+
+  it('should avoid Chromium bug when using 12 hour time in a 24 hour locale', () => {
+    const datetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 0,
+      minute: 0,
+      tzOffset: 0,
+    };
+
+    expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am');
+  });
 });
