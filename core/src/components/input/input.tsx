@@ -32,10 +32,16 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   /**
-   * The last emitted ionChange event value.
-   * This value is updated when the input emits an ionChange event.
+   * If `true`, the user cleared the input by pressing the clear icon,
+   * within the session of the input being focused.
+   *
+   * This property is reset to `false` when the input is blurred.
    */
-  private previousValue?: string | null | undefined;
+  private inputCleared = false;
+  /**
+   * The value of the input when the input is focused.
+   */
+  private focusedValue: string | number | null | undefined;
 
   @State() hasFocus = false;
 
@@ -198,12 +204,27 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * Emitted when a keyboard input occurred.
+   * The `ionInput` event fires when the `value` of an `<ion-input>` element
+   * has been changed.
+   *
+   * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+   * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event).
    */
   @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
   /**
-   * Emitted when the value has changed.
+   * The `ionChange` event is fired for `<ion-input>` elements when the user
+   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+   * event is not necessarily fired for each alteration to an element's value.
+   *
+   * Depending on the way the users interacts with the element, the `ionChange`
+   * event fires at a different moment:
+   * - When the user commits the change explicitly (e.g. by selecting a date
+   * from a date picker for `<ion-input type="date">`, etc.).
+   * - When the element loses focus after its value has changed: for elements
+   * where the user's interaction is typing.
+   *
    */
   @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
@@ -325,7 +346,6 @@ export class Input implements ComponentInterface {
     const { value } = this;
     const newValue = value == null ? value : value.toString();
     this.ionChange.emit(newValue);
-    this.previousValue = newValue;
   }
 
   private shouldClearOnEdit() {
@@ -365,14 +385,16 @@ export class Input implements ComponentInterface {
     this.focusChanged();
     this.emitStyle();
 
-    if (this.value != null && this.previousValue !== this.value) {
-      /**
-       * Emits the `ionChange` event when the input loses focus,
-       * only if the input has a value and it does not match the
-       * last emitted value. This occurs when the user performs
-       * a clear action, and then blurs the input.
-       */
-      this.emitValueChange();
+    if (this.inputCleared) {
+      if (this.focusedValue !== this.value) {
+        /**
+         * Emits the `ionChange` event when the input value
+         * is different than the value when the input was focused.
+         */
+        this.emitValueChange();
+      }
+      this.focusedValue = undefined;
+      this.inputCleared = false;
     }
 
     this.ionBlur.emit(ev);
@@ -380,6 +402,7 @@ export class Input implements ComponentInterface {
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
+    this.focusedValue = this.value;
     this.focusChanged();
     this.emitStyle();
 
@@ -418,6 +441,7 @@ export class Input implements ComponentInterface {
     }
 
     this.value = '';
+    this.inputCleared = true;
 
     this.ionInput.emit(ev);
 

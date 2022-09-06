@@ -2,63 +2,73 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: events: ionChange', () => {
-  test('should not emit ionChange when the value is updated dynamically', async ({ page }) => {
-    await page.setContent(`<ion-input></ion-input>`);
+  test.describe('when the input is blurred', () => {
+    test.describe('should emit', () => {
+      test('if the value has changed', async ({ page }) => {
+        await page.setContent(`<ion-input></ion-input>`);
 
-    const input = page.locator('ion-input');
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
+        const nativeInput = page.locator('ion-input input');
+        const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-    await input.evaluate((el: HTMLIonInputElement) => {
-      el.value = 'new value';
+        await nativeInput.type('new value', { delay: 100 });
+        // Value change is not emitted until the control is blurred.
+        await nativeInput.evaluate((e) => e.blur());
+
+        await ionChangeSpy.next();
+
+        expect(ionChangeSpy).toHaveReceivedEventDetail('new value');
+      });
     });
 
-    expect(ionChangeSpy.events.length).toBe(0);
+    test.describe('should not emit', () => {
+      test('if the value has not changed', async ({ page }) => {
+        await page.setContent(`<ion-input value="" clear-input="true"></ion-input>`);
 
-    // Update the value again to make sure it doesn't emit a second time
-    await input.evaluate((el: HTMLIonInputElement) => {
-      el.value = 'new value 2';
+        const ionChangeSpy = await page.spyOnEvent('ionChange');
+        const nativeInput = page.locator('ion-input input');
+
+        await nativeInput.type('new value', { delay: 100 });
+
+        await page.click('ion-input .input-clear-icon');
+
+        await nativeInput.evaluate((e) => e.blur());
+
+        expect(ionChangeSpy.events.length).toBe(0);
+      });
+
+      test('if the value is set programmatically', async ({ page }) => {
+        await page.setContent(`<ion-input></ion-input>`);
+
+        const input = page.locator('ion-input');
+        const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+        await input.evaluate((el: HTMLIonInputElement) => {
+          el.value = 'new value';
+        });
+
+        expect(ionChangeSpy.events.length).toBe(0);
+
+        // Update the value again to make sure it doesn't emit a second time
+        await input.evaluate((el: HTMLIonInputElement) => {
+          el.value = 'new value 2';
+        });
+
+        expect(ionChangeSpy.events.length).toBe(0);
+      });
     });
-
-    expect(ionChangeSpy.events.length).toBe(0);
   });
+});
 
-  test('should emit ionChange when the user types', async ({ page }) => {
-    await page.setContent(`<ion-input></ion-input>`);
+test.describe('input: events: ionInput', () => {
+  test.describe('should emit', () => {
+    test('when the input is cleared', async ({ page }) => {
+      await page.setContent(`<ion-input value="some value" clear-input="true"></ion-input>`);
 
-    const nativeInput = page.locator('ion-input input');
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
+      const ionInputSpy = await page.spyOnEvent('ionInput');
 
-    await nativeInput.type('new value', { delay: 100 });
-    // Value change is not emitted until the control is blurred.
-    await nativeInput.evaluate((e) => e.blur());
+      await page.click('ion-input .input-clear-icon');
 
-    await ionChangeSpy.next();
-
-    expect(ionChangeSpy).toHaveReceivedEventDetail('new value');
-  });
-
-  test('should emit ionInput when the user clears the input', async ({ page }) => {
-    await page.setContent(`<ion-input value="some value" clear-input="true"></ion-input>`);
-
-    const ionInputSpy = await page.spyOnEvent('ionInput');
-
-    await page.click('ion-input .input-clear-icon');
-
-    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
-  });
-
-  test('should emit ionChange when the user clears the input and blurs the input', async ({ page }) => {
-    await page.setContent(`<ion-input value="some value" clear-input="true"></ion-input>`);
-
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
-    const nativeInput = page.locator('ion-input input');
-
-    await page.click('ion-input .input-clear-icon');
-
-    await nativeInput.evaluate((e) => e.blur());
-
-    await ionChangeSpy.next();
-
-    expect(ionChangeSpy).toHaveReceivedEventDetail('');
+      expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
+    });
   });
 });
