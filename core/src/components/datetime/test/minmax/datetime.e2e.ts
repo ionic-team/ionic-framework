@@ -141,4 +141,51 @@ test.describe('datetime: minmax', () => {
       await testDisplayedMonth(page, `<ion-datetime max="2012-06-01"></ion-datetime>`, 'June 2012');
     });
   });
+
+  // TODO(FW-2165)
+  test('should not loop infinitely in webkit', async ({ page, skip }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25752',
+    });
+
+    skip.browser('chromium');
+    skip.browser('firefox');
+
+    await page.setContent(`
+      <button id="bind">Bind datetimeMonthDidChange event</button>
+      <ion-datetime min="2022-04-15" value="2022-04-20" presentation="date" locale="en-US"></ion-datetime>
+
+      <script type="module">
+        import { InitMonthDidChangeEvent } from '/src/components/datetime/test/utils/month-did-change-event.js';
+        document.querySelector('#bind').addEventListener('click', function() {
+          InitMonthDidChangeEvent();
+        });
+      </script>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
+    const eventButton = page.locator('button#bind');
+    await eventButton.click();
+
+    const buttons = page.locator('ion-datetime .calendar-next-prev ion-button');
+    await buttons.nth(1).click();
+    await page.waitForChanges();
+
+    await datetimeMonthDidChange.next();
+
+    /**
+     * This is hacky, but its purpose is to make sure
+     * we are not triggering a WebKit bug. When the fix
+     * for the bug ships in WebKit, this will be removed.
+     */
+    await page.evaluate(() => {
+      return new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      });
+    });
+
+    await expect(datetimeMonthDidChange).toHaveReceivedEventTimes(1);
+  });
 });
