@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.6-nightly.20220907](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6-nightly.20220907) (2022-09-07)
+
+
+### Bug Fixes
+
+* **vue:** custom animation plays when replacing ([#25863](https://github.com/ionic-team/ionic/issues/25863)) ([2d3661a](https://github.com/ionic-team/ionic/commit/2d3661ae3894b98ac4b8b158594b8de0f0823073)), closes [#25831](https://github.com/ionic-team/ionic/issues/25831)
+
+
+
+
+
 ## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
 
 **Note:** Version bump only for package @ionic/vue

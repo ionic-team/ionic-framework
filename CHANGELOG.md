@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.6-nightly.20220907](https://github.com/ionic-team/ionic-framework/compare/v6.2.5...v6.2.6-nightly.20220907) (2022-09-07)
+
+
+### Bug Fixes
+
+* **datetime:** calendar day and years are now localized ([#25847](https://github.com/ionic-team/ionic-framework/issues/25847)) ([cbd1268](https://github.com/ionic-team/ionic-framework/commit/cbd1268a03204f05314f2ba284ad433457a9cf33)), closes [#25843](https://github.com/ionic-team/ionic-framework/issues/25843)
+* **datetime:** hourCycle formats hour correctly ([#25869](https://github.com/ionic-team/ionic-framework/issues/25869)) ([1a1491d](https://github.com/ionic-team/ionic-framework/commit/1a1491df0242da1cb3c9a7f128bbd4d5ce4dbf3e)), closes [#25862](https://github.com/ionic-team/ionic-framework/issues/25862)
+* **datetime:** month grid no longer loops on ios ([#25857](https://github.com/ionic-team/ionic-framework/issues/25857)) ([c938054](https://github.com/ionic-team/ionic-framework/commit/c938054605dffb6c3002a64a3d8aaf36892c7a93)), closes [#25752](https://github.com/ionic-team/ionic-framework/issues/25752)
+* **vue:** custom animation plays when replacing ([#25863](https://github.com/ionic-team/ionic-framework/issues/25863)) ([2d3661a](https://github.com/ionic-team/ionic-framework/commit/2d3661ae3894b98ac4b8b158594b8de0f0823073)), closes [#25831](https://github.com/ionic-team/ionic-framework/issues/25831)
+
+
+
+
+
 ## [6.2.5](https://github.com/ionic-team/ionic-framework/compare/v6.2.4...v6.2.5) (2022-08-31)
 
 
