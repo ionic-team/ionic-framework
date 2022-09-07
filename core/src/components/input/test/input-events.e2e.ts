@@ -16,7 +16,7 @@ test.describe('input: events: ionChange', () => {
 
         await ionChangeSpy.next();
 
-        expect(ionChangeSpy).toHaveReceivedEventDetail('new value');
+        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
       });
     });
 

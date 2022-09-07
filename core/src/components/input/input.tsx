@@ -345,7 +345,7 @@ export class Input implements ComponentInterface {
   private emitValueChange() {
     const { value } = this;
     const newValue = value == null ? value : value.toString();
-    this.ionChange.emit(newValue);
+    this.ionChange.emit({ value: newValue });
   }
 
   private shouldClearOnEdit() {

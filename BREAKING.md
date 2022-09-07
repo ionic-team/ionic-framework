@@ -27,16 +27,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 `ionChange` will no longer be emitted when the `value` of `ion-input` is modified externally. `ionChange` will only be emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
 
-`ionChange` will no longer emit an object with a value: `{ value: "New Value" }`. It will emit the value directly as the event detail: `"New Value"`. Update usages to no longer reference the `.value` property on the event detail.
-
 If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
-
-**Types**
-
-|Type|Previous Value|New Value|
-|----|---------------|---------|
-|`InputChangeEventDetail`|`{ value: string \| undefined \| null }`|`string \| undefined \| null`|
-
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
