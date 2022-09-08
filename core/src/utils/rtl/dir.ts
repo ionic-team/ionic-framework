@@ -5,9 +5,9 @@
  */
 export const isRTL = (hostEl?: Pick<HTMLElement, 'dir'>) => {
   if (hostEl) {
-    if (hostEl.dir !== '') {
-      return hostEl.dir.toLowerCase() === 'rtl';
+    if (hostEl.dir && hostEl.dir !== '') {
+      return hostEl.dir?.toLowerCase() === 'rtl';
     }
   }
-  return document?.dir.toLowerCase() === 'rtl';
+  return document?.dir?.toLowerCase() === 'rtl';
 };

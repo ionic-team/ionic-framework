@@ -16,10 +16,15 @@ describe('rtl: dir', () => {
     it('should return true', () => {
       global.document.dir = 'rtl';
       expect(isRTL()).toBe(true);
+      expect(isRTL({ dir: undefined } as any)).toBe(true);
     });
 
     it('should return false', () => {
       global.document.dir = 'ltr';
+      expect(isRTL()).toBe(false);
+      expect(isRTL({ dir: undefined } as any)).toBe(false);
+
+      global.document = undefined as any;
       expect(isRTL()).toBe(false);
     });
   });
