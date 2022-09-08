@@ -22,7 +22,7 @@ $range-ios-hit-height: $range-ios-slider-height !default;
 $range-ios-bar-height: 4px !default;
 
 /// @prop - Background of the range bar
-$range-ios-bar-background-color: #e4e4e6 !default;
+$range-ios-bar-background-color: var(--ion-color-step-900, #e6e6e6) !default;
 
 /// @prop - Background of the active range bar
 $range-ios-bar-active-background-color: current-color(base) !default;
