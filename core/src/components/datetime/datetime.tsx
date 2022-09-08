@@ -1106,7 +1106,28 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
+
+    /**
+     * TODO(FW-2165)
+     * Remove this when https://bugs.webkit.org/show_bug.cgi?id=235960 is fixed.
+     * When using `min`, we add `scroll-snap-align: none`
+     * to the disabled month so that users cannot scroll to it.
+     * This triggers a bug in WebKit where the scroll position is reset.
+     * Since the month change logic is handled by a scroll listener,
+     * this causes the month to change leading to `scroll-snap-align`
+     * changing again, thus changing the scroll position again and causing
+     * an infinite loop.
+     * This issue only applies to the calendar grid, so we can disable
+     * it if the calendar grid is not being used.
+     */
+    const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
+    if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
+      const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
+      if (workingMonth) {
+        calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+      }
+    }
 
     if (prevPresentation === null) {
       this.prevPresentation = presentation;
@@ -1524,7 +1545,7 @@ export class Datetime implements ComponentInterface {
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
-      ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      ? getYearColumnData(this.locale, this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
     /**
@@ -1889,7 +1910,7 @@ export class Datetime implements ComponentInterface {
             const { day, dayOfWeek } = dateObject;
             const { isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
               this.activePartsClone,
@@ -1966,7 +1987,7 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
-                {day}
+                {text}
               </button>
             );
           })}
