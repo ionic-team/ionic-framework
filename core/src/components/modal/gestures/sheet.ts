@@ -234,7 +234,7 @@ export const createSheetGesture = (
      * the closest breakpoint to snap to.
      */
     const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 250) / height;
+    const threshold = (detail.deltaY + velocity * 350) / height;
 
     const diff = currentBreakpoint - threshold;
     const closest = breakpoints.reduce((a, b) => {
