@@ -93,7 +93,7 @@
   }
 }
 
-.range-bar {
+.range-bar-container {
   @include border-radius(var(--bar-border-radius));
   @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
 
@@ -101,6 +101,17 @@
     /* stylelint-disable-next-line property-disallowed-list */
     left: unset;
   }
+
+  position: absolute;
+
+  width: 100%;
+  height: var(--bar-height);
+
+  overflow: hidden;
+}
+
+.range-bar {
+  @include border-radius(var(--bar-border-radius));
 
   position: absolute;
 
