@@ -97,15 +97,27 @@ describe('Tabs', () => {
     it('should navigate deep then go home', () => {
       const tab = getSelectedTab();
       tab.find('#goto-tab1-page2').click();
+      cy.ionPageVisible('app-tabs-tab1-nested');
+      cy.ionPageHidden('app-tabs-tab1');
+
       testTabTitle('Tab 1 - Page 2 (1)');
 
       cy.get('#goto-next').click();
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab1-nested:first-of-type');
+
       testTabTitle('Tab 1 - Page 2 (2)');
 
       cy.get('#tab-button-contact').click();
+      cy.ionPageVisible('app-tabs-tab2');
+      cy.ionPageHidden('app-tabs-tab1-nested:last-of-type');
+
       testTabTitle('Tab 2 - Page 1');
 
       cy.get('#tab-button-account').click();
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab2');
+
       testTabTitle('Tab 1 - Page 2 (2)');
       cy.testStack('ion-tabs ion-router-outlet', [
         'app-tabs-tab1',
@@ -235,18 +247,39 @@ describe('Tabs', () => {
     it('should navigate deep then go home and preserve navigation extras', () => {
       let tab = getSelectedTab();
       tab.find('#goto-tab1-page2').click();
+      cy.ionPageVisible('app-tabs-tab1-nested');
+      cy.ionPageHidden('app-tabs-tab1');
+
       tab = testTabTitle('Tab 1 - Page 2 (1)');
 
       tab.find('#goto-next').click();
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab1-nested:first-of-type');
+
       testTabTitle('Tab 1 - Page 2 (2)');
 
       cy.ionTabClick('Tab Two');
+      cy.ionPageVisible('app-tabs-tab2');
+      cy.ionPageHidden('app-tabs-tab1-nested:last-of-type');
+
       testTabTitle('Tab 2 - Page 1');
 
       cy.ionTabClick('Tab One');
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab2');
+
       testTabTitle('Tab 1 - Page 2 (2)');
 
       cy.ionTabClick('Tab One');
+      /**
+       * Wait for the leaving view to
+       * be unmounted otherwise testTabTitle
+       * may get the leaving view before it
+       * is unmounted.
+       */
+      cy.ionPageVisible('app-tabs-tab1');
+      cy.ionPageDoesNotExist('app-tabs-tab1-nested');
+
       testTabTitle('Tab 1 - Page 1');
 
       testUrlContains(rootUrl);
