@@ -203,7 +203,9 @@ describe('useIonRouter', () => {
     await waitForRouter();
 
     expect(router.currentRoute.value.path).toEqual('/page2');
-    expect(animFn).not.toHaveBeenCalled();
+
+    // Animation should still be called even though this is a replace operation
+    expect(animFn).toHaveBeenCalled();
 
     expect(vm.ionRouter.canGoBack()).toEqual(false);
   })

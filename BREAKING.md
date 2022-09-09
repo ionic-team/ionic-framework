@@ -12,50 +12,17 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 7.x
 
+- [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
   - [Input](#version-7x-input)
   - [Overlays](#version-7x-overlays)
-  - [Virtual Scroll](#version-7x-virtual-scroll)
+  - [Range](#version-7x-range)
   - [Slides](#version-7x-slides)
-- [Browser and Platform Support](#version-7x-browser-platform-support)
+  - [Virtual Scroll](#version-7x-virtual-scroll)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
 
-<h2 id="version-7x-components">Components</h2>
-
-<h4 id="version-7x-input">Input</h4>
-
-`ionChange` will no longer be emitted when the `value` of `ion-input` is modified externally. `ionChange` will only be emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
-
-If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
-
-<h4 id="version-7x-overlays">Overlays</h4>
-
-Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
-
-<h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
-
-`ion-virtual-scroll` has been removed from Ionic.
-
-Developers using the component will need to migrate to a virtual scroll solution provided by their framework:
-
-- [Angular](https://ionicframework.com/docs/angular/virtual-scroll)
-- [React](https://ionicframework.com/docs/react/virtual-scroll)
-- [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
-
-Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
-
-<h4 id="version-7x-slides">Slides</h4>
-
-`ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
-
-Developers using these components will need to migrate to using Swiper.js directly, optionally using the `IonicSlides` plugin. Guides for migration and usage are linked below:
-
-- [Angular](https://ionicframework.com/docs/angular/slides)
-- [React](https://ionicframework.com/docs/react/slides)
-- [Vue](https://ionicframework.com/docs/vue/slides)
-
-<h4 id="version-7x-browser-platform-support">Browser and Platform Support</h4>
+<h2 id="version-7x-browser-platform-support">Browser and Platform Support</h2>
 
 This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 7.
 
@@ -81,6 +48,59 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | -------- | ---------------------- |
 | iOS      | 14+                    |
 | Android  | 5.1+ with Chromium 79+ |
+
+<h2 id="version-7x-components">Components</h2>
+
+<h4 id="version-7x-input">Input</h4>
+
+`ionChange` will no longer be emitted when the `value` of `ion-input` is modified externally. `ionChange` will only be emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
+
+If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
+
+<h4 id="version-7x-overlays">Overlays</h4>
+
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+
+<h4 id="version-7x-range">Range</h4>
+
+Range is updated to align with the design specification for supported modes.
+
+**Design tokens**
+
+
+iOS:
+
+|Token|Previous Value|New Value|
+|-----|--------------|---------|
+|`--bar-border-radius`|`0px`|`$range-ios-bar-border-radius` (`2px` default)|
+|`--knob-size`|`28px`|`$range-ios-knob-width` (`26px` default)|
+|`$range-ios-bar-height`|`2px`|`4px`|
+|`$range-ios-bar-background-color`|`rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`|`var(--ion-color-step-900, #e6e6e6)`|
+|`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
+|`$range-ios-knob-width`|`28px`|`26px`|
+
+
+<h4 id="version-7x-slides">Slides</h4>
+
+`ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
+
+Developers using these components will need to migrate to using Swiper.js directly, optionally using the `IonicSlides` plugin. Guides for migration and usage are linked below:
+
+- [Angular](https://ionicframework.com/docs/angular/slides)
+- [React](https://ionicframework.com/docs/react/slides)
+- [Vue](https://ionicframework.com/docs/vue/slides)
+
+<h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
+
+`ion-virtual-scroll` has been removed from Ionic.
+
+Developers using the component will need to migrate to a virtual scroll solution provided by their framework:
+
+- [Angular](https://ionicframework.com/docs/angular/virtual-scroll)
+- [React](https://ionicframework.com/docs/react/virtual-scroll)
+- [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
+
+Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
 
 <h2 id="version-7x-utilities">Utilities</h2>
 
