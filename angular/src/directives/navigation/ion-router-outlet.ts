@@ -308,8 +308,19 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
 
     this.activatedView = enteringView;
+
+    /**
+     * The top outlet is set prior to the entering view's transition completing,
+     * so that when we have nested outlets (e.g. ion-tabs inside an ion-router-outlet),
+     * the tabs outlet will be assigned as the top outlet when a view inside tabs is
+     * activated.
+     *
+     * In this scenario, activeWith is called for both the tabs and the root router outlet.
+     * To avoid a race condition, we assign the top outlet synchronously.
+     */
+    this.navCtrl.setTopOutlet(this);
+
     this.stackCtrl.setActive(enteringView).then((data) => {
-      this.navCtrl.setTopOutlet(this);
       this.activateEvents.emit(cmpRef.instance);
       this.stackEvents.emit(data);
     });
