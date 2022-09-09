@@ -46,7 +46,15 @@ import {
   getPreviousYear,
   getStartOfWeek,
 } from './utils/manipulation';
-import { clampDate, convertToArrayOfNumbers, getPartsFromCalendarDay, parseAmPm, parseDate } from './utils/parse';
+import {
+  clampDate,
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseMaxParts,
+  parseMinParts,
+} from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -629,18 +637,8 @@ export class Datetime implements ComponentInterface {
     return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
   }
 
-  /**
-   * Stencil sometimes sets calendarBodyRef to null on rerender, even though
-   * the element is present. Query for it manually as a fallback.
-   *
-   * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
-   */
-  private getCalendarBodyEl = () => {
-    return this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
-  };
-
   private initializeKeyboardListeners = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -784,41 +782,28 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    if (this.min === undefined) {
+    const { min, todayParts } = this;
+    if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.min);
-
-    this.minParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.minParts = parseMinParts(min, todayParts);
   };
 
   private processMaxParts = () => {
-    if (this.max === undefined) {
+    const { max, todayParts } = this;
+
+    if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.max);
-
-    this.maxParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.maxParts = parseMaxParts(max, todayParts);
   };
 
   private initializeCalendarListener = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1121,7 +1106,28 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
+
+    /**
+     * TODO(FW-2165)
+     * Remove this when https://bugs.webkit.org/show_bug.cgi?id=235960 is fixed.
+     * When using `min`, we add `scroll-snap-align: none`
+     * to the disabled month so that users cannot scroll to it.
+     * This triggers a bug in WebKit where the scroll position is reset.
+     * Since the month change logic is handled by a scroll listener,
+     * this causes the month to change leading to `scroll-snap-align`
+     * changing again, thus changing the scroll position again and causing
+     * an infinite loop.
+     * This issue only applies to the calendar grid, so we can disable
+     * it if the calendar grid is not being used.
+     */
+    const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
+    if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
+      const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
+      if (workingMonth) {
+        calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+      }
+    }
 
     if (prevPresentation === null) {
       this.prevPresentation = presentation;
@@ -1150,7 +1156,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    this.highlightActiveParts = !!value;
+    const hasValue = !!value;
+    this.highlightActiveParts = hasValue;
     let valueToProcess = parseDate(value || getToday());
 
     const { minParts, maxParts, multiple } = this;
@@ -1159,7 +1166,17 @@ export class Datetime implements ComponentInterface {
       valueToProcess = (valueToProcess as DatetimeParts[])[0];
     }
 
-    warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    /**
+     * Datetime should only warn of out of bounds values
+     * if set by the user. If the `value` is undefined,
+     * we will default to today's date which may be out
+     * of bounds. In this case, the warning makes it look
+     * like the developer did something wrong which is
+     * not true.
+     */
+    if (hasValue) {
+      warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    }
 
     /**
      * If there are multiple values, pick an arbitrary one to clamp to. This way,
@@ -1241,7 +1258,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private nextMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1261,7 +1278,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private prevMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1398,7 +1415,6 @@ export class Datetime implements ComponentInterface {
 
     const result = getCombinedDateColumnData(
       locale,
-      workingParts,
       todayParts,
       min,
       max,
@@ -1528,7 +1544,7 @@ export class Datetime implements ComponentInterface {
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
-      ? getYearColumnData(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      ? getYearColumnData(this.locale, this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
     /**
@@ -1839,11 +1855,11 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
               </ion-button>
-              <ion-button disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
@@ -1893,7 +1909,7 @@ export class Datetime implements ComponentInterface {
             const { day, dayOfWeek } = dateObject;
             const { isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
               this.activePartsClone,
@@ -1970,7 +1986,7 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
-                {day}
+                {text}
               </button>
             );
           })}
@@ -1989,7 +2005,7 @@ export class Datetime implements ComponentInterface {
   }
   private renderCalendar(mode: Mode) {
     return (
-      <div class="datetime-calendar">
+      <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(mode)}
         {this.renderCalendarBody()}
       </div>
