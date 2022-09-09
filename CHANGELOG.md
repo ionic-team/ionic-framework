@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.6](https://github.com/ionic-team/ionic-framework/compare/v6.2.5...v6.2.6) (2022-09-07)
+
+
+### Bug Fixes
+
+* **datetime:** calendar day and years are now localized ([#25847](https://github.com/ionic-team/ionic-framework/issues/25847)) ([cbd1268](https://github.com/ionic-team/ionic-framework/commit/cbd1268a03204f05314f2ba284ad433457a9cf33)), closes [#25843](https://github.com/ionic-team/ionic-framework/issues/25843)
+* **datetime:** hourCycle formats hour correctly ([#25869](https://github.com/ionic-team/ionic-framework/issues/25869)) ([1a1491d](https://github.com/ionic-team/ionic-framework/commit/1a1491df0242da1cb3c9a7f128bbd4d5ce4dbf3e)), closes [#25862](https://github.com/ionic-team/ionic-framework/issues/25862)
+* **datetime:** month grid no longer loops on ios ([#25857](https://github.com/ionic-team/ionic-framework/issues/25857)) ([c938054](https://github.com/ionic-team/ionic-framework/commit/c938054605dffb6c3002a64a3d8aaf36892c7a93)), closes [#25752](https://github.com/ionic-team/ionic-framework/issues/25752)
+* **vue:** custom animation plays when replacing ([#25863](https://github.com/ionic-team/ionic-framework/issues/25863)) ([2d3661a](https://github.com/ionic-team/ionic-framework/commit/2d3661ae3894b98ac4b8b158594b8de0f0823073)), closes [#25831](https://github.com/ionic-team/ionic-framework/issues/25831)
+
+
+
+
+
+## [6.2.5](https://github.com/ionic-team/ionic-framework/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* **action-sheet:** add aria-labelledby ([#25837](https://github.com/ionic-team/ionic-framework/issues/25837)) ([5270151](https://github.com/ionic-team/ionic-framework/commit/527015184e9413c1037277d3197bcaa33044c38c))
+* **angular:** router outlet has mode property ([#25816](https://github.com/ionic-team/ionic-framework/issues/25816)) ([afd0bbc](https://github.com/ionic-team/ionic-framework/commit/afd0bbc60aa8f4edc88dc311d6484ac60117fce5)), closes [#25813](https://github.com/ionic-team/ionic-framework/issues/25813)
+* **datetime:** next and previous buttons have correct labels ([#25845](https://github.com/ionic-team/ionic-framework/issues/25845)) ([41e3387](https://github.com/ionic-team/ionic-framework/commit/41e338730d32837fc9dd8a15477e37dea4cc76c9)), closes [#25844](https://github.com/ionic-team/ionic-framework/issues/25844)
+* **datetime:** only log out of bounds warning if value set ([#25835](https://github.com/ionic-team/ionic-framework/issues/25835)) ([85af6ce](https://github.com/ionic-team/ionic-framework/commit/85af6ce436890eb922d2ba32053fb8b8bc7fd4ff)), closes [#25833](https://github.com/ionic-team/ionic-framework/issues/25833)
+* **input:** clear button is not activated on swipe ([#25825](https://github.com/ionic-team/ionic-framework/issues/25825)) ([ff71ad4](https://github.com/ionic-team/ionic-framework/commit/ff71ad492d7671f8e550da7e08dbde30cb05ebf7)), closes [#24857](https://github.com/ionic-team/ionic-framework/issues/24857)
+* **modal:** handleBehavior can be used with controller ([#25821](https://github.com/ionic-team/ionic-framework/issues/25821)) ([79ef1b5](https://github.com/ionic-team/ionic-framework/commit/79ef1b57dc74fd856ed7c2904d7400d283cc081e)), closes [#25820](https://github.com/ionic-team/ionic-framework/issues/25820)
+* **searchbar:** clear button has focus indicator ([#25828](https://github.com/ionic-team/ionic-framework/issues/25828)) ([373b4ff](https://github.com/ionic-team/ionic-framework/commit/373b4ffe216ba584b92014cef501f64668e1f177))
+* **searchbar:** keypress can activate clear button ([#25824](https://github.com/ionic-team/ionic-framework/issues/25824)) ([c270756](https://github.com/ionic-team/ionic-framework/commit/c270756356c7b23a1959ac5f4b8206a5cd1825c2))
+
+
+
+
+
 ## [6.2.4](https://github.com/ionic-team/ionic-framework/compare/v6.2.3...v6.2.4) (2022-08-24)
 
 
