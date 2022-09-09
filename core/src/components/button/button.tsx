@@ -124,6 +124,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
+   * To specify the form to be submitted if the button is placed outside of that form.
+   */
+  @Prop() form?: string | HTMLFormElement;
+
+  /**
    * Emitted when the button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -155,6 +160,24 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     return 'bounded';
   }
+  /**
+   * Finds the appropriate form for button of type 'submit'.
+   *
+   * We first check, if there is a form specified by the form attribute. If not, we will
+   * check if the button is inside a form.
+   */
+  private findForm = (): HTMLFormElement | null => {
+    if (this.form instanceof HTMLFormElement) return this.form;
+
+    if (typeof this.form === 'string') {
+      const el = document.getElementById(this.form);
+      if (el instanceof HTMLFormElement) {
+        return el;
+      }
+    }
+
+    return this.el.closest('form');
+  };
 
   private handleClick = (ev: Event) => {
     if (this.type === 'button') {
@@ -163,7 +186,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       // this button wants to specifically submit a form
       // climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = this.el.closest('form');
+      const form = this.findForm();
+
       if (form) {
         ev.preventDefault();
 
@@ -213,7 +237,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             rel,
             target,
           };
-
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
