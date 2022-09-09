@@ -115,6 +115,16 @@ describe('Tabs', () => {
       ]);
 
       cy.get('#tab-button-account').click();
+
+      /**
+       * Wait for the leaving view to
+       * be unmounted otherwise testTabTitle
+       * may get the leaving view before it
+       * is unmounted.
+       */
+      cy.ionPageVisible('app-tabs-tab1');
+      cy.ionPageDoesNotExist('app-tabs-tab1-nested');
+
       testTabTitle('Tab 1 - Page 1');
       cy.testStack('ion-tabs ion-router-outlet', [
         'app-tabs-tab1',
@@ -280,33 +290,33 @@ describe('Tabs', () => {
   describe('entry url - /', () => {
     it('should pop to the root outlet from the tabs outlet', () => {
       cy.visit('/');
-  
+
       cy.get('ion-title').should('contain.text', 'Test App');
-  
+
       cy.get('ion-item').contains('Tabs test').click();
-  
+
       cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
-  
+
       cy.get('#goto-tab1-page2').click();
-  
+
       cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
-  
+
       cy.get('#goto-global').click();
-  
+
       cy.get('ion-title').should('contain.text', 'Global Page');
-  
+
       cy.get('#goto-prev-pop').click();
-  
+
       cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
-  
+
       cy.get('#goto-prev').click();
-  
+
       cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
-  
+
       cy.get('#goto-previous-page').click();
-  
+
       cy.get('ion-title').should('contain.text', 'Test App');
-  
+
     });
   });
 
@@ -395,6 +405,8 @@ describe('Tabs', () => {
 
 function testTabTitle(title) {
   const tab = getSelectedTab();
+
+  console.log(tab)
 
   // Find is used to get a direct descendant instead of get
   tab.find('ion-title').should('have.text', title);
