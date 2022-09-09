@@ -1,4 +1,5 @@
 import { Component, NgZone } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs-tab1',
@@ -8,6 +9,8 @@ export class TabsTab1Component {
   title = 'ERROR';
   segment = 'one';
   changed = 'false';
+
+  constructor(public navCtrl: NavController) {}
 
   ionViewWillEnter() {
     NgZone.assertInAngularZone();
