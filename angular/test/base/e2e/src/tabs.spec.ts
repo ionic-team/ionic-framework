@@ -406,8 +406,6 @@ describe('Tabs', () => {
 function testTabTitle(title) {
   const tab = getSelectedTab();
 
-  console.log(tab)
-
   // Find is used to get a direct descendant instead of get
   tab.find('ion-title').should('have.text', title);
   return getSelectedTab();
