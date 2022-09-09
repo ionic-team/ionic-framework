@@ -1415,7 +1415,6 @@ export class Datetime implements ComponentInterface {
 
     const result = getCombinedDateColumnData(
       locale,
-      workingParts,
       todayParts,
       min,
       max,

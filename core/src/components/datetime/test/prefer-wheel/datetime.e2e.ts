@@ -251,7 +251,7 @@ test.describe('datetime: prefer wheel', () => {
 
       const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
-      expect(await dateValues.count()).toBe(427);
+      expect(await dateValues.count()).toBe(397);
     });
   });
   test.describe('datetime: time-date wheel rendering', () => {
@@ -356,7 +356,7 @@ test.describe('datetime: prefer wheel', () => {
 
       const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
-      expect(await dateValues.count()).toBe(427);
+      expect(await dateValues.count()).toBe(397);
     });
   });
 });
