@@ -50,6 +50,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'tabs-global',
+    loadChildren: () => import('./tabs-global/tabs-global.module').then(m => m.TabsGlobalModule)
+  },
+  {
     path: 'nested-outlet',
     component: NestedOutletComponent,
     children: [
@@ -62,7 +66,7 @@ const routes: Routes = [
         component: NestedOutletPage2Component
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
