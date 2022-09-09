@@ -217,9 +217,18 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
           requestAnimationFrame(async () => {
             enteringEl.classList.add('ion-page-invisible');
 
+            const hasRootDirection = direction === undefined || direction === 'root' || direction === 'none';
             const result = await ionRouterOutlet.value.commit(enteringEl, leavingEl, {
               deepWait: true,
-              duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
+              /**
+               * replace operations result in a direction of none.
+               * These typically do not have need animations, so we set
+               * the duration to 0. However, if a developer explicitly
+               * passes an animationBuilder, we should assume that
+               * they want an animation to be played even
+               * though it is a replace operation.
+               */
+              duration: hasRootDirection && animationBuilder === undefined ? 0 : undefined,
               direction,
               showGoBack,
               progressAnimation,
