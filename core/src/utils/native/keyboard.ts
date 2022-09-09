@@ -1,5 +1,6 @@
 import { win } from '../window';
 
+// Interfaces source: https://capacitorjs.com/docs/apis/keyboard#interfaces
 export interface KeyboardResizeOptions {
   mode: KeyboardResize;
 }
