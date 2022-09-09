@@ -1,60 +1,178 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
+import { KeyboardResize } from '@utils/native/keyboard';
+import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
-test.describe('scroll-assist', () => {
-  const getScrollPosition = async (contentEl: Locator) => {
-    return await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-      const scrollEl = await el.getScrollElement();
+const getScrollPosition = async (contentEl: Locator) => {
+  return await contentEl.evaluate(async (el: HTMLIonContentElement) => {
+    const scrollEl = await el.getScrollElement();
 
-      return scrollEl.scrollTop;
-    });
-  };
+    return scrollEl.scrollTop;
+  });
+};
+
+test.describe('scroll-assist', () => {
+  let scrollAssistFixture: ScrollAssistFixture;
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl();
     skip.mode('md', 'Scroll utils are only needed on iOS mode');
     skip.browser('firefox');
     skip.browser('chromium');
 
-    await page.goto('/src/utils/input-shims/hacks/test');
-  });
-  test('should not activate when input is above the keyboard', async ({ page }) => {
-    const input = page.locator('#input-above-keyboard');
-    const content = page.locator('ion-content');
-
-    await expect(await getScrollPosition(content)).toBe(0);
-
-    await input.click();
-    await expect(input.locator('input')).toBeFocused();
-    await page.waitForChanges();
-
-    await expect(await getScrollPosition(content)).toBe(0);
+    scrollAssistFixture = new ScrollAssistFixture(page);
   });
 
-  test('should activate when input is below the keyboard', async ({ page }) => {
-    const input = page.locator('#input-below-keyboard');
-    const content = page.locator('ion-content');
+  test.describe('scroll-assist: basic functionality', () => {
+    test.beforeEach(async () => {
+      await scrollAssistFixture.goto();
+    });
+    test('should not activate when input is above the keyboard', async () => {
+      await scrollAssistFixture.expectNotToHaveScrollAssist(
+        '#input-above-keyboard',
+        '#input-above-keyboard input:not(.cloned-input)'
+      );
+    });
 
-    await expect(await getScrollPosition(content)).toBe(0);
+    test('should activate when input is below the keyboard', async () => {
+      await scrollAssistFixture.expectToHaveScrollAssist(
+        '#input-below-keyboard',
+        '#input-below-keyboard input:not(.cloned-input)'
+      );
+    });
 
-    await input.click({ force: true });
-    await page.waitForChanges();
-    await expect(input.locator('input:not(.cloned-input)')).toBeFocused();
-
-    await expect(await getScrollPosition(content)).not.toBe(0);
+    test('should activate even when not explicitly tapping input', async () => {
+      await scrollAssistFixture.expectToHaveScrollAssist(
+        '#item-below-keyboard ion-label',
+        '#input-below-keyboard input:not(.cloned-input)'
+      );
+    });
   });
+  test.describe('scroll-assist: scroll-padding', () => {
+    test.describe('scroll-padding: browser/cordova', () => {
+      test.beforeEach(async () => {
+        await scrollAssistFixture.goto();
+      });
+      test('should add scroll padding for an input at the bottom of the scroll container', async () => {
+        await scrollAssistFixture.expectToHaveScrollPadding(
+          '#input-outside-viewport',
+          '#input-outside-viewport input:not(.cloned-input)'
+        );
+      });
 
-  test('should activate even when not explicitly tapping input', async ({ page }) => {
-    const label = page.locator('#item-below-keyboard ion-label');
-    const input = page.locator('#input-below-keyboard');
-    const content = page.locator('ion-content');
+      test('should keep scroll padding even when switching between inputs', async () => {
+        await scrollAssistFixture.expectToHaveScrollPadding(
+          '#input-outside-viewport',
+          '#input-outside-viewport input:not(.cloned-input)'
+        );
 
-    await expect(await getScrollPosition(content)).toBe(0);
+        await scrollAssistFixture.expectToHaveScrollPadding(
+          '#textarea-outside-viewport',
+          '#textarea-outside-viewport textarea:not(.cloned-input)'
+        );
+      });
+    });
+    test.describe('scroll-padding: webview resizing', () => {
+      test('should add scroll padding when webview resizing is "none"', async () => {
+        await scrollAssistFixture.goto(KeyboardResize.None);
 
-    await label.click({ force: true });
-    await page.waitForChanges();
-    await expect(input.locator('input:not(.cloned-input)')).toBeFocused();
+        await scrollAssistFixture.expectToHaveScrollPadding(
+          '#input-outside-viewport',
+          '#input-outside-viewport input:not(.cloned-input)'
+        );
+      });
+      test('should not add scroll padding when webview resizing is "body"', async () => {
+        await scrollAssistFixture.goto(KeyboardResize.Body);
 
-    await expect(await getScrollPosition(content)).not.toBe(0);
+        await scrollAssistFixture.expectNotToHaveScrollPadding(
+          '#input-outside-viewport',
+          '#input-outside-viewport input:not(.cloned-input)'
+        );
+      });
+      test('should not add scroll padding when webview resizing is "ionic"', async () => {
+        await scrollAssistFixture.goto(KeyboardResize.Ionic);
+
+        await scrollAssistFixture.expectNotToHaveScrollPadding(
+          '#input-outside-viewport',
+          '#input-outside-viewport input:not(.cloned-input)'
+        );
+      });
+      test('should not add scroll padding when webview resizing is "native"', async () => {
+        await scrollAssistFixture.goto(KeyboardResize.Native);
+
+        await scrollAssistFixture.expectNotToHaveScrollPadding(
+          '#input-outside-viewport',
+          '#input-outside-viewport input:not(.cloned-input)'
+        );
+      });
+    });
   });
 });
+
+class ScrollAssistFixture {
+  readonly page: E2EPage;
+  private content!: Locator;
+
+  constructor(page: E2EPage) {
+    this.page = page;
+  }
+
+  async goto(resizeMode?: KeyboardResize) {
+    let url = `/src/utils/input-shims/hacks/test`;
+    if (resizeMode !== undefined) {
+      url += `?resizeMode=${resizeMode}`;
+    }
+
+    await this.page.goto(url);
+
+    this.content = this.page.locator('ion-content');
+  }
+
+  private async focusInput(interactiveSelector: string, inputSelector: string) {
+    const { page } = this;
+    const interactive = page.locator(interactiveSelector);
+    const input = page.locator(inputSelector);
+
+    await interactive.click({ force: true });
+    await expect(input).toBeFocused();
+    await page.waitForChanges();
+  }
+
+  private getScrollPosition() {
+    const { content } = this;
+
+    return getScrollPosition(content);
+  }
+
+  async expectNotToHaveScrollAssist(interactiveSelector: string, inputSelector: string) {
+    await expect(await this.getScrollPosition()).toBe(0);
+
+    await this.focusInput(interactiveSelector, inputSelector);
+
+    await expect(await this.getScrollPosition()).toBe(0);
+  }
+
+  async expectToHaveScrollAssist(interactiveSelector: string, inputSelector: string) {
+    await expect(await this.getScrollPosition()).toBe(0);
+
+    await this.focusInput(interactiveSelector, inputSelector);
+
+    await expect(await this.getScrollPosition()).not.toBe(0);
+  }
+
+  async expectToHaveScrollPadding(interactiveSelector: string, inputSelector: string) {
+    const { content } = this;
+
+    await this.focusInput(interactiveSelector, inputSelector);
+
+    await expect(content).not.toHaveCSS('--keyboard-offset', '0px');
+  }
+
+  async expectNotToHaveScrollPadding(interactiveSelector: string, inputSelector: string) {
+    const { content } = this;
+
+    await this.focusInput(interactiveSelector, inputSelector);
+
+    await expect(content).toHaveCSS('--keyboard-offset', '0px');
+  }
+}
