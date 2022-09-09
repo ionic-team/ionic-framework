@@ -52,6 +52,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     };
     isDismissing = false;
 
+    keepContentsMounted = this.props.trigger !== undefined ?? this.props.keepContentsMounted;
+
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
@@ -113,6 +115,23 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
+
+      const newProps = {
+        ...this.props,
+        delegate: this.delegate,
+      };
+
+      if (this.props.trigger !== undefined && this.props.keepContentsMounted !== true) {
+        /**
+         * Trigger-based overlays are dependent on the web component being
+         * mounted in order for the trigger element to attach event listeners.
+         *
+         * For framework implementations, we require that `keepContentsMounted` is set to
+         * `true` in order to always mount the web component.
+         */
+        this.keepContentsMounted = true;
+      }
+
       attachProps(
         node,
         /**
@@ -124,7 +143,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
          * For non-trigger overlays, we use a no-op delegate to allow React portals
          * to render the element in the correct place and within React's context.
          */
-        { ...this.props, delegate: this.props.trigger ? null : this.delegate },
+        newProps,
         prevProps
       );
     }
@@ -195,17 +214,10 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         )
       );
 
-      return this.props.trigger
-        ? overlay
-        : createPortal(
-            this.state.isOpen ||
-              this.props.isOpen ||
-              this.isDismissing ||
-              this.props.keepContentsMounted
-              ? overlay
-              : null,
-            appRoot
-          );
+      const mountOverlay =
+        this.state.isOpen || this.props.isOpen || this.isDismissing || this.keepContentsMounted;
+
+      return createPortal(mountOverlay ? overlay : null, appRoot);
     }
 
     static get displayName() {
