@@ -1,7 +1,7 @@
 import { getScrollElement, scrollByPoint } from '../../content';
-import { pointerCoord, raf } from '../../helpers';
+import { raf } from '../../helpers';
 
-import { isFocused, relocateInput } from './common';
+import { relocateInput, SCROLL_AMOUNT_PADDING } from './common';
 import { getScrollData } from './scroll-data';
 
 export const enableScrollAssist = (
@@ -11,32 +11,18 @@ export const enableScrollAssist = (
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number
 ) => {
-  let coord: any;
-  const touchStart = (ev: Event) => {
-    coord = pointerCoord(ev);
+  /**
+   * When the input is about to receive
+   * focus, we need to move it to prevent
+   * mobile Safari from adjusting the viewport.
+   */
+  const focusIn = () => {
+    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
   };
-
-  const touchEnd = (ev: Event) => {
-    // input cover touchend/mouseup
-    if (!coord) {
-      return;
-    }
-    // get where the touchend/mouseup ended
-    const endCoord = pointerCoord(ev);
-
-    // focus this input if the pointer hasn't moved XX pixels
-    // and the input doesn't already have focus
-    if (!hasPointerMoved(6, coord, endCoord) && !isFocused(inputEl)) {
-      // begin the input focus process
-      jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
-    }
-  };
-  componentEl.addEventListener('touchstart', touchStart, { capture: true, passive: true });
-  componentEl.addEventListener('touchend', touchEnd, true);
+  componentEl.addEventListener('focusin', focusIn, true);
 
   return () => {
-    componentEl.removeEventListener('touchstart', touchStart, true);
-    componentEl.removeEventListener('touchend', touchEnd, true);
+    componentEl.removeEventListener('focusin', focusIn, true);
   };
 };
 
@@ -125,7 +111,7 @@ const jsSetFocus = async (
          */
         if (inputEl.type === 'password') {
           // Add 50px to account for the "Passwords" bar
-          scrollData.scrollAmount += 50;
+          scrollData.scrollAmount += SCROLL_AMOUNT_PADDING;
           window.addEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
         } else {
           window.addEventListener('ionKeyboardDidShow', scrollContent);
@@ -145,22 +131,3 @@ const jsSetFocus = async (
     scrollContent();
   }
 };
-
-const hasPointerMoved = (
-  threshold: number,
-  startCoord: PointerCoordinates | undefined,
-  endCoord: PointerCoordinates | undefined
-) => {
-  if (startCoord && endCoord) {
-    const deltaX = startCoord.x - endCoord.x;
-    const deltaY = startCoord.y - endCoord.y;
-    const distance = deltaX * deltaX + deltaY * deltaY;
-    return distance > threshold * threshold;
-  }
-  return false;
-};
-
-export interface PointerCoordinates {
-  x: number;
-  y: number;
-}
