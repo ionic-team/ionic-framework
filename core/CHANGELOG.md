@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.7-nightly.20220909](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7-nightly.20220909) (2022-09-09)
+
+
+### Bug Fixes
+
+* **tab-bar:** use correct import path ([#25898](https://github.com/ionic-team/ionic/issues/25898)) ([ad46045](https://github.com/ionic-team/ionic/commit/ad46045bcc251c9719ecf6621792f1a5b3c6afce)), closes [#25897](https://github.com/ionic-team/ionic/issues/25897)
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 
