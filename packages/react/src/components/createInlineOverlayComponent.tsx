@@ -51,8 +51,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       removeViewFromDom: () => Promise.resolve(),
     };
     isDismissing = false;
-
-    keepContentsMounted = this.props.trigger !== undefined ?? this.props.keepContentsMounted;
+    keepContentsMounted = false;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
@@ -120,17 +119,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         ...this.props,
         delegate: this.delegate,
       };
-
-      if (this.props.trigger !== undefined && this.props.keepContentsMounted !== true) {
-        /**
-         * Trigger-based overlays are dependent on the web component being
-         * mounted in order for the trigger element to attach event listeners.
-         *
-         * For framework implementations, we require that `keepContentsMounted` is set to
-         * `true` in order to always mount the web component.
-         */
-        this.keepContentsMounted = true;
-      }
 
       attachProps(
         node,
@@ -214,8 +202,18 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         )
       );
 
+      /**
+       * Trigger-based overlays are dependent on the web component being
+       * mounted in order for the trigger element to attach event listeners.
+       *
+       * For framework implementations, we require that `keepContentsMounted` is set to
+       * `true` in order to always mount the web component.
+       */
+      const keepContentsMounted =
+        this.props.trigger !== undefined || this.props.keepContentsMounted;
+
       const mountOverlay =
-        this.state.isOpen || this.props.isOpen || this.isDismissing || this.keepContentsMounted;
+        this.state.isOpen || this.props.isOpen || this.isDismissing || keepContentsMounted;
 
       return createPortal(mountOverlay ? overlay : null, appRoot);
     }
