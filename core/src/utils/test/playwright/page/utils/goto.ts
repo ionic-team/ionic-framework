@@ -22,7 +22,22 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
   const formattedRtl = urlToParams.get('rtl') ?? rtl;
   const ionicTesting = urlToParams.get('ionic:_testing') ?? _testing;
 
-  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}`;
+  /**
+   * Pass through other custom query params
+   */
+  urlToParams.delete('ionic:mode');
+  urlToParams.delete('rtl');
+  urlToParams.delete('ionic:_testing');
+
+  /**
+   * Convert remaining query params to a string.
+   * Be sure to call decodeURIComponent to decode
+   * characters such as &.
+   */
+  const remainingQueryParams = decodeURIComponent(urlToParams.toString());
+  const remainingQueryParamsString = remainingQueryParams == '' ? '' : `&${remainingQueryParams}`;
+
+  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}${remainingQueryParamsString}`;
 
   testInfo.annotations.push({
     type: 'mode',
