@@ -1,4 +1,5 @@
 import { flushPromises } from '@vue/test-utils';
+import { createAnimation } from '@ionic/vue';
 
 export const waitForRouter = async () => {
   await flushPromises();
@@ -6,10 +7,5 @@ export const waitForRouter = async () => {
 }
 
 export const mockAnimation = () => {
-  return jest.fn(() => {
-    return {
-      onFinish: () => {},
-      play: () => {}
-    }
-  })
+  return jest.fn(() => createAnimation());
 }
