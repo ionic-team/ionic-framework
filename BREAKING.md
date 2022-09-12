@@ -53,7 +53,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-accordion-group">Accordion Group</h4>
 
-`ionChange` will no longer be emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` will only be emitted from user committed changes, such as clicking or tapping the accordion header.
+`ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
