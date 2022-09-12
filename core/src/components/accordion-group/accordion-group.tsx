@@ -169,6 +169,10 @@ export class AccordionGroup implements ComponentInterface {
   }
 
   /**
+   * This method is used to ensure that the value
+   * of ion-accordion-group is being set in a valid
+   * way. This method should only be called in
+   * response to a user generated action.
    * @internal
    */
   @Method()
