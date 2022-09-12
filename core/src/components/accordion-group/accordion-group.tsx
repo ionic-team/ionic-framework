@@ -55,9 +55,18 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() expand: 'compact' | 'inset' = 'compact';
 
   /**
-   * Emitted when the value property has changed.
+   * Emitted when the value property has changed
+   * as a result of a user action such as a click.
+   * This event will not emit when programmatically setting
+   * the value property.
    */
   @Event() ionChange!: EventEmitter<AccordionGroupChangeEventDetail>;
+
+  /**
+   * Emitted when the value property has changed.
+   * @internal
+   */
+  @Event() ionValueChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
   @Watch('value')
   valueChanged() {
@@ -74,6 +83,12 @@ export class AccordionGroup implements ComponentInterface {
     if (!multiple && Array.isArray(value)) {
       this.setValue(value[0]);
     }
+
+    /**
+     * Do not use `value` here as that will be
+     * not account for the adjustment we make above.
+     */
+    this.ionValueChange.emit({ value: this.value });
   }
 
   @Watch('disabled')
