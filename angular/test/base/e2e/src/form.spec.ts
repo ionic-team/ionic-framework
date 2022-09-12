@@ -36,7 +36,9 @@ describe('Form', () => {
     });
 
     it('should become valid', () => {
-      cy.get('ion-input.required').invoke('prop', 'value', 'Some value');
+      cy.get('ion-input.required').type('Some value');
+      cy.get('ion-input.required input').blur();
+
       testStatus('INVALID');
 
       // TODO: FW-1160 - Remove when v7 is released
