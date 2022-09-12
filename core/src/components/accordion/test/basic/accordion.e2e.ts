@@ -11,10 +11,10 @@ test.describe('accordion: basic', () => {
   });
 });
 
-test.describe.only('accordion: ionChange', () => {
+test.describe('accordion: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
-  })
+  });
   test('should fire ionChange when interacting with accordions', async ({ page }) => {
     await page.setContent(`
       <ion-accordion-group value="second">
@@ -71,7 +71,7 @@ test.describe.only('accordion: ionChange', () => {
     const ionChange = await page.spyOnEvent('ionChange');
     const accordionGroup = page.locator('ion-accordion-group');
 
-    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => el.value = 'second');
+    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => (el.value = 'second'));
     await expect(ionChange).not.toHaveReceivedEvent();
   });
 
@@ -97,7 +97,7 @@ test.describe.only('accordion: ionChange', () => {
     const ionChange = await page.spyOnEvent('ionChange');
     const accordionGroup = page.locator('ion-accordion-group');
 
-    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => el.value = ['second', 'third']);
+    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => (el.value = ['second', 'third']));
     await expect(ionChange).toHaveReceivedEventDetail({ value: 'second' });
   });
-})
+});
