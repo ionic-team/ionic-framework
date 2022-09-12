@@ -11,7 +11,7 @@ test.describe('checkbox: basic', () => {
   });
 });
 
-test.describe.only('checkbox: ionChange', () => {
+test.describe('checkbox: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
