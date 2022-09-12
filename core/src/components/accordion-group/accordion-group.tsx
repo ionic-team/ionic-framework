@@ -68,11 +68,11 @@ export class AccordionGroup implements ComponentInterface {
      * let multiple accordions be open
      * at once, but user passes an array
      * just grab the first value.
+     * This should emit ionChange because
+     * we are updating the value internally.
      */
     if (!multiple && Array.isArray(value)) {
-      this.value = value[0];
-    } else {
-      this.ionChange.emit({ value: this.value });
+      this.setValue(value[0]);
     }
   }
 
@@ -156,6 +156,19 @@ export class AccordionGroup implements ComponentInterface {
   }
 
   /**
+   * Sets the value property and emits ionChange.
+   * This should only be called when the user interacts
+   * with the accordion and not for any update
+   * to the value property. The exception is when
+   * the app sets the value of a single-select
+   * accordion group to an array.
+   */
+  private setValue(accordionValue: string | string[] | null | undefined) {
+    const value = (this.value = accordionValue);
+    this.ionChange.emit({ value });
+  }
+
+  /**
    * @internal
    */
   @Method()
@@ -177,10 +190,10 @@ export class AccordionGroup implements ComponentInterface {
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
         const valueExists = processedValue.find((v) => v === accordionValue);
         if (valueExists === undefined && accordionValue !== undefined) {
-          this.value = [...processedValue, accordionValue];
+          this.setValue([...processedValue, accordionValue]);
         }
       } else {
-        this.value = accordionValue;
+        this.setValue(accordionValue);
       }
     } else {
       /**
@@ -190,9 +203,9 @@ export class AccordionGroup implements ComponentInterface {
       if (multiple) {
         const groupValue = value || [];
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
-        this.value = processedValue.filter((v) => v !== accordionValue);
+        this.setValue(processedValue.filter((v) => v !== accordionValue));
       } else {
-        this.value = undefined;
+        this.setValue(undefined);
       }
     }
   }
