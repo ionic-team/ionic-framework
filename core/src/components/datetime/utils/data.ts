@@ -441,7 +441,6 @@ const getAllMonthsInRange = (currentParts: DatetimeParts, maxParts: DatetimePart
  */
 export const getCombinedDateColumnData = (
   locale: string,
-  refParts: DatetimeParts,
   todayParts: DatetimeParts,
   minParts: DatetimeParts,
   maxParts: DatetimeParts,
@@ -473,7 +472,7 @@ export const getCombinedDateColumnData = (
    * of work as the text.
    */
   months.forEach((monthObject) => {
-    const referenceMonth = { month: monthObject.month, day: null, year: refParts.year };
+    const referenceMonth = { month: monthObject.month, day: null, year: monthObject.year };
     const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
       month: 'short',
       day: 'numeric',
@@ -492,7 +491,7 @@ export const getCombinedDateColumnData = (
        */
       dateColumnItems.push({
         text: isToday ? getTodayLabel(locale) : dayObject.text,
-        value: `${refParts.year}-${monthObject.month}-${dayObject.value}`,
+        value: `${referenceMonth.year}-${referenceMonth.month}-${dayObject.value}`,
       });
 
       /**
@@ -506,8 +505,8 @@ export const getCombinedDateColumnData = (
        * updating the picker column value.
        */
       dateParts.push({
-        month: monthObject.month,
-        year: refParts.year,
+        month: referenceMonth.month,
+        year: referenceMonth.year,
         day: dayObject.value as number,
       });
     });
