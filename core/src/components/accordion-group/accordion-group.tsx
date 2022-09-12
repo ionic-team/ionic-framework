@@ -64,6 +64,8 @@ export class AccordionGroup implements ComponentInterface {
 
   /**
    * Emitted when the value property has changed.
+   * This is used to ensure that ion-accordion can respond
+   * to any value property changes.
    * @internal
    */
   @Event() ionValueChange!: EventEmitter<AccordionGroupChangeEventDetail>;
