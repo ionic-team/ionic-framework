@@ -38,7 +38,7 @@ describe('Inputs', () => {
   it('change values should update angular', () => {
     cy.get('#reset-button').click();
 
-    cy.get('ion-checkbox').invoke('prop', 'checked', true);
+    cy.get('ion-checkbox#first-checkbox').click();
     cy.get('ion-toggle').invoke('prop', 'checked', true);
 
     cy.get('ion-input').eq(0).type('hola');
