@@ -3,11 +3,14 @@ import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
-import { BooleanValueAccessorDirective } from './directives/control-value-accessors/boolean-value-accessor';
-import { NumericValueAccessorDirective } from './directives/control-value-accessors/numeric-value-accessor';
-import { RadioValueAccessorDirective } from './directives/control-value-accessors/radio-value-accessor';
-import { SelectValueAccessorDirective } from './directives/control-value-accessors/select-value-accessor';
-import { TextValueAccessorDirective } from './directives/control-value-accessors/text-value-accessor';
+import {
+  BooleanValueAccessorDirective,
+  NumericValueAccessorDirective,
+  RadioValueAccessorDirective,
+  SelectValueAccessorDirective,
+  TextValueAccessorDirective,
+  InputValueAccessorDirective,
+} from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
@@ -38,6 +41,7 @@ const DECLARATIONS = [
   RadioValueAccessorDirective,
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
+  InputValueAccessorDirective,
 
   // navigation
   IonTabs,

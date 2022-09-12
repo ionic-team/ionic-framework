@@ -14,6 +14,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
+  - [Input](#version-7x-input)
   - [Overlays](#version-7x-overlays)
   - [Range](#version-7x-range)
   - [Slides](#version-7x-slides)
@@ -49,6 +50,12 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Android  | 5.1+ with Chromium 79+ |
 
 <h2 id="version-7x-components">Components</h2>
+
+<h4 id="version-7x-input">Input</h4>
+
+`ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
+
+If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
 
 <h4 id="version-7x-overlays">Overlays</h4>
 

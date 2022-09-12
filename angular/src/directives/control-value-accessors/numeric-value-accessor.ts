@@ -18,13 +18,13 @@ export class NumericValueAccessorDirective extends ValueAccessor {
     super(injector, el);
   }
 
-  @HostListener('ionChange', ['$event.target'])
-  _handleIonChange(el: any): void {
-    this.handleChangeEvent(el, el.value);
+  @HostListener('ionInput', ['$event.target'])
+  handleInputEvent(el: HTMLIonInputElement): void {
+    this.handleValueChange(el, el.value);
   }
 
   registerOnChange(fn: (_: number | null) => void): void {
-    super.registerOnChange((value) => {
+    super.registerOnChange((value: string) => {
       fn(value === '' ? null : parseFloat(value));
     });
   }
