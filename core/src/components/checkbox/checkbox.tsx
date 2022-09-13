@@ -63,7 +63,10 @@ export class Checkbox implements ComponentInterface {
   @Prop() value: any | null = 'on';
 
   /**
-   * Emitted when the checked property has changed.
+   * Emitted when the checked property has changed
+   * as a result of a user action such as a click.
+   * This event will not emit when programmatically
+   * setting the checked property.
    */
   @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
@@ -88,11 +91,7 @@ export class Checkbox implements ComponentInterface {
   }
 
   @Watch('checked')
-  checkedChanged(isChecked: boolean) {
-    this.ionChange.emit({
-      checked: isChecked,
-      value: this.value,
-    });
+  checkedChanged() {
     this.emitStyle();
   }
 
@@ -114,11 +113,25 @@ export class Checkbox implements ComponentInterface {
     }
   }
 
-  private onClick = (ev: any) => {
+  /**
+   * Sets the checked property and emits
+   * the ionChange event. Use this to update the
+   * checked state in response to user-generated
+   * actions such as a click.
+   */
+  private setChecked = (state: boolean) => {
+    const isChecked = (this.checked = state);
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value,
+    });
+  };
+
+  private toggleChecked = (ev: any) => {
     ev.preventDefault();
 
     this.setFocus();
-    this.checked = !this.checked;
+    this.setChecked(!this.checked);
     this.indeterminate = false;
   };
 
@@ -153,7 +166,6 @@ export class Checkbox implements ComponentInterface {
 
     return (
       <Host
-        onClick={this.onClick}
         aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
@@ -176,6 +188,7 @@ export class Checkbox implements ComponentInterface {
           aria-checked={`${checked}`}
           disabled={disabled}
           id={inputId}
+          onChange={this.toggleChecked}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
           ref={(focusEl) => (this.focusEl = focusEl)}
