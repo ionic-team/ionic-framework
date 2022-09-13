@@ -22,7 +22,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
-  private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
 
   // Value to be emitted when gesture ends
@@ -76,15 +75,13 @@ export class Segment implements ComponentInterface {
   /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value?: string | null;
+  @Prop({ mutable: true }) value?: string;
 
   @Watch('value')
   protected valueChanged(value: string | undefined, oldValue: string | undefined | null) {
     this.ionSelect.emit({ value });
-    if (oldValue !== '' || this.didInit) {
-      if (!this.activated) {
-        this.ionChange.emit({ value });
-      } else {
+    if (oldValue !== '') {
+      if (this.activated) {
         this.valueAfterGesture = value;
       }
     }
@@ -157,7 +154,6 @@ export class Segment implements ComponentInterface {
     if (this.disabled) {
       this.disabledChanged();
     }
-    this.didInit = true;
   }
 
   onStart(detail: GestureDetail) {
@@ -181,9 +177,19 @@ export class Segment implements ComponentInterface {
 
     const value = this.valueAfterGesture;
     if (value !== undefined) {
-      this.ionChange.emit({ value });
       this.valueAfterGesture = undefined;
     }
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    this.ionChange.emit({ value });
   }
 
   private getButtons() {
@@ -247,6 +253,7 @@ export class Segment implements ComponentInterface {
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
       this.value = clicked.value;
+      this.emitValueChange();
       this.setCheckedClasses();
     }
 
@@ -296,6 +303,15 @@ export class Segment implements ComponentInterface {
     });
 
     this.value = current.value;
+    if (!this.activated) {
+      /**
+       * The value change is emitted only when the segment is not activated.
+       * This is to align with iOS where the value change is only emitted
+       * when the pointer is released, not when each segment button is
+       * activated on drag.
+       */
+      this.emitValueChange();
+    }
     this.setCheckedClasses();
   }
 

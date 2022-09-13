@@ -2452,7 +2452,7 @@ export namespace Components {
         /**
           * the value of the segment.
          */
-        "value"?: string | null;
+        "value"?: string;
     }
     interface IonSegmentButton {
         /**
@@ -6227,7 +6227,7 @@ declare namespace LocalJSX {
         /**
           * the value of the segment.
          */
-        "value"?: string | null;
+        "value"?: string;
     }
     interface IonSegmentButton {
         /**
