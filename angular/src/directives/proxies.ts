@@ -814,14 +814,29 @@ export class IonInfiniteScrollContent {
   }
 }
 
+import type { InputInputEventDetail as IInputInputInputEventDetail } from '@ionic/core';
 import type { InputChangeEventDetail as IInputInputChangeEventDetail } from '@ionic/core';
 export declare interface IonInput extends Components.IonInput {
   /**
-   * Emitted when a keyboard input occurred. 
+   * The `ionInput` event fires when the `value` of an `<ion-input>` element
+has been changed.
+
+For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<CustomEvent<IInputInputInputEventDetail>>;
   /**
-   * Emitted when the value has changed. 
+   * The `ionChange` event is fired for `<ion-input>` elements when the user
+modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+event is not necessarily fired for each alteration to an element's value.
+
+Depending on the way the users interacts with the element, the `ionChange`
+event fires at a different moment:
+- When the user commits the change explicitly (e.g. by selecting a date
+from a date picker for `<ion-input type="date">`, etc.).
+- When the element loses focus after its value has changed: for elements
+where the user's interaction is typing. 
    */
   ionChange: EventEmitter<CustomEvent<IInputInputChangeEventDetail>>;
   /**
