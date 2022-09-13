@@ -260,7 +260,7 @@ export class Input implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title']),
+      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
     };
   }
 
