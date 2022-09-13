@@ -12,4 +12,24 @@ test.describe('label: rendering', () => {
 
     expect(await item.screenshot()).toMatchSnapshot(`item-color-inherit-${page.getSnapshotSettings()}.png`);
   });
+  test('should set color directly', async ({ page }) => {
+    await page.setContent(`
+      <ion-label color="danger">Label Text</ion-label>
+    `);
+
+    const labelEl = page.locator('ion-label');
+
+    expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-${page.getSnapshotSettings()}.png`);
+  })
+  test('should use contrast color when color is set on item', async ({ page }) => {
+    await page.setContent(`
+      <ion-item color="danger">
+        <ion-label>Label Text</ion-label>
+      </ion-item>
+    `);
+
+    const labelEl = page.locator('ion-label');
+
+    expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-contrast-${page.getSnapshotSettings()}.png`);
+  })
 });
