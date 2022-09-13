@@ -84,6 +84,8 @@ iOS:
 
 `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
 
+The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
+
 <h4 id="version-7x-slides">Slides</h4>
 
 `ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
