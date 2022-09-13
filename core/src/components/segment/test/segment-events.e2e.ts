@@ -1,18 +1,13 @@
-
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
-import { Mouse } from 'puppeteer';
 
 test.describe('segment: events: ionChange', () => {
-
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
 
   test.describe('when the segment is clicked', () => {
-
     test.describe('should emit', () => {
-
       test('when the value changes', async ({ page }) => {
         await page.setContent(`
           <ion-segment value="1">
@@ -56,19 +51,15 @@ test.describe('segment: events: ionChange', () => {
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
         expect(ionChangeSpy.events.length).toBe(1);
       });
-
     });
-
   });
 
   test.describe('when the pointer is released', () => {
-
     test.describe('should emit', () => {
-
       test('if the value has changed', async ({ page }) => {
         test.info().annotations.push({
           type: 'issue',
-          description: 'https://github.com/ionic-team/ionic-framework/issues/20257'
+          description: 'https://github.com/ionic-team/ionic-framework/issues/20257',
         });
 
         await page.setContent(`
@@ -95,13 +86,10 @@ test.describe('segment: events: ionChange', () => {
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
         expect(ionChangeSpy.events.length).toBe(1);
       });
-
     });
-
   });
 
   test.describe('should not emit', () => {
-
     test('if the value has not changed', async ({ page }) => {
       await page.setContent(`
         <ion-segment value="1">
@@ -133,12 +121,10 @@ test.describe('segment: events: ionChange', () => {
       const segment = page.locator('ion-segment');
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      await segment.evaluate((el: HTMLIonSegmentElement) => el.value = '2');
+      await segment.evaluate((el: HTMLIonSegmentElement) => (el.value = '2'));
 
       expect(ionChangeSpy.events.length).toBe(0);
       expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
     });
-
   });
-
 });
