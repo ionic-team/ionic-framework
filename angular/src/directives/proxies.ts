@@ -31,7 +31,10 @@ export class IonAccordion {
 import type { AccordionGroupChangeEventDetail as IAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core';
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
   /**
-   * Emitted when the value property has changed. 
+   * Emitted when the value property has changed
+as a result of a user action such as a click.
+This event will not emit when programmatically setting
+the value property. 
    */
   ionChange: EventEmitter<CustomEvent<IAccordionGroupAccordionGroupChangeEventDetail>>;
 
