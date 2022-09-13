@@ -8,6 +8,7 @@ import {
   createAnimation,
 } from '@ionic/core/components';
 import React from 'react';
+import type { PropsWithChildren } from 'react';
 
 interface PartialPropertyValue {
   property: string;
@@ -59,7 +60,7 @@ export interface CreateAnimationProps {
   progressEnd?: { playTo: 0 | 1 | undefined; step: number; dur?: number };
 }
 
-export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
+export class CreateAnimation extends React.PureComponent<PropsWithChildren<CreateAnimationProps>> {
   nodes: Map<number, HTMLElement> = new Map();
   animation: Animation;
 
