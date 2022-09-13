@@ -7,8 +7,7 @@ import {
   AnimationLifecycle,
   createAnimation,
 } from '@ionic/core/components';
-import React from 'react';
-import type { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 interface PartialPropertyValue {
   property: string;
