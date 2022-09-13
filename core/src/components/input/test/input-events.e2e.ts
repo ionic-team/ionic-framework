@@ -2,6 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('input: events: ionChange', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+  });
+
   test.describe('when the input is blurred', () => {
     test.describe('should emit', () => {
       test('if the value has changed', async ({ page }) => {
