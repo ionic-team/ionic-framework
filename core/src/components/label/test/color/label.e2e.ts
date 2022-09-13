@@ -20,7 +20,7 @@ test.describe('label: rendering', () => {
     const labelEl = page.locator('ion-label');
 
     expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-${page.getSnapshotSettings()}.png`);
-  })
+  });
   test('should use contrast color when color is set on item', async ({ page }) => {
     await page.setContent(`
       <ion-item color="danger">
@@ -31,7 +31,7 @@ test.describe('label: rendering', () => {
     const labelEl = page.locator('ion-label');
 
     expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-contrast-${page.getSnapshotSettings()}.png`);
-  })
+  });
   test('should override color even if color set on item', async ({ page }) => {
     await page.setContent(`
       <ion-item color="danger">
@@ -42,5 +42,5 @@ test.describe('label: rendering', () => {
     const labelEl = page.locator('ion-label');
 
     expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-override-${page.getSnapshotSettings()}.png`);
-  })
+  });
 });

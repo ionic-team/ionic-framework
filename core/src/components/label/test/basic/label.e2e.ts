@@ -5,7 +5,7 @@ test.describe('label: rendering', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setContent(`
       <ion-label>My Label</ion-label>
-    `)
+    `);
 
     const labelEl = page.locator('ion-label');
 
@@ -16,7 +16,7 @@ test.describe('label: rendering', () => {
       <ion-item>
         <ion-label>My Label</ion-label>
       </ion-item>
-    `)
+    `);
 
     const itemEl = page.locator('ion-item');
 
@@ -28,7 +28,7 @@ test.describe('label: rendering', () => {
         <ion-label position="stacked">My Label</ion-label>
         <ion-input></ion-input>
       </ion-item>
-    `)
+    `);
 
     const itemEl = page.locator('ion-item');
 
@@ -40,7 +40,7 @@ test.describe('label: rendering', () => {
         <ion-label position="floating">My Label</ion-label>
         <ion-input></ion-input>
       </ion-item>
-    `)
+    `);
 
     const itemEl = page.locator('ion-item');
 
