@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.7-nightly.20220913](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7-nightly.20220913) (2022-09-13)
+
+
+### Bug Fixes
+
+* **angular:** nav controller can pop views after leaving tabs outlet ([#25690](https://github.com/ionic-team/ionic/issues/25690)) ([725b13f](https://github.com/ionic-team/ionic/commit/725b13fa60775dc9f9c3491cb545c70a5a9162eb)), closes [#18593](https://github.com/ionic-team/ionic/issues/18593)
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 **Note:** Version bump only for package @ionic/angular
