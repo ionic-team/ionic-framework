@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('avatar: basic', () => {
   test('should not have visual regressions', async ({ page, skip }) => {
-    skip.rtl();
+    skip.rtl('Avatar does not test RTL behaviors. Usages of Avatar in slots are tested in components that use Avatar.');
 
     await page.goto(`/src/components/avatar/test/basic`);
 
