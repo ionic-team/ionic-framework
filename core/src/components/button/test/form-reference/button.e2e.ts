@@ -7,15 +7,15 @@ test.describe('button: form', () => {
       <form id="myForm"></form>
       <ion-button form="myForm" type="submit">Submit</ion-button>
     `);
-  
+
     const submitEvent = await page.spyOnEvent('submit');
 
     await page.click('ion-button');
-  
+
     expect(submitEvent).toHaveReceivedEvent();
   });
 
-  test('should submit the form by reference', async({ page }) => {
+  test('should submit the form by reference', async ({ page }) => {
     await page.setContent(`
       <form></form>
       <ion-button type="submit">Submit</ion-button>
@@ -26,25 +26,25 @@ test.describe('button: form', () => {
         button.form = form;
       </script>
     `);
-  
+
     const submitEvent = await page.spyOnEvent('submit');
-    
+
     await page.click('ion-button');
-  
+
     expect(submitEvent).toHaveReceivedEvent();
   });
 
-  test('should submit the closest form', async({ page }) => {
+  test('should submit the closest form', async ({ page }) => {
     await page.setContent(`
       <form>
          <ion-button type="submit">Submit</ion-button>
       </form>
     `);
-  
+
     const submitEvent = await page.spyOnEvent('submit');
 
     await page.click('ion-button');
-  
+
     expect(submitEvent).toHaveReceivedEvent();
   });
 });
