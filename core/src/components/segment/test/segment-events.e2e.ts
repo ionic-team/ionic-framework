@@ -84,7 +84,6 @@ test.describe('segment: events: ionChange', () => {
         await ionChangeSpy.next();
 
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
-        expect(ionChangeSpy.events.length).toBe(1);
       });
     });
   });

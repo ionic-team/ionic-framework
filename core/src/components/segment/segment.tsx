@@ -80,10 +80,8 @@ export class Segment implements ComponentInterface {
   @Watch('value')
   protected valueChanged(value: string | undefined, oldValue: string | undefined | null) {
     this.ionSelect.emit({ value });
-    if (oldValue !== '') {
-      if (this.activated) {
-        this.valueAfterGesture = value;
-      }
+    if (oldValue !== '' && this.activated) {
+      this.valueAfterGesture = value;
     }
   }
 
@@ -177,6 +175,7 @@ export class Segment implements ComponentInterface {
 
     const value = this.valueAfterGesture;
     if (value !== undefined) {
+      this.emitValueChange();
       this.valueAfterGesture = undefined;
     }
   }
