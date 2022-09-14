@@ -53,7 +53,6 @@
     "@types/swiper": "5.4.0",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
-    "@typescript-eslint/utils": "^5.37.0",
     "aws-sdk": "^2.738.0",
     "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
