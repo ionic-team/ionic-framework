@@ -399,6 +399,12 @@ export const present = async (
     return;
   }
 
+  /**
+   * Updates the assigned z-index of the overlay
+   * to be above the last overlay.
+   */
+  prepareOverlay(overlay.el);
+
   setRootAriaHidden(true);
 
   overlay.presented = true;

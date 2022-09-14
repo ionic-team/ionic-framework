@@ -178,30 +178,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
       const appRoot = document.querySelector('ion-app') || document.body;
 
-      const overlay = createElement(
-        tagName,
-        newProps,
-        /**
-         * We only want the inner component
-         * to be mounted if the overlay is open,
-         * so conditionally render the component
-         * based on the isOpen state.
-         */
-        createElement(
-          'div',
-          {
-            id: 'ion-react-wrapper',
-            ref: this.wrapperRef,
-            style: {
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%',
-            },
-          },
-          children
-        )
-      );
-
       /**
        * Trigger-based overlays are dependent on the web component being
        * mounted in order for the trigger element to attach event listeners.
@@ -215,7 +191,34 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       const mountOverlay =
         this.state.isOpen || this.props.isOpen || this.isDismissing || keepContentsMounted;
 
-      return createPortal(mountOverlay ? overlay : null, appRoot);
+      return createPortal(
+        mountOverlay
+          ? createElement(
+              tagName,
+              newProps,
+              /**
+               * We only want the inner component
+               * to be mounted if the overlay is open,
+               * so conditionally render the component
+               * based on the isOpen state.
+               */
+              createElement(
+                'div',
+                {
+                  id: 'ion-react-wrapper',
+                  ref: this.wrapperRef,
+                  style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                  },
+                },
+                children
+              )
+            )
+          : null,
+        appRoot
+      );
     }
 
     static get displayName() {
