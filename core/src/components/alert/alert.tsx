@@ -43,6 +43,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
   private gesture?: Gesture;
+  private hdrId?: string;
+  private subHdrId?: string;
+  private msgId?: string;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -250,6 +253,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   connectedCallback() {
     prepareOverlay(this.el);
+    const { overlayIndex } = this;
+    this.hdrId = `alert-${overlayIndex}-hdr`;
+    this.subHdrId = `alert-${overlayIndex}-sub-hdr`;
+    this.msgId = `alert-${overlayIndex}-msg`;
   }
 
   componentWillLoad() {
@@ -578,11 +585,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
+    const { overlayIndex, header, subHeader, message, htmlAttributes, hdrId, subHdrId, msgId } = this;
     const mode = getIonMode(this);
-    const hdrId = `alert-${overlayIndex}-hdr`;
-    const subHdrId = `alert-${overlayIndex}-sub-hdr`;
-    const msgId = `alert-${overlayIndex}-msg`;
+
     const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
 
     /**
