@@ -85,7 +85,7 @@ iOS:
 |`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
 |`$range-ios-knob-width`|`28px`|`26px`|
 
-<h4 id="version-7x-slides">Segment</h4>
+<h4 id="version-7x-segment">Segment</h4>
 
 `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
 
