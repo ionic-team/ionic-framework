@@ -38,6 +38,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   private wrapperEl?: HTMLElement;
   private groupEl?: HTMLElement;
   private gesture?: Gesture;
+  private headerId?: string;
 
   @Element() el!: HTMLIonActionSheetElement;
 
@@ -132,6 +133,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   connectedCallback() {
     prepareOverlay(this.el);
+
+    const { overlayIndex } = this;
+    this.headerId = `action-sheet-${overlayIndex}-header`;
   }
 
   /**
@@ -239,22 +243,21 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { header, htmlAttributes, overlayIndex } = this;
+    const { header, htmlAttributes, overlayIndex, headerId } = this;
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');
-    const headerID = `action-sheet-${overlayIndex}-header`;
 
     return (
       <Host
         role="dialog"
         aria-modal="true"
-        aria-labelledby={header !== undefined ? headerID : null}
+        aria-labelledby={header !== undefined ? headerId : null}
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
-          zIndex: `${20000 + this.overlayIndex}`,
+          zIndex: `${20000 + overlayIndex}`,
         }}
         class={{
           [mode]: true,
@@ -274,7 +277,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
               {header !== undefined && (
                 <div
-                  id={headerID}
+                  id={headerId}
                   class={{
                     'action-sheet-title': true,
                     'action-sheet-has-sub-title': this.subHeader !== undefined,
