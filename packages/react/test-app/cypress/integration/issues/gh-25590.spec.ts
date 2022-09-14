@@ -22,7 +22,20 @@ describe('IonModal', () => {
 
     cy.get('ion-button#dismissModalBtn').click();
     cy.get('ion-button#renderModalBtn').should('be.visible');
+  });
 
+  it('should display an inline modal within a modal', () => {
+    cy.visit('issue/ion-modal-datetime-button');
+
+    cy.get('ion-modal').should('not.exist');
+    cy.get('ion-button#renderModalBtn').click();
+
+    cy.get('ion-modal').should('be.visible');
+
+    cy.get('ion-datetime-button').click();
+
+    cy.get('ion-modal#datetimeModal').should('be.visible');
+    cy.get('ion-datetime').should('be.visible');
   });
 
 });

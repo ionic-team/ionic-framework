@@ -29,6 +29,7 @@ import Tabs from './pages/Tabs';
 import NavComponent from './pages/navigation/NavComponent';
 import IonModalConditionalSibling from './pages/issues/IonModalConditionalSibling';
 import IonModalConditional from './pages/issues/IonModalConditional';
+import IonModalDatetimeButton from './pages/issues/IonModalDatetimeButton';
 
 setupIonicReact();
 
@@ -44,6 +45,7 @@ const App: React.FC = () => (
         <Route path="/tabs" component={Tabs} />
         <Route path="/issue/ion-modal-conditional-sibling" component={IonModalConditionalSibling} />
         <Route path="/issue/ion-modal-conditional" component={IonModalConditional} />
+        <Route path="/issue/ion-modal-datetime-button" component={IonModalDatetimeButton} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
