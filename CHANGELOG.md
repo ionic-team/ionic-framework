@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.7](https://github.com/ionic-team/ionic-framework/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **angular:** nav controller can pop views after leaving tabs outlet ([#25690](https://github.com/ionic-team/ionic-framework/issues/25690)) ([725b13f](https://github.com/ionic-team/ionic-framework/commit/725b13fa60775dc9f9c3491cb545c70a5a9162eb)), closes [#18593](https://github.com/ionic-team/ionic-framework/issues/18593)
+* **datetime:** correct year is set in wheel picker ([#25896](https://github.com/ionic-team/ionic-framework/issues/25896)) ([fb653eb](https://github.com/ionic-team/ionic-framework/commit/fb653ebe67458a088adf0626741d190ceb2880a6)), closes [#25895](https://github.com/ionic-team/ionic-framework/issues/25895)
+* **footer:** padding is added correctly with tabs ([#25921](https://github.com/ionic-team/ionic-framework/issues/25921)) ([edbb64c](https://github.com/ionic-team/ionic-framework/commit/edbb64c4b6de7ace7043675a85fd503da18304d7)), closes [#25918](https://github.com/ionic-team/ionic-framework/issues/25918)
+* **input,textarea:** data-form-type attribute is assigned to inner input ([#25927](https://github.com/ionic-team/ionic-framework/issues/25927)) ([9451b28](https://github.com/ionic-team/ionic-framework/commit/9451b283e2cb30ac9087574461f6b9f4b6cc3e0f)), closes [#25908](https://github.com/ionic-team/ionic-framework/issues/25908)
+* **modal:** sheet is easier to dismiss with swipe ([#25883](https://github.com/ionic-team/ionic-framework/issues/25883)) ([fa169d2](https://github.com/ionic-team/ionic-framework/commit/fa169d2dca649107342fe365ef6c7da892ebb8fd)), closes [#24296](https://github.com/ionic-team/ionic-framework/issues/24296)
+* **react:** add correct type for CreateAnimation ([#25931](https://github.com/ionic-team/ionic-framework/issues/25931)) ([89d3e3c](https://github.com/ionic-team/ionic-framework/commit/89d3e3c819b282e4d7ce716b9099eaab82ab4de2))
+* **tab-bar:** use correct import path ([#25898](https://github.com/ionic-team/ionic-framework/issues/25898)) ([ad46045](https://github.com/ionic-team/ionic-framework/commit/ad46045bcc251c9719ecf6621792f1a5b3c6afce)), closes [#25897](https://github.com/ionic-team/ionic-framework/issues/25897)
+* **textarea:** auto grow textarea line wraps long contents ([#25928](https://github.com/ionic-team/ionic-framework/issues/25928)) ([777109a](https://github.com/ionic-team/ionic-framework/commit/777109a7e8625ed61a8cc09e52fc06e104b124ea)), closes [#25893](https://github.com/ionic-team/ionic-framework/issues/25893)
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic-framework/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 
