@@ -28,6 +28,24 @@ test.describe('card: basic', () => {
       skip.rtl();
     });
 
+    test('should not have visual regressions with button cards', async ({ page }) => {
+      await page.setContent(`
+        <ion-card button="true">
+          <ion-card-header>
+            <ion-card-title>Card Title</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week
+            in the woods. Wash your spirit clean.
+          </ion-card-content>
+        </ion-card>
+      `);
+
+      const card = page.locator('ion-card');
+      expect(await card.screenshot()).toMatchSnapshot(`card-button-${page.getSnapshotSettings()}.png`);
+    });
+
     test('should not have visual regressions with translucent cards', async ({ page, skip }) => {
       skip.mode('md', 'Translucent effect is only available in iOS mode.');
 
@@ -36,12 +54,12 @@ test.describe('card: basic', () => {
           <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0">
             <img style="transform: rotate(145deg) scale(1.5)" src="/src/components/card/test/img.jpg" />
           </div>
-          <ion-card-header translucent>
+          <ion-card-header translucent="true">
             <ion-card-subtitle> Subtitle </ion-card-subtitle>
             <ion-card-title> Title </ion-card-title>
           </ion-card-header>
 
-          <ion-card-content style="min-height: 200px"> </ion-card-content>
+          <ion-card-content style="min-height: 20px"></ion-card-content>
         </ion-card>
       `);
 
@@ -119,13 +137,13 @@ test.describe('card: basic', () => {
               <ion-note>More</ion-note>
             </ion-item>
 
-            <ion-item button class="ion-activated">
+            <ion-item button="true" class="ion-activated">
               <ion-icon name="warning" slot="start"></ion-icon>
               <ion-label>Button Item activated</ion-label>
               <ion-note>More</ion-note>
             </ion-item>
 
-            <ion-item button>
+            <ion-item button="true">
               <ion-icon name="walk" slot="start"></ion-icon>
               <ion-label>Button Item</ion-label>
               <ion-note>More</ion-note>
