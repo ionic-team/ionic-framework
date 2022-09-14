@@ -380,7 +380,7 @@ export namespace Components {
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
-          * To specify the form to be submitted if the button is placed outside of that form.
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
          */
         "form"?: string | HTMLFormElement;
         /**
@@ -4344,7 +4344,7 @@ declare namespace LocalJSX {
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
-          * To specify the form to be submitted if the button is placed outside of that form.
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
          */
         "form"?: string | HTMLFormElement;
         /**
