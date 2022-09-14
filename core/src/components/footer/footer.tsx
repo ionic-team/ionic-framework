@@ -112,7 +112,7 @@ export class Footer implements ComponentInterface {
     const { translucent, collapse } = this;
     const mode = getIonMode(this);
     const tabs = this.el.closest('ion-tabs');
-    const tabBar = tabs?.querySelector('ion-tab-bar');
+    const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 
     return (
       <Host
