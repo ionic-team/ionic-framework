@@ -86,6 +86,35 @@ test.describe('segment: events: ionChange', () => {
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
       });
     });
+
+    test.describe('should not emit', () => {
+      test('if the value has not changed', async ({ page }) => {
+        await page.setContent(`
+          <ion-segment value="1">
+            <ion-segment-button value="1">One</ion-segment-button>
+            <ion-segment-button value="2">Two</ion-segment-button>
+            <ion-segment-button value="3">Three</ion-segment-button>
+          </ion-segment>
+        `);
+
+        const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+        const firstButton = page.locator('ion-segment-button[value="1"]');
+        const lastButton = page.locator('ion-segment-button[value="3"]');
+
+        await firstButton.hover();
+        await page.mouse.down();
+
+        await lastButton.hover();
+        await firstButton.hover();
+
+        await page.mouse.up();
+
+        await page.waitForChanges();
+
+        expect(ionChangeSpy.events.length).toBe(0);
+      });
+    });
   });
 
   test.describe('should not emit', () => {

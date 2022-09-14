@@ -25,7 +25,8 @@ export class Segment implements ComponentInterface {
   private checked?: HTMLIonSegmentButtonElement;
 
   // Value to be emitted when gesture ends
-  private valueAfterGesture?: any;
+  private valueAfterGesture?: string;
+  private valueBeforeGesture?: string;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -155,6 +156,7 @@ export class Segment implements ComponentInterface {
   }
 
   onStart(detail: GestureDetail) {
+    this.valueBeforeGesture = this.value;
     this.activate(detail);
   }
 
@@ -175,7 +177,10 @@ export class Segment implements ComponentInterface {
 
     const value = this.valueAfterGesture;
     if (value !== undefined) {
-      this.emitValueChange();
+      if (this.valueBeforeGesture !== value) {
+        this.emitValueChange();
+      }
+      this.valueBeforeGesture = undefined;
       this.valueAfterGesture = undefined;
     }
   }
