@@ -1,16 +1,16 @@
 module.exports = {
     meta: {
-        messages: {
-            emptyCatch: 'Empty catch block is not allowed.',
-        },
+      messages: {
+        noComponentOnReadyMethod: 'Using the componentOnReady method is not allowed. Use the componentOnReady helper utility instead.',
+      },
     },
     create(context) {
-        return {
-            CatchClause(node) {
-                if (node.body.body.length === 0) {
-                    context.report({ node: node.body, messageId: 'emptyCatch' });
-                }
-            }
-        }
+      return {
+        MemberExpression(node) {
+          if (node.property.name === 'componentOnReady') {
+            context.report({ node: node, messageId: 'noComponentOnReadyMethod' });
+          }
+      }
     }
+  }
 };
