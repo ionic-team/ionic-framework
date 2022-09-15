@@ -16,7 +16,8 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "custom-rules"
   ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -29,6 +30,7 @@ module.exports = {
     ],
     "no-useless-catch": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "custom-rules/no-component-on-ready-method": "error"
   }
 };
