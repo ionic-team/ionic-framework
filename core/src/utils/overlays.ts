@@ -87,7 +87,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
  * are eligible to receive focus. We select
  * interactive elements that meet the following
  * criteria:
- * 1. Element does not have tabindex="-1"
+ * 1. Element does not have a negative tabindex
  * 2. Element does not have [hidden]
  */
 const focusableQueryString =
