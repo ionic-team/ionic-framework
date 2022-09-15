@@ -82,6 +82,14 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   return Promise.resolve() as any;
 };
 
+/**
+ * This query string selects elements that
+ * are eligible to receive focus. We select
+ * interactive elements that meet the following
+ * criteria:
+ * 1. Element does not have tabindex="-1"
+ * 2. Element does not have [hidden]
+ */
 const focusableQueryString =
   '[tabindex]:not([tabindex^="-"]):not([hidden]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]), textarea:not([tabindex^="-"]):not([hidden]), button:not([tabindex^="-"]):not([hidden]), select:not([tabindex^="-"]):not([hidden]), .ion-focusable:not([tabindex^="-"]):not([hidden])';
 
