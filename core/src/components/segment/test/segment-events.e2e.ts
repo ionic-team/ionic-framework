@@ -27,7 +27,7 @@ test.describe('segment: events: ionChange', () => {
         expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
 
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
-        expect(ionChangeSpy.events.length).toBe(1);
+        expect(ionChangeSpy).toHaveReceivedEventTimes(1);
       });
 
       test('when the segment does not have an initial value', async ({ page }) => {
@@ -49,7 +49,7 @@ test.describe('segment: events: ionChange', () => {
         expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
 
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
-        expect(ionChangeSpy.events.length).toBe(1);
+        expect(ionChangeSpy).toHaveReceivedEventTimes(1);
       });
     });
   });
@@ -63,11 +63,15 @@ test.describe('segment: events: ionChange', () => {
         });
 
         await page.setContent(`
-          <ion-segment value="1">
-            <ion-segment-button value="1">One</ion-segment-button>
-            <ion-segment-button value="2">Two</ion-segment-button>
-            <ion-segment-button value="3">Three</ion-segment-button>
-          </ion-segment>
+          <ion-app>
+            <ion-toolbar>
+              <ion-segment value="1">
+                <ion-segment-button value="1">One</ion-segment-button>
+                <ion-segment-button value="2">Two</ion-segment-button>
+                <ion-segment-button value="3">Three</ion-segment-button>
+              </ion-segment>
+            </ion-toolbar>
+          </ion-app>
         `);
 
         const ionChangeSpy = await page.spyOnEvent('ionChange');
@@ -81,9 +85,8 @@ test.describe('segment: events: ionChange', () => {
         await lastButton.hover();
         await page.mouse.up();
 
-        await ionChangeSpy.next();
-
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
+        expect(ionChangeSpy).toHaveReceivedEventTimes(1);
       });
     });
 
@@ -106,13 +109,11 @@ test.describe('segment: events: ionChange', () => {
         await page.mouse.down();
 
         await lastButton.hover();
-        await firstButton.hover();
 
+        await firstButton.hover();
         await page.mouse.up();
 
-        await page.waitForChanges();
-
-        expect(ionChangeSpy.events.length).toBe(0);
+        expect(ionChangeSpy).toHaveReceivedEventTimes(0);
       });
     });
   });
@@ -134,7 +135,7 @@ test.describe('segment: events: ionChange', () => {
 
       expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('1');
 
-      expect(ionChangeSpy.events.length).toBe(0);
+      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     });
 
     test('if the value is set programmatically', async ({ page }) => {
@@ -151,7 +152,7 @@ test.describe('segment: events: ionChange', () => {
 
       await segment.evaluate((el: HTMLIonSegmentElement) => (el.value = '2'));
 
-      expect(ionChangeSpy.events.length).toBe(0);
+      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
       expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
     });
   });

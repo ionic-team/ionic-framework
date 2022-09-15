@@ -24,8 +24,7 @@ export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private checked?: HTMLIonSegmentButtonElement;
 
-  // Value to be emitted when gesture ends
-  private valueAfterGesture?: string;
+  // Value before the segment is dragged
   private valueBeforeGesture?: string;
 
   @Element() el!: HTMLIonSegmentElement;
@@ -79,11 +78,12 @@ export class Segment implements ComponentInterface {
   @Prop({ mutable: true }) value?: string;
 
   @Watch('value')
-  protected valueChanged(value: string | undefined, oldValue: string | undefined | null) {
+  protected valueChanged(value: string | undefined) {
+    /**
+     * `ionSelect` is emitted every time the value changes (internal or external changes).
+     * Used by `ion-segment-button` to determine if the button should be checked.
+     */
     this.ionSelect.emit({ value });
-    if (oldValue !== '' && this.activated) {
-      this.valueAfterGesture = value;
-    }
   }
 
   /**
@@ -99,7 +99,9 @@ export class Segment implements ComponentInterface {
   @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
-   * Emitted when user has dragged over a new button
+   * Emitted when the value of the segment changes from user committed actions
+   * or from externally assigning a value.
+   *
    * @internal
    */
   @Event() ionSelect!: EventEmitter<SegmentChangeEventDetail>;
@@ -175,14 +177,13 @@ export class Segment implements ComponentInterface {
       this.addRipple(detail);
     }
 
-    const value = this.valueAfterGesture;
+    const value = this.value;
     if (value !== undefined) {
       if (this.valueBeforeGesture !== value) {
         this.emitValueChange();
       }
-      this.valueBeforeGesture = undefined;
-      this.valueAfterGesture = undefined;
     }
+    this.valueBeforeGesture = undefined;
   }
 
   /**
@@ -257,7 +258,6 @@ export class Segment implements ComponentInterface {
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
       this.value = clicked.value;
-      this.emitValueChange();
       this.setCheckedClasses();
     }
 
@@ -307,15 +307,6 @@ export class Segment implements ComponentInterface {
     });
 
     this.value = current.value;
-    if (!this.activated) {
-      /**
-       * The value change is emitted only when the segment is not activated.
-       * This is to align with iOS where the value change is only emitted
-       * when the pointer is released, not when each segment button is
-       * activated on drag.
-       */
-      this.emitValueChange();
-    }
     this.setCheckedClasses();
   }
 
@@ -513,6 +504,9 @@ export class Segment implements ComponentInterface {
     if (keyDownSelectsButton) {
       const previous = this.checked || current;
       this.checkButton(previous, current);
+      if (current !== previous) {
+        this.emitValueChange();
+      }
     }
     current.focus();
   }

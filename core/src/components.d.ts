@@ -6212,7 +6212,7 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
-          * Emitted when user has dragged over a new button
+          * Emitted when the value of the segment changes from user committed actions or from externally assigning a value.
          */
         "onIonSelect"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
