@@ -1,7 +1,7 @@
 module.exports = {
     meta: {
       messages: {
-        noComponentOnReadyMethod: 'Using the componentOnReady method is not allowed. Use the componentOnReady helper utility instead.',
+        noComponentOnReadyMethod: 'Using the componentOnReady method is not allowed. Use the componentOnReady helper utility in src/utils/helpers.ts instead.',
       },
     },
     create(context) {
