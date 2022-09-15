@@ -33,6 +33,12 @@ export const waitForChanges = async (page: Page, timeoutMs = 100) => {
               const childElm = children[i];
               const childStencilElm = childElm as HostElement;
               if (childElm.tagName.includes('-') && typeof childStencilElm.componentOnReady === 'function') {
+                /**
+                 * We are only using the lazy loaded bundle
+                 * here so we can safely use the
+                 * componentOnReady method.
+                 */
+                // eslint-disable-next-line custom-rules/no-component-on-ready-method
                 promises.push(childStencilElm.componentOnReady());
               }
               waitComponentOnReady(childElm, promises);

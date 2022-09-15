@@ -58,6 +58,7 @@
     "domino": "^2.1.6",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-custom-rules": "file:custom-rules",
     "execa": "^5.0.0",
     "fs-extra": "^9.0.1",
     "jest": "^26.4.1",
