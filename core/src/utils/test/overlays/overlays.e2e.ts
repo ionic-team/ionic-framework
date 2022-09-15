@@ -53,4 +53,38 @@ test.describe('overlays: focus', () => {
     await page.keyboard.press(tabKey);
     await expect(visibleButton).toBeFocused();
   });
+
+  test.only('should move focus to overlay when last focused element is removed from DOM', async ({
+    page,
+    browserName,
+  }) => {
+    await page.setContent(`
+      <ion-button id="open-modal">Show Modal</ion-button>
+      <ion-modal trigger="open-modal">
+        <ion-content>
+          <ion-button id="remove" onclick="remove(this)">Button</ion-button>
+        </ion-content>
+      </ion-modal>
+      <script>
+        const remove = (el) => {
+          el.remove();
+        }
+      </script>
+    `);
+
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = page.locator('ion-modal');
+    const presentButton = page.locator('ion-button#open-modal');
+    const removeButton = page.locator('ion-button#remove');
+    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+    await presentButton.click();
+    await ionModalDidPresent.next();
+
+    await page.keyboard.press(tabKey);
+    await expect(removeButton).toBeFocused();
+
+    await page.keyboard.press('Enter');
+    await expect(modal).toBeFocused();
+  });
 });
