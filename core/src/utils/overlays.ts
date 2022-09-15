@@ -91,7 +91,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
  * 2. Element does not have [hidden]
  */
 const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]):not([hidden]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]), textarea:not([tabindex^="-"]):not([hidden]), button:not([tabindex^="-"]):not([hidden]), select:not([tabindex^="-"]):not([hidden]), .ion-focusable:not([tabindex^="-"]):not([hidden])';
+  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled])';
 
 export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
