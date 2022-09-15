@@ -4,7 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('overlays: focus', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
-  })
+  });
   test('should not focus the overlay container if element inside of overlay is focused', async ({ page }) => {
     await page.setContent(`
       <ion-button id="open-modal">Show Modal</ion-button>
@@ -52,5 +52,5 @@ test.describe('overlays: focus', () => {
 
     await page.keyboard.press(tabKey);
     await expect(visibleButton).toBeFocused();
-  })
+  });
 });
