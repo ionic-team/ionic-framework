@@ -54,7 +54,7 @@ test.describe('overlays: focus', () => {
     await expect(visibleButton).toBeFocused();
   });
 
-  test.only('should move focus to overlay when last focused element is removed from DOM', async ({
+  test.only('should not select a disabled focusable element', async ({
     page,
     browserName,
   }) => {
@@ -62,29 +62,24 @@ test.describe('overlays: focus', () => {
       <ion-button id="open-modal">Show Modal</ion-button>
       <ion-modal trigger="open-modal">
         <ion-content>
-          <ion-button id="remove" onclick="remove(this)">Button</ion-button>
+          <ion-button disabled="true" id="disabled">Button</ion-button>
+          <ion-button id="active">Active Button</ion-button>
         </ion-content>
       </ion-modal>
-      <script>
-        const remove = (el) => {
-          el.remove();
-        }
-      </script>
     `);
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-    const modal = page.locator('ion-modal');
     const presentButton = page.locator('ion-button#open-modal');
-    const removeButton = page.locator('ion-button#remove');
+    const activeButton = page.locator('ion-button#active');
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
     await presentButton.click();
     await ionModalDidPresent.next();
 
     await page.keyboard.press(tabKey);
-    await expect(removeButton).toBeFocused();
+    await expect(activeButton).toBeFocused();
 
-    await page.keyboard.press('Enter');
-    await expect(modal).toBeFocused();
+    await page.keyboard.press(tabKey);
+    await expect(activeButton).toBeFocused();
   });
 });
