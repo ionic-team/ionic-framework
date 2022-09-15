@@ -7,6 +7,6 @@ test.describe('button: size', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`button-size-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`button-size-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -7,6 +7,6 @@ test.describe('button: clear', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`button-clear-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`button-clear-${page.getSnapshotSettings()}.png`);
   });
 });

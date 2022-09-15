@@ -7,8 +7,6 @@ test.describe('button: strong', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `button-strong-${page.getSnapshotSettings()}.png`
-    );
+    expect(await page.screenshot()).toMatchSnapshot(`button-strong-${page.getSnapshotSettings()}.png`);
   });
 });

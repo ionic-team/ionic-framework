@@ -7,8 +7,6 @@ test.describe('button: expand', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `button-expand-${page.getSnapshotSettings()}.png`
-    );
+    expect(await page.screenshot()).toMatchSnapshot(`button-expand-${page.getSnapshotSettings()}.png`);
   });
 });
