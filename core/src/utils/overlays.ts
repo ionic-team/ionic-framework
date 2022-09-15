@@ -100,7 +100,7 @@ const focusableQueryString =
 export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
 
-  console.log('got',firstInput)
+  console.log('got', firstInput);
   const shadowRoot = firstInput?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
