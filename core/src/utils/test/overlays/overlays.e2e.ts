@@ -28,7 +28,7 @@ test.describe('overlays: focus', () => {
     await expect(page.locator('ion-input input')).toBeFocused();
   });
 
-  test.only('should not select a hidden focusable element', async ({ page, browserName }) => {
+  test('should not select a hidden focusable element', async ({ page, browserName }) => {
     await page.setContent(`
       <ion-button id="open-modal">Show Modal</ion-button>
       <ion-modal trigger="open-modal">
@@ -41,7 +41,6 @@ test.describe('overlays: focus', () => {
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const presentButton = page.locator('ion-button#open-modal');
-    const hiddenButton = page.locator('ion-button#hidden');
     const visibleButton = page.locator('ion-button#visible');
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
