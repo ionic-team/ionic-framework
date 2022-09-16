@@ -189,7 +189,7 @@ test.describe('datetime: minmax', () => {
     await expect(datetimeMonthDidChange).toHaveReceivedEventTimes(1);
   });
 
-  test.only('should not include 12AM when minimum is greater than 12AM', async ({ page, skip }) => {
+  test('should not include 12AM when minimum is greater than 12AM', async ({ page, skip }) => {
     skip.rtl();
 
     test.info().annotations.push({
@@ -212,7 +212,7 @@ test.describe('datetime: minmax', () => {
     await expect(hourPickerItems).toHaveText(['8', '9', '10', '11']);
   });
 
-  test.only('should include 12PM when minimum is greater than 12', async ({ page, skip }) => {
+  test('should include 12PM when minimum is greater than 12', async ({ page, skip }) => {
     skip.rtl();
 
     test.info().annotations.push({
