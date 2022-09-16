@@ -32,7 +32,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-case-declarations": "off",
     "@typescript-eslint/strict-boolean-expressions": [
-      "warn",
+      "error",
       {
         "allowNullableBoolean": true,
         "allowNullableString": true,
