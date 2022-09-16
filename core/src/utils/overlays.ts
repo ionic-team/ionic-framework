@@ -82,8 +82,20 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   return Promise.resolve() as any;
 };
 
+/**
+ * This query string selects elements that
+ * are eligible to receive focus. We select
+ * interactive elements that meet the following
+ * criteria:
+ * 1. Element does not have a negative tabindex
+ * 2. Element does not have `hidden`
+ * 3. Element does not have `disabled` for non-Ionic components.
+ * 4. Element does not have `disabled` or `disabled="true"` for Ionic components.
+ * Note: We need this distinction because `disabled="false"` is
+ * valid usage for the disabled property on ion-button.
+ */
 const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
+  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 
 export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;

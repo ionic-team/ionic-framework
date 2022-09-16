@@ -243,13 +243,8 @@ export class Searchbar implements ComponentInterface {
   /**
    * Clears the input field and triggers the control change.
    */
-  private onClearInput = (ev?: Event, shouldFocus?: boolean) => {
+  private onClearInput = (shouldFocus?: boolean) => {
     this.ionClear.emit();
-
-    if (ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
 
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
@@ -533,8 +528,15 @@ export class Searchbar implements ComponentInterface {
             type="button"
             no-blur
             class="searchbar-clear-button"
-            onMouseDown={(ev) => this.onClearInput(ev, true)}
-            onTouchStart={(ev) => this.onClearInput(ev, true)}
+            onPointerDown={(ev) => {
+              /**
+               * This prevents mobile browsers from
+               * blurring the input when the clear
+               * button is activated.
+               */
+              ev.preventDefault();
+            }}
+            onClick={() => this.onClearInput(true)}
           >
             <ion-icon
               aria-hidden="true"

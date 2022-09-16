@@ -578,20 +578,26 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { overlayIndex, header, subHeader, htmlAttributes } = this;
+    const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
     const mode = getIonMode(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
     const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
-    const defaultAriaLabel = header || subHeader || 'Alert';
+
+    /**
+     * If the header is defined, use that. Otherwise, fall back to the subHeader.
+     * If neither is defined, don't set aria-labelledby.
+     */
+    const ariaLabelledBy = header ? hdrId : subHeader ? subHdrId : null;
 
     return (
       <Host
         role={role}
         aria-modal="true"
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={message ? msgId : null}
         tabindex="-1"
-        aria-label={defaultAriaLabel}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + overlayIndex}`,
@@ -623,7 +629,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             )}
           </div>
 
-          <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(this.message)}></div>
+          <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(message)}></div>
 
           {this.renderAlertInputs()}
           {this.renderAlertButtons()}

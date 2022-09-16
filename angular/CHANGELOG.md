@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **angular:** nav controller can pop views after leaving tabs outlet ([#25690](https://github.com/ionic-team/ionic/issues/25690)) ([725b13f](https://github.com/ionic-team/ionic/commit/725b13fa60775dc9f9c3491cb545c70a5a9162eb)), closes [#18593](https://github.com/ionic-team/ionic/issues/18593)
+
+
+
+
+
+## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* **angular:** router outlet has mode property ([#25816](https://github.com/ionic-team/ionic/issues/25816)) ([afd0bbc](https://github.com/ionic-team/ionic/commit/afd0bbc60aa8f4edc88dc311d6484ac60117fce5)), closes [#25813](https://github.com/ionic-team/ionic/issues/25813)
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 **Note:** Version bump only for package @ionic/angular
