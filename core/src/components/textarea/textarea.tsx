@@ -159,16 +159,23 @@ export class Textarea implements ComponentInterface {
     }
     this.runAutoGrow();
     this.emitStyle();
-    this.ionChange.emit({ value });
   }
 
   /**
-   * Emitted when the input value has changed.
+   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
+   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+   * event is not necessarily fired for each alteration to an element's value.
+   *
+   * Depending on the way the users interacts with the element, the `ionChange`
+   * event fires at a different moment:
+   * - When the element loses focus after its value has changed : for elements
+   * where the user's interaction is typing.
    */
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Emitted when a keyboard input occurred.
+   * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
+   * has been changed.
    */
   @Event() ionInput!: EventEmitter<InputEvent>;
 
@@ -252,6 +259,18 @@ export class Textarea implements ComponentInterface {
     });
   }
 
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    const newValue = value == null ? value : value.toString();
+    this.ionChange.emit({ value: newValue });
+  }
+
   private runAutoGrow() {
     if (this.nativeInput && this.autoGrow) {
       writeTask(() => {
@@ -298,12 +317,16 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
-  private onInput = (ev: Event) => {
-    if (this.nativeInput) {
-      this.value = this.nativeInput.value;
+  private onInput = (ev: InputEvent | Event) => {
+    const input = ev.target as HTMLTextAreaElement | null;
+    if (input) {
+      this.value = input.value || '';
     }
-    this.emitStyle();
     this.ionInput.emit(ev as InputEvent);
+  };
+
+  private onChange = () => {
+    this.emitValueChange();
   };
 
   private onFocus = (ev: FocusEvent) => {
@@ -361,6 +384,7 @@ export class Textarea implements ComponentInterface {
             rows={this.rows}
             wrap={this.wrap}
             onInput={this.onInput}
+            onChange={this.onChange}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}
