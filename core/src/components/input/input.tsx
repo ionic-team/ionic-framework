@@ -260,7 +260,7 @@ export class Input implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title']),
+      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
     };
   }
 
@@ -402,12 +402,6 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private clearTextOnEnter = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter') {
-      this.clearTextInput(ev);
-    }
-  };
-
   private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
@@ -496,8 +490,15 @@ export class Input implements ComponentInterface {
             aria-label="reset"
             type="button"
             class="input-clear-icon"
-            onPointerDown={this.clearTextInput}
-            onKeyDown={this.clearTextOnEnter}
+            onPointerDown={(ev) => {
+              /**
+               * This prevents mobile browsers from
+               * blurring the input when the clear
+               * button is activated.
+               */
+              ev.preventDefault();
+            }}
+            onClick={this.clearTextInput}
           />
         )}
       </Host>

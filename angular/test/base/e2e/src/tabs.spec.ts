@@ -97,15 +97,27 @@ describe('Tabs', () => {
     it('should navigate deep then go home', () => {
       const tab = getSelectedTab();
       tab.find('#goto-tab1-page2').click();
+      cy.ionPageVisible('app-tabs-tab1-nested');
+      cy.ionPageHidden('app-tabs-tab1');
+
       testTabTitle('Tab 1 - Page 2 (1)');
 
       cy.get('#goto-next').click();
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab1-nested:first-of-type');
+
       testTabTitle('Tab 1 - Page 2 (2)');
 
       cy.get('#tab-button-contact').click();
+      cy.ionPageVisible('app-tabs-tab2');
+      cy.ionPageHidden('app-tabs-tab1-nested:last-of-type');
+
       testTabTitle('Tab 2 - Page 1');
 
       cy.get('#tab-button-account').click();
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab2');
+
       testTabTitle('Tab 1 - Page 2 (2)');
       cy.testStack('ion-tabs ion-router-outlet', [
         'app-tabs-tab1',
@@ -115,6 +127,16 @@ describe('Tabs', () => {
       ]);
 
       cy.get('#tab-button-account').click();
+
+      /**
+       * Wait for the leaving view to
+       * be unmounted otherwise testTabTitle
+       * may get the leaving view before it
+       * is unmounted.
+       */
+      cy.ionPageVisible('app-tabs-tab1');
+      cy.ionPageDoesNotExist('app-tabs-tab1-nested');
+
       testTabTitle('Tab 1 - Page 1');
       cy.testStack('ion-tabs ion-router-outlet', [
         'app-tabs-tab1',
@@ -225,23 +247,112 @@ describe('Tabs', () => {
     it('should navigate deep then go home and preserve navigation extras', () => {
       let tab = getSelectedTab();
       tab.find('#goto-tab1-page2').click();
+      cy.ionPageVisible('app-tabs-tab1-nested');
+      cy.ionPageHidden('app-tabs-tab1');
+
       tab = testTabTitle('Tab 1 - Page 2 (1)');
 
       tab.find('#goto-next').click();
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab1-nested:first-of-type');
+
       testTabTitle('Tab 1 - Page 2 (2)');
 
       cy.ionTabClick('Tab Two');
+      cy.ionPageVisible('app-tabs-tab2');
+      cy.ionPageHidden('app-tabs-tab1-nested:last-of-type');
+
       testTabTitle('Tab 2 - Page 1');
 
       cy.ionTabClick('Tab One');
+      cy.ionPageVisible('app-tabs-tab1-nested:last-of-type');
+      cy.ionPageHidden('app-tabs-tab2');
+
       testTabTitle('Tab 1 - Page 2 (2)');
 
       cy.ionTabClick('Tab One');
+      /**
+       * Wait for the leaving view to
+       * be unmounted otherwise testTabTitle
+       * may get the leaving view before it
+       * is unmounted.
+       */
+      cy.ionPageVisible('app-tabs-tab1');
+      cy.ionPageDoesNotExist('app-tabs-tab1-nested');
+
       testTabTitle('Tab 1 - Page 1');
 
       testUrlContains(rootUrl);
     });
   })
+
+  describe('entry url - /tabs/account', () => {
+    beforeEach(() => {
+      cy.visit('/tabs/account');
+    });
+    it('should pop to previous view when leaving tabs outlet', () => {
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+
+      cy.get('#goto-tab1-page2').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+
+      cy.get('#goto-global').click();
+
+      cy.get('ion-title').should('contain.text', 'Global Page');
+
+      cy.get('#goto-prev-pop').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+
+      cy.get('#goto-prev').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+
+      /**
+       * Verifies that when entering the tabs outlet directly,
+       * the navController.pop() method does not pop the previous view,
+       * when you are at the root of the tabs outlet.
+       */
+      cy.get('#goto-previous-page').click();
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+    });
+  });
+
+  describe('entry url - /', () => {
+    it('should pop to the root outlet from the tabs outlet', () => {
+      cy.visit('/');
+
+      cy.get('ion-title').should('contain.text', 'Test App');
+
+      cy.get('ion-item').contains('Tabs test').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+
+      cy.get('#goto-tab1-page2').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+
+      cy.get('#goto-global').click();
+
+      cy.get('ion-title').should('contain.text', 'Global Page');
+
+      cy.get('#goto-prev-pop').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 2 (1)');
+
+      cy.get('#goto-prev').click();
+
+      cy.get('ion-title').should('contain.text', 'Tab 1 - Page 1');
+
+      cy.get('#goto-previous-page').click();
+
+      cy.get('ion-title').should('contain.text', 'Test App');
+
+    });
+  });
+
 
   describe('entry url - /tabs/account/nested/1', () => {
     beforeEach(() => {

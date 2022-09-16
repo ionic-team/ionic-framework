@@ -229,6 +229,7 @@ export class ItemSliding implements ComponentInterface {
        * util here since we need to wait for all of these items
        * to be ready before we set `this.sides` and `this.optsDirty`.
        */
+      // eslint-disable-next-line custom-rules/no-component-on-ready-method
       const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
 
       const side = isEndSide(option.side) ? 'end' : 'start';

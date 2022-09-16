@@ -222,7 +222,12 @@ export class Breadcrumb implements ComponentInterface {
           </button>
         )}
         {showSeparator && (
-          <span class="breadcrumb-separator" part="separator">
+          /**
+           * Separators should not be announced by narrators.
+           * We add aria-hidden on the span so that this applies
+           * to any custom separators too.
+           */
+          <span class="breadcrumb-separator" part="separator" aria-hidden="true">
             <slot name="separator">
               {mode === 'ios' ? (
                 <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>

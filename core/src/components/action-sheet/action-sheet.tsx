@@ -239,16 +239,18 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { htmlAttributes } = this;
+    const { header, htmlAttributes, overlayIndex } = this;
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');
+    const headerID = `action-sheet-${overlayIndex}-header`;
 
     return (
       <Host
         role="dialog"
         aria-modal="true"
+        aria-labelledby={header !== undefined ? headerID : null}
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
@@ -256,7 +258,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         }}
         class={{
           [mode]: true,
-
           ...getClassMap(this.cssClass),
           'overlay-hidden': true,
           'action-sheet-translucent': this.translucent,
@@ -268,17 +269,18 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
         <div tabindex="0"></div>
 
-        <div class="action-sheet-wrapper ion-overlay-wrapper" role="dialog" ref={(el) => (this.wrapperEl = el)}>
+        <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
-              {this.header !== undefined && (
+              {header !== undefined && (
                 <div
+                  id={headerID}
                   class={{
                     'action-sheet-title': true,
                     'action-sheet-has-sub-title': this.subHeader !== undefined,
                   }}
                 >
-                  {this.header}
+                  {header}
                   {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
                 </div>
               )}

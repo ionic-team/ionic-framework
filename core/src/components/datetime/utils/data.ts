@@ -3,7 +3,14 @@ import type { PickerColumnItem } from '../../picker-column-internal/picker-colum
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { getLocalizedDayPeriod, removeDateTzOffset, getFormattedHour, addTimePadding, getTodayLabel } from './format';
+import {
+  getLocalizedDayPeriod,
+  removeDateTzOffset,
+  getFormattedHour,
+  addTimePadding,
+  getTodayLabel,
+  getYear,
+} from './format';
 import { getNumDaysInMonth, is24Hour } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
@@ -384,6 +391,7 @@ export const getDayColumnData = (
 };
 
 export const getYearColumnData = (
+  locale: string,
   refParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
@@ -409,7 +417,7 @@ export const getYearColumnData = (
   }
 
   return processedYears.map((year) => ({
-    text: `${year}`,
+    text: getYear(locale, { year, month: refParts.month, day: refParts.day }),
     value: year,
   }));
 };
@@ -439,7 +447,6 @@ const getAllMonthsInRange = (currentParts: DatetimeParts, maxParts: DatetimePart
  */
 export const getCombinedDateColumnData = (
   locale: string,
-  refParts: DatetimeParts,
   todayParts: DatetimeParts,
   minParts: DatetimeParts,
   maxParts: DatetimeParts,
@@ -471,7 +478,7 @@ export const getCombinedDateColumnData = (
    * of work as the text.
    */
   months.forEach((monthObject) => {
-    const referenceMonth = { month: monthObject.month, day: null, year: refParts.year };
+    const referenceMonth = { month: monthObject.month, day: null, year: monthObject.year };
     const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
       month: 'short',
       day: 'numeric',
@@ -490,7 +497,7 @@ export const getCombinedDateColumnData = (
        */
       dateColumnItems.push({
         text: isToday ? getTodayLabel(locale) : dayObject.text,
-        value: `${refParts.year}-${monthObject.month}-${dayObject.value}`,
+        value: `${referenceMonth.year}-${referenceMonth.month}-${dayObject.value}`,
       });
 
       /**
@@ -504,8 +511,8 @@ export const getCombinedDateColumnData = (
        * updating the picker column value.
        */
       dateParts.push({
-        month: monthObject.month,
-        year: refParts.year,
+        month: referenceMonth.month,
+        year: referenceMonth.year,
         day: dayObject.value as number,
       });
     });

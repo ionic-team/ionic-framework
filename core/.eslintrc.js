@@ -17,7 +17,8 @@ module.exports = {
     "project": "tsconfig.json"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "custom-rules"
   ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -38,6 +39,7 @@ module.exports = {
         "allowNullableString": true,
         "allowAny": true
       }
-    ]
+    ],
+    "custom-rules/no-component-on-ready-method": "error"
   }
 };
