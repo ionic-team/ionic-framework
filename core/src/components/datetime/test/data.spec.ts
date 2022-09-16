@@ -63,7 +63,7 @@ describe('generateTime()', () => {
     };
     const { hours, minutes } = generateTime(today, 'h12', min);
 
-    expect(hours.length).toEqual(11);
+    expect(hours.length).toEqual(10);
     expect(minutes.length).toEqual(60);
   });
   it('should not filter according to min if not on reference day', () => {
@@ -103,7 +103,7 @@ describe('generateTime()', () => {
     };
     const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
-    expect(hours.length).toEqual(7);
+    expect(hours.length).toEqual(8);
     expect(minutes.length).toEqual(45);
   });
   it('should not filter according to min if not on reference day', () => {
