@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'accordions', component: AccordionComponent },
   { path: 'alerts', component: AlertComponent },
   { path: 'inputs', component: InputsComponent },
+  { path: 'textarea', loadChildren: () => import('./textarea/textarea.module').then(m => m.TextareaModule) },
   { path: 'form', component: FormComponent },
   { path: 'modals', component: ModalComponent },
   { path: 'modal-inline', loadChildren: () => import('./modal-inline').then(m => m.ModalInlineModule) },
