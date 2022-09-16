@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Overlays](#version-7x-overlays)
   - [Range](#version-7x-range)
   - [Slides](#version-7x-slides)
+  - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
@@ -99,6 +100,12 @@ Developers using these components will need to migrate to using Swiper.js direct
 - [Angular](https://ionicframework.com/docs/angular/slides)
 - [React](https://ionicframework.com/docs/react/slides)
 - [Vue](https://ionicframework.com/docs/vue/slides)
+
+<h4 id="version-7x-textarea">Textarea</h4>
+
+`ionChange` is no longer emitted when the `value` of `ion-textarea` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the textarea and the textarea losing focus.
+
+If your application requires immediate feedback based on the user typing actively in the textarea, consider migrating your event listeners to using `ionInput` instead.
 
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 
