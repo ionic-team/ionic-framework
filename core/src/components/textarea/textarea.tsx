@@ -53,13 +53,13 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce = 0;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
