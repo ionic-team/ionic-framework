@@ -30,6 +30,12 @@ test.describe('overlays: focus', () => {
 
   test('should not select a hidden focusable element', async ({ page, browserName }) => {
     await page.setContent(`
+      <style>
+        [hidden] {
+          display: none;
+        }
+      </style>
+
       <ion-button id="open-modal">Show Modal</ion-button>
       <ion-modal trigger="open-modal">
         <ion-content>
