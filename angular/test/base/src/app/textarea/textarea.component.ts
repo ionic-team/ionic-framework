@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-textarea',
@@ -12,6 +12,6 @@ export class TextareaComponent {
     textarea: ['', Validators.required]
   })
 
-  constructor(private fb: UntypedFormBuilder) { }
+  constructor(private fb: FormBuilder) { }
 
 }
