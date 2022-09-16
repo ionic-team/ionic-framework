@@ -54,7 +54,10 @@ test.describe('alert: basic', () => {
     expect(alert).toHaveAttribute('data-testid', 'basic-alert');
   });
 
-  test('should dismiss when async handler resolves', async ({ page }) => {
+  test('should dismiss when async handler resolves', async ({ page, skip }) => {
+    skip.rtl();
+    await page.goto(`/src/components/alert/test/basic`);
+
     const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
     const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
     const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
