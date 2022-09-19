@@ -64,12 +64,28 @@ test.describe('datetime-button: multiple selection', () => {
     await page.waitForSelector('.datetime-ready');
 
     const datetime = page.locator('ion-datetime');
+    const ionChange = await page.spyOnEvent('ionChange');
     const dateButton = page.locator('#date-button');
     await expect(dateButton).toHaveText('2 days');
 
-    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = ['2022-06-01', '2022-06-02', '2022-06-3']));
-    await page.waitForChanges();
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = ['2022-06-01', '2022-06-02', '2022-06-03']));
+    await ionChange.next();
 
     await expect(dateButton).toHaveText('3 days');
+  });
+  test('should render single date if datetime is used incorrectly', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime locale="en-US" id="datetime" presentation="date-time" multiple="true"></ion-datetime>
+
+      <script>
+        const datetime = document.querySelector('ion-datetime');
+        datetime.value = ['2022-06-01T16:30', '2022-06-02'];
+      </script>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    await expect(page.locator('#date-button')).toHaveText('Jun 1, 2022');
+    await expect(page.locator('#time-button')).toHaveText('4:30 PM');
   });
 });
