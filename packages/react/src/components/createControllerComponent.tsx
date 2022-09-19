@@ -4,7 +4,6 @@ import React from 'react';
 import {
   attachProps,
   dashToPascalCase,
-  defineCustomElement,
   setRef,
 } from './react-component-lib/utils';
 
