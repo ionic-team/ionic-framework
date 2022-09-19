@@ -596,7 +596,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         role={role}
         aria-modal="true"
         aria-labelledby={ariaLabelledBy}
-        aria-describedby={message ? msgId : null}
+        aria-describedby={message !== undefined ? msgId : null}
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
