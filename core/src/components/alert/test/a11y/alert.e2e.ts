@@ -35,8 +35,12 @@ test.describe('alert: a11y', () => {
   });
 
   test('should not have accessibility violations when header and message are defined', async ({ page }) => {
+    const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
     const button = page.locator('#bothHeaders');
+
     await button.click();
+    await didPresent.next();
 
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
