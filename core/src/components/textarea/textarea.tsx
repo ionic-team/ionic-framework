@@ -218,7 +218,7 @@ export class Textarea implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['title']),
+      ...inheritAttributes(this.el, ['data-form-type', 'title']),
     };
   }
 
