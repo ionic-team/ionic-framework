@@ -33,9 +33,8 @@ test.describe('segment: events: ionChange', () => {
   });
 
   test.describe('when the segment is clicked', () => {
-    test.describe('should emit', () => {
-      test('when the value changes', async ({ page }) => {
-        await page.setContent(`
+    test('should emit when the value changes', async ({ page }) => {
+      await page.setContent(`
           <ion-segment value="1">
             <ion-segment-button value="1">One</ion-segment-button>
             <ion-segment-button value="2">Two</ion-segment-button>
@@ -43,21 +42,21 @@ test.describe('segment: events: ionChange', () => {
           </ion-segment>
         `);
 
-        const segment = page.locator('ion-segment');
-        const ionChangeSpy = await page.spyOnEvent('ionChange');
+      const segment = page.locator('ion-segment');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        await page.click('ion-segment-button[value="2"]');
+      await page.click('ion-segment-button[value="2"]');
 
-        await ionChangeSpy.next();
+      await ionChangeSpy.next();
 
-        expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
+      expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
 
-        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
-        expect(ionChangeSpy).toHaveReceivedEventTimes(1);
-      });
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
+      expect(ionChangeSpy).toHaveReceivedEventTimes(1);
+    });
 
-      test('when the segment does not have an initial value', async ({ page }) => {
-        await page.setContent(`
+    test('when the segment does not have an initial value', async ({ page }) => {
+      await page.setContent(`
           <ion-segment>
             <ion-segment-button value="1">One</ion-segment-button>
             <ion-segment-button value="2">Two</ion-segment-button>
@@ -65,121 +64,114 @@ test.describe('segment: events: ionChange', () => {
           </ion-segment>
         `);
 
-        const segment = page.locator('ion-segment');
-        const ionChangeSpy = await page.spyOnEvent('ionChange');
+      const segment = page.locator('ion-segment');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        await page.click('ion-segment-button[value="2"]');
+      await page.click('ion-segment-button[value="2"]');
 
-        await ionChangeSpy.next();
+      await ionChangeSpy.next();
 
-        expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
+      expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
 
-        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
-        expect(ionChangeSpy).toHaveReceivedEventTimes(1);
-      });
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
+      expect(ionChangeSpy).toHaveReceivedEventTimes(1);
     });
   });
 
   test.describe('when the pointer is released', () => {
-    test.describe('should emit', () => {
-      test('if the value has changed', async ({ page }) => {
-        test.info().annotations.push({
-          type: 'issue',
-          description: 'https://github.com/ionic-team/ionic-framework/issues/20257',
-        });
-
-        await page.setContent(`
-          <ion-app>
-            <ion-toolbar>
-              <ion-segment value="1">
-                <ion-segment-button value="1">One</ion-segment-button>
-                <ion-segment-button value="2">Two</ion-segment-button>
-                <ion-segment-button value="3">Three</ion-segment-button>
-              </ion-segment>
-            </ion-toolbar>
-          </ion-app>
-        `);
-
-        const ionChangeSpy = await page.spyOnEvent('ionChange');
-
-        const firstButton = page.locator('ion-segment-button[value="1"]');
-        const lastButton = page.locator('ion-segment-button[value="3"]');
-
-        await firstButton.hover();
-        await page.mouse.down();
-
-        await lastButton.hover();
-        await page.mouse.up();
-
-        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
-        expect(ionChangeSpy).toHaveReceivedEventTimes(1);
+    test('should emit if the value has changed', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/20257',
       });
+
+      await page.setContent(`
+        <ion-app>
+          <ion-toolbar>
+            <ion-segment value="1">
+              <ion-segment-button value="1">One</ion-segment-button>
+              <ion-segment-button value="2">Two</ion-segment-button>
+              <ion-segment-button value="3">Three</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
+        </ion-app>
+      `);
+
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      const firstButton = page.locator('ion-segment-button[value="1"]');
+      const lastButton = page.locator('ion-segment-button[value="3"]');
+
+      await firstButton.hover();
+      await page.mouse.down();
+
+      await lastButton.hover();
+      await page.mouse.up();
+
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
+      expect(ionChangeSpy).toHaveReceivedEventTimes(1);
     });
 
-    test.describe('should not emit', () => {
-      test('if the value has not changed', async ({ page }) => {
-        await page.setContent(`
-          <ion-segment value="1">
-            <ion-segment-button value="1">One</ion-segment-button>
-            <ion-segment-button value="2">Two</ion-segment-button>
-            <ion-segment-button value="3">Three</ion-segment-button>
-          </ion-segment>
-        `);
+    test('should not emit if the value has not changed', async ({ page }) => {
+      await page.setContent(`
+        <ion-segment value="1">
+          <ion-segment-button value="1">One</ion-segment-button>
+          <ion-segment-button value="2">Two</ion-segment-button>
+          <ion-segment-button value="3">Three</ion-segment-button>
+        </ion-segment>
+      `);
 
-        const ionChangeSpy = await page.spyOnEvent('ionChange');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        const firstButton = page.locator('ion-segment-button[value="1"]');
-        const lastButton = page.locator('ion-segment-button[value="3"]');
+      const firstButton = page.locator('ion-segment-button[value="1"]');
+      const lastButton = page.locator('ion-segment-button[value="3"]');
 
-        await firstButton.hover();
-        await page.mouse.down();
+      await firstButton.hover();
+      await page.mouse.down();
 
-        await lastButton.hover();
+      await lastButton.hover();
 
-        await firstButton.hover();
-        await page.mouse.up();
+      await firstButton.hover();
+      await page.mouse.up();
 
-        expect(ionChangeSpy).toHaveReceivedEventTimes(0);
-      });
+      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     });
   });
 
-  test.describe('should not emit', () => {
-    test('if the value has not changed', async ({ page }) => {
-      await page.setContent(`
-        <ion-segment value="1">
-          <ion-segment-button value="1">One</ion-segment-button>
-          <ion-segment-button value="2">Two</ion-segment-button>
-          <ion-segment-button value="3">Three</ion-segment-button>
-        </ion-segment>
-      `);
+  test('should not emit if the value has not changed on click', async ({ page }) => {
+    await page.setContent(`
+      <ion-segment value="1">
+        <ion-segment-button value="1">One</ion-segment-button>
+        <ion-segment-button value="2">Two</ion-segment-button>
+        <ion-segment-button value="3">Three</ion-segment-button>
+      </ion-segment>
+    `);
 
-      const segment = page.locator('ion-segment');
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
+    const segment = page.locator('ion-segment');
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      await page.click('ion-segment-button[value="1"]');
+    await page.click('ion-segment-button[value="1"]');
 
-      expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('1');
+    expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('1');
 
-      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
-    });
+    expect(ionChangeSpy).toHaveReceivedEventTimes(0);
+  });
 
-    test('if the value is set programmatically', async ({ page }) => {
-      await page.setContent(`
-        <ion-segment value="1">
-          <ion-segment-button value="1">One</ion-segment-button>
-          <ion-segment-button value="2">Two</ion-segment-button>
-          <ion-segment-button value="3">Three</ion-segment-button>
-        </ion-segment>
-      `);
+  test('should not emit if the value is set programmatically', async ({ page }) => {
+    await page.setContent(`
+      <ion-segment value="1">
+        <ion-segment-button value="1">One</ion-segment-button>
+        <ion-segment-button value="2">Two</ion-segment-button>
+        <ion-segment-button value="3">Three</ion-segment-button>
+      </ion-segment>
+    `);
 
-      const segment = page.locator('ion-segment');
-      const ionChangeSpy = await page.spyOnEvent('ionChange');
+    const segment = page.locator('ion-segment');
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      await segment.evaluate((el: HTMLIonSegmentElement) => (el.value = '2'));
+    await segment.evaluate((el: HTMLIonSegmentElement) => (el.value = '2'));
 
-      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
-      expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
-    });
+    expect(ionChangeSpy).toHaveReceivedEventTimes(0);
+    expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
   });
 });
