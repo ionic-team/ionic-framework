@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **react:** add correct type for CreateAnimation ([#25931](https://github.com/ionic-team/ionic/issues/25931)) ([89d3e3c](https://github.com/ionic-team/ionic/commit/89d3e3c819b282e4d7ce716b9099eaab82ab4de2))
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 **Note:** Version bump only for package @ionic/react

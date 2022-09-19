@@ -53,14 +53,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
-   * without left and right borders.
+   * with square corners and no left or right borders.
    */
   @Prop({ reflect: true }) expand?: 'full' | 'block';
 
   /**
-   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
-   * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
-   * a toolbar, where the default is `"clear"`.
+   * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
+   * for a transparent button with a border, or to `"solid"` for a button with a filled background.
+   * The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
@@ -97,12 +97,16 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() rel: string | undefined;
 
   /**
-   * The button shape.
+   * Set to `"round"` for a button with more rounded corners.
    */
   @Prop({ reflect: true }) shape?: 'round';
 
   /**
-   * The button size.
+   * Set to `"small"` for a button with less height and padding, to `"default"`
+   * for a button with the default height and padding, or to `"large"` for a button
+   * with more height and padding. By default the size is unset, unless the button
+   * is inside of an item, where the size is `"small"` by default. Set the size to
+   * `"default"` inside of an item to make it a standard size button.
    */
   @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
 
