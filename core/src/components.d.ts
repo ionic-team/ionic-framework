@@ -375,11 +375,11 @@ export namespace Components {
          */
         "download": string | undefined;
         /**
-          * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+          * Set to `"block"` for a full-width button or to `"full"` for a full-width button with square corners and no left or right borders.
          */
         "expand"?: 'full' | 'block';
         /**
-          * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+          * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"` for a transparent button with a border, or to `"solid"` for a button with a filled background. The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
@@ -403,11 +403,11 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * The button shape.
+          * Set to `"round"` for a button with more rounded corners.
          */
         "shape"?: 'round';
         /**
-          * The button size.
+          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
         "size"?: 'small' | 'default' | 'large';
         /**
@@ -4136,11 +4136,11 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         /**
-          * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+          * Set to `"block"` for a full-width button or to `"full"` for a full-width button with square corners and no left or right borders.
          */
         "expand"?: 'full' | 'block';
         /**
-          * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+          * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"` for a transparent button with a border, or to `"solid"` for a button with a filled background. The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
@@ -4172,11 +4172,11 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
-          * The button shape.
+          * Set to `"round"` for a button with more rounded corners.
          */
         "shape"?: 'round';
         /**
-          * The button size.
+          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
         "size"?: 'small' | 'default' | 'large';
         /**
