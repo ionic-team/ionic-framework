@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **datetime:** correct year is set in wheel picker ([#25896](https://github.com/ionic-team/ionic/issues/25896)) ([fb653eb](https://github.com/ionic-team/ionic/commit/fb653ebe67458a088adf0626741d190ceb2880a6)), closes [#25895](https://github.com/ionic-team/ionic/issues/25895)
+* **footer:** padding is added correctly with tabs ([#25921](https://github.com/ionic-team/ionic/issues/25921)) ([edbb64c](https://github.com/ionic-team/ionic/commit/edbb64c4b6de7ace7043675a85fd503da18304d7)), closes [#25918](https://github.com/ionic-team/ionic/issues/25918)
+* **input,textarea:** data-form-type attribute is assigned to inner input ([#25927](https://github.com/ionic-team/ionic/issues/25927)) ([9451b28](https://github.com/ionic-team/ionic/commit/9451b283e2cb30ac9087574461f6b9f4b6cc3e0f)), closes [#25908](https://github.com/ionic-team/ionic/issues/25908)
+* **modal:** sheet is easier to dismiss with swipe ([#25883](https://github.com/ionic-team/ionic/issues/25883)) ([fa169d2](https://github.com/ionic-team/ionic/commit/fa169d2dca649107342fe365ef6c7da892ebb8fd)), closes [#24296](https://github.com/ionic-team/ionic/issues/24296)
+* **tab-bar:** use correct import path ([#25898](https://github.com/ionic-team/ionic/issues/25898)) ([ad46045](https://github.com/ionic-team/ionic/commit/ad46045bcc251c9719ecf6621792f1a5b3c6afce)), closes [#25897](https://github.com/ionic-team/ionic/issues/25897)
+* **textarea:** auto grow textarea line wraps long contents ([#25928](https://github.com/ionic-team/ionic/issues/25928)) ([777109a](https://github.com/ionic-team/ionic/commit/777109a7e8625ed61a8cc09e52fc06e104b124ea)), closes [#25893](https://github.com/ionic-team/ionic/issues/25893)
+
+
+
+
+
+## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
+
+
+### Bug Fixes
+
+* **datetime:** calendar day and years are now localized ([#25847](https://github.com/ionic-team/ionic/issues/25847)) ([cbd1268](https://github.com/ionic-team/ionic/commit/cbd1268a03204f05314f2ba284ad433457a9cf33)), closes [#25843](https://github.com/ionic-team/ionic/issues/25843)
+* **datetime:** hourCycle formats hour correctly ([#25869](https://github.com/ionic-team/ionic/issues/25869)) ([1a1491d](https://github.com/ionic-team/ionic/commit/1a1491df0242da1cb3c9a7f128bbd4d5ce4dbf3e)), closes [#25862](https://github.com/ionic-team/ionic/issues/25862)
+* **datetime:** month grid no longer loops on ios ([#25857](https://github.com/ionic-team/ionic/issues/25857)) ([c938054](https://github.com/ionic-team/ionic/commit/c938054605dffb6c3002a64a3d8aaf36892c7a93)), closes [#25752](https://github.com/ionic-team/ionic/issues/25752)
+
+
+
+
+
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* **action-sheet:** add aria-labelledby ([#25837](https://github.com/ionic-team/ionic/issues/25837)) ([5270151](https://github.com/ionic-team/ionic/commit/527015184e9413c1037277d3197bcaa33044c38c))
+* **datetime:** next and previous buttons have correct labels ([#25845](https://github.com/ionic-team/ionic/issues/25845)) ([41e3387](https://github.com/ionic-team/ionic/commit/41e338730d32837fc9dd8a15477e37dea4cc76c9)), closes [#25844](https://github.com/ionic-team/ionic/issues/25844)
+* **datetime:** only log out of bounds warning if value set ([#25835](https://github.com/ionic-team/ionic/issues/25835)) ([85af6ce](https://github.com/ionic-team/ionic/commit/85af6ce436890eb922d2ba32053fb8b8bc7fd4ff)), closes [#25833](https://github.com/ionic-team/ionic/issues/25833)
+* **input:** clear button is not activated on swipe ([#25825](https://github.com/ionic-team/ionic/issues/25825)) ([ff71ad4](https://github.com/ionic-team/ionic/commit/ff71ad492d7671f8e550da7e08dbde30cb05ebf7)), closes [#24857](https://github.com/ionic-team/ionic/issues/24857)
+* **modal:** handleBehavior can be used with controller ([#25821](https://github.com/ionic-team/ionic/issues/25821)) ([79ef1b5](https://github.com/ionic-team/ionic/commit/79ef1b57dc74fd856ed7c2904d7400d283cc081e)), closes [#25820](https://github.com/ionic-team/ionic/issues/25820)
+* **searchbar:** clear button has focus indicator ([#25828](https://github.com/ionic-team/ionic/issues/25828)) ([373b4ff](https://github.com/ionic-team/ionic/commit/373b4ffe216ba584b92014cef501f64668e1f177))
+* **searchbar:** keypress can activate clear button ([#25824](https://github.com/ionic-team/ionic/issues/25824)) ([c270756](https://github.com/ionic-team/ionic/commit/c270756356c7b23a1959ac5f4b8206a5cd1825c2))
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **alert:** add default aria-label ([#25800](https://github.com/ionic-team/ionic/issues/25800)) ([d395a73](https://github.com/ionic-team/ionic/commit/d395a73cb6c419e6c0072746b8e4768cd5f78ef3))
+* **alert:** use aria-labelledby and aria-describedby instead of aria-label ([#25805](https://github.com/ionic-team/ionic/issues/25805)) ([27318d7](https://github.com/ionic-team/ionic/commit/27318d75df60dfce1a90f23ba31ea2b6636ba42f))
+* **breadcrumb:** separator is not announced by narrators ([#25796](https://github.com/ionic-team/ionic/issues/25796)) ([71fad38](https://github.com/ionic-team/ionic/commit/71fad3884bc55b266067efb346500c848b856946))
+* **datetime:** close month/year picker when hidden ([#25789](https://github.com/ionic-team/ionic/issues/25789)) ([3b211b6](https://github.com/ionic-team/ionic/commit/3b211b60fd9a88be6e232f839ecc4be090181530)), closes [#25787](https://github.com/ionic-team/ionic/issues/25787)
+* **modal:** role attribute can be customized ([#25804](https://github.com/ionic-team/ionic/issues/25804)) ([037d579](https://github.com/ionic-team/ionic/commit/037d579b2a3a660358f1e9c9b020c9510bb9c6b0))
+* **refresher:** use componentOnReady utility for CE build ([#25783](https://github.com/ionic-team/ionic/issues/25783)) ([bd715a5](https://github.com/ionic-team/ionic/commit/bd715a52562f1f175d4bb6ea2dbfdd67a3e91db1)), closes [#25782](https://github.com/ionic-team/ionic/issues/25782)
+* **select:** compareWith passes params in correct order ([#25764](https://github.com/ionic-team/ionic/issues/25764)) ([d631195](https://github.com/ionic-team/ionic/commit/d6311951243fd9b867ae5d4a7a08c8d341f8eb7a)), closes [#25759](https://github.com/ionic-team/ionic/issues/25759)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 

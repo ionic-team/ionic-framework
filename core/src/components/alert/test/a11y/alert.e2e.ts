@@ -3,12 +3,29 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
-const testAriaLabel = async (page: E2EPage, buttonID: string, expectedAriaLabel: string) => {
+const testAria = async (
+  page: E2EPage,
+  buttonID: string,
+  expectedAriaLabelledBy: string | null,
+  expectedAriaDescribedBy: string | null
+) => {
+  const didPresent = await page.spyOnEvent('ionAlertDidPresent');
   const button = page.locator(`#${buttonID}`);
+
   await button.click();
+  await didPresent.next();
 
   const alert = page.locator('ion-alert');
-  await expect(alert).toHaveAttribute('aria-label', expectedAriaLabel);
+
+  /**
+   * expect().toHaveAttribute() can't check for a null value, so grab and check
+   * the values manually instead.
+   */
+  const ariaLabelledBy = await alert.getAttribute('aria-labelledby');
+  const ariaDescribedBy = await alert.getAttribute('aria-describedby');
+
+  expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
+  expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
 test.describe('alert: a11y', () => {
@@ -17,27 +34,27 @@ test.describe('alert: a11y', () => {
     await page.goto(`/src/components/alert/test/a11y`);
   });
 
-  test('should not have accessibility violations', async ({ page }) => {
-    const button = page.locator('#customHeader');
+  test('should not have accessibility violations when header and message are defined', async ({ page }) => {
+    const button = page.locator('#bothHeaders');
     await button.click();
 
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
 
-  test('should have fallback aria-label when no header or subheader is specified', async ({ page }) => {
-    await testAriaLabel(page, 'noHeader', 'Alert');
+  test('should have aria-labelledby when header is set', async ({ page }) => {
+    await testAria(page, 'noMessage', 'alert-1-hdr', null);
   });
 
-  test('should inherit aria-label from header', async ({ page }) => {
-    await testAriaLabel(page, 'customHeader', 'Header');
+  test('should have aria-describedby when message is set', async ({ page }) => {
+    await testAria(page, 'noHeaders', null, 'alert-1-msg');
   });
 
-  test('should inherit aria-label from subheader if no header is specified', async ({ page }) => {
-    await testAriaLabel(page, 'subHeaderOnly', 'Subtitle');
+  test('should fall back to subHeader for aria-labelledby if header is not defined', async ({ page }) => {
+    await testAria(page, 'subHeaderOnly', 'alert-1-sub-hdr', 'alert-1-msg');
   });
 
-  test('should allow for manually specifying aria-label', async ({ page }) => {
-    await testAriaLabel(page, 'customAriaLabel', 'Custom alert');
+  test('should allow for manually specifying aria attributes', async ({ page }) => {
+    await testAria(page, 'customAria', 'Custom title', 'Custom description');
   });
 });

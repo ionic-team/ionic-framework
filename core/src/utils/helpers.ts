@@ -69,6 +69,7 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
  */
 export const componentOnReady = (el: any, callback: any) => {
   if (el.componentOnReady) {
+    // eslint-disable-next-line custom-rules/no-component-on-ready-method
     el.componentOnReady().then((resolvedEl: any) => callback(resolvedEl));
   } else {
     raf(() => callback(el));

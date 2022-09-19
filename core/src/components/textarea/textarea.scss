@@ -101,6 +101,8 @@
   @include text-inherit();
 
   grid-area: 1 / 1 / 2 / 2;
+
+  word-break: break-word;
 }
 
 .native-textarea {
