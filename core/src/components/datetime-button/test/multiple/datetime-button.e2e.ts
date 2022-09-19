@@ -6,7 +6,7 @@ test.describe('datetime-button: multiple selection', () => {
     skip.rtl();
     skip.mode('ios', 'No mode-specific logic');
   });
-  test('should render number of dates', async ({ page }) => {
+  test('should render number of dates when more than 1 date is selected', async ({ page }) => {
     await page.setContent(`
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-datetime locale="en-US" id="datetime" presentation="date" multiple="true"></ion-datetime>
@@ -19,6 +19,15 @@ test.describe('datetime-button: multiple selection', () => {
     await page.waitForSelector('.datetime-ready');
 
     await expect(page.locator('#date-button')).toContainText('3 days');
+  });
+  test('should render number of dates when 0 dates are selected', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime locale="en-US" id="datetime" presentation="date" multiple="true"></ion-datetime>
+    `);
+    await page.waitForSelector('.datetime-ready');
+
+    await expect(page.locator('#date-button')).toHaveText('0 days');
   });
   test('should render date when only 1 day is selected', async ({ page }) => {
     await page.setContent(`
