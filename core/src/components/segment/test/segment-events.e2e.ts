@@ -6,6 +6,32 @@ test.describe('segment: events: ionChange', () => {
     skip.rtl();
   });
 
+  test.describe('when the segment is activated by keyboard navigation', () => {
+    test('should emit when there is no initial value', async ({ page, browserName }) => {
+      await page.setContent(`
+        <ion-segment>
+          <ion-segment-button value="1">One</ion-segment-button>
+          <ion-segment-button value="2">Two</ion-segment-button>
+          <ion-segment-button value="3">Three</ion-segment-button>
+        </ion-segment>
+    `);
+
+      const segment = page.locator('ion-segment');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+      await page.keyboard.press(tabKey);
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('Enter');
+
+      expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
+
+      expect(ionChangeSpy).toHaveReceivedEventTimes(1);
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
+    });
+  });
+
   test.describe('when the segment is clicked', () => {
     test.describe('should emit', () => {
       test('when the value changes', async ({ page }) => {

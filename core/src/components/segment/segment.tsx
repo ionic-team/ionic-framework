@@ -502,8 +502,8 @@ export class Segment implements ComponentInterface {
     }
 
     if (keyDownSelectsButton) {
-      const previous = this.checked || current;
-      this.checkButton(previous, current);
+      const previous = this.checked;
+      this.checkButton(this.checked || current, current);
       if (current !== previous) {
         this.emitValueChange();
       }
