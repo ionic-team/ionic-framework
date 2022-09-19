@@ -49,16 +49,26 @@ export const addTimePadding = (value: number): string => {
 };
 
 /**
- * Formats the hour value so that it
- * is always 2 digits. Only applies
- * if using 12 hour format.
+ * Formats 24 hour times so that
+ * it always has 2 digits. For
+ * 12 hour times it ensures that
+ * hour 0 is formatted as '12'.
  */
 export const getFormattedHour = (hour: number, use24Hour: boolean): string => {
-  if (!use24Hour) {
-    return hour.toString();
+  if (use24Hour) {
+    return addTimePadding(hour);
   }
 
-  return addTimePadding(hour);
+  /**
+   * If using 12 hour
+   * format, make sure hour
+   * 0 is formatted as '12'.
+   */
+  if (hour === 0) {
+    return '12';
+  }
+
+  return hour.toString();
 };
 
 /**
