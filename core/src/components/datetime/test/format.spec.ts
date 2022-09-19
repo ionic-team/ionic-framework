@@ -57,7 +57,7 @@ describe('getMonthAndDay()', () => {
 describe('getFormattedHour()', () => {
   it('should only add padding if using 24 hour time', () => {
     expect(getFormattedHour(0, true)).toEqual('00');
-    expect(getFormattedHour(0, false)).toEqual('0');
+    expect(getFormattedHour(0, false)).toEqual('12');
 
     expect(getFormattedHour(10, true)).toEqual('10');
     expect(getFormattedHour(10, false)).toEqual('10');
