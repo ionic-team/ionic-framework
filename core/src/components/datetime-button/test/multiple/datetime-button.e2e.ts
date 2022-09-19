@@ -18,8 +18,7 @@ test.describe('datetime-button: multiple selection', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeButton = page.locator('ion-datetime-button');
-    await expect(datetimeButton).toHaveText('3 days');
+    await expect(page.locator('#date-button')).toContainText('3 days');
   });
   test('should render date when only 1 day is selected', async ({ page }) => {
     await page.setContent(`
@@ -33,8 +32,7 @@ test.describe('datetime-button: multiple selection', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeButton = page.locator('ion-datetime-button');
-    await expect(datetimeButton).toHaveText('Jun 1, 2022');
+    await expect(page.locator('#date-button')).toHaveText('Jun 1, 2022');
   });
   test('should use customFormatter', async ({ page }) => {
     await page.setContent(`
@@ -51,8 +49,7 @@ test.describe('datetime-button: multiple selection', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeButton = page.locator('ion-datetime-button');
-    await expect(datetimeButton).toHaveText('Selected: 3');
+    await expect(page.locator('#date-button')).toHaveText('Selected: 3');
   });
   test('should re-render when value is programmatically changed', async ({ page }) => {
     await page.setContent(`
@@ -66,13 +63,13 @@ test.describe('datetime-button: multiple selection', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeButton = page.locator('ion-datetime-button');
     const datetime = page.locator('ion-datetime');
-    await expect(datetimeButton).toHaveText('2 days');
+    const dateButton = page.locator('#date-button');
+    await expect(dateButton).toHaveText('2 days');
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = ['2022-06-01', '2022-06-02', '2022-06-3']));
     await page.waitForChanges();
 
-    await expect(datetimeButton).toHaveText('3 days');
+    await expect(dateButton).toHaveText('3 days');
   });
 });
