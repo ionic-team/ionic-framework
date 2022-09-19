@@ -191,7 +191,7 @@ export class DatetimeButton implements ComponentInterface {
      * Both ion-datetime and ion-datetime-button default
      * to today's date and time if no value is set.
      */
-    const parsedDatetimes = parseDate(parsedValues) ?? parseDate([getToday()]);
+    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
 
     /**
      * If developers incorrectly use multiple="true"
