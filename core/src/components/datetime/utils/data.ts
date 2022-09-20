@@ -549,10 +549,11 @@ export const getTimeColumnsData = (
   });
   const minutesItems = minutes.map((minute) => {
     const text = addTimePadding(minute);
+    const minuteLabel = minute === 1 ? 'minute' : 'minutes';
     return {
       text: addTimePadding(minute),
       value: minute,
-      ariaLabel: `${text} minutes`,
+      ariaLabel: `${text} ${minuteLabel}`,
     };
   });
 
