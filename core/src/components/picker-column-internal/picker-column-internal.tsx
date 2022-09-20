@@ -137,6 +137,7 @@ export class PickerColumnInternal implements ComponentInterface {
        * is actively visible to the user.
        */
       this.scrollActiveItemIntoView();
+      this.focusActiveItem();
     }
   }
 
@@ -388,6 +389,21 @@ export class PickerColumnInternal implements ComponentInterface {
     });
   };
 
+  private focusActiveItem() {
+    const activeItem = this.activeItem;
+    if (activeItem) {
+      /**
+       * Focusing the active item on value change
+       * will announce the value to screen readers.
+       */
+      activeItem.focus();
+    }
+  }
+
+  private onFocus = () => {
+    this.focusActiveItem();
+  };
+
   get activeItem() {
     return getElementRoot(this.el).querySelector(
       `.picker-item[data-value="${this.value}"]:not([disabled])`
@@ -401,15 +417,23 @@ export class PickerColumnInternal implements ComponentInterface {
     return (
       <Host
         tabindex={0}
+        role="radiogroup"
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
         })}
+        onFocus={this.onFocus}
       >
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
         {items.map((item, index) => {
           {
             /*
@@ -423,7 +447,10 @@ export class PickerColumnInternal implements ComponentInterface {
           }
           return (
             <button
-              tabindex="-1"
+              role="radio"
+              tabIndex={-1}
+              aria-label={item.ariaLabel}
+              aria-checked={item.value === this.value ? 'true' : 'false'}
               class={{
                 'picker-item': true,
                 'picker-item-disabled': item.disabled || false,
@@ -439,9 +466,15 @@ export class PickerColumnInternal implements ComponentInterface {
             </button>
           );
         })}
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
       </Host>
     );
   }

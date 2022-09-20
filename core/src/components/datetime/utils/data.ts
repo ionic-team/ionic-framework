@@ -527,7 +527,7 @@ export const getTimeColumnsData = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   allowedHourValues?: number[],
-  allowedMinuteVaues?: number[]
+  allowedMinuteValues?: number[]
 ): { [key: string]: PickerColumnItem[] } => {
   const use24Hour = is24Hour(locale, hourCycle);
   const { hours, minutes, am, pm } = generateTime(
@@ -536,19 +536,23 @@ export const getTimeColumnsData = (
     minParts,
     maxParts,
     allowedHourValues,
-    allowedMinuteVaues
+    allowedMinuteValues
   );
 
   const hoursItems = hours.map((hour) => {
+    const text = getFormattedHour(hour, use24Hour);
     return {
-      text: getFormattedHour(hour, use24Hour),
+      text,
       value: getInternalHourValue(hour, use24Hour, refParts.ampm),
+      ariaLabel: `${text} o'clock`,
     };
   });
   const minutesItems = minutes.map((minute) => {
+    const text = addTimePadding(minute);
     return {
       text: addTimePadding(minute),
       value: minute,
+      ariaLabel: `${text} minutes`,
     };
   });
 

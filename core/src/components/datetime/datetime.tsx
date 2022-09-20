@@ -1848,7 +1848,11 @@ export class Datetime implements ComponentInterface {
             <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}{' '}
-                <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
+                <ion-icon
+                  aria-hidden="true"
+                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
+                  lazy={false}
+                ></ion-icon>
               </ion-label>
             </ion-item>
           </div>
@@ -1898,6 +1902,8 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div
+        // Non-visible months should be hidden from screen readers
+        aria-hidden={!isWorkingMonth ? 'true' : 'false'}
         class={{
           'calendar-month': true,
           // Prevents scroll snap swipe gestures for months outside of the min/max bounds
@@ -2037,12 +2043,13 @@ export class Datetime implements ComponentInterface {
           if (popoverRef) {
             this.isTimePopoverOpen = true;
 
-            popoverRef.present(
+            popoverRef.presentFromTrigger(
               new CustomEvent('ionShadowTarget', {
                 detail: {
                   ionShadowTarget: ev.target,
                 },
-              })
+              }),
+              true
             );
 
             await popoverRef.onWillDismiss();
