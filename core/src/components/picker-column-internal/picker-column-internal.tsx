@@ -400,10 +400,6 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private onFocus = () => {
-    this.focusActiveItem();
-  };
-
   get activeItem() {
     return getElementRoot(this.el).querySelector(
       `.picker-item[data-value="${this.value}"]:not([disabled])`
@@ -411,7 +407,7 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   render() {
-    const { items, color, isActive, numericInput } = this;
+    const { items, color, isActive, numericInput, value } = this;
     const mode = getIonMode(this);
 
     return (
@@ -423,7 +419,6 @@ export class PickerColumnInternal implements ComponentInterface {
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
         })}
-        onFocus={this.onFocus}
       >
         <div class="picker-item picker-item-empty" aria-hidden="true">
           &nbsp;
@@ -450,7 +445,7 @@ export class PickerColumnInternal implements ComponentInterface {
               role="radio"
               tabIndex={-1}
               aria-label={item.ariaLabel}
-              aria-checked={item.value === this.value ? 'true' : 'false'}
+              aria-checked={item.value === value ? 'true' : 'false'}
               class={{
                 'picker-item': true,
                 'picker-item-disabled': item.disabled || false,
