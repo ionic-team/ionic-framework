@@ -64,9 +64,11 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-input">Input</h4>
 
-`ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
+- `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
 
-If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
+  - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
+
+- The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
