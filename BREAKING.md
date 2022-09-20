@@ -92,9 +92,10 @@ iOS:
 
 <h4 id="version-7x-segment">Segment</h4>
 
-`ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
+- `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
 
-The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
+- The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
+  - Developers needing to clear the checked segment item should assign a value of `''` instead of `null`.
 
 <h4 id="version-7x-slides">Slides</h4>
 
