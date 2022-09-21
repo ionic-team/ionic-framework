@@ -50,12 +50,16 @@ test.describe('textarea: events: ionChange', () => {
         el.value = 'new value';
       });
 
+      await page.waitForChanges();
+
       expect(ionChangeSpy).toHaveReceivedEventTimes(0);
 
       // Update the value again to make sure it doesn't emit a second time
       await textarea.evaluate((el: HTMLIonTextareaElement) => {
         el.value = 'new value 2';
       });
+
+      await page.waitForChanges();
 
       expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     });
