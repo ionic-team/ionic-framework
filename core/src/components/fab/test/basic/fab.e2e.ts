@@ -1,18 +1,18 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('fab: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
+test.describe('fab: basic (visual checks)', () => {
+  test.beforeEach(async ({ page }) => {
     await page.goto(`/src/components/fab/test/basic`);
+  });
 
+  test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
 
     expect(await page.screenshot()).toMatchSnapshot(`fab-basic-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not have visual regressions when open', async ({ page }) => {
-    await page.goto(`/src/components/fab/test/basic`);
-
     // this fab has multiple buttons on each side, so it covers all the bases
     const fab = page.locator('#fab5');
 
@@ -27,12 +27,17 @@ test.describe('fab: basic', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`fab-open-${page.getSnapshotSettings()}.png`);
   });
+});
 
-  test('should toggle active state when clicked', async ({ page, skip }) => {
+test.describe('fab: basic (functionality checks)', () => {
+  test.beforeEach(async ({ page, skip }) => {
     skip.rtl();
     skip.mode('ios');
 
     await page.goto(`/src/components/fab/test/basic`);
+  });
+
+  test('should toggle active state when clicked', async ({ page }) => {
     const fab = page.locator('#fab1');
     const fabList = fab.locator('ion-fab-list');
 
@@ -49,11 +54,7 @@ test.describe('fab: basic', () => {
     expect(fabList).not.toHaveClass(/fab-list-active/);
   });
 
-  test('should not open when disabled', async ({ page, skip }) => {
-    skip.rtl();
-    skip.mode('ios');
-
-    await page.goto(`/src/components/fab/test/basic`);
+  test('should not open when disabled', async ({ page }) => {
     const fab = page.locator('#fab2');
     const fabList = fab.locator('ion-fab-list');
 
