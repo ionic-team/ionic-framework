@@ -19,7 +19,11 @@ test.describe('fab: basic (visual checks)', () => {
     await fab.click();
     await page.waitForChanges();
 
-    // fab.screenshot doesn't work since the bounding box is just the middle button
+    /**
+     * fab.screenshot doesn't work since ion-fab's bounding box only covers the
+     * central button. This viewport size crops extra white space while also
+     * containing all the buttons in the open fab.
+     */
     await page.setViewportSize({
       width: 320,
       height: 415,
