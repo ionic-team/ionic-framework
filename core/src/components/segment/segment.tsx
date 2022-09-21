@@ -22,11 +22,10 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
-  private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
 
-  // Value to be emitted when gesture ends
-  private valueAfterGesture?: any;
+  // Value before the segment is dragged
+  private valueBeforeGesture?: string;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -76,18 +75,15 @@ export class Segment implements ComponentInterface {
   /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value?: string | null;
+  @Prop({ mutable: true }) value?: string;
 
   @Watch('value')
-  protected valueChanged(value: string | undefined, oldValue: string | undefined | null) {
+  protected valueChanged(value: string | undefined) {
+    /**
+     * `ionSelect` is emitted every time the value changes (internal or external changes).
+     * Used by `ion-segment-button` to determine if the button should be checked.
+     */
     this.ionSelect.emit({ value });
-    if (oldValue !== '' || this.didInit) {
-      if (!this.activated) {
-        this.ionChange.emit({ value });
-      } else {
-        this.valueAfterGesture = value;
-      }
-    }
   }
 
   /**
@@ -103,7 +99,9 @@ export class Segment implements ComponentInterface {
   @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
-   * Emitted when user has dragged over a new button
+   * Emitted when the value of the segment changes from user committed actions
+   * or from externally assigning a value.
+   *
    * @internal
    */
   @Event() ionSelect!: EventEmitter<SegmentChangeEventDetail>;
@@ -157,10 +155,10 @@ export class Segment implements ComponentInterface {
     if (this.disabled) {
       this.disabledChanged();
     }
-    this.didInit = true;
   }
 
   onStart(detail: GestureDetail) {
+    this.valueBeforeGesture = this.value;
     this.activate(detail);
   }
 
@@ -179,11 +177,24 @@ export class Segment implements ComponentInterface {
       this.addRipple(detail);
     }
 
-    const value = this.valueAfterGesture;
+    const value = this.value;
     if (value !== undefined) {
-      this.ionChange.emit({ value });
-      this.valueAfterGesture = undefined;
+      if (this.valueBeforeGesture !== value) {
+        this.emitValueChange();
+      }
     }
+    this.valueBeforeGesture = undefined;
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    this.ionChange.emit({ value });
   }
 
   private getButtons() {
@@ -491,8 +502,11 @@ export class Segment implements ComponentInterface {
     }
 
     if (keyDownSelectsButton) {
-      const previous = this.checked || current;
-      this.checkButton(previous, current);
+      const previous = this.checked;
+      this.checkButton(this.checked || current, current);
+      if (current !== previous) {
+        this.emitValueChange();
+      }
     }
     current.focus();
   }
