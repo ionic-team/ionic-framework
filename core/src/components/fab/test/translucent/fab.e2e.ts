@@ -10,5 +10,11 @@ test('should not have visual regressions', async ({ page, skip }) => {
   await fab.click();
   await page.waitForChanges();
 
-  expect(await fab.screenshot()).toMatchSnapshot(`fab-translucent-${page.getSnapshotSettings()}.png`);
+  // fab.screenshot doesn't work since the bounding box is just the middle button
+  await page.setViewportSize({
+    width: 235,
+    height: 310,
+  });
+
+  expect(await page.screenshot()).toMatchSnapshot(`fab-translucent-${page.getSnapshotSettings()}.png`);
 });

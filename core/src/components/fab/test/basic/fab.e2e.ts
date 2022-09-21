@@ -12,13 +12,20 @@ test.describe('fab: basic', () => {
 
   test('should not have visual regressions when open', async ({ page }) => {
     await page.goto(`/src/components/fab/test/basic`);
+
+    // this fab has multiple buttons on each side, so it covers all the bases
     const fab = page.locator('#fab5');
 
     await fab.click();
     await page.waitForChanges();
 
-    // this fab has multiple buttons on each side, so it covers all the bases
-    expect(await fab.screenshot()).toMatchSnapshot(`fab-open-${page.getSnapshotSettings()}.png`);
+    // fab.screenshot doesn't work since the bounding box is just the middle button
+    await page.setViewportSize({
+      width: 320,
+      height: 415,
+    });
+
+    expect(await page.screenshot()).toMatchSnapshot(`fab-open-${page.getSnapshotSettings()}.png`);
   });
 
   test('should toggle active state when clicked', async ({ page, skip }) => {
