@@ -11,6 +11,6 @@ test.describe('fab-button: aria attributes', () => {
     `);
 
     const nativeButton = page.locator('ion-fab-button button');
-    expect(nativeButton).toHaveAttribute('aria-label', 'Hello World');
+    await expect(nativeButton).toHaveAttribute('aria-label', 'Hello World');
   });
 });
