@@ -4,7 +4,6 @@ import React from 'react';
 import {
   attachProps,
   dashToPascalCase,
-  defineCustomElement,
   setRef,
 } from './react-component-lib/utils';
 
@@ -27,9 +26,11 @@ export const createControllerComponent = <
 >(
   tagName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> },
-  customElement?: any
+  defineCustomElement?: () => void
 ) => {
-  defineCustomElement(tagName, customElement);
+  if (defineCustomElement) {
+    defineCustomElement();
+  }
 
   const displayName = dashToPascalCase(tagName);
   const didDismissEventName = `on${displayName}DidDismiss`;
