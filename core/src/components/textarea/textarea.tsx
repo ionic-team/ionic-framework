@@ -315,7 +315,7 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
-  private onInput = (ev: InputEvent | Event) => {
+  private onInput = (ev: InputEvent) => {
     const input = ev.target as HTMLTextAreaElement | null;
     if (input) {
       this.value = input.value || '';
