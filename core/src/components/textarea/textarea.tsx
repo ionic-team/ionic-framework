@@ -322,6 +322,11 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
+  // `Event` type is used instead of `InputEvent`
+  // since the types from Stencil are not derived
+  // from the element (e.g. textarea and input
+  // should be InputEvent, but all other elements
+  // should be Event).
   private onInput = (ev: Event) => {
     const input = ev.target as HTMLTextAreaElement | null;
     if (input) {
