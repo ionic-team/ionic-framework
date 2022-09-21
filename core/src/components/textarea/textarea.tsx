@@ -269,6 +269,7 @@ export class Textarea implements ComponentInterface {
    */
   private emitValueChange() {
     const { value } = this;
+    // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;

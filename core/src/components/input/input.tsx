@@ -344,6 +344,7 @@ export class Input implements ComponentInterface {
    */
   private emitValueChange() {
     const { value } = this;
+    // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     this.ionChange.emit({ value: newValue });
   }
