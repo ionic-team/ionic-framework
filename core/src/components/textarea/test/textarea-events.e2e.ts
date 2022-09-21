@@ -7,43 +7,39 @@ test.describe('textarea: events: ionChange', () => {
   });
 
   test.describe('when the textarea is blurred', () => {
-    test.describe('should emit', () => {
-      test('if the value has changed', async ({ page }) => {
-        await page.setContent(`<ion-textarea></ion-textarea>`);
+    test('should emit if the value has changed', async ({ page }) => {
+      await page.setContent(`<ion-textarea></ion-textarea>`);
 
-        const nativeTextarea = page.locator('ion-textarea textarea');
-        const ionChangeSpy = await page.spyOnEvent('ionChange');
+      const nativeTextarea = page.locator('ion-textarea textarea');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        await nativeTextarea.type('new value', { delay: 100 });
-        // Value change is not emitted until the control is blurred.
-        await nativeTextarea.evaluate((e) => e.blur());
+      await nativeTextarea.type('new value', { delay: 100 });
+      // Value change is not emitted until the control is blurred.
+      await nativeTextarea.evaluate((e) => e.blur());
 
-        await ionChangeSpy.next();
+      await ionChangeSpy.next();
 
-        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
-      });
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
     });
 
-    test.describe('should not emit', () => {
-      test('if the value is set programmatically', async ({ page }) => {
-        await page.setContent(`<ion-textarea></ion-textarea>`);
+    test('should not emit if the value is set programmatically', async ({ page }) => {
+      await page.setContent(`<ion-textarea></ion-textarea>`);
 
-        const textarea = page.locator('ion-textarea');
-        const ionChangeSpy = await page.spyOnEvent('ionChange');
+      const textarea = page.locator('ion-textarea');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        await textarea.evaluate((el: HTMLIonTextareaElement) => {
-          el.value = 'new value';
-        });
-
-        expect(ionChangeSpy.events.length).toBe(0);
-
-        // Update the value again to make sure it doesn't emit a second time
-        await textarea.evaluate((el: HTMLIonTextareaElement) => {
-          el.value = 'new value 2';
-        });
-
-        expect(ionChangeSpy.events.length).toBe(0);
+      await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        el.value = 'new value';
       });
+
+      expect(ionChangeSpy.events.length).toBe(0);
+
+      // Update the value again to make sure it doesn't emit a second time
+      await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        el.value = 'new value 2';
+      });
+
+      expect(ionChangeSpy.events.length).toBe(0);
     });
   });
 });
