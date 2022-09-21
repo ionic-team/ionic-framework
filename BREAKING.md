@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-7x-input)
   - [Overlays](#version-7x-overlays)
   - [Range](#version-7x-range)
+  - [Segment](#version-7x-segment)
   - [Slides](#version-7x-slides)
   - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
@@ -64,9 +65,11 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-input">Input</h4>
 
-`ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
+- `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
 
-If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
+  - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
+
+- The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
@@ -90,6 +93,12 @@ iOS:
 |`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
 |`$range-ios-knob-width`|`28px`|`26px`|
 
+<h4 id="version-7x-segment">Segment</h4>
+
+- `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
+
+- The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
+  - Developers needing to clear the checked segment item should assign a value of `''` instead of `null`.
 
 <h4 id="version-7x-slides">Slides</h4>
 
