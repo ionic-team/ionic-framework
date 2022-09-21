@@ -21,9 +21,13 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
-  private didBlurAfterEdit = false;
+  private didBlurAfterEdit = this.hasValue();
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
+  /**
+   * The value of the input when the textarea is focused.
+   */
+  private focusedValue?: string | null;
 
   @Element() el!: HTMLElement;
 
@@ -48,9 +52,9 @@ export class Textarea implements ComponentInterface {
   @Prop() autofocus = false;
 
   /**
-   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit.
    */
-  @Prop({ mutable: true }) clearOnEdit = false;
+  @Prop() clearOnEdit = false;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
@@ -87,12 +91,12 @@ export class Textarea implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   * This attribute specifies the maximum number of characters that the user can enter.
    */
   @Prop() maxlength?: number;
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+   * This attribute specifies the minimum number of characters that the user can enter.
    */
   @Prop() minlength?: number;
 
@@ -266,6 +270,8 @@ export class Textarea implements ComponentInterface {
   private emitValueChange() {
     const { value } = this;
     const newValue = value == null ? value : value.toString();
+    // Emitting a value change should update the internal state for tracking the focused value
+    this.focusedValue = newValue;
     this.ionChange.emit({ value: newValue });
   }
 
@@ -329,6 +335,7 @@ export class Textarea implements ComponentInterface {
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
+    this.focusedValue = this.value;
     this.focusChange();
 
     this.ionFocus.emit(ev);
@@ -337,6 +344,14 @@ export class Textarea implements ComponentInterface {
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
+
+    if (this.focusedValue !== this.value) {
+      /**
+       * Emits the `ionChange` event when the textarea value
+       * is different than the value when the textarea was focused.
+       */
+      this.emitValueChange();
+    }
 
     this.ionBlur.emit(ev);
   };

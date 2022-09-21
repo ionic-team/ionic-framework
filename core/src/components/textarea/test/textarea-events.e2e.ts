@@ -20,6 +20,24 @@ test.describe('textarea: events: ionChange', () => {
       await ionChangeSpy.next();
 
       expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
+      expect(ionChangeSpy).toHaveReceivedEventTimes(1);
+    });
+
+    test('should emit if the textarea is cleared with an initial value', async ({ page }) => {
+      await page.setContent(`<ion-textarea clear-on-edit="true" value="123"></ion-textarea>`);
+
+      const textarea = page.locator('ion-textarea');
+      const nativeTextarea = textarea.locator('textarea');
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+      await nativeTextarea.type('new value');
+
+      await nativeTextarea.evaluate((e) => e.blur());
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
+      expect(ionChangeSpy).toHaveReceivedEventTimes(1);
     });
 
     test('should not emit if the value is set programmatically', async ({ page }) => {
@@ -32,14 +50,14 @@ test.describe('textarea: events: ionChange', () => {
         el.value = 'new value';
       });
 
-      expect(ionChangeSpy.events.length).toBe(0);
+      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
 
       // Update the value again to make sure it doesn't emit a second time
       await textarea.evaluate((el: HTMLIonTextareaElement) => {
         el.value = 'new value 2';
       });
 
-      expect(ionChangeSpy.events.length).toBe(0);
+      expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     });
   });
 });
