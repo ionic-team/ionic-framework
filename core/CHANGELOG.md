@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+
+### Bug Fixes
+
+* **datetime:** account for 12AM with min times and 12 hour format ([#25952](https://github.com/ionic-team/ionic/issues/25952)) ([55ebd6c](https://github.com/ionic-team/ionic/commit/55ebd6cdf39c01b401e876b76e755bfa04db8f65)), closes [#25183](https://github.com/ionic-team/ionic/issues/25183)
+* **item:** show the highlight on iOS when --highlight-height is set ([#25905](https://github.com/ionic-team/ionic/issues/25905)) ([d7db133](https://github.com/ionic-team/ionic/commit/d7db1333f13834ecb447b4b1da62cfffed9fb333))
+* **overlays:** focus trapping no longer includes disabled elements ([#25949](https://github.com/ionic-team/ionic/issues/25949)) ([6cb5827](https://github.com/ionic-team/ionic/commit/6cb5827d069c255ab0a9a8c319aba9994a4c5196))
+* **overlays:** focus trapping no longer includes hidden elements ([#25948](https://github.com/ionic-team/ionic/issues/25948)) ([5c10f98](https://github.com/ionic-team/ionic/commit/5c10f98ceb3ae42d3363b38ba786b9122676a59c))
+
+
+### Performance Improvements
+
+* **card:** avoid force compositing on ios ([#25942](https://github.com/ionic-team/ionic/issues/25942)) ([174c3b3](https://github.com/ionic-team/ionic/commit/174c3b30a0bce7e7ab13e5605348ec107af69dd6))
+
+
+
+
+
 ## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
 
 

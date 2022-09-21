@@ -7,7 +7,7 @@ test.describe('button: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
   });
 });
 
