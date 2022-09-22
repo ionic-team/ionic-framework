@@ -4,7 +4,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, TabBarChangedEventDetail } from '../../interface';
 import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
-import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
+import { createKeyboardController, KeyboardLifecycle } from '../../utils/keyboard/keyboard-controller';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -60,8 +60,19 @@ export class TabBar implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.keyboardCtrl = createKeyboardController((keyboardOpen) => {
-      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+    this.keyboardCtrl = createKeyboardController((_, lifecycle: KeyboardLifecycle) => {
+      if (lifecycle === KeyboardLifecycle.WillShow) {
+        this.keyboardVisible = false;
+
+        /**
+         * Do not show the element when the keyboard
+         * is about to close because the webview may
+         * not have resized yet. As a result, the element
+         * will briefly appear on top of the closing keyboard.
+         */
+      } else if (lifecycle === KeyboardLifecycle.DidHide) {
+        this.keyboardVisible = true;
+      }
     });
   }
 
