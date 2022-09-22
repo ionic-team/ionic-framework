@@ -586,7 +586,7 @@ export class Datetime implements ComponentInterface {
 
     /**
      * When setting the active parts, it is possible
-     * to set the invalid data. For example,
+     * to set invalid data. For example,
      * when updating January 31 to February,
      * February 31 does not exist. As a result
      * we need to validate the active parts and
