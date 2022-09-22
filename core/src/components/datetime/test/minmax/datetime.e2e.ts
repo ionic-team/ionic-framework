@@ -188,4 +188,50 @@ test.describe('datetime: minmax', () => {
 
     await expect(datetimeMonthDidChange).toHaveReceivedEventTimes(1);
   });
+
+  test('should not include 12AM when minimum is greater than 12AM', async ({ page, skip }) => {
+    skip.rtl();
+
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25183',
+    });
+
+    await page.setContent(`
+      <ion-datetime
+        presentation="time"
+        min="2022-04-25T08:30:00"
+        max="2022-04-25T21:30:00"
+        value="2022-04-25T08:30:00"
+      ></ion-datetime>
+    `);
+
+    const hourPickerItems = page.locator(
+      'ion-datetime ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)'
+    );
+    await expect(hourPickerItems).toHaveText(['8', '9', '10', '11']);
+  });
+
+  test('should include 12PM when minimum is greater than 12', async ({ page, skip }) => {
+    skip.rtl();
+
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25183',
+    });
+
+    await page.setContent(`
+      <ion-datetime
+        locale="en-US"
+        presentation="time"
+        min="2022-07-29T08:00:00"
+        value="2022-07-29T12:00:00"
+      ></ion-datetime>
+    `);
+
+    const hourPickerItems = page.locator(
+      'ion-datetime ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)'
+    );
+    await expect(hourPickerItems).toHaveText(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
+  });
 });
