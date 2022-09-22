@@ -45,6 +45,7 @@ import {
   getPreviousWeek,
   getPreviousYear,
   getStartOfWeek,
+  validateParts,
 } from './utils/manipulation';
 import {
   clampDate,
@@ -583,6 +584,19 @@ export class Datetime implements ComponentInterface {
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
     const { multiple, activePartsClone, highlightActiveParts } = this;
 
+    /**
+     * When setting the active parts, it is possible
+     * to set the invalid data. For example,
+     * when updating January 31 to February,
+     * February 31 does not exist. As a result
+     * we need to validate the active parts and
+     * ensure that we are only setting valid dates.
+     * Additionally, we need to update the working parts
+     * too in the event that the validated parts are different.
+     */
+    const validatedParts = validateParts(parts);
+    this.setWorkingParts(validatedParts);
+
     if (multiple) {
       /**
        * We read from activePartsClone here because valueChanged() only updates that,
@@ -595,20 +609,20 @@ export class Datetime implements ComponentInterface {
        */
       const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
       if (removeDate) {
-        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, parts));
+        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else if (highlightActiveParts) {
-        this.activeParts = [...activePartsArray, parts];
+        this.activeParts = [...activePartsArray, validatedParts];
       } else {
         /**
          * If highlightActiveParts is false, that means we just have a
          * default value of today in activeParts; we need to replace that
          * rather than adding to it since it's just a placeholder.
          */
-        this.activeParts = [parts];
+        this.activeParts = [validatedParts];
       }
     } else {
       this.activeParts = {
-        ...parts,
+        ...validatedParts,
       };
     }
 
