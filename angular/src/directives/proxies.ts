@@ -1828,7 +1828,7 @@ has been modified.
    * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
 has been changed. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<CustomEvent<InputEvent | null>>;
   /**
    * Emitted when the input loses focus. 
    */

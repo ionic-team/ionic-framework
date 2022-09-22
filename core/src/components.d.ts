@@ -6576,7 +6576,7 @@ declare namespace LocalJSX {
         /**
           * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.
          */
-        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
+        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent | null>) => void;
         /**
           * Emitted when the styles change.
          */

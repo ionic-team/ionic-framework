@@ -84,10 +84,10 @@ test.describe('textarea: events: ionInput', () => {
     const ionInputSpy = await page.spyOnEvent('ionInput');
     const textarea = page.locator('ion-textarea');
 
+    await textarea.click();
     await textarea.press('Backspace');
 
-    await ionInputSpy.next();
-
     expect(ionInputSpy).toHaveReceivedEventTimes(1);
+    expect(ionInputSpy).toHaveReceivedEventDetail(null);
   });
 });

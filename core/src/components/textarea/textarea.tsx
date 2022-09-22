@@ -179,7 +179,7 @@ export class Textarea implements ComponentInterface {
    * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
    * has been changed.
    */
-  @Event() ionInput!: EventEmitter<InputEvent>;
+  @Event() ionInput!: EventEmitter<InputEvent | null>;
 
   /**
    * Emitted when the styles change.
@@ -291,7 +291,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit(ev: KeyboardEvent) {
+  private checkClearOnEdit() {
     if (!this.clearOnEdit) {
       return;
     }
@@ -302,13 +302,7 @@ export class Textarea implements ComponentInterface {
       this.value = '';
     }
 
-    this.ionInput.emit(
-      new InputEvent('input', {
-        data: null,
-        dataTransfer: null,
-        inputType: ev.key === 'Backspace' ? 'deleteContentBackward' : 'insertText',
-      })
-    );
+    this.ionInput.emit(null);
 
     // Reset the flag
     this.didBlurAfterEdit = false;
@@ -370,8 +364,8 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = (ev: KeyboardEvent) => {
-    this.checkClearOnEdit(ev);
+  private onKeyDown = () => {
+    this.checkClearOnEdit();
   };
 
   render() {
