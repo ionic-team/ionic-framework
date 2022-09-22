@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.9-nightly.20220922](https://github.com/ionic-team/ionic-framework/compare/v6.2.8...v6.2.9-nightly.20220922) (2022-09-22)
+
+
+### Bug Fixes
+
+* **datetime:** swiping wheel no longer dismisses card modal ([#25981](https://github.com/ionic-team/ionic-framework/issues/25981)) ([7543c84](https://github.com/ionic-team/ionic-framework/commit/7543c84445e6698d29cafe75b423c33115bc534c))
+* **react:** overlays now define internal ionic components ([#25967](https://github.com/ionic-team/ionic-framework/issues/25967)) ([21dc893](https://github.com/ionic-team/ionic-framework/commit/21dc893f90a56d14d69330367daae6788e32652e)), closes [#25962](https://github.com/ionic-team/ionic-framework/issues/25962)
+
+
+
+
+
 ## [6.2.8](https://github.com/ionic-team/ionic-framework/compare/v6.2.7...v6.2.8) (2022-09-21)
 
 
