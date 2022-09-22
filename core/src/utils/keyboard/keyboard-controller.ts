@@ -63,7 +63,7 @@ export type KeyboardController = {
   isKeyboardVisible: () => boolean;
 };
 
-enum KeyboardLifecycle {
+export enum KeyboardLifecycle {
   WillShow = 'willShow',
   DidShow = 'didShow',
   WillHide = 'willHide',
