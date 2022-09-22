@@ -32,6 +32,7 @@ test.describe('datetime: switching months with different number of days', () => 
   test('should adjust the selected day when moving to a month with a different number of days', async ({ page }) => {
     const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
     const monthColumnItems = page.locator('ion-datetime .month-column .picker-item:not(.picker-item-empty)');
+    const datetime = page.locator('ion-datetime');
     const ionChange = await page.spyOnEvent('ionChange');
 
     await monthYearToggle.click();
@@ -39,9 +40,9 @@ test.describe('datetime: switching months with different number of days', () => 
 
     // February
     await monthColumnItems.nth(1).click();
-    await page.waitForChanges();
 
+    await ionChange.next();
     await expect(ionChange).toHaveReceivedEventTimes(1);
-    await expect(ionChange.events[0].detail.value).toContainText('2022-02-29');
+    await expect(datetime).toHaveJSProperty('value', '2022-02-28');
   });
 });
