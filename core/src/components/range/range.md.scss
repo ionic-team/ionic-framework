@@ -8,11 +8,14 @@
   --knob-border-radius: 50%;
   --knob-background: var(--bar-background-active);
   --knob-box-shadow: none;
-  --knob-size: 18px;
+  --knob-size: 20px;
+  --knob-indicator-opacity-hover: 0.13;
+  --knob-indicator-opacity-focus: 0.13;
+  --knob-indicator-opacity-active: 0.25;
   --bar-height: #{$range-md-bar-height};
   --bar-background: #{ion-color(primary, base, 0.26)};
   --bar-background-active: #{ion-color(primary, base)};
-  --bar-border-radius: 0;
+  --bar-border-radius: 10px;
   --height: #{$range-md-slider-height};
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};
@@ -57,7 +60,7 @@
 }
 
 .range-knob {
-  transform: scale(.67);
+  transform: scale(1);
 
   transition-duration: 120ms;
   transition-property: transform, background-color, border;
@@ -87,7 +90,7 @@
     background: var(--knob-background);
 
     content: "";
-    opacity: 0.3;
+    opacity: var(--knob-indicator-opacity-hover);
     pointer-events: none;
   }
 }
@@ -112,7 +115,7 @@
 .range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include border-radius(50%);
-  @include transform(translate3d(0, 0, 0), scale(.01));
+  @include transform(translate3d(0, 0, 0), scale(0.01));
 
   display: inline-block;
   position: relative;
@@ -165,8 +168,8 @@
 @media (any-hover: hover) {
   .range-knob-handle:hover .range-knob:before {
     transform: scale(2);
-    
-    opacity: 0.04;
+
+    opacity: var(--knob-indicator-opacity-hover);
   }
 }
 
@@ -178,12 +181,12 @@
   }
 
   &.ion-focused .range-knob::before {
-    opacity: 0.13;
+    opacity: var(--knob-indicator-opacity-focus);
   }
 
   &.ion-activated .range-knob::before,
   &.range-knob-pressed .range-knob::before {
-    opacity: 0.25;
+    opacity: var(--knob-indicator-opacity-active);
   }
 }
 

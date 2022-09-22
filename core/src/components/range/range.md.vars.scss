@@ -19,19 +19,13 @@ $range-md-hit-width:                         42px !default;
 $range-md-hit-height:                        $range-md-slider-height !default;
 
 /// @prop - Height of the range bar
-$range-md-bar-height:                        2px !default;
+$range-md-bar-height:                        4px !default;
 
 /// @prop - Background of the range bar
 $range-md-bar-background-color:              $background-color-step-250 !default;
 
 /// @prop - Background of the active range bar
 $range-md-bar-active-background-color:       current-color(base) !default;
-
-/// @prop - Width of the range knob
-$range-md-knob-width:                        18px !default;
-
-/// @prop - Height of the range knob
-$range-md-knob-height:                       $range-md-knob-width !default;
 
 /// @prop - Background of the range knob
 $range-md-knob-background-color:             $range-md-bar-active-background-color !default;
