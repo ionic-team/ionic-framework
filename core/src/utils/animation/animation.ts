@@ -23,7 +23,6 @@ import {
   setStyleProperty,
 } from './animation-utils';
 
-
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
   o?: AnimationCallbackOptions;
