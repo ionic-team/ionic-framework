@@ -115,7 +115,7 @@ export const generateKeyframeName = (keyframeRules: string) => {
 
 export const getStyleContainer = (element: HTMLElement) => {
   // getRootNode is not always available in SSR environments.
-  const rootNode = (element.getRootNode !== undefined) ? element.getRootNode() as any : element;
+  const rootNode = element.getRootNode !== undefined ? (element.getRootNode() as any) : element;
   return rootNode.head || rootNode;
 };
 
