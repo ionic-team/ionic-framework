@@ -1,4 +1,5 @@
 import { raf } from '../helpers';
+import { win } from '../window';
 
 import type {
   Animation,
@@ -21,6 +22,7 @@ import {
   removeStyleProperty,
   setStyleProperty,
 } from './animation-utils';
+
 
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
@@ -83,7 +85,8 @@ export const createAnimation = (animationId?: string): Animation => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsAnimationEffect =
-    typeof (AnimationEffect as any) === 'function' || typeof (window as any).AnimationEffect === 'function';
+    typeof (AnimationEffect as any) === 'function' ||
+    (win !== undefined && typeof (win as any).AnimationEffect === 'function');
   const supportsWebAnimations =
     typeof (Element as any) === 'function' &&
     typeof (Element as any).prototype!.animate === 'function' &&
