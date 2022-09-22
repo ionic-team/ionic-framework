@@ -291,7 +291,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit() {
+  private checkClearOnEdit(ev: KeyboardEvent) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -301,6 +301,14 @@ export class Textarea implements ComponentInterface {
       // Clear the input
       this.value = '';
     }
+
+    this.ionInput.emit(
+      new InputEvent('input', {
+        data: null,
+        dataTransfer: null,
+        inputType: ev.key === 'Backspace' ? 'deleteContentBackward' : 'insertText',
+      })
+    );
 
     // Reset the flag
     this.didBlurAfterEdit = false;
@@ -362,8 +370,8 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = () => {
-    this.checkClearOnEdit();
+  private onKeyDown = (ev: KeyboardEvent) => {
+    this.checkClearOnEdit(ev);
   };
 
   render() {
