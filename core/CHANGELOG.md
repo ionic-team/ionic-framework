@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+
+### Bug Fixes
+
+* **datetime:** account for 12AM with min times and 12 hour format ([#25952](https://github.com/ionic-team/ionic/issues/25952)) ([55ebd6c](https://github.com/ionic-team/ionic/commit/55ebd6cdf39c01b401e876b76e755bfa04db8f65)), closes [#25183](https://github.com/ionic-team/ionic/issues/25183)
+* **item:** show the highlight on iOS when --highlight-height is set ([#25905](https://github.com/ionic-team/ionic/issues/25905)) ([d7db133](https://github.com/ionic-team/ionic/commit/d7db1333f13834ecb447b4b1da62cfffed9fb333))
+* **overlays:** focus trapping no longer includes disabled elements ([#25949](https://github.com/ionic-team/ionic/issues/25949)) ([6cb5827](https://github.com/ionic-team/ionic/commit/6cb5827d069c255ab0a9a8c319aba9994a4c5196))
+* **overlays:** focus trapping no longer includes hidden elements ([#25948](https://github.com/ionic-team/ionic/issues/25948)) ([5c10f98](https://github.com/ionic-team/ionic/commit/5c10f98ceb3ae42d3363b38ba786b9122676a59c))
+
+
+### Performance Improvements
+
+* **card:** avoid force compositing on ios ([#25942](https://github.com/ionic-team/ionic/issues/25942)) ([174c3b3](https://github.com/ionic-team/ionic/commit/174c3b30a0bce7e7ab13e5605348ec107af69dd6))
+
+
+
+
+
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **datetime:** correct year is set in wheel picker ([#25896](https://github.com/ionic-team/ionic/issues/25896)) ([fb653eb](https://github.com/ionic-team/ionic/commit/fb653ebe67458a088adf0626741d190ceb2880a6)), closes [#25895](https://github.com/ionic-team/ionic/issues/25895)
+* **footer:** padding is added correctly with tabs ([#25921](https://github.com/ionic-team/ionic/issues/25921)) ([edbb64c](https://github.com/ionic-team/ionic/commit/edbb64c4b6de7ace7043675a85fd503da18304d7)), closes [#25918](https://github.com/ionic-team/ionic/issues/25918)
+* **input,textarea:** data-form-type attribute is assigned to inner input ([#25927](https://github.com/ionic-team/ionic/issues/25927)) ([9451b28](https://github.com/ionic-team/ionic/commit/9451b283e2cb30ac9087574461f6b9f4b6cc3e0f)), closes [#25908](https://github.com/ionic-team/ionic/issues/25908)
+* **modal:** sheet is easier to dismiss with swipe ([#25883](https://github.com/ionic-team/ionic/issues/25883)) ([fa169d2](https://github.com/ionic-team/ionic/commit/fa169d2dca649107342fe365ef6c7da892ebb8fd)), closes [#24296](https://github.com/ionic-team/ionic/issues/24296)
+* **tab-bar:** use correct import path ([#25898](https://github.com/ionic-team/ionic/issues/25898)) ([ad46045](https://github.com/ionic-team/ionic/commit/ad46045bcc251c9719ecf6621792f1a5b3c6afce)), closes [#25897](https://github.com/ionic-team/ionic/issues/25897)
+* **textarea:** auto grow textarea line wraps long contents ([#25928](https://github.com/ionic-team/ionic/issues/25928)) ([777109a](https://github.com/ionic-team/ionic/commit/777109a7e8625ed61a8cc09e52fc06e104b124ea)), closes [#25893](https://github.com/ionic-team/ionic/issues/25893)
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 

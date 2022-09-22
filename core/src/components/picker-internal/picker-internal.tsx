@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, h } from '@stencil/core';
+import { Component, Element, Event, Listen, Host, h } from '@stencil/core';
 
 import { getElementRoot } from '../../utils/helpers';
 
@@ -29,6 +29,19 @@ export class PickerInternal implements ComponentInterface {
   @Element() el!: HTMLIonPickerInternalElement;
 
   @Event() ionInputModeChange!: EventEmitter<PickerInternalChangeEventDetail>;
+
+  /**
+   * When the picker is interacted with
+   * we need to prevent touchstart so other
+   * gestures do not fire. For example,
+   * scrolling on the wheel picker
+   * in ion-datetime should not cause
+   * a card modal to swipe to close.
+   */
+  @Listen('touchstart')
+  preventTouchStartPropagation(ev: TouchEvent) {
+    ev.stopPropagation();
+  }
 
   componentWillLoad() {
     getElementRoot(this.el).addEventListener('focusin', this.onFocusIn);
