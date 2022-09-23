@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.9-nightly.20220923](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9-nightly.20220923) (2022-09-23)
+
+
+### Bug Fixes
+
+* **animation:** improve compatibility with ssr ([#25992](https://github.com/ionic-team/ionic/issues/25992)) ([02234f6](https://github.com/ionic-team/ionic/commit/02234f69e0333266b4d500f24b3bb002c099bda2)), closes [#25987](https://github.com/ionic-team/ionic/issues/25987)
+* **datetime:** swiping wheel no longer dismisses card modal ([#25981](https://github.com/ionic-team/ionic/issues/25981)) ([7543c84](https://github.com/ionic-team/ionic/commit/7543c84445e6698d29cafe75b423c33115bc534c))
+
+
+
+
+
 ## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
 
 
