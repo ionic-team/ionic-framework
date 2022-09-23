@@ -208,7 +208,8 @@ export class Input implements ComponentInterface {
    *
    * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
    * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
-   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event).
+   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+   * the input is cleared on edit, the type is `null`.
    */
   @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
@@ -421,9 +422,9 @@ export class Input implements ComponentInterface {
      */
     if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
       this.value = '';
-      this.didInputClearOnEdit = true;
     }
-    this.ionInput.emit(ev);
+    this.didInputClearOnEdit = true;
+    this.ionInput.emit(null);
   }
 
   private onCompositionStart = () => {

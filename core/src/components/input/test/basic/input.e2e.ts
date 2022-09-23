@@ -228,4 +228,15 @@ test.describe('input: clearOnEdit', () => {
 
     expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('some value');
   });
+
+  test('should not clear the input if it does not have an initial value when typing', async ({ page }) => {
+    await page.setContent(`<ion-input value="" clear-on-edit="true"></ion-input>`);
+
+    const input = page.locator('ion-input');
+
+    await input.click();
+    await input.type('hello world');
+
+    expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('hello world');
+  });
 });

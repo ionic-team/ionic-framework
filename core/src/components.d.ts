@@ -4913,7 +4913,7 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionInput` event fires when the `value` of an `<ion-input>` element has been changed.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event).
+          * The `ionInput` event fires when the `value` of an `<ion-input>` element has been changed.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
          */
         "onIonInput"?: (event: IonInputCustomEvent<InputInputEventDetail>) => void;
         /**
